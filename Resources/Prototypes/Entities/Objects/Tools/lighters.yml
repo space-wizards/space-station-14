@@ -16,6 +16,16 @@
     activatedDamage:
         types:
             Heat: 1
+    activatedSoundOnHit: # imp
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+      params:
+        variation: 0.250
+        volume: -15
+    activatedSoundOnHitNoDamage: # imp
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+      params:
+        variation: 0.250
+        volume: -17
   - type: ItemToggleSize
     activatedSize: Small
   - type: ItemToggleHot
@@ -88,6 +98,8 @@
     radius: 1.1 #smallest possible
     color: orange
   - type: ItemTogglePointLight
+  - type: ItemToggleDamageOtherOnHit # imp
+  - type: DamageOtherOnHit
 
 - type: entity
   name: cheap lighter
@@ -153,6 +165,16 @@
     activatedDamage:
         types:
             Heat: 1
+    activatedSoundOnHit: # imp
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+      params:
+        variation: 0.250
+        volume: -15
+    activatedSoundOnHitNoDamage: # imp
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+      params:
+        variation: 0.250
+        volume: -17
   - type: ItemToggleSize
     activatedSize: Small
   - type: ItemToggleHot
@@ -210,6 +232,10 @@
   - type: UseDelay
   - type: IgnitionSource
     ignited: false
+  # imp edits #
+  - type: ItemToggleDamageOtherOnHit
+  - type: DamageOtherOnHit
+  # end imp edits #
 
 - type: entity
   name: flippo engraved lighter

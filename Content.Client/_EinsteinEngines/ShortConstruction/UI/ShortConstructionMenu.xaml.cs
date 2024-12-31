@@ -1,7 +1,7 @@
 using System.Numerics;
 using Content.Client.Construction;
 using Content.Client.UserInterface.Controls;
-using Content.Shared._EinsteinEngine.ShortConstruction;
+using Content.Shared._EinsteinEngines.ShortConstruction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Popups;
 using Robust.Client.GameObjects;
@@ -15,7 +15,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client._EinsteinEngine.ShortConstruction.UI;
+namespace Content.Client._EinsteinEngines.ShortConstruction.UI;
 
 //This was originally a PR for Einstein's Engines, submitted by Github user VMSolidus.
 //https://github.com/Simple-Station/Einstein-Engines/pull/861

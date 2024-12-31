@@ -1,59 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Impstation is taken by a fey mood!
-    type: Add
-  id: 326
-  time: '2024-10-05T14:09:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/416
-- author: KingMudkipIII
-  changes:
-  - message: Added the Greatwrench, which spawns rarely in tool closets.
-    type: Add
-  id: 327
-  time: '2024-10-05T14:10:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/415
-- author: formlessnameless
-  changes:
-  - message: Spelves are strippable now. Steal their stuff!
-    type: Fix
-  id: 328
-  time: '2024-10-05T16:58:52.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/417
-- author: mqole
-  changes:
-  - message: Various additional roles have been given the option for senior PDAs.
-    type: Add
-  id: 329
-  time: '2024-10-06T03:30:11.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/423
-- author: TGRCDev
-  changes:
-  - message: Revenants now freeze in place when any of their abilities stun them,
-      to prevent revenants from abusing their velocity to slide through doors while
-      stunned.
-    type: Tweak
-  - message: Revenants now only receive stolen essence and essence regen from a haunted
-      crewmate once. Revenants can see who has already been haunted by examining them.
-    type: Tweak
-  id: 330
-  time: '2024-10-06T03:30:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/420
-- author: Sha-Seng
-  changes:
-  - message: Driller Cape for 100 hr salvagers
-    type: Add
-  - message: Mecha Gar Glasses (black) to loot pools
-    type: Add
-  - message: 100 hr salvagers can now spawn with Gar Glasses
-    type: Add
-  - message: Added in-hand sprites for Giga Gar Glasses
-    type: Tweak
-  - message: Normalized damage values amongst Gar Glasses
-    type: Tweak
-  id: 331
-  time: '2024-10-06T03:33:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/425
 - author: starlighthowls
   changes:
   - message: Thaven now have survival boxes
@@ -4489,3 +4434,71 @@
   id: 825
   time: '2024-12-30T11:27:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1165
+- author: Darkmajia
+  changes:
+  - message: A few items can now be used as melee weapons.
+    type: Add
+  - message: Pacifists can now throw most dangerous items, but still cannot cause
+      harm with them.
+    type: Add
+  - message: 'Ported the Throwing Update from Einstein Engines, which includes:'
+    type: Add
+  - message: Many items can now be thrown to deal damage.
+    type: Add
+  - message: Examining an item will show a lot of information about its throwing potential.
+    type: Add
+  - message: Items that deal throwing damage now cost stamina to throw.
+    type: Tweak
+  - message: The default time to remove an embedded item has been increased from 3
+      seconds to 5 seconds.
+    type: Tweak
+  - message: The time to pry up a floor tile has been reduced from 1 second to 0.5
+      seconds. Throwing tiles deals more damage.
+    type: Tweak
+  id: 826
+  time: '2024-12-30T22:46:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1157
+- author: ruddygreat
+  changes:
+  - message: Invisibility is now fully invisible! an outline can be seen by the invisible
+      entity, anything inside the entity & ghosts.
+    type: Tweak
+  id: 827
+  time: '2024-12-30T22:56:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1150
+- author: kipdotnet
+  changes:
+  - message: Apids, a Beefolk ghostrole that cargo can order in to help botany and
+      medical.
+    type: Add
+  id: 828
+  time: '2024-12-30T22:57:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1147
+- author: suyo and dark
+  changes:
+  - message: new sound for goliath attacks to better match the damage type they do
+    type: Add
+  - message: added a toggleable magnetic pickup for the ore box and ore bag
+    type: Add
+  - message: ore boxes have been refitted to hold more ore, including ore bags and
+      artifact fragments. you can dump them out easier now too!
+    type: Tweak
+  - message: industrial ore waba-beepi efficiency increased from 1.5x to 2x
+    type: Tweak
+  id: 829
+  time: '2024-12-30T23:09:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1160
+- author: neonannihilator
+  changes:
+  - message: You can now pick up and wear diona nymphs!
+    type: Add
+  id: 830
+  time: '2024-12-30T23:12:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1170
+- author: Kandiyaki
+  changes:
+  - message: the codex cicatrix now works as a focus when opened.
+    type: Fix
+  id: 831
+  time: '2024-12-30T23:25:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1164

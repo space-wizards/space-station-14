@@ -5,12 +5,14 @@ namespace Content.Shared.Throwing
     /// </summary>
     public abstract class ThrowEvent : HandledEntityEventArgs
     {
+        public EntityUid? User { get; }
         public readonly EntityUid Thrown;
         public readonly EntityUid Target;
         public ThrownItemComponent Component;
 
-        public ThrowEvent(EntityUid thrown, EntityUid target, ThrownItemComponent component)
+        public ThrowEvent(EntityUid? user, EntityUid thrown, EntityUid target, ThrownItemComponent component)
         {
+            User = User;
             Thrown = thrown;
             Target = target;
             Component = component;
@@ -22,7 +24,7 @@ namespace Content.Shared.Throwing
     /// </summary>
     public sealed class ThrowHitByEvent : ThrowEvent
     {
-        public ThrowHitByEvent(EntityUid thrown, EntityUid target, ThrownItemComponent component) : base(thrown, target, component)
+        public ThrowHitByEvent(EntityUid? user, EntityUid thrown, EntityUid target, ThrownItemComponent component) : base(user, thrown, target, component)
         {
         }
     }
@@ -32,7 +34,7 @@ namespace Content.Shared.Throwing
     /// </summary>
     public sealed class ThrowDoHitEvent : ThrowEvent
     {
-        public ThrowDoHitEvent(EntityUid thrown, EntityUid target, ThrownItemComponent component) : base(thrown, target, component)
+        public ThrowDoHitEvent(EntityUid thrown, EntityUid target, ThrownItemComponent component) : base(null, thrown, target, component)
         {
         }
     }

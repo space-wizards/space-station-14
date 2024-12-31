@@ -14,7 +14,7 @@ using Robust.Shared.Enums;
 
 // ReSharper disable InconsistentNaming
 
-namespace Content.Client._EinsteinEngine.ShortConstruction.UI;
+namespace Content.Client._EinsteinEngines.ShortConstruction.UI;
 
 [UsedImplicitly]
 public sealed class ShortConstructionMenuBUI : BoundUserInterface

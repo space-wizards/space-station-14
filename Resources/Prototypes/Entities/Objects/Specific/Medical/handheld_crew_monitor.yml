@@ -29,6 +29,10 @@
     - HighRiskItem
   - type: StealTarget
     stealGroup: HandheldCrewMonitor
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 5
 
 - type: entity
   id: HandheldCrewMonitorEmpty
