@@ -109,8 +109,10 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             ("speaker", Name(entity)),
             ("originalName", nameEv.VoiceName));
 
+        var range = args.TelephoneSource.Comp.LinkedTelephones.Count > 1 ? ChatTransmitRange.HideChat : ChatTransmitRange.GhostRangeLimit;
         var volume = entity.Comp.SpeakerVolume == TelephoneVolume.Speak ? InGameICChatType.Speak : InGameICChatType.Whisper;
-        _chat.TrySendInGameICMessage(entity, args.Message, volume, ChatTransmitRange.GhostRangeLimit, nameOverride: name, checkRadioPrefix: false);
+
+        _chat.TrySendInGameICMessage(entity, args.Message, volume, range, nameOverride: name, checkRadioPrefix: false);
     }
 
     #endregion
