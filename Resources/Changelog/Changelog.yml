@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Replacement Crew Monitor Servers, as well as the Crew Monitor Server
-      on the dev map, now work properly.
-    type: Fix
-  id: 7264
-  time: '2024-09-02T04:37:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31677
 - author: poeMota
   changes:
   - message: Now the time played on ERT roles and midround borgs will be saved to
@@ -3934,3 +3926,12 @@
   id: 7763
   time: '2024-12-31T10:29:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34117
+- author: chromiumboy
+  changes:
+  - message: Chat messages from holopads during emergency broadcasts will no longer
+      be logged in the chat window to prevent message spam. This is a temporary change
+      until a proper fix can be made to the chat system
+    type: Tweak
+  id: 7764
+  time: '2024-12-31T10:52:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34114
