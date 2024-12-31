@@ -116951,6 +116951,11 @@ entities:
     - type: Transform
       pos: 17.569016,13.6063385
       parent: 2
+  - uid: 23089
+    components:
+    - type: Transform
+      pos: -11.501634,18.687561
+      parent: 2
 - proto: SecurityTechFab
   entities:
   - uid: 17927

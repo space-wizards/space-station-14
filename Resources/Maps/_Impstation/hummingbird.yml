@@ -33913,6 +33913,11 @@ entities:
     - type: Transform
       pos: 121.65561,51.181595
       parent: 2
+  - uid: 24408
+    components:
+    - type: Transform
+      pos: 81.55687,22.084185
+      parent: 2
 - proto: CableHV
   entities:
   - uid: 4859
@@ -155755,7 +155760,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -156633.58
+      secondsUntilStateChange: -156695.97
       state: Opening
     - type: Airlock
       autoClose: False
@@ -156815,5 +156820,10 @@ entities:
     components:
     - type: Transform
       pos: 57.487473,-29.129871
+      parent: 2
+  - uid: 24407
+    components:
+    - type: Transform
+      pos: 81.46312,21.97481
       parent: 2
 ...
