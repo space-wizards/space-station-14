@@ -89,6 +89,11 @@
     interfaces:
       enum.ApcUiKey.Key:
         type: ApcBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Wires
+    boardName: wires-board-name-apc
+    layoutId: APC
   - type: ActivatableUI
     inHandsOnly: false
     key: enum.ApcUiKey.Key
