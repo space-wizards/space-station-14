@@ -6,7 +6,8 @@
   metabolisms:
     Drink:
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 3
   reactiveEffects:
     Extinguish:
@@ -27,7 +28,8 @@
   metabolisms:
     Drink:
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 2
   plantMetabolism:
   - !type:PlantAdjustNutrition
@@ -49,7 +51,8 @@
   metabolisms:
     Drink:
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol

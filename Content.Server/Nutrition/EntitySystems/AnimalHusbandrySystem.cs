@@ -9,10 +9,12 @@ using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Nutrition.AnimalHusbandry;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition.Prototypes;
 using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -24,7 +26,7 @@ namespace Content.Server.Nutrition.EntitySystems;
 public sealed class AnimalHusbandrySystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly HungerSystem _hunger = default!;
+    [Dependency] private readonly SatiationSystem _satiation = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -37,6 +39,8 @@ public sealed class AnimalHusbandrySystem : EntitySystem
 
     private readonly HashSet<EntityUid> _failedAttempts = new();
     private readonly HashSet<EntityUid> _birthQueue = new();
+
+    private static readonly ProtoId<SatiationTypePrototype> HungerSatiation = "Hunger";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -121,12 +125,20 @@ public sealed class AnimalHusbandrySystem : EntitySystem
         if (TryComp<InteractionPopupComponent>(uid, out var interactionPopup))
             _audio.PlayPvs(interactionPopup.InteractSuccessSound, uid);
 
-        _hunger.ModifyHunger(uid, -component.HungerPerBirth);
-        _hunger.ModifyHunger(partner, -component.HungerPerBirth);
+        if (TryComp<SatiationComponent>(uid, out var satiation))
+        {
+            _satiation.ModifyValue((uid, satiation), HungerSatiation, -component.HungerPerBirth);
+        }
+
+        if (TryComp<SatiationComponent>(uid, out var partnerSatiation))
+        {
+            _satiation.ModifyValue((uid, partnerSatiation), HungerSatiation, -component.HungerPerBirth);
+        }
 
         component.GestationEndTime = _timing.CurTime + component.GestationDuration;
         component.Gestating = true;
-        _adminLog.Add(LogType.Action, $"{ToPrettyString(uid)} (carrier) and {ToPrettyString(partner)} (partner) successfully bred.");
+        _adminLog.Add(LogType.Action,
+            $"{ToPrettyString(uid)} (carrier) and {ToPrettyString(partner)} (partner) successfully bred.");
         return true;
     }
 
@@ -148,11 +160,18 @@ public sealed class AnimalHusbandrySystem : EntitySystem
         if (_mobState.IsIncapacitated(uid))
             return false;
 
-        if (TryComp<HungerComponent>(uid, out var hunger) && _hunger.GetHungerThreshold(hunger) < HungerThreshold.Okay)
-            return false;
+        // If no satiations, no limit to reproduction
+        if (!TryComp<SatiationComponent>(uid, out var satiation))
+        {
+            return true;
+        }
 
-        if (TryComp<ThirstComponent>(uid, out var thirst) && thirst.CurrentThirstThreshold < ThirstThreshold.Okay)
+        // If has hunger or thirst, check that they're high enough.
+        if (_satiation.GetThresholdOrNull((uid, satiation), HungerSatiation) is < SatiationThreshold.Okay ||
+            _satiation.GetThresholdOrNull((uid, satiation), "Thirst") is < SatiationThreshold.Okay)
+        {
             return false;
+        }
 
         return true;
     }
@@ -198,6 +217,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
                 // Make sure the name prefix is applied
                 _nameMod.RefreshNameModifiers(offspring);
             }
+
             _adminLog.Add(LogType.Action, $"{ToPrettyString(uid)} gave birth to {ToPrettyString(offspring)}.");
         }
 
@@ -224,7 +244,8 @@ public sealed class AnimalHusbandrySystem : EntitySystem
 
             if (_timing.CurTime < reproductive.NextBreedAttempt)
                 continue;
-            reproductive.NextBreedAttempt += _random.Next(reproductive.MinBreedAttemptInterval, reproductive.MaxBreedAttemptInterval);
+            reproductive.NextBreedAttempt +=
+                _random.Next(reproductive.MinBreedAttemptInterval, reproductive.MaxBreedAttemptInterval);
 
             // no.
             if (HasComp<ActorComponent>(uid) || TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind)
