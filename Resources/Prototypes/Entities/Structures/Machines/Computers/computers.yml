@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseEngineeringContraband ]
   id: ComputerAlert
   name: atmospheric alerts computer
   description: Used to access the station's atmospheric automated alert system.
@@ -50,7 +50,7 @@
           type: WiresBoundUserInterface
 
 - type: entity
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseEngineeringContraband ]
   id: ComputerAtmosMonitoring
   name: atmospheric network monitor
   description: Used to monitor the station's atmospheric networks.
@@ -288,7 +288,7 @@
     board: ComputerIFFSyndicateCircuitboard
 
 - type: entity
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseEngineeringContraband ]
   id: ComputerPowerMonitoring
   name: power monitoring computer
   description: It monitors power levels across the station.
@@ -634,7 +634,7 @@
     color: "#1f8c28"
 
 - type: entity
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseGrandTheftContraband ]
   id: ComputerComms
   name: communications computer
   description: A computer used to make station wide announcements via keyboard, set the appropriate alert level, and call the emergency shuttle.
