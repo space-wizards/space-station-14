@@ -2,8 +2,8 @@
   id: Hotel
   mapName: 'Hotel'
   mapPath: /Maps/_Starlight/Stations/Hotel.yml
-  minPlayers: 35
-  maxPlayers: 70
+  minPlayers: 20
+  maxPlayers: 65
   stations:
     Hotel:
       stationProto: StandardNanotrasenStation
