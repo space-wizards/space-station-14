@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: yuitop
   changes:
-  - message: actions bar now resize dynamically
-    type: Tweak
-  id: 7267
-  time: '2024-09-02T19:12:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31759
-- author: yuitop
-  changes:
   - message: space ninja throwing star ability now spawns a throwing star
     type: Fix
   id: 7268
@@ -3931,3 +3924,10 @@
   id: 7766
   time: '2024-12-31T13:20:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34150
+- author: justdie12
+  changes:
+  - message: Flipped signal disposal routers sprite
+    type: Fix
+  id: 7767
+  time: '2024-12-31T13:25:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34139
