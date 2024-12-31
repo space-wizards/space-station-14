@@ -4,12 +4,12 @@ uniform sampler2D SCREEN_TEXTURE;
 uniform highp float visibility; // number between -1 and 1
 uniform bool ShowOutline;
 
-uniform highp float outline_width = 2.0;
-uniform highp vec4 outline_color = vec4(0.0,1.0,0.0,0.33);
-uniform bool outline_fullbright = false;
-uniform highp float light_boost = 4.0;
-uniform highp float light_gamma = 1.0;
-uniform highp float light_whitepoint = 1.0;
+const highp float outline_width = 2.0;
+const highp vec4 outline_color = vec4(0.0,1.0,0.0,0.33);
+const bool outline_fullbright = false;
+const highp float light_boost = 4.0;
+const highp float light_gamma = 1.0;
+const highp float light_whitepoint = 1.0;
 
 void fragment() {
     highp vec4 spriteCol = zTexture(UV);
