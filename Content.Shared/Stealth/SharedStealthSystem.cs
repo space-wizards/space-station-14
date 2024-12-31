@@ -54,7 +54,7 @@ public abstract class SharedStealthSystem : EntitySystem
 
     public virtual void SetEnabled(EntityUid uid, bool value, StealthComponent? component = null)
     {
-        if (!Resolve(uid, ref component, false) || component.Enabled == value)
+        if (!Resolve(uid, ref component, false))
             return;
 
         component.Enabled = value;
@@ -106,11 +106,11 @@ public abstract class SharedStealthSystem : EntitySystem
         if (args.Current is not StealthComponentState cast)
             return;
 
-        SetEnabled(uid, cast.Enabled, component);
         component.LastVisibility = cast.Visibility;
         component.LastUpdated = cast.LastUpdated;
         component.UseAltShader = cast.UseAltShader;
         component.MinVisibility = cast.MinVisibility;
+        SetEnabled(uid, cast.Enabled, component);
     }
 
     private void OnMove(EntityUid uid, StealthOnMoveComponent component, ref MoveEvent args)

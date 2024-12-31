@@ -35,30 +35,11 @@ public sealed class StealthSystem : SharedStealthSystem
         SubscribeLocalEvent<StealthComponent, BeforePostShaderRenderEvent>(OnShaderRender);
     }
 
-    //don't like doing this but it's the only good way to have the shader update as far as I can tell
-    //though there's probably a better way, been staring at this for a while and kinda just want to be done with it
-    //it works well, but it's not a very elegant solution
-    //I actually have no idea why this works come to think of it
-    //todo attack this with a debugger for a few hours
-    public override void Update(float frameTime)
-    {
-
-        //don't do this every frame at least
-        timer += frameTime;
-        if (timer < 0.1f)
-            return;
-        timer = 0;
-
-        var query = EntityQueryEnumerator<StealthComponent>();
-        while (query.MoveNext(out var ent, out var component))
-        {
-            SetShader(ent, component.Enabled);
-        }
-    }
+    //no longer needs a force update! yaaaaay!
 
     public override void SetEnabled(EntityUid uid, bool value, StealthComponent? component = null)
     {
-        if (!Resolve(uid, ref component) || component.Enabled == value)
+        if (!Resolve(uid, ref component))
             return;
 
         base.SetEnabled(uid, value, component);
@@ -105,20 +86,6 @@ public sealed class StealthSystem : SharedStealthSystem
 
     private void OnShaderRender(EntityUid uid, StealthComponent component, BeforePostShaderRenderEvent args)
     {
-        // Distortion effect uses screen coordinates. If a player moves, the entities appear to move on screen. this
-        // makes the distortion very noticeable.
-
-        // So we need to use relative screen coordinates. The reference frame we use is the parent's position on screen.
-        // this ensures that if the Stealth is not moving relative to the parent, its relative screen position remains
-        // unchanged.
-        var parent = Transform(uid).ParentUid;
-        if (!parent.IsValid())
-            return; // should never happen, but lets not kill the client.
-        var parentXform = Transform(parent);
-        var reference = args.Viewport.WorldToLocal(_transformSystem.GetWorldPosition(parentXform));
-        reference.X = -reference.X;
-        var visibility = GetVisibility(uid, component);
-
         //imp special - show an outline for people that should see it, goes along with complete invisibility
         //includes the entity with the component, any admins & any ghosts
         var shaderToUse = component.UseAltShader ? _altShader : _shader;
@@ -148,6 +115,20 @@ public sealed class StealthSystem : SharedStealthSystem
             shaderToUse.SetParameter("ShowOutline", true);
         }
         //imp special end
+
+        // Distortion effect uses screen coordinates. If a player moves, the entities appear to move on screen. this
+        // makes the distortion very noticeable.
+
+        // So we need to use relative screen coordinates. The reference frame we use is the parent's position on screen.
+        // this ensures that if the Stealth is not moving relative to the parent, its relative screen position remains
+        // unchanged.
+        var parent = Transform(uid).ParentUid;
+        if (!parent.IsValid())
+            return; // should never happen, but lets not kill the client.
+        var parentXform = Transform(parent);
+        var reference = args.Viewport.WorldToLocal(_transformSystem.GetWorldPosition(parentXform));
+        reference.X = -reference.X;
+        var visibility = GetVisibility(uid, component);
 
         // actual visual visibility effect is limited to +/- 1.
         visibility = Math.Clamp(visibility, -1f, 1f);
