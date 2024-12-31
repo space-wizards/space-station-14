@@ -704,6 +704,7 @@
     Telecrystal: 24
   categories:
   - UplinkChemicals
+  restockTime: 900
   conditions:
     - !type:StoreWhitelistCondition
       whitelist:
