@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseComputer
+  parent: [ BaseComputer, BaseScienceContraband ]
   id: ComputerTechnologyDiskTerminal
   name: tech disk terminal
   description: A terminal used to print out technology disks.

@@ -33,7 +33,7 @@
   name: protolathe machine board
   description: A machine printed circuit board for a protolathe.
   components:
-    - type: Sprite
+    - type: Sprite #imp
       state: science
     - type: MachineBoard
       prototype: Protolathe
@@ -51,7 +51,7 @@
   name: hyper convection protolathe machine board
   description: A machine printed circuit board for a hyper convection protolathe.
   components:
-    - type: Sprite
+    - type: Sprite #imp
       state: science
     - type: MachineBoard
       prototype: ProtolatheHyperConvection

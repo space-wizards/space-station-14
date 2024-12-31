@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseComputer
+  parent: [ BaseComputer, BaseCargoContraband ]
   id: ComputerShipyard
   name: shipyard console
   description: Used to purchase and sell shuttles

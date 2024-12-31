@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseCargoContraband ]
   id: ShipyardComputerCircuitboard
   name: shipyard computer board
   description: A computer printed circuit board for a shipyard computer.

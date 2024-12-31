@@ -1,5 +1,6 @@
 - type: entity
   id: ParticleAcceleratorBase
+  parent: BaseEngineeringContraband #imp
   abstract: true
   placement:
     mode: SnapgridCenter
