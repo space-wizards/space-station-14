@@ -2,6 +2,7 @@
   name: supermatter arc
   id: SupermatterLightning
   parent: BaseLightning
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: /Textures/Effects/lightning.rsi
@@ -21,6 +22,7 @@
     lightningPrototype: SupermatterLightning
   - type: Beam
     sound: /Audio/_EinsteinEngines/Supermatter/lightning.ogg
+    allowSpriteOverwrite: false
   - type: TimedDespawn
     lifetime: 1
 
@@ -28,6 +30,7 @@
   name: charged supermatter arc
   id: SupermatterLightningCharged
   parent: SupermatterLightning
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: /Textures/Effects/lightning.rsi
@@ -53,6 +56,7 @@
   name: supercharged supermatter arc
   id: SupermatterLightningSupercharged
   parent: SupermatterLightningCharged
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: /Textures/Effects/lightning.rsi
