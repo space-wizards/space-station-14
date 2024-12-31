@@ -29,13 +29,15 @@ public sealed partial class IdCardConsoleComponent : Component
         public readonly string JobTitle;
         public readonly List<ProtoId<AccessLevelPrototype>> AccessList;
         public readonly ProtoId<AccessLevelPrototype> JobPrototype;
+        public readonly List<ProtoId<AccessLevelPrototype>> HiddenAccess;
 
-        public WriteToTargetIdMessage(string fullName, string jobTitle, List<ProtoId<AccessLevelPrototype>> accessList, ProtoId<AccessLevelPrototype> jobPrototype)
+        public WriteToTargetIdMessage(string fullName, string jobTitle, List<ProtoId<AccessLevelPrototype>> accessList, ProtoId<AccessLevelPrototype> jobPrototype, List<ProtoId<AccessLevelPrototype>> hiddenAccess)
         {
             FullName = fullName;
             JobTitle = jobTitle;
             AccessList = accessList;
             JobPrototype = jobPrototype;
+            HiddenAccess = hiddenAccess;
         }
     }
 
@@ -74,6 +76,16 @@ public sealed partial class IdCardConsoleComponent : Component
         "Security",
         "Service",
         "Theatre",
+    };
+
+    [DataField, AutoNetworkedField]
+    public List<ProtoId<AccessLevelPrototype>> HiddenAccess = new()
+    {
+        "SyndicateAgent",
+        "NuclearOperative",
+        "CentralCommand",
+        "Wizard",
+        "EmergencyShuttleRepealAll",
     };
 
     [Serializable, NetSerializable]
