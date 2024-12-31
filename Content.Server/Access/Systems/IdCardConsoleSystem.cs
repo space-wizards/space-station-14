@@ -171,10 +171,12 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         _access.TrySetTags(targetId, newAccessList.Union(hiddenAccess));
 
+        var changes = addedTags.Select(tag => "+" + tag).Union(removedTags.Except(hiddenAccess).Select(tag => "-" + tag));
+
         /*TODO: ECS SharedIdCardConsoleComponent and then log on card ejection, together with the save.
         This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/
         _adminLogger.Add(LogType.Action, LogImpact.Medium,
-            $"{ToPrettyString(player):player} has modified {ToPrettyString(targetId):entity} with the following accesses: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
+            $"{ToPrettyString(player):player} has modified {ToPrettyString(targetId):entity} with the following accesses: [{string.Join(", ", changes)}] [{string.Join(", ", newAccessList)}]");
     }
 
     /// <summary>
