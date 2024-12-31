@@ -138,7 +138,6 @@ public sealed class MappingState : GameplayStateBase
             .Bind(ContentKeyFunctions.MappingCancelEraseDecal, new PointerInputCmdHandler(HandleCancelEraseDecal, outsidePrediction: true))
             .Bind(ContentKeyFunctions.MappingOpenContextMenu, new PointerInputCmdHandler(HandleOpenContextMenu, outsidePrediction: true))
             .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(HandleOnUse, outsidePrediction: true))
-            .Bind(EngineKeyFunctions.UseSecondary, new PointerInputCmdHandler(HandleOnUseSecondary, outsidePrediction: true))
             .Register<MappingState>();
 
         _overlays.AddOverlay(new MappingOverlay(this));
@@ -565,6 +564,8 @@ public sealed class MappingState : GameplayStateBase
             Deselect();
         }
 
+        State = CursorState.None;
+        Screen.UnPressActionsExcept(new Control());
         Screen.EntityContainer.Visible = false;
         Screen.DecalContainer.Visible = false;
 
@@ -776,12 +777,19 @@ public sealed class MappingState : GameplayStateBase
         if (_placement.Eraser)
             return;
 
+        Deselect();
         _placement.Clear();
         _placement.ToggleEraser();
+
+        if (Screen.EraseDecalButton.Pressed)
+        {
+            _updatePlacement = true;
+            _updateEraseDecal = false;
+        }
+
         Screen.UnPressActionsExcept(Screen.EraseEntityButton);
         State = CursorState.Delete;
         Screen.EntityPlacementMode.Disabled = true;
-        Deselect();
     }
 
     private void DisableEntityEraser()
@@ -808,6 +816,19 @@ public sealed class MappingState : GameplayStateBase
 
     private bool HandleMappingUnselect(in PointerInputCmdArgs args)
     {
+        if (Screen.MoveGrid.Pressed)
+        {
+            var gridDrag = _entityManager.System<GridDraggingSystem>();
+            if (gridDrag.Enabled)
+                _consoleHost.ExecuteCommand("griddrag");
+        }
+
+        if (_placement.Eraser)
+            _placement.ToggleEraser();
+
+        Screen.UnPressActionsExcept(new Control());
+        State = CursorState.None;
+
         if (Screen.Prototypes.Selected is not { Prototype.Prototype: DecalPrototype })
             return false;
 
@@ -944,24 +965,6 @@ public sealed class MappingState : GameplayStateBase
             if (GetHoveredGrid() is { } grid)
                 _consoleHost.ExecuteCommand($"vv {_entityManager.GetNetEntity(grid.Owner).Id}");
         }
-
-        return false;
-    }
-
-    private bool HandleOnUseSecondary(in PointerInputCmdArgs args)
-    {
-        if (Screen.MoveGrid.Pressed)
-        {
-            var gridDrag = _entityManager.System<GridDraggingSystem>();
-            if (gridDrag.Enabled)
-                _consoleHost.ExecuteCommand("griddrag");
-        }
-
-        if (_placement.Eraser)
-            _placement.ToggleEraser();
-
-        Screen.UnPressActionsExcept(new Control());
-        State = CursorState.None;
 
         return false;
     }
