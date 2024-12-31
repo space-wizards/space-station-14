@@ -85,7 +85,7 @@
   - type: GenericVisualizer
     visuals:
       enum.AnchorVisuals.Anchored:
-        pipeBendAnchored:
+        anchoredHalf:
           False: { state: pipeHalf }
           True: { state: pipeHalfAnchored }
   - type: Construction
@@ -111,7 +111,7 @@
   - type: GenericVisualizer
     visuals:
       enum.AnchorVisuals.Anchored:
-        pipeBendAnchored:
+        anchoredStraight:
           False: { state: pipeStraight }
           True: { state: pipeStraightAnchored }
   - type: Construction
@@ -151,7 +151,7 @@
   - type: GenericVisualizer
     visuals:
       enum.AnchorVisuals.Anchored:
-        pipeBendAnchored:
+        anchoredBend:
           False: { state: pipeBend }
           True: { state: pipeBendAnchored }
   - type: Construction
@@ -198,7 +198,7 @@
   - type: GenericVisualizer
     visuals:
       enum.AnchorVisuals.Anchored:
-        pipeBendAnchored:
+        anchoredTJunction:
           False: { state: pipeTJunction }
           True: { state: pipeTJunctionAnchored }
   - type: Construction
@@ -243,7 +243,7 @@
   - type: GenericVisualizer
     visuals:
       enum.AnchorVisuals.Anchored:
-        pipeBendAnchored:
+        anchoredFourway:
           False: { state: pipeFourway }
           True: { state: pipeFourwayAnchored }
   - type: Construction
