@@ -151,20 +151,25 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         if (oldTags.SequenceEqual(newAccessList))
             return;
 
-        // I hate that C# doesn't have an option for this and don't desire to write this out the hard way.
-        // var difference = newAccessList.Difference(oldTags);
-        var difference = newAccessList.Union(oldTags).Except(newAccessList.Intersect(oldTags)).ToHashSet();
+        var ableToModify = component.AccessLevels.ToHashSet();
+
+        var addedTags = newAccessList.Except(oldTags).Select(tag => tag).ToHashSet();
+        var removedTags = oldTags.Except(newAccessList).Select(tag => tag).ToHashSet();
+
+        //Probably there is a cleaner way to do this, vissible difference is the difference between the new access and the old access the user of the computer could see
+        var difference = addedTags.Union(removedTags).ToHashSet();
+        var visibleDifference = difference.Intersect(ableToModify).ToHashSet();
+        var hiddenAccess = difference.Except(visibleDifference).ToList();
+
         // NULL SAFETY: PrivilegedIdIsAuthorized checked this earlier.
         var privilegedPerms = _accessReader.FindAccessTags(privilegedId!.Value).ToHashSet();
-        if (!difference.IsSubsetOf(privilegedPerms))
+        if (!visibleDifference.IsSubsetOf(privilegedPerms))
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to modify permissions they could not give/take!");
             return;
         }
 
-        var addedTags = newAccessList.Except(oldTags).Select(tag => "+" + tag).ToList();
-        var removedTags = oldTags.Except(newAccessList).Select(tag => "-" + tag).ToList();
-        _access.TrySetTags(targetId, newAccessList);
+        _access.TrySetTags(targetId, newAccessList.Union(hiddenAccess));
 
         /*TODO: ECS SharedIdCardConsoleComponent and then log on card ejection, together with the save.
         This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/
