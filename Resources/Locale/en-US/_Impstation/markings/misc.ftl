@@ -191,9 +191,9 @@ marking-fishbowl = Fishbowl
 marking-fishbowl-fishbowl1 = Fish
 marking-fishbowl-fishbowl2 = Fish bubbles
 marking-FadingStars = Fading Starlight
-marking-Fadingstars-fadingstars1 = Brightest
-marking-Fadingstars-fadingstars2 = Middling
-marking-Fadingstars-fadingstars3 = Darkest
+marking-FadingStars-fadingstars1 = Brightest
+marking-FadingStars-fadingstars2 = Middling
+marking-FadingStars-fadingstars3 = Darkest
 
 # snails
 marking-SnailCheeks = Cheeks

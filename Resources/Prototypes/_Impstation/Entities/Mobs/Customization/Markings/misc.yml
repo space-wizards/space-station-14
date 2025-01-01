@@ -184,7 +184,7 @@
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/markingsbundle1.rsi
-    state: thavenleftarmscales
+    state: thavenlefthandscales
 
 - type: marking
   id: ThavenRHandScales
@@ -195,7 +195,7 @@
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/markingsbundle1.rsi
-    state: thavenrightarmscales
+    state: thavenrighthandscales
 
 #- type: marking
 #  id: Thiddies
