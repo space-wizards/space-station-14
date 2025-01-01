@@ -11931,7 +11931,7 @@ entities:
       pos: -21.5,-40.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -19290.504
+      secondsUntilStateChange: -19364.908
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12675,7 +12675,7 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -199194.86
+      secondsUntilStateChange: -199269.27
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -85337,6 +85337,16 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -5.5,3.5
+      parent: 2
+  - uid: 13525
+    components:
+    - type: Transform
+      pos: -63.5,-28.5
+      parent: 2
+  - uid: 14555
+    components:
+    - type: Transform
+      pos: -51.5,-28.5
       parent: 2
   - uid: 14636
     components:
