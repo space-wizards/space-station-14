@@ -1,4 +1,5 @@
 using Content.Shared.Physics;
+using Content.Shared.Radio;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -107,6 +108,24 @@ public sealed partial class ContainmentFieldGeneratorComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("createdField", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string CreatedField = "ContainmentField";
+
+    /// <summary>
+    /// What sound should play on power loss?
+    /// </summary>
+    [DataField]
+    public string WarningSound = string.Empty;
+
+    /// <summary>
+    /// What sound should play on containment failure?
+    /// </summary>
+    [DataField]
+    public string AlarmSound = string.Empty;
+
+    /// <summary>
+    /// What radio channel should hear about failures?
+    /// </summary>
+    [DataField("alertChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
+    public string AlertChannel = "Engineering";
 }
 
 [Serializable, NetSerializable]

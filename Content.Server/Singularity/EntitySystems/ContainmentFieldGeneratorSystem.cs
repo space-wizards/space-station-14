@@ -1,17 +1,21 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
+using Content.Server.Radio.EntitySystems;
 using Content.Server.Singularity.Events;
 using Content.Shared.Construction.Components;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Radio;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -24,6 +28,9 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default(SharedAudioSystem)!;
+    [Dependency] private readonly RadioSystem _radio = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -156,6 +163,9 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     private void RemoveConnections(Entity<ContainmentFieldGeneratorComponent> generator)
     {
         var (uid, component) = generator;
+
+        _audio.PlayPvs(component.AlarmSound, uid);
+
         foreach (var (direction, value) in component.Connections)
         {
             foreach (var field in value.Item2)
@@ -179,6 +189,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         ChangeOnLightVisualizer(generator);
         ChangeFieldVisualizer(generator);
         _adminLogger.Add(LogType.FieldGeneration, LogImpact.Medium, $"{ToPrettyString(uid)} lost field connections"); // Ideally LogImpact would depend on if there is a singulo nearby
+        _radio.SendRadioMessage(uid, Loc.GetString("comp-containment-disconnected-radio"), _prototype
+            .Index<RadioChannelPrototype>(component.AlertChannel), uid, false);
     }
 
     #endregion
@@ -222,6 +234,9 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         {
             RemoveConnections(generator);
         }
+
+        if (component.Connections.Count != 0 && component.PowerMinimum < component.PowerBuffer && component.PowerBuffer < 25)
+            _audio.PlayPvs(component.WarningSound, generator.Owner);
 
         ChangePowerVisualizer(power, generator);
     }

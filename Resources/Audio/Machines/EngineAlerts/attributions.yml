@@ -1,0 +1,4 @@
+- files: ["engine_alert1.ogg", "engine_alert2.ogg", "engine_alert3.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station"
+  source: "https://github.com/tgstation/tgstation/tree/cd109df38d59de8da31523e944c2b79b6cae3029/sound/machines/engine_alert"
