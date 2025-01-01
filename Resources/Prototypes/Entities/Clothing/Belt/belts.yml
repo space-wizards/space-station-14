@@ -477,6 +477,7 @@
         - MagazineMagnum
         - CombatKnife
         - Truncheon
+        - ModularGrenade
       components:
         - Stunbaton
         - FlashOnTrigger

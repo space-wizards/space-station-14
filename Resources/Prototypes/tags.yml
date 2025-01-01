@@ -874,6 +874,9 @@
   id: Mineshaft
 
 - type: Tag
+  id: ModularGrenade
+
+- type: Tag
   id: ModularReceiver
 
 - type: Tag
