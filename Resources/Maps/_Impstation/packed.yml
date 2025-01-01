@@ -2354,6 +2354,11 @@ entities:
           decals:
             826: 41,-8
         - node:
+            color: '#9FED5896'
+            id: BrickTileWhiteInnerNe
+          decals:
+            4217: 27,-9
+        - node:
             color: '#D381C996'
             id: BrickTileWhiteInnerNe
           decals:
@@ -2374,10 +2379,20 @@ entities:
           decals:
             2088: 53,20
         - node:
+            color: '#9FED5896'
+            id: BrickTileWhiteInnerSe
+          decals:
+            4218: 27,-1
+        - node:
             color: '#D381C996'
             id: BrickTileWhiteInnerSe
           decals:
             2084: 50,19
+        - node:
+            color: '#9FED5896'
+            id: BrickTileWhiteInnerSw
+          decals:
+            4219: 37,-1
         - node:
             color: '#D381C996'
             id: BrickTileWhiteInnerSw
@@ -2414,6 +2429,15 @@ entities:
             828: 41,-6
             829: 41,-5
             830: 41,-4
+        - node:
+            color: '#9FED5896'
+            id: BrickTileWhiteLineE
+          decals:
+            4212: 27,-2
+            4213: 27,-4
+            4214: 27,-5
+            4215: 27,-7
+            4216: 27,-8
         - node:
             color: '#A4610696'
             id: BrickTileWhiteLineE
@@ -2556,6 +2580,13 @@ entities:
             id: BrickTileWhiteLineS
           decals:
             2219: 77,-6
+            4205: 34,-1
+            4206: 36,-1
+            4207: 32,-1
+            4208: 31,-1
+            4209: 30,-1
+            4210: 29,-1
+            4211: 28,-1
         - node:
             color: '#A4610696'
             id: BrickTileWhiteLineS
@@ -2698,54 +2729,6 @@ entities:
             id: Caution
           decals:
             4191: 24,-34
-        - node:
-            color: '#1F820993'
-            id: CheckerNESW
-          decals:
-            3958: 29,-3
-            3959: 30,-3
-            3960: 31,-3
-            3961: 32,-3
-            3962: 33,-3
-            3963: 34,-3
-            3964: 35,-3
-            3965: 36,-3
-            3966: 36,-4
-            3967: 36,-5
-            3968: 36,-6
-            3969: 36,-7
-            3970: 36,-8
-            3971: 35,-8
-            3972: 34,-8
-            3973: 33,-8
-            3974: 32,-8
-            3975: 31,-8
-            3976: 31,-7
-            3977: 31,-6
-            3978: 29,-6
-            3979: 30,-6
-            3980: 29,-5
-            3981: 30,-5
-            3982: 31,-5
-            3984: 29,-4
-            3985: 30,-4
-            3986: 31,-4
-            3987: 32,-4
-            3988: 33,-4
-            3989: 34,-4
-            3990: 35,-4
-            3991: 35,-5
-            3992: 34,-5
-            3993: 33,-5
-            3994: 32,-5
-            3995: 32,-6
-            3996: 33,-6
-            3997: 34,-6
-            3998: 35,-6
-            3999: 35,-7
-            4000: 34,-7
-            4001: 33,-7
-            4002: 32,-7
         - node:
             color: '#52B4E996'
             id: CheckerNESW
@@ -2916,7 +2899,6 @@ entities:
             416: 41,-41
             1004: 25,-3
             1005: 26,-3
-            1006: 27,-3
             1017: 24,13
             1018: 24,14
             1019: 19,11
@@ -2965,6 +2947,7 @@ entities:
             3926: -22,-2
             3927: -22,-1
             3928: -22,0
+            4201: 27,-3
         - node:
             cleanable: True
             color: '#FFFFFFFF'
@@ -4642,24 +4625,6 @@ entities:
             3413: 9,32
             3535: 9,33
         - node:
-            color: '#92000093'
-            id: QuarterTileOverlayGreyscale180
-          decals:
-            4021: 36,-1
-            4023: 34,-1
-            4025: 32,-1
-            4026: 31,-1
-            4027: 30,-1
-            4028: 29,-1
-            4029: 28,-1
-            4030: 27,-1
-            4031: 27,-2
-            4032: 27,-3
-            4033: 27,-4
-            4034: 27,-5
-            4036: 27,-7
-            4037: 27,-8
-        - node:
             color: '#951710FF'
             id: QuarterTileOverlayGreyscale180
           decals:
@@ -4692,10 +4657,6 @@ entities:
             941: 27,-12
             942: 27,-11
             943: 27,-10
-            944: 27,-9
-            945: 27,-8
-            946: 27,-7
-            948: 27,-5
             1123: -6,-14
             1124: -6,-13
             1125: -6,-12
@@ -4721,16 +4682,6 @@ entities:
             1756: 28,34
             1757: 28,35
             1758: 28,36
-            1972: 37,-1
-            1973: 36,-1
-            1975: 34,-1
-            1977: 32,-1
-            1978: 32,-1
-            1979: 31,-1
-            1980: 30,-1
-            1981: 29,-1
-            1982: 28,-1
-            1983: 27,-1
             1992: 13,-1
             1993: 14,-1
             1994: 16,-1
@@ -4848,18 +4799,6 @@ entities:
             2514: 105,-20
             2515: 102,-20
             2516: 102,-17
-        - node:
-            color: '#1F820993'
-            id: QuarterTileOverlayGreyscale270
-          decals:
-            4003: 37,-1
-            4004: 36,-1
-            4006: 34,-1
-            4008: 32,-1
-            4009: 31,-1
-            4010: 30,-1
-            4011: 29,-1
-            4012: 28,-1
         - node:
             color: '#334E6DC8'
             id: QuarterTileOverlayGreyscale270
@@ -5110,17 +5049,6 @@ entities:
             2518: 104,-17
             2519: 107,-18
             2520: 106,-20
-        - node:
-            color: '#1F820993'
-            id: QuarterTileOverlayGreyscale90
-          decals:
-            4013: 27,-2
-            4014: 27,-3
-            4015: 27,-4
-            4016: 27,-5
-            4018: 27,-7
-            4019: 27,-8
-            4020: 27,-9
         - node:
             color: '#334E6DC8'
             id: QuarterTileOverlayGreyscale90
@@ -5485,11 +5413,6 @@ entities:
           decals:
             3204: 15,20
         - node:
-            color: '#D4D4D428'
-            id: ThreeQuarterTileOverlayGreyscale180
-          decals:
-            1003: 27,-2
-        - node:
             color: '#DE3A3A96'
             id: ThreeQuarterTileOverlayGreyscale180
           decals:
@@ -5587,11 +5510,6 @@ entities:
             id: ThreeQuarterTileOverlayGreyscale90
           decals:
             3209: 15,25
-        - node:
-            color: '#D4D4D428'
-            id: ThreeQuarterTileOverlayGreyscale90
-          decals:
-            999: 27,-4
         - node:
             color: '#DE3A3A47'
             id: ThreeQuarterTileOverlayGreyscale90
@@ -8172,7 +8090,7 @@ entities:
       pos: 101.5,-19.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -3856.9937
+      secondsUntilStateChange: -4993.863
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -32710,21 +32628,6 @@ entities:
     - type: Transform
       pos: 36.5,-6.5
       parent: 2
-  - uid: 1661
-    components:
-    - type: Transform
-      pos: 29.5,-3.5
-      parent: 2
-  - uid: 1662
-    components:
-    - type: Transform
-      pos: 30.5,-2.5
-      parent: 2
-  - uid: 1664
-    components:
-    - type: Transform
-      pos: 29.5,-2.5
-      parent: 2
   - uid: 2516
     components:
     - type: Transform
@@ -33048,21 +32951,6 @@ entities:
     components:
     - type: Transform
       pos: 14.5,15.5
-      parent: 2
-  - uid: 12374
-    components:
-    - type: Transform
-      pos: 31.5,-3.5
-      parent: 2
-  - uid: 12793
-    components:
-    - type: Transform
-      pos: 31.5,-2.5
-      parent: 2
-  - uid: 15085
-    components:
-    - type: Transform
-      pos: 30.5,-3.5
       parent: 2
 - proto: CarpetBlack
   entities:
@@ -36390,11 +36278,27 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -21.5,-13.5
       parent: 2
+  - uid: 265
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 30.5,-4.5
+      parent: 2
+  - uid: 267
+    components:
+    - type: Transform
+      pos: 30.5,-2.5
+      parent: 2
   - uid: 334
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -21.5,-12.5
+      parent: 2
+  - uid: 543
+    components:
+    - type: Transform
+      pos: 29.5,-2.5
       parent: 2
   - uid: 790
     components:
@@ -36439,6 +36343,12 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 19.5,-27.5
+      parent: 2
+  - uid: 913
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 29.5,-4.5
       parent: 2
   - uid: 939
     components:
@@ -37439,6 +37349,11 @@ entities:
           showEnts: False
           occludes: True
           ent: null
+  - uid: 8412
+    components:
+    - type: Transform
+      pos: 39.5,-5.5
+      parent: 2
 - proto: ChessBoard
   entities:
   - uid: 14078
@@ -43464,13 +43379,6 @@ entities:
     - type: Transform
       pos: 67.6423,-14.594364
       parent: 2
-- proto: DrinkGlassWhite
-  entities:
-  - uid: 15126
-    components:
-    - type: Transform
-      pos: 36.1319,-8.358889
-      parent: 2
 - proto: DrinkGoldenCup
   entities:
   - uid: 12097
@@ -43561,6 +43469,13 @@ entities:
     - type: Transform
       pos: 67.47043,-15.094364
       parent: 2
+- proto: DrinkThavenBadGlass
+  entities:
+  - uid: 270
+    components:
+    - type: Transform
+      pos: 30.482529,-3.3862696
+      parent: 2
 - proto: DrinkWaterCup
   entities:
   - uid: 5644
@@ -43604,13 +43519,6 @@ entities:
     components:
     - type: Transform
       pos: 57.63163,-13.7188425
-      parent: 2
-- proto: DungeonMasterCircuitBoard
-  entities:
-  - uid: 14279
-    components:
-    - type: Transform
-      pos: 84.42593,28.556656
       parent: 2
 - proto: ElectricGuitarInstrument
   entities:
@@ -46529,41 +46437,6 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
-- proto: FloraTreeChristmas02
-  entities:
-  - uid: 2566
-    components:
-    - type: Transform
-      pos: 30.5,-3.5
-      parent: 2
-- proto: FoodBakedCookie
-  entities:
-  - uid: 15122
-    components:
-    - type: Transform
-      pos: 35.204815,-8.44228
-      parent: 2
-- proto: FoodBakedCookieOatmeal
-  entities:
-  - uid: 15123
-    components:
-    - type: Transform
-      pos: 35.392315,-8.525671
-      parent: 2
-- proto: FoodBakedCookieRaisin
-  entities:
-  - uid: 15124
-    components:
-    - type: Transform
-      pos: 35.558983,-8.400584
-      parent: 2
-- proto: FoodBakedCookieSugar
-  entities:
-  - uid: 15125
-    components:
-    - type: Transform
-      pos: 35.3819,-8.296345
-      parent: 2
 - proto: FoodBanana
   entities:
   - uid: 9595
@@ -46710,6 +46583,13 @@ entities:
     - type: Transform
       pos: -0.0010213852,-26.399889
       parent: 2
+- proto: FoodMealFruitLollipop
+  entities:
+  - uid: 419
+    components:
+    - type: Transform
+      pos: 29.565876,-3.3959675
+      parent: 2
 - proto: FoodMeat
   entities:
   - uid: 566
@@ -46850,6 +46730,13 @@ entities:
     components:
     - type: Transform
       pos: 33.59406,-4.5126047
+      parent: 2
+- proto: GameMasterCircuitBoard
+  entities:
+  - uid: 14279
+    components:
+    - type: Transform
+      pos: 84.42593,28.556656
       parent: 2
 - proto: GasFilterFlipped
   entities:
@@ -67598,6 +67485,13 @@ entities:
     - type: Transform
       pos: 44.5,-10.5
       parent: 2
+- proto: LockerBrigmedicFilled
+  entities:
+  - uid: 6527
+    components:
+    - type: Transform
+      pos: 30.5,28.5
+      parent: 2
 - proto: LockerCaptainFilledNoLaser
   entities:
   - uid: 4137
@@ -69023,13 +68917,6 @@ entities:
     components:
     - type: Transform
       pos: -3.4634295,-18.46823
-      parent: 2
-- proto: PortableFlasher
-  entities:
-  - uid: 8412
-    components:
-    - type: Transform
-      pos: 31.5,26.5
       parent: 2
 - proto: PortableGeneratorJrPacman
   entities:
@@ -72172,18 +72059,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 41.5,-12.5
       parent: 2
-- proto: PresentRandom
-  entities:
-  - uid: 15086
-    components:
-    - type: Transform
-      pos: 29.5,-3.5
-      parent: 2
-  - uid: 15087
-    components:
-    - type: Transform
-      pos: 31.5,-3.5
-      parent: 2
 - proto: Protolathe
   entities:
   - uid: 5305
@@ -72620,6 +72495,13 @@ entities:
     components:
     - type: Transform
       pos: 37.5,-17.5
+      parent: 2
+- proto: RandomFoodMeal
+  entities:
+  - uid: 1154
+    components:
+    - type: Transform
+      pos: 35.5,-8.5
       parent: 2
 - proto: RandomPainting
   entities:
@@ -76177,55 +76059,10 @@ entities:
       parent: 2
 - proto: ShuttersNormalOpen
   entities:
-  - uid: 265
-    components:
-    - type: Transform
-      pos: 34.5,-8.5
-      parent: 2
-  - uid: 267
-    components:
-    - type: Transform
-      pos: 35.5,-8.5
-      parent: 2
-  - uid: 270
-    components:
-    - type: Transform
-      pos: 36.5,-8.5
-      parent: 2
-  - uid: 419
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 37.5,-7.5
-      parent: 2
-  - uid: 913
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 37.5,-4.5
-      parent: 2
-  - uid: 1154
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 37.5,-3.5
-      parent: 2
-  - uid: 1658
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 37.5,-6.5
-      parent: 2
   - uid: 2090
     components:
     - type: Transform
       pos: 11.5,29.5
-      parent: 2
-  - uid: 6512
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 37.5,-5.5
       parent: 2
   - uid: 12381
     components:
@@ -76619,21 +76456,6 @@ entities:
       linkedPorts:
         55:
         - Pressed: Toggle
-  - uid: 1471
-    components:
-    - type: MetaData
-      name: Kitchen Counter Shutters
-    - type: Transform
-      pos: 32.5,-9.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        265:
-        - Pressed: Toggle
-        267:
-        - Pressed: Toggle
-        270:
-        - Pressed: Toggle
   - uid: 4245
     components:
     - type: Transform
@@ -76781,26 +76603,6 @@ entities:
         - Pressed: Toggle
 - proto: SignalButtonDirectional
   entities:
-  - uid: 543
-    components:
-    - type: MetaData
-      name: Bar Shutters
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 40.5,-8.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        419:
-        - Pressed: Toggle
-        1658:
-        - Pressed: Toggle
-        6512:
-        - Pressed: Toggle
-        913:
-        - Pressed: Toggle
-        1154:
-        - Pressed: Toggle
   - uid: 3993
     components:
     - type: Transform
@@ -78727,10 +78529,10 @@ entities:
       parent: 2
 - proto: SpawnMobMonkeyPunpun
   entities:
-  - uid: 6527
+  - uid: 4406
     components:
     - type: Transform
-      pos: 39.5,-5.5
+      pos: 38.5,-5.5
       parent: 2
 - proto: SpawnMobMouse
   entities:
@@ -79371,12 +79173,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 20.5,-41.5
       parent: 2
-  - uid: 4406
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 30.5,28.5
-      parent: 2
   - uid: 5067
     components:
     - type: Transform
@@ -79425,18 +79221,6 @@ entities:
     components:
     - type: Transform
       pos: 54.5,37.5
-      parent: 2
-  - uid: 15120
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 29.777733,-4.241445
-      parent: 2
-  - uid: 15121
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 31.173567,-4.241445
       parent: 2
 - proto: StoolBar
   entities:
@@ -81336,6 +81120,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: 20.5,5.5
       parent: 2
+  - uid: 1471
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 30.5,-3.5
+      parent: 2
   - uid: 1507
     components:
     - type: Transform
@@ -81380,6 +81170,12 @@ entities:
     components:
     - type: Transform
       pos: 33.5,-5.5
+      parent: 2
+  - uid: 1658
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 29.5,-3.5
       parent: 2
   - uid: 1758
     components:
