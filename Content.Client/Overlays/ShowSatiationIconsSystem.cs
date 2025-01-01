@@ -1,5 +1,8 @@
+using System.Linq;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition.Prototypes;
 using Content.Shared.Overlays;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
@@ -13,6 +16,8 @@ public sealed class ShowSatiationIconsSystem : EquipmentHudSystem<ShowSatiationI
 {
     [Dependency] private readonly SatiationSystem _satiation = default!;
 
+    private HashSet<ProtoId<SatiationTypePrototype>> _types = [];
+
     public override void Initialize()
     {
         base.Initialize();
@@ -20,17 +25,32 @@ public sealed class ShowSatiationIconsSystem : EquipmentHudSystem<ShowSatiationI
         SubscribeLocalEvent<SatiationComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
     }
 
+    protected override void UpdateInternal(RefreshEquipmentHudEvent<ShowSatiationIconsComponent> args)
+    {
+        base.UpdateInternal(args);
+
+        // Any time we update `ShowIcons` component, we need to reconstruct the set of satiation types to show.
+        _types = [];
+        foreach (var type in args.Components.SelectMany(comp => comp.ShownTypes))
+        {
+            _types.Add(type);
+        }
+    }
+
+    protected override void DeactivateInternal()
+    {
+        base.DeactivateInternal();
+        _types.Clear();
+    }
+
     private void OnGetStatusIconsEvent(Entity<SatiationComponent> entity, ref GetStatusIconsEvent args)
     {
-        // TODO I am not convinced that this `TryComp` is correct. It seems like it'll be looking for the component on
-        //  the entity whose status is being checked, rather than an entity who is viewing. Eg. you put on the beer
-        //  goggles or something and this system will be checking the PATRONS for the `can see thirst` component.
-        if (!IsActive || !TryComp<ShowSatiationIconsComponent>(entity, out var showComp))
+        if (!IsActive)
         {
             return;
         }
 
-        foreach (var shownTypeId in showComp.ShownTypes)
+        foreach (var shownTypeId in _types)
         {
             if (_satiation.GetStatusIconOrNull(entity, shownTypeId) is { } iconId)
             {
