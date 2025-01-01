@@ -1,16 +1,16 @@
 reagent-name-cola = cola
 reagent-desc-cola = A sweet, carbonated soft drink. Caffeine free.
 
-reagent-name-shirley-temple = shirley temple
+reagent-name-shirley-temple = Shirley Temple
 reagent-desc-shirley-temple = A favorite amongst younger members of the crew.
 
-reagent-name-changeling-sting = changeling sting
+reagent-name-changeling-sting = Changeling Sting
 reagent-desc-changeling-sting = You take a tiny sip and feel a burning sensation...
 
 reagent-name-dr-gibb = Dr. Gibb
 reagent-desc-dr-gibb = A delicious blend of 42 different flavours.
 
-reagent-name-energy-drink = Energy Drink
+reagent-name-energy-drink = energy drink
 reagent-desc-energy-drink = A dose of energy! Nanotrasen is not responsible if you grow avian appendages.
 
 reagent-name-grape-soda = grape soda
@@ -34,7 +34,7 @@ reagent-desc-root-beer = A very sweet, carbonated drink reminiscent of sarsparil
 reagent-name-root-beer-float = root beer float
 reagent-desc-root-beer-float = Root beer, but now with ice cream on top. It truly is the magnum opus of Canadian summertime drinks.
 
-reagent-name-sol-dry = sol dry
+reagent-name-sol-dry = Sol Dry
 reagent-desc-sol-dry = Sweet ginger soda from outer space!
 
 reagent-name-roy-rogers = roy rogers
@@ -46,7 +46,7 @@ reagent-desc-space-mountain-wind = Blows right through you like a space wind.
 reagent-name-space-up = Space-Up
 reagent-desc-space-up = Tastes like a hull breach in your mouth.
 
-reagent-name-starkist = starkist
+reagent-name-starkist = Starkist
 reagent-desc-starkist = A sweet, orange flavored soft drink.
 
 reagent-name-fourteen-loko = Fourteen Loko
