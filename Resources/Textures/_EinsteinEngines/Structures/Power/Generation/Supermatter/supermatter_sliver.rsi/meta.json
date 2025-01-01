@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "copyright": "Taken and edited from https://github.com/tgstation/tgstation/blob/master/icons/obj/antags/syndicate_tools.dmi",
+    "license": "CC-BY-SA-3.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        }
+    ]
+}

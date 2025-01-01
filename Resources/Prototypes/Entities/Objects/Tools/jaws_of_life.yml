@@ -49,10 +49,16 @@
         Blunt: 10
     soundHit:
       collection: MetalThud
+  # imp edits #
+  - type: DamageOtherOnHit
+    staminaCost: 7
+  - type: ThrowingAngle
+    angle: 90
+  # end imp edits #
 
 - type: entity
   name: syndicate jaws of life
-  parent: [JawsOfLife, BaseSyndicateContraband]
+  parent: [JawsOfLife, Tier2Contraband]
   id: SyndicateJawsOfLife
   description: Useful for entering the station or its departments.
   components:

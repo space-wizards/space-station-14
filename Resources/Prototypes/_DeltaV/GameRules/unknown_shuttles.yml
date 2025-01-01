@@ -9,6 +9,7 @@
   id: SyndicateRecruiter
   components:
   - type: StationEvent
+    startAnnouncement: false
     weight: 4
     minimumPlayers: 20
     maxOccurrences: 1

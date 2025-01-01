@@ -144,7 +144,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 7
+        maxVol: 13
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
@@ -594,7 +594,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 18
+        maxVol: 20
         reagents:
         - ReagentId: Vitamin
           Quantity: 4
@@ -1742,7 +1742,7 @@
 
 - type: entity
   name: gatfruit
-  parent: [ FoodProduceBase, BaseSyndicateContraband ]
+  parent: [ FoodProduceBase, Tier2Contraband ]
   id: FoodGatfruit
   description: A delicious, gun-shaped fruit with a thick wooden stem.
   components:
@@ -2590,50 +2590,3 @@
     entries:
       Taco: AnomalyBerry
       Burger: AnomalyBerryBurger
-
-- type: entity
-  name: lemo fruit
-  parent: FoodProduceBase
-  id: FoodLemo
-  description: A recently-discovered delicacy from the remote planet Teo.
-  components:
-  - type: FlavorProfile
-    flavors:
-      - sweet
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 14
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 4
-  - type: Sprite
-    sprite: Objects/Specific/Hydroponics/lemo.rsi
-    state: fruit_pink
-  - type: Produce
-    seedId: lemo
-  - type: SliceableFood
-    count: 5
-    slice: FoodLemoSlice
-  - type: Tag
-    tags:
-    - Fruit
-    - Lemo
-
-- type: entity
-  name: lemo slice
-  parent: ProduceSliceBase
-  id: FoodLemoSlice
-  description: It takes 35 days to go off.
-  components:
-  - type: FlavorProfile
-    flavors:
-      - sweet
-  - type: Sprite
-    sprite: Objects/Specific/Hydroponics/lemo.rsi
-  - type: Tag
-    tags:
-    - Fruit
-    - Slice

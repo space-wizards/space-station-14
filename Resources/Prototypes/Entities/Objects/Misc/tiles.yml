@@ -12,7 +12,10 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Blunt: 5
+        Blunt: 5.5
+    staminaCost: 5 # imp
+    soundHit: # imp
+      collection: MetalThud
   - type: Stack
     count: 1
   - type: Tag

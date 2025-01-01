@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseItem, BaseMagicContraband ]
+  parent: [ BaseItem, TierXContraband ]
   id: CodexCicatrix
   name: codex cicatrix
   description: An ominous book you've never seen before. The letters seem to be contantly rearranging themselves.
@@ -38,7 +38,7 @@
     activatedSize: Normal
 
 - type: entity
-  parent: [ DrinkBase, BaseMagicContraband ]
+  parent: [ DrinkBase, TierXContraband ]
   id: HereticEldritchFlask
   name: eldritch flask
   description: A flask filled with an unknown substance. Who knows what will happen when you take a sip from it.

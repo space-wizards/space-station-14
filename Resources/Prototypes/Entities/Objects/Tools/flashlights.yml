@@ -74,6 +74,10 @@
     quickEquip: false
     slots:
       - Belt
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 6
 
 - type: entity
   name: seclite

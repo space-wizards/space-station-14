@@ -1,7 +1,8 @@
-# Window headers
+﻿# Window headers
 holopad-window-title = {CAPITALIZE($title)}
 holopad-window-subtitle = [color=white][bold]Holographic communication system[/bold][/color]
 holopad-window-options = [color=darkgray][font size=10][italic]Please select an option from the list below[/italic][/font][/color]
+
 # Call status
 holopad-window-no-calls-in-progress = No holo-calls in progress
 holopad-window-incoming-call = Incoming holo-call from:
@@ -25,15 +26,18 @@ holopad-window-access-denied = Access denied
 holopad-window-select-contact-from-list = Select a contact to initiate a holo-call
 holopad-window-fetching-contacts-list = No holopads are currently contactable
 holopad-window-contact-label = {CAPITALIZE($label)}
+
 # Flavor
 holopad-window-flavor-left = ⚠ Do not enter while projector is active
 holopad-window-flavor-right = v3.0.9
+
 # Holograms
 holopad-hologram-name = hologram of {THE($name)}
+
 # Holopad actions
 holopad-activate-projector-verb = Activate holopad projector
 holopad-ai-is-unable-to-reach-holopad = You are unable to interface with the source of the call, it is too far from your core.
-holopad-ai-is-unable-to-activate-projector = You are unable to activate the holopad's projector, it is too far from your core.
+
 # Mapping prototypes
 # General
 holopad-general-tools = General - Tools
@@ -91,6 +95,9 @@ holopad-engineering-breakroom = Engineering - Breakroom
 holopad-engineering-front = Engineering - Front
 holopad-engineering-telecoms = Engineering - Telecoms
 holopad-engineering-tech-vault = Engineering - Tech Vault
+holopad-engineering-ame = Engineering - AME
+holopad-engineering-power = Engineering - Power
+
 # Security
 holopad-security-front = Security - Front
 holopad-security-brig = Security - Brig
@@ -102,6 +109,9 @@ holopad-security-perma = Security - Perma
 holopad-security-courtroom = Security - Courtroom
 holopad-security-lawyer = Security - Lawyer
 holopad-security-armory = Security - Armory
+holopad-security-locker-room = Security - Locker Room
+holopad-security-brig-med = Security - Brig Med
+
 # Service
 holopad-service-janitor = Service - Janitor
 holopad-service-bar = Service - Bar
@@ -116,6 +126,8 @@ holopad-service-clown = Service - Clown
 holopad-service-musician = Service - Musician
 holopad-service-mime = Service - Mime
 holopad-service-clown-mime = Service - Clown/Mime
+holopad-service-gameroom = Service - Game Room
+
 # AI
 holopad-ai-core = AI - Core
 holopad-ai-main = AI - Main
@@ -123,8 +135,10 @@ holopad-ai-upload = AI - Upload
 holopad-ai-backup-power = AI - Backup Power
 holopad-ai-entrance = AI - Entrance
 holopad-ai-chute = AI - Chute
+
 # Long Range
 holopad-station-bridge = Station - Bridge
 holopad-station-cargo-bay = Station - Cargo Bay
+
 # CentComm
 holopad-centcomm-evac = CentComm - Evacuation Shuttle

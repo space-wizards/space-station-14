@@ -24,4 +24,5 @@
         Blunt: 3
   - type: UseDelay
     delay: 1
+  - type: DamageOtherOnHit # imp
 

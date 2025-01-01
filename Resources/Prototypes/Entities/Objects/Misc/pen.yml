@@ -26,6 +26,18 @@
         maxDistance: 2
   - type: UseDelay
     delay: 1.5
+  # imp edits #
+  - type: EmbeddableProjectile
+    offset: 0.3,0.0
+    removalTime: 0.0
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 3
+  - type: ThrowingAngle
+    angle: 315
+  - type: LandAtCursor
+  # end imp edits #
 
 - type: entity
   parent: Pen
@@ -37,11 +49,10 @@
     removalTime: 0.0
   - type: ThrowingAngle
     angle: 315
-  - type: LandAtCursor
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 3
+        Piercing: 5
 
 #TODO: I want the luxury pen to write a cool font like Merriweather in the future.
 
@@ -82,7 +93,7 @@
 
 - type: entity
   name: Cybersun pen
-  parent: [BaseAdvancedPen, BaseSyndicateContraband]
+  parent: [BaseAdvancedPen, Tier2Contraband]
   id: CyberPen
   description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write. So powerful, it's even able to rewrite officially stamped documents should the need arise.
   components:
@@ -101,6 +112,10 @@
     state: pen_centcom
   - type: Item
     heldPrefix: pen_centcom
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Piercing: 8
 
 - type: entity
   name: captain's fountain pen
@@ -110,6 +125,10 @@
   components:
   - type: Sprite
     state: pen_cap
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Piercing: 8
 
 - type: entity
   name: hop's fountain pen
@@ -119,3 +138,7 @@
   components:
   - type: Sprite
     state: pen_hop
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Piercing: 8

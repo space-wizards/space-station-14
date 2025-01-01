@@ -24,7 +24,7 @@
   - type: Occluder
   - type: Appearance
   - type: RadiationBlocker
-    resistance: 8
+    resistance: 10
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StrongMetallic

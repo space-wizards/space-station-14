@@ -69,12 +69,12 @@
   - type: CommunicationsConsole
     canShuttle: false
     title: comms-console-announcement-title-station-ai
-    color: "#2ed2fd"
-  - type: ShowJobIcons
+    color: "#5ed7aa"
   - type: HolographicAvatar
     layerData:
     - sprite: Mobs/Silicon/station_ai.rsi
       state: default
+  - type: ShowJobIcons
 
 - type: entity
   id: AiHeldIntellicard
@@ -249,16 +249,16 @@
     stealGroup: AILawBoard
 
 - type: entity
-  id: DungeonMasterCircuitBoard
+  id: GameMasterCircuitBoard
   parent: BaseElectronics
-  name: law board (Dungeon Master)
-  description: An electronics board containing the Dungeon Master lawset.
+  name: law board (Game Master)
+  description: An electronics board containing the Game Master lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: std_mod
   - type: SiliconLawProvider
-    laws: DungeonMasterLawset
+    laws: GameMasterLawset
   - type: StealTarget #imp
     stealGroup: AILawBoard
 
@@ -335,6 +335,17 @@
   - type: Intellicard
 
 - type: entity
+  id: PlayerStationAiPreview
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: base
+    - state: ai
+      shader: unshaded
+
+- type: entity
   id: PlayerStationAiEmpty
   name: AI Core
   description: The latest in Artificial Intelligences.
@@ -371,6 +382,12 @@
       map: ["unshaded"]
       shader: unshaded
   - type: Appearance
+  - type: InteractionPopup
+    interactSuccessString: petting-success-station-ai
+    interactFailureString: petting-failure-station-ai
+    messagePerceivedByOthers: petting-success-station-ai-others # Otherwise AI cannot tell its being pet as It's just a brain inside of the core, not the core itself.
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
   - type: GenericVisualizer
     visuals:
       enum.StationAiVisualState.Key:
@@ -392,10 +409,10 @@
   - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
-      enum.HolopadUiKey.AiRequestWindow:
-        type: HolopadBoundUserInterface
-      enum.HolopadUiKey.AiActionWindow:
-        type: HolopadBoundUserInterface
+        enum.HolopadUiKey.AiRequestWindow:
+          type: HolopadBoundUserInterface
+        enum.HolopadUiKey.AiActionWindow:
+          type: HolopadBoundUserInterface
 
 # The job-ready version of an AI spawn.
 - type: entity
@@ -477,6 +494,28 @@
     - state: ai_camera
       shader: unshaded
       map: ["base"]
+
+# The holographic representation of the AI that is projected from a holopad.
+- type: entity
+  id: StationAiHoloLocal
+  name: AI hologram
+  description: A holographic representation of an AI.
+  categories: [ HideSpawnMenu ]
+  suffix: DO NOT MAP
+  components:
+  - type: Transform
+    anchored: true
+  - type: WarpPoint
+    follow: true
+  - type: Eye
+  - type: ContentEye
+  - type: Examiner
+  - type: Actions
+  - type: Alerts
+  - type: FTLSmashImmune
+  - type: CargoSellBlacklist
+  - type: StationAiVision
+    range: 20
 
 # Borgs
 - type: entity
@@ -810,6 +849,8 @@
   - type: ProtectedFromStepTriggers
   - type: InputMover
   - type: MobMover
+  - type: ContentEye
+    maxZoom: 1.2, 1.2
   - type: Tag
     tags:
       - CannotSuicide

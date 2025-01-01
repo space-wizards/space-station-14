@@ -45,22 +45,61 @@
     price: 22
     
 - type: entity
-  name: micro wrench
-  parent: Wrench
-  id: TckWrench
-  description: "A common tool for assembly and disassembly. Remember: lefty t'kch, righty k'ckt."
+  name: micro drill
+  parent: BaseItem
+  id: MicroDrill
+  description: A bite-sized power drill for anchoring structures and prying tiles.
   components:
+  - type: Tag
+    tags:
+    - Powerdrill
   - type: Sprite
-    sprite: _Impstation/Objects/Tools/tckwrench.rsi
-    state: icon
+    sprite: _Impstation/Objects/Tools/tckdrill.rsi
+    state: icon_bolt
+  - type: Item
+    sprite: _Impstation/Objects/Tools/tckdrill.rsi
+    size: Tiny
+  - type: Tool
+    qualities:
+      - Anchoring
+    speedModifier: 1.5
+    useSound: /Audio/Items/drill_use.ogg
+  - type: ToolTileCompatible
+    delay: 0.5
+  - type: Prying
+    speedModifier: 1.5
+    pryPowered: false # lets not do this again
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Anchoring
+        sprite:
+          sprite: _Impstation/Objects/Tools/tckdrill.rsi
+          state: icon_bolt
+        useSound:
+          path: /Audio/_Impstation/Items/minidrill.ogg #its too low powered to use the real sound
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Prying
+        sprite:
+          sprite: _Impstation/Objects/Tools/tckdrill.rsi
+          state: icon_pry
+        useSound:
+          path: /Audio/Items/crowbar.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 300
+      Plastic: 100
+  - type: StaticPrice
+    price: 100
   - type: MeleeWeapon
-    wideAnimationRotation: 135
-    attackRate: 1.5
-    range: 1
+    wideAnimationRotation: 0 #youre just hitting people with the backside of it
+    attackRate: 1
     damage:
       types:
         Blunt: 2
     soundHit:
       collection: WeakHit
-  - type: Item
-    size: Tiny
+  

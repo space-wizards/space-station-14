@@ -49,10 +49,10 @@
       required: true
       defaultMarkings: [ SpElfEars1 ]
     Head:
-      points: 1
+      points: 4
       required: false
     Chest:
-      points: 1
+      points: 4
       required: false
     Arms:
       points: 4

@@ -25,6 +25,11 @@
   - type: Tag
     tags:
       - Structure
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 8
+    staminaCost: 50
 
 - type: entity
   # This means that it's not anchored on spawn.

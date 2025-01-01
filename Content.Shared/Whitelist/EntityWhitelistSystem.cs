@@ -49,10 +49,12 @@ public sealed class EntityWhitelistSystem : EntitySystem
     {
         if (list.Components != null)
         {
-            var regs = StringsToRegs(list.Components);
-
-            list.Registrations ??= new List<ComponentRegistration>();
-            list.Registrations.AddRange(regs);
+            if (list.Registrations == null)
+            {
+                var regs = StringsToRegs(list.Components);
+                list.Registrations = new List<ComponentRegistration>();
+                list.Registrations.AddRange(regs);
+            }
         }
 
         if (list.MindRoles != null)

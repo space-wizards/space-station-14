@@ -25,10 +25,11 @@
         Blunt: 3
   - type: UseDelay
     delay: 1
+  - type: DamageOtherOnHit
 
 - type: entity
   name: cane blade
-  parent: [BaseItem, BaseSyndicateContraband]
+  parent: [BaseItem, Tier2Contraband]
   id: CaneBlade
   description: A sharp blade with a cane shaped hilt.
   components:
@@ -51,6 +52,14 @@
     tags:
       - CaneBlade
   - type: DisarmMalus
+  # imp edits #
+  - type: DamageOtherOnHit
+    staminaCost: 5
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 45
+  # end imp edits #
 
 - type: entity
   parent: Cane

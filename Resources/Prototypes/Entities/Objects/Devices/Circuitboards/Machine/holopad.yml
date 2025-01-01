@@ -4,10 +4,9 @@
   name: holopad machine board
   description: A machine printed circuit board for a holopad.
   components:
-  - type: MachineBoard
-    prototype: Holopad
-    stackRequirements:
-      Capacitor: 4
-      Cable: 4
-      Glass: 2
-
+    - type: MachineBoard
+      prototype: Holopad
+      stackRequirements:
+        Capacitor: 4
+        Cable: 4
+        Glass: 2

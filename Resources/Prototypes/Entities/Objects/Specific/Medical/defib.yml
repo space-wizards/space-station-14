@@ -47,6 +47,13 @@
     - type: GuideHelp
       guides:
       - Medical Doctor
+    - type: DamageOtherOnHit # imp
+      damage:
+        types:
+          Blunt: 16
+      staminaCost: 22.5
+      soundHit:
+        path: /Audio/Weapons/smash.ogg
 
 - type: entity
   id: Defibrillator

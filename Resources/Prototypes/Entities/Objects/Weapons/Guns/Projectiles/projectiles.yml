@@ -878,6 +878,10 @@
   components:
     - type: EmbeddableProjectile
       deleteOnRemove: true
+      sound: 
+        path: /Audio/_Impstation/Effects/grapple_impact.ogg
+        params:
+          volume: 4
     - type: Clickable
     - type: InteractionOutline
     - type: Sprite

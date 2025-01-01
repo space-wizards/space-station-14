@@ -32,6 +32,11 @@
         Heat: 5
     soundHit:
       path: /Audio/Effects/lightburn.ogg
+  # imp edits #
+  - type: DamageOtherOnHit
+  - type: ThrowingAngle
+    angle: 45
+  # end imp edits #
 
 # Drill
 
@@ -57,6 +62,17 @@
       path: /Audio/Items/drill_hit.ogg
   - type: StaticPrice
     price: 40
+  # imp edits #
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 11
+    staminaCost: 8
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 90
+  # end imp edits #
 
 # Scalpel
 
@@ -90,6 +106,14 @@
         Slash: 8
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
+  # imp edits #
+  - type: DamageOtherOnHit
+    staminaCost: 5
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 90
+  # end imp edits #
 
 - type: entity
   name: shiv
@@ -142,6 +166,23 @@
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/scissors.rsi
     storedRotation: 90
+  # imp edits #
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    damage:
+      types:
+        Slash: 3.0
+        Blunt: 2.5
+    angle: 20
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: DamageOtherOnHit
+    staminaCost: 5
+  - type: ThrowingAngle
+    angle: 90
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  # end imp edits #
 
 - type: entity
   name: hemostat
@@ -154,6 +195,23 @@
   - type: Item
     heldPrefix: hemostat
     storedRotation: 90
+  # imp edits #
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    damage:
+      types:
+        Slash: 7.5
+    angle: 20
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: DamageOtherOnHit
+    staminaCost: 5
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 90
+  # end imp edits #
+        
 
   # - type: entity
   #   name: bone setter
@@ -183,7 +241,25 @@
   - type: Tool
     qualities:
       - Sawing
-# No melee for regular saw because have you ever seen someone use a band saw as a weapon? It's dumb.
+  # imp edits #
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    swingLeft: true
+    attackRate: 0.75
+    damage:
+      types:
+        Blunt: 2.5
+        Slash: 6.5
+    angle: 20
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: DamageOtherOnHit
+    staminaCost: 10
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 0
+  # end imp edits #
 
 - type: entity
   name: choppa
@@ -204,6 +280,8 @@
       path: /Audio/Weapons/bladeslice.ogg
   - type: Tool
     speedModifier: 0.5
+  - type: ThrowingAngle # imp
+    angle: 90
 
 - type: entity
   name: circular saw
@@ -223,11 +301,20 @@
       path: /Audio/Items/drill_hit.ogg
   - type: Tool
     speedModifier: 1.5
+  # imp edits #
+  - type: DamageOtherOnHit
+    damage:
+      groups:
+        Brute: 10
+    staminaCost: 14
+  - type: ThrowingAngle
+    angle: 90
+  # end imp edits #
 
 - type: entity
   name: advanced circular saw
   id: SawAdvanced
-  parent: [ SawElectric, BaseSyndicateContraband ]
+  parent: [ SawElectric, Tier3Contraband ]
   description: You think you can cut anything with it.
   components:
   - type: Sprite

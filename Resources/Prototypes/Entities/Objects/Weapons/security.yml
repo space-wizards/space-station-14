@@ -43,9 +43,6 @@
   - type: StaminaDamageOnHit
     damage: 35
     sound: /Audio/Weapons/egloves.ogg
-  - type: StaminaDamageOnCollide
-    damage: 35
-    sound: /Audio/Weapons/egloves.ogg
   - type: LandAtCursor # it deals stamina damage when thrown
   - type: Battery
     maxCharge: 1000
@@ -91,6 +88,10 @@
     guides:
     - Security
     - Antagonists
+  # imp edits #
+  - type: ItemToggleDamageOtherOnHit
+  - type: DamageOtherOnHit
+  # end imp edits #
 
 - type: entity
   name: truncheon
@@ -128,6 +129,8 @@
     guides:
     - Security
     - Antagonists
+  - type: DamageOtherOnHit # imp
+    staminaCost: 9
 
 - type: entity
   name: flash
@@ -174,6 +177,10 @@
       guides:
       - Security
       - Antagonists
+    - type: DamageOtherOnHit # imp
+      damage:
+        types:
+          Blunt: 0
 
 - type: entity
   name: flash
