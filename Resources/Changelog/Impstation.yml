@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Added fill sprites for drinks that had none, including Arnold Palmers
-      and Shirley Temples.
-    type: Add
-  id: 338
-  time: '2024-10-07T07:16:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/429
 - author: hivehum
   changes:
   - message: Thaven can now use the French Braid hair.
@@ -4498,3 +4490,10 @@
   id: 837
   time: '2025-01-01T17:24:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1187
+- author: kipdotnet
+  changes:
+  - message: Removed about half the lights from banana so it is less blinding.
+    type: Tweak
+  id: 838
+  time: '2025-01-01T17:26:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1188
