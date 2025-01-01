@@ -80,7 +80,7 @@ reagent-name-atomic-bomb = atomic bomb
 reagent-desc-atomic-bomb = Nuclear proliferation never tasted so good.
 
 reagent-name-b52 = b-52
-reagent-desc-b52 = Coffee, syndicate cream, and cognac. You will get bombed.
+reagent-desc-b52 = Coffee, gorlex cream, and cognac. You will get bombed.
 
 reagent-name-blue-hawaiian = blue hawaiian
 reagent-desc-blue-hawaiian = Aloha! Does that mean hello or goodbye?
@@ -160,11 +160,11 @@ reagent-desc-iced-beer = A beer which is so cold the air around it freezes.
 reagent-name-irish-car-bomb = grenade penguin
 reagent-desc-irish-car-bomb = An unstable mixture of syndicate cream and ale.
 
-reagent-name-irish-cream = syndicate cream
-reagent-desc-irish-cream = Whiskey-imbued cream. What else could you expect from the Syndicate.
+reagent-name-irish-cream = gorlex cream
+reagent-desc-irish-cream = Whiskey-imbued cream. What else could you expect from Gorlex Marauders?
 
-reagent-name-irish-coffee = syndicate coffee
-reagent-desc-irish-coffee = Coffee served with syndicate cream. Regular cream just isn't the same!
+reagent-name-irish-coffee = cybersun coffee
+reagent-desc-irish-coffee = Coffee served with gorlex cream. Regular cream just isn't the same!
 
 reagent-name-kira-special = kira special
 reagent-desc-kira-special = Long live the guy who everyone had mistaken for a girl. Baka!
