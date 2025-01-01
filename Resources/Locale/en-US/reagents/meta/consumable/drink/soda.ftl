@@ -37,7 +37,7 @@ reagent-desc-root-beer-float = Root beer, but now with ice cream on top. It trul
 reagent-name-sol-dry = Sol Dry
 reagent-desc-sol-dry = Sweet ginger soda from outer space!
 
-reagent-name-roy-rogers = roy rogers
+reagent-name-roy-rogers = Roy Rogers
 reagent-desc-roy-rogers = Solid proof that there IS something known as too sweet.
 
 reagent-name-space-mountain-wind = Space Mountain Wind
