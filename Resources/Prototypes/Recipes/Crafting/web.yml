@@ -26,8 +26,8 @@
     tags:
     - SpiderCraft
   icon:
-    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
-    state: WEB-icon
+    sprite: Clothing/OuterClothing/WinterCoats/Coat/web.rsi
+    state: icon
   objectType: Item
 
 - type: construction
