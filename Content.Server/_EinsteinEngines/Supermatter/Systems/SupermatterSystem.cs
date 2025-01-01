@@ -165,6 +165,7 @@ public sealed partial class SupermatterSystem : EntitySystem
         sm.MatterPower += 200;
 
         EntityManager.SpawnEntity(sm.CollisionResultPrototype, Transform(target).Coordinates);
+        _popup.PopupEntity(Loc.GetString("supermatter-collide-mob", ("sm", uid), ("target", target)), uid, PopupType.LargeCaution);
         _audio.PlayPvs(sm.DustSound, uid);
         EntityManager.QueueDeleteEntity(target);
     }
