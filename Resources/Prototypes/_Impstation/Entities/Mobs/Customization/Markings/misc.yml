@@ -1376,7 +1376,7 @@
   id: VitiligoHeadL
   bodyPart: Head
   markingCategory: Head
-  speciesRestriction: [ Human ]
+  speciesRestriction: [ Human,  ]
   forcedColoring: true
   coloring:
     default:
@@ -1391,7 +1391,7 @@
   id: VitiligoHeadR
   bodyPart: Head
   markingCategory: Head
-  speciesRestriction: [ Human ]
+  speciesRestriction: [ Human, Dwarf ]
   forcedColoring: true
   coloring:
     default:
@@ -1406,7 +1406,7 @@
   id: VitiligoHeadJaw
   bodyPart: Head
   markingCategory: Head
-  speciesRestriction: [ Human ]
+  speciesRestriction: [ Human, Dwarf ]
   forcedColoring: true
   coloring:
     default:
@@ -1421,7 +1421,7 @@
   id: VitiligoChestF
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [ Human ]
+  speciesRestriction: [ Human, Dwarf ]
   forcedColoring: true
   coloring:
     default:
@@ -1436,7 +1436,7 @@
   id: VitiligoChestSpots
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [ Human ]
+  speciesRestriction: [ Human, Dwarf ]
   forcedColoring: true
   coloring:
     default:
@@ -1451,7 +1451,7 @@
   id: VitiligoArmR
   bodyPart: RArm
   markingCategory: Arms
-  speciesRestriction: [ Human ]
+  speciesRestriction: [ Human, Dwarf ]
   forcedColoring: true
   coloring:
     default:
@@ -1466,7 +1466,7 @@
   id: VitiligoArmL
   bodyPart: LArm
   markingCategory: Arms
-  speciesRestriction: [ Human ]
+  speciesRestriction: [ Human, Dwarf ]
   forcedColoring: true
   coloring:
     default:
@@ -1481,7 +1481,7 @@
   id: VitiligoHandR
   bodyPart: RHand
   markingCategory: Arms
-  speciesRestriction: [ Human ]
+  speciesRestriction: [ Human, Dwarf ]
   forcedColoring: true
   coloring:
     default:
@@ -1496,7 +1496,7 @@
   id: VitiligoHandL
   bodyPart: LHand
   markingCategory: Arms
-  speciesRestriction: [ Human ]
+  speciesRestriction: [ Human, Dwarf ]
   forcedColoring: true
   coloring:
     default:
@@ -1511,7 +1511,7 @@
   id: VitiligoLegR
   bodyPart: RLeg
   markingCategory: Legs
-  speciesRestriction: [ Human ]
+  speciesRestriction: [ Human, Dwarf ]
   forcedColoring: true
   coloring:
     default:
@@ -1526,7 +1526,7 @@
   id: VitiligoLegL
   bodyPart: LLeg
   markingCategory: Legs
-  speciesRestriction: [ Human ]
+  speciesRestriction: [ Human, Dwarf ]
   forcedColoring: true
   coloring:
     default:
