@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: Escargot and snails! Hopefully you don't encounter that one snail...
-    type: Add
-  id: 7272
-  time: '2024-09-03T10:33:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30765
 - author: Fildrance
   changes:
   - message: When research is unlocked in console the approver of the research is
@@ -3935,3 +3928,10 @@
   id: 7771
   time: '2025-01-01T16:23:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34043
+- author: ReeZii
+  changes:
+  - message: Fixed thief beacon, which can doubled steal target's
+    type: Fix
+  id: 7772
+  time: '2025-01-01T16:25:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33750
