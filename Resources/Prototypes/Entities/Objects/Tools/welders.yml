@@ -109,6 +109,7 @@
     tags:
     - DroneUsable
   # imp edits #
+    - WeldingTool
   - type: ItemToggleDamageOtherOnHit
     activatedDamage:
       types:

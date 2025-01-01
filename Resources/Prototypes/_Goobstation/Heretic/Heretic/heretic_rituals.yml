@@ -61,7 +61,7 @@
     state: icon
   requiredTags:
     Knife: 1
-    Matchstick: 1
+    WeldingTool: 1
   output:
     HereticBladeAsh: 1
 

@@ -14,6 +14,7 @@ public sealed partial class HereticAbilitySystem : EntitySystem
 {
     [Dependency] private readonly AudioSystem _audio = default!;
     public SoundSpecifier JauntExitSound = new SoundPathSpecifier("/Audio/Magic/fireball.ogg");
+    public const float RebirthRange = 3f;
 
     private void SubscribeAsh()
     {
@@ -88,7 +89,7 @@ public sealed partial class HereticAbilitySystem : EntitySystem
         if (!TryUseAbility(ent, args))
             return;
 
-        var lookup = _lookup.GetEntitiesInRange(ent, 5f);
+        var lookup = _lookup.GetEntitiesInRange(ent, RebirthRange);
 
         foreach (var look in lookup)
         {
