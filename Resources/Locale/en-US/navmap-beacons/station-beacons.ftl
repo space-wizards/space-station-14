@@ -51,6 +51,7 @@ station-beacon-telecoms = Telecoms
 station-beacon-atmos = Atmos
 station-beacon-teg = TEG
 station-beacon-tech-vault = Tech Vault
+station-beacon-anchor = Anchor
 
 station-beacon-service = Service
 station-beacon-kitchen = Kitchen

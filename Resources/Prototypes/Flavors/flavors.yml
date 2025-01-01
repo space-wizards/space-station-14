@@ -675,6 +675,11 @@
   description: flavor-complex-lemon-lime-soda
 
 - type: flavor
+  id: lemonlimecranberrysoda
+  flavorType: Complex
+  description: flavor-complex-lemon-lime-cranberry-soda
+
+- type: flavor
   id: pwrgamesoda
   flavorType: Complex
   description: flavor-complex-pwr-game-soda
@@ -910,6 +915,186 @@
   description: flavor-complex-pilk
 
 - type: flavor
+  id: absinthe
+  flavorType: Complex
+  description: flavor-complex-absinthe
+
+- type: flavor
+  id: bluecuracao
+  flavorType: Complex
+  description: flavor-complex-blue-curacao
+
+- type: flavor
+  id: gin
+  flavorType: Complex
+  description: flavor-complex-gin
+
+- type: flavor
+  id: acidspit
+  flavorType: Complex
+  description: flavor-complex-acidspit
+
+- type: flavor
+  id: alliescocktail
+  flavorType: Complex
+  description: flavor-complex-allies-cocktail
+
+- type: flavor
+  id: aloe
+  flavorType: Complex
+  description: flavor-complex-aloe
+
+- type: flavor
+  id: amasec
+  flavorType: Complex
+  description: flavor-complex-amasec
+
+- type: flavor
+  id: andalusia
+  flavorType: Complex
+  description: flavor-complex-andalusia
+
+- type: flavor
+  id: b52
+  flavorType: Complex
+  description: flavor-complex-b52
+
+- type: flavor
+  id: bahamamama
+  flavorType: Complex
+  description: flavor-complex-bahama-mama
+
+- type: flavor
+  id: barefoot
+  flavorType: Complex
+  description: flavor-complex-barefoot
+
+- type: flavor
+  id: booger
+  flavorType: Complex
+  description: flavor-complex-booger
+
+- type: flavor
+  id: bravebull
+  flavorType: Complex
+  description: flavor-complex-brave-bull
+
+- type: flavor
+  id: demonsblood
+  flavorType: Complex
+  description: flavor-complex-demons-blood
+
+- type: flavor
+  id: devilskiss
+  flavorType: Complex
+  description: flavor-complex-devils-kiss
+
+- type: flavor
+  id: driestmartini
+  flavorType: Complex
+  description: flavor-complex-driest-martini
+
+- type: flavor
+  id: erikasurprise
+  flavorType: Complex
+  description: flavor-complex-erika-surprise
+
+- type: flavor
+  id: ginfizz
+  flavorType: Complex
+  description: flavor-complex-gin-fizz
+
+- type: flavor
+  id: gildlager
+  flavorType: Complex
+  description: flavor-complex-gildlager
+
+- type: flavor
+  id: grog
+  flavorType: Complex
+  description: flavor-complex-grog
+
+- type: flavor
+  id: hippiesdelight
+  flavorType: Complex
+  description: flavor-complex-hippies-delight
+
+- type: flavor
+  id: hooch
+  flavorType: Complex
+  description: flavor-complex-hooch
+
+- type: flavor
+  id: manhattan
+  flavorType: Complex
+  description: flavor-complex-manhattan
+
+- type: flavor
+  id: manhattanproject
+  flavorType: Complex
+  description: flavor-complex-manhattan-project
+
+- type: flavor
+  id: margarita
+  flavorType: Complex
+  description: flavor-complex-margarita
+
+- type: flavor
+  id: martini
+  flavorType: Complex
+  description: flavor-complex-martini
+
+- type: flavor
+  id: mojito
+  flavorType: Complex
+  description: flavor-complex-mojito
+
+- type: flavor
+  id: neurotoxin
+  flavorType: Complex
+  description: flavor-complex-neurotoxin
+
+- type: flavor
+  id: patron
+  flavorType: Complex
+  description: flavor-complex-patron
+
+- type: flavor
+  id: redmead
+  flavorType: Complex
+  description: flavor-complex-red-mead
+
+- type: flavor
+  id: sbiten
+  flavorType: Complex
+  description: flavor-complex-sbiten
+
+- type: flavor
+  id: snowwhite
+  flavorType: Complex
+  description: flavor-complex-snowwhite
+
+- type: flavor
+  id: suidream
+  flavorType: Complex
+  description: flavor-complex-sui-dream
+
+- type: flavor
+  id: toxinsspecial
+  flavorType: Complex
+  description: flavor-complex-toxins-special
+
+- type: flavor
+  id: vodkamartini
+  flavorType: Complex
+  description: flavor-complex-vodka-martini
+
+- type: flavor
+  id: vodkatonic
+  flavorType: Complex
+  description: flavor-complex-vodka-tonic
+
+- type: flavor
   id: medicine
   flavorType: Complex
   description: flavor-complex-medicine
@@ -1090,6 +1275,11 @@
   description: flavor-weh
 
 - type: flavor
+  id: hew
+  flavorType: Base
+  description: flavor-hew
+
+- type: flavor
   id: fishops
   flavorType: Complex
   description: flavor-complex-fishops
@@ -1148,3 +1338,8 @@
   id: compressed-meat
   flavorType: Complex
   description: flavor-complex-compressed-meat
+
+- type: flavor
+  id: zombiecocktail
+  flavorType: Complex
+  description: flavor-complex-zombiecocktail
