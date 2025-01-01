@@ -80,6 +80,7 @@
     amber:
       announcement: alert-level-amber-announcement
       sound: /Audio/_Impstation/Misc/amber.ogg
+      disableSelection: true
       color: DarkGoldenrod
       emergencyLightColor: DarkGoldenrod
       forceEnableEmergencyLights: true
