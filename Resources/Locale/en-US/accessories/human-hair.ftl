@@ -146,6 +146,7 @@ marking-HumanHairSidetail3 = Ponytail (Side) 3
 marking-HumanHairSidetail4 = Ponytail (Side) 4
 marking-HumanHairSpikyponytail = Ponytail (Spiky)
 marking-HumanHairPoofy = Poofy
+marking-HumanHairPulato = Pulato
 marking-HumanHairQuiff = Quiff
 marking-HumanHairRonin = Ronin
 marking-HumanHairShaped = Shaped
