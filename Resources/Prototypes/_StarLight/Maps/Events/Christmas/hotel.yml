@@ -1,6 +1,6 @@
 - type: gameMap
-  id: Hotel
-  mapName: 'Hotel'
+  id: ChristmasHotel
+  mapName: 'Christmas Hotel'
   mapPath: /Maps/_Starlight/Stations/Events/Christmas/Hotel.yml
   minPlayers: 20
   maxPlayers: 65
