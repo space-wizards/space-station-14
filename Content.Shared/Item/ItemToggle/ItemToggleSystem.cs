@@ -2,7 +2,9 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Popups;
+using Content.Shared.Projectiles;
 using Content.Shared.Temperature;
+using Content.Shared.Throwing;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Content.Shared.Wieldable;
@@ -23,6 +25,7 @@ public sealed class ItemToggleSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedProjectileSystem _projectile = default!;
 
     private EntityQuery<ItemToggleComponent> _query;
 
@@ -43,6 +46,8 @@ public sealed class ItemToggleSystem : EntitySystem
         SubscribeLocalEvent<ItemToggleHotComponent, IsHotEvent>(OnIsHotEvent);
 
         SubscribeLocalEvent<ItemToggleActiveSoundComponent, ItemToggledEvent>(UpdateActiveSound);
+        SubscribeLocalEvent<ItemToggleThrowingAngleComponent, ItemToggledEvent>(UpdateThrowingAngle);
+        SubscribeLocalEvent<ItemToggleEmbeddableProjectileComponent, ItemToggledEvent>(UpdateEmbeddableProjectile);
     }
 
     private void OnStartup(Entity<ItemToggleComponent> ent, ref ComponentStartup args)
@@ -288,6 +293,105 @@ public sealed class ItemToggleSystem : EntitySystem
                 : _audio.PlayPvs(comp.ActiveSound, uid, loop);
             if (stream?.Entity is {} entity)
                 comp.PlayingStream = entity;
+        }
+    }
+
+    /// <summary>
+    /// Used to update the throwing angle on item toggle.
+    /// </summary>
+    private void UpdateThrowingAngle(EntityUid uid, ItemToggleThrowingAngleComponent component, ref ItemToggledEvent args)
+    {
+        if (component.DeleteOnDeactivate)
+        {
+            if (args.Activated)
+            {
+                var newThrowingAngle = new ThrowingAngleComponent();
+
+                if (component.ActivatedAngle is { } activatedAngle)
+                    newThrowingAngle.Angle = activatedAngle;
+
+                if (component.ActivatedAngularVelocity is { } activatedAngularVelocity)
+                    newThrowingAngle.AngularVelocity = activatedAngularVelocity;
+
+                AddComp(uid, newThrowingAngle);
+            }
+            else
+                RemCompDeferred<ThrowingAngleComponent>(uid);
+            return;
+        }
+
+        if (!TryComp<ThrowingAngleComponent>(uid, out var throwingAngle))
+            return;
+
+        if (args.Activated)
+        {
+            component.DeactivatedAngle ??= throwingAngle.Angle;
+            if (component.ActivatedAngle is { } activatedAngle)
+                throwingAngle.Angle = activatedAngle;
+
+            component.DeactivatedAngularVelocity ??= throwingAngle.AngularVelocity;
+            if (component.ActivatedAngularVelocity is { } activatedAngularVelocity)
+                throwingAngle.AngularVelocity = activatedAngularVelocity;
+        }
+        else
+        {
+            if (component.DeactivatedAngle is { } deactivatedAngle)
+                throwingAngle.Angle = deactivatedAngle;
+
+            if (component.DeactivatedAngularVelocity is { } deactivatedAngularVelocity)
+                throwingAngle.AngularVelocity = deactivatedAngularVelocity;
+        }
+    }
+
+    /// <summary>
+    ///   Used to update the embeddable stats on item toggle.
+    /// </summary>
+    private void UpdateEmbeddableProjectile(EntityUid uid, ItemToggleEmbeddableProjectileComponent component, ItemToggledEvent args)
+    {
+        if (!TryComp<EmbeddableProjectileComponent>(uid, out var embeddable))
+            return;
+
+        if (args.Activated)
+        {
+            component.DeactivatedRemovalTime ??= embeddable.RemovalTime;
+            if (component.ActivatedRemovalTime is { } activatedRemovalTime)
+                embeddable.RemovalTime = activatedRemovalTime;
+
+            component.DeactivatedOffset ??= embeddable.Offset;
+            if (component.ActivatedOffset is { } activatedOffset)
+                embeddable.Offset = activatedOffset;
+
+            component.DeactivatedEmbedOnThrow ??= embeddable.EmbedOnThrow;
+            if (component.ActivatedEmbedOnThrow is { } activatedEmbedOnThrow)
+            {
+                embeddable.EmbedOnThrow = activatedEmbedOnThrow;
+
+                if (embeddable.Target != null && activatedEmbedOnThrow == false)
+                    _projectile.RemoveEmbed(uid, embeddable);
+            }
+
+            component.DeactivatedSound ??= embeddable.Sound;
+            if (component.ActivatedSound is { } activatedSound)
+                embeddable.Sound = activatedSound;
+        }
+        else
+        {
+            if (component.DeactivatedRemovalTime is { } deactivatedRemovalTime)
+                embeddable.RemovalTime = deactivatedRemovalTime;
+
+            if (component.DeactivatedOffset is { } deactivatedOffset)
+                embeddable.Offset = deactivatedOffset;
+
+            if (component.DeactivatedEmbedOnThrow is { } deactivatedEmbedOnThrow)
+            {
+                embeddable.EmbedOnThrow = deactivatedEmbedOnThrow;
+
+                if (embeddable.Target != null && deactivatedEmbedOnThrow == false)
+                    _projectile.RemoveEmbed(uid, embeddable);
+            }
+
+            if (component.DeactivatedSound is { } deactivatedSound)
+                embeddable.Sound = deactivatedSound;
         }
     }
 }

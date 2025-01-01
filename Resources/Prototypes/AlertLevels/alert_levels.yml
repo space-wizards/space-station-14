@@ -70,10 +70,17 @@
       emergencyLightColor: DarkViolet
       forceEnableEmergencyLights: true
       shuttleTime: 1200
-    pink:
+    pink: # imp
       announcement: alert-level-pink-announcement
       sound: /Audio/_Impstation/Misc/pink.ogg
       color: Pink
       emergencyLightColor: Pink
+      forceEnableEmergencyLights: true
+      shuttleTime: 1200
+    amber:
+      announcement: alert-level-amber-announcement
+      sound: /Audio/_Impstation/Misc/amber.ogg
+      color: DarkGoldenrod
+      emergencyLightColor: DarkGoldenrod
       forceEnableEmergencyLights: true
       shuttleTime: 1200

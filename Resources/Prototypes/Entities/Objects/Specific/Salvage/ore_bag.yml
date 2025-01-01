@@ -13,6 +13,9 @@
     quickEquip: false
     slots:
     - belt
+  - type: Tag
+    tags:
+    - OreBag # imp
   - type: Item
     size: Ginormous
   - type: Storage

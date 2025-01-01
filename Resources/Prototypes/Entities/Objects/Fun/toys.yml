@@ -72,8 +72,11 @@
     openToolQualityNeeded: Slicing
     closeToolQualityNeeded: Slicing # Should probably be stitching or something if that gets added
     name: secret-stash-plushie
-  - type: StealTarget #imp
+  # imp edits #
+  - type: StealTarget
     stealGroup: Plushie
+  - type: DamageOtherOnHit
+  # end imp edits #
 
 - type: entity
   parent: BasePlushie

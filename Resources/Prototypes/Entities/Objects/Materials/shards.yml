@@ -44,10 +44,6 @@
         density: 30
         mask:
         - ItemMask
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Slash: 2
   - type: Tag
     tags:
     - Trash
@@ -78,6 +74,15 @@
   - type: DeleteOnTrigger
   - type: StaticPrice
     price: 0
+  # imp edits #
+  - type: DamageOtherOnHit
+    meleeDamageMultiplier: 2
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/bladeslice.ogg
+    removalTime: 2.5
+    autoRemoveDuration: 30
+  - type: EmbedPassiveDamage
+  # end imp edits #
 
 - type: entity
   parent: ShardBase

@@ -1,9 +1,11 @@
+# Base Entities
+
 - type: entity
   save: false
-  parent: [ BaseSimpleMob, MobCombat ]
+  parent: [ BaseMob, MobCombat, MobBloodstream ]
   id: BaseMobDinosaur
   suffix: AI
-  description: Enigmatic behemoth from a bygone era, known for their imposing stature and formidable presence.
+  description: A mesozoic soldier, ready to live or die for the Dino Wars.
   abstract: true
   components:
   - type: NpcFactionMember
@@ -11,7 +13,7 @@
     - Dino
   - type: Tool
     qualities:
-      - Prying
+    - Prying
   - type: Prying
     pryPowered: false
     useSound: /Audio/Items/crowbar.ogg
@@ -24,9 +26,19 @@
   - type: Sprite
     sprite: _Impstation/Mobs/Aliens/Dinos/anky.rsi
     layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: anki
-  - type: SolutionContainerManager
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: anki
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.75
+        density: 1000
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: ReplacementAccent
     accent: dino
   - type: Bloodstream
@@ -62,18 +74,20 @@
     normalState: Generic_mob_burning
   - type: NameIdentifier
     group: GenericNumber
-  - type: Tag # imp additions
+  - type: Tag
     tags:
-      - CannotSuicide
-      - DoorBumpOpener
-      - FootstepSound
+    - CannotSuicide
+    - DoorBumpOpener
+    - FootstepSound
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepThud
   - type: Butcherable
     spawned:
-      - id: FoodMeat
-        amount: 4
+    - id: FoodMeat
+      amount: 8
+    - id: MaterialBones1
+      amount: 8
   - type: GhostRole
     allowMovement: true
     makeSentient: true
@@ -109,6 +123,280 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
+  - type: Metabolizer
+    solutionOnBody: false
+    metabolizerTypes: [ Reptilian ]
+    groups:
+    - id: Medicine
+    - id: Poison
+  - type: Speech
+    speechSounds: Dino
+    speechVerb: Reptilian
+  - type: Vocal
+    sounds:
+      Unsexed: DinoEmotes
+
+- type: entity
+  parent: BaseMobDinosaur
+  id: BaseMobDinosaurSmall
+  abstract: true
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 1000
+        mask:
+          - MobMask
+        layer:
+          - MobLayer
+  - type: Bloodstream
+    bloodReagent: DinoBlood
+    bloodMaxVolume: 100
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          0.5
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -1
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 4
+    - id: MaterialBones1
+      amount: 4
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: BarestepHard
+
+- type: entity
+  parent: BaseMobDinosaur
+  id: BaseMobDinosaurCarnivore
+  abstract: true
+  components:
+  - type: Devourer
+    foodPreference: Humanoid
+    shouldStoreDevoured: true
+    chemical: DinoBlood
+    healRate: 15.0
+    whitelist:
+      components:
+      - MobState
+      - Door
+      tags:
+      - Wall
+
+# Small Dinosaurs
+
+- type: entity
+  parent: BaseMobDinosaurSmall
+  id: MobDinosaurCompy
+  name: compsognathus
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Aliens/Dinos/compy.rsi
+    layers:
+    - state: compy
+      map: ["enum.DamageStateVisualLayers.Base"]
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: compy
+      Dead:
+        Base: compy_dead
+  - type: HTN
+    rootTask:
+      task: XenoCompound
+    blackboard:
+      NavClimb: !type:Bool
+        true
+      NavInteract: !type:Bool
+        true
+      NavPry: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+  - type: Tool
+    qualities:
+    - Prying
+  - type: Prying
+    pryPowered: true
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Critical
+      75: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      25: 0.8
+      40: 0.6
+  - type: MeleeWeapon
+    animation: WeaponArcClaw
+    wideAnimation: WeaponArcClaw
+    altDisarm: false
+    angle: 30
+    range: 1
+    soundHit:
+      collection: AlienClaw
+    damage:
+      types:
+        Piercing: 6
+        Structural: 6
+  - type: MovementSpeedModifier
+    baseSprintSpeed : 7.5
+    baseWalkSpeed: 2.5
+  - type: GhostRole
+    allowMovement: true
+    makeSentient: true
+    name: ghost-role-information-dino-compy-name
+    description: ghost-role-information-dino-compy-description
+    rules: ghost-role-information-rules-team-antagonist
+
+- type: entity
+  parent: BaseMobDinosaurSmall
+  id: MobDinosaurDilo
+  name: dilophosaurus
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Aliens/Dinos/dilo.rsi
+    layers:
+    - state: dilo
+      map: ["enum.DamageStateVisualLayers.Base"]
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: dilo
+      Dead:
+        Base: dilo_dead
+  - type: HTN
+    rootTask:
+      task: SimpleRangedHostileCompound
+    blackboard:
+      NavSmash: !type:Bool
+        true
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Critical
+      75: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      25: 0.8
+      40: 0.6
+  - type: MeleeWeapon
+    animation: WeaponArcClaw
+    wideAnimation: WeaponArcClaw
+    angle: 30
+    range: 1
+    soundHit:
+      collection: AlienClaw
+    damage:
+      types:
+        Slash: 7
+        Caustic: 3
+        Structural: 10
+    attackRate: 0.75
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 0
+    rechargeSound: null
+    showExamineText: false
+  - type: BasicEntityAmmoProvider
+    proto: BulletAcid
+    capacity: 1
+    count: 1
+  - type: Gun
+    fireRate: 0.5
+    useKey: false
+    showExamineText: false
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot: /Audio/Weapons/pierce.ogg
+  - type: MovementSpeedModifier
+    baseSprintSpeed : 4.5
+    baseWalkSpeed: 2.5
+  - type: GhostRole
+    allowMovement: true
+    makeSentient: true
+    name: ghost-role-information-dino-dilo-name
+    description: ghost-role-information-dino-dilo-description
+    rules: ghost-role-information-rules-team-antagonist
+
+- type: entity
+  parent: BaseMobDinosaurSmall
+  id: MobDinosaurRaptor
+  name: velociraptor
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Aliens/Dinos/raptor.rsi
+    layers:
+    - state: raptor
+      map: ["enum.DamageStateVisualLayers.Base"]
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: raptor
+      Dead:
+        Base: raptor_dead
+  - type: HTN
+    rootTask:
+      task: XenoCompound
+    blackboard:
+      NavClimb: !type:Bool
+        true
+      NavInteract: !type:Bool
+        true
+      NavPry: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+  - type: Tool
+    qualities:
+    - Prying
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 2.0
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      80: Critical
+      120: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      40: 0.8
+      60: 0.6
+  - type: MeleeWeapon
+    animation: WeaponArcClaw
+    wideAnimation: WeaponArcClaw
+    altDisarm: false
+    angle: 30
+    soundHit:
+      collection: AlienClaw
+    damage:
+      types:
+        Slash: 20
+        Structural: 12
+    attackRate: 0.33
+  - type: MovementSpeedModifier
+    baseSprintSpeed : 6.5
+    baseWalkSpeed: 2.5
+  - type: GhostRole
+    allowMovement: true
+    makeSentient: true
+    name: ghost-role-information-dino-raptor-name
+    description: ghost-role-information-dino-raptor-description
+    rules: ghost-role-information-rules-team-antagonist
+
+# Large Dinosaurs
 
 - type: entity
   parent: BaseMobDinosaur
@@ -118,188 +406,44 @@
   - type: Sprite
     sprite: _Impstation/Mobs/Aliens/Dinos/anky.rsi
     layers:
-      - state: anki
-        map: ["enum.DamageStateVisualLayers.Base"]
+    - state: anki
+      map: ["enum.DamageStateVisualLayers.Base"]
   - type: DamageStateVisuals
     states:
       Alive:
         Base: anki
       Dead:
         Base: anki_dead
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.75
-        density: 1000
-        mask:
-          - MobMask
-        layer:
-          - MobLayer
   - type: MobThresholds
     thresholds:
       0: Alive
-      250: Dead
+      250: Critical
+      350: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      60: 0.7
-      125: 0.5
+      125: 0.8
+      200: 0.6
   - type: MeleeWeapon
+    animation: WeaponArcSmash
+    wideAnimation: WeaponArcSmash
     altDisarm: false
-    angle: 0
+    angle: 30
     soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      collection: MetalThud
     damage:
       types:
-        Blunt: 20
-        Structural: 10
+        Blunt: 30
+        Structural: 60
+    attackRate: 0.5
   - type: MovementSpeedModifier
-    baseSprintSpeed : 2
+    baseSprintSpeed : 2.5
     baseWalkSpeed: 1
-  - type: Devourer # imp additions
-    foodPreference: Humanoid
-    shouldStoreDevoured: true
-    chemical: DinoBlood
-    healRate: 15.0
-    whitelist:
-      components:
-      - Door
-      tags:
-      - Wall
-
-- type: entity
-  parent: BaseMobDinosaur
-  id: MobDinosaurCompy
-  name: compsognathus
-  components:
-  - type: Sprite
-    sprite: _Impstation/Mobs/Aliens/Dinos/compy.rsi
-    layers:
-      - state: compy
-        map: ["enum.DamageStateVisualLayers.Base"]
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: compy
-      Dead:
-        Base: compy_dead
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.45
-        density: 1000
-        mask:
-          - MobMask
-        layer:
-          - MobLayer
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      50: Dead
-  - type: Bloodstream
-    bloodReagent: DinoBlood
-    bloodMaxVolume: 100 #small sized dino
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          0.5
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -1
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      10: 0.7
-      30: 0.5
-  - type: MeleeWeapon
-    altDisarm: false
-    angle: 0
-    soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
-    damage:
-      types:
-        Piercing: 5
-        Structural: 2
-  - type: MovementSpeedModifier
-    baseSprintSpeed : 5
-    baseWalkSpeed: 2.5
-  - type: FootstepModifier # imp additions
-    footstepSoundCollection:
-      collection: BarestepHard
-  - type: Butcherable
-    spawned:
-      - id: FoodMeat
-        amount: 2
-
-- type: entity
-  parent: BaseMobDinosaur
-  id: MobDinosaurDilo
-  name: dilophosaurus
-  components:
-  - type: Sprite
-    sprite: _Impstation/Mobs/Aliens/Dinos/dilo.rsi
-    layers:
-      - state: dilo
-        map: ["enum.DamageStateVisualLayers.Base"]
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: dilo
-      Dead:
-        Base: dilo_dead
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.45
-        density: 1000
-        mask:
-          - MobMask
-        layer:
-          - MobLayer
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      50: Dead
-  - type: Bloodstream
-    bloodReagent: DinoBlood
-    bloodMaxVolume: 100 #small sized dino
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          0.5
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -1
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      10: 0.7
-      30: 0.5
-  - type: MeleeWeapon
-    altDisarm: false
-    angle: 0
-    soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
-    damage:
-      types:
-        Slash: 5
-        Caustic: 2
-        Structural: 2
-  - type: MovementSpeedModifier
-    baseSprintSpeed : 5.5
-    baseWalkSpeed: 2.5
-  - type: FootstepModifier # imp additions
-    footstepSoundCollection:
-      collection: BarestepHard
-  - type: Butcherable
-    spawned:
-      - id: FoodMeat
-        amount: 2
+  - type: GhostRole
+    allowMovement: true
+    makeSentient: true
+    name: ghost-role-information-dino-anki-name
+    description: ghost-role-information-dino-anki-description
+    rules: ghost-role-information-rules-team-antagonist
 
 - type: entity
   parent: BaseMobDinosaur
@@ -309,55 +453,46 @@
   - type: Sprite
     sprite: _Impstation/Mobs/Aliens/Dinos/kentro.rsi
     layers:
-      - state: kentro
-        map: ["enum.DamageStateVisualLayers.Base"]
+    - state: kentro
+      map: ["enum.DamageStateVisualLayers.Base"]
   - type: DamageStateVisuals
     states:
       Alive:
         Base: kentro
       Dead:
         Base: kentro_dead
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.70
-        density: 1000
-        mask:
-          - MobMask
-        layer:
-          - MobLayer
   - type: MobThresholds
     thresholds:
       0: Alive
-      150: Dead
+      150: Critical
+      250: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      10: 0.7
-      75: 0.6
+      75: 0.8
+      120: 0.6
   - type: MeleeWeapon
+    animation: WeaponArcThrust
+    wideAnimation: WeaponArcThrust
     altDisarm: false
-    angle: 0
+    angle: 30
+    range: 1.75
     soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      collection: AlienClaw
     damage:
       types:
-        Piercing: 10
-        Structural: 5
+        Piercing: 15
+        Structural: 15
+    attackRate: 0.75
+    resistanceBypass: true
   - type: MovementSpeedModifier
     baseSprintSpeed : 2.5
     baseWalkSpeed: 1.5
-  - type: Devourer # imp additions
-    foodPreference: Humanoid
-    shouldStoreDevoured: true
-    chemical: DinoBlood
-    healRate: 15.0
-    whitelist:
-      components:
-      - Door
-      tags:
-      - Wall
+  - type: GhostRole
+    allowMovement: true
+    makeSentient: true
+    name: ghost-role-information-dino-kentro-name
+    description: ghost-role-information-dino-kentro-description
+    rules: ghost-role-information-rules-team-antagonist
 
 - type: entity
   parent: BaseMobDinosaur
@@ -367,8 +502,8 @@
   - type: Sprite
     sprite: _Impstation/Mobs/Aliens/Dinos/para.rsi
     layers:
-      - state: para
-        map: ["enum.DamageStateVisualLayers.Base"]
+    - state: para
+      map: ["enum.DamageStateVisualLayers.Base"]
   - type: DamageStateVisuals
     states:
       Alive:
@@ -389,181 +524,81 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Dead
+      150: Critical
+      225: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      30: 0.8
-      50: 0.6
+      75: 0.8
+      120: 0.6
   - type: MeleeWeapon
+    animation: WeaponArcClaw
+    wideAnimation: WeaponArcClaw
     altDisarm: false
-    angle: 0
+    angle: 30
     soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      collection: AlienClaw
     damage:
       types:
-        Blunt: 5
-        Structural: 2
+        Blunt: 10
+        Structural: 10
   - type: MovementSpeedModifier
     baseSprintSpeed : 4
     baseWalkSpeed: 2.5
-  - type: Devourer # imp additions
-    foodPreference: Humanoid
-    shouldStoreDevoured: true
-    chemical: DinoBlood
-    healRate: 15.0
-    whitelist:
-      components:
-      - Door
-      tags:
-      - Wall
+  - type: GhostRole
+    allowMovement: true
+    makeSentient: true
+    name: ghost-role-information-dino-para-name
+    description: ghost-role-information-dino-para-description
+    rules: ghost-role-information-rules-team-antagonist
 
 - type: entity
-  parent: BaseMobDinosaur
-  id: MobDinosaurRaptor
-  name: velociraptor
-  components:
-  - type: Sprite
-    sprite: _Impstation/Mobs/Aliens/Dinos/raptor.rsi
-    layers:
-      - state: raptor
-        map: ["enum.DamageStateVisualLayers.Base"]
-  - type: HTN
-    rootTask:
-      task: XenoCompound
-    blackboard:
-      NavClimb: !type:Bool
-        true
-      NavInteract: !type:Bool
-        true
-      NavPry: !type:Bool # Clever Girl
-        true
-      NavSmash: !type:Bool
-        true
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: raptor
-      Dead:
-        Base: raptor_dead
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.45
-        density: 1000
-        mask:
-          - MobMask
-        layer:
-          - MobLayer
-  - type: Tool
-    qualities:
-      - Prying
-  - type: Prying
-    pryPowered: !type:Bool
-        true
-    force: !type:Bool
-      true
-    useSound:
-      path: /Audio/Items/crowbar.ogg
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      80: Dead
-  - type: Bloodstream
-    bloodReagent: DinoBlood
-    bloodMaxVolume: 150 #small sized dino
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          0.5
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -1
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      25: 0.8
-      50: 0.6
-  - type: MeleeWeapon
-    altDisarm: false
-    angle: 0
-    soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
-    damage:
-      types:
-        Slash: 12
-        Structural: 6
-  - type: MovementSpeedModifier
-    baseSprintSpeed : 6.5
-    baseWalkSpeed: 2.5
-  - type: FootstepModifier # imp additions
-    footstepSoundCollection:
-      collection: BarestepHard
-  - type: Butcherable
-    spawned:
-      - id: FoodMeat
-        amount: 2
-
-- type: entity
-  parent: BaseMobDinosaur
+  parent: BaseMobDinosaurCarnivore
   id: MobDinosaurSpino
   name: spinosaurus
   components:
   - type: Sprite
     sprite: _Impstation/Mobs/Aliens/Dinos/spino.rsi
     layers:
-      - state: spino
-        map: ["enum.DamageStateVisualLayers.Base"]
+    - state: spino
+      map: ["enum.DamageStateVisualLayers.Base"]
   - type: DamageStateVisuals
     states:
       Alive:
         Base: spino
       Dead:
         Base: spino_dead
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.75
-        density: 1000
-        mask:
-          - MobMask
-        layer:
-          - MobLayer
   - type: MobThresholds
     thresholds:
       0: Alive
-      350: Dead
+      250: Critical
+      450: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      100: 0.5
-      200: 0.3
+      125: 0.8
+      200: 0.6
   - type: MeleeWeapon
+    animation: WeaponArcBite
+    wideAnimation: WeaponArcBite
     altDisarm: false
-    angle: 0
+    angle: 30
+    range: 2
     soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      collection: AlienClaw
     damage:
       types:
         Slash: 18
         Piercing: 12
-        Structural: 15
+        Structural: 30
+    attackRate: 0.75
   - type: MovementSpeedModifier
     baseSprintSpeed : 5
     baseWalkSpeed: 2.5
-  - type: Devourer # imp additions
-    foodPreference: Humanoid
-    shouldStoreDevoured: true
-    chemical: DinoBlood
-    healRate: 15.0
-    whitelist:
-      components:
-      - MobState
-      - Door
-      tags:
-      - Wall
+  - type: GhostRole
+    allowMovement: true
+    makeSentient: true
+    name: ghost-role-information-dino-spino-name
+    description: ghost-role-information-dino-spino-description
+    rules: ghost-role-information-rules-team-antagonist
 
 - type: entity
   parent: BaseMobDinosaur
@@ -573,8 +608,8 @@
   - type: Sprite
     sprite: _Impstation/Mobs/Aliens/Dinos/stego.rsi
     layers:
-      - state: stego
-        map: ["enum.DamageStateVisualLayers.Base"]
+    - state: stego
+      map: ["enum.DamageStateVisualLayers.Base"]
   - type: DamageStateVisuals
     states:
       Alive:
@@ -595,94 +630,86 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      200: Dead
+      750: Dead
+      850: Critical
   - type: SlowOnDamage
     speedModifierThresholds:
-      100: 0.7
-      150: 0.3
+      600: 0.8
+      675: 0.6
+      700: 0.4
+      720: 0.2
   - type: MeleeWeapon
+    animation: WeaponArcSmash
+    wideAnimation: WeaponArcSmash
     altDisarm: false
-    angle: 0
+    angle: 30
+    range: 1.75
     soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      collection: MetalThud
     damage:
       types:
-        Blunt: 10
-        Piercing: 8
-        Structural: 9
+        Blunt: 14
+        Piercing: 6
+        Structural: 20
+    attackRate: 0.5
   - type: MovementSpeedModifier
-    baseSprintSpeed : 3.5
-    baseWalkSpeed: 2
-  - type: Devourer # imp additions
-    foodPreference: Humanoid
-    shouldStoreDevoured: true
-    chemical: DinoBlood
-    healRate: 15.0
-    whitelist:
-      components:
-      - Door
-      tags:
-      - Wall
+    baseSprintSpeed : 1.5
+    baseWalkSpeed: 1
+  - type: GhostRole
+    allowMovement: true
+    makeSentient: true
+    name: ghost-role-information-dino-stego-name
+    description: ghost-role-information-dino-stego-description
+    rules: ghost-role-information-rules-team-antagonist
 
 - type: entity
-  parent: BaseMobDinosaur
+  parent: BaseMobDinosaurCarnivore
   id: MobDinosaurTrex
   name: tyrannosaurus
   components:
   - type: Sprite
     sprite: _Impstation/Mobs/Aliens/Dinos/trex.rsi
     layers:
-      - state: trex
-        map: ["enum.DamageStateVisualLayers.Base"]
+    - state: trex
+      map: ["enum.DamageStateVisualLayers.Base"]
   - type: DamageStateVisuals
     states:
       Alive:
         Base: trex
       Dead:
         Base: trex_dead
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.75
-        density: 1000
-        mask:
-          - MobMask
-        layer:
-          - MobLayer
   - type: MobThresholds
     thresholds:
       0: Alive
-      350: Dead
+      400: Critical
+      500: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      100: 0.6
-      200: 0.3
+      250: 0.8
+      325: 0.6
   - type: MeleeWeapon
+    animation: WeaponArcBite
+    wideAnimation: WeaponArcBite
     altDisarm: false
-    angle: 0
+    angle: 30
+    range: 2.25
     soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      collection: AlienClaw
     damage:
       types:
         Slash: 15
         Piercing: 25
-        Structural: 20
+        Structural: 40
+    attackRate: 0.75
   - type: MovementSpeedModifier
-    baseSprintSpeed : 4.5
+    baseSprintSpeed : 3.5
     baseWalkSpeed: 2.5
-  - type: Devourer # imp additions
-    foodPreference: Humanoid
-    shouldStoreDevoured: true
-    chemical: DinoBlood
-    healRate: 15.0
-    whitelist:
-      components:
-      - MobState
-      - Door
-      tags:
-      - Wall
+  - type: GhostRole
+    allowMovement: true
+    makeSentient: true
+    name: ghost-role-information-dino-trex-name
+    description: ghost-role-information-dino-trex-description
+    rules: ghost-role-information-rules-team-antagonist
 
 - type: entity
   parent: BaseMobDinosaur
@@ -692,8 +719,8 @@
   - type: Sprite
     sprite: _Impstation/Mobs/Aliens/Dinos/trike.rsi
     layers:
-      - state: trike
-        map: ["enum.DamageStateVisualLayers.Base"]
+    - state: trike
+      map: ["enum.DamageStateVisualLayers.Base"]
   - type: DamageStateVisuals
     states:
       Alive:
@@ -714,31 +741,32 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      200: Dead
+      350: Critical
+      450: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      100: 0.7
-      150: 0.3
+      200: 0.8
+      280: 0.6
   - type: MeleeWeapon
+    animation: WeaponArcThrust
+    wideAnimation: WeaponArcThrust
     altDisarm: false
-    angle: 0
+    angle: 30
+    range: 1.75
     soundHit:
-      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      collection: AlienClaw
     damage:
       types:
-        Blunt: 15
-        Structural: 7
+        Blunt: 6
+        Piercing: 9
+        Structural: 15
+    attackRate: 0.75
   - type: MovementSpeedModifier
     baseSprintSpeed : 3
     baseWalkSpeed: 1.5
-  - type: Devourer # imp additions
-    foodPreference: Humanoid
-    shouldStoreDevoured: true
-    chemical: DinoBlood
-    healRate: 15.0
-    whitelist:
-      components:
-      - MobState
-      - Door
-      tags:
-      - Wall
+  - type: GhostRole
+    allowMovement: true
+    makeSentient: true
+    name: ghost-role-information-dino-trike-name
+    description: ghost-role-information-dino-trike-description
+    rules: ghost-role-information-rules-team-antagonist

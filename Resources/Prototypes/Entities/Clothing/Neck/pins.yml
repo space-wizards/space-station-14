@@ -11,6 +11,11 @@
     sprite: Clothing/Neck/Misc/pins.rsi
   - type: Clothing
     sprite: Clothing/Neck/Misc/pins.rsi
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 1
+    staminaCost: 1
 
 - type: entity
   parent: ClothingNeckPinBase

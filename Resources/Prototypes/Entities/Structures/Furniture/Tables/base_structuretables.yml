@@ -38,6 +38,7 @@
     footstepSoundCollection:
       collection: FootstepHull
   - type: RequireProjectileTarget # Goobstation - Crawling
+  - type: ThrownItemImmune # imp
 
 - type: entity
   id: CounterBase

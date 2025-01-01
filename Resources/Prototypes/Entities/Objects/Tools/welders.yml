@@ -107,7 +107,19 @@
     temperature: 700
   - type: Tag
     tags:
-    - DroneUsable  
+    - DroneUsable
+  # imp edits #
+  - type: ItemToggleDamageOtherOnHit
+    activatedDamage:
+      types:
+        Heat: 4
+        Blunt: 3
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 8
+    staminaCost: 7.5
+  # end imp edits #
 
 - type: entity
   name: industrial welding tool

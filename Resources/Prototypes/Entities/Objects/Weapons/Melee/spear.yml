@@ -117,6 +117,7 @@
     inHandsMaxFillLevels: 1
     equippedFillBaseName: -fill-
     equippedMaxFillLevels: 1
+  - type: EmbedPassiveDamage # imp
 
 
 - type: entity

@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: OreBox
   name: ore box
-  description: A large storage container for holding unprocessed ores.
+  description: A large storage container for holding unprocessed ores and ore bags. Built surprisingly lightweight for easy hauling and is equipped with a magnet to pull in nearby ore. # imp
   parent: BaseStructureDynamic
   components:
   - type: StaticPrice
@@ -51,13 +51,18 @@
           False: { visible: true }
   - type: Storage
     grid:
-    - 0,0,9,5
-    maxItemSize: Normal
+    - 0,0,17,9 # imp, can hold 3 ore bags or up to 45 stacks of ore
+    maxItemSize: Ginormous # imp
     storageOpenSound: /Audio/Effects/closetopen.ogg
     storageCloseSound: /Audio/Effects/closetclose.ogg
     whitelist:
       tags:
       - Ore
+      - OreBag # imp
+      - ArtifactFragment # imp
+  - type: Dumpable # imp
+  - type: MagnetPickup # imp
+    range: 1.5 # more than an ore bag, less than the ore bag of holding
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:

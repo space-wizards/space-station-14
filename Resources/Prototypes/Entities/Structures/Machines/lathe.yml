@@ -1296,7 +1296,7 @@
   - type: Machine
     board: OreProcessorIndustrialMachineCircuitboard
   - type: Lathe
-    materialUseMultiplier: 0.75
+    materialUseMultiplier: 0.50 # imp, from 1.5x more sheets to 2x
     timeMultiplier: 0.5
     staticRecipes:
       - SheetSteel
