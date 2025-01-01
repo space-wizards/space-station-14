@@ -28,7 +28,7 @@ reagent-desc-coffeeliqueur = Liquor flavoured with cold brewed coffee and spices
 reagent-name-melon-liquor = melon liquor
 reagent-desc-melon-liquor = A relatively sweet and fruity 46 proof liquor.
 
-reagent-name-n-t-cahors = NeoTheology Cahors Wine
+reagent-name-n-t-cahors = NeoTheology Cahors wine
 reagent-desc-n-t-cahors = Fortified dessert wine made from cabernet sauvignon, saperavi and other grapes.
 
 reagent-name-poison-wine = poison wine
@@ -94,7 +94,7 @@ reagent-desc-banana-honk = A drink from Clown Heaven.
 reagent-name-barefoot = barefoot
 reagent-desc-barefoot = Barefoot and pregnant.
 
-reagent-name-beepsky-smash = Beepsky Smash
+reagent-name-beepsky-smash = Beepsky smash
 reagent-desc-beepsky-smash = Deny drinking this and prepare for THE LAW.
 
 reagent-name-black-russian = Black Russian
