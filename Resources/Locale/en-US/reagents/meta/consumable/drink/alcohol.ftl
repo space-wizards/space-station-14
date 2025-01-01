@@ -80,7 +80,7 @@ reagent-name-atomic-bomb = atomic bomb
 reagent-desc-atomic-bomb = Nuclear proliferation never tasted so good.
 
 reagent-name-b52 = b-52
-reagent-desc-b52 = Coffee, irish cream, and cognac. You will get bombed.
+reagent-desc-b52 = Coffee, syndicate cream, and cognac. You will get bombed.
 
 reagent-name-blue-hawaiian = blue hawaiian
 reagent-desc-blue-hawaiian = Aloha! Does that mean hello or goodbye?
@@ -157,14 +157,14 @@ reagent-desc-hooch = Either someone's failure at cocktail making or attempt in a
 reagent-name-iced-beer = iced beer
 reagent-desc-iced-beer = A beer which is so cold the air around it freezes.
 
-reagent-name-irish-car-bomb = irish car bomb
-reagent-desc-irish-car-bomb = A troubling mixture of irish cream and ale.
+reagent-name-irish-car-bomb = grenade penguin
+reagent-desc-irish-car-bomb = An unstable mixture of syndicate cream and ale.
 
-reagent-name-irish-cream = irish cream
-reagent-desc-irish-cream = Whiskey-imbued cream. What else could you expect from the Irish.
+reagent-name-irish-cream = syndicate cream
+reagent-desc-irish-cream = Whiskey-imbued cream. What else could you expect from the Syndicate.
 
-reagent-name-irish-coffee = irish coffee
-reagent-desc-irish-coffee = Coffee served with irish cream. Regular cream just isn't the same!
+reagent-name-irish-coffee = syndicate coffee
+reagent-desc-irish-coffee = Coffee served with syndicate cream. Regular cream just isn't the same!
 
 reagent-name-kira-special = kira special
 reagent-desc-kira-special = Long live the guy who everyone had mistaken for a girl. Baka!
@@ -268,8 +268,8 @@ reagent-desc-vodka-red-bool = Because heart failure and liver failure go hand in
 reagent-name-xeno-basher = xeno basher
 reagent-desc-xeno-basher = The perfect drink before an expedition.
 
-reagent-name-irish-bool = irish bool
-reagent-desc-irish-bool = Like a bool in a Ireland shop.
+reagent-name-irish-bool = exploding syndicat
+reagent-desc-irish-bool = Full of energy, with an explosive finish.
 
 reagent-name-budget-insuls = budget insuls
 reagent-desc-budget-insuls = A tider's preferred drink.
