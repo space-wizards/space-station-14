@@ -9,6 +9,8 @@ heretic-magicitem-examine = [color=yellow]Allows you to use advanced spells whil
 heretic-blade-examine = [color=yellow]Using it while it's in your hand will break the blade and teleport you away from danger.[/color]
 heretic-blade-use = The blade shatters, and you feel the voices pulling you away.
 
+heretic-ghoul-examine = { CAPITALIZE(POSS-ADJ($ent)) } body looks like a decaying corpse.
+
 heretic-rust-mark-itembreak = {$name} shatters into dust!
 
 heretic-manselink-fail-exists = This creature is already connected!
