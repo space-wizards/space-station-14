@@ -39,7 +39,7 @@ public sealed class AtmosPipeColorSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(item.Owner, out var appearance))
             return;
 
-        if (!TryComp<AtmosPipeColorComponent>(item.Owner, out var colorSync))
+        if (TryComp<AtmosPipeColorComponent>(item.Owner, out var colorSync))
         {
             if (colorSync != null)
             {

@@ -3,11 +3,14 @@ using Robust.Client.GameObjects;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Hands;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Item;
 
 namespace Content.Client.Atmos.EntitySystems;
 
 public sealed class PipeColorVisualizerSystem : VisualizerSystem<PipeColorVisualsComponent>
 {
+    [Dependency] private readonly SharedItemSystem _itemSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -20,9 +23,7 @@ public sealed class PipeColorVisualizerSystem : VisualizerSystem<PipeColorVisual
         foreach (var (key, layerData) in args.Layers)
         {
             if (TryComp(item.Owner, out AtmosPipeColorComponent? pipeColor))
-            {
                 layerData.Color = pipeColor.Color;
-            }
         }
     }
 
@@ -34,7 +35,11 @@ public sealed class PipeColorVisualizerSystem : VisualizerSystem<PipeColorVisual
             // T-ray scanner / sub floor runs after this visualizer. Lets not bulldoze transparency.
             var layer = sprite[PipeVisualLayers.Pipe];
             layer.Color = color.WithAlpha(layer.Color.A);
+
+            sprite.Color = color;
         }
+
+        _itemSystem.VisualsChanged(uid);
     }
 }
 
