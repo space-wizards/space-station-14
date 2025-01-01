@@ -1,0 +1,97 @@
+# Minor science loot spawner
+# Use case: Common areas that aren't science
+- type: entity
+  name: science supplies spawner
+  id: LootSpawnerScienceMinor
+  parent: MarkerBase
+  suffix: Minor, 80%
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Specific/Research/anomalyscanner.rsi
+        state: icon
+  - type: RandomSpawner
+    rarePrototypes:
+    - AnomalyScanner
+    - NodeScanner
+    - Multitool
+    - Igniter
+    rareChance: 0.1
+    prototypes:
+    - ClothingHandsGlovesLatex
+    - ClothingMaskSterile
+    - ClothingOuterCoatRnd
+    - NetworkConfigurator
+    - PowerCellSmall
+    - Flashlight
+    - MatterBinStockPart
+    - CapacitorStockPart
+    - MicroManipulatorStockPart
+    - Beaker
+    chance: 0.8
+    offset: 0.2
+
+# Major science loot spawner
+# Use case: Loot in science areas only
+- type: entity
+  name: science supplies spawner
+  id: LootSpawnerScienceMajor
+  parent: MarkerBase
+  suffix: Major
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Specific/Research/researchdisk.rsi
+      state: icon
+  - type: RandomSpawner
+    rarePrototypes:
+    - ResearchDisk
+    - ResearchDisk5000
+    - RandomInstrumentTable
+    rareChance: 0.1
+    prototypes:
+    - LootSpawnerIndustrial
+    - AnomalyScanner
+    - NodeScanner
+    - NetworkConfigurator
+    - Multitool
+    - Beaker
+    - Igniter
+    - MatterBinStockPart
+    - CapacitorStockPart
+    - MicroManipulatorStockPart
+    chance: 0.9
+    offset: 0.2
+
+# Borg Module Spawner
+# Use case: One or two in robotics or as valuable loot
+- type: entity
+  name: robotics board spawner
+  id: LootSpawnerRoboticsBorgModule
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Specific/Robotics/borgmodule.rsi
+      state: generic
+  - type: RandomSpawner
+    rarePrototypes:
+    - BorgModuleDefibrillator
+    - BorgModuleAdvancedCleaning
+    - BorgModuleClowning
+    - BorgModuleGardening
+    - BorgModuleHarvesting
+    rareChance: 0.1
+    prototypes:
+    - BorgModuleCable
+    - BorgModuleFireExtinguisher
+    - BorgModuleGPS
+    - BorgModuleRadiationDetection
+    - BorgModuleTool
+    - BorgModuleArtifact
+    - BorgModuleAnomaly
+    chance: 0.9
+    offset: 0.2
