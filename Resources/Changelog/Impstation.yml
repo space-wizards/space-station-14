@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Thaven can now use the French Braid hair.
-    type: Add
-  - message: Nuclear Ops Commander requires 7.5 hours playtime in Engineering, Medical,
-      Security, and Command.
-    type: Tweak
-  id: 339
-  time: '2024-10-07T07:15:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/436
 - author: Darkmajia
   changes:
   - message: Core Station now has an additional scientist job slot.
@@ -4497,3 +4487,14 @@
   id: 838
   time: '2025-01-01T17:26:00.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1188
+- author: honeyed-lemons
+  changes:
+  - message: Added Chemmaster boards to Box, Xeno, and Fland
+    type: Add
+  - message: Heavily tweaked boxes bar and kitchen area
+    type: Tweak
+  - message: Removes Christmas from Box
+    type: Tweak
+  id: 839
+  time: '2025-01-01T23:20:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1189
