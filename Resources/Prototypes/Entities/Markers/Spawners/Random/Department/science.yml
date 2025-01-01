@@ -24,13 +24,40 @@
     - ClothingOuterCoatRnd
     - NetworkConfigurator
     - PowerCellSmall
-    - Flashlight
+    - FlashlightLantern
     - MatterBinStockPart
     - CapacitorStockPart
     - MicroManipulatorStockPart
     - Beaker
     chance: 0.8
     offset: 0.2
+
+- type: entityTable
+  id: ScienceMajorTable
+  table: !type:GroupSelector
+    children:
+    # Common Group
+    - !type:GroupSelector
+      weight: 75
+      children:
+      - id: AnomalyScanner
+      - id: NodeScanner
+      - id: NetworkConfigurator
+      - id: Multitool
+      - id: Beaker
+      - id: Igniter
+      - id: MatterBinStockPart
+      - id: CapacitorStockPart
+      - id: MicroManipulatorStockPart
+    - id: LootSpawnerIndustrial
+      weight: 20
+    # Rare Group
+    - !type:GroupSelector
+      weight: 5
+      children:
+      - id: ResearchDisk
+      - id: ResearchDisk5000
+      - id: RandomInstrumentTable
 
 # Major science loot spawner
 # Use case: Loot in science areas only
@@ -45,25 +72,11 @@
     - state: red
     - sprite: Objects/Specific/Research/researchdisk.rsi
       state: icon
-  - type: RandomSpawner
-    rarePrototypes:
-    - ResearchDisk
-    - ResearchDisk5000
-    - RandomInstrumentTable
-    rareChance: 0.1
-    prototypes:
-    - LootSpawnerIndustrial
-    - AnomalyScanner
-    - NodeScanner
-    - NetworkConfigurator
-    - Multitool
-    - Beaker
-    - Igniter
-    - MatterBinStockPart
-    - CapacitorStockPart
-    - MicroManipulatorStockPart
-    chance: 0.9
-    offset: 0.2
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: MaintToolsTable
+      prob: 0.9
+      offset: 0.2
 
 # Borg Module Spawner
 # Use case: One or two in robotics or as valuable loot

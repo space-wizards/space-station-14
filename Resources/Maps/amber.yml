@@ -106793,6 +106793,11 @@ entities:
     - type: Transform
       pos: 20.5,-23.5
       parent: 2
+  - uid: 22767
+    components:
+    - type: Transform
+      pos: 51.5,-33.5
+      parent: 2
 - proto: LootSpawnerSecurityBasic
   entities:
   - uid: 18172
