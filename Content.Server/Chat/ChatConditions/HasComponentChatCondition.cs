@@ -19,8 +19,9 @@ namespace Content.Server.Chat.ChatConditions;
 /// Checks if the consumer is on a map with an active server, if necessary.
 /// </summary>
 [DataDefinition]
-public sealed partial class HasComponentEntityChatCondition : EntityChatCondition
+public sealed partial class HasComponentChatCondition : ChatCondition
 {
+    public override Type? ConsumerType { get; set; } = typeof(EntityUid);
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
@@ -28,24 +29,28 @@ public sealed partial class HasComponentEntityChatCondition : EntityChatConditio
     [DataField]
     public string? Component;
 
-    public override HashSet<EntityUid> FilterConsumers(HashSet<EntityUid> consumers, Dictionary<Enum, object> channelParameters)
+    public override HashSet<T> FilterConsumers<T>(HashSet<T> consumers, Dictionary<Enum, object> channelParameters)
     {
-        IoCManager.InjectDependencies(this);
-
-        var returnConsumers = new HashSet<EntityUid>();
-
-        if (Component != null)
+        if (consumers is HashSet<EntityUid> entityConsumers)
         {
-            foreach (var consumer in consumers)
+            IoCManager.InjectDependencies(this);
+
+            var returnConsumers = new HashSet<EntityUid>();
+
+            if (Component != null)
             {
-                var comp = _componentFactory.GetRegistration(Component, true);
-                if (_entityManager.HasComponent(consumer, comp.Type))
+                foreach (var consumer in entityConsumers)
                 {
-                    returnConsumers.Add(consumer);
+                    var comp = _componentFactory.GetRegistration(Component, true);
+                    if (_entityManager.HasComponent(consumer, comp.Type))
+                    {
+                        returnConsumers.Add(consumer);
+                    }
                 }
             }
+            return returnConsumers as HashSet<T> ?? new HashSet<T>();
         }
 
-        return returnConsumers;
+        return new HashSet<T>();
     }
 }

@@ -1,24 +1,21 @@
 ﻿- type: communicationChannel
   id: ICSpeech
-  publishSessionChatConditions:
-  - !type:AllSessionChatCondition
+  publishChatConditions:
+  - !type:IsGhostChatCondition
+    inverted: true
     subconditions:
-    - !type:IsGhostSessionChatCondition
-      inverted: true
-      entityChatConditions:
-      - !type:IsAboveCritEntityChatCondition
-        subconditions:
-        - !type:HasComponentEntityChatCondition
-          component: Sleeping
-          inverted: true
+    - !type:IsAboveCritChatCondition
+      subconditions:
+      - !type:HasComponentChatCondition
+        component: Sleeping
+        inverted: true
   consumeCollections:
-  - consumeSessionChatConditions:
-    - !type:AllSessionChatCondition
-      useEntityChatConditions: true
+  - sessionChatConditions:
+    - !type:IsGhostChatCondition
     entityChatConditions:
-    - !type:RangeEntityChatCondition
+    - !type:RangeChatCondition
       maximumRange: 10
-    collectionChatModifiers:
+    chatModifiers:
     - !type:MainMessageChatModifier
     - !type:EntityNameHeaderChatModifier
     - !type:SpeechVerbChatModifier
@@ -41,13 +38,12 @@
   id: BubbleOnlySpeech # This is for IC speech that shouldn't appear in the chatbox, e.g vending machines
   allowSessionMessages: false
   consumeCollections:
-  - consumeSessionChatConditions:
-    - !type:AllSessionChatCondition
-      useEntityChatConditions: true
+  - sessionChatConditions:
+    - !type:AllChatCondition
     entityChatConditions:
-    - !type:RangeEntityChatCondition
+    - !type:RangeChatCondition
       maximumRange: 10
-    collectionChatModifiers:
+    chatModifiers:
     - !type:MainMessageChatModifier
     - !type:EntityNameHeaderChatModifier
     - !type:ColorFulltextChatModifier
@@ -65,30 +61,32 @@
 
 - type: communicationChannel
   id: ICWhisper
-  publishSessionChatConditions:
-  - !type:AllSessionChatCondition
+  publishChatConditions:
+  - !type:IsGhostChatCondition
+    inverted: true
+    subconditions:
+    - !type:IsAboveCritChatCondition
+      subconditions:
+      - !type:HasComponentChatCondition
+        component: Sleeping
+        inverted: true
   consumeCollections:
-  - consumeSessionChatConditions: # Within hearing range
-    - !type:IsGhostSessionChatCondition
-    - !type:AllSessionChatCondition
-      useConsumeEntityChatConditions: true
-    consumeEntityChatConditions:
-    - !type:RangeEntityChatCondition
+  - sessionChatConditions: # Within hearing range
+    - !type:IsGhostChatCondition
+    entityChatConditions:
+    - !type:RangeChatCondition
       maximumRange: 2
-    collectionChatModifiers:
+    chatModifiers:
     - !type:SanitizeRadioPrefixChatModifier
     - !type:MainMessageChatModifier
     - !type:EntityNameHeaderChatModifier
     - !type:ColorFulltextChatModifier
       colorKey: Whisper
-  - consumeSessionChatConditions: # Whispering obfuscation
-    - !type:AllSessionChatCondition
-      useConsumeEntityChatConditions: true
-    consumeEntityChatConditions:
-    - !type:RangeEntityChatCondition
+  - entityChatConditions:
+    - !type:RangeChatCondition
       minimumRange: 2
       maximumRange: 5
-    collectionChatModifiers:
+    chatModifiers:
     - !type:SanitizeRadioPrefixChatModifier
     - !type:MainMessageChatModifier
     - !type:ObfuscateTextChatModifier
@@ -112,16 +110,22 @@
 
 - type: communicationChannel
   id: Emote
-  publishSessionChatConditions:
-  - !type:AllSessionChatCondition
+  publishChatConditions:
+  - !type:IsGhostChatCondition
+    inverted: true
+    subconditions:
+    - !type:IsAboveCritChatCondition
+      subconditions:
+      - !type:HasComponentChatCondition
+        component: Sleeping
+        inverted: true
   consumeCollections:
-  - consumeSessionChatConditions:
-    - !type:AllSessionChatCondition
-      useConsumeEntityChatConditions: true
-    consumeEntityChatConditions:
-    - !type:RangeEntityChatCondition
+  - sessionChatConditions:
+    - !type:IsGhostChatCondition
+    entityChatConditions:
+    - !type:RangeChatCondition
       maximumRange: 10
-    collectionChatModifiers:
+    chatModifiers:
     - !type:MainMessageChatModifier
     - !type:EntityNameHeaderChatModifier
     - !type:ColorFulltextChatModifier
@@ -136,14 +140,14 @@
 
 - type: communicationChannel
   id: Dead
-  publishSessionChatConditions:
-  - !type:IsAdminSessionChatCondition
-  - !type:IsGhostSessionChatCondition
+  publishChatConditions:
+  - !type:IsAdminChatCondition
+  - !type:IsGhostChatCondition
   consumeCollections:
-  - consumeSessionChatConditions:
-    - !type:IsAdminSessionChatCondition
-    - !type:IsGhostSessionChatCondition
-    collectionChatModifiers:
+  - sessionChatConditions:
+    - !type:IsAdminChatCondition
+    - !type:IsGhostChatCondition
+    chatModifiers:
     - !type:MainMessageChatModifier
     - !type:EntityNameHeaderChatModifier
     - !type:ColorFulltextChatModifier
@@ -165,21 +169,21 @@
 
 - type: communicationChannel
   id: LOOC
-  publishSessionChatConditions:
-  - !type:AllSessionChatCondition
+  publishChatConditions:
+  - !type:IsGhostChatCondition
+    inverted: true
     subconditions:
-    - !type:IsGhostSessionChatCondition
-      inverted: true
-      entityChatConditions:
-      - !type:IsAboveCritEntityChatCondition
-        subconditions:
-        - !type:HasComponentEntityChatCondition
-          component: Sleeping
-          inverted: true
+    - !type:IsAboveCritChatCondition
+      subconditions:
+      - !type:HasComponentChatCondition
+        component: Sleeping
+        inverted: true
   consumeCollections:
-  - consumeSessionChatConditions:
-    - !type:AllSessionChatCondition
-    collectionChatModifiers:
+  - sessionChatConditions:
+    - !type:IsGhostChatCondition
+    - !type:RangeChatCondition
+      maximumRange: 10
+    chatModifiers:
     - !type:MainMessageChatModifier
     - !type:EntityNameHeaderChatModifier
     - !type:ColorFulltextChatModifier
@@ -203,17 +207,15 @@
 
 - type: communicationChannel
   id: OOC
-  publishSessionChatConditions:
-  - !type:IsAdminSessionChatCondition
+  publishChatConditions:
+  - !type:IsAdminChatCondition
     subconditions:
-    - !type:AdminOOCEnabledSessionChatCondition
-  - !type:AllSessionChatCondition
-    subconditions:
-    - !type:OOCEnabledSessionChatCondition
+    - !type:AdminOOCEnabledChatCondition
+  - !type:OOCEnabledChatCondition
   consumeCollections:
-  - consumeSessionChatConditions:
-    - !type:AllSessionChatCondition
-    collectionChatModifiers:
+  - sessionChatConditions:
+    - !type:AllChatCondition
+    chatModifiers:
     - !type:SessionNameHeaderChatModifier
     - !type:ColorFulltextChatModifier
       colorKey: OOC
@@ -235,24 +237,20 @@
 - type: communicationChannel
   id: RadioBase
   abstract: true
-  publishSessionChatConditions:
-  - !type:AllSessionChatCondition
-    entityChatConditions:
-    - !type:IsAboveCritEntityChatCondition
+  publishChatConditions:
+  - !type:IsAboveCritChatCondition
+    subconditions:
+    - !type:HasComponentChatCondition
+      component: Sleeping
+      inverted: true
       subconditions:
-      - !type:HasComponentEntityChatCondition
-        component: Sleeping
-        inverted: true
+      - !type:RadioTransmissionChatCondition
         subconditions:
-        - !type:RadioTransmissionEntityChatCondition
-          subconditions:
-          - !type:ActiveTelecomsEntityChatCondition
+        - !type:ActiveTelecomsChatCondition
   consumeCollections:
-  - consumeSessionChatConditions:
-    - !type:AllSessionChatCondition
-      entityChatConditions:
-      - !type:RadioReceiverEntityChatCondition
-    collectionChatModifiers:
+  - entityChatConditions:
+    - !type:RadioReceiverChatCondition
+    chatModifiers:
     - !type:SanitizeRadioPrefixChatModifier
     - !type:MainMessageChatModifier
     - !type:EntityNameHeaderChatModifier
@@ -268,8 +266,6 @@
     afterNode: false
   - !type:BoldTagChatModifier
     targetNode: EntityNameHeader
-  backupChildCommunicationChannels:
-  - Dead #If dead, this should attempt the Dead channel
   chatChannels:
   - Radio
 
@@ -381,12 +377,12 @@
 
 - type: communicationChannel
   id: AdminChat
-  publishSessionChatConditions:
-  - !type:IsAdminSessionChatCondition
+  publishChatConditions:
+  - !type:IsAdminChatCondition
   consumeCollections:
-  - consumeSessionChatConditions:
-    - !type:AllSessionChatCondition
-    collectionChatModifiers:
+  - sessionChatConditions:
+    - !type:IsAdminChatCondition
+    chatModifiers:
     - !type:SessionNameHeaderChatModifier
     - !type:ColorFulltextChatModifier
       colorKey: AdminChat
@@ -405,12 +401,12 @@
 
 - type: communicationChannel
   id: AdminAlert
-  publishSessionChatConditions:
-  - !type:IsAdminSessionChatCondition
+  publishChatConditions:
+  - !type:IsAdminChatCondition
   consumeCollections:
-  - consumeSessionChatConditions:
-    - !type:AllSessionChatCondition
-    collectionChatModifiers:
+  - sessionChatConditions:
+    - !type:IsAdminChatCondition
+    chatModifiers:
     - !type:BoldFulltextChatModifier
     - !type:ColorFulltextChatModifier
       colorKey: AdminAlert
@@ -419,12 +415,12 @@
 
 - type: communicationChannel
   id: Server # Server announcements to go out to all players.
-  publishSessionChatConditions:
-  - !type:IsAdminSessionChatCondition
+  publishChatConditions:
+  - !type:IsAdminChatCondition
   consumeCollections:
-  - consumeSessionChatConditions:
-    - !type:AllSessionChatCondition
-    collectionChatModifiers:
+  - sessionChatConditions:
+    - !type:AllChatCondition
+    chatModifiers:
     - !type:ColorFulltextChatModifier
       colorKey: Server
   chatChannels:
@@ -432,12 +428,12 @@
 
 - type: communicationChannel
   id: GameMessage # Used to communicate non-diagetic info
-  publishSessionChatConditions:
-  - !type:IsAdminSessionChatCondition
+  publishChatConditions:
+  - !type:IsAdminChatCondition
   consumeCollections:
-  - consumeSessionChatConditions:
-    - !type:AllSessionChatCondition
-    collectionChatModifiers:
+  - sessionChatConditions:
+    - !type:AllChatCondition
+    chatModifiers:
     - !type:ColorFulltextChatModifier
       colorKey: IngameAnnouncement
   chatChannels:
@@ -445,11 +441,10 @@
 
 - type: communicationChannel
   id: StationAnnouncement # Used for station announcements
-  allowSessionMessages: false
   consumeCollections:
-  - consumeSessionChatConditions:
-    - !type:SameStationSessionChatCondition
-    collectionChatModifiers:
+  - sessionChatConditions:
+    - !type:SameStationChatCondition
+    chatModifiers:
     - !type:ColorFulltextChatModifier
       colorKey: IngameAnnouncement
   chatChannels:

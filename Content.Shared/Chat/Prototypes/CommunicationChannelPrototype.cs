@@ -27,14 +27,7 @@ public sealed partial class CommunicationChannelPrototype : IPrototype, IInherit
     /// </summary>
     [DataField(serverOnly: true)]
     [AlwaysPushInheritance]
-    public List<SessionChatCondition> PublishSessionChatConditions = new();
-
-    /// <summary>
-    /// The conditions required for an entity (non-client) to be allowed to publish via this communication channel.
-    /// </summary>
-    [DataField(serverOnly: true)]
-    [AlwaysPushInheritance]
-    public List<EntityChatCondition> PublishEntityChatConditions = new();
+    public List<ChatCondition> PublishChatConditions = new();
 
     /// <summary>
     /// A collection of consumer conditions and applicable markup tags.
@@ -50,13 +43,6 @@ public sealed partial class CommunicationChannelPrototype : IPrototype, IInherit
     [DataField]
     [AlwaysPushInheritance]
     public ChatChannel ChatChannels = ChatChannel.None;
-
-    /// <summary>
-    /// If true, the server may publish to this channel.
-    /// </summary>
-    [DataField]
-    [AlwaysPushInheritance]
-    public bool AllowServerMessages = true;
 
     /// <summary>
     /// If true, an entity does not need to be attached to publish to this channel.
@@ -125,13 +111,21 @@ public partial struct ConsumeCollection
     /// The conditions required for a session (i.e. client) to be allowed to consume this communication channel.
     /// </summary>
     [DataField(serverOnly: true)]
-    public List<SessionChatCondition> ConsumeSessionChatConditions = new();
+    public List<ChatCondition> SessionChatConditions = new();
 
     /// <summary>
-    /// The conditions required for an entity (non-client) to be allowed to consume this communication channel.
+    /// If true, this consume collection will also process all sessions through the EntityChatConditions list.
+    /// This is useful for when you want similar behavior shared between non-client and client entities,
+    /// i.e. most types of speech, and helps cut down on yaml size.
     /// </summary>
     [DataField(serverOnly: true)]
-    public List<EntityChatCondition> ConsumeEntityChatConditions = new();
+    public bool UseEntitySessionConditions = true;
+
+    /// <summary>
+    /// The conditions required for a non-client entity to be allowed to consume this communication channel.
+    /// </summary>
+    [DataField(serverOnly: true)]
+    public List<ChatCondition> EntityChatConditions = new();
 
     /// <summary>
     /// Contains markup node suppliers that are applied and processed on the server.
@@ -139,16 +133,18 @@ public partial struct ConsumeCollection
     /// If such nodes are needed, it's better to supply a tag that gets converted appropriately on the client instead.
     /// </summary>
     [DataField(serverOnly: true)]
-    public List<ChatModifier> CollectionChatModifiers = new();
+    public List<ChatModifier> ChatModifiers = new();
 
     public ConsumeCollection(
-        List<SessionChatCondition> consumeSessionChatConditions,
-        List<EntityChatCondition> consumeEntityChatConditions,
-        List<ChatModifier> collectionChatModifiers)
+        List<ChatCondition> sessionChatConditions,
+        bool useEntitySessionConditions,
+        List<ChatCondition> entityChatConditions,
+        List<ChatModifier> chatModifiers)
     {
-        ConsumeSessionChatConditions = consumeSessionChatConditions;
-        ConsumeEntityChatConditions = consumeEntityChatConditions;
-        CollectionChatModifiers = collectionChatModifiers;
+        SessionChatConditions = sessionChatConditions;
+        UseEntitySessionConditions = useEntitySessionConditions;
+        EntityChatConditions = entityChatConditions;
+        ChatModifiers = chatModifiers;
     }
 }
 

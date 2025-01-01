@@ -15,6 +15,7 @@ using Content.Shared.Chat.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Mind;
 using Content.Shared.Players.RateLimiting;
+using Microsoft.Extensions.Logging;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
@@ -296,9 +297,9 @@ internal sealed partial class ChatManager : IChatManager
         // If senderSession is null, it means the server is sending the message.
         if (senderSession != null)
         {
-            var basePublishSessionChatCondition = new SessionChatCondition(communicationChannel.PublishSessionChatConditions, new List<EntityChatCondition>());
+            var basePublishChatCondition = new ChatCondition(communicationChannel.PublishChatConditions);
 
-            var result = basePublishSessionChatCondition.ProcessCondition(new HashSet<ICommonSession>() { senderSession }, compiledChannelParameters);
+            var result = basePublishChatCondition.ProcessCondition(new HashSet<ICommonSession>() { senderSession }, compiledChannelParameters);
 
             var allowPublish = false;
 
@@ -308,14 +309,26 @@ internal sealed partial class ChatManager : IChatManager
             if (!allowPublish)
                 failedPublishing = true;
         }
-        else if (!communicationChannel.AllowServerMessages)
+
+        // We also pass it on to any child channels that should be included.
+        var childChannels = HandleChildChannels(communicationChannel, communicationChannel.AlwaysChildCommunicationChannels);
+        if (childChannels.Count > 0)
         {
-            Logger.Debug("ServerMessageNotAllowed");
-            return;
+            foreach (var childChannel in childChannels)
+            {
+                SendChannelMessage(
+                    message,
+                    childChannel,
+                    senderSession,
+                    senderEntity,
+                    ref usedCommsChannels,
+                    targetSessions,
+                    channelParameters);
+            }
         }
 
         // If the sender failed the publishing conditions, this attempt a back-up channel.
-        // Useful for e.g. making ghosts sending LOOC messages to speak in Deadchat instead.
+        // Useful for e.g. making ghosts trying to send LOOC messages fall back to Deadchat instead.
         if (failedPublishing)
         {
             var backupChildChannels = HandleChildChannels(communicationChannel, communicationChannel.BackupChildCommunicationChannels);
@@ -332,10 +345,8 @@ internal sealed partial class ChatManager : IChatManager
                         targetSessions);
                 }
             }
-        }
-
-        if (failedPublishing)
             return;
+        }
 
         //At this point we may assume that the message is publishing; as such, it should be recorded in the usedCommsTypes.
         if (communicationChannel.NonRepeatable)
@@ -346,68 +357,71 @@ internal sealed partial class ChatManager : IChatManager
         #region Consumers
 
         // This section handles sending out the message to consumers, whether that be sessions or entities.
+        // This is done via consume collections; a consume collection contains a list of conditions for sessions and entities,
+        // as well as chat modifiers that change the message clientside.
 
+        // Sessions/Entities are processed via the first consume collection they meet the conditions for;
+        // therefore, they should be exempt from any subsequent consume collections.
         var exemptSessions = new HashSet<ICommonSession>();
         var exemptEntities = new HashSet<EntityUid>();
 
-        // We start by looking at player sessions and evaluating them.
-        // ConsumeCollections allow us to modify the message with different ChatModifiers based on the recipients.
         foreach (var consumeCollection in communicationChannel.ConsumeCollections)
         {
             var eligibleConsumerSessions = new HashSet<ICommonSession>();
 
-            if (consumeCollection.ConsumeSessionChatConditions.Count > 0)
+            // Adds on the EntityChatConditions list, for when you want sessions to consume messages similarly to entities.
+            if (consumeCollection.UseEntitySessionConditions && consumeCollection.EntityChatConditions.Count > 0)
+                consumeCollection.SessionChatConditions.Add(new ChatCondition(consumeCollection.EntityChatConditions));
+
+            if (consumeCollection.SessionChatConditions.Count > 0)
             {
-                // The list of chat conditions is made into its own chat condition here, to more easily evaluate it iteratively.
-                foreach (var consumeSessionChatCondition in consumeCollection.ConsumeSessionChatConditions)
-                {
-                    var baseSessionChatCondition =
-                        new SessionChatCondition(new List<SessionChatCondition>() { consumeSessionChatCondition }, consumeSessionChatCondition.UseConsumeEntityChatConditions ? consumeCollection.ConsumeEntityChatConditions : consumeSessionChatCondition.EntityChatConditions);
+                // The list of chat conditions is made into its own chat condition here to more easily evaluate it iteratively.
+                var baseChatCondition = new ChatCondition(consumeCollection.SessionChatConditions);
 
-                    var filteredConsumers = baseSessionChatCondition.ProcessCondition(targetSessions ?? _playerManager.NetworkedSessions.ToHashSet(), compiledChannelParameters);
+                var filteredConsumers = baseChatCondition.ProcessCondition(
+                    targetSessions ?? _playerManager.NetworkedSessions.ToHashSet(),
+                    compiledChannelParameters);
 
-                    if (filteredConsumers.Count > 0)
-                        eligibleConsumerSessions = filteredConsumers;
+                if (filteredConsumers.Count > 0)
+                    eligibleConsumerSessions = filteredConsumers;
 
-                    eligibleConsumerSessions.ExceptWith(exemptSessions);
-                    exemptSessions.UnionWith(eligibleConsumerSessions);
-                }
+                eligibleConsumerSessions.ExceptWith(exemptSessions);
+                exemptSessions.UnionWith(eligibleConsumerSessions);
             }
-
-            // No consumers for this collection.
-            if (eligibleConsumerSessions.Count == 0)
-                continue;
 
             // Next, we apply any ChatModifiers from the collection.
             var consumerMessage = message;
-            foreach (var markupSupplier in consumeCollection.CollectionChatModifiers)
+            foreach (var chatModifier in consumeCollection.ChatModifiers)
             {
-                consumerMessage = markupSupplier.ProcessChatModifier(consumerMessage, compiledChannelParameters);
+                consumerMessage = chatModifier.ProcessChatModifier(consumerMessage, compiledChannelParameters);
             }
 
             // Comment: I don't know whether there will ever be a ContentMarkupTag that /needs/ to be done serverside.
             // Any such behavior could just as well be done via a ChatModifier.
-            // So for now we're commenting it out.
+            // So for now we're commenting it out:
 
             // consumerMessage = _contentMarkupTagManager.ProcessMessage(consumerMessage);
 
-            // Off the message goes!
-            ChatFormattedMessageToHashset(
-                consumerMessage,
-                communicationChannel,
-                eligibleConsumerSessions.Select(x => x.Channel),
-                senderEntity ?? EntityUid.Invalid,
-                communicationChannel.HideChat,
-                true //CHAT-TODO: Process properly
+            if (eligibleConsumerSessions.Count != 0)
+            {
+                // Off the message goes!
+                ChatFormattedMessageToHashset(
+                    consumerMessage,
+                    communicationChannel,
+                    eligibleConsumerSessions.Select(x => x.Channel),
+                    senderEntity ?? EntityUid.Invalid,
+                    communicationChannel.HideChat,
+                    true //CHAT-TODO: Process properly
                 );
+            }
 
             // Send out the message to any listening entities as well.
-            if (consumeCollection.ConsumeEntityChatConditions.Count > 0)
+            if (consumeCollection.EntityChatConditions.Count > 0)
             {
                 var getListenerEv = new GetListenerConsumerEvent();
                 _entityManager.EventBus.RaiseEvent(EventSource.Local, ref getListenerEv);
 
-                var baseEntityChatCondition = new EntityChatCondition(consumeCollection.ConsumeEntityChatConditions);
+                var baseEntityChatCondition = new ChatCondition(consumeCollection.EntityChatConditions);
 
                 var filteredEntities = baseEntityChatCondition.ProcessCondition(getListenerEv.Entities, compiledChannelParameters);
 
@@ -421,23 +435,6 @@ internal sealed partial class ChatManager : IChatManager
 
                     _entityManager.EventBus.RaiseLocalEvent(consumerEntity, listenerConsumeEv);
                 }
-            }
-        }
-
-        // Finally we pass it on to any child channels that should be included.
-        var childChannels = HandleChildChannels(communicationChannel, communicationChannel.AlwaysChildCommunicationChannels);
-        if (childChannels.Count > 0)
-        {
-            foreach (var childChannel in childChannels)
-            {
-                SendChannelMessage(
-                    message,
-                    childChannel,
-                    senderSession,
-                    senderEntity,
-                    ref usedCommsChannels,
-                    targetSessions,
-                    channelParameters);
             }
         }
 

@@ -1,14 +1,9 @@
-﻿using System.Linq;
-using Content.Server.Power.Components;
-using Content.Server.Radio.Components;
-using Content.Server.Station.Components;
-using Content.Server.Station.Systems;
+﻿using Content.Server.Power.Components;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
-using Robust.Shared.Network;
-using Robust.Shared.Player;
+using Microsoft.Extensions.Logging;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chat.ChatConditions;
@@ -17,22 +12,22 @@ namespace Content.Server.Chat.ChatConditions;
 /// Checks if the consumer is on a map with an active server, if necessary.
 /// </summary>
 [DataDefinition]
-public sealed partial class ActiveTelecomsEntityChatCondition : EntityChatCondition
+public sealed partial class ActiveTelecomsChatCondition : ChatCondition
 {
+    public override Type? ConsumerType { get; set; } = null;
 
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
-    public override HashSet<EntityUid> FilterConsumers(HashSet<EntityUid> consumers, Dictionary<Enum, object> channelParameters)
+    public override HashSet<T> FilterConsumers<T>(HashSet<T> consumers, Dictionary<Enum, object> channelParameters)
     {
         IoCManager.InjectDependencies(this);
-        var returnConsumers = new HashSet<EntityUid>();
 
         if (!channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var senderEntity) ||
             !channelParameters.TryGetValue(DefaultChannelParameters.RadioChannel, out var radioChannel) ||
             !_prototypeManager.TryIndex((string)radioChannel, out RadioChannelPrototype? radioPrototype) ||
             !_entityManager.TryGetComponent<TransformComponent>((EntityUid)senderEntity, out var sourceTransform))
-            return new HashSet<EntityUid>();
+            return new HashSet<T>();
 
         var activeServer = radioPrototype.LongRange;
 
@@ -51,9 +46,6 @@ public sealed partial class ActiveTelecomsEntityChatCondition : EntityChatCondit
             }
         }
 
-        if (activeServer)
-            returnConsumers = consumers;
-
-        return returnConsumers;
+        return activeServer ? consumers : new HashSet<T>();
     }
 }
