@@ -57,7 +57,7 @@
       children:
       - id: ResearchDisk
       - id: ResearchDisk5000
-      - id: RandomInstrumentTable
+      - id: RandomInstruments
 
 # Major science loot spawner
 # Use case: Loot in science areas only
@@ -75,7 +75,6 @@
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: MaintToolsTable
-      prob: 0.9
       offset: 0.2
 
 # Borg Module Spawner
