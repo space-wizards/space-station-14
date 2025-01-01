@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Core Station now has an additional scientist job slot.
-    type: Add
-  id: 340
-  time: '2024-10-07T07:16:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/432
 - author: formlessnameless
   changes:
   - message: Removed pAI from base trinket loadout and added it to learner roles to
@@ -4498,3 +4491,10 @@
   id: 839
   time: '2025-01-01T23:20:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1189
+- author: hivehum
+  changes:
+  - message: The Dino Wars have ended...
+    type: Remove
+  id: 840
+  time: '2025-01-01T23:43:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1191
