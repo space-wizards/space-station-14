@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: Adjusted a few loadout slot orders.
-    type: Tweak
-  id: 337
-  time: '2024-10-07T07:16:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/430
-- author: Darkmajia
-  changes:
   - message: Added fill sprites for drinks that had none, including Arnold Palmers
       and Shirley Temples.
     type: Add
@@ -4497,3 +4490,11 @@
   id: 836
   time: '2025-01-01T02:25:52.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1181
+- author: EpicToastTM
+  changes:
+  - message: Christmas is over. (Maps have been updated to remove presents, Christmas
+      trees and other decals.)
+    type: Tweak
+  id: 837
+  time: '2025-01-01T17:24:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1187
