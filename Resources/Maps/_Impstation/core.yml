@@ -22173,18 +22173,6 @@ entities:
     - type: Transform
       pos: 35.5,16.5
       parent: 2
-  - uid: 16238
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -13.5,-1.5
-      parent: 2
-  - uid: 16239
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -23.5,15.5
-      parent: 2
   - uid: 20514
     components:
     - type: Transform
@@ -22206,28 +22194,11 @@ entities:
     - type: Transform
       pos: 46.5,0.5
       parent: 2
-  - uid: 21603
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 48.5,12.5
-      parent: 2
   - uid: 21604
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 56.5,16.5
-      parent: 2
-  - uid: 21605
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 37.5,21.5
-      parent: 2
-  - uid: 21607
-    components:
-    - type: Transform
-      pos: 61.5,-10.5
       parent: 2
   - uid: 21608
     components:
@@ -22271,12 +22242,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -27.5,-11.5
       parent: 2
-  - uid: 21622
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 2.5,22.5
-      parent: 2
   - uid: 21624
     components:
     - type: Transform
@@ -22287,12 +22252,6 @@ entities:
     components:
     - type: Transform
       pos: 17.5,24.5
-      parent: 2
-  - uid: 21626
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 28.5,9.5
       parent: 2
   - uid: 21627
     components:
@@ -22309,23 +22268,11 @@ entities:
     - type: Transform
       pos: 61.5,28.5
       parent: 2
-  - uid: 21845
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -31.5,10.5
-      parent: 2
   - uid: 21878
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 50.5,-36.5
-      parent: 2
-  - uid: 21879
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -18.5,-28.5
       parent: 2
 - proto: ButtonFrameJanitor
   entities:
@@ -59861,6 +59808,13 @@ entities:
     - type: Transform
       pos: 41.5,11.5
       parent: 2
+- proto: ChemMasterMachineCircuitboard
+  entities:
+  - uid: 896
+    components:
+    - type: Transform
+      pos: -16.43388,7.7636
+      parent: 2
 - proto: ChessBoard
   entities:
   - uid: 864
@@ -61273,6 +61227,13 @@ entities:
     - type: Transform
       pos: 8.478626,42.864456
       parent: 2
+- proto: ClothingHeadHatCircusClown
+  entities:
+  - uid: 2064
+    components:
+    - type: Transform
+      pos: -30.484482,7.7589936
+      parent: 2
 - proto: ClothingHeadHatMagician
   entities:
   - uid: 3737
@@ -61377,11 +61338,6 @@ entities:
       parent: 2
 - proto: ClothingHeadHatTophat
   entities:
-  - uid: 896
-    components:
-    - type: Transform
-      pos: -16.531141,7.6365333
-      parent: 2
   - uid: 3738
     components:
     - type: Transform
@@ -76164,34 +76120,37 @@ entities:
     - type: Transform
       pos: 61.5,19.5
       parent: 2
-- proto: FloraRockSolid01
+- proto: FloraRockSolid
   entities:
+  - uid: 16697
+    components:
+    - type: Transform
+      pos: 62.19926,-39.235546
+      parent: 2
   - uid: 16712
     components:
     - type: Transform
       pos: 28.622553,-54.29832
       parent: 2
-  - uid: 17302
-    components:
-    - type: Transform
-      pos: 38.490116,-53.00032
-      parent: 2
-  - uid: 17303
-    components:
-    - type: Transform
-      pos: 64.42829,-47.413994
-      parent: 2
-- proto: FloraRockSolid02
-  entities:
   - uid: 16745
     components:
     - type: Transform
       pos: 26.769617,-50.317265
       parent: 2
+  - uid: 16748
+    components:
+    - type: Transform
+      pos: -44.05552,-40.28774
+      parent: 2
   - uid: 16779
     components:
     - type: Transform
       pos: -44.44241,-39.335354
+      parent: 2
+  - uid: 17021
+    components:
+    - type: Transform
+      pos: 28.54376,-56.43803
       parent: 2
   - uid: 17138
     components:
@@ -76203,23 +76162,6 @@ entities:
     - type: Transform
       pos: 46.236732,-51.29415
       parent: 2
-- proto: FloraRockSolid03
-  entities:
-  - uid: 16697
-    components:
-    - type: Transform
-      pos: 62.19926,-39.235546
-      parent: 2
-  - uid: 16748
-    components:
-    - type: Transform
-      pos: -44.05552,-40.28774
-      parent: 2
-  - uid: 17021
-    components:
-    - type: Transform
-      pos: 28.54376,-56.43803
-      parent: 2
   - uid: 17299
     components:
     - type: Transform
@@ -76230,7 +76172,17 @@ entities:
     - type: Transform
       pos: 50.521164,-56.935516
       parent: 2
-- proto: FloraTree01
+  - uid: 17302
+    components:
+    - type: Transform
+      pos: 38.490116,-53.00032
+      parent: 2
+  - uid: 17303
+    components:
+    - type: Transform
+      pos: 64.42829,-47.413994
+      parent: 2
+- proto: FloraTree
   entities:
   - uid: 1075
     components:
@@ -76242,73 +76194,56 @@ entities:
     - type: Transform
       pos: -28.765827,6.0652723
       parent: 2
-  - uid: 3620
-    components:
-    - type: Transform
-      pos: -45.82935,-1.4404856
-      parent: 2
-- proto: FloraTree02
-  entities:
   - uid: 3619
     components:
     - type: Transform
       pos: -48.654617,4.503584
+      parent: 2
+  - uid: 3620
+    components:
+    - type: Transform
+      pos: -45.82935,-1.4404856
       parent: 2
   - uid: 3696
     components:
     - type: Transform
       pos: -49.713776,-8.129584
       parent: 2
-  - uid: 6140
-    components:
-    - type: Transform
-      pos: -45.10429,-48.580776
-      parent: 2
-- proto: FloraTree05
-  entities:
-  - uid: 6128
-    components:
-    - type: Transform
-      pos: -50.151165,-48.580776
-      parent: 2
-- proto: FloraTree06
-  entities:
   - uid: 3810
     components:
     - type: Transform
       pos: -47.863766,-29.112556
       parent: 2
-- proto: FloraTreeChristmas02
-  entities:
-  - uid: 21377
+  - uid: 6128
     components:
     - type: Transform
-      pos: -33.5,6.5
+      pos: -50.151165,-48.580776
       parent: 2
-- proto: FloraTreeLarge03
+  - uid: 6140
+    components:
+    - type: Transform
+      pos: -45.10429,-48.580776
+      parent: 2
+- proto: FloraTreeLarge
   entities:
   - uid: 1077
     components:
     - type: Transform
       pos: -39.07622,5.790084
       parent: 2
-- proto: FloraTreeLarge04
-  entities:
   - uid: 4227
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -45.237907,-8.042405
       parent: 2
-- proto: FloraTreeSnow02
+- proto: FloraTreeSnow
   entities:
   - uid: 20393
     components:
     - type: Transform
       pos: 80.68255,-34.341137
       parent: 2
-- proto: FloraTreeSnow04
-  entities:
   - uid: 20394
     components:
     - type: Transform
@@ -76492,6 +76427,13 @@ entities:
     components:
     - type: Transform
       pos: -59.463665,-34.472084
+      parent: 2
+- proto: FoodMealMeatLollipop
+  entities:
+  - uid: 2065
+    components:
+    - type: Transform
+      pos: -36.484684,5.710078
       parent: 2
 - proto: FoodMeat
   entities:
@@ -103221,10 +103163,10 @@ entities:
       parent: 2
 - proto: HolopadGeneralTheater
   entities:
-  - uid: 22538
+  - uid: 2066
     components:
     - type: Transform
-      pos: -33.5,5.5
+      pos: -33.5,6.5
       parent: 2
 - proto: HolopadGeneralTools
   entities:
@@ -104494,6 +104436,13 @@ entities:
     components:
     - type: Transform
       pos: -36.5,12.5
+      parent: 2
+- proto: LockerBrigmedicFilled
+  entities:
+  - uid: 22570
+    components:
+    - type: Transform
+      pos: -5.5,34.5
       parent: 2
 - proto: LockerCaptainFilledNoLaser
   entities:
@@ -117805,6 +117754,11 @@ entities:
     - type: Transform
       pos: 27.200108,-41.24766
       parent: 2
+  - uid: 22571
+    components:
+    - type: Transform
+      pos: -16.46513,7.454127
+      parent: 2
 - proto: SecurityTechFab
   entities:
   - uid: 5043
@@ -118132,46 +118086,6 @@ entities:
       parent: 2
 - proto: ShuttersNormalOpen
   entities:
-  - uid: 2064
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -16.5,-0.5
-      parent: 2
-  - uid: 2065
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -16.5,0.5
-      parent: 2
-  - uid: 2066
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -16.5,1.5
-      parent: 2
-  - uid: 2067
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -16.5,2.5
-      parent: 2
-  - uid: 2068
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -16.5,3.5
-      parent: 2
-  - uid: 2693
-    components:
-    - type: Transform
-      pos: 43.5,10.5
-      parent: 2
-  - uid: 2694
-    components:
-    - type: Transform
-      pos: 42.5,10.5
-      parent: 2
   - uid: 2908
     components:
     - type: Transform
@@ -118234,18 +118148,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 29.5,-27.5
-      parent: 2
-  - uid: 5655
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 32.5,21.5
-      parent: 2
-  - uid: 5661
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 32.5,20.5
       parent: 2
   - uid: 7033
     components:
@@ -118338,16 +118240,6 @@ entities:
     - type: Transform
       pos: 48.5,-39.5
       parent: 2
-  - uid: 8747
-    components:
-    - type: Transform
-      pos: 45.5,10.5
-      parent: 2
-  - uid: 8748
-    components:
-    - type: Transform
-      pos: 46.5,10.5
-      parent: 2
   - uid: 8768
     components:
     - type: Transform
@@ -118373,47 +118265,11 @@ entities:
     - type: Transform
       pos: -22.5,10.5
       parent: 2
-  - uid: 15409
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -23.5,14.5
-      parent: 2
-  - uid: 15410
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -23.5,13.5
-      parent: 2
-  - uid: 15411
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -23.5,12.5
-      parent: 2
   - uid: 16627
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 14.5,33.5
-      parent: 2
-  - uid: 17478
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -27.5,12.5
-      parent: 2
-  - uid: 17479
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -27.5,13.5
-      parent: 2
-  - uid: 17480
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -27.5,14.5
       parent: 2
   - uid: 17492
     components:
@@ -118438,71 +118294,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -22.5,-12.5
-      parent: 2
-  - uid: 17496
-    components:
-    - type: Transform
-      pos: -16.5,-28.5
-      parent: 2
-  - uid: 17497
-    components:
-    - type: Transform
-      pos: -15.5,-28.5
-      parent: 2
-  - uid: 17498
-    components:
-    - type: Transform
-      pos: -17.5,-28.5
-      parent: 2
-  - uid: 17502
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 0.5,24.5
-      parent: 2
-  - uid: 17503
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 0.5,23.5
-      parent: 2
-  - uid: 17512
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 24.5,14.5
-      parent: 2
-  - uid: 17514
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 24.5,13.5
-      parent: 2
-  - uid: 17515
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 24.5,12.5
-      parent: 2
-  - uid: 17521
-    components:
-    - type: Transform
-      pos: 57.5,-15.5
-      parent: 2
-  - uid: 17522
-    components:
-    - type: Transform
-      pos: 58.5,-15.5
-      parent: 2
-  - uid: 17523
-    components:
-    - type: Transform
-      pos: 59.5,-15.5
-      parent: 2
-  - uid: 17524
-    components:
-    - type: Transform
-      pos: 60.5,-15.5
       parent: 2
   - uid: 19928
     components:
@@ -118530,24 +118321,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 19.5,-71.5
-      parent: 2
-  - uid: 22860
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 24.5,15.5
-      parent: 2
-  - uid: 22861
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 32.5,19.5
-      parent: 2
-  - uid: 22862
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 0.5,25.5
       parent: 2
 - proto: ShuttersRadiationOpen
   entities:
@@ -118855,24 +118628,6 @@ entities:
       linkedPorts:
         16684:
         - Pressed: Toggle
-  - uid: 2100
-    components:
-    - type: MetaData
-      name: Shutters button
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 48.5,12.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        8747:
-        - Pressed: Toggle
-        8748:
-        - Pressed: Toggle
-        2693:
-        - Pressed: Toggle
-        2694:
-        - Pressed: Toggle
   - uid: 4520
     components:
     - type: MetaData
@@ -118912,22 +118667,6 @@ entities:
         4542:
         - Pressed: Toggle
         4540:
-        - Pressed: Toggle
-  - uid: 5653
-    components:
-    - type: MetaData
-      name: Shutters button
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 37.5,21.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        5655:
-        - Pressed: Toggle
-        5661:
-        - Pressed: Toggle
-        22861:
         - Pressed: Toggle
   - uid: 5757
     components:
@@ -119055,26 +118794,6 @@ entities:
       linkedPorts:
         8243:
         - Pressed: DoorBolt
-  - uid: 12911
-    components:
-    - type: MetaData
-      name: Shutters button
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -13.5,-1.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        2064:
-        - Pressed: Toggle
-        2065:
-        - Pressed: Toggle
-        2066:
-        - Pressed: Toggle
-        2067:
-        - Pressed: Toggle
-        2068:
-        - Pressed: Toggle
   - uid: 12913
     components:
     - type: MetaData
@@ -119142,28 +118861,6 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         1686:
-        - Pressed: Toggle
-  - uid: 15913
-    components:
-    - type: MetaData
-      name: Shutters button
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -23.5,15.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        15410:
-        - Pressed: Toggle
-        15409:
-        - Pressed: Toggle
-        15411:
-        - Pressed: Toggle
-        15408:
-        - Pressed: Toggle
-        21746:
-        - Pressed: Toggle
-        7377:
         - Pressed: Toggle
   - uid: 16121
     components:
@@ -119279,38 +118976,6 @@ entities:
         - Pressed: Toggle
         17495:
         - Pressed: Toggle
-  - uid: 17499
-    components:
-    - type: MetaData
-      name: Shutters button
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -18.5,-28.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        17498:
-        - Pressed: Toggle
-        17496:
-        - Pressed: Toggle
-        17497:
-        - Pressed: Toggle
-  - uid: 17505
-    components:
-    - type: MetaData
-      name: Shutters button
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 2.5,22.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        17503:
-        - Pressed: Toggle
-        17502:
-        - Pressed: Toggle
-        22862:
-        - Pressed: Toggle
   - uid: 17507
     components:
     - type: MetaData
@@ -119332,24 +118997,6 @@ entities:
         8591:
         - Pressed: Toggle
         8592:
-        - Pressed: Toggle
-  - uid: 17516
-    components:
-    - type: MetaData
-      name: Shutters button
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 28.5,9.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        17515:
-        - Pressed: Toggle
-        17514:
-        - Pressed: Toggle
-        17512:
-        - Pressed: Toggle
-        22860:
         - Pressed: Toggle
   - uid: 17517
     components:
@@ -119389,23 +119036,6 @@ entities:
         6548:
         - Pressed: Toggle
         6549:
-        - Pressed: Toggle
-  - uid: 17520
-    components:
-    - type: MetaData
-      name: Shutters button
-    - type: Transform
-      pos: 61.5,-10.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        17524:
-        - Pressed: Toggle
-        17523:
-        - Pressed: Toggle
-        17522:
-        - Pressed: Toggle
-        17521:
         - Pressed: Toggle
   - uid: 17526
     components:
@@ -119520,22 +119150,6 @@ entities:
         - Pressed: DoorBolt
         - Pressed: Close
         - Pressed: AutoClose
-  - uid: 21844
-    components:
-    - type: MetaData
-      name: Shutters button
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -31.5,10.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        17478:
-        - Pressed: Toggle
-        17480:
-        - Pressed: Toggle
-        17479:
-        - Pressed: Toggle
   - uid: 21873
     components:
     - type: MetaData
@@ -149241,6 +148855,11 @@ entities:
     components:
     - type: Transform
       pos: 23.433456,-65.575584
+      parent: 2
+  - uid: 22572
+    components:
+    - type: Transform
+      pos: -16.610964,7.48235
       parent: 2
 - proto: Wristwatch
   entities:
