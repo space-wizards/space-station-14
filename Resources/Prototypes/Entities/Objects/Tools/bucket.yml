@@ -2,7 +2,6 @@
   parent: BaseItem
   id: BaseBucket
   name: base bucket
-  description: Something that looks and acts like a bucket.
   abstract: true
   components:
   - type: Drink
@@ -80,7 +79,6 @@
 - type: entity
   parent: BaseBucket
   id: BaseWateringCan
-  description: Something that looks and acts like a watering can.
   abstract: true
   components:
   - type: Tag
@@ -106,12 +104,12 @@
 
 - type: entity
   parent: BaseWateringCan
-  id: WoodenWateringCan # fewer micro plastics
-  name: wooden watering can
-  description: An old metal-made watering can but shoddily painted to look like it was made of wood for some dubious reason...
+  id: OldWateringCan
+  name: old watering can
+  description: An old watering can, shoddily painted to look like it was made of wood for some dubious reason...
   components:
   - type: Sprite
-    sprite: Objects/Tools/Hydroponics/watering_can_wooden.rsi
+    sprite: Objects/Tools/Hydroponics/watering_can_old.rsi
     layers:
     - state: icon
     - map: ["enum.SolutionContainerLayers.Fill"]
@@ -120,8 +118,7 @@
       visible: false
   - type: PhysicalComposition
     materialComposition:
-      Steel: 25
-      Wood: 25
+      Plastic: 50
 
 - type: entity
   parent: MarkerBase
@@ -138,7 +135,7 @@
     prototypes:
     - WateringCan
     rarePrototypes:
-    - WoodenWateringCan
+    - OldWateringCan
 
 - type: entity
   parent: BaseWateringCan
