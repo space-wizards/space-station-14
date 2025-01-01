@@ -111,7 +111,8 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         if (!Resolve(uid, ref component))
             return;
 
-        TryOpenUi(uid, args.User, component);
+        if (component.CurrentMode == ImplanterToggleMode.Draw)
+            TryOpenUi(uid, args.User, component);
     }
 
     private void TryOpenUi(EntityUid uid, EntityUid user, ImplanterComponent? component = null)
