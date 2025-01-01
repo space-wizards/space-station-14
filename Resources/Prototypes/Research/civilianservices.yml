@@ -209,7 +209,7 @@
     state: icon
   discipline: CivilianServices
   tier: 2
-  const: 10000
+  cost: 10000
   recipeUnlocks:
   - AdvancedWateringCan
 
