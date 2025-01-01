@@ -151,15 +151,18 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         if (oldTags.SequenceEqual(newAccessList))
             return;
 
-        var ableToModify = component.AccessLevels.ToHashSet();
+        var ableToModify = component.AccessLevels;
 
-        var addedTags = newAccessList.Except(oldTags).Select(tag => tag).ToHashSet();
-        var removedTags = oldTags.Except(newAccessList).Select(tag => tag).ToHashSet();
+        var addedTags = newAccessList.Except(oldTags);
+        var removedTags = oldTags.Except(newAccessList);
 
         //Probably there is a cleaner way to do this, visible difference is the difference between the new access and the old access the user of the computer could see
-        var difference = addedTags.Union(removedTags).ToHashSet();
+        var difference = addedTags.Union(removedTags);
         var visibleDifference = difference.Intersect(ableToModify).ToHashSet();
-        var hiddenAccess = difference.Except(visibleDifference).ToList();
+
+        /*This codes relies on the fact that since ableToModify contains only the access the computer is able to see, hiddenAccess will only contain modified access
+        that the computer can not see, like Centcomm and SyndicateAgent*/
+        var hiddenAccess = difference.Except(ableToModify);
 
         // NULL SAFETY: PrivilegedIdIsAuthorized checked this earlier.
         var privilegedPerms = _accessReader.FindAccessTags(privilegedId!.Value).ToHashSet();
@@ -169,14 +172,15 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             return;
         }
 
-        _access.TrySetTags(targetId, newAccessList.Union(hiddenAccess));
+        var finalAccess = newAccessList.Union(hiddenAccess);
+        _access.TrySetTags(targetId, finalAccess);
 
         var changes = addedTags.Select(tag => "+" + tag).Union(removedTags.Except(hiddenAccess).Select(tag => "-" + tag));
 
         /*TODO: ECS SharedIdCardConsoleComponent and then log on card ejection, together with the save.
         This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/
         _adminLogger.Add(LogType.Action, LogImpact.Medium,
-            $"{ToPrettyString(player):player} has modified {ToPrettyString(targetId):entity} with the following accesses: [{string.Join(", ", changes)}] [{string.Join(", ", newAccessList)}]");
+            $"{ToPrettyString(player):player} has modified {ToPrettyString(targetId):entity} with the following accesses: [{string.Join(", ", changes)}] [{string.Join(", ", finalAccess)}]");
     }
 
     /// <summary>
