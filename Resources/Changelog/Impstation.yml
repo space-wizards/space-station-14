@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KingMudkipIII
-  changes:
-  - message: Added a special drink for the Thaven
-    type: Add
-  id: 336
-  time: '2024-10-06T10:59:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/426
 - author: Darkmajia
   changes:
   - message: Adjusted a few loadout slot orders.
@@ -4497,3 +4490,10 @@
   id: 835
   time: '2025-01-01T01:19:52.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1176
+- author: crocodilecarousel
+  changes:
+  - message: Added almost TWO HUNDRED brand new markings for nearly every species!
+    type: Add
+  id: 836
+  time: '2025-01-01T02:25:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1181
