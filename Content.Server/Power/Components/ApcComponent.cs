@@ -26,6 +26,8 @@ public sealed partial class ApcComponent : BaseApcNetComponent
     [DataField("enabled")]
     public bool MainBreakerEnabled = true;
 
+    public bool PowerDisabled = false;
+
     /// <summary>
     /// APC state needs to always be updated after first processing tick.
     /// </summary>
