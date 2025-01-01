@@ -488,6 +488,7 @@
         - DoorRemote
         - Whistle
         - BalloonPopper
+        - PayloadCase
   - type: ItemMapper
     mapLayers:
       flashbang:
