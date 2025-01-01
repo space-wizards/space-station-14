@@ -157,8 +157,8 @@ reagent-desc-hooch = Either someone's failure at cocktail making or attempt in a
 reagent-name-iced-beer = iced beer
 reagent-desc-iced-beer = A beer which is so cold the air around it freezes.
 
-reagent-name-irish-car-bomb = grenade penguin
-reagent-desc-irish-car-bomb = An unstable mixture of syndicate cream and ale.
+reagent-name-irish-slammer = grenade penguin
+reagent-desc-irish-slammer = An unstable mixture of gorlex cream and ale.
 
 reagent-name-irish-cream = gorlex cream
 reagent-desc-irish-cream = Whiskey-imbued cream. What else could you expect from Gorlex Marauders?
