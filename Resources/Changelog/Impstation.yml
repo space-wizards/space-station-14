@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Added Little Guys Car, available for purchase from the cargo request
-      console.
-    type: Add
-  - message: Adjusted the wording of the Thaven guidebook entry and some Moods to
-      discourage suicide.
-    type: Tweak
-  id: 335
-  time: '2024-10-06T10:59:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/427
 - author: KingMudkipIII
   changes:
   - message: Added a special drink for the Thaven
@@ -4500,3 +4489,11 @@
   id: 834
   time: '2024-12-31T21:59:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1179
+- author: suyo
+  changes:
+  - message: shaved 1.5 seconds off of the goliath's tentacle grapple stun to accommodate
+      for crawling's extremely interruptible doafter (1 second)
+    type: Tweak
+  id: 835
+  time: '2025-01-01T01:19:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1176
