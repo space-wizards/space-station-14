@@ -7,8 +7,11 @@ using Content.Server.Speech;
 using Content.Server.Speech.Components;
 using Content.Shared.Chat;
 using Content.Shared.Database;
+using Content.Shared.Labels.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Power;
+using Content.Shared.Silicons.StationAi;
+using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Speech;
 using Content.Shared.Telephone;
 using Robust.Server.GameObjects;
@@ -19,8 +22,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using System.Linq;
-using Content.Shared.Silicons.StationAi;
-using Content.Shared.Silicons.Borgs.Components;
 
 namespace Content.Server.Telephone;
 
@@ -108,8 +109,10 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             ("speaker", Name(entity)),
             ("originalName", nameEv.VoiceName));
 
+        var range = args.TelephoneSource.Comp.LinkedTelephones.Count > 1 ? ChatTransmitRange.HideChat : ChatTransmitRange.GhostRangeLimit;
         var volume = entity.Comp.SpeakerVolume == TelephoneVolume.Speak ? InGameICChatType.Speak : InGameICChatType.Whisper;
-        _chat.TrySendInGameICMessage(entity, args.Message, volume, ChatTransmitRange.GhostRangeLimit, nameOverride: name, checkRadioPrefix: false);
+
+        _chat.TrySendInGameICMessage(entity, args.Message, volume, range, nameOverride: name, checkRadioPrefix: false);
     }
 
     #endregion
@@ -151,7 +154,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
                     break;
 
-                // Try to hang up if their has been no recent in-call activity 
+                // Try to hang up if there has been no recent in-call activity
                 case TelephoneState.InCall:
                     if (_timing.CurTime > telephone.StateStartTime + TimeSpan.FromSeconds(telephone.IdlingTimeout))
                         EndTelephoneCalls(entity);
@@ -214,7 +217,15 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         source.Comp.LinkedTelephones.Add(receiver);
         source.Comp.Muted = options?.MuteSource == true;
 
-        receiver.Comp.LastCallerId = GetNameAndJobOfCallingEntity(user); // This will be networked when the state changes
+        var callerInfo = GetNameAndJobOfCallingEntity(user);
+
+        // Base the name of the device on its label
+        string? deviceName = null;
+
+        if (TryComp<LabelComponent>(source, out var label))
+            deviceName = label.CurrentLabel;
+
+        receiver.Comp.LastCallerId = (callerInfo.Item1, callerInfo.Item2, deviceName); // This will be networked when the state changes
         receiver.Comp.LinkedTelephones.Add(source);
         receiver.Comp.Muted = options?.MuteReceiver == true;
 

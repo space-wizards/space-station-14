@@ -7,7 +7,8 @@
   - type: StorageFill
     contents:
     - id: FoodBoxPizzaFilled
-      amount: 4
+      amount: 3
+    - id: FoodBoxPizzaCotton
     - id: LidSalami
       prob: 0.01
 
@@ -20,7 +21,8 @@
   - type: StorageFill
     contents:
     - id: FoodBoxPizzaFilled
-      amount: 16
+      amount: 15
+    - id: FoodBoxPizzaCotton
     - id: LidSalami
       prob: 0.04
 
