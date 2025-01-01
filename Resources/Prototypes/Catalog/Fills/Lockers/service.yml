@@ -109,6 +109,11 @@
       - id: ClothingUniformOveralls
       - id: ClothingHeadHatTrucker
         prob: 0.1
+      - id: WoodenWateringCan
+        prob: 0.1
+        orGroup: WateringCanType
+      - id: WateringCan
+        orGroup: WateringCanType
 
 - type: entity
   id: LockerBotanistLoot

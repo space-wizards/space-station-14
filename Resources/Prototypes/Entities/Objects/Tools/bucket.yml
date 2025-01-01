@@ -53,9 +53,6 @@
   - type: Tag
     tags:
     - Bucket
-  - type: PhysicalComposition
-    materialComposition:
-      Plastic: 50
   - type: DnaSubstanceTrace
 
 - type: entity
@@ -76,16 +73,26 @@
     slots:
     - HEAD
     quickEquip: false
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50
 
 - type: entity
   parent: BaseBucket
-  id: WateringCan
-  name: watering can
-  description: It's a watering can. It is scientifically proved that using a watering can to simulate rain increases plant happiness!
+  id: BaseWateringCan
+  description: Something that looks and acts like a watering can.
+  abstract: true
   components:
   - type: Tag
     tags:
     - WateringCan
+
+- type: entity
+  parent: BaseWateringCan
+  id: WateringCan
+  name: watering can
+  description: It's a watering can. It is scientifically proved that using a watering can to simulate rain increases plant happiness!
+  components:
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/watering_can.rsi
     layers:
@@ -93,16 +100,51 @@
     - map: ["enum.SolutionContainerLayers.Fill"]
       state: fill-1
       visible: false
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50
 
 - type: entity
-  parent: BaseBucket
+  parent: BaseWateringCan
+  id: WoodenWateringCan # fewer micro plastics
+  name: wooden watering can
+  description: An old metal-made watering can but shoddily painted to look like it was made of wood for some dubious reason...
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/watering_can_wooden.rsi
+    layers:
+    - state: icon
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 25
+      Wood: 25
+
+- type: entity
+  parent: MarkerBase
+  id: RandomWateringCan
+  name: random watering can spawner
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/watering_can.rsi
+    layers:
+    - state: icon
+  - type: RandomSpawner
+    offset: 0.0
+    rareChance: 0.1
+    prototypes:
+    - WateringCan
+    rarePrototypes:
+    - WoodenWateringCan
+
+- type: entity
+  parent: BaseWateringCan
   id: AdvancedWateringCan
   name: advanced watering can
   description: Everything a botanist would want in a watering can. This marvel of technology generates its own water!
   components:
-  - type: Tag
-    tags:
-    - WateringCan
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/watering_can_advanced.rsi
     layers:
