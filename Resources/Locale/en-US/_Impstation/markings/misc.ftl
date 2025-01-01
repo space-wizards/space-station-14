@@ -1,6 +1,6 @@
-#this file is subject to getting its shit moved to other files at a later date#
+# this file is subject to getting its shit moved to other files at a later date#
 
-#arachnids
+# arachnids
 marking-SpiderMirror = Mirror
 marking-SpiderMirror-spidermirror = Mirror
 marking-SpiderGlowEyes = Glowing Eyes
@@ -11,7 +11,7 @@ marking-SpiderEyesMulti-spidereyesmilti2 = Middle Top
 marking-SpiderEyesMulti-spidereyesmilti3 = Middle Bottom
 marking-SpiderEyesMulti-spidereyesmilti4 = Bottom
 
-#decapoid
+# decapoid
 marking-CrabChestBiopulse = Biopulse
 marking-CrabChestBiopulse-crabchestbiopulse1 = Outter
 marking-CrabChestBiopulse-crabchestbiopulse2 = Inner
@@ -67,7 +67,7 @@ marking-Crabspine-crabspine = Armored Spine
 marking-CrabCorset = Corset Stripes
 marking-CrabCorset-crabtorsocorset = Corset Stripes
 
-#diona
+# diona
 marking-DionaLivingNymph = Living Nymphs
 marking-DionaLivingNymph-dionalivingnymph = Living Nymphs
 marking-DionaMossChest = Moss Drape
@@ -81,7 +81,7 @@ marking-DionaFirefly-dionafirefly = Fireflies
 marking-DionaPollenDust = Pollen Cloud
 marking-DionaPollenDust-dionapollendust = Pollen Cloud
 
-#dwarves
+# dwarves
 marking-DwarfBearCheeks = Glowing Cheeks
 marking-DwarfBearCheeks-dwarfbearcheeks = Glowing Cheeks
 marking-DwarfHeadGlow = Glowing Star
@@ -123,7 +123,7 @@ marking-DwarfMarkCobra-dwarfmarkcobra = Mark of the Cobra
 marking-DwarfMarkSpider = Mark of the Spider
 marking-DwarfMarkSpider-dwafmarkspider = Mark of the Spider
 
-#grays
+# grays
 marking-GrayObject = Inscrutable Objects
 marking-GrayObject-grayobject1 = Ball
 marking-GrayObject-grayobject2 = Not Ball
@@ -132,7 +132,7 @@ marking-RadiumGlow-radiumglow = Radium Glow
 marking-GrayFakeLashes = Fake Lashes
 marking-GrayFakeLashes-grayfakelashes = Fake Lashes
 
-#humans
+# humans
 marking-VitiligoHeadL = Vitiligo Left Eye
 marking-VitiligoHeadR = Vitiligo Right Eye
 marking-VitiligoHeadJaw = Vitiligo Jawline
@@ -145,7 +145,7 @@ marking-VitiligoLegL = Vitiligo Left Leg
 marking-VitiligoChestF = Vitiligo Chest Spread
 marking-VitiligoChestSpots = Vitiligo Chest Spots
 
-#moths
+# moths
 marking-MothTrueButterfly = Rainbow Wings
 marking-MothTrueButterfly-mothtruebutterfly1 = Stripes
 marking-MothTrueButterfly-mothtruebutterfly2 = Dots
@@ -182,7 +182,7 @@ marking-MothRhinoBeetle-rhinobeetle1 = Outline
 marking-MothRhinoBeetle-rhinobeetle2 = Shine
 marking-MothRhinoBeetle-rhinobeetle3 = Wings
 
-#slimes
+# slimes
 marking-fizz = Fizz
 marking-fizz-fizz = Fizz
 marking-bubble = Bubbles
@@ -195,7 +195,7 @@ marking-Fadingstars-fadingstars1 = Brightest
 marking-Fadingstars-fadingstars2 = Middling
 marking-Fadingstars-fadingstars3 = Darkest
 
-#snails
+# snails
 marking-SnailCheeks = Cheeks
 marking-SnailCheeks-snailcheeks = Cheeks
 marking-SnailShellProstheticSimple = Simple Prosthetic Shell
@@ -215,7 +215,7 @@ marking-ProstheticInnerLight-snailshellprostheticinnerlight = Prosthetic Inner L
 marking-ProstheticPulse = Prosthetic Pulse
 marking-ProstheticPulse-snailshellprostheticpulse = Prosthetic Pulse
 
-#thaven
+# thaven
 marking-Gills = Gills
 marking-Gills-thavengills = Gills
 marking-ThavenChestScales = Chest Scales
@@ -231,7 +231,7 @@ marking-ThavenLLegScales-thavenleftlegscales = L Leg Scales
 marking-ThavenRLegScales = R Leg Scales
 marking-ThavenRLegScales-thavenrightlegscales = R Leg Scales
 marking-ThavenLHandScales = L Hand Scales
-marking-ThavenLArmScales-thavenlefthandscales = L Hand Scales
+marking-ThavenLHandScales-thavenlefthandscales = L Hand Scales
 marking-ThavenRHandScales = R Hand Scales
 marking-ThavenRHandScales-thavenrighthandscales = R Hand Scales
 marking-ThavenTopSurgery = Top Surgery
@@ -268,7 +268,7 @@ marking-ThavenHeadCap = Dappled Crown
 marking-ThavenHeadCap-thavenheadcap1 = Crown
 marking-ThavenHeadCap-thavenheadcap2 = Dapples
 
-#vox
+# vox
 marking-VoxCocktail = Cocktail
 marking-VoxCocktail-voxcocktail1 = Feathers
 marking-VoxCocktail-voxcocktail2 = Feathers
@@ -295,10 +295,10 @@ marking-VoxFootGradientLFoot = Solid Foot Left
 marking-VoxFootGradientLFoot-voxfootgradientl1 = Solid Foot Left
 marking-VoxFootGradientRFoot = Solid Foot Right
 marking-VoxFootGradientRFoot-voxfootgradientr1 = Solid Foot Right
-marking-VoxFootGradientLLeg = Solid Leg Left
-marking-VoxFootGradientLLeg-voxfootgradientl2 = Solid Leg Left
-marking-VoxFootGradientRLeg = Solid Leg Right
-marking-VoxFootGradientRLeg-voxfootgradientr2 = Solid Leg Left
+marking-VoxLegGradientLLeg = Solid Leg Left
+marking-VoxLegGradientLLeg-voxfootgradientl2 = Solid Leg Left
+marking-VoxLegGradientRLeg = Solid Leg Right
+marking-VoxLegGradientRLeg-voxfootgradientr2 = Solid Leg Left
 marking-VoxHandGradientRHand = Right Hand Gradient
 marking-VoxHandGradientRHand-voxhandgradientr1 = Bottom
 marking-VoxHandGradientRHand-voxhandgradientr2 = Middle
@@ -344,3 +344,15 @@ marking-VoxTailBalled = Thrasher
 marking-VoxTailBalled-voxtailballed = Thrasher
 marking-VoxTailSplit = Twinned
 marking-VoxTailSplit-voxtailsplit = Twinned
+
+# upstream vox markings dont have localized names. lmfao
+marking-VoxBeak = Default Beak
+marking-VoxLArmScales = Scaled Left Arm
+marking-VoxLHandScales = Scaled Left Hand
+marking-VoxRArmScales = Scaled Right Arm
+marking-VoxRHandScales = Scaled Right Hand
+marking-VoxTail = Default Tail
+marking-VoxLFootScales = Scaled Left Foot
+marking-VoxLLegScales = Scaled Left Leg
+marking-VoxRFootScales = Scaled Right Foot
+marking-VoxRLegScales = Scaled Right Leg

@@ -1054,6 +1054,11 @@
   speciesRestriction: [ Vox ]
   forcedColoring: false
   followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#E4E4E4"
   sprites:
   - sprite: _Impstation/Mobs/Customization/markingsbundle1.rsi
     state: voxarmprostheticl
@@ -1065,6 +1070,11 @@
   speciesRestriction: [ Vox ]
   forcedColoring: false
   followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#E4E4E4"
   sprites:
   - sprite: _Impstation/Mobs/Customization/markingsbundle1.rsi
     state: voxarmprostheticr
