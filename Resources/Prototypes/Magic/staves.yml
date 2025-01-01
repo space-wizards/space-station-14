@@ -42,3 +42,56 @@
     event: !type:ChangeComponentsSpellEvent
       toAdd:
       - type: RgbLightController
+
+- type: entity
+  id: Mjolnir
+  parent: BaseItem
+  name: Mjolnir
+  description: TODO
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/staves.rsi
+    layers:
+    - state: nothing
+    - state: nothing-unshaded
+      shader: unshaded
+  - type: RepulseAttract
+    strength: 5
+    range: 5
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: staff-inhand-left
+      - state: staff-inhand-left-unshaded
+        shader: unshaded
+      right:
+      - state: staff-inhand-right
+      - state: staff-inhand-right-unshaded
+        shader: unshaded
+
+- type: entity
+  id: SingularityHammer
+  parent: BaseItem
+  name: SingularityHammer
+  description: TODO
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/staves.rsi
+    layers:
+    - state: nothing
+    - state: nothing-unshaded
+      shader: unshaded
+  - type: RepulseAttract
+    strength: 5
+    range: 5
+    attract: true
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: staff-inhand-left
+      - state: staff-inhand-left-unshaded
+        shader: unshaded
+      right:
+      - state: staff-inhand-right
+      - state: staff-inhand-right-unshaded
+        shader: unshaded
