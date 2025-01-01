@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Vox sounds are now less unbearable.
-    type: Tweak
-  id: 7269
-  time: '2024-09-03T07:23:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31679
-- author: Just_Art
-  changes:
-  - message: Added Classic Long 2 and Classic Long 3 hairstyles!
-    type: Add
-  id: 7270
-  time: '2024-09-03T08:29:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30963
 - author: ScarKy0
   changes:
   - message: Plenty of old silicon laws can now be rolled as ion laws.
@@ -3935,3 +3921,17 @@
   id: 7768
   time: '2024-12-31T23:08:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34156
+- author: Booblesnoot42
+  changes:
+  - message: Tarantulas spawned in vents will now be hostile to the crew.
+    type: Fix
+  id: 7769
+  time: '2025-01-01T16:18:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34153
+- author: Booblesnoot42
+  changes:
+  - message: The RCD no longer has a cooldown when opened or closed.
+    type: Fix
+  id: 7770
+  time: '2025-01-01T16:19:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34149
