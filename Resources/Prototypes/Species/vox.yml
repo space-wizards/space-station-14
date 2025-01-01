@@ -6,7 +6,7 @@
   sprites: MobVoxSprites
   markingLimits: MobVoxMarkingLimits
   dollPrototype: MobVoxDummy
-  skinColoration: VoxFeathers
+  skinColoration: Hues #imp
   defaultSkinTone: "#6c741d"
   maleFirstNames: names_vox
   femaleFirstNames: names_vox
@@ -64,9 +64,12 @@
       points: 1
       required: false
     Tail:
-      points: 1
-      required: true
+      points: 3 #imp
+      required: false #imp
       defaultMarkings: [ VoxTail ]
+    Overlay: #imp
+      points: 4
+      required: false
 
 - type: humanoidBaseSprite
   id: MobVoxEyes
