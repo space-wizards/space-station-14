@@ -37,3 +37,13 @@
   parent: BaseHydroToolRecipe
   id: HydroponicsToolClippers
   result: HydroponicsToolClippers
+
+- type: latheRecipe
+  parent: Bucket
+  id: WateringCan
+  result: WateringCan
+
+- type: latheRecipe
+  parent: AdvMopItem
+  id: AdvancedWateringCan
+  result: AdvancedWateringCan

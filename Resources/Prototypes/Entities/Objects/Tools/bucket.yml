@@ -1,27 +1,16 @@
 - type: entity
   parent: BaseItem
-  id: Bucket
-  name: bucket
-  description: It's a boring old bucket.
+  id: BaseBucket
+  name: base bucket
+  description: Something that looks and acts like a bucket.
+  abstract: true
   components:
   - type: Drink
     solution: bucket
     ignoreEmpty: true
   - type: Clickable
-  - type: Sprite
-    sprite: Objects/Tools/bucket.rsi
-    layers:
-    - state: icon
-    - map: ["enum.SolutionContainerLayers.Fill"]
-      state: fill-1
-      visible: false
   - type: Item
     size: Normal
-  - type: Clothing
-    sprite: Objects/Tools/bucket.rsi
-    slots:
-    - HEAD
-    quickEquip: false
   - type: SolutionContainerManager
     solutions:
       bucket:
@@ -63,8 +52,67 @@
     solution: bucket
   - type: Tag
     tags:
-      - Bucket
+    - Bucket
   - type: PhysicalComposition
     materialComposition:
       Plastic: 50
   - type: DnaSubstanceTrace
+
+- type: entity
+  parent: BaseBucket
+  id: Bucket
+  name: bucket
+  description: It's a boring old bucket.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/bucket.rsi
+    layers:
+    - state: icon
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+  - type: Clothing
+    sprite: Objects/Tools/bucket.rsi
+    slots:
+    - HEAD
+    quickEquip: false
+
+- type: entity
+  parent: BaseBucket
+  id: WateringCan
+  name: watering can
+  description: It's a watering can. It is scientifically proved that using a watering can to simulate rain increases plant happiness!
+  components:
+  - type: Tag
+    tags:
+    - WateringCan
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/watering_can.rsi
+    layers:
+    - state: icon
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+
+- type: entity
+  parent: BaseBucket
+  id: AdvancedWateringCan
+  name: advanced watering can
+  description: Everything a botanist would want in a watering can. This marvel of technology generates its own water!
+  components:
+  - type: Tag
+    tags:
+    - WateringCan
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/watering_can_advanced.rsi
+    layers:
+    - state: icon
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+  - type: SolutionRegeneration
+    solution: bucket
+    generated:
+      reagents:
+      - ReagentId: Water
+        Quantity: 10

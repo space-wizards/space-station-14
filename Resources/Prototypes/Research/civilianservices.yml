@@ -201,6 +201,18 @@
   recipeUnlocks:
   - CargoTelepadMachineCircuitboard
 
+- type: technology
+  id: AdvancedHydroponics
+  name: research-technology-advanced-hydroponics
+  icon:
+    sprite: Objects/Tools/Hydroponics/watering_can_advanced.rsi
+    state: icon
+  discipline: CivilianServices
+  tier: 2
+  const: 10000
+  recipeUnlocks:
+  - AdvancedWateringCan
+
 # Tier 3
 
 - type: technology
