@@ -1,5 +1,6 @@
 using Content.Server.AlertLevel;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Piping.Components;
 using Content.Server.Chat.Systems;
 using Content.Server.Decals;
 using Content.Server.DoAfter;
@@ -14,6 +15,7 @@ using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
+using Content.Shared.CCVar;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -26,6 +28,8 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server._EinsteinEngines.Supermatter.Systems;
 
@@ -47,6 +51,8 @@ public sealed partial class SupermatterSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
 
     public override void Initialize()
@@ -54,6 +60,7 @@ public sealed partial class SupermatterSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SupermatterComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<SupermatterComponent, AtmosDeviceUpdateEvent>(OnSupermatterUpdated);
 
         SubscribeLocalEvent<SupermatterComponent, StartCollideEvent>(OnCollideEvent);
         SubscribeLocalEvent<SupermatterComponent, InteractHandEvent>(OnHandInteract);
@@ -62,56 +69,22 @@ public sealed partial class SupermatterSystem : EntitySystem
         SubscribeLocalEvent<SupermatterComponent, SupermatterDoAfterEvent>(OnGetSliver);
     }
 
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
         foreach (var sm in EntityManager.EntityQuery<SupermatterComponent>())
         {
-            if (!sm.Activated)
-                return;
-
             var uid = sm.Owner;
-            sm.UpdateAccumulator += frameTime;
-
-            if (sm.UpdateAccumulator >= sm.UpdateTimer)
-            {
-                sm.UpdateAccumulator -= sm.UpdateTimer;
-                Cycle(uid, sm);
-            }
-        }
-    }
-
-
-    public void Cycle(EntityUid uid, SupermatterComponent sm)
-    {
-        sm.ZapAccumulator++;
-        sm.YellAccumulator++;
-
-        ProcessAtmos(uid, sm);
-        HandleDamage(uid, sm);
-
-        if (sm.Damage >= sm.DamageDelaminationPoint || sm.Delamming)
-            HandleDelamination(uid, sm);
-
-        HandleSoundLoop(uid, sm);
-
-        if (sm.ZapAccumulator >= sm.ZapTimer)
-        {
-            sm.ZapAccumulator -= sm.ZapTimer;
-            SupermatterZap(uid, sm);
-        }
-
-        if (sm.YellAccumulator >= sm.YellTimer)
-        {
-            sm.YellAccumulator -= sm.YellTimer;
             AnnounceCoreDamage(uid, sm);
         }
     }
 
     private void OnMapInit(EntityUid uid, SupermatterComponent sm, MapInitEvent args)
     {
+        // Set the yell timer
+        sm.YellTimer = TimeSpan.FromSeconds(_config.GetCVar(CCVars.SupermatterYellTimer));
+
         // Set the Sound
         _ambient.SetAmbience(uid, true);
 
@@ -119,6 +92,20 @@ public sealed partial class SupermatterSystem : EntitySystem
         var mix = _atmosphere.GetContainingMixture(uid, true, true);
         mix?.AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard);
         mix?.AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard);
+    }
+    public void OnSupermatterUpdated(EntityUid uid, SupermatterComponent sm, AtmosDeviceUpdateEvent args)
+    {
+        ProcessAtmos(uid, sm);
+        HandleDamage(uid, sm);
+
+        if (sm.Damage >= sm.DamageDelaminationPoint || sm.Delamming)
+            HandleDelamination(uid, sm);
+
+        HandleSoundLoop(uid, sm);
+        HandleAccent(uid, sm);
+
+        if (sm.Damage >= sm.DamagePenaltyPoint)
+            SupermatterZap(uid, sm);
     }
 
     private void OnCollideEvent(EntityUid uid, SupermatterComponent sm, ref StartCollideEvent args)

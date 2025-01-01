@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Beam;
 using Content.Server.Beam.Components;
 using Content.Server.Lightning.Components;
@@ -138,7 +139,7 @@ public sealed class LightningSystem : SharedLightningSystem
 
             if (_random.Prob(hitCoordsChance) && targets[count].Comp.LightningResistance <= mobLightningResistance)
             {
-                var targetCoordinate = coordinates.Offset(_random.NextVector2(1f, range));
+                var targetCoordinate = coordinates.Offset(new Vector2(range, range));
 
                 if (user != null)
                     ShootLightning(user.Value, targetCoordinate, lightningPrototype, triggerLightningEvents);
