@@ -115,6 +115,7 @@
     layers:
     - state: icon
     - map: ["enum.SolutionContainerLayers.Fill"]
+      sprite: Objects/Tools/Hydroponics/watering_can.rsi
       state: fill-1
       visible: false
   - type: PhysicalComposition
@@ -150,6 +151,7 @@
     layers:
     - state: icon
     - map: ["enum.SolutionContainerLayers.Fill"]
+      sprite: Objects/Tools/Hydroponics/watering_can.rsi
       state: fill-1
       visible: false
   - type: SolutionRegeneration
