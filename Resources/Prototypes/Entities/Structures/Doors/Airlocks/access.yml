@@ -970,6 +970,15 @@
       board: [ DoorElectronicsKitchen ]
 
 - type: entity
+  parent: AirlockMaintServiceLocked
+  id: AirlockMaintKitchenHydroLocked
+  suffix: Kitchen/Hydroponics, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsKitchenHydroponics ]
+
+- type: entity
   parent: AirlockMaint
   id: AirlockMaintIntLocked
   suffix: Interior, Locked
