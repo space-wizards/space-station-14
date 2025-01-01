@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Fildrance
-  changes:
-  - message: When research is unlocked in console the approver of the research is
-      named.
-    type: Add
-  - message: Borgs door access is getting logged now (and is accessible in Log Probe
-      Cartridge)
-    type: Add
-  - message: e-magged research and cargo consoles are not radio-ing any messages on
-      research/buy confimation (for anyone)
-    type: Add
-  id: 7273
-  time: '2024-09-03T13:01:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31170
 - author: Lyroth001
   changes:
   - message: added a new artifact node for medical chems
@@ -3935,3 +3921,10 @@
   id: 7772
   time: '2025-01-01T16:25:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33750
+- author: Errant
+  changes:
+  - message: Removed seasonal nuke song "Nukemass".
+    type: Remove
+  id: 7773
+  time: '2025-01-01T16:27:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34066
