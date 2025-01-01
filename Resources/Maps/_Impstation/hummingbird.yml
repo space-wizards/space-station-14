@@ -75405,6 +75405,11 @@ entities:
     - type: Transform
       pos: 143.58154,-3.3391929
       parent: 2
+  - uid: 16640
+    components:
+    - type: Transform
+      pos: 49.54387,-29.020178
+      parent: 2
 - proto: FlashlightLantern
   entities:
   - uid: 11768
@@ -111190,18 +111195,6 @@ entities:
     components:
     - type: Transform
       pos: 27.547531,-17.415571
-      parent: 2
-- proto: Intellicard
-  entities:
-  - uid: 16640
-    components:
-    - type: Transform
-      pos: 49.514492,-29.160477
-      parent: 2
-  - uid: 16641
-    components:
-    - type: Transform
-      pos: 49.389492,-29.004227
       parent: 2
 - proto: IntercomAll
   entities:
@@ -155229,7 +155222,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -159468.53
+      secondsUntilStateChange: -159504.58
       state: Opening
     - type: Airlock
       autoClose: False
