@@ -43,6 +43,7 @@
       toAdd:
       - type: RgbLightController
 
+#TODO: Sprites for both
 - type: entity
   id: Mjolnir
   parent: BaseItem
@@ -58,6 +59,8 @@
   - type: RepulseAttract
     strength: 5
     range: 5
+    useDelay: 10
+  - type: Item
     size: Normal
     inhandVisuals:
       left:
@@ -85,6 +88,7 @@
     strength: 5
     range: 5
     attract: true
+  - type: Item
     size: Normal
     inhandVisuals:
       left:

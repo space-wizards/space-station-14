@@ -27,6 +27,12 @@ public sealed partial class RepulseAttractComponent : Component
     [DataField]
     public float Range = 1.0F;
 
+    // TODO: Add stun check
+    // TODO: Add enums for behavior?
+    //    On Activate
+    //    On Throw
+    //    On Hit
+
     /// <summary>
     ///     What kind of entities should this effect only?
     /// </summary>
@@ -39,5 +45,15 @@ public sealed partial class RepulseAttractComponent : Component
     [DataField, AutoNetworkedField]
     public EntityWhitelist? Blacklist;
 
-    // TODO: Cooldown?
+    /// <summary>
+    ///     How long until this can be used again?
+    /// </summary>
+    [DataField]
+    public TimeSpan? UseDelay;
+
+    /// <summary>
+    ///     When is the next time this can be used? Determined by <see cref="UseDelay"/>
+    /// </summary>
+    [DataField]
+    public TimeSpan? NextUse;
 }
