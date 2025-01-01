@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Plenty of old silicon laws can now be rolled as ion laws.
-    type: Add
-  id: 7271
-  time: '2024-09-03T09:45:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31664
 - author: IProduceWidgets
   changes:
   - message: Escargot and snails! Hopefully you don't encounter that one snail...
@@ -3935,3 +3928,10 @@
   id: 7770
   time: '2025-01-01T16:19:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34149
+- author: lzk228
+  changes:
+  - message: Decreased HP for rusted wall variants
+    type: Tweak
+  id: 7771
+  time: '2025-01-01T16:23:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34043
