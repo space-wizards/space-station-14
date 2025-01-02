@@ -632,6 +632,8 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 6.5,5.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 142
     components:
     - type: Transform
@@ -656,12 +658,16 @@ entities:
     - type: Transform
       pos: 3.5,6.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 129
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,0.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
 - proto: GasPipeSensor
   entities:
   - uid: 60
@@ -682,12 +688,16 @@ entities:
       rot: 3.141592653589793 rad
       pos: 4.5,5.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 75
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,3.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 95
     components:
     - type: Transform
@@ -700,45 +710,61 @@ entities:
       rot: 3.141592653589793 rad
       pos: 4.5,2.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 123
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,1.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 124
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,4.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 126
     components:
     - type: Transform
       pos: 3.5,3.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 127
     components:
     - type: Transform
       pos: 3.5,2.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 128
     components:
     - type: Transform
       pos: 3.5,1.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 130
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,5.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 131
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,5.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 134
     components:
     - type: Transform
@@ -769,12 +795,16 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 4.5,4.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 125
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 3.5,5.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
 - proto: GasPort
   entities:
   - uid: 24
@@ -811,6 +841,8 @@ entities:
       parent: 1
     - type: GasValve
       open: False
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
 - proto: GasVentPump
   entities:
   - uid: 101
@@ -822,6 +854,8 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 11
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 121
     components:
     - type: Transform
@@ -830,6 +864,8 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 11
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
 - proto: GasVentScrubber
   entities:
   - uid: 18
@@ -841,6 +877,8 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 11
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 102
     components:
     - type: Transform
@@ -850,6 +888,8 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 11
+    - type: AtmosPipeColor
+      color: '#990000FF'
 - proto: GasVolumePump
   entities:
   - uid: 32
@@ -1193,11 +1233,39 @@ entities:
     - type: Transform
       pos: 1.5,-2.5
       parent: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        65:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        7:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        6:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
   - uid: 36
     components:
     - type: Transform
       pos: 1.5,3.5
       parent: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        108:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        9:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        10:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
 - proto: WallShuttle
   entities:
   - uid: 3
