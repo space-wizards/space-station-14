@@ -1559,3 +1559,10 @@ Entries:
   id: 221
   time: '2025-01-02T12:14:47.217308+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: Now security cadets and officers, starts with rubber ammos in his Pistols.
+    type: Tweak
+  id: 222
+  time: '2025-01-02T12:19:28.568355+00:00'
+  url: 'null'
