@@ -97,7 +97,7 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/brokenglasses.rsi
   - type: VisionCorrection
-    correctionPower: 1.5
+    correctionPower: 1.4
   - type: Tag
     tags:
     - HamsterWearable
