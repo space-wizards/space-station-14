@@ -1,6 +1,6 @@
 - type: entity
   id: DefibrillatorBrigmedical
-  parent: BaseDefibrillator
+  parent: [ BaseDefibrillator, PowerCellSlotTinyItem ]
   name: Brigmedic Defibrillator
   description: Hand-held device that can save lives, and act as a weapon in a pinch.
   components:
@@ -23,10 +23,7 @@
     size: Normal
   - type: ToggleCellDraw
   - type: PowerCellDraw
-    useRate: 100
-  - type: Battery
-    maxCharge: 1000
-    startingCharge: 1000
+    useRate: 50
   - type: Defibrillator
     zapHeal:
       types:
@@ -48,3 +45,47 @@
       types:
         Blunt: 4
         Shock: 7
+
+- type: entity
+  name: Brigmedic Defibrillator Battery Cell
+  description: You are fairly certain this is a AA battery in disguse..
+  id: PowerCellTiny
+  suffix: Full
+  parent: BasePowerCell
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Power/power_cells.rsi
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: tiny
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+  - type: Item
+    size: Small    
+  - type: Battery
+    maxCharge: 250 #while in theory this could give five uses, in practice it gives 2-3 uses (between charge-up time, cooldown and idle-time). Any lower and the margins are too narrow to get more than 1 use out of the defib.
+    startingCharge: 250
+  - type: Tag
+    tags:
+      - PowerCellSmall
+
+- type: entity
+  id: PowerCellSlotTinyItem
+  abstract: true
+  components:
+    - type: ContainerContainer
+      containers:
+        cell_slot: !type:ContainerSlot { }
+    - type: PowerCellSlot
+      cellSlotId: cell_slot
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          whitelist:
+            tags:
+              - PowerCellSmall
+            components:
+              - PowerCellTiny
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellTiny
