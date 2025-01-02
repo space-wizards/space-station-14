@@ -10,7 +10,7 @@ reagent-desc-changeling-sting = You take a tiny sip and feel a burning sensation
 reagent-name-dr-gibb = Dr. Gibb
 reagent-desc-dr-gibb = A delicious blend of 42 different flavours.
 
-reagent-name-energy-drink = energy drink
+reagent-name-energy-drink = Red Bool
 reagent-desc-energy-drink = A dose of energy! Nanotrasen is not responsible if you grow avian appendages.
 
 reagent-name-grape-soda = grape soda

@@ -137,6 +137,8 @@
         reagents:
         - ReagentId: Absinthe
           Quantity: 100
+  - type: Label
+    currentLabel: reagent-name-absinthe
   - type: Sprite
     sprite: Objects/Consumable/Drinks/absinthebottle.rsi
   - type: Sealable
@@ -177,6 +179,8 @@
         reagents:
         - ReagentId: Nothing
           Quantity: 100
+  - type: Label
+    currentLabel: reagent-name-nothing
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bottleofnothing.rsi
   - type: Sealable
@@ -300,8 +304,6 @@
         reagents:
         - ReagentId: CoffeeLiqueur
           Quantity: 100
-  - type: Label
-    currentLabel: reagent-name-coffeeliqueur
   - type: Sprite
     sprite: Objects/Consumable/Drinks/coffeeliqueurbottle.rsi
   - type: Sealable
@@ -532,6 +534,8 @@
         reagents:
         - ReagentId: Beer
           Quantity: 50
+  - type: Label
+    currentLabel: reagent-name-beer
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer.rsi
   - type: Openable
@@ -580,6 +584,8 @@
         reagents:
         - ReagentId: Ale
           Quantity: 50
+  - type: Label
+    currentLabel: reagent-name-ale
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alebottle.rsi
   - type: Openable
@@ -763,6 +769,8 @@
         - ReagentId: Sugar
           Quantity: 300
   - type: Drink
+  - type: Label
+    currentLabel: reagent-name-sugar
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -887,7 +895,7 @@
   parent: DrinkBottlePlasticBaseFull
   id: DrinkIcedTeaJug
   name: iced tea jug
-  description: For when the regular tea is too hot for you boohoo.
+  description: For when the regular tea is too hot for you. Boohoo.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -966,7 +974,7 @@
           Quantity: 100
   - type: Drink
   - type: Label
-    currentLabel: red bool
+    currentLabel: reagent-name-energy-drink
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
