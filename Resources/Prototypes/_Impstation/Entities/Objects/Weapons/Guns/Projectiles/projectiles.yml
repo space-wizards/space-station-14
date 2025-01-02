@@ -1,29 +1,63 @@
 - type: entity
   id: BulletGrenadeCleaner
   name: cleaner grenade
-  parent: BaseBulletTrigger
   categories: [ HideSpawnMenu ]
   components:
+  - type: CollisionWake
+  - type: Physics
+    bodyType: Dynamic
+    fixedRotation: false
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
       - state: frag
-  - type: SoundOnTrigger
-    sound: /Audio/Items/smoke_grenade_smoke.ogg
   - type: SmokeOnTrigger
     duration: 15
-    spreadAmount: 50
+    spreadAmount: 5
     smokePrototype: Foam
     solution:
       reagents:
       - ReagentId: SpaceCleaner
-        Quantity: 30
+        Quantity: 50
   - type: Ammo
     muzzleFlash: null
   - type: PointLight
     radius: 3.5
     color: blue
     energy: 0.5
+  - type: TileFrictionModifier
+    modifier: 0.01
+  - type: Fixtures
+    fixtures:
+      bouncer:
+        shape:
+          !type:PhysShapeCircle
+          Radius: 0.1
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.9  # 90% bouncy
+        friction: 0.3
+  - type: TimedDespawn
+    lifetime: 5
+  - type: TriggerOnCollide
+    fixtureID: bouncer
+    #todos
+    #restore old cleanade projectile?
+      #make this a new flavour of cleanade in general?
+      #something something clean-puck?
+      #that might need a shit ton of wierd extra code though
+      #stuff like an EnableTriggers comp / event
+      #or triggerOnThrown?
+      #would be wierd either way
+      #will want to look into it eventually though
+    #create SpreadSmokePassively comp & system - turn into a more broad TriggerOnInterval thing? or just
+    #create EmitSmokeOnDespawn comp & system - will also need a TriggerOnTimedDespawn event / method in TriggerSystem
+    #create projectileSpeedModifier component & system - oh god this will be a lot of boring work
+      #basic idea though - goes on the ammo entity & subscribes to any relevant ammoProvider component events
+      #on refresh modifiers, check what would be about to be shot, then check if it's the right proto, then modify proj speed accordingly
+      #this sucks but at least it'll hopefully work
+      #scratch that, the whole gun system is too pusk to do this easily, might make that an upstream PR
 
 - type: entity #BaseBullet isnt declared globally I guess? if its not here then the game doesnt build bc it cant find the parent for bullets in this file.
   id: ImpstationBaseBullet
@@ -133,7 +167,7 @@
     damage:
       types:
         Heat: 15
-        
+
 - type: entity
   name: godly laser bolt
   id: BulletLaserGold
@@ -184,7 +218,7 @@
     energy: 1.34
     castShadows: false
     color: "#9b68ff"
-    
+
 - type: entity
   name : ungodly laser bolt
   id: BulletLaserFGold
