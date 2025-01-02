@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Artifact utility node now works better
-    type: Tweak
-  id: 343
-  time: '2024-10-07T07:18:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/428
 - author: Sha-Seng
   changes:
   - message: Added Bellmoth's shovel incident art to the lobby screen rotation
@@ -4494,3 +4487,10 @@
   id: 842
   time: '2025-01-02T00:47:37.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1190
+- author: aada
+  changes:
+  - message: Several machines and computers are now contraband.
+    type: Tweak
+  id: 843
+  time: '2025-01-02T10:54:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1168
