@@ -703,6 +703,46 @@
 # Tastes like France.
 
 - type: entity
+  name: cotton baguette
+  parent: FoodBreadBaguette
+  id: FoodBreadBaguetteCotton
+  description: Bon azzétit!
+  components:
+  - type: Sprite
+    state: baguette-cotton
+  - type: SliceableFood
+    slice: FoodBreadBaguetteCottonSlice
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: Tag
+    tags:
+    - Bread
+    - ClothMade
+  - type: Clothing
+    equippedPrefix: baguette-cotton
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: baguette-cotton-inhand-left
+      right:
+      - state: baguette-cotton-inhand-right
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Fiber
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: TableSalt
+          Quantity: 1
+        - ReagentId: Blackpepper
+          Quantity: 1
+
+- type: entity
   name: crostini
   parent: FoodBreadSliceBase
   id: FoodBreadBaguetteSlice
@@ -717,6 +757,37 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 0.5
+        - ReagentId: Vitamin
+          Quantity: 0.1
+        - ReagentId: TableSalt
+          Quantity: 0.1
+        - ReagentId: Blackpepper
+          Quantity: 0.1
+
+- type: entity
+  name: cotton crostini
+  parent: FoodBreadBaguetteSlice
+  id: FoodBreadBaguetteCottonSlice
+  description: Bon az-zetite!
+  components:
+  - type: Sprite
+    state: crostini-cotton
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: Tag
+    tags:
+    - Bread
+    - Slice
+    - ClothMade
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 2
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 0.25
+        - ReagentId: Fiber
+          Quantity: 0.25
         - ReagentId: Vitamin
           Quantity: 0.1
         - ReagentId: TableSalt

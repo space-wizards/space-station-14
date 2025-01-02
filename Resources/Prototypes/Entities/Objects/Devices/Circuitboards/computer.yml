@@ -24,15 +24,19 @@
   name: atmospheric alerts computer board
   description: A computer printed circuit board for an atmospheric alerts computer.
   components:
+    - type: Sprite
+      state: cpu_engineering
     - type: ComputerBoard
       prototype: ComputerAlert
-      
+
 - type: entity
   parent: BaseComputerCircuitboard
   id: AtmosMonitoringComputerCircuitboard
   name: atmospheric network monitor board
   description: A computer printed circuit board for an atmospheric network monitor.
   components:
+    - type: Sprite
+      state: cpu_engineering
     - type: ComputerBoard
       prototype: ComputerAtmosMonitoring
 
