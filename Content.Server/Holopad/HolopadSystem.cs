@@ -179,11 +179,15 @@ public sealed class HolopadSystem : SharedHolopadSystem
         // AI broadcasting
         if (TryComp<StationAiHeldComponent>(args.Actor, out var stationAiHeld))
         {
+            // Link the AI to the holopad they are broadcasting from
+            LinkHolopadToUser(source, args.Actor);
+
             if (!_stationAiSystem.TryGetStationAiCore((args.Actor, stationAiHeld), out var stationAiCore) ||
                 stationAiCore.Value.Comp.RemoteEntity == null ||
                 !TryComp<HolopadComponent>(stationAiCore, out var stationAiCoreHolopad))
                 return;
 
+            // Execute the broadcast, but have it originate from the AI core
             ExecuteBroadcast((stationAiCore.Value, stationAiCoreHolopad), args.Actor);
 
             // Switch the AI's perspective from free roaming to the target holopad
@@ -611,10 +615,25 @@ public sealed class HolopadSystem : SharedHolopadSystem
             DeleteHologram(entity.Comp.Hologram.Value, entity);
 
         if (entity.Comp.User != null)
-            UnlinkHolopadFromUser(entity, entity.Comp.User.Value);
+        {
+            // Check if the associated holopad user is an AI
+            if (TryComp<StationAiHeldComponent>(entity.Comp.User, out var stationAiHeld) &&
+                _stationAiSystem.TryGetStationAiCore((entity.Comp.User.Value, stationAiHeld), out var stationAiCore))
+            {
+                // Return the AI eye to free roaming
+                _stationAiSystem.SwitchRemoteEntityMode(stationAiCore.Value, true);
 
-        if (TryComp<StationAiCoreComponent>(entity, out var stationAiCore))
-            _stationAiSystem.SwitchRemoteEntityMode((entity.Owner, stationAiCore), true);
+                // If the AI core is still broadcasting, end its calls
+                if (entity.Owner != stationAiCore.Value.Owner &&
+                    TryComp<TelephoneComponent>(stationAiCore, out var stationAiCoreTelephone) &&
+                    _telephoneSystem.IsTelephoneEngaged((stationAiCore.Value.Owner, stationAiCoreTelephone)))
+                {
+                    _telephoneSystem.EndTelephoneCalls((stationAiCore.Value.Owner, stationAiCoreTelephone));
+                }
+            }
+
+            UnlinkHolopadFromUser(entity, entity.Comp.User.Value);
+        }
 
         Dirty(entity);
     }
