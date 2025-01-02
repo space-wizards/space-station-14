@@ -10,6 +10,7 @@ using Content.Shared.Holopad;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Labels.Components;
 using Content.Shared.Silicons.StationAi;
+using Content.Shared.Speech;
 using Content.Shared.Telephone;
 using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
@@ -528,16 +529,23 @@ public sealed class HolopadSystem : SharedHolopadSystem
             entity.Comp.HologramProtoId == null)
             return;
 
-        var uid = Spawn(entity.Comp.HologramProtoId, Transform(entity).Coordinates);
+        var hologramUid = Spawn(entity.Comp.HologramProtoId, Transform(entity).Coordinates);
 
         // Safeguard - spawned holograms must have this component
-        if (!TryComp<HolopadHologramComponent>(uid, out var component))
+        if (!TryComp<HolopadHologramComponent>(hologramUid, out var holopadHologram))
         {
-            Del(uid);
+            Del(hologramUid);
             return;
         }
 
-        entity.Comp.Hologram = new Entity<HolopadHologramComponent>(uid, component);
+        entity.Comp.Hologram = new Entity<HolopadHologramComponent>(hologramUid, holopadHologram);
+
+        // Relay speech preferentially through the hologram
+        if (TryComp<SpeechComponent>(hologramUid, out var hologramSpeech) &&
+            TryComp<TelephoneComponent>(entity, out var entityTelephone))
+        {
+            _telephoneSystem.SetSpeakerForTelephone((entity, entityTelephone), (hologramUid, hologramSpeech));
+        }
     }
 
     private void DeleteHologram(Entity<HolopadHologramComponent> hologram, Entity<HolopadComponent> attachedHolopad)
