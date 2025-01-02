@@ -58,7 +58,7 @@
   description: An iconic weapon of war. Simple and effective; favored by revolutionaries everywhere. Uses .30 rifle ammo.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Rifles/ak.rsi
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
