@@ -77,6 +77,25 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/glasses.rsi
   - type: VisionCorrection
+  - type: BreakOnSlip
+    slot: eyes
+    replacementPrototype: ClothingEyesGlassesBroken
+    message: Your glasses crack from hitting the floor
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesBroken
+  name: broken glasses
+  description: A pair of no longer spectacular spectacles featuring cracked lenses.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/brokenglasses.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/brokenglasses.rsi
   - type: Tag
     tags:
     - HamsterWearable
@@ -188,7 +207,7 @@
   parent: [ClothingEyesBase, BaseCommandContraband]
   id: ClothingEyesGlassesCommand
   name: administration glasses
-  description: Upgraded sunglasses that provide flash immunity and show ID card status. 
+  description: Upgraded sunglasses that provide flash immunity and show ID card status.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/commandglasses.rsi
