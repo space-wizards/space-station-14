@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: crekulon
-  changes:
-  - message: '"Monotonous" and "Sharp inflection" punctuation-based accents. Both
-      are 1-point traits.'
-    type: Add
-  - message: Changed stutter to be a 1-point speech trait rather than 2-point.
-    type: Tweak
-  id: 342
-  time: '2024-10-07T07:18:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/435
 - author: TheGrimbeeper
   changes:
   - message: Artifact utility node now works better
@@ -4497,3 +4487,10 @@
   id: 841
   time: '2025-01-01T23:44:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1192
+- author: Darkmajia
+  changes:
+  - message: The Supermatter has received many, many adjustments.
+    type: Tweak
+  id: 842
+  time: '2025-01-02T00:47:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1190
