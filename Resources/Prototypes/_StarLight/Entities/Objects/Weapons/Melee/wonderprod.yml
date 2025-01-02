@@ -33,7 +33,7 @@
         sprite:
           sprite: _Starlight/Objects/Weapons/Melee/wonderprod.rsi
           state: stun-icon
-        addComponents:
+        components:
         - type: MeleeWeapon
           wideAnimationRotation: -135
           attackRate: 0.5
@@ -42,14 +42,6 @@
               Shock: 0
           angle: 60
           animation: WeaponArcThrust
-        - type: StaminaDamageOnHit
-          damage: 225
-          sound: /Audio/Weapons/Guns/Hits/taser_hit.ogg
-        removeComponents:
-        - type: MeleeWeapon
-          damage:
-            types:
-              Shock: 0
         - type: StaminaDamageOnHit
           damage: 225
           sound: /Audio/Weapons/Guns/Hits/taser_hit.ogg
@@ -63,7 +55,7 @@
         sprite:
           sprite: _Starlight/Objects/Weapons/Melee/wonderprod.rsi
           state: cuffs-icon
-        addComponents:
+        components:
         - type: MeleeWeapon
           wideAnimationRotation: -135
           attackRate: 0.5
@@ -74,19 +66,13 @@
           animation: WeaponArcThrust
         - type: CuffsOnHit
           proto: Cablecuffs
-        removeComponents:
-        - type: MeleeWeapon
-          damage:
-            types:
-              Shock: 0
-        - type: CuffsOnHit
 
       sleep: !type:ItemSwitchState
         verb: sleep
         sprite:
           sprite: _Starlight/Objects/Weapons/Melee/wonderprod.rsi
           state: sleep-icon
-        addComponents:
+        components:
         - type: MeleeWeapon
           wideAnimationRotation: -135
           attackRate: 1
@@ -99,19 +85,10 @@
           reagents:
           - ReagentId: Nocturine
             Quantity: 5
-        removeComponents:
-        - type: MeleeWeapon
-          damage:
-            types:
-              Shock: 0
-        - type: InjectOnHit
-          reagents:
-          - ReagentId: Nocturine
-            Quantity: 10
 
       damage: !type:ItemSwitchState
         verb: damage
-        addComponents:
+        components:
         - type: MeleeWeapon
           wideAnimationRotation: -135
           attackRate: 0.75
@@ -120,11 +97,6 @@
           damage:
             types:
               Heat: 30
-        removeComponents:
-        - type: MeleeWeapon
-          damage:
-            types:
-              Shock: 0
         sprite:
           sprite: _Starlight/Objects/Weapons/Melee/wonderprod.rsi
           state: damage-icon

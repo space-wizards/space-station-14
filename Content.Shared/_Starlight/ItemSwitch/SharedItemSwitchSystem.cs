@@ -132,11 +132,11 @@ public abstract class SharedItemSwitchSystem : EntitySystem
         };
         RaiseLocalEvent(uid, ref attempt);
 
-        if (ent.Comp.States.TryGetValue(ent.Comp.State, out var prevState) && prevState.RemoveComponents is not null)
-            EntityManager.RemoveComponents(ent, prevState.RemoveComponents);
+        if (ent.Comp.States.TryGetValue(ent.Comp.State, out var prevState) && prevState.RemoveComponents && prevState.Components is not null)
+            EntityManager.RemoveComponents(ent, prevState.Components);
 
-        if(state.AddComponents is not null)
-            EntityManager.AddComponents(ent, state.AddComponents);
+        if (state.Components is not null)
+            EntityManager.AddComponents(ent, state.Components);
 
         if (!comp.Predictable) predicted = false;
 
@@ -182,6 +182,6 @@ public abstract class SharedItemSwitchSystem : EntitySystem
 
         VisualsChanged(ent, key);
     }
-    private void UpdateClothingLayer(Entity<ClothingComponent> ent, ref ItemSwitchedEvent args) 
+    private void UpdateClothingLayer(Entity<ClothingComponent> ent, ref ItemSwitchedEvent args)
         => _clothing.SetEquippedPrefix(ent, args.State, ent.Comp);
 }
