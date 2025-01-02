@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: Fixed many entities not taking structural damage, including girders,
-      firelocks, and machines.
-    type: Fix
-  id: 7278
-  time: '2024-09-04T13:37:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30790
 - author: lzk228
   changes:
   - message: Reduced walk speed of some small mobs (mice, cockroaches, bees etc.)
@@ -3930,3 +3922,11 @@
   id: 7777
   time: '2025-01-02T18:23:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30514
+- author: FairlySadPanda
+  changes:
+  - message: Added a few new actions that a scrambled borg can encounter via an ion
+      storm.
+    type: Add
+  id: 7778
+  time: '2025-01-02T18:55:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34180
