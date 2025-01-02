@@ -416,7 +416,7 @@
 
 - type: entity
   parent: ClothingHandsBase
-  id: ClothingHandsGlovesForensic
+  id: [ClothingHandsGlovesForensic, BaseRestrictedContraband]
   name: forensic gloves
   description: Do not leave fibers or fingerprints. If you work without them, you're A TERRIBLE DETECTIVE.
   components:
