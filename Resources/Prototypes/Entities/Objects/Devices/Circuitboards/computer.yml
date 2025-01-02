@@ -22,7 +22,7 @@
         Silicon: 20
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseEngineeringContraband ]
   id: AlertsComputerCircuitboard
   name: atmospheric alerts computer board
   description: A computer printed circuit board for an atmospheric alerts computer.
@@ -31,7 +31,7 @@
       prototype: ComputerAlert
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseEngineeringContraband ]
   id: AtmosMonitoringComputerCircuitboard
   name: atmospheric network monitor board
   description: A computer printed circuit board for an atmospheric network monitor.
@@ -40,7 +40,7 @@
       prototype: ComputerAtmosMonitoring
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseEngineeringContraband ]
   id: PowerComputerCircuitboard
   name: power monitoring computer board
   description: A computer printed circuit board for a power monitoring computer.
@@ -51,7 +51,7 @@
       prototype: ComputerPowerMonitoring
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseMedicalContraband ]
   id: MedicalRecordsComputerCircuitboard
   name: medical records computer board
   description: A computer printed circuit board for a medical records computer.
@@ -62,7 +62,7 @@
       prototype: ComputerMedicalRecords
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseSecurityContraband ]
   id: CriminalRecordsComputerCircuitboard
   name: criminal records computer board
   description: A computer printed circuit board for a criminal records computer.
@@ -73,7 +73,7 @@
       prototype: ComputerCriminalRecords
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseSecurityCommandContraband ]
   id: StationRecordsComputerCircuitboard
   name: station records computer board
   description: A computer printed circuit board for a station records computer.
@@ -84,7 +84,7 @@
       prototype: ComputerStationRecords
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseCargoContraband ]
   id: CargoRequestComputerCircuitboard
   name: cargo request computer board
   description: A computer printed circuit board for a cargo request computer.
@@ -100,7 +100,7 @@
         - DroneUsable
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseCargoContraband ]
   id: CargoSaleComputerCircuitboard
   name: cargo sale computer board
   description: A computer printed circuit board for a cargo sale computer.
@@ -112,7 +112,7 @@
 
 - type: entity
   id: CargoBountyComputerCircuitboard
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseCargoContraband ]
   name: cargo bounty computer board
   description: A computer printed circuit board for a cargo bounty computer.
   components:
@@ -126,7 +126,7 @@
     - DroneUsable
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseCargoContraband ]
   id: CargoShuttleComputerCircuitboard
   name: cargo shuttle computer board
   description: A computer printed circuit board for a cargo shuttle computer.
@@ -137,7 +137,7 @@
       prototype: ComputerCargoShuttle
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseCargoContraband ]
   id: SalvageExpeditionsComputerCircuitboard
   name: salvage expeditions computer board
   description: A computer printed circuit board for a salvage expeditions computer.
@@ -150,7 +150,7 @@
       stealGroup: SalvageExpeditionsComputerCircuitboard
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseCargoContraband ]
   id: CargoShuttleConsoleCircuitboard
   name: cargo shuttle console board
   description: A computer printed circuit board for a cargo shuttle console.
@@ -196,7 +196,7 @@
         - DroneUsable
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseScienceContraband ]
   id: ResearchComputerCircuitboard
   name: R&D computer board
   description: A computer printed circuit board for a R&D console.
@@ -218,7 +218,7 @@
       prototype: ComputerAnalysisConsole
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseScienceContraband ]
   id: TechDiskComputerCircuitboard
   name: tech disk terminal board
   description: A computer printed circuit board for a technology disk terminal.
@@ -294,7 +294,7 @@
     prototype: ComputerRadar
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseEngineeringContraband ]
   id: SolarControlComputerCircuitboard
   name: solar control computer board
   description: A computer printed circuit board for a solar control console.
@@ -323,7 +323,7 @@
       prototype: BlockGameArcade
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseEngineeringContraband ]
   id: ParticleAcceleratorComputerCircuitboard
   name: PA control box computer board
   description: A computer printed circuit board for a particle accelerator control box.
@@ -343,7 +343,7 @@
       prototype: ComputerShuttle
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, Tier2Contraband ]
   id: SyndicateShuttleConsoleCircuitboard
   name: syndicate shuttle console board
   description: A computer printed circuit board for a syndicate shuttle console.
@@ -374,7 +374,7 @@
       prototype: ComputerIFF
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, Tier2Contraband ]
   id: ComputerIFFSyndicateCircuitboard
   name: syndicate IFF console board
   description: Allows you to control the IFF and stealth characteristics of this vessel.
@@ -407,7 +407,7 @@
       prototype: ComputerSensorMonitoring
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseCommandContraband ]
   id: RoboticsConsoleCircuitboard
   name: robotics control console board
   description: A computer printed circuit board for a robotics control console.
@@ -418,7 +418,7 @@
       prototype: ComputerRoboticsControl
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseCommandContraband ]
   id: StationAiUploadCircuitboard
   name: AI upload console board
   description: A computer printed circuit board for a AI upload console.
