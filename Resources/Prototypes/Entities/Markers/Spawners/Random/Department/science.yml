@@ -90,7 +90,7 @@
       state: icon
   - type: EntityTableSpawner
     table: !type:NestedSelector
-      tableId: MaintToolsTable
+      tableId: ScienceMajorTable
       offset: 0.2
 
 # Borg Module Spawner
