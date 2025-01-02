@@ -4,6 +4,7 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Toolshed.Commands.Generic;
 
 namespace Content.Server.Commands
 {
@@ -51,6 +52,7 @@ namespace Content.Server.Commands
             return true;
         }
 
+        [Obsolete($"Use toolshed's {nameof(EmplaceCommand)}")]
         public static string SubstituteEntityDetails(IConsoleShell shell, EntityUid ent, string ruleString)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
