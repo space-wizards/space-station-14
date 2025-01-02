@@ -4,11 +4,12 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Controls
 {
-    public sealed class StripeBack : Container
+    [Virtual]
+    public class StripeBack : Container
     {
-        private const float PadSize = 4;
-        private const float EdgeSize = 2;
-        private static readonly Color EdgeColor = Color.FromHex("#525252ff");
+        public float PadSize { get; set; } = 4;
+        public float EdgeSize { get; set; } = 2;
+        public Color EdgeColor { get; set; } = Color.FromHex("#525252ff");
 
         private bool _hasTopEdge = true;
         private bool _hasBottomEdge = true;
