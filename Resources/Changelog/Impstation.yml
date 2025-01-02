@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Added thunky boots and tappy high heels sfx
-    type: Add
-  - message: Gave jump boots the thunky sfx
-    type: Tweak
-  - message: Gave high heels the tappy sfx
-    type: Tweak
-  id: 349
-  time: '2024-10-08T17:39:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/441
 - author: Darkmajia
   changes:
   - message: Brigmedics now spawn in their department.
@@ -4484,3 +4473,11 @@
   id: 848
   time: '2025-01-02T13:19:37.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1193
+- author: Darkmajia
+  changes:
+  - message: Embedded projectiles no longer disappear along with the destroyed or
+      eaten objects they're attached to.
+    type: Fix
+  id: 849
+  time: '2025-01-02T19:45:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1207
