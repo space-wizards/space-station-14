@@ -99,6 +99,49 @@
   - type: Tag
     tags:
       - Spray
+
+- type: entity
+  name: spray nozzle
+  description: A pressurized nozzle for spraying reagents.
+  id: BorgSprayBottle
+  parent: SprayBottle
+  suffix: ""
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 200
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 200
+  - type: Tag
+    tags:
+      - Spray
+
+- type: entity
+  name: super spray nozzle
+  id: BorgMegaSprayBottle
+  parent: SprayBottle
+  suffix: Empty
+  description: A high capacity, high pressure spray nozzle, for cleaning even the biggest of spills.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: cleaner_large
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 300
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 300
+  - type: Spray
+    transferAmount: 15
+    sprayedPrototype: BigVapor
+    sprayVelocity: 3
+    sprayDistance: 4.5
+    spraySound:
+      path: /Audio/Effects/spray2.ogg
 # Vapor
 
 - type: entity

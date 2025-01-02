@@ -64,3 +64,26 @@
     quickInsert: true
     areaInsert: true
     areaInsertRadius: 5
+
+- type: entity
+  name: internal trash bag
+  id: BorgTrashBag
+  description: A upgraded trash bag capable of holding nearly anything.
+  parent: TrashBag
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/trashbag.rsi
+    layers:
+      - state: icon-0
+        map: ["enum.StorageFillLayers.Fill"]
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,7,5
+    quickInsert: true
+    areaInsert: true
+    storageOpenSound:
+      collection: trashBagRustle
+    storageInsertSound:
+      collection: trashBagRustle
+    whitelist: null
