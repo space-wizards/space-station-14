@@ -1,7 +1,7 @@
 - type: entity
   name: apid
   id: MobApid
-  parent: [BaseSimpleMob, StripableInventoryBase, MobRespirator, MobFlammable, MobBloodstream]
+  parent: [BaseSimpleMob, StripableInventoryBase, MobRespirator, MobFlammable, MobBloodstream, MobAtmosStandard]
   description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
   suffix: Ghost role
   components:
@@ -249,6 +249,9 @@
     bodyStatus: InAir
   - type: NoSlip
   - type: CanMoveInAir
+  - type: NpcFactionMember
+    factions:
+      - Passive
 
 - type: entity
   name: apid botanist
@@ -306,6 +309,26 @@
   - type: GhostRole
     name: ghost-role-information-apid-engineer-name
     description: ghost-role-information-apid-engineer-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
+
+- type: entity
+  name: apid emergency responder
+  id: MobApidEmergency
+  parent: MobApid
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: Loadout
+    prototypes:
+      - StartingGearApidEmergency
+  - type: RandomMetadata
+    nameSegments:
+    - apid_emergency
+    - names_apid
+  - type: GhostRole
+    name: ghost-role-information-apid-beert-name
+    description: ghost-role-information-apid-beert-description
     rules: ghost-role-information-crewmember-rules
     raffle:
       settings: default

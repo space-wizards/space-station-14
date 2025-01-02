@@ -289,3 +289,16 @@
     pocket2: ClothingMaskBreath
     ears: ClothingHeadsetEngineering
     eyes: ClothingEyesGlassesMeson
+
+- type: startingGear #emergency responder
+  id: StartingGearApidEmergency
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTMedic
+    id: ParamedicPDA
+    belt: ApidEmergencyResponseBeltFilled
+    outerClothing: ClothingOuterHardsuitERTMedical
+    head: ClothingHeadHatParamedicSirenCap
+    pocket1: DoubleEmergencyOxygenTankFilled
+    pocket2: WeaponDisabler
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedSec
