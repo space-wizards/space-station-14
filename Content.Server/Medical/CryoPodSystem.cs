@@ -31,6 +31,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Content.Server.Medical;
 
@@ -50,6 +51,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
     [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -71,21 +73,33 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         SubscribeLocalEvent<CryoPodComponent, AfterActivatableUIOpenEvent>(OnActivateUI);
         SubscribeLocalEvent<CryoPodComponent, EntRemovedFromContainerMessage>(OnEjected);
         SubscribeLocalEvent<CryoPodComponent, EntInsertedIntoContainerMessage>(OnInsertedItemChanged);
-        SubscribeLocalEvent<CryoPodComponent, EntRemovedFromContainerMessage>(OnInsertedItemChanged);
     }
 
-    private void OnInsertedItemChanged(Entity<CryoPodComponent> ent, ref EntRemovedFromContainerMessage args)
+    private void OnInsertedItemChanged(Entity<CryoPodComponent> entity, ref EntInsertedIntoContainerMessage args)
     {
-        throw new NotImplementedException();
+        OnInsertedItemChanged(entity.Owner, entity.Comp);
     }
 
-    private void OnInsertedItemChanged(Entity<CryoPodComponent> ent, ref EntInsertedIntoContainerMessage args)
+    private void OnInsertedItemChanged(EntityUid uid, CryoPodComponent cryoPod)
     {
-        throw new NotImplementedException();
-    }
+        var itemSlotsQuery = GetEntityQuery<ItemSlotsComponent>();
+        if (!itemSlotsQuery.TryGetComponent(uid, out var itemSlotsComponent))
+            return;
 
-    private UpdateColors()
-    {
+        var insertedItem = _itemSlotsSystem.GetItemOrNull(uid, cryoPod.SolutionContainerName, itemSlotsComponent);
+        if (insertedItem.HasValue)
+        {
+            if (_appearanceSystem.TryGetData<Color>(insertedItem.Value, SolutionContainerVisuals.Color, out var color))
+                _appearanceSystem.SetData(uid, SolutionContainerVisuals.Color, color);
+
+            if (_appearanceSystem.TryGetData<float>(insertedItem.Value, SolutionContainerVisuals.FillFraction, out var friction))
+                _appearanceSystem.SetData(uid, SolutionContainerVisuals.FillFraction, friction);
+        }
+        else
+        {
+            _appearanceSystem.SetData(uid, SolutionContainerVisuals.Color, Color.Transparent);
+            _appearanceSystem.SetData(uid, SolutionContainerVisuals.FillFraction, 0.0);
+        }
 
     }
 
@@ -131,6 +145,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
                 var solutionToInject = _solutionContainerSystem.SplitSolution(containerSolution.Value, cryoPod.BeakerTransferAmount);
                 _bloodstreamSystem.TryAddToChemicals(patient.Value, solutionToInject, bloodstream);
                 _reactiveSystem.DoEntityReaction(patient.Value, solutionToInject, ReactionMethod.Injection);
+                OnInsertedItemChanged(uid, cryoPod);
             }
         }
     }
@@ -307,6 +322,8 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
 
     private void OnEjected(Entity<CryoPodComponent> cryoPod, ref EntRemovedFromContainerMessage args)
     {
+        OnInsertedItemChanged(cryoPod.Owner, cryoPod.Comp);
+
         if (TryComp<HealthAnalyzerComponent>(cryoPod.Owner, out var healthAnalyzer))
         {
             healthAnalyzer.ScannedEntity = null;

@@ -15,17 +15,17 @@
             "name": "grinder",
             "delays": [ [ 1.0 ] ]
         },
-  	    {
+        {
             "name": "beakerSlot1"
-   	    },
-  	    {
+        },
+        {
             "name": "beakerSlot2"
-   	    },
-  	    {
+        },
+        {
             "name": "beakerSlot3"
-   	    },
-  	    {
+        },
+        {
             "name": "beakerSlot4"
-   	    }
+        }
     ]
 }

@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Containers;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -20,7 +20,7 @@ public sealed partial class CryoPodComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("solutionContainerName")]
-    public string SolutionContainerName { get; set; } = "beakerSlot";
+    public string SolutionContainerName { get; set; } = "beakerSlot";//whats up with this name and documentation?
 
     /// <summary>
     /// How often (seconds) are chemicals transferred from the beaker to the body?
@@ -66,6 +66,10 @@ public sealed partial class CryoPodComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("locked")]
     public bool Locked { get; set; }
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("color")]
+    public Color? Color { get; set; }
 
     /// <summary>
     /// Causes the pod to be locked without being fixable by messing with wires.
