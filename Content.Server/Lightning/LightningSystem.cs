@@ -4,6 +4,7 @@ using Content.Server.Beam;
 using Content.Server.Beam.Components;
 using Content.Server.Lightning.Components;
 using Content.Shared.Lightning;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -134,12 +135,12 @@ public sealed class LightningSystem : SharedLightningSystem
         while (shootedCount < boltCount)
         {
             count++;
+            var outOfRange = count >= targets.Count ? true : false;
+            var targetLightningResistance = outOfRange ? 0 : targets[count].Comp.LightningResistance;
 
-            if (count >= targets.Count) { break; }
-
-            if (_random.Prob(hitCoordsChance) && targets[count].Comp.LightningResistance <= mobLightningResistance)
+            if (_random.Prob(hitCoordsChance) && targetLightningResistance <= mobLightningResistance)
             {
-                var targetCoordinate = coordinates.Offset(new Vector2(range, range));
+                var targetCoordinate = coordinates.Offset(_random.NextVector2(range, range));
 
                 if (user != null)
                     ShootLightning(user.Value, targetCoordinate, lightningPrototype, triggerLightningEvents);
@@ -155,6 +156,8 @@ public sealed class LightningSystem : SharedLightningSystem
                 continue;
             }
 
+            if (outOfRange) { break; }
+
             var curTarget = targets[count];
             if (!_random.Prob(curTarget.Comp.HitProbability)) //Chance to ignore target
                 continue;
@@ -164,9 +167,9 @@ public sealed class LightningSystem : SharedLightningSystem
             else
                 ShootLightning(coordinates, targets[count].Owner, lightningPrototype, triggerLightningEvents);
 
-            if (arcDepth - targets[count].Comp.LightningResistance > 0)
+            if (arcDepth - targetLightningResistance > 0)
             {
-                ShootRandomLightnings(targets[count].Owner, range, 1, lightningPrototype, arcDepth - targets[count].Comp.LightningResistance, triggerLightningEvents, hitCoordsChance);
+                ShootRandomLightnings(targets[count].Owner, range, 1, lightningPrototype, arcDepth - targetLightningResistance, triggerLightningEvents, hitCoordsChance);
             }
             shootedCount++;
         }
