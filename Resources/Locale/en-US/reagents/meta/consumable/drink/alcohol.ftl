@@ -157,8 +157,8 @@ reagent-desc-hooch = Either someone's failure at cocktail making or attempt in a
 reagent-name-iced-beer = iced beer
 reagent-desc-iced-beer = A beer which is so cold the air around it freezes.
 
-reagent-name-irish-slammer = irish slammer
-reagent-desc-irish-slammer = An unconventional mixture of irish cream and stout.
+reagent-name-irish-slammer = grenade penguin
+reagent-desc-irish-slammer = What's black and white a red all over?
 
 reagent-name-irish-cream = irish cream
 reagent-desc-irish-cream = Whiskey-imbued cream. What else could you expect from the Irish.
