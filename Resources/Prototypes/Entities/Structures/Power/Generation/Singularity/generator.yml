@@ -38,6 +38,7 @@
   parent: SingularityGenerator
   id: WehularityGenerator
   name: wehvitational wehularity generator
+  suffix: Admeme
   description: An Odd Device which produces a Wehvitational Wehularity when set up.
   components:
   - type: Sprite

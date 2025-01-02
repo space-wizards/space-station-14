@@ -2,6 +2,7 @@
   id: Wehularity
   name: wehvitational wehularity
   description: A mesmerizing swirl of weh that wehs in everyweh. If it's weh-ing towards you, weh.
+  suffix: Admeme
   components:
   - type: Clickable
   - type: AmbientSound
