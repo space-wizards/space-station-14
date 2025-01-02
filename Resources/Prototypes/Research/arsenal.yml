@@ -49,21 +49,29 @@
   - WeaponLaserCarbine
   - WeaponMechCombatFiredartLaser
 
-#- type: technology Moved to starlight
-#  id: NonlethalAmmunition
-#  name: research-technology-nonlethal-ammunition
-#  icon:
-#    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-#    state: beanbag
-#  discipline: Arsenal
-#  tier: 1
-#  cost: 5000
-#  recipeUnlocks:
-#  - MagazineShotgunBeanbag
-#  - BoxShellTranquilizer
-#  - BoxBeanbag
-#  - WeaponDisabler
-#  - WeaponMechCombatDisabler
+- type: technology
+  id: NonlethalAmmunition
+  name: research-technology-nonlethal-ammunition
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: beanbag
+  discipline: Arsenal
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - MagazineShotgunBeanbag
+  - BoxShellTranquilizer
+  - BoxBeanbag
+  - WeaponDisabler
+  - WeaponMechCombatDisabler
+  - CartridgePistolRubber
+  - CartridgeMagnumRubber
+  - CartridgeLightRifleRubber
+  - CartridgeRifleRubber
+  - MagazineBoxPistolRubber
+  - MagazineBoxMagnumRubber
+  - MagazineBoxLightRifleRubber
+  - MagazineBoxRifleRubber
 
 - type: technology
   id: UraniumMunitions
