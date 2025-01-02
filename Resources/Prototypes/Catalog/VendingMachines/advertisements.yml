@@ -83,12 +83,6 @@
     count: 8
 
 - type: localizedDataset
-  id: GibbSoftdrinksAds
-  values:
-    prefix: advertisement-gibb-
-    count: 8
-
-- type: localizedDataset
   id: CondimentVendAds
   values:
     prefix: advertisement-condiment-
