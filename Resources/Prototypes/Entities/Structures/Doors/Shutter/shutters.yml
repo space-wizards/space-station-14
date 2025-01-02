@@ -61,7 +61,7 @@
         type: WiresBoundUserInterface
   - type: Airtight
   - type: RadiationBlocker
-    resistance: 1
+    resistance: 2
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic
@@ -144,7 +144,7 @@
     containers:
     - board
   - type: RadiationBlocker
-    resistance: 10
+    resistance: 4
   - type: Destructible
     thresholds:
     - trigger:

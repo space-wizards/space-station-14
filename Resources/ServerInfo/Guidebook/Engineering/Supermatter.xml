@@ -6,11 +6,11 @@
 
   So you've decided to take on the challenge and set up the Supermatter Engine? First, let's give you a short overview of the main Supermatter crystal beforehand.
 
-  Its primary features are emitting electrical arcs that are harnessed to power the station through tesla coils.
+  Its primary features are emitting radiation that is harnessed to power the station through radiation collectors.
 
-  Side effects include radiation emission, releasing hot oxygen and plasma, heating the air around, and exploding, transforming into a black hole or an energy ball and eating the entire station if you screw up hard enough.
+  Side effects include releasing hot oxygen and plasma, heating the air around, and exploding, transforming into a black hole or an energy ball and eating the entire station if you screw up hard enough.
 
-  It begins inert but being hit by an object or a projectile will activate it and it'll start exhibiting nearly all of the aforementioned properties.
+  It begins inert, though still radioactive, but being hit by an object or a projectile will activate it. This includes bodies: do not run into the supermatter!
 
   ## Words of Warning
 
@@ -18,9 +18,9 @@
 
   2. [color=red]PUT YOUR RADIATION SUIT ON[/color].
 
-  3. Most the Supermatter setup involves a gas loop that is designed to cool down the Supermatter chamber. Please have at least some knowledge of gases and their atmospheric properties.
+  3. Most of the Supermatter setup involves a gas loop that is designed to cool down the Supermatter chamber.
 
-  4. Anything that bumps into the Supermatter is [color=red]fundamentally annihilated[/color]. [color=red]Do not touch it[/color]. This means weld and bolt the door to the chamber.
+  4. Anything that bumps into the Supermatter is [color=red]fundamentally annihilated[/color]. [color=red]Do not touch it[/color].
 
   ## Gas Interactions
 
@@ -46,11 +46,11 @@
 
   Now, forget about everything you've just read and get to setting up the most basic loop there is: the Nitrogen loop.
 
-  The atmospheric setup in its' most basic form should look like this:
+  The atmospheric setup in its most basic form should look like this:
 
   (We did not have enough budget for images, here is a text representation)
 
-  1. Nitrogen gets pumped into the chamber by passive vents from one side
+  1. Nitrogen gets pumped into the chamber by vents from one side
 
   2. Every gas gets pumped out of the chamber by using scrubbers set on Siphon on the other side.
 
@@ -60,6 +60,6 @@
 
   ## Experiment
 
-  You're not a real engineer if you haven't figured out the most efficient way to produce electricity using the Supermatter crystal, are you?
+  You're not a real engineer if you haven't figured out the most efficient way to produce power using the Supermatter crystal, are you?
 
 </Document>

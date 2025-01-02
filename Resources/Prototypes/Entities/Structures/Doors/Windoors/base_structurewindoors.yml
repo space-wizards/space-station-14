@@ -282,7 +282,7 @@
   - type: StaticPrice
     price: 500
   - type: RadiationBlocker
-    resistance: 4
+    resistance: 2
 
 - type: entity
   id: BaseSecurePlasmaWindoor
@@ -343,7 +343,7 @@
   - type: StaticPrice
     price: 500
   - type: RadiationBlocker
-    resistance: 6
+    resistance: 4
   - type: Tag
     tags:
       - SecurePlasmaWindoor
@@ -409,7 +409,7 @@
   - type: StaticPrice
     price: 560
   - type: RadiationBlocker
-    resistance: 5
+    resistance: 3
 
 - type: entity
   id: BaseSecureUraniumWindoor
@@ -470,7 +470,7 @@
   - type: StaticPrice
     price: 750
   - type: RadiationBlocker
-    resistance: 8
+    resistance: 5
   - type: Tag
     tags:
       - SecureUraniumWindoor
