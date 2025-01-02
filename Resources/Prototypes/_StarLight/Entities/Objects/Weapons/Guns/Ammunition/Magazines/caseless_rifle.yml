@@ -1,5 +1,5 @@
 - type: entity
-  id: MagazinePistolCaselessRifleRubber
+  id: MagazineCaselessRifleRubber
   name: "pistol magazine (.25 caseless rubber)"
   parent: BaseMagazinePistolCaselessRifle
   components:

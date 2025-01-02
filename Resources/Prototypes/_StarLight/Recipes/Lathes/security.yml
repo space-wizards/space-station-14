@@ -69,3 +69,12 @@
   materials:
     Steel: 350
     Plastic: 600
+    
+- type: latheRecipe
+  id: ShellShotgunBeanbag
+  result: MagazineBoxLightRifleRubber
+  category: Ammo
+  completetime: 5
+  materials:
+    Steel: 350
+    Plastic: 600
