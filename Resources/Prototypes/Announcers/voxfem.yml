@@ -45,6 +45,14 @@
       path: alerts/pink.ogg
     - id: alertAmber # It's Dino Wars
       path: alerts/amber.ogg
+    - id: alertBurgundy # Don't move!
+      path: alerts/burgundy.ogg
+    - id: khaki # oh fuck
+      path: alerts/khaki.ogg
+    - id: alertNavy # It's clown time!
+      path: alerts/navy.ogg
+    - id: alertChartreuse # Wha?
+      path: alerts/chartreuse.ogg
 
     # Events
     ## Wizard's Den
