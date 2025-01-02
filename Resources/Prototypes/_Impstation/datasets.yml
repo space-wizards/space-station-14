@@ -8,7 +8,7 @@
     - Security
     - Medical
     - Cargo
-    
+
 - type: dataset
   id: Pets
   values:
@@ -75,7 +75,7 @@
     - Figurines
     - Toys
     - Lockers
-    
+
 - type: dataset
   id: Edibles
   values:
@@ -90,6 +90,8 @@
     - Bungo Curry
     - Salty Sweet Miso Cola Soup
     - Bread Dog
+    - Camel's Soup
+    - Toddler Rings Stew
 
 - type: dataset
   id: Holidays
