@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lyroth001
-  changes:
-  - message: added a new artifact node for medical chems
-    type: Add
-  id: 7274
-  time: '2024-09-03T15:11:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30873
 - author: DieselMohawk
   changes:
   - message: Added Red Neck Gaiter to Secdrobe
@@ -3928,3 +3921,10 @@
   id: 7773
   time: '2025-01-01T16:27:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34066
+- author: Alpaccalypse
+  changes:
+  - message: '"Irish Car Bomb" renamed to "Irish Slammer".'
+    type: Tweak
+  id: 7774
+  time: '2025-01-02T09:46:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34107
