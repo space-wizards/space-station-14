@@ -63,7 +63,6 @@
         acts: [ "Destruction" ]
 
 # Custom Soup Example
-
 - type: entity
   name: pea soup
   parent: FoodBowlBase
@@ -100,6 +99,9 @@
     trash: 
     - FoodBowlBig
     utensil: Fork
+  - type: Tag
+    tags:
+    - Salad
 
 - type: entity
   name: aesir salad
@@ -217,9 +219,6 @@
           Quantity: 2
         - ReagentId: Allicin
           Quantity: 3
-  - type: Tag
-    tags:
-    - Salad
 
 - type: entity
   name: caesar salad
@@ -246,9 +245,6 @@
           Quantity: 8
         - ReagentId: Vitamin
           Quantity: 6
-  - type: Tag
-    tags:
-    - Salad
 
 - type: entity
   name: kimchi salad
@@ -276,9 +272,6 @@
           Quantity: 2
         - ReagentId: Allicin
           Quantity: 2
-  - type: Tag
-    tags:
-    - Salad
 
 - type: entity
   name: fruit salad
@@ -388,15 +381,24 @@
           Quantity: 5
         - ReagentId: Omnizine
           Quantity: 5
-  - type: Tag
-    tags:
-    - Salad
 
 # Rice
+- type: entity
+  parent: FoodBowlBase
+  id: FoodRiceBase
+  abstract: true
+  components:
+  - type: Food
+    trash: 
+    - FoodBowlBig
+    utensil: Fork
+  - type: Tag
+    tags:
+    - Rice
 
 - type: entity
   name: boiled rice
-  parent: FoodBowlBase
+  parent: FoodRiceBase
   id: FoodRiceBoiled
   description: A warm bowl of rice.
   components:
@@ -410,7 +412,7 @@
 
 - type: entity
   name: egg-fried rice
-  parent: FoodBowlBase
+  parent: FoodRiceBase
   id: FoodRiceEgg
   description: A bowl of rice with a fried egg.
   components:
@@ -434,11 +436,11 @@
   - type: Tag
     tags:
     - Meat
-    - Soup
+    - Rice
 
 - type: entity
   name: rice and pork
-  parent: FoodBowlBase
+  parent: FoodRiceBase
   id: FoodRicePork
   description: Well, it looks like pork...
   components:
@@ -466,11 +468,11 @@
   - type: Tag
     tags:
     - Meat
-    - Soup
+    - Rice
 
 - type: entity
   name: rice pudding
-  parent: FoodBowlBase
+  parent: FoodRiceBase
   id: FoodRicePudding
   description: Everybody loves rice pudding!
   components:
@@ -498,7 +500,7 @@
 
 - type: entity
   name: black-eyed gumbo
-  parent: FoodBowlBase
+  parent: FoodRiceBase
   id: FoodRiceGumbo
   description: A spicy and savory meat and rice dish.
   components:
@@ -526,7 +528,7 @@
   - type: Tag
     tags:
     - Meat
-    - Soup
+    - Rice
 
 # Misc
 
