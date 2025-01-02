@@ -31,7 +31,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Content.Server.Medical;
 

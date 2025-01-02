@@ -4,7 +4,6 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Medical.Cryogenics;
 using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
-using Robust.Shared.Containers;
 using static Content.Shared.Medical.Cryogenics.CryoPodComponent;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
@@ -23,7 +22,6 @@ public sealed class CryoPodSystem: SharedCryoPodSystem
         SubscribeLocalEvent<CryoPodComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
         SubscribeLocalEvent<CryoPodComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<CryoPodComponent, CryoPodPryFinished>(OnCryoPodPryFinished);
-    //    SubscribeLocalEvent<CryoPodComponent, EntRemovedFromContainerMessage>(OnCryoPodRemoval);
         SubscribeLocalEvent<CryoPodComponent, AppearanceChangeEvent>(OnAppearanceChange);
 
         SubscribeLocalEvent<InsideCryoPodComponent, ComponentStartup>(OnCryoPodInsertion);
@@ -105,5 +103,5 @@ public sealed class CryoPodSystem: SharedCryoPodSystem
 public enum CryoPodVisualLayers : byte
 {
     Base,
-    Cover
+    Cover,
 }
