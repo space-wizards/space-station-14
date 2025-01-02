@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Station AI's name now correctly displays in announcements.
-    type: Fix
-  id: 7277
-  time: '2024-09-03T22:05:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31802
 - author: Ilya246
   changes:
   - message: Fixed many entities not taking structural damage, including girders,
@@ -3928,3 +3921,12 @@
   id: 7776
   time: '2025-01-02T16:49:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32673
+- author: SlamBamActionman
+  changes:
+  - message: Added Chameleon PDA, found in the Thief & Uplink Chameleon Kit!
+    type: Add
+  - message: The PDA "owner" field now updates upon having a new ID inserted.
+    type: Tweak
+  id: 7777
+  time: '2025-01-02T18:23:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30514
