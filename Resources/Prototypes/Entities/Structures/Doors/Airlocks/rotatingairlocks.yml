@@ -1,0 +1,49 @@
+﻿# Rotating airlocks that require only one tile to keep the spessmen in and the spess out.
+
+- type: entity
+  id: RotatingAirlock
+  parent: Airlock
+  name: rotating airlock
+  description: It rotates inward, it rotates outward, and maybe it crushes you.
+  components:
+    - type: RotatingDoor
+      innerFixtureName: left
+      outerFixtureName: right
+      innerDoor:
+        vertices:
+          - -0.49,0.36
+          - -0.49,-0.36
+          - -0.36,-0.36
+          - -0.36,0.36
+      outerDoor:
+        vertices:
+          - 0.49,0.36
+          - 0.49,-0.36
+          - 0.36,-0.36
+          - 0.36,0.36
+      density: 1500
+      mask:
+        - TabletopMachineMask
+      layer:
+        - GlassAirlockLayer
+    - type: Fixtures
+      fixtures:
+        down:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.49,-0.49,0.49,-0.36"
+          density: 1500
+          mask:
+            - TabletopMachineMask
+          layer:
+            - GlassAirlockLayer
+        up:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "0.49,0.49,-0.49,0.36"
+          density: 1500
+          mask:
+            - TabletopMachineMask
+          layer:
+            - GlassAirlockLayer
+
