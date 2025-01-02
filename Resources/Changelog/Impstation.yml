@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Spawning with Gar Glasses is now restricted to Salvage as intended
-    type: Tweak
-  id: 345
-  time: '2024-10-07T07:24:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/434
 - author: widgetbeck
   changes:
   - message: Fixed Gastropoids not being able to use backpack keybinds by overhauling
@@ -4494,3 +4487,10 @@
   id: 844
   time: '2025-01-02T10:57:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1177
+- author: aada
+  changes:
+  - message: Bananium can now be smelted in a microwave.
+    type: Add
+  id: 845
+  time: '2025-01-02T11:48:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1201
