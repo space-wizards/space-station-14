@@ -48,9 +48,8 @@
     sprite: Clothing/Belt/emt.rsi
   - type: StorageFill
     contents:
-      - id: WeaponTetherGun
       - id: JawsOfLife
-      - id: DefibrillatorCompactVery
+      - id: DefibrillatorCompact
       - id: MedicatedSuture
       - id: RegenerativeMesh
       - id: SyringeSaline
