@@ -754,7 +754,7 @@
         color: "#FFFFFF"
   sprites:
   - sprite: _Impstation/Mobs/Customization/animatedmarkings.rsi
-    state: dwarfmarkkangaroo
+    state: dwarfmarkkangaroolhand
   shader: unshaded
 
 - type: marking
