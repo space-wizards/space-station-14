@@ -344,13 +344,6 @@
   - SeniorBartenderPDA
 
 - type: loadoutGroup
-  id: Mixologist
-  name: loadout-group-bartender-mixologist
-  minLimit: 0
-  loadouts:
-  - ChemMasterFlatpack
-
-- type: loadoutGroup
   id: ChefHead
   name: loadout-group-chef-head
   minLimit: 0

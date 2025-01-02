@@ -53,3 +53,11 @@
      TearGasGrenade: 1
      FoodBowlBig: 1
      Cigarette: 8 # YUMMY!!!!!!!!!
+
+- type: microwaveMealRecipe
+  id: RecipeBananium
+  name: bananium recipe
+  result: MaterialBananium1
+  time: 30
+  solids:
+    BananiumOre1: 1

@@ -1,6 +1,5 @@
-supermatter-announcer = Automatic Supermatter Engine
 supermatter-examine-integrity =
-    Its' integrity is [color=yellow]{$integrity}%[/color].
+    Its integrity is [color=yellow]{$integrity}%[/color].
 supermatter-warning =
     Warning! Crystal hyperstructure integrity faltering! Integrity: {$integrity}%.
 supermatter-emergency =
@@ -14,9 +13,16 @@ supermatter-delam-tesla =
 supermatter-delam-cascade =
     CRYSTAL DELAMINATION IMMINENT! Harmonic frequency limits exceeded, casualty destabilization field could not be engaged!
 supermatter-delam-cancel =
-    Crystalline hyperstructure returning to safe operating parameters. Failsafe has been Disengaged. Integrity: {$integrity}%.
+    Crystalline hyperstructure returning to safe operating parameters. Failsafe has been disengaged. Integrity: {$integrity}%.
+supermatter-delam-player =
+    You feel reality distort for a moment...
 supermatter-seconds-before-delam =
     Estimated time before delamination: {$seconds} seconds.
+supermatter-seconds-before-delam-countdown =
+    {$seconds} seconds remain before causality stabilization.
+supermatter-seconds-before-delam-imminent =
+    {$seconds}...
+
 supermatter-tamper-begin =
     You begin carefully cutting a piece off the supermatter crystal...
 supermatter-tamper-end =
@@ -24,3 +30,8 @@ supermatter-tamper-end =
 supermatter-announcement-cc-tamper =
     Our automatic casualty system has detected that the supermatter crystal structural integrity was compromised by an external force.
     Engineering department, report to the supermatter engine immediately.
+
+supermatter-collide =
+    {CAPITALIZE(THE($target))} slams into the {$sm}!
+supermatter-collide-mob =
+    {CAPITALIZE(THE($target))}'s body flashes into dust!

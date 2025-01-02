@@ -51,7 +51,7 @@
   - type: StaticPrice
     price: 215
   - type: RadiationBlocker
-    resistance: 10
+    resistance: 5
 
 - type: entity
   id: UraniumReinforcedWindowDirectional

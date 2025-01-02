@@ -1,88 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Thaven can now use the French Braid hair.
-    type: Add
-  - message: Nuclear Ops Commander requires 7.5 hours playtime in Engineering, Medical,
-      Security, and Command.
-    type: Tweak
-  id: 339
-  time: '2024-10-07T07:15:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/436
-- author: Darkmajia
-  changes:
-  - message: Core Station now has an additional scientist job slot.
-    type: Add
-  id: 340
-  time: '2024-10-07T07:16:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/432
-- author: formlessnameless
-  changes:
-  - message: Removed pAI from base trinket loadout and added it to learner roles to
-      better match the original intent
-    type: Tweak
-  id: 341
-  time: '2024-10-07T07:15:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/431
-- author: crekulon
-  changes:
-  - message: '"Monotonous" and "Sharp inflection" punctuation-based accents. Both
-      are 1-point traits.'
-    type: Add
-  - message: Changed stutter to be a 1-point speech trait rather than 2-point.
-    type: Tweak
-  id: 342
-  time: '2024-10-07T07:18:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/435
-- author: TheGrimbeeper
-  changes:
-  - message: Artifact utility node now works better
-    type: Tweak
-  id: 343
-  time: '2024-10-07T07:18:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/428
-- author: Sha-Seng
-  changes:
-  - message: Added Bellmoth's shovel incident art to the lobby screen rotation
-    type: Add
-  id: 344
-  time: '2024-10-07T07:18:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/433
-- author: Sha-Seng
-  changes:
-  - message: Spawning with Gar Glasses is now restricted to Salvage as intended
-    type: Tweak
-  id: 345
-  time: '2024-10-07T07:24:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/434
-- author: widgetbeck
-  changes:
-  - message: Fixed Gastropoids not being able to use backpack keybinds by overhauling
-      how their extra storage works.
-    type: Tweak
-  - message: Overhauled Gastropoid storage! Now they can cram up to two backpacks
-      into their shell, instead of having internal storage.
-    type: Tweak
-  - message: Changed the speed numbers on Mucin. It now makes Gastropoids ever so
-      slightly faster than average, but slows everyone else down the same amount as
-      slime.
-    type: Tweak
-  - message: Changed the Gastropoid guidebook entry to reflect the above changes.
-    type: Tweak
-  - message: New sprites for the Little Guys Car.
-    type: Add
-  - message: Little Guys Car hitbox is no longer massive and square.
-    type: Fix
-  id: 346
-  time: '2024-10-08T02:34:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/439
-- author: Darkmajia
-  changes:
-  - message: Crusher daggers now have a hitsound.
-    type: Add
-  id: 347
-  time: '2024-10-08T17:34:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/438
 - author: Darkmajia
   changes:
   - message: Fixed salvage's glasses loadout.
@@ -4497,3 +4413,73 @@
   id: 838
   time: '2025-01-01T17:26:00.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1188
+- author: honeyed-lemons
+  changes:
+  - message: Added Chemmaster boards to Box, Xeno, and Fland
+    type: Add
+  - message: Heavily tweaked boxes bar and kitchen area
+    type: Tweak
+  - message: Removes Christmas from Box
+    type: Tweak
+  id: 839
+  time: '2025-01-01T23:20:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1189
+- author: hivehum
+  changes:
+  - message: The Dino Wars have ended...
+    type: Remove
+  id: 840
+  time: '2025-01-01T23:43:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1191
+- author: aada
+  changes:
+  - message: Salt once again tastes like salt.
+    type: Fix
+  id: 841
+  time: '2025-01-01T23:44:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1192
+- author: Darkmajia
+  changes:
+  - message: The Supermatter has received many, many adjustments.
+    type: Tweak
+  id: 842
+  time: '2025-01-02T00:47:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1190
+- author: aada
+  changes:
+  - message: Several machines and computers are now contraband.
+    type: Tweak
+  id: 843
+  time: '2025-01-02T10:54:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1168
+- author: DinnerCalzone
+  changes:
+  - message: Added the improvised grappling gun, craftable with the crafting menu.
+    type: Add
+  id: 844
+  time: '2025-01-02T10:57:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1177
+- author: aada
+  changes:
+  - message: Bananium can now be smelted in a microwave.
+    type: Add
+  id: 845
+  time: '2025-01-02T11:48:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1201
+- author: DinnerCalzone
+  changes:
+  - message: Removed the chemmaster flatpack prestige item from the bartender's loadout.
+    type: Remove
+  - message: Chemmasters and chemmaster machine boards have been added to the bar
+      across a number of stations.
+    type: Add
+  id: 846
+  time: '2025-01-02T11:50:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1163
+- author: ultramario1998
+  changes:
+  - message: Admins now have a new toy!
+    type: Add
+  id: 847
+  time: '2025-01-02T11:52:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1198
