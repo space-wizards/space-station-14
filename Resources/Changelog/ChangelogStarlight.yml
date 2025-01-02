@@ -1545,3 +1545,17 @@ Entries:
   id: 219
   time: '2024-12-30T23:33:29.710493+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: Changed revenant sprites.
+    type: Tweak
+  id: 220
+  time: '2025-01-02T12:14:23.588094+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Returned unlethal(rubber) ammunition for sec.
+    type: Add
+  id: 221
+  time: '2025-01-02T12:14:47.217308+00:00'
+  url: 'null'
