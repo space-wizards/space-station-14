@@ -2,12 +2,12 @@
   id: SodaInventory
   startingInventory:
     DrinkColaCan: 3
-    DrinkDrGibbCan: 3
-    DrinkShamblersJuiceCan: 3
-    DrinkSpaceUpCan: 3
-    DrinkSpaceMountainWindCan: 3
-    DrinkStarkistCan: 3
+    DrinkGrapeCan: 3
+    DrinkRootBeerCan: 3
+    DrinkIcedTeaCan: 3
     DrinkSolDryCan: 3
+    DrinkLemonLimeCan: 3
+    DrinkLemonLimeCranberryCan: 3
     DrinkFourteenLokoCan: 3
   emaggedInventory:
     DrinkNukieCan: 3
