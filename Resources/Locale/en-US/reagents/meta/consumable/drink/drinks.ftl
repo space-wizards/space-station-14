@@ -34,7 +34,7 @@ reagent-desc-iced-tea = No relation to a certain rap artist/actor.
 reagent-name-lemonade = lemonade
 reagent-desc-lemonade = Drink using lemon juice, water, and a sweetener such as cane sugar or honey.
 
-reagent-name-arnold-palmer = arnold palmer
+reagent-name-arnold-palmer = Arnold Palmer
 reagent-desc-arnold-palmer = Now watch this drive.
 
 reagent-name-milk = milk
@@ -94,7 +94,7 @@ reagent-desc-posca = Poor warriors' drink from a forgotten era.
 reagent-name-the-martinez = The Martinez
 reagent-desc-the-martinez = The edgerunner legend. Remembered by a drink, forgotten by a drunk.
 
-reagent-name-white-gilgamesh = white gilgamesh
+reagent-name-white-gilgamesh = White Gilgamesh
 reagent-desc-white-gilgamesh = A sickening mixture of milk and beer. Makes you feel like you're made of wood.
 
 reagent-name-mopwata = mopwata
