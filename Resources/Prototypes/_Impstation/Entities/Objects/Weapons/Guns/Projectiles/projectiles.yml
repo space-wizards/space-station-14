@@ -47,10 +47,10 @@
     modifier: 0.01
   - type: Fixtures
     fixtures:
-      bouncer:
+      fix1:
         shape:
           !type:PhysShapeCircle
-          Radius: 0.1 #why the fuck does this not work aaeugh
+          radius: 0.15 #I am going to become the joker why does the game not error out if there's a fucking typo in a field name in a component come the fuck on
         density: 10
         mask:
         - ItemMask
@@ -59,7 +59,18 @@
   - type: TimedDespawn
     lifetime: 5
   - type: TriggerOnCollide
-    fixtureID: bouncer
+    fixtureID: fix1
+  - type: EmitSoundOnCollide
+    sound:
+      collection: WeakHit
+  - type: EmitSoundOnSpawn
+    sound: /Audio/Items/smoke_grenade_smoke.ogg
+
+    #actual todos
+      #smoke spew sound
+        #needs EmitSoundOnSpawn component
+        #god the triggersystem is underbaked
+
     #potential todos
     #restore old cleanade projectile?
       #make this a new flavour of cleanade in general?
@@ -69,11 +80,8 @@
       #or triggerOnThrown?
       #would be wierd either way
       #will want to look into it eventually though
-    #create projectileSpeedModifier component & system - oh god this will be a lot of boring work
-      #basic idea though - goes on the ammo entity & subscribes to any relevant ammoProvider component events
-      #on refresh modifiers, check what would be about to be shot, then check if it's the right proto, then modify proj speed accordingly
-      #this sucks but at least it'll hopefully work
-      #scratch that, the whole gun system is too pusk to do this easily, might make that an upstream PR
+    #add projectile speed to ammo protos instead of the gun
+      #will do in a PR to upstream
 
 - type: entity #BaseBullet isnt declared globally I guess? if its not here then the game doesnt build bc it cant find the parent for bullets in this file.
   id: ImpstationBaseBullet
