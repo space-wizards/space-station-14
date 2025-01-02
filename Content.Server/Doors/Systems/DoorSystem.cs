@@ -28,20 +28,18 @@ public sealed partial class DoorSystem : SharedDoorSystem
         InitializeFirelock();
     }
 
-    protected override void SetCollidable(
-        Entity<DoorComponent> door,
-        bool collidable,
-        PhysicsComponent? physics = null,
+    protected override void SetCollidable(Entity<DoorComponent> door,
+        bool isClosed,
         OccluderComponent? occluder = null
     )
     {
         if (door.Comp.ChangeAirtight && TryComp(door, out AirtightComponent? airtight))
-            _airtightSystem.SetAirblocked((door, airtight), collidable);
+            _airtightSystem.SetAirblocked((door, airtight), isClosed);
 
         // Pathfinding / AI stuff.
-        RaiseLocalEvent(new AccessReaderChangeEvent(door, collidable));
+        RaiseLocalEvent(new AccessReaderChangeEvent(door, isClosed));
 
-        base.SetCollidable(door, collidable, physics, occluder);
+        base.SetCollidable(door, isClosed, occluder);
     }
 
     private void OnBoltPowerChanged(Entity<DoorBoltComponent> ent, ref PowerChangedEvent args)

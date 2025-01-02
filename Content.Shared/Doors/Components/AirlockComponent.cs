@@ -17,13 +17,11 @@ public sealed partial class AirlockComponent : Component
     public bool Powered;
 
     // Need to network airlock safety state to avoid mis-predicts when a door auto-closes as the client walks through the door.
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public bool Safety = true;
 
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
-    public bool EmergencyAccess = false;
+    public bool EmergencyAccess;
 
     /// <summary>
     /// Sound to play when the airlock emergency access is turned on.
@@ -49,14 +47,14 @@ public sealed partial class AirlockComponent : Component
     /// Whether the maintenance panel should be visible even if the airlock is opened.
     /// </summary>
     [DataField]
-    public bool OpenPanelVisible = false;
+    public bool OpenPanelVisible;
 
     /// <summary>
     /// Whether the airlock should stay open if the airlock was clicked.
     /// If the airlock was bumped into it will still auto close.
     /// </summary>
     [DataField]
-    public bool KeepOpenIfClicked = false;
+    public bool KeepOpenIfClicked;
 
     /// <summary>
     /// Whether the airlock should auto close. This value is reset every time the airlock closes.
@@ -89,7 +87,7 @@ public sealed partial class AirlockComponent : Component
     /// Whether the door lights should be visible.
     /// </summary>
     [DataField]
-    public bool OpenUnlitVisible = false;
+    public bool OpenUnlitVisible;
 
     /// <summary>
     /// Whether the door should display emergency access lights.
