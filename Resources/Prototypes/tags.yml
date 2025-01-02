@@ -1310,9 +1310,6 @@
   id: WallmountSubstationElectronics
 
 - type: Tag
-  id: WateringCan
-
-- type: Tag
   id: WeaponAntiqueLaser
 
 - type: Tag

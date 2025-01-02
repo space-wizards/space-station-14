@@ -49,9 +49,6 @@
     fillBaseName: fill-
   - type: ExaminableSolution
     solution: bucket
-  - type: Tag
-    tags:
-    - Bucket
   - type: DnaSubstanceTrace
 
 - type: entity
@@ -72,21 +69,15 @@
     slots:
     - HEAD
     quickEquip: false
+  - type: Tag
+    tags:
+    - Bucket
   - type: PhysicalComposition
     materialComposition:
       Plastic: 50
 
 - type: entity
   parent: BaseBucket
-  id: BaseWateringCan
-  abstract: true
-  components:
-  - type: Tag
-    tags:
-    - WateringCan
-
-- type: entity
-  parent: BaseWateringCan
   id: WateringCan
   name: watering can
   description: It's a watering can. It is scientifically proved that using a watering can to simulate rain increases plant happiness!
@@ -103,7 +94,7 @@
       Plastic: 50
 
 - type: entity
-  parent: BaseWateringCan
+  parent: BaseBucket
   id: OldWateringCan
   name: old watering can
   description: An old watering can, shoddily painted to look like it was made of wood for some dubious reason...
@@ -126,9 +117,10 @@
   name: random watering can spawner
   components:
   - type: Sprite
-    sprite: Objects/Tools/Hydroponics/watering_can.rsi
     layers:
-    - state: icon
+    - state: red
+    - sprite: Objects/Tools/Hydroponics/watering_can.rsi
+      state: icon
   - type: RandomSpawner
     offset: 0.0
     rareChance: 0.1
@@ -138,7 +130,7 @@
     - OldWateringCan
 
 - type: entity
-  parent: BaseWateringCan
+  parent: BaseBucket
   id: AdvancedWateringCan
   name: advanced watering can
   description: Everything a botanist would want in a watering can. This marvel of technology generates its own water!
