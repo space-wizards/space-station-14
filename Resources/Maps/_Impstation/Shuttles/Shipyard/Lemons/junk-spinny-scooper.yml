@@ -164,13 +164,6 @@ entities:
     - type: Transform
       pos: 0.5,-1.5
       parent: 1
-- proto: ClosetWall
-  entities:
-  - uid: 63
-    components:
-    - type: Transform
-      pos: -1.5,1.5
-      parent: 1
 - proto: ClosetWallMaintenanceFilledRandom
   entities:
   - uid: 61
@@ -178,6 +171,11 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,1.5
+      parent: 1
+  - uid: 63
+    components:
+    - type: Transform
+      pos: -1.5,1.5
       parent: 1
 - proto: ComfyChair
   entities:

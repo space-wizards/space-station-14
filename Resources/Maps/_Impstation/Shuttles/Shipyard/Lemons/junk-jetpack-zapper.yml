@@ -144,31 +144,31 @@ entities:
         tiles:
           0,0:
             0: 2047
-            2: 32768
+            1: 32768
           0,-1:
             0: 28944
           -1,0:
             0: 3582
-            2: 8192
+            1: 8192
           0,1:
-            1: 3075
+            2: 3075
           -1,1:
-            1: 1544
+            2: 1544
           1,0:
             0: 272
-            1: 2
+            2: 2
           0,2:
-            1: 8
+            2: 8
           1,1:
-            1: 32
+            2: 32
           -1,-1:
             0: 49152
           -2,0:
-            1: 8
+            2: 8
           -2,1:
-            1: 128
+            2: 128
           -1,2:
-            1: 2
+            2: 2
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
@@ -186,7 +186,7 @@ entities:
           - 0
           - 0
         - volume: 2500
-          temperature: 293.15
+          immutable: True
           moles:
           - 0
           - 0
@@ -201,7 +201,7 @@ entities:
           - 0
           - 0
         - volume: 2500
-          immutable: True
+          temperature: 293.15
           moles:
           - 0
           - 0
@@ -835,8 +835,24 @@ entities:
         Before operating electrified griles, personnel must deconstruct the safety glass attached to each grille.
 
 
-        The marked button opens and closes the shutter mechanisms to allow access to safety glas and to expose the electrified grilles for use.
+        The marked button opens and closes the shutter mechanisms to allow access to safety glass and to expose the electrified grilles for use.
 
+  - uid: 168
+    components:
+    - type: Transform
+      pos: -0.6011536,2.650527
+      parent: 1
+    - type: Paper
+      content: >-
+        [head=2]Cannon Operation Instructions:[/ head]
+
+
+        In the case that operation buttons were not linked, link each button to the front-mounted cannon with a multitool.
+
+         - Link the dock-side button to the "Activate" function.
+         - Link the computer-side button to the "Toggle" function.
+
+        [There is a heavily smudged diagram on the paper. Fittingly, the smudge looks an awful lot like the pile of scrap outside the cockpit window.]
 - proto: Poweredlight
   entities:
   - uid: 14
