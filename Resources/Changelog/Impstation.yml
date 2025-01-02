@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Fixed salvage's glasses loadout.
-    type: Fix
-  id: 348
-  time: '2024-10-08T17:37:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/440
 - author: Sha-Seng
   changes:
   - message: Added thunky boots and tappy high heels sfx
@@ -4483,3 +4476,11 @@
   id: 847
   time: '2025-01-02T11:52:19.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1198
+- author: Darkmajia
+  changes:
+  - message: Air alarms can now override the pressure lockout functions of individual
+      air vents.
+    type: Add
+  id: 848
+  time: '2025-01-02T13:19:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1193
