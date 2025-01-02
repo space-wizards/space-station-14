@@ -309,3 +309,23 @@
     rules: ghost-role-information-crewmember-rules
     raffle:
       settings: default
+
+- type: entity
+  name: apid emergency responder
+  id: MobApidEmergency
+  parent: MobApid
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: Loadout
+    prototypes:
+      - StartingGearApidEmergency
+  - type: RandomMetadata
+    nameSegments:
+    - apid_emergency
+    - names_apid
+  - type: GhostRole
+    name: ghost-role-information-apid-beert-name
+    description: ghost-role-information-apid-beert-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default

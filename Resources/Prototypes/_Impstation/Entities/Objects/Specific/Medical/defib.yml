@@ -1,0 +1,9 @@
+- type: entity
+  id: DefibrillatorCompactVery # for apid ERT gear
+  parent: DefibrillatorCompact
+  name: compact defibrillator
+  suffix: Belt size, DO NOT MAP
+  description: Now in fun size!
+  components:
+  - type: Item
+    size: Small
