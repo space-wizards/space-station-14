@@ -27,8 +27,7 @@
   equipment:
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetSecurity
-    pocket1: WeaponPistolMk58
+    pocket1: WeaponPistolMk58Nonlethal
   storage:
     back:
     - Flash
-    - MagazinePistol
