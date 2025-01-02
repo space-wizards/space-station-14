@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Fixed Gastropoids not being able to use backpack keybinds by overhauling
-      how their extra storage works.
-    type: Tweak
-  - message: Overhauled Gastropoid storage! Now they can cram up to two backpacks
-      into their shell, instead of having internal storage.
-    type: Tweak
-  - message: Changed the speed numbers on Mucin. It now makes Gastropoids ever so
-      slightly faster than average, but slows everyone else down the same amount as
-      slime.
-    type: Tweak
-  - message: Changed the Gastropoid guidebook entry to reflect the above changes.
-    type: Tweak
-  - message: New sprites for the Little Guys Car.
-    type: Add
-  - message: Little Guys Car hitbox is no longer massive and square.
-    type: Fix
-  id: 346
-  time: '2024-10-08T02:34:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/439
 - author: Darkmajia
   changes:
   - message: Crusher daggers now have a hitsound.
@@ -4494,3 +4473,13 @@
   id: 845
   time: '2025-01-02T11:48:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1201
+- author: DinnerCalzone
+  changes:
+  - message: Removed the chemmaster flatpack prestige item from the bartender's loadout.
+    type: Remove
+  - message: Chemmasters and chemmaster machine boards have been added to the bar
+      across a number of stations.
+    type: Add
+  id: 846
+  time: '2025-01-02T11:50:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1163
