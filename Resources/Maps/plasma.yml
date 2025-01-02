@@ -2185,6 +2185,25 @@ entities:
             6148: -69,-28
             6149: -70,-27
             6150: -68,-27
+            6954: -100,-41
+            6955: -100,-40
+            6956: -100,-39
+            6957: -96,-40
+            6958: -96,-41
+            6959: -98,-42
+            6960: -100,-38
+            6961: -101,-36
+            6962: -100,-35
+            6963: -96,-38
+            6964: -97,-46
+            6965: -98,-45
+            6966: -99,-47
+            6967: -97,-48
+            6968: -97,-44
+            6969: -99,-44
+            6970: -85,-33
+            6971: -84,-32
+            6972: -74,-33
         - node:
             color: '#FFFFFFFF'
             id: DirtHeavy
@@ -7306,7 +7325,7 @@ entities:
             1: 65535
           -24,-1:
             1: 51336
-            3: 305
+            2: 305
           -23,1:
             1: 57599
           -23,3:
@@ -7322,11 +7341,11 @@ entities:
           -22,3:
             1: 65357
           -22,0:
-            2: 3822
+            3: 3822
           -22,4:
             1: 65535
           -22,-1:
-            2: 20479
+            3: 20479
           -21,1:
             1: 47355
           -21,0:
@@ -7338,7 +7357,7 @@ entities:
             0: 25122
           -21,-1:
             1: 34952
-            2: 819
+            3: 819
           -20,0:
             1: 4565
           -20,1:
@@ -7421,7 +7440,7 @@ entities:
             1: 21969
           -21,-2:
             1: 34955
-            2: 13056
+            3: 13056
           -20,-1:
             1: 21845
           -19,-4:
@@ -7468,7 +7487,7 @@ entities:
           -25,-2:
             1: 27648
           -25,-1:
-            3: 128
+            2: 128
             1: 25138
           -24,-5:
             1: 11259
@@ -7478,15 +7497,15 @@ entities:
             1: 32768
           -23,-2:
             1: 136
-            2: 34816
+            3: 34816
           -23,-1:
-            2: 2184
+            3: 2184
           -22,-4:
             1: 65520
           -22,-3:
             1: 65092
           -22,-2:
-            2: 65280
+            3: 65280
             1: 14
           -24,-16:
             1: 36409
@@ -7542,17 +7561,17 @@ entities:
             1: 47247
           -12,-8:
             1: 15
-            2: 30464
+            3: 30464
           -12,-9:
             1: 62702
           -13,-8:
             1: 13
-            2: 60928
+            3: 60928
           -12,-7:
-            2: 127
+            3: 127
             1: 28672
           -13,-7:
-            2: 1263
+            3: 1263
             1: 28672
           -12,-6:
             1: 30711
@@ -8208,16 +8227,16 @@ entities:
           -26,0:
             1: 29491
           -28,0:
-            3: 21840
+            2: 21840
             4: 8736
           -28,1:
             1: 208
             0: 32
-            3: 28672
+            2: 28672
           -29,1:
             1: 21973
           -28,2:
-            3: 119
+            2: 119
             1: 61440
           -29,2:
             1: 54613
@@ -8343,7 +8362,7 @@ entities:
             1: 61695
           -32,0:
             1: 4
-            3: 4112
+            2: 4112
             0: 17472
           -31,-3:
             1: 65535
@@ -8364,13 +8383,13 @@ entities:
           -29,0:
             1: 21845
           -33,0:
-            3: 49344
+            2: 49344
             1: 4369
           -32,1:
-            3: 4112
+            2: 4112
             0: 17476
           -33,1:
-            3: 49344
+            2: 49344
             1: 4369
           -32,2:
             5: 16
@@ -8771,10 +8790,10 @@ entities:
             0: 65535
           -38,0:
             0: 8994
-            3: 34944
+            2: 34944
           -37,0:
             0: 34952
-            3: 13104
+            2: 13104
           -32,-14:
             1: 20206
           -32,-12:
@@ -9165,10 +9184,10 @@ entities:
           - 0
           - 0
         - volume: 2500
-          temperature: 235
+          temperature: 293.15
           moles:
-          - 21.824879
-          - 82.10312
+          - 0
+          - 0
           - 0
           - 0
           - 0
@@ -9180,10 +9199,10 @@ entities:
           - 0
           - 0
         - volume: 2500
-          temperature: 293.15
+          temperature: 235
           moles:
-          - 0
-          - 0
+          - 21.824879
+          - 82.10312
           - 0
           - 0
           - 0
@@ -65483,11 +65502,6 @@ entities:
       parent: 2
 - proto: CrateMaterialPlasma
   entities:
-  - uid: 7428
-    components:
-    - type: Transform
-      pos: -112.5,-38.5
-      parent: 2
   - uid: 12922
     components:
     - type: Transform
@@ -122052,6 +122066,31 @@ entities:
     - type: Transform
       pos: -37.600494,-30.548458
       parent: 2
+  - uid: 25704
+    components:
+    - type: Transform
+      pos: -135.47147,-38.412785
+      parent: 2
+  - uid: 25705
+    components:
+    - type: Transform
+      pos: -52.508957,-22.949903
+      parent: 2
+  - uid: 25706
+    components:
+    - type: Transform
+      pos: -47.180832,-24.715528
+      parent: 2
+  - uid: 25707
+    components:
+    - type: Transform
+      pos: -69.47495,-26.919731
+      parent: 2
+  - uid: 25708
+    components:
+    - type: Transform
+      pos: -54.422913,-30.442062
+      parent: 2
 - proto: HarmonicaInstrument
   entities:
   - uid: 6796
@@ -124702,6 +124741,11 @@ entities:
     components:
     - type: Transform
       pos: -18.550848,-1.5089836
+      parent: 2
+  - uid: 25709
+    components:
+    - type: Transform
+      pos: -82.47984,-49.47957
       parent: 2
 - proto: Morgue
   entities:
@@ -130361,6 +130405,28 @@ entities:
     components:
     - type: Transform
       pos: -25.5,21.5
+      parent: 2
+- proto: RandomArtifactSpawner
+  entities:
+  - uid: 7428
+    components:
+    - type: Transform
+      pos: -112.5,-38.5
+      parent: 2
+  - uid: 25697
+    components:
+    - type: Transform
+      pos: -147.5,-37.5
+      parent: 2
+  - uid: 25698
+    components:
+    - type: Transform
+      pos: -149.5,-48.5
+      parent: 2
+  - uid: 25699
+    components:
+    - type: Transform
+      pos: -145.5,-42.5
       parent: 2
 - proto: RandomBoard
   entities:
@@ -139453,6 +139519,28 @@ entities:
     - type: Transform
       pos: -113.5,-30.5
       parent: 2
+- proto: SpawnPointResearchAssistant
+  entities:
+  - uid: 25700
+    components:
+    - type: Transform
+      pos: -128.5,-46.5
+      parent: 2
+  - uid: 25701
+    components:
+    - type: Transform
+      pos: -128.5,-44.5
+      parent: 2
+  - uid: 25702
+    components:
+    - type: Transform
+      pos: -126.5,-44.5
+      parent: 2
+  - uid: 25703
+    components:
+    - type: Transform
+      pos: -126.5,-46.5
+      parent: 2
 - proto: SpawnPointResearchDirector
   entities:
   - uid: 21489
@@ -139674,6 +139762,11 @@ entities:
     components:
     - type: Transform
       pos: -37.085976,-30.474735
+      parent: 2
+  - uid: 25710
+    components:
+    - type: Transform
+      pos: -85.4901,-44.3657
       parent: 2
 - proto: StairDark
   entities:
@@ -145418,6 +145511,11 @@ entities:
     components:
     - type: Transform
       pos: -19.5,11.5
+      parent: 2
+  - uid: 25711
+    components:
+    - type: Transform
+      pos: -82.5,-45.5
       parent: 2
 - proto: TrainingBomb
   entities:
@@ -162919,7 +163017,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -143357.69
+      secondsUntilStateChange: -143630.48
       state: Opening
     - type: Airlock
       autoClose: False
