@@ -1,3 +1,4 @@
+#this is technically a throwable now but it will absolutely not work as anything other than a bullet shot from a gun
 - type: entity
   id: BulletGrenadeCleaner
   name: cleaner grenade
@@ -8,12 +9,29 @@
     bodyType: Dynamic
     fixedRotation: false
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    sprite: Objects/Misc/landmine.rsi
     layers:
-      - state: frag
+      - state: landmine
+    noRot: true
   - type: SmokeOnTrigger
     duration: 15
     spreadAmount: 5
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: SpaceCleaner
+        Quantity: 50
+  - type: EmitSmokeOnDespawn
+    duration: 15
+    spreadAmount: 10
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: SpaceCleaner
+        Quantity: 50
+  - type: EmitSmokePeriodically
+    duration: 15
+    spreadAmount: 1
     smokePrototype: Foam
     solution:
       reagents:
@@ -32,17 +50,17 @@
       bouncer:
         shape:
           !type:PhysShapeCircle
-          Radius: 0.1
-        density: 20
+          Radius: 0.1 #why the fuck does this not work aaeugh
+        density: 10
         mask:
         - ItemMask
-        restitution: 0.9  # 90% bouncy
-        friction: 0.3
+        restitution: 1.0  # 100% bouncy
+        friction: 0.2
   - type: TimedDespawn
     lifetime: 5
   - type: TriggerOnCollide
     fixtureID: bouncer
-    #todos
+    #potential todos
     #restore old cleanade projectile?
       #make this a new flavour of cleanade in general?
       #something something clean-puck?
@@ -51,8 +69,6 @@
       #or triggerOnThrown?
       #would be wierd either way
       #will want to look into it eventually though
-    #create SpreadSmokePassively comp & system - turn into a more broad TriggerOnInterval thing? or just
-    #create EmitSmokeOnDespawn comp & system - will also need a TriggerOnTimedDespawn event / method in TriggerSystem
     #create projectileSpeedModifier component & system - oh god this will be a lot of boring work
       #basic idea though - goes on the ammo entity & subscribes to any relevant ammoProvider component events
       #on refresh modifiers, check what would be about to be shot, then check if it's the right proto, then modify proj speed accordingly
