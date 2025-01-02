@@ -91,10 +91,19 @@
           Quantity: 5
 
 # Salad
+- type: entity
+  parent: FoodBowlBase
+  id: FoodSaladBase
+  abstract: true
+  components:
+  - type: Food
+    trash: 
+    - FoodBowlBig
+    utensil: Fork
 
 - type: entity
   name: aesir salad
-  parent: FoodBowlBase
+  parent: FoodSaladBase
   id: FoodSaladAesir
   description: Probably too incredible for mortals to fully enjoy.
   components:
@@ -118,12 +127,12 @@
           Quantity: 8
   - type: Tag
     tags:
-    - Soup
+    - Salad
     - Fruit # I don't know what this is but its' a salad so sure
 
 - type: entity
   name: herb salad
-  parent: FoodBowlBase
+  parent: FoodSaladBase
   id: FoodSaladHerb
   description: A tasty salad with apples on top.
   components:
@@ -147,11 +156,11 @@
   - type: Tag
     tags:
     - Fruit
-    - Soup
+    - Salad
 
 - type: entity
   name: valid salad
-  parent: FoodBowlBase
+  parent: FoodSaladBase
   id: FoodSaladValid
   description: It's just an herb salad with meatballs and fried potato slices. Nothing suspicious about it.
   components:
@@ -180,11 +189,11 @@
     tags:
     - Meat
     - Fruit
-    - Soup
+    - Salad
 
 - type: entity
   name: coleslaw
-  parent: FoodBowlBase
+  parent: FoodSaladBase
   id: FoodSaladColeslaw
   description: Shredded cabbage and red onions dressed with a vinaigrette.
   components:
@@ -208,10 +217,13 @@
           Quantity: 2
         - ReagentId: Allicin
           Quantity: 3
+  - type: Tag
+    tags:
+    - Salad
 
 - type: entity
   name: caesar salad
-  parent: FoodBowlBase
+  parent: FoodSaladBase
   id: FoodSaladCaesar
   description: A simple yet flavorful salad of onions, lettuce, croutons, and shreds of cheese dressed in oil. Comes with a slice of pita bread!
   components:
@@ -234,10 +246,13 @@
           Quantity: 8
         - ReagentId: Vitamin
           Quantity: 6
+  - type: Tag
+    tags:
+    - Salad
 
 - type: entity
   name: kimchi salad
-  parent: FoodBowlBase
+  parent: FoodSaladBase
   id: FoodSaladKimchi
   description: It really is just a spicy salad.
   components:
@@ -261,10 +276,13 @@
           Quantity: 2
         - ReagentId: Allicin
           Quantity: 2
+  - type: Tag
+    tags:
+    - Salad
 
 - type: entity
   name: fruit salad
-  parent: FoodBowlBase
+  parent: FoodSaladBase
   id: FoodSaladFruit
   description: Your standard fruit salad.
   components:
@@ -287,11 +305,11 @@
   - type: Tag
     tags:
     - Fruit
-    - Soup
+    - Salad
 
 - type: entity
   name: jungle salad
-  parent: FoodBowlBase
+  parent: FoodSaladBase
   id: FoodSaladJungle
   description: Exotic fruits in a bowl.
   components:
@@ -315,11 +333,11 @@
   - type: Tag
     tags:
     - Fruit
-    - Soup
+    - Salad
 
 - type: entity
   name: citrus salad
-  parent: FoodBowlBase
+  parent: FoodSaladBase
   id: FoodSaladCitrus
   description: Citrus overload!
   components:
@@ -343,11 +361,11 @@
   - type: Tag
     tags:
     - Fruit
-    - Soup
+    - Salad
 
 - type: entity
   name: salad of eden
-  parent: FoodBowlBase
+  parent: FoodSaladBase
   id: FoodSaladEden
   description: A salad brimming with untapped potential.
   components:
@@ -370,6 +388,9 @@
           Quantity: 5
         - ReagentId: Omnizine
           Quantity: 5
+  - type: Tag
+    tags:
+    - Salad
 
 # Rice
 
