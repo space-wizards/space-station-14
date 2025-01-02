@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Brigmedics now spawn in their department.
-    type: Add
-  id: 350
-  time: '2024-10-08T17:41:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/442
 - author: KingMudkipIII
   changes:
   - message: 'Added two new drinks: Starry Night, and Zombie Slushie. Spriting is
@@ -4481,3 +4474,16 @@
   id: 849
   time: '2025-01-02T19:45:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1207
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: New sprites for the AKMS
+    type: Add
+  - message: some sound effects for the Daito and Nemesis were changed (not the firing
+      sounds)
+    type: Tweak
+  - message: Cargo Prices for Impstation guns have been reduced, as has the TC price
+      for the Nemesis reduced slightly.
+    type: Tweak
+  id: 850
+  time: '2025-01-02T20:05:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1208
