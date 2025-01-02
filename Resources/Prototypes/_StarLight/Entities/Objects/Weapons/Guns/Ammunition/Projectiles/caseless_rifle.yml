@@ -1,0 +1,10 @@
+- type: entity
+  id: BulletCaselessRifleRubber
+  name: bullet (.25 caseless rubber)
+  parent: BaseBulletRubber
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 1

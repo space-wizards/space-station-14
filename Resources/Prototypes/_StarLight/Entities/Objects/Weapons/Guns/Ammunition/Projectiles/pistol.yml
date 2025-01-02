@@ -1,0 +1,10 @@
+- type: entity
+  id: BulletPistolRubber
+  name: bullet (.35 auto rubber)
+  parent: BaseBulletRubber
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 1

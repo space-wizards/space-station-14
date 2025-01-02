@@ -1,0 +1,58 @@
+# Tier 2
+
+- type: technology
+  id: EnergyGuns
+  name: research-technology-energy-gun #
+  icon:
+    sprite: _Sunrise/Objects/Weapons/Guns/Battery/energygun.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - WeaponEnergyGun
+  - WeaponEnergyGunMini
+
+- type: technology
+  id: EnergyGunsAdvanced
+  name: research-technology-energy-gun-advance #
+  icon:
+    sprite: _Sunrise/Objects/Weapons/Guns/Battery/energygun_pistol.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - WeaponEnergyGunPistol
+
+- type: technology
+  id: Advanced Laser Manipulation
+  name: research-technology-advance-laser #
+  icon:
+    sprite: _Sunrise/Objects/Weapons/Guns/Battery/energygun_carbine.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 2
+  cost: 12500
+  recipeUnlocks:
+  - WeaponGunLaserCarbineAutomatic
+  
+- type: technology
+  id: NonlethalAmmunition
+  name: research-technology-nonlethal-ammunition
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: beanbag
+  discipline: Arsenal
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - ShellShotgunBeanbag
+  - CartridgePistolRubber
+  - CartridgeMagnumRubber
+  - CartridgeLightRifleRubber
+  - CartridgeRifleRubber
+  - MagazineBoxPistolRubber
+  - MagazineBoxMagnumRubber
+  - MagazineBoxLightRifleRubber
+  - MagazineBoxRifleRubber
