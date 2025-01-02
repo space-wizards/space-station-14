@@ -195,3 +195,21 @@
     damage:
       types:
         Heat: 1
+
+- type: entity
+  parent: GrapplingHook
+  id: GrapplingHookImprovised
+  name: grappling plunger
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: EmbeddableProjectile
+      deleteOnRemove: true
+      sound: 
+        path: /Audio/Weapons/pop.ogg
+        params:
+          volume: 4
+    - type: Sprite
+      noRot: false
+      sprite: _Impstation/Objects/Weapons/Guns/Launchers/grappling_gun_improvised.rsi
+      layers:
+        - state: hook
