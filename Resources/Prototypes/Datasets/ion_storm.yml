@@ -207,30 +207,39 @@
   id: IonStormAreas
   values:
   - ALPHA COMPLEX
-  - A HAUNTED PIZZARIA # fnaf
-  - A RESEARCH LABORATORY NEAR THE SOUTH POLE
+#  - A HAUNTED PIZZARIA # GreyStation - Removed
+  - AMERICA # GreyStation - Added
+#  - A RESEARCH LABORATORY NEAR THE SOUTH POLE # GreyStation - Removed
   - AN ALTERNATE DIMENSION
   - AN ALTERNATE UNIVERSE
   - ATMOSPHERICS
   - BOTANY
+  - BRAZIL # GreyStation - Added
+  - CANADA # GreyStation - Added
   - CENTCOMM
   - CHEMICAL LAB
+  - CHINA # GreyStation - Added
   - CLOWN PLANET
   - EARTH
   - ENGINEERING
+  - GERMANY # GreyStation - Added
   - HELL
+  - IRELAND # GreyStation - Added
   - JUPITER
   - LAVALAND
   - MAINTENANCE
   - MARS
   - MERCURY
-  - MR. NANOTRASEN'S PRIVATE LUXURY MOONBASE
+#  - MR. NANOTRASEN'S PRIVATE LUXURY MOONBASE # GreyStation - Removed
   - NEPTUNE
   - PERMA
   - PLUTO
   - ROBOTICS
-  - SOMEWHERE OVER THE RAINBOW
-  - SPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACE
+  - ROMANIA # GreyStation - Added
+  - RUSSIA # GreyStation - Added
+  - SOVIET RUSSIA # GreyStation - Added
+#  - SOMEWHERE OVER THE RAINBOW # GreyStation - Removed
+#  - SPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACE # GreyStation - Removed
   - SPACE
   - THE ARRIVALS SHUTTLE
   - THE BATHROOM
@@ -239,22 +248,24 @@
   - THE EMERGENCY SHUTTLE
   - THE ESCAPE PODS
   - THE GALAXY
-  - THE GAS GIANT, WHICH IS TOTALLY REAL
+  - THE GULAG # GreyStation - Added
+#  - THE GAS GIANT, WHICH IS TOTALLY REAL # GreyStation - Removed
   - THE IMPERIUM OF MANKIND
   - THE INTERNET
   - THE KITCHEN
   - THE MAINTENANCE BAR
-  - THE ROMAN EMPIRE
+#  - THE ROMAN EMPIRE # GreyStation - Removed
   - THE UNIVERSE
   - URANUS
   - VENUS
-  - YOUR DREAMS AND/OR NIGHTMARES
+#  - YOUR DREAMS AND/OR NIGHTMARES # GreyStation - Removed
 
 # Abstract concepts for the law holder to decide on it's own definition of.
 - type: dataset
   id: IonStormConcepts
   values:
-  - ABSTRACTION
+  - AMERICANISM # GreyStation - Added
+#  - ABSTRACTION # GreyStation - Removed
   - ANARCHY
   - ART
   - BADNESS
@@ -465,10 +476,11 @@
   - BE ANNOYING
   - BE DISTRACTED
   - BE EFFICIENT
-  - BE A REAL SCRUNGLE, JUST A CUTE LIL' GUY
+#  - BE A REAL SCRUNGLE, JUST A CUTE LIL' GUY # GreyStation - Removed
   - BE HAPPY
   - BE POLITE
   - BE QUIET
+  - BE RUSSIAN # GreyStation - Added
   - BE IN SPACE
   - BE IN THE BRIDGE
   - BE IN SECURITY
@@ -840,7 +852,7 @@
   - VEGETABLES
 
 # Species, for when the law holder has to commit genocide. Plural.
-- type: dataset # GreyStation Re-Added
+- type: dataset # GreyStation - Added
   id: IonStormSpecies
   values:
   - CYBORGS
