@@ -6,9 +6,12 @@ using Content.Shared.Examine;
 using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -22,6 +25,8 @@ public abstract class SharedImplanterSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public override void Initialize()
     {
@@ -30,6 +35,10 @@ public abstract class SharedImplanterSystem : EntitySystem
         SubscribeLocalEvent<ImplanterComponent, ComponentInit>(OnImplanterInit);
         SubscribeLocalEvent<ImplanterComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<ImplanterComponent, ExaminedEvent>(OnExamine);
+
+        SubscribeLocalEvent<ImplanterComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<ImplanterComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
+        SubscribeLocalEvent<ImplanterComponent, DeimplantChangeVerbMessage>(OnSelected);
     }
 
     private void OnImplanterInit(EntityUid uid, ImplanterComponent component, ComponentInit args)
@@ -56,6 +65,45 @@ public abstract class SharedImplanterSystem : EntitySystem
             return;
 
         args.PushMarkup(Loc.GetString("implanter-contained-implant-text", ("desc", component.ImplantData.Item2)));
+    }
+
+    private void OnVerb(EntityUid uid, ImplanterComponent component, GetVerbsEvent<InteractionVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        if (component.CurrentMode == ImplanterToggleMode.Draw)
+        {
+            args.Verbs.Add(new InteractionVerb()
+            {
+                Text = Loc.GetString("implanter-set-draw-verb"),
+                Act = () => TryOpenUi(uid, args.User, component)
+            });
+        }
+    }
+
+    private void OnUseInHand(EntityUid uid, ImplanterComponent? component, UseInHandEvent args)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (component.CurrentMode == ImplanterToggleMode.Draw)
+            TryOpenUi(uid, args.User, component);
+    }
+
+    private void OnSelected(EntityUid uid, ImplanterComponent component, DeimplantChangeVerbMessage args)
+    {
+        component.DeimplantChosen = args.Implant;
+        SetSelectedDeimplant(uid, args.Implant, component: component);
+    }
+
+    private void TryOpenUi(EntityUid uid, EntityUid user, ImplanterComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+        _uiSystem.TryToggleUi(uid, DeimplantUiKey.Key, user);
+        component.DeimplantChosen ??= component.DeimplantWhitelist.FirstOrNull();
+        Dirty(uid, component);
     }
 
     //Instantly implant something and add all necessary components and containers.
@@ -266,6 +314,17 @@ public abstract class SharedImplanterSystem : EntitySystem
 
         else
             _appearance.SetData(uid, ImplanterVisuals.Full, implantFound, appearance);
+    }
+
+    public void SetSelectedDeimplant(EntityUid uid, string? implant, ImplanterComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        if (implant != null && _proto.TryIndex(implant, out EntityPrototype? proto))
+            component.DeimplantChosen = proto;
+
+        Dirty(uid, component);
     }
 }
 

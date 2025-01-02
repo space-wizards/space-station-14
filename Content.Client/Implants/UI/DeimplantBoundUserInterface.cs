@@ -23,15 +23,13 @@ public sealed class DeimplantBoundUserInterface : BoundUserInterface
 
         _window.OnImplantChange += implant => SendMessage(new DeimplantChangeVerbMessage(implant));
     }
-
-    protected override void UpdateState(BoundUserInterfaceState state)
+    
+    public void UpdateState(Dictionary<string, string> implantList, string? implant)
     {
-        if (state is not DeimplantBuiState cast || _window == null)
+        if (_window != null)
         {
-            return;
+            _window.UpdateImplantList(implantList);
+            _window.UpdateState(implant);
         }
-
-        _window.UpdateImplantList(cast.ImplantList);
-        _window.UpdateState(cast.Implant);
     }
 }
