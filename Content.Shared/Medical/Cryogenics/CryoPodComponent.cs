@@ -16,11 +16,11 @@ public sealed partial class CryoPodComponent : Component
     public string PortName { get; set; } = "port";
 
     /// <summary>
-    /// Specifies the name of the atmospherics port to draw gas from.
+    /// Specifies the name of the slot that holds beaker with medicine
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("solutionContainerName")]
-    public string SolutionContainerName { get; set; } = "beakerSlot";//whats up with this name and documentation?
+    public string SolutionContainerName { get; set; } = "beakerSlot";
 
     /// <summary>
     /// How often (seconds) are chemicals transferred from the beaker to the body?
@@ -66,10 +66,6 @@ public sealed partial class CryoPodComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("locked")]
     public bool Locked { get; set; }
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("color")]
-    public Color? Color { get; set; }
 
     /// <summary>
     /// Causes the pod to be locked without being fixable by messing with wires.

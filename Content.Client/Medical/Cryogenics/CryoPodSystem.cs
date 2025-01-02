@@ -95,7 +95,6 @@ public sealed class CryoPodSystem: SharedCryoPodSystem
                 else
                 {
                     _pointLightSystem.SetEnabled(uid, true, pointLight);
-                    pointLight.Color = color;
                     _pointLightSystem.SetColor(uid, color, pointLight);
                 }
             }
