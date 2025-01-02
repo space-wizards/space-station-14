@@ -34,6 +34,7 @@ using Content.Shared.Containers.ItemSlots;
 using Robust.Server.GameObjects;
 using Content.Shared.Whitelist;
 using Content.Shared.Destructible;
+using Content.Shared.Projectiles;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -60,6 +61,7 @@ public sealed class FoodSystem : EntitySystem
     [Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly UtensilSystem _utensil = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] public readonly SharedProjectileSystem _projectile = default!;
 
     public const float MaxFeedDistance = 1.0f;
 
@@ -335,6 +337,14 @@ public sealed class FoodSystem : EntitySystem
         RaiseLocalEvent(food, ev);
         if (ev.Cancelled)
             return;
+
+        // Unembed any embedded projectiles
+        var childEnumerator = Transform(food).ChildEnumerator;
+        while (childEnumerator.MoveNext(out var child))
+        {
+            if (TryComp<EmbeddableProjectileComponent>(child, out var embeddable))
+                _projectile.RemoveEmbed(child, embeddable);
+        }
 
         var dev = new DestructionEventArgs();
         RaiseLocalEvent(food, dev);
