@@ -6,10 +6,10 @@ marking-SpiderMirror-spidermirror = Mirror
 marking-SpiderGlowEyes = Glowing Eyes
 marking-SpiderGlowEyes-spidergloweyes = Glowing Eyes
 marking-SpiderEyesMulti = Multicolor Eyes
-marking-SpiderEyesMulti-spidereyesmilti1 = Top
-marking-SpiderEyesMulti-spidereyesmilti2 = Middle Top
-marking-SpiderEyesMulti-spidereyesmilti3 = Middle Bottom
-marking-SpiderEyesMulti-spidereyesmilti4 = Bottom
+marking-SpiderEyesMulti-spidereyesmulti1 = Top
+marking-SpiderEyesMulti-spidereyesmulti2 = Middle Top
+marking-SpiderEyesMulti-spidereyesmulti3 = Middle Bottom
+marking-SpiderEyesMulti-spidereyesmulti4 = Bottom
 
 # decapoid
 marking-CrabChestBiopulse = Biopulse
@@ -219,7 +219,7 @@ marking-ProstheticPulse-snailshellprostheticpulse = Prosthetic Pulse
 
 # thaven
 marking-Gills = Gills
-marking-Gills-thavengills = Gills
+marking-Gills-thavenchestgills = Gills
 marking-ThavenChestScales = Chest Scales
 marking-ThavenChestScales-thavenchestscales = Chest Scales
 marking-ThavenHeadScales = Head Scales
@@ -348,13 +348,14 @@ marking-VoxTailSplit = Twinned
 marking-VoxTailSplit-voxtailsplit = Twinned
 
 # upstream vox markings dont have localized names. lmfao
-marking-VoxBeak = Default Beak
-marking-VoxLArmScales = Scaled Left Arm
-marking-VoxLHandScales = Scaled Left Hand
-marking-VoxRArmScales = Scaled Right Arm
-marking-VoxRHandScales = Scaled Right Hand
-marking-VoxTail = Default Tail
-marking-VoxLFootScales = Scaled Left Foot
-marking-VoxLLegScales = Scaled Left Leg
-marking-VoxRFootScales = Scaled Right Foot
-marking-VoxRLegScales = Scaled Right Leg
+# these are just straight up broken and shouldnt be visible from the markings menu period but ALAS im not skilled enough to remove them so you get this stupid botch job instead
+marking-VoxBeak = Default Beak [DO NOT USE]
+marking-VoxLArmScales = Default Arm [DO NOT USE]
+marking-VoxLHandScales = Default Left Hand [DO NOT USE]
+marking-VoxRArmScales = Default Right Arm [DO NOT USE]
+marking-VoxRHandScales = Default Right Hand [DO NOT USE]
+marking-VoxTail = Default Tail [DO NOT USE]
+marking-VoxLFootScales = Default Left Foot [DO NOT USE]
+marking-VoxLLegScales = Default Left Leg [DO NOT USE]
+marking-VoxRFootScales = Default Right Foot [DO NOT USE]
+marking-VoxRLegScales = Default Right Leg [DO NOT USE]
