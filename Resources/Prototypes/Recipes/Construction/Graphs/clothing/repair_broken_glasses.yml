@@ -1,0 +1,18 @@
+﻿- type: constructionGraph
+  id: RepairBrokenGlasses
+  start: start
+  graph:
+    - node: start
+      edges:
+      - to: glasses
+        steps:
+        - tag: BrokenGlasses
+          name: broken glasses
+          icon:
+            sprite: Clothing/Eyes/Glasses/brokenglasses.rsi
+            state: icon
+        - material: Glass
+          amount: 1
+          doAfter: 4
+    - node: glasses
+      entity: ClothingEyesGlasses

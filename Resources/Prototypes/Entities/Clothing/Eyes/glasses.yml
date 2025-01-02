@@ -81,6 +81,9 @@
     slot: eyes
     replacementPrototype: ClothingEyesGlassesBroken
     message: Your glasses crack from hitting the floor
+  - type: Construction
+    graph: RepairBrokenGlasses
+    node: glasses
   - type: Tag
     tags:
     - HamsterWearable
@@ -100,6 +103,7 @@
     correctionPower: 1.4
   - type: Tag
     tags:
+    - BrokenGlasses
     - HamsterWearable
     - WhitelistChameleon
 
