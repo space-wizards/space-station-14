@@ -65,6 +65,13 @@ public sealed class MappingState : GameplayStateBase
     private TransformSystem _transform = default!;
     private VerbSystem _verbs = default!;
 
+    // 1 off in case something else uses these colors since we use them to compare
+    private static readonly Color PickColor = new(1, 255, 0);
+    private static readonly Color DeleteColor = new(255, 1, 0);
+    private static readonly Color EraseDecalColor = Color.Red.WithAlpha(0.2f);
+    private static readonly Color GridSelectColor = Color.Green.WithAlpha(0.2f);
+    private static readonly Color GridRemoveColor = Color.Red.WithAlpha(0.2f);
+
     private readonly ISawmill _sawmill;
     private readonly GameplayStateLoadController _loadController;
     private bool _setup;
@@ -74,14 +81,12 @@ public sealed class MappingState : GameplayStateBase
     private readonly List<MappingPrototype> _prototypes = new();
     private (TimeSpan At, MappingSpawnButton Button)? _lastClicked;
     private Control? _scrollTo;
-    private bool _updatePlacement;
-    private bool _updateEraseDecal;
     private bool _tileErase;
 
     private MappingScreen Screen => (MappingScreen) UserInterfaceManager.ActiveScreen!;
     private MainViewport Viewport => UserInterfaceManager.ActiveScreen!.GetWidget<MainViewport>()!;
 
-    public CursorState State { get; set; }
+    public CursorMeta Meta { get; set; }
 
     public MappingState()
     {
@@ -89,6 +94,8 @@ public sealed class MappingState : GameplayStateBase
 
         _sawmill = _log.GetSawmill("mapping");
         _loadController = UserInterfaceManager.GetUIController<GameplayStateLoadController>();
+
+        Meta = new CursorMeta();
     }
 
     protected override void Startup()
@@ -415,7 +422,11 @@ public sealed class MappingState : GameplayStateBase
 
     private void OnPlacementChanged(object? sender, EventArgs e)
     {
-        _updatePlacement = true;
+        if (!_placement.IsActive && _decal.GetActiveDecal().Decal == null)
+            Deselect();
+
+        Screen.EraseEntityButton.Pressed = _placement.Eraser;
+        Screen.EntityPlacementMode.Disabled = _placement.Eraser;
     }
 
     protected override void OnKeyBindStateChanged(ViewportBoundKeyEventArgs args)
@@ -564,7 +575,7 @@ public sealed class MappingState : GameplayStateBase
             Deselect();
         }
 
-        State = CursorState.None;
+        Meta.State = CursorState.None;
         Screen.UnPressActionsExcept(new Control());
         Screen.EntityContainer.Visible = false;
         Screen.DecalContainer.Visible = false;
@@ -692,7 +703,7 @@ public sealed class MappingState : GameplayStateBase
 
     private void OnEraseTilePressed(ButtonEventArgs args)
     {
-        State = CursorState.None;
+        Meta.State = CursorState.None;
         _placement.Clear();
         Deselect();
 
@@ -713,51 +724,68 @@ public sealed class MappingState : GameplayStateBase
 
         Screen.UnPressActionsExcept(Screen.EraseTileButton);
         _tileErase = true;
-        _updatePlacement = true;
-        _updateEraseDecal = false;
         Screen.EntityPlacementMode.Disabled = true;
     }
 
     private void OnEraseDecalPressed(ButtonToggledEventArgs args)
     {
-        State = CursorState.None;
         if (args.Button.Pressed)
         {
-            Screen.UnPressActionsExcept(Screen.EraseDecalButton);
-        }
+            Meta.State = CursorState.Tile;
+            Meta.Color = EraseDecalColor;
 
-        _placement.Clear();
-        Deselect();
-        _updatePlacement = true;
-        _updateEraseDecal = args.Pressed;
+            Screen.UnPressActionsExcept(Screen.EraseDecalButton);
+            _placement.Clear();
+            Deselect();
+        }
+        else
+        {
+            Meta.State = CursorState.None;
+        }
     }
 
     private void OnFixGridAtmosPressed(ButtonEventArgs args)
     {
-        State = args.Button.Pressed ? CursorState.GridGreen : CursorState.None;
-
         if (args.Button.Pressed)
         {
+            Meta.State = CursorState.Grid;
+            Meta.Color = GridSelectColor;
             Screen.UnPressActionsExcept(Screen.FixGridAtmos);
+        }
+        else
+        {
+            Meta.State = CursorState.None;
         }
     }
 
     private void OnRemoveGridPressed(ButtonEventArgs args)
     {
-        State = args.Button.Pressed ? CursorState.GridRed : CursorState.None;
-
         if (args.Button.Pressed)
+        {
+            Meta.State = CursorState.Grid;
+            Meta.Color = GridRemoveColor;
             Screen.UnPressActionsExcept(Screen.RemoveGrid);
+        }
+        else
+        {
+            Meta.State = CursorState.None;
+        }
     }
 
     private void OnMoveGridPressed(ButtonEventArgs args)
     {
-        State = args.Button.Pressed ? CursorState.GridGreen : CursorState.None;
-        var gridDragSystem = _entitySystemManager.GetEntitySystem<GridDraggingSystem>();
-
         if (args.Button.Pressed)
+        {
+            Meta.State = CursorState.Grid;
+            Meta.Color = GridSelectColor;
             Screen.UnPressActionsExcept(Screen.MoveGrid);
+        }
+        else
+        {
+            Meta.State = CursorState.None;
+        }
 
+        var gridDragSystem = _entitySystemManager.GetEntitySystem<GridDraggingSystem>();
         if (args.Button.Pressed != gridDragSystem.Enabled)
         {
             _consoleHost.ExecuteCommand("griddrag");
@@ -766,10 +794,16 @@ public sealed class MappingState : GameplayStateBase
 
     private void OnGridVVPressed(ButtonEventArgs args)
     {
-        State = args.Button.Pressed ? CursorState.GridGreen : CursorState.None;
-
         if (args.Button.Pressed)
+        {
+            Meta.State = CursorState.Grid;
+            Meta.Color = GridSelectColor;
             Screen.UnPressActionsExcept(Screen.GridVV);
+        }
+        else
+        {
+            Meta.State = CursorState.None;
+        }
     }
 
     private void EnableEntityEraser()
@@ -782,14 +816,13 @@ public sealed class MappingState : GameplayStateBase
         _placement.ToggleEraser();
 
         if (Screen.EraseDecalButton.Pressed)
-        {
-            _updatePlacement = true;
-            _updateEraseDecal = false;
-        }
+            Screen.EraseDecalButton.Pressed = false;
 
         Screen.UnPressActionsExcept(Screen.EraseEntityButton);
-        State = CursorState.Delete;
         Screen.EntityPlacementMode.Disabled = true;
+
+        Meta.State = CursorState.Entity;
+        Meta.Color = DeleteColor;
     }
 
     private void DisableEntityEraser()
@@ -798,20 +831,21 @@ public sealed class MappingState : GameplayStateBase
             return;
 
         _placement.ToggleEraser();
-        State = CursorState.None;
+        Meta.State = CursorState.None;
         Screen.EntityPlacementMode.Disabled = false;
     }
 
     private void EnablePick()
     {
         Screen.UnPressActionsExcept(Screen.Pick);
-        State = CursorState.Pick;
+        Meta.State = CursorState.Entity;
+        Meta.Color = PickColor;
     }
 
     private void DisablePick()
     {
         Screen.Pick.Pressed = false;
-        State = CursorState.None;
+        Meta.State = CursorState.None;
     }
 
     private bool HandleMappingUnselect(in PointerInputCmdArgs args)
@@ -827,7 +861,7 @@ public sealed class MappingState : GameplayStateBase
             _placement.ToggleEraser();
 
         Screen.UnPressActionsExcept(new Control());
-        State = CursorState.None;
+        Meta.State = CursorState.None;
 
         if (Screen.Prototypes.Selected is not { Prototype.Prototype: DecalPrototype })
             return false;
@@ -876,7 +910,7 @@ public sealed class MappingState : GameplayStateBase
 
     private bool HandlePick(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
     {
-        if (State != CursorState.Pick)
+        if (!Screen.Pick.Pressed)
             return false;
 
         MappingPrototype? button = null;
@@ -941,7 +975,7 @@ public sealed class MappingState : GameplayStateBase
         if (Screen.FixGridAtmos.Pressed)
         {
             Screen.FixGridAtmos.Pressed = false;
-            State = CursorState.None;
+            Meta.State = CursorState.None;
             if (GetHoveredGrid() is { } grid)
                 _consoleHost.ExecuteCommand($"fixgridatmos {_entityManager.GetNetEntity(grid.Owner).Id}");
 
@@ -951,7 +985,7 @@ public sealed class MappingState : GameplayStateBase
         if (Screen.RemoveGrid.Pressed)
         {
             Screen.RemoveGrid.Pressed = false;
-            State = CursorState.None;
+            Meta.State = CursorState.None;
             if (GetHoveredGrid() is { } grid)
                 _consoleHost.ExecuteCommand($"rmgrid {_entityManager.GetNetEntity(grid.Owner).Id}");
 
@@ -961,7 +995,7 @@ public sealed class MappingState : GameplayStateBase
         if (Screen.GridVV.Pressed)
         {
             Screen.GridVV.Pressed = false;
-            State = CursorState.None;
+            Meta.State = CursorState.None;
             if (GetHoveredGrid() is { } grid)
                 _consoleHost.ExecuteCommand($"vv {_entityManager.GetNetEntity(grid.Owner).Id}");
         }
@@ -1043,24 +1077,38 @@ public sealed class MappingState : GameplayStateBase
         return null;
     }
 
+    public Box2Rotated? GetHoveredTileBox2()
+    {
+        if (UserInterfaceManager.CurrentlyHovered is not IViewportControl viewport ||
+            _input.MouseScreenPosition is not { IsValid: true } coords)
+        {
+            return null;
+        }
+
+        if (GetHoveredGrid() is not { } grid)
+            return null;
+
+        if (!_entityManager.TryGetComponent<TransformComponent>(grid, out var xform))
+            return null;
+
+        var mapCoords = viewport.PixelToMap(coords.Position);
+        var mapSys = _entityManager.System<MapSystem>();
+
+        var tileSize = grid.Comp.TileSize;
+        var tileDimensions = new Vector2(tileSize, tileSize);
+        var tileRef = mapSys.GetTileRef(grid, mapCoords);
+        var worldCoord = mapSys.LocalToWorld(grid.Owner, grid.Comp, tileRef.GridIndices);
+        var box = Box2.FromDimensions(worldCoord, tileDimensions);
+
+        return new Box2Rotated(box, xform.LocalRotation, box.BottomLeft);
+    }
+
     public override void FrameUpdate(FrameEventArgs e)
     {
         if (!Screen.EraseTileButton.Pressed && _tileErase)
         {
             _placement.Clear();
             _tileErase = false;
-        }
-
-        if (_updatePlacement)
-        {
-            _updatePlacement = false;
-
-            if (!_placement.IsActive && _decal.GetActiveDecal().Decal == null)
-                Deselect();
-
-            Screen.EraseEntityButton.Pressed = _placement.Eraser;
-            Screen.EraseDecalButton.Pressed = _updateEraseDecal;
-            Screen.EntityPlacementMode.Disabled = _placement.Eraser;
         }
 
         if (_scrollTo is not { } scrollTo)
@@ -1082,9 +1130,18 @@ public sealed class MappingState : GameplayStateBase
     public enum CursorState
     {
         None,
-        Pick,
-        Delete,
-        GridGreen,
-        GridRed,
+        Tile,
+        Entity,
+        Grid,
+    }
+
+    public sealed class CursorMeta
+    {
+        public CursorState State = CursorState.None;
+
+        /// <summary>
+        /// Сolor with which the mapping overlay will be drawn
+        /// </summary>
+        public Color Color = Color.White;
     }
 }

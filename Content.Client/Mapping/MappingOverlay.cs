@@ -15,10 +15,6 @@ public sealed class MappingOverlay : Overlay
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
-    // 1 off in case something else uses these colors since we use them to compare
-    private static readonly Color PickColor = new(1, 255, 0);
-    private static readonly Color DeleteColor = new(255, 1, 0);
-
     private readonly Dictionary<EntityUid, Color> _oldColors = new();
 
     private readonly MappingState _state;
@@ -41,7 +37,7 @@ public sealed class MappingOverlay : Overlay
             if (!_entities.TryGetComponent(id, out SpriteComponent? sprite))
                 continue;
 
-            if (sprite.Color == DeleteColor || sprite.Color == PickColor)
+            if (sprite.Color != color)
                 sprite.Color = color;
         }
 
@@ -53,67 +49,54 @@ public sealed class MappingOverlay : Overlay
         var handle = args.WorldHandle;
         handle.UseShader(_shader);
 
-        switch (_state.State)
+        switch (_state.Meta.State)
         {
-            case CursorState.Pick:
+            case CursorState.Entity:
             {
                 if (_state.GetHoveredEntity() is { } entity &&
                     _entities.TryGetComponent(entity, out SpriteComponent? sprite))
                 {
                     _oldColors[entity] = sprite.Color;
-                    sprite.Color = PickColor;
+                    sprite.Color = _state.Meta.Color;
                 }
 
                 break;
             }
-            case CursorState.Delete:
+            case CursorState.Tile:
             {
-                if (_state.GetHoveredEntity() is { } entity &&
-                    _entities.TryGetComponent(entity, out SpriteComponent? sprite))
+                if (_state.GetHoveredTileBox2() is { } box)
+                    args.WorldHandle.DrawRect(box, _state.Meta.Color);
+
+                break;
+            }
+            case CursorState.Grid:
+            {
+                if (args.MapId == MapId.Nullspace || _state.GetHoveredGrid() is not { } grid)
+                    break;
+
+                var mapSystem = _entities.System<SharedMapSystem>();
+                var xformSystem = _entities.System<SharedTransformSystem>();
+
+                var tileSize = grid.Comp.TileSize;
+                var tileDimensions = new Vector2(tileSize, tileSize);
+                var (_, _, worldMatrix, invMatrix) = xformSystem.GetWorldPositionRotationMatrixWithInv(grid.Owner);
+                args.WorldHandle.SetTransform(worldMatrix);
+                var bounds = args.WorldBounds;
+                bounds = new Box2Rotated(bounds.Box.Enlarged(1), bounds.Rotation, bounds.Origin);
+                var localAABB = invMatrix.TransformBox(bounds);
+
+                var enumerator = mapSystem.GetLocalTilesEnumerator(grid.Owner, grid, localAABB);
+
+                while (enumerator.MoveNext(out var tileRef))
                 {
-                    _oldColors[entity] = sprite.Color;
-                    sprite.Color = DeleteColor;
+                    var box = Box2.FromDimensions(tileRef.GridIndices, tileDimensions);
+                    args.WorldHandle.DrawRect(box, _state.Meta.Color);
                 }
 
-                break;
-            }
-            case CursorState.GridGreen:
-            {
-                DrawGridOverlay(args, new Color(0f, 225f, 0f).WithAlpha(0.05f));
-                break;
-            }
-            case CursorState.GridRed:
-            {
-                DrawGridOverlay(args, new Color(225f, 0f, 0f).WithAlpha(0.05f));
                 break;
             }
         }
 
         handle.UseShader(null);
-    }
-
-    private void DrawGridOverlay(in OverlayDrawArgs args, Color color)
-    {
-        if (args.MapId == MapId.Nullspace || _state.GetHoveredGrid() is not { } grid)
-            return;
-
-        var mapSystem = _entities.System<SharedMapSystem>();
-        var xformSystem = _entities.System<SharedTransformSystem>();
-
-        var tileSize = grid.Comp.TileSize;
-        var tileDimensions = new Vector2(tileSize, tileSize);
-        var (_, _, worldMatrix, invMatrix) = xformSystem.GetWorldPositionRotationMatrixWithInv(grid.Owner);
-        args.WorldHandle.SetTransform(worldMatrix);
-        var bounds = args.WorldBounds;
-        bounds = new Box2Rotated(bounds.Box.Enlarged(1), bounds.Rotation, bounds.Origin);
-        var localAABB = invMatrix.TransformBox(bounds);
-
-        var enumerator = mapSystem.GetLocalTilesEnumerator(grid.Owner, grid, localAABB);
-
-        while (enumerator.MoveNext(out var tileRef))
-        {
-            var box = Box2.FromDimensions(tileRef.GridIndices, tileDimensions);
-            args.WorldHandle.DrawRect(box, color);
-        }
     }
 }
