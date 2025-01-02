@@ -16,11 +16,11 @@ alert-level-khaki-instructions = fuck
 
 alert-level-denim = Denim
 alert-level-denim-announcement = The station is sad and needs cheering up. Clowns and mimes are advised to carry lethal weaponry at all times.
-alert-level-denim-instructions = Feel happier.
+alert-level-denim-instructions = Get well soon!
 
 alert-level-chartreuse = Chartreuse
 alert-level-chartreuse-announcement = It might be safe to return to your workplaces?
-alert-level-chartreuse-instructions = Maintain confusion.
+alert-level-chartreuse-instructions = Huh? Wha?
 
 alert-level-white = White
 alert-level-white-announcement = Spectral activity has been detected! Please defer to the Chaplain and all other spiritual authorities for instruction.
@@ -28,4 +28,4 @@ alert-level-white-instructions = Look out for phantoms, and report if necessary.
 
 alert-level-puce = Puce
 alert-level-puce-announcement = A food recall has been initiated, and your station is affected.
-alert-level-puce-instructions = Don't eat the burgers in the cafeteria
+alert-level-puce-instructions = Don't eat the burgers in the cafeteria...

@@ -53,7 +53,7 @@
       path: alerts/denim.ogg
     - id: alertChartreuse # Wha?
       path: alerts/chartreuse.ogg
-    - id: alertWhite # There's ghosts! Not to be confused with the one from Harmony.
+    - id: alertWhite # There's ghosts! Not to be confused with the one from DeltaV.
       path: alerts/white.ogg
     - id: alertPuce # don't eat anything
       path: alerts/puce.ogg
