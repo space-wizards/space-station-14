@@ -5,9 +5,9 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Mapping;
 
 [GenerateTypedNameReferences]
-public sealed partial class MappingLayersWindow : DefaultWindow
+public sealed partial class MappingVisibilityWindow : DefaultWindow
 {
-    public MappingLayersWindow()
+    public MappingVisibilityWindow()
     {
         RobustXamlLoader.Load(this);
     }

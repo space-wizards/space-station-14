@@ -12,13 +12,13 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Mapping;
 
-public sealed class MappingLayersUIController : UIController
+public sealed class MappingVisibilityUIController : UIController
 {
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly ILightManager _lightManager = default!;
 
-    private MappingLayersWindow? _window;
+    private MappingVisibilityWindow? _window;
 
     [ValidatePrototypeId<TagPrototype>]
     private const string WallTag = "Wall";
@@ -48,7 +48,7 @@ public sealed class MappingLayersUIController : UIController
         if (_window is { Disposed: false })
             return;
 
-        _window = UIManager.CreateWindow<MappingLayersWindow>();
+        _window = UIManager.CreateWindow<MappingVisibilityWindow>();
 
         _window.Light.Pressed = _lightManager.Enabled;
         _window.Light.OnPressed += args => _lightManager.Enabled = args.Button.Pressed;

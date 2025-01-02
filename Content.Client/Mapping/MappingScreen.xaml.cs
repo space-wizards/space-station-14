@@ -43,7 +43,7 @@ public sealed partial class MappingScreen : InGameScreen
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        var layersUIController = UserInterfaceManager.GetUIController<MappingLayersUIController>();
+        var visibilityUIController = UserInterfaceManager.GetUIController<MappingVisibilityUIController>();
 
         AutoscaleMaxResolution = new Vector2i(1080, 770);
 
@@ -100,11 +100,8 @@ public sealed partial class MappingScreen : InGameScreen
         Pick.Texture.TexturePath = "/Textures/Interface/eyedropper.svg.png";
         Flip.Texture.TexturePath = "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
         Flip.OnPressed += args => FlipSides();
-        Layers.Texture.TexturePath = "/Textures/Interface/hamburger.svg.192dpi.png";
-        Layers.OnPressed += args =>
-        {
-            layersUIController.ToggleWindow();
-        };
+        Visibility.Texture.TexturePath = "/Textures/Interface/hamburger.svg.192dpi.png";
+        Visibility.OnPressed += args => visibilityUIController.ToggleWindow();
         FixGridAtmos.Texture.TexturePath = "/Textures/Interface/VerbIcons/oxygen.svg.192dpi.png";
         RemoveGrid.Texture.TexturePath = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
         MoveGrid.Texture.TexturePath = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
@@ -218,7 +215,6 @@ public sealed partial class MappingScreen : InGameScreen
         Grab.Pressed = Grab == except;
         Move.Pressed = Move == except;
         Pick.Pressed = Pick == except;
-        Layers.Pressed = Layers == except;
         FixGridAtmos.Pressed = FixGridAtmos == except;
         RemoveGrid.Pressed = RemoveGrid == except;
         MoveGrid.Pressed = MoveGrid == except;
