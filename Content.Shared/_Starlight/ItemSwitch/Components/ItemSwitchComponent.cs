@@ -53,10 +53,10 @@ public sealed partial class ItemSwitchState : BoundUserInterfaceMessage
     public SoundSpecifier? SoundFailToActivate;
 
     [DataField]
-    public ComponentRegistry? AddComponents;
+    public ComponentRegistry? Components;
 
     [DataField]
-    public ComponentRegistry? RemoveComponents;
+    public bool RemoveComponents = true;
 
     [DataField]
     public SpriteSpecifier? Sprite;
