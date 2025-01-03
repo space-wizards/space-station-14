@@ -1,20 +1,19 @@
 - type: gameMap
-  id: Tram
+  id: Tramstation
   mapName: 'Tram'
   mapPath: /Maps/tram.yml
   maxRandomOffset: 0
-  randomRotation: false
-  minPlayers: 35
-  maxPlayers: 70
+  minPlayers: 0
+  maxPlayers: 99
   stations:
     Tram:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Tram{0}-{1}'
+          mapNameTemplate: 'Tram'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'ED'
+            prefixCreator: '14'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_omega.yml
         - type: StationJobs
