@@ -50,6 +50,37 @@ public sealed class ReflectSystem : EntitySystem
         SubscribeLocalEvent<ReflectComponent, GotEquippedHandEvent>(OnReflectHandEquipped);
         SubscribeLocalEvent<ReflectComponent, GotUnequippedHandEvent>(OnReflectHandUnequipped);
         SubscribeLocalEvent<ReflectComponent, ItemToggledEvent>(OnToggleReflect);
+
+        SubscribeLocalEvent<ReflectUserComponent, ProjectileReflectAttemptEvent>(OnReflectUserCollide);
+        SubscribeLocalEvent<ReflectUserComponent, HitScanReflectAttemptEvent>(OnReflectUserHitscan);
+    }
+
+    private void OnReflectUserHitscan(EntityUid uid, ReflectUserComponent component, ref HitScanReflectAttemptEvent args)
+    {
+        if (args.Reflected)
+            return;
+
+        foreach (var ent in _inventorySystem.GetHandOrInventoryEntities(uid, SlotFlags.All & ~SlotFlags.POCKET))
+        {
+            if (!TryReflectHitscan(uid, ent, args.Shooter, args.SourceItem, args.Direction, args.Reflective, out var dir))
+                continue;
+
+            args.Direction = dir.Value;
+            args.Reflected = true;
+            break;
+        }
+    }
+
+    private void OnReflectUserCollide(EntityUid uid, ReflectUserComponent component, ref ProjectileReflectAttemptEvent args)
+    {
+        foreach (var ent in _inventorySystem.GetHandOrInventoryEntities(uid, SlotFlags.All & ~SlotFlags.POCKET))
+        {
+            if (!TryReflectProjectile(uid, ent, args.ProjUid))
+                continue;
+
+            args.Cancelled = true;
+            break;
+        }
     }
 
     private void OnReflectCollide(EntityUid uid, ReflectComponent component, ref ProjectileReflectAttemptEvent args)
@@ -117,7 +148,7 @@ public sealed class ReflectSystem : EntitySystem
             return;
         }
 
-        if (TryReflectHitscan(uid, uid, args.Shooter, args.SourceItem, args.Direction, out var dir))
+        if (TryReflectHitscan(uid, uid, args.Shooter, args.SourceItem, args.Direction, args.Reflective, out var dir))
         {
             args.Direction = dir.Value;
             args.Reflected = true;
@@ -130,11 +161,13 @@ public sealed class ReflectSystem : EntitySystem
         EntityUid? shooter,
         EntityUid shotSource,
         Vector2 direction,
+        ReflectType hitscanReflectType,
         [NotNullWhen(true)] out Vector2? newDirection)
     {
         if (!TryComp<ReflectComponent>(reflector, out var reflect) ||
             !_toggle.IsActivated(reflector) ||
-            !_random.Prob(reflect.ReflectProb))
+            !_random.Prob(reflect.ReflectProb) ||
+            (reflect.Reflects & hitscanReflectType) == 0x0)
         {
             newDirection = null;
             return false;
