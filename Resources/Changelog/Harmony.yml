@@ -816,3 +816,14 @@ Entries:
     changes:
     - type: Tweak
       message: Recolored Improvised Bolas
+  - id: 212
+    author: Jajsha
+    time: '2025-01-03T03:13:01.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/212
+    changes:
+    - type: Tweak
+      message: Modified medical fabricator inventory.
+    - type: Tweak
+      message: Jugs now fit in chemistry bags.
+    - type: Fix
+      message: Vials now fit in medical related containers.
