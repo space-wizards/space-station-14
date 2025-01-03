@@ -71,11 +71,6 @@
   description: A upgraded trash bag capable of holding nearly anything.
   parent: TrashBag
   components:
-  - type: Sprite
-    sprite: Objects/Specific/Janitorial/trashbag.rsi
-    layers:
-      - state: icon-0
-        map: ["enum.StorageFillLayers.Fill"]
   - type: Storage
     maxItemSize: Huge
     grid:
