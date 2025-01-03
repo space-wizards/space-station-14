@@ -19,10 +19,10 @@ reagent-desc-grape-soda = It's Graaaaaape!
 reagent-name-ice-cream = ice cream
 reagent-desc-ice-cream = It was either this or the microwave, and nobody wants ice cream soup!
 
-reagent-name-lemon-lime = Smite Lemon-Lime
+reagent-name-lemon-lime = Smite Soda
 reagent-desc-lemon-lime = Tangy lime and lemon soda.
 
-reagent-name-lemon-lime-cranberry = Smite Lemon-Lime-Cranberry
+reagent-name-lemon-lime-cranberry = Smite Cranberry
 reagent-desc-lemon-lime-cranberry = Tart cranberry, Christmas, and a hint of lemon and lime.
 
 reagent-name-pwr-game = PWR Game
@@ -40,8 +40,8 @@ reagent-desc-sol-dry = Sweet ginger soda from outer space!
 reagent-name-roy-rogers = Roy Rogers
 reagent-desc-roy-rogers = Solid proof that there IS something known as too sweet.
 
-reagent-name-space-mountain-wind = Space Mountain Wind
-reagent-desc-space-mountain-wind = Blows right through you like a space wind.
+reagent-name-space-mountain-wind = Space Solar Wind
+reagent-desc-space-mountain-wind = Blows right through you like a solar wind.
 
 reagent-name-space-up = Space-Up
 reagent-desc-space-up = Tastes like a hull breach in your mouth.
