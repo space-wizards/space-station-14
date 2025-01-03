@@ -1633,4 +1633,10 @@ Entries:
   id: 231
   time: '2025-01-03T15:07:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/197
-
+- author: Rinary
+  changes:
+  - message: Now all avaible collective minds displayed at character menu.
+    type: Tweak
+  id: 232
+  time: '2025-01-03T19:43:45.344070+00:00'
+  url: 'null'
