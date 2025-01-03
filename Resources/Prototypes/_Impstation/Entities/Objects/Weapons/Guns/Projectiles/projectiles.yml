@@ -23,7 +23,7 @@
         Quantity: 50
   - type: EmitSmokeOnDespawn
     duration: 15
-    spreadAmount: 10
+    spreadAmount: 20
     smokePrototype: Foam
     solution:
       reagents:
@@ -65,11 +65,8 @@
       collection: WeakHit
   - type: EmitSoundOnSpawn
     sound: /Audio/Items/smoke_grenade_smoke.ogg
-
-    #actual todos
-      #smoke spew sound
-        #needs EmitSoundOnSpawn component
-        #god the triggersystem is underbaked
+  - type: ProjectileSpeedOverride
+    speedOverride: 15
 
     #potential todos
     #restore old cleanade projectile?
