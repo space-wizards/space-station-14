@@ -114,9 +114,6 @@
         reagents:
         - ReagentId: SpaceCleaner
           Quantity: 200
-  - type: Tag
-    tags:
-      - Spray
 
 - type: entity
   name: super spray nozzle
