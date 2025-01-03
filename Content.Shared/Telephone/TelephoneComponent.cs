@@ -127,9 +127,10 @@ public sealed partial class TelephoneComponent : Component
 
     /// <summary>
     /// The presumed name and/or job of the last person to call this telephone
+    /// and the name of the device that they used to do so
     /// </summary>
     [ViewVariables, AutoNetworkedField]
-    public (string?, string?) LastCallerId;
+    public (string?, string?, string?) LastCallerId;
 }
 
 #region: Telephone events
@@ -181,6 +182,7 @@ public readonly record struct TelephoneMessageReceivedEvent(string Message, MsgC
 [Serializable, NetSerializable]
 public struct TelephoneCallOptions
 {
+    public bool IgnoreRange;    // The source can always reach its target
     public bool ForceConnect;   // The source immediately starts a call with the receiver, potentially interrupting a call that is already in progress 
     public bool ForceJoin;      // The source smoothly joins a call in progress, or starts a normal call with the receiver if there is none
     public bool MuteSource;     // Chatter from the source is not transmitted - could be used for eavesdropping when combined with 'ForceJoin'
