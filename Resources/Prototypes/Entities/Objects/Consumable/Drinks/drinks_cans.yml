@@ -72,7 +72,7 @@
   parent: DrinkCanBaseFull
   id: DrinkColaCan
   name: Space Cola can
-  description: A refreshing beverage.
+  description: A sweet, carbonated soft drink. Caffeine free.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -262,8 +262,8 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkSpaceMountainWindCan
-  name: Space Mountain Wind can
-  description: Blows right through you like a space wind.
+  name: Space Solar Wind can
+  description: Blows right through you like a solar wind.
   components:
   - type: SolutionContainerManager
     solutions:
