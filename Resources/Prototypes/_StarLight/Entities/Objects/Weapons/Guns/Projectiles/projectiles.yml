@@ -23,7 +23,7 @@
   id: BaseBulletRubber
   name: base bullet rubber
   parent: BaseBullet
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi

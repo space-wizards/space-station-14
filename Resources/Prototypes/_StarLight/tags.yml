@@ -29,3 +29,6 @@
   
 - type: Tag
   id: Diona
+  
+- type: Tag
+  id: PowerCellTiny

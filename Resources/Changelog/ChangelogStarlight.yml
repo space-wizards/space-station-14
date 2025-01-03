@@ -1612,4 +1612,25 @@ Entries:
   id: 228
   time: '2025-01-03T07:05:49.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/207
+- author: Rinary
+  changes:
+  - message: Updated execution system, now it works with any knife or gun.
+    type: Tweak
+  id: 229
+  time: '2025-01-03T14:47:53.235344+00:00'
+  url: 'null'
+- author: STARLIGHT TEAM
+  changes:
+  - message: Ripley Resprite.
+    type: Tweak
+  id: 230
+  time: '2025-01-03T14:51:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/204
+- author: Killer Tamashi
+  changes:
+  - message: Added Brigmedic Defibrillator
+    type: Add
+  id: 231
+  time: '2025-01-03T15:07:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/197
 

@@ -2,7 +2,7 @@
   id: BulletMagnumRubber
   name: bullet (.45 magnum rubber)
   parent: BaseBulletRubber
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:

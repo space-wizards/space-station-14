@@ -18,6 +18,8 @@ public record struct ShotAttemptedEvent
     /// The gun being shot.
     /// </summary>
     public Entity<GunComponent> Used;
+    
+    public string? Message;
 
     public bool Cancelled { get; private set; }
 
