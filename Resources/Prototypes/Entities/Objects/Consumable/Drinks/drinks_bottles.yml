@@ -402,8 +402,8 @@
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
   id: DrinkSpaceMountainWindBottleFull
-  name: Space Mountain Wind bottle
-  description: Blows right through you like a space wind.
+  name: Space Solar Wind bottle
+  description: Blows right through you like a solar wind.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -421,7 +421,7 @@
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
   id: DrinkSpaceUpBottleFull
-  name: Space-up bottle
+  name: Space-Up bottle
   description: Tastes like a hull breach in your mouth.
   components:
   - type: SolutionContainerManager
