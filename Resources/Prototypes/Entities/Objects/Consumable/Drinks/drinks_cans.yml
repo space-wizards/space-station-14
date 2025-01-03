@@ -505,7 +505,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkShamblersJuiceCan
-  name: Shamblers Juice can
+  name: Shambler's Juice can
   description: ~Shake me up some of that Shambler's Juice!~
   components:
   - type: SolutionContainerManager
