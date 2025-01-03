@@ -9735,7 +9735,7 @@ entities:
             color: '#FFFFFFFF'
             id: StandClear
           decals:
-            17969: 29.75,1.46875
+            17969: 29.75,1.53125
         - node:
             color: '#52B4E996'
             id: ThreeQuarterTileOverlayGreyscale
