@@ -1670,9 +1670,8 @@ Entries:
   url: https://github.com/ss14Starlight/space-station-14/pull/203
 - author: Clone0401
   changes:
-  - message: the Graytide virus no longer randomly happens
+  - message: Now greytide virus max occurrences setted to 2, weight from 5 to 2.
     type: Tweak
   id: 237
   time: '2025-01-03T21:42:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/208
-
