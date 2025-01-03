@@ -1,264 +1,34 @@
 - type: entity
   name: apid
-  id: MobApid
-  parent: [BaseSimpleMob, StripableInventoryBase, MobRespirator, MobFlammable, MobBloodstream, MobAtmosStandard]
+  suffix: Ghostrole
+  id: MobApidBaseGhostrole
+  parent: BaseMobApid
   description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
-  suffix: Ghost role
   components:
-  - type: CombatMode
-  - type: Inventory
-    templateId: apid
-    displacements:
-      jumpsuit:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: jumpsuit
-      head:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: head
-      eyes:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: glasses
-      ears:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: ears
-      mask:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: mask
-      neck:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: neck
-      outerClothing:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: outerClothing
-      gloves:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: hands
-      shoes:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: feet
-      belt:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: belt
-      back:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: back
-      suitstorage:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: suitstorage
-    femaleDisplacements: # piskun HumanoidAppearance
-      jumpsuit:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: jumpsuit
-      head:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: head
-      eyes:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: glasses
-      ears:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: ears
-      mask:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: mask
-      outerClothing:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: outerClothing
-      belt:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
-            state: belt
-  - type: Deathgasp
-  - type: Blindable
-  - type: Cuffable
-  - type: RotationVisuals
-    defaultRotation: 90
-    horizontalRotation: 90
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 80
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-  - type: Stripping
-  - type: Hands
-  - type: ComplexInteraction
-  - type: GenericVisualizer
-    visuals:
-      enum.CreamPiedVisuals.Creamed:
-        clownedon:
-          True: {visible: true}
-          False: {visible: false}
-  - type: Body
-    prototype: Primate
-    requiredLegs: 1 # TODO: More than 1 leg
-  - type: CreamPied
-  - type: FireVisuals
-    sprite: Mobs/Effects/onfire.rsi
-    normalState: Monkey_burning
-  - type: InteractionPopup
-    successChance: 0.9
-    interactSuccessString: petting-success-apid
-    interactFailureString: petting-failure-apid
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/mouse_squeak.ogg
-    interactFailureSound:
-      path: /Audio/Effects/tesla_consume.ogg
-  - type: Puller
-    needsHands: true
-  - type: IdExaminable
-  - type: Tag
-    tags:
-    - VimPilot
-    - DoorBumpOpener
-    - AnomalyHost
-    - CanPilot
-  - type: Reactive
-    groups:
-      Flammable: [ Touch ]
-      Extinguish: [ Touch ]
-    reactions:
-    - reagents: [ Water, SpaceCleaner ]
-      methods: [ Touch ]
-      effects:
-      - !type:WashCreamPieReaction
-  - type: Speech
-    speechVerb: Moth
-    allowedEmotes: ['Chitter', 'Squeak']
-  - type: Vocal
-    sounds:
-      Male: MaleMoth
-      Female: FemaleMoth
-      Unsexed: UnisexMoth
-  - type: TypingIndicator
-    proto: moth
-  - type: Bloodstream
-    bloodReagent: InsectBlood
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      60: Critical
-      125: Dead
-  - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute.
-    allowedStates:
-    - Alive
-    damageCap: 20
-    damage:
-      types:
-        Heat: -0.07
-      groups:
-        Brute: -0.07
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 3.5
-    baseSprintSpeed: 5
-    weightlessAcceleration: 1.5 # zoom
-    weightlessFriction: 1
-    weightlessModifier: 1
-  - type: MeleeWeapon
-    hidden: true
-    soundHit:
-      collection: MetalThud
-    damage:
-      groups:
-        Brute: 5
-  - type: Temperature
-    heatDamageThreshold: 360
-    coldDamageThreshold: 285
-    currentTemperature: 310.15
-    specificHeat: 42
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: _Impstation/Mobs/Animals/Apid/apid.rsi
-      state: apid
-    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
-      color: "#ffffff"
-      sprite: Objects/Misc/handcuffs.rsi
-      state: body-overlay-2
-      visible: false
-    - map: [ "ears" ]
-    - map: [ "id" ]
-    - map: [ "mask" ]
-    - map: [ "head" ]
-    - map: [ "clownedon" ]
-      sprite: "Effects/creampie.rsi"
-      state: "creampie_human"
-      visible: false
-  - type: GhostTakeoverAvailable
   - type: GhostRole
     makeSentient: true
     name: ghost-role-information-apid-name
     description: ghost-role-information-apid-description
     rules: ghost-role-information-nonantagonist-rules
-  - type: MovementIgnoreGravity #wheee
-    gravityState: true
-  - type: Climbing
   - type: RandomMetadata
     nameSegments:
     - apid_worker
     - names_apid
-  - type: Grammar
-    attributes:
-      proper: true
-  - type: MothAccent
-  - type: Physics
-    bodyStatus: InAir
-  - type: NoSlip
-  - type: CanMoveInAir
-  - type: NpcFactionMember
-    factions:
-      - Passive
+  - type: RandomHumanoidAppearance
+    randomizeName: false
 
 - type: entity
   name: apid botanist
   id: MobApidBotanist
-  parent: MobApid
+  parent: MobApidBaseGhostrole
   description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
   components:
+  - type: GhostRole
+    name: ghost-role-information-apid-botanist-name
+    description: ghost-role-information-apid-botanist-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
   - type: Loadout
     prototypes:
       - StartingGearApidBotanist
@@ -266,19 +36,19 @@
     nameSegments:
     - apid_botanist
     - names_apid
-  - type: GhostRole
-    name: ghost-role-information-apid-botanist-name
-    description: ghost-role-information-apid-botanist-description
-    rules: ghost-role-information-crewmember-rules
-    raffle:
-      settings: default
 
 - type: entity
   name: apid doctor
   id: MobApidDoctor
-  parent: MobApid
+  parent: MobApidBaseGhostrole
   description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
   components:
+  - type: GhostRole
+    name: ghost-role-information-apid-doctor-name
+    description: ghost-role-information-apid-doctor-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
   - type: Loadout
     prototypes:
       - StartingGearApidDoctor
@@ -286,19 +56,19 @@
     nameSegments:
     - apid_doctor
     - names_apid
-  - type: GhostRole
-    name: ghost-role-information-apid-doctor-name
-    description: ghost-role-information-apid-doctor-description
-    rules: ghost-role-information-crewmember-rules
-    raffle:
-      settings: default
 
 - type: entity
   name: apid engineer
   id: MobApidEngineer
-  parent: MobApid
+  parent: MobApidBaseGhostrole
   description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
   components:
+  - type: GhostRole
+    name: ghost-role-information-apid-engineer-name
+    description: ghost-role-information-apid-engineer-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
   - type: Loadout
     prototypes:
       - StartingGearApidEngineer
@@ -306,19 +76,19 @@
     nameSegments:
     - apid_engineer
     - names_apid
-  - type: GhostRole
-    name: ghost-role-information-apid-engineer-name
-    description: ghost-role-information-apid-engineer-description
-    rules: ghost-role-information-crewmember-rules
-    raffle:
-      settings: default
 
 - type: entity
   name: apid emergency responder
   id: MobApidEmergency
-  parent: MobApid
+  parent: MobApidBaseGhostrole
   description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
   components:
+  - type: GhostRole
+    name: ghost-role-information-apid-beert-name
+    description: ghost-role-information-apid-beert-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
   - type: Loadout
     prototypes:
       - StartingGearApidEmergency
@@ -326,9 +96,3 @@
     nameSegments:
     - apid_emergency
     - names_apid
-  - type: GhostRole
-    name: ghost-role-information-apid-beert-name
-    description: ghost-role-information-apid-beert-description
-    rules: ghost-role-information-crewmember-rules
-    raffle:
-      settings: default
