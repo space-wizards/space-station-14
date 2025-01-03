@@ -45,7 +45,6 @@ public sealed class StealthOnWebSystem : EntitySystem
         {
             RemComp<StealthComponent>(ent.Owner);
             RemComp<StealthOnMoveComponent>(ent.Owner);
-            RemComp<StaminaDamageOnHitComponent>(ent.Owner);
         }
     }
     private void OnEntityEnter(Entity<StealthOnWebComponent> ent, ref StartCollideEvent args)
