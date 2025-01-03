@@ -53,7 +53,7 @@ reagent-name-whiskey = whiskey
 reagent-desc-whiskey = A type of distilled alcoholic beverage made from fermented grain mash.
 
 reagent-name-wine = wine
-reagent-desc-wine = An premium alchoholic beverage made from distilled grape juice.
+reagent-desc-wine = A premium alcoholic beverage made from distilled grape juice.
 
 reagent-name-champagne = champagne
 reagent-desc-champagne = A premium sparkling wine
@@ -130,7 +130,7 @@ reagent-desc-doctors-delight = A gulp a day keeps the MediBot away. That's proba
 reagent-name-driest-martini = driest martini
 reagent-desc-driest-martini = Only for the experienced. You think you see sand floating in the glass.
 
-reagent-name-erika-surprise = Erika Surprise
+reagent-name-erika-surprise = Erika surprise
 reagent-desc-erika-surprise = The surprise is, it's green!
 
 reagent-name-gargle-blaster = Pan-Galactic Gargle Blaster
@@ -148,7 +148,7 @@ reagent-desc-gildlager = 100 proof cinnamon schnapps, made for alcoholic teen gi
 reagent-name-grog = grog
 reagent-desc-grog = Watered-down rum, pirate approved!
 
-reagent-name-hippies-delight = Hippies Delight
+reagent-name-hippies-delight = Hippie's Delight
 reagent-desc-hippies-delight = You just don't get it maaaan.
 
 reagent-name-hooch = hooch
@@ -166,7 +166,7 @@ reagent-desc-irish-cream = Whiskey-imbued cream. What else could you expect from
 reagent-name-irish-coffee = Irish coffee
 reagent-desc-irish-coffee = Coffee served with irish cream. Regular cream just isn't the same!
 
-reagent-name-kira-special = Kira Special
+reagent-name-kira-special = Kira special
 reagent-desc-kira-special = Long live the guy who everyone had mistaken for a girl. Baka!
 
 reagent-name-long-island-iced-tea = Long Island iced tea
@@ -178,7 +178,7 @@ reagent-desc-manhattan = The Detective's undercover drink of choice. He never co
 reagent-name-manhattan-project = Manhattan Project
 reagent-desc-manhattan-project = A scientist's drink of choice, for pondering ways to blow up the ship.
 
-reagent-name-manly-dorf = Manly Dorf
+reagent-name-manly-dorf = manly dorf
 reagent-desc-manly-dorf = Beer and Ale, brought together in a delicious mix. Intended for stout dwarves only.
 
 reagent-name-margarita = margarita
