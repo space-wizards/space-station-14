@@ -102,6 +102,7 @@ public sealed partial class MentorSystem : SharedMentorSystem
             ticket = new MentorTicket
             {
                 Id = ticketId,
+                Title = $"{senderSession.Name}[{ticketId.ToString()[..4]}]",
                 Creator = senderSession.UserId
             };
 
@@ -111,6 +112,7 @@ public sealed partial class MentorSystem : SharedMentorSystem
             {
                 Sender = senderSession.UserId,
                 Ticket = ticketId,
+                Title = ticket.Title,
                 Text = Loc.GetString("mentor-system-ticket-created"),
                 PlaySound = false
             };
@@ -133,6 +135,7 @@ public sealed partial class MentorSystem : SharedMentorSystem
             Sender = senderSession.UserId,
             Ticket = ticketId,
             Text = text,
+            Title = ticket.Title,
             PlaySound = true
         };
         _sawmill.Info($"mhelp message: {text}");
@@ -143,6 +146,7 @@ public sealed partial class MentorSystem : SharedMentorSystem
             {
                 Sender = senderSession.UserId,
                 Ticket = ticketId,
+                Title = ticket.Title,
                 Text = Loc.GetString("mentor-system-ticket-claimed", ("name", senderSession.Name)),
                 PlaySound = false,
                 TicketClosed = true
@@ -285,6 +289,7 @@ public sealed partial class MentorSystem : SharedMentorSystem
 public sealed class MentorTicket
 {
     public Guid Id { get; set; }
+    public string Title { get; set; } = "";
     public NetUserId Creator { get; set; }
     public NetUserId? Mentor { get; set; }
     public bool IsClosed { get; set; }
