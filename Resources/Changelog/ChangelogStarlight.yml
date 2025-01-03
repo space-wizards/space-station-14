@@ -1574,4 +1574,35 @@ Entries:
   id: 223
   time: '2025-01-03T02:23:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/205
+- author: STARLIGHT TEAM
+  changes:
+  - message: The ambush attack of the gray spider from invisibility now deals less
+      stamina damage, and the damage directly depends on the level of transparency.
+    type: Fix
+  id: 224
+  time: '2025-01-03T03:40:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/206
+- author: STARLIGHT TEAM
+  changes:
+  - message: Reduced health, regeneration, damage, and speed.
+    type: Tweak
+  id: 225
+  time: '2025-01-03T03:40:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/206
+- author: STARLIGHT TEAM
+  changes:
+  - message: The egg-laying cooldown has been reduced by 30 seconds, from 2.5 minutes
+      to 2 minutes.
+    type: Tweak
+  id: 226
+  time: '2025-01-03T03:40:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/206
+- author: STARLIGHT TEAM
+  changes:
+  - message: 'Damage modifiers have been adjusted: brute damage now deals only 40%
+      damage, while heat damage deals 160%.'
+    type: Tweak
+  id: 227
+  time: '2025-01-03T03:40:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/206
 
