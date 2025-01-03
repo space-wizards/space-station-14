@@ -58,8 +58,16 @@
       shader: unshaded
   - type: RepulseAttract
     strength: 5
-    range: 5
+    range: 3
     useDelay: 10
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 20
+        Structural: 20
+    soundHit:
+      collection: MetalThud
   - type: Item
     size: Normal
     inhandVisuals:
@@ -86,8 +94,17 @@
       shader: unshaded
   - type: RepulseAttract
     strength: 5
-    range: 5
+    range: 3
+    useDelay: 10
     attract: true
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 10
+        Structural: 10
+    soundHit:
+      collection: MetalThud
   - type: Item
     size: Normal
     inhandVisuals:
