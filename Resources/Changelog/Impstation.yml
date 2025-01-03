@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: aada
-  changes:
-  - message: Roundstart duplicate galoshes fixed.
-    type: Fix
-  id: 352
-  time: '2024-10-11T18:21:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/455
 - author: widgetbeck
   changes:
   - message: Added ~15 Thaven Moods, several of which have several potential permutations.
@@ -4484,3 +4477,10 @@
   id: 851
   time: '2025-01-03T03:17:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1206
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: Zipper is more common
+    type: Tweak
+  id: 852
+  time: '2025-01-03T15:45:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1210
