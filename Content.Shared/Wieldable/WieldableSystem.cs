@@ -73,6 +73,7 @@ public sealed class WieldableSystem : EntitySystem
         if (TryComp<WieldableComponent>(uid, out var wieldable) &&
             !wieldable.Wielded)
         {
+            args.Message = Loc.GetString("wieldable-component-requires", ("item", uid));
             args.Cancel();
 
             var time = _timing.CurTime;

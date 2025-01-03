@@ -1605,4 +1605,67 @@ Entries:
   id: 227
   time: '2025-01-03T03:40:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/206
+- author: STARLIGHT TEAM
+  changes:
+  - message: A small improvement to the mentor interface.
+    type: Add
+  id: 228
+  time: '2025-01-03T07:05:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/207
+- author: Rinary
+  changes:
+  - message: Updated execution system, now it works with any knife or gun.
+    type: Tweak
+  id: 229
+  time: '2025-01-03T14:47:53.235344+00:00'
+  url: 'null'
+- author: STARLIGHT TEAM
+  changes:
+  - message: Ripley Resprite.
+    type: Tweak
+  id: 230
+  time: '2025-01-03T14:51:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/204
+- author: Killer Tamashi
+  changes:
+  - message: Added Brigmedic Defibrillator
+    type: Add
+  id: 231
+  time: '2025-01-03T15:07:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/197
+- author: Rinary
+  changes:
+  - message: Now all avaible collective minds displayed at character menu.
+    type: Tweak
+  id: 232
+  time: '2025-01-03T19:43:45.344070+00:00'
+  url: 'null'
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added Starlight.
+    type: Add
+  id: 233
+  time: '2025-01-03T19:50:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/203
+- author: STARLIGHT TEAM
+  changes:
+  - message: Removed SS13.
+    type: Remove
+  id: 234
+  time: '2025-01-03T19:50:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/203
+- author: STARLIGHT TEAM
+  changes:
+  - message: Changed SS14.
+    type: Tweak
+  id: 235
+  time: '2025-01-03T19:50:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/203
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed Rinary.
+    type: Fix
+  id: 236
+  time: '2025-01-03T19:50:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/203
 

@@ -2,7 +2,7 @@
   id: BulletRifleRubber
   name: bullet (0.20 rifle rubber)
   parent: BaseBulletRubber
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:
