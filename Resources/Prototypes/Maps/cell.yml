@@ -15,6 +15,8 @@
             prefixCreator: 'DS'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_cell.yml
+        - type: StationCargoShuttle
+          path: /Maps/Shuttles/cargo_cell.yml
         - type: StationJobs
           availableJobs:
             #service
