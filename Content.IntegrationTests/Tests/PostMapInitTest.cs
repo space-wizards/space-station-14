@@ -65,7 +65,7 @@ namespace Content.IntegrationTests.Tests
             "Gate",
             "Amber",
             "Loop",
-            "Cell"
+            "Elkridge"
 
            
         };
