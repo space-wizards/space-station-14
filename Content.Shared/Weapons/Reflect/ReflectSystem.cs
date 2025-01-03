@@ -142,8 +142,7 @@ public sealed class ReflectSystem : EntitySystem
 
     private void OnReflectHitscan(EntityUid uid, ReflectComponent component, ref HitScanReflectAttemptEvent args)
     {
-        if (args.Reflected ||
-            (component.Reflects & args.Reflective) == 0x0)
+        if (args.Reflected)
         {
             return;
         }
