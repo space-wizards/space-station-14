@@ -43,10 +43,8 @@
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
-        sprite: Mobs/Effects/brute_damage.rsi
+        sprite: _Impstation/Mobs/Effects/apid_brute_damage.rsi # technically this is only brute sprites for the chest. but that doesn't matter
         color: "#808A51"
-      Burn:
-        sprite: Mobs/Effects/burn_damage.rsi
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 285
