@@ -44,7 +44,7 @@
   id: BaseThiefStealAnimalObjective
   components:
   - type: StealCondition
-    verifyMapExistence: false
+    verifyMapExistence: true
     checkAlive: true
     objectiveNoOwnerText: objective-condition-steal-title-alive-no-owner
     descriptionText: objective-condition-thief-animal-description
