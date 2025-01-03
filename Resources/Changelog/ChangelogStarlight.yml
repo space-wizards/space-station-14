@@ -1566,3 +1566,12 @@ Entries:
   id: 222
   time: '2025-01-02T12:19:28.568355+00:00'
   url: 'null'
+- author: STARLIGHT TEAM
+  changes:
+  - message: A recruitment computer has been added, allowing CentCom to adjust available
+      slots on the station.
+    type: Add
+  id: 223
+  time: '2025-01-03T02:23:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/205
+
