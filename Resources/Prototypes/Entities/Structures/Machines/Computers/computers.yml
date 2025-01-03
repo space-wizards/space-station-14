@@ -607,7 +607,7 @@
   - type: PointLight
     radius: 1.5
     energy: 1.6
-    color: "#3c5eb5"
+    color: "#D3D310"
   - type: Tag
     tags:
     - EmagImmune

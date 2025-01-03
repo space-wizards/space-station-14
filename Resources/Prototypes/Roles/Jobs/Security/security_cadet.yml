@@ -10,6 +10,7 @@
       department: Security
       time: 54000 # 15 hrs
       inverted: true # stop playing intern if you're good at security!
+  weight: -1
   startingGear: SecurityCadetGear
   icon: "JobIconSecurityCadet"
   supervisors: job-supervisors-security

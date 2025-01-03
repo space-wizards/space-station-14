@@ -1,4 +1,48 @@
 - type: entity
+  parent: BaseComputerAiAccess
+  id: RecruitmentComputer
+  name: recruitment computer
+  description: A computer for managing crew hiring.
+  components:
+  - type: RecruitmentComputer
+  - type: ActivatableUI
+    key: enum.RecruitmentComputerUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.RecruitmentComputerUiKey.Key:
+        type: RecruitmentComputerBui
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: AccessReader
+    access: [["CentralCommand"]]
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: recruitment
+    - map: ["computerLayerKeys"]
+      state: recruitment_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: Computer
+    board: RecruitmentComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3c5eb5"
+  - type: Tag
+    tags:
+    - EmagImmune
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+
+#abductor
+- type: entity
   parent: BaseComputer
   id: AbductorConsole
   name: abductor console

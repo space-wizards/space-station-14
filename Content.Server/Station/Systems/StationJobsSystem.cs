@@ -38,6 +38,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         SubscribeLocalEvent<StationJobsComponent, ComponentShutdown>(OnStationDeletion);
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
         SubscribeLocalEvent<NewLifeOpenedEvent>(OnPlayerNewLifeOpen); //  🌟Starlight🌟
+        SubscribeLocalEvent<PlayerConnectEvent>(OnPlayerConnect); //  🌟Starlight🌟
         Subs.CVar(_configurationManager, CCVars.GameDisallowLateJoins, _ => UpdateJobsAvailable(), true);
     }
 
@@ -489,8 +490,8 @@ public sealed partial class StationJobsSystem : EntitySystem
     private TickerJobsAvailableEvent GenerateJobsAvailableEvent()
     {
         // If late join is disallowed, return no available jobs.
-        if (_gameTicker.DisallowLateJoin)
-            return new TickerJobsAvailableEvent(new(), new());
+        //if (_gameTicker.DisallowLateJoin)  🌟Starlight🌟
+        //    return new TickerJobsAvailableEvent(new(), new());
 
         var jobs = new Dictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>>();
         var stationNames = new Dictionary<NetEntity, string>();
@@ -523,6 +524,11 @@ public sealed partial class StationJobsSystem : EntitySystem
     private void OnPlayerNewLifeOpen(NewLifeOpenedEvent ev, EntitySessionEventArgs args)
     {
         RaiseNetworkEvent(_cachedAvailableJobs, args.SenderSession.Channel);
+    }
+    //  🌟Starlight🌟
+    private void OnPlayerConnect(PlayerConnectEvent ev)
+    {
+        RaiseNetworkEvent(_cachedAvailableJobs, ev.PlayerSession.Channel);
     }
 
     private void OnStationRenamed(EntityUid uid, StationJobsComponent component, StationRenamedEvent args)

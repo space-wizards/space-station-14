@@ -6,6 +6,7 @@ namespace Content.Client.Stylesheets
     {
         Stylesheet SheetNano { get; }
         Stylesheet SheetSpace { get; }
+        Stylesheet Starlight { get; }
 
         void Initialize();
     }
