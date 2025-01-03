@@ -11856,7 +11856,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -56779.19
+      secondsUntilStateChange: -57097.516
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -47528,6 +47528,81 @@ entities:
     components:
     - type: Transform
       pos: 9.5,-73.5
+      parent: 8364
+  - uid: 27982
+    components:
+    - type: Transform
+      pos: 37.5,3.5
+      parent: 8364
+  - uid: 27983
+    components:
+    - type: Transform
+      pos: -32.5,-30.5
+      parent: 8364
+  - uid: 27984
+    components:
+    - type: Transform
+      pos: -33.5,-30.5
+      parent: 8364
+  - uid: 27985
+    components:
+    - type: Transform
+      pos: -34.5,-30.5
+      parent: 8364
+  - uid: 27986
+    components:
+    - type: Transform
+      pos: -35.5,-30.5
+      parent: 8364
+  - uid: 27987
+    components:
+    - type: Transform
+      pos: -36.5,-30.5
+      parent: 8364
+  - uid: 27989
+    components:
+    - type: Transform
+      pos: -36.5,-29.5
+      parent: 8364
+  - uid: 27990
+    components:
+    - type: Transform
+      pos: -36.5,-28.5
+      parent: 8364
+  - uid: 27991
+    components:
+    - type: Transform
+      pos: -36.5,-27.5
+      parent: 8364
+  - uid: 27992
+    components:
+    - type: Transform
+      pos: -36.5,-26.5
+      parent: 8364
+  - uid: 27993
+    components:
+    - type: Transform
+      pos: -36.5,-25.5
+      parent: 8364
+  - uid: 27994
+    components:
+    - type: Transform
+      pos: -36.5,-24.5
+      parent: 8364
+  - uid: 27995
+    components:
+    - type: Transform
+      pos: -36.5,-23.5
+      parent: 8364
+  - uid: 28007
+    components:
+    - type: Transform
+      pos: -36.5,-22.5
+      parent: 8364
+  - uid: 28021
+    components:
+    - type: Transform
+      pos: -36.5,-21.5
       parent: 8364
   - uid: 28150
     components:
@@ -85222,7 +85297,7 @@ entities:
       pos: -8.5,-70.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -8504.234
+      secondsUntilStateChange: -8822.562
       state: Closing
   - uid: 5277
     components:
@@ -85968,7 +86043,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -50967.727
+      secondsUntilStateChange: -51286.05
       state: Closing
   - uid: 15010
     components:
@@ -125245,7 +125320,7 @@ entities:
       pos: 28.5,-34.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -30738.094
+      secondsUntilStateChange: -31056.422
       state: Closing
 - proto: hydroponicsSoil
   entities:
@@ -125736,6 +125811,13 @@ entities:
     components:
     - type: Transform
       pos: -0.17810851,-82.508446
+      parent: 8364
+- proto: Jukebox
+  entities:
+  - uid: 28024
+    components:
+    - type: Transform
+      pos: 31.5,-10.5
       parent: 8364
 - proto: KitchenElectricGrill
   entities:
