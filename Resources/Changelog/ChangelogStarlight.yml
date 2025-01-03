@@ -1640,3 +1640,32 @@ Entries:
   id: 232
   time: '2025-01-03T19:43:45.344070+00:00'
   url: 'null'
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added Starlight.
+    type: Add
+  id: 233
+  time: '2025-01-03T19:50:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/203
+- author: STARLIGHT TEAM
+  changes:
+  - message: Removed SS13.
+    type: Remove
+  id: 234
+  time: '2025-01-03T19:50:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/203
+- author: STARLIGHT TEAM
+  changes:
+  - message: Changed SS14.
+    type: Tweak
+  id: 235
+  time: '2025-01-03T19:50:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/203
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed Rinary.
+    type: Fix
+  id: 236
+  time: '2025-01-03T19:50:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/203
+
