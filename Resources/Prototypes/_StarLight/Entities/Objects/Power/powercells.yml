@@ -20,4 +20,4 @@
     startingCharge: 250
   - type: Tag
     tags:
-      - PowerCellSmall
+      - PowerCellTiny

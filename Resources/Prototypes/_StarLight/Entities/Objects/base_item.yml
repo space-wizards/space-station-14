@@ -13,8 +13,9 @@
         cell_slot:
           whitelist:
             tags:
-              - PowerCellSmall
-            components:
               - PowerCellTiny
+            components:
+              - PowerCell
+            requireAll: true
           name: power-cell-slot-component-slot-name-default
           startingItem: PowerCellTiny
