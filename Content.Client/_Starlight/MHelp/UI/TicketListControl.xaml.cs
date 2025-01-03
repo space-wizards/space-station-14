@@ -81,18 +81,18 @@ public sealed partial class TicketListControl : BoxContainer
         button.AddStyleClass(ListContainer.StyleClassListContainerButton);
     }
 
-    internal void EnsureTicket(Guid ticketId, bool ticketClosed)
+    internal void EnsureTicket(Guid ticketId, string title, bool ticketClosed)
     {
         if(_tickets.TryGetValue(ticketId, out var ticket))
         {
             ticket.IsClosed = ticketClosed;
             return;
         }
-        _tickets.TryAdd(ticketId, new Ticket(ticketId) { IsClosed = ticketClosed});
+        _tickets.TryAdd(ticketId, new Ticket(ticketId, title) { IsClosed = ticketClosed});
     }
 }
 
-public record Ticket(Guid Id) : ListData
+public record Ticket(Guid Id, string Title) : ListData
 {
     public bool IsPinned { get; set; }
     public bool IsClosed { get; set; }
