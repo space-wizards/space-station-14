@@ -365,6 +365,22 @@
     - state: icon-diagnosis
   - type: ItemBorgModule
     items:
+    - HandheldHealthAnalyzerUnpowered
+    - ClothingNeckStethoscope
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: diagnosis-module }
+    
+- type: entity
+  id: BorgModuleTopicals # todo: reuse when med refractor is finished
+  parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+  name: topicals cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: medical
+    - state: icon-diagnosis
+  - type: ItemBorgModule
+    items:
     - Gauze10Lingering
     - Brutepack10Lingering
     - Ointment10Lingering
@@ -396,7 +412,7 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: treatment-module }
 
 - type: entity
-  id: BorgModuleDefibrillator # integrated into both treatment modules
+  id: BorgModuleDefibrillator
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
   name: defibrillator cyborg module
   components:
@@ -406,6 +422,7 @@
     - state: icon-defib
   - type: ItemBorgModule
     items:
+    - HandheldHealthAnalyzerUnpowered
     - DefibrillatorOneHandedUnpowered
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: defib-module }
