@@ -11931,7 +11931,7 @@ entities:
       pos: -21.5,-40.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -19364.908
+      secondsUntilStateChange: -20065.678
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12675,7 +12675,7 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -199269.27
+      secondsUntilStateChange: -199970.03
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -16652,6 +16652,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: 15.5,26.5
       parent: 2
+  - uid: 7995
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -9.5,-25.5
+      parent: 2
   - uid: 9352
     components:
     - type: Transform
@@ -16668,6 +16674,12 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 24.5,-26.5
+      parent: 2
+  - uid: 13477
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -9.5,-29.5
       parent: 2
   - uid: 13820
     components:
@@ -78832,11 +78844,6 @@ entities:
     - type: Transform
       pos: -24.5,-1.5
       parent: 2
-  - uid: 7995
-    components:
-    - type: Transform
-      pos: 0.5,22.5
-      parent: 2
   - uid: 13449
     components:
     - type: Transform
@@ -78851,11 +78858,6 @@ entities:
     components:
     - type: Transform
       pos: -16.5,20.5
-      parent: 2
-  - uid: 13472
-    components:
-    - type: Transform
-      pos: -4.5,-2.5
       parent: 2
   - uid: 13473
     components:
@@ -78877,11 +78879,6 @@ entities:
     - type: Transform
       pos: -48.5,-13.5
       parent: 2
-  - uid: 13477
-    components:
-    - type: Transform
-      pos: -20.5,-28.5
-      parent: 2
   - uid: 13478
     components:
     - type: Transform
@@ -78891,11 +78888,6 @@ entities:
     components:
     - type: Transform
       pos: -36.5,-27.5
-      parent: 2
-  - uid: 13480
-    components:
-    - type: Transform
-      pos: -5.5,-30.5
       parent: 2
   - uid: 13482
     components:
@@ -78931,11 +78923,6 @@ entities:
     components:
     - type: Transform
       pos: 28.5,21.5
-      parent: 2
-  - uid: 13490
-    components:
-    - type: Transform
-      pos: 4.5,32.5
       parent: 2
   - uid: 13491
     components:
@@ -79036,11 +79023,6 @@ entities:
     components:
     - type: Transform
       pos: -12.5,2.5
-      parent: 2
-  - uid: 15297
-    components:
-    - type: Transform
-      pos: -6.5,-35.5
       parent: 2
   - uid: 15822
     components:
@@ -81606,11 +81588,6 @@ entities:
     components:
     - type: Transform
       pos: -28.5,14.5
-      parent: 2
-  - uid: 14844
-    components:
-    - type: Transform
-      pos: -29.5,-41.5
       parent: 2
   - uid: 14845
     components:
@@ -86230,6 +86207,36 @@ entities:
       linkedPorts:
         6281:
         - Pressed: Toggle
+- proto: SignalSwitchDirectional
+  entities:
+  - uid: 13472
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -9.5,-25.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        14970:
+        - Off: Open
+        - On: Close
+        1927:
+        - On: Open
+        - Off: Close
+  - uid: 13480
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -9.5,-29.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        13703:
+        - Off: Open
+        - On: Close
+        1928:
+        - On: Open
+        - Off: Close
 - proto: SignAnomaly
   entities:
   - uid: 12760
