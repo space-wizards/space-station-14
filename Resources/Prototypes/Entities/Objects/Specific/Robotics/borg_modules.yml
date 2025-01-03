@@ -192,22 +192,6 @@
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: tool-module }
 
-# cargo modules
-- type: entity
-  id: BorgModuleAppraisal
-  parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
-  name: appraisal cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: cargo
-    - state: icon-appraisal
-  - type: ItemBorgModule
-    items:
-    - AppraisalTool
-  - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: appraisal-module }
-
 - type: entity
   id: BorgModuleMining
   parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
@@ -227,7 +211,7 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
 
 - type: entity
-  id: BorgModuleGrapplingGun
+  id: BorgModuleSalvaging
   parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
   name: salvaging cyborg module
   components:
@@ -261,8 +245,8 @@
     - WelderExperimental
     - Multitool
     - GasAnalyzer
-    - GeigerCounter
     - RemoteSignallerAdvanced
+
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-tools-module }
 
@@ -303,7 +287,7 @@
 
 # janitorial modules (this gets its own unique things because janis are epic)
 - type: entity
-  id: BorgModuleLightReplacer
+  id: BorgModuleCustodial
   parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
   name: custodial cyborg module
   components:
@@ -354,24 +338,25 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-cleaning-module }
 
 # medical modules
+
 - type: entity
-  id: BorgModuleDiagnosis # todo: reuse when med refractor is finished
+  id: BorgModuleDiagnosis
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
-  name: topicals cyborg module
+  name: diagnosis cyborg module
   components:
   - type: Sprite
     layers:
     - state: medical
-    - state: icon-diagnosis
+    - state: icon-defib
   - type: ItemBorgModule
     items:
     - HandheldHealthAnalyzerUnpowered
-    - ClothingNeckStethoscope
+    - DefibrillatorOneHandedUnpowered
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: diagnosis-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: defib-module }
     
 - type: entity
-  id: BorgModuleTopicals # todo: reuse when med refractor is finished
+  id: BorgModuleTopicals
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
   name: topicals cyborg module
   components:
@@ -393,7 +378,7 @@
 - type: entity
   id: BorgModuleTreatment
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
-  name: treatment cyborg module
+  name: chemical cyborg module
   components:
   - type: Sprite
     layers:
@@ -401,31 +386,13 @@
     - state: icon-treatment
   - type: ItemBorgModule
     items:
-    - HandheldHealthAnalyzerUnpowered
     - Beaker
     - Beaker
     - Syringe
     - Syringe
-    - DefibrillatorOneHandedUnpowered
 
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: treatment-module }
-
-- type: entity
-  id: BorgModuleDefibrillator
-  parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
-  name: defibrillator cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: medical
-    - state: icon-defib
-  - type: ItemBorgModule
-    items:
-    - HandheldHealthAnalyzerUnpowered
-    - DefibrillatorOneHandedUnpowered
-  - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: defib-module }
 
 - type: entity
   id: BorgModuleAdvancedTreatment
@@ -438,12 +405,11 @@
     - state: icon-chemist
   - type: ItemBorgModule
     items:
-    - HandheldHealthAnalyzerUnpowered
     - Beaker
     - Beaker
     - Syringe
     - BorgHypo
-    - DefibrillatorOneHandedUnpowered
+    
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-diagnosis-module }
 

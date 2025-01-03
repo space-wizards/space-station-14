@@ -167,11 +167,6 @@
   id: BorgModuleAdvancedTreatment
   result: BorgModuleAdvancedTreatment
 
-- type: latheRecipe
-  parent: BaseGoldBorgModuleRecipe
-  id: BorgModuleDefibrillator
-  result: BorgModuleDefibrillator
-
 # Science Modules
 
 - type: latheRecipe
