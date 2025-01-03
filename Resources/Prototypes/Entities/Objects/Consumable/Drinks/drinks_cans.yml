@@ -71,7 +71,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkColaCan
-  name: Space Cola
+  name: Space Cola can
   description: A refreshing beverage.
   components:
   - type: SolutionContainerManager
@@ -280,7 +280,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkSpaceUpCan
-  name: Space-up can
+  name: Space-Up can
   description: Tastes like a hull breach in your mouth.
   components:
   - type: SolutionContainerManager
@@ -433,7 +433,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkEnergyDrinkCan
-  name: Red Bool energy drink
+  name: Red Bool can
   description: A can of Red Bool, with enough caffeine to kill a horse.
   components:
   - type: SolutionContainerManager
