@@ -1,22 +1,22 @@
 - type: gameMap
-  id: Cell
-  mapName: 'Cell'
-  mapPath: /Maps/cell.yml
+  id: Elkridge
+  mapName: 'Elkridge Depot'
+  mapPath: /Maps/elkridge.yml
   minPlayers: 7
   maxPlayers: 35
   stations:
-    Cell:
+    Elkridge:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Cell {1}'
+          mapNameTemplate: '{0} Elkridge Depot {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: 'DS'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_cell.yml
+          emergencyShuttlePath: /Maps/Shuttles/emergency_elkridge.yml
         - type: StationCargoShuttle
-          path: /Maps/Shuttles/cargo_cell.yml
+          path: /Maps/Shuttles/cargo_elkridge.yml
         - type: StationJobs
           availableJobs:
             #service

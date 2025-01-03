@@ -15,7 +15,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: NT Evac Cilium
+      name: NT Evac Log
     - type: Transform
       pos: -0.42093527,-0.86894274
       parent: invalid
