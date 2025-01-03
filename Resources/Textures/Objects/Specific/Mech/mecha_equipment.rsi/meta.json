@@ -131,6 +131,25 @@
       "name": "mecha_analyzer"
     },
     {
+      "name": "mecha_analyzer_anim",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.5
+        ]
+      ]
+    },
+    {
       "name": "mecha_medigun"
     },
     {
@@ -150,6 +169,107 @@
     },
     {
       "name": "mecha_kineticgun"
+    },
+    {
+      "name": "mecha_camera"
+    },
+    {
+      "name": "mecha_bin"
+    },
+    {
+      "name": "mecha_air_tank"
+    },
+    {
+      "name": "mecha_radio"
+    },
+    {
+      "name": "mecha_sleeper"
+    },
+    {
+      "name": "mecha_syringegun"
+    },
+    {
+      "name": "paddy_claw"
+    },
+    {
+      "name": "paddyupgrade"
+    },
+    {
+      "name": "mecha_chainsword",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "mecha_immolator",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "mecha_solaris",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "mecha_firedart"
+    },
+    {
+      "name": "mecha_xray"
+    },
+    {
+      "name": "mecha_amlg90"
+    },
+    {
+      "name": "triphasic_scan_module",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     }
   ]
 }
