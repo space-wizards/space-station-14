@@ -1,0 +1,20 @@
+# PowerCellSlot parents
+- type: entity
+  id: PowerCellSlotTinyItem
+  abstract: true
+  components:
+    - type: ContainerContainer
+      containers:
+        cell_slot: !type:ContainerSlot { }
+    - type: PowerCellSlot
+      cellSlotId: cell_slot
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          whitelist:
+            tags:
+              - PowerCellSmall
+            components:
+              - PowerCellTiny
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellTiny
