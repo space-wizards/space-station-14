@@ -1619,3 +1619,11 @@ Entries:
   id: 229
   time: '2025-01-03T14:47:53.235344+00:00'
   url: 'null'
+- author: STARLIGHT TEAM
+  changes:
+  - message: Ripley Resprite.
+    type: Tweak
+  id: 230
+  time: '2025-01-03T14:51:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/204
+
