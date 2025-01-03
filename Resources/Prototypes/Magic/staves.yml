@@ -43,19 +43,20 @@
       toAdd:
       - type: RgbLightController
 
-#TODO: Sprites for both
+# TODO: Activate on hit/click
+
+# TODO: Add stun
 - type: entity
-  id: Mjolnir
+  id: Mjollnir
   parent: BaseItem
   name: Mjolnir
-  description: TODO
+  description: A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy.
   components:
+  - type: Wieldable
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Basic/staves.rsi
+    sprite: Objects/Weapons/Melee/mjollnir.rsi
     layers:
-    - state: nothing
-    - state: nothing-unshaded
-      shader: unshaded
+    - state: icon
   - type: RepulseAttract
     strength: 5
     range: 3
@@ -64,34 +65,30 @@
     wideAnimationRotation: -135
     damage:
       types:
-        Blunt: 20
-        Structural: 20
+        Blunt: 5
+        Structural: 5
     soundHit:
       collection: MetalThud
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 20
+        Structural: 25
   - type: Item
-    size: Normal
-    inhandVisuals:
-      left:
-      - state: staff-inhand-left
-      - state: staff-inhand-left-unshaded
-        shader: unshaded
-      right:
-      - state: staff-inhand-right
-      - state: staff-inhand-right-unshaded
-        shader: unshaded
+    size: Ginormous
 
+# TODO: Change sound
 - type: entity
   id: SingularityHammer
   parent: BaseItem
-  name: SingularityHammer
-  description: TODO
+  name: Singularity Hammer
+  description: The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows.
   components:
+  - type: Wieldable
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Basic/staves.rsi
+    sprite: Objects/Weapons/Melee/singularityhammer.rsi
     layers:
-    - state: nothing
-    - state: nothing-unshaded
-      shader: unshaded
+    - state: icon
   - type: RepulseAttract
     strength: 5
     range: 3
@@ -101,18 +98,14 @@
     wideAnimationRotation: -135
     damage:
       types:
-        Blunt: 10
-        Structural: 10
+        Blunt: 5
+        Structural: 5
     soundHit:
       collection: MetalThud
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 15
+        Structural: 15
   - type: Item
-    size: Normal
-    inhandVisuals:
-      left:
-      - state: staff-inhand-left
-      - state: staff-inhand-left-unshaded
-        shader: unshaded
-      right:
-      - state: staff-inhand-right
-      - state: staff-inhand-right-unshaded
-        shader: unshaded
+    size: Ginormous
