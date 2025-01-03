@@ -35,6 +35,7 @@ public abstract class SharedMentorSystem : EntitySystem
         public required string Text { get; init; }
         public bool PlaySound { get; init; }
         public bool TicketClosed { get; set; }
+        public string Title { get; set; } = "";
     }
     [Serializable, NetSerializable]
     public sealed class MHelpCloseTicket() : EntityEventArgs

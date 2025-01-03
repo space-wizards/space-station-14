@@ -32,7 +32,7 @@ public sealed class MentorMHelpUIHandler(NetUserId owner) : IMHelpUIHandler
             return;
         var panel = EnsurePanel(message.Ticket.Value);
         panel.ReceiveLine(message);
-        Control?.EnsureTicket(message.Ticket.Value, message.TicketClosed);
+        Control?.EnsureTicket(message.Ticket.Value, message.Title, message.TicketClosed);
         Control?.UpdateTicketList();
     }
 

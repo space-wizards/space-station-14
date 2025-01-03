@@ -33,7 +33,7 @@ public sealed partial class TicketEntry : BoxContainer
 
     private void Update(Ticket ticket)
     {
-        Label.Text = (ticket.IsClosed ? "(X) " : "") + ticket.Id.ToString();
+        Label.Text = (ticket.IsClosed ? "(X) " : "") + ticket.Title.ToString();
 
         UpdatePinButtonTexture(ticket.IsPinned);
     }

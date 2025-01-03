@@ -104,8 +104,8 @@ public sealed partial class MhelpControl : Control
     }
     public void UpdateTicketList() =>
         TicketSelector.UpdateList();
-    public void EnsureTicket(Guid ticketId, bool ticketClosed) =>
-        TicketSelector.EnsureTicket(ticketId, ticketClosed);
+    public void EnsureTicket(Guid ticketId, string title, bool ticketClosed) =>
+        TicketSelector.EnsureTicket(ticketId, title, ticketClosed);
     public void UpdateList()
     {
         TicketSelector.UpdateList();
