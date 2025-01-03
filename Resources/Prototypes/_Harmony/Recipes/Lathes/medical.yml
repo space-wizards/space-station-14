@@ -1,0 +1,37 @@
+- type: latheRecipe
+  id: BaseChemistryEmptyVial
+  result: BaseChemistryEmptyVial
+  completetime: 2
+  materials:
+    Glass: 50
+
+- type: latheRecipe
+  id: Bloodpack
+  result: Bloodpack1
+  completetime: 1
+  materials:
+    Steel: 25
+    Plastic: 25
+
+- type: latheRecipe
+  parent: BaseSurgicalRecipe
+  id: CircularSaw
+  result: SawElectric
+
+- type: latheRecipe
+  id: ClothingEyesHudMedical
+  result: ClothingEyesHudMedical
+  completetime: 2
+  materials:
+    Steel: 200
+    Plastic: 300
+    Glass: 500
+
+- type: latheRecipe
+  id: ClothingEyesEyepatchHudMedical
+  result: ClothingEyesEyepatchHudMedical
+  completetime: 2
+  materials:
+    Steel: 200
+    Plastic: 300
+    Glass: 500
