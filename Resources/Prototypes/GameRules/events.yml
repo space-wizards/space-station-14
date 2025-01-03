@@ -567,9 +567,10 @@
   - type: StationEvent
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 5
+    weight: 2
     minimumPlayers: 25
     reoccurrenceDelay: 20
+    maxOccurrences: 2 
   - type: GreytideVirusRule
     accessGroups:
     - Cargo
