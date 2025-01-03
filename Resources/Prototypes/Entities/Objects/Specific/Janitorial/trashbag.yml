@@ -68,11 +68,10 @@
 - type: entity
   name: internal trash bag
   id: BorgTrashBag
-  description: A upgraded trash bag capable of holding nearly anything.
+  description: A upgraded trash bag with a massive internal volume.
   parent: TrashBag
   components:
   - type: Storage
     maxItemSize: Huge
     grid:
-    - 0,0,7,5
-    whitelist: null
+    - 0,0,10,6
