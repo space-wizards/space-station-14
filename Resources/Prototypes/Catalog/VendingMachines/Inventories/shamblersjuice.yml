@@ -3,12 +3,13 @@
   startingInventory:
     DrinkShamblersJuiceCan: 4
     DrinkGrapeCan: 2
-    DrinkRootBeerCan: 2
     DrinkIcedTeaCan: 2
+    DrinkPwrGameCan: 2
+    DrinkRootBeerCan: 2
     DrinkSolDryCan: 2
     DrinkLemonLimeCan: 2
     DrinkLemonLimeCranberryCan: 2
-    DrinkFourteenLokoCan: 2
+    DrinkColaCan: 3
   emaggedInventory:
     DrinkNukieCan: 2
     DrinkChangelingStingCan: 2

@@ -2,13 +2,14 @@
   id: DrGibbInventory
   startingInventory:
     DrinkDrGibbCan: 4
+    DrinkFourteenLokoCan: 3
     DrinkGrapeCan: 2
-    DrinkRootBeerCan: 2
     DrinkIcedTeaCan: 2
-    DrinkSolDryCan: 2
-    DrinkLemonLimeCan: 2
-    DrinkLemonLimeCranberryCan: 2
-    DrinkFourteenLokoCan: 2
+    DrinkEnergyDrinkCan: 2
+    DrinkRootBeerCan: 2
+    DrinkSpaceMountainWindCan: 2
+    DrinkSpaceUpCan: 3
+    DrinkStarkistCan: 3
   emaggedInventory:
     DrinkNukieCan: 2
     DrinkChangelingStingCan: 2

@@ -1,0 +1,13 @@
+- type: vendingMachineInventory
+  id: RobustSoftdrinksInventory
+  startingInventory:
+    DrinkIcedTeaCan: 3
+    DrinkEnergyDrinkCan: 3
+    DrinkLemonLimeCan: 3
+    DrinkLemonLimeCranberryCan: 3
+    DrinkSolDryCan: 3
+    DrinkSpaceMountainWindCan: 3
+    DrinkSpaceUpCan: 3
+  emaggedInventory:
+    DrinkNukieCan: 2
+    DrinkChangelingStingCan: 2

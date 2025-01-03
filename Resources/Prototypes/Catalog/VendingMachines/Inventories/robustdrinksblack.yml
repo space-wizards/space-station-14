@@ -1,0 +1,14 @@
+- type: vendingMachineInventory
+  id: RobustSoftdrinksBlackInventory # Bit long, but makes sense with current IDs
+  startingInventory:
+    DrinkDrGibbCan: 3
+    DrinkFourteenLokoCan: 3
+    DrinkGrapeCan: 3
+    DrinkPwrGameCan: 3
+    DrinkShamblersJuiceCan: 3
+    DrinkColaCan: 3
+    DrinkRootBeerCan: 3
+    DrinkStarkistCan: 3
+  emaggedInventory:
+    DrinkNukieCan: 2
+    DrinkChangelingStingCan: 2

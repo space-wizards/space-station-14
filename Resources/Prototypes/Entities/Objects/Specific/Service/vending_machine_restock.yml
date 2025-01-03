@@ -328,14 +328,16 @@
   components:
   - type: VendingMachineRestock
     canRestock:
-    - RobustSoftdrinksInventory
     - BodaInventory
-    - PwrGameInventory
-    - ShamblersJuiceInventory
-    - StarkistInventory
-    - SpaceUpInventory
-    - SodaInventory
     - DrGibbInventory
+    - PwrGameInventory
+    - RobustSoftdrinksInventory
+    - RobustSoftdrinksBlackInventory
+    - ShamblersJuiceInventory
+    - SodaInventory
+    - SpaceColaInventory
+    - SpaceUpInventory
+    - StarkistInventory
   - type: Sprite
     layers:
     - state: base
