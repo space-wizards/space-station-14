@@ -1,4 +1,4 @@
-reagent-name-cola = cola
+reagent-name-cola = Space Cola
 reagent-desc-cola = A sweet, carbonated soft drink. Caffeine free.
 
 reagent-name-shirley-temple = Shirley Temple
@@ -19,17 +19,17 @@ reagent-desc-grape-soda = It's Graaaaaape!
 reagent-name-ice-cream = ice cream
 reagent-desc-ice-cream = It was either this or the microwave, and nobody wants ice cream soup!
 
-reagent-name-lemon-lime = lemon-lime
-reagent-desc-lemon-lime = tangy lime and lemon soda
+reagent-name-lemon-lime = Smite Lemon-Lime
+reagent-desc-lemon-lime = Tangy lime and lemon soda.
 
-reagent-name-lemon-lime-cranberry = lemon-lime-cranberry
+reagent-name-lemon-lime-cranberry = Smite Lemon-Lime-Cranberry
 reagent-desc-lemon-lime-cranberry = Tart cranberry, Christmas, and a hint of lemon and lime.
 
 reagent-name-pwr-game = PWR Game
 reagent-desc-pwr-game = The only drink with the PWR that true gamers crave. When a gamer talks about gamerfuel, this is what they're literally referring to.
 
 reagent-name-root-beer = root beer
-reagent-desc-root-beer = A very sweet, carbonated drink reminiscent of sarsparilla. Goes well with ice cream.
+reagent-desc-root-beer = A very sweet, carbonated drink reminiscent of sarsaparilla. Goes well with ice cream.
 
 reagent-name-root-beer-float = root beer float
 reagent-desc-root-beer-float = Root beer, but now with ice cream on top. It truly is the magnum opus of Canadian summertime drinks.
