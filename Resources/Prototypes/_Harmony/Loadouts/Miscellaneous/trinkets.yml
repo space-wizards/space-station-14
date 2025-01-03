@@ -58,3 +58,9 @@
   storage:
     back:
     - HarmonicaInstrument
+
+- type: loadout
+  id: PlushieVox
+  storage:
+    back:
+    - PlushieVox
