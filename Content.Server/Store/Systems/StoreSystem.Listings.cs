@@ -95,18 +95,6 @@ public sealed partial class StoreSystem
     }
 
     /// <summary>
-    /// Gets the available listings for a store
-    /// </summary>
-    /// <param name="buyer">Either the account owner, user, or an inanimate object (e.g., surplus bundle)</param>
-    /// <param name="store"></param>
-    /// <param name="component">The store the listings are coming from.</param>
-    /// <returns>The available listings.</returns>
-    public IEnumerable<ListingDataWithCostModifiers> GetAvailableListings(EntityUid buyer, EntityUid store, StoreComponent component)
-    {
-        return GetAvailableListings(buyer, component.FullListingsCatalog, component.Categories, store);
-    }
-
-    /// <summary>
     /// Gets the available listings for a user given an overall set of listings and categories to filter by.
     /// </summary>
     /// <param name="buyer">Either the account owner, user, or an inanimate object (e.g., surplus bundle)</param>
