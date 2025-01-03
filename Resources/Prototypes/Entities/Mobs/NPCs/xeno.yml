@@ -99,7 +99,7 @@
     makeSentient: true
     name: ghost-role-information-xeno-name
     description: ghost-role-information-xeno-description
-    rules: ghost-role-information-rules-default-team-antagonist
+    rules: ghost-role-information-xeno-rules
     raffle:
       settings: default
   - type: GhostTakeoverAvailable

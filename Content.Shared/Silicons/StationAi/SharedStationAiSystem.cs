@@ -20,12 +20,15 @@ using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -67,6 +70,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     [ValidatePrototypeId<EntityPrototype>]
     private static readonly EntProtoId DefaultAi = "StationAiBrain";
+
+    private const float MaxVisionMultiplier = 5f;
 
     public override void Initialize()
     {
@@ -344,16 +349,47 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         AttachEye(ent);
     }
 
-    private bool SetupEye(Entity<StationAiCoreComponent> ent)
+    public void SwitchRemoteEntityMode(Entity<StationAiCoreComponent> ent, bool isRemote)
+    {
+        if (isRemote == ent.Comp.Remote)
+            return;
+
+        ent.Comp.Remote = isRemote;
+
+        EntityCoordinates? coords = ent.Comp.RemoteEntity != null ? Transform(ent.Comp.RemoteEntity.Value).Coordinates : null;
+
+        // Attach new eye
+        ClearEye(ent);
+
+        if (SetupEye(ent, coords))
+            AttachEye(ent);
+
+        // Adjust user FoV
+        var user = GetInsertedAI(ent);
+
+        if (TryComp<EyeComponent>(user, out var eye))
+            _eye.SetDrawFov(user.Value, !isRemote);
+    }
+
+    private bool SetupEye(Entity<StationAiCoreComponent> ent, EntityCoordinates? coords = null)
     {
         if (_net.IsClient)
             return false;
+
         if (ent.Comp.RemoteEntity != null)
             return false;
 
-        if (ent.Comp.RemoteEntityProto != null)
+        var proto = ent.Comp.RemoteEntityProto;
+
+        if (coords == null)
+            coords = Transform(ent.Owner).Coordinates;
+
+        if (!ent.Comp.Remote)
+            proto = ent.Comp.PhysicalEntityProto;
+
+        if (proto != null)
         {
-            ent.Comp.RemoteEntity = SpawnAtPosition(ent.Comp.RemoteEntityProto, Transform(ent.Owner).Coordinates);
+            ent.Comp.RemoteEntity = SpawnAtPosition(proto, coords.Value);
             Dirty(ent);
         }
 
@@ -364,6 +400,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     {
         if (_net.IsClient)
             return;
+
         QueueDel(ent.Comp.RemoteEntity);
         ent.Comp.RemoteEntity = null;
         Dirty(ent);
@@ -392,11 +429,26 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         _mover.SetRelay(user, ent.Comp.RemoteEntity.Value);
     }
 
+    private EntityUid? GetInsertedAI(Entity<StationAiCoreComponent> ent)
+    {
+        if (!_containers.TryGetContainer(ent.Owner, StationAiHolderComponent.Container, out var container) ||
+            container.ContainedEntities.Count != 1)
+        {
+            return null;
+        }
+
+        return container.ContainedEntities[0];
+    }
+
     private void OnAiInsert(Entity<StationAiCoreComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
+        if (args.Container.ID != StationAiCoreComponent.Container)
+            return;
+
         if (_timing.ApplyingState)
             return;
 
+        ent.Comp.Remote = true;
         SetupEye(ent);
 
         // Just so text and the likes works properly
@@ -410,6 +462,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
+        ent.Comp.Remote = true;
+
         // Reset name to whatever
         _metadata.SetEntityName(ent.Owner, Prototype(ent.Owner)?.Name ?? string.Empty);
 
@@ -421,6 +475,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             _eye.SetDrawFov(args.Entity, true, eyeComp);
             _eye.SetTarget(args.Entity, null, eyeComp);
         }
+
         ClearEye(ent);
     }
 
@@ -474,6 +529,36 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         }
 
         return _blocker.CanComplexInteract(entity.Owner);
+    }
+
+    public bool TryGetStationAiCore(Entity<StationAiHeldComponent?> ent, [NotNullWhen(true)] out Entity<StationAiCoreComponent>? parentEnt)
+    {
+        parentEnt = null;
+        var parent = Transform(ent).ParentUid;
+
+        if (!parent.IsValid())
+            return false;
+
+        if (!TryComp<StationAiCoreComponent>(parent, out var stationAiCore))
+            return false;
+
+        parentEnt = new Entity<StationAiCoreComponent>(parent, stationAiCore);
+
+        return true;
+    }
+
+    public bool TryGetInsertedAI(Entity<StationAiCoreComponent> ent, [NotNullWhen(true)] out Entity<StationAiHeldComponent>? insertedAi)
+    {
+        insertedAi = null;
+        var insertedEnt = GetInsertedAI(ent);
+
+        if (TryComp<StationAiHeldComponent>(insertedEnt, out var stationAiHeld))
+        {
+            insertedAi = (insertedEnt.Value, stationAiHeld);
+            return true;
+        }
+
+        return false;
     }
 }
 
