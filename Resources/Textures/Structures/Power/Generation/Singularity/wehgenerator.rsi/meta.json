@@ -6,10 +6,10 @@
     "x": 32,
     "y": 32
   },
+  "metaAtlas": false,
   "states": [
     {
       "name": "icon"
     }
-  ],
-  "metaAtlas": false
+  ]
 }
