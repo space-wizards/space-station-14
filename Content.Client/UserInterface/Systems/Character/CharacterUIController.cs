@@ -8,12 +8,14 @@ using Content.Client.UserInterface.Systems.Character.Windows;
 using Content.Client.UserInterface.Systems.Objectives.Controls;
 using Content.Shared.Input;
 using Content.Shared.Objectives.Systems;
+using Content.Shared.CollectiveMind;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Utility;
 using static Content.Client.CharacterInfo.CharacterInfoSystem;
@@ -25,6 +27,7 @@ namespace Content.Client.UserInterface.Systems.Character;
 public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CharacterInfoSystem>
 {
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
     [UISystemDependency] private readonly SpriteSystem _sprite = default!;
 
@@ -107,13 +110,14 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             return;
         }
 
-        var (entity, job, objectives, briefing, entityName) = data;
+        var (entity, job, objectives, minds, briefing, entityName) = data;
 
         _window.SpriteView.SetEntity(entity);
         _window.NameLabel.Text = entityName;
         _window.SubText.Text = job;
         _window.Objectives.RemoveAllChildren();
         _window.ObjectivesLabel.Visible = objectives.Any();
+        _window.Minds.RemoveAllChildren();
 
         foreach (var (groupId, conditions) in objectives)
         {
@@ -152,6 +156,28 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             }
 
             _window.Objectives.AddChild(objectiveControl);
+        }
+        
+        
+        if (minds != null && minds.Count > 0)
+        {
+            var mindsControl = new CharacterMindsControl
+            {
+                Orientation = BoxContainer.LayoutOrientation.Vertical
+            };
+            var mindDescriptionMessage = new FormattedMessage();
+            mindDescriptionMessage.AddText("Available collective minds:");
+            foreach (var mindId in minds)
+            {
+                var mindPrototype = _prototypeManager.Index<CollectiveMindPrototype>(mindId.Key);
+
+                mindDescriptionMessage.AddText("\n");
+                mindDescriptionMessage.PushColor(mindPrototype.Color);
+                mindDescriptionMessage.AddText($"{mindId.Key}: +{mindPrototype.KeyCode}");
+                mindDescriptionMessage.Pop();
+            }
+            mindsControl.Description.SetMessage(mindDescriptionMessage);
+            _window.Objectives.AddChild(mindsControl);
         }
 
         if (briefing != null)
