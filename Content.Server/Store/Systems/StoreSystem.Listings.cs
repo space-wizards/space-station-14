@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Mind;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
@@ -88,6 +89,18 @@ public sealed partial class StoreSystem
     /// <param name="store"></param>
     /// <param name="component">The store the listings are coming from.</param>
     /// <returns>The available listings.</returns>
+    public IEnumerable<ListingDataWithCostModifiers> GetAvailableListings(Entity<MindComponent?> buyer, EntityUid store, StoreComponent component)
+    {
+        return GetAvailableListings(buyer, component.FullListingsCatalog, component.Categories, store);
+    }
+
+    /// <summary>
+    /// Gets the available listings for a store
+    /// </summary>
+    /// <param name="buyer">Either the account owner, user, or an inanimate object (e.g., surplus bundle)</param>
+    /// <param name="store"></param>
+    /// <param name="component">The store the listings are coming from.</param>
+    /// <returns>The available listings.</returns>
     public IEnumerable<ListingDataWithCostModifiers> GetAvailableListings(EntityUid buyer, EntityUid store, StoreComponent component)
     {
         return GetAvailableListings(buyer, component.FullListingsCatalog, component.Categories, store);
@@ -102,7 +115,7 @@ public sealed partial class StoreSystem
     /// <param name="storeEntity">The physial entity of the store. Can be null.</param>
     /// <returns>The available listings.</returns>
     public IEnumerable<ListingDataWithCostModifiers> GetAvailableListings(
-        EntityUid buyer,
+        Entity<MindComponent?> buyer,
         IReadOnlyCollection<ListingDataWithCostModifiers>? listings,
         HashSet<ProtoId<StoreCategoryPrototype>> categories,
         EntityUid? storeEntity = null

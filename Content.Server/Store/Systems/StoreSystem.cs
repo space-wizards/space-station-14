@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Mind;
 
 namespace Content.Server.Store.Systems;
 
@@ -70,12 +71,12 @@ public sealed partial class StoreSystem : EntitySystem
             return;
 
         if (!_mind.TryGetMind(args.User, out var mind, out var mindComp))
-            mind = args.User;
+            return;
 
-        component.AccountOwner ??= mind;
+        component.AccountOwner ??= new Entity<MindComponent?>(mind, mindComp);
         DebugTools.Assert(component.AccountOwner != null);
 
-        if (component.AccountOwner == mind)
+        if (component.AccountOwner.Value.Owner == mind)
             return;
 
         _popup.PopupEntity(Loc.GetString("store-not-account-owner", ("store", uid)), uid, args.User);

@@ -27,14 +27,13 @@ public sealed partial class BuyerJobCondition : ListingCondition
     public override bool Condition(ListingConditionArgs args)
     {
         var ent = args.EntityManager;
-        var minds = ent.System<SharedMindSystem>();
+        //var minds = ent.System<SharedMindSystem>();
 
-        // this is for things like surplus crate
-        if (!minds.TryGetMind(args.Buyer, out var mindId, out _))
+        if (args.Buyer.Comp == null)
             return true;
 
         var jobs = ent.System<SharedJobSystem>();
-        jobs.MindTryGetJob(mindId, out var job);
+        jobs.MindTryGetJob(args.Buyer, out var job);
 
         if (Blacklist != null)
         {

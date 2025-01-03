@@ -27,7 +27,7 @@ public sealed partial class BuyerSpeciesCondition : ListingCondition
     {
         var ent = args.EntityManager;
 
-        if (!ent.TryGetComponent<HumanoidAppearanceComponent>(args.Buyer, out var appearance))
+        if (!ent.TryGetComponent<HumanoidAppearanceComponent>(args.Buyer.Owner, out var appearance))
             return true; // inanimate or non-humanoid entities should be handled elsewhere, main example being surplus crates
 
         if (Blacklist != null)
