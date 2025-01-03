@@ -25,3 +25,5 @@ flavor-base-whimsy = whimsical
 flavor-complex-secticket = like rotten eggs
 
 flavor-complex-medium = like your vision expanded
+
+flavor-complex-rodent = like rodents
