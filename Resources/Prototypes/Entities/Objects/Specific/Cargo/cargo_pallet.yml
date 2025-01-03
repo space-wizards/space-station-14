@@ -27,9 +27,9 @@
     layers:
     - sprite: Structures/catwalk.rsi
       state: catwalk_preview
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
+  #- type: Damageable
+  #  damageContainer: StructuralInorganic
+  #  damageModifierSet: Metallic
   #- type: Destructible
   #  thresholds:
   #    - trigger:
