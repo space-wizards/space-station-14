@@ -10,7 +10,7 @@
     - id: ClericalError
     - id: CockroachMigration
     - id: GasLeak
-#    - id: GreytideVirus
+    - id: GreytideVirus
     - id: IonStorm # its calm like 90% of the time smh
     - id: KudzuGrowth
     - id: MassHallucinations
