@@ -1605,4 +1605,11 @@ Entries:
   id: 227
   time: '2025-01-03T03:40:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/206
+- author: STARLIGHT TEAM
+  changes:
+  - message: A small improvement to the mentor interface.
+    type: Add
+  id: 228
+  time: '2025-01-03T07:05:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/207
 
