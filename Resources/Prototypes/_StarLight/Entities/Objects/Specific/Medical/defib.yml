@@ -1,0 +1,47 @@
+- type: entity
+  id: DefibrillatorBrigmedical
+  parent: [ BaseDefibrillator, PowerCellSlotTinyItem ]
+  name: Brigmedic Defibrillator
+  description: Hand-held device that can save lives, and act as a weapon in a pinch.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/defibbrig.rsi
+    layers:
+      - state: icon
+      - state: screen
+        map: [ "enum.ToggleVisuals.Layer" ]
+        visible: false
+        shader: unshaded
+      - state: ready
+        map: ["enum.PowerDeviceVisualLayers.Powered"]
+        shader: unshaded
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 4
+  - type: Item
+    size: Normal
+  - type: ToggleCellDraw
+  - type: PowerCellDraw
+    useRate: 50
+  - type: Defibrillator
+    zapHeal:
+      types:
+        Asphyxiation: -40
+    doAfterDuration: 6
+  - type: DoAfter
+  - type: UseDelay
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
+      path: /Audio/Items/Defib/defib_zap.ogg
+      params:
+        variation: 0.250
+    activatedSoundOnHitNoDamage:
+      path: /Audio/Items/Defib/defib_zap.ogg
+      params:
+        variation: 0.250
+        volume: -10
+    activatedDamage:
+      types:
+        Blunt: 4
+        Shock: 7
