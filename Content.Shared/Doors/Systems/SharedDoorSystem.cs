@@ -589,7 +589,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             if (otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.GlassLayer || otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.GlassAirlockLayer || otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.TableLayer)
                 continue;
 
-            //If the colliding entity is a non-lowImpassible, ignore it by the airlock
+            // Ignore low-passable entities.
             if ((otherPhysics.Comp.CollisionMask & (int)CollisionGroup.LowImpassable) == 0)
                 continue;
 
