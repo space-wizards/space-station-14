@@ -999,7 +999,7 @@
     damage:
       groups:
         Brute: 1
-    - type: FlavorProfile
+  - type: FlavorProfile
     flavors:
       - meaty
       - bread
