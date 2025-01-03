@@ -33,8 +33,8 @@
 
 - type: listing
   id: HereticSidePathKnowledge
-  name: knowledge-path-side-knowledge-name
-  description: knowledge-path-side-knowledge-desc
+  name: knowledge-path-side-s5-name
+  description: knowledge-path-side-s5-desc
   productHereticKnowledge: RitualOfKnowledge
   cost:
     KnowledgePoint: 2
@@ -44,4 +44,4 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   - !type:HereticPathCondition
-    stage: 0
+    stage: 5
