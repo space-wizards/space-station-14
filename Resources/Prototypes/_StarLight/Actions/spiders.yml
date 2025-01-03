@@ -64,7 +64,7 @@
     renewCharges: true
     charges: 1
     maxCharges: 3
-    useDelay: 150
+    useDelay: 120
     icon:
       sprite: _Starlight/Interface/Actions/actions_spider.rsi
       state: egg

@@ -11,13 +11,6 @@
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: alive
       sprite: _Starlight/Mobs/Animals/Spiders/terror_red.rsi
-#  - type: SpriteMovement
-#    movementLayers:
-#      movement:
-#        state: tarantula-moving
-#    noMovementLayers:
-#      movement:
-#        state: tarantula
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -45,6 +38,9 @@
   - type: CombatMode
   - type: Body
     prototype: AnimalHemocyanin
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: TerrorSpider
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -138,18 +134,18 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      160: Dead
+      140: Dead
   - type: PassiveDamage 
     allowedStates:
     - Alive
-    damageCap: 159
+    damageCap: 139
     damage:
       types:
-        Poison: -1
+        Poison: -0.8
       groups:
-        Brute: -1
-        Burn: -1
-        Airloss: -2
+        Brute: -0.8
+        Burn: -0.8
+        Airloss: -1.5
   - type: MeleeWeapon
     altDisarm: false
     angle: 0
@@ -158,7 +154,7 @@
       path: /Audio/Effects/bite.ogg
     damage:
       types:
-        Piercing: 23
+        Piercing: 21
         Structural: 20
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.00
@@ -177,21 +173,23 @@
       sprite: _Starlight/Mobs/Animals/Spiders/terror_gray2.rsi
   - type: VentCrawler
   - type: StealthOnWeb
+  - type: StaminaDamageOnHit
+    damage: 100
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Dead
+      80: Dead
   - type: PassiveDamage 
     allowedStates:
     - Alive
-    damageCap: 99
+    damageCap: 79
     damage:
       types:
-        Poison: -1
+        Poison: -0.5
       groups:
-        Brute: -1
-        Burn: -1
-        Airloss: -2
+        Brute: -0.5
+        Burn: -0.5
+        Airloss: -1.5
   - type: MeleeWeapon
     altDisarm: false
     angle: 0
@@ -209,7 +207,7 @@
       path: /Audio/Items/crowbar.ogg
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.00
-    baseSprintSpeed : 5.00
+    baseSprintSpeed : 5
     
 - type: entity
   name: terror green
@@ -226,18 +224,18 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Dead
+      80: Dead
   - type: PassiveDamage 
     allowedStates:
     - Alive
-    damageCap: 99
+    damageCap: 79
     damage:
       types:
-        Poison: -1
+        Poison: -0.5
       groups:
-        Brute: -1
-        Burn: -1
-        Airloss: -2
+        Brute: -0.5
+        Burn: -0.5
+        Airloss: -1.5
   - type: MeleeWeapon
     altDisarm: false
     angle: 0
@@ -248,7 +246,7 @@
       types:
         Piercing: 11
   - type: MeleeChemicalInjector
-    transferAmount: 3.75
+    transferAmount: 2.75
     solution: melee
   - type: Prying
     pryPowered: false
@@ -258,7 +256,7 @@
       path: /Audio/Items/crowbar.ogg
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.00
-    baseSprintSpeed : 6.00
+    baseSprintSpeed : 4.75
   - type: ActionGrant
     actions:
     - ActionEggInjection
@@ -278,7 +276,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      180: Dead
+      160: Dead
   - type: PassiveDamage 
     allowedStates:
     - Alive
@@ -289,7 +287,7 @@
       groups:
         Brute: -1
         Burn: -1
-        Airloss: -3
+        Airloss: -2
   - type: MeleeWeapon
     altDisarm: false
     angle: 0
@@ -300,7 +298,7 @@
       types:
         Piercing: 15
   - type: MeleeChemicalInjector
-    transferAmount: 7.75
+    transferAmount: 3.75
     solution: melee
   - type: Prying
     pryPowered: true
@@ -310,7 +308,7 @@
       path: /Audio/Items/crowbar.ogg
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.00
-    baseSprintSpeed : 4.00
+    baseSprintSpeed : 3.75
   - type: TerrorPrincess
   - type: ActionGrant
     actions:
