@@ -56,53 +56,37 @@ public sealed partial class PowerWireAction : BaseWireAction
     // Getting it from a dictionary is significantly more expensive.
     private void SetPower(EntityUid owner, bool pulsed)
     {
-        // I've made an absolute mess of this. The python in me hates it.
-        // This is only for testing...
         if (EntityManager.TryGetComponent(owner, out ApcPowerReceiverComponent? power))
         {
-            if (pulsed)
-            {
-                power.PowerDisabled = true;
-                return;
-            }
-
-            if (AllWiresCut(owner))
-            {
-                power.PowerDisabled = true;
-            }
-            else
-            {
-                if (WiresSystem.TryGetData<bool>(owner, PowerWireActionKey.Pulsed, out var isPulsed)
-                    && isPulsed)
-                {
-                    return;
-                }
-
-                power.PowerDisabled = false;
-            }
+            SetPoweredState(power, pulsed, owner);
         }
         else if (EntityManager.TryGetComponent(owner, out ApcComponent? apc))
         {
-            if (pulsed)
+            SetPoweredState(apc, pulsed, owner);
+        }
+    }
+
+    private void SetPoweredState(dynamic power, bool pulsed, EntityUid owner)
+    {
+        if (pulsed)
+        {
+            power.PowerDisabled = true;
+            return;
+        }
+
+        if (AllWiresCut(owner))
+        {
+            power.PowerDisabled = true;
+        }
+        else
+        {
+            if (WiresSystem.TryGetData<bool>(owner, PowerWireActionKey.Pulsed, out var isPulsed)
+                && isPulsed)
             {
-                apc.PowerDisabled = true;
                 return;
             }
 
-            if (AllWiresCut(owner))
-            {
-                apc.PowerDisabled = true;
-            }
-            else
-            {
-                if (WiresSystem.TryGetData<bool>(owner, PowerWireActionKey.Pulsed, out var isPulsed)
-                    && isPulsed)
-                {
-                    return;
-                }
-
-                apc.PowerDisabled = false;
-            }
+            power.PowerDisabled = false;
         }
     }
 
