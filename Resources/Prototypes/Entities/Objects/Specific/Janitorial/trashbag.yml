@@ -75,10 +75,4 @@
     maxItemSize: Huge
     grid:
     - 0,0,7,5
-    quickInsert: true
-    areaInsert: true
-    storageOpenSound:
-      collection: trashBagRustle
-    storageInsertSound:
-      collection: trashBagRustle
     whitelist: null
