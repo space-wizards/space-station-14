@@ -44,7 +44,7 @@ public sealed class TemperatureSystem : EntitySystem
         SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
         SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
         SubscribeLocalEvent<TemperatureComponent, RejuvenateEvent>(OnRejuvenate);
-        SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
+        SubscribeLocalEvent<AlertsComponent, AtmosExposedUpdateEvent>(ServerAlert);
         SubscribeLocalEvent<TemperatureProtectionComponent, InventoryRelayedEvent<ModifyChangedTemperatureEvent>>(
             OnTemperatureChangeAttempt);
 
@@ -186,11 +186,12 @@ public sealed class TemperatureSystem : EntitySystem
         ForceChangeTemperature(uid, Atmospherics.T20C, comp);
     }
 
-    private void ServerAlert(EntityUid uid, AlertsComponent status, OnTemperatureChangeEvent args)
+    private void ServerAlert(EntityUid uid, AlertsComponent status, ref AtmosExposedUpdateEvent args)
     {
         ProtoId<AlertPrototype> type;
         float threshold;
         float idealTemp;
+        float coefficient;
 
         if (!TryComp<TemperatureComponent>(uid, out var temperature))
         {
@@ -198,38 +199,38 @@ public sealed class TemperatureSystem : EntitySystem
             return;
         }
 
-        if (TryComp<ThermalRegulatorComponent>(uid, out var regulator) &&
-            regulator.NormalBodyTemperature > temperature.ColdDamageThreshold &&
-            regulator.NormalBodyTemperature < temperature.HeatDamageThreshold)
-        {
-            idealTemp = regulator.NormalBodyTemperature;
-        }
-        else
-        {
-            idealTemp = (temperature.ColdDamageThreshold + temperature.HeatDamageThreshold) / 2;
-        }
+        idealTemp = (temperature.PreferredTemperatureMin + temperature.PreferredTemperatureMax) / 2;
 
-        if (args.CurrentTemperature <= idealTemp)
+        if (args.GasMixture.Temperature <= idealTemp)
         {
             type = temperature.ColdAlert;
-            threshold = temperature.ColdDamageThreshold;
+            threshold = temperature.PreferredTemperatureMin;
+            
+            // I'm 99% sure that there is a better way to do this, but i've already spent 3 hours trying to figure it out, and it works as intended.
+            var ev = new ModifyChangedTemperatureEvent(-1.0f);
+            RaiseLocalEvent(uid, ev);
+            coefficient = ev.TemperatureDelta * -1;
         }
         else
         {
             type = temperature.HotAlert;
-            threshold = temperature.HeatDamageThreshold;
+            threshold = temperature.PreferredTemperatureMax;
+
+            var ev = new ModifyChangedTemperatureEvent(1.0f);
+            RaiseLocalEvent(uid, ev);
+            coefficient = ev.TemperatureDelta;
         }
 
         // Calculates a scale where 1.0 is the ideal temperature and 0.0 is where temperature damage begins
         // The cold and hot scales will differ in their range if the ideal temperature is not exactly halfway between the thresholds
-        var tempScale = (args.CurrentTemperature - threshold) / (idealTemp - threshold);
+        var tempScale = (args.GasMixture.Temperature * coefficient - threshold) / (idealTemp * coefficient - threshold);
         switch (tempScale)
         {
             case <= 0f:
                 _alerts.ShowAlert(uid, type, 3);
                 break;
 
-            case <= 0.4f:
+            case <= 0.3f:
                 _alerts.ShowAlert(uid, type, 2);
                 break;
 
