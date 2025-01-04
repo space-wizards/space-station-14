@@ -56,7 +56,7 @@
     <GuideEntityEmbed Entity="BorgModuleMining" Caption="Mining"/>
     <GuideEntityEmbed Entity="BorgModuleCleaning" Caption="Cleaning"/>
     <GuideEntityEmbed Entity="BorgModuleService" Caption="Service"/>
-    <GuideEntityEmbed Entity="BorgModuleTreatment" Caption="Treatment"/>
+    <GuideEntityEmbed Entity="BorgModuleChemical" Caption="Treatment"/>
   </Box>
   <Box>
     [italic]Examples of specialized modules. Note the housing and circuit board colors.

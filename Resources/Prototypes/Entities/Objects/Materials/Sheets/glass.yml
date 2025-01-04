@@ -198,6 +198,15 @@
         canReact: false
 
 - type: entity
+  parent: SheetRGlass
+  id: SheetRGlassLingering0
+  suffix: Lingering, 0
+  components:
+  - type: Stack
+    lingering: true
+    count: 0
+
+- type: entity
   parent: SheetGlassBase
   id: SheetPGlass
   name: plasma glass

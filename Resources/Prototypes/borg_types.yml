@@ -46,8 +46,8 @@
   defaultModules:
   - BorgModuleTool
   - BorgModuleConstruction
-  - BorgModuleRCD
   - BorgModuleCable
+  - BorgModuleRCD
 
   radioChannels:
   - Engineering
@@ -80,9 +80,10 @@
     - BorgModuleCargo
 
   defaultModules:
-  - BorgModuleGrapplingGun
+  - BorgModuleTool
+  - BorgModuleTraversal
   - BorgModuleMining
-  - BorgModuleAppraisal
+  - BorgModuleSupply
 
   radioChannels:
   - Supply
@@ -116,7 +117,8 @@
     - BorgModuleJanitor
 
   defaultModules:
-  - BorgModuleLightReplacer
+  - BorgModuleTool
+  - BorgModuleCustodial
   - BorgModuleCleaning
 
   radioChannels:
@@ -151,7 +153,10 @@
     - BorgModuleMedical
 
   defaultModules:
-  - BorgModuleTreatment
+  - BorgModuleTool
+  - BorgModuleDefibrillator
+  - BorgModuleTopicals
+  - BorgModuleChemical
 
   radioChannels:
   - Science
@@ -198,6 +203,7 @@
     - BorgModuleService
 
   defaultModules:
+  - BorgModuleTool
   - BorgModuleMusique
   - BorgModuleService
   - BorgModuleClowning

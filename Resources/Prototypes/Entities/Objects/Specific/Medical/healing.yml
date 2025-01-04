@@ -107,6 +107,15 @@
     count: 1
 
 - type: entity
+  id: RegenerativeMesh0Lingering
+  parent: RegenerativeMesh
+  suffix: 0, Lingering
+  components:
+  - type: Stack
+    lingering: true
+    count: 0
+
+- type: entity
   name: bruise pack
   description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
   parent: BaseHealingItem
@@ -192,6 +201,15 @@
   - type: Stack
     stackType: MedicatedSuture
     count: 1
+
+- type: entity
+  id: MedicatedSuture0Lingering
+  parent: MedicatedSuture
+  suffix: 0, Lingering
+  components:
+  - type: Stack
+    lingering: true
+    count: 0
 
 - type: entity
   name: blood pack
