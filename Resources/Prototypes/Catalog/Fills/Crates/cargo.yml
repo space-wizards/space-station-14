@@ -98,7 +98,7 @@
       prob: 0.001
       orGroup: Canister
     - id: TritiumCanister
-      prob: 0.001
+      prob: 0.0001
       orGroup: Canister
     - id: WaterVaporCanister
       prob: 0.001
