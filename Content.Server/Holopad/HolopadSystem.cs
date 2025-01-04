@@ -8,6 +8,7 @@ using Content.Shared.Audio;
 using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Inventory;
 using Content.Shared.Labels.Components;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Speech;
@@ -15,7 +16,9 @@ using Content.Shared.Telephone;
 using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Server.GameStates;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Linq;
@@ -32,24 +35,17 @@ public sealed class HolopadSystem : SharedHolopadSystem
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
     [Dependency] private readonly SharedStationAiSystem _stationAiSystem = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     private float _updateTimer = 1.0f;
-
     private const float UpdateTime = 1.0f;
-    private const float MinTimeBetweenSyncRequests = 0.5f;
-    private TimeSpan _minTimeSpanBetweenSyncRequests;
-
-    private HashSet<EntityUid> _pendingRequestsForSpriteState = new();
-    private HashSet<EntityUid> _recentlyUpdatedHolograms = new();
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _minTimeSpanBetweenSyncRequests = TimeSpan.FromSeconds(MinTimeBetweenSyncRequests);
 
         // Holopad UI and bound user interface messages
         SubscribeLocalEvent<HolopadComponent, BeforeActivatableUIOpenEvent>(OnUIOpen);
@@ -68,7 +64,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         // Networked events
         SubscribeNetworkEvent<HolopadUserTypingChangedEvent>(OnTypingChanged);
-        SubscribeNetworkEvent<PlayerSpriteStateMessage>(OnPlayerSpriteStateMessage);
+        SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvs);
+        SubscribeLocalEvent<HolopadHologramComponent, ComponentGetState>(GetHolopadHologramState);
 
         // Component start/shutdown events
         SubscribeLocalEvent<HolopadComponent, ComponentInit>(OnHolopadInit);
@@ -268,16 +265,12 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (source.Comp.Hologram == null)
             GenerateHologram(source);
 
-        // Receiver holopad holograms have to be generated now instead of waiting for their own event
-        // to fire because holographic avatars get synced immediately
         if (TryComp<HolopadComponent>(args.Receiver, out var receivingHolopad) && receivingHolopad.Hologram == null)
             GenerateHologram((args.Receiver, receivingHolopad));
 
+        // Re-link the user to refresh the sprite data
         if (source.Comp.User != null)
-        {
-            // Re-link the user to refresh the sprite data
             LinkHolopadToUser(source, source.Comp.User.Value);
-        }
     }
 
     private void OnHoloCallEnded(Entity<HolopadComponent> entity, ref TelephoneCallEndedEvent args)
@@ -323,20 +316,27 @@ public sealed class HolopadSystem : SharedHolopadSystem
         }
     }
 
-    private void OnPlayerSpriteStateMessage(PlayerSpriteStateMessage ev, EntitySessionEventArgs args)
+    private void OnExpandPvs(ref ExpandPvsEvent args)
     {
-        var uid = args.SenderSession.AttachedEntity;
+        if (args.Entities == null)
+            args.Entities = new();
 
-        if (!Exists(uid))
-            return;
+        // Add holopad users and their held/equipped items to PVS so that they can be rendered by remote holopads
+        var query = AllEntityQuery<HolopadUserComponent>();
+        while (query.MoveNext(out var ent, out var entHolopadUser))
+        {
+            args.Entities.Add(ent);
 
-        if (!_pendingRequestsForSpriteState.Remove(uid.Value))
-            return;
+            foreach (var item in _inventorySystem.GetHandOrInventoryEntities(ent))
+                args.Entities.Add(item);
+        }
+    }
 
-        if (!TryComp<HolopadUserComponent>(uid, out var holopadUser))
-            return;
+    private void GetHolopadHologramState(Entity<HolopadHologramComponent> entity, ref ComponentGetState args)
+    {
+        var netTarget = GetNetEntity(entity.Comp.LinkedEntity);
 
-        SyncHolopadUserWithLinkedHolograms((uid.Value, holopadUser), ev.SpriteLayerData);
+        args.State = new HolopadHologramComponentState(netTarget);
     }
 
     #endregion
@@ -485,8 +485,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
                 }
             }
         }
-
-        _recentlyUpdatedHolograms.Clear();
     }
 
     public void UpdateUIState(Entity<HolopadComponent> entity, TelephoneComponent? telephone = null)
@@ -570,15 +568,21 @@ public sealed class HolopadSystem : SharedHolopadSystem
             entity.Comp.User = (user, holopadUser);
         }
 
-        if (TryComp<HolographicAvatarComponent>(user, out var avatar))
-        {
-            SyncHolopadUserWithLinkedHolograms((user, holopadUser), avatar.LayerData);
-            return;
-        }
+        foreach (var receiver in GetLinkedHolopads(entity))
+            SyncHolopadHologramAppearanceWithTarget(receiver, (user, holopadUser));
+    }
 
-        // We have no apriori sprite data for the hologram, request
-        // the current appearance of the user from the client
-        RequestHolopadUserSpriteUpdate((user, holopadUser));
+    private void SyncHolopadHologramAppearanceWithTarget(Entity<HolopadComponent> entity, Entity<HolopadUserComponent>? user)
+    {
+        var netHologram = GetNetEntity(entity.Comp.Hologram);
+
+        if (netHologram == null)
+            return;
+
+        var netUser = GetNetEntity(user);
+
+        entity.Comp.Hologram!.Value.Comp.LinkedEntity = user?.Owner;
+        Dirty(entity.Comp.Hologram.Value);
     }
 
     private void UnlinkHolopadFromUser(Entity<HolopadComponent> entity, Entity<HolopadUserComponent>? user)
@@ -593,11 +597,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
             if (linkedHolopad.Comp.Hologram != null)
             {
                 _appearanceSystem.SetData(linkedHolopad.Comp.Hologram.Value.Owner, TypingIndicatorVisuals.IsTyping, false);
-
-                // Send message with no sprite data to the client
-                // This will set the holgram sprite to a generic icon
-                var ev = new PlayerSpriteStateMessage(GetNetEntity(linkedHolopad.Comp.Hologram.Value));
-                RaiseNetworkEvent(ev);
+                SyncHolopadHologramAppearanceWithTarget(linkedHolopad, null);
             }
         }
 
@@ -606,12 +606,10 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         user.Value.Comp.LinkedHolopads.Remove(entity);
 
-        if (!user.Value.Comp.LinkedHolopads.Any())
+        if (!user.Value.Comp.LinkedHolopads.Any() &&
+            user.Value.Comp.LifeStage < ComponentLifeStage.Stopping)
         {
-            _pendingRequestsForSpriteState.Remove(user.Value);
-
-            if (user.Value.Comp.LifeStage < ComponentLifeStage.Stopping)
-                RemComp<HolopadUserComponent>(user.Value);
+            RemComp<HolopadUserComponent>(user.Value);
         }
     }
 
@@ -644,31 +642,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
         }
 
         Dirty(entity);
-    }
-
-    private void RequestHolopadUserSpriteUpdate(Entity<HolopadUserComponent> user)
-    {
-        if (!_pendingRequestsForSpriteState.Add(user))
-            return;
-
-        var ev = new PlayerSpriteStateRequest(GetNetEntity(user));
-        RaiseNetworkEvent(ev);
-    }
-
-    private void SyncHolopadUserWithLinkedHolograms(Entity<HolopadUserComponent> entity, PrototypeLayerData[]? spriteLayerData)
-    {
-        foreach (var linkedHolopad in entity.Comp.LinkedHolopads)
-        {
-            foreach (var receivingHolopad in GetLinkedHolopads(linkedHolopad))
-            {
-                if (receivingHolopad.Comp.Hologram == null || !_recentlyUpdatedHolograms.Add(receivingHolopad.Comp.Hologram.Value))
-                    continue;
-
-                var netHologram = GetNetEntity(receivingHolopad.Comp.Hologram.Value);
-                var ev = new PlayerSpriteStateMessage(netHologram, spriteLayerData);
-                RaiseNetworkEvent(ev);
-            }
-        }
     }
 
     private void ActivateProjector(Entity<HolopadComponent> entity, EntityUid user)
