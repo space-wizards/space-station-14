@@ -47,6 +47,7 @@
   - BorgModuleTool
   - BorgModuleConstruction
   - BorgModuleCable
+  - BorgModuleRCD
 
   radioChannels:
   - Engineering
