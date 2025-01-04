@@ -88,7 +88,7 @@ reagent-desc-blue-hawaiian = Aloha! Does that mean hello or goodbye?
 reagent-name-bahama-mama = Bahama mama
 reagent-desc-bahama-mama = Tropical cocktail.
 
-reagent-name-banana-honk = banana honk
+reagent-name-banana-honk = Banana Honk
 reagent-desc-banana-honk = A drink from Clown Heaven.
 
 reagent-name-barefoot = barefoot
@@ -106,7 +106,7 @@ reagent-desc-bloody-mary = A strange yet pleasurable mixture made of vodka, toma
 reagent-name-booger = booger
 reagent-desc-booger = Ewww...
 
-reagent-name-brave-bull = brave bull
+reagent-name-brave-bull = Brave Bull
 reagent-desc-brave-bull = It's just as effective as Dutch-Courage!
 
 reagent-name-coconut-rum = coconut rum
@@ -178,7 +178,7 @@ reagent-desc-manhattan = The Detective's undercover drink of choice. He never co
 reagent-name-manhattan-project = Manhattan Project
 reagent-desc-manhattan-project = A scientist's drink of choice, for pondering ways to blow up the ship.
 
-reagent-name-manly-dorf = manly dorf
+reagent-name-manly-dorf = Manly Dorf
 reagent-desc-manly-dorf = Beer and Ale, brought together in a delicious mix. Intended for stout dwarves only.
 
 reagent-name-margarita = margarita
@@ -271,7 +271,7 @@ reagent-desc-white-russian = That's just, like, your opinion, man...
 reagent-name-vodka-red-bool = vodka red bool
 reagent-desc-vodka-red-bool = Because heart failure and liver failure go hand in hand.
 
-reagent-name-xeno-basher = xeno basher
+reagent-name-xeno-basher = Xeno Basher
 reagent-desc-xeno-basher = The perfect drink before an expedition.
 
 reagent-name-irish-bool = Irish bool
