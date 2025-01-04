@@ -45,6 +45,7 @@ namespace Content.Server.Database
         public DbSet<AdminMessage> AdminMessages { get; set; } = null!;
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
+        public DbSet<PolyPhrase> PolyPhrase { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -1052,6 +1053,39 @@ namespace Content.Server.Database
         public string Path { get; set; } = string.Empty;
 
         public byte[] Data { get; set; } = default!;
+    }
+
+    [Table("poly_phrases")]
+    public class PolyPhrase
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        /// <summary>
+        /// While Poly makes a good-faith effort to learn as many unique phrases as possible, it remains a dumb bird.
+        /// It's very likely it'll learn common sentences more than once, because checking all learned sentences for duplicates sounds terrible.
+        /// </summary>
+        [Required, MaxLength(255)]
+        public string Message { get; set; } = string.Empty;
+
+        /// <summary>
+        /// "Local" if it was said near Poly, otherwise the channel he heard it from.
+        /// Falls back to local if Poly can't transmit on the channel.
+        /// </summary>
+        [Required]
+        public string Channel { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Who said this? Useful if Poly learns some undesirable phrases.
+        /// Not required because Poly might learn from machines (Supermatter when???)
+        /// </summary>
+        public Guid? PlayerId { get; set; }
+
+        /// <summary>
+        /// Set to true to ban this phrase from being used again.
+        /// </summary>
+        [Required]
+        public bool Blacklisted { get; set; }
     }
 
     // Note: this interface isn't used by the game, but it *is* used by SS14.Admin.

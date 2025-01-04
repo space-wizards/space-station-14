@@ -333,6 +333,16 @@ namespace Content.Server.Database
         void InjectTestNotification(DatabaseNotification notification);
 
         #endregion
+
+        #region Poly Parrot
+
+        Task<int> InsertPolyMemory(string channel, string sentence, Guid? author);
+
+        Task<PolyPhraseRecord?> GetRandomPolyMemory(CancellationToken cancel = default);
+
+        Task<List<PolyPhraseRecord>> PopulatePolyBuffer(CancellationToken cancel = default);
+
+        #endregion
     }
 
     /// <summary>
@@ -989,6 +999,24 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.RemoveJobWhitelist(player, job));
+        }
+
+        public Task<int> InsertPolyMemory(string channel, string sentence, Guid? author)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.InsertPolyMemory(channel, sentence, author));
+        }
+
+        public Task<PolyPhraseRecord?> GetRandomPolyMemory(CancellationToken cancel = default)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetRandomPolyMemory(cancel));
+        }
+
+        public Task<List<PolyPhraseRecord>> PopulatePolyBuffer(CancellationToken cancel = default)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.PopulatePolyBuffer(cancel));
         }
 
         public void SubscribeToNotifications(Action<DatabaseNotification> handler)

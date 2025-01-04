@@ -162,7 +162,8 @@ public sealed class IonStormSystem : EntitySystem
     }
 
     // for your own sake direct your eyes elsewhere
-    private string GenerateLaw()
+    // Poly demands more sentences
+    public string GenerateLaw()
     {
         // pick all values ahead of time to make the logic cleaner
         var threats = Pick(Threats);

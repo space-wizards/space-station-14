@@ -2100,6 +2100,37 @@
   - type: Bloodstream
     bloodMaxVolume: 50
 
+# Poly!!! :
+
+- type: entity
+  name: Poly the Parrot
+  parent: MobParrot
+  id: MobPoly
+  description: An expert on quantum cracker theory.
+  components:
+  - type: NpcFactionMember
+    factions:
+      - PetsNT
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Poly
+  - type: IntrinsicRadioReceiver
+  - type: Inventory
+    templateId: poly
+    speciesId: poly
+  - type: InventorySlots
+  - type: Strippable # Free engineering headset
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: Loadout
+    prototypes: [ MobPolyGear ]
+  - type: ActiveListener
+    range: 10 # Big bird hears all
+
 - type: entity
   name: penguin
   parent: SimpleMobBase

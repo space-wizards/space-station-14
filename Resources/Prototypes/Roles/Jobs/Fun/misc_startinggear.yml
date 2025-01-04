@@ -182,3 +182,8 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorGrey
     shoes: ClothingShoesColorBlack
+
+- type: startingGear
+  id: MobPolyGear
+  equipment:
+      ears: ClothingHeadsetEngineering

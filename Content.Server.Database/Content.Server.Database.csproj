@@ -28,5 +28,12 @@
     <ProjectReference Include="..\Content.Shared.Database\Content.Shared.Database.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\Sqlite\20250104033600_PolyParrot.cs" />
+    <Compile Remove="Migrations\Sqlite\20250104033600_PolyParrot.Designer.cs" />
+    <Compile Remove="Migrations\Postgres\20250104033607_PolyParrot.cs" />
+    <Compile Remove="Migrations\Postgres\20250104033607_PolyParrot.Designer.cs" />
+  </ItemGroup>
+
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
 </Project>

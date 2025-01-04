@@ -1720,6 +1720,68 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #endregion
 
+        # region Poly the Parrot
+
+        // Learn sentence
+
+        public async Task<int> InsertPolyMemory(string channel, string sentence, Guid? author)
+        {
+            await using var db = await GetDb();
+            var phrase = new PolyPhrase
+            {
+                Channel = channel,
+                Message = sentence,
+                PlayerId = author,
+            };
+            db.DbContext.PolyPhrase.Add(phrase);
+            await db.DbContext.SaveChangesAsync();
+            return phrase.Id;
+        }
+
+        public async Task<PolyPhraseRecord?> GetRandomPolyMemory(CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            // Fetch a random PolyPhrase that is not blacklisted
+            var sql = """
+                SELECT *
+                FROM poly_phrases
+                WHERE blacklisted = false
+                ORDER BY RANDOM()
+                LIMIT 1
+                """;
+
+            var randomPhrase = await db.DbContext.PolyPhrase
+                .FromSqlRaw(sql)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(cancel);
+
+            return randomPhrase == null ? null : new PolyPhraseRecord(randomPhrase.Id, randomPhrase.Message, randomPhrase.Channel);
+        }
+
+        public async Task<List<PolyPhraseRecord>> PopulatePolyBuffer(CancellationToken cancel)
+        {
+            await using var db = await GetDb(cancel);
+
+            // We get 100 random phrases that are not blacklisted
+            var sql = @"
+                SELECT *
+                FROM poly_phrases
+                WHERE blacklisted = false
+                ORDER BY RANDOM()
+                LIMIT 100
+                ";
+
+            var phrases = await db.DbContext.PolyPhrase
+                .FromSqlRaw(sql)
+                .AsNoTracking()
+                .ToListAsync(cancel);
+
+            return phrases.Select(p => new PolyPhraseRecord(p.Id, p.Message, p.Channel)).ToList();
+        }
+
+        # endregion
+
         // SQLite returns DateTime as Kind=Unspecified, Npgsql actually knows for sure it's Kind=Utc.
         // Normalize DateTimes here so they're always Utc. Thanks.
         protected abstract DateTime NormalizeDatabaseTime(DateTime time);
