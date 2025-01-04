@@ -441,7 +441,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         QueueDel(ent.Comp.VirtualPart.Value);
     }
 
-    private static HumanoidVisualLayers? GetLayer(string slotId) => slotId switch
+    public static HumanoidVisualLayers? GetLayer(string slotId) => slotId switch
     {
         "left arm" => HumanoidVisualLayers.LArm,
         "right arm" => HumanoidVisualLayers.RArm,

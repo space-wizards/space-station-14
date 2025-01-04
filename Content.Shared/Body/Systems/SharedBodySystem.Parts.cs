@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
@@ -602,7 +602,34 @@ public partial class SharedBodySystem
             }
         }
     }
+    // 🌟Starlight🌟
+    public IEnumerable<Entity<BodyPartComponent>> GetAllBodyPart(
+        EntityUid partId,
+        BodyPartComponent? part = null)
+    {
+        if (!Resolve(partId, ref part, logMissing: false))
+            yield break;
 
+        foreach (var (slotId, slot) in part.Children)
+        {
+            var containerSlotId = GetPartSlotContainerId(slotId);
+
+            if (Containers.TryGetContainer(partId, containerSlotId, out var container))
+            {
+                foreach (var containedEnt in container.ContainedEntities)
+                {
+                    if (!TryComp(containedEnt, out BodyPartComponent? childPart))
+                        continue;
+                    yield return (containedEnt, childPart);
+
+                    foreach (var subPart in GetAllBodyPart(containedEnt, childPart))
+                    {
+                        yield return subPart;
+                    }
+                }
+            }
+        }
+    }
     /// <summary>
     /// Returns true if the bodyId has any parts of this type.
     /// </summary>
