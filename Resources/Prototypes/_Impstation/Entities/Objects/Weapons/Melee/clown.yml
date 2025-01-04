@@ -38,7 +38,7 @@
 
 - type: entity
   id: ACMEBoxOpen
-  parent: BaseItem
+  parent: [BaseItem, Tier1Contraband]
   name: discarded ACME brand box
   description: I hope whoever opened this gets the day that they deserve.
   components:
