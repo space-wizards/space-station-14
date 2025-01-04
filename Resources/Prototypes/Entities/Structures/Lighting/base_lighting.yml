@@ -44,6 +44,19 @@
     cost: 4
     delay: 2
     fx: EffectRCDDeconstruct2
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,0.5,0.4,0.35"
+        density: 190
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
   - type: Destructible
     thresholds:
     - trigger:
@@ -253,6 +266,19 @@
       radius: 6
       softness: 1.1
       enabled: true
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.2,0.5,0.2,0.35"
+          density: 190
+          mask:
+          - TabletopMachineMask
+          layer:
+          - TabletopMachineLayer
     - type: Damageable
       damageContainer: Inorganic
     - type: Destructible
