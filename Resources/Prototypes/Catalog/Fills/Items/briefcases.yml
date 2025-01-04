@@ -9,7 +9,7 @@
         amount: 3
 
 - type: entity
-  id: Ca
+  id: BriefcaseSyndieSniperBundleFilled
   parent: BriefcaseSyndie
   suffix: Syndicate, Sniper Bundle
   components:
