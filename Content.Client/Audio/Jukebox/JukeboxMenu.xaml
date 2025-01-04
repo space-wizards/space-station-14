@@ -1,18 +1,25 @@
 <ui:FancyWindow xmlns="https://spacestation14.io" xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
-                SetSize="400 500" Title="{Loc 'jukebox-menu-title'}">
+xmlns:jb="clr-namespace:Content.Client.Audio.Jukebox"
+SetSize="400 500" Title="{Loc 'jukebox-menu-title'}">
     <BoxContainer Margin="4 0" Orientation="Vertical">
-        <ItemList Name="MusicList" SelectMode="Button" Margin="3 3 3 3"
-        HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="8"/>
+        <Label Text="{Loc 'jukebox-menu-songs'}"/>
+        <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True" Margin="13 3 3 3">
+            <BoxContainer Name="MusicList" Orientation="Vertical"
+            HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="8"/>
+        </ScrollContainer>
+        <Label Text="{Loc 'jukebox-menu-queue'}"/>
+        <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True" Margin="13 3 3 3">
+            <BoxContainer Name="MusicListQueue" Orientation="Vertical"
+            HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="8"/>
+        </ScrollContainer>
         <BoxContainer Orientation="Vertical">
-            <Label Name="SongSelected" Text="{Loc 'jukebox-menu-selectedsong'}" />
-            <Label Name="SongName" Text="---" />
-            <Slider Name="PlaybackSlider" HorizontalExpand="True" />
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True"
-        VerticalExpand="False" SizeFlagsStretchRatio="1">
-            <Button Name="PlayButton" Text="{Loc 'jukebox-menu-buttonplay'}" />
-            <Button Name="StopButton" Text="{Loc 'jukebox-menu-buttonstop'}" />
-            <Label Name="DurationLabel" Text="00:00 / 00:00" HorizontalAlignment="Right" HorizontalExpand="True"/>
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <Label Name="SongSelected" Text="{Loc 'jukebox-menu-selectedsong-none'}" />
+                <BoxContainer HorizontalExpand="True"/>
+                <Label Name="DurationLabel" Text="---" />
+            </BoxContainer>
+            <Slider Name="PlaybackSlider" Visible="false" HorizontalExpand="True" />
+            <jb:JukeboxEntry Name="CurrentSong" Visible="false" EntryType="Current"/>
         </BoxContainer>
     </BoxContainer>
 </ui:FancyWindow>

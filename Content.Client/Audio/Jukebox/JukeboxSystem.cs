@@ -36,10 +36,28 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
         var query = AllEntityQuery<JukeboxComponent, UserInterfaceComponent>();
 
-        while (query.MoveNext(out var uid, out _, out var ui))
+        while (query.MoveNext(out var uid, out var jukebox, out var ui))
         {
             if (!_uiSystem.TryGetOpenUi<JukeboxBoundUserInterface>((uid, ui), JukeboxUiKey.Key, out var bui))
                 continue;
+
+            if (obj.Removed?.TryGetValue(typeof(JukeboxPrototype), out var removed) ?? false)
+            {
+                var list = new List<ProtoId<JukeboxPrototype>>();
+                while (jukebox.SongIdQueue.Count > 0)
+                {
+                    var next = jukebox.SongIdQueue.Dequeue();
+                    if (removed.Contains(next))
+                        continue;
+
+
+                    list.Add(next);
+                }
+                foreach (var song in list)
+                {
+                    jukebox.SongIdQueue.Enqueue(song);
+                }
+            }
 
             bui.PopulateMusic();
         }
