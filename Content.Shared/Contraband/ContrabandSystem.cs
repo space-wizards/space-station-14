@@ -95,7 +95,7 @@ public sealed class ContrabandSystem : EntitySystem
             component,
             examineMarkup,
             Loc.GetString("contraband-examinable-verb-text"),
-            "/Textures/Interface/VerbIcons/knife.svg.png",
+            "/Textures/Interface/VerbIcons/lock.svg.192dpi.png",
             Loc.GetString("contraband-examinable-verb-message"));
     }
 
