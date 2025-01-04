@@ -60,6 +60,7 @@ public sealed class GreytideVirusRule : StationEventSystem<GreytideVirusRuleComp
 
         var firelockQuery = GetEntityQuery<FirelockComponent>();
         var accessQuery = GetEntityQuery<AccessReaderComponent>();
+        var externalAccessQuery = GetEntityQuery<ExternalAccessMarkerComponent>();
 
         var lockQuery = AllEntityQuery<LockComponent, TransformComponent>();
         while (lockQuery.MoveNext(out var lockUid, out var lockComp, out var xform))
@@ -86,7 +87,7 @@ public sealed class GreytideVirusRule : StationEventSystem<GreytideVirusRuleComp
         while (airlockQuery.MoveNext(out var airlockUid, out var airlockComp, out var doorComp, out var xform))
         {
             // don't space everything
-            if (firelockQuery.HasComp(airlockUid))
+            if (firelockQuery.HasComp(airlockUid) || externalAccessQuery.HasComp(airlockUid))
                 continue;
 
             // make sure not to hit CentCom or other maps
