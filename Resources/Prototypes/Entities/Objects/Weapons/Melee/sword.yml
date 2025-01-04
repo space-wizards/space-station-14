@@ -93,7 +93,7 @@
   description: A katana infused with strong energy.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Melee/energykatana.rsi
+    sprite: _Impstation/Objects/Weapons/Melee/energykatana.rsi # imp
     layers: # imp
     - state: off-icon
       map: [ "enum.ToggleVisuals.Layer" ]
@@ -106,7 +106,7 @@
     animation: WeaponArcSlash # imp
   - type: Item
     heldPrefix: off # imp
-    sprite: Objects/Weapons/Melee/energykatana.rsi
+    sprite: _Impstation/Objects/Weapons/Melee/energykatana.rsi # imp
   - type: EnergyKatana
   - type: DashAbility
   - type: LimitedCharges
@@ -115,7 +115,7 @@
   - type: AutoRecharge
     rechargeDuration: 20
   - type: Clothing
-    sprite: Objects/Weapons/Melee/energykatana.rsi
+    sprite: _Impstation/Objects/Weapons/Melee/energykatana.rsi # imp
     quickEquip: false # imp
     slots:
     - Back
