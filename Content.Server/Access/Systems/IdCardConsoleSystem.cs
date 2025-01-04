@@ -151,25 +151,36 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         if (oldTags.SequenceEqual(newAccessList))
             return;
 
-        // I hate that C# doesn't have an option for this and don't desire to write this out the hard way.
-        // var difference = newAccessList.Difference(oldTags);
-        var difference = newAccessList.Union(oldTags).Except(newAccessList.Intersect(oldTags)).ToHashSet();
+        var ableToModify = component.AccessLevels;
+
+        var addedTags = newAccessList.Except(oldTags);
+        var removedTags = oldTags.Except(newAccessList);
+
+        //Probably there is a cleaner way to do this, visible difference is the difference between the new access and the old access the user of the computer could see
+        var difference = addedTags.Union(removedTags);
+        var visibleDifference = difference.Intersect(ableToModify).ToHashSet();
+
+        /*This codes relies on the fact that since ableToModify contains only the access the computer is able to see, hiddenAccess will only contain modified access
+        that the computer can not see, like Centcomm and SyndicateAgent*/
+        var hiddenAccess = difference.Except(ableToModify);
+
         // NULL SAFETY: PrivilegedIdIsAuthorized checked this earlier.
         var privilegedPerms = _accessReader.FindAccessTags(privilegedId!.Value).ToHashSet();
-        if (!difference.IsSubsetOf(privilegedPerms))
+        if (!visibleDifference.IsSubsetOf(privilegedPerms))
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to modify permissions they could not give/take!");
             return;
         }
 
-        var addedTags = newAccessList.Except(oldTags).Select(tag => "+" + tag).ToList();
-        var removedTags = oldTags.Except(newAccessList).Select(tag => "-" + tag).ToList();
-        _access.TrySetTags(targetId, newAccessList);
+        var finalAccess = newAccessList.Union(hiddenAccess);
+        _access.TrySetTags(targetId, finalAccess);
+
+        var changes = addedTags.Select(tag => "+" + tag).Union(removedTags.Except(hiddenAccess).Select(tag => "-" + tag));
 
         /*TODO: ECS SharedIdCardConsoleComponent and then log on card ejection, together with the save.
         This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/
         _adminLogger.Add(LogType.Action, LogImpact.Medium,
-            $"{ToPrettyString(player):player} has modified {ToPrettyString(targetId):entity} with the following accesses: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
+            $"{ToPrettyString(player):player} has modified {ToPrettyString(targetId):entity} with the following accesses: [{string.Join(", ", changes)}] [{string.Join(", ", finalAccess)}]");
     }
 
     /// <summary>
