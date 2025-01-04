@@ -92,7 +92,6 @@
         disableEject: true
         swap: false
 
-
 - type: entity
   parent: Holoprojector
   id: HoloprojectorField
