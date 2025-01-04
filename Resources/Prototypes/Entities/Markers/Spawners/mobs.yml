@@ -540,7 +540,7 @@
       - MobAdultSlimesYellowAngry
 
 - type: entity
-  name: Smile Spawner
+  name: Smile Brain Spawner
   id: SpawnMobSmile
   parent: MarkerBase
   components:
@@ -550,7 +550,7 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobSlimesPet
+      - SentientSmileCore
 
 - type: entity
   name: Pun Pun Spawner

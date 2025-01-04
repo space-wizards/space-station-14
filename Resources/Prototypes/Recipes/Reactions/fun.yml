@@ -201,3 +201,21 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
+
+- type: reaction
+  id: SmileTheSlime
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    Happiness:
+      amount: 4
+    SentientGreyMatter:
+      amount: 5
+    JuiceThatMakesYouWeh:
+      amount: 10
+    Slime:
+      amount: 20
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: MobSlimesPet
