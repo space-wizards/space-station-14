@@ -76,3 +76,7 @@
         enum.ToggleVisuals.Layer:
           True: {state: on-icon}
           False: {state: off-icon}
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-ninja
+    stampedColor: "#21a52e"
+    stampState: "paper_stamp-ninja"
