@@ -110,7 +110,6 @@
           params:
             volume: -5
       - !type:PopupBehavior
-        type: Local
         popup: "clothing-glasses-shatter"
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
