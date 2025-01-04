@@ -1,7 +1,6 @@
 ﻿using System.Numerics;
 using Content.Shared.Conveyor;
 using Content.Shared.Gravity;
-using Content.Shared.Magic;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
@@ -11,115 +10,220 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Utility;
+using Robust.Shared.Threading;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Physics.Controllers;
 
 public abstract class SharedConveyorController : VirtualController
 {
+    /*
+     * Conveyors move entities directly rather than using velocity as we don't want to interfere with other sources
+     * of velocity, e.g. throwing, so we don't have to worry about tracking velocity sources every tick.
+     *
+     * This means we need a slim version of physics to handle this so the below handles:
+     * - Conveyor sleeping
+     * - Conveyor waking
+     */
+
+    [Dependency] private   readonly IGameTiming _timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
+    [Dependency] private   readonly IParallelManager _parallel = default!;
+    [Dependency] private   readonly CollisionWakeSystem _wake = default!;
     [Dependency] protected readonly EntityLookupSystem Lookup = default!;
-    [Dependency] private readonly SharedMapSystem _maps = default!;
-    [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
-    [Dependency] private readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private   readonly FixtureSystem _fixtures = default!;
+    [Dependency] private   readonly RayCastSystem _ray = default!;
+    [Dependency] private   readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private   readonly SharedMapSystem _maps = default!;
 
     protected const string ConveyorFixture = "conveyor";
 
-    private EntityQuery<MapGridComponent> _gridQuery;
-    private EntityQuery<TransformComponent> _xformQuery;
+    private ConveyorJob _job;
+
+    private EntityQuery<ConveyorComponent> _conveyorQuery;
+    private EntityQuery<ConveyedComponent> _conveyedQuery;
+    protected EntityQuery<PhysicsComponent> PhysicsQuery;
+    protected EntityQuery<TransformComponent> XformQuery;
+
+    protected HashSet<EntityUid> Intersecting = new();
 
     private ValueList<EntityUid> _ents = new();
-    private HashSet<Entity<ConveyorComponent>> _conveyors = new();
+
+    /// <summary>
+    /// How much a conveyed item needs to move in the desired direction to avoid sleeping.
+    /// </summary>
+    private const float DirectionAmount = 0.3f;
 
     public override void Initialize()
     {
-        _gridQuery = GetEntityQuery<MapGridComponent>();
-        _xformQuery = GetEntityQuery<TransformComponent>();
+        _job = new ConveyorJob(this);
+        _conveyorQuery = GetEntityQuery<ConveyorComponent>();
+        _conveyedQuery = GetEntityQuery<ConveyedComponent>();
+        PhysicsQuery = GetEntityQuery<PhysicsComponent>();
+        XformQuery = GetEntityQuery<TransformComponent>();
 
         UpdatesAfter.Add(typeof(SharedMoverController));
 
+        SubscribeLocalEvent<ConveyedComponent, ComponentStartup>(OnConveyedStartup);
+        SubscribeLocalEvent<ConveyedComponent, ComponentShutdown>(OnConveyedShutdown);
+        SubscribeLocalEvent<ConveyedComponent, PhysicsWakeEvent>(OnConveyedWake);
+        SubscribeLocalEvent<ConveyedComponent, PhysicsSleepEvent>(OnConveyedSleep);
+
         SubscribeLocalEvent<ConveyorComponent, StartCollideEvent>(OnConveyorStartCollide);
         SubscribeLocalEvent<ConveyorComponent, EndCollideEvent>(OnConveyorEndCollide);
+        SubscribeLocalEvent<ConveyorComponent, ComponentStartup>(OnConveyorStartup);
 
         base.Initialize();
+    }
+
+    private void OnConveyedStartup(Entity<ConveyedComponent> ent, ref ComponentStartup args)
+    {
+        // We need waking / sleeping to work and don't want collisionwake interfering with us.
+        EnsureComp<ActiveConveyedComponent>(ent);
+        _wake.SetEnabled(ent.Owner, false);
+    }
+
+    private void OnConveyedShutdown(Entity<ConveyedComponent> ent, ref ComponentShutdown args)
+    {
+        _wake.SetEnabled(ent.Owner, true);
+    }
+
+    private void OnConveyedWake(Entity<ConveyedComponent> ent, ref PhysicsWakeEvent args)
+    {
+        if (_timing.ApplyingState)
+            return;
+
+        EnsureComp<ActiveConveyedComponent>(ent);
+    }
+
+    private void OnConveyedSleep(Entity<ConveyedComponent> ent, ref PhysicsSleepEvent args)
+    {
+        if (_timing.ApplyingState)
+            return;
+
+        RemCompDeferred<ActiveConveyedComponent>(ent);
+    }
+
+    private void OnConveyorStartup(Entity<ConveyorComponent> ent, ref ComponentStartup args)
+    {
+        AwakenConveyor(ent.Owner);
+    }
+
+    /// <summary>
+    /// Forcefully awakens all entities near the conveyor.
+    /// </summary>
+    protected virtual void AwakenConveyor(Entity<TransformComponent?> ent)
+    {
+    }
+
+    /// <summary>
+    /// Wakes all conveyed entities contacting this conveyor.
+    /// </summary>
+    protected void WakeConveyed(EntityUid conveyorUid)
+    {
+        var contacts = PhysicsSystem.GetContacts(conveyorUid);
+
+        while (contacts.MoveNext(out var contact))
+        {
+            var other = contact.OtherEnt(conveyorUid);
+
+            if (_conveyedQuery.HasComp(other))
+            {
+                PhysicsSystem.WakeBody(other);
+            }
+        }
     }
 
     private void OnConveyorStartCollide(EntityUid uid, ConveyorComponent component, ref StartCollideEvent args)
     {
         var otherUid = args.OtherEntity;
 
-        if (!args.OtherFixture.Hard || args.OtherBody.BodyType == BodyType.Static || component.State == ConveyorState.Off)
+        if (!args.OtherFixture.Hard || args.OtherBody.BodyType == BodyType.Static)
             return;
 
-        var conveyed = EnsureComp<ConveyedComponent>(otherUid);
-
-        if (conveyed.Colliding.Contains(uid))
-            return;
-
-        conveyed.Colliding.Add(uid);
-        Dirty(otherUid, conveyed);
+        EnsureComp<ConveyedComponent>(otherUid);
     }
 
     private void OnConveyorEndCollide(Entity<ConveyorComponent> ent, ref EndCollideEvent args)
     {
-        if (!TryComp(args.OtherEntity, out ConveyedComponent? conveyed))
+        if (!_conveyedQuery.HasComp(args.OtherEntity))
             return;
 
-        if (!conveyed.Colliding.Remove(ent.Owner))
+        if (IsConveyed(args.OtherEntity))
             return;
 
-        Dirty(args.OtherEntity, conveyed);
+        RemCompDeferred<ConveyedComponent>(args.OtherEntity);
+        RemCompDeferred<ActiveConveyedComponent>(args.OtherEntity);
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
     {
         base.UpdateBeforeSolve(prediction, frameTime);
 
-        var query = EntityQueryEnumerator<ConveyedComponent, TransformComponent, PhysicsComponent>();
+        _job.FrameTime = frameTime;
+        _job.Prediction = prediction;
+        _job.Conveyed.Clear();
         _ents.Clear();
 
-        while (query.MoveNext(out var uid, out var comp, out var xform, out var physics))
-        {
-            if (TryConvey((uid, comp, physics, xform), prediction, frameTime))
-                continue;
+        var query = EntityQueryEnumerator<ActiveConveyedComponent, ConveyedComponent, FixturesComponent, PhysicsComponent>();
 
-            _ents.Add(uid);
+        while (query.MoveNext(out var uid, out _, out var comp, out var fixtures, out var body))
+        {
+            _job.Conveyed.Add(((uid, comp, fixtures, body, Transform(uid)), Vector2.Zero, false));
+        }
+
+        _parallel.ProcessNow(_job, _job.Conveyed.Count);
+
+        foreach (var ent in _job.Conveyed)
+        {
+            if (!ent.Result)
+            {
+                _ents.Add(ent.Entity.Owner);
+                continue;
+            }
+
+            // Not conveying anywhere.
+            if (ent.Direction.Equals(Vector2.Zero))
+            {
+                continue;
+            }
+
+            var physics = ent.Entity.Comp3;
+            var xform = ent.Entity.Comp4;
+
+            // Force it awake for collisionwake reasons.
+            PhysicsSystem.SetAwake((ent.Entity.Owner, physics), true);
+            PhysicsSystem.SetSleepTime(physics, 0f);
+
+            TransformSystem.SetLocalPosition(ent.Entity.Owner, xform.LocalPosition + ent.Direction, xform);
         }
 
         foreach (var ent in _ents)
         {
+            RemComp<ActiveConveyedComponent>(ent);
             RemComp<ConveyedComponent>(ent);
         }
     }
 
-    private bool TryConvey(Entity<ConveyedComponent, PhysicsComponent, TransformComponent> entity, bool prediction, float frameTime)
+    /// <summary>
+    /// Gets the conveying direction for an entity.
+    /// </summary>
+    /// <returns>False if we should no longer be considered conveyed</returns>
+    private bool TryConvey(Entity<ConveyedComponent, FixturesComponent, PhysicsComponent, TransformComponent> entity,
+        bool prediction,
+        float frameTime,
+        out Vector2 direction)
     {
-        var physics = entity.Comp2;
-        var xform = entity.Comp3;
-        var contacting = entity.Comp1.Colliding.Count > 0;
-
-        if (!contacting)
-            return false;
+        direction = Vector2.Zero;
+        var fixtures = entity.Comp2;
+        var physics = entity.Comp3;
+        var xform = entity.Comp4;
 
         // Client moment
         if (!physics.Predict && prediction)
             return true;
 
-        if (physics.BodyType == BodyType.Static)
-            return false;
-
-        if (!_gridQuery.TryComp(xform.GridUid, out var grid))
-            return true;
-
-        var gridTile = _maps.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates);
-        _conveyors.Clear();
-
-        // Check for any conveyors on the attached tile.
-        Lookup.GetLocalEntitiesIntersecting(xform.GridUid.Value, gridTile, _conveyors);
-        DebugTools.Assert(_conveyors.Count <= 1);
-
-        // No more conveyors.
-        if (_conveyors.Count == 0)
+        if (xform.GridUid == null)
             return true;
 
         if (physics.BodyStatus == BodyStatus.InAir ||
@@ -130,13 +234,29 @@ public abstract class SharedConveyorController : VirtualController
 
         Entity<ConveyorComponent> bestConveyor = default;
         var bestSpeed = 0f;
+        var contacts = PhysicsSystem.GetContacts((entity.Owner, fixtures));
+        var worldPos = TransformSystem.GetWorldPosition(entity.Owner);
 
-        foreach (var conveyor in _conveyors)
+        while (contacts.MoveNext(out var contact))
         {
-            if (conveyor.Comp.Speed > bestSpeed && CanRun(conveyor))
+            if (!contact.IsTouching)
+                continue;
+
+            // Check if our center is over their fixture otherwise ignore it.
+            var other = contact.OtherEnt(entity.Owner);
+            var otherFixture = contact.OtherFixture(entity.Owner);
+            var otherWorldPos = PhysicsSystem.GetPhysicsTransform(other);
+
+            if (!_fixtures.TestPoint(otherFixture.Item2.Shape, otherWorldPos, worldPos))
+                continue;
+
+            if (!_conveyorQuery.TryComp(other, out var conveyor))
+                continue;
+
+            if (conveyor.Speed > bestSpeed && CanRun(conveyor))
             {
-                bestSpeed = conveyor.Comp.Speed;
-                bestConveyor = conveyor;
+                bestSpeed = conveyor.Speed;
+                bestConveyor = (other, conveyor);
             }
         }
 
@@ -144,7 +264,7 @@ public abstract class SharedConveyorController : VirtualController
             return true;
 
         var comp = bestConveyor.Comp!;
-        var conveyorXform = _xformQuery.GetComponent(bestConveyor.Owner);
+        var conveyorXform = XformQuery.GetComponent(bestConveyor.Owner);
         var conveyorPos = conveyorXform.LocalPosition;
         var conveyorRot = conveyorXform.LocalRotation;
 
@@ -153,22 +273,72 @@ public abstract class SharedConveyorController : VirtualController
         if (comp.State == ConveyorState.Reverse)
             conveyorRot += MathF.PI;
 
-        var direction = conveyorRot.ToWorldVec();
+        var conveyorDirection = conveyorRot.ToWorldVec();
+        direction = conveyorDirection;
 
-        var localPos = xform.LocalPosition;
-        var itemRelative = conveyorPos - localPos;
+        var itemRelative = conveyorPos - xform.LocalPosition;
 
-        localPos += Convey(direction, bestSpeed, frameTime, itemRelative);
+        direction = Convey(direction, bestSpeed, frameTime, itemRelative);
 
-        TransformSystem.SetLocalPosition(entity, localPos, xform);
+        // Shapecast to the desired spot
+        var result = new RayResult();
 
-        // Force it awake for collisionwake reasons.
-        Physics.SetAwake((entity, physics), true);
-        Physics.SetSleepTime(physics, 0f);
+        foreach (var fixture in fixtures.Fixtures.Values)
+        {
+            if (!fixture.Hard)
+                continue;
+
+            var filter = new QueryFilter
+            {
+                LayerBits = fixture.CollisionLayer,
+                MaskBits = fixture.CollisionMask,
+                Flags = QueryFlags.Static,
+            };
+
+            var transform = PhysicsSystem.GetLocalPhysicsTransform(entity.Owner, xform);
+            transform.Position += direction;
+
+            foreach (var contact in fixture.Contacts.Values)
+            {
+                var normal = contact.Manifold.LocalNormal;
+
+                // If it's overlapping already and we're not conveying in that direction.
+                if (contact.IsTouching && contact.Hard && Vector2.Dot(conveyorDirection, normal) > DirectionAmount)
+                {
+                    direction = Vector2.Zero;
+                    return true;
+                }
+            }
+
+            _ray.CastShape(xform.GridUid.Value,
+                ref result,
+                fixture.Shape,
+                transform,
+                direction,
+                filter,
+                RayCastSystem.RayCastClosestCallback);
+
+            if (result.Hit)
+            {
+                foreach (var (uid, localNormal, fraction) in result.Results)
+                {
+                    if (Vector2.Dot(conveyorDirection, localNormal) > DirectionAmount)
+                    {
+                        continue;
+                    }
+
+                    if (fraction < 1f)
+                    {
+                        // Can't go all the way so move partially and stop.
+                        direction *= fraction;
+                        return true;
+                    }
+                }
+            }
+        }
 
         return true;
     }
-
     private static Vector2 Convey(Vector2 direction, float speed, float frameTime, Vector2 itemRelative)
     {
         if (speed == 0 || direction.Length() == 0)
@@ -205,5 +375,54 @@ public abstract class SharedConveyorController : VirtualController
     public bool CanRun(ConveyorComponent component)
     {
         return component.State != ConveyorState.Off && component.Powered;
+    }
+
+    private record struct ConveyorJob : IParallelRobustJob
+    {
+        public int BatchSize => 16;
+
+        public List<(Entity<ConveyedComponent, FixturesComponent, PhysicsComponent, TransformComponent> Entity, Vector2 Direction, bool Result)> Conveyed = new();
+
+        public SharedConveyorController System;
+
+        public float FrameTime;
+        public bool Prediction;
+
+        public ConveyorJob(SharedConveyorController controller)
+        {
+            System = controller;
+        }
+
+        public void Execute(int index)
+        {
+            var convey = Conveyed[index];
+
+            var result = System.TryConvey(
+                (convey.Entity.Owner, convey.Entity.Comp1, convey.Entity.Comp2, convey.Entity.Comp3, convey.Entity.Comp4),
+                Prediction, FrameTime, out var direction);
+
+            Conveyed[index] = (convey.Entity, direction, result);
+        }
+    }
+
+    /// <summary>
+    /// Checks an entity's contacts to see if it's still being conveyed.
+    /// </summary>
+    private bool IsConveyed(Entity<FixturesComponent?> ent)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
+        var contacts = PhysicsSystem.GetContacts(ent.Owner);
+
+        while (contacts.MoveNext(out var contact))
+        {
+            var other = contact.OtherEnt(ent.Owner);
+
+            if (_conveyorQuery.HasComp(other))
+                return true;
+        }
+
+        return false;
     }
 }
