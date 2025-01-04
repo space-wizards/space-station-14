@@ -328,3 +328,15 @@
       itemIconStyle: NoItem
       useDelay: 1 # emote spam
       event: !type:ToggleActionEvent
+
+- type: entity
+  id: ActionToggleRootable
+  name: action-name-toggle-rootable
+  description: action-description-toggle-rootable
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/rooting.png
+    iconOn: Interface/Actions/rooting.png
+    itemIconStyle: NoItem
+    useDelay: 1
+    event: !type:ToggleActionEvent
