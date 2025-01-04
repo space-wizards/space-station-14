@@ -1425,14 +1425,13 @@
   id: UplinkFakeMindshield
   name: uplink-fake-mindshield-name
   description: uplink-fake-mindshield-desc
-  icon: { sprite: Objects/Specific/Medical/implanter.rsi, state: implanter0 }
+  icon: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon-on }
   productEntity: FakeMindShieldImplanter
   discountDownTo:
     Telecrystal: 2
   cost:
     Telecrystal: 4
   categories:
-  - UplinkDeception
   - UplinkImplants
 
 

@@ -11,7 +11,6 @@ public sealed class SharedFakeMindShieldSystem : EntitySystem
         SubscribeLocalEvent<FakeMindShieldComponent, FakeMindShieldToggleEvent>(OnToggleMindshield);
     }
 
-
     private void OnToggleMindshield(EntityUid uid, FakeMindShieldComponent comp, FakeMindShieldToggleEvent toggleEvent)
     {
         comp.IsEnabled = !comp.IsEnabled;

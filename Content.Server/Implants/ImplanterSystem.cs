@@ -122,7 +122,6 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         if (args.Cancelled || args.Handled || args.Target == null || args.Used == null)
             return;
 
-
         Implant(args.User, args.Target.Value, args.Used.Value, component);
 
         args.Handled = true;
