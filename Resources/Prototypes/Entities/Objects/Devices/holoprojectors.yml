@@ -82,6 +82,7 @@
   parent: HolofanProjector
   id: HolofanProjectorBorg
   suffix: borg
+  description: Stops suicidal crew from causing more crew harm during atmos emergencies. Powered by a self-recharging power cell.
   components:
   - type: ItemSlots
     slots:

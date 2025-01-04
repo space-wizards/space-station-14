@@ -194,9 +194,9 @@
 # cargo modules
 
 - type: entity
-  id: BorgModuleSupply
+  id: BorgModuleAppraisal
   parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
-  name: supply cyborg module
+  name: cargo cyborg module
   components:
   - type: Sprite
     layers:
@@ -206,7 +206,6 @@
     items:
     - AppraisalTool
     - HandLabeler
-    - RadioHandheld
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: appraisal-module }
 
@@ -225,6 +224,7 @@
     - Shovel
     - MineralScannerUnpowered
     - BorgOreBag
+    - RadioHandheld
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
 
@@ -264,7 +264,7 @@
     - Multitool
     - GasAnalyzer
     - HolofanProjectorBorg
-
+    - RemoteSignallerAdvanced
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-tools-module }
 
@@ -358,7 +358,6 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-cleaning-module }
 
 # medical modules
-
 - type: entity
   id: BorgModuleDiagnosis # todo: reuse when med refractor is finished
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
@@ -406,8 +405,8 @@
     - state: icon-defib
   - type: ItemBorgModule
     items:
-    - HandheldHealthAnalyzerUnpowered
     - DefibrillatorOneHandedUnpowered
+    - HandheldHealthAnalyzerUnpowered
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: defib-module }
 
@@ -422,8 +421,8 @@
     - state: icon-chemist
   - type: ItemBorgModule
     items:
-    - BaseChemistryEmptyVial
-    - BaseChemistryEmptyVial
+    - Beaker
+    - Beaker
     - Syringe
     - Syringe
 
@@ -441,11 +440,11 @@
     - state: icon-chemist
   - type: ItemBorgModule
     items:
-    - Beaker
-    - Beaker
+    - LargeBeaker
+    - LargeBeaker
     - Syringe
     - BorgHypo
-    
+
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-diagnosis-module }
 

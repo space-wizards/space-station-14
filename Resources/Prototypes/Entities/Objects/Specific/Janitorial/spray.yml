@@ -121,23 +121,13 @@
   suffix: Empty
   description: A high capacity, high pressure spray bottle, for cleaning even the biggest of spills.
   components:
-  - type: Sprite
-    sprite: Objects/Specific/Janitorial/janitorial.rsi
-    state: cleaner_large
   - type: SolutionContainerManager
     solutions:
       spray:
-        maxVol: 300
+        maxVol: 250
         reagents:
         - ReagentId: SpaceCleaner
-          Quantity: 300
-  - type: Spray
-    transferAmount: 15
-    sprayedPrototype: BigVapor
-    sprayVelocity: 3
-    sprayDistance: 4.5
-    spraySound:
-      path: /Audio/Effects/spray2.ogg
+          Quantity: 250
 # Vapor
 
 - type: entity
