@@ -131,3 +131,11 @@
   abstract: true
   components:
     - type: StationEventEligible # For when someone makes this more granular in the future.
+
+- type: entity
+  id: BaseStationAlternateDimension
+  abstract: true
+  components:
+    - type: StationAlternateDimensionGenerator
+      dimensions: 
+      - Shadowlands

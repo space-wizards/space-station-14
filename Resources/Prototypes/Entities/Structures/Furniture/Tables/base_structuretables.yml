@@ -36,6 +36,10 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepHull
+  - type: Tag
+    tags:
+    - Structure
+    - Table
 
 - type: entity
   id: CounterBase

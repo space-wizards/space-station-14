@@ -1,0 +1,80 @@
+- type: entity
+  id: ShadowDimensionFillSpawner
+  name: Shadow dimension filler
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: /Textures/Tiles/Planet/shadowbasalt.rsi
+        state: basalt1
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      prob: 0.9
+      children:
+      - id: ShadowBasaltRandom
+        weight: 10
+      - id: ShadowTree
+      - id: ShadowKudzuWeak
+      - id: CrystalPink
+      - id: PortalShadow
+        weight: 0.5
+
+- type: entity
+  id: ShadowDimensionBarrierSpawner
+  name: Shadow dimension barrier
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Walls/cobblebrick_chromite.rsi
+        state: full
+        color: "#ff66cc"
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      prob: 0.9
+      children:
+      - id: WallChromiteCobblebrick
+        weight: 10
+      - id: ShadowKudzuWeak
+      - id: FloorChromiteChasm
+      - id: ShadowTree
+
+- type: entity
+  id: ShadowDimensionLootSpawner
+  name: Shadow dimension loot
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/crystal.rsi
+        state: crystal_grey
+        color: "#ff66cc"
+  - type: RandomSpawner
+    chance: 0.5
+    prototypes:
+    - ArtifactFragment1
+    - SalvageSpawnerScrapCommon
+    - SalvageCanisterSpawner
+    - SalvageSpawnerTreasure
+    - SalvageSpawnerEquipment
+    - SalvageSpawnerScrapValuable
+
+- type: entity
+  id: ShadowDimensionEpicLootSpawner
+  name: Shadow dimension epic loot
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/crystal.rsi
+        state: crystal_grey
+        color: "#ff66cc"
+  - type: RandomSpawner
+    prototypes:
+    - SalvageSpawnerScrapValuable
+    - SalvageSpawnerEquipmentValuable
+    - SalvageSpawnerTreasureValuable

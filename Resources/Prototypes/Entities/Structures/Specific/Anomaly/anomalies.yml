@@ -876,6 +876,29 @@
     damage:
       types:
         Cold: 10
+  - type: AlternateDimensionAutoPortal
+    otherSidePortal: PortalBlue
+    targetDimension: Shadowlands
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+      portalFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.48,0.25,0.48"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false
 
 - type: entity
   id: AnomalyTech

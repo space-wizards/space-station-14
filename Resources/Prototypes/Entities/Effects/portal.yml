@@ -84,6 +84,8 @@
     radius: 3
     energy: 1
     netsync: false
+  - type: Portal
+    canTeleportToOtherMaps: true
 
 - type: entity
   id: PortalGatewayOrange
@@ -100,9 +102,11 @@
     radius: 3
     energy: 1
     netsync: false
+  - type: Portal
+    canTeleportToOtherMaps: true
 
 - type: entity
-  id: ShadowPortal
+  id: PortalShadow
   name: shadow rift
   description: Looks unstable.
   parent: [ BasePortal, BaseShadow ]
@@ -123,3 +127,17 @@
     volume: -3
     sound:
       path: /Audio/Ambience/anomaly_scary.ogg
+  - type: AlternateDimensionAutoPortal
+    otherSidePortal: InvisiblePortal
+    targetDimension: Shadowlands
+
+- type: entity
+  id: InvisiblePortal
+  parent: BasePortal
+  description: You're out of this portal, but you can't go back in. You can't even see it, ha!
+  components:
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: Portal
+    enable: false
