@@ -337,6 +337,7 @@
       - id: BeachBall
       - id: ClothingShoesSkates
       - id: RubberChicken
+      - id: BikeHorn
 
 - type: entity
   id: CrateFunBikeHornImplants
