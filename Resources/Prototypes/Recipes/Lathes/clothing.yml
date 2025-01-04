@@ -40,13 +40,6 @@
 
 - type: latheRecipe
   abstract: true
-  id: BaseCarpetRecipe
-  completetime: 1
-  materials:
-    Cloth: 100
-
-- type: latheRecipe
-  abstract: true
   parent: BaseHatRecipe
   id: BaseCommandHatRecipe
   materials:
@@ -916,49 +909,3 @@
   parent: BaseNeckClothingRecipe
   id: ClothingNeckScarfStripedPurple
   result: ClothingNeckScarfStripedPurple
-
-# Carpets
-- type: latheRecipe
-  parent: BaseCarpetRecipe
-  id: Carpet
-  result: FloorCarpetItemRed
-
-- type: latheRecipe
-  parent: BaseCarpetRecipe
-  id: CarpetBlack
-  result: FloorCarpetItemBlack
-
-- type: latheRecipe
-  parent: BaseCarpetRecipe
-  id: CarpetPink
-  result: FloorCarpetItemPink
-
-- type: latheRecipe
-  parent: BaseCarpetRecipe
-  id: CarpetBlue
-  result: FloorCarpetItemBlue
-
-- type: latheRecipe
-  parent: BaseCarpetRecipe
-  id: CarpetGreen
-  result: FloorCarpetItemGreen
-
-- type: latheRecipe
-  parent: BaseCarpetRecipe
-  id: CarpetOrange
-  result: FloorCarpetItemOrange
-
-- type: latheRecipe
-  parent: BaseCarpetRecipe
-  id: CarpetPurple
-  result: FloorCarpetItemPurple
-
-- type: latheRecipe
-  parent: BaseCarpetRecipe
-  id: CarpetCyan
-  result: FloorCarpetItemCyan
-
-- type: latheRecipe
-  parent: BaseCarpetRecipe
-  id: CarpetWhite
-  result: FloorCarpetItemWhite
