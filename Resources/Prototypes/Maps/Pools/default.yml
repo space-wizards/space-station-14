@@ -1,12 +1,16 @@
 - type: gameMapPool
   id: DefaultMapPool
   maps:
+  - Amber
   - Aspid
   - Bagel
   - Box
   - Cog
   - Core
+  - Elkridge
   - Fland
+  #- Gate
+  - Loop
   - Marathon
   - Meta
   - Oasis

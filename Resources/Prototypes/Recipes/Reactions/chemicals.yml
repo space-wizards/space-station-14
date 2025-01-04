@@ -81,7 +81,7 @@
       amount: 1
     Sulfur:
       amount: 1
-    Oxygen: 
+    Oxygen:
       amount: 2
   products:
     SulfuricAcid: 3
@@ -204,6 +204,20 @@
       maxRange: 6
       energyConsumption: 12500
       duration: 15
+
+- type: reaction
+  id: Flash
+  impact: High
+  priority: 20
+  reactants:
+    Aluminium:
+      amount: 1
+    Potassium:
+      amount: 1
+    Sulfur:
+      amount: 1
+  effects:
+    - !type:FlashReactionEffect
 
 - type: reaction
   id: TableSalt
@@ -501,3 +515,4 @@
       amount: 1
   products:
     Tazinide: 1
+

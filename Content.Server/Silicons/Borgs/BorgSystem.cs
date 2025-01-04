@@ -129,12 +129,25 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
         if (module != null && CanInsertModule(uid, used, component, module, args.User))
         {
-            _container.Insert(used, component.ModuleContainer);
+            InsertModule((uid, component), used);
             _adminLog.Add(LogType.Action, LogImpact.Low,
                 $"{ToPrettyString(args.User):player} installed module {ToPrettyString(used)} into borg {ToPrettyString(uid)}");
             args.Handled = true;
             UpdateUI(uid, component);
         }
+    }
+
+    /// <summary>
+    /// Inserts a new module into a borg, the same as if a player inserted it manually.
+    /// </summary>
+    /// <para>
+    /// This does not run checks to see if the borg is actually allowed to be inserted, such as whitelists.
+    /// </para>
+    /// <param name="ent">The borg to insert into.</param>
+    /// <param name="module">The module to insert.</param>
+    public void InsertModule(Entity<BorgChassisComponent> ent, EntityUid module)
+    {
+        _container.Insert(module, ent.Comp.ModuleContainer);
     }
 
     // todo: consider transferring over the ghost role? managing that might suck.
