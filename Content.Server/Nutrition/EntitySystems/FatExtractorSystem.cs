@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Nutrition.Components;
 using Content.Server.Power.Components;
@@ -36,6 +36,9 @@ public sealed class FatExtractorSystem : EntitySystem
 
     private void OnGotEmagged(EntityUid uid, FatExtractorComponent component, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
+
         args.Handled = true;
         args.Repeatable = false;
     }
