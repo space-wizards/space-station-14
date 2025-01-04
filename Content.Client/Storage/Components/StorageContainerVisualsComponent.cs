@@ -1,4 +1,4 @@
-﻿using Content.Client.Chemistry.Visualizers;
+using Content.Client.Chemistry.Visualizers;
 using Content.Shared.Chemistry.Components;
 
 namespace Content.Client.Storage.Components;
@@ -19,6 +19,12 @@ public sealed partial class StorageContainerVisualsComponent : Component
     /// </summary>
     [DataField("fillBaseName")]
     public string? FillBaseName;
+
+    /// <summary>
+    ///     Optional: visuals will be calculated based on item inserted into insertedItemSlotID instead of item itself
+    /// </summary>
+    [DataField("insertedItemSlotID")]
+    public string? InsertedItemSlotID;
 
     [DataField("layer")]
     public StorageContainerVisualLayers FillLayer = StorageContainerVisualLayers.Fill;

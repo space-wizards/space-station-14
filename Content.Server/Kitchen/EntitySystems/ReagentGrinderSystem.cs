@@ -23,6 +23,8 @@ using System.Linq;
 using Content.Server.Jittering;
 using Content.Shared.Jittering;
 using Content.Shared.Power;
+using Robust.Shared.Map;
+using Content.Shared.Chemistry;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -40,6 +42,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
         [Dependency] private readonly JitteringSystem _jitter = default!;
+        [Dependency] private readonly IEntityManager _entManager = default!;
 
         public override void Initialize()
         {
@@ -161,6 +164,19 @@ namespace Content.Server.Kitchen.EntitySystems
 
             var outputContainer = _itemSlotsSystem.GetItemOrNull(uid, SharedReagentGrinder.BeakerSlotId);
             _appearanceSystem.SetData(uid, ReagentGrinderVisualState.BeakerAttached, outputContainer.HasValue);
+
+            if (outputContainer.HasValue)
+            {
+                var appearanceComponent = _entManager.GetComponent<AppearanceComponent>(outputContainer.Value);
+
+                _appearanceSystem.TryGetData(outputContainer.Value, SolutionContainerVisuals.Color, out var color);
+                _appearanceSystem.TryGetData(outputContainer.Value, SolutionContainerVisuals.FillFraction, out var fraction);
+
+                if (color != null)
+                    _appearanceSystem.SetData(uid, ReagentGrinderVisualState.Color, color);
+                if (fraction != null)
+                    _appearanceSystem.SetData(uid, ReagentGrinderVisualState.FillFraction, fraction);
+            }
 
             if (reagentGrinder.AutoMode != GrinderAutoMode.Off && !HasComp<ActiveReagentGrinderComponent>(uid) && this.IsPowered(uid, EntityManager))
             {

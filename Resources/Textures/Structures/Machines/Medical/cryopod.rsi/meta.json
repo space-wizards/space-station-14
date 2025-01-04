@@ -36,6 +36,18 @@
     },
     {
       "name": "pod-off"
+    },
+    {
+      "name": "beakerSlot1"
+    },
+    {
+      "name": "beakerSlot2"
+    },
+    {
+      "name": "beakerSlot3"
+    },
+    {
+      "name": "beakerSlot4"
     }
   ]
 }

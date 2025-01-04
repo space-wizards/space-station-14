@@ -65,7 +65,9 @@ namespace Content.Shared.Kitchen
     [Serializable, NetSerializable]
     public enum ReagentGrinderVisualState : byte
     {
-        BeakerAttached
+        BeakerAttached,
+        Color,
+        FillFraction
     }
 
     [Serializable, NetSerializable]

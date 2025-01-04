@@ -1,11 +1,11 @@
-﻿- type: entity
+- type: entity
   parent: [BaseStructure, ConstructibleMachine] # Not a BaseMachinePowered since we don't want the anchorable component
   id: CryoPod
   name: cryo pod
   description: A special machine intended to create a safe environment for the use of chemicals that react in cold environments.
   components:
   - type: Sprite
-    sprite: Structures/Machines/cryogenics.rsi
+    sprite: Structures/Machines/Medical/cryopod.rsi
     drawdepth: Mobs
     noRot: true
     offset: 0, 0.5
@@ -21,6 +21,9 @@
         visible: false
       - state: pod-panel
         map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+        visible: false
+      - state: beakerSlot1
+        map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: InteractionOutline
   - type: Transform
@@ -101,7 +104,6 @@
     requiresComplex: false
   - type: ActivatableUIRequiresPower
   - type: PointLight
-    color: "#3a807f"
     radius: 2
     energy: 10
     enabled: false
@@ -115,3 +117,7 @@
   - type: GuideHelp
     guides:
     - Cryogenics
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    insertedItemSlotID: beakerSlot
+    fillBaseName: beakerSlot
