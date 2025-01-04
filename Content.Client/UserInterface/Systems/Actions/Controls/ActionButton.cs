@@ -4,6 +4,8 @@ using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Client.Stylesheets;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Systems;
+using FastAccessors;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -22,6 +24,7 @@ public sealed class ActionButton : Control, IEntityControl
     private IEntityManager _entities;
     private SpriteSystem? _spriteSys;
     private ActionUIController? _controller;
+    private ActionChargesSystem _chargesSys;
     private bool _beingHovered;
     private bool _depressed;
     private bool _toggled;
@@ -65,6 +68,7 @@ public sealed class ActionButton : Control, IEntityControl
 
         _entities = entities;
         _spriteSys = spriteSys;
+        _chargesSys = _entities.System<ActionChargesSystem>();
         _controller = controller;
 
         MouseFilter = MouseFilterMode.Pass;
@@ -195,10 +199,15 @@ public sealed class ActionButton : Control, IEntityControl
         var name = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityName));
         var decr = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityDescription));
 
-        if (_action is { Charges: not null })
+        if (_entities.TryGetComponent(ActionId, out ActionChargesComponent? actionCharges))
         {
-            var charges = FormattedMessage.FromMarkupPermissive(Loc.GetString($"Charges: {_action.Charges.Value.ToString()}/{_action.MaxCharges.ToString()}"));
-            return new ActionAlertTooltip(name, decr, charges: charges);
+            var charges = _chargesSys.GetCurrentCharges((ActionId.Value, actionCharges, null));
+
+            if (charges != null)
+            {
+                var chargesText = FormattedMessage.FromMarkupPermissive(Loc.GetString($"Charges: {charges.Value.ToString()}/{actionCharges.MaxCharges.ToString()}"));
+                return new ActionAlertTooltip(name, decr, charges: chargesText);
+            }
         }
 
         return new ActionAlertTooltip(name, decr);
