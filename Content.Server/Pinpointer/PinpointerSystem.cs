@@ -2,16 +2,16 @@ using Content.Shared.Interaction;
 using Content.Shared.Pinpointer;
 using System.Linq;
 using System.Numerics;
-using Robust.Shared.Utility;
-using Content.Server.Shuttles.Events;
 using Content.Shared.IdentityManagement;
-
+using Content.Shared.Tag;
+using Content.Shared.Verbs;
 namespace Content.Server.Pinpointer;
 
 public sealed class PinpointerSystem : SharedPinpointerSystem
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -21,7 +21,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         _xformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeLocalEvent<PinpointerComponent, ActivateInWorldEvent>(OnActivate);
-        SubscribeLocalEvent<FTLCompletedEvent>(OnLocateTarget);
+        SubscribeLocalEvent<PinpointerComponent, GetVerbsEvent<Verb>>(OnPinpointerVerb);
     }
 
     public override bool TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
@@ -45,49 +45,29 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
     private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled || !args.Complex)
-            return;
-
         TogglePinpointer(uid, component);
-
-        if (!component.CanRetarget)
-            LocateTarget(uid, component);
-
-        args.Handled = true;
     }
 
-    private void OnLocateTarget(ref FTLCompletedEvent ev)
+    /// <summary>
+    ///     Searches the closest object that has a specific component, this entity is then added to the stored targets.
+    /// </summary>
+    private void LocateTarget(EntityUid uid, PinpointerComponent component,IComponent selectedComponent, EntityUid user)
     {
-        // This feels kind of expensive, but it only happens once per hyperspace jump
+        var target = FindTargetFromComponent(uid, selectedComponent.GetType());
 
-        // todo: ideally, you would need to raise this event only on jumped entities
-        // this code update ALL pinpointers in game
-        var query = EntityQueryEnumerator<PinpointerComponent>();
-
-        while (query.MoveNext(out var uid, out var pinpointer))
+        //Don't track or store the target if a fake variant is in the list of tracked targets.
+        if (target != null)
         {
-            if (pinpointer.CanRetarget)
-                continue;
-
-            LocateTarget(uid, pinpointer);
-        }
-    }
-
-    private void LocateTarget(EntityUid uid, PinpointerComponent component)
-    {
-        // try to find target from whitelist
-        if (component.IsActive && component.Component != null)
-        {
-            if (!EntityManager.ComponentFactory.TryGetRegistration(component.Component, out var reg))
+            foreach (var storedTarget in component.StoredTargets)
             {
-                Log.Error($"Unable to find component registration for {component.Component} for pinpointer!");
-                DebugTools.Assert(false);
-                return;
+                if (_tagSystem.HasTag(storedTarget, "FakeNukeDisk") && _tagSystem.HasTag(target.Value, "RealNukeDisk"))
+                    target = storedTarget;
             }
-
-            var target = FindTargetFromComponent(uid, reg.Type);
-            SetTarget(uid, target, component);
         }
+
+        SetTarget(uid, target, component, user,true);
+        StoreTarget(target, uid, component, user);
+
     }
 
     public override void Update(float frameTime)
@@ -146,7 +126,12 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         var target = pinpointer.Target;
         if (target == null || !EntityManager.EntityExists(target.Value))
         {
+            //Updates appearance when currently tracking entity gets deleted or moves off-station
+            if (pinpointer.DistanceToTarget == Distance.Unknown)
+                return;
+
             SetDistance(uid, Distance.Unknown, pinpointer);
+            UpdateAppearance(uid,pinpointer);
             return;
         }
 
@@ -201,5 +186,104 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             return Distance.Medium;
         else
             return Distance.Far;
+    }
+
+    /// <summary>
+    ///     Clears the list with stored targets and turns off the pinpointer.
+    /// </summary>
+    private void RemoveAllStoredTargets(EntityUid uid, PinpointerComponent component)
+    {
+        for (var i = component.StoredTargets.Count - 1; i >= 0; i--)
+        {
+            var target = component.StoredTargets[i];
+            if (!TryComp<TrackableComponent>(target, out var trackable))
+                continue;
+
+            //Remove the Trackable component if no other entity is tracking the target.
+            if (trackable.TrackedBy.Count == 1)
+                RemCompDeferred<TrackableComponent>(target);
+            //Remove the pinpointer from the target's TrackedBy list and
+            //remove the target from the pinpointer's target list.
+            else
+            {
+                trackable.TrackedBy.Remove(uid);
+                RemoveTarget(target, component,uid);
+            }
+        }
+
+        //Set the current target to null so the arrow doesn't keep pointing towards the last selected target.
+        component.Target = null;
+
+        if (component.IsActive)
+        {
+            TogglePinpointer(uid, component);
+        }
+    }
+
+    /// <summary>
+    ///     Adds a verb that allows the user to search for the closest target containing a certain component, a verb that
+    ///     allows the user to select any of the stored targets and a verb that allows the user to clear the stored targets.
+    /// </summary>
+    private void OnPinpointerVerb(EntityUid uid, PinpointerComponent component, GetVerbsEvent<Verb> args)
+    {
+        if (!args.CanInteract || args.Hands == null)
+            return;
+
+        //Adds the closest target verb if there is at least 1 stored component, there is no need to show an empty list.
+        if (component.Components.Count > 0)
+        {
+            foreach (var targetComponent in component.Components)
+            {
+                args.Verbs.Add(new Verb()
+                {
+                    Text = Loc.GetString( "name-pinpointer-component-" + targetComponent.Key),
+                    Act = () => LocateTarget(uid, component, targetComponent.Value.Component, args.User),
+                    Priority = 100,
+                    Category = VerbCategory.SearchClosest,
+                });
+            }
+        }
+
+        var storedOrder1 = 0;
+        var storedOrder10 = 0;
+
+        //Adds the target selection verb if there is at least 1 stored target, no need to show an empty list.
+        if (component.StoredTargets.Count > 0)
+        {
+            foreach (var target in component.StoredTargets)
+            {
+                storedOrder1++;
+                if (storedOrder1 == 10)
+                {
+                    storedOrder1 = 0;
+                    storedOrder10++;
+                }
+
+                // Adds a number in front of a name to order the list based on order added
+                var storedPrefix = Loc.GetString("prefix-pinpointer-targets",
+                    ("storedOrder10", storedOrder10),("storedOrder1", storedOrder1));
+
+                args.Verbs.Add(new Verb()
+                {
+                    Text = storedPrefix + " " + Identity.Name(target, EntityManager),
+                    Act = () => SetTarget(uid, target, component, args.User, true),
+                    Priority = 50,
+                    Category = VerbCategory.SelectTarget,
+                });
+            }
+        }
+
+        //Adds the stored target reset verb if there is at least 1 stored target,
+        //no need to reset if there are no stored targets.
+        if (component.StoredTargets.Count > 0)
+        {
+            args.Verbs.Add(new Verb()
+            {
+                Text = Loc.GetString("reset-pinpointer-targets"),
+                Act = () => RemoveAllStoredTargets(uid, component),
+                Category = null,
+                Priority = 25
+            });
+        }
     }
 }

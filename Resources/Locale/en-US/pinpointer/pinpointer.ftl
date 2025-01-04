@@ -1,1 +1,13 @@
 ﻿examine-pinpointer-linked = It is tracking: {$target}
+targeting-pinpointer-succeeded = Target changed to: {$target}
+targeting-pinpointer-failed = No target detected
+targeting-pinpointer-already-tracked = Already tracking selected target
+cycle-pinpointer-target = Change target
+prefix-pinpointer-targets = [{$storedOrder10}{$storedOrder1}]
+reset-pinpointer-targets = Reset targets
+target-pinpointer-stored = {$target} has been saved
+target-pinpointer-full = Pinpointer tracking storage is full
+name-pinpointer-component-NukeDisk= nuclear authentication disk
+name-pinpointer-component-Nuke = nuclear fission explosive
+name-pinpointer-component-BecomesStation = space station
+name-pinpointer-component-ResearchServer = research server

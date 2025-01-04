@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Pinpointer;
@@ -11,52 +12,89 @@ namespace Content.Shared.Pinpointer;
 [Access(typeof(SharedPinpointerSystem))]
 public sealed partial class PinpointerComponent : Component
 {
-    // TODO: Type serializer oh god
-    [DataField("component"), ViewVariables(VVAccess.ReadWrite)]
-    public string? Component;
+    /// <summary>
+    ///     A list of components that will be searched for when selected from the verb menu.
+    ///     The closest entities found with one of the components in this list will be added to the StoredTargets.
+    /// </summary>
+    [DataField]
+    public ComponentRegistry Components = new();
 
-    [DataField("mediumDistance"), ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    ///     A list of entities that are stored on the pinpointer
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public readonly List<EntityUid> StoredTargets = new();
+
+    /// <summary>
+    ///     The maximum amount of targets the pinpointer is able to store
+    /// </summary>
+    [DataField]
+    public int MaxTargets = 10;
+
+    /// <summary>
+    ///     The arrow's colour is red when the tile distance to the target is higher than this value and blue when below.
+    /// </summary>
+    [DataField]
     public float MediumDistance = 16f;
 
-    [DataField("closeDistance"), ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    ///     The arrow's colour is blue when the tile distance to the target is higher than this value and green when below.
+    /// </summary>
+    [DataField]
     public float CloseDistance = 8f;
 
-    [DataField("reachedDistance"), ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    ///     The arrow's colour is green when the tile distance to the target is higher than this value and the arrow
+    ///     turns into a black dot when below this value.
+    /// </summary>
+    [DataField]
     public float ReachedDistance = 1f;
 
     /// <summary>
     ///     Pinpointer arrow precision in radians.
     /// </summary>
-    [DataField("precision"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public double Precision = 0.09;
 
     /// <summary>
     ///     Name to display of the target being tracked.
     /// </summary>
-    [DataField("targetName"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public string? TargetName;
 
     /// <summary>
     ///     Whether or not the target name should be updated when the target is updated.
     /// </summary>
-    [DataField("updateTargetName"), ViewVariables(VVAccess.ReadWrite)]
-    public bool UpdateTargetName;
+    [DataField]
+    public bool UpdateTargetName = true;
 
     /// <summary>
     ///     Whether or not the target can be reassigned.
     /// </summary>
-    [DataField("canRetarget"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public bool CanRetarget;
 
-    [ViewVariables]
+    /// <summary>
+    ///     The current target.
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
     public EntityUid? Target = null;
 
+    /// <summary>
+    ///     If the pinpointer is turned on.
+    /// </summary>
     [ViewVariables, AutoNetworkedField]
     public bool IsActive = false;
 
+    /// <summary>
+    ///     The angle the arrow is pointing at.
+    /// </summary>
     [ViewVariables, AutoNetworkedField]
     public Angle ArrowAngle;
 
+    /// <summary>
+    ///     The distance towards the target.
+    /// </summary>
     [ViewVariables, AutoNetworkedField]
     public Distance DistanceToTarget = Distance.Unknown;
 

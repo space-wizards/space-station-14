@@ -1,10 +1,14 @@
-namespace Content.Server.Nuke
+using Robust.Shared.GameStates;
+
+namespace Content.Shared.Nuke
 {
     /// <summary>
     ///     Paper with a written nuclear code in it.
     ///     Can be used in mapping or admins spawn.
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
+    [AutoGenerateComponentState]
+    [Access(typeof(SharedNukeCodePaperSystem))]
     public sealed partial class NukeCodePaperComponent : Component
     {
         /// <summary>
@@ -12,7 +16,13 @@ namespace Content.Server.Nuke
         /// station as the paper, or if it will get a random code from all
         /// possible nukes.
         /// </summary>
-        [DataField("allNukesAvailable")]
+        [DataField]
         public bool AllNukesAvailable;
+
+        /// <summary>
+        /// The nuke that will get primed using the code on the paper.
+        /// </summary>
+        [ViewVariables, AutoNetworkedField]
+        public EntityUid? Nuke;
     }
 }

@@ -45,9 +45,24 @@
   parent: [ PinpointerBase, BaseCommandContraband ]
   components:
   - type: Pinpointer
-    component: NukeDisk
-    targetName: nuclear authentication disk
-
+    components:
+    - type: NukeDisk
+    - type: Nuke
+      explosionType: Default
+      maxIntensity: 100
+      intensitySlope: 5
+      totalIntensity: 5000000
+      diskSlot:
+        name: Disk
+        insertSound:
+          path: /Audio/Machines/terminal_insert_disc.ogg
+        ejectSound:
+          path: /Audio/Machines/terminal_insert_disc.ogg
+        whitelist:
+          components:
+          - NukeDisk
+      alertLevelOnActivate: delta
+      alertLevelOnDeactivate: green
 - type: entity
   name: syndicate pinpointer
   description: Produced specifically for nuclear operative missions, get that disk!
@@ -65,8 +80,10 @@
   - type: Icon
     state: pinpointer-syndicate
   - type: Pinpointer
-    component: NukeDisk
-    targetName: nuclear authentication disk
+    components:
+    - type: NukeDisk
+    - type: BecomesStation
+      id: station
 
 - type: entity
   name: universal pinpointer
@@ -85,7 +102,6 @@
   - type: Icon
     state: pinpointer-way
   - type: Pinpointer
-    updateTargetName: true
     canRetarget: true
 
 - type: entity
@@ -97,14 +113,33 @@
   components:
   - type: Sprite
     layers:
-    - state: pinpointer-station
+    - state: pinpointer-way
       map: ["enum.PinpointerLayers.Base"]
     - state: pinonnull
       map: ["enum.PinpointerLayers.Screen"]
       shader: unshaded
       visible: false
   - type: Icon
-    state: pinpointer-station
+    state: pinpointer-way
   - type: Pinpointer
-    component: ResearchServer
-    targetName: the station
+    components:
+    - type: BecomesStation
+      id: station
+
+- type: entity
+  parent: PinpointerStation
+  name: ninja pinpointer
+  description: A handheld tracking device that leads to the direction of any nearby station and any nearby research servers.
+  id: PinpointerNinja
+  suffix: Ninja
+  components:
+  - type: Sprite
+    layers:
+    - state: pinpointer-ninja
+  - type: Icon
+    state: pinpointer-ninja
+  - type: Pinpointer
+    components:
+    - type: BecomesStation
+      id: station
+    - type: ResearchServer

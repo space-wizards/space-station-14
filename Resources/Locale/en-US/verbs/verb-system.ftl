@@ -28,6 +28,8 @@ verb-categories-lever = Lever
 verb-categories-select-type = Select Type
 verb-categories-fax = Set Destination
 verb-categories-power-level = Power Level
+verb-categories-select-target = Select target
+verb-categories-search-closest = Target closest
 
 verb-common-toggle-light = Toggle light
 verb-common-close = Close
