@@ -79,13 +79,25 @@
 - type: localizedDataset
   id: RobustSoftdrinksAds
   values:
-    prefix: advertisement-cola-
+    prefix: advertisement-robust-
     count: 8
 
 - type: localizedDataset
-  id: GibbSoftdrinksAds
+  id: DrGibbAds
   values:
     prefix: advertisement-gibb-
+    count: 8
+
+- type: localizedDataset
+  id: PwrGameAds
+  values:
+    prefix: advertisement-pwr-
+    count: 8
+    
+- type: localizedDataset
+  id: SpaceColaAds
+  values:
+    prefix: advertisement-cola-
     count: 8
 
 - type: localizedDataset
