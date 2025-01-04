@@ -73,7 +73,7 @@ public sealed class StoreTests
             Assert.That(invSystem.TryEquip(human, pda, "id"));
 
             FixedPoint2 originalBalance = 20;
-            uplinkSystem.AddUplink(human, originalBalance, null, true);
+            uplinkSystem.AddUplink(human, originalBalance, pda, true);
 
             var storeComponent = entManager.GetComponent<StoreComponent>(pda);
             var discountComponent = entManager.GetComponent<StoreDiscountComponent>(pda);
