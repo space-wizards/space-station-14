@@ -56,11 +56,18 @@ public sealed partial class PowerWireAction : BaseWireAction
     // Getting it from a dictionary is significantly more expensive.
     private void SetPower(EntityUid owner, bool pulsed)
     {
-        if (!EntityManager.TryGetComponent(owner, out ApcPowerReceiverComponent? power))
+        if (EntityManager.TryGetComponent(owner, out ApcPowerReceiverComponent? power))
         {
-            return;
+            SetPoweredState(power, pulsed, owner);
         }
+        else if (EntityManager.TryGetComponent(owner, out ApcComponent? apc))
+        {
+            SetPoweredState(apc, pulsed, owner);
+        }
+    }
 
+    private void SetPoweredState(dynamic power, bool pulsed, EntityUid owner)
+    {
         if (pulsed)
         {
             power.PowerDisabled = true;
