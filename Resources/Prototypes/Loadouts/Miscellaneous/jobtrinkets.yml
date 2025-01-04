@@ -1,0 +1,457 @@
+﻿# Job-specific trinkets
+
+- type: loadout
+  id: LizardPlushieCaptain
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobCaptain
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobCaptain
+
+- type: loadout
+  id: LizardPlushieHeadOfPersonnel
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobHeadOfPersonnel
+      time: 72000 # 20hr
+  storage:
+    back:
+      - PlushieLizardJobHeadofpersonnel
+
+- type: loadout
+  id: LizardPlushiePassenger
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPassenger
+      time: 72000 # 20hr
+  storage:
+    back:
+      - PlushieLizardJobPassenger
+
+- type: loadout
+  id: LizardPlushieBartender
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobBartender
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobBartender
+
+- type: loadout
+  id: LizardPlushieServiceWorker
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobServiceWorker
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobServiceworker
+
+- type: loadout
+  id: LizardPlushieChef
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChef
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobChef
+
+- type: loadout
+  id: LizardPlushieLibrarian
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobLibrarian
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobLibrarian
+
+- type: loadout
+  id: LizardPlushieLawyer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobLawyer
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobLawyer
+
+- type: loadout
+  id: LizardPlushieChaplain
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChaplain
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobChaplain
+
+- type: loadout
+  id: LizardPlushieJanitor
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobJanitor
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobJanitor
+
+- type: loadout
+  id: LizardPlushieBotanist
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobBotanist
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobBotanist
+
+- type: loadout
+  id: LizardPlushieClown
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobClown
+
+- type: loadout
+  id: LizardPlushieMime
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMime
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobMime
+
+- type: loadout
+  id: LizardPlushieMusician
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMusician
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobMusician
+
+- type: loadout
+  id: LizardPlushieQuartermaster
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobQuartermaster
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobQuartermaster
+
+- type: loadout
+  id: LizardPlushieCargoTechnician
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobCargoTechnician
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobCargotechnician
+
+- type: loadout
+  id: LizardPlushieSalvageSpecialist
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobSalvagespecialist
+
+- type: loadout
+  id: LizardPlushieChiefEngineer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChiefEngineer
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobChiefengineer
+
+- type: loadout
+  id: LizardPlushieTechnicalAssistant
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobTechnicalassistant
+
+- type: loadout
+  id: LizardPlushieStationEngineer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobStationEngineer
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobStationengineer
+
+- type: loadout
+  id: LizardPlushieAtmosphericTechnician
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobAtmosphericTechnician
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobAtmospherictechnician
+
+- type: loadout
+  id: LizardPlushieResearchDirector
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobResearchDirector
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobResearchdirector
+
+- type: loadout
+  id: LizardPlushieScientist
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobScientist
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobScientist
+
+- type: loadout
+  id: LizardPlushieResearchAssistant
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Science
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobResearchassistant
+
+- type: loadout
+  id: LizardPlushieHeadofSecurity
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobHeadOfSecurity
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobHeadofsecurity
+
+- type: loadout
+  id: LizardPlushieWarden
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobWarden
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobWarden
+
+- type: loadout
+  id: LizardPlushieDetective
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobDetective
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobDetective
+
+- type: loadout
+  id: LizardPlushieSecurity
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobSecurityofficer
+
+- type: loadout
+  id: LizardPlushieSecurityCadet
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Security
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobSecuritycadet
+
+- type: loadout
+  id: LizardPlushieChiefMedicalOfficer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChiefMedicalOfficer
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobChiefmedicalofficer
+
+- type: loadout
+  id: LizardPlushieMedicalDoctor
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobMedicaldoctor
+
+- type: loadout
+  id: LizardPlushieMedicalIntern
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Medical
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobMedicalintern
+
+- type: loadout
+  id: LizardPlushieChemist
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChemist
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobChemist
+
+- type: loadout
+  id: LizardPlushieParamedic
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobParamedic
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobParamedic
+
+- type: loadout
+  id: LizardPlushieReporter
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobReporter
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobReporter
+
+- type: loadout
+  id: LizardPlushiePsychologist
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPsychologist
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobPsychologist
+
+- type: loadout
+  id: LizardPlushieBoxer
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobBoxer
+        time: 72000 # 20hr
+  storage:
+    back:
+      - PlushieLizardJobBoxer
+
+- type: loadout
+  id: LizardPlushieZookeeper
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobZookeeper
+      time: 72000 # 20hr
+  storage:
+    back:
+    - PlushieLizardJobZookeeper
