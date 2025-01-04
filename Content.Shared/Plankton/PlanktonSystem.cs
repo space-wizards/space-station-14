@@ -11,6 +11,7 @@ using Content.Shared.Light.Components;
 using Content.Server.Light.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Radiation.Events;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Plankton
 {
@@ -264,20 +265,22 @@ namespace Content.Shared.Plankton
                         }
                         else
                         {
-                            planktonInstance.CurrentHunger += 0.5;
-                            Log.Info("{planktonInstance.SpeciesName} is increasing satiation to {planktonInstance.CurrentHunger} from consuming radiation);
+                            planktonInstance.CurrentHunger += (float)0.5;
+
+                            Log.Info($"{planktonInstance.SpeciesName} has eaten radiaiton to {planktonInstance.CurrentHunger}");
                         }
                 }
                 else
                 {
-                    planktonInstance.CurrentSize -= 0.5;
-                    component.DeadPlankton += 0.5;
-                    Log.Info($"{planktonInstance.SpeciesName} is dying due to radiation exposure! Current size is {planktonInstance.CurrentSize})
+                    planktonInstance.CurrentSize -= (float)0.5;
+                    component.DeadPlankton += (float)0.5;
+
+                    Log.Info($"{planktonInstance.SpeciesName} is dying due to radiation exposure! Current size is {planktonInstance.CurrentSize}");
 
                     if (planktonInstance.CurrentSize <= 0)
                     {
                         planktonInstance.IsAlive = false;
-                        Log.Info($"{planktonInstance.SpeciesName} has been killed by excess radiation exposure")
+                        Log.Info($"{planktonInstance.SpeciesName} has been killed by excess radiation exposure");
                     }
                 }
 
@@ -303,6 +306,12 @@ namespace Content.Shared.Plankton
                         {
                                 PerformCarnivoreCheck(component);
                         }
+
+                        if (planktonInstance.Diet == PlanktonComponent.PlanktonDiet.Photosynthetic)
+                        {       float PhotosyntheticFood = 0.001f;
+                                planktonInstance.CurrentHunger += PhotosyntheticFood;
+                                Log.Info($"{planktonInstance.SpeciesName} photosynthesizing");
+                        }
                 }
             }
         }
@@ -326,7 +335,6 @@ namespace Content.Shared.Plankton
         private void PerformAggressionCheck(PlanktonComponent component)
 {
 
-    // Collect all plankton instances that need to be deleted
     var planktonToRemove = new List<PlanktonComponent.PlanktonSpeciesInstance>();
 
     foreach (var planktonEntity in EntityManager.EntityQuery<PlanktonComponent>())
@@ -349,11 +357,9 @@ namespace Content.Shared.Plankton
                     }
                     if (!otherPlankton.IsAlive)
                     {
-                        Log.Error($"{aggressivePlankton.SpeciesName}'s target is dead.");
                         continue;
                     }
 
-                    // Check if the plankton instance should be removed (e.g., it was wiped out)
                     if (otherPlankton.CurrentSize <= 0)
                     {
                         planktonToRemove.Add(otherPlankton);
@@ -364,8 +370,6 @@ namespace Content.Shared.Plankton
     }
 
 
-
-    // Remove the dead plankton species instances after the loop
     foreach (var plankton in planktonToRemove)
     {
         plankton.IsAlive = false;
@@ -375,8 +379,6 @@ namespace Content.Shared.Plankton
 
      private void PerformCarnivoreCheck(PlanktonComponent component)
 {
-    Log.Info($"Performing canivore check");
-    // Collect all plankton instances that need to be deleted
     var planktonToRemoveCarnivore = new List<PlanktonComponent.PlanktonSpeciesInstance>();
 
     foreach (var planktonEntity in EntityManager.EntityQuery<PlanktonComponent>())
@@ -391,23 +393,21 @@ namespace Content.Shared.Plankton
         {
             foreach (var carnivorousPlankton in carnivorousPlanktonInstances)
             {
-                 int carnivoreCount = carnivorousPlankton.CurrentSize;  // Total number of carnivores
-                 float huntMultiplier = carnivoreCount * 0.05f;
+                 int carnivoreCount = (int)carnivorousPlankton.CurrentSize;
+                 float huntMultiplier = carnivoreCount * 0.005f;
                 foreach (var otherPlankton in component.SpeciesInstances)
                 {
                     if (carnivorousPlankton == otherPlankton) continue;
                     if (otherPlankton.IsAlive == true && carnivorousPlankton.IsAlive == true)
                     {
-                        ReducePlanktonSizeCarnivorous(otherPlankton, component, carnivorousPlankton);
+                        float sizeReduction = 0.1f + huntMultiplier;
+                        ReducePlanktonSizeCarnivorous(otherPlankton, component, carnivorousPlankton, sizeReduction);
                     }
 
                     if (!otherPlankton.IsAlive)
                     {
-                        Log.Error($"{carnivorousPlankton.SpeciesName} will start starving soon due to killing all prey.");
+                        continue;
                     }
-
-                    float sizeReduction = 0.5f + huntMultiplier;  // Multiply by the number of carnivores
-                    ReducePlanktonSizeCarnivorous(otherPlankton,
 
                     // Check if the plankton instance should be removed
                     if (otherPlankton.CurrentSize <= 0)
@@ -494,7 +494,7 @@ namespace Content.Shared.Plankton
             // Ensure hunger doesn't exceed 50 and log if full
             if (planktonInstance.CurrentHunger >= 51f)
             {
-                planktonInstance.CurrentHunger = 50f;  // Clamp the hunger to a maximum of 50
+                planktonInstance.CurrentHunger = 50f;
                 Log.Error($"{planktonInstance.SpeciesName} is full.");
             }
            }
@@ -511,7 +511,7 @@ namespace Content.Shared.Plankton
                     var growthExponent = growthRate * planktonInstance.CurrentSize;
 
                     planktonInstance.CurrentSize += growthExponent;
-                    Log.Info($"{planktonInstance.SpeciesName} is a class-I plankton that has grown to size {planktonInstance.CurrentSize}");
+                    Log.Info($"{planktonInstance.SpeciesName} is a class-I plankton");
                 }
                 if (planktonInstance.IsAlive && planktonInstance.CurrentHunger >= 45 && planktonInstance.CurrentSize <= 200)
                 {
@@ -519,7 +519,7 @@ namespace Content.Shared.Plankton
                     var growthExponent = growthRate * planktonInstance.CurrentSize;
 
                     planktonInstance.CurrentSize += growthExponent;
-                    Log.Info($"{planktonInstance.SpeciesName} is a class-II plankton that has grown to size {planktonInstance.CurrentSize}");
+                    Log.Info($"{planktonInstance.SpeciesName} is a class-II plankton");
                 }
                 if (planktonInstance.IsAlive && planktonInstance.CurrentHunger >= 50 && planktonInstance.CurrentSize >= 200)
                 {
@@ -527,7 +527,7 @@ namespace Content.Shared.Plankton
                     var growthExponent = growthRate * planktonInstance.CurrentSize;
 
                     planktonInstance.CurrentSize += growthExponent;
-                    Log.Info($"{planktonInstance.SpeciesName} is a class-III plankton that has grown to size {planktonInstance.CurrentSize}");
+                    Log.Info($"{planktonInstance.SpeciesName} is a class-III plankton");
                 }
             }
         }

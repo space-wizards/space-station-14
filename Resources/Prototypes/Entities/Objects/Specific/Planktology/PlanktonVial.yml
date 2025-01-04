@@ -4,7 +4,6 @@
   description: A vial designed to hold plankton cultures.
   parent: BaseChemistryEmptyVial
   components:
-    - type: Plankton
     - type: SolutionContainerManager
       solutions:
         beaker:

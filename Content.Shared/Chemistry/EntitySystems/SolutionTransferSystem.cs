@@ -297,7 +297,7 @@ private void TransferPlanktonComponent(EntityUid sourceEntity, EntityUid targetE
 {
     if (TryComp<PlanktonComponent>(sourceEntity, out var planktonSource))
     {
-        // If target does not have a PlanktonComponent, add one
+        // If the target doesn't have a PlanktonComponent, add one
         if (!HasComp<PlanktonComponent>(targetEntity))
         {
             _entityManager.AddComponent<PlanktonComponent>(targetEntity);
@@ -306,6 +306,7 @@ private void TransferPlanktonComponent(EntityUid sourceEntity, EntityUid targetE
 
         var planktonTarget = Comp<PlanktonComponent>(targetEntity);
 
+        // Transfer other plankton-related properties (ReagentId, Diet, Characteristics, etc.)
         planktonTarget.ReagentId = planktonSource.ReagentId;
         planktonTarget.DeadPlankton = planktonSource.DeadPlankton;
         planktonTarget.Diet = planktonSource.Diet;
@@ -313,44 +314,81 @@ private void TransferPlanktonComponent(EntityUid sourceEntity, EntityUid targetE
         planktonTarget.TemperatureToleranceLow = planktonSource.TemperatureToleranceLow;
         planktonTarget.TemperatureToleranceHigh = planktonSource.TemperatureToleranceHigh;
 
-       if (TryComp<PlanktonSeparatorComponent>(sourceEntity, out _))
+        // If there's a separator component, transfer only one species
+        if (TryComp<PlanktonSeparatorComponent>(sourceEntity, out _))
         {
-            // If there's a separator, randomly pick one species to transfer
+            // Randomly select a species to transfer
             if (planktonSource.SpeciesInstances.Count > 0)
             {
                 var randomIndex = _random.Next(planktonSource.SpeciesInstances.Count);
                 var selectedSpecies = planktonSource.SpeciesInstances[randomIndex];
 
-                // Add the selected species instance to the target's list
-                var newSpeciesInstance = new PlanktonComponent.PlanktonSpeciesInstance(
-                    selectedSpecies.SpeciesName,
-                    selectedSpecies.Diet,
-                    selectedSpecies.Characteristics,
-                    selectedSpecies.CurrentSize,
-                    selectedSpecies.CurrentHunger,
-                    selectedSpecies.IsAlive
-                );
-                planktonTarget.SpeciesInstances.Add(newSpeciesInstance);
+                // Check if the species already exists in the target container
+                var existingSpecies = planktonTarget.SpeciesInstances
+                    .FirstOrDefault(s => s.SpeciesName.ToString() == selectedSpecies.SpeciesName.ToString());
+
+                if (existingSpecies != null)
+                {
+                    // If the species exists, just add to the current size
+                    existingSpecies.CurrentSize += selectedSpecies.CurrentSize;
+                    if (existingSpecies.CurrentSize < 0)
+                    {
+                        existingSpecies.CurrentSize = 0; // Prevent negative size
+                    }
+                }
+                else
+                {
+                    // Add a new species if it doesn't exist in the target
+                    planktonTarget.SpeciesInstances.Add(new PlanktonComponent.PlanktonSpeciesInstance(
+                        selectedSpecies.SpeciesName,
+                        selectedSpecies.Diet,
+                        selectedSpecies.Characteristics,
+                        selectedSpecies.CurrentSize,
+                        selectedSpecies.CurrentHunger,
+                        selectedSpecies.IsAlive
+                    ));
+                }
+
+                // Log for debugging
+                Log.Info($"Plankton separator transferred species: {selectedSpecies.SpeciesName}");
             }
         }
         else
         {
-        // Add new species instances to the target's list without clearing it
-        foreach (var speciesInstance in planktonSource.SpeciesInstances)
-        {
-            var newSpeciesInstance = new PlanktonComponent.PlanktonSpeciesInstance(
-                speciesInstance.SpeciesName,
-                speciesInstance.Diet,
-                speciesInstance.Characteristics,
-                speciesInstance.CurrentSize,
-                speciesInstance.CurrentHunger,
-                speciesInstance.IsAlive
-            );
-            planktonTarget.SpeciesInstances.Add(newSpeciesInstance);
-        }
+            // If no separator, transfer all species normally (but avoid duplicates)
+            foreach (var species in planktonSource.SpeciesInstances)
+            {
+                // Check if the species already exists in the target container
+                var existingSpecies = planktonTarget.SpeciesInstances
+                    .FirstOrDefault(s => s.SpeciesName.ToString() == species.SpeciesName.ToString());
+
+                if (existingSpecies != null)
+                {
+                    // Update size if species exists
+                    existingSpecies.CurrentSize += species.CurrentSize;
+                    if (existingSpecies.CurrentSize < 0)
+                    {
+                        existingSpecies.CurrentSize = 0;
+                    }
+                }
+                else
+                {
+                    // Add the species to the target if it doesn't exist
+                    planktonTarget.SpeciesInstances.Add(new PlanktonComponent.PlanktonSpeciesInstance(
+                        species.SpeciesName,
+                        species.Diet,
+                        species.Characteristics,
+                        species.CurrentSize,
+                        species.CurrentHunger,
+                        species.IsAlive
+                    ));
+                }
+            }
         }
     }
 }
+
+
 
 
 }

@@ -1,3 +1,4 @@
+using Robust.Shared.Utility;
 using Content.Server.Popups;
 using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
@@ -11,10 +12,12 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Plankton;
+using System.Linq;
 
 namespace Content.Server.Plankton;
 
-public sealed class PlankonScannerSystem : EntitySystem
+public sealed class PlanktonScannerSystem : EntitySystem
 {
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -31,18 +34,21 @@ public sealed class PlankonScannerSystem : EntitySystem
     }
 
     private void OnBeforeRangedInteract(EntityUid uid, PlanktonScannerComponent component, BeforeRangedInteractEvent args)
-    {
-        if (args.Handled || !args.CanReach || args.Target is not {} target)
-            return;
+{
+    if (args.Handled || !args.CanReach || !args.Target.HasValue)
+        return;
 
-        if (!TryComp<PlanktonComponent>(target, out var plankton))
-            return;
+    var target = args.Target.Value; // Safe to use Value here
+    if (!TryComp<PlanktonComponent>(target, out var plankton))
+        return;
 
-        CreatePopup(uid, target, plankton);
-        args.Handled = true;
-    }
+    CreatePopup(uid, target, plankton, component); // Now passing a non-null EntityUid
 
-    private void AddScanVerb(EntityUid uid, PlanktonScannerComponent scanner, GetVerbsEvent<UtilityVerb> args)
+    args.Handled = true;
+}
+
+
+    private void AddScanVerb(EntityUid uid, PlanktonScannerComponent component, GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanAccess)
             return;
@@ -54,7 +60,7 @@ public sealed class PlankonScannerSystem : EntitySystem
         {
             Act = () =>
             {
-                CreatePopup(uid, args.Target, plankton, scanner);
+                CreatePopup(uid, args.Target, plankton, component); // Fixed this line
             },
             Text = Loc.GetString("plankton-scan-tooltip")
         };
@@ -72,113 +78,95 @@ public sealed class PlankonScannerSystem : EntitySystem
             Text = Loc.GetString("toggle-analysis-verb-get-data-text"),
             Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/light.svg.192dpi.png")),
             Act = () => TryToggleAnalysis((uid, component), args.User),
-            Priority = -1 // For things like PDA's, Open-UI and other verbs that should be higher priority.
+            Priority = -1 // For things like PDA's, Open-UI, etc.
         };
 
         args.Verbs.Add(verb);
     }
 
-    public void TryToggleAnalysis(Entity<PlanktonScannerComponent?> ent, EntityUid? user = null, bool quiet = false)
-    {
-        if (!TryComp(ent, out var component))
-        return;
 
-        string ScanModeStatus;
-        
-        if (component.AnalysisMode)
-        {
-            ScanModeStatus = "analysis-mode-toggle-off";
-        }
-        else
-        {
-            ScanModeStatus = "analysis-mode-toggle-on";
-        }
-        
-        var messageSwitch = Loc.GetString(ScanModeStatus);
-        
-        _popupSystem.PopupEntity(messageSwitch, ent);
-        component.AnalysisMode = !component.AnalysisMode;
-    }
+    private void TryToggleAnalysis((EntityUid, PlanktonScannerComponent) data, EntityUid user)
+{
+    var (uid, component) = data;
+    component.AnalysisMode = !component.AnalysisMode;
+}
+
 
     private void CreatePopup(EntityUid uid, EntityUid target, PlanktonComponent component, PlanktonScannerComponent scanner)
-{
-    if (TryComp(uid, out UseDelayComponent? useDelay)
-        && !_useDelay.TryResetDelay((uid, useDelay), true))
-        return;
-
-    // Collects plankton species and living status from the target
-    var planktonNames = component.SpeciesInstances
-        .Select(species => $"{species.SpeciesName} - {(species.IsAlive ? "ALIVE" : "DEAD")}")
-        .ToList();
-
-    // Header for the paper report
-    var message = Loc.GetString("plankton-scan-popup",
-        ("count", $"{component.SpeciesInstances.Count}"));
-
-    // Same as the paper report header, but just the popup.
-    var messagePopup = Loc.GetString("plankton-scan-popup",
-        ("count", $"{component.SpeciesInstances.Count}"));
-
-    var rewardPopup = Loc.GetString("plankton-reward-popup");
-
-    // Add the species names and status to the message if there are any
-    if (planktonNames.Count > 0)
     {
-        message += "\nSpecies names:\n" + string.Join("\n", planktonNames) + $"\nAmount of dead plankton: {component.DeadPlankton}";
-    }
+        if (TryComp(uid, out UseDelayComponent? useDelay)
+            && !_useDelay.TryResetDelay((uid, useDelay), true))
+            return;
 
-   if (planktonNames.Count == 1 && scanner.AnalysisMode)
-   {
-    var species = component.SpeciesInstances.First();
-    if (species.CurrentSize >= 50)
-    {
-        if ((species.Characteristics & PlanktonComponent.PlanktonCharacteristics.HyperExoticSpecies) != 0)
+        // Collects plankton species and living status from the target
+        var planktonNames = component.SpeciesInstances
+            .Select(species => $"{species.SpeciesName} - {(species.IsAlive ? "ALIVE" : "DEAD")}")
+            .ToList();
+
+        // Header for the paper report
+        var message = Loc.GetString("plankton-scan-popup", ("count", $"{component.SpeciesInstances.Count}"));
+
+        // Same as the paper report header, but just the popup.
+        var messagePopup = Loc.GetString("plankton-scan-popup", ("count", $"{component.SpeciesInstances.Count}"));
+
+        var rewardPopup = Loc.GetString("plankton-reward-popup");
+
+        // Add the species names and status to the message if there are any
+        if (planktonNames.Count > 0)
         {
-            var rewardSuper = Spawn(scanner.PlanktonAdvancedRewardEntityId, Transform(uid).Coordinates);
-            _popupSystem.PopupEntity(rewardPopup, target);
-            _audioSystem.PlayPvs(comp.PrintSound, uid);
+            message += "\nSpecies names:\n" + string.Join("\n", planktonNames) + $"\nAmount of dead plankton: {component.DeadPlankton}";
+        }
+
+        if (planktonNames.Count == 1 && scanner.AnalysisMode)
+        {
+            var species = component.SpeciesInstances.First();
+            if (species.CurrentSize >= 50)
+            {
+                if ((species.Characteristics & PlanktonComponent.PlanktonCharacteristics.HyperExoticSpecies) != 0)
+                {
+                    var rewardSuper = Spawn(scanner.PlanktonAdvancedRewardEntityId, Transform(uid).Coordinates);
+                    _popupSystem.PopupEntity(rewardPopup, target);
+                    _audioSystem.PlayPvs(scanner.PrintSound, uid);
+                }
+                else
+                {
+                    var reward = Spawn(scanner.PlanktonRewardEntityId, Transform(uid).Coordinates);
+                    _popupSystem.PopupEntity(rewardPopup, target);
+                    _audioSystem.PlayPvs(scanner.PrintSound, uid);
+                }
+            }
+            else
+            {
+                if (species.CurrentSize < 50) _popupSystem.PopupEntity("plankton-too-small-alert", target);
+            }
         }
         else
         {
+            if (planktonNames.Count > 1) _popupSystem.PopupEntity("too-many-plankton-alert", target);
+            if (planktonNames.Count == 0) _popupSystem.PopupEntity("no-plankton-alert", target);
+        }
 
-        
-            var reward = Spawn(scanner.PlanktonRewardEntityId, Transform(uid).Coordinates);
-            _popupSystem.PopupEntity(rewardPopup, target);
-            _audioSystem.PlayPvs(comp.PrintSound, uid);
+        if (!scanner.AnalysisMode)
+        {
+            _popupSystem.PopupEntity(messagePopup, target);
+
+            var report = Spawn(scanner.PlanktonReportEntityId, Transform(uid).Coordinates);
+            _metaSystem.SetEntityName(report, Loc.GetString("plankton-analysis-report-title", ("id", $"Plankton Scan Report")));
+            _audioSystem.PlayPvs(scanner.PrintSound, uid);
+
+            _paper.SetContent(report, message);
         }
     }
-    else 
-    {
-        if (species.CurrentSize < 50)  _popupSystem.PopupEntity("plankton-too-small-alert", target);
-    }
-   }
-   else
-   {
-       if (planktonNames.Count > 1)  _popupSystem.PopupEntity("too-many-plankton-alert", target);
-       if (planktonNames.Count == 0)  _popupSystem.PopupEntity("no-plankton-alert", target);
-   }
- if (!scanner.AnalysisMode)
-{
-    _popupSystem.PopupEntity(messagePopup, target);
-
-    var report = Spawn(scanner.PlanktonReportEntityId, Transform(uid).Coordinates);
-    _metaSystem.SetEntityName(report, Loc.GetString("plankton-analysis-report-title", ("id", $"Plankton Scan Report")));
-    _audioSystem.PlayPvs(comp.PrintSound, uid);
-
-    _paper.SetContent(report, message.ToMarkup());
-}
-}
 
     private void OnExamine(EntityUid uid, PlanktonScannerComponent component, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
 
-        var text = component.AnalysisMode 
-        ? "analysis-mode-on" 
+        var text = component.AnalysisMode
+        ? "analysis-mode-on"
         : "analysis-mode-off";
 
         args.PushMarkup(Loc.GetString(text));
     }
-
 }
