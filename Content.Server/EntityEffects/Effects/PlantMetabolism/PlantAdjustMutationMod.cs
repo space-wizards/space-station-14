@@ -1,3 +1,4 @@
+using Content.Server.Botany.Components;
 using Content.Shared.EntityEffects;
 using JetBrains.Annotations;
 
@@ -10,10 +11,11 @@ public sealed partial class PlantAdjustMutationMod : PlantAdjustAttribute
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        if (!CanMetabolize(args.TargetEntity, out var plantHolderComp, args.EntityManager))
+        var plantHolderComp = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+        if (plantHolderComp.PlantUid == null || !CanMetabolize(plantHolderComp.PlantUid.Value, out PlantComponent? plantComp, args.EntityManager))
             return;
 
-        plantHolderComp.MutationMod += Amount;
+        plantComp.MutationMod = Math.Clamp(plantComp.MutationMod + Amount, 1f, 3f);
     }
 }
 
