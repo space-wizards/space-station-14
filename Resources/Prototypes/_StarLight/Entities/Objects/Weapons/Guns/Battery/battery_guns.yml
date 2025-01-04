@@ -1,0 +1,38 @@
+- type: entity
+  name: hybrid taser
+  parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
+  id: WeaponAdvancedTaser
+  description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
+  components:
+  - type: Tag
+    tags:
+    - Taser
+    - Sidearm
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/adv_taser.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: disable
+      shader: unshaded
+    - state: stunmag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    heldPrefix: taser4
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Belt
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 150
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletDisabler
+      fireCost: 150
+    - proto: BulletAdvTaser
+      fireCost: 200
