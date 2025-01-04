@@ -12,6 +12,8 @@
   femaleFirstNames: apid_worker
   lastNames: names_apid
   sexes:
+  - Male
+  - Female
   - Unsexed
 
 - type: speciesBaseSprites

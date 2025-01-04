@@ -70,11 +70,8 @@
     weightlessAcceleration: 1.5 # zoom
     weightlessFriction: 1
     weightlessModifier: 1
-  - type: MovementIgnoreGravity #wheee
+  - type: MovementIgnoreGravity # nyoom
     gravityState: true
-  - type: Grammar
-    attributes:
-      proper: true
   - type: MeleeWeapon
     attackRate: 1
     soundHit:
