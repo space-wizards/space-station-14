@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ClothingBackpack
   id: ClothingBackpackChameleon
   name: backpack
@@ -20,7 +20,7 @@
           type: ChameleonBoundUserInterface
 
 - type: entity
-  parent: Clothing
+  parent: [Clothing, ClothingSlotBase]
   id: ClothingBackpackWaterTank
   name: backpack water tank
   description: Holds a large amount of fluids. Supplies to spray nozzles in your hands.
@@ -37,6 +37,20 @@
   - type: Clothing
     slots: BACK
     sprite: Clothing/Back/Backpacks/waterbackpack.rsi
+  - type: ItemSlots
+    slots:
+      item:
+        name: clothing-waterbackpack-loaded
+        whitelist:
+          tags:
+          - SprayNozzle
+  - type: ItemMapper
+    mapLayers:
+      icon-filled:
+        whitelist:
+          tags:
+            - SprayNozzle
+  - type: Appearance
   - type: SolutionAmmoProvider
     solutionId: tank
     proto: BulletWaterShot
@@ -61,3 +75,4 @@
     solution: tank
   - type: ExaminableSolution
     solution: tank
+
