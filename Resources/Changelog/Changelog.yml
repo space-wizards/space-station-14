@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: qwerltaz
-  changes:
-  - message: Made tesla a lot brighter.
-    type: Tweak
-  id: 7280
-  time: '2024-09-04T14:47:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31357
 - author: Allen
   changes:
   - message: Magboots and Science Magboots are no longer contraband. Advanced Magboots
@@ -3930,3 +3923,10 @@
   id: 7779
   time: '2025-01-04T00:40:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34206
+- author: themias
+  changes:
+  - message: Forensics are now applied to bullets when loading using an ammo box.
+    type: Fix
+  id: 7780
+  time: '2025-01-04T13:41:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32280
