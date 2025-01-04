@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: formlessnameless
   changes:
-  - message: Updated ghost bar join message
-    type: Tweak
-  id: 357
-  time: '2024-10-12T00:50:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/458
-- author: formlessnameless
-  changes:
   - message: The ling headslug now has all of the powers of a mouse
     type: Tweak
   - message: Ghost bar doors are all access, and there is now a Vox Box
@@ -4471,3 +4464,10 @@
   id: 856
   time: '2025-01-04T14:56:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1226
+- author: kipdotnet
+  changes:
+  - message: Banana has been updated!
+    type: Tweak
+  id: 857
+  time: '2025-01-04T15:13:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1222
