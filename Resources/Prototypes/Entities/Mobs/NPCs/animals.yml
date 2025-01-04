@@ -1727,6 +1727,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: MouseBites #imp
+          Quantity: 2
   - type: Butcherable
     spawned:
     - id: FoodMeatRat
