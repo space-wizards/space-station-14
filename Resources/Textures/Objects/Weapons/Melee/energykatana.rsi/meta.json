@@ -8,18 +8,29 @@
   },
   "states": [
     {
-      "name": "icon"
+      "name": "off-icon"
+    },
+    {
+      "name": "on-icon"
     },
     {
       "name": "equipped-BELT",
       "directions": 4
     },
     {
-      "name": "inhand-left",
+      "name": "off-inhand-left",
       "directions": 4
     },
     {
-      "name": "inhand-right",
+      "name": "on-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "off-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "on-inhand-right",
       "directions": 4
     },
     {
