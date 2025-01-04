@@ -53,6 +53,10 @@
   minLimit: 0
   loadouts:
   - Glasses
+  - GarGlasses
+  - OrangeGarGlasses
+  - GigaGarGlasses
+  - CheapSunglasses
   - GlassesJamjar
   - GlassesJensen
 
@@ -177,6 +181,46 @@
   loadouts:
   - GreyJumpsuit
   - GreyJumpskirt
+  - WhiteJumpsuit
+  - WhiteJumpskirt
+  - BlackJumpsuit
+  - BlackJumpskirt
+  - BlueJumpsuit
+  - BlueJumpskirt
+  - YellowJumpsuit
+  - YellowJumpskirt
+  - DarkBlueJumpsuit
+  - DarkBlueJumpskirt
+  - TealJumpsuit
+  - TealJumpskirt
+  - GreenJumpsuit
+  - GreenJumpskirt
+  - DarkGreenJumpsuit
+  - DarkGreenJumpskirt
+  - OrangeJumpsuit
+  - OrangeJumpskirt
+  - PinkJumpsuit
+  - PinkJumpskirt
+  - PurpleJumpsuit
+  - PurpleJumpskirt
+  - LightBrownJumpsuit
+  - LightBrownJumpskirt
+  - BrownJumpsuit
+  - BrownJumpskirt
+  - MaroonJumpsuit
+  - MaroonJumpskirt
+  - HawaiiBlack
+  - HawaiiBlue
+  - HawaiiRed
+  - HawaiiYellow
+  - FlannelRed
+  - Loungewear
+  - CasualBlueJumpsuit
+  - CasualBlueJumpskirt
+  - CasualPurpleJumpsuit
+  - CasualPurpleJumpskirt
+  - CasualRedJumpsuit
+  - CasualRedJumpskirt
   - AncientJumpsuit
   - RainbowJumpsuit
 
@@ -192,7 +236,7 @@
   name: loadout-group-passenger-gloves
   minLimit: 0
   loadouts:
-  - PassengerGloves
+  - FingerlessInsuls
 
 - type: loadoutGroup
   id: CommonBackpack
@@ -215,12 +259,23 @@
   minLimit: 0
   loadouts:
   - PassengerWintercoat
+  - BomberCoat
+  - GentleCoat
+  - JensenCoat
 
 - type: loadoutGroup
   id: PassengerShoes
   name: loadout-group-passenger-shoes
   loadouts:
   - BlackShoes
+  - WhiteShoes
+  - BrownShoes
+  - GreenShoes
+  - OrangeShoes
+  - RedShoes
+  - YellowShoes
+  - PurpleShoes
+  - TouristShoes
   - WinterBoots
 
 - type: loadoutGroup
