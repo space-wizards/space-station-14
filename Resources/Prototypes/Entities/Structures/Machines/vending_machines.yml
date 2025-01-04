@@ -490,6 +490,11 @@
   name: Space Cola Vendor
   description: It vends cola, in space.
   components:
+  - type: Advertise
+    pack: SpaceColaAds
+  - type: SpeakOnUIClosed
+    pack: SpaceColaGoodbyes
+  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/cola-red.rsi
     layers:
@@ -553,7 +558,7 @@
 - type: entity
   parent: VendingMachineCola
   id: VendingMachineStarkist
-  name: Star-kist Vendor
+  name: Starkist Vendor
   description: The taste of a star in liquid form.
   components:
   - type: VendingMachine
@@ -610,7 +615,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachinePwrGame
-  name: Pwr Game Vendor
+  name: PWR Game Vendor
   description: You want it, we got it. Brought to you in partnership with Vlad's Salads.
   components:
   - type: VendingMachine
@@ -625,9 +630,9 @@
     ejectDelay: 1.9
     initialStockQuality: 0.33
   - type: Advertise
-    pack: RobustSoftdrinksAds
+    pack: PwrGameAds
   - type: SpeakOnUIClosed
-    pack: GenericVendGoodbyes
+    pack: PwrGameGoodbyes
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/pwrgame.rsi
     layers:
