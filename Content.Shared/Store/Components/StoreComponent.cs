@@ -1,4 +1,5 @@
 using Content.Shared.FixedPoint;
+using Content.Shared.Mind;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -41,7 +42,7 @@ public sealed partial class StoreComponent : Component
     /// regardless of who activated it. I.E. role specific items for uplinks.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public EntityUid? AccountOwner = null;
+    public Entity<MindComponent?>? AccountOwner = null;
 
     /// <summary>
     /// Cached list of listings items with modifiers.
