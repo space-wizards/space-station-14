@@ -241,10 +241,10 @@ public sealed class PolySystem : EntitySystem
 
     private (string channel, string sentence, Guid? author) PickRandomSentence(Entity<PolyComponent> poly)
     {
-        // Poly can use a few sources for sentences, below are the options with their odds
-        // 1. Poly's memory (50%)
-        // 2. The database (35%)
-        // 3. Borg ion laws (15%)
+        // Poly can use a few sources for sentences, currently they are
+        // 1. Memory
+        // 2. Speech buffer (Randomly pulled from the database)
+        // 3. Random law generation
 
         if (_robustRandom.Prob(0.5f) && poly.Comp.Memory.Count > 0)
         {
@@ -253,7 +253,7 @@ public sealed class PolySystem : EntitySystem
             return sentence;
         }
 
-        if (_robustRandom.Prob(0.35f))
+        if (_robustRandom.Prob(0.5f))
         {
             // Pick a random speech from the buffer
             if (poly.Comp.SpeechBuffer.Count > 0)
