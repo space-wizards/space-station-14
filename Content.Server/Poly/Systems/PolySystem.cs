@@ -174,6 +174,12 @@ public sealed class PolySystem : EntitySystem
         string sentence,
         EntityUid author)
     {
+        if (HasComp<PolyComponent>(author))
+        {
+            _sawmill.Debug("Poly can't learn from another Poly or itself!");
+            return;
+        }
+
         if (_timing.CurTime < poly.Comp.StateTime + poly.Comp.LearnCooldown)
         {
             _sawmill.Debug("Poly is still on cooldown");
