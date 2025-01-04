@@ -1,28 +1,17 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/a9451f4d22f233d328b63490c2bcf64a640e42ff and modified by Jackal298, 'on-' states by iaada (github).",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/a9451f4d22f233d328b63490c2bcf64a640e42ff and modified by Jackal298, recolor by iaada (github).",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "icon"
-    },
-    {
       "name": "off-icon"
     },
     {
-      "name": "on-icon",
-      "delays": [
-        [
-          0.6,
-          0.1,
-          0.1,
-          0.1
-        ]
-	  ]
+      "name": "on-icon"
     },
     {
       "name": "equipped-BELT",
@@ -34,33 +23,7 @@
     },
     {
       "name": "on-inhand-left",
-      "directions": 4,
-      "delays": [
-        [
-          0.6,
-          0.1,
-          0.1,
-          0.1
-        ],
-        [
-          0.6,
-          0.1,
-          0.1,
-          0.1
-        ],
-        [
-          0.6,
-          0.1,
-          0.1,
-          0.1
-        ],
-        [
-          0.6,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "off-inhand-right",
@@ -68,33 +31,7 @@
     },
     {
       "name": "on-inhand-right",
-      "directions": 4,
-      "delays": [
-        [
-          0.6,
-          0.1,
-          0.1,
-          0.1
-        ],
-        [
-          0.6,
-          0.1,
-          0.1,
-          0.1
-        ],
-        [
-          0.6,
-          0.1,
-          0.1,
-          0.1
-        ],
-        [
-          0.6,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "equipped-BACKPACK",
