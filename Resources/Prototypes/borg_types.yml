@@ -12,7 +12,7 @@
     - BorgModuleGeneric
 
   defaultModules:
-
+  - BorgModuleTool
 
   radioChannels:
   - Science
@@ -80,8 +80,9 @@
 
   defaultModules:
   - BorgModuleTool
-  - BorgModuleSalvaging
+  - BorgModuleTraversal
   - BorgModuleMining
+  - BorgModuleSupply
 
   radioChannels:
   - Supply
@@ -152,9 +153,10 @@
 
   defaultModules:
   - BorgModuleTool
-  - BorgModuleDiagnosis
+  - BorgModuleDefibrillator
   - BorgModuleTopicals
-  - BorgModuleTreatment
+  - BorgModuleChemical
+
   radioChannels:
   - Science
   - Medical

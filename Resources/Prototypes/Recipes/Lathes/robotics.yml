@@ -164,8 +164,8 @@
 
 - type: latheRecipe
   parent: BaseGoldBorgModuleRecipe
-  id: BorgModuleAdvancedTreatment
-  result: BorgModuleAdvancedTreatment
+  id: BorgModuleAdvancedChemical
+  result: BorgModuleAdvancedChemical
 
 # Science Modules
 

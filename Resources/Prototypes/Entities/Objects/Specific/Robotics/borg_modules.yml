@@ -188,9 +188,27 @@
     - Wirecutter
     - WelderIndustrial
     - Multitool
-    - RemoteSignaller
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: tool-module }
+
+# Cargo Modules
+
+- type: entity
+  id: BorgModuleSupply
+  parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
+  name: supply cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: cargo
+    - state: icon-appraisal
+  - type: ItemBorgModule
+    items:
+    - AppraisalTool
+    - HandLabeler
+    - RadioHandheld
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: appraisal-module }
 
 - type: entity
   id: BorgModuleMining
@@ -211,9 +229,9 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
 
 - type: entity
-  id: BorgModuleSalvaging
+  id: BorgModuleTraversal
   parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
-  name: salvaging cyborg module
+  name: traversal cyborg module
   components:
   - type: Sprite
     layers:
@@ -224,7 +242,7 @@
     - WeaponGrapplingGun
     - FireExtinguisher
     - HandheldGPSBasic
-    - RadioHandheld
+    - HandHeldMassScannerBorg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: grappling-module }
 
@@ -245,7 +263,7 @@
     - WelderExperimental
     - Multitool
     - GasAnalyzer
-    - RemoteSignallerAdvanced
+    # holofan
 
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-tools-module }
@@ -267,6 +285,8 @@
     - SheetPlasteelLingering0
     - PartRodMetalLingering0
     - FloorTileItemSteelLingering0
+    - FloorTileItemWhiteLingering0
+    - FloorTileItemDarkLingering0
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: construction-module }
 
@@ -340,9 +360,45 @@
 # medical modules
 
 - type: entity
-  id: BorgModuleDiagnosis
+  id: BorgModuleDiagnosis # todo: reuse when med refractor is finished
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
   name: diagnosis cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: medical
+    - state: icon-diagnosis
+  - type: ItemBorgModule
+    items:
+    - HandheldHealthAnalyzerUnpowered
+    - ClothingNeckStethoscope
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: diagnosis-module }
+
+- type: entity
+  id: BorgModuleTopicals
+  parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+  name: topicals cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: medical
+    - state: icon-treatment
+  - type: ItemBorgModule
+    items:
+    - Gauze10Lingering
+    - Brutepack10Lingering
+    - Ointment10Lingering
+    - Bloodpack10Lingering
+    - RegenerativeMesh0Lingering
+    - MedicatedSuture0Lingering
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: treatment-module }
+
+- type: entity
+  id: BorgModuleDefibrillator
+  parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+  name: defibrillator cyborg module
   components:
   - type: Sprite
     layers:
@@ -354,50 +410,30 @@
     - DefibrillatorOneHandedUnpowered
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: defib-module }
-    
-- type: entity
-  id: BorgModuleTopicals
-  parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
-  name: topicals cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: medical
-    - state: icon-diagnosis
-  - type: ItemBorgModule
-    items:
-    - Gauze10Lingering
-    - Brutepack10Lingering
-    - Ointment10Lingering
-    - Bloodpack10Lingering
-    - RegenerativeMesh0Lingering
-    - MedicatedSuture0Lingering
-  - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: diagnosis-module }
 
 - type: entity
-  id: BorgModuleTreatment
+  id: BorgModuleChemical
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
   name: chemical cyborg module
   components:
   - type: Sprite
     layers:
     - state: medical
-    - state: icon-treatment
+    - state: icon-chemist
   - type: ItemBorgModule
     items:
-    - Beaker
-    - Beaker
+    - BaseChemistryEmptyVial
+    - BaseChemistryEmptyVial
     - Syringe
     - Syringe
 
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: treatment-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-diagnosis-module }
 
 - type: entity
-  id: BorgModuleAdvancedTreatment
+  id: BorgModuleAdvancedChemical
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
-  name: advanced treatment cyborg module
+  name: advanced chemical cyborg module
   components:
   - type: Sprite
     layers:
