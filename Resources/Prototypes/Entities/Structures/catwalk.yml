@@ -51,6 +51,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: TrayScanReveal
   - type: RCDDeconstructable
     cost: 2
     delay: 2
