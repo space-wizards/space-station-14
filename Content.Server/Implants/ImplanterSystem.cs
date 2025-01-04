@@ -79,6 +79,9 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         args.Handled = true;
     }
 
+    /// <summary>
+    /// Returns true if the target already has an implant of the same type.
+    /// </summary>
     public bool CheckSameImplant(EntityUid target, EntityUid implant)
     {
         if (!TryComp<ImplantedComponent>(target, out var implanted))
