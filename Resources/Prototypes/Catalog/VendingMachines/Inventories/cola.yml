@@ -9,6 +9,8 @@
     DrinkLemonLimeCan: 2
     DrinkLemonLimeCranberryCan: 2
     DrinkFourteenLokoCan: 2
+  contrabandInventory:
+    DrinkColaBottleFull: 2
   emaggedInventory:
     DrinkNukieCan: 2
     DrinkChangelingStingCan: 2
