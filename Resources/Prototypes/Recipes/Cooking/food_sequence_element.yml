@@ -36,6 +36,15 @@
   - sprite: Objects/Consumable/Food/skewer.rsi
     state: skewer-rat
 
+# Raw Snake
+
+- type: foodSequenceElement
+  id: MeatSnake
+  name: food-sequence-content-snake
+  sprites:
+  - sprite: Objects/Consumable/Food/skewer.rsi
+    state: skewer-snake
+
 # Cheese
 
 - type: foodSequenceElement
@@ -53,6 +62,15 @@
   sprites:
   - sprite: Objects/Consumable/Food/taco_sequence.rsi
     state: cheese
+  tags:
+  - Cheese
+
+- type: foodSequenceElement
+  id: CheeseSkewer
+  name: food-sequence-content-cheese
+  sprites:
+  - sprite: Objects/Consumable/Food/ingredients.rsi
+    state: cheesewedge
   tags:
   - Cheese
 
@@ -132,6 +150,17 @@
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
     state: chicken-fried
+  tags:
+  - Cooked
+  - Meat
+  - Chicken
+
+- type: foodSequenceElement
+  id: MeatChickenSkewer
+  name: food-sequence-content-chicken
+  sprites:
+  - sprite: Objects/Consumable/Food/skewer.rsi
+    state: skewer-meat
   tags:
   - Cooked
   - Meat
@@ -277,6 +306,16 @@
   - Cooked
   - Meat
 
+- type: foodSequenceElement
+  id: MeatBallSkewer
+  name: food-sequence-skewer-content-meatball
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: meatball-cooked
+  tags:
+  - Cooked
+  - Meat
+
 # Snail meat
 
 - type: foodSequenceElement
@@ -301,6 +340,21 @@
   - Cutlet
   - Meat
 
+#- type: foodSequenceElement    H: COMMENTED OUT because it no worky :(
+#  id: MeatCutletSkewer                 I need to rewrite this thing one way or another anyways.
+#  components:
+#  - type: Sprite
+#    sprite: Objects/Consumable/Food/skewer.rsi
+#    layers:
+#    - state: skewer-meat
+#    - state: skewer-meat-alpha
+#      color: brown
+#  - type: Tag
+#    tags:
+#    - Cooked
+#    - Cutlet
+#    - Meat
+
 # Bear cutlet
 
 - type: foodSequenceElement
@@ -324,6 +378,22 @@
   - Cooked
   - Cutlet
   - Meat
+
+#- type: foodSequenceElement    H: COMMENTED OUT because it no worky :(
+#  id: BearCutletSkewer             I need to rewrite this thing one way or another anyways.
+#  name: feed-sequence-content-bear
+#  components:
+#  - type: Sprite
+#    sprite: Objects/Consumable/Food/skewer.rsi
+#    layers:
+#    - state: skewer-meat
+#    - state: skewer-meat-alpha
+#      color: green
+#  - type: Tag
+#    tags:
+#    - Cooked
+#    - Cutlet
+#   - Meat
 
 # Penguin cutlet
 
@@ -376,7 +446,7 @@
   - Cutlet
   - Meat
 
-# Spider cutlet
+# Lizard cutlet
 
 - type: foodSequenceElement
   id: LizardCutlet
