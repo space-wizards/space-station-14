@@ -355,7 +355,7 @@
     board: MedicalRecordsComputerCircuitboard
 
 - type: entity
-  parent: BaseComputerAiAccess
+  parent: [BaseComputerAiAccess, BaseRestrictedContraband]
   id: ComputerCriminalRecords
   name: criminal records computer
   description: This can be used to check criminal records. Only security can modify them.

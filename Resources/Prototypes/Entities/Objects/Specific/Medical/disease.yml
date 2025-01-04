@@ -43,7 +43,7 @@
     - Chemicals
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseMedicalContraband]
   id: Vaccine
   name: vaccine
   description: Prevents people who DON'T already have a disease from catching it.

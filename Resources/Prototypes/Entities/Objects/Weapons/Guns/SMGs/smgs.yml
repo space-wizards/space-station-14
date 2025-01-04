@@ -60,7 +60,7 @@
 
 - type: entity
   name: Atreides
-  parent: [BaseWeaponSubMachineGun, BaseMajorContraband]
+  parent: [BaseWeaponSubMachineGun, BaseRestrictedContraband]
   id: WeaponSubMachineGunAtreides
   description: Pla-ket-ket-ket-ket! Uses .35 auto ammo.
   components:

@@ -12,7 +12,7 @@
     sprite: Objects/Storage/boxes.rsi
 
 - type: entity
-  parent: BaseAmmoProvider
+  parent: [BaseAmmoProvider, BaseRestrictedContraband]
   id: AmmoProviderShotgunShell
   abstract: true
   components:
@@ -32,7 +32,7 @@
 
 # Shotgun Shells
 - type: entity
-  parent: AmmoProviderShotgunShell
+  parent: [AmmoProviderShotgunShell, BaseCivilianSecurityContraband]
   id: BoxBeanbag
   name: shell box (beanbag)
   components:

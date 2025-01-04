@@ -29,7 +29,7 @@
     slots: WITHOUT_POCKET
 
 - type: entity
-  parent: ClothingOuterSuitBomb
+  parent: [ClothingOuterSuitBomb, BaseCivilianContraband]
   id: ClothingOuterSuitJanitorBomb
   name: janitorial bomb suit
   description: A heavy helmet designed to withstand explosions formed from reactions between chemicals.
@@ -72,7 +72,7 @@
     slots: WITHOUT_POCKET
 
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing]
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseEngineeringContraband]
   id: ClothingOuterSuitAtmosFire
   name: atmos fire suit
   description: An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame.
@@ -129,7 +129,7 @@
     slots: WITHOUT_POCKET
 
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseToggleClothing, BaseMajorContraband]
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseToggleClothing, BaseSpiderclanContraband]
   id: ClothingOuterSuitSpaceNinja
   name: space ninja suit
   description: This black technologically advanced, cybernetically-enhanced suit provides many abilities like invisibility or teleportation.

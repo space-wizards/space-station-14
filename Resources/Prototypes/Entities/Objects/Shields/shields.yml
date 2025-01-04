@@ -466,6 +466,12 @@
       price: 350
 
 - type: entity
+  parent: [BaseCentcommContraband, EnergyShield]
+  id: EnergyShieldCentcomm
+  name: death squad energy shield
+  description: A reverse engineered version of the iconic Syndicate shield, made exclusively for CentComm's elite forces.
+
+- type: entity
   name: broken energy shield
   parent: BaseItem
   id: BrokenEnergyShield

@@ -1,7 +1,7 @@
 - type: entity
   name: proto-kinetic accelerator
   id: WeaponProtoKineticAccelerator
-  parent: [WeaponProtoKineticAcceleratorBase, BaseCargoContraband]
+  parent: [WeaponProtoKineticAcceleratorBase, BaseScienceCargoContraband] # science needs a way to kill rock crabs
   description: Fires low-damage kinetic bolts at a short range.
   components:
   - type: Sprite

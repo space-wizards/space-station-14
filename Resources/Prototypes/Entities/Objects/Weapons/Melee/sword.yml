@@ -72,7 +72,7 @@
 
 - type: entity
   name: energy katana
-  parent: Katana
+  parent: [BaseSpiderclanContraband, Katana]
   id: EnergyKatana
   description: A katana infused with strong energy.
   components:

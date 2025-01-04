@@ -369,7 +369,7 @@
 
 - type: entity
   name: compressed matter
-  parent: BaseItem
+  parent: [BaseItem, BaseEngineeringContraband]
   id: RCDAmmo
   description: A cartridge of raw matter compacted by bluespace technology. Used in rapid construction devices.
   components:

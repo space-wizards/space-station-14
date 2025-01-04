@@ -41,7 +41,7 @@
     job: Passenger
 
 - type: entity
-  parent: PassengerIDCard
+  parent: [PassengerIDCard, BaseEngineeringContraband]
   id: TechnicalAssistantIDCard
   name: technical assistant ID card
   components:
@@ -53,7 +53,7 @@
     - state: idintern-tech
 
 - type: entity
-  parent: PassengerIDCard
+  parent: [PassengerIDCard, BaseMedicalContraband]
   id: MedicalInternIDCard
   name: medical intern ID card
   components:
@@ -65,7 +65,7 @@
     - state: idintern-med
 
 - type: entity
-  parent: PassengerIDCard
+  parent: [PassengerIDCard, BaseScienceContraband]
   id: ResearchAssistantIDCard
   name: research assistant ID card
   components:
@@ -77,7 +77,7 @@
     - state: idintern-sci
 
 - type: entity
-  parent: PassengerIDCard
+  parent: [PassengerIDCard, BaseSecurityContraband]
   id: SecurityCadetIDCard
   name: security cadet ID card
   components:
@@ -89,7 +89,7 @@
     - state: idintern-cadet
 
 - type: entity
-  parent: PassengerIDCard
+  parent: [PassengerIDCard, BaseCivilianContraband]
   id: ServiceWorkerIDCard
   name: service worker ID card
   components:
@@ -123,7 +123,7 @@
     stealGroup: CaptainIDCard
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseSecurityContraband]
   id: SecurityIDCard
   name: security ID card
   components:
@@ -135,7 +135,7 @@
     job: SecurityOfficer
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseSecurityContraband]
   id: WardenIDCard
   name: warden ID card
   components:
@@ -147,7 +147,7 @@
       job: Warden
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseEngineeringContraband]
   id: EngineeringIDCard
   name: engineer ID card
   components:
@@ -159,7 +159,7 @@
     job: StationEngineer
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseMedicalContraband]
   id: MedicalIDCard
   name: medical ID card
   components:
@@ -171,7 +171,7 @@
     job: MedicalDoctor
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseMedicalContraband]
   id: ParamedicIDCard
   name: paramedic ID card
   components:
@@ -183,7 +183,7 @@
     job: Paramedic
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseMedicalContraband]
   id: ChemistIDCard
   name: chemist ID card
   components:
@@ -195,7 +195,7 @@
     job: Chemist
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCargoContraband]
   id: CargoIDCard
   name: cargo ID card
   components:
@@ -207,7 +207,7 @@
     job: CargoTechnician
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCargoContraband]
   id: SalvageIDCard
   name: salvage ID card
   components:
@@ -219,7 +219,7 @@
     job: SalvageSpecialist
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCommandContraband]
   id: QuartermasterIDCard
   name: quartermaster ID card
   components:
@@ -233,7 +233,7 @@
       job: Quartermaster
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseScienceContraband]
   id: ResearchIDCard
   name: research ID card
   components:
@@ -245,7 +245,7 @@
     job: Scientist
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCivilianContraband]
   id: ClownIDCard
   name: clown ID card
   components:
@@ -257,7 +257,7 @@
     job: Clown
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCivilianContraband]
   id: MimeIDCard
   name: mime ID card
   components:
@@ -269,7 +269,7 @@
     job: Mime
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCivilianContraband]
   id: ChaplainIDCard
   name: chaplain ID card
   components:
@@ -281,7 +281,7 @@
       job: Chaplain
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCivilianContraband]
   id: JanitorIDCard
   name: janitor ID card
   components:
@@ -293,7 +293,7 @@
     job: Janitor
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCivilianContraband]
   id: BartenderIDCard
   name: bartender ID card
   components:
@@ -305,7 +305,7 @@
     job: Bartender
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCivilianContraband]
   id: PunPunIDCard
   name: pun pun ID card
   components:
@@ -321,7 +321,7 @@
       - DoorBumpOpener
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCivilianContraband]
   id: ChefIDCard
   name: chef ID card
   components:
@@ -333,7 +333,7 @@
     job: Chef
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCivilianContraband]
   id: BotanistIDCard
   name: botanist ID card
   components:
@@ -345,7 +345,7 @@
       job: Botanist
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCivilianContraband]
   id: LibrarianIDCard
   name: librarian ID card
   components:
@@ -357,7 +357,7 @@
       job: Librarian
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCivilianContraband]
   id: LawyerIDCard
   name: lawyer ID card
   components:
@@ -369,7 +369,7 @@
       job: Lawyer
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCommandContraband]
   id: HoPIDCard
   name: head of personnel ID card
   components:
@@ -383,7 +383,7 @@
     job: HeadOfPersonnel
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCommandContraband]
   id: CEIDCard
   name: chief engineer ID card
   components:
@@ -397,7 +397,7 @@
     job: ChiefEngineer
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCommandContraband]
   id: CMOIDCard
   name: chief medical officer ID card
   components:
@@ -411,7 +411,7 @@
     job: ChiefMedicalOfficer
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCommandContraband]
   id: RDIDCard
   name: research director ID card
   components:
@@ -425,7 +425,7 @@
     job: ResearchDirector
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCommandContraband]
   id: HoSIDCard
   name: head of security ID card
   components:
@@ -454,7 +454,7 @@
     job: Visitor
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseSecurityContraband]
   id: BrigmedicIDCard
   name: brigmedic ID card
   components:
@@ -464,7 +464,7 @@
     - state: idbrigmedic
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCentcommContraband]
   id: CentcomIDCard
   name: command officer ID card
   components:
@@ -478,7 +478,7 @@
     job: CentralCommandOfficial
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCentcommContraband]
   id: ERTLeaderIDCard
   name: ERT leader ID card
   components:
@@ -492,7 +492,7 @@
     heldPrefix: gold
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCentcommContraband]
   id: ERTChaplainIDCard
   name: ERT chaplain ID card
   components:
@@ -506,7 +506,7 @@
     heldPrefix: blue
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCentcommContraband]
   id: ERTEngineerIDCard
   name: ERT engineer ID card
   components:
@@ -518,7 +518,7 @@
     job: ERTEngineer
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCentcommContraband]
   id: ERTJanitorIDCard
   name: ERT janitor ID card
   components:
@@ -530,7 +530,7 @@
     job: ERTJanitor
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCentcommContraband]
   id: ERTMedicIDCard
   name: ERT medic ID card
   components:
@@ -542,7 +542,7 @@
     job: ERTMedical
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCentcommContraband]
   id: ERTSecurityIDCard
   name: ERT security ID card
   components:
@@ -554,7 +554,7 @@
     job: ERTSecurity
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCivilianContraband]
   id: MusicianIDCard
   name: musician ID card
   components:
@@ -566,7 +566,7 @@
       job: Musician
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCentcommContraband]
   id: CentcomIDCardDeathsquad
   name: death squad ID card
   components:
@@ -625,7 +625,7 @@
     - NuclearOperative
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseEngineeringContraband]
   id: AtmosIDCard
   name: atmospheric technician ID card
   components:
@@ -637,7 +637,7 @@
     job: AtmosphericTechnician
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseSyndicateContraband]
   id: SyndicateIDCard
   name: syndicate ID card
   components:
@@ -663,7 +663,7 @@
     - SyndicateAgent
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseMedicalContraband]
   id: PsychologistIDCard
   name: psychologist ID card
   components:
@@ -675,7 +675,7 @@
     job: Psychologist
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCivilianContraband]
   id: ReporterIDCard
   name: reporter ID card
   components:
@@ -687,7 +687,7 @@
     job: Reporter
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCivilianContraband]
   id: BoxerIDCard
   name: boxer ID card
   components:
@@ -699,7 +699,7 @@
     job: Boxer
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseCivilianContraband]
   id: ZookeeperIDCard
   name: zookeeper ID card
   components:
@@ -711,7 +711,7 @@
     job: Zookeeper
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseSecurityContraband]
   id: DetectiveIDCard
   name: detective ID card
   components:

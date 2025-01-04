@@ -74,7 +74,7 @@
 
 #Syndicate SWAT Helmet
 - type: entity
-  parent: ClothingHeadHelmetSwat
+  parent: [ClothingHeadHelmetSwat, BaseSyndicateContraband]
   id: ClothingHeadHelmetSwatSyndicate
   name: SWAT helmet
   suffix: Syndicate
@@ -133,7 +133,7 @@
 
 #Janitorial Bombsuit Helmet
 - type: entity
-  parent: ClothingHeadHelmetBombSuit
+  parent: [ClothingHeadHelmetBombSuit, BaseCivilianContraband]
   id: ClothingHeadHelmetJanitorBombSuit
   name: janitorial bombsuit helmet
   description: A heavy helmet designed to withstand explosions formed from reactions between chemicals.
@@ -166,7 +166,7 @@
 
 #Space Ninja Helmet
 - type: entity
-  parent: [ClothingHeadEVAHelmetBase, BaseMajorContraband]
+  parent: [ClothingHeadEVAHelmetBase, BaseSpiderclanContraband]
   id: ClothingHeadHelmetSpaceNinja
   name: space ninja helmet
   description: What may appear to be a simple black garment is in fact a highly sophisticated nano-weave helmet. Standard issue ninja gear.

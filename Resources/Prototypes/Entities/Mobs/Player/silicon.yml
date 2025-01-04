@@ -287,6 +287,7 @@
   parent:
   - BaseItem
   - AiHolder
+  - BaseCommandContraband
   suffix: Empty
   components:
   - type: ContainerComp
@@ -378,7 +379,7 @@
     unlistedNumber: true
     requiresPower: false
   - type: Holopad
-  - type: StationAiWhitelist  
+  - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
         enum.HolopadUiKey.AiRequestWindow:

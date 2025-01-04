@@ -22,7 +22,7 @@
     - HeadSide
 
 - type: entity
-  parent: ClothingHeadHatHoodBioGeneral
+  parent: [ClothingHeadHatHoodBioGeneral, BaseCommandContraband]
   id: ClothingHeadHatHoodBioCmo
   name: bio hood
   suffix: CMO
@@ -35,7 +35,7 @@
     sprite: Clothing/Head/Hoods/Bio/cmo.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodBioGeneral
+  parent: [ClothingHeadHatHoodBioGeneral, BaseCivilianContraband]
   id: ClothingHeadHatHoodBioJanitor
   name: bio hood
   suffix: Janitor
@@ -48,7 +48,7 @@
     sprite: Clothing/Head/Hoods/Bio/janitor.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodBioGeneral
+  parent: [ClothingHeadHatHoodBioGeneral, BaseScienceContraband]
   id: ClothingHeadHatHoodBioScientist
   name: bio hood
   suffix: Science
@@ -61,7 +61,7 @@
     sprite: Clothing/Head/Hoods/Bio/scientist.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodBioGeneral
+  parent: [ClothingHeadHatHoodBioGeneral, BaseSecurityContraband]
   id: ClothingHeadHatHoodBioSecurity
   name: bio hood
   suffix: Security
@@ -74,7 +74,7 @@
     sprite: Clothing/Head/Hoods/Bio/security.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodBioGeneral
+  parent: [ClothingHeadHatHoodBioGeneral, BaseMedicalContraband]
   id: ClothingHeadHatHoodBioVirology
   name: bio hood
   suffix: Virology
@@ -273,7 +273,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodbartender.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent: [ClothingHeadHatHoodWinterBase, BaseCommandContraband]
   id: ClothingHeadHatHoodWinterCaptain
   categories: [ HideSpawnMenu ]
   name: captain's winter coat hood
@@ -296,7 +296,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodcargo.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent: [ClothingHeadHatHoodWinterBase, BaseCommandContraband]
   id: ClothingHeadHatHoodWinterCE
   categories: [ HideSpawnMenu ]
   name: chief engineer's winter coat hood
@@ -307,7 +307,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodce.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent: [ClothingHeadHatHoodWinterBase, BaseCentcommContraband]
   id: ClothingHeadHatHoodWinterCentcom
   categories: [ HideSpawnMenu ]
   name: CentComm winter coat hood
@@ -330,7 +330,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodchemist.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent: [ClothingHeadHatHoodWinterBase, BaseCommandContraband]
   id: ClothingHeadHatHoodWinterCMO
   categories: [ HideSpawnMenu ]
   name: chief medical officer's winter coat hood
@@ -352,7 +352,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodengi.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent: [ClothingHeadHatHoodWinterBase, BaseCommandContraband]
   id: ClothingHeadHatHoodWinterHOP
   categories: [ HideSpawnMenu ]
   name: head of personnel's winter coat hood
@@ -363,7 +363,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodhop.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent: [ClothingHeadHatHoodWinterBase, BaseCommandContraband]
   id: ClothingHeadHatHoodWinterHOS
   categories: [ HideSpawnMenu ]
   name: head of security's winter coat hood
@@ -440,7 +440,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodpara.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent: [ClothingHeadHatHoodWinterBase, BaseCommandContraband]
   id: ClothingHeadHatHoodWinterQM
   categories: [ HideSpawnMenu ]
   name: quartermaster's coat hood
@@ -451,7 +451,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodqm.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent: [ClothingHeadHatHoodWinterBase, BaseCommandContraband]
   id: ClothingHeadHatHoodWinterRD
   categories: [ HideSpawnMenu ]
   name: research director's coat hood
@@ -484,7 +484,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodsci.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent: [ClothingHeadHatHoodWinterBase, BaseSecurityContraband]
   id: ClothingHeadHatHoodWinterSec
   categories: [ HideSpawnMenu ]
   name: security coat hood
@@ -495,7 +495,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent: [ClothingHeadHatHoodWinterBase, BaseSyndicateContraband]
   id: ClothingHeadHatHoodWinterSyndie
   categories: [ HideSpawnMenu ]
   name: syndicate coat hood
@@ -506,7 +506,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodsyndicate.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent: [ClothingHeadHatHoodWinterBase, BaseSecurityContraband]
   id: ClothingHeadHatHoodWinterWarden
   categories: [ HideSpawnMenu ]
   name: warden's coat hood

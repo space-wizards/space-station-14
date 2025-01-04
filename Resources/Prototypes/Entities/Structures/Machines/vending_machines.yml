@@ -199,7 +199,7 @@
     - Drinks
 
 - type: entity
-  parent: VendingMachineBooze
+  parent: [VendingMachineBooze, BaseSyndicateContraband]
   id: VendingMachineBoozeSyndicate # syndie booze-o-mat for nukie outpost
   name: Bruise-O-Mat
   description: A refurbished Booze-O-Mat for boosting operative morale. An imprint of a blood-red hardsuit is visible on one side, and the paint seems ashed off on the other side.
@@ -1916,7 +1916,7 @@
     access: [["Research"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: [VendingMachine, BaseSyndicateContraband]
   id: VendingMachineSyndieDrobe
   name: SyndieDrobe
   description: Wardrobe machine encoded by the syndicate, contains elite outfits for various operations.
@@ -2113,7 +2113,7 @@
     state: dispenser
 
 - type: entity
-  parent: VendingMachine
+  parent: [VendingMachine, BaseEngineeringContraband]
   id: VendingMachineTankDispenserEngineering
   suffix: ENG [O2, Plasma]
   name: gas tank dispenser
@@ -2157,7 +2157,7 @@
     - Chemist
 
 - type: entity
-  parent: VendingMachineChemicals
+  parent: [VendingMachineChemicals, BaseSyndicateContraband]
   id: VendingMachineChemicalsSyndicate
   name: SyndieJuice
   description: Not made with freshly squeezed syndies I hope.

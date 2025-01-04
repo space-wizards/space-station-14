@@ -37,7 +37,7 @@
 - type: entity
   id: MagazineLightRifleBox
   name: "L6 SAW magazine box (.30 rifle)"
-  parent: BaseMagazineLightRifle
+  parent: [BaseSyndicateContraband, BaseMagazineLightRifle]
   components:
   - type: Tag
     tags:

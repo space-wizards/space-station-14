@@ -188,7 +188,7 @@
     access: [["Security"]]
 
 - type: entity
-  parent: CrateBaseSecure
+  parent: [CrateBaseSecure, BaseEngineeringContraband]
   id: CrateEngineeringSecure
   name: secure engineering crate
   components:
@@ -200,7 +200,7 @@
     access: [["Engineering"]]
 
 - type: entity
-  parent: CrateBaseSecure
+  parent: [CrateBaseSecure, BaseMedicalContraband]
   id: CrateMedicalSecure
   name: secure medical crate
   components:
@@ -212,7 +212,7 @@
     access: [["Medical"]]
 
 - type: entity
-  parent: CrateBaseSecure
+  parent: [CrateBaseSecure, BaseMedicalContraband]
   id: CrateChemistrySecure
   name: secure chemistry crate
   components:
@@ -234,7 +234,7 @@
     sprite: Structures/Storage/Crates/privatecrate_secure.rsi
 
 - type: entity
-  parent: CrateBaseSecure
+  parent: [CrateBaseSecure, BaseScienceContraband]
   id: CrateScienceSecure
   name: secure science crate
   components:
@@ -246,7 +246,7 @@
     access: [["Research"]]
 
 - type: entity
-  parent: CrateBaseSecure
+  parent: [CrateBaseSecure, BaseEngineeringScienceMedicalContraband]
   id: CratePlasma
   name: plasma crate
   components:
@@ -268,7 +268,7 @@
       sprite: Structures/Storage/Crates/secure.rsi
 
 - type: entity
-  parent: CrateBaseSecure
+  parent: [CrateBaseSecure, BaseCivilianContraband]
   id: CrateHydroSecure
   name: secure hydroponics crate
   components:
@@ -280,7 +280,7 @@
     access: [["Hydroponics"]]
 
 - type: entity
-  parent: CrateBaseSecure
+  parent: [CrateBaseSecure, BaseRestrictedContraband]
   id: CrateWeaponSecure
   name: secure weapon crate
   components:
@@ -304,7 +304,7 @@
     access: [["Armory"]]
 
 - type: entity
-  parent: CrateBaseSecure
+  parent: [CrateBaseSecure, BaseCommandContraband]
   id: CrateCommandSecure
   name: command crate
   components:
@@ -584,7 +584,7 @@
     state: base
 
 - type: entity
-  parent: CrateGenericSteel
+  parent: [CrateGenericSteel, BaseSyndicateContraband]
   id: CrateSyndicate
   name: Syndicate crate
   description: A dark steel crate with red bands and a letter S embossed on the front.
@@ -616,7 +616,7 @@
       map: ["enum.PaperLabelVisuals.Layer"]
 
 - type: entity
-  parent: CrateBaseSecure
+  parent: [CrateBaseSecure, BaseCivilianContraband]
   id: CrateTrashCartJani
   name: janitorial trash cart
   components:

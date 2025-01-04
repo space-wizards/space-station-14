@@ -75,7 +75,7 @@
 
 - type: entity
   id: SecurityTechFabCircuitboard
-  parent: BaseMachineCircuitboard
+  parent: [BaseMachineCircuitboard, BaseRestrictedContraband]
   name: security techfab machine board
   description: A machine printed circuit board for a security techfab.
   components:
@@ -93,7 +93,7 @@
 
 - type: entity
   id: AmmoTechFabCircuitboard
-  parent: BaseMachineCircuitboard
+  parent: [BaseMachineCircuitboard, BaseRestrictedContraband]
   name: ammo techfab circuit board
   description: A machine printed circuit board for an ammo techfab.
   components:
@@ -107,7 +107,7 @@
 
 - type: entity
   id: MedicalTechFabCircuitboard
-  parent: BaseMachineCircuitboard
+  parent: [BaseMachineCircuitboard, BaseMedicalContraband]
   name: medical techfab machine board
   description: A machine printed circuit board for a medical techfab.
   components:
@@ -164,7 +164,7 @@
 
 - type: entity
   id: ExosuitFabricatorMachineCircuitboard
-  parent: BaseMachineCircuitboard
+  parent: [BaseMachineCircuitboard, BaseScienceContraband]
   name: exosuit fabricator machine board
   components:
   - type: Sprite
@@ -276,7 +276,7 @@
 
 - type: entity
   id: ArtifactCrusherMachineCircuitboard
-  parent: BaseMachineCircuitboard
+  parent: [BaseMachineCircuitboard, BaseScienceContraband]
   name: artifact crusher machine board
   description: A machine printed circuit board for an artifact crusher.
   components:

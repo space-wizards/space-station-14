@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, BaseCentcommContraband]
   id: ClothingNeckCloakCentcom
   name: central commander's cloak
   description: A pompous and elite green cloak with a nice gold trim, tailored specifically to the Central Commander. It's so heavy, the gold trim might be real.

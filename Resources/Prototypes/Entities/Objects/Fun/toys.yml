@@ -1208,7 +1208,7 @@
     modifier: 0.05
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseSyndicateContraband]
   id: BalloonSyn
   name: syndie balloon
   description: Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.

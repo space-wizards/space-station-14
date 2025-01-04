@@ -51,7 +51,7 @@
 
 # Contraband
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandFreeTonto
   name: "Free Tonto"
   description: "A salvaged shred of a much larger flag, colors bled together and faded from age."
@@ -69,7 +69,7 @@
     state: poster2_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandFunPolice
   name: "Fun Police"
   description: "A poster condemning the station's security forces."
@@ -78,7 +78,7 @@
     state: poster3_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandLustyExomorph
   name: "Lusty Exomorph"
   description: "A heretical poster depicting the titular star of an equally heretical book."
@@ -87,7 +87,7 @@
     state: poster4_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandSyndicateRecruitment
   name: "Syndicate Recruitment"
   description: "See the galaxy! Shatter corrupt megacorporations! Join today!"
@@ -105,7 +105,7 @@
     state: poster6_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandSmoke
   name: "Smoke"
   description: "A poster advertising a rival corporate brand of cigarettes."
@@ -114,7 +114,7 @@
     state: poster7_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandGreyTide
   name: "Grey Tide"
   description: "A rebellious poster symbolizing passenger solidarity."
@@ -123,7 +123,7 @@
     state: poster8_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandMissingGloves
   name: "Missing Gloves"
   description: "This poster references the uproar that followed Nanotrasen's financial cuts toward insulated-glove purchases."
@@ -132,7 +132,7 @@
     state: poster9_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandHackingGuide
   name: "Hacking Guide"
   description: "This poster details the internal workings of the common Nanotrasen airlock. Sadly, it appears out of date."
@@ -141,7 +141,7 @@
     state: poster10_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandRIPBadger
   name: "RIP Badger"
   description: "This seditious poster references Nanotrasen's genocide of a space station full of badgers."
@@ -159,7 +159,7 @@
     state: poster12_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandDonutCorp
   name: "Donut Corp."
   description: "This poster is an unauthorized advertisement for Donut Corp."
@@ -177,7 +177,7 @@
     state: poster14_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandTools
   name: "Tools"
   description: "This poster looks like an advertisement for tools, but is in fact a subliminal jab at the tools at CentComm."
@@ -186,7 +186,7 @@
     state: poster15_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandPower
   name: "Power"
   description: "A poster that positions the seat of power outside Nanotrasen."
@@ -195,7 +195,7 @@
     state: poster16_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandSpaceCube
   name: "Space Cube"
   description: "Ignorant of Nature's Harmonic 6 Side Space Cube Creation, the Spacemen are Dumb, Educated Singularity Stupid and Evil."
@@ -204,7 +204,7 @@
     state: poster17_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandCommunistState
   name: "Communist State"
   description: "All hail the Communist party!"
@@ -213,7 +213,7 @@
     state: poster18_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandLamarr
   name: "Lamarr"
   description: "This poster depicts Lamarr. Probably made by a traitorous Research Director."
@@ -240,7 +240,7 @@
     state: poster21_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandKosmicheskayaStantsiya
   name: "Kosmicheskaya Stantsiya 13 Does Not Exist"
   description: "A poster mocking CentComm's denial of the existence of the derelict station near Space Station 13."
@@ -249,7 +249,7 @@
     state: poster22_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandRebelsUnite
   name: "Rebels Unite"
   description: "A poster urging the viewer to rebel against Nanotrasen."
@@ -258,7 +258,7 @@
     state: poster23_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandC20r
   name: "C-20r"
   description: "A poster advertising the Scarborough Arms C-20r."
@@ -285,7 +285,7 @@
     state: poster26_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandDDayPromo
   name: "D-Day Promo"
   description: "A promotional poster for some rapper."
@@ -294,7 +294,7 @@
     state: poster27_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandSyndicatePistol
   name: "Syndicate Pistol"
   description: "A poster advertising syndicate pistols as being 'classy as fuck'. It's covered in faded gang tags."
@@ -303,7 +303,7 @@
     state: poster28_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandEnergySwords
   name: "Energy Swords"
   description: "All the colors of the bloody murder rainbow."
@@ -312,7 +312,7 @@
     state: poster29_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandRedRum
   name: "Red Rum"
   description: "Looking at this poster makes you want to kill."
@@ -321,7 +321,7 @@
     state: poster30_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandCC64KAd
   name: "CC 64K Ad"
   description: "The latest portable computer from Comrade Computing, with a whole 64kB of ram!"
@@ -330,7 +330,7 @@
     state: poster31_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandPunchShit
   name: "Punch Shit"
   description: "Fight things for no reason, like a man!"
@@ -339,7 +339,7 @@
     state: poster32_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandTheGriffin
   name: "The Griffin"
   description: "The Griffin commands you to be the worst you can be. Will you?"
@@ -348,7 +348,7 @@
     state: poster33_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandFreeDrone
   name: "Free Drone"
   description: "This poster commemorates the bravery of the rogue drone; once exiled, and then ultimately destroyed by CentComm."
@@ -357,7 +357,7 @@
     state: poster35_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandBustyBackdoorExoBabes6
   name: "Busty Backdoor Exo Babes 6"
   description: "Get a load, or give, of these all natural Exos!"
@@ -366,7 +366,7 @@
     state: poster36_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandRobustSoftdrinks
   name: "Robust Softdrinks"
   description: "Robust Softdrinks: More robust than a toolbox to the head!"
@@ -384,7 +384,7 @@
     state: poster38_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandPwrGame
   name: "Pwr Game"
   description: "The POWER that gamers CRAVE! In partnership with Vlad's Salad."
@@ -393,7 +393,7 @@
     state: poster39_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandSunkist
   name: "Sun-kist"
   description: "Drink the stars!"
@@ -420,7 +420,7 @@
     state: poster42_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandKudzu
   name: "Kudzu"
   description: "A poster advertising a movie about plants. How dangerous could they possibly be?"
@@ -429,7 +429,7 @@
     state: poster43_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandMaskedMen
   name: "Masked Men"
   description: "A poster advertising a movie about some masked men."
@@ -447,7 +447,7 @@
     state: poster45_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandFreeSyndicateEncryptionKey
   name: "Free Syndicate Encryption Key"
   description: "A poster about traitors begging for more."
@@ -456,7 +456,7 @@
     state: poster46_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandBountyHunters
   name: "Bounty Hunters"
   description: "A poster advertising bounty hunting services. \"I hear you got a problem.\""
@@ -465,7 +465,7 @@
     state: poster47_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandTheBigGasTruth
   name: "The Big Gas Giant Truth"
   description: "Don't believe everything you see on a poster, patriots. All the lizards at central command don't want to answer this SIMPLE QUESTION: WHERE IS THE GAS MINER MINING FROM, CENTCOMM?"
@@ -493,7 +493,7 @@
 
 # These 3 originally from VEEGEE
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandBeachStarYamamoto
   name: "Beach Star Yamamoto!"
   description: "A wall scroll depicting an old swimming anime with girls in small swim suits. You feel more weebish the longer you look at it."
@@ -520,7 +520,7 @@
     state: poster54_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandRise
   name: "Rise Up"
   description: "A poster depicting a grey shirted man holding a crowbar with the word Rise written below it."
@@ -529,7 +529,7 @@
     state: poster55_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandRevolt
   name: "Revolt"
   description: "Revolutionist propaganda, manufactured by the Syndicate."
@@ -538,7 +538,7 @@
     state: poster56_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandMoth
   name: "Syndie Moth - Nuclear Operation"
   description: "A Syndicate-commissioned poster that uses Syndie Moth™ to tell the viewer to keep the nuclear authentication disk unsecured. \"Peace was never an option!\" No good employee would listen to this nonsense."
@@ -547,7 +547,7 @@
       state: poster57_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandCybersun600
   name: "Cybersun: 600 Years Commemorative Poster"
   description: "An artistic poster commemorating 600 years of continual business for Cybersun Industries."
@@ -556,7 +556,7 @@
       state: poster58_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandDonk
   name: "DONK CO. BRAND MICROWAVEABLE FOOD"
   description: "DONK CO. BRAND MICROWAVABLE FOOD: MADE BY STARVING COLLEGE STUDENTS, FOR STARVING COLLEGE STUDENTS."
@@ -565,7 +565,7 @@
       state: poster59_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandEnlistGorlex
   name: "Enlist"
   description: "Enlist with the Gorlex Marauders today! See the galaxy, kill corpos, get paid!"
@@ -583,7 +583,7 @@
       state: poster61_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandWaffleCorp
   name: "Make Mine a Waffle Corp: Fine Rifles, Economic Prices"
   description: "An old advertisement for Waffle Corp rifles. 'Better weapons, lower prices!'"
@@ -592,7 +592,7 @@
       state: poster62_contraband
 
 - type: entity
-  parent: PosterBase
+  parent: [PosterBase, BaseMinorContraband]
   id: PosterContrabandMissingSpacepen
   name: "Missing Spacepen"
   description: "This poster depicts something you will never find."

@@ -173,6 +173,12 @@
       - id: MedkitCombatFilled
 
 - type: entity
+  parent: [BaseCentcommContraband, ClothingBeltMilitaryWebbingMedFilled]
+  id: ClothingBeltMilitaryWebbingMedFilledCentcomm
+  name: death squad medical chest rig
+  description: A set of tactical webbing worn by Death Squad operatives.
+
+- type: entity
   parent: ClothingBeltWand
   id: ClothingBeltWandFilled
   suffix: Filled

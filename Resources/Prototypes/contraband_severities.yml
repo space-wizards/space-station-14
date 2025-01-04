@@ -21,7 +21,17 @@
   id: GrandTheft
   examineText: contraband-examine-text-GrandTheft
 
+# Having this as a regular crew member is considered grand theft. (r&d server)
+- type: contrabandSeverity
+  id: GrandTheftSpiderClan
+  examineText: contraband-examine-text-GrandTheftSpiderClan
+
 # This is clear syndicate contraband and is illegal to own IC.
 - type: contrabandSeverity
   id: Syndicate
   examineText: contraband-examine-text-Syndicate
+
+# This is clear syndicate contraband and is illegal to own IC.
+- type: contrabandSeverity
+  id: SpiderClan
+  examineText: contraband-examine-text-SpiderClan

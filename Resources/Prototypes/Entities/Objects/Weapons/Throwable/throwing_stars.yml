@@ -43,7 +43,7 @@
     damage: 10
 
 - type: entity
-  parent: ThrowingStar
+  parent: [BaseSpiderclanContraband, ThrowingStar]
   id: ThrowingStarNinja
   name: ninja throwing star
   components:

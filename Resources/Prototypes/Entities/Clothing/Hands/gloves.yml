@@ -110,7 +110,7 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: [ClothingHandsBase, BaseCommandContraband]
   id: ClothingHandsGlovesHop
   name: papercut-proof gloves
   description: Perfect for dealing with paperwork and matters with bureaucracy.
@@ -187,7 +187,7 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsButcherable
+  parent: [ClothingHandsButcherable, BaseScienceContraband]
   id: ClothingHandsGlovesRobohands
   name: robohands gloves
   description: Beep boop borp!
@@ -202,7 +202,7 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: [ClothingHandsBase, BaseToggleClothing, BaseMajorContraband]
+  parent: [ClothingHandsBase, BaseToggleClothing, BaseSpiderclanContraband]
   id: ClothingHandsGlovesSpaceNinja
   name: space ninja gloves
   description: These black nano-enhanced gloves insulate from electricity and provide fire resistance.
@@ -415,7 +415,7 @@
     price: 0
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: [ClothingHandsBase, BaseSecurityContraband]
   id: ClothingHandsGlovesForensic
   name: forensic gloves
   description: Do not leave fibers or fingerprints. If you work without them, you're A TERRIBLE DETECTIVE.

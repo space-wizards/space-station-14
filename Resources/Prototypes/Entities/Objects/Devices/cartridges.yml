@@ -71,7 +71,7 @@
     - type: NetProbeCartridge
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseCentcommSecurityContraband]
   id: LogProbeCartridge
   name: LogProbe cartridge
   description: A program for getting access logs from devices.
@@ -95,7 +95,7 @@
       - Forensics
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseCentcommSecurityContraband]
   id: WantedListCartridge
   name: Wanted list cartridge
   description: A program to get a list of wanted persons.

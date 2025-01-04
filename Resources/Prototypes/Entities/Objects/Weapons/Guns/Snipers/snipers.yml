@@ -49,7 +49,7 @@
 
 - type: entity
   name: Hristov
-  parent: [BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband]
+  parent: [BaseWeaponSniper, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponSniperHristov
   description: A portable anti-materiel rifle. Fires armor piercing 14.5mm shells. Uses .60 anti-materiel ammo.
   components:

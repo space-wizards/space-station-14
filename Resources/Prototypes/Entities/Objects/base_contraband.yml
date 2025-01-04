@@ -8,6 +8,16 @@
     # no one should be carrying this around visibly!
     allowedDepartments: null
 
+# non-stealth spider clan stuff
+- type: entity
+  id: BaseSpiderclanContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: SpiderClan
+    # no one should be carrying this around visibly!
+    allowedDepartments: null
+
 # minor contraband not departmentally restricted -- improvised weapons etc
 - type: entity
   id: BaseMinorContraband
@@ -157,6 +167,46 @@
   - type: Contraband
     allowedDepartments: [ Medical, Science ]
 
+- type: entity
+  id: BaseCivilianSecurityContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Security, Civilian ]
+
+- type: entity
+  id: BaseScienceCargoContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Science, Cargo ]
+
+- type: entity
+  id: BaseMedicalSecurityContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Medical, Security ]
+
+- type: entity
+  id: BaseCentcommSecurityContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Security, CentralCommand ]
+
+- type: entity
+  id: BaseEngineeringScienceMedicalContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Engineering, Science, Medical ]
+
 # for ~objective items
 - type: entity
   id: BaseGrandTheftContraband
@@ -164,4 +214,13 @@
   components:
   - type: Contraband
     severity: GrandTheft
+    allowedDepartments: [ Command ]
+
+- type: entity
+  parent: BaseGrandTheftContraband
+  id: BaseGrandTheftContrabandSpiderClan
+  abstract: true
+  components:
+  - type: Contraband
+    severity: GrandTheftSpiderClan
     allowedDepartments: [ Command ]

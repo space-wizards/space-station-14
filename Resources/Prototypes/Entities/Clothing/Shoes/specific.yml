@@ -12,7 +12,7 @@
 # stuff common to all clown & jester shoes
 - type: entity
   abstract: true
-  parent: [ClothingShoesBaseButcherable, ClothingSlotBase]
+  parent: [ClothingShoesBaseButcherable, ClothingSlotBase, BaseCivilianContraband]
   id: ClothingShoesClownBase
   components:
   - type: ItemSlots
@@ -121,7 +121,7 @@
     maxContactWalkSlowdown: 0.7
 
 - type: entity
-  parent: [ClothingShoesBaseButcherable, BaseMajorContraband]
+  parent: [ClothingShoesBaseButcherable, BaseSpiderclanContraband]
   id: ClothingShoesSpaceNinja
   name: space ninja shoes
   description: A pair of nano-enhanced boots with built-in magnetic suction cups.

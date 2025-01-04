@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, BaseCentcommContraband]
   id: ClothingUniformJumpsuitDeathSquad
   name: death squad uniform
   description: Advanced armored jumpsuit used by special forces in special operations.
@@ -275,7 +275,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/cmo_turtle.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, BaseRestrictedContraband]
   id: ClothingUniformJumpsuitDetective
   name: hard-worn suit
   description: Someone who wears this means business.
@@ -286,7 +286,7 @@
       sprite: Clothing/Uniforms/Jumpsuit/detective.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, BaseRestrictedContraband]
   id: ClothingUniformJumpsuitDetectiveGrey
   name: noir suit
   description: A hard-boiled private investigator's grey suit, complete with tie clip.
@@ -463,7 +463,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/paramedic.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, BaseMedicalSecurityContraband]
   id: ClothingUniformJumpsuitBrigmedic
   name: brigmedic jumpsuit
   description: This uniform is issued to qualified personnel who have been trained. No one cares that the training took half a day.
@@ -613,7 +613,7 @@
       - state: overlay-inhand-right
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, BaseRestrictedContraband]
   id: ClothingUniformJumpsuitSecBlue
   name: blue shirt and tie
   description: I'm a little busy right now, Calhoun.
@@ -812,7 +812,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/capformal.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, BaseCentcommContraband]
   id: ClothingUniformJumpsuitCentcomFormal
   name: central command formal suit
   description: A suit for special occasions.
@@ -871,7 +871,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/mercenary.rsi
 
 - type: entity
-  parent: UnsensoredClothingUniformBase
+  parent: [UnsensoredClothingUniformBase, BaseSpiderclanContraband]
   id: ClothingUniformJumpsuitNinja
   name: ninja jumpsuit
   description: Comfortable ninja suit, for convenience when relaxing and when you need to practice.
@@ -1161,7 +1161,7 @@
       sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, BaseEngineeringContraband]
   id: ClothingUniformJumpsuitSeniorEngineer
   name: senior engineer jumpsuit
   description: A sign of skill and prestige within the engineering department.
@@ -1172,7 +1172,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/senior_engineer.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, BaseScienceContraband]
   id: ClothingUniformJumpsuitSeniorResearcher
   name: senior researcher jumpsuit
   description: A sign of skill and prestige within the science department.
@@ -1183,7 +1183,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/senior_researcher.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, BaseMedicalContraband]
   id: ClothingUniformJumpsuitSeniorPhysician
   name: senior physician jumpsuit
   description: A sign of skill and prestige within the medical department.

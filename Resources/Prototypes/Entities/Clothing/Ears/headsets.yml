@@ -36,7 +36,7 @@
     sprite: Clothing/Ears/Headsets/base.rsi
 
 - type: entity
-  parent: ClothingHeadset
+  parent: [ClothingHeadset, BaseCargoContraband]
   id: ClothingHeadsetCargo
   name: cargo headset
   description: A headset used by supply employees.
@@ -107,7 +107,7 @@
     sprite: Clothing/Ears/Headsets/command.rsi
 
 - type: entity
-  parent: ClothingHeadset
+  parent: [ClothingHeadset, BaseEngineeringContraband]
   id: ClothingHeadsetEngineering
   name: engineering headset
   description: A headset for engineers to chat while the station burns around them.
@@ -136,7 +136,7 @@
       - EncryptionKeyCommon
 
 - type: entity
-  parent: ClothingHeadset
+  parent: [ClothingHeadset, BaseMedicalContraband]
   id: ClothingHeadsetMedical
   name: medical headset
   description: A headset for the trained staff of the medbay.
@@ -165,7 +165,7 @@
       - EncryptionKeyCommon
 
 - type: entity
-  parent: ClothingHeadset
+  parent: [ClothingHeadset, BaseScienceContraband]
   id: ClothingHeadsetScience
   name: science headset
   description: A sciency headset. Like usual.
@@ -181,7 +181,7 @@
     sprite: Clothing/Ears/Headsets/science.rsi
 
 - type: entity
-  parent: ClothingHeadsetScience
+  parent: [ClothingHeadsetScience, BaseMedicalScienceContraband]
   id: ClothingHeadsetMedicalScience
   name: medical research headset
   description: A headset that is a result of the mating between medical and science.
@@ -242,7 +242,7 @@
     sprite: Clothing/Ears/Headsets/security.rsi
 
 - type: entity
-  parent: [ClothingHeadset, BaseRestrictedContraband]
+  parent: [ClothingHeadset, BaseMedicalSecurityContraband]
   id: ClothingHeadsetBrigmedic
   name: brigmedic headset
   description: A headset that helps to hear the death cries.
@@ -259,7 +259,7 @@
     sprite: Clothing/Ears/Headsets/brigmedic.rsi
 
 - type: entity
-  parent: ClothingHeadset
+  parent: [ClothingHeadset, BaseCivilianContraband]
   id: ClothingHeadsetService
   name: service headset
   description: Headset used by the service staff, tasked with keeping the station full, happy and clean.

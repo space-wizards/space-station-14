@@ -91,6 +91,12 @@
     sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
 
 - type: entity
+  parent: [BaseCentcommContraband, EnergySword]
+  id: EnergySwordCentcomm
+  name: death squad energy sword
+  description: A reverse engineered version of the iconic Syndicate weapon, made exclusively for CentComm's elite forces.
+
+- type: entity
   name: energy dagger
   parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
   id: EnergyDaggerLoud

@@ -22,7 +22,7 @@
 - type: entity
   id: ShellShotgunBeanbag
   name: shell (.50 beanbag)
-  parent: BaseShellShotgun
+  parent: [BaseCivilianSecurityContraband, BaseShellShotgun]
   components:
   - type: Tag
     tags:

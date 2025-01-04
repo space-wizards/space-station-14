@@ -18,7 +18,7 @@
     - state: icon_flipped
       map: ["foldedLayer"]
       visible: false
-      
+
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHeadHatBaseFlipped
@@ -84,7 +84,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent: [ClothingHeadHeadHatBaseFlippable, BaseCommandContraband]
   id: ClothingHeadHatQMsoft
   name: quartermaster's cap
   description: "It's a baseball hat painted in the Quartermaster's colors."
@@ -98,7 +98,7 @@
   parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatQMsoft]
   id: ClothingHeadHatQMsoftFlipped
   name: quartermaster's cap
-    
+
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatCorpsoft
@@ -239,7 +239,7 @@
   name: red cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent: [ClothingHeadHeadHatBaseFlippable, BaseRestrictedContraband]
   id: ClothingHeadHatSecsoft
   name: security cap
   description: It's a robust baseball hat in tasteful red colour.
@@ -271,7 +271,7 @@
   name: yellow cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent: [ClothingHeadHeadHatBaseFlippable, BaseSyndicateContraband]
   id: ClothingHeadHatBizarreSoft
   name: troublemaker's cap
   description: A truly.. bizarre accessory.
@@ -285,7 +285,7 @@
   parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatBizarreSoft]
   id: ClothingHeadHatBizarreSoftFlipped
   name: troublemaker's cap
-    
+
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatParamedicsoft

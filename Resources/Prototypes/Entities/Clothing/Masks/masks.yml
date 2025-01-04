@@ -61,7 +61,7 @@
         Heat: 0.95
 
 - type: entity
-  parent: ClothingMaskGas
+  parent: [ClothingMaskGas, BaseEngineeringContraband]
   id: ClothingMaskGasAtmos
   name: atmospheric gas mask
   description: Improved gas mask utilized by atmospheric technicians. It's flameproof!
@@ -76,7 +76,7 @@
         Heat: 0.80
 
 - type: entity
-  parent: [ClothingMaskGasAtmos, BaseCommandContraband]
+  parent: [BaseCommandContraband, ClothingMaskGasAtmos]
   id: ClothingMaskGasCaptain
   name: captain's gas mask
   description: Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone.
@@ -139,7 +139,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingMaskBreathMedical
+  parent: [ClothingMaskBreathMedical, BaseMedicalSecurityContraband]
   id: ClothingMaskBreathMedicalSecurity
   name: military-style medical mask
   description: A medical mask with a small layer of protection against damage and viruses, similar to the one used in the medical units of the first corporate war.
@@ -651,7 +651,7 @@
     replacement: italian
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: [ClothingMaskBase, BaseSpiderclanContraband]
   id: ClothingMaskNinja
   name: ninja mask
   description: A close-fitting nano-enhanced mask that acts both as an air filter and a post-modern fashion statement.

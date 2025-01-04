@@ -69,7 +69,7 @@
     stealGroup: AmePartFlatpack
 
 - type: entity
-  parent: BaseFlatpack
+  parent: [BaseFlatpack, BaseEngineeringContraband]
   id: SingularityGeneratorFlatpack
   name: singularity generator flatpack
   description: A flatpack used for constructing a singularity generator.
@@ -125,7 +125,7 @@
     guides: [ Singularity, Power ]
 
 - type: entity
-  parent: BaseFlatpack
+  parent: [BaseFlatpack, BaseEngineeringContraband]
   id: TeslaGeneratorFlatpack
   name: tesla generator flatpack
   description: A flatpack used for constructing a tesla generator.
