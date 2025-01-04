@@ -1,16 +1,26 @@
 #
 # Base component for consumable food
+# that should be cleaned up in space
+#
+- type: entity
+  parent: EdibleBase
+  id: FoodBase
+  abstract: true
+  components:
+  - type: SpaceGarbage
+
+#
+# Base component for edible food-like items
 #
 - type: entity
   parent: BaseItem
-  id: FoodBase
+  id: EdibleBase
   abstract: true
   components:
   - type: FlavorProfile
     flavors:
       - food
   - type: Food
-  - type: SpaceGarbage
   - type: Sprite
   - type: StaticPrice
     price: 0
