@@ -1137,6 +1137,9 @@
 
 - type: Tag
   id: Slice # sliced fruit, vegetables, pizza etc.
+  
+- type: Tag
+  id: SlotDependencyOverride
 
 - type: Tag
   id: SmallAIChip
