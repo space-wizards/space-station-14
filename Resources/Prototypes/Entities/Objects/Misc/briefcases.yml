@@ -6,6 +6,14 @@
   components:
   - type: Item
     size: Ginormous
+  - type: Appearance
+  - type: SubFloorHide
+  - type: Anchorable
+  - type: CollideOnAnchor
+    enable: false
+  - type: Transform
+    anchored: false
+  - type: AnchorableStorage
   - type: Storage
     grid:
     - 0,0,5,3

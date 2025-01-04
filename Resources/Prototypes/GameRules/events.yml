@@ -563,6 +563,19 @@
     - Service
     blacklist:
     - External # don't space everything
+    
+- type: entity
+  id: SmugglerStashRule
+  parent: BaseGameRule
+  components:
+    - type: StationEvent
+      earliestStart: 0
+      duration: 1
+      minimumPlayers: 1
+      maxOccurrences: 2
+      weight: 10
+    - type: RandomSpawnRule
+      prototype: RandomSatchel 
 
 - type: entity
   parent: BaseGameRule
