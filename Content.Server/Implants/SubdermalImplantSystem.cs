@@ -24,6 +24,7 @@ using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Store.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
+using DnaComponent = Content.Shared.Forensics.DnaComponent;
 
 namespace Content.Server.Implants;
 

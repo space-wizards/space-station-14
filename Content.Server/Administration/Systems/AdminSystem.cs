@@ -32,6 +32,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using DnaComponent = Content.Shared.Forensics.DnaComponent;
 
 namespace Content.Server.Administration.Systems;
 

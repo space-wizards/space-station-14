@@ -1,4 +1,5 @@
-﻿using Content.Shared.Damage;
+﻿using Content.Shared.Changeling.Devour;
+using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
 using Content.Shared.Silicons.Borgs;
@@ -20,6 +21,7 @@ public abstract class SharedArmorSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
+        SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<ChangelingDevourAttemptEvent>>(OnChangelingDevourAttempt);
         SubscribeLocalEvent<ArmorComponent, BorgModuleRelayedEvent<DamageModifyEvent>>(OnBorgDamageModify);
         SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
     }
@@ -27,6 +29,15 @@ public abstract class SharedArmorSystem : EntitySystem
     private void OnDamageModify(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<DamageModifyEvent> args)
     {
         args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
+    }
+
+    private void OnChangelingDevourAttempt(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<ChangelingDevourAttemptEvent> args)
+    {
+        var slash = component.Modifiers.Coefficients.ContainsKey("Slash") && component.Modifiers.Coefficients["Slash"] < 1f - args.Args.ProtectionThreshold;
+        var blunt = component.Modifiers.Coefficients.ContainsKey("Blunt") && component.Modifiers.Coefficients["Blunt"] < 1f - args.Args.ProtectionThreshold;
+        var pierce = component.Modifiers.Coefficients.ContainsKey("Piercing") && component.Modifiers.Coefficients["Piercing"] < 1f - args.Args.ProtectionThreshold;
+
+        args.Args.Protection = slash || blunt ||  pierce;
     }
 
     private void OnBorgDamageModify(EntityUid uid, ArmorComponent component,
