@@ -87417,7 +87417,6 @@ entities:
     - type: Transform
       pos: -23.5,25.5
       parent: 2
-    - type: BiasedArtifact
 - proto: SimpleXenoArtifactItem
   entities:
   - uid: 15286

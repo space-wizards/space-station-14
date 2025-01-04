@@ -201,7 +201,7 @@
   parent: BaseXenoArtifactEffect
   description: Becomes phased
   components:
-  - type: XAEPhasing
+  - type: XAERemoveCollision
 
 - type: entity
   id: XenoArtifactWandering

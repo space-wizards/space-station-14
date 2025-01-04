@@ -4,12 +4,12 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 
-public sealed class XAEPhasingSystem : BaseXAESystem<XAEPhasingComponent>
+public sealed class XAERemoveCollisionSystem : BaseXAESystem<XAERemoveCollisionComponent>
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     /// <inheritdoc />
-    protected override void OnActivated(Entity<XAEPhasingComponent> ent, ref XenoArtifactNodeActivatedEvent args)
+    protected override void OnActivated(Entity<XAERemoveCollisionComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
         if (!TryComp<FixturesComponent>(ent.Owner, out var fixtures))
             return;
