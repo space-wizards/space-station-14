@@ -335,3 +335,18 @@
         amount: 2
       - id: SyndieTrickyBomb
         amount: 2
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateRunnerBundle
+  name: syndicate runner bundle
+  description: Everything you need to go fast and not get caught.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingShoesBootsSpeedSyndicate
+      - id: ClothingHeadNukieHeadband
+      - id: SmokeScreenImplanter
+      - id: SlipocalypseClusterSoap
+      - id: ClothingUniformJumpsuitTacticool
+      - id: ClothingMaskNeckGaiterRed
