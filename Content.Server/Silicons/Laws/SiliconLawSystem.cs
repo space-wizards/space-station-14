@@ -67,7 +67,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         var msg = Loc.GetString("laws-notify");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
-        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.Channel, colorOverride: Color.FromHex("#2ed2fd"));
+        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.Channel, colorOverride: Color.FromHex("#5ed7aa"));
 
         if (!TryComp<SiliconLawProviderComponent>(uid, out var lawcomp))
             return;
