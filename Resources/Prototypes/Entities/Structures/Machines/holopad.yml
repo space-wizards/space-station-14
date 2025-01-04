@@ -21,7 +21,7 @@
     powerLoad: 300
   - type: StationAiVision
   - type: Sprite
-    sprite: Structures/Machines/holopad.rsi
+    sprite: Structures/Machines/Holopad/basic_holopad.rsi
     drawdepth: FloorObjects
     snapCardinals: true
     layers:
@@ -111,6 +111,8 @@
   parent: Holopad
   id: HolopadLongRange
   components:
+  - type: Sprite
+    sprite: Structures/Machines/Holopad/long_range_holopad.rsi
   - type: Telephone
     transmissionRange: Map
     compatibleRanges:
@@ -124,6 +126,8 @@
   parent: Holopad
   id: HolopadUnlimitedRange
   components:
+  - type: Sprite
+    sprite: Structures/Machines/Holopad/quantum_entangling_holopad.rsi
   - type: Telephone
     transmissionRange: Unlimited
     compatibleRanges:
@@ -138,6 +142,8 @@
   id: HolopadBluespace
   suffix: Unrestricted range
   components:
+  - type: Sprite
+    sprite: Structures/Machines/Holopad/bluespace_holopad.rsi
   - type: Telephone
     unlistedNumber: true
     transmissionRange: Unlimited
@@ -169,7 +175,7 @@
     speechSounds: Borg
     speechBubbleOffset: 0.45
   - type: HolopadHologram
-    rsiPath: Structures/Machines/holopad.rsi
+    rsiPath: Structures/Machines/Holopad/basic_holopad.rsi
     rsiState: icon_in_call
     shaderName: Hologram
     color1: "#65b8e2"
