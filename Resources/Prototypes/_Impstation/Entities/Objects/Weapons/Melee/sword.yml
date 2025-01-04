@@ -53,6 +53,7 @@
   - type: Reflect
   - type: ThrowingAngle
     angle: 300
+  - type: ItemToggleDamageOtherOnHit
   - type: ItemToggle
     predictable: false
     soundActivate:
