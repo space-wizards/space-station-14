@@ -34,3 +34,15 @@
   - type: GuideHelp
     guides: [ Singularity, Power ]
 
+- type: entity
+  parent: SingularityGenerator
+  id: WehularityGenerator
+  name: wehvitational wehularity generator
+  suffix: Admeme
+  description: An Odd Device which produces a Wehvitational Wehularity when set up.
+  components:
+  - type: Sprite
+    sprite: Structures/Power/Generation/Singularity/wehgenerator.rsi
+    state: icon
+  - type: SingularityGenerator
+    spawnId: Wehularity

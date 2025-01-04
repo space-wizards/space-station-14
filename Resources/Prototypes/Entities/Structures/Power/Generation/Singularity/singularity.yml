@@ -100,3 +100,50 @@
             sprite: Structures/Power/Generation/Singularity/singularity_6.rsi
             state: singularity_6
             scale: .9,.9
+
+- type: entity
+  parent: Singularity
+  id: Wehularity
+  name: wehvitational wehularity
+  description: A mesmerizing swirl of weh that wehs in everyweh. If it's weh-ing towards you, weh.
+  suffix: Admeme
+  components:
+  - type: AmbientSound
+    volume: -4
+    range: 14
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: Sprite
+    sprite: Structures/Power/Generation/Singularity/wehularity_1.rsi
+    shader: unshaded
+    layers:
+    - map: [ "VisualLevel" ]
+      state: wehularity_1
+  - type: GenericVisualizer
+    visuals:
+      enum.SingularityAppearanceKeys.Singularity:
+        VisualLevel:
+          1:
+            sprite: Structures/Power/Generation/Singularity/wehularity_1.rsi
+            state: wehularity_1
+            scale: 1.0,1.0
+          2:
+            sprite: Structures/Power/Generation/Singularity/wehularity_2.rsi
+            state: wehularity_2
+            scale: 1.0,1.0
+          3:
+            sprite: Structures/Power/Generation/Singularity/wehularity_3.rsi
+            state: wehularity_3
+            scale: 1.0,1.0
+          4:
+            sprite: Structures/Power/Generation/Singularity/wehularity_4.rsi
+            state: wehularity_4
+            scale: 1.0,1.0
+          5:
+            sprite: Structures/Power/Generation/Singularity/wehularity_5.rsi
+            state: wehularity_5
+            scale: 1.5,1.5
+          6:
+            sprite: Structures/Power/Generation/Singularity/wehularity_6.rsi
+            state: wehularity_6
+            scale: .9,.9
