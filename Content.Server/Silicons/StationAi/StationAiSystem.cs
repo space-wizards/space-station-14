@@ -1,5 +1,8 @@
 using System.Linq;
 using Content.Server.Chat.Managers;
+using Content.Server.Spawners.Components;
+using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Server.Chat.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Mind;
@@ -9,6 +12,7 @@ using Content.Shared.StationAi;
 using Robust.Shared.Audio;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using static Content.Server.Chat.Systems.ChatSystem;
 
 namespace Content.Server.Silicons.StationAi;
@@ -20,8 +24,15 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly StationJobsSystem _stationJobs = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _ais = new();
+
+    /// <summary>
+    /// PrototypeJobId of the StationAI Job
+    /// </summary>
+    private readonly EntProtoId _aiJobId = "StationAi";
 
     public override void Initialize()
     {
@@ -98,6 +109,23 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
         if (cue != null && _mind.TryGetMind(uid, out var mindId, out _))
             _roles.MindPlaySound(mindId, cue);
+    }
+
+    public override void TryRemoveAiJobSlot(EntityUid ent, bool force = false)
+    {
+        if (!HasComp<ContainerSpawnPointComponent>(ent) && !force)
+            return;
+
+        foreach (var uniqueStation in _station.GetStationsSet())
+        {
+            if (!HasComp<StationJobsComponent>(uniqueStation))
+                continue;
+
+            _stationJobs.TryAdjustJobSlot(uniqueStation, _aiJobId, -1, clamp: true);
+        }
+
+        if (!force)
+            RemCompDeferred<ContainerSpawnPointComponent>(ent);
     }
 
     private void AnnounceSnip(EntityUid entity)

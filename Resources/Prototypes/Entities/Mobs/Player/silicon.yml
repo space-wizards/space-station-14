@@ -307,6 +307,7 @@
           Empty: { state: empty }
           Occupied: { state: full }
   - type: Intellicard
+  - type: StationAiConverter
 
 - type: entity
   id: PlayerStationAiPreview
@@ -368,6 +369,7 @@
         unshaded:
           Empty: { state: ai_empty }
           Occupied: { state: ai }
+  - type: StationAiConverter
   - type: Telephone
     compatibleRanges:
     - Grid
@@ -378,7 +380,7 @@
     unlistedNumber: true
     requiresPower: false
   - type: Holopad
-  - type: StationAiWhitelist  
+  - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
         enum.HolopadUiKey.AiRequestWindow:
@@ -442,6 +444,8 @@
     - HideContextMenu
     - StationAi
     - NoConsoleSound
+  - type: RandomMetadata
+    nameSegments: [ names_ai ]
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
