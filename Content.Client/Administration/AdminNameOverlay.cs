@@ -1,22 +1,30 @@
+using System.Linq;
 using System.Numerics;
 using Content.Client.Administration.Systems;
+using Content.Shared.CCVar;
+using Content.Shared.Mind;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
-using Robust.Shared;
-using Robust.Shared.Enums;
 using Robust.Shared.Configuration;
+using Robust.Shared.Enums;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Administration;
 
 internal sealed class AdminNameOverlay : Overlay
 {
     private readonly AdminSystem _system;
+    private readonly IConfigurationManager _config = IoCManager.Resolve<IConfigurationManager>(); // TODO is this even legal?
     private readonly IEntityManager _entityManager;
     private readonly IEyeManager _eyeManager;
     private readonly EntityLookupSystem _entityLookup;
     private readonly IUserInterfaceManager _userInterfaceManager;
     private readonly Font _font;
+
+    //TODO make this adjustable via GUI
+    private readonly ProtoId<RoleTypePrototype>[] _filter =
+        ["SoloAntagonist", "TeamAntagonist", "SiliconAntagonist", "FreeAgent"];
 
     public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, EntityLookupSystem entityLookup, IUserInterfaceManager userInterfaceManager)
     {
@@ -34,6 +42,9 @@ internal sealed class AdminNameOverlay : Overlay
     protected override void Draw(in OverlayDrawArgs args)
     {
         var viewport = args.WorldAABB;
+
+        //TODO make this adjustable via GUI
+        var classic = _config.GetCVar(CCVars.AdminOverlayClassic);
 
         foreach (var playerInfo in _system.PlayerList)
         {
@@ -64,12 +75,23 @@ internal sealed class AdminNameOverlay : Overlay
             var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center +
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
-            if (playerInfo.Antag)
+
+            var label = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
+            var color = playerInfo.RoleProto.Color;
+
+            if (classic)
             {
-                args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), "ANTAG", uiScale, Color.OrangeRed);
-;
+                label = Loc.GetString("admin-overlay-antag-classic");
+                color = Color.OrangeRed;
             }
-            args.ScreenHandle.DrawString(_font, screenCoordinates+lineoffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
+
+            if (_filter.Contains(playerInfo.RoleProto.ID) && !classic ||
+                playerInfo.Antag && classic )
+            {
+                args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), label, uiScale, color);
+            }
+
+            args.ScreenHandle.DrawString(_font, screenCoordinates + lineoffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
             args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, uiScale, playerInfo.Connected ? Color.Aquamarine : Color.White);
         }
     }

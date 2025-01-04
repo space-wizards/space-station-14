@@ -3,11 +3,12 @@
 namespace Content.Server.Ghost.Roles;
 
 /// <summary>
-/// This is used for round end display of ghost roles.
-/// It may also be used to ensure some ghost roles count as antagonists in future.
+/// Added to mind role entities to tag that they are a ghostrole.
+/// It also holds the name for the round end display
 /// </summary>
 [RegisterComponent]
 public sealed partial class GhostRoleMarkerRoleComponent : BaseMindRoleComponent
 {
-    [DataField("name")] public string? Name;
+    [DataField] public string? Name;
+
 }

@@ -14,6 +14,8 @@
       name: ghost-role-information-guardian-name
       description: ghost-role-information-guardian-description
       rules: ghost-role-information-familiar-rules
+      mindRoles:
+      - MindRoleGhostRoleFamiliar
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
