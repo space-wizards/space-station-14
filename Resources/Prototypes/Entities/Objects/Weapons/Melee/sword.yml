@@ -94,12 +94,18 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/energykatana.rsi
+    layers: # imp
+    - state: off-icon
+      map: [ "enum.ToggleVisuals.Layer" ]
   - type: MeleeWeapon
     wideAnimationRotation: -60
     damage:
       types:
-        Slash: 30
+        Slash: 5 # imp
+    angle: 60 # imp
+    animation: WeaponArcSlash # imp
   - type: Item
+    heldPrefix: off # imp
     sprite: Objects/Weapons/Melee/energykatana.rsi
   - type: EnergyKatana
   - type: DashAbility
@@ -110,12 +116,54 @@
     rechargeDuration: 20
   - type: Clothing
     sprite: Objects/Weapons/Melee/energykatana.rsi
+    quickEquip: false # imp
     slots:
     - Back
     - Belt
   - type: Reflect
-  - type: ThrowingAngle # imp
+   # imp edits #
+  - type: ThrowingAngle
     angle: 300
+  - type: ItemToggle
+    predictable: false
+    soundActivate:
+      collection: sparks
+      params:
+        variation: 0.250
+    soundDeactivate:
+      collection: sparks
+      params:
+        variation: 0.250
+    soundFailToActivate:
+      path: /Audio/Machines/button.ogg
+      params:
+        variation: 0.250
+  - type: StaminaDamageOnHit
+    damage: 30
+    sound: /Audio/Weapons/egloves.ogg
+  - type: UseDelay
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Slash: 30
+    activatedSoundOnHit:
+        path: /Audio/Weapons/bladeslice.ogg
+    deactivatedSoundOnHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Stunbaton
+    energyPerUse: 100
+    inverted: true
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+     enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: on-icon}
+          False: {state: off-icon}
+    # end imp edits #
 
 - type: entity
   name: machete
