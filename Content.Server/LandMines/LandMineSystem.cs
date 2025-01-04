@@ -1,7 +1,9 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Armable;
+using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.LandMines;
 using Content.Shared.Popups;
 using Content.Shared.StepTrigger.Systems;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.LandMines;
@@ -14,30 +16,46 @@ public sealed class LandMineSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<LandMineComponent, StepTriggeredOnEvent>(HandleStepOnTriggered);
         SubscribeLocalEvent<LandMineComponent, StepTriggeredOffEvent>(HandleStepOffTriggered);
-
         SubscribeLocalEvent<LandMineComponent, StepTriggerAttemptEvent>(HandleStepTriggerAttempt);
     }
 
+    /// <summary>
+    /// Warns the player when stepped on.
+    /// </summary>
     private void HandleStepOnTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredOnEvent args)
     {
-        _popupSystem.PopupCoordinates(
-            Loc.GetString("land-mine-triggered", ("mine", uid)),
-            Transform(uid).Coordinates,
-            args.Tripper,
-            PopupType.LargeCaution);
-
-        _audioSystem.PlayPvs(component.Sound, uid);
+      if (!string.IsNullOrEmpty(component.TriggerText))
+      {
+          _popupSystem.PopupCoordinates(
+              Loc.GetString(component.TriggerText, ("mine", uid)),
+              Transform(uid).Coordinates,
+              args.Tripper,
+              PopupType.LargeCaution);
+      }
+      _audioSystem.PlayPvs(component.Sound, uid);
     }
 
+    /// <summary>
+    /// Sends a trigger when stepped off.
+    /// </summary>
     private void HandleStepOffTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredOffEvent args)
     {
         _trigger.Trigger(uid, args.Tripper);
     }
 
-    private static void HandleStepTriggerAttempt(EntityUid uid, LandMineComponent component, ref StepTriggerAttemptEvent args)
+    /// <summary>
+    /// If both ArmableComponent and ItemToggleComponent is present it will not
+    /// continue unless ItemToggleComponent.Activated is true.
+    /// </summary>
+    private void HandleStepTriggerAttempt(EntityUid uid, LandMineComponent component, ref StepTriggerAttemptEvent args)
     {
-        args.Continue = true;
+        if (TryComp<ArmableComponent>(uid, out _) && TryComp<ItemToggleComponent>(uid, out var itemToggle) && !itemToggle.Activated)
+            args.Continue = false;
+        else
+            args.Continue = true;
     }
 }
