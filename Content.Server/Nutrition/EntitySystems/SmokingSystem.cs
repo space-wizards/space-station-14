@@ -1,10 +1,9 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Server.Forensics;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -20,7 +19,7 @@ using System.Linq;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    public sealed partial class SmokingSystem : EntitySystem
+    public sealed partial class SmokingSystem : SharedSmokingSystem
     {
         [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
@@ -45,6 +44,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public override void Initialize()
         {
+            base.Initialize();
+
             SubscribeLocalEvent<SmokableComponent, IsHotEvent>(OnSmokableIsHotEvent);
             SubscribeLocalEvent<SmokableComponent, ComponentShutdown>(OnSmokableShutdownEvent);
             SubscribeLocalEvent<SmokableComponent, GotEquippedEvent>(OnSmokeableEquipEvent);
