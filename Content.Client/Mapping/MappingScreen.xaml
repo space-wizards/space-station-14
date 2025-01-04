@@ -8,51 +8,18 @@
     VerticalExpand="False"
     VerticalAlignment="Bottom"
     HorizontalAlignment="Center">
-    <SplitContainer Name="ScreenContainer" HorizontalExpand="True"
-                                     VerticalExpand="True" SplitWidth="0"
-                                     StretchDirection="TopLeft" ResizeMode="NotResizable">
-        <BoxContainer Orientation="Vertical" VerticalExpand="True" Name="SpawnContainer" MinWidth="200" SetWidth="600">
+    <SplitContainer Name="LeftContainer" HorizontalExpand="True"
+                    VerticalExpand="True" SplitWidth="0"
+                    StretchDirection="TopLeft" ResizeMode="NotResizable">
+        <BoxContainer Orientation="Vertical" VerticalExpand="True" Name="SpawnContainer" MinWidth="200" SetWidth="450">
             <PanelContainer VerticalExpand="True" HorizontalExpand="True">
                 <PanelContainer.PanelOverride>
                     <graphics:StyleBoxFlat BackgroundColor="#222222AA" />
                 </PanelContainer.PanelOverride>
-                <mapping:MappingPrototypeList Name="Prototypes" Access="Public" VerticalExpand="True" />
+                <mapping:MappingPrototypeList Name="Entities" Access="Public" VerticalExpand="True" />
             </PanelContainer>
-            <BoxContainer Name="DecalContainer" Access="Public" Orientation="Horizontal"
-                          Visible="False" Margin="1 3 1 3">
-                <PanelContainer VerticalExpand="True" HorizontalExpand="True">
-                    <PanelContainer.PanelOverride>
-                        <graphics:StyleBoxFlat BackgroundColor="#222222AA" />
-                    </PanelContainer.PanelOverride>
-                    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-                        <ColorSelectorSliders Name="DecalColorPicker" IsAlphaVisible="True" />
-                        <Button Name="DecalPickerOpen" Text="{Loc decal-placer-window-palette}"
-                                StyleClasses="ButtonSquare" />
-                    </BoxContainer>
-                </PanelContainer>
-                <PanelContainer VerticalExpand="True" HorizontalExpand="True">
-                    <PanelContainer.PanelOverride>
-                        <graphics:StyleBoxFlat BackgroundColor="#222222AA" />
-                    </PanelContainer.PanelOverride>
-                    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-                        <CheckBox Name="DecalEnableAuto" Margin="0 0 0 10"
-                                  Text="{Loc decal-placer-window-enable-auto}" />
-                        <CheckBox Name="DecalEnableSnap"
-                                  Text="{Loc decal-placer-window-enable-snap}" />
-                        <CheckBox Name="DecalEnableCleanable"
-                                  Text="{Loc decal-placer-window-enable-cleanable}" />
-                        <BoxContainer Name="DecalSpinBoxContainer" Orientation="Horizontal">
-                            <Label Text="{Loc decal-placer-window-rotation}" Margin="0 0 0 1" />
-                        </BoxContainer>
-                        <BoxContainer Orientation="Horizontal">
-                            <Label Text="{Loc decal-placer-window-zindex}" Margin="0 0 0 1" />
-                            <SpinBox Name="DecalZIndexSpinBox" HorizontalExpand="True" />
-                        </BoxContainer>
-                    </BoxContainer>
-                </PanelContainer>
-            </BoxContainer>
-            <BoxContainer Name="EntityContainer" Access="Public" Orientation="Horizontal"
-                          Visible="False">
+            <controls:HLine Color="#404040" Thickness="2"/>
+            <BoxContainer Orientation="Horizontal">
                 <Button Name="EntityReplaceButton" Access="Public" ToggleMode="True"
                         SetHeight="48"
                         StyleClasses="ButtonSquare" Text="{Loc 'mapping-replace'}" HorizontalExpand="True" />
@@ -61,53 +28,105 @@
                               StyleClasses="ButtonSquare" TooltipDelay="0"
                               ToolTip="{Loc entity-spawn-window-override-menu-tooltip}"
                               HorizontalExpand="True" />
-            </BoxContainer>
-            <BoxContainer Orientation="Horizontal">
                 <Button Name="EraseEntityButton" Access="Public" HorizontalExpand="True"
                         SetHeight="48"
                         ToggleMode="True" Text="{Loc 'mapping-erase-entity'}" StyleClasses="ButtonSquare"
                         ToolTip="{Loc 'mapping-erase-entity-tooltip'}" />
-                <Button Name="EraseTileButton" Access="Public" HorizontalExpand="True"
-                        SetHeight="48"
-                        ToggleMode="True" Text="{Loc 'mapping-erase-tile'}" StyleClasses="ButtonSquare" />
-                <Button Name="EraseDecalButton" Access="Public" HorizontalExpand="True"
-                        SetHeight="48"
-                        ToggleMode="True" Text="{Loc 'mapping-erase-decal'}" StyleClasses="ButtonSquare" />
             </BoxContainer>
             <widgets:ChatBox Visible="False" />
         </BoxContainer>
-        <LayoutContainer Name="ViewportContainer" HorizontalExpand="True" VerticalExpand="True">
-            <controls:MainViewport Name="MainViewport"/>
-            <hotbar:HotbarGui Name="Hotbar" />
-            <PanelContainer Name="Actions" VerticalExpand="True" HorizontalExpand="True"
-                            MaxHeight="48">
-                <PanelContainer.PanelOverride>
-                    <graphics:StyleBoxFlat BackgroundColor="#222222AA" />
-                </PanelContainer.PanelOverride>
-                <BoxContainer Orientation="Horizontal" Margin="15 10">
-                    <mapping:MappingActionsButton Name="Add" Access="Public"
-                                                  Disabled="True" ToolTip=""
-                                                  Visible="False" />
-                    <mapping:MappingActionsButton Name="Fill" Access="Public"
-                                                  ToolTip="" Visible="False" />
-                    <mapping:MappingActionsButton Name="Grab" Access="Public"
-                                                  ToolTip="" Visible="False" />
-                    <mapping:MappingActionsButton Name="Move" Access="Public"
-                                                  ToolTip="" Visible="False" />
-                    <mapping:MappingActionsButton Name="Pick" Access="Public"
-                                                  ToolTip="{Loc 'mapping-pick-tooltip'}" />
-                    <mapping:MappingActionsButton Name="Flip" Access="Public" ToggleMode="False" />
-                    <mapping:MappingActionsButton Name="Visibility" Access="Public" ToggleMode="False" />
-                    <mapping:MappingActionsButton Name="FixGridAtmos" Access="Public"
-                                                  ToolTip="{Loc 'mapping-fixgridatmos-tooltip'}" />
-                    <mapping:MappingActionsButton Name="RemoveGrid" Access="Public"
-                                                  ToolTip="{Loc 'mapping-remove-grid-tooltip'}" />
-                    <mapping:MappingActionsButton Name="MoveGrid" Access="Public"
-                                                  ToolTip="{Loc 'mapping-move-grid-tooltip'}" />
-                    <mapping:MappingActionsButton Name="GridVV" Access="Public"
-                                                  ToolTip="{Loc 'mapping-grid-vv-tooltip'}" />
+        <SplitContainer Name="RightContainer" HorizontalExpand="True"
+                        VerticalExpand="True" SplitWidth="0"
+                        StretchDirection="TopLeft" ResizeMode="NotResizable">
+            <LayoutContainer Name="ViewportContainer" HorizontalExpand="True" VerticalExpand="True">
+                <controls:MainViewport Name="MainViewport"/>
+                <hotbar:HotbarGui Name="Hotbar" />
+                <PanelContainer Name="Actions" VerticalExpand="True" HorizontalExpand="True"
+                                MaxHeight="48">
+                    <PanelContainer.PanelOverride>
+                        <graphics:StyleBoxFlat BackgroundColor="#222222AA" />
+                    </PanelContainer.PanelOverride>
+                    <BoxContainer Orientation="Horizontal" Margin="15 10">
+                        <mapping:MappingActionsButton Name="Add" Access="Public"
+                                                      Disabled="True" ToolTip=""
+                                                      Visible="False" />
+                        <mapping:MappingActionsButton Name="Fill" Access="Public"
+                                                      ToolTip="" Visible="False" />
+                        <mapping:MappingActionsButton Name="Grab" Access="Public"
+                                                      ToolTip="" Visible="False" />
+                        <mapping:MappingActionsButton Name="Move" Access="Public"
+                                                      ToolTip="" Visible="False" />
+                        <mapping:MappingActionsButton Name="Pick" Access="Public"
+                                                      ToolTip="{Loc 'mapping-pick-tooltip'}" />
+                        <mapping:MappingActionsButton Name="Flip" Access="Public" ToggleMode="False" />
+                        <mapping:MappingActionsButton Name="Visibility" Access="Public" ToggleMode="False" />
+                        <mapping:MappingActionsButton Name="FixGridAtmos" Access="Public"
+                                                      ToolTip="{Loc 'mapping-fixgridatmos-tooltip'}" />
+                        <mapping:MappingActionsButton Name="RemoveGrid" Access="Public"
+                                                      ToolTip="{Loc 'mapping-remove-grid-tooltip'}" />
+                        <mapping:MappingActionsButton Name="MoveGrid" Access="Public"
+                                                      ToolTip="{Loc 'mapping-move-grid-tooltip'}" />
+                        <mapping:MappingActionsButton Name="GridVV" Access="Public"
+                                                      ToolTip="{Loc 'mapping-grid-vv-tooltip'}" />
+                    </BoxContainer>
+                </PanelContainer>
+            </LayoutContainer>
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" MinWidth="200" SetWidth="500">
+                <PanelContainer VerticalExpand="True" HorizontalExpand="True">
+                    <PanelContainer.PanelOverride>
+                        <graphics:StyleBoxFlat BackgroundColor="#222222AA" />
+                    </PanelContainer.PanelOverride>
+                    <mapping:MappingPrototypeList Name="Tiles" Access="Public" VerticalExpand="True" Margin="1 5" />
+                </PanelContainer>
+                <controls:HLine Color="#404040" Thickness="2"/>
+                <PanelContainer VerticalExpand="True" HorizontalExpand="True">
+                    <PanelContainer.PanelOverride>
+                        <graphics:StyleBoxFlat BackgroundColor="#222222AA" />
+                    </PanelContainer.PanelOverride>
+                    <mapping:MappingPrototypeList Name="Decals" Access="Public" VerticalExpand="True" Margin="1 5" />
+                </PanelContainer>
+                <controls:HLine Color="#404040" Thickness="2"/>
+                <BoxContainer Orientation="Horizontal">
+                    <PanelContainer VerticalExpand="True" HorizontalExpand="True">
+                        <PanelContainer.PanelOverride>
+                            <graphics:StyleBoxFlat BackgroundColor="#222222AA" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="3 3">
+                            <ColorSelectorSliders Name="DecalColorPicker" IsAlphaVisible="True" />
+                            <Button Name="DecalPickerOpen" Text="{Loc decal-placer-window-palette}" />
+                        </BoxContainer>
+                    </PanelContainer>
+                    <PanelContainer VerticalExpand="True" HorizontalExpand="True">
+                        <PanelContainer.PanelOverride>
+                            <graphics:StyleBoxFlat BackgroundColor="#222222AA" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="3 3">
+                            <CheckBox Name="DecalEnableAuto" Margin="0 0 0 10"
+                                      Text="{Loc decal-placer-window-enable-auto}" />
+                            <CheckBox Name="DecalEnableSnap"
+                                      Text="{Loc decal-placer-window-enable-snap}" />
+                            <CheckBox Name="DecalEnableCleanable"
+                                      Text="{Loc decal-placer-window-enable-cleanable}" />
+                            <BoxContainer Name="DecalSpinBoxContainer" Orientation="Horizontal">
+                                <Label Text="{Loc decal-placer-window-rotation}" Margin="0 0 0 1" />
+                            </BoxContainer>
+                            <BoxContainer Orientation="Horizontal">
+                                <Label Text="{Loc decal-placer-window-zindex}" Margin="0 0 0 1" />
+                                <SpinBox Name="DecalZIndexSpinBox" HorizontalExpand="True" />
+                            </BoxContainer>
+                        </BoxContainer>
+                    </PanelContainer>
                 </BoxContainer>
-            </PanelContainer>
-        </LayoutContainer>
+                <controls:HLine Color="#404040" Thickness="2"/>
+                <BoxContainer Orientation="Horizontal">
+                    <Button Name="EraseTileButton" Access="Public" HorizontalExpand="True"
+                            SetHeight="48"
+                            ToggleMode="True" Text="{Loc 'mapping-erase-tile'}" StyleClasses="ButtonSquare" />
+                    <Button Name="EraseDecalButton" Access="Public" HorizontalExpand="True"
+                            SetHeight="48"
+                            ToggleMode="True" Text="{Loc 'mapping-erase-decal'}" StyleClasses="ButtonSquare" />
+                </BoxContainer>
+            </BoxContainer>
+        </SplitContainer>
     </SplitContainer>
 </mapping:MappingScreen>

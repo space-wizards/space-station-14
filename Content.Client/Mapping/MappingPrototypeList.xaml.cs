@@ -13,15 +13,17 @@ namespace Content.Client.Mapping;
 [GenerateTypedNameReferences]
 public sealed partial class MappingPrototypeList : Control
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
     private (int start, int end) _lastIndices;
     private readonly List<MappingPrototype> _prototypes = new();
+    private readonly List<MappingPrototype> _allPrototypes = new();
     private readonly List<Texture> _insertTextures = new();
     private readonly List<MappingPrototype> _search = new();
 
     public MappingSpawnButton? Selected;
     public Action<IPrototype, List<Texture>>? GetPrototypeData;
-    public event Action<MappingSpawnButton, IPrototype?>? SelectionChanged;
-    public event Action<MappingSpawnButton, ButtonToggledEventArgs>? CollapseToggled;
+    public event Action<MappingPrototypeList, MappingSpawnButton, IPrototype?>? SelectionChanged;
 
     public MappingPrototypeList()
     {
@@ -30,19 +32,28 @@ public sealed partial class MappingPrototypeList : Control
         MeasureButton.Measure(Vector2Helpers.Infinity);
 
         ScrollContainer.OnScrolled += UpdateSearch;
+        CollapseAllButton.OnPressed += OnCollapseAll;
+        SearchBar.OnTextChanged += OnSearch;
+        ClearSearchButton.OnPressed += _ =>
+        {
+            SearchBar.Text = string.Empty;
+            OnSearch(new LineEdit.LineEditEventArgs(SearchBar, string.Empty));
+        };
         OnResized += UpdateSearch;
 
         CollapseAllButton.Texture.TexturePath = "/Textures/Interface/VerbIcons/collapse.svg.192dpi.png";
         ClearSearchButton.Texture.TexturePath = "/Textures/Interface/VerbIcons/cross.svg.192dpi.png";
     }
 
-    public void UpdateVisible(List<MappingPrototype> prototypes)
+    public void UpdateVisible(List<MappingPrototype> prototypes, List<MappingPrototype> allPrototypes)
     {
         _prototypes.Clear();
+        _allPrototypes.Clear();
 
         PrototypeList.DisposeAllChildren();
 
         _prototypes.AddRange(prototypes);
+        _allPrototypes.AddRange(allPrototypes);
 
         Selected = null;
         ScrollContainer.SetScrollValue(new Vector2(0, 0));
@@ -83,12 +94,12 @@ public sealed partial class MappingPrototypeList : Control
 
         list.AddChild(button);
 
-        button.Button.OnToggled += _ => SelectionChanged?.Invoke(button, prototype);
+        button.Button.OnToggled += _ => SelectionChanged?.Invoke(this, button, prototype);
 
         if (includeChildren && mapping.Children?.Count > 0)
         {
             button.CollapseButton.Visible = true;
-            button.CollapseButton.OnToggled += args => CollapseToggled?.Invoke(button, args);
+            button.CollapseButton.OnToggled += _ => ToggleCollapse(button);
         }
         else
         {
@@ -169,5 +180,106 @@ public sealed partial class MappingPrototypeList : Control
         {
             Insert(SearchList, _search[i], false);
         }
+    }
+
+    private void OnCollapseAll(ButtonEventArgs args)
+    {
+        foreach (var child in PrototypeList.Children)
+        {
+            if (child is not MappingSpawnButton button)
+                continue;
+
+            Collapse(button);
+        }
+
+        ScrollContainer.SetScrollValue(new Vector2(0, 0));
+    }
+
+    public void ToggleCollapse(MappingSpawnButton button)
+    {
+        if (button.CollapseButton.Pressed)
+        {
+            if (button.Prototype?.Children != null)
+            {
+                foreach (var child in button.Prototype.Children)
+                {
+                    Insert(button.ChildrenPrototypes, child, true);
+                }
+            }
+
+            button.CollapseButton.Label.Text = "▼";
+        }
+        else
+        {
+            button.ChildrenPrototypes.DisposeAllChildren();
+            button.CollapseButton.Label.Text = "▶";
+        }
+    }
+
+    public void Collapse(MappingSpawnButton button)
+    {
+        if (!button.CollapseButton.Pressed)
+            return;
+
+        button.CollapseButton.Pressed = false;
+        ToggleCollapse(button);
+    }
+
+
+    public void UnCollapse(MappingSpawnButton button)
+    {
+        if (button.CollapseButton.Pressed)
+            return;
+
+        button.CollapseButton.Pressed = true;
+        ToggleCollapse(button);
+    }
+
+    private void OnSearch(LineEdit.LineEditEventArgs args)
+    {
+        if (string.IsNullOrEmpty(args.Text))
+        {
+            PrototypeList.Visible = true;
+            SearchList.Visible = false;
+            return;
+        }
+
+        var matches = new List<MappingPrototype>();
+        foreach (var prototype in _allPrototypes)
+        {
+            if (prototype.Name.Contains(args.Text, StringComparison.OrdinalIgnoreCase))
+                matches.Add(prototype);
+        }
+
+        matches.Sort(static (a, b) =>
+            string.Compare(a.Name, b.Name, StringComparison.OrdinalIgnoreCase));
+
+        PrototypeList.Visible = false;
+        SearchList.Visible = true;
+        Search(matches);
+    }
+
+    public void Sort(Dictionary<string, MappingPrototype> prototypes, MappingPrototype topLevel)
+    {
+        static int Compare(MappingPrototype a, MappingPrototype b)
+        {
+            return string.Compare(a.Name, b.Name, StringComparison.OrdinalIgnoreCase);
+        }
+
+        topLevel.Children ??= new List<MappingPrototype>();
+
+        foreach (var prototype in prototypes.Values)
+        {
+            if (prototype.Parents == null && prototype != topLevel)
+            {
+                prototype.Parents = new List<MappingPrototype> { topLevel };
+                topLevel.Children.Add(prototype);
+            }
+
+            prototype.Parents?.Sort(Compare);
+            prototype.Children?.Sort(Compare);
+        }
+
+        topLevel.Children.Sort(Compare);
     }
 }

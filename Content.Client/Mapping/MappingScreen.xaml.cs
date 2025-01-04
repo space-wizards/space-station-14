@@ -47,15 +47,15 @@ public sealed partial class MappingScreen : InGameScreen
 
         AutoscaleMaxResolution = new Vector2i(1080, 770);
 
-        SetAnchorPreset(ScreenContainer, LayoutPreset.Wide);
+        SetAnchorPreset(LeftContainer, LayoutPreset.Wide);
         SetAnchorPreset(ViewportContainer, LayoutPreset.Wide);
         SetAnchorPreset(SpawnContainer, LayoutPreset.Wide);
         SetAnchorPreset(MainViewport, LayoutPreset.Wide);
         SetAnchorAndMarginPreset(Hotbar, LayoutPreset.BottomWide, margin: 5);
         SetAnchorAndMarginPreset(Actions, LayoutPreset.TopWide, margin: 5);
 
-        ScreenContainer.OnSplitResizeFinished += () =>
-            OnChatResized?.Invoke(new Vector2(ScreenContainer.SplitFraction, 0));
+        LeftContainer.OnSplitResizeFinished += () =>
+            OnChatResized?.Invoke(new Vector2(LeftContainer.SplitFraction, 0));
 
         var rotationSpinBox = new FloatSpinBox(90.0f, 0)
         {
@@ -99,9 +99,9 @@ public sealed partial class MappingScreen : InGameScreen
 
         Pick.Texture.TexturePath = "/Textures/Interface/eyedropper.svg.png";
         Flip.Texture.TexturePath = "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
-        Flip.OnPressed += args => FlipSides();
+        Flip.OnPressed += _ => FlipSides();
         Visibility.Texture.TexturePath = "/Textures/Interface/hamburger.svg.192dpi.png";
-        Visibility.OnPressed += args => visibilityUIController.ToggleWindow();
+        Visibility.OnPressed += _ => visibilityUIController.ToggleWindow();
         FixGridAtmos.Texture.TexturePath = "/Textures/Interface/VerbIcons/oxygen.svg.192dpi.png";
         RemoveGrid.Texture.TexturePath = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
         MoveGrid.Texture.TexturePath = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
@@ -110,7 +110,8 @@ public sealed partial class MappingScreen : InGameScreen
 
     public void FlipSides()
     {
-        ScreenContainer.Flip();
+        LeftContainer.Flip();
+        RightContainer.Flip();
 
         if (SpawnContainer.GetPositionInParent() == 0)
         {
@@ -182,7 +183,7 @@ public sealed partial class MappingScreen : InGameScreen
 
     private void RefreshList()
     {
-        foreach (var control in Prototypes.Children)
+        foreach (var control in Decals.Children)
         {
             if (control is not MappingSpawnButton button ||
                 button.Prototype?.Prototype is not DecalPrototype)
@@ -205,7 +206,7 @@ public sealed partial class MappingScreen : InGameScreen
 
     public override void SetChatSize(Vector2 size)
     {
-        ScreenContainer.ResizeMode = SplitContainer.SplitResizeMode.RespectChildrenMinSize;
+        LeftContainer.ResizeMode = SplitContainer.SplitResizeMode.RespectChildrenMinSize;
     }
 
     public void UnPressActionsExcept(Control except)
