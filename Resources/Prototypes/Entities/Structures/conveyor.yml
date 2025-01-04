@@ -35,6 +35,11 @@
         - DoorPassable
         hard: False
   - type: Conveyor
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
   - type: DeviceLinkSink
     ports:
       - Reverse
