@@ -1,4 +1,4 @@
-﻿using Content.Server.IdentityManagement;
+using Content.Server.IdentityManagement;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IdentityManagement.Components;
@@ -63,7 +63,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         if (!Resolve(uid, ref component))
             return;
 
-        var state = new ChameleonBoundUserInterfaceState(component.Slot, component.Default);
+        var state = new ChameleonBoundUserInterfaceState(component.Slot, component.Default, component.RequireTag);
         _uiSystem.SetUiState(uid, ChameleonUiKey.Key, state);
     }
 
@@ -84,7 +84,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         // make sure that it is valid change
         if (string.IsNullOrEmpty(protoId) || !_proto.TryIndex(protoId, out EntityPrototype? proto))
             return;
-        if (!IsValidTarget(proto, component.Slot))
+        if (!IsValidTarget(proto, component.Slot, component.RequireTag))
             return;
         component.Default = protoId;
 

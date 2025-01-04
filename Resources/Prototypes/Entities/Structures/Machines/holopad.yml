@@ -22,6 +22,7 @@
   - type: StationAiVision
   - type: Sprite
     sprite: Structures/Machines/holopad.rsi
+    drawdepth: FloorObjects
     snapCardinals: true
     layers:
     - state: base
@@ -71,9 +72,8 @@
     speechSounds: Borg
     speechBubbleOffset: 0.45
   - type: Telephone
-    transmissionRange: Map
     ringTone: /Audio/Machines/double_ring.ogg
-    listeningRange: 4
+    listeningRange: 2.5
     speakerVolume: Speak
   - type: AccessReader
     access: [[ "Command" ]]
@@ -107,29 +107,49 @@
 
 - type: entity
   name: long-range holopad
-  description: "A floor-mounted device for projecting holographic images to other devices that are far away."
+  description: "A floor-mounted device for projecting holographic images to similar devices that are far away."
   parent: Holopad
   id: HolopadLongRange
-  suffix: For calls between maps
   components:
   - type: Telephone
-    transmissionRange: Long
+    transmissionRange: Map
+    compatibleRanges:
+    - Map
+    - Unlimited
+    ignoreTelephonesOnSameGrid: true
 
 - type: entity
   name: quantum entangling holopad
-  description: "An experimental floor-mounted device for projecting holographic images at extreme distances."
+  description: "An floor-mounted device for projecting holographic images to similar devices at extreme distances."
   parent: Holopad
   id: HolopadUnlimitedRange
-  suffix: Unlimited range
   components:
   - type: Telephone
     transmissionRange: Unlimited
-  - type: AccessReader
-    access: [[]]
+    compatibleRanges:
+    - Map
+    - Unlimited
+    ignoreTelephonesOnSameGrid: true
+
+- type: entity
+  name: bluespace holopad
+  description: "An experimental floor-mounted device for projecting holographic images via bluespace."
+  parent: Holopad
+  id: HolopadBluespace
+  suffix: Unrestricted range
+  components:
+  - type: Telephone
+    unlistedNumber: true
+    transmissionRange: Unlimited
+    compatibleRanges:
+    - Grid
+    - Map
+    - Unlimited
 
 # These are spawned by holopads
 - type: entity
   id: HolopadHologram
+  name: hologram
   categories: [ HideSpawnMenu ]
   suffix: DO NOT MAP
   components:
@@ -144,6 +164,10 @@
   - type: Appearance
   - type: TypingIndicator
     proto: robot
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
+    speechBubbleOffset: 0.45
   - type: HolopadHologram
     rsiPath: Structures/Machines/holopad.rsi
     rsiState: icon_in_call
@@ -347,6 +371,22 @@
 
 - type: entity
   parent: Holopad
+  id: HolopadScienceArtifactNorth
+  suffix: Artifact North
+  components:
+  - type: Label
+    currentLabel: holopad-science-artifact-north
+
+- type: entity
+  parent: Holopad
+  id: HolopadScienceArtifactSouth
+  suffix: Artifact South
+  components:
+  - type: Label
+    currentLabel: holopad-science-artifact-south
+
+- type: entity
+  parent: Holopad
   id: HolopadScienceRobotics
   suffix: Robotics
   components:
@@ -450,6 +490,14 @@
   - type: Label
     currentLabel: holopad-medical-breakroom
 
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalClinic
+  suffix: Med Clinic
+  components:
+  - type: Label
+    currentLabel: holopad-medical-clinic
+
 # Cargo
 - type: entity
   parent: Holopad
@@ -482,6 +530,14 @@
   components:
   - type: Label
     currentLabel: holopad-cargo-breakroom
+
+- type: entity
+  parent: Holopad
+  id: HolopadCargoMailroom
+  suffix: Cargo Mailroom
+  components:
+  - type: Label
+    currentLabel: holopad-cargo-mailroom
 
 # Engineering
 - type: entity
@@ -563,6 +619,14 @@
   components:
   - type: Label
     currentLabel: holopad-engineering-power
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringMain
+  suffix: Engi Main
+  components:
+  - type: Label
+    currentLabel: holopad-engineering-main
 
 # Security
 - type: entity
@@ -660,6 +724,22 @@
   components:
   - type: Label
     currentLabel: holopad-security-brig-med
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityEvacCheckpoint
+  suffix: Sec Evac Checkpoint
+  components:
+  - type: Label
+    currentLabel: holopad-security-evac-checkpoint
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityArrivalsCheckpoint
+  suffix: Sec Arrivals Checkpoint
+  components:
+  - type: Label
+    currentLabel: holopad-security-arrivals-checkpoint
 
 # Service
 - type: entity
