@@ -166,7 +166,7 @@ public sealed class IdentitySystem : SharedIdentitySystem
         if (_idCard.TryFindIdCard(target, out var id))
         {
             presumedName = string.IsNullOrWhiteSpace(id.Comp.FullName) ? null : id.Comp.FullName;
-            presumedJob = id.Comp.JobTitle?.ToLowerInvariant();
+            presumedJob = id.Comp.LocalizedJobTitle?.ToLowerInvariant();
         }
 
         // If it didn't find a job, that's fine.

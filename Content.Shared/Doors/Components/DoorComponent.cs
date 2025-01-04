@@ -66,7 +66,7 @@ public sealed partial class DoorComponent : Component
     /// <summary>
     ///     When the door is active, this is the time when the state will next update.
     /// </summary>
-    [AutoNetworkedField]
+    [AutoNetworkedField, ViewVariables]
     public TimeSpan? NextStateChange;
 
     /// <summary>

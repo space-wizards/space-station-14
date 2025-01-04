@@ -2,11 +2,11 @@ name: Build & Test Debug
 
 on:
   push:
-    branches: [ master, staging, trying ]
+    branches: [ master, staging, stable ]
   merge_group:
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
-    branches: [ master ]
+    branches: [ master, staging, stable ]
 
 jobs:
   build:
