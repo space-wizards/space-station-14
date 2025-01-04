@@ -77,10 +77,43 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/glasses.rsi
   - type: VisionCorrection
-  - type: BreakOnSlip
-    slot: eyes
-    replacementPrototype: ClothingEyesGlassesBroken
-    message: Your glasses crack from hitting the floor
+  - type: DamageOnSlip
+    damageChance: 0.01
+    damage:
+      types:
+        Blunt: 5
+    multiplierMax: 3
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 2 # Can be thrown 5 times w/o hitting wall, if not dropped
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 10
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ClothingEyesGlassesBroken:
+            min: 1
+            max: 1
+          ShardGlass:
+            min: 0
+            max: 1
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+          params:
+            volume: -5
+      - !type:PopupBehavior
+        type: Local
+        popup: "clothing-glasses-shatter"
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: RepairBrokenGlasses
     node: glasses
