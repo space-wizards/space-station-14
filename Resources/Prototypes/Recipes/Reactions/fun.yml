@@ -73,6 +73,7 @@
 
 - type: reaction
   id: SpaceGlue
+  preserveDNA: true
   minTemp: 370
   reactants:
     SpaceLube:
