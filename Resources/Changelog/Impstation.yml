@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Ghosts can visit the Ghost Bar to discuss the shift events in character!
-    type: Add
-  id: 355
-  time: '2024-10-11T20:41:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/449
 - author: starlighthowls
   changes:
   - message: map Skimmer 0-12 pop
@@ -4470,3 +4463,13 @@
   id: 854
   time: '2025-01-04T02:25:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1223
+- author: iaada
+  changes:
+  - message: The ninja's katana now deals stun damage. 4 hits to down.
+    type: Tweak
+  - message: The energy katana can be activated to return to its previous damage.  It
+      gets 10 attacks before needing to be charged.
+    type: Add
+  id: 855
+  time: '2025-01-04T14:54:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1225
