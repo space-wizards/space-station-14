@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Database;
+using Content.Server.GameTicking;
 using Content.Server.Mind;
 using Content.Server.Poly.Components;
 using Content.Server.Radio;
@@ -50,7 +51,7 @@ public sealed class PolySystem : EntitySystem
         SubscribeLocalEvent<PolyComponent, ClothingDidUnequippedEvent>(OnClothingDidUnequippedEvent);
         SubscribeLocalEvent<PolyComponent, MapInitEvent>(OnMapInit, after: [typeof(LoadoutSystem)]);
         SubscribeLocalEvent<PolyComponent, ListenEvent>(OnListen);
-        SubscribeLocalEvent<PolyComponent, RoundEndMessageEvent>(OnRoundEnd);
+        SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
 
         _sawmill = _logManager.GetSawmill("polyparrot");
     }
@@ -71,6 +72,12 @@ public sealed class PolySystem : EntitySystem
             if (bird.SpeechBuffer.Count == 0)
                 _ = FillBuffer(new Entity<PolyComponent>(bird.Owner, bird)); // Uh uh!! Big hack cause idk what I'm doing
         }
+    }
+
+    private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
+    {
+        if (ev.New == GameRunLevel.PostRound)
+            OnRoundEnd();
     }
 
     /// <summary>
@@ -152,20 +159,24 @@ public sealed class PolySystem : EntitySystem
             author);
     }
 
-    private async void OnRoundEnd(EntityUid uid, PolyComponent component, RoundEndMessageEvent args)
+    private void OnRoundEnd()
     {
-        if (component.SavedMemory)
-            return;
-
-        foreach (var (channel, sentence, guid) in component.Memory)
+        foreach (var component in EntityQuery<PolyComponent>())
         {
-            await _db.InsertPolyMemory(channel, sentence, guid);
-            _sawmill.Info($"Saved new memory: {sentence}");
-        }
 
-        _sawmill.Info("Memory saved to database");
-        component.Memory.Clear();
-        component.SavedMemory = true;
+            if (component.SavedMemory)
+                return;
+
+            foreach (var (channel, sentence, guid) in component.Memory)
+            {
+                _ = _db.InsertPolyMemory(channel, sentence, guid); // Screams
+                _sawmill.Info($"Saved new memory: {sentence}");
+            }
+
+            _sawmill.Info("Memory saved to database");
+            component.Memory.Clear();
+            component.SavedMemory = true;
+        }
     }
 
     private void LearnSentence(Entity<PolyComponent> poly,
