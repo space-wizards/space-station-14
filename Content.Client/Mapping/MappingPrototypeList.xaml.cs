@@ -45,23 +45,20 @@ public sealed partial class MappingPrototypeList : Control
         ClearSearchButton.Texture.TexturePath = "/Textures/Interface/VerbIcons/cross.svg.192dpi.png";
     }
 
-    public void UpdateVisible(List<MappingPrototype> prototypes, List<MappingPrototype> allPrototypes)
+    public void UpdateVisible(MappingPrototype prototype, List<MappingPrototype> allPrototypes)
     {
         _prototypes.Clear();
         _allPrototypes.Clear();
 
         PrototypeList.DisposeAllChildren();
 
-        _prototypes.AddRange(prototypes);
+        _prototypes.Add(prototype);
         _allPrototypes.AddRange(allPrototypes);
 
         Selected = null;
         ScrollContainer.SetScrollValue(new Vector2(0, 0));
 
-        foreach (var prototype in _prototypes)
-        {
-            Insert(PrototypeList, prototype, true);
-        }
+        Insert(PrototypeList, prototype, true);
     }
 
     public MappingSpawnButton Insert(Container list, MappingPrototype mapping, bool includeChildren)

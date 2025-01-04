@@ -25,16 +25,13 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Markdown.Sequence;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using static System.StringComparison;
 using static Robust.Client.UserInterface.Controls.BaseButton;
-using static Robust.Client.UserInterface.Controls.LineEdit;
 using static Robust.Client.UserInterface.Controls.OptionButton;
 using static Robust.Shared.Input.Binding.PointerInputCmdHandler;
 
@@ -56,7 +53,6 @@ public sealed class MappingState : GameplayStateBase
     [Dependency] private readonly IResourceCache _resources = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
 
     private EntityMenuUIController _entityMenuController = default!;
 
@@ -155,29 +151,6 @@ public sealed class MappingState : GameplayStateBase
         ReloadPrototypes();
     }
 
-    private void OnPrototypesReloaded(PrototypesReloadedEventArgs obj)
-    {
-        if (!obj.WasModified<EntityPrototype>() &&
-            !obj.WasModified<ContentTileDefinition>() &&
-            !obj.WasModified<DecalPrototype>())
-        {
-            return;
-        }
-
-        ReloadPrototypes();
-    }
-
-    private bool HandleOpenContextMenu(in PointerInputCmdArgs args)
-    {
-        Deselect();
-
-        var coords = args.Coordinates.ToMap(_entityManager, _transform);
-        if (_verbs.TryGetEntityMenuEntities(coords, out var entities))
-            _entityMenuController.OpenRootMenu(entities);
-
-        return true;
-    }
-
     protected override void Shutdown()
     {
         CommandBinds.Unregister<MappingState>();
@@ -247,7 +220,7 @@ public sealed class MappingState : GameplayStateBase
         }
 
         Screen.Entities.Sort(mappings, entities);
-        Screen.Entities.UpdateVisible(new ([entities]), _allPrototypes.GetOrNew(typeof(EntityPrototype)));
+        Screen.Entities.UpdateVisible(entities, _allPrototypes.GetOrNew(typeof(EntityPrototype)));
         mappings.Clear();
 
         var tiles = new MappingPrototype(null, Loc.GetString("mapping-tiles")) { Children = new List<MappingPrototype>() };
@@ -257,7 +230,7 @@ public sealed class MappingState : GameplayStateBase
         }
 
         Screen.Tiles.Sort(mappings, tiles);
-        Screen.Tiles.UpdateVisible(new ([tiles]), _allPrototypes.GetOrNew(typeof(ContentTileDefinition)));
+        Screen.Tiles.UpdateVisible(tiles, _allPrototypes.GetOrNew(typeof(ContentTileDefinition)));
         mappings.Clear();
 
         var decals = new MappingPrototype(null, Loc.GetString("mapping-decals")) { Children = new List<MappingPrototype>() };
@@ -268,7 +241,7 @@ public sealed class MappingState : GameplayStateBase
         }
 
         Screen.Decals.Sort(mappings, decals);
-        Screen.Decals.UpdateVisible(new ([decals]), _allPrototypes.GetOrNew(typeof(DecalPrototype)));
+        Screen.Decals.UpdateVisible(decals, _allPrototypes.GetOrNew(typeof(DecalPrototype)));
         mappings.Clear();
     }
 
@@ -393,6 +366,78 @@ public sealed class MappingState : GameplayStateBase
 
             return mapping;
         }
+    }
+
+    private void Deselect()
+    {
+        if (Screen.Entities.Selected is { } entitySelected)
+        {
+            entitySelected.Button.Pressed = false;
+            Screen.Entities.Selected = null;
+
+            if (entitySelected.Prototype?.Prototype is EntityPrototype)
+                _placement.Clear();
+        }
+
+        if (Screen.Tiles.Selected is { } tileSelected)
+        {
+            tileSelected.Button.Pressed = false;
+            Screen.Tiles.Selected = null;
+
+            if (tileSelected.Prototype?.Prototype is ContentTileDefinition)
+                _placement.Clear();
+        }
+
+        if (Screen.Decals.Selected is { } decalSelected)
+        {
+            decalSelected.Button.Pressed = false;
+            Screen.Decals.Selected = null;
+
+            if (decalSelected.Prototype?.Prototype is DecalPrototype)
+                _decal.SetActive(false);
+        }
+    }
+
+    private void EnableEntityEraser()
+    {
+        if (_placement.Eraser)
+            return;
+
+        Deselect();
+        _placement.Clear();
+        _placement.ToggleEraser();
+
+        if (Screen.EraseDecalButton.Pressed)
+            Screen.EraseDecalButton.Pressed = false;
+
+        Screen.UnPressActionsExcept(Screen.EraseEntityButton);
+        Screen.EntityPlacementMode.Disabled = true;
+
+        Meta.State = CursorState.Entity;
+        Meta.Color = DeleteColor;
+    }
+
+    private void DisableEntityEraser()
+    {
+        if (!_placement.Eraser)
+            return;
+
+        _placement.ToggleEraser();
+        Meta.State = CursorState.None;
+        Screen.EntityPlacementMode.Disabled = false;
+    }
+
+    #region On Event
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs obj)
+    {
+        if (!obj.WasModified<EntityPrototype>() &&
+            !obj.WasModified<ContentTileDefinition>() &&
+            !obj.WasModified<DecalPrototype>())
+        {
+            return;
+        }
+
+        ReloadPrototypes();
     }
 
     private void OnPlacementChanged(object? sender, EventArgs e)
@@ -557,44 +602,6 @@ public sealed class MappingState : GameplayStateBase
         button.Button.Pressed = true;
     }
 
-    private void Deselect()
-    {
-        if (Screen.Entities.Selected is { } entitySelected)
-        {
-            entitySelected.Button.Pressed = false;
-            Screen.Entities.Selected = null;
-
-            if (entitySelected.Prototype?.Prototype is EntityPrototype)
-                _placement.Clear();
-        }
-
-        if (Screen.Tiles.Selected is { } tileSelected)
-        {
-            tileSelected.Button.Pressed = false;
-            Screen.Tiles.Selected = null;
-
-            if (tileSelected.Prototype?.Prototype is ContentTileDefinition)
-                _placement.Clear();
-        }
-
-        if (Screen.Decals.Selected is { } decalSelected)
-        {
-            decalSelected.Button.Pressed = false;
-            Screen.Decals.Selected = null;
-
-            if (decalSelected.Prototype?.Prototype is DecalPrototype)
-                _decal.SetActive(false);
-        }
-    }
-
-    private void OnPickPressed(ButtonEventArgs args)
-    {
-        if (args.Button.Pressed)
-            EnablePick();
-        else
-            DisablePick();
-    }
-
     private void OnEntityReplacePressed(ButtonToggledEventArgs args)
     {
         _placement.Replacement = args.Pressed;
@@ -672,6 +679,30 @@ public sealed class MappingState : GameplayStateBase
             Meta.State = CursorState.None;
         }
     }
+    #endregion
+
+    #region Mapping Actions
+    private void OnPickPressed(ButtonEventArgs args)
+    {
+        if (args.Button.Pressed)
+            EnablePick();
+        else
+            DisablePick();
+    }
+
+    private void EnablePick()
+    {
+        Deselect();
+        Screen.UnPressActionsExcept(Screen.Pick);
+        Meta.State = CursorState.Entity;
+        Meta.Color = PickColor;
+    }
+
+    private void DisablePick()
+    {
+        Screen.Pick.Pressed = false;
+        Meta.State = CursorState.None;
+    }
 
     private void OnFixGridAtmosPressed(ButtonEventArgs args)
     {
@@ -738,48 +769,18 @@ public sealed class MappingState : GameplayStateBase
             Meta.State = CursorState.None;
         }
     }
+    #endregion
 
-    private void EnableEntityEraser()
-    {
-        if (_placement.Eraser)
-            return;
-
-        Deselect();
-        _placement.Clear();
-        _placement.ToggleEraser();
-
-        if (Screen.EraseDecalButton.Pressed)
-            Screen.EraseDecalButton.Pressed = false;
-
-        Screen.UnPressActionsExcept(Screen.EraseEntityButton);
-        Screen.EntityPlacementMode.Disabled = true;
-
-        Meta.State = CursorState.Entity;
-        Meta.Color = DeleteColor;
-    }
-
-    private void DisableEntityEraser()
-    {
-        if (!_placement.Eraser)
-            return;
-
-        _placement.ToggleEraser();
-        Meta.State = CursorState.None;
-        Screen.EntityPlacementMode.Disabled = false;
-    }
-
-    private void EnablePick()
+    #region Handle
+    private bool HandleOpenContextMenu(in PointerInputCmdArgs args)
     {
         Deselect();
-        Screen.UnPressActionsExcept(Screen.Pick);
-        Meta.State = CursorState.Entity;
-        Meta.Color = PickColor;
-    }
 
-    private void DisablePick()
-    {
-        Screen.Pick.Pressed = false;
-        Meta.State = CursorState.None;
+        var coords = _transform.ToMapCoordinates(args.Coordinates);
+        if (_verbs.TryGetEntityMenuEntities(coords, out var entities))
+            _entityMenuController.OpenRootMenu(entities);
+
+        return true;
     }
 
     private bool HandleMappingUnselect(in PointerInputCmdArgs args)
@@ -953,6 +954,7 @@ public sealed class MappingState : GameplayStateBase
 
         return false;
     }
+    #endregion
 
     private async void SaveMap()
     {
@@ -979,7 +981,7 @@ public sealed class MappingState : GameplayStateBase
             return null;
         }
 
-        var mapPos = _eyeManager.PixelToMap(position);
+        var mapPos = viewport.PixelToMap(position.Position);
         if (_mapMan.TryFindGridAt(mapPos, out var gridUid, out var grid))
         {
             return new Entity<MapGridComponent>(gridUid, grid);
