@@ -140,6 +140,18 @@
     sprite: Clothing/Ears/Headsets/syndicate.rsi
 
 - type: entity
+  parent: [ClothingHeadsetAltSyndicate]
+  id: ClothingHeadsetAltSyndicateCommunication
+  name: blood-red over-ear headset with stolen master key
+  description: An updated, modular syndicate intercom that fits over the head and with a stolen master key.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySyndie
+      - EncryptionKeyStationMaster
+
+- type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltFreelancer
   name: freelancer's over-ear headset
