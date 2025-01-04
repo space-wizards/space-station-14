@@ -1,0 +1,106 @@
+- type: entity
+  parent: BaseItem
+  id: EmptyWaterBalloon
+  name: empty water balloon
+  description: Fill it up to reveal it's true color!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/water_balloons.rsi
+    layers:
+    - state: icon
+  - type: WaterBalloon
+  - type: Item
+    size: Tiny
+  - type: SolutionContainerManager
+    solutions:
+      balloon:
+        maxVol: 10
+  - type: DrawableSolution
+    solution: balloon
+  - type: RefillableSolution
+    solution: balloon
+  - type: DrainableSolution
+    solution: balloon
+  - type: ExaminableSolution
+    solution: balloon
+  - type: Spillable
+    solution: balloon
+
+- type: entity
+  parent: BaseItem
+  id: FilledWaterBalloon
+  suffix: DO NOT SPAWN 
+  name: water balloon
+  description: Ready to splash your enemies!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/water_balloons.rsi
+    layers:
+    - state: icon_inflated_fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+    - state: icon_inflated
+      map: [ "spriteMap" ]
+  - type: RandomSprite
+    available:
+    - spriteMap:
+        icon_inflated: Balloons
+  - type: Item
+    size: Normal
+  - type: SolutionContainerManager
+    solutions:
+      balloon:
+        maxVol: 10
+  - type: ExaminableSolution
+    solution: balloon
+  - type: Spillable
+    solution: balloon
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: icon_inflated_fill-
+    solutionName: balloon
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5 
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:SpillBehavior 
+        solution: balloon
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/Fluids/splash.ogg
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: BaseAmmoProvider 
+  id: BoxWaterBalloon
+  suffix: Box
+  name: water balloons dispenser
+  description: Dispenses 25 colorful water balloons, Donk.Co is not responsible for any injuries. 
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/water_balloons.rsi
+    layers:
+    - state: water_balloon_box
+  - type: Item
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: water-balloon-box-inhand-left
+      right:
+      - state: water-balloon-box-inhand-right
+  - type: BallisticAmmoProvider
+    whitelist:
+      components:
+      - WaterBalloon
+    proto: EmptyWaterBalloon
+    capacity: 25
+        
