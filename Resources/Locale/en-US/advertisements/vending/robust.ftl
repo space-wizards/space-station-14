@@ -1,7 +1,7 @@
 ﻿advertisement-robust-1 = Refreshing!
 advertisement-robust-2 = Hope you're thirsty!
 advertisement-robust-3 = Over 10 million drinks sold!
-advertisement-robust-4 = Thirsty? Try a robust soda?
+advertisement-robust-4 = Thirsty? Try a Robust soda?
 advertisement-robust-5 = Please, have a drink!
 advertisement-robust-6 = Quench that thirst!
 advertisement-robust-7 = The best drinks in the galaxy!
