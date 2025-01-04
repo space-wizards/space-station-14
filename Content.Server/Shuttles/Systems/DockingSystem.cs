@@ -79,7 +79,11 @@ namespace Content.Server.Shuttles.Systems
 
             foreach (var entity in _dockingBoltSet)
             {
-                _doorSystem.TryClose(entity);
+                if (TryComp<DoorComponent>(entity, out var comp))
+                {
+                    _doorSystem.TryClose((entity, comp));
+                }
+
                 _doorSystem.SetBoltsDown((entity.Owner, entity.Comp2), enabled);
             }
         }
@@ -263,7 +267,8 @@ namespace Content.Server.Shuttles.Systems
 
                 joint.LocalAnchorA = anchorA;
                 joint.LocalAnchorB = anchorB;
-                joint.ReferenceAngle = (float)(_transform.GetWorldRotation(gridBXform) - _transform.GetWorldRotation(gridAXform));
+                joint.ReferenceAngle =
+                    (float)(_transform.GetWorldRotation(gridBXform) - _transform.GetWorldRotation(gridAXform));
                 joint.CollideConnected = true;
                 joint.Stiffness = stiffness;
                 joint.Damping = damping;
@@ -280,25 +285,27 @@ namespace Content.Server.Shuttles.Systems
 
             if (TryComp(dockAUid, out DoorComponent? doorA))
             {
-                if (_doorSystem.TryOpen(dockAUid, doorA))
+                if (_doorSystem.TryOpen((dockAUid, doorA)))
                 {
                     if (TryComp<DoorBoltComponent>(dockAUid, out var airlockA))
                     {
                         _doorSystem.SetBoltsDown((dockAUid, airlockA), true);
                     }
                 }
+
                 doorA.ChangeAirtight = false;
             }
 
             if (TryComp(dockBUid, out DoorComponent? doorB))
             {
-                if (_doorSystem.TryOpen(dockBUid, doorB))
+                if (_doorSystem.TryOpen((dockBUid, doorB)))
                 {
                     if (TryComp<DoorBoltComponent>(dockBUid, out var airlockB))
                     {
                         _doorSystem.SetBoltsDown((dockBUid, airlockB), true);
                     }
                 }
+
                 doorB.ChangeAirtight = false;
             }
 
@@ -352,7 +359,7 @@ namespace Content.Server.Shuttles.Systems
             if (TryComp<DoorBoltComponent>(dockUid, out var airlock))
                 _doorSystem.SetBoltsDown((dockUid, airlock), false);
 
-            if (TryComp(dockUid, out DoorComponent? door) && _doorSystem.TryClose(dockUid, door))
+            if (TryComp(dockUid, out DoorComponent? door) && _doorSystem.TryClose((dockUid, door)))
                 door.ChangeAirtight = true;
         }
 
@@ -453,8 +460,10 @@ namespace Content.Server.Shuttles.Systems
             var (worldPosA, worldRotA) = XformSystem.GetWorldPositionRotation(xformA);
             var (worldPosB, worldRotB) = XformSystem.GetWorldPositionRotation(xformB);
 
-            return CanDock(new MapCoordinates(worldPosA, xformA.MapID), worldRotA,
-                new MapCoordinates(worldPosB, xformB.MapID), worldRotB);
+            return CanDock(new MapCoordinates(worldPosA, xformA.MapID),
+                worldRotA,
+                new MapCoordinates(worldPosB, xformB.MapID),
+                worldRotB);
         }
     }
 }

@@ -53,7 +53,7 @@ public sealed class SolarFlareRule : StationEventSystem<SolarFlareRuleComponent>
             while (airlockQuery.MoveNext(out var airlockEnt, out var airlock, out var door))
             {
                 if (airlock.AutoClose && RobustRandom.Prob(component.DoorToggleChancePerSecond))
-                    _door.TryToggleDoor(airlockEnt, door);
+                    _door.TryToggleDoor((airlockEnt, door));
             }
         }
     }

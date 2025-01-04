@@ -93,7 +93,7 @@ public sealed partial class NPCSteeringSystem
 
                     if (!door.BumpOpen && (component.Flags & PathFlags.Interact) != 0x0)
                     {
-                        if (door.State != DoorState.Opening)
+                        if (door.State != DoorState.AttemptingOpenBySelf)
                         {
                             _interaction.InteractionActivate(uid, ent);
                             return SteeringObstacleStatus.Continuing;
@@ -115,7 +115,7 @@ public sealed partial class NPCSteeringSystem
                     {
                         // TODO: Use the verb.
 
-                        if (door.State != DoorState.Opening)
+                        if (door.State != DoorState.AttemptingOpenBySelf)
                             _pryingSystem.TryPry(ent, uid, out id, uid);
 
                         component.DoAfterId = id;
