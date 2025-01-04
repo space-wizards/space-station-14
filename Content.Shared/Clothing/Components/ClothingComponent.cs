@@ -64,6 +64,11 @@ public sealed partial class ClothingComponent : Component
     /// </summary>
     public string? InSlot;
 
+    /// <summary>
+    /// The SlotFlag value of the inventory slot the clothing is in.
+    /// </summary>
+    public SlotFlags EquippedInSlot = SlotFlags.NONE;
+
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan EquipDelay = TimeSpan.Zero;
 
