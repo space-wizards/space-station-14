@@ -1,8 +1,9 @@
 using Content.Shared.Damage;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Content.Shared.Damage.Prototypes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Destructible.Thresholds.Triggers
+namespace Content.Shared.Destructible.Thresholds.Triggers
 {
     /// <summary>
     ///     A trigger that will activate when the amount of damage received
@@ -12,16 +13,16 @@ namespace Content.Server.Destructible.Thresholds.Triggers
     [DataDefinition]
     public sealed partial class DamageGroupTrigger : IThresholdTrigger
     {
-        [DataField("damageGroup", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<DamageGroupPrototype>))]
-        public string DamageGroup { get; set; } = default!;
+        [DataField(required: true)]
+        public ProtoId<DamageGroupPrototype> DamageGroup;
 
         /// <summary>
         ///     The amount of damage at which this threshold will trigger.
         /// </summary>
-        [DataField("damage", required: true)]
-        public int Damage { get; set; } = default!;
+        [DataField(required: true)]
+        public int Damage;
 
-        public bool Reached(DamageableComponent damageable, DestructibleSystem system)
+        public bool Reached(DamageableComponent damageable, EntityManager entManager)
         {
             return damageable.DamagePerGroup[DamageGroup] >= Damage;
         }
