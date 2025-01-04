@@ -25,50 +25,44 @@ namespace Content.Server.Stack
             SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
         }
 
-        public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
+        public override void SetCount(Entity<StackComponent> entity, int amount)
         {
-            if (!Resolve(uid, ref component, false))
-                return;
-
-            base.SetCount(uid, amount, component);
+            base.SetCount(entity, amount);
 
             // Queue delete stack if count reaches zero.
-            if (component.Count <= 0 && !component.Lingering)
-                QueueDel(uid);
+            if (entity.Comp.Count <= 0 && !entity.Comp.Lingering)
+                QueueDel(entity);
         }
 
         /// <summary>
         ///     Try to split this stack into two. Returns a non-null <see cref="Robust.Shared.GameObjects.EntityUid"/> if successful.
         /// </summary>
-        public EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, StackComponent? stack = null)
+        public EntityUid? Split(Entity<StackComponent> entity, int amount, EntityCoordinates spawnPosition)
         {
-            if (!Resolve(uid, ref stack))
-                return null;
-
             // Try to remove the amount of things we want to split from the original stack...
-            if (!Use(uid, amount, stack))
+            if (!Use(entity, amount))
                 return null;
 
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
-            var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
+            var prototype = _prototypeManager.TryIndex<StackPrototype>(entity.Comp.StackTypeId, out var stackType)
                 ? stackType.Spawn.ToString()
-                : Prototype(uid)?.ID;
+                : Prototype(entity)?.ID;
 
             // Set the output parameter in the event instance to the newly split stack.
-            var entity = Spawn(prototype, spawnPosition);
+            var spawnEntity = Spawn(prototype, spawnPosition);
 
-            if (TryComp(entity, out StackComponent? stackComp))
+            if (TryComp(spawnEntity, out StackComponent? stackComp))
             {
                 // Set the split stack's count.
-                SetCount(entity, amount, stackComp);
+                SetCount((spawnEntity, stackComp), amount);
                 // Don't let people dupe unlimited stacks
                 stackComp.Unlimited = false;
             }
 
-            var ev = new StackSplitEvent(entity);
-            RaiseLocalEvent(uid, ref ev);
+            var ev = new StackSplitEvent(spawnEntity);
+            RaiseLocalEvent(entity, ref ev);
 
-            return entity;
+            return spawnEntity;
         }
 
         /// <summary>
@@ -90,7 +84,7 @@ namespace Content.Server.Stack
             var stack = Comp<StackComponent>(entity);
 
             // And finally, set the correct amount!
-            SetCount(entity, amount, stack);
+            SetCount((entity, stack), amount);
             return entity;
         }
 
@@ -114,7 +108,7 @@ namespace Content.Server.Stack
             {
                 var entity = SpawnAtPosition(entityPrototype, spawnPosition);
                 spawnedEnts.Add(entity);
-                SetCount(entity, count);
+                SetCount((entity, Comp<StackComponent>(entity)), count);
             }
 
             return spawnedEnts;
@@ -137,7 +131,7 @@ namespace Content.Server.Stack
             {
                 var entity = SpawnNextToOrDrop(entityPrototype, target);
                 spawnedEnts.Add(entity);
-                SetCount(entity, count);
+                SetCount((entity, Comp<StackComponent>(entity)), count);
             }
 
             return spawnedEnts;
@@ -216,7 +210,7 @@ namespace Content.Server.Stack
                 return;
             }
 
-            if (Split(uid, amount, userTransform.Coordinates, stack) is not {} split)
+            if (Split((uid, stack), amount, userTransform.Coordinates) is not {} split)
                 return;
 
             Hands.PickupOrDrop(userUid, split);

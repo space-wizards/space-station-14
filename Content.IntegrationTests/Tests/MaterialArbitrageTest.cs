@@ -367,7 +367,8 @@ public sealed class MaterialArbitrageTest
                 await server.WaitPost(() =>
                 {
                     var ent = entManager.SpawnEntity(id, testMap.GridCoords);
-                    stackSys.SetCount(ent, 1);
+                    if (entManager.TryGetComponent<StackComponent>(ent, out var stackComponent))
+                        stackSys.SetCount((ent, stackComponent), 1);
                     priceCache[id] = price = pricing.GetPrice(ent, false);
                     entManager.DeleteEntity(ent);
                 });
