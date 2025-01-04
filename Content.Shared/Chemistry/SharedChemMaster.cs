@@ -19,17 +19,6 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ChemMasterSetModeMessage : BoundUserInterfaceMessage
-    {
-        public readonly ChemMasterMode ChemMasterMode;
-
-        public ChemMasterSetModeMessage(ChemMasterMode mode)
-        {
-            ChemMasterMode = mode;
-        }
-    }
-
-    [Serializable, NetSerializable]
     public sealed class ChemMasterSetPillTypeMessage : BoundUserInterfaceMessage
     {
         public readonly uint PillType;
@@ -81,12 +70,6 @@ namespace Content.Shared.Chemistry
             Dosage = dosage;
             Label = label;
         }
-    }
-
-    public enum ChemMasterMode
-    {
-        Transfer,
-        Discard,
     }
 
     public enum ChemMasterReagentAmount
@@ -158,8 +141,6 @@ namespace Content.Shared.Chemistry
         /// </summary>
         public readonly IReadOnlyList<ReagentQuantity> BufferReagents;
 
-        public readonly ChemMasterMode Mode;
-
         public readonly FixedPoint2? BufferCurrentVolume;
         public readonly uint SelectedPillType;
 
@@ -168,14 +149,13 @@ namespace Content.Shared.Chemistry
         public readonly bool UpdateLabel;
 
         public ChemMasterBoundUserInterfaceState(
-            ChemMasterMode mode, ContainerInfo? inputContainerInfo, ContainerInfo? outputContainerInfo,
+            ContainerInfo? inputContainerInfo, ContainerInfo? outputContainerInfo,
             IReadOnlyList<ReagentQuantity> bufferReagents, FixedPoint2 bufferCurrentVolume,
             uint selectedPillType, uint pillDosageLimit, bool updateLabel)
         {
             InputContainerInfo = inputContainerInfo;
             OutputContainerInfo = outputContainerInfo;
             BufferReagents = bufferReagents;
-            Mode = mode;
             BufferCurrentVolume = bufferCurrentVolume;
             SelectedPillType = selectedPillType;
             PillDosageLimit = pillDosageLimit;

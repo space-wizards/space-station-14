@@ -36,10 +36,6 @@ namespace Content.Client.Chemistry.UI
                 new ItemSlotButtonPressedEvent(SharedChemMaster.InputSlotName));
             _window.OutputEjectButton.OnPressed += _ => SendMessage(
                 new ItemSlotButtonPressedEvent(SharedChemMaster.OutputSlotName));
-            _window.BufferTransferButton.OnPressed += _ => SendMessage(
-                new ChemMasterSetModeMessage(ChemMasterMode.Transfer));
-            _window.BufferDiscardButton.OnPressed += _ => SendMessage(
-                new ChemMasterSetModeMessage(ChemMasterMode.Discard));
             _window.CreatePillButton.OnPressed += _ => SendMessage(
                 new ChemMasterCreatePillsMessage(
                     (uint) _window.PillDosage.Value, (uint) _window.PillNumber.Value, _window.LabelLine));
