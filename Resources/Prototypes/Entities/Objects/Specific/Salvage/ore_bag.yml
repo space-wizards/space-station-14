@@ -42,7 +42,7 @@
   - type: Storage
     maxItemSize: Normal
     grid:
-    - 0,0,9,3
+    - 0,0,9,5
     quickInsert: true
     areaInsert: true
     whitelist:
