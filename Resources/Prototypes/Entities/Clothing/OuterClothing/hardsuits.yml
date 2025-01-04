@@ -1003,3 +1003,19 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSanta
+
+#Sunflower's Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBasic
+  id: ClothingOuterHelioSphere
+  name: HelioSphere Hardsuit
+  description: A space suit that will allow you to continue your photosynthesis even in full vacuum conditions
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/heliosphere.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/heliosphere.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHelioSphere
+  - type: Tag
+    id: SentiflowerWearable
