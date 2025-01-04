@@ -124,10 +124,10 @@
   - type: SolutionContainerManager
     solutions:
       spray:
-        maxVol: 250
+        maxVol: 500
         reagents:
         - ReagentId: SpaceCleaner
-          Quantity: 250
+          Quantity: 500
 # Vapor
 
 - type: entity
