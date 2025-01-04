@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Red, Blue, Black, Green, Brown, and Golden high-heels to clothesmate
-    type: Add
-  id: 354
-  time: '2024-10-11T20:36:11.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/448
 - author: AirFryerBuyOneGetOneFree
   changes:
   - message: Ghosts can visit the Ghost Bar to discuss the shift events in character!
@@ -4470,3 +4463,10 @@
   id: 853
   time: '2025-01-03T19:02:40.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1213
+- author: MintyTheBinty
+  changes:
+  - message: Added 10 new suits and made them available in drobes and loadouts!
+    type: Add
+  id: 854
+  time: '2025-01-04T02:25:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1223
