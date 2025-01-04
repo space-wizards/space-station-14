@@ -4,52 +4,86 @@ using Robust.Client.Console;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
-namespace Content.Client.Administration.UI.CustomControls
+namespace Content.Client.Administration.UI.CustomControls;
+
+[Virtual]
+public class CommandButton : Button, IDocumentTag
 {
-    [Virtual]
-    public class CommandButton : Button, IDocumentTag
+    private ConfirmWindow? _window;
+
+    public string? Command { get; set; }
+    public string? ConfirmationPrompt { get; set; }
+
+    public CommandButton()
     {
-        public string? Command { get; set; }
+        OnPressed += TryExecute;
+    }
 
-        public CommandButton()
+    protected virtual bool CanPress()
+    {
+        return string.IsNullOrEmpty(Command) ||
+            IoCManager.Resolve<IClientConGroupController>().CanCommand(Command.Split(' ')[0]);
+    }
+
+    protected override void EnteredTree()
+    {
+        Visible = CanPress();
+    }
+
+    private void Confirm(ButtonEventArgs obj)
+    {
+        if (ConfirmationPrompt is null || Command is null)
         {
-            OnPressed += Execute;
+            return;
         }
 
-        protected virtual bool CanPress()
+        if (_window is null)
         {
-            return string.IsNullOrEmpty(Command) ||
-                   IoCManager.Resolve<IClientConGroupController>().CanCommand(Command.Split(' ')[0]);
+            _window = new ConfirmWindow(
+                () => { Execute(obj); },    // confirm
+                () => { },                  // cancel
+                Loc.GetString("conform-command-message", ("command", Command), ("message", ConfirmationPrompt))
+            );
         }
 
-        protected override void EnteredTree()
+        if (_window is not null && !_window.IsOpen)
         {
-            if (!CanPress())
-            {
-                Visible = false;
-            }
+            _window.OpenCentered();
         }
 
-        protected virtual void Execute(ButtonEventArgs obj)
+    }
+
+    private void TryExecute(ButtonEventArgs obj)
+    {
+        if (!string.IsNullOrEmpty(ConfirmationPrompt))
         {
-            // Default is to execute command
-            if (!string.IsNullOrEmpty(Command))
-                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(Command);
+            Confirm(obj);
+            return;
         }
 
-        public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
-        {
-            if (args.Count != 2 || !args.TryGetValue("Text", out var text) || !args.TryGetValue("Command", out var command))
-            {
-                Logger.Error($"Invalid arguments passed to {nameof(CommandButton)}");
-                control = null;
-                return false;
-            }
+        Execute(obj);
+    }
 
-            Command = command;
-            Text = Loc.GetString(text);
-            control = this;
-            return true;
+    protected virtual void Execute(ButtonEventArgs obj)
+    {
+        if (string.IsNullOrEmpty(Command))
+            return;
+
+        IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(Command);
+    }
+
+    public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
+    {
+        if (!(args.Count == 3 || args.Count == 2) || !args.TryGetValue("Text", out var text) || !args.TryGetValue("Command", out var command))
+        {
+            Logger.Error($"Invalid arguments passed to {nameof(CommandButton)}");
+            control = null;
+            return false;
         }
+
+        Command = command;
+        Text = Loc.GetString(text);
+        control = this;
+        return true;
     }
 }
