@@ -116,6 +116,7 @@
     - HamsterWearable
     - WhitelistChameleon
 
+# Harmony Change: Updated Sprite Pathing for Head of Staff Beret Update
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretQM
@@ -123,9 +124,9 @@
   description: A beret with the cargo's insignia emblazoned on it. For quartermasters that are more inclined towards style.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/beret_qm.rsi
+    sprite: _Harmony/Clothing/Head/Hats/beret_qm.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/beret_qm.rsi
+    sprite: _Harmony/Clothing/Head/Hats/beret_qm.rsi
   - type: Tag
     tags:
     - ClothMade

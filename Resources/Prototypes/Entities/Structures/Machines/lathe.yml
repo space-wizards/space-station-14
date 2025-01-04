@@ -962,6 +962,7 @@
       - ClothingUniformJumpskirtCargo
       - ClothingUniformJumpsuitSalvageSpecialist
       - ClothingHeadHatBeretEngineering
+      - ClothingHeadHatBeretChiefEngineerHarmony # Harmony
       - ClothingUniformJumpsuitChiefEngineer
       - ClothingUniformJumpskirtChiefEngineer
       - ClothingUniformJumpsuitChiefEngineerTurtle
@@ -1034,6 +1035,7 @@
       - ClothingUniformJumpskirtQMTurtleneck
       - ClothingUniformJumpsuitQMFormal
       - ClothingHeadHatBeretRND
+      - ClothingHeadHatBeretResearchDirectorHarmony # Harmony
       - ClothingUniformJumpsuitResearchDirector
       - ClothingUniformJumpskirtResearchDirector
       - ClothingUniformJumpsuitScientist

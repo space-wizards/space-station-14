@@ -56,3 +56,35 @@
     - ClothMade
     - HamsterWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingHeadBase, BaseCommandContraband]
+  id: ClothingHeadHatBeretChiefEngineerHarmony
+  name: chief engineer's beret
+  description: Made out of the finest white leather NT has to offer. It sure is a shame you can't wear it on your helmet...
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Head/Hats/beret_ce.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Head/Hats/beret_ce.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingHeadBase, BaseCommandContraband]
+  id: ClothingHeadHatBeretResearchDirectorHarmony
+  name: research director's beret
+  description: A purple beret reinforced with a lot of durathread to make sure it wont be damaged in an explosion.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Head/Hats/beret_rd.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Head/Hats/beret_rd.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon
