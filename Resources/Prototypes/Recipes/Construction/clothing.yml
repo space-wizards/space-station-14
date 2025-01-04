@@ -98,6 +98,17 @@
   objectType: Item
 
 - type: construction
+  name: repair broken glasses
+  id: ClothingEyesGlasses
+  graph: RepairBrokenGlasses
+  startNode: start
+  targetNode: glasses
+  category: construction-category-clothing
+  description: Replace the cracked lenses with new lenses.
+  icon: { sprite: Clothing/Eyes/Glasses/glasses.rsi, state: icon }
+  objectType: Item
+
+- type: construction
   name: security glasses
   id: ClothingEyesGlassesSecurity
   graph: GlassesSecHUD

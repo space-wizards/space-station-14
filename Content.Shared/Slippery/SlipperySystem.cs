@@ -19,7 +19,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Slippery;
 
-[UsedImplicitly] 
+[UsedImplicitly]
 public sealed class SlipperySystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -83,7 +83,7 @@ public sealed class SlipperySystem : EntitySystem
     {
         if (HasComp<SpeedModifiedByContactComponent>(args.OtherEntity))
             _speedModifier.AddModifiedEntity(args.OtherEntity);
-    } 
+    }
 
     private bool CanSlip(EntityUid uid, EntityUid toSlip)
     {
@@ -111,6 +111,9 @@ public sealed class SlipperySystem : EntitySystem
 
         var ev = new SlipEvent(other);
         RaiseLocalEvent(uid, ref ev);
+
+        var slippedEv = new SlippedEvent(other);
+        RaiseLocalEvent(other, ref slippedEv);
 
         if (TryComp(other, out PhysicsComponent? physics) && !HasComp<SlidingComponent>(other))
         {
@@ -162,3 +165,13 @@ public record struct SlipCausingAttemptEvent (bool Cancelled);
 /// <param name="Slipped">The entity being slipped</param>
 [ByRefEvent]
 public readonly record struct SlipEvent(EntityUid Slipped);
+
+/// <summary>
+/// Raised on the entity that WAS slipped, passed on to all equipped clothing
+/// </summary>
+[ByRefEvent]
+public sealed class SlippedEvent(EntityUid slipped) : EntityEventArgs, IInventoryRelayEvent
+{
+    public EntityUid Slipped = slipped;
+    public SlotFlags TargetSlots => SlotFlags.All;
+}
