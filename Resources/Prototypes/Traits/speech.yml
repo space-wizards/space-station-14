@@ -91,6 +91,29 @@
   - type: ReplacementAccent
     accent: liar
 
+- type: trait
+  id: PseudobulbarAffect
+  name: trait-pseudobulbar-affect-name
+  description: trait-pseudobulbar-affect-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: EmotionallyUnstableAccent
+    triggerEmotionChance: 0.2
+    exclamatorySentenceChance: 0.5
+    changeMessageChance: 0.3
+    emotes:
+      - Laugh
+      - Scream
+      - Crying
+  - type: EmotionLoop
+    minTimeBetweenEmotions: 60
+    maxTimeBetweenEmotions: 90
+    emotes:
+      - Laugh
+      - Scream
+      - Crying
+
 # 2 Cost
 
 - type: trait
