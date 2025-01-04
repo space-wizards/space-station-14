@@ -1,6 +1,6 @@
 - type: entity
   id: BaseShellShotgun
-  name: shell (.50)
+  name: shell (.50 pellet)
   parent: [ BaseCartridge, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -73,7 +73,7 @@
 
 - type: entity
   id: ShellShotgun
-  name: shell (.50)
+  name: shell (.50 pellet)
   parent: BaseShellShotgun
   components:
   - type: Sprite
