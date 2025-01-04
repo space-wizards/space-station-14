@@ -18,12 +18,12 @@
   id: UplinkRevolverPython
   name: uplink-revolver-python-name
   description: uplink-revolver-python-desc
-  productEntity: WeaponRevolverPythonAP
-  discountCategory: usualDiscounts
+  productEntity: WeaponRevolverPython
+  discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 4
+    Telecrystal: 2
   cost:
-    Telecrystal: 8 # Originally was 13 TC but was not used due to high cost
+    Telecrystal: 4 # Originally was 13 and then 8 TC, preloaded with AP rounds, but was not used due to high cost
   categories:
   - UplinkWeaponry
 
@@ -499,9 +499,20 @@
 
 # For the Python
 - type: listing
-  id: UplinkSpeedLoaderMagnumAP
+  id: UplinkSpeedLoaderMagnum
   name: uplink-speedloader-magnum-name
-  description: uplink-speedloader-magnu-desc
+  description: uplink-speedloader-magnum-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi, state: icon }
+  productEntity: SpeedLoaderMagnum
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkAmmo
+
+- type: listing
+  id: UplinkSpeedLoaderMagnumAP
+  name: uplink-speedloader-magnum-ap-name
+  description: uplink-speedloader-magnum-ap-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi, state: icon }
   productEntity: SpeedLoaderMagnumAP
   cost:
