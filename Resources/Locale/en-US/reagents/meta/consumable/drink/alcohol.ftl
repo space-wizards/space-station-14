@@ -85,7 +85,7 @@ reagent-desc-b52 = Coffee, irish cream, and cognac. You will get bombed.
 reagent-name-blue-hawaiian = Blue Hawaiian
 reagent-desc-blue-hawaiian = Aloha! Does that mean hello or goodbye?
 
-reagent-name-bahama-mama = Bahama mama
+reagent-name-bahama-mama = Bahama Mama
 reagent-desc-bahama-mama = Tropical cocktail.
 
 reagent-name-banana-honk = Banana Honk
