@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from shiptest at commmit https://github.com/shiptest-ss13/Shiptest/commit/440a15fb476a20d77ba28c1fe315c1b659032ce8, edited by Alekshhh",
+  "copyright": "Taken from shiptest at commmit https://github.com/shiptest-ss13/Shiptest/commit/440a15fb476a20d77ba28c1fe315c1b659032ce8, edited by Alekshhh, N2 lockers edited by Lamrr",
   "size": {
     "x": 32,
     "y": 32
@@ -27,6 +27,9 @@
     { "name": "med_door" },
     { "name": "med_open" },
     { "name": "mixed_door" },
+    { "name": "n2" },
+    { "name": "n2_door" },
+    { "name": "n2_open" },
     { "name": "orange_door" },
     { "name": "pink_door" },
     { "name": "red_door" },
