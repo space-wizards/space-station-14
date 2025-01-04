@@ -161,7 +161,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
         if (!_player.TryGetSessionByEntity(component.User.Value, out var session))
             return;
 
-        var sound = _audio.GetSound(sounds);
+        var sound = _audio.ResolveSound(sounds);
         var param = sounds.Params.WithLoop(true).WithVolume(-4f);
 
         component.Stream = _audio.PlayGlobal(sound, session, param)?.Entity;
