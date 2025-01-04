@@ -227,7 +227,10 @@ public sealed class PolySystem : EntitySystem
         {
             _sawmill.Info($"Poly said on radio: {sentence}");
             _chatSystem.TrySendInGameICMessage(poly.Owner, sentence, InGameICChatType.Whisper, ChatTransmitRange.Normal);
-            _radioSystem.SendRadioMessage(poly.Owner, _chatSystem.TransformSpeech(poly.Owner, sentence), prototype, poly.Owner); // Poly the radio
+
+            var cleanedMessage = _chatSystem.TransformSpeech(poly.Owner, sentence);
+            cleanedMessage = _chatSystem.SanitizeInGameICMessage(poly.Owner, cleanedMessage, out _);
+            _radioSystem.SendRadioMessage(poly.Owner, cleanedMessage , prototype, poly.Owner); // Poly the radio
             return;
         }
 
@@ -262,7 +265,7 @@ public sealed class PolySystem : EntitySystem
             }
         }
 
-        var law = _ionStormSystem.GenerateLaw();
+        var law = _ionStormSystem.GenerateLaw().ToLower(); // We lowercase it here, the chat system should handle formatting it
         var channel = _robustRandom.Pick(new[] {"Local", "Engineering", "Common"});
 
         return (channel, law, null);
