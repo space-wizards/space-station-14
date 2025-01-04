@@ -9,7 +9,7 @@ namespace Content.Server.EntityEffects.Effects;
 /// Heal or apply eye damage
 /// </summary>
 [UsedImplicitly]
-public sealed partial class ChemHealEyeDamage : EntityEffect
+public sealed partial class ChemChangeEyeDamage : EntityEffect
 {
     /// <summary>
     /// How much eye damage to add.
@@ -18,7 +18,7 @@ public sealed partial class ChemHealEyeDamage : EntityEffect
     public int Amount = -1;
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("reagent-effect-guidebook-cure-eye-damage", ("chance", Probability), ("deltasign", MathF.Sign(Amount)));
+        => Loc.GetString("reagent-effect-guidebook-change-eye-damage", ("chance", Probability), ("deltasign", MathF.Sign(Amount)));
 
     public override void Effect(EntityEffectBaseArgs args)
     {
