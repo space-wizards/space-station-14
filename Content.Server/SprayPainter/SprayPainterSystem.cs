@@ -1,5 +1,5 @@
-using Content.Server.Atmos.Piping.Components;
-using Content.Server.Atmos.Piping.EntitySystems;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.SprayPainter;
@@ -36,8 +36,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             return;
 
         Audio.PlayPvs(ent.Comp.SpraySound, ent);
-
-        _pipeColor.SetColor(target, color, args.Color);
+        _pipeColor.SetColor((target, color), args.Color);
 
         args.Handled = true;
     }
