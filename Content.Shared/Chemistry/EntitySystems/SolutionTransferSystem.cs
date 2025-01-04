@@ -10,6 +10,8 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Content.Shared.Plankton;
 using System.Collections.Generic;
+using System.Linq;
+
 
 
 namespace Content.Shared.Chemistry.EntitySystems;
@@ -159,72 +161,122 @@ public sealed class SolutionTransferSystem : EntitySystem
     /// Transfer from a solution to another, allowing either entity to cancel it and show a popup.
     /// </summary>
     /// <returns>The actual amount transferred.</returns>
-    public FixedPoint2 Transfer(EntityUid user,
-        EntityUid sourceEntity,
-        Entity<SolutionComponent> source,
-        EntityUid targetEntity,
-        Entity<SolutionComponent> target,
-        FixedPoint2 amount)
+public FixedPoint2 Transfer(EntityUid user,
+    EntityUid sourceEntity,
+    Entity<SolutionComponent> source,
+    EntityUid targetEntity,
+    Entity<SolutionComponent> target,
+    FixedPoint2 amount)
+{
+    var transferAttempt = new SolutionTransferAttemptEvent(sourceEntity, targetEntity);
+
+    // Check if the source is cancelling the transfer
+    RaiseLocalEvent(sourceEntity, ref transferAttempt);
+    if (transferAttempt.CancelReason is {} reason)
     {
-        var transferAttempt = new SolutionTransferAttemptEvent(sourceEntity, targetEntity);
+        _popup.PopupClient(reason, sourceEntity, user);
+        return FixedPoint2.Zero;
+    }
 
-        // Check if the source is cancelling the transfer
-        RaiseLocalEvent(sourceEntity, ref transferAttempt);
-        if (transferAttempt.CancelReason is {} reason)
+    var sourceSolution = source.Comp.Solution;
+    if (sourceSolution.Volume == 0)
+    {
+        _popup.PopupClient(Loc.GetString("comp-solution-transfer-is-empty", ("target", sourceEntity)), sourceEntity, user);
+        return FixedPoint2.Zero;
+    }
+
+    // Check if the target is cancelling the transfer
+    RaiseLocalEvent(targetEntity, ref transferAttempt);
+    if (transferAttempt.CancelReason is {} targetReason)
+    {
+        _popup.PopupClient(targetReason, targetEntity, user);
+        return FixedPoint2.Zero;
+    }
+
+    var targetSolution = target.Comp.Solution;
+    if (targetSolution.AvailableVolume == 0)
+    {
+        _popup.PopupClient(Loc.GetString("comp-solution-transfer-is-full", ("target", targetEntity)), targetEntity, user);
+        return FixedPoint2.Zero;
+    }
+
+    // Calculate the actual amount to transfer
+    var actualAmount = FixedPoint2.Min(amount, FixedPoint2.Min(sourceSolution.Volume, targetSolution.AvailableVolume));
+
+    // Handle plankton species transfer from source to target
+    if (TryComp<PlanktonComponent>(sourceEntity, out var planktonSource))
+    {
+        var planktonFraction = actualAmount / sourceSolution.Volume;
+
+        // Handle plankton transfer to the target if it has a PlanktonComponent
+        if (TryComp<PlanktonComponent>(targetEntity, out var planktonTarget))
         {
-            _popup.PopupClient(reason, sourceEntity, user);
-            return FixedPoint2.Zero;
-        }
-
-        var sourceSolution = source.Comp.Solution;
-        if (sourceSolution.Volume == 0)
-        {
-            _popup.PopupClient(Loc.GetString("comp-solution-transfer-is-empty", ("target", sourceEntity)), sourceEntity, user);
-            return FixedPoint2.Zero;
-        }
-
-        // Check if the target is cancelling the transfer
-        RaiseLocalEvent(targetEntity, ref transferAttempt);
-        if (transferAttempt.CancelReason is {} targetReason)
-        {
-            _popup.PopupClient(targetReason, targetEntity, user);
-            return FixedPoint2.Zero;
-        }
-
-        var targetSolution = target.Comp.Solution;
-        if (targetSolution.AvailableVolume == 0)
-        {
-            _popup.PopupClient(Loc.GetString("comp-solution-transfer-is-full", ("target", targetEntity)), targetEntity, user);
-            return FixedPoint2.Zero;
-        }
-
-        var actualAmount = FixedPoint2.Min(amount, FixedPoint2.Min(sourceSolution.Volume, targetSolution.AvailableVolume));
-
-        if (TryComp<PlanktonComponent>(sourceEntity, out var planktonSource))
-        {
-            var PlanktonFraction = actualAmount / sourceSolution.Volume;
-            float planktonFraction = (float)PlanktonFraction;
-
+            // Transfer plankton species only if they are not already in the target container
             foreach (var species in planktonSource.SpeciesInstances)
             {
-                species.CurrentSize -= species.CurrentSize * planktonFraction;
-                if (species.CurrentSize < 0)
-                    species.CurrentSize = 0;
+                // Check if the species already exists in the target container
+                var existingSpecies = planktonTarget.SpeciesInstances
+                    .FirstOrDefault(s => s.SpeciesName.ToString() == species.SpeciesName.ToString());
+
+                if (existingSpecies != null)
+                {
+                    // If the species exists in target, update the current size safely
+                    existingSpecies.CurrentSize += species.CurrentSize * (float)planktonFraction;
+                }
+                else
+                {
+                    // If it doesn't exist, add a new instance of this species to the target container
+                    planktonTarget.SpeciesInstances.Add(new PlanktonComponent.PlanktonSpeciesInstance(
+                        species.SpeciesName,
+                        species.Diet,
+                        species.Characteristics,
+                        species.CurrentSize * (float)planktonFraction, // Apply fraction to new species added
+                        species.CurrentHunger,
+                        species.IsAlive
+                    ));
+                }
             }
         }
+        else
+        {
+            // If the target doesn't have a PlanktonComponent, create a new one and add species
+            planktonTarget = new PlanktonComponent();
+            foreach (var species in planktonSource.SpeciesInstances)
+            {
+                planktonTarget.SpeciesInstances.Add(new PlanktonComponent.PlanktonSpeciesInstance(
+                    species.SpeciesName,
+                    species.Diet,
+                    species.Characteristics,
+                    species.CurrentSize * (float)planktonFraction, // Apply fraction to new species added
+                    species.CurrentHunger,
+                    species.IsAlive
+                ));
+            }
+            _entityManager.AddComponent(targetEntity, planktonTarget);
+        }
 
-        var solution = _solution.SplitSolution(source, actualAmount);
-        _solution.AddSolution(target, solution);
+        // Safely update plankton species sizes in the source (reduce based on the fraction)
+        foreach (var species in planktonSource.SpeciesInstances.ToList()) // Use ToList() to avoid modifying collection during iteration
+        {
+            species.CurrentSize -= species.CurrentSize * (float)planktonFraction;
+            if (species.CurrentSize < 0)
+                species.CurrentSize = 0;
+        }
+    }
 
-        TransferPlanktonComponent(sourceEntity, targetEntity);
+    // Handle solution transfer logic
+    var solution = _solution.SplitSolution(source, actualAmount);
+    _solution.AddSolution(target, solution);
 
-        var ev = new SolutionTransferredEvent(sourceEntity, targetEntity, user, actualAmount);
-        RaiseLocalEvent(targetEntity, ref ev);
+    TransferPlanktonComponent(sourceEntity, targetEntity);
 
-        _adminLogger.Add(LogType.Action, LogImpact.Medium,
-            $"{ToPrettyString(user):player} transferred {SharedSolutionContainerSystem.ToPrettyString(solution)} to {ToPrettyString(targetEntity):target}, which now contains {SharedSolutionContainerSystem.ToPrettyString(targetSolution)}");
+    var ev = new SolutionTransferredEvent(sourceEntity, targetEntity, user, actualAmount);
+    RaiseLocalEvent(targetEntity, ref ev);
 
-        if (sourceSolution.Volume == 0) // if the container being poured is empty, remove the planktoncomponent.
+    _adminLogger.Add(LogType.Action, LogImpact.Medium,
+        $"{ToPrettyString(user):player} transferred {SharedSolutionContainerSystem.ToPrettyString(solution)} to {ToPrettyString(targetEntity):target}, which now contains {SharedSolutionContainerSystem.ToPrettyString(targetSolution)}");
+
+    if (sourceSolution.Volume == 0) // if the container being poured is empty, remove the planktoncomponent.
     {
         if (HasComp<PlanktonComponent>(sourceEntity))
         {
@@ -232,18 +284,22 @@ public sealed class SolutionTransferSystem : EntitySystem
         }
     }
 
-        return actualAmount;
-    }
+    return actualAmount;
+}
 
 
 
-        private void TransferPlanktonComponent(EntityUid sourceEntity, EntityUid targetEntity)
+
+
+
+private void TransferPlanktonComponent(EntityUid sourceEntity, EntityUid targetEntity)
 {
     if (TryComp<PlanktonComponent>(sourceEntity, out var planktonSource))
     {
+        // If target does not have a PlanktonComponent, add one
         if (!HasComp<PlanktonComponent>(targetEntity))
         {
-            EntityManager.AddComponent<PlanktonComponent>(targetEntity);
+            _entityManager.AddComponent<PlanktonComponent>(targetEntity);
             Log.Info($"Added PlanktonComponent to {targetEntity}");
         }
 
@@ -273,7 +329,9 @@ public sealed class SolutionTransferSystem : EntitySystem
 }
 
 
-    }
+
+
+}
 
 /// <summary>
 /// Raised when attempting to transfer from one solution to another.

@@ -16,7 +16,7 @@ namespace Content.Shared.Plankton
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-    //    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default;
+    //  [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default;
 
         private const float UpdateInterval = 1f; // Interval in seconds
         private const float HungerInterval = 5f;
@@ -60,7 +60,8 @@ namespace Content.Shared.Plankton
 
         private void OnPlanktonCompInit(EntityUid uid, PlanktonComponent component, ComponentInit args)
         {
-            var random = new System.Random();
+
+        }
           //  var reagentId = reagentId.Prototype;
 
            // component.ReagentId = reagentId;
@@ -72,66 +73,74 @@ namespace Content.Shared.Plankton
            //     return;
           //  }
 
-            for (int i = 0; i < 3; i++)
+       private void OnPlanktonGeneration(EntityUid uid, PlanktonComponent component)
+{
+    var random = new System.Random();
+
+    // Removed planktonName initialization here
+    for (int i = 0; i < 3; i++)
+    {
+        // Pick valid names from the arrays
+        var firstName = PlanktonComponent.PlanktonFirstNames[random.Next(PlanktonComponent.PlanktonFirstNames.Length)];
+        var secondName = PlanktonComponent.PlanktonSecondNames[random.Next(PlanktonComponent.PlanktonSecondNames.Length)];
+
+        // Ensure planktonName is never null
+        PlanktonComponent.PlanktonName planktonName = new PlanktonComponent.PlanktonName(firstName ?? "DefaultFirstName", secondName ?? "DefaultSecondName");
+
+        // Randomly generate 2-3 characteristics per plankton
+        int numCharacteristics = random.Next(2, 4);  // Randomly pick 2-3 characteristics
+        var possibleCharacteristics = Enum.GetValues(typeof(PlanktonComponent.PlanktonCharacteristics));
+        var selectedCharacteristics = new HashSet<PlanktonComponent.PlanktonCharacteristics>();
+
+        while (selectedCharacteristics.Count < numCharacteristics)
+        {
+            var characteristicValue = possibleCharacteristics.GetValue(random.Next(possibleCharacteristics.Length));
+            if (characteristicValue != null)
             {
-                var firstName = PlanktonComponent.PlanktonFirstNames[random.Next(PlanktonComponent.PlanktonFirstNames.Length)];
-                var secondName = PlanktonComponent.PlanktonSecondNames[random.Next(PlanktonComponent.PlanktonSecondNames.Length)];
-                var planktonName = new PlanktonComponent.PlanktonName(firstName, secondName);
-
-                // Randomly generate 2-3 characteristics per plankton
-                int numCharacteristics = random.Next(2, 4);  // Randomly pick 2-3 characteristics
-                var possibleCharacteristics = Enum.GetValues(typeof(PlanktonComponent.PlanktonCharacteristics));
-                var selectedCharacteristics = new HashSet<PlanktonComponent.PlanktonCharacteristics>();
-
-               while (selectedCharacteristics.Count < numCharacteristics)
+                var randomCharacteristic = (PlanktonComponent.PlanktonCharacteristics)characteristicValue;
+                if ((selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Cryophilic) &&
+                    selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Pyrophilic)) ||
+                   (randomCharacteristic == PlanktonComponent.PlanktonCharacteristics.Cryophilic &&
+                  selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Pyrophilic)) ||
+                 (randomCharacteristic == PlanktonComponent.PlanktonCharacteristics.Pyrophilic &&
+                  selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Cryophilic)))
                 {
-                    var characteristicValue = possibleCharacteristics.GetValue(random.Next(possibleCharacteristics.Length));
-                 if (characteristicValue != null)
-                 {
-                        var randomCharacteristic = (PlanktonComponent.PlanktonCharacteristics)characteristicValue;
-                        if ((selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Cryophilic) &&
-                            selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Pyrophilic)) ||
-                           (randomCharacteristic == PlanktonComponent.PlanktonCharacteristics.Cryophilic &&
-                          selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Pyrophilic)) ||
-                         (randomCharacteristic == PlanktonComponent.PlanktonCharacteristics.Pyrophilic &&
-                          selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Cryophilic)))
-                       {
-                         Log.Error("Disallowed characteristic mix: Cryophilic and Pyrophilic cannot coexist.");
-                            continue;
-                       }
-                       selectedCharacteristics.Add(randomCharacteristic);
-                 }
+                    Log.Error("Disallowed characteristic mix: Cryophilic and Pyrophilic cannot coexist.");
+                    continue;
+                }
+                selectedCharacteristics.Add(randomCharacteristic);
+            }
+        }
+
+        PlanktonComponent.PlanktonCharacteristics combinedCharacteristics = 0;
+        foreach (var characteristic in selectedCharacteristics)
+        {
+            combinedCharacteristics |= characteristic;
+        }
+
+        // Create a new plankton species instance
+        var planktonInstance = new PlanktonComponent.PlanktonSpeciesInstance(
+            planktonName,
+            (PlanktonComponent.PlanktonDiet)random.Next(Enum.GetValues<PlanktonComponent.PlanktonDiet>().Length),
+            combinedCharacteristics,
+            1.0f,
+            50f,
+            true
+        );
+
+        // Add the plankton species instance to the SpeciesInstances list
+        component.SpeciesInstances.Add(planktonInstance);
+
+        planktonInstance.IsAlive = true;
+        planktonInstance.CurrentHunger = 50f;
+
+        Log.Info($"Generated plankton species {planktonInstance.SpeciesName} with characteristics {combinedCharacteristics} and diet {planktonInstance.Diet}. Is alive is {planktonInstance.IsAlive}");
+    }
+
+    // Log the total number of plankton species initialized
+    Log.Info($"Plankton component initialized with {component.SpeciesInstances.Count} species.");
 }
 
-
-                PlanktonComponent.PlanktonCharacteristics combinedCharacteristics = 0;
-                foreach (var characteristic in selectedCharacteristics)
-                {
-                    combinedCharacteristics |= characteristic;
-                }
-
-                // Create a new plankton species instance
-                var planktonInstance = new PlanktonComponent.PlanktonSpeciesInstance(
-                    planktonName,
-                    (PlanktonComponent.PlanktonDiet)random.Next(Enum.GetValues<PlanktonComponent.PlanktonDiet>().Length),
-                    combinedCharacteristics,
-                    1.0f,
-                    50f,
-                    true
-                );
-
-                // Add the plankton species instance to the SpeciesInstances list
-                component.SpeciesInstances.Add(planktonInstance);
-
-                planktonInstance.IsAlive = true;
-                planktonInstance.CurrentHunger = 50f;
-
-                Log.Info($"Generated plankton species {planktonInstance.SpeciesName} with characteristics {combinedCharacteristics} and diet {planktonInstance.Diet}. Is alive is {planktonInstance.IsAlive}");
-            }
-
-            // Log the total number of plankton species initialized
-            Log.Info($"Plankton component initialized with {component.SpeciesInstances.Count} species.");
-        }
 
         private void PlanktonInteraction(EntityUid uid)
         {
@@ -410,7 +419,7 @@ namespace Content.Shared.Plankton
                     {
                         planktonInstance.CurrentHunger = 0f;
                         planktonInstance.IsAlive = false;
-                        component.DeadPlankton = planktonInstance.CurrentSize;
+                        component.DeadPlankton += planktonInstance.CurrentSize;
                         Log.Error($"{planktonInstance.SpeciesName} has starved to death.");
                     }
                 }
@@ -432,8 +441,7 @@ namespace Content.Shared.Plankton
             }
            }
            }
-}
-
+        }
 }
 }
 
