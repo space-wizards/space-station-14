@@ -18,7 +18,7 @@
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: DoctorDay
-    prototype: WeaponTaser
+    prototype: WehMedipen
 
 - type: startingGear
   id: DoctorGear
