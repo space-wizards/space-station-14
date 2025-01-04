@@ -45,6 +45,7 @@ namespace Content.Server.Database
         public DbSet<AdminMessage> AdminMessages { get; set; } = null!;
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
+        public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -968,6 +969,8 @@ namespace Content.Server.Database
          * Reservation by commenting out the value is likely sufficient for this purpose, but may impact projects which depend on SS14 like SS14.Admin.
          */
         BabyJail = 4,
+        /// Results from rejected connections with external API checking tools
+        IPChecks = 5,
     }
 
     public class ServerBanHit
@@ -1283,5 +1286,29 @@ namespace Content.Server.Database
 
             return new ImmutableTypedHwid(hwid.Hwid.ToImmutableArray(), hwid.Type);
         }
+    }
+
+
+    /// <summary>
+    ///  Cache for the IPIntel system
+    /// </summary>
+    public class IPIntelCache
+    {
+        public int Id { get; set; }
+
+        /// <summary>
+        /// The IP address (duh). This is made unique manually for psql cause of ef core bug.
+        /// </summary>
+        public IPAddress Address { get; set; } = null!;
+
+        /// <summary>
+        /// Date this record was added. Used to check if our cache is out of date.
+        /// </summary>
+        public DateTime Time { get; set; }
+
+        /// <summary>
+        /// The score IPIntel returned
+        /// </summary>
+        public float Score { get; set; }
     }
 }
