@@ -1,4 +1,5 @@
-using System.Linq;
+﻿using System.Linq;
+using Content.Shared._Starlight.Medical.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
@@ -163,6 +164,17 @@ namespace Content.Shared.Damage
                     return damage;
                 }
             }
+
+            // 🌟Starlight🌟 start
+            var finalEv = new DamageBeforeApplyEvent
+            {
+                Damage = damage,
+                Origin = origin
+            };
+            RaiseLocalEvent(uid.Value, finalEv);
+            if (finalEv.Cancelled)
+                return damage;
+            // 🌟Starlight🌟 end
 
             // TODO DAMAGE PERFORMANCE
             // Consider using a local private field instead of creating a new dictionary here.
