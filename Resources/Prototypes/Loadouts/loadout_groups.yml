@@ -308,6 +308,10 @@
   - BartenderJumpsuit
   - BartenderJumpskirt
   - BartenderJumpsuitPurple
+  - ClothingUniformNightclubSuit #imp
+  - ClothingUniformNightclubSuitSkirt #imp
+  - ClothingUniformSeniorBartender #imp
+  - ClothingUniformSeniorBartenderSkirt #imp
 
 - type: loadoutGroup
   id: BartenderNeck
@@ -406,6 +410,8 @@
   - LibrarianJumpskirt
   - CuratorJumpsuit
   - CuratorJumpskirt
+  - ClothingUniformBrownSuit #imp
+  - ClothingUniformBrownSuitSkirt #imp
 
 - type: loadoutGroup
   id: LibrarianNeck
@@ -436,6 +442,8 @@
   - LawyerJumpskirtRed
   - LawyerJumpsuitGood
   - LawyerJumpskirtGood
+  - ClothingUniformCreamSuit #imp
+  - ClothingUniformCreamSuitSkirt #imp
 
 - type: loadoutGroup
   id: LawyerNeck
@@ -478,6 +486,8 @@
   - ChaplainJumpskirt
   - ChaplainRobesLight
   - ChaplainRobesDark
+  - ClothingUniformFuneralSuit #imp
+  - ClothingUniformFuneralSuitSkirt #imp
 
 - type: loadoutGroup
   id: ChaplainOuterClothing
@@ -771,6 +781,8 @@
   loadouts:
   - MusicianJumpsuit
   - MusicianJumpskirt
+  - ClothingUniformMrSpaceWide #imp
+  - ClothingUniformMrSpaceWideSkirt #imp
 
 - type: loadoutGroup
   id: MusicianNeck
@@ -1497,6 +1509,10 @@
   - DetectiveJumpskirt
   - NoirJumpsuit
   - NoirJumpskirt
+  - ClothingUniformMiamiVice #imp
+  - ClothingUniformMiamiViceSkirt #imp
+  - ClothingUniformDetectiveSuit #imp
+  - ClothingUniformDetectiveSuitSkirt #imp
 
 - type: loadoutGroup
   id: DetectiveOuterClothing
@@ -1862,6 +1878,8 @@
   loadouts:
   - ReporterJumpsuit
   - JournalistJumpsuit
+  - ClothingUniformBrosBlazer #imp
+  - ClothingUniformBrosBlazerSkirt #imp
 
 - type: loadoutGroup
   id: ReporterNeck
