@@ -93,20 +93,14 @@
   description: A katana infused with strong energy.
   components:
   - type: Sprite
-    sprite: _Impstation/Objects/Weapons/Melee/energykatana.rsi # imp
-    layers: # imp
-    - state: off-icon
-      map: [ "enum.ToggleVisuals.Layer" ]
+    sprite: Objects/Weapons/Melee/energykatana.rsi
   - type: MeleeWeapon
     wideAnimationRotation: -60
     damage:
       types:
-        Slash: 5 # imp
-    angle: 60 # imp
-    animation: WeaponArcSlash # imp
+        Slash: 30
   - type: Item
-    heldPrefix: off # imp
-    sprite: _Impstation/Objects/Weapons/Melee/energykatana.rsi # imp
+    sprite: Objects/Weapons/Melee/energykatana.rsi
   - type: EnergyKatana
   - type: DashAbility
   - type: LimitedCharges
@@ -115,55 +109,13 @@
   - type: AutoRecharge
     rechargeDuration: 20
   - type: Clothing
-    sprite: _Impstation/Objects/Weapons/Melee/energykatana.rsi # imp
-    quickEquip: false # imp
+    sprite: Objects/Weapons/Melee/energykatana.rsi
     slots:
     - Back
     - Belt
   - type: Reflect
-   # imp edits #
-  - type: ThrowingAngle
+  - type: ThrowingAngle # imp
     angle: 300
-  - type: ItemToggle
-    predictable: false
-    soundActivate:
-      collection: sparks
-      params:
-        variation: 0.250
-    soundDeactivate:
-      collection: sparks
-      params:
-        variation: 0.250
-    soundFailToActivate:
-      path: /Audio/Machines/button.ogg
-      params:
-        variation: 0.250
-  - type: StaminaDamageOnHit
-    damage: 30
-    sound: /Audio/Weapons/egloves.ogg
-  - type: UseDelay
-  - type: ItemToggleMeleeWeapon
-    activatedDamage:
-      types:
-        Slash: 30
-    activatedSoundOnHit:
-        path: /Audio/Weapons/bladeslice.ogg
-    deactivatedSoundOnHit:
-        path: /Audio/Weapons/bladeslice.ogg
-  - type: Stunbaton
-    energyPerUse: 100
-    inverted: true
-  - type: Battery
-    maxCharge: 1000
-    startingCharge: 1000
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-     enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
-          True: {state: on-icon}
-          False: {state: off-icon}
-    # end imp edits #
 
 - type: entity
   name: machete
