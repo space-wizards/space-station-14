@@ -10,8 +10,8 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Content.Shared.Plankton;
 using System.Collections.Generic;
+using Robust.Shared.Random;
 using System.Linq;
-
 
 
 namespace Content.Shared.Chemistry.EntitySystems;
@@ -27,6 +27,7 @@ public sealed class SolutionTransferSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <summary>
     ///     Default transfer amounts for the set-transfer verb.
@@ -312,6 +313,28 @@ private void TransferPlanktonComponent(EntityUid sourceEntity, EntityUid targetE
         planktonTarget.TemperatureToleranceLow = planktonSource.TemperatureToleranceLow;
         planktonTarget.TemperatureToleranceHigh = planktonSource.TemperatureToleranceHigh;
 
+       if (TryComp<PlanktonSeparatorComponent>(sourceEntity, out _))
+        {
+            // If there's a separator, randomly pick one species to transfer
+            if (planktonSource.SpeciesInstances.Count > 0)
+            {
+                var randomIndex = _random.Next(planktonSource.SpeciesInstances.Count);
+                var selectedSpecies = planktonSource.SpeciesInstances[randomIndex];
+
+                // Add the selected species instance to the target's list
+                var newSpeciesInstance = new PlanktonComponent.PlanktonSpeciesInstance(
+                    selectedSpecies.SpeciesName,
+                    selectedSpecies.Diet,
+                    selectedSpecies.Characteristics,
+                    selectedSpecies.CurrentSize,
+                    selectedSpecies.CurrentHunger,
+                    selectedSpecies.IsAlive
+                );
+                planktonTarget.SpeciesInstances.Add(newSpeciesInstance);
+            }
+        }
+        else
+        {
         // Add new species instances to the target's list without clearing it
         foreach (var speciesInstance in planktonSource.SpeciesInstances)
         {
@@ -325,10 +348,9 @@ private void TransferPlanktonComponent(EntityUid sourceEntity, EntityUid targetE
             );
             planktonTarget.SpeciesInstances.Add(newSpeciesInstance);
         }
+        }
     }
 }
-
-
 
 
 }

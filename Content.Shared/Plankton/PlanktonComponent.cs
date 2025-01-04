@@ -85,7 +85,6 @@ public partial class PlanktonComponent : Component
     [DataField("temperatureToleranceHigh"), ViewVariables(VVAccess.ReadWrite)]
     public float TemperatureToleranceHigh { get; set; } = 40.0f; // Max temperature tolerance
 
-    // Define large lists of "scientific" first and second names for plankton
     public static readonly string[] PlanktonFirstNames =
     {
         "Acanthocystis", "Actinophrys", "Amphora", "Apistosporus", "Aulacodiscus",
@@ -93,17 +92,21 @@ public partial class PlanktonComponent : Component
         "Entomorpha", "Euglena", "Gloeocapsa", "Leptocylindrus", "Mastigophora",
         "Mesorhizobium", "Navicula", "Nitzschia", "Oscillatoria", "Phaeodactylum",
         "Phacus", "Platymonas", "Protoperidinium", "Pyramimonas", "Spirulina",
-        "Synedra", "Tetradontia", "Trachelomonas", "Volvox", "Vorticella"
+        "Synedra", "Tetradontia", "Trachelomonas", "Volvox", "Vorticella", "Bill",
+        "Ratilus", "Betamios", "Noctliuca", "Terminidia", "Democracia", "Kharaa", 
+        "Meridia", "Malevalon", "ERROR", "Kerbalius", "Raptura"
     };
 
     public static readonly string[] PlanktonSecondNames =
     {
-        "longispina", "latifolia", "quadricaudata", "gracilis", "bioluminescens",
-        "radiata", "toxica", "cystiformis", "fimbriata", "planctonica",
+        "longispina", "latifolia", "quadricaudata", "gracilis", "deloriana",
+        "radiata", "honkliens", "cystiformis", "fimbriata", "planctonica",
         "viridis", "globosa", "aurelia", "pulchra", "reducta",
         "tuberculata", "subtilis", "hyalina", "cephalopodiformis", "corymbosa",
-        "parasitica", "electrica", "xenofila", "macrospora", "fluorescens",
-        "lucida", "cyanobacteria", "multicellularis", "carotenoides", "ectoplasmica"
+        "unobtania", "tri-tachia", "xenofila", "macrospora", "apogeelia",
+        "lucida", "triesta", "rounyens", "tcarotenoides", "ectoplasmica",
+        "thingius", "cordycepsia", "krabby", "jones", "4546B", "rottia", "hearthiata", 
+        "nomaia", "exadv1ia", "florania", "hylotlia", "thargoidis", "celesteia", "brackenis"
     };
 
     // Class to combine the first and second name for plankton species
