@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: map Skimmer 0-12 pop
-    type: Add
-  - message: fixes an incorrect sound file directory in ranged weapons
-    type: Fix
-  id: 356
-  time: '2024-10-11T21:01:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/457
 - author: formlessnameless
   changes:
   - message: Updated ghost bar join message
@@ -4473,3 +4464,10 @@
   id: 855
   time: '2025-01-04T14:54:06.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1225
+- author: DinnerCalzone
+  changes:
+  - message: Added a blood-red phone to the lone ops shuttle.
+    type: Add
+  id: 856
+  time: '2025-01-04T14:56:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1226
