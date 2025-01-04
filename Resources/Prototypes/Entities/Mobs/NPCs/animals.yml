@@ -1729,6 +1729,10 @@
           Quantity: 3
         - ReagentId: MouseBites #imp
           Quantity: 2
+      mousebites: #imp. dont look at this.
+        reagents:
+        - ReagentId: MouseBites
+          Quantity: 500 # DONT LOOK AT THIS
   - type: Butcherable
     spawned:
     - id: FoodMeatRat
@@ -1787,6 +1791,9 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Mouse
+  - type: MeleeChemicalInjector #imp
+    solution: mousebites
+    transferAmount: 1
 
 - type: entity
   parent: MobMouse
