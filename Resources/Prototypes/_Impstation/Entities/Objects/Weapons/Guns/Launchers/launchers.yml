@@ -5,7 +5,7 @@
   description: A de-militarised piece of military surplus equipment, repurposed for the real troops.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Launchers/cleaner_lake.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Launchers/cleaner_lake.rsi
     layers:
       - state: icon
         map: ["enum.GunVisualLayers.Base"]
@@ -80,7 +80,7 @@
           unshaded:
             True: { state: base-unshaded }
             False: { state: base-unshaded-off }
-            
+
 - type: entity
   name: improvised grappling gun
   parent: WeaponGrapplingGun

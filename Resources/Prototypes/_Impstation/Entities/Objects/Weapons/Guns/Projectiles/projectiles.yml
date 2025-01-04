@@ -9,9 +9,9 @@
     bodyType: Dynamic
     fixedRotation: false
   - type: Sprite
-    sprite: Objects/Misc/landmine.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Projectiles/cleanmine.rsi
     layers:
-      - state: landmine
+      - state: cleanmine
     noRot: true
   - type: SmokeOnTrigger
     duration: 15
