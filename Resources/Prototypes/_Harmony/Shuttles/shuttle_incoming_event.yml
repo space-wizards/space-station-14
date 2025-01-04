@@ -1,0 +1,41 @@
+# Harmony ERT Shuttles
+
+- type: preloadedGrid
+  id: ShuttleERTMedSecLarge
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTMedSecLarge.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: ShuttleERTSecMedium
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTSecMedium.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: ShuttleERTSecSmall
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTSecSmall.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: ShuttleERTMedMedium
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTMedMedium.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: ShuttleERTMedSmall
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTMedSmall.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: ShuttleERTEngiJaniMedium
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTEngiJaniMedium.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: ShuttleERTEngiSmall
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTEngiSmall.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: ShuttleERTJaniSmall
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTJaniSmall.yml
+  copies: 1

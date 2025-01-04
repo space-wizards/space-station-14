@@ -1,0 +1,91 @@
+# Harmony ERT Shuttles
+
+# General
+
+- type: entity
+  id: ERTMedSecLarge
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ert-generic-shuttle-incoming #!!
+    weight: 0 #  Admin only.
+  - type: LoadMapRule
+    preloadedGrid: ShuttleERTMedSecLarge
+
+# Security
+
+- type: entity
+  id: ERTSecMedium
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ert-sec-shuttle-incoming #!!
+    weight: 0 #  Admin only.
+  - type: LoadMapRule
+    preloadedGrid: ShuttleERTSecMedium
+
+- type: entity
+  id: ERTSecSmall
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ert-sec-shuttle-incoming #!!
+    weight: 0 #  Admin only.
+  - type: LoadMapRule
+    preloadedGrid: ShuttleERTSecSmall
+
+# Medical
+
+- type: entity
+  id: ERTMedMedium
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ert-sec-shuttle-incoming #!!
+    weight: 0 #  Admin only.
+  - type: LoadMapRule
+    preloadedGrid: ShuttleERTMedMedium
+
+- type: entity
+  id: ERTMedSmall
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ert-med-shuttle-incoming #!!
+    weight: 0 #  Admin only.
+  - type: LoadMapRule
+    preloadedGrid: ShuttleERTMedSmall
+
+# Engineering
+
+- type: entity
+  id: ERTEngiJaniMedium
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ert-engi-shuttle-incoming #!!
+    weight: 0 #  Admin only.
+  - type: LoadMapRule
+    preloadedGrid: ShuttleERTEngiJaniMedium
+
+- type: entity
+  id: ERTEngiSmall
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-ert-engi-shuttle-incoming #!!
+    weight: 0 #  Admin only.
+  - type: LoadMapRule
+    preloadedGrid: ShuttleERTEngiSmall
+
+# Janitorial
+
+- type: entity
+  id: ERTJaniSmall
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: null # Just a janitor.
+    weight: 0 #  Admin only.
+  - type: LoadMapRule
+    preloadedGrid: ShuttleERTJaniSmall
