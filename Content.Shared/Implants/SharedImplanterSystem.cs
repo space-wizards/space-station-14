@@ -52,13 +52,30 @@ public abstract class SharedImplanterSystem : EntitySystem
 
         args.PushMarkup(Loc.GetString("implanter-contained-implant-text", ("desc", component.ImplantData.Item2)));
     }
+    public bool CheckSameImplant(EntityUid target, EntityUid implant)
+    {
+        if (!TryComp<ImplantedComponent>(target, out var implanted))
+            return false;
 
+        var implantPrototype = Prototype(implant);
+        return implanted.ImplantContainer.ContainedEntities.Any(entity => Prototype(entity) == implantPrototype);
+    }
     //Instantly implant something and add all necessary components and containers.
     //Set to draw mode if not implant only
     public void Implant(EntityUid user, EntityUid target, EntityUid implanter, ImplanterComponent component)
     {
         if (!CanImplant(user, target, implanter, component, out var implant, out var implantComp))
             return;
+
+        // Check if we are trying to implant a implant which is already implanted
+        // Check AFTER the doafter to prevent "is it a fake?" metagaming against deceptive implants
+        if (!component.AllowMultipleImplants && CheckSameImplant(target, implant.Value))
+        {
+            var name = Identity.Name(target, EntityManager, user);
+            var msg = Loc.GetString("implanter-component-implant-already", ("implant", implant), ("target", name));
+            _popup.PopupEntity(msg, target, user);
+            return;
+        }
 
         //If the target doesn't have the implanted component, add it.
         var implantedComp = EnsureComp<ImplantedComponent>(target);

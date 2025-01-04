@@ -328,3 +328,15 @@
       itemIconStyle: NoItem
       useDelay: 1 # emote spam
       event: !type:ToggleActionEvent
+
+- type: entity
+  id: FakeMindShieldToggleAction
+  name: action-name-toggle-fake-mindshield
+  description: action-description-toggle-fake-mindshield
+  components:
+  - type: InstantAction
+    icon: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon }
+    iconOn: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon-on }
+    itemIconStyle: NoItem
+    useDelay: 1
+    event: !type:FakeMindShieldToggleEvent
