@@ -35,32 +35,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitBartenderPurple
 
-- type: loadout
-  id: ClothingUniformNightclubSuit
-  equipment:
-    jumpsuit: ClothingUniformNightclubSuit #imp
-
-- type: loadout
-  id: ClothingUniformNightclubSuitSkirt
-  equipment:
-    jumpsuit: ClothingUniformNightclubSuitSkirt #imp
-
-- type: loadout
-  id: ClothingUniformSeniorBartender
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorBartender
-  equipment:
-    id: ClothingUniformSeniorBartender #imp
-
-- type: loadout
-  id: ClothingUniformSeniorBartenderSkirt
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorBartender
-  equipment:
-    id: ClothingUniformSeniorBartenderSkirt #imp
-    
 # Neck
 - type: loadout
   id: RedTie

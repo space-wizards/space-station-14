@@ -1,3 +1,12 @@
+- type: loadoutEffectGroup
+  id: SeniorBartender
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobBartender
+      time: 187200 #52 hrs (1 hour per week for 1 year)
+
 - type: loadout
   id: BartenderCuteApron
   effects:
@@ -5,3 +14,30 @@
     proto: SeniorBartender
   equipment:
     outerClothing: ClothingOuterApronCuteBar
+
+- type: loadout
+  id: ClothingUniformNightclubSuit
+  equipment:
+    jumpsuit: ClothingUniformNightclubSuit #imp
+
+- type: loadout
+  id: ClothingUniformNightclubSuitSkirt
+  equipment:
+    jumpsuit: ClothingUniformNightclubSuitSkirt #imp
+
+- type: loadout
+  id: ClothingUniformSeniorBartender
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorBartender
+  equipment:
+    id: ClothingUniformSeniorBartender #imp
+
+- type: loadout
+  id: ClothingUniformSeniorBartenderSkirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorBartender
+  equipment:
+    id: ClothingUniformSeniorBartenderSkirt #imp
+    
