@@ -72,7 +72,7 @@ namespace Content.Client.Configurable.UI
             outerColumn.AddChild(_column);
             baseContainer.AddChild(outerColumn);
             baseContainer.AddChild(confirmButton);
-            Contents.AddChild(baseContainer);
+            ContentsContainer.AddChild(baseContainer);
         }
 
         public void Populate(ConfigurationBoundUserInterfaceState state)

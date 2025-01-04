@@ -34,7 +34,7 @@ namespace Content.Client.PDA.Ringer
                     else
                         PreviousNoteInputs[index] = input.Text;
 
-                    input.RemoveStyleClass("Caution");
+                    input.RemoveStyleClass("highlight");
                 };
 
                 input.OnFocusExit += _ => foo();
@@ -48,9 +48,9 @@ namespace Content.Client.PDA.Ringer
                     input.Text = input.Text.ToUpper();
 
                     if (!IsNote(input.Text))
-                        input.AddStyleClass("Caution");
+                        input.AddStyleClass("highlight");
                     else
-                        input.RemoveStyleClass("Caution");
+                        input.RemoveStyleClass("highlight");
                 };
             }
         }

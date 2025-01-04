@@ -22,8 +22,6 @@ namespace Content.Client.VendingMachines.UI
 
         public event Action<GUIBoundKeyEventArgs, ListData>? OnItemSelected;
 
-        private readonly StyleBoxFlat _styleBox = new() { BackgroundColor = new Color(70, 73, 102) };
-
         public VendingMachineMenu()
         {
             MinSize = SetSize = new Vector2(250, 150);
@@ -71,7 +69,6 @@ namespace Content.Client.VendingMachines.UI
             button.AddChild(new VendingMachineItem(protoID, text));
 
             button.ToolTip = text;
-            button.StyleBoxOverride = _styleBox;
         }
 
         /// <summary>

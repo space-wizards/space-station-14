@@ -6,7 +6,7 @@
         <BoxContainer Orientation="Vertical" HorizontalExpand="True">
             <GridContainer Margin="2 0 0 0" Columns="2">
                 <!-- Power -->
-                <Label Text="{Loc 'power-charge-window-power'}" HorizontalExpand="True" StyleClasses="StatusFieldTitle" />
+                <Label Text="{Loc 'power-charge-window-power'}" HorizontalExpand="True" StyleClasses="highlight" />
                 <BoxContainer Orientation="Horizontal" MinWidth="120">
                     <Button Name="OnButton" Text="{Loc 'power-charge-window-power-on'}" StyleClasses="OpenRight" />
                     <Button Name="OffButton" Text="{Loc 'power-charge-window-power-off'}" StyleClasses="OpenLeft" />
@@ -14,13 +14,13 @@
                 <Control /> <!-- Empty control to act as a spacer in the grid. -->
                 <Label Name="PowerLabel" Text="0 / 0 W" />
                 <!-- Status -->
-                <Label Text="{Loc 'power-charge-window-status'}"  StyleClasses="StatusFieldTitle" />
+                <Label Text="{Loc 'power-charge-window-status'}"  StyleClasses="highlight" />
                 <Label Name="StatusLabel" Text="{Loc 'power-charge-window-status-fully-charged'}" />
                 <!-- ETA -->
-                <Label Text="{Loc 'power-charge-window-eta'}" StyleClasses="StatusFieldTitle" />
+                <Label Text="{Loc 'power-charge-window-eta'}" StyleClasses="highlight" />
                 <Label Name="EtaLabel" Text="N/A" />
                 <!-- Charge -->
-                <Label Text="{Loc 'power-charge-window-charge'}" StyleClasses="StatusFieldTitle" />
+                <Label Text="{Loc 'power-charge-window-charge'}" StyleClasses="highlight" />
                 <ProgressBar Name="ChargeBar" MaxValue="255">
                     <Label Name="ChargeText" Margin="4 0" Text="0 %" />
                 </ProgressBar>

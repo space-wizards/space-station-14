@@ -47,14 +47,14 @@ namespace Content.Client.Chemistry.UI
             {
                 // For every button decide which stylebase to have
                 // Every row has 10 buttons
-                String styleBase = StyleBase.ButtonOpenBoth;
+                String styleBase = StyleClass.ButtonOpenBoth;
                 uint modulo = i % 10;
                 if (i > 0 && modulo == 0)
-                    styleBase = StyleBase.ButtonOpenRight;
+                    styleBase = StyleClass.ButtonOpenRight;
                 else if (i > 0 && modulo == 9)
-                    styleBase = StyleBase.ButtonOpenLeft;
+                    styleBase = StyleClass.ButtonOpenLeft;
                 else if (i == 0)
-                    styleBase = StyleBase.ButtonOpenRight;
+                    styleBase = StyleClass.ButtonOpenRight;
 
                 // Generate buttons
                 PillTypeButtons[i] = new Button
@@ -107,13 +107,13 @@ namespace Content.Client.Chemistry.UI
 
             var buttonConfigs = new (string text, ChemMasterReagentAmount amount, string styleClass)[]
             {
-                ("1", ChemMasterReagentAmount.U1, StyleBase.ButtonOpenBoth),
-                ("5", ChemMasterReagentAmount.U5, StyleBase.ButtonOpenBoth),
-                ("10", ChemMasterReagentAmount.U10, StyleBase.ButtonOpenBoth),
-                ("25", ChemMasterReagentAmount.U25, StyleBase.ButtonOpenBoth),
-                ("50", ChemMasterReagentAmount.U50, StyleBase.ButtonOpenBoth),
-                ("100", ChemMasterReagentAmount.U100, StyleBase.ButtonOpenBoth),
-                (Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, StyleBase.ButtonOpenLeft),
+                ("1", ChemMasterReagentAmount.U1, StyleClass.ButtonOpenBoth),
+                ("5", ChemMasterReagentAmount.U5, StyleClass.ButtonOpenBoth),
+                ("10", ChemMasterReagentAmount.U10, StyleClass.ButtonOpenBoth),
+                ("25", ChemMasterReagentAmount.U25, StyleClass.ButtonOpenBoth),
+                ("50", ChemMasterReagentAmount.U50, StyleClass.ButtonOpenBoth),
+                ("100", ChemMasterReagentAmount.U100, StyleClass.ButtonOpenBoth),
+                (Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, StyleClass.ButtonOpenLeft),
             };
 
             var buttons = new List<ReagentButton>();
@@ -140,17 +140,17 @@ namespace Content.Client.Chemistry.UI
 
             // Ensure the Panel Info is updated, including UI elements for Buffer Volume, Output Container and so on
             UpdatePanelInfo(castState);
-    
+
             BufferCurrentVolume.Text = $" {castState.BufferCurrentVolume?.Int() ?? 0}u";
-    
+
             InputEjectButton.Disabled = castState.InputContainerInfo is null;
             OutputEjectButton.Disabled = castState.OutputContainerInfo is null;
             CreateBottleButton.Disabled = castState.OutputContainerInfo?.Reagents == null;
             CreatePillButton.Disabled = castState.OutputContainerInfo?.Entities == null;
-            
+
             UpdateDosageFields(castState);
         }
-        
+
         //assign default values for pill and bottle fields.
         private void UpdateDosageFields(ChemMasterBoundUserInterfaceState castState)
         {
@@ -162,7 +162,7 @@ namespace Content.Client.Chemistry.UI
             var bufferVolume = castState.BufferCurrentVolume?.Int() ?? 0;
 
             PillDosage.Value = (int)Math.Min(bufferVolume, castState.PillDosageLimit);
-            
+
             PillTypeButtons[castState.SelectedPillType].Pressed = true;
             PillNumber.IsValid = x => x >= 0 && x <= pillNumberMax;
             PillDosage.IsValid = x => x > 0 && x <= castState.PillDosageLimit;
@@ -231,7 +231,7 @@ namespace Content.Client.Chemistry.UI
             var bufferVol = new Label
             {
                 Text = $"{state.BufferCurrentVolume}u",
-                StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
+                StyleClasses = { StyleClass.LabelWeak }
             };
             bufferHBox.AddChild(bufferVol);
 
@@ -247,7 +247,7 @@ namespace Content.Client.Chemistry.UI
                 BufferInfo.Children.Add(BuildReagentRow(reagentColor, rowCount++, name, reagentId, quantity, true, true));
             }
         }
-        
+
         private void BuildContainerUI(Control control, ContainerInfo? info, bool addReagentButtons)
         {
             control.Children.Clear();
@@ -271,7 +271,7 @@ namespace Content.Client.Chemistry.UI
                     new Label
                     {
                         Text = $"{info.CurrentVolume}/{info.MaxVolume}",
-                        StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
+                        StyleClasses = { StyleClass.LabelWeak }
                     }
                 }
             });
@@ -295,7 +295,7 @@ namespace Content.Client.Chemistry.UI
                     _prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? proto);
                     var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
                     var reagentColor = proto?.SubstanceColor ?? default(Color);
-        
+
                     control.Children.Add(BuildReagentRow(reagentColor, rowCount++, name, reagent.Reagent, reagent.Quantity, false, addReagentButtons));
                 }
             }
@@ -315,7 +315,7 @@ namespace Content.Client.Chemistry.UI
             }
             //this calls the separated button builder, and stores the return to render after labels
             var reagentButtonConstructors = CreateReagentTransferButtons(reagent, isBuffer, addReagentButtons);
-            
+
             // Create the row layout with the color panel
             var rowContainer = new BoxContainer
             {
@@ -326,7 +326,7 @@ namespace Content.Client.Chemistry.UI
                     new Label
                     {
                         Text = $"{quantity}u",
-                        StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
+                        StyleClasses = { StyleClass.LabelWeak }
                     },
 
                     // Padding
@@ -358,7 +358,7 @@ namespace Content.Client.Chemistry.UI
                 Children = { rowContainer }
             };
         }
-        
+
         public string LabelLine
         {
             get => LabelLineEdit.Text;

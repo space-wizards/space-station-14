@@ -52,7 +52,7 @@ namespace Content.Client.Credits
         {
             foreach (var entry in CreditsManager.GetLicenses(_resourceManager).OrderBy(p => p.Name))
             {
-                licensesContainer.AddChild(new Label {StyleClasses = {StyleBase.StyleClassLabelHeading}, Text = entry.Name});
+                licensesContainer.AddChild(new Label {StyleClasses = {StyleClass.LabelHeading}, Text = entry.Name});
 
                 // We split these line by line because otherwise
                 // the LGPL causes Clyde to go out of bounds in the rendering code.
@@ -92,7 +92,7 @@ namespace Content.Client.Credits
                 }
 
                 first = false;
-                patronsContainer.AddChild(new Label {StyleClasses = {StyleBase.StyleClassLabelHeading}, Text = $"{tier.Key}"});
+                patronsContainer.AddChild(new Label {StyleClasses = {StyleClass.LabelHeading}, Text = $"{tier.Key}"});
 
                 var msg = string.Join(", ", tier.OrderBy(p => p.Name).Select(p => p.Name));
 
@@ -139,7 +139,7 @@ namespace Content.Client.Credits
                 }
 
                 first = false;
-                ss14ContributorsContainer.AddChild(new Label {StyleClasses = {StyleBase.StyleClassLabelHeading}, Text = title});
+                ss14ContributorsContainer.AddChild(new Label {StyleClasses = {StyleClass.LabelHeading}, Text = title});
 
                 var label = new RichTextLabel();
                 var text = _resourceManager.ContentFileReadAllText($"/Credits/{path}");
