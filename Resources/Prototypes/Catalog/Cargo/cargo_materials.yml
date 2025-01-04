@@ -107,3 +107,13 @@
   cost: 1000
   category: cargoproduct-category-name-materials
   group: market
+
+- type: cargoProduct
+  id: MaterialGenericTank
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: generictank-1
+  product: GenericTank
+  cost: 500
+  category: cargoproduct-category-name-materials
+  group: market
