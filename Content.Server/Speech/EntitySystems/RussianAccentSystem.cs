@@ -21,20 +21,20 @@ public sealed class RussianAccentSystem : EntitySystem
 
             accentedMessage[i] = c switch
             {
-                'A' => 'Д',
-                'b' => 'в',
-                'N' => 'И',
-                'n' => 'и',
-                'K' => 'К',
-                'k' => 'к',
-                'm' => 'м',
-                'h' => 'н',
-                't' => 'т',
-                'R' => 'Я',
-                'r' => 'я',
-                'Y' => 'У',
-                'W' => 'Ш',
-                'w' => 'ш',
+            //    'A' => 'Д', //im not sure how to cleanly excise this from the code so im ripping it out at the roots like a caveman
+            //    'b' => 'в',
+            //    'N' => 'И',
+            //    'n' => 'и',
+            //    'K' => 'К',
+            //    'k' => 'к',
+            //    'm' => 'м',
+            //    'h' => 'н',
+            //    't' => 'т',
+            //    'R' => 'Я',
+            //    'r' => 'я',
+            //    'Y' => 'У',
+            //    'W' => 'Ш',
+            //    'w' => 'ш',
                 _ => accentedMessage[i]
             };
         }
@@ -44,6 +44,6 @@ public sealed class RussianAccentSystem : EntitySystem
 
     private void OnAccent(EntityUid uid, RussianAccentComponent component, AccentGetEvent args)
     {
-        args.Message = Accentuate(args.Message);
+        args.Message = Accentuate(args.Message); 
     }
 }
