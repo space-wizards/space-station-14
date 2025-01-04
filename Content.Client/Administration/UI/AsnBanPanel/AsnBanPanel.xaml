@@ -1,0 +1,30 @@
+﻿<DefaultWindow
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Title="{Loc asn-ban-panel-title}" MinSize="350 500">
+    <BoxContainer Orientation="Vertical">
+        <TabContainer Name="Tabs" VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <BoxContainer Orientation="Horizontal" Margin="2">
+                    <Label Text="{Loc asn-ban-panel-asn}" MinWidth="100"/>
+                    <Control MinWidth="50" />
+                    <LineEdit Name="ASNLine" MinWidth="100" HorizontalExpand="True"
+                              PlaceHolder="{Loc asn-ban-panel-placeholder}"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" Margin="2">
+                    <LineEdit Name="TimeLine" MaxWidth="150" MinWidth="70" PlaceHolder="0" />
+                    <OptionButton Name="MultiplierOption" />
+                    <Control MinWidth="50" />
+                    <Label Name="ExpiresLabel" />
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" Margin="4">
+                    <Label Text="{Loc asn-ban-panel-severity}" />
+                    <OptionButton Name="SeverityOption" />
+                </BoxContainer>
+                <cc:HSeparator Margin="1"/>
+                <TextEdit Name="ReasonTextEdit" MinHeight="100" VerticalExpand="True" HorizontalExpand="True"/>
+            </BoxContainer>
+        </TabContainer>
+        <Button Name="SubmitButton" Text="{Loc asn-ban-panel-submit}" HorizontalExpand="True"/>
+    </BoxContainer>
+</DefaultWindow>

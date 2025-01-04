@@ -311,6 +311,71 @@ namespace Content.Server.Database
 
             await db.PgDbContext.SaveChangesAsync();
         }
+
+        public override async Task<ServerAsnBanDef?> GetServerAsnBanAsync(int id)
+        {
+            await using var db = await GetDbImpl();
+
+            var ban = await db.PgDbContext.AsnBan
+                .Include(p => p.Unban)
+                .Where(p => p.Id == id)
+                .SingleOrDefaultAsync();
+
+            return ConvertAsnBan(ban);
+        }
+
+        public override async Task<ServerAsnBanDef?> GetServerAsnBanAsync(string asn)
+        {
+            await using var db = await GetDbImpl();
+            return (await GetServerAsnBanQueryAsync(db, asn, includeUnbanned: false)).FirstOrDefault();
+        }
+
+        private async Task<IEnumerable<ServerAsnBanDef>> GetServerAsnBanQueryAsync(
+            DbGuardImpl db,
+            string asn,
+            bool includeUnbanned)
+        {
+            IQueryable<ServerAsnBan> query = db.PgDbContext.AsnBan.Where(p => p.Asn == asn);
+            if (!includeUnbanned)
+            {
+                query = db.PgDbContext.AsnBan.Where(p => p.Asn == asn && p.Unban == null);
+            }
+
+            var bans = await query.ToListAsync();
+            return bans.Select(ConvertAsnBan)!;
+        }
+
+        public override async Task AddServerAsnBanAsync(ServerAsnBanDef serverAsnBan)
+        {
+            await using var db = await GetDbImpl();
+
+            db.PgDbContext.AsnBan.Add(new ServerAsnBan
+            {
+                Asn = serverAsnBan.Asn,
+                Reason = serverAsnBan.Reason,
+                Severity = serverAsnBan.Severity,
+                BanningAdmin = serverAsnBan.BanningAdmin?.UserId,
+                BanTime = serverAsnBan.BanTime.UtcDateTime,
+                ExpirationTime = serverAsnBan.ExpirationTime?.UtcDateTime
+            });
+
+            await db.PgDbContext.SaveChangesAsync();
+        }
+
+        public override async Task AddServerAsnUnbanAsync(ServerAsnUnbanDef serverAsnUnban)
+        {
+            await using var db = await GetDbImpl();
+
+            db.PgDbContext.AsnUnban.Add(new ServerAsnUnban
+            {
+                BanId = serverAsnUnban.BanId,
+                UnbanningAdmin = serverAsnUnban.UnbanningAdmin,
+                UnbanTime = serverAsnUnban.UnbanTime.UtcDateTime,
+            });
+
+            await db.PgDbContext.SaveChangesAsync();
+        }
+
         #endregion
 
         #region Role Ban
@@ -493,6 +558,53 @@ namespace Content.Server.Database
             await db.PgDbContext.SaveChangesAsync();
         }
         #endregion
+
+        [return: NotNullIfNotNull(nameof(ban))]
+        private static ServerAsnBanDef? ConvertAsnBan(ServerAsnBan? ban)
+        {
+            if (ban == null)
+            {
+                return null;
+            }
+
+            NetUserId? uid = null;
+
+            NetUserId? aUid = null;
+            if (ban.BanningAdmin is { } aGuid)
+            {
+                aUid = new NetUserId(aGuid);
+            }
+
+            var unban = ConvertAsnUnban(ban.Unban);
+
+            return new ServerAsnBanDef(
+                ban.Asn,
+                aUid,
+                DateTime.SpecifyKind(ban.BanTime, DateTimeKind.Utc),
+                ban.ExpirationTime == null ? null : DateTime.SpecifyKind(ban.ExpirationTime.Value, DateTimeKind.Utc),
+                ban.Severity,
+                ban.Reason,
+                unban);
+        }
+
+        private static ServerAsnUnbanDef? ConvertAsnUnban(ServerAsnUnban? unban)
+        {
+            if (unban == null)
+            {
+                return null;
+            }
+
+            NetUserId? aUid = null;
+            if (unban.UnbanningAdmin is { } aGuid)
+            {
+                aUid = new NetUserId(aGuid);
+            }
+
+            return new ServerAsnUnbanDef(
+                unban.Id,
+                aUid,
+                DateTime.SpecifyKind(unban.UnbanTime, DateTimeKind.Utc));
+        }
 
         public override async Task<int> AddConnectionLogAsync(
             NetUserId userId,
