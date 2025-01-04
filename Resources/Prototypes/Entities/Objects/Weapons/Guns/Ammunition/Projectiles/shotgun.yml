@@ -112,6 +112,9 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: shard
+    layers:
+    - state: shard
+      shader: unshaded
   - type: Projectile
     damage:
       types:
@@ -127,6 +130,95 @@
     proto: PelletShotgunImprovised
     count: 10
     spread: 45
+
+- type: entity
+  id: PelletShotgunImprovisedIncendiary
+  name: improvised incendiary pellet
+  categories: [ HideSpawnMenu ]
+  parent: BaseBulletIncendiary
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: shard
+    layers:
+    - state: shard
+      shader: unshaded
+    color: "#d15b00"
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 1.5
+        Slash: 1.5
+        Heat: 7
+  - type: IgnitionSource
+    ignited: true
+
+- type: entity
+  id: PelletShotgunImprovisedIncendiarySpread
+  categories: [ HideSpawnMenu ]
+  parent: PelletShotgunImprovisedIncendiary
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgunImprovisedIncendiary
+    count: 6
+    spread: 45
+
+- type: entity
+  id: PelletShotgunImprovisedUranium
+  name: improvised uranium pellet
+  categories: [ HideSpawnMenu ]
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: shard
+    layers:
+    - state: shard
+      shader: unshaded
+    color: "#8eff7a"
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 1.25
+        Slash: 1.25
+        Radiation: 2.5   
+
+- type: entity
+  id: PelletShotgunImprovisedUraniumSpread
+  categories: [ HideSpawnMenu ]
+  parent: PelletShotgunImprovisedUranium
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgunImprovisedUranium
+    count: 10
+    spread: 45
+
+- type: entity
+  id: PelletShotgunCoin
+  name: pellet (coin slug)
+  categories: [ HideSpawnMenu ]
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: coinstack
+    layers:
+    - state: coinstack
+      shader: unshaded
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 14
+
+- type: entity
+  id: PelletShotgunCoinSpread
+  categories: [ HideSpawnMenu ]
+  parent: PelletShotgunCoin
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgunCoin
+    count: 2
+    spread: 8
 
 - type: entity
   id: PelletShotgunTranquilizer

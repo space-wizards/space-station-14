@@ -348,6 +348,9 @@
   id: CluwneHorn
 
 - type: Tag
+  id: Coin
+
+- type: Tag
   id: Cola
 
 - type: Tag
@@ -1113,6 +1116,9 @@
 
 - type: Tag
   id: ShellShotgun
+
+- type: Tag
+  id: ShellShotgunEmpty
 
 - type: Tag
   id: ShellShotgunLight # shotgun shells that are compatible with the flare gun.
