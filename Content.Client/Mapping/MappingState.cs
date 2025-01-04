@@ -694,8 +694,9 @@ public sealed class MappingState : GameplayStateBase
     {
         Deselect();
         Screen.UnPressActionsExcept(Screen.Pick);
-        Meta.State = CursorState.Entity;
+        Meta.State = CursorState.EntityOrTile;
         Meta.Color = PickColor;
+        Meta.SecondColor = PickColor.WithAlpha(0.2f);
     }
 
     private void DisablePick()
@@ -1048,6 +1049,7 @@ public sealed class MappingState : GameplayStateBase
         Tile,
         Entity,
         Grid,
+        EntityOrTile,
     }
 
     public sealed class CursorMeta
@@ -1058,5 +1060,7 @@ public sealed class MappingState : GameplayStateBase
         /// Сolor with which the mapping overlay will be drawn
         /// </summary>
         public Color Color = Color.White;
+
+        public Color? SecondColor;
     }
 }

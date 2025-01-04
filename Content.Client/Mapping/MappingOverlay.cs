@@ -69,6 +69,21 @@ public sealed class MappingOverlay : Overlay
 
                 break;
             }
+            case CursorState.EntityOrTile:
+            {
+                if (_state.GetHoveredEntity() is { } entity &&
+                    _entities.TryGetComponent(entity, out SpriteComponent? sprite))
+                {
+                    _oldColors[entity] = sprite.Color;
+                    sprite.Color = _state.Meta.Color;
+                }
+                else if (_state.GetHoveredTileBox2() is { } box)
+                {
+                    args.WorldHandle.DrawRect(box, _state.Meta.SecondColor ?? _state.Meta.Color);
+                }
+
+                break;
+            }
             case CursorState.Grid:
             {
                 if (args.MapId == MapId.Nullspace || _state.GetHoveredGrid() is not { } grid)
