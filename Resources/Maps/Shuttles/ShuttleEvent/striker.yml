@@ -374,6 +374,13 @@ entities:
           occludes: True
           ents:
           - 29
+- proto: BoxFolderRed
+  entities:
+  - uid: 295
+    components:
+    - type: Transform
+      pos: -1.595145,-4.7171545
+      parent: 1
 - proto: BoxMRE
   entities:
   - uid: 30
@@ -803,7 +810,7 @@ entities:
   - uid: 167
     components:
     - type: Transform
-      pos: -1.1813428,-5.15565
+      pos: -1.23577,-5.0140295
       parent: 1
 - proto: DoorElectronics
   entities:
@@ -896,13 +903,6 @@ entities:
       parent: 1
     - type: FaxMachine
       name: Striker
-- proto: filingCabinetRandom
-  entities:
-  - uid: 173
-    components:
-    - type: Transform
-      pos: -1.5,-4.5
-      parent: 1
 - proto: Firelock
   entities:
   - uid: 174
@@ -1425,12 +1425,24 @@ entities:
     - type: Transform
       pos: 1.60798,-0.3062118
       parent: 1
-- proto: PhoneInstrumentSyndicate
+- proto: Paper
   entities:
-  - uid: 295
+  - uid: 296
     components:
     - type: Transform
-      pos: 0.48305517,-4.170118
+      pos: -1.438895,-4.8890295
+      parent: 1
+  - uid: 297
+    components:
+    - type: Transform
+      pos: -1.313895,-4.8421545
+      parent: 1
+- proto: PhoneInstrumentSyndicate
+  entities:
+  - uid: 298
+    components:
+    - type: Transform
+      pos: -1.501395,-4.3577795
       parent: 1
 - proto: PinpointerNuclear
   entities:
@@ -1830,6 +1842,11 @@ entities:
       parent: 1
 - proto: TableWood
   entities:
+  - uid: 173
+    components:
+    - type: Transform
+      pos: -1.5,-4.5
+      parent: 1
   - uid: 247
     components:
     - type: Transform
