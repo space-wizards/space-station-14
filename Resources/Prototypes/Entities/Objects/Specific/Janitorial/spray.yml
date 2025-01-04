@@ -101,11 +101,10 @@
       - Spray
 
 - type: entity
-  name: spray nozzle
-  description: A pressurized nozzle for spraying reagents.
+  name: cyborg spray bottle
+  description: A pressurized bottle for spraying reagents.
   id: BorgSprayBottle
   parent: SprayBottle
-  suffix: ""
   components:
   - type: SolutionContainerManager
     solutions:
@@ -116,11 +115,11 @@
           Quantity: 200
 
 - type: entity
-  name: super spray nozzle
+  name: cyborg mega spray bottle
   id: BorgMegaSprayBottle
   parent: SprayBottle
   suffix: Empty
-  description: A high capacity, high pressure spray nozzle, for cleaning even the biggest of spills.
+  description: A high capacity, high pressure spray bottle, for cleaning even the biggest of spills.
   components:
   - type: Sprite
     sprite: Objects/Specific/Janitorial/janitorial.rsi
