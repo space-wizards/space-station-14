@@ -1,0 +1,249 @@
+- type: constructionGraph
+  id: TargetCatTree
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DeleteEntity {}
+      edges:
+        - to: TargetCatTree
+          steps:
+            - material: Cardboard
+              amount: 10
+              doAfter: 15
+    
+    - node: TargetCatTree
+      entity: TargetCatTree
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+                prototype: MaterialCardboard10
+                amount: 1
+          steps: 
+          - tool: Cutting
+            doAfter: 15
+        
+        - to: TargetCatTreeBeige
+          steps:
+            - material: Cloth
+              amount: 1
+              doAfter: 3
+          
+            
+        - to: TargetCatTreeBlack
+          steps:
+            - tag: CarpetBlack
+              name: black carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-black
+              doAfter: 3
+        
+        - to: TargetCatTreeBlue
+          steps: 
+            - tag: CarpetBlue
+              name: blue carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-blue
+              doAfter: 3
+        
+        - to: TargetCatTreeCyan
+          steps: 
+            - tag: CarpetCyan
+              name: cyan carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-cyan
+              doAfter: 3
+        
+        - to: TargetCatTreeGreen
+          steps: 
+            - tag: CarpetGreen
+              name: green carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-green
+              doAfter: 3
+        
+        - to: TargetCatTreePink
+          steps: 
+            - tag: CarpetPink
+              name: pink carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-pink
+              doAfter: 3
+        
+        - to: TargetCatTreePurple
+          steps: 
+            - tag: CarpetPurple
+              name: purple carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-purple
+              doAfter: 3
+        
+        - to: TargetCatTreeRed
+          steps: 
+            - tag: CarpetRed
+              name: red carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-red
+              doAfter: 3
+        
+        - to: TargetCatTreeSkyblue
+          steps: 
+            - tag: CarpetSBlue
+              name: skyblue carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-skyblue
+              doAfter: 3
+        
+        - to: TargetCatTreeWhite
+          steps: 
+            - tag: CarpetWhite
+              name: white carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-white
+              doAfter: 3
+    
+    - node: TargetCatTreeBeige
+      entity: TargetCatTreeBeige
+      edges:
+        - to: TargetCatTree
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 3
+    
+    - node: TargetCatTreeBlack
+      entity: TargetCatTreeBlack
+      edges:
+        - to: TargetCatTree
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemBlack
+              amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 3
+        
+    - node: TargetCatTreeBlue
+      entity: TargetCatTreeBlue
+      edges:
+        - to: TargetCatTree
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemBlue
+              amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 3
+    
+    - node: TargetCatTreeCyan
+      entity: TargetCatTreeCyan
+      edges:
+        - to: TargetCatTree
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemCyan
+              amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 3
+    
+    - node: TargetCatTreeGreen
+      entity: TargetCatTreeGreen
+      edges:
+        - to: TargetCatTree
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemGreen
+              amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 3
+    
+    - node: TargetCatTreePink
+      entity: TargetCatTreePink
+      edges:
+        - to: TargetCatTree
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemPink
+              amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 3
+    
+    - node: TargetCatTreePurple
+      entity: TargetCatTreePurple
+      edges:
+        - to: TargetCatTree
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemPurple
+              amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 3
+    
+    - node: TargetCatTreeRed
+      entity: TargetCatTreeRed
+      edges:
+        - to: TargetCatTree
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemRed
+              amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 3
+    
+    - node: TargetCatTreeSkyblue
+      entity: TargetCatTreeSkyblue
+      edges:
+        - to: TargetCatTree
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemSkyBlue
+              amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 3
+    
+    - node: TargetCatTreeWhite
+      entity: TargetCatTreeWhite
+      edges:
+        - to: TargetCatTree
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemWhite
+              amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 3
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        
+        
+        
