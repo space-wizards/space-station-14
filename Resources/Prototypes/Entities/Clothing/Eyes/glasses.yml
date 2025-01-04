@@ -95,6 +95,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - CorgiWearable
 
 - type: entity
   parent: ClothingEyesBase
