@@ -1,5 +1,6 @@
 using Content.Server.Antag;
 using Content.Server.Chat.Systems;
+using Content.Server.Communications;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Popups;
 using Content.Server.Roles;
@@ -41,6 +42,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         SubscribeLocalEvent<InitialInfectedRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<ZombieRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<IncurableZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
+        SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnShuttleCallAttempt);
     }
 
     private void OnGetBriefing(Entity<InitialInfectedRoleComponent> role, ref GetBriefingEvent args)
@@ -119,8 +121,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         {
             foreach (var station in _station.GetStations())
             {
-                _chat.DispatchStationAnnouncement(station, Loc.GetString("zombie-shuttle-call"), colorOverride: Color.Crimson);
+                _chat.DispatchStationAnnouncement(station, Loc.GetString(zombieRuleComponent.ShuttleCallReason), colorOverride: Color.Crimson);
             }
+            zombieRuleComponent.ZombieShuttleCalled = true;
             _roundEnd.RequestRoundEnd(null, false);
         }
 
@@ -128,6 +131,23 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         // when everyone gets on the shuttle.
         if (GetInfectedFraction() >= 1) // Oops, all zombies
             _roundEnd.EndRound();
+    }
+
+    /// <summary>
+    ///     Doesn't let the shuttle be recalled, stopping round-stalling.
+    /// </summary>
+    private void OnShuttleCallAttempt(ref CommunicationConsoleCallShuttleAttemptEvent ev)
+    {
+        var query = QueryActiveRules();
+        while (query.MoveNext(out _, out _, out var zombie, out _))
+        {
+            if (!zombie.ZombieShuttleCalled)
+                continue;
+
+            ev.Cancelled = true;
+            ev.Reason = Loc.GetString(zombie.ShuttleCallUnavailableReason);
+            return;
+        }
     }
 
     protected override void Started(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
