@@ -8,3 +8,14 @@
   id: JournalistJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitJournalist
+
+- type: loadout
+  id: ClothingUniformBrosBlazer
+  equipment:
+    jumpsuit: ClothingUniformBrosBlazer #imp
+
+- type: loadout
+  id: ClothingUniformBrosBlazerSkirt
+  equipment:
+    jumpsuit: ClothingUniformBrosBlazerSkirt #imp
+

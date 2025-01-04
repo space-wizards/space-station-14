@@ -19,6 +19,16 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtMusician
 
+- type: loadout
+  id: ClothingUniformMrSpaceWide
+  equipment:
+    jumpsuit: ClothingUniformMrSpaceWide #imp
+
+- type: loadout
+  id: ClothingUniformMrSpaceWideSkirt
+  equipment:
+    jumpsuit: ClothingUniformMrSpaceWideSkirt #imp
+
 # Outerclothing
 - type: loadout
   id: MusicianWintercoat

@@ -27,6 +27,8 @@
     ClothingHeadHatSkub: 2
     ClothingOuterSkub: 2
     ClothingHeadHatBeretFrench: 2
+    ClothingUniformMrSpaceWide: 2 #imp
+    ClothingUniformMrSpaceWideSkirt: 2 #imp
     ClothingOuterSuitChicken: 2
     ClothingHeadHatChickenhead: 2
     ClothingOuterSuitMonkey: 2
@@ -68,6 +70,10 @@
     ClothingShoesSlippers: 1
     ClothingShoesTourist: 1
     ClothingShoesWizard: 1
+    ClothingUniformHitmanSuit: 1 #imp
+    ClothingUniformHitmanSuitSkirt: 1 #imp
+    ClothingUniformBrosBlazer: 1 #imp
+    ClothingUniformBrosBlazerSkirt: 1 #imp
   emaggedInventory:
     ClothingShoesBling: 1
     ClothingShoesBootsCowboyFancy: 1

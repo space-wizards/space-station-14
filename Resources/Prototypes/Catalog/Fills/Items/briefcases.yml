@@ -9,7 +9,7 @@
         amount: 3
 
 - type: entity
-  id: BriefcaseSyndieSniperBundleFilled
+  id: Ca
   parent: BriefcaseSyndie
   suffix: Syndicate, Sniper Bundle
   components:
@@ -25,7 +25,7 @@
       - id: MagazineBoxAntiMateriel
       - id: ClothingNeckTieRed
       - id: ClothingHandsGlovesLatex
-      - id: ClothingUniformJumpsuitLawyerBlack
+      - id: ClothingUniformHitmanSuit
       - id: BarberScissors
 
 - type: entity

@@ -51,6 +51,16 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitMonasticRobeLight
 
+- type: loadout
+  id: ClothingUniformFuneralSuit
+  equipment:
+    jumpsuit: ClothingUniformFuneralSuit #imp
+
+- type: loadout
+  id: ClothingUniformFuneralSuitSkirt
+  equipment:
+    jumpsuit: ClothingUniformFuneralSuitSkirt #imp
+
 # Neck
 - type: loadout
   id: ChaplainNeck

@@ -49,6 +49,16 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtLawyerGood
 
+- type: loadout
+  id: ClothingUniformCreamSuit
+  equipment:
+    jumpsuit: ClothingUniformCreamSuit #imp
+
+- type: loadout
+  id: ClothingUniformCreamSuitSkirt
+  equipment:
+    jumpsuit: ClothingUniformCreamSuitSkirt #imp
+
 # Neck
 - type: loadout
   id: LawyerNeck

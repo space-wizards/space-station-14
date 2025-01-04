@@ -45,6 +45,26 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtDetectiveGrey
 
+- type: loadout
+  id: ClothingUniformMiamiVice
+  equipment:
+    jumpsuit: ClothingUniformMiamiVice #imp
+
+- type: loadout
+  id: ClothingUniformMiamiViceSkirt
+  equipment:
+    jumpsuit: ClothingUniformMiamiViceSkirt #imp
+
+- type: loadout
+  id: ClothingUniformDetectiveSuit
+  equipment:
+    jumpsuit: ClothingUniformDetectiveSuit #imp
+
+- type: loadout
+  id: ClothingUniformDetectiveSuitSkirt
+  equipment:
+    jumpsuit: ClothingUniformDetectiveSuitSkirt #imp
+
 # OuterClothing
 - type: loadout
   id: DetectiveArmorVest
