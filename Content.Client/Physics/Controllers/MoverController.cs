@@ -94,7 +94,10 @@ public sealed class MoverController : SharedMoverController
             return;
 
         if (RelayQuery.TryGetComponent(player, out var relayMover))
+        {
             HandleClientsideMovement(relayMover.RelayEntity, frameTime);
+            HandleRelayMovement(relayMover.RelayEntity);
+        }
 
         HandleClientsideMovement(player, frameTime);
     }
