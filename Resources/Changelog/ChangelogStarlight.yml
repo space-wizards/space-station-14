@@ -1675,3 +1675,11 @@ Entries:
   id: 237
   time: '2025-01-03T21:42:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/208
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added a chance of limb removal when taking damage.
+    type: Add
+  id: 238
+  time: '2025-01-04T03:22:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/211
+
