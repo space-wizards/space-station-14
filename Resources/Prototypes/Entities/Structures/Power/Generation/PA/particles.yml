@@ -46,8 +46,10 @@
             Level1: {state: particle1}
             Level2: {state: particle2}
             Level3: {state: particle3}
-    - type: GuideHelp
-      guides: [ Singularity, Power ]
+    - type: GuideHelp # why does this even have a guidebook link in the first place
+      guides:
+        - SingularityTeslaEngine
+        - Power
 
 - type: entity
   name: anti particles
