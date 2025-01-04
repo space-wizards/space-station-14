@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Reduced walk speed of some small mobs (mice, cockroaches, bees etc.)
-    type: Tweak
-  id: 7279
-  time: '2024-09-04T14:10:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31360
 - author: qwerltaz
   changes:
   - message: Made tesla a lot brighter.
@@ -3930,3 +3923,10 @@
   id: 7778
   time: '2025-01-02T18:55:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34180
+- author: Deerstop
+  changes:
+  - message: Map rotation now includes Elkridge Depot
+    type: Tweak
+  id: 7779
+  time: '2025-01-04T00:40:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34206
