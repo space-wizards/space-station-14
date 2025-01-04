@@ -1,3 +1,4 @@
+using Content.Shared._EinsteinEngines.Supermatter.Monitor;
 using Content.Shared.Atmos;
 using Content.Shared.DoAfter;
 using Content.Shared.Radio;
@@ -18,6 +19,12 @@ public sealed partial class SupermatterComponent : Component
     /// </summary>
     [DataField]
     public bool Activated = true;
+
+    /// <summary>
+    ///     The current status of the singularity, used for alert sounds and the monitoring console
+    /// </summary>
+    [DataField]
+    public SupermatterStatusType Status = SupermatterStatusType.Inactive;
 
     [DataField]
     public string SliverPrototype = "SupermatterSliver";
