@@ -15,7 +15,9 @@ public sealed class ProtodataTag : IMarkupTag
     [Dependency] private readonly IEntityManager _entMan = default!;
 
     public string Name => "protodata";
-    private ISawmill Log => _log ??= _logMan.GetSawmill("protodata_tag");
+
+    private const string SawmillName = "ui.richtext.protodata_tag";
+    private ISawmill Sawmill => _log ??= _logMan.GetSawmill(SawmillName);
     private ISawmill? _log;
 
     public string TextBefore(MarkupNode node)
@@ -35,7 +37,7 @@ public sealed class ProtodataTag : IMarkupTag
         // Try to get the value
         if (!guidebookData.TryGetValue(prototype, component.StringValue!, member.StringValue!, out var value))
         {
-            Log.Error($"Failed to find protodata for {component}.{member} in {prototype}");
+            Sawmill.Error($"Failed to find protodata for {component}.{member} in {prototype}");
             return "???";
         }
 

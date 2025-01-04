@@ -24,7 +24,7 @@ namespace Content.Server.Preferences.Managers
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IDependencyCollection _dependencies = default!;
-        [Dependency] private readonly ILogManager _log = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly UserDbDataManager _userDb = default!;
 
         // Cache player prefs on the server so we don't need as much async hell related to them.
@@ -32,6 +32,7 @@ namespace Content.Server.Preferences.Managers
             new();
 
         private ISawmill _sawmill = default!;
+        private const string SawmillName = "prefs";
 
         private int MaxCharacterSlots => _cfg.GetCVar(CCVars.GameMaxCharacterSlots);
 
@@ -41,7 +42,7 @@ namespace Content.Server.Preferences.Managers
             _netManager.RegisterNetMessage<MsgSelectCharacter>(HandleSelectCharacterMessage);
             _netManager.RegisterNetMessage<MsgUpdateCharacter>(HandleUpdateCharacterMessage);
             _netManager.RegisterNetMessage<MsgDeleteCharacter>(HandleDeleteCharacterMessage);
-            _sawmill = _log.GetSawmill("prefs");
+            _sawmill = _logManager.GetSawmill(SawmillName);
         }
 
         private async void HandleSelectCharacterMessage(MsgSelectCharacter message)
@@ -51,7 +52,7 @@ namespace Content.Server.Preferences.Managers
 
             if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded)
             {
-                Logger.WarningS("prefs", $"User {userId} tried to modify preferences before they loaded.");
+                _sawmill.Warning($"User {userId} tried to modify preferences before they loaded.");
                 return;
             }
 
@@ -121,7 +122,7 @@ namespace Content.Server.Preferences.Managers
 
             if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded)
             {
-                Logger.WarningS("prefs", $"User {userId} tried to modify preferences before they loaded.");
+                _sawmill.Warning($"User {userId} tried to modify preferences before they loaded.");
                 return;
             }
 
