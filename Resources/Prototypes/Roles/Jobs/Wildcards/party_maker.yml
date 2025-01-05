@@ -18,7 +18,6 @@
     jumpsuit: ClothingUniformJumpsuitHawaiBlack
     id: PartyMakerPDA
     ears: ClothingHeadsetService
-    back: ClothingBackpack
     eyes: ClothingEyesGlassesSunglasses
     shoes: ClothingShoesColorBlack
   storage:

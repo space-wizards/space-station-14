@@ -524,12 +524,14 @@
 - type: roleLoadout
   id: JobSecurityClown
   groups:
+  - ClownBackpack
   - SurvivalSecurity
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
   id: JobCommandMaid
   groups:
+  - CommonBackpack
   - Survival
   - GroupSpeciesBreathTool
 
@@ -537,6 +539,7 @@
   id: JobPartyMaker
   groups:
   - GroupTankHarness
+  - CommonBackpack
   - Survival
   - GroupSpeciesBreathTool
 

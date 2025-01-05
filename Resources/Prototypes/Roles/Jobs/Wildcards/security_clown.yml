@@ -48,7 +48,6 @@
     id: SecurityClownPDA
     ears: ClothingHeadsetSecurity
     belt: BikeHorn
-    back: ClothingBackpackClown
   storage:
     back:
     - Flash

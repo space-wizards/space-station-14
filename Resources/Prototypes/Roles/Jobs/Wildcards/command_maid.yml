@@ -29,5 +29,4 @@
     gloves: ClothingHandsGlovesJanitor
     ears: ClothingHeadsetCommandService
     belt: ClothingBeltJanitorFilled
-    back: ClothingBackpack
     shoes: ClothingShoesGaloshes
