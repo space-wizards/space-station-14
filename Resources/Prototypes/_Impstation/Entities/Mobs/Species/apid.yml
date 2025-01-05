@@ -106,7 +106,7 @@
         density: 75
         restitution: 0.0
         mask:
-        - MobMask
+        - CrateMask # this is so they can fly over tables and through plastic flaps
         layer:
         - MobLayer
   - type: Physics
