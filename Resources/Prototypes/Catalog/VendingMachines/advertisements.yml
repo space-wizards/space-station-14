@@ -112,7 +112,7 @@
     prefix: advertisement-cola-
     count: 8
 
-- type: localizedDataset 
+- type: localizedDataset
   id: SpaceUpAds
   values:
     prefix: advertisement-spaceup-
