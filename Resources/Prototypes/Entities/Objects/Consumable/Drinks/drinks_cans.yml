@@ -72,7 +72,7 @@
   parent: DrinkCanBaseFull
   id: DrinkColaCan
   name: Space Cola can
-  description: A sweet, carbonated soft drink. Caffeine free.
+  description: A sweet, carbonated soft drink.
   components:
   - type: SolutionContainerManager
     solutions:
