@@ -563,7 +563,7 @@
 - type: entity
   parent: VendingMachineCola
   id: VendingMachineStarkist
-  name: Star-kist Vendor
+  name: Starkist Vendor
   description: The taste of a star in liquid form.
   components:
   - type: VendingMachine
