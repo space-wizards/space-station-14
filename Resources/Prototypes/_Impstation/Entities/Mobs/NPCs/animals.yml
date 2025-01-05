@@ -1,6 +1,6 @@
 - type: entity
   name: BROS
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: [ MobCombat, SimpleMobBase ]
   id: MobBros
   description: OH FUCK IT'S BROS
   components:

@@ -144,7 +144,7 @@ namespace Content.Client.Chat.UI
 
             var baseOffset = 0f;
 
-            if (_entityManager.TryGetComponent<SpeechComponent>(_senderEntity, out var speech))
+           if (_entityManager.TryGetComponent<SpeechComponent>(_senderEntity, out var speech))
                 baseOffset = speech.SpeechBubbleOffset;
 
             var offset = (-_eyeManager.CurrentEye.Rotation).ToWorldVec() * -(EntityVerticalOffset + baseOffset);

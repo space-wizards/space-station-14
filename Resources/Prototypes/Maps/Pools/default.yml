@@ -12,7 +12,9 @@
   - Cluster
   - Core
   - Fland
+  #- Gate
   - Hummingbird
+  - Loop
   - Marathon
   - Meta
   - Oasis

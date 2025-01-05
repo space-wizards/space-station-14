@@ -76,7 +76,7 @@
       collection: FootstepHighheels
 
 - type: entity
-  parent: [ ClothingShoesMilitaryBase, BaseRestrictedContraband ]
+  parent: [ ClothingShoesMilitaryBase ]
   id: ClothingShoesBootsMerc
   name: mercenary boots
   description: Boots that have gone through many conflicts and that have proven their combat reliability.
@@ -178,7 +178,7 @@
     sprite: Clothing/Shoes/Boots/winterbootssec.rsi
 
 - type: entity
-  parent: [ClothingShoesBaseWinterBoots, BaseSyndicateContraband]
+  parent: [ClothingShoesBaseWinterBoots, Tier1Contraband]
   id: ClothingShoesBootsWinterSyndicate
   name: syndicate's winter boots
   description: Durable heavy boots, looks like merch from "Syndieland".

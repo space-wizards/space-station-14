@@ -790,17 +790,6 @@
       - RegenerativeMesh
 
 - type: cargoBounty
-  id: BountyDonkPockets
-  reward: 8000
-  description: bounty-description-donk-pockets
-  entries:
-  - name: bounty-item-donk-pockets
-    amount: 12
-    whitelist:
-      tags:
-      - DonkPocket
-
-- type: cargoBounty
   id: BountyJugs
   reward: 4000
   description: bounty-description-jugs

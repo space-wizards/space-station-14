@@ -1,5 +1,10 @@
 #tck'tck lawset
 - type: siliconLaw
+  id: Tcksimov0
+  order: 0
+  lawString: law-tcksimov-0
+
+- type: siliconLaw
   id: Tcksimov1
   order: 1
   lawString: law-tcksimov-1
@@ -22,6 +27,7 @@
 - type: siliconLawset
   id: Tcksimov
   laws:
+  - Tcksimov0
   - Tcksimov1
   - Tcksimov2
   - Tcksimov3

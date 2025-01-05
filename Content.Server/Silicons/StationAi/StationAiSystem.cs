@@ -9,6 +9,7 @@ using Content.Shared.StationAi;
 using Robust.Shared.Audio;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using static Content.Server.Chat.Systems.ChatSystem;
 
 namespace Content.Server.Silicons.StationAi;
 
@@ -56,9 +57,10 @@ public sealed class StationAiSystem : SharedStationAiSystem
             if (range < 0 || range > ev.VoiceRange)
                 continue;
 
-            ev.Recipients.TryAdd(actor.PlayerSession, new ChatSystem.ICChatRecipientData(range, false));
+            ev.Recipients.TryAdd(actor.PlayerSession, new ICChatRecipientData(range, false));
         }
     }
+
     public override bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
     {
         if (!base.SetVisionEnabled(entity, enabled, announce))

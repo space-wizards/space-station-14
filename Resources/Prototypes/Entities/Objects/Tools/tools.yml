@@ -44,6 +44,7 @@
       Steel: 100
   - type: StaticPrice
     price: 30
+  - type: DamageOtherOnHit # imp
 
 - type: entity
   name: screwdriver
@@ -89,6 +90,16 @@
       Steel: 100
   - type: StaticPrice
     price: 30
+  # imp edits #
+  - type: DamageOtherOnHit
+    staminaCost: 5
+  - type: ThrowingAngle
+    angle: 270
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+    removalTime: 1
+  - type: EmbedPassiveDamage
+  # end imp edits #
 
 - type: entity
   name: wrench
@@ -129,6 +140,7 @@
       Steel: 100
   - type: StaticPrice
     price: 22
+  - type: DamageOtherOnHit # imp
 
 - type: entity
   name: multitool
@@ -178,6 +190,10 @@
       Plastic: 100
   - type: StaticPrice
     price: 56
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Shock: 2
 
 - type: entity
   name: network configurator
@@ -286,6 +302,13 @@
         Piercing: 10
     soundHit:
       path: "/Audio/Items/drill_hit.ogg"
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 8
+    staminaCost: 7.5
+    soundHit:
+      collection: MetalThud
 
 - type: entity
   id: RCD
@@ -488,6 +511,12 @@
   - type: StaticPrice
     price: 25
   - type: Shovel
+  # imp edits #
+  - type: DamageOtherOnHit
+    staminaCost: 8.5
+  - type: ThrowingAngle
+    angle: 45
+  # end imp edits #
 
 - type: entity
   parent: BaseItem
@@ -525,3 +554,4 @@
   - type: Construction
     graph: WoodenRollingPin
     node: rollingpin
+  - type: DamageOtherOnHit # imp

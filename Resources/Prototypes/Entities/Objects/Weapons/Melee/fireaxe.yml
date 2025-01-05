@@ -49,11 +49,20 @@
     stealGroup: FireAxe
   - type: IgniteOnMeleeHit
     fireStacks: -4
+  # imp edits #
+  - type: DamageOtherOnHit
+    meleeDamageMultiplier: 1.5
+    staminaCost: 18
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 45
+  # end imp edits #
 
 - type: entity
   id: FireAxeFlaming
   name: fire axe
-  parent: [BaseSyndicateContraband, FireAxe]
+  parent: [Tier3Contraband, FireAxe]
   description: Why fight fire with an axe when you can fight with fire and axe? Now featuring rugged rubberized handle!
   components:
   - type: MeleeWeapon

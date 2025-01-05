@@ -258,7 +258,7 @@
 
 - type: entity
   id: Protolathe
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseScienceContraband ]
   name: protolathe
   description: Converts raw materials into advanced items.
   components:
@@ -423,7 +423,7 @@
 
 - type: entity
   id: CircuitImprinter
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseScienceContraband ]
   name: circuit imprinter
   description: Prints circuit boards for machines.
   components:
@@ -568,7 +568,7 @@
 
 - type: entity
   id: ExosuitFabricator
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseScienceContraband ]
   name: exosuit fabricator
   description: Creates parts for robotics and other mechanical needs.
   components:
@@ -596,6 +596,7 @@
     - BorgModuleTool
     - BorgModuleBartender
     - BorgModulePaper
+    - BorgModuleArtistic #imp special
     - CyborgEndoskeleton
     - LeftArmBorg
     - RightArmBorg
@@ -692,7 +693,7 @@
 
 - type: entity
   id: SecurityTechFab
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseSecurityContraband ]
   name: security techfab
   description: Prints equipment for use by security crew.
   components:
@@ -834,7 +835,7 @@
 
 - type: entity
   id: AmmoTechFab
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseSecurityContraband ]
   name: ammo techfab
   description: Prints the bare minimum of bullets that any budget military or armory could need. Nothing fancy.
   components:
@@ -890,7 +891,7 @@
 
 - type: entity
   id: MedicalTechFab
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseMedicalContraband ]
   name: medical techfab
   description: Prints equipment for use by the medbay.
   components:
@@ -1274,7 +1275,7 @@
       staticRecipes:
         - SheetSteel
         - SheetGlass1
-        - SheetRGlass
+        - SheetRGlassRaw
         - SheetPlasma1
         - SheetPGlass1
         - SheetRPGlass1
@@ -1295,12 +1296,12 @@
   - type: Machine
     board: OreProcessorIndustrialMachineCircuitboard
   - type: Lathe
-    materialUseMultiplier: 0.75
+    materialUseMultiplier: 0.50 # imp, from 1.5x more sheets to 2x
     timeMultiplier: 0.5
     staticRecipes:
       - SheetSteel
       - SheetGlass1
-      - SheetRGlass
+      - SheetRGlassRaw
       - SheetPlasma1
       - SheetPGlass1
       - SheetRPGlass1

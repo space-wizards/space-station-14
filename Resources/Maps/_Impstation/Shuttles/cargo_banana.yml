@@ -112,7 +112,7 @@ entities:
       parent: 1
     - type: DeviceList
       devices:
-      - 43
+      - 44
 - proto: AirCanister
   entities:
   - uid: 3
@@ -338,7 +338,7 @@ entities:
       parent: 1
 - proto: FaxMachineBase
   entities:
-  - uid: 57
+  - uid: 42
     components:
     - type: Transform
       pos: 0.5,3.5
@@ -348,14 +348,14 @@ entities:
       destinationAddress: Cargo Shuttle
 - proto: GasPort
   entities:
-  - uid: 42
+  - uid: 43
     components:
     - type: Transform
       pos: 2.5,0.5
       parent: 1
 - proto: GasVentPump
   entities:
-  - uid: 43
+  - uid: 44
     components:
     - type: Transform
       rot: 3.141592653589793 rad
@@ -368,66 +368,53 @@ entities:
       - 2
 - proto: GeneratorBasic15kW
   entities:
-  - uid: 44
+  - uid: 45
     components:
     - type: Transform
       pos: 0.5,0.5
       parent: 1
 - proto: GravityGeneratorMini
   entities:
-  - uid: 45
+  - uid: 46
     components:
     - type: Transform
       pos: 0.5,1.5
       parent: 1
 - proto: Grille
   entities:
-  - uid: 46
+  - uid: 47
     components:
     - type: Transform
       pos: 2.5,4.5
       parent: 1
-  - uid: 47
+  - uid: 48
     components:
     - type: Transform
       pos: 1.5,4.5
       parent: 1
-  - uid: 48
+  - uid: 49
     components:
     - type: Transform
       pos: 0.5,4.5
       parent: 1
-  - uid: 49
+  - uid: 50
     components:
     - type: Transform
       pos: 1.5,-2.5
       parent: 1
-  - uid: 50
+  - uid: 51
     components:
     - type: Transform
       pos: 3.5,-0.5
       parent: 1
-  - uid: 51
+  - uid: 52
     components:
     - type: Transform
       pos: -0.5,-0.5
       parent: 1
-- proto: Holopad
-  entities:
-  - uid: 96
-    components:
-    - type: MetaData
-      name: holopad (Cargo Shuttle)
-    - type: Transform
-      pos: 1.5,1.5
-      parent: 1
-    - type: Label
-      currentLabel: Cargo Shuttle
-    - type: NameModifier
-      baseName: holopad
 - proto: HolopadLongRange
   entities:
-  - uid: 97
+  - uid: 54
     components:
     - type: MetaData
       name: long-range holopad (Cargo Shuttle)
@@ -440,53 +427,63 @@ entities:
       baseName: long-range holopad
 - proto: MiniGyroscope
   entities:
-  - uid: 52
+  - uid: 55
     components:
     - type: Transform
       pos: 2.5,1.5
       parent: 1
-- proto: Paper
-  entities:
-  - uid: 53
-    components:
-    - type: Transform
-      pos: 1.5680943,3.545013
-      parent: 1
-  - uid: 54
-    components:
-    - type: Transform
-      pos: 1.3493443,3.654388
-      parent: 1
 - proto: PaperBin20
   entities:
-  - uid: 55
+  - uid: 58
     components:
     - type: Transform
       pos: 0.5,2.5
       parent: 1
-- proto: Pen
+- proto: PaperCargoBountyManifest
+  entities:
+  - uid: 57
+    components:
+    - type: Transform
+      pos: 1.382721,3.7731934
+      parent: 1
+- proto: PaperCargoInvoice
   entities:
   - uid: 56
+    components:
+    - type: Transform
+      pos: 1.648346,3.5544434
+      parent: 1
+- proto: Pen
+  entities:
+  - uid: 59
     components:
     - type: Transform
       pos: 1.1056519,3.5185852
       parent: 1
 - proto: PlushieLamp
   entities:
-  - uid: 95
+  - uid: 60
     components:
     - type: Transform
       pos: 0.23052979,3.3310852
       parent: 1
+- proto: PosterLegitBlessThisSpess
+  entities:
+  - uid: 53
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -0.5,1.5
+      parent: 1
 - proto: Poweredlight
   entities:
-  - uid: 58
+  - uid: 61
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,1.5
       parent: 1
-  - uid: 59
+  - uid: 62
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
@@ -494,39 +491,39 @@ entities:
       parent: 1
 - proto: ShuttleWindow
   entities:
-  - uid: 60
+  - uid: 63
     components:
     - type: Transform
       pos: 3.5,-0.5
       parent: 1
-  - uid: 61
+  - uid: 64
     components:
     - type: Transform
       pos: -0.5,-0.5
       parent: 1
-  - uid: 62
+  - uid: 65
     components:
     - type: Transform
       pos: 1.5,-2.5
       parent: 1
-  - uid: 63
+  - uid: 66
     components:
     - type: Transform
       pos: 0.5,4.5
       parent: 1
-  - uid: 64
+  - uid: 67
     components:
     - type: Transform
       pos: 1.5,4.5
       parent: 1
-  - uid: 65
+  - uid: 68
     components:
     - type: Transform
       pos: 2.5,4.5
       parent: 1
 - proto: SubstationWallBasic
   entities:
-  - uid: 66
+  - uid: 69
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
@@ -534,41 +531,41 @@ entities:
       parent: 1
 - proto: Table
   entities:
-  - uid: 67
+  - uid: 70
     components:
     - type: Transform
       pos: 0.5,3.5
       parent: 1
-  - uid: 68
+  - uid: 71
     components:
     - type: Transform
       pos: 0.5,2.5
       parent: 1
-  - uid: 69
+  - uid: 72
     components:
     - type: Transform
       pos: 1.5,3.5
       parent: 1
 - proto: Thruster
   entities:
-  - uid: 70
+  - uid: 73
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-2.5
       parent: 1
-  - uid: 71
+  - uid: 74
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,-2.5
       parent: 1
-  - uid: 72
+  - uid: 75
     components:
     - type: Transform
       pos: 4.5,3.5
       parent: 1
-  - uid: 73
+  - uid: 76
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
@@ -576,117 +573,117 @@ entities:
       parent: 1
 - proto: WallShuttleDiagonal
   entities:
-  - uid: 74
+  - uid: 77
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,4.5
       parent: 1
-  - uid: 75
+  - uid: 78
     components:
     - type: Transform
       pos: -0.5,4.5
       parent: 1
-  - uid: 76
+  - uid: 79
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,2.5
       parent: 1
-  - uid: 77
+  - uid: 80
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,2.5
       parent: 1
-  - uid: 78
+  - uid: 81
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,-1.5
       parent: 1
-  - uid: 79
+  - uid: 82
     components:
     - type: Transform
       pos: -1.5,-1.5
       parent: 1
 - proto: WallShuttleInterior
   entities:
-  - uid: 80
+  - uid: 83
     components:
     - type: Transform
       pos: -0.5,3.5
       parent: 1
-  - uid: 81
+  - uid: 84
     components:
     - type: Transform
       pos: 3.5,3.5
       parent: 1
-  - uid: 82
+  - uid: 85
     components:
     - type: Transform
       pos: -0.5,2.5
       parent: 1
-  - uid: 83
+  - uid: 86
     components:
     - type: Transform
       pos: -0.5,1.5
       parent: 1
-  - uid: 84
+  - uid: 87
     components:
     - type: Transform
       pos: -0.5,0.5
       parent: 1
-  - uid: 85
+  - uid: 88
     components:
     - type: Transform
       pos: -0.5,-1.5
       parent: 1
-  - uid: 86
+  - uid: 89
     components:
     - type: Transform
       pos: 3.5,-1.5
       parent: 1
-  - uid: 87
+  - uid: 90
     components:
     - type: Transform
       pos: 3.5,0.5
       parent: 1
-  - uid: 88
+  - uid: 91
     components:
     - type: Transform
       pos: 3.5,1.5
       parent: 1
-  - uid: 89
+  - uid: 92
     components:
     - type: Transform
       pos: 3.5,2.5
       parent: 1
-  - uid: 90
+  - uid: 93
     components:
     - type: Transform
       pos: 3.5,-2.5
       parent: 1
-  - uid: 91
+  - uid: 94
     components:
     - type: Transform
       pos: -0.5,-2.5
       parent: 1
 - proto: WindoorSecureCargoLocked
   entities:
-  - uid: 92
+  - uid: 95
     components:
     - type: Transform
       pos: 1.5,2.5
       parent: 1
 - proto: WindowReinforcedDirectional
   entities:
-  - uid: 93
+  - uid: 96
     components:
     - type: Transform
       pos: 0.5,2.5
       parent: 1
-  - uid: 94
+  - uid: 97
     components:
     - type: Transform
       pos: 2.5,2.5

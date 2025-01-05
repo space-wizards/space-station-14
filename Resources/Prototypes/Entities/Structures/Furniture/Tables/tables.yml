@@ -54,6 +54,7 @@
   - type: Construction
     graph: Table
     node: TableFrame
+  - type: ThrownItemImmune # imp
 
 - type: entity
   id: CounterWoodFrame

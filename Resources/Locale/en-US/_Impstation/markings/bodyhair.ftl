@@ -6,3 +6,6 @@ marking-BodyhairHumanFemale = Body Hair
 
 marking-BodyhairSpelf-spelf_bodyhair = Body Hair
 marking-BodyhairSpelf = Body Hair
+
+marking-BodyhairHumanUnsexed-human_bodyhair_unsexed = Body Hair
+marking-BodyhairHumanUnsexed = Body Hair

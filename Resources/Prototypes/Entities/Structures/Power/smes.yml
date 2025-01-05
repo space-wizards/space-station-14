@@ -28,6 +28,8 @@
         - map: ["enum.SmesVisualLayers.Output"]
           state: "smes-op1"
           shader: unshaded
+        - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+          state: smes-open
     - type: Smes
     - type: Appearance
     - type: Battery
@@ -67,6 +69,7 @@
       color: "#c9c042"
       castShadows: false
     - type: WiresPanel
+    - type: WiresVisuals
     - type: Machine
       board: SMESMachineCircuitboard
     - type: StationInfiniteBatteryTarget

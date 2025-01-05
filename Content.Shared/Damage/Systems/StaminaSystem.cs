@@ -260,9 +260,10 @@ public sealed partial class StaminaSystem : EntitySystem
         }
 
         var slowdownThreshold = component.CritThreshold / 2f;
+        var damageDelta = oldDamage - component.StaminaDamage;
 
         // If we go above n% then apply slowdown
-        if (oldDamage < slowdownThreshold &&
+        if (damageDelta < 0 &&
             component.StaminaDamage > slowdownThreshold)
         {
             _stunSystem.TrySlowdown(uid, TimeSpan.FromSeconds(3), true, 0.8f, 0.8f);

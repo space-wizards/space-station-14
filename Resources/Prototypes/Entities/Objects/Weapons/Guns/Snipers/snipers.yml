@@ -40,7 +40,7 @@
 
 - type: entity
   name: Kardashev-Mosin
-  parent: [BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband]
+  parent: [BaseWeaponSniper, BaseGunWieldable, Tier3Contraband]
   id: WeaponSniperMosin
   description: A weapon for hunting, or endless trench warfare. There's a bayonet at the end, and the heft of the rifle could do some damage. Uses .20 rifle ammo.
 # Melee and gun components don't play nice; description will change when fixed. Melee components also disabled for the time being
@@ -83,7 +83,7 @@
 
 - type: entity
   name: Hristov
-  parent: [BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband]
+  parent: [BaseWeaponSniper, BaseGunWieldable, Tier3Contraband]
   id: WeaponSniperHristov
   description: A portable anti-materiel rifle, originally intended for destroying the engine blocks of moving vehicles. Uses .60 anti-materiel ammo.
   components:

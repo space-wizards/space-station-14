@@ -45,7 +45,6 @@
   showInVote: false
   rules:
     - Thief
-    - SubGamemodesRule
     - LowpopStationEventScheduler
     - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler

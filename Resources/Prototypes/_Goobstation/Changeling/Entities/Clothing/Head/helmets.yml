@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, TierXContraband]
   id: ChangelingClothingHeadHelmet
   name: chitinous helmet
   description: An all-consuming chitinous mass of armor.

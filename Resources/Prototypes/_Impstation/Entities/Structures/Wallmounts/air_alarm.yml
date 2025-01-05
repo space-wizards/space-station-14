@@ -1,0 +1,7 @@
+- type: entity
+  id: AirAlarmSupermatter
+  parent: AirAlarm
+  suffix: Supermatter
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"], ["Engineering"]]

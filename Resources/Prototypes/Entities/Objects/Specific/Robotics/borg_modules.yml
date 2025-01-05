@@ -591,7 +591,7 @@
 #syndicate modules
 - type: entity
   id: BorgModuleSyndicateWeapon
-  parent: [ BaseBorgModule, BaseProviderBorgModule, BaseSyndicateContraband ]
+  parent: [ BaseBorgModule, BaseProviderBorgModule, Tier3Contraband ]
   name: weapon cyborg module
   components:
   - type: Sprite
@@ -607,7 +607,7 @@
 
 - type: entity
   id: BorgModuleOperative
-  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, Tier2Contraband ]
   name: operative cyborg module
   description: A module that comes with a crowbar, an Emag and a syndicate pinpointer.
   components:
@@ -626,7 +626,7 @@
 
 - type: entity
   id: BorgModuleEsword
-  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, Tier3Contraband ]
   name: energy sword cyborg module
   description: A module that comes with a double energy sword.
   components:
@@ -643,7 +643,7 @@
 
 - type: entity
   id: BorgModuleL6C
-  parent: [ BaseBorgModuleSyndicateAssault, BaseProviderBorgModule, BaseSyndicateContraband ]
+  parent: [ BaseBorgModuleSyndicateAssault, BaseProviderBorgModule, Tier3Contraband ]
   name: L6C ROW cyborg module
   description: A module that comes with a L6C.
   components:
@@ -660,7 +660,7 @@
 
 - type: entity
   id: BorgModuleMartyr
-  parent: [ BaseBorgModule, BaseProviderBorgModule, BaseSyndicateContraband ]
+  parent: [ BaseBorgModule, BaseProviderBorgModule, Tier3Contraband ]
   name: martyr cyborg module
   description: "A module that comes with an explosive you probably don't want to handle yourself."
   components:

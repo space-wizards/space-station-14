@@ -1,0 +1,111 @@
+- type: entity
+  id: DinoRift
+  parent: CarpRift
+  name: dinosaur rift
+  description: A rift created seconds in the past.
+  categories: [ HideSpawnMenu ]
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: DragonRift
+    maxAccumuluator: 180
+    spawnAccumulator: 15
+    spawnCooldown: 15
+    spawn: DinosaurSpawnerRandom
+    announcement: dino-rift-warning
+  - type: Sprite
+    layers:
+    - sprite: Structures/Specific/carp_rift.rsi
+      state: icon
+      color: DarkGoldenrod
+      shader: unshaded
+  - type: PointLight
+    enabled: true
+    color: "#e00909"
+    radius: 10.0
+    energy: 5.0
+    netsync: false
+  - type: NavMapBeacon
+    color: "#ff0000"
+    text: dinosaur rift
+    enabled: false
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/_Impstation/Misc/dino-rift.ogg
+
+- type: entity
+  id: DinoRiftEasy
+  parent: DinoRift
+  suffix: easy
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: DragonRift
+    maxAccumuluator: 180
+    spawnAccumulator: 15
+    spawnCooldown: 15
+    spawn: DinosaurSpawnerEasy
+    announcement: dino-rift-warning
+
+- type: entity
+  id: DinoRiftMedium
+  parent: DinoRift
+  suffix: medium
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: DragonRift
+    maxAccumuluator: 180
+    spawnAccumulator: 15
+    spawnCooldown: 15
+    spawn: DinosaurSpawnerMedium
+    announcement: dino-rift-warning
+
+- type: entity
+  id: DinoRiftHard
+  parent: DinoRift
+  suffix: hard
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: DragonRift
+    maxAccumuluator: 180
+    spawnAccumulator: 15
+    spawnCooldown: 15
+    spawn: DinosaurSpawnerHard
+    announcement: dino-rift-warning
+
+- type: entity
+  id: DinoRiftFinal
+  parent: DinoRift
+  name: the final dinosaur rift
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: DragonRift
+    maxAccumuluator: 300
+    spawnAccumulator: 0
+    spawnCooldown: 8
+    spawn: DinosaurSpawnerRandom
+    announcement: dino-rift-warning
+  - type: Sprite
+    layers:
+    - sprite: Structures/Specific/carp_rift.rsi
+      state: icon
+      color: "#e00909"
+      shader: unshaded
+      scale: 3, 3
+  - type: PointLight
+    enabled: true
+    color: "#a10808"
+    radius: 30.0
+    energy: 15.0
+    netsync: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

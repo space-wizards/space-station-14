@@ -67,7 +67,6 @@
 
                 <!-- If the alarm is inactive, this is label is displayed instead -->
                 <Label Name="NoDataLabel" Text="{Loc 'atmos-alerts-window-no-data-available'}" HorizontalAlignment="Center" Margin="0 15" FontColorOverride="#a9a9a9" ReservesSpace="False" Visible="False"></Label>
-
             </PanelContainer>
         </BoxContainer>
     </Button>

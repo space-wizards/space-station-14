@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: CargoTelepad
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseCargoContraband ]
   name: cargo telepad
   description: Beam in the pizzas and dig in.
   components:

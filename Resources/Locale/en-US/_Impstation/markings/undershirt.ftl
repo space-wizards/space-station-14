@@ -81,3 +81,30 @@ marking-UndershirtBraSportsA = Bra (Sports)
 
 marking-UndershirtBraStraplessA-strapless = Bra
 marking-UndershirtBraStraplessA = Bra (Strapless)
+
+marking-UndershirtDefaultU-undershirt = Undershirt
+marking-UndershirtDefaultU = Undershirt (Default)
+
+marking-UndershirtRolledU-rolled_undershirt = Undershirt
+marking-UndershirtRolledU = Undershirt (Rolled)
+
+marking-UndershirtSleevelessU-sleeveless = Tanktop
+marking-UndershirtSleevelessU = Tanktop
+
+marking-UndershirtGrossSleevelessU-gross_sleeveless = Tanktop
+marking-UndershirtGrossSleevelessU = Tanktop (Gross)
+
+marking-UndershirtRolledSleevelessU-rolled_undershirt_sleeveless = Tanktop
+marking-UndershirtRolledSleevelessU = Tanktop (Rolled)
+
+marking-UndershirtNanotrasenU-nanotrasen = Undershirt
+marking-UndershirtNanotrasenU = Undershirt (Nanotrasen)
+
+marking-UndershirtBinderU-binder = Binder
+marking-UndershirtBinderU = Binder
+
+marking-UndershirtBraSportsU-sports = Bra
+marking-UndershirtBraSportsU = Bra (Sports)
+
+marking-UndershirtBraStraplessU-strapless = Bra
+marking-UndershirtBraStraplessU = Bra (Strapless)

@@ -24,3 +24,11 @@
         Piercing: 6
     soundHit:
       path: "/Audio/Weapons/bladeslice.ogg"
+  # imp edits #
+  - type: DamageOtherOnHit
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 225
+  # end imp edits #

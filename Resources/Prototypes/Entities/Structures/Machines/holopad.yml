@@ -82,10 +82,10 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-      enum.HolopadUiKey.InteractionWindow:
-        type: HolopadBoundUserInterface
-      enum.WiresUiKey.Key:
-        type: WiresBoundUserInterface
+        enum.HolopadUiKey.InteractionWindow:
+          type: HolopadBoundUserInterface
+        enum.WiresUiKey.Key:
+          type: WiresBoundUserInterface
   - type: WiresPanel
   - type: WiresVisuals
   - type: Wires
@@ -117,7 +117,6 @@
     - Map
     - Unlimited
     ignoreTelephonesOnSameGrid: true
-
 - type: entity
   name: quantum entangling holopad
   description: "An floor-mounted device for projecting holographic images to similar devices at extreme distances."

@@ -251,3 +251,54 @@
   - HoPShoesWhite
   - BlackCommandHeels
   - BlueCommandHeels
+
+- type: startingGear #the starting gear for the apid botanist. they dont have a backslot and whatever so ive gotta do it bespoke
+  id: StartingGearApidBotanist
+  equipment:
+    jumpsuit: ClothingUniformOveralls
+    id: BotanistPDA
+    belt: ClothingBeltPlantFilled
+    outerClothing: ClothingOuterApronBotanist
+    head: ClothingHeadBandBotany
+    pocket1: EmergencyOxygenTankFilled
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetService
+
+- type: startingGear #the doctor too
+  id: StartingGearApidDoctor
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+    id: MedicalPDA
+    belt: ClothingBeltMedicalFilled
+    outerClothing: ClothingOuterWinterMed
+    #head: 
+    pocket1: EmergencyOxygenTankFilled
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesGlassesHudMedical
+
+- type: startingGear #the engineer!
+  id: StartingGearApidEngineer
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitEngineering
+    id: EngineerPDA
+    belt: ClothingBeltUtilityEngineering
+    outerClothing: ClothingOuterHardsuitEngineering
+    head: ClothingHeadHatHardhatYellow
+    pocket1: DoubleEmergencyOxygenTankFilled
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetEngineering
+    eyes: ClothingEyesGlassesMeson
+
+- type: startingGear #emergency responder
+  id: StartingGearApidEmergency
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTMedic
+    id: ParamedicPDA
+    belt: ApidEmergencyResponseBeltFilled
+    outerClothing: ClothingOuterHardsuitERTMedical
+    head: ClothingHeadHatParamedicSirenCap
+    pocket1: DoubleEmergencyOxygenTankFilled
+    pocket2: WeaponDisabler
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedSec

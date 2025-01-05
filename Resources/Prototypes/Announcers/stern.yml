@@ -32,8 +32,6 @@
       path: alerts/blue.ogg
     - id: alertViolet # Viral infection or misc medical emergencies, listen to Medical
       path: alerts/violet.ogg
-  #  - id: alertWhite # Glimmer is too high, listen to Epistemics
-  #    path: alerts/white.ogg
     - id: alertYellow # The station is being largely damaged, listen to Engineering
       path: alerts/yellow.ogg
     - id: alertRed # Generic many things are bad, listen to Security
@@ -46,6 +44,20 @@
       path: alerts/epsilon.ogg
     - id: alertPink # Please don't form a union
       path: alerts/pink.ogg
+    - id: alertAmber # It's Dino Wars
+      path: alerts/amber.ogg
+    - id: alertBurgundy # Don't move!
+      path: alerts/burgundy.ogg
+    - id: khaki # oh fuck
+      path: alerts/khaki.ogg
+    - id: alertDenim # It's clown time!
+      path: alerts/denim.ogg
+    - id: alertChartreuse # Wha?
+      path: alerts/chartreuse.ogg
+    - id: alertWhite # There's ghosts! Not to be confused with the one from DeltaV.
+      path: alerts/white.ogg
+    - id: alertPuce # don't eat anything
+      path: alerts/puce.ogg
 
 
     # Events

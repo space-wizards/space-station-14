@@ -22,7 +22,7 @@
     ears: ClothingHeadsetGrey
     pocket1: SpiderCharge
     pocket2: PinpointerStation
-    belt: EnergyKatana
+    belt: EnergyKatanaStun # imp
   inhand:
     - JetpackBlackFilled
   storage:

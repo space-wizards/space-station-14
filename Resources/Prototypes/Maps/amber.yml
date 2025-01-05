@@ -3,7 +3,7 @@
   mapName: 'Amber'
   mapPath: /Maps/_Impstation/amber.yml
   minPlayers: 15
-  maxPlayers: 50
+  maxPlayers: 35
   stations:
     Amber:
       stationProto: StandardNanotrasenStation

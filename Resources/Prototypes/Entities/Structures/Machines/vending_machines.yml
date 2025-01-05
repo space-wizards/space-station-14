@@ -2219,7 +2219,7 @@
   parent: VendingMachineChemicals
   id: VendingMachineChemicalsSyndicate
   name: SyndieJuice
-  description: Not made with freshly squeezed syndies I hope.
+  description: Not made with freshly squeezed syndies, I hope.
   components:
   - type: VendingMachine
     pack: ChemVendInventorySyndicate
@@ -2228,6 +2228,15 @@
     normalState: normal
     denyState: deny
     ejectDelay: 2
+  - type: Sprite # imp
+    sprite: _Impstation/Structures/Machines/VendingMachines/syndiejuice.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["SyndicateAgent"]]
 

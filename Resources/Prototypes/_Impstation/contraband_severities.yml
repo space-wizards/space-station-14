@@ -3,3 +3,23 @@
 - type: contrabandSeverity
   id: DecapoidEmpire
   examineText: contraband-examine-text-DecapoidEmpire
+
+# tier 1 contraband: syndicate pajamas, flags, duffels, etc
+- type: contrabandSeverity
+  id: Tier1Contraband
+  examineText: contraband-examine-text-Tier1
+
+# tier 2 contraband: espionage/sabotage items a la emag, cham projector, cybersun pen, etc
+- type: contrabandSeverity
+  examineText: contraband-examine-text-Tier2
+  id: Tier2Contraband
+
+# tier 3 contraband: military-level equipment a la blood-red hardsuit, china lake, etc
+- type: contrabandSeverity
+  id: Tier3Contraband
+  examineText: contraband-examine-text-Tier3
+
+# tier X contraband: paranormal/extraordinary equipment, a la heretic blade, changeling armblade, etc
+- type: contrabandSeverity
+  id: TierXContraband
+  examineText: contraband-examine-text-TierX

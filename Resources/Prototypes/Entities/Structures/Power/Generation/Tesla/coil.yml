@@ -5,6 +5,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: SupermatterImmune
   - type: Transform
     anchored: true
   - type: Physics
@@ -110,6 +111,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: SupermatterImmune
   - type: Transform
     anchored: true
   - type: Physics

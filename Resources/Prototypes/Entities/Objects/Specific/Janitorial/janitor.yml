@@ -52,6 +52,11 @@
     guides:
     - Janitorial
   - type: DnaSubstanceTrace
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 6
+    staminaCost: 8
 
 - type: entity
   parent: BaseItem
@@ -113,6 +118,11 @@
         - Mop
         - MopAdv
     - type: DnaSubstanceTrace
+    - type: DamageOtherOnHit # imp
+      damage:
+        types:
+          Blunt: 6
+      staminaCost: 8
 
 - type: entity
   name: wet floor sign
