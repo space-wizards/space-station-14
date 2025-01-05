@@ -41,7 +41,7 @@
   result: ClothingUniformJumpskirtHeadofPersonnelMessKitHarmony
 
 - type: latheRecipe
-  parent: BaseCommandJumpsuitRecipe
+  parent: BaseCommandHatRecipe
   id: ClothingHeadHatBeretHeadofPersonnelHarmony
   result: ClothingHeadHatBeretHeadofPersonnelHarmony
 
@@ -82,12 +82,12 @@
 
 ## Chief Engineer
 - type: latheRecipe
-  parent: BaseCommandJumpsuitRecipe
+  parent: BaseCommandHatRecipe
   id: ClothingHeadHatBeretChiefEngineerHarmony
   result: ClothingHeadHatBeretChiefEngineerHarmony
 
 ## Research Director
 - type: latheRecipe
-  parent: BaseCommandJumpsuitRecipe
+  parent: BaseCommandHatRecipe
   id: ClothingHeadHatBeretResearchDirectorHarmony
   result: ClothingHeadHatBeretResearchDirectorHarmony
