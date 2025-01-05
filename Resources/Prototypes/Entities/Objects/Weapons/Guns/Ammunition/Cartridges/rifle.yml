@@ -1,6 +1,6 @@
 - type: entity
   id: BaseCartridgeRifle
-  name: cartridge (.20 rifle)
+  name: cartridge (.223 rifle)
   parent: [ BaseCartridge, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -20,16 +20,18 @@
 
 - type: entity
   id: CartridgeRifle
-  name: cartridge (.20 rifle)
+  name: cartridge (.223 rifle)
   parent: BaseCartridgeRifle
+  description: 0.223x1.78 inches. High-velocity intermediate cartridge designed by Nanotrasen for use in combat rifles. A good balance of recoil, velocity, and stopping power.
   components:
   - type: CartridgeAmmo
     proto: BulletRifle
 
 - type: entity
   id: CartridgeRiflePractice
-  name: cartridge (.20 rifle practice)
+  name: cartridge (.223 rifle practice)
   parent: BaseCartridgeRifle
+  description: 0.223x1.78 inches. Intermediate rifle cartridge lacking a projectile for use in practice.
   components:
   - type: CartridgeAmmo
     proto: BulletRiflePractice
@@ -43,8 +45,9 @@
 
 - type: entity
   id: CartridgeRifleIncendiary
-  name: cartridge (.20 rifle incendiary)
+  name: cartridge (.223 rifle incendiary)
   parent: BaseCartridgeRifle
+  description: 0.223x1.78 inches. Replaces the lead payload with a self-igniting incendiary compound. Developed by Nanotrasen for use in combat rifles.
   components:
   - type: CartridgeAmmo
     proto: BulletRifleIncendiary
@@ -58,8 +61,9 @@
 
 - type: entity
   id: CartridgeRifleUranium
-  name: cartridge (.20 rifle uranium)
+  name: cartridge (.223 rifle uranium)
   parent: BaseCartridgeRifle
+  description: 0.223x1.78 inches. Specialized rifle round containing a uranium core which severely irradiates the target after impact. Developed by Nanotrasen for use in combat rifles.
   components:
   - type: CartridgeAmmo
     proto: BulletRifleUranium

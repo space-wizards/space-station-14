@@ -2,6 +2,7 @@
   parent: [ BaseCartridge, BaseMajorContraband ]
   id: CartridgeAntiMateriel
   name: cartridge (.60 anti-materiel)
+  description: 0.60x4.5 inches. Massive, powerful bullet used by high caliber sniper rifles and heavy machine guns. Designed to destroy equipment and vehicles, but it will work just as well against a person.
   components:
   - type: Tag
     tags:

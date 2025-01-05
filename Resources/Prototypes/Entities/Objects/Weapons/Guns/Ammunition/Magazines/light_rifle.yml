@@ -1,7 +1,7 @@
 # Empty mags
 - type: entity
   id: BaseMagazineLightRifle
-  name: "magazine (.30 rifle)"
+  name: "magazine (.308 rifle)"
   parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -36,8 +36,9 @@
 # Magazines
 - type: entity
   id: MagazineLightRifleBox
-  name: "L6 SAW magazine box (.30 rifle)"
+  name: "ammo belt (.308 rifle)"
   parent: BaseMagazineLightRifle
+  description: Metal box containing a 100-round belt of linked 0.308x1.53 inch rifle rounds, for use in a light machine gun. Used primarily by the L6 squad automatic weapon.
   components:
   - type: Tag
     tags:
@@ -56,8 +57,9 @@
 
 - type: entity
   id: MagazineLightRifle
-  name: "magazine (.30 rifle)"
+  name: "magazine (.308 rifle)"
   parent: BaseMagazineLightRifle
+  description: Magazine containing 0.308x1.53 inch rifle rounds. Comparable to the .223 cartridge, but somewhat wider and shorter. Commonly used by aftermarket and Syndicate rifles.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifle
@@ -70,9 +72,10 @@
 
 - type: entity
   id: MagazineLightRifleEmpty
-  name: "magazine (.30 rifle any)"
+  name: "magazine (.308 rifle any)"
   suffix: empty
   parent: MagazineLightRifle
+  description: Magazine designed for 0.308x1.53 inch rifle rounds.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -83,8 +86,9 @@
 
 - type: entity
   id: MagazineLightRiflePractice
-  name: "magazine (.30 rifle practice)"
+  name: "magazine (.308 rifle practice)"
   parent: BaseMagazineLightRifle
+  description: Magazine containing 0.308x1.53 inch practice rifle rounds. Intermediate rifle cartridge lacking a projectile for use in practice.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRiflePractice
@@ -97,8 +101,9 @@
 
 - type: entity
   id: MagazineLightRifleUranium
-  name: "magazine (.30 rifle uranium)"
+  name: "magazine (.308 rifle uranium)"
   parent: BaseMagazineLightRifle
+  description: Magazine containing 0.308x1.53 inch uranium rifle rounds. Contains a expensive uranium core which severely irradiates the target after impact. Primarily used by the Syndicate, or by particularly wealthy organized crime.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleUranium
@@ -111,41 +116,9 @@
 
 - type: entity
   id: MagazineLightRifleIncendiary
-  name: "magazine (.30 rifle incendiary)"
+  name: "magazine (.308 rifle incendiary)"
   parent: MagazineLightRifle
+  description: Magazine containing 0.308x1.53 inch incendiary rifle rounds. Intermediate rifle cartridge containing an incendiary compound to burn the target from inside.  Generally used in aftermarket and Syndicate rifles.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleIncendiary
-
-- type: entity
-  id: MagazineLightRifleMaxim
-  name: "pan magazine (.30 rifle)"
-  parent: BaseMagazineLightRifle
-  components:
-  - type: Tag
-    tags:
-      - MagazineLightRiflePan
-  - type: BallisticAmmoProvider
-    proto: CartridgeLightRifle
-    capacity: 96
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/maxim.rsi
-
-- type: entity
-  id: MagazineLightRiflePkBox
-  name: "PK munitions box (.30 rifle)"
-  parent: BaseMagazineLightRifle
-  components:
-  - type: Tag
-    tags:
-      - MagazineLightRifleBox
-  - type: BallisticAmmoProvider
-    proto: CartridgeLightRifle
-    capacity: 80
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/pk_box.rsi
-  - type: MagazineVisuals
-    magState: mag
-    steps: 7
-    zeroVisible: false
-  - type: Appearance

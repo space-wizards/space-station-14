@@ -1,7 +1,7 @@
 # Empty mags
 - type: entity
   id: BaseMagazineRifle
-  name: "magazine (.20 rifle)"
+  name: "magazine (.223 rifle)"
   parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -35,8 +35,9 @@
 # Magazines
 - type: entity
   id: MagazineRifle
-  name: "magazine (.20 rifle)"
+  name: "magazine (.223 rifle)"
   parent: BaseMagazineRifle
+  description: Magazine containing 0.223x1.78 inch rifle rounds. High-velocity intermediate cartridge designed by Nanotrasen for use in combat rifles. A good balance of recoil, velocity, and stopping power.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifle
@@ -49,9 +50,10 @@
 
 - type: entity
   id: MagazineRifleEmpty
-  name: "magazine (.20 rifle any)"
+  name: "magazine (.223 rifle any)"
   suffix: empty
   parent: MagazineRifle
+  description: Magazine designed for 0.223x1.78 inch rifle rounds.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -64,14 +66,16 @@
   id: MagazineRifleIncendiary
   name: "magazine (.20 rifle incendiary)"
   parent: MagazineRifle
+  description: Magazine containing 0.223x1.78 inch rifle rounds. Intermediate rifle cartridge containing an incendiary compound to burn the target from inside. Generally used in aftermarket and Syndicate rifles.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleIncendiary
 
 - type: entity
   id: MagazineRiflePractice
-  name: "magazine (.20 rifle practice)"
+  name: "magazine (.223 rifle practice)"
   parent: BaseMagazineRifle
+  description: Magazine containing 0.223x1.78 inch rifle rounds. Intermediate rifle cartridge lacking a projectile for use in practice.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRiflePractice
@@ -84,8 +88,9 @@
 
 - type: entity
   id: MagazineRifleUranium
-  name: "magazine (.20 rifle uranium)"
+  name: "magazine (.223 rifle uranium)"
   parent: BaseMagazineRifle
+  description: Magazine containing 0.223x1.78 inch rifle rounds. Each round contains a expensive uranium core which severely irradiates the target after impact. Developed by Nanotrasen for use in combat rifles.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleUranium

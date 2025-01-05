@@ -1,6 +1,6 @@
 - type: entity
   id: BaseCartridgeLightRifle
-  name: cartridge (.30 rifle)
+  name: cartridge (.308 rifle)
   parent: [ BaseCartridge, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -20,7 +20,7 @@
 
 - type: entity
   id: CartridgeLightRifle
-  name: cartridge (.30 rifle)
+  name: cartridge (.308 rifle)
   parent: BaseCartridgeLightRifle
   components:
   - type: CartridgeAmmo
@@ -28,8 +28,9 @@
 
 - type: entity
   id: CartridgeLightRiflePractice
-  name: cartridge (.30 rifle practice)
+  name: cartridge (.308 rifle practice)
   parent: BaseCartridgeLightRifle
+  description: 0.308x1.53 inches. Intermediate rifle cartridge lacking a projectile for use in practice.
   components:
   - type: CartridgeAmmo
     proto: BulletLightRiflePractice
@@ -43,8 +44,9 @@
 
 - type: entity
   id: CartridgeLightRifleIncendiary
-  name: cartridge (.30 rifle incendiary)
+  name: cartridge (.308 rifle incendiary)
   parent: BaseCartridgeLightRifle
+  description: 0.308x1.53 inches. Intermediate rifle cartridge containing an incendiary compound to burn the target from inside.  Generally used in aftermarket and Syndicate rifles.
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifleIncendiary
@@ -58,8 +60,9 @@
 
 - type: entity
   id: CartridgeLightRifleUranium
-  name: cartridge (.30 rifle uranium)
+  name: cartridge (.308 rifle uranium)
   parent: BaseCartridgeLightRifle
+  description: 0.308x1.53 inches. Contains a expensive uranium core which severely irradiates the target after impact. Primarily used by the Syndicate, or by particularly wealthy organized crime.
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifleUranium
