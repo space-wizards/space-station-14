@@ -284,7 +284,7 @@
   id: BodaAds
   values:
     prefix: advertisement-sovietsoda-
-    count: 6
+    count: 8
 
 - type: localizedDataset
   id: SyndieDrobeAds
