@@ -269,6 +269,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 if (slot.InsertSuccessPopup.HasValue)
                     _popupSystem.PopupClient(Loc.GetString(slot.InsertSuccessPopup), uid, args.User);
+
                 args.Handled = true;
                 return;
             }
