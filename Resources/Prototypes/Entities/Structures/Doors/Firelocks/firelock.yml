@@ -106,7 +106,7 @@
     - type: StaticPrice
       price: 150
     - type: AccessReader
-      access: [ [ "Engineering" ] ]
+      access: [ [ "Engineering" ] , [ "Security" ], [ "Command" ] ] #Harmony added Security and Command
     - type: PryUnpowered
       pryModifier: 0.5
     - type: PointLight
