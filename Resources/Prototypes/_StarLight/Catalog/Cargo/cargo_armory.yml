@@ -1,0 +1,19 @@
+- type: cargoProduct
+  id: ArmoryLr30
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/lr_30.rsi
+    state: icon
+  product: CrateArmoryLr30
+  cost: 5200
+  category: cargoproduct-category-name-armory
+  group: market
+  
+- type: cargoProduct
+  id: ArmoryLr30Magazines
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/Battery/lr30_mag.rsi
+    state: base
+  product: CrateArmoryLr30Magazines
+  cost: 3600
+  category: cargoproduct-category-name-armory
+  group: market
