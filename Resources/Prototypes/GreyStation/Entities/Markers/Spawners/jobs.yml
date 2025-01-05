@@ -22,16 +22,3 @@
       - state: green
       - sprite: GreyStation/Markers/jobs.rsi
         state: prisonguard
-
-- type: entity
-  id: SpawnPointMartialArtist
-  parent: SpawnPointJobBase
-  name: martial artist
-  components:
-  - type: SpawnPoint
-    job_id: MartialArtist
-  - type: Sprite
-    layers:
-      - state: green
-      - sprite: GreyStation/Markers/jobs.rsi
-        state: martialartist

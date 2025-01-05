@@ -23,16 +23,3 @@
       state: prisonguard
   - type: PresetIdCard
     job: PrisonGuard
-
-- type: entity
-  parent: IDCardStandard
-  id: MartialArtistIDCard
-  name: martial artist ID card
-  components:
-  - type: Sprite
-    layers:
-    - state: default
-    - sprite: GreyStation/Objects/Misc/id_cards.rsi
-      state: martialartist
-  - type: PresetIdCard
-    job: MartialArtist
