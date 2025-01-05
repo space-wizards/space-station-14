@@ -277,13 +277,13 @@ namespace Content.Shared.Containers.ItemSlots
     public record struct ItemSlotEjectAttemptEvent(EntityUid SlotEntity, EntityUid Item, EntityUid? User, ItemSlot Slot, bool Cancelled = false);
 
     /// <summary>
-    /// Event raised after the item is inserted.
+    /// Event raised on the slot entity and the item that was inserted, after successfully inserting.
     /// </summary>
     [ByRefEvent]
     public record struct ItemSlotInsertedEvent(EntityUid SlotEntity, EntityUid Item, EntityUid? User, ItemSlot Slot);
 
     /// <summary>
-    /// Event raised after the item is ejected.
+    /// Event raised on the slot entity and the item that was ejected, after successfully ejecting.
     /// </summary>
     [ByRefEvent]
     public record struct ItemSlotEjectedEvent(EntityUid SlotEntity, EntityUid Item, EntityUid? User, ItemSlot Slot);
