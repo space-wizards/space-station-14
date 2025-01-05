@@ -51,6 +51,7 @@
   - type: StorageFill
     contents:
       - id: ClothingHeadHatHopcap
+      - id: ClothingHeadHatBeretHeadofPersonnelHarmony # Harmony Change
       - id: ClothingOuterWinterHoP
       - id: ClothingEyesGlasses
       - id: ClothingNeckCloakHop

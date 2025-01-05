@@ -40,6 +40,11 @@
   id: ClothingUniformJumpskirtHoPMessKitHarmony
   result: ClothingUniformJumpskirtHeadofPersonnelMessKitHarmony
 
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingHeadHatBeretHeadofPersonnelHarmony
+  result: ClothingHeadHatBeretHeadofPersonnelHarmony
+
 ## HoS
 - type: latheRecipe
   parent: BaseCommandHatRecipe
