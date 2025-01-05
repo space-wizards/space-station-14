@@ -304,7 +304,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             var ev = new ItemSlotInsertedEvent(uid, item, user, slot);
             RaiseLocalEvent(uid, ref ev);
-            RaiseLocalEvent(args.Used, ref ev);
+            RaiseLocalEvent(item, ref ev);
         }
 
         /// <summary>
