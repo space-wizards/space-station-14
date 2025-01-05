@@ -585,12 +585,11 @@
     - ProximitySensor
     - BorgModuleAdvancedCleaning
     - BorgModuleAdvancedTool
+    - BorgModuleAdvancedChemical
+    - BorgModuleAdvancedMining
     - BorgModuleGPS
-    - BorgModuleArtifact
-    - BorgModuleAnomaly
     - BorgModuleGardening
     - BorgModuleHarvesting
-    - BorgModuleAdvancedChemical
     - RipleyHarness
     - RipleyLArm
     - RipleyRArm

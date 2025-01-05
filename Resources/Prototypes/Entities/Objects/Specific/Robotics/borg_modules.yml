@@ -116,9 +116,9 @@
     - state: icon-cables
   - type: ItemBorgModule
     items:
-    - CableApcStackLingering10
-    - CableMVStackLingering10
-    - CableHVStackLingering10
+    - CableApcStackLingering0
+    - CableMVStackLingering0
+    - CableHVStackLingering0
     - Wirecutter
     - trayScanner
   - type: BorgModuleIcon
@@ -127,7 +127,8 @@
 - type: entity
   id: BorgModuleFireExtinguisher
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
-  name: fire extinguisher cyborg module
+  name: thruster cyborg module
+  description: NT assigned a team to design a jetpack for cyborg units, but they ran out of time and just rebranded a fire extingusher.
   components:
   - type: Sprite
     layers:
@@ -135,7 +136,7 @@
     - state: icon-fire-extinguisher
   - type: ItemBorgModule
     items:
-    - FireExtinguisher
+    - BorgFireExtinguisher
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: extinguisher-module }
 
@@ -143,6 +144,7 @@
   id: BorgModuleGPS
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
   name: GPS cyborg module
+  description: For cyborgs that keep getting lost.
   components:
   - type: Sprite
     layers:
@@ -157,24 +159,10 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: gps-module }
 
 - type: entity
-  id: BorgModuleRadiationDetection
-  parent: [ BaseBorgModule, BaseProviderBorgModule ]
-  name: radiation detection cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: generic
-    - state: icon-radiation
-  - type: ItemBorgModule
-    items:
-    - GeigerCounter
-  - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: geiger-module }
-
-- type: entity
   id: BorgModuleTool
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
   name: tool cyborg module
+  description: A essential part of every Cyborg's loadout, this module contains all the basic tools for repairing the station.
   components:
   - type: Sprite
     layers:
@@ -192,11 +180,10 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: tool-module }
 
 # cargo modules
-
 - type: entity
   id: BorgModuleAppraisal
   parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
-  name: cargo cyborg module
+  name: appraisal cyborg module
   components:
   - type: Sprite
     layers:
@@ -206,6 +193,7 @@
     items:
     - AppraisalTool
     - HandLabeler
+    - RadioHandheld
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: appraisal-module }
 
@@ -224,7 +212,24 @@
     - Shovel
     - MineralScannerUnpowered
     - BorgOreBag
-    - RadioHandheld
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
+
+- type: entity
+  id: BorgModuleAdvancedMining
+  parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
+  name: advanced mining cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: cargo
+    - state: icon-mining
+  - type: ItemBorgModule
+    items:
+    - MiningDrillDiamond
+    - Shovel
+    - AdvancedMineralScannerUnpowered
+    - OreBagOfHolding
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
 
@@ -263,7 +268,6 @@
     - WelderExperimental
     - Multitool
     - GasAnalyzer
-    - HolofanProjectorBorg
     - RemoteSignallerAdvanced
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-tools-module }
@@ -282,6 +286,7 @@
     - SheetSteelLingering0
     - SheetGlassLingering0
     - SheetRGlassLingering0
+    - SheetRPGlassLingering0
     - SheetPlasteelLingering0
     - PartRodMetalLingering0
     - FloorTileItemSteelLingering0
@@ -293,7 +298,7 @@
 - type: entity
   id: BorgModuleRCD
   parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
-  name: RCD cyborg module
+  name: engineering cyborg module
   components:
   - type: Sprite
     layers:
@@ -302,6 +307,11 @@
   - type: ItemBorgModule
     items:
     - RCDRecharging
+    - BorgFireExtinguisher
+    - HandheldGPSBasic
+    - HolofanProjectorBorg
+    - GeigerCounter
+
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: rcd-module }
 
@@ -354,6 +364,8 @@
     - AdvMopItem
     - BorgMegaSprayBottle
     - HoloprojectorBorg
+    - BorgDropper
+    - Beaker
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-cleaning-module }
 
@@ -385,19 +397,19 @@
     - state: icon-treatment
   - type: ItemBorgModule
     items:
-    - Gauze10Lingering
-    - Brutepack10Lingering
-    - Ointment10Lingering
-    - Bloodpack10Lingering
+    - Gauze0Lingering
+    - Brutepack0Lingering
+    - Ointment0Lingering
+    - Bloodpack0Lingering
     - RegenerativeMesh0Lingering
     - MedicatedSuture0Lingering
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: treatment-module }
 
 - type: entity
-  id: BorgModuleDefibrillator
+  id: BorgModuleRescue
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
-  name: defibrillator cyborg module
+  name: rescue cyborg module
   components:
   - type: Sprite
     layers:
@@ -405,8 +417,10 @@
     - state: icon-defib
   - type: ItemBorgModule
     items:
-    - DefibrillatorOneHandedUnpowered
     - HandheldHealthAnalyzerUnpowered
+    - DefibrillatorOneHandedUnpowered
+    - BorgFireExtinguisher
+    - HandheldGPSBasic
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: defib-module }
 
@@ -421,10 +435,18 @@
     - state: icon-chemist
   - type: ItemBorgModule
     items:
-    - Beaker
-    - Beaker
+    - HandheldHealthAnalyzerUnpowered
     - Syringe
     - Syringe
+    - BaseChemistryEmptyVial
+    - BaseChemistryEmptyVial
+    - BaseChemistryEmptyVial
+    - BaseChemistryEmptyVial
+    - BaseChemistryEmptyVial
+    - BaseChemistryEmptyVial
+    - BaseChemistryEmptyVial
+    - BaseChemistryEmptyVial
+    - BaseChemistryEmptyVial 
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-diagnosis-module }
 
@@ -439,11 +461,18 @@
     - state: icon-chemist
   - type: ItemBorgModule
     items:
-    - LargeBeaker
-    - LargeBeaker
-    - Syringe
+    - HandheldHealthAnalyzerUnpowered
     - BorgHypo
-
+    - BorgDropper
+    - Beaker
+    - Beaker
+    - Beaker
+    - BaseChemistryEmptyVial
+    - BaseChemistryEmptyVial
+    - BaseChemistryEmptyVial
+    - BaseChemistryEmptyVial
+    - BaseChemistryEmptyVial
+    - BaseChemistryEmptyVial 
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-diagnosis-module }
 
@@ -461,6 +490,11 @@
   - type: ItemBorgModule
     items:
     - NodeScanner
+    - FireExtinguisherMini
+    - GasAnalyzer
+    - BorgDropper
+    - BaseChemistryEmptyVial
+    - GeigerCounter
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: node-scanner-module }
 
@@ -475,10 +509,11 @@
     - state: icon-anomalies
   - type: ItemBorgModule
     items:
+    - RemoteSignaller
     - AnomalyScanner
     - AnomalyLocatorUnpowered
     - AnomalyLocatorWideUnpowered
-    - RemoteSignaller
+    - SheetRGlassLingering0
     - Multitool
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: anomaly-module }

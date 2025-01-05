@@ -313,9 +313,9 @@
     - Dropper
 
 - type: entity
-  name: borgdropper
+  name: hydraulic dropper
   parent: Dropper
-  description: Used to transfer small amounts of chemical solution between containers. Extended for use by medical borgs.
+  description: Used to transfer small amounts of chemical solution between containers. A hydraulic mechanism allows for a much higher capacity than standard models.
   id: BorgDropper
   components:
   - type: Sprite
@@ -328,7 +328,7 @@
   - type: SolutionContainerManager
     solutions:
       injector:
-        maxVol: 10
+        maxVol: 15
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi
 

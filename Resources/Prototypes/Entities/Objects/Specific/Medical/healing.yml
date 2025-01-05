@@ -56,13 +56,13 @@
     count: 1
 
 - type: entity
-  id: Ointment10Lingering
+  id: Ointment0Lingering
   parent: Ointment
-  suffix: 10, Lingering
+  suffix: 0, Lingering
   components:
   - type: Stack
     lingering: true
-    count: 10
+    count: 0
 
 - type: entity
   name: regenerative mesh
@@ -153,13 +153,13 @@
     count: 1
 
 - type: entity
-  id: Brutepack10Lingering
+  id: Brutepack0Lingering
   parent: Brutepack
-  suffix: 10, Lingering
+  suffix: 0, Lingering
   components:
   - type: Stack
     lingering: true
-    count: 10
+    count: 0
 
 - type: entity
   name: medicated suture
@@ -242,11 +242,12 @@
 
 - type: entity
   parent: Bloodpack
-  id: Bloodpack10Lingering
-  suffix: 10, Lingering
+  id: Bloodpack0Lingering
+  suffix: 0, Lingering
   components:
   - type: Stack
     lingering: true
+    count: 0
 
 - type: entity
   parent: BaseHealingItem
@@ -316,13 +317,13 @@
     count: 1
 
 - type: entity
-  id: Gauze10Lingering
+  id: Gauze0Lingering
   parent: Gauze
-  suffix: 10, Lingering
+  suffix: 0, Lingering
   components:
   - type: Stack
     lingering: true
-    count: 10
+    count: 0
 
 - type: entity
   name: aloe cream

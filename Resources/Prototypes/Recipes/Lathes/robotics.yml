@@ -136,15 +136,12 @@
   id: BorgModuleGPS
   result: BorgModuleGPS
 
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleRadiationDetection
-  result: BorgModuleRadiationDetection
+# Cargo Modules
 
 - type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleTool
-  result: BorgModuleTool
+  parent: BaseGoldBorgModuleRecipe
+  id: BorgModuleAdvancedMining
+  result: BorgModuleAdvancedMining
 
 # Engineering Modules
 
@@ -167,17 +164,7 @@
   id: BorgModuleAdvancedChemical
   result: BorgModuleAdvancedChemical
 
-# Science Modules
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleArtifact
-  result: BorgModuleArtifact
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleAnomaly
-  result: BorgModuleAnomaly
+# Science Modules (if we add a advanced sci module that requires crafting)
 
 # Service Modules
 

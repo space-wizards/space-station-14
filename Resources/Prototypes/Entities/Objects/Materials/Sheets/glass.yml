@@ -337,6 +337,15 @@
     count: 1
 
 - type: entity
+  parent: SheetRPGlass
+  id: SheetRPGlassLingering0
+  suffix: Lingering, 0
+  components:
+  - type: Stack
+    lingering: true
+    count: 0
+
+- type: entity
   parent: SheetGlassBase
   id: SheetUGlass
   name: uranium glass
