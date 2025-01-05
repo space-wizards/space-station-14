@@ -1,15 +1,12 @@
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.AlertLevel;
 
-[DataDefinition]
 [Prototype("alertLevels")]
-[Serializable, NetSerializable]
 public sealed partial class AlertLevelPrototype : IPrototype
 {
-    [IdDataField] public string ID { get; private set; } = default!;
+    [IdDataField] public string ID { get; } = default!;
 
     /// <summary>
     /// Dictionary of alert levels. Keyed by string - the string key is the most important
@@ -30,7 +27,6 @@ public sealed partial class AlertLevelPrototype : IPrototype
 /// the Levels field in AlertLevelPrototype.
 /// </summary>
 [DataDefinition]
-[Serializable, NetSerializable]
 public sealed partial class AlertLevelDetail
 {
     /// <summary>
