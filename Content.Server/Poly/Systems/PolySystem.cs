@@ -91,13 +91,7 @@ public sealed class PolySystem : EntitySystem
         if (!_configManager.GetCVar(CCVars.PolyPersistantMemory))
             return;
 
-        foreach (var (channel, sentence, guid) in component.Memory)
-        {
-            _ = _db.InsertPolyMemory(channel, sentence, guid); // Screams
-            _sawmill.Info($"Saved new memory: {sentence}");
-        }
-
-        _sawmill.Info("Memory saved to database");
+        _ = FlushMemory(component);
     }
 
     /// <summary>
@@ -169,6 +163,7 @@ public sealed class PolySystem : EntitySystem
             author);
     }
 
+    // I don't think I need this anymore now that memory gets saved on component shutdown
     private void OnRoundEnd()
     {
         if (!_configManager.GetCVar(CCVars.PolyPersistantMemory))
@@ -176,18 +171,7 @@ public sealed class PolySystem : EntitySystem
 
         foreach (var component in EntityQuery<PolyComponent>())
         {
-            if (component.SavedMemory)
-                return;
-
-            foreach (var (channel, sentence, guid) in component.Memory)
-            {
-                _ = _db.InsertPolyMemory(channel, sentence, guid); // Screams
-                _sawmill.Info($"Saved new memory: {sentence}");
-            }
-
-            _sawmill.Info("Memory saved to database");
-            component.Memory.Clear();
-            component.SavedMemory = true;
+            _ = FlushMemory(component);
         }
     }
 
@@ -273,7 +257,6 @@ public sealed class PolySystem : EntitySystem
         // 2. Speech buffer (Randomly pulled from the database)
         // 3. Random law generation
 
-        // If
         if (_robustRandom.Prob(0.5f) && poly.Comp.Memory.Count > 0)
         {
             var index = _robustRandom.Next(poly.Comp.Memory.Count);
@@ -281,7 +264,7 @@ public sealed class PolySystem : EntitySystem
             return sentence;
         }
 
-        if (_robustRandom.Prob(0.5f))
+        if (_robustRandom.Prob(0.5f) || poly.Comp.SavedMemory)
         {
             // Pick a random speech from the buffer
             if (poly.Comp.SpeechBuffer.Count > 0)
@@ -299,5 +282,22 @@ public sealed class PolySystem : EntitySystem
         var channel = _robustRandom.Pick(new[] {"Local", "Engineering", "Common"});
 
         return (channel, cleanedLaw, null);
+    }
+
+    private async Task FlushMemory(PolyComponent poly)
+    {
+        if (!_configManager.GetCVar(CCVars.PolyPersistantMemory))
+            return;
+
+        if (poly.Memory.Count == 0 || poly.SavedMemory)
+            return;
+
+        foreach (var (channel, sentence, guid) in poly.Memory)
+        {
+            await _db.InsertPolyMemory(channel, sentence, guid);
+        }
+        _sawmill.Info($"{poly.Memory.Count} memories saved");
+        poly.Memory.Clear();
+        poly.SavedMemory = true;
     }
 }
