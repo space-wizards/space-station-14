@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Allen
-  changes:
-  - message: Magboots and Science Magboots are no longer contraband. Advanced Magboots
-      and Blood-Red Magboots now have appropriate contraband types (Grand Theft and
-      Syndie Contraband respectively)
-    type: Fix
-  id: 7281
-  time: '2024-09-04T15:04:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30960
 - author: Blackern5000
   changes:
   - message: Zombie outbreaks are now SIGNIFICANTLY rarer
@@ -3930,3 +3921,12 @@
   id: 7780
   time: '2025-01-04T13:41:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32280
+- author: deltanedas
+  changes:
+  - message: Fixed wielding use delay not working properly.
+    type: Fix
+  - message: Fixed bow sprite not updating when wielded.
+    type: Fix
+  id: 7781
+  time: '2025-01-05T19:06:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32188
