@@ -64,9 +64,10 @@ public sealed class UplinkSystem : EntitySystem
     private void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2 balance, bool giveDiscounts)
     {
         if (!_mind.TryGetMind(user, out var mind, out var mindComp))
-            return;
+            mind = user; // Nothing without a mind should be setting up an uplink, but just in case
 
         var store = EnsureComp<StoreComponent>(uplink);
+
         store.AccountOwner = new Entity<MindComponent?>(mind, mindComp);
 
         store.Balance.Clear();
