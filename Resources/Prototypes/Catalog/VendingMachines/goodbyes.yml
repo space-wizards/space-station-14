@@ -134,7 +134,7 @@
   id: BodaGoodbyes
   values:
     prefix: thankyou-sovietsoda-
-    count: 3
+    count: 4
 
 - type: localizedDataset
   id: SyndieDrobeGoodbyes
