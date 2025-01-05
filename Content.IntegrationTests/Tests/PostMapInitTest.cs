@@ -69,7 +69,10 @@ namespace Content.IntegrationTests.Tests
 			"Atlas", // Update of Atlas. Back from the grave!
             "Gate",
             "Amber",
-            "Loop"
+            "Loop",
+            "Elkridge"
+
+           
         };
 
         /// <summary>

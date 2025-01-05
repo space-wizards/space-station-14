@@ -354,6 +354,8 @@
   description: An adorable stuffed toy that resembles a lizardperson of every color. You just might trip while staring at it...
   name: rainbow lizard plushie
   components:
+  - type: Sprite
+    state: rainbowlizardplush
   - type: PointLight
     radius: 1.5
     energy: 2
@@ -363,6 +365,14 @@
     clothingVisuals:
       head:
       - state: lizard-equipped-HELMET
+        shader: unshaded
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: rainbowlizardplush-inhand-left
+        shader: unshaded
+      right:
+      - state: rainbowlizardplush-inhand-right
         shader: unshaded
 
 - type: entity
