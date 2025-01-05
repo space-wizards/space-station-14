@@ -57,17 +57,18 @@ public sealed class PolySystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var bird in EntityQuery<PolyComponent>())
+        var query = EntityQueryEnumerator<PolyComponent>();
+        while (query.MoveNext(out var uid, out var bird))
         {
             if (_timing.CurTime < bird.BarkAccumulator + bird.BarkTime)
                 continue;
 
             bird.BarkAccumulator = _timing.CurTime;
 
-            SayRandomSentence(new Entity<PolyComponent>(bird.Owner, bird));
+            SayRandomSentence(new Entity<PolyComponent>(uid, bird));
 
             if (bird.SpeechBuffer.Count == 0 && _configManager.GetCVar(CCVars.PolyPersistantMemory))
-                _ = FillBuffer(new Entity<PolyComponent>(bird.Owner, bird)); // Uh uh!! Big hack cause idk what I'm doing
+                _ = FillBuffer(new Entity<PolyComponent>(uid, bird)); // Uh uh!! Big hack cause idk what I'm doing
         }
     }
 
@@ -218,7 +219,7 @@ public sealed class PolySystem : EntitySystem
             return;
 
         var sentences = await _db.PopulatePolyBuffer(); // This might not return anything if the database is empty, so TODO: add check for this
-        poly.Comp.SpeechBuffer = new(sentences.Select(s => (s.Channel, s.Phrase)));
+        poly.Comp.SpeechBuffer = [..sentences.Select(s => (s.Channel, s.Phrase))];
     }
 
     private void SayRandomSentence(Entity<PolyComponent> poly)
@@ -231,6 +232,7 @@ public sealed class PolySystem : EntitySystem
             transmitter.Channels.Contains(prototype.ID) &&
             poly.Comp.Headset.Valid)
         {
+            // TODO: Figure out a way to sync the transformed speech from chatSystem with radioSystem
             _chatSystem.TrySendInGameICMessage(poly.Owner, sentence, InGameICChatType.Whisper, ChatTransmitRange.Normal);
             _radioSystem.SendRadioMessage(poly.Owner, _chatSystem.TransformSpeech(poly.Owner, sentence), prototype, poly.Owner); // Poly the radio
             return;
