@@ -7,10 +7,10 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-ert-generic-shuttle-incoming #!!
+    startAnnouncement: true
     weight: 0 #  Admin only.
   - type: LoadMapRule
-    preloadedGrid: ShuttleERTMedSecLarge
+    mapPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTMedSecLarge.yml
 
 # Security
 
@@ -19,20 +19,20 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-ert-sec-shuttle-incoming #!!
+    startAnnouncement: true
     weight: 0 #  Admin only.
   - type: LoadMapRule
-    preloadedGrid: ShuttleERTSecMedium
+    mapPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTSecMedium.yml
 
 - type: entity
   id: ERTSecSmall
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-ert-sec-shuttle-incoming #!!
+    startAnnouncement: true
     weight: 0 #  Admin only.
   - type: LoadMapRule
-    preloadedGrid: ShuttleERTSecSmall
+    mapPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTSecSmall.yml
 
 # Medical
 
@@ -41,20 +41,20 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-ert-sec-shuttle-incoming #!!
+    startAnnouncement: true
     weight: 0 #  Admin only.
   - type: LoadMapRule
-    preloadedGrid: ShuttleERTMedMedium
+    mapPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTMedMedium.yml
 
 - type: entity
   id: ERTMedSmall
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-ert-med-shuttle-incoming #!!
+    startAnnouncement: true
     weight: 0 #  Admin only.
   - type: LoadMapRule
-    preloadedGrid: ShuttleERTMedSmall
+    mapPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTMedSmall.yml
 
 # Engineering
 
@@ -63,20 +63,20 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-ert-engi-shuttle-incoming #!!
+    startAnnouncement: true
     weight: 0 #  Admin only.
   - type: LoadMapRule
-    preloadedGrid: ShuttleERTEngiJaniMedium
+    mapPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTEngiJaniMedium.yml
 
 - type: entity
   id: ERTEngiSmall
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-ert-engi-shuttle-incoming #!!
+    startAnnouncement: true
     weight: 0 #  Admin only.
   - type: LoadMapRule
-    preloadedGrid: ShuttleERTEngiSmall
+    mapPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTEngiSmall.yml
 
 # Janitorial
 
@@ -85,7 +85,7 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: null # Just a janitor.
+    startAnnouncement: true
     weight: 0 #  Admin only.
   - type: LoadMapRule
-    preloadedGrid: ShuttleERTJaniSmall
+    mapPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTJaniSmall.yml
