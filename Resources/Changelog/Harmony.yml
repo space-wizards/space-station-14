@@ -800,3 +800,51 @@ Entries:
     changes:
     - type: Add
       message: Added poquito, the new station pet.
+  - id: 250
+    author: spanky-spanky
+    time: '2024-12-28T20:52:03.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/250
+    changes:
+    - type: Add
+      message: New visiting shuttle event "Syndicate Reinforcement."
+    - type: Remove
+      message: Removed Instigator from shuttle event pool.
+  - id: 261
+    author: DieselMohawk
+    time: '2024-12-30T19:13:14.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/261
+    changes:
+    - type: Tweak
+      message: Recolored Improvised Bolas
+  - id: 212
+    author: Jajsha
+    time: '2025-01-03T03:13:01.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/212
+    changes:
+    - type: Tweak
+      message: Modified medical fabricator inventory.
+    - type: Tweak
+      message: Jugs now fit in chemistry bags.
+    - type: Fix
+      message: Vials now fit in medical related containers.
+  - id: 259
+    author: Ermucat
+    time: '2025-01-03T04:12:38.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/259
+    changes:
+    - type: Fix
+      message: Theifs no longer have to steal animals that dont exist
+  - id: 269
+    author: MissKay1994
+    time: '2025-01-03T14:07:41.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/269
+    changes:
+    - type: Add
+      message: Added vox plushie to loadouts. Skreee!
+  - id: 256
+    author: BoskiYourk
+    time: '2025-01-03T14:15:34.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/256
+    changes:
+    - type: Tweak
+      message: Recolored the QM's winter coat and cloak.
