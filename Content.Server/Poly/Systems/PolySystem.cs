@@ -16,6 +16,7 @@ using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Radio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -37,6 +38,7 @@ public sealed class PolySystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
     private ISawmill _sawmill = default!;
     private readonly string _earSlot = SlotFlags.EARS.ToString().ToLower();
@@ -48,6 +50,7 @@ public sealed class PolySystem : EntitySystem
         SubscribeLocalEvent<PolyComponent, ClothingDidUnequippedEvent>(OnClothingDidUnequippedEvent);
         SubscribeLocalEvent<PolyComponent, MapInitEvent>(OnMapInit, after: [typeof(LoadoutSystem)]);
         SubscribeLocalEvent<PolyComponent, ListenEvent>(OnListen);
+        SubscribeLocalEvent<PolyComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
 
         _sawmill = _logManager.GetSawmill("polyparrot");
@@ -60,6 +63,10 @@ public sealed class PolySystem : EntitySystem
         var query = EntityQueryEnumerator<PolyComponent>();
         while (query.MoveNext(out var uid, out var bird))
         {
+            // Is Poly actually still alive???
+            if (_mobStateSystem.IsIncapacitated(uid))
+                continue;
+
             if (_timing.CurTime < bird.BarkAccumulator + bird.BarkTime)
                 continue;
 
@@ -76,6 +83,21 @@ public sealed class PolySystem : EntitySystem
     {
         if (ev.New == GameRunLevel.PostRound)
             OnRoundEnd();
+    }
+
+    private void OnComponentShutdown(EntityUid uid, PolyComponent component, ref ComponentShutdown args)
+    {
+        // Poly got fucking gibbed lmao
+        if (!_configManager.GetCVar(CCVars.PolyPersistantMemory))
+            return;
+
+        foreach (var (channel, sentence, guid) in component.Memory)
+        {
+            _ = _db.InsertPolyMemory(channel, sentence, guid); // Screams
+            _sawmill.Info($"Saved new memory: {sentence}");
+        }
+
+        _sawmill.Info("Memory saved to database");
     }
 
     /// <summary>
@@ -175,6 +197,9 @@ public sealed class PolySystem : EntitySystem
         string sentence,
         EntityUid author)
     {
+        if (_mobStateSystem.IsIncapacitated(poly.Owner))
+            return; // L bozo
+
         if (HasComp<PolyComponent>(author))
         {
             _sawmill.Debug("Poly can't learn from another Poly or itself!");
