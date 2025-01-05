@@ -155,6 +155,7 @@
   minLimit: 0
   loadouts:
   - HoPHead
+  - HoPBeretHarmony # Harmony
 
 - type: loadoutGroup
   id: HoPJumpsuit
@@ -705,7 +706,8 @@
   minLimit: 0
   loadouts:
   - ChiefEngineerHead
-  - ChiefEngineerBeret
+#  - ChiefEngineerBeret
+  - CEBeretHarmony # Harmony Change
 
 - type: loadoutGroup
   id: ChiefEngineerJumpsuit
@@ -840,7 +842,8 @@
   name: loadout-group-research-director-head
   minLimit: 0
   loadouts:
-  - ResearchDirectorBeret
+#  - ResearchDirectorBeret
+  - RDBeretHarmony # Harmony Change
 
 - type: loadoutGroup
   id: ResearchDirectorNeck
