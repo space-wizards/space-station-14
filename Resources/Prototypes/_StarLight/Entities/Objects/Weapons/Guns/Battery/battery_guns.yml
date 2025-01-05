@@ -31,7 +31,7 @@
   - type: MagazineVisuals
     magState: disable
     steps: 5
-    zeroVisible: false
+    zeroVisible: true
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisabler
     fireCost: 100
@@ -59,9 +59,17 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-unshaded-0
+    - state: disable
+      map: ["enum.FireModesLayers.FireMode"]
+    - state: disable-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Item
+    heldPrefix: disable4
+  - type: MagazineVisuals
+    magState: disable
+    steps: 5
+    zeroVisible: true
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisabler
     fireCost: 100
@@ -69,8 +77,14 @@
     fireModes:
     - proto: BulletDisabler
       fireCost: 100
+      visualState: disable
+      magState: disable
+      heldPrefix: disable4
     - proto: BulletLaser
       fireCost: 65
+      visualState: kill
+      magState: kill
+      heldPrefix: kill4
       
 - type: entity
   name: lr-30
@@ -153,7 +167,7 @@
   - type: MagazineVisuals
     magState: mag
     steps: 4
-    zeroVisible: false
+    zeroVisible: true
   - type: PointLight
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
