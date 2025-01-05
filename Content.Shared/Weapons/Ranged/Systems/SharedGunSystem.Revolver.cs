@@ -104,7 +104,9 @@ public partial class SharedGunSystem
         if (TryRevolverSpeedLoading(revolverUid, component, uid, user) ||
             TryRevolverInsertReload(revolverUid, component, uid, user))
         {
+            UpdateAmmoCount(revolverUid);
             UpdateRevolverAppearance(revolverUid, component);
+            Dirty(revolverUid, component);
             Audio.PlayPredicted(component.SoundInsert, revolverUid, user);
             Popup(Loc.GetString("gun-revolver-insert"), revolverUid, user);
             return true;
@@ -173,8 +175,6 @@ public partial class SharedGunSystem
             }
 
             DebugTools.Assert(ammo.Count == 0);
-            UpdateAmmoCount(revolverUid);
-            Dirty(revolverUid, component);
             return true;
         }
 
@@ -196,8 +196,6 @@ public partial class SharedGunSystem
             component.AmmoSlots[index] = uid;
             Containers.Insert(uid, component.AmmoContainer);
             SetChamber(index, component, uid);
-            UpdateAmmoCount(revolverUid);
-            Dirty(revolverUid, component);
             return true;
         }
 
