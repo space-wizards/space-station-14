@@ -856,8 +856,6 @@
         Burn: -900
         Airloss: -600
         Toxin: -600
-      types:
-        Structural: -200
 
 - type: artifactEffect
   id: EffectSuperHeat
@@ -889,7 +887,7 @@
       - Wall
     damage:
       types:
-        Structural: 75
+        Structural: 50
 
 - type: artifactEffect
   id: EffectPresentSpawn
