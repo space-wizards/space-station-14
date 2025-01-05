@@ -1,0 +1,12 @@
+﻿advertisement-robust-1 = I've got what you need!
+advertisement-robust-2 = Mmmmm, metallic!
+advertisement-robust-3 = Over 1 million drinks sold!
+advertisement-robust-4 = Take a look at my selection!
+advertisement-robust-5 = Hey you, have a drink!
+advertisement-robust-6 = Shamble on down to flavor town!
+advertisement-robust-7 = All our ingredients are secret!
+advertisement-robust-8 = Get your shamble on, here!
+thankyou-robust-1 = Keep it on the QT.
+thankyou-robust-2 = The good stuff!
+thankyou-robust-3 = Shh, it's a secret!
+thankyou-robust-4 = ~Shake me up some of that Shambler's Juice!~

@@ -1,12 +1,12 @@
 ﻿advertisement-cola-1 = Cola, in spaaace!
 advertisement-cola-2 = Space your thirst!
 advertisement-cola-3 = Over 1 million drinks sold!
-advertisement-cola-4 = Thirsty? Why not Space Cola?
-advertisement-cola-5 = Space cola: It's extraterrestrial!
+advertisement-cola-4 = Consistently Space Cola!
+advertisement-cola-5 = Space Cola: It's extraterrestrial!
 advertisement-cola-6 = Spessy the Space Cadet says "Drink up!"
 advertisement-cola-7 = 42% more sugar than competing brands!
 advertisement-cola-8 = Way better than Dr. Gibb!
 thankyou-cola-1 = Enjoy the sugar rush!
-thankyou-cola-2 = Enjoy your caffeine free beverage!
+thankyou-cola-2 = Welcome to the club Space Cadet!
 thankyou-cola-3 = I hope you like sugar!
 thankyou-cola-4 = Thirst spaced!

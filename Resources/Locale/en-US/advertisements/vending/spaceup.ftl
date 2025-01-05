@@ -1,0 +1,12 @@
+﻿advertisement-robust-1 = Invigorating!
+advertisement-robust-2 = Fresh and lean, no caffeine!
+advertisement-robust-3 = Over 1 million drinks sold!
+advertisement-robust-4 = Like a hull-breach in your mouth!
+advertisement-robust-5 = Decompress, have a Space-Up!
+advertisement-robust-6 = Send your taste buds to outer space!
+advertisement-robust-7 = Way more nicer than cola, it's Space-Up!
+advertisement-robust-8 = Crisp invigorating Space-Up!
+thankyou-robust-1 = Breach that can and enjoy!
+thankyou-robust-2 = Blow that thirst into space!
+thankyou-robust-3 = You've Space-Upped!
+thankyou-robust-4 = Enjoy the singular flavor!
