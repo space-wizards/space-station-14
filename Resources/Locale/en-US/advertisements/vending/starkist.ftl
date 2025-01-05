@@ -1,0 +1,12 @@
+﻿advertisement-robust-1 = Good pulsations!
+advertisement-robust-2 = It's orange flavored!
+advertisement-robust-3 = Over 1 million drinks sold!
+advertisement-robust-4 = Head for the stars!
+advertisement-robust-5 = Taste the stars!
+advertisement-robust-6 = Fun, radiation and Starkist!
+advertisement-robust-7 = The best orange drink in the sector!
+advertisement-robust-8 = Kiss the stars, buy Starkist!
+thankyou-robust-1 = Drinkin' the stars!
+thankyou-robust-2 = Kiss your thirst goodbye!
+thankyou-robust-3 = Enjoy the good pulsations!
+thankyou-robust-4 = Bask in the flavor!
