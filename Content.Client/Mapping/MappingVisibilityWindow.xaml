@@ -4,7 +4,7 @@
     Title="{Loc 'mapping-layers-window-title'}"
     Resizable="False"
     MinWidth="250">
-    <GridContainer Columns="1">
+    <BoxContainer Orientation="Vertical">
         <mapping:MappingLayerButton Name="Light" Text="{Loc 'mapping-layers-light'}" Access="Public"/>
         <mapping:MappingSubLayerButton Name="Fov" Text="{Loc 'mapping-layers-fov'}" Access="Public"/>
         <mapping:MappingSubLayerButton Name="Shadows" Text="{Loc 'mapping-layers-shadows'}" Access="Public"/>
@@ -17,5 +17,5 @@
         <mapping:MappingSubLayerButton Name="Cables" Text="{Loc 'mapping-layers-cables'}" Access="Public"/>
         <mapping:MappingSubLayerButton Name="Disposal" Text="{Loc 'mapping-layers-disposal'}" Access="Public"/>
         <mapping:MappingSubLayerButton Name="Atmos" Text="{Loc 'mapping-layers-atmos'}" Access="Public"/>
-    </GridContainer>
+    </BoxContainer>
 </DefaultWindow>

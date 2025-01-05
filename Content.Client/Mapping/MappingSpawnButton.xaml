@@ -5,9 +5,9 @@
         <Control>
             <Button Name="Button" Access="Public" ToggleMode="True" />
             <BoxContainer Orientation="Horizontal">
-                <LayeredTextureRect Name="Texture" Access="Public" SetSize="48 48"
+                <LayeredTextureRect Name="Texture" Access="Public" SetSize="46 46"
                                     HorizontalAlignment="Center" VerticalAlignment="Center"
-                                    Stretch="KeepAspectCentered" CanShrink="True" />
+                                    Stretch="Tile" Visible="False" Margin="1 1 0 0" RectClipContent="True" />
                 <Control SetSize="48 48" Access="Public" Name="CollapseButtonWrapper">
                     <Button Name="CollapseButton" Access="Public" Text="▶"
                             ToggleMode="True" SetSize="48 48" StyleClasses="OpenRight" />
