@@ -20,7 +20,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    heldPrefix: taser4
+    heldPrefix: disable4
   - type: Clothing
     quickEquip: false
     slots:
@@ -41,10 +41,12 @@
       fireCost: 100
       visualState: disable
       magState: disable
+      heldPrefix: disable4
     - proto: BulletAdvTaser
       fireCost: 250
       visualState: stun
       magState: stun
+      heldPrefix: stun4
 
 - type: entity
   name: energy gun
@@ -83,7 +85,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-      shader: unshaded
   - type: Item
     size: Huge
   - type: MagazineAmmoProvider
@@ -116,7 +117,7 @@
   - type: MagazineVisuals
     magState: mag
     steps: 6
-    zeroVisible: false
+    zeroVisible: true
   - type: Appearance
   
 - type: entity
