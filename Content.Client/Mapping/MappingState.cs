@@ -81,7 +81,7 @@ public sealed class MappingState : GameplayStateBase
     private MappingScreen Screen => (MappingScreen) UserInterfaceManager.ActiveScreen!;
     private MainViewport Viewport => UserInterfaceManager.ActiveScreen!.GetWidget<MainViewport>()!;
 
-    public CursorMeta Meta { get; set; }
+    public CursorMeta Meta { get; }
 
     public MappingState()
     {
@@ -219,7 +219,7 @@ public sealed class MappingState : GameplayStateBase
             Register(entity, entity.ID, entities);
         }
 
-        Screen.Entities.Sort(mappings, entities);
+        Sort(mappings, entities);
         Screen.Entities.UpdateVisible(entities, _allPrototypes.GetOrNew(typeof(EntityPrototype)));
         mappings.Clear();
 
@@ -229,7 +229,7 @@ public sealed class MappingState : GameplayStateBase
             Register(tile, tile.ID, tiles);
         }
 
-        Screen.Tiles.Sort(mappings, tiles);
+        Sort(mappings, tiles);
         Screen.Tiles.UpdateVisible(tiles, _allPrototypes.GetOrNew(typeof(ContentTileDefinition)));
         mappings.Clear();
 
@@ -240,7 +240,7 @@ public sealed class MappingState : GameplayStateBase
                 Register(decal, decal.ID, decals);
         }
 
-        Screen.Decals.Sort(mappings, decals);
+        Sort(mappings, decals);
         Screen.Decals.UpdateVisible(decals, _allPrototypes.GetOrNew(typeof(DecalPrototype)));
         mappings.Clear();
     }
@@ -366,6 +366,30 @@ public sealed class MappingState : GameplayStateBase
 
             return mapping;
         }
+    }
+
+    public void Sort(Dictionary<string, MappingPrototype> prototypes, MappingPrototype topLevel)
+    {
+        static int Compare(MappingPrototype a, MappingPrototype b)
+        {
+            return string.Compare(a.Name, b.Name, StringComparison.OrdinalIgnoreCase);
+        }
+
+        topLevel.Children ??= new List<MappingPrototype>();
+
+        foreach (var prototype in prototypes.Values)
+        {
+            if (prototype.Parents == null && prototype != topLevel)
+            {
+                prototype.Parents = new List<MappingPrototype> { topLevel };
+                topLevel.Children.Add(prototype);
+            }
+
+            prototype.Parents?.Sort(Compare);
+            prototype.Children?.Sort(Compare);
+        }
+
+        topLevel.Children.Sort(Compare);
     }
 
     private void Deselect()

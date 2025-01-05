@@ -83,7 +83,8 @@
                     <PanelContainer.PanelOverride>
                         <graphics:StyleBoxFlat BackgroundColor="#222222AA" />
                     </PanelContainer.PanelOverride>
-                    <mapping:MappingPrototypeList Name="Decals" Access="Public" VerticalExpand="True" Margin="1 5" />
+                    <mapping:MappingPrototypeList Name="Decals" Access="Public" VerticalExpand="True" Margin="1 5"
+                                                  Gallery="True"/>
                 </PanelContainer>
                 <controls:HLine Color="#404040" Thickness="2"/>
                 <BoxContainer Orientation="Horizontal">

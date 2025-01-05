@@ -22,6 +22,7 @@ public sealed partial class MappingPrototypeList : Control
     private readonly List<MappingPrototype> _search = new();
 
     public MappingSpawnButton? Selected;
+    public bool Gallery { get; set; }
     public Action<IPrototype, List<Texture>>? GetPrototypeData;
     public event Action<MappingPrototypeList, MappingSpawnButton, IPrototype?>? SelectionChanged;
 
@@ -75,6 +76,10 @@ public sealed partial class MappingPrototypeList : Control
 
         if (_insertTextures.Count > 0)
         {
+            button.Button.RemoveStyleClass("OpenBoth");
+            button.Button.AddStyleClass("OpenLeft");
+            button.CollapseButton.RemoveStyleClass("OpenRight");
+            button.CollapseButton.AddStyleClass("ButtonSquare");
             button.Texture.Textures.AddRange(_insertTextures);
             button.Texture.InvalidateMeasure();
         }
@@ -100,6 +105,8 @@ public sealed partial class MappingPrototypeList : Control
         }
         else
         {
+            if (Gallery)
+                button.Gallery();
             button.CollapseButtonWrapper.Visible = false;
             button.CollapseButton.Visible = false;
         }
@@ -196,11 +203,21 @@ public sealed partial class MappingPrototypeList : Control
     {
         if (button.CollapseButton.Pressed)
         {
+            if (Gallery)
+                button.ChildrenPrototypesGallery.MaxGridWidth = Width - button.ChildrenPrototypesGallery.Margin.Left;
+
             if (button.Prototype?.Children != null)
             {
                 foreach (var child in button.Prototype.Children)
                 {
-                    Insert(button.ChildrenPrototypes, child, true);
+                    if (child.Children == null && Gallery)
+                    {
+                        Insert(button.ChildrenPrototypesGallery, child, true);
+                    }
+                    else
+                    {
+                        Insert(button.ChildrenPrototypes, child, true);
+                    }
                 }
             }
 
@@ -209,6 +226,7 @@ public sealed partial class MappingPrototypeList : Control
         else
         {
             button.ChildrenPrototypes.DisposeAllChildren();
+            button.ChildrenPrototypesGallery.DisposeAllChildren();
             button.CollapseButton.Label.Text = "▶";
         }
     }
@@ -254,29 +272,5 @@ public sealed partial class MappingPrototypeList : Control
         PrototypeList.Visible = false;
         SearchList.Visible = true;
         Search(matches);
-    }
-
-    public void Sort(Dictionary<string, MappingPrototype> prototypes, MappingPrototype topLevel)
-    {
-        static int Compare(MappingPrototype a, MappingPrototype b)
-        {
-            return string.Compare(a.Name, b.Name, StringComparison.OrdinalIgnoreCase);
-        }
-
-        topLevel.Children ??= new List<MappingPrototype>();
-
-        foreach (var prototype in prototypes.Values)
-        {
-            if (prototype.Parents == null && prototype != topLevel)
-            {
-                prototype.Parents = new List<MappingPrototype> { topLevel };
-                topLevel.Children.Add(prototype);
-            }
-
-            prototype.Parents?.Sort(Compare);
-            prototype.Children?.Sort(Compare);
-        }
-
-        topLevel.Children.Sort(Compare);
     }
 }

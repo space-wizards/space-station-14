@@ -13,4 +13,15 @@ public sealed partial class MappingSpawnButton : Control
     {
         RobustXamlLoader.Load(this);
     }
+
+    public void Gallery()
+    {
+        ToolTip = Label.Text;
+        TooltipDelay = 0;
+        Name = string.Empty;
+        Label.Visible = false;
+        Button.AddStyleClass("ButtonSquare");
+        SetWidth = 48;
+        SetHeight = 48;
+    }
 }

@@ -3,14 +3,14 @@
     xmlns:mapping="clr-namespace:Content.Client.Mapping">
     <BoxContainer Orientation="Vertical">
         <Control>
-            <Button Name="Button" Access="Public" ToggleMode="True" StyleClasses="ButtonSquare" />
+            <Button Name="Button" Access="Public" ToggleMode="True" />
             <BoxContainer Orientation="Horizontal">
-                <LayeredTextureRect Name="Texture" Access="Public" MinSize="48 48"
+                <LayeredTextureRect Name="Texture" Access="Public" SetSize="48 48"
                                     HorizontalAlignment="Center" VerticalAlignment="Center"
                                     Stretch="KeepAspectCentered" CanShrink="True" />
                 <Control SetSize="48 48" Access="Public" Name="CollapseButtonWrapper">
                     <Button Name="CollapseButton" Access="Public" Text="▶"
-                            ToggleMode="True" StyleClasses="ButtonSquare" SetSize="48 48" />
+                            ToggleMode="True" SetSize="48 48" StyleClasses="OpenRight" />
                 </Control>
                 <Label Name="Label" Access="Public"
                        VAlign="Center"
@@ -22,5 +22,7 @@
         </Control>
         <BoxContainer Name="ChildrenPrototypes" Access="Public" Orientation="Vertical"
                       Margin="24 0 0 0" />
+        <GridContainer Name="ChildrenPrototypesGallery" Access="Public" Columns="10"
+                       Margin="24 0 0 0" />
     </BoxContainer>
 </mapping:MappingSpawnButton>
