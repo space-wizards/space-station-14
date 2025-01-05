@@ -1,0 +1,19 @@
+# Seclink
+- type: entity
+  id: StorePresetSeclink
+  abstract: true
+  components:
+  - type: Store
+    name: store-preset-name-seclink
+    categories:
+    - SeclinkBaton
+    - SeclinkDisabler
+    - SeclinkUtility
+    currencyWhitelist:
+    - BatonToken
+    - DisablerToken
+    - UtilityToken
+    balance:
+      BatonToken: 0
+      DisablerToken: 0
+      UtilityToken: 0

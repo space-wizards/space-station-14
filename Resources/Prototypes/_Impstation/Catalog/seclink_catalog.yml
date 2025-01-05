@@ -1,0 +1,32 @@
+#Baton Skins
+- type: listing
+  id: SeclinkBaton
+  name: seclink-stun-baton-name
+  description: seclink-stun-baton-desc
+  productEntity: Stunbaton
+  cost:
+    BatonToken: 1
+  categories:
+  - SeclinkBaton
+
+#Disabler Options
+- type: listing
+  id: SeclinkDisabler
+  name: seclink-disabler-name
+  description: seclink-disabler-desc
+  productEntity: WeaponDisabler
+  cost:
+    DisablerToken: 1
+  categories:
+  - SeclinkDisabler
+
+#Utility Options
+- type: listing
+  id: SeclinkCrowbar
+  name: seclink-crowbar-name
+  description: seclink-crowbar-desc
+  productEntity: Pribar
+  cost:
+    UtilityToken: 1
+  categories:
+  - SeclinkUtility
