@@ -524,6 +524,11 @@
   components:
   - type: VendingMachine
     pack: SpaceUpInventory
+  - type: Advertise
+    pack: SpaceUpAds
+  - type: SpeakOnUIClosed
+    pack: SpaceUpGoodbyes
+  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/spaceup.rsi
     layers:
@@ -569,6 +574,11 @@
   components:
   - type: VendingMachine
     pack: StarkistInventory
+  - type: Advertise
+    pack: StarkistAds
+  - type: SpeakOnUIClosed
+    pack: StarkistGoodbyes
+  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/starkist.rsi
     layers:
@@ -602,7 +612,9 @@
     ejectDelay: 1.9
     initialStockQuality: 0.33
   - type: Advertise
-    pack: RobustSoftdrinksAds
+    pack: ShamblerAds
+  - type: SpeakOnUIClosed
+    pack: ShamblerGoodbyes
   - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/shamblersjuice.rsi
@@ -627,7 +639,7 @@
   components:
   - type: VendingMachine
     pack: PwrGameInventory
-    dispenseOnHitChance: 0.25
+    dispenseOnHitChance: 0.35 # Power through with PWR Game!
     dispenseOnHitThreshold: 2
     offState: off
     brokenState: broken
