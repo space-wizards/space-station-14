@@ -80,3 +80,41 @@
           unshaded:
             True: { state: base-unshaded }
             False: { state: base-unshaded-off }
+            
+- type: entity
+  name: improvised grappling gun
+  parent: WeaponGrapplingGun
+  id: WeaponGrapplingGunImprovised
+  description: An improvised pneumatic cannon modified into a grappling gun using a plunger, a lot of wire, and a lot of hope.
+  components:
+    - type: GrapplingGun
+      reelRate: 1.25
+      cycleSound:
+        path: /Audio/Weapons/pop.ogg
+        params:
+          pitch: .75
+      ropeSprite: _Impstation/Objects/Weapons/Guns/Launchers/grappling_gun_improvised.rsi/rope.png
+    - type: Gun
+      soundGunshot: /Audio/Effects/thunk.ogg
+      fireRate: 0.5
+      clumsyProof: true
+    - type: BasicEntityAmmoProvider
+      proto: GrapplingHookImprovised
+      capacity: 1
+    - type: Sprite
+      sprite: _Impstation/Objects/Weapons/Guns/Launchers/grappling_gun_improvised.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          visible: true
+    - type: Item
+      size: Normal
+    - type: Clothing
+      sprite: _Impstation/Objects/Weapons/Guns/Launchers/grappling_gun_improvised.rsi
+      quickEquip: false
+      slots:
+      - Back
+    - type: Construction
+      graph: GrapplingGunImprovised
+      node: improvisedgrapple

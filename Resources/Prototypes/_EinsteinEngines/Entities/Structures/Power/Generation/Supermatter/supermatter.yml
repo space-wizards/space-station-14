@@ -6,21 +6,32 @@
     mode: SnapgridCenter
   components:
     - type: Supermatter
+    - type: AtmosDevice
     - type: RadiationSource
     - type: AmbientSound
-      range: 5
-      volume: 0
+      range: 20
+      volume: -10
       sound:
         path: /Audio/_EinsteinEngines/Supermatter/calm.ogg
+    - type: EmitSoundOnTrigger
+      sound:
+        collection: SupermatterAccentNormal
     - type: Physics
     - type: Speech
-      speechSounds: Pai
+      speechSounds: null
+      speechVerb: Supermatter
+      suffixSpeechVerbs:
+        chat-speech-verb-suffix-exclamation-strong: Supermatter
+        chat-speech-verb-suffix-exclamation: Supermatter
+        chat-speech-verb-suffix-question: Supermatter
+        chat-speech-verb-suffix-stutter: Supermatter
+        chat-speech-verb-suffix-mumble: Supermatter
     - type: Fixtures
       fixtures:
         fix1:
           shape:
             !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.25,0.25"
+            bounds: "-0.25,-0.25,0.25,0.4"
           mask:
             - Impassable
             - MidImpassable
@@ -41,9 +52,10 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Sprite
-      drawdepth: WallMountedItems
       sprite: _EinsteinEngines/Structures/Power/Generation/Supermatter/supermatter.rsi
       state: supermatter
+      drawdepth: Mobs
+      offset: -0.015,0.295
     - type: Icon
       sprite: _EinsteinEngines/Structures/Power/Generation/Supermatter/supermatter.rsi
       state: supermatter

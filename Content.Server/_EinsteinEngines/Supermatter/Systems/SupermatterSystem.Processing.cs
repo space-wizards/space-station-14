@@ -1,11 +1,17 @@
 using System.Linq;
 using System.Text;
 using Content.Server.Chat.Systems;
+using Content.Server.Explosion.EntitySystems;
+using Content.Server.Sound.Components;
 using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
+using Content.Shared.Popups;
 using Content.Shared.Radiation.Components;
+using Robust.Shared.Configuration;
+using Robust.Shared.Player;
+using Robust.Shared.Random;
 
 namespace Content.Server._EinsteinEngines.Supermatter.Systems;
 
@@ -97,11 +103,16 @@ public sealed partial class SupermatterSystem
 
         // Irradiate stuff
         if (TryComp<RadiationSourceComponent>(uid, out var rad))
+        {
             rad.Intensity =
-                sm.Power
+                _config.GetCVar(CCVars.SupermatterRadsBase) +
+                (sm.Power
                 * Math.Max(0, 1f + transmissionBonus / 10f)
                 * 0.003f
-                * _config.GetCVar(CCVars.SupermatterRadsModifier);
+                * _config.GetCVar(CCVars.SupermatterRadsModifier));
+
+            rad.Slope = Math.Clamp(rad.Intensity / 15, 0.2f, 1f);
+        }
 
         // Power * 0.55 * 0.8~1
         var energy = sm.Power * sm.ReactionPowerModifier;
@@ -131,10 +142,35 @@ public sealed partial class SupermatterSystem
     /// </summary>
     private void SupermatterZap(EntityUid uid, SupermatterComponent sm)
     {
-        // Divide power by its' threshold to get a value from 0-1, then multiply by the amount of possible lightnings
-        var zapPower = sm.Power / sm.PowerPenaltyThreshold * sm.LightningPrototypes.Length;
-        var zapPowerNorm = (int) Math.Clamp(zapPower, 0, sm.LightningPrototypes.Length - 1);
-        _lightning.ShootRandomLightnings(uid, 3.5f, sm.Power > sm.PowerPenaltyThreshold ? 3 : 1, sm.LightningPrototypes[zapPowerNorm]);
+        var zapPower = 0;
+        var zapCount = 0;
+        var zapRange = Math.Clamp(sm.Power / 1000, 2, 7);
+
+        // fuck this
+        if (_random.Prob(0.05f))
+        {
+            zapCount += 1;
+        }
+
+        if (sm.Power >= sm.PowerPenaltyThreshold)
+        {
+            zapCount += 2;
+        }
+
+        if (sm.Power >= sm.SeverePowerPenaltyThreshold)
+        {
+            zapPower = 1;
+            zapCount++;
+        }
+
+        if (sm.Power >= sm.CriticalPowerPenaltyThreshold)
+        {
+            zapPower = 2;
+            zapCount++;
+        }
+
+        if (zapCount >= 1)
+            _lightning.ShootRandomLightnings(uid, zapRange, zapCount, sm.LightningPrototypes[zapPower], hitCoordsChance: sm.ZapHitCoordinatesChance);
     }
 
     /// <summary>
@@ -228,16 +264,21 @@ public sealed partial class SupermatterSystem
     /// </summary>
     private void AnnounceCoreDamage(EntityUid uid, SupermatterComponent sm)
     {
+        // If undamaged, no need to announce anything
+        if (sm.Damage == 0)
+            return;
+
         var message = string.Empty;
         var global = false;
 
         var integrity = GetIntegrity(sm).ToString("0.00");
 
         // Special cases
-        if (sm.Damage < sm.DamageDelaminationPoint && sm.Delamming)
+        if (sm.Damage < sm.DamageDelaminationPoint && sm.DelamAnnounced)
         {
             message = Loc.GetString("supermatter-delam-cancel", ("integrity", integrity));
             sm.DelamAnnounced = false;
+            sm.YellTimer = TimeSpan.FromSeconds(_config.GetCVar(CCVars.SupermatterYellTimer));
             global = true;
         }
 
@@ -254,18 +295,48 @@ public sealed partial class SupermatterSystem
                 default:                loc = "supermatter-delam-explosion"; break;
             }
 
-            var station = _station.GetOwningStation(uid);
-            if (station != null)
-                _alert.SetLevel((EntityUid) station, sm.AlertCodeDeltaId, true, true, true, false);
-
             sb.AppendLine(Loc.GetString(loc));
-            sb.AppendLine(Loc.GetString("supermatter-seconds-before-delam", ("seconds", sm.DelamTimer)));
+            sb.Append(Loc.GetString("supermatter-seconds-before-delam", ("seconds", sm.DelamTimer)));
 
             message = sb.ToString();
             global = true;
             sm.DelamAnnounced = true;
+            sm.YellTimer = TimeSpan.FromSeconds(sm.DelamTimer / 2);
 
-            SendSupermatterAnnouncement(uid, message, global);
+            SendSupermatterAnnouncement(uid, sm, message, global);
+            return;
+        }
+
+        // Only announce every YellTimer seconds
+        if (_timing.CurTime < sm.YellLast + sm.YellTimer)
+            return;
+
+        if (sm.Delamming && sm.DelamAnnounced)
+        {
+            var seconds = Math.Ceiling(sm.DelamEndTime.TotalSeconds - _timing.CurTime.TotalSeconds);
+
+            if (seconds <= 0)
+                return;
+
+            var loc = seconds switch
+            {
+                >  5 => "supermatter-seconds-before-delam-countdown",
+                <= 5 => "supermatter-seconds-before-delam-imminent",
+                _ => String.Empty
+            };
+
+            sm.YellTimer = seconds switch
+            {
+                > 30 => TimeSpan.FromSeconds(10),
+                >  5 => TimeSpan.FromSeconds(5),
+                <= 5 => TimeSpan.FromSeconds(1),
+                _ => TimeSpan.FromSeconds(_config.GetCVar(CCVars.SupermatterYellTimer))
+            };
+
+            message = Loc.GetString(loc, ("seconds", seconds));
+            global = true;
+
+            SendSupermatterAnnouncement(uid, sm, message, global);
             return;
         }
 
@@ -287,21 +358,24 @@ public sealed partial class SupermatterSystem
             }
         }
 
-        SendSupermatterAnnouncement(uid, message, global);
+        SendSupermatterAnnouncement(uid, sm, message, global);
     }
 
-    /// <param name="global">If true, sends a station announcement</param>
+    /// <param name="global">If true, sends the message to the common radio</param>
     /// <param name="customSender">Localisation string for a custom announcer name</param>
-    public void SendSupermatterAnnouncement(EntityUid uid, string message, bool global = false, string? customSender = null)
+    public void SendSupermatterAnnouncement(EntityUid uid, SupermatterComponent sm, string message, bool global = false)
     {
-        if (global)
-        {
-            var sender = Loc.GetString(customSender != null ? customSender : "supermatter-announcer");
-            _chat.DispatchStationAnnouncement(uid, message, sender, colorOverride: Color.Yellow);
+        if (message == String.Empty)
             return;
-        }
 
+        var channel = sm.Channel;
+
+        if (global)
+            channel = sm.ChannelGlobal;
+
+        sm.YellLast = _timing.CurTime;
         _chat.TrySendInGameICMessage(uid, message, InGameICChatType.Speak, hideChat: false, checkRadioPrefix: true);
+        _radio.SendRadioMessage(uid, message, channel, uid);
     }
 
     /// <summary>
@@ -356,6 +430,7 @@ public sealed partial class SupermatterSystem
         if (!sm.Delamming)
         {
             sm.Delamming = true;
+            sm.DelamEndTime = _timing.CurTime + TimeSpan.FromSeconds(sm.DelamTimer);
             AnnounceCoreDamage(uid, sm);
         }
 
@@ -365,10 +440,22 @@ public sealed partial class SupermatterSystem
             AnnounceCoreDamage(uid, sm);
         }
 
-        sm.DelamTimerAccumulator++;
-
-        if (sm.DelamTimerAccumulator < sm.DelamTimer)
+        if (_timing.CurTime < sm.DelamEndTime)
             return;
+
+        var smTransform = Transform(uid);
+
+        foreach (var pSession in Filter.GetAllPlayers())
+        {
+            var pEntity = pSession.AttachedEntity;
+
+            if (pEntity != null
+                && TryComp<TransformComponent>(pEntity, out var pTransform)
+                && pTransform.MapID == smTransform.MapID)
+                _popup.PopupEntity(Loc.GetString("supermatter-delam-player"), pEntity.Value, pEntity.Value, PopupType.MediumCaution);
+        }
+        
+        _audio.PlayGlobal(sm.DistortSound, Filter.BroadcastMap(Transform(uid).MapID), true);
 
         switch (sm.PreferredDelamType)
         {
@@ -400,13 +487,48 @@ public sealed partial class SupermatterSystem
         if (ambient == null)
             return;
 
-        if (sm.Delamming && sm.CurrentSoundLoop != sm.DelamSound)
+        var volume = Math.Clamp((sm.Power / 50) - 5, -5, 5);
+
+        _ambient.SetVolume(uid, volume);
+
+        if (sm.Damage >= sm.DamageDelamAlertPoint && sm.CurrentSoundLoop != sm.DelamSound)
             sm.CurrentSoundLoop = sm.DelamSound;
 
-        else if (!sm.Delamming && sm.CurrentSoundLoop != sm.CalmSound)
+        else if (sm.Damage < sm.DamageDelamAlertPoint && sm.CurrentSoundLoop != sm.CalmSound)
             sm.CurrentSoundLoop = sm.CalmSound;
 
         if (ambient.Sound != sm.CurrentSoundLoop)
             _ambient.SetSound(uid, sm.CurrentSoundLoop, ambient);
+    }
+
+    /// <summary>
+    ///     Plays normal/delam sounds at a rate determined by power and damage
+    /// </summary>
+    private void HandleAccent(EntityUid uid, SupermatterComponent sm)
+    {
+        var emit = Comp<EmitSoundOnTriggerComponent>(uid);
+
+        if (emit == null)
+            return;
+
+        if (sm.AccentLastTime >= _timing.CurTime || !_random.Prob(0.05f))
+            return;
+
+        var aggression = Math.Min((sm.Damage / 800) * (sm.Power / 2500), 1) * 100;
+        var nextSound = Math.Max(Math.Round((100 - aggression) * 5), sm.AccentMinCooldown);
+
+        if (sm.AccentLastTime + TimeSpan.FromSeconds(nextSound) > _timing.CurTime)
+            return;
+
+        if (sm.Damage >= sm.DamageDelamAlertPoint && emit.Sound != sm.DelamAccent)
+            emit.Sound = sm.DelamAccent;
+
+        else if (sm.Damage < sm.DamageDelamAlertPoint && emit.Sound != sm.CalmAccent)
+            emit.Sound = sm.CalmAccent;
+
+        sm.AccentLastTime = _timing.CurTime;
+
+        var ev = new TriggerEvent(uid);
+        RaiseLocalEvent(uid, ev);
     }
 }

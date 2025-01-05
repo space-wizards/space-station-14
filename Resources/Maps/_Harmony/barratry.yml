@@ -44175,6 +44175,13 @@ entities:
     - type: Transform
       pos: -4.5,25.5
       parent: 1
+- proto: ChemMasterMachineCircuitboard
+  entities:
+  - uid: 9735
+    components:
+    - type: Transform
+      pos: -27.648325,35.364082
+      parent: 1
 - proto: ChessBoard
   entities:
   - uid: 345
@@ -48451,6 +48458,13 @@ entities:
       text: AI Upload
     - type: WarpPoint
       location: AI Upload
+  - uid: 16667
+    components:
+    - type: Transform
+      pos: -52.5,-2.5
+      parent: 1
+    - type: NavMapBeacon
+      text: Newsroom
 - proto: DefaultStationBeaconAISatellite
   entities:
   - uid: 1451
@@ -52258,21 +52272,6 @@ entities:
       parent: 1
 - proto: DrinkBottleBeer
   entities:
-  - uid: 9735
-    components:
-    - type: Transform
-      pos: -27.588842,35.58307
-      parent: 1
-  - uid: 9737
-    components:
-    - type: Transform
-      pos: -27.416967,35.64557
-      parent: 1
-  - uid: 9738
-    components:
-    - type: Transform
-      pos: -27.229467,35.567444
-      parent: 1
   - uid: 10538
     components:
     - type: Transform
@@ -52614,13 +52613,6 @@ entities:
     components:
     - type: Transform
       pos: -4.4271035,21.406034
-      parent: 1
-- proto: DungeonMasterCircuitBoard
-  entities:
-  - uid: 11876
-    components:
-    - type: Transform
-      pos: 19.464724,16.583416
       parent: 1
 - proto: ElectricGuitarInstrument
   entities:
@@ -56331,41 +56323,33 @@ entities:
       parent: 1
     - type: Fixtures
       fixtures: {}
-- proto: FloraTree01
-  entities:
-  - uid: 5652
-    components:
-    - type: Transform
-      pos: -31.673817,19.688118
-      parent: 1
-  - uid: 7525
-    components:
-    - type: Transform
-      pos: -11.963879,39.845062
-      parent: 1
-- proto: FloraTree02
-  entities:
-  - uid: 7523
-    components:
-    - type: Transform
-      pos: -12.854504,35.595062
-      parent: 1
-- proto: FloraTree03
+- proto: FloraTree
   entities:
   - uid: 5651
     components:
     - type: Transform
       pos: -34.080067,20.500618
       parent: 1
-- proto: FloraTree04
-  entities:
+  - uid: 5652
+    components:
+    - type: Transform
+      pos: -31.673817,19.688118
+      parent: 1
   - uid: 5653
     components:
     - type: Transform
       pos: -33.986317,15.672493
       parent: 1
-- proto: FloraTree05
-  entities:
+  - uid: 7523
+    components:
+    - type: Transform
+      pos: -12.854504,35.595062
+      parent: 1
+  - uid: 7525
+    components:
+    - type: Transform
+      pos: -11.963879,39.845062
+      parent: 1
   - uid: 7526
     components:
     - type: Transform
@@ -56569,6 +56553,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: GameMasterCircuitBoard
+  entities:
+  - uid: 11876
+    components:
+    - type: Transform
+      pos: 19.464724,16.583416
+      parent: 1
 - proto: GasAnalyzer
   entities:
   - uid: 15550
@@ -92927,6 +92918,11 @@ entities:
       parent: 1
 - proto: Screwdriver
   entities:
+  - uid: 9738
+    components:
+    - type: Transform
+      pos: -27.492075,35.489082
+      parent: 1
   - uid: 10019
     components:
     - type: Transform
@@ -114655,6 +114651,11 @@ entities:
     components:
     - type: Transform
       pos: -24.486898,29.543127
+      parent: 1
+  - uid: 9737
+    components:
+    - type: Transform
+      pos: -27.429575,35.504707
       parent: 1
 - proto: Zipties
   entities:

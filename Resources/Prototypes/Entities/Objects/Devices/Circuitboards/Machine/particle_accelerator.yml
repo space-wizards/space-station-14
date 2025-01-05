@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: MachineParticleAcceleratorEndCapCircuitboard
-  parent: BaseMachineCircuitboard
+  parent: [ BaseMachineCircuitboard, BaseEngineeringContraband ]
   name: PA end cap board
   description: A machine board for a particle accelerator end cap.
   components:
@@ -14,7 +14,7 @@
 
 - type: entity
   id: MachineParticleAcceleratorFuelChamberCircuitboard
-  parent: BaseMachineCircuitboard
+  parent: [ BaseMachineCircuitboard, BaseEngineeringContraband ]
   name: PA fuel chamber board
   description: A machine board for a particle accelerator fuel chamber.
   components:
@@ -32,7 +32,7 @@
 
 - type: entity
   id: MachineParticleAcceleratorPowerBoxCircuitboard
-  parent: BaseMachineCircuitboard
+  parent: [ BaseMachineCircuitboard, BaseEngineeringContraband ]
   name: PA power box board
   description: A machine board for a particle accelerator power box.
   components:
@@ -48,7 +48,7 @@
 
 - type: entity
   id: MachineParticleAcceleratorEmitterStarboardCircuitboard
-  parent: BaseMachineCircuitboard
+  parent: [ BaseMachineCircuitboard, BaseEngineeringContraband ]
   name: PA starboard emitter board
   description: A machine board for a particle accelerator left emitter.
   components:
@@ -62,7 +62,7 @@
 
 - type: entity
   id: MachineParticleAcceleratorEmitterForeCircuitboard
-  parent: BaseMachineCircuitboard
+  parent: [ BaseMachineCircuitboard, BaseEngineeringContraband ]
   name: PA fore emitter board
   description: A machine board for a particle accelerator center emitter.
   components:
@@ -76,7 +76,7 @@
 
 - type: entity
   id: MachineParticleAcceleratorEmitterPortCircuitboard
-  parent: BaseMachineCircuitboard
+  parent: [ BaseMachineCircuitboard, BaseEngineeringContraband ]
   name: PA port emitter board
   description: A machine board for a particle accelerator right emitter.
   components:

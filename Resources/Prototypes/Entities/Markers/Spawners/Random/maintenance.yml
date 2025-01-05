@@ -453,6 +453,7 @@
       - id: RifleStock
       - id: ModularReceiver
       - id: HydroponicsToolScythe
+      - id: WeaponPistolZipper
     # Rare Group
     - !type:GroupSelector
       weight: 5
@@ -463,7 +464,6 @@
       - id: ClothingMaskMuzzle
       - id: ClothingMaskGasSecurity
       - id: ShardGlass
-      - id: WeaponPistolZipper
         weight: 2
       - id: Syringe
       - id: Mousetrap

@@ -133,7 +133,6 @@
     solution: food
   - type: Extractable
     grindableSolutionName: food
-  - type: SupermatterImmune
 
 - type: entity
   parent: Ash

@@ -107,3 +107,8 @@
   id: medium
   flavorType: Complex
   description: flavor-complex-medium
+  
+- type: flavor
+  id: rodent
+  flavorType: Complex
+  description: flavor-complex-rodent

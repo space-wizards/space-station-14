@@ -57,5 +57,8 @@ ghost-role-information-apid-doctor-description = A Beefolk medical doctor, calle
 ghost-role-information-apid-engineer-name = Apid Engineer
 ghost-role-information-apid-engineer-description = A Beefolk engineer, called in as backup to help a crew in need.
 
+ghost-role-information-apid-beert-name = Apid Emergency Responder
+ghost-role-information-apid-beert-description = A Beefolk emergency responder, called in as backup to help a crew in need.
+
 ghost-role-information-apid-name = Apid
 ghost-role-information-apid-description = A Beefolk worker, called in as backup to help a crew in need.

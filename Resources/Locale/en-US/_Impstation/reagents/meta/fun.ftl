@@ -15,3 +15,6 @@ reagent-desc-holium = An impossibly compressed liquid. It feels as though it cou
 
 reagent-name-medium = medium
 reagent-desc-medium = An alchemical medium to the afterlife.
+
+reagent-name-mouse-bites = mouse bites
+reagent-desc-mouse-bites = The patient needs mouse bites to live

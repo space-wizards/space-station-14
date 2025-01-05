@@ -1,0 +1,36 @@
+- type: constructionGraph
+  id: GrapplingGunImprovised
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: improvisedgrapple
+      steps:
+      - tag: Pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+        name: a pipe
+      - tag: Handcuffs
+        icon:
+          sprite: Objects/Misc/cablecuffs.rsi
+          state: cuff
+          color: red
+        name: cuffs
+      - tag: Plunger
+        icon:
+          sprite: Objects/Specific/Janitorial/plunger.rsi
+          state: plunger
+        name: a plunger
+      - tag: GasTank
+        icon:
+          sprite: Objects/Tanks/generic.rsi
+          state: icon
+        name: any air tank
+      - material: Cable
+        amount: 15
+      - material: Steel
+        amount: 6
+        doAfter: 10
+  - node: improvisedgrapple
+    entity: WeaponGrapplingGunImprovised
