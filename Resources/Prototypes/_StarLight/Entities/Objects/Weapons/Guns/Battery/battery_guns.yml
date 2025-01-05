@@ -102,8 +102,6 @@
   - type: Item
     size: Huge
   - type: MagazineAmmoProvider
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
   - type: ItemSlots
     slots:
       gun_magazine:
