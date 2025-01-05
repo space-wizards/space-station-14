@@ -99,7 +99,22 @@ public partial class SharedGunSystem
         if (_whitelistSystem.IsWhitelistFail(component.Whitelist, uid))
             return false;
 
-        // If it's a speedloader try to get ammo from it.
+        // First, check if it's a speedloader and try to get ammo from it.
+        // Otherwise, try to insert the entity directly.
+        if (TryRevolverSpeedLoading(revolverUid, component, uid, user) ||
+            TryRevolverInsertReload(revolverUid, component, uid, user))
+        {
+            UpdateRevolverAppearance(revolverUid, component);
+            Audio.PlayPredicted(component.SoundInsert, revolverUid, user);
+            Popup(Loc.GetString("gun-revolver-insert"), revolverUid, user);
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool TryRevolverSpeedLoading(EntityUid revolverUid, RevolverAmmoProviderComponent component, EntityUid uid, EntityUid? user)
+    {
         if (EntityManager.HasComponent<SpeedLoaderComponent>(uid))
         {
             var freeSlots = 0;
@@ -158,16 +173,16 @@ public partial class SharedGunSystem
             }
 
             DebugTools.Assert(ammo.Count == 0);
-            UpdateRevolverAppearance(revolverUid, component);
             UpdateAmmoCount(revolverUid);
             Dirty(revolverUid, component);
-
-            Audio.PlayPredicted(component.SoundInsert, revolverUid, user);
-            Popup(Loc.GetString("gun-revolver-insert"), revolverUid, user);
             return true;
         }
 
-        // Try to insert the entity directly.
+        return false;
+    }
+
+    private bool TryRevolverInsertReload(EntityUid revolverUid, RevolverAmmoProviderComponent component, EntityUid uid,  EntityUid? user)
+    {
         for (var i = 0; i < component.Capacity; i++)
         {
             var index = (component.CurrentIndex + i) % component.Capacity;
@@ -181,15 +196,11 @@ public partial class SharedGunSystem
             component.AmmoSlots[index] = uid;
             Containers.Insert(uid, component.AmmoContainer);
             SetChamber(index, component, uid);
-            Audio.PlayPredicted(component.SoundInsert, revolverUid, user);
-            Popup(Loc.GetString("gun-revolver-insert"), revolverUid, user);
-            UpdateRevolverAppearance(revolverUid, component);
             UpdateAmmoCount(revolverUid);
             Dirty(revolverUid, component);
             return true;
         }
 
-        Popup(Loc.GetString("gun-revolver-full"), revolverUid, user);
         return false;
     }
 
