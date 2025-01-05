@@ -225,20 +225,16 @@ public sealed class PolySystem : EntitySystem
     {
         var (channel, sentence, _) = PickRandomSentence(poly);
 
-        // If the channel is not local, try to resolve the prototype
-        _sawmill.Debug($"Channel is {channel}");
+        // If Poly is unable to transmit on the requested channel, the message just gets thrown into local.
         if (_prototypeManager.TryIndex<RadioChannelPrototype>(channel, out var prototype) &&
             TryComp<ActiveRadioComponent>(poly.Owner, out var transmitter) &&
             transmitter.Channels.Contains(prototype.ID) &&
             poly.Comp.Headset.Valid)
         {
-            _sawmill.Info($"Poly said on radio: {sentence}");
             _chatSystem.TrySendInGameICMessage(poly.Owner, sentence, InGameICChatType.Whisper, ChatTransmitRange.Normal);
-            _radioSystem.SendRadioMessage(poly.Owner, sentence , prototype, poly.Owner); // Poly the radio
+            _radioSystem.SendRadioMessage(poly.Owner, _chatSystem.TransformSpeech(poly.Owner, sentence), prototype, poly.Owner); // Poly the radio
             return;
         }
-
-        _sawmill.Info($"Poly said local: {sentence}");
 
         _chatSystem.TrySendInGameICMessage(poly.Owner, sentence, InGameICChatType.Speak, ChatTransmitRange.Normal);
     }
@@ -272,8 +268,7 @@ public sealed class PolySystem : EntitySystem
 
         // TODO: Replace with localized random string, probably from SS13 Poly
         var law = _ionStormSystem.GenerateLaw().ToLower();
-        var cleanedLaw = _chatSystem.TransformSpeech(poly.Owner, law);
-        cleanedLaw = _chatSystem.SanitizeInGameICMessage(poly.Owner, cleanedLaw, out _);
+        var cleanedLaw = _chatSystem.SanitizeInGameICMessage(poly.Owner, law, out _);
         var channel = _robustRandom.Pick(new[] {"Local", "Engineering", "Common"});
 
         return (channel, cleanedLaw, null);
