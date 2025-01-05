@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Zombie outbreaks are now SIGNIFICANTLY rarer
-    type: Tweak
-  id: 7282
-  time: '2024-09-04T15:57:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30266
 - author: yuitop
   changes:
   - message: Going into portals while pulling no more crashes the game
@@ -3930,3 +3923,12 @@
   id: 7781
   time: '2025-01-05T19:06:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32188
+- author: Errant
+  changes:
+  - message: Lobby chat width is no longer dependent on the server's name.
+    type: Tweak
+  - message: Lobby title of a server can now be different from the Hub listing's name.
+    type: Tweak
+  id: 7782
+  time: '2025-01-05T20:56:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33783
