@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 
@@ -55,6 +56,10 @@ public sealed partial class PuddleSystem
                 Spawn("PuddleSparkle", xformQuery.GetComponent(uid).Coordinates);
                 QueueDel(uid);
             }
+
+            var ev = new SolutionContainerChangedEvent(puddleSolution, puddle.SolutionName);
+            RaiseLocalEvent(uid, ref ev);
+            Dirty(puddle.Solution.Value.Owner, puddle.Solution.Value.Comp); // Fix the misprediction
         }
     }
 }
