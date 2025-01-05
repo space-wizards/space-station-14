@@ -1,0 +1,78 @@
+- type: entity
+  id: ApidCryopodBotanist
+  parent: BaseStructureDynamic
+  name: apid botanist cryopod
+  suffix: Ghost role, Botanist
+  description: A small, hexagonal cryopod containing a Beefolk botanist. They might take a little bit to wake up.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _Impstation/Structures/apidcryopod.rsi
+    state: icon
+  - type: Fixtures #this is copied from crates so they should hopefully handle the same
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 50
+        mask:
+        - CrateMask #this is so they can go under plastic flaps
+        layer:
+        - MachineLayer
+  - type: GhostRole
+    name: ghost-role-information-apid-botanist-name
+    description: ghost-role-information-apid-botanist-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobApidBotanist
+
+- type: entity
+  id: ApidCryopodDoctor
+  parent: ApidCryopodBotanist
+  name: apid medical doctor cryopod
+  suffix: Ghost role, Medical
+  description: A small, hexagonal cryopod containing a Beefolk medical doctor. They might take a little bit to wake up.
+  components:
+  - type: GhostRole
+    name: ghost-role-information-apid-doctor-name
+    description: ghost-role-information-apid-doctor-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobApidDoctor
+
+- type: entity
+  id: ApidCryopodEngineer
+  parent: ApidCryopodBotanist
+  name: apid engineer cryopod
+  suffix: Ghost role, Engineer
+  description: A small, hexagonal cryopod containing a Beefolk engineer. They might take a little bit to wake up.
+  components:
+  - type: GhostRole
+    name: ghost-role-information-apid-engineer-name
+    description: ghost-role-information-apid-engineer-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobApidEngineer
+
+- type: entity
+  id: ApidCryopodEmergency
+  parent: ApidCryopodBotanist
+  name: apid emergency responder cryopod
+  suffix: Ghost role, BeeRT
+  description: A small, hexagonal cryopod containing a Beefolk emergency responder. They might take a little bit to wake up.
+  components:
+  - type: GhostRole
+    name: ghost-role-information-apid-beert-name
+    description: ghost-role-information-apid-beert-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobApidEmergency

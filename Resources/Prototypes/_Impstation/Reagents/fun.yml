@@ -123,3 +123,32 @@
     entity: FloorChasmEntity
     maxOnTileWhitelist:
       tags: [ FloorChasmEntity ]
+
+- type: reagent
+  id: Medium
+  name: reagent-name-medium
+  desc: reagent-desc-medium
+  physicalDesc: reagent-physical-desc-reflective
+  flavor: medium
+  color: "#DC89E0"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:Medium
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+
+- type: reagent
+  id: MouseBites
+  name: reagent-name-mouse-bites
+  desc: reagent-desc-mouse-bites
+  physicalDesc: reagent-physical-desc-rodent
+  flavor: rodent
+  color: "#C70039"
+  metabolisms:
+    Medicine:
+      effects:
+      # its just a weaker tranex with no od
+      - !type:ModifyBleedAmount
+        amount: -0.5

@@ -16,6 +16,8 @@
         weight: 9
       - id: PlushieSpaceLizard
         weight: 1
+      - id: PlushieLizardInversed
+        weight: 0.5
     - !type:GroupSelector
       children:
       - id: PlushieCarp
@@ -45,6 +47,8 @@
       weight: 0.1
     - id: PlushieDecapoid
     - id: PlushieSnail
+    - id: PlushieImp
+      weight: 0.1
 
 - type: entity
   id: CrateFunPlushie

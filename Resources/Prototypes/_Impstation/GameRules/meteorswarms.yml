@@ -13,3 +13,11 @@
   - type: ImmovableRodRule
     rodPrototypes:
     - id: ImmovableRodGondal
+
+- type: entity
+  id: ImmovableHollowPlasticBarrelSpawn
+  parent: ImmovableRodSpawn
+  components:
+  - type: ImmovableRodRule
+    rodPrototypes:
+    - id: ImmovableRodHollowPlasticBarrel

@@ -39,6 +39,10 @@
   - type: GuideHelp
     guides:
     - Medical Doctor
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 5
 
 - type: entity
   id: HandheldHealthAnalyzer

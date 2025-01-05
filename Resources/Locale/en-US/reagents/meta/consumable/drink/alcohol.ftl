@@ -279,3 +279,6 @@ reagent-desc-watermelon-wakeup = If you want to be awake, this will do it... Als
 
 reagent-name-rubberneck = rubberneck
 reagent-desc-rubberneck = A popular drink amongst those adhering to an all synthetic diet.
+
+reagent-name-zombiecocktail = zombie
+reagent-desc-zombiecocktail = It gets in your head. Your he-eyeh-ead.

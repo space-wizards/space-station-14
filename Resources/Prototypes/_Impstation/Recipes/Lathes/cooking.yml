@@ -100,4 +100,5 @@
   id: RollingPin
   result: RollingPin
   materials:
-    Wood: 400
+    Wood: 200
+    Steel: 50

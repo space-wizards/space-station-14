@@ -29,8 +29,10 @@
   - MagazineRifleIncendiary
   - MagazinePistolIncendiary
   - MagazineLightRifleIncendiary
+  - MagazineLPistolIncendiary
   - SpeedLoaderMagnumIncendiary
   - MagazineShotgunIncendiary
+  - MagazineBoxLPistolIncendiary
   - MagazineBoxPistolIncendiary
   - MagazineBoxMagnumIncendiary
   - MagazineBoxLightRifleIncendiary
@@ -76,10 +78,12 @@
   cost: 7500
   recipeUnlocks:
   - MagazineRifleUranium
+  - MagazineLPistolUranium
   - MagazinePistolUranium
   - MagazineDMRUranium
   - MagazineLightRifleUranium
   - SpeedLoaderMagnumUranium
+  - MagazineBoxLPistolUranium
   - MagazineBoxPistolUranium
   - MagazineBoxMagnumUranium
   - MagazineBoxLightRifleUranium

@@ -40,11 +40,15 @@
     damage:
       types:
         Blunt: 10
+    soundHit: # imp
+      path: /Audio/Weapons/smash.ogg
   - type: PhysicalComposition
     materialComposition:
       Steel: 185
   - type: StaticPrice
     price: 30
+  - type: DamageOtherOnHit # imp
+    staminaCost: 8
 
 - type: entity
   abstract: true
@@ -139,6 +143,8 @@
   - type: Tag # goob edit
     tags:
       - EmergencyOxygenTank
+  - type: DamageOtherOnHit # imp
+    staminaCost: 3.5
 
 - type: entity
   parent: EmergencyOxygenTank
@@ -191,6 +197,7 @@
   - type: Tag # goob edit
     tags:
       - EmergencyNitrogenTank
+
 - type: entity
   parent: ExtendedEmergencyOxygenTank
   id: DoubleEmergencyOxygenTank
@@ -212,6 +219,8 @@
     damage:
       types:
         Blunt: 7.5
+  - type: DamageOtherOnHit # imp
+    staminaCost: 5
 
 - type: entity
   parent: DoubleEmergencyOxygenTank

@@ -102,3 +102,13 @@
   id: unholy
   flavorType: Base
   description: flavor-base-unholy
+
+- type: flavor
+  id: medium
+  flavorType: Complex
+  description: flavor-complex-medium
+  
+- type: flavor
+  id: rodent
+  flavorType: Complex
+  description: flavor-complex-rodent

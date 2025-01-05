@@ -22,6 +22,7 @@
     CaptainJetpackStealObjective: 0.5
     HandTeleporterStealObjective: 0.5
     EnergyShotgunStealObjective: 0.5
+    #StealSupermatterSliverObjective: 0.5
 
 - type: weightedRandom
   id: TraitorObjectiveGroupKill
@@ -101,6 +102,7 @@
     ServiceTechFabStealObjective: 1
     ShiningSpringStealObjective: 1
     ShipyardComputerCircuitboardStealObjective: 1
+    SecPillCanisterStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupStructure

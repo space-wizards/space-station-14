@@ -28,8 +28,8 @@
 - type: entity
   parent: MobGoblin
   id: MobGoblinKnight
-  name: Sir Gollylad 
-  description: The noble Knight Gollylad, first among his peers. Strong enough to open powered doors. 
+  name: Sir Gollylad
+  description: The noble Knight Gollylad, first among his peers. Strong enough to open powered doors.
   components:
   - type: GhostRole
     name: ghost-role-information-goblin-knight-name
@@ -61,7 +61,7 @@
   components:
   - type: GhostRole
     name: ghost-role-information-goblin-castaway-name
-    description: ghost-role-information-goblin-stowaway-description
+    description: ghost-role-information-goblin-castaway-description
     rules: ghost-role-information-nonantagonist-freeagent-goblin-stowaway
     raffle:
       settings: default

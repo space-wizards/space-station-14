@@ -1,7 +1,7 @@
 - type: guideEntry
   id: Heretics
   name: guide-entry-heretics
-  text: "/ServerInfo/_Impstation/Guidebook/Antagonist/Heretics.xml" # for imp metashield
+  text: "/ServerInfo/_Impstation/Guidebook/Antagonist/Heretics.xml" # given a consistency pass by dark, keeping in imp directory 4 now
   children:
   - HereticsAsh
   - HereticsFlesh

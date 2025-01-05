@@ -1,0 +1,78 @@
+- type: entity
+  name: energy katana
+  suffix: stun
+  parent: Katana
+  id: EnergyKatanaStun
+  description: A katana infused with strong energy. Few possess the strength to contain it.
+  components:
+  - type: StaminaDamageOnHit
+    damage: 30
+    sound: /Audio/Weapons/egloves.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: -60
+    damage:
+      types:
+        Slash: 5
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Slash: 30
+    activatedSoundOnHit:
+        path: /Audio/Weapons/bladeslice.ogg
+    deactivatedSoundOnHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Stunbaton
+    energyPerUse: 100
+    inverted: true
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Melee/energykatana.rsi
+    layers:
+    - state: off-icon
+      map: [ "enum.ToggleVisuals.Layer" ]
+    angle: 60
+    animation: WeaponArcSlash
+  - type: Item
+    heldPrefix: off
+    sprite: _Impstation/Objects/Weapons/Melee/energykatana.rsi
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Melee/energykatana.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - Belt
+  - type: EnergyKatana
+  - type: DashAbility
+  - type: LimitedCharges
+    maxCharges: 3
+    charges: 3
+  - type: AutoRecharge
+    rechargeDuration: 20
+  - type: Reflect
+  - type: ThrowingAngle
+    angle: 300
+  - type: ItemToggleDamageOtherOnHit
+  - type: ItemToggle
+    predictable: false
+    soundActivate:
+      collection: sparks
+      params:
+        variation: 0.250
+    soundDeactivate:
+      collection: sparks
+      params:
+        variation: 0.250
+    soundFailToActivate:
+      path: /Audio/Machines/button.ogg
+      params:
+        variation: 0.250
+  - type: UseDelay
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+     enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: on-icon}
+          False: {state: off-icon}

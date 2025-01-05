@@ -46,7 +46,7 @@
 - type: entity
   name: Bulldog
   # Don't parent to BaseWeaponShotgun because it differs significantly
-  parent: [BaseItem, BaseGunWieldable, BaseSyndicateContraband]
+  parent: [BaseItem, BaseGunWieldable, Tier3Contraband]
   id: WeaponShotgunBulldog
   description: A fully-automatic magazine-fed assault shotgun designed for close-quarters combat. This will get the job done. Uses .50 shotgun shells.
   components:

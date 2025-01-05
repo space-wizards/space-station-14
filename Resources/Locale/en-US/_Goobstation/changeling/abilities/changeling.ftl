@@ -71,3 +71,8 @@ changeling-chameleon-end = Our skin no longer blends in.
 
 changeling-hivemind-start = We attune our brainwaves to match the greater hivemind.
 changeling-hivemind-end = Our connection to the greater hivemind is severed.
+
+changeling-mindshield-start = We shape our mental patterns to imitate mindshielding.
+changeling-mindshield-end = We cease our mindshield pattern shaping.
+changeling-mindshield-fail = We already have an implanted mindshield.
+changeling-mindshield-overwrite = Our mindshield patterns give way to the implant.

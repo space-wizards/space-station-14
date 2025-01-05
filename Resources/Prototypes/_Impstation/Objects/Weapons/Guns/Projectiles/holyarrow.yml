@@ -8,7 +8,7 @@
   - type: Item
     size: Small
   - type: Sprite
-    sprite: _Impstation/Objects/Misc/nullrod_bow.rsi
+    sprite: _Impstation/Objects/Misc/nullrod_arrow.rsi
     layers:
       - state: arrowprojectile
         shader: unshaded

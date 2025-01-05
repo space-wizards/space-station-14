@@ -8,7 +8,7 @@
   - type: AtmosDevice
   - type: Tag
     tags:
-      - Unstackable
+    - Unstackable
   - type: SubFloorHide
     blockInteractions: false
     blockAmbience: false
@@ -57,10 +57,13 @@
   - type: PipeColorVisuals
   - type: GasPressurePump
     enabled: false
+  - type: ActivatableUI
+    key: enum.GasPressurePumpUiKey.Key
+  - type: ActivatableUIRequiresAnchor
   - type: UserInterface
     interfaces:
-        enum.GasPressurePumpUiKey.Key:
-          type: GasPressurePumpBoundUserInterface
+      enum.GasPressurePumpUiKey.Key:
+        type: GasPressurePumpBoundUserInterface
   - type: Construction
     graph: GasBinary
     node: pressurepump
@@ -70,12 +73,8 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/gas_pump.ogg
-  - type: VentCrawTube
-    containerId: VentCrawTube
-  - type: VentCrawTransit
-  - type: ContainerContainer
-    containers:
-      VentCrawTube: !type:Container
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasFlowRegulator
 
 - type: entity
   parent: GasBinaryBase
@@ -85,60 +84,59 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: ExtensionCableReceiver
-    - type: LightningTarget
-      priority: 1
-    - type: ApcPowerReceiver
-      powerLoad: 200
-    - type: Rotatable
-    - type: Transform
-      noRot: false
-    - type: Sprite
-      sprite: Structures/Piping/Atmospherics/pump.rsi
-      layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
-          state: pipeStraight
-          map: [ "enum.PipeVisualLayers.Pipe" ]
-        - state: pumpVolume
-          map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-    - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.GasVolumePumpVisuals.State:
-          enabled:
-            On: { state: pumpVolumeOn }
-            Off: { state: pumpVolume }
-            Blocked: { state: pumpVolumeBlocked }
-    - type: PipeColorVisuals
-    - type: GasVolumePump
-      enabled: false
-    - type: UserInterface
-      interfaces:
-        enum.GasVolumePumpUiKey.Key:
-          type: GasVolumePumpBoundUserInterface
-    - type: Construction
-      graph: GasBinary
-      node: volumepump
-    - type: AmbientSound
-      enabled: false
-      volume: -9
-      range: 5
-      sound:
-        path: /Audio/Ambience/Objects/gas_pump.ogg
-    - type: DeviceNetwork
-      deviceNetId: AtmosDevices
-      receiveFrequencyId: AtmosMonitor
-      transmitFrequencyId: AtmosMonitor
-      sendBroadcastAttemptEvent: true
-      examinableAddress: true
-      prefix: device-address-prefix-volume-pump
-    - type: WiredNetworkConnection
-    - type: VentCrawTube
-      containerId: VentCrawTube
-    - type: VentCrawTransit
-    - type: ContainerContainer
-      containers:
-        VentCrawTube: !type:Container
+  - type: ExtensionCableReceiver
+  - type: LightningTarget
+    priority: 1
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: Rotatable
+  - type: Transform
+    noRot: false
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: pumpVolume
+      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.GasVolumePumpVisuals.State:
+        enabled:
+          On: { state: pumpVolumeOn }
+          Off: { state: pumpVolume }
+          Blocked: { state: pumpVolumeBlocked }
+  - type: PipeColorVisuals
+  - type: GasVolumePump
+    enabled: false
+  - type: UserInterface
+    interfaces:
+      enum.GasVolumePumpUiKey.Key:
+        type: GasVolumePumpBoundUserInterface
+  - type: Construction
+    graph: GasBinary
+    node: volumepump
+  - type: AmbientSound
+    enabled: false
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/gas_pump.ogg
+  - type: DeviceNetwork
+    deviceNetId: AtmosDevices
+    receiveFrequencyId: AtmosMonitor
+    transmitFrequencyId: AtmosMonitor
+    sendBroadcastAttemptEvent: true
+    examinableAddress: true
+    prefix: device-address-prefix-volume-pump
+  - type: WiredNetworkConnection
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasFlowRegulator
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawTransit
 
 - type: entity
   parent: GasBinaryBase
@@ -148,32 +146,31 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: Sprite
-      sprite: Structures/Piping/Atmospherics/pump.rsi
-      layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
-          state: pipeStraight
-          map: [ "enum.PipeVisualLayers.Pipe" ]
-        - state: pumpPassiveGate
-          map: [ "enum.SubfloorLayers.FirstLayer" ]
-    - type: Appearance
-    - type: PipeColorVisuals
-    - type: GasPassiveGate
-    - type: Construction
-      graph: GasBinary
-      node: passivegate
-    - type: AmbientSound
-      enabled: true
-      volume: -9
-      range: 5
-      sound:
-        path: /Audio/Ambience/Objects/gas_hiss.ogg
-    - type: VentCrawTube
-      containerId: VentCrawTube
-    - type: VentCrawTransit
-    - type: ContainerContainer
-      containers:
-        VentCrawTube: !type:Container
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: pumpPassiveGate
+      map: [ "enum.SubfloorLayers.FirstLayer" ]
+  - type: Appearance
+  - type: PipeColorVisuals
+  - type: GasPassiveGate
+  - type: Construction
+    graph: GasBinary
+    node: passivegate
+  - type: AmbientSound
+    enabled: true
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/gas_hiss.ogg
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasValve
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawTransit
 
 - type: entity
   parent: GasBinaryBase
@@ -183,51 +180,50 @@
   placement:
     mode: SnapgridCenter
   components:
-    # TODO ATMOS: Give unique sprite.
-    - type: Sprite
-      sprite: Structures/Piping/Atmospherics/pump.rsi
-      layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
-          state: pipeStraight
-          map: [ "enum.PipeVisualLayers.Pipe" ]
-        - state: pumpManualValve
-          map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-    - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.FilterVisuals.Enabled:
-          enabled:
-            True: { state: pumpManualValveOn }
-            False: { state: pumpManualValve }
-    - type: PipeColorVisuals
-    - type: GasValve
-    - type: NodeContainer
-      nodes:
-        inlet:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: North
-          volume: 100
-        outlet:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
-          volume: 100
-    - type: Construction
-      graph: GasBinary
-      node: valve
-    - type: AmbientSound
-      enabled: true
-      volume: -9
-      range: 5
-      sound:
-        path: /Audio/Ambience/Objects/gas_hiss.ogg
-    - type: VentCrawTube
-      containerId: VentCrawTube
-    - type: VentCrawTransit
-    - type: ContainerContainer
-      containers:
-        VentCrawTube: !type:Container
+  # TODO ATMOS: Give unique sprite.
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: pumpManualValve
+      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.FilterVisuals.Enabled:
+        enabled:
+          True: { state: pumpManualValveOn }
+          False: { state: pumpManualValve }
+  - type: PipeColorVisuals
+  - type: GasValve
+  - type: NodeContainer
+    nodes:
+      inlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North
+        volume: 100
+      outlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+        volume: 100
+  - type: Construction
+    graph: GasBinary
+    node: valve
+  - type: AmbientSound
+    enabled: true
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/gas_hiss.ogg
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasValve
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawTransit
 
 - type: entity
   parent: GasBinaryBase
@@ -263,9 +259,9 @@
     range: 200
   - type: DeviceLinkSink
     ports:
-      - Open
-      - Close
-      - Toggle
+    - Open
+    - Close
+    - Toggle
   - type: NodeContainer
     nodes:
       inlet:
@@ -287,12 +283,11 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/gas_hiss.ogg
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasValve
   - type: VentCrawTube
     containerId: VentCrawTube
   - type: VentCrawTransit
-  - type: ContainerContainer
-    containers:
-      VentCrawTube: !type:Container
 
 - type: entity
   parent: GasBinaryBase
@@ -302,34 +297,31 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: Sprite
-      sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
-      layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
-          state: pipeHalf
-          map: [ "enum.PipeVisualLayers.Pipe" ]
-        - state: gasCanisterPort
-          map: [ "enum.SubfloorLayers.FirstLayer" ]
-    - type: Appearance
-    - type: PipeColorVisuals
-    - type: GasPort
-    - type: NodeContainer
-      nodes:
-        connected:
-          !type:PortPipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
-    - type: Construction
-      graph: GasBinary
-      node: port
-    - type: VentCrawTube
-      containerId: VentCrawTube
-    - type: VentCrawJunction
-      degrees:
-        - 0
-    - type: ContainerContainer
-      containers:
-        VentCrawTube: !type:Container
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeHalf
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: gasCanisterPort
+      map: [ "enum.SubfloorLayers.FirstLayer" ]
+  - type: Appearance
+  - type: PipeColorVisuals
+  - type: GasPort
+  - type: NodeContainer
+    nodes:
+      connected:
+        !type:PortPipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+  - type: Construction
+    graph: GasBinary
+    node: port
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasVentOpening
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawTransit
 
 - type: entity
   parent: GasVentPump
@@ -339,53 +331,58 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: Sprite
-      drawdepth: FloorObjects
-      sprite: Structures/Piping/Atmospherics/vent.rsi
-      layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
-          state: pipeStraight
-          map: [ "enum.PipeVisualLayers.Pipe" ]
-        - state: vent_off
-          map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
-    - type: GenericVisualizer
-      visuals:
-        enum.VentPumpVisuals.State:
-          enabled:
-            Off: { state: vent_off }
-            In: { state: vent_in }
-            Out: { state: vent_out }
-            Welded: { state: vent_welded }
-            Lockout: { state: vent_lockout }
-    - type: PipeColorVisuals
-    - type: GasVentPump
-      inlet: inlet
-      outlet: outlet
-      canLink: true
-    - type: DeviceNetwork
-      deviceNetId: Wireless
-      receiveFrequencyId: BasicDevice
-    - type: WirelessNetworkConnection
-      range: 200
-    - type: DeviceLinkSink
-      ports:
-        - Pressurize
-        - Depressurize
-    - type: Construction
-      graph: GasBinary
-      node: dualportventpump
-    - type: NodeContainer
-      nodes:
-        inlet:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: North
-        outlet:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
-    - type: AmbientSound
-      enabled: true
+  - type: Sprite
+    drawdepth: FloorObjects
+    sprite: Structures/Piping/Atmospherics/vent.rsi
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: vent_off
+      map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.VentPumpVisuals.State:
+        enabled:
+          Off: { state: vent_off }
+          In: { state: vent_in }
+          Out: { state: vent_out }
+          Welded: { state: vent_welded }
+          Lockout: { state: vent_lockout }
+  - type: PipeColorVisuals
+  - type: GasVentPump
+    inlet: inlet
+    outlet: outlet
+    canLink: true
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+    - Pressurize
+    - Depressurize
+  - type: Construction
+    graph: GasBinary
+    node: dualportventpump
+  - type: NodeContainer
+    nodes:
+      inlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North
+      outlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+  - type: AmbientSound
+    enabled: true
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasVentOpening
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawTransit
 
 - type: entity
   parent: [ BaseMachine, ConstructibleMachine ]
@@ -448,7 +445,8 @@
         acts: ["Destruction"]
   - type: Machine
     board: GasRecyclerMachineCircuitboard
-
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasValve
 - type: entity
   parent: GasBinaryBase
   id: HeatExchanger
@@ -488,3 +486,5 @@
   - type: Construction
     graph: GasBinary
     node: radiator
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: Thermoregulator

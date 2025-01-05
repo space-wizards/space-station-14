@@ -64,6 +64,7 @@
   - type: StaticPrice
     price: 70
   - type: PowerSwitch
+  - type: DamageOtherOnHitImmune # imp
 
 - type: entity
   id: DisposalUnit

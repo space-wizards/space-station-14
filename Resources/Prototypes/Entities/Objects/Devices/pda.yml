@@ -121,6 +121,10 @@
     proto: robot
   - type: Speech
     speechVerb: Robotic
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 4
 
 - type: entity
   parent: BasePDA

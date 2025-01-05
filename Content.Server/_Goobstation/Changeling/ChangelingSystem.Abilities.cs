@@ -21,6 +21,8 @@ using Content.Shared.Stealth.Components;
 using Content.Shared.Damage.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Content.Shared.Mindshield.Components;
+using Content.Shared._Goobstation.FakeMindshield.Components;
 
 namespace Content.Server.Changeling;
 
@@ -64,6 +66,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         SubscribeLocalEvent<ChangelingComponent, ActionFleshmendEvent>(OnHealUltraSwag);
         SubscribeLocalEvent<ChangelingComponent, ActionLastResortEvent>(OnLastResort);
         SubscribeLocalEvent<ChangelingComponent, ActionLesserFormEvent>(OnLesserForm);
+        SubscribeLocalEvent<ChangelingComponent, ActionMindshieldFakeEvent>(OnMindshieldFake);
         SubscribeLocalEvent<ChangelingComponent, ActionSpacesuitEvent>(OnSpacesuit);
         SubscribeLocalEvent<ChangelingComponent, ActionHivemindAccessEvent>(OnHivemindAccess);
     }
@@ -590,6 +593,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         }
 
         EnsureComp<StealthComponent>(uid);
+        _stealth.SetUseAltShader(uid, true);
         _stealth.SetMinVisibility(uid, 0);
 
         var stealthOnMove = EnsureComp<StealthOnMoveComponent>(uid);
@@ -689,6 +693,29 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         PlayMeatySound((EntityUid)newUid, comp);
     }
+
+    public void OnMindshieldFake(Entity<ChangelingComponent> ent, ref ActionMindshieldFakeEvent args)
+    {
+        if (!TryUseAbility(ent, ent.Comp, args))
+            return;
+
+        if (HasComp<MindShieldComponent>(ent))
+        {
+            _popup.PopupEntity(Loc.GetString("changeling-mindshield-fail"), ent, ent, PopupType.Medium);
+            return;
+        }
+
+        if (HasComp<FakeMindShieldComponent>(ent))
+        {
+            RemComp<FakeMindShieldComponent>(ent);
+            _popup.PopupEntity(Loc.GetString("changeling-mindshield-end"), ent, ent);
+            return;
+        }
+
+        EnsureComp<FakeMindShieldComponent>(ent);
+        _popup.PopupEntity(Loc.GetString("changeling-mindshield-start"), ent, ent);
+    }
+
     public void OnSpacesuit(EntityUid uid, ChangelingComponent comp, ref ActionSpacesuitEvent args)
     {
         if (!TryUseAbility(uid, comp, args))

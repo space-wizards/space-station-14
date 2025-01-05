@@ -14,6 +14,8 @@ steal-target-groups-servicetechfab = service techfab machine board
 steal-target-groups-shipyardcomputercircuitboard = shipyard computer board
 steal-target-groups-commscomputercircuitboard = communications computer board
 
+steal-target-groups-secpillcanister = head of security's pill canister
+
 # Thief Animal
 
 steal-target-groups-finfin = Fin Fin

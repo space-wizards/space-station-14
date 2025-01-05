@@ -82,7 +82,7 @@
       amount: 2
     - id: ClothingHeadHelmetRiot
       amount: 2
-    - id: WeaponShotgunEnforcerRubber
+    - id: WeaponShotgunEnforcerBeanbag # Imp
       amount: 2
     - id: BoxBeanbag
       amount: 2

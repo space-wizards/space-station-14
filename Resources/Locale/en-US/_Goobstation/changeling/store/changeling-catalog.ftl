@@ -104,6 +104,11 @@ evolutionmenu-utility-fleshmend-desc =
     Our flesh rapidly regenerates, healing our burns, bruises, and asphyxiation.
     Costs a medium amount of chemicals.
 
+evolutionmenu-utility-hivemindaccess-name = Hivemind Access
+evolutionmenu-utility-hivemindaccess-desc =
+    We tune our chemical receptors for hivemind communication, allowing us to recognize and communicate with other changelings who have also evolved this ability.
+    To communicate through the hivemind, use +h in the chatbox.
+
 evolutionmenu-utility-lastresort-name = Last Resort
 evolutionmenu-utility-lastresort-desc =
     We abandon our vessel, escaping in our vulnerable true self, to find a new body to occupy.
@@ -114,12 +119,12 @@ evolutionmenu-utility-lesserform-desc =
     We become lesser, transforming into a sentient monkey.
     Costs a small amount of chemicals.
 
+evolutionmenu-utility-mindshield-name = Mindshield Patterns
+evolutionmenu-utility-mindshield-desc =
+    We shape our mental patterns to imitate a mindshield implantation.
+    Costs no chemicals.
+
 evolutionmenu-utility-spacesuit-name = Space Adaptation
 evolutionmenu-utility-spacesuit-desc =
     We prepare our cells to resist barotrauma. We must still breathe. Cannot be used in our lesser form.
     Costs a small amount of chemicals.
-
-evolutionmenu-utility-hivemindaccess-name = Hivemind Access
-evolutionmenu-utility-hivemindaccess-desc =
-    We tune our chemical receptors for hivemind communication, allowing us to recognize and communicate with other changelings who have also evolved this ability.
-    To communicate through the hivemind, use +h in the chatbox.

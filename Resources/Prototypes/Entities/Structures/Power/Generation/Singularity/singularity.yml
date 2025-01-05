@@ -3,6 +3,7 @@
   name: gravitational singularity
   description: A mesmerizing swirl of darkness that sucks in everything. If it's moving towards you, run.
   components:
+  - type: SupermatterImmune
   - type: Clickable
   - type: AmbientSound
     volume: -4

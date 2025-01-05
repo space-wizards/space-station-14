@@ -258,7 +258,7 @@
 
 - type: entity
   id: Protolathe
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseScienceContraband ]
   name: protolathe
   description: Converts raw materials into advanced items.
   components:
@@ -423,7 +423,7 @@
 
 - type: entity
   id: CircuitImprinter
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseScienceContraband ]
   name: circuit imprinter
   description: Prints circuit boards for machines.
   components:
@@ -540,6 +540,7 @@
       - MassMediaCircuitboard
       - ReagentGrinderIndustrialMachineCircuitboard
       - JukeboxCircuitBoard
+      - SMESAdvancedMachineCircuitboard
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ShuttleGunDusterCircuitboard
@@ -567,7 +568,7 @@
 
 - type: entity
   id: ExosuitFabricator
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseScienceContraband ]
   name: exosuit fabricator
   description: Creates parts for robotics and other mechanical needs.
   components:
@@ -595,6 +596,7 @@
     - BorgModuleTool
     - BorgModuleBartender
     - BorgModulePaper
+    - BorgModuleArtistic #imp special
     - CyborgEndoskeleton
     - LeftArmBorg
     - RightArmBorg
@@ -691,7 +693,7 @@
 
 - type: entity
   id: SecurityTechFab
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseSecurityContraband ]
   name: security techfab
   description: Prints equipment for use by security crew.
   components:
@@ -713,6 +715,8 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    unlitIdleState: unlit
+    unlitRunningState: unlit-building
     staticRecipes:
       - BoxLethalshot
       - BoxShotgunPractice
@@ -726,6 +730,8 @@
       - MagazineBoxLightRiflePractice
       - MagazineBoxMagnum
       - MagazineBoxMagnumPractice
+      - MagazineBoxLPistol
+      - MagazineBoxLPistolPractice
       - MagazineBoxPistol
       - MagazineBoxPistolPractice
       - MagazineBoxRifle
@@ -734,6 +740,9 @@
       - MagazineDMREmpty
       - MagazineLightRifle
       - MagazineLightRifleEmpty
+      - MagazineLPistol
+      - MagazineLPistolEmpty
+      - MagazineLPistolPractice
       - MagazinePistol
       - MagazinePistolEmpty
       - MagazinePistolSubMachineGun
@@ -772,9 +781,7 @@
       - HyperBurstConversionKit
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
-      - MagazineBoxLPistol
       - MagazineBoxLPistolIncendiary
-      - MagazineBoxLPistolPractice
       - MagazineBoxLPistolUranium
       - MagazineBoxMagnumIncendiary
       - MagazineBoxMagnumUranium
@@ -787,10 +794,7 @@
       - MagazineGrenadeEmpty
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
-      - MagazineLPistol
-      - MagazineLPistolEmpty
       - MagazineLPistolIncendiary
-      - MagazineLPistolPractice
       - MagazineLPistolUranium
       - MagazinePistolIncendiary
       - MagazinePistolUranium
@@ -831,7 +835,7 @@
 
 - type: entity
   id: AmmoTechFab
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseSecurityContraband ]
   name: ammo techfab
   description: Prints the bare minimum of bullets that any budget military or armory could need. Nothing fancy.
   components:
@@ -853,6 +857,8 @@
     - type: Lathe
       idleState: icon
       runningState: icon
+      unlitIdleState: unlit
+      unlitRunningState: unlit-building
       staticRecipes:
         - BoxLethalshot
         - BoxShotgunSlug
@@ -885,7 +891,7 @@
 
 - type: entity
   id: MedicalTechFab
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseMedicalContraband ]
   name: medical techfab
   description: Prints equipment for use by the medbay.
   components:
@@ -905,6 +911,8 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    unlitIdleState: unlit
+    unlitRunningState: unlit-building
     staticRecipes:
       - Brutepack
       - Ointment
@@ -985,6 +993,7 @@
       - ClothingUniformJumpskirtBartender
       - ClothingHeadHatCapcap
       - ClothingHeadHatCaptain
+      - ClothingHeadHatBeretCaptain # imp
       - ClothingUniformJumpsuitCaptain
       - ClothingUniformJumpskirtCaptain
       - ClothingUniformJumpsuitCapFormal
@@ -1266,7 +1275,7 @@
       staticRecipes:
         - SheetSteel
         - SheetGlass1
-        - SheetRGlass
+        - SheetRGlassRaw
         - SheetPlasma1
         - SheetPGlass1
         - SheetRPGlass1
@@ -1287,12 +1296,12 @@
   - type: Machine
     board: OreProcessorIndustrialMachineCircuitboard
   - type: Lathe
-    materialUseMultiplier: 0.75
+    materialUseMultiplier: 0.50 # imp, from 1.5x more sheets to 2x
     timeMultiplier: 0.5
     staticRecipes:
       - SheetSteel
       - SheetGlass1
-      - SheetRGlass
+      - SheetRGlassRaw
       - SheetPlasma1
       - SheetPGlass1
       - SheetRPGlass1

@@ -38,6 +38,22 @@
       "name": "unlit"
     },
     {
+      "name": "unlit-building",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
       "name": "inserting",
       "delays": [
         [

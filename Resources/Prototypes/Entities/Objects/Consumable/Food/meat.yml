@@ -476,6 +476,9 @@
   id: FoodMeatSpider
   description: A slab of spider meat. That's so Kafkaesque.
   components:
+  - type: Tag
+    tags:
+      - SpiderMeat
   - type: Sprite
     state: spider
   - type: SolutionContainerManager

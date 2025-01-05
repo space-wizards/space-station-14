@@ -71,10 +71,24 @@
   - type: Reflect
   - type: IgnitionSource
     temperature: 700
+  # imp edits #
+  - type: ItemToggleDamageOtherOnHit
+    activatedStaminaCost: 6
+  - type: ItemToggleEmbedPassiveDamage
+  - type: ItemToggleEmbeddableProjectile
+    activatedEmbedOnThrow: true
+  - type: ItemToggleThrowingAngle
+    activatedAngle: 225
+    deleteOnDeactivate: true
+  - type: DamageOtherOnHit
+  - type: EmbeddableProjectile
+    embedOnThrow: false
+  - type: EmbedPassiveDamage
+  # end imp edits #
 
 - type: entity
   name: energy sword
-  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
+  parent: [BaseMeleeWeaponEnergy, Tier3Contraband]
   id: EnergySword
   description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
   components:
@@ -92,7 +106,7 @@
 
 - type: entity
   name: energy dagger
-  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
+  parent: [BaseMeleeWeaponEnergy, Tier3Contraband]
   id: EnergyDaggerLoud
   description: A not as loud and dangerous dagger with a beam made of pure, concentrated plasma. This one is completely undisguised.
   components:
@@ -153,6 +167,8 @@
     energy: 1.5
     color: white
     netsync: false
+  - type: ItemToggleThrowingAngle # imp
+    activatedAngle: 135
 
 - type: entity
   name: pen
@@ -223,9 +239,32 @@
   - type: Tag
     tags:
     - Write
+  # imp edits #
+  - type: ItemToggleEmbeddableProjectile
+    activatedOffset: 0.0,0.0
+    activatedRemovalTime: 3
+  - type: ItemToggleThrowingAngle
+    activatedAngle: 135
+    deleteOnDeactivate: false
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 3
+    staminaCost: 3.5
+  - type: EmbeddableProjectile
+    offset: 0.3,0.0
+    removalTime: 0.0
+    embedOnThrow: true
+  - type: EmbedPassiveDamage
+    damage:
+      types:
+        Blunt: 0
+  - type: ThrowingAngle
+    angle: 315
+  # end imp edits #
 
 - type: entity
-  parent: [BaseItem, BaseSyndicateContraband]
+  parent: [BaseItem, Tier3Contraband]
   id: EnergyDaggerBox
   name: e-dagger box
   suffix: E-Dagger
@@ -268,7 +307,7 @@
 
 - type: entity
   name: double-bladed energy sword
-  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
+  parent: [BaseMeleeWeaponEnergy, Tier3Contraband]
   id: EnergySwordDouble
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. This can be stored in pockets.
   components:

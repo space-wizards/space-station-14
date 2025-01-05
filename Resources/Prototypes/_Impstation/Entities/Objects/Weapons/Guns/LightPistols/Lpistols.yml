@@ -45,7 +45,7 @@
             - CartridgeLPistol
   - type: Construction
     graph: UpgradeWeaponPistolConversion
-    node: start
+    node: convert-fullauto
 
 - type: entity
   name: mk 92hb
@@ -97,7 +97,7 @@
             - CartridgeLPistol
   - type: Construction
     graph: UpgradeWeaponPistolConversion
-    node: start
+    node: convert-hyperburst
 
 - type: entity
   name: zipper .22
@@ -172,3 +172,62 @@
         whitelist:
           tags:
             - CartridgeLPistol
+
+- type: entity
+  name: improvised pistol
+  parent: [ BaseWeaponPistol, BaseRestrictedContraband ]
+  id: WeaponPistolImprovised
+  description: A pistol made of junk-- used by the truly desperate. Its imprecise engineering allows it to use a variety of magazines and ammo. Uses .22 auto or .35 auto ammo.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/improvpistol.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: true
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/improvpistol.rsi
+  - type: Gun
+    fireRate: 3.5
+    minAngle: 4
+    maxAngle: 20
+    angleIncrease: 4
+    angleDecay: 10
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/zipper.ogg
+  - type: ChamberMagazineAmmoProvider
+    boltClosed: null
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: null
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineZipper
+            - MagazineLPistol
+            - MagazinePistol
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: null
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLPistol
+            - CartridgePistol
+  - type: Construction
+    graph: ImprovisedPistolGraph
+    node: pistol
+  - type: StaticPrice
+    price: 20

@@ -109,7 +109,7 @@
 - type: polymorph
   id: TreeMorph
   configuration:
-    entity: FloraTree01
+    entity: FloraTree
     forced: true
     transferName: true
     revertOnDeath: true

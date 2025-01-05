@@ -170,7 +170,7 @@
         prob: 0.5
 
 - type: entity
-  parent: [GunSafe, BaseRestrictedContraband]
+  parent: [GunSafeBaseSecure, BaseRestrictedContraband]
   id: GunSafeDisabler
   name: disabler safe
   components:
@@ -180,19 +180,23 @@
       amount: 5
 
 - type: entity
-  parent: [GunSafe, BaseRestrictedContraband]
+  parent: [GunSafeBaseSecure, BaseRestrictedContraband]
   id: GunSafePistolMk58
-  name: mk58 safe
+  name: pistol safe
   components:
   - type: StorageFill
     contents:
     - id: WeaponPistolMk58
       amount: 4
+    - id: FullAutoConversionKit
+    - id: HyperBurstConversionKit
     - id: MagazinePistol
       amount: 8
+    - id: MagazineLPistol
+      amount: 4
 
 - type: entity
-  parent: [GunSafe, BaseRestrictedContraband]
+  parent: [GunSafeBaseSecure, BaseRestrictedContraband]
   id: GunSafeRifleLecter
   name: rifle safe
   components:
@@ -207,7 +211,7 @@
       amount: 2
 
 - type: entity
-  parent: [GunSafe, BaseRestrictedContraband]
+  parent: [GunSafeBaseSecure, BaseRestrictedContraband]
   id: GunSafeSubMachineGunDrozd
   name: drozd safe
   components:
@@ -219,7 +223,7 @@
       amount: 4
 
 - type: entity
-  parent: [GunSafe, BaseRestrictedContraband]
+  parent: [GunSafeBaseSecure, BaseRestrictedContraband]
   id: GunSafeShotgunEnforcer
   name: enforcer safe
   components:
@@ -231,7 +235,7 @@
       amount: 4
 
 - type: entity
-  parent: [GunSafe, BaseRestrictedContraband]
+  parent: [GunSafeBaseSecure, BaseRestrictedContraband]
   id: GunSafeShotgunKammerer
   name: kammerer safe
   components:
@@ -249,7 +253,7 @@
 - type: entity
   id: GunSafeSubMachineGunWt550
   suffix: Wt550
-  parent: [GunSafe, BaseRestrictedContraband]
+  parent: [GunSafeBaseSecure, BaseRestrictedContraband]
   name: wt550 safe
   components:
   - type: StorageFill
@@ -260,7 +264,7 @@
       amount: 4
 
 - type: entity
-  parent: GunSafe
+  parent: GunSafeBaseSecure
   id: GunSafeLaserCarbine
   name: laser safe
   components:

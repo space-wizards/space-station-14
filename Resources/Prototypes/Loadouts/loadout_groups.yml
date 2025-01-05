@@ -146,6 +146,7 @@
   loadouts:
   - CaptainHead
   - CaptainCap
+  - CaptainBeret # imp
   - CaptainCrusherCap #imp
 
 - type: loadoutGroup
@@ -307,6 +308,10 @@
   - BartenderJumpsuit
   - BartenderJumpskirt
   - BartenderJumpsuitPurple
+  - ClothingUniformNightclubSuit #imp
+  - ClothingUniformNightclubSuitSkirt #imp
+  - ClothingUniformSeniorBartender #imp
+  - ClothingUniformSeniorBartenderSkirt #imp
 
 - type: loadoutGroup
   id: BartenderNeck
@@ -341,13 +346,6 @@
   loadouts:
   - BartenderPDA
   - SeniorBartenderPDA
-
-- type: loadoutGroup
-  id: Mixologist
-  name: loadout-group-bartender-mixologist
-  minLimit: 0
-  loadouts:
-  - ChemMasterFlatpack
 
 - type: loadoutGroup
   id: ChefHead
@@ -412,6 +410,8 @@
   - LibrarianJumpskirt
   - CuratorJumpsuit
   - CuratorJumpskirt
+  - ClothingUniformBrownSuit #imp
+  - ClothingUniformBrownSuitSkirt #imp
 
 - type: loadoutGroup
   id: LibrarianNeck
@@ -442,6 +442,8 @@
   - LawyerJumpskirtRed
   - LawyerJumpsuitGood
   - LawyerJumpskirtGood
+  - ClothingUniformCreamSuit #imp
+  - ClothingUniformCreamSuitSkirt #imp
 
 - type: loadoutGroup
   id: LawyerNeck
@@ -484,6 +486,8 @@
   - ChaplainJumpskirt
   - ChaplainRobesLight
   - ChaplainRobesDark
+  - ClothingUniformFuneralSuit #imp
+  - ClothingUniformFuneralSuitSkirt #imp
 
 - type: loadoutGroup
   id: ChaplainOuterClothing
@@ -639,6 +643,7 @@
   loadouts:
   - JesterHat
   - JesterAltHat
+  - CircusClownHat #imp
 
 - type: loadoutGroup
   id: ClownJumpsuit
@@ -648,6 +653,16 @@
   - ClownSkirt
   - JesterSuit
   - JesterAltSuit
+  - CirclusClownSuit #imp
+
+#imp
+- type: loadoutGroup
+  id: ClownMask
+  name: loadout-group-clown-mask
+  minLimit: 1
+  loadouts:
+  - ClownMask
+  - ClownNose
 
 - type: loadoutGroup
   id: ClownBackpack
@@ -656,6 +671,13 @@
   - ClownBackpack
   - ClownSatchel
   - ClownDuffel
+
+- type: loadoutGroup
+  id: ClownNeck
+  name: loadout-group-clown-neck
+  minLimit: 0
+  loadouts:
+  - NeckRuffle
 
 - type: loadoutGroup
   id: ClownOuterClothing
@@ -671,6 +693,7 @@
   loadouts:
   - ClownShoes
   - JesterShoes
+  - CircusClownShoes
 
 - type: loadoutGroup
   id: SurvivalClown
@@ -758,6 +781,8 @@
   loadouts:
   - MusicianJumpsuit
   - MusicianJumpskirt
+  - ClothingUniformMrSpaceWide #imp
+  - ClothingUniformMrSpaceWideSkirt #imp
 
 - type: loadoutGroup
   id: MusicianNeck
@@ -1484,11 +1509,14 @@
   - DetectiveJumpskirt
   - NoirJumpsuit
   - NoirJumpskirt
+  - ClothingUniformMiamiVice #imp
+  - ClothingUniformMiamiViceSkirt #imp
+  - ClothingUniformDetectiveSuit #imp
+  - ClothingUniformDetectiveSuitSkirt #imp
 
 - type: loadoutGroup
   id: DetectiveOuterClothing
   name: loadout-group-detective-outerclothing
-  minLimit: 0
   loadouts:
   - DetectiveArmorVest
   - DetectiveCoatGrey
@@ -1616,6 +1644,7 @@
   loadouts:
   - ChiefMedicalOfficerLabCoat
   - ChiefMedicalOfficerWintercoat
+  - CMOPrestigeLabcoat #IMP
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerNeck
@@ -1624,6 +1653,7 @@
   loadouts:
   - ChiefMedicalOfficerCloak
   - ChiefMedicalOfficerMantle
+  - CMOGreatCloak #IMP
   - ScarfLightBlue
 
 - type: loadoutGroup
@@ -1848,6 +1878,8 @@
   loadouts:
   - ReporterJumpsuit
   - JournalistJumpsuit
+  - ClothingUniformBrosBlazer #imp
+  - ClothingUniformBrosBlazerSkirt #imp
 
 - type: loadoutGroup
   id: ReporterNeck

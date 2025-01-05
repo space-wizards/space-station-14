@@ -142,6 +142,13 @@
       flatReductions:
         Heat: 10 # the average lightbulb only does around four damage!
     slots: OUTERCLOTHING
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 19
+    staminaCost: 44
+    soundHit:
+      collection: MetalThud
 
 - type: entity
   abstract: true

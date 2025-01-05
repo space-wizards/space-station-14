@@ -542,7 +542,7 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-ai
-    color: "#2ed2fd"
+    color: "#5ed7aa"
 
 - type: entity
   parent: DefaultStationBeaconAI

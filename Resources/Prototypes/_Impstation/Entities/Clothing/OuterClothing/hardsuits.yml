@@ -32,6 +32,9 @@
   name: black mime hardsuit
   description: A custom-made mime hardsuit.
   components:
+  - type: Tag
+    tags:
+      - MimeHardsuit
   - type: Sprite
     sprite: _Impstation/Clothing/OuterClothing/Hardsuits/mimeblack.rsi
   - type: Clothing

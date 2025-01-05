@@ -916,6 +916,18 @@
     - id: BookRandomStory
       prob: 0.5
       orGroup: book
+    - id: BookKeelBayWorn
+      prob: 0.1
+      orGroup: book
+    - id: BookKeelBay
+      prob: 0.4
+      orGroup: book
+    - id: BookCosmicCult
+      prob: 0.5
+      orGroup: book
+    - id: BookTenebraeConspiracy
+      prob: 0.5
+      orGroup: book
     - id: BookGatsby
       prob: 0.05
       orGroup: book
@@ -1062,12 +1074,34 @@
 - type: artifactEffect
   id: EffectGridKnockdown
   targetDepth: 4
-  effectHint: artifact-effect-hint-stationwide-disruption
+  effectHint: artifact-effect-hint-environment
   effectProb: 0.6
   components:
   - type: KnockdownArtifact
-    entireGrid: true
+    entireGrid: false
     knockdownTime: 2.5
+    range: 15
+
+- type: artifactEffect
+  id: EffectAnimateSingle
+  targetDepth: 4
+  effectHint: artifact-effect-hint-sentience
+  effectProb: 0.5
+  components:
+  - type: AnimateArtifact
+    range: 6
+    duration: 10
+    count: 1
+
+- type: artifactEffect
+  id: EffectScrambleSingleRare
+  targetDepth: 4
+  effectHint: artifact-effect-hint-polymorph
+  effectProb: 0.01
+  components:
+  - type: ScrambleDNAArtifact
+    range: 4
+    count: 1
 
 - type: artifactEffect
   id: EffectSingulo

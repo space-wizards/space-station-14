@@ -6,7 +6,8 @@ loadout-group-tank-harness-with-outerwear-aquatic = Tank harness for water-breat
 loadout-group-tank-harness-command-with-outerwear-aquatic = Command tank harness for water-breathers (in inventory)
 loadout-group-breath-tool-decapoid = Vaporizer for decapoids
 loadout-group-breath-tool-inventory-decapoid = Vaporizer for decapoids (in inventory)
-loadout-group-head-of-security-mask = Head of Security mask
 loadout-group-hop-shoes = Head of Personnel shoes
+loadout-group-clown-mask = Clown mask
+loadout-group-clown-neck = Clown neck
 
 loadout-group-chemist-head = Chemist head

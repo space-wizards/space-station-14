@@ -1,0 +1,83 @@
+- type: entity
+  name: random dinosaur spawner
+  id: DinosaurSpawnerRandom
+  parent: MarkerBase
+  suffix: DO NOT MAP
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: raptor
+          sprite: _Impstation/Mobs/Aliens/Dinos/raptor.rsi
+    - type: ConditionalSpawner
+      prototypes:
+      - MobDinosaurAnki
+      - MobDinosaurCompy
+      - MobDinosaurDilo
+      - MobDinosaurKentro
+      - MobDinosaurPara
+      - MobDinosaurRaptor
+      - MobDinosaurSpino
+      - MobDinosaurStego
+      - MobDinosaurTrex
+      - MobDinosaurTrike
+
+- type: entity
+  name: dinosaur rift spawner (easy)
+  id: DinosaurSpawnerEasy
+  parent: MarkerBase
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: raptor
+          sprite: _Impstation/Mobs/Aliens/Dinos/raptor.rsi
+    - type: ConditionalSpawner
+      prototypes:
+      - MobDinosaurCompy
+      - MobDinosaurDilo
+      - MobDinosaurPara
+      - MobDinosaurRaptor
+
+- type: entity
+  name: dinosaur rift spawner (medium)
+  id: DinosaurSpawnerMedium
+  parent: MarkerBase
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: raptor
+          sprite: _Impstation/Mobs/Aliens/Dinos/raptor.rsi
+    - type: ConditionalSpawner
+      prototypes:
+      - MobDinosaurAnki
+      - MobDinosaurCompy
+      - MobDinosaurDilo
+      - MobDinosaurKentro
+      - MobDinosaurPara
+      - MobDinosaurRaptor
+      - MobDinosaurStego
+      - MobDinosaurTrike
+
+- type: entity
+  name: dinosaur rift spawner (hard)
+  id: DinosaurSpawnerHard
+  parent: MarkerBase
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: raptor
+          sprite: _Impstation/Mobs/Aliens/Dinos/raptor.rsi
+    - type: ConditionalSpawner
+      prototypes:
+      - MobDinosaurAnki
+      - MobDinosaurKentro
+      - MobDinosaurSpino
+      - MobDinosaurStego
+      - MobDinosaurTrex
+      - MobDinosaurTrike

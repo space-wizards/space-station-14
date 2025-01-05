@@ -75,7 +75,6 @@
   - BartenderPDA
   - Survival
   - Trinkets
-  - Mixologist
   - GroupSpeciesBreathTool
   - GroupTankHarnessWithOuterwear
   - GroupBreathToolDecapoid # imp special
@@ -204,6 +203,8 @@
   id: JobClown
   groups:
   - ClownHead
+  - ClownMask #imp
+  - ClownNeck #imp
   - ClownJumpsuit
   - ClownOuterClothing
   - ClownShoes
@@ -429,7 +430,6 @@
   groups:
   - HeadofSecurityHead
   - HeadofSecurityNeck
-  - HeadofSecurityMask
   - HeadofSecurityJumpsuit
   - HeadofSecurityOuterClothing
   - UpperSecurityShoes

@@ -333,9 +333,10 @@
     - id: SecurityTechFabCircuitboard
     - id: WeaponDisabler
     - id: WantedListCartridge
-    - id: ClothingNeckBronzeheart
+    - id: ClothingNeckBronzeheart #imp
     - id: TicketPad #imp special
     - id: Stunbaton #imp temporary till seclink gets more toys
+    - id: PillCanisterHOS #imp
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable

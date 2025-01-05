@@ -1,0 +1,8 @@
+- type: entity
+  parent: [ ClothingNeckBase]
+  id: ClothingNeckRuffle
+  name: ruffle
+  description: A big puffy ruffle, for either looking fancy or funny.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Misc/ruffle.rsi

@@ -70,7 +70,7 @@
 
 - type: entity
   name: viper
-  parent: [BaseWeaponPistol, BaseSyndicateContraband]
+  parent: [BaseWeaponPistol, Tier3Contraband]
   id: WeaponPistolViper
   description: A small, easily-concealable but somewhat underpowered handgun. Retrofitted with a fully automatic receiver. Uses .35 auto ammo.
   components:
@@ -103,7 +103,7 @@
 
 - type: entity
   name: echis
-  parent: [ BaseItem, BaseSyndicateContraband ]
+  parent: [ BaseItem, Tier3Contraband ]
   id: WeaponPistolEchis
   description: A viper pistol for use by cyborgs. Creates .35 ammo on the fly from an internal ammo fabricator, which slowly self-charges.
   components:
@@ -138,7 +138,7 @@
 
 - type: entity
   name: cobra
-  parent: [ BaseWeaponPistol, BaseSyndicateContraband ]
+  parent: [ BaseWeaponPistol, Tier3Contraband ]
   id: WeaponPistolCobra
   description: A rugged, integrally-suppressed handgun. Perfect for the robust operator who wants to leave no trace. Uses .25 caseless ammo.
   components:

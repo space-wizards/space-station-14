@@ -65,6 +65,7 @@ public sealed partial class ActionEphedrineOverdoseEvent : InstantActionEvent { 
 public sealed partial class ActionFleshmendEvent : InstantActionEvent { }
 public sealed partial class ActionLastResortEvent : InstantActionEvent { }
 public sealed partial class ActionLesserFormEvent : InstantActionEvent { }
+public sealed partial class ActionMindshieldFakeEvent : InstantActionEvent { }
 public sealed partial class ActionSpacesuitEvent : InstantActionEvent { }
 public sealed partial class ActionHivemindAccessEvent : InstantActionEvent { }
 public sealed partial class ActionContortBodyEvent : InstantActionEvent { }

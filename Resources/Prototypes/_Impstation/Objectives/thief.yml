@@ -155,6 +155,15 @@
     difficulty: 1
 
 - type: entity
+  parent: BaseThiefStealObjective
+  id: SecPillCanisterStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: SecPillCanister
+  - type: Objective
+    difficulty: 1
+
+- type: entity
   parent: BaseThiefStealStructureObjective
   id: PTechStealObjective
   components:

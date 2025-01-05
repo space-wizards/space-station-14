@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseItem, BaseSyndicateContraband]
+  parent: [BaseItem, Tier3Contraband]
   abstract: true
   id: ReinforcementRadio
   name: syndicate reinforcement radio

@@ -19,6 +19,12 @@
         Slash: 6
   - type: Item
     sprite: Objects/Tools/Hydroponics/hoe.rsi
+  # imp edits #
+  - type: DamageOtherOnHit
+    staminaCost: 5
+  - type: ThrowingAngle
+    angle: 135
+  # end imp edits #
 
 - type: entity
   name: plant clippers
@@ -40,6 +46,8 @@
   - type: Item
     sprite: Objects/Tools/Hydroponics/clippers.rsi
     storedRotation: -90
+  - type: DamageOtherOnHit # imp
+    staminaCost: 5
 
 - type: entity
   name: scythe
@@ -64,6 +72,15 @@
     - back
   - type: StaticPrice
     price: 40
+  # imp edits #
+  - type: DamageOtherOnHit
+    staminaCost: 7
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 315
+  # end imp edits #
 
 - type: entity
   name: hatchet
@@ -87,6 +104,14 @@
         Piercing: 2
   - type: Item
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
+  # imp edits #
+  - type: DamageOtherOnHit
+    meleeDamageMultiplier: 1.5
+    staminaCost: 6.5
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: EmbedPassiveDamage
+  # end imp edits #
 
 - type: entity
   name: spade
@@ -112,6 +137,12 @@
     sprite: Objects/Tools/Hydroponics/spade.rsi
   - type: Shovel
     speedModifier: 0.75 # slower at digging than a full-sized shovel
+  # imp edits #
+  - type: DamageOtherOnHit
+    staminaCost: 5
+  - type: ThrowingAngle
+    angle: 45
+  # end imp edits #
 
 - type: entity
   name: plant bag

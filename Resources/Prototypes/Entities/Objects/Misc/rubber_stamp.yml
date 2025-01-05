@@ -214,7 +214,7 @@
 
 - type: entity
   name: syndicate rubber stamp
-  parent: [RubberStampBase, BaseSyndicateContraband]
+  parent: [RubberStampBase, Tier1Contraband]
   id: RubberStampSyndicate
   suffix: DO NOT MAP
   components:

@@ -95,14 +95,6 @@
   equipment:
     back: ClothingBackpackDuffelCaptain
 
-- type: loadout
-  id: CommandVeteranDuffel
-  equipment:
-    back: ClothingBackpackDuffelCommandveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCommand
-
 # Outer clothing
 - type: loadout
   id: CaptainOuterClothing

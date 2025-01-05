@@ -58,7 +58,7 @@
       250: Dead
   - type: MeleeWeapon
     soundHit:
-      path: "/Audio/Weapons/smash.ogg"
+      path: "/Audio/_Impstation/Weapons/strong_hit_slash_pierce.ogg" # imp
     angle: 0
     attackRate: 0.75
     animation: WeaponArcPunch

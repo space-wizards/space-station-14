@@ -43,6 +43,8 @@
     tags:
     - BaseballBat
   - type: DeflectThrownObjects
+  - type: DamageOtherOnHit # imp
+    staminaCost: 10
 
 - type: entity
   name: incomplete baseball bat

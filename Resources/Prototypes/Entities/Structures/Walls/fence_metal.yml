@@ -324,9 +324,9 @@
     openingAnimationTime: 0
     closingAnimationTime: 0
     openSound:
-      path: /Audio/Effects/door_open.ogg
+      path: /Audio/Effects/door_chainlink_open.ogg
     closeSound:
-      path: /Audio/Effects/door_close.ogg
+      path: /Audio/Effects/door_chainlink_close.ogg
   - type: Construction
     graph: FenceMetal
     node: gate
