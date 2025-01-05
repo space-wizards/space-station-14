@@ -187,6 +187,8 @@
   components:
     - type: Item
       sprite: Objects/Tanks/Jetpacks/mini.rsi
+      shape:
+        - 0,0,3,1
     - type: Sprite
       sprite: Objects/Tanks/Jetpacks/mini.rsi
     - type: Clothing
@@ -259,6 +261,8 @@
   components:
   - type: Item
     sprite: Objects/Tanks/Jetpacks/void.rsi
+    shape:
+      - 0,0,3,1
   - type: Sprite
     sprite: Objects/Tanks/Jetpacks/void.rsi
   - type: Clothing
