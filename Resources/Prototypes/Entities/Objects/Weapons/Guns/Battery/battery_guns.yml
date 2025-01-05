@@ -237,6 +237,12 @@
   components:
   - type: StaticPrice
     price: 420
+  - type: Item
+    heldPrefix: mag4
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
     fireCost: 62.5
