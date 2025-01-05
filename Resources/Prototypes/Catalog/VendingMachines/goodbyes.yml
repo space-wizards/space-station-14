@@ -41,11 +41,23 @@
     count: 4
 
 - type: localizedDataset
+  id: DrGibbGoodbyes
+  values:
+    prefix: thankyou-gibb-
+    count: 4
+
+- type: localizedDataset
   id: PwrGameGoodbyes
   values:
     prefix: thankyou-pwr-
     count: 4
-    
+
+- type: localizedDataset
+  id: ShamblerGoodbyes
+  values:
+    prefix: thankyou-shambler-
+    count: 4
+
 - type: localizedDataset
   id: SpaceColaGoodbyes
   values:
@@ -53,15 +65,15 @@
     count: 4
 
 - type: localizedDataset
-  id: DrGibbGoodbyes
+  id: SpaceUpGoodbyes
   values:
-    prefix: thankyou-gibb-
+    prefix: thankyou-spaceup-
     count: 4
 
 - type: localizedDataset
-  id: SmiteGoodbyes
+  id: StarkistGoodbyes
   values:
-    prefix: thankyou-smite-
+    prefix: thankyou-starkist-
     count: 4
 
 - type: localizedDataset
