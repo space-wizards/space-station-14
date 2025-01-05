@@ -63,7 +63,7 @@
       
 - type: entity
   name: lr-30
-  parent: BaseItem
+  parent: [BaseItem, BaseGunWieldable]
   id: WeaponLr30
   description: Energy carbine with lethal mode.
   components:
