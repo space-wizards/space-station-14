@@ -4,30 +4,26 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Database;
 using Content.Server.GameTicking;
-using Content.Server.Mind;
 using Content.Server.Poly.Components;
 using Content.Server.Radio;
 using Content.Server.Radio.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Silicons.Laws;
 using Content.Server.Speech;
+using Content.Shared.CCVar;
 using Content.Shared.Clothing;
 using Content.Shared.Database;
-using Content.Shared.GameTicking;
-using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Radio;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Poly.Systems;
 
-/// <summary>
-/// This handles...
-/// </summary>
 public sealed class PolySystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -40,6 +36,7 @@ public sealed class PolySystem : EntitySystem
     [Dependency] private readonly RadioSystem _radioSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
 
     private ISawmill _sawmill = default!;
     private readonly string _earSlot = SlotFlags.EARS.ToString().ToLower();
@@ -69,7 +66,7 @@ public sealed class PolySystem : EntitySystem
 
             SayRandomSentence(new Entity<PolyComponent>(bird.Owner, bird));
 
-            if (bird.SpeechBuffer.Count == 0)
+            if (bird.SpeechBuffer.Count == 0 && _configManager.GetCVar(CCVars.PolyPersistantMemory))
                 _ = FillBuffer(new Entity<PolyComponent>(bird.Owner, bird)); // Uh uh!! Big hack cause idk what I'm doing
         }
     }
@@ -94,7 +91,6 @@ public sealed class PolySystem : EntitySystem
 
         component.Headset = args.Clothing.Owner;
         EnsureComp<ActiveRadioComponent>(uid).Channels = [..radio.Channels];
-        //EnsureComp<IntrinsicRadioTransmitterComponent>(uid).Channels = [..radio.Channels];
     }
 
     private void OnClothingDidUnequippedEvent(EntityUid uid, PolyComponent component, ref ClothingDidUnequippedEvent args)
@@ -107,13 +103,11 @@ public sealed class PolySystem : EntitySystem
 
         component.Headset = EntityUid.Invalid;
         RemComp<ActiveRadioComponent>(uid);
-        //if (TryComp<IntrinsicRadioTransmitterComponent>(uid, out var transmitter))
-        //    transmitter.Channels.Clear();
     }
 
     private void OnMapInit(EntityUid uid, PolyComponent component, ref MapInitEvent args)
     {
-        // Init Poly's speech buffer
+        // Init Poly's speech buffer)
         _ = FillBuffer(new Entity<PolyComponent>(uid, component));
 
         // Check if idiot bird is wearing a headset
@@ -125,7 +119,6 @@ public sealed class PolySystem : EntitySystem
 
         component.Headset = (EntityUid)ears;
         EnsureComp<ActiveRadioComponent>(uid).Channels = [..radio.Channels];
-        //EnsureComp<IntrinsicRadioTransmitterComponent>(uid).Channels = [..radio.Channels];
     }
 
     private void OnRadioReceive(EntityUid uid, PolyComponent component, RadioReceiveEvent args)
@@ -133,9 +126,6 @@ public sealed class PolySystem : EntitySystem
         var message = args.Message;
         var author = args.MessageSource;
         var channel = args.Channel.ID;
-
-        // Print it out for testing
-        _sawmill.Info($"Received message: \"{message}\" on channel {args.Channel.LocalizedName}");
 
         LearnSentence(new Entity<PolyComponent>(uid, component),
             component.RadioLearnProbability,
@@ -149,9 +139,6 @@ public sealed class PolySystem : EntitySystem
         var message = args.Message;
         var author = args.Source;
 
-        // Print it out for testing
-        _sawmill.Info($"Received local: {message}");
-
         LearnSentence(new Entity<PolyComponent>(uid, component),
             component.LocalLearnProbability,
             "local",
@@ -161,9 +148,11 @@ public sealed class PolySystem : EntitySystem
 
     private void OnRoundEnd()
     {
+        if (!_configManager.GetCVar(CCVars.PolyPersistantMemory))
+            return;
+
         foreach (var component in EntityQuery<PolyComponent>())
         {
-
             if (component.SavedMemory)
                 return;
 
@@ -204,29 +193,30 @@ public sealed class PolySystem : EntitySystem
 
         if (!_robustRandom.Prob(probability))
         {
-            _sawmill.Debug("Poly didn't learn this time");
             return;
         }
 
-        _sawmill.Debug("Poly learned a new sentence");
-
-        Guid? authorGuid = null;
-        // I hate this function, surely theres a method I need to look for lol
+        Guid? authorGuid = null; // This is terrible and I hate it
         if (TryComp<MindContainerComponent>(author, out var mind))
         {
             if (TryComp<MindComponent>(mind.Mind, out var mindComp))
                 authorGuid = mindComp.UserId;
         }
 
+        // Is 255 a lot? Idk, it might be too much
         if (sentence.Length > 255)
                 sentence = sentence[..255];
 
         poly.Comp.Memory.Add((channel, sentence, authorGuid));
+        _sawmill.Info($"Poly learned new sentence \"{sentence}\" from {author}");
         _adminLogManager.Add(LogType.PolyLearned, LogImpact.Medium, $"{ToPrettyString(poly.Owner)} learned new sentence \"{sentence}\" from {ToPrettyString(author):player}");
     }
 
     private async Task FillBuffer(Entity<PolyComponent> poly)
     {
+        if (!_configManager.GetCVar(CCVars.PolyPersistantMemory))
+            return;
+
         var sentences = await _db.PopulatePolyBuffer(); // This might not return anything if the database is empty, so TODO: add check for this
         poly.Comp.SpeechBuffer = new(sentences.Select(s => (s.Channel, s.Phrase)));
     }
@@ -244,10 +234,7 @@ public sealed class PolySystem : EntitySystem
         {
             _sawmill.Info($"Poly said on radio: {sentence}");
             _chatSystem.TrySendInGameICMessage(poly.Owner, sentence, InGameICChatType.Whisper, ChatTransmitRange.Normal);
-
-            var cleanedMessage = _chatSystem.TransformSpeech(poly.Owner, sentence);
-            cleanedMessage = _chatSystem.SanitizeInGameICMessage(poly.Owner, cleanedMessage, out _);
-            _radioSystem.SendRadioMessage(poly.Owner, cleanedMessage , prototype, poly.Owner); // Poly the radio
+            _radioSystem.SendRadioMessage(poly.Owner, sentence , prototype, poly.Owner); // Poly the radio
             return;
         }
 
@@ -263,6 +250,7 @@ public sealed class PolySystem : EntitySystem
         // 2. Speech buffer (Randomly pulled from the database)
         // 3. Random law generation
 
+        // If
         if (_robustRandom.Prob(0.5f) && poly.Comp.Memory.Count > 0)
         {
             var index = _robustRandom.Next(poly.Comp.Memory.Count);
@@ -282,9 +270,12 @@ public sealed class PolySystem : EntitySystem
             }
         }
 
-        var law = _ionStormSystem.GenerateLaw().ToLower(); // We lowercase it here, the chat system should handle formatting it
+        // TODO: Replace with localized random string, probably from SS13 Poly
+        var law = _ionStormSystem.GenerateLaw().ToLower();
+        var cleanedLaw = _chatSystem.TransformSpeech(poly.Owner, law);
+        cleanedLaw = _chatSystem.SanitizeInGameICMessage(poly.Owner, cleanedLaw, out _);
         var channel = _robustRandom.Pick(new[] {"Local", "Engineering", "Common"});
 
-        return (channel, law, null);
+        return (channel, cleanedLaw, null);
     }
 }
