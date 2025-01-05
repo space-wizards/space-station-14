@@ -72,7 +72,7 @@
     - SprayPainter
     - Pen
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: service-module }
+    icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: artistic-module }
 
 - type: entity
   id: BorgModulePaper
@@ -92,7 +92,7 @@
     - RubberStampDenied
     - RubberStampBorg
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: service-module }
+    icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: bureaucracy-module }
 
 - type: entity
   id: BorgModuleBartender
@@ -112,4 +112,4 @@
     - Pitcher
     - BorgDropper
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: service-module }
+    icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: bartender-module }
