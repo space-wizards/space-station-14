@@ -6,7 +6,11 @@
   components:
   - type: Pda
     id: PrisonerIDCard
-    state: pda-clear
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-clear
   - type: Icon
     state: pda-clear
 
@@ -18,37 +22,13 @@
   components:
   - type: Pda
     id: PrisonGuardIDCard
-    state: pda-security
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-security
   - type: PdaBorderColor
     borderColor: "#A32D26"
     accentVColor: "#DFDFDF"
   - type: Icon
     state: pda-security
-
-- type: entity
-  parent: BasePDA
-  id: MartialArtistPDA
-  name: martial artist PDA
-  description: Smells like straw.
-  components:
-  - type: Sprite
-    sprite: GreyStation/Objects/Devices/pda.rsi
-    layers:
-    - map: [ "enum.PdaVisualLayers.Base" ]
-    - state: "light_overlay"
-      map: [ "enum.PdaVisualLayers.Flashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "enum.PdaVisualLayers.IdLight" ]
-      shader: "unshaded"
-      visible: false
-  - type: Pda
-    id: MartialArtistIDCard
-    state: pda-martialartist
-  - type: PdaBorderColor
-    borderColor: "#d7d7d0"
-    accentHColor: "#232323"
-  - type: Icon
-    sprite: GreyStation/Objects/Devices/pda.rsi
-    state: pda-martialartist
