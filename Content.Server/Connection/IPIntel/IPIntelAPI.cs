@@ -9,7 +9,7 @@ namespace Content.Server.Connection.IPIntel;
 
 public interface IIPIntelApi
 {
-    public Task<HttpResponseMessage> GetIPScore(IPAddress ip);
+    Task<HttpResponseMessage> GetIPScore(IPAddress ip);
 }
 
 public sealed class IPIntelApi : IIPIntelApi

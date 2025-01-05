@@ -21,7 +21,7 @@ public sealed class IPIntel
     private readonly IChatManager _chatManager;
     private readonly IGameTiming _gameTiming;
 
-    private ISawmill _sawmill;
+    private readonly ISawmill _sawmill;
 
     public IPIntel(IIPIntelApi api,
         IServerDbManager db,
@@ -41,8 +41,8 @@ public sealed class IPIntel
         cfg.OnValueChanged(CCVars.GameIPIntelRejectUnknown, b => _rejectUnknown = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelRejectBad, b => _rejectBad = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelRejectRateLimited, b => _rejectLimited = b, true);
-        cfg.OnValueChanged(CCVars.GameIPIntelMaxMinute, b => _requestLimitMinute = b, true);
-        cfg.OnValueChanged(CCVars.GameIPIntelMaxDay, b => _requestLimitDay = b, true);
+        cfg.OnValueChanged(CCVars.GameIPIntelMaxMinute, b => _minute.Limit = b, true);
+        cfg.OnValueChanged(CCVars.GameIPIntelMaxDay, b => _day.Limit = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelBackOffSeconds, b => _backoffSeconds = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelCleanupMins, b => _cleanupMins = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelBadRating, b => _rating = b, true);
@@ -54,23 +54,23 @@ public sealed class IPIntel
 
     internal struct Ratelimits
     {
-        public bool RateLimited { get; set; }
-        public int CurrentRequests { get; set; }
-        public TimeSpan LastRatelimited { get; set; }
+        public bool RateLimited;
+        public bool LimitHasBeenHandled;
+        public int CurrentRequests;
+        public int Limit;
+        public TimeSpan LastRatelimited;
     }
 
+    // Self-managed preemptive rate limits.
     private Ratelimits _day;
-    /// This is internal for the reasoning of tests. Please DO NOT MODIFY IT outside the IPIntel function.
-    internal Ratelimits _minute;
+    private Ratelimits _minute;
 
-    private bool _limitHasBeenHandled;
-
+    // Next time we need to clean the database of stale cached IPIntel results.
     private TimeSpan _nextClean;
 
+    // Responsive backoff if we hit a Too Many Requests API error.
     private int _failedRequests;
-
-    /// This is internal for the reasoning of tests. Please DO NOT MODIFY IT outside the IPIntel function.
-    internal DateTime ReleasePeriod;
+    private TimeSpan _releasePeriod;
 
     // CCVars
     private string? _contactEmail;
@@ -78,8 +78,6 @@ public sealed class IPIntel
     private bool _rejectBad;
     private bool _rejectLimited;
     private bool _alertAdminReject;
-    private int _requestLimitMinute;
-    private int _requestLimitDay;
     private int _backoffSeconds;
     private int _cleanupMins;
     private TimeSpan _cacheDays;
@@ -138,19 +136,31 @@ public sealed class IPIntel
             return _rejectUnknown ? (true, Loc.GetString("generic-misconfigured")) : (false, string.Empty);
         }
 
-        return await QueryIPIntel(username, ip);
+        var apiResult = await QueryIPIntelRateLimited(ip);
+        switch (apiResult.Code)
+        {
+            case IPIntelResultCode.Success:
+                await Task.Run(() => _db.UpsertIPIntelCache(DateTime.UtcNow, ip, apiResult.Score));
+                return ScoreCheck(apiResult.Score, username);
+
+            case IPIntelResultCode.RateLimited:
+                return _rejectLimited ? (true, Loc.GetString("ipintel-server-ratelimited")) : (false, string.Empty);
+
+            case IPIntelResultCode.Errored:
+                return _rejectUnknown ? (true, Loc.GetString("ipintel-unknown")) : (false, string.Empty);
+
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 
-    public async Task<(bool IsBad, string Reason)> QueryIPIntel(string username, IPAddress ip)
+    public async Task<IPIntelResult> QueryIPIntelRateLimited(IPAddress ip)
     {
-        _day.CurrentRequests++;
-        _minute.CurrentRequests++;
-
-        // Check our api limits. If we are ratelimited we back out.
-        HandleRatelimit();
+        IncrementAndTestRateLimit(ref _day, TimeSpan.FromDays(1), "daily");
+        IncrementAndTestRateLimit(ref _minute, TimeSpan.FromMinutes(1), "minute");
 
         if (_minute.RateLimited || _day.RateLimited || CheckSuddenRateLimit())
-            return _rejectLimited ? (true, Loc.GetString("ipintel-server-ratelimited")) : (false, string.Empty);
+            return new IPIntelResult(0, IPIntelResultCode.RateLimited);
 
         // Info about flag B: https://getipintel.net/free-proxy-vpn-tor-detection-api/#flagsb
         // TLDR: We don't care about knowing if a connection is compromised.
@@ -161,7 +171,7 @@ public sealed class IPIntel
         {
             _sawmill.Warning($"We hit the IPIntel request limit at some point. (Current limit count: Minute: {_minute.CurrentRequests} Day: {_day.CurrentRequests})");
             CalculateSuddenRatelimit();
-            return _rejectLimited ? (true, Loc.GetString("ipintel-server-ratelimited")) : (false, string.Empty);
+            return new IPIntelResult(0, IPIntelResultCode.RateLimited);
         }
 
         var response = await request.Content.ReadAsStringAsync();
@@ -169,40 +179,32 @@ public sealed class IPIntel
 
         if (request.StatusCode == HttpStatusCode.OK)
         {
-            await Task.Run(() => _db.UpsertIPIntelCache(DateTime.UtcNow, ip, score));
-            return ScoreCheck(score, username);
+            _failedRequests = 0;
+            return new IPIntelResult(score, IPIntelResultCode.Success);
         }
 
-        // Something went wrong! Let's see if it's an error we know about
-        if (ErrorCheck(response, out var rejectResult))
-            return rejectResult;
+        if (ErrorMessages.TryGetValue(response, out var errorMessage))
+        {
+            _sawmill.Error($"IPIntel returned error {response}: {errorMessage}");
+        }
+        else
+        {
+            // Oh boy, we don't know this error.
+            _sawmill.Error($"IPIntel returned {response} (Status code: {request.StatusCode})... we don't know what this error code is. Please make an issue in upstream!");
+        }
 
-        // Oh boy, we don't know this error.
-        _sawmill.Error($"IPIntel returned {response} (Status code: {request.StatusCode})... we don't know what this error code is. Please make an issue in upstream!");
-        return _rejectUnknown ? (true, Loc.GetString("ipintel-unknown")) : (false, string.Empty);
+        return new IPIntelResult(0, IPIntelResultCode.Errored);
     }
-
-
 
     private bool CheckSuddenRateLimit()
     {
-        if (_failedRequests >= 1)
-        {
-            if (ReleasePeriod < DateTime.UtcNow)
-            {
-                CalculateSuddenRatelimit();
-                return true;
-            }
-        }
-
-        _failedRequests = 0;
-        return false;
+        return _failedRequests >= 1 && _releasePeriod > _gameTiming.RealTime;
     }
 
     private void CalculateSuddenRatelimit()
     {
         _failedRequests++;
-        ReleasePeriod = DateTime.UtcNow + TimeSpan.FromSeconds(_failedRequests * _backoffSeconds);
+        _releasePeriod = _gameTiming.RealTime + TimeSpan.FromSeconds(_failedRequests * _backoffSeconds);
     }
 
     private static readonly Dictionary<string, string> ErrorMessages = new()
@@ -215,66 +217,36 @@ public sealed class IPIntel
         ["-6"] = "You did not provide any contact information with your query or the contact information is invalid.",
     };
 
-    private bool ErrorCheck(string response, out (bool, string) result)
+    private void IncrementAndTestRateLimit(ref Ratelimits ratelimits, TimeSpan expireInterval, string name)
     {
-        result = default;
+        if (ratelimits.CurrentRequests < ratelimits.Limit)
+        {
+            ratelimits.CurrentRequests += 1;
+            return;
+        }
 
-        if (!ErrorMessages.TryGetValue(response, out var errorMessage))
-            return false;
+        if (ShouldLiftRateLimit(in ratelimits, expireInterval))
+        {
+            _sawmill.Info($"IPIntel {name} rate limit lifted. We are back to normal.");
+            ratelimits.RateLimited = false;
+            ratelimits.CurrentRequests = 0;
+            ratelimits.LimitHasBeenHandled = false;
+            return;
+        }
 
-        _sawmill.Error($"IPIntel returned error {response}: {errorMessage}");
-        result = _rejectUnknown ? (true, Loc.GetString("ipintel-unknown")) : (false, string.Empty);
+        if (ratelimits.LimitHasBeenHandled)
+            return;
 
-        return true;
+        _sawmill.Warning($"We just hit our last {name} IPIntel limit ({ratelimits.Limit})");
+        ratelimits.RateLimited = true;
+        ratelimits.LimitHasBeenHandled = true;
+        ratelimits.LastRatelimited = _gameTiming.RealTime;
     }
 
-    private void HandleRatelimit()
-    {
-        // Oh my god this is terrible
-        if (_day.CurrentRequests >= _requestLimitDay)
-        {
-            if (ShouldLiftRateLimit(_day.RateLimited, _day.LastRatelimited, TimeSpan.FromDays(1)))
-            {
-                _sawmill.Info("IPIntel daily rate limit lifted. We are back to normal.");
-                _day.RateLimited = false;
-                _day.CurrentRequests = 0;
-                _limitHasBeenHandled = false;
-                return;
-            }
-
-            if (_limitHasBeenHandled)
-                return;
-
-            _sawmill.Warning($"We just hit our last daily IPIntel limit ({_requestLimitDay})");
-            _day.RateLimited = true;
-            _limitHasBeenHandled = true;
-            _day.LastRatelimited = _gameTiming.RealTime;
-        }
-        else if (_minute.CurrentRequests >= _requestLimitMinute)
-        {
-            if (ShouldLiftRateLimit(_minute.RateLimited, _minute.LastRatelimited, TimeSpan.FromMinutes(1)))
-            {
-                _sawmill.Info("IPIntel minute rate limit lifted. We are back to normal.");
-                _minute.RateLimited = false;
-                _minute.CurrentRequests = 0;
-                _limitHasBeenHandled = false;
-                return;
-            }
-
-            if (_limitHasBeenHandled)
-                return;
-
-            _sawmill.Warning($"We just hit our last minute IPIntel limit ({_requestLimitMinute}).");
-            _minute.RateLimited = true;
-            _limitHasBeenHandled = true;
-            _minute.LastRatelimited = _gameTiming.RealTime;
-        }
-    }
-
-    private bool ShouldLiftRateLimit(bool currentlyRatelimited, TimeSpan lastRatelimited, TimeSpan liftingTime)
+    private bool ShouldLiftRateLimit(in Ratelimits ratelimits, TimeSpan liftingTime)
     {
         // Should we raise this limit now?
-        return currentlyRatelimited && _gameTiming.RealTime >= lastRatelimited + liftingTime;
+        return ratelimits.RateLimited && _gameTiming.RealTime >= ratelimits.LastRatelimited + liftingTime;
     }
 
     private (bool, string Empty) ScoreCheck(float score, string username)
@@ -361,7 +333,7 @@ public sealed class IPIntel
         (ToAddressBytes("fc00::"), 7), // Unique local address
     ];
 
-    private static bool IsAddressReservedIpv4(IPAddress address)
+    internal static bool IsAddressReservedIpv4(IPAddress address)
     {
         if (address.AddressFamily != AddressFamily.InterNetwork)
             return false;
@@ -380,10 +352,13 @@ public sealed class IPIntel
         return false;
     }
 
-    private static bool IsAddressReservedIpv6(IPAddress address)
+    internal static bool IsAddressReservedIpv6(IPAddress address)
     {
         if (address.AddressFamily != AddressFamily.InterNetworkV6)
             return false;
+
+        if (address.IsIPv4MappedToIPv6)
+            return IsAddressReservedIpv4(address.MapToIPv4());
 
         Span<byte> ipBitsByte = stackalloc byte[16];
         address.TryWriteBytes(ipBitsByte, out _);
@@ -397,5 +372,14 @@ public sealed class IPIntel
         }
 
         return false;
+    }
+
+    public readonly record struct IPIntelResult(float Score, IPIntelResultCode Code);
+
+    public enum IPIntelResultCode : byte
+    {
+        Success = 0,
+        RateLimited,
+        Errored,
     }
 }
