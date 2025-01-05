@@ -5,7 +5,6 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Prototypes;
@@ -151,6 +150,9 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
             Dirty(uid, projectileBatteryAmmoProviderComponent);
             var updateClientAmmoEvent = new UpdateClientAmmoEvent();
             RaiseLocalEvent(uid, ref updateClientAmmoEvent);
+            
+            var fireModeChangedEvent = new FireModeChangedEvent();
+            RaiseLocalEvent(uid, ref fireModeChangedEvent);
 
             if (user != null)
             {

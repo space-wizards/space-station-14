@@ -14,8 +14,9 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: disable
+      map: ["enum.FireModesLayers.FireMode"]
       shader: unshaded
-    - state: mag-unshaded-0
+    - state: disable-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
@@ -27,6 +28,10 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
+  - type: MagazineVisuals
+    magState: disable
+    steps: 5
+    zeroVisible: false
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisabler
     fireCost: 100
@@ -34,8 +39,12 @@
     fireModes:
     - proto: BulletDisabler
       fireCost: 100
+      visualState: disable
+      magState: disable
     - proto: BulletAdvTaser
       fireCost: 250
+      visualState: stun
+      magState: stun
 
 - type: entity
   name: energy gun

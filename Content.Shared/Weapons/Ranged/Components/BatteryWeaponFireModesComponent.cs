@@ -49,6 +49,15 @@ public sealed partial class BatteryWeaponFireMode
     /// </summary>
     [DataField("conditions")]
     public List<FireModeCondition>? Conditions;
+    
+    [DataField("heldPrefix")]
+    public string? HeldPrefix;
+    
+    [DataField("magState")]
+    public string? MagState;
+    
+    [DataField("visualState")]
+    public string? VisualState;
 }
 
 /// <summary>
@@ -67,3 +76,6 @@ public abstract partial class FireModeCondition
 }
 
 public readonly record struct FireModeConditionConditionArgs(EntityUid Shooter, EntityUid? Weapon, BatteryWeaponFireMode? FireMode, IEntityManager EntityManager);
+
+[ByRefEvent]
+public readonly record struct FireModeChangedEvent();

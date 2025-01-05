@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d",
+  "copyright": "Taken from Paradise Station",
   "size": {
     "x": 32,
     "y": 32
@@ -14,13 +14,10 @@
       "name": "base"
     },
     {
-      "name": "stun"
-    },
-    {
       "name": "disable"
     },
     {
-      "name": "mag-unshaded-0",
+      "name": "disable-unshaded-0",
       "delays": [
         [
           0.3,
@@ -29,16 +26,40 @@
       ]
     },
     {
-      "name": "mag-unshaded-1"
+      "name": "disable-unshaded-1"
     },
     {
-      "name": "mag-unshaded-2"
+      "name": "disable-unshaded-2"
     },
     {
-      "name": "mag-unshaded-3"
+      "name": "disable-unshaded-3"
     },
     {
-      "name": "mag-unshaded-4"
+      "name": "disable-unshaded-4"
+    },
+    {
+      "name": "stun"
+    },
+    {
+      "name": "stun-unshaded-0",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "stun-unshaded-1"
+    },
+    {
+      "name": "stun-unshaded-2"
+    },
+    {
+      "name": "stun-unshaded-3"
+    },
+    {
+      "name": "stun-unshaded-4"
     },
     {
       "name": "taser0-inhand-left",

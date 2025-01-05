@@ -1,16 +1,33 @@
 using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Rounding;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    
     private void InitializeMagazineVisuals()
     {
         SubscribeLocalEvent<MagazineVisualsComponent, ComponentInit>(OnMagazineVisualsInit);
         SubscribeLocalEvent<MagazineVisualsComponent, AppearanceChangeEvent>(OnMagazineVisualsChange);
+    }
+    
+    public void SetMagState(EntityUid uid, string? magState, bool force = false, MagazineVisualsComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        if (!force && component.MagState == magState)
+            return;
+
+        component.MagState = magState;
+        
+        if (TryComp<AppearanceComponent>(uid, out var appearance))
+            _appearance.QueueUpdate(uid, appearance);
     }
 
     private void OnMagazineVisualsInit(EntityUid uid, MagazineVisualsComponent component, ComponentInit args)
