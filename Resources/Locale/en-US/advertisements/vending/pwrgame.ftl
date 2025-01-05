@@ -9,4 +9,4 @@ advertisement-pwr-8 = Git gud, get PWR!
 thankyou-pwr-1 = PWR to the people!
 thankyou-pwr-2 = Pow! Take that, thirst!
 thankyou-pwr-3 = Pwn them with PWR!
-thankyou-pwr-4 = Feel the PWR!
+thankyou-pwr-4 = Pairs well with Vlad's Salads!
