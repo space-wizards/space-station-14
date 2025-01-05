@@ -1127,9 +1127,6 @@
   id: Sidearm
 
 - type: Tag
-  id: SignalTrigger
-
-- type: Tag
   id: SkeletonMotorcycleKeys
 
 - type: Tag
@@ -1248,6 +1245,9 @@
 
 - type: Tag
   id: TimerSignalElectronics
+
+- type:
+  id: TimerSignalTrigger
 
 - type: Tag
   id: Toolbox

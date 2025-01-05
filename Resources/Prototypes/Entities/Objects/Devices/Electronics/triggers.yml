@@ -20,6 +20,9 @@
     size: Small
   - type: StaticPrice
     price: 40
+  - type: Tag
+    tags:
+    - TimerSignalTrigger
   - type: PayloadTrigger
     components:
     - type: OnUseTimerTrigger
@@ -39,30 +42,6 @@
     - type: DeviceLinkSink
       ports:
       - Timer
-
-#- type: entity
-#  parent: TimerTrigger
-#  id: SignalTrigger
-#  name: signal trigger
-#  description: Adds a machine link that is triggered by signals.
-#  components:
-#  - type: Sprite
-#    sprite: Objects/Devices/signaltrigger.rsi
-#    state: signaltrigger
-#  - type: StaticPrice
-#    price: 40
-#  - type: Tag
-#    tags:
-#    - SignalTrigger
-#  - type: PayloadTrigger
-#    components:
-#    - type: TriggerOnSignal
-#    - type: DeviceNetwork
-#      deviceNetId: Wireless
-#      receiveFrequencyId: BasicDevice
-#    - type: WirelessNetworkConnection
-#      range: 200
-#    - type: DeviceLinkSink
 
 - type: entity
   parent: BaseItem

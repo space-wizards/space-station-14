@@ -316,7 +316,6 @@
       - FlashPayload
       - Signaller
       - SignallerAdvanced
-      - SignalTrigger
       - VoiceTrigger
       - Igniter
       - HandHeldMassScanner
@@ -771,7 +770,6 @@
       - ShuttleGunPerforatorCircuitboard
       - ShuttleGunSvalinnMachineGunCircuitboard
       - Signaller
-      - SignalTrigger
       - SpeedLoaderMagnumIncendiary
       - SpeedLoaderMagnumUranium
       - TelescopicShield
