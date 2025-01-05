@@ -380,7 +380,7 @@
     duration: 1
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/Shuttles/ShuttleEvent/striker.yml
+    mapPath: /Maps/_Impstation/Shuttles/ShuttleEvent/striker.yml
   - type: NukeopsRule
     roundEndBehavior: Nothing
   - type: AntagSelection
