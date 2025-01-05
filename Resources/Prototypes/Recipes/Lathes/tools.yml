@@ -214,3 +214,11 @@
     Steel: 750
     Plasma: 150
     Uranium: 150
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: WeaponFlareGun
+  result: WeaponFlareGun
+  completetime: 3
+  materials:
+    Plastic: 300

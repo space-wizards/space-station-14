@@ -201,6 +201,8 @@
       - WetFloorSign
       - ClothingHeadHatCone
       - FreezerElectronics
+      - WeaponFlareGun
+      - BoxShotgunFlare
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - BoxLethalshot
