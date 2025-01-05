@@ -1,0 +1,123 @@
+#Token Currency
+- type: entity
+  name: batontoken
+  parent: [BaseItem, BaseRestrictedContraband]
+  id: BatonToken
+  suffix: 3 BT
+  description: This is a Baton Token
+  components:
+   - type: Sprite
+     sprite: _Impstation/Objects/Specific/Security/seclink.rsi
+     state: batontoken
+   - type: Item
+     sprite: _Impstation/Objects/Specific/Security/seclink.rsi
+     size: Tiny
+   - type: Stack
+     count: 3
+     stackType: BatonToken
+   - type: StaticPrice
+     price: 0
+   - type: StackPrice
+     price: 200
+   - type: Currency
+     price:
+       BatonToken: 1
+
+- type: entity
+  parent: BatonToken
+  id: BatonToken1
+  suffix: 1 BT
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  name: disablertoken
+  parent: [BaseItem, BaseRestrictedContraband]
+  id: DisablerToken
+  suffix: 3 DT
+  description: This is a Disabler Token
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Security/seclink.rsi
+    state: disablertoken
+  - type: Item
+    sprite: _Impstation/Objects/Specific/Security/seclink.rsi
+    size: Tiny
+  - type: Stack
+    count: 3
+    stackType: DisablerToken
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 200
+  - type: Currency
+    price:
+      DisablerToken: 1
+
+- type: entity
+  parent: DisablerToken
+  id: DisablerToken1
+  suffix: 1 DT
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  name: utilitytoken
+  parent: [ BaseItem, BaseRestrictedContraband ]
+  id: UtilityToken
+  suffix: 3 UT
+  description: This is a Utility Token
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Security/seclink.rsi
+    state: utilitytoken
+  - type: Item
+    sprite: _Impstation/Objects/Specific/Security/seclink.rsi
+    size: Tiny
+  - type: Stack
+    count: 3
+    stackType: UtilityToken
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 200
+  - type: Currency
+    price:
+      UtilityToken: 1
+
+- type: entity
+  parent: UtilityToken
+  id: UtilityToken1
+  suffix: 1 BT
+  components:
+  - type: Stack
+    count: 1
+
+#SecLink Radio
+- type: entity
+  parent: [BaseItem, StorePresetSeclink, BaseRestrictedContraband]
+  id: BaseSeclinkRadio
+  name: SecLink radio
+  description: Order your security equipment with this
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Security/seclink.rsi
+    layers:
+    - state: seclinkradio
+  - type: Item
+    sprite: _Impstation/Objects/Specific/Security/seclink.rsi
+    heldPrefix: seclinkradio
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    balance:
+      BatonToken: 0
+      DisablerToken: 0
+      UtilityToken: 0

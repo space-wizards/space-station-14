@@ -1,0 +1,21 @@
+# Seclink
+- type: entity
+  name: token box
+  parent: BoxCardboard
+  id: BoxToken
+  description: A box full of tokens meant to be used in the SecLink radio.
+  components:
+  - type: Storage
+    grid:
+    - 0,0,2,0
+  - type: StorageFill
+    contents:
+    - id: BatonToken1
+      amount: 5
+    - id: DisablerToken1
+      amount: 5
+    - id: UtilityToken1
+      amount: 5
+  - type: Sprite
+    layers:
+    - state: box_security

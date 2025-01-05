@@ -335,6 +335,7 @@
     - id: WantedListCartridge
     - id: ClothingNeckBronzeheart
     - id: TicketPad #imp special
+    - id: Stunbaton #imp temporary till seclink gets more toys
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
