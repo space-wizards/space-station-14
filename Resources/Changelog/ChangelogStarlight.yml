@@ -1682,4 +1682,12 @@ Entries:
   id: 238
   time: '2025-01-04T03:22:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/211
+- author: Conflee
+  changes:
+  - message: Added Security Magboots. They spawn in Security Hardsuit Storage, including
+      Warden and HoS's
+    type: Add
+  id: 239
+  time: '2025-01-05T20:59:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/216
 
