@@ -41,7 +41,7 @@
     count: 4
 
 - type: localizedDataset
-  id: GibbSoftdrinksGoodbyes
+  id: DrGibbGoodbyes
   values:
     prefix: thankyou-gibb-
     count: 4

@@ -83,7 +83,7 @@
     count: 8
 
 - type: localizedDataset
-  id: GibbSoftdrinksAds
+  id: DrGibbAds
   values:
     prefix: advertisement-gibb-
     count: 8

@@ -669,9 +669,9 @@
     ejectDelay: 1.9
     initialStockQuality: 0.33
   - type: Advertise
-    pack: GibbSoftdrinksAds
+    pack: DrGibbAds
   - type: SpeakOnUIClosed
-    pack: GibbSoftdrinksGoodbyes
+    pack: DrGibbGoodbyes
   - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/gib.rsi
