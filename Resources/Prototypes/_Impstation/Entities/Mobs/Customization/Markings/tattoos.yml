@@ -1,0 +1,69 @@
+- type: marking
+  id: TattooCuthereChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: tattoo_cuthere_chest
+
+- type: marking
+  id: TattooDollLeftArm
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: tattoo_doll_l_arm
+
+- type: marking
+  id: TattooDollRightArm
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: tattoo_doll_r_arm
+
+- type: marking
+  id: TattooDollLeftHand
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: tattoo_doll_l_hand
+
+- type: marking
+  id: TattooDollRightHand
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: tattoo_doll_r_hand
