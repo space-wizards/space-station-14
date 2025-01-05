@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -42,4 +43,27 @@ public sealed partial class BatteryWeaponFireMode
     /// </summary>
     [DataField]
     public float FireCost = 100;
+    
+    /// <summary>
+    /// Conditions that must be satisfied to activate this firing mode
+    /// </summary>
+    [DataField("conditions")]
+    public List<FireModeCondition>? Conditions;
 }
+
+/// <summary>
+/// Used to define a complicated condition that requires C#
+/// </summary>
+[ImplicitDataDefinitionForInheritors]
+[MeansImplicitUse]
+[Serializable, NetSerializable]
+public abstract partial class FireModeCondition
+{
+    /// <summary>
+    /// Determines whether or not a certain entity can change firemode.
+    /// </summary>
+    /// <returns>Whether or not the firemode can be changed</returns>
+    public abstract bool Condition(FireModeConditionConditionArgs args);
+}
+
+public readonly record struct FireModeConditionConditionArgs(EntityUid Shooter, EntityUid? Weapon, BatteryWeaponFireMode? FireMode, IEntityManager EntityManager);

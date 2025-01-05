@@ -55,6 +55,15 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
             var fireMode = component.FireModes[i];
             var entProto = _prototypeManager.Index<EntityPrototype>(fireMode.Prototype);
             var index = i;
+            
+            if (fireMode.Conditions != null)
+            {
+                var conditionArgs = new FireModeConditionConditionArgs(args.User, args.Target, fireMode, EntityManager);
+                var conditionsMet = fireMode.Conditions.All(condition => condition.Condition(conditionArgs));
+
+                if (!conditionsMet)
+                    continue;
+            }
 
             var v = new Verb
             {

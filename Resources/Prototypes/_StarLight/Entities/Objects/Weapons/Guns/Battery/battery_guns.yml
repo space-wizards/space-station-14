@@ -137,6 +137,9 @@
       fireCost: 150
     - proto: BulletLaser
       fireCost: 200
+      conditions:
+      - !type:AlertLevelCondition
+        alertLevel: blue
   - type: MagazineVisuals
     magState: mag
     steps: 4

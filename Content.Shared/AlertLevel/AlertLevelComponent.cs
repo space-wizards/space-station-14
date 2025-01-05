@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.AlertLevel;
+namespace Content.Shared.AlertLevel;
 
 /// <summary>
 /// Alert level component. This is the component given to a station to
