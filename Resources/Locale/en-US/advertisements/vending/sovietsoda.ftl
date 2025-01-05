@@ -8,5 +8,5 @@ advertisement-sovietsoda-7 = Patience and hard work can overcome anything.
 advertisement-sovietsoda-8 = We make good team!
 thankyou-sovietsoda-1 = You did well!
 thankyou-sovietsoda-2 = Now get back to work.
-thankyou-sovietsoda-3 = This is all you're getting.
+thankyou-sovietsoda-3 = Enjoy, comrade!
 thankyou-sovietsoda-4 = Trust, but verify.
