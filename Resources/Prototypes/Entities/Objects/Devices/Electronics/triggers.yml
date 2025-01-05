@@ -10,8 +10,8 @@
 - type: entity
   parent: BaseItem
   id: TimerTrigger
-  name: timer trigger
-  description: A configurable timer.
+  name: timer-signal trigger
+  description: A configurable timer that can be activated by signal.
   components:
   - type: Sprite
     sprite: Objects/Devices/timer.rsi
@@ -23,37 +23,46 @@
   - type: PayloadTrigger
     components:
     - type: OnUseTimerTrigger
-      delay: 5
+      delay: 3
       delayOptions: [3, 5, 10, 15, 30]
       initialBeepDelay: 0
       beepSound:
         path: /Audio/Machines/Nuke/general_beep.ogg
         params:
           volume: -2
-
-- type: entity
-  parent: TimerTrigger
-  id: SignalTrigger
-  name: signal trigger
-  description: Adds a machine link that is triggered by signals.
-  components:
-  - type: Sprite
-    sprite: Objects/Devices/signaltrigger.rsi
-    state: signaltrigger
-  - type: StaticPrice
-    price: 40
-  - type: Tag
-    tags:
-    - SignalTrigger
-  - type: PayloadTrigger
-    components:
-    - type: TriggerOnSignal
+    - type: TimerStartOnSignal
     - type: DeviceNetwork
       deviceNetId: Wireless
       receiveFrequencyId: BasicDevice
     - type: WirelessNetworkConnection
       range: 200
     - type: DeviceLinkSink
+      ports:
+      - Timer
+
+#- type: entity
+#  parent: TimerTrigger
+#  id: SignalTrigger
+#  name: signal trigger
+#  description: Adds a machine link that is triggered by signals.
+#  components:
+#  - type: Sprite
+#    sprite: Objects/Devices/signaltrigger.rsi
+#    state: signaltrigger
+#  - type: StaticPrice
+#    price: 40
+#  - type: Tag
+#    tags:
+#    - SignalTrigger
+#  - type: PayloadTrigger
+#    components:
+#    - type: TriggerOnSignal
+#    - type: DeviceNetwork
+#      deviceNetId: Wireless
+#      receiveFrequencyId: BasicDevice
+#    - type: WirelessNetworkConnection
+#      range: 200
+#    - type: DeviceLinkSink
 
 - type: entity
   parent: BaseItem
