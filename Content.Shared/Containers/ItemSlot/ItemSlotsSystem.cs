@@ -269,13 +269,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 if (slot.InsertSuccessPopup.HasValue)
                     _popupSystem.PopupClient(Loc.GetString(slot.InsertSuccessPopup), uid, args.User);
-
                 args.Handled = true;
-
-                var ev = new ItemSlotInsertedEvent(uid, args.Used, args.User, slot);
-                RaiseLocalEvent(uid, ref ev);
-                RaiseLocalEvent(args.Used, ref ev);
-
                 return;
             }
         }
@@ -306,6 +300,10 @@ namespace Content.Shared.Containers.ItemSlots
                     $"{ToPrettyString(user.Value)} inserted {ToPrettyString(item)} into {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
 
             _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
+
+            var ev = new ItemSlotInsertedEvent(uid, item, user, slot);
+            RaiseLocalEvent(uid, ref ev);
+            RaiseLocalEvent(args.Used, ref ev);
         }
 
         /// <summary>
