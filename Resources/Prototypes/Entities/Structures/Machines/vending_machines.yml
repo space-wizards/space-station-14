@@ -626,7 +626,7 @@
   components:
   - type: VendingMachine
     pack: PwrGameInventory
-    dispenseOnHitChance: 0.25
+    dispenseOnHitChance: 0.35 # Power through with PWR Game!
     dispenseOnHitThreshold: 2
     offState: off
     brokenState: broken
