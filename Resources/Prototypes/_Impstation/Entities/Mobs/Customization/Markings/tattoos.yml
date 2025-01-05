@@ -1,8 +1,8 @@
 - type: marking
-  id: TattooCuthereChest
+  id: ChestCutHere
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [Human, Dwarf]
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
   coloring:
     default:
       type:
@@ -10,13 +10,13 @@
       fallbackColor: "#666666"
   sprites:
   - sprite: _Impstation/Mobs/Customization/tattoos.rsi
-    state: tattoo_cuthere_chest
+    state: chest_cuthere
 
 - type: marking
-  id: TattooDollLeftArm
+  id: ArmDollJointsTattooLeft
   bodyPart: LArm
   markingCategory: Arms
-  speciesRestriction: [Human, Dwarf]
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
   coloring:
     default:
       type:
@@ -24,13 +24,13 @@
       fallbackColor: "#666666"
   sprites:
   - sprite: _Impstation/Mobs/Customization/tattoos.rsi
-    state: tattoo_doll_l_arm
+    state: l_arm_doll
 
 - type: marking
-  id: TattooDollRightArm
+  id: ArmDollJointsTattooRight
   bodyPart: RArm
   markingCategory: Arms
-  speciesRestriction: [Human, Dwarf]
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
   coloring:
     default:
       type:
@@ -38,13 +38,13 @@
       fallbackColor: "#666666"
   sprites:
   - sprite: _Impstation/Mobs/Customization/tattoos.rsi
-    state: tattoo_doll_r_arm
+    state: r_arm_doll
 
 - type: marking
-  id: TattooDollLeftHand
+  id: HandDollJointsTattooLeft
   bodyPart: LHand
   markingCategory: Arms
-  speciesRestriction: [Human, Dwarf]
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
   coloring:
     default:
       type:
@@ -52,13 +52,13 @@
       fallbackColor: "#666666"
   sprites:
   - sprite: _Impstation/Mobs/Customization/tattoos.rsi
-    state: tattoo_doll_l_hand
+    state: l_hand_doll
 
 - type: marking
-  id: TattooDollRightHand
+  id: HandDollJointsTattooRight
   bodyPart: RHand
   markingCategory: Arms
-  speciesRestriction: [Human, Dwarf]
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
   coloring:
     default:
       type:
@@ -66,4 +66,60 @@
       fallbackColor: "#666666"
   sprites:
   - sprite: _Impstation/Mobs/Customization/tattoos.rsi
-    state: tattoo_doll_r_hand
+    state: r_hand_doll
+
+- type: marking
+  id: LegDollJointsTattooLeft
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: l_leg_doll
+
+- type: marking
+  id: LegDollJointsTattooRight
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: r_leg_doll
+
+- type: marking
+  id: FootDollJointsTattooLeft
+  bodyPart: LFoot
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: l_foot_doll
+
+- type: marking
+  id: FootDollJointsTattooRight
+  bodyPart: RFoot
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: r_foot_doll

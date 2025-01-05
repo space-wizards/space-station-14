@@ -1,17 +1,29 @@
 marking-TattooNanotrasenChest-tattoo_nanotrasen_chest = Chest Tattoo (Nanotrasen)
 marking-TattooNanotrasenChest = Chest Tattoo (Nanotrasen)
 
-marking-TattooDollLeftArm-tattoo_doll_l_arm = Left Arm Tattoo (Doll Joints)
-marking-TattooDollLeftArm = Left Arm Tattoo (Doll Joints)
+marking-ArmDollJointsTattooLeft-l_arm_doll = Doll Joints Arm Tattoo (Left)
+marking-ArmDollJointsTattooLeft = Doll Joints Arm Tattoo (Left)
 
-marking-TattooDollRightArm-tattoo_doll_r_arm = Right Arm Tattoo (Doll Joints)
-marking-TattooDollRightArm = Right Arm Tattoo (Doll Joints)
+marking-ArmDollJointsTattooRight-r_arm_doll = Doll Joints Arm Tattoo (Right)
+marking-ArmDollJointsTattooRight = Doll Joints Arm Tattoo (Right)
 
-marking-TattooDollLeftHand-tattoo_doll_l_hand = Left Hand Tattoo (Doll Joints)
-marking-TattooDollLeftHand = Left Hand Tattoo (Doll Joints)
+marking-HandDollJointsTattooLeft-l_hand_doll = Doll Joints Hand Tattoo (Left)
+marking-HandDollJointsTattooLeft = Doll Joints Hand Tattoo (Left)
 
-marking-TattooDollRightHand-tattoo_doll_r_hand = Right Hand Tattoo (Doll Joints)
-marking-TattooDollRightHand = Right Hand Tattoo (Doll Joints)
+marking-HandDollJointsTattooRight-r_hand_doll = Doll Joints Hand Tattoo (Right)
+marking-HandDollJointsTattooRight = Doll Joints Hand Tattoo (Right)
 
-marking-TattooCuthereChest-tattoo_cuthere_chest = Chest Tattoo (Cut Here)
-marking-TattooCuthereChest = Chest Tattoo (Cut Here)
+marking-LegDollJointsTattooLeft-l_leg_doll = Doll Joints Leg Tattoo (Left)
+marking-LegDollJointsTattooLeft = Doll Joints Leg Tattoo (Left)
+
+marking-LegDollJointsTattooRight-r_leg_doll = Doll Joints Leg Tattoo (Right)
+marking-LegDollJointsTattooRight = Doll Joints Leg Tattoo (Right)
+
+marking-FootDollJointsTattooLeft-l_foot_doll = Doll Joints Foot Tattoo (Left)
+marking-FootDollJointsTattooLeft = Doll Joints Foot Tattoo (Left)
+
+marking-FootDollJointsTattooRight-r_foot_doll = Doll Joints Foot Tattoo (Right)
+marking-FootDollJointsTattooRight = Doll Joints Foot Tattoo (Right)
+
+marking-ChestCutHere-chest_cuthere = 'Cut Here' Tattoo
+marking-ChestCutHere = 'Cut Here' Tattoo

@@ -8,23 +8,39 @@
   },
   "states": [
     {
-      "name": "tattoo_doll_l_arm",
+      "name": "l_arm_doll",
       "directions": 4
     },
     {
-      "name": "tattoo_doll_r_arm",
+      "name": "r_arm_doll",
       "directions": 4
     },
     {
-      "name": "tattoo_doll_l_hand",
+      "name": "l_hand_doll",
       "directions": 4
     },
     {
-      "name": "tattoo_doll_r_hand",
+      "name": "r_hand_doll",
       "directions": 4
     },
     {
-      "name": "tattoo_cuthere_chest",
+      "name": "l_leg_doll",
+      "directions": 4
+    },
+    {
+      "name": "r_leg_doll",
+      "directions": 4
+    },
+    {
+      "name": "l_foot_doll",
+      "directions": 4
+    },
+    {
+      "name": "r_foot_doll",
+      "directions": 4
+    },
+    {
+      "name": "chest_cuthere",
       "directions": 4
     }
   ]
