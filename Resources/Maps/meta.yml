@@ -130807,13 +130807,6 @@ entities:
     - type: Transform
       pos: 57.5,10.5
       parent: 5350
-- proto: PosterContrabandLustyExomorph
-  entities:
-  - uid: 12717
-    components:
-    - type: Transform
-      pos: 32.5,30.5
-      parent: 5350
 - proto: PosterContrabandMissingGloves
   entities:
   - uid: 3767
