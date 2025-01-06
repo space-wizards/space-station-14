@@ -212,8 +212,8 @@
     Frostoil:
       amount: 10
   effects:
-    - !type:CreateEntityReactionEffect
-      entity: IngotGold1
+  - !type:CreateEntityReactionEffect
+    entity: IngotGold1
 
 - type: reaction
   id: SolidifySilver
