@@ -42671,7 +42671,7 @@ entities:
     - type: Transform
       pos: -11.790611,57.730843
       parent: 2
-- proto: ClothingMaskSexyClown
+- proto: ClothingMaskBlushingClown
   entities:
   - uid: 7663
     components:
@@ -42680,7 +42680,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: ClothingMaskSexyMime
+- proto: ClothingMaskBlushingMime
   entities:
   - uid: 12903
     components:

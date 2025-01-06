@@ -306,3 +306,8 @@ Resources/MapImages
 
 # Direnv stuff
 .direnv/
+
+
+.run/Content Server+Client.run.xml
+
+global.json

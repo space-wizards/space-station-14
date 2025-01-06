@@ -60756,14 +60756,14 @@ entities:
     - type: Transform
       pos: 50.52941,-44.450947
       parent: 60
-- proto: ClothingMaskSexyClown
+- proto: ClothingMaskBlushingClown
   entities:
   - uid: 12225
     components:
     - type: Transform
       pos: 22.039051,-11.200508
       parent: 60
-- proto: ClothingMaskSexyMime
+- proto: ClothingMaskBlushingMime
   entities:
   - uid: 4261
     components:
