@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: The syndicate stealth box will no longer make a loud sound upon being
-      opened.
-    type: Tweak
-  id: 7284
-  time: '2024-09-04T22:42:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30741
 - author: chromiumboy
   changes:
   - message: The atmospheric alert computers are now functional! Use them to locate
@@ -3932,3 +3924,11 @@
   id: 7783
   time: '2025-01-05T22:11:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34070
+- author: ArtisticRoomba
+  changes:
+  - message: You can no longer get stuck when trying to walk between a station anchor
+      and a wall.
+    type: Fix
+  id: 7784
+  time: '2025-01-06T12:32:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34217
