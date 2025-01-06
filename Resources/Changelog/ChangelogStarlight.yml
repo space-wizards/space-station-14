@@ -1755,4 +1755,11 @@ Entries:
   id: 248
   time: '2025-01-06T13:02:49.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Added blueshield, as new role.
+    type: Add
+  id: 249
+  time: '2025-01-06T20:45:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/220
 
