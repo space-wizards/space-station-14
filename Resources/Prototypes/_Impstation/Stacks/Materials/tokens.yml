@@ -1,17 +1,17 @@
 - type: stack
   id: BatonToken
   name: baton token
-  icon: Objects/Specific/Security/seclink.rsi
+  icon: _Impstation/Objects/Specific/Security/seclink.rsi
   spawn: BatonToken1
 
 - type: stack
   id: DisablerToken
   name: disabler token
-  icon: Objects/Specific/Security/seclink.rsi
+  icon: _Impstation/Objects/Specific/Security/seclink.rsi
   spawn: DisablerToken1
 
 - type: stack
   id: UtilityToken
   name: utility token
-  icon: Objects/Specific/Security/seclink.rsi
+  icon: _Impstation/Objects/Specific/Security/seclink.rsi
   spawn: UtilityToken1
