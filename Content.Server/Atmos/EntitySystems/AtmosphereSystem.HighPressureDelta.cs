@@ -20,6 +20,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string? SpaceWindSound { get; private set; } = "/Audio/Effects/space_wind.ogg";
+        public string? WaterMoveSound { get; private set; } = "/Audio/Effects/water_move.ogg";
 
         private readonly HashSet<Entity<MovedByPressureComponent>> _activePressures = new(8);
 
@@ -93,14 +94,29 @@ namespace Content.Server.Atmos.EntitySystems
         private void HighPressureMovements(Entity<GridAtmosphereComponent> gridAtmosphere, TileAtmosphere tile, EntityQuery<PhysicsComponent> bodies, EntityQuery<TransformComponent> xforms, EntityQuery<MovedByPressureComponent> pressureQuery, EntityQuery<MetaDataComponent> metas)
         {
             // TODO ATMOS finish this
+        bool isWaterPresent = false;
+
+        if (tile.Air != null)
+        {
+            // Check the moles of gasId 9 (water)
+            if (tile.Air.GetMoles(9) >= 1)  // Adjust the last threshhold as needed
+            {
+                isWaterPresent = true;
+            }
+        }
 
             // Don't play the space wind sound on tiles that are on fire...
             if (tile.PressureDifference > 15 && !tile.Hotspot.Valid)
             {
-                if (_spaceWindSoundCooldown == 0 && !string.IsNullOrEmpty(SpaceWindSound))
+                if (_spaceWindSoundCooldown == 0 && !string.IsNullOrEmpty(SpaceWindSound) && !isWaterPresent)
                 {
                     var coordinates = _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.GridIndices);
                     _audio.PlayPvs(SpaceWindSound, coordinates, AudioParams.Default.WithVariation(0.125f).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
+                }
+                if (_spaceWindSoundCooldown == 0 && !string.IsNullOrEmpty(WaterMoveSound) && isWaterPresent)
+                {
+                     var coordinates = _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.GridIndices);
+                    _audio.PlayPvs(WaterMoveSound, coordinates, AudioParams.Default.WithVariation(0.125f).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
                 }
             }
 
