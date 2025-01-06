@@ -322,17 +322,6 @@
       range: 3
 
 - type: rules
-  id: NearSea
-  rules:
-    - !type:NearbyTilesPercentRule
-      ignoreAnchored: true
-      percent: 0.05
-      tiles:
-        - tiles-invisible
-        - tiles-invisible-real
-      range: 4
-
-- type: rules
   id: NearSpookyFog
   rules:
     - !type:NearbyEntitiesRule
