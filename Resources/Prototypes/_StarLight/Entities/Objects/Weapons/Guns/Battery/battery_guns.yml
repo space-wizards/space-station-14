@@ -249,3 +249,41 @@
         - yellow
         - red
         - gamma
+        
+- type: entity
+  name: X-01 multiphase energy gun
+  parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
+  id: WeaponMultiphaseGun
+  description: This is an expensive, modern version of the antique laser pistol. This weapon has several unique fire modes, but no ability to reload on its own over time.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/multiphase_gun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: disable
+      map: ["enum.FireModesLayers.FireMode"]
+    - state: disable-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: MagazineVisuals
+    magState: disable
+    steps: 5
+    zeroVisible: true
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletDisabler
+      fireCost: 100
+      magState: disable
+      visualState: disable
+    - proto: BulletAdvTaser
+      fireCost: 250
+      magState: stun
+      visualState: stun
+    - proto: BulletLaser
+      fireCost: 100
+      magState: kill
+      visualState: kill

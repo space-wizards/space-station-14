@@ -153,27 +153,61 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         component.CurrentFireMode = index;
         Dirty(uid, component);
 
-        if (TryComp(uid, out ProjectileBatteryAmmoProviderComponent? projectileBatteryAmmoProviderComponent))
+        if (TryGetAmmoProvider(uid, out var ammoProvider) && ammoProvider != null)
         {
             if (!_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))
                 return;
 
-            // TODO: Have this get the info directly from the batteryComponent when power is moved to shared.
-            var OldFireCost = projectileBatteryAmmoProviderComponent.FireCost;
-            projectileBatteryAmmoProviderComponent.Prototype = fireMode.Prototype;
-            projectileBatteryAmmoProviderComponent.FireCost = fireMode.FireCost;
-            float FireCostDiff = (float)fireMode.FireCost / (float)OldFireCost;
-            projectileBatteryAmmoProviderComponent.Shots = (int)Math.Round(projectileBatteryAmmoProviderComponent.Shots/FireCostDiff);
-            projectileBatteryAmmoProviderComponent.Capacity = (int)Math.Round(projectileBatteryAmmoProviderComponent.Capacity/FireCostDiff);
-            Dirty(uid, projectileBatteryAmmoProviderComponent);
+            if (ammoProvider is ProjectileBatteryAmmoProviderComponent projectileAmmo)
+            {
+                var oldFireCost = projectileAmmo.FireCost;
+                projectileAmmo.Prototype = fireMode.Prototype;
+                projectileAmmo.FireCost = fireMode.FireCost;
+
+                float fireCostDiff = (float)fireMode.FireCost / (float)oldFireCost;
+                projectileAmmo.Shots = (int)Math.Round(projectileAmmo.Shots / fireCostDiff);
+                projectileAmmo.Capacity = (int)Math.Round(projectileAmmo.Capacity / fireCostDiff);
+                Dirty(uid, projectileAmmo);
+            }
+            else if (ammoProvider is HitscanBatteryAmmoProviderComponent hitscanAmmo)
+            {
+                var oldFireCost = hitscanAmmo.FireCost;
+                hitscanAmmo.Prototype = fireMode.Prototype;
+                hitscanAmmo.FireCost = fireMode.FireCost;
+
+                float fireCostDiff = (float)fireMode.FireCost / (float)oldFireCost;
+                hitscanAmmo.Shots = (int)Math.Round(hitscanAmmo.Shots / fireCostDiff);
+                hitscanAmmo.Capacity = (int)Math.Round(hitscanAmmo.Capacity / fireCostDiff);
+                Dirty(uid, hitscanAmmo);
+            }
+
             var updateClientAmmoEvent = new UpdateClientAmmoEvent();
             RaiseLocalEvent(uid, ref updateClientAmmoEvent);
-            
+
             if (fireMode.HeldPrefix != null)
                 _item.SetHeldPrefix(uid, fireMode.HeldPrefix);
 
             if (user != null && TryComp<ActorComponent>(user, out var actor))
                 _popupSystem.PopupEntity(Loc.GetString("gun-set-fire-mode", ("mode", prototype.Name)), uid, actor.PlayerSession);
         }
+    }
+    
+    private bool TryGetAmmoProvider(EntityUid uid, out object? ammoProvider)
+    {
+        ammoProvider = null;
+
+        if (TryComp<ProjectileBatteryAmmoProviderComponent>(uid, out var projectileProvider))
+        {
+            ammoProvider = projectileProvider;
+            return true;
+        }
+
+        if (TryComp<HitscanBatteryAmmoProviderComponent>(uid, out var hitscanProvider))
+        {
+            ammoProvider = hitscanProvider;
+            return true;
+        }
+
+        return false;
     }
 }
