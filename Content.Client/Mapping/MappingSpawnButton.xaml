@@ -3,7 +3,7 @@
     xmlns:mapping="clr-namespace:Content.Client.Mapping">
     <BoxContainer Orientation="Vertical">
         <Control>
-            <Button Name="Button" Access="Public" ToggleMode="True" />
+            <Button Name="Button" Access="Public" ToggleMode="True" TooltipDelay="0" />
             <BoxContainer Orientation="Horizontal">
                 <LayeredTextureRect Name="Texture" Access="Public" SetSize="46 46"
                                     HorizontalAlignment="Center" VerticalAlignment="Center"

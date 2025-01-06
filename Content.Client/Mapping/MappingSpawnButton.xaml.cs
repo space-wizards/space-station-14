@@ -22,7 +22,6 @@ public sealed partial class MappingSpawnButton : Control
     public void Gallery()
     {
         Button.ToolTip = Label.Text;
-        Button.TooltipDelay = 0;
         Label.Visible = false;
         Button.AddStyleClass("ButtonSquare");
         SetWidth = 48;
