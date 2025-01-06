@@ -116,9 +116,9 @@
     - state: icon-cables
   - type: ItemBorgModule
     items:
-    - CableApcStackLingering0
-    - CableMVStackLingering0
-    - CableHVStackLingering0
+    - CableApcStackLingering10
+    - CableMVStackLingering10
+    - CableHVStackLingering10
     - Wirecutter
     - trayScanner
   - type: BorgModuleIcon
@@ -178,6 +178,21 @@
     - Multitool
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: tool-module }
+
+- type: entity # only still here because Cog Station has it mapped, delete after thats fixed.
+  id: BorgModuleRadiationDetection
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: radiation detection cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-radiation
+  - type: ItemBorgModule
+    items:
+    - GeigerCounter
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: geiger-module }
 
 # cargo modules
 - type: entity
