@@ -705,8 +705,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         var callOptions = new TelephoneCallOptions()
         {
-            ForceConnect = true,
-            MuteReceiver = true
+            ForceConnect = true
         };
 
         _telephoneSystem.CallTelephone(source, receiver, user, callOptions);
