@@ -172,3 +172,17 @@
   - BasicStationEventScheduler
   - GameRuleMeteorScheduler
   - BasicRoundstartVariation
+
+- type: gamePreset
+  id: SafeHarbor
+  alias:
+  - safeharbor
+  - crashedship
+  - ThatOneFuckedShip
+  - floatsam
+  - flotsam
+  name: safe-harbor-title
+  showInVote: false
+  description: safe-harbor-description
+  rules:
+  - BasicRoundstartVariation
