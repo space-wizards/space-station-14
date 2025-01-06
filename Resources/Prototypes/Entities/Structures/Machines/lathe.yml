@@ -572,8 +572,6 @@
     - SciFlash
     - BorgModuleCable
     - BorgModuleFireExtinguisher
-    - BorgModuleRadiationDetection
-    - BorgModuleTool
     - CyborgEndoskeleton
     - LeftArmBorg
     - RightArmBorg
