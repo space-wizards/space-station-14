@@ -2,19 +2,19 @@
 
 public static class ChatChannelExtensions
 {
-    public static Color TextColor(this ChatChannel channel)
+    public static Color TextColor(this ChatChannelFilter channel)
     {
         return channel switch
         {
-            ChatChannel.Server => Color.Orange,
-            ChatChannel.Radio => Color.LimeGreen,
-            ChatChannel.LOOC => Color.MediumTurquoise,
-            ChatChannel.OOC => Color.LightSkyBlue,
-            ChatChannel.Dead => Color.MediumPurple,
-            ChatChannel.Admin => Color.Red,
-            ChatChannel.AdminAlert => Color.Red,
-            ChatChannel.AdminChat => Color.HotPink,
-            ChatChannel.Whisper => Color.DarkGray,
+            ChatChannelFilter.Server => Color.Orange,
+            ChatChannelFilter.Radio => Color.LimeGreen,
+            ChatChannelFilter.LOOC => Color.MediumTurquoise,
+            ChatChannelFilter.OOC => Color.LightSkyBlue,
+            ChatChannelFilter.Dead => Color.MediumPurple,
+            ChatChannelFilter.Admin => Color.Red,
+            ChatChannelFilter.AdminAlert => Color.Red,
+            ChatChannelFilter.AdminChat => Color.HotPink,
+            ChatChannelFilter.Whisper => Color.DarkGray,
             _ => Color.LightGray
         };
     }

@@ -38,11 +38,18 @@ public sealed partial class CommunicationChannelPrototype : IPrototype, IInherit
     public List<ConsumeCollection> ConsumeCollections = new();
 
     /// <summary>
-    /// The kind of communication types this channel utilizes (e.g. speech, OOC, etc.)
+    /// The kind of chat filter this channel works under; used to filter chat clientside.
     /// </summary>
     [DataField]
     [AlwaysPushInheritance]
-    public ChatChannel ChatChannels = ChatChannel.None;
+    public ChatChannelFilter ChatFilter = ChatChannelFilter.None;
+
+    /// <summary>
+    /// The way the message is conveyed in the game; audio, visual, OOC or such.
+    /// </summary>
+    [DataField]
+    [AlwaysPushInheritance]
+    public ChatChannelMedium ChatMedium = ChatChannelMedium.None;
 
     /// <summary>
     /// If true, an entity does not need to be attached to publish to this channel.

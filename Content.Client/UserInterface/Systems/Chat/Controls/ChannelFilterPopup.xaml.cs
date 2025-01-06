@@ -10,40 +10,39 @@ namespace Content.Client.UserInterface.Systems.Chat.Controls;
 public sealed partial class ChannelFilterPopup : Popup
 {
     // order in which the available channel filters show up when available
-    private static readonly ChatChannel[] ChannelFilterOrder =
+    private static readonly ChatChannelFilter[] ChannelFilterOrder =
     {
-        ChatChannel.Local,
-        ChatChannel.Whisper,
-        ChatChannel.Emotes,
-        ChatChannel.Radio,
-        ChatChannel.Notifications,
-        ChatChannel.Announcements,
-        ChatChannel.LOOC,
-        ChatChannel.OOC,
-        ChatChannel.Dead,
-        ChatChannel.Admin,
-        ChatChannel.AdminAlert,
-        ChatChannel.AdminChat,
-        ChatChannel.Server
+        ChatChannelFilter.Local,
+        ChatChannelFilter.Whisper,
+        ChatChannelFilter.Emotes,
+        ChatChannelFilter.Radio,
+        ChatChannelFilter.Notifications,
+        ChatChannelFilter.LOOC,
+        ChatChannelFilter.OOC,
+        ChatChannelFilter.Dead,
+        ChatChannelFilter.Admin,
+        ChatChannelFilter.AdminAlert,
+        ChatChannelFilter.AdminChat,
+        ChatChannelFilter.Server
     };
 
-    private readonly Dictionary<ChatChannel, ChannelFilterCheckbox> _filterStates = new();
+    private readonly Dictionary<ChatChannelFilter, ChannelFilterCheckbox> _filterStates = new();
 
-    public event Action<ChatChannel, bool>? OnChannelFilter;
+    public event Action<ChatChannelFilter, bool>? OnChannelFilter;
 
     public ChannelFilterPopup()
     {
         RobustXamlLoader.Load(this);
     }
 
-    public bool IsActive(ChatChannel channel)
+    public bool IsActive(ChatChannelFilter channel)
     {
         return _filterStates.TryGetValue(channel, out var checkbox) && checkbox.Pressed;
     }
 
-    public ChatChannel GetActive()
+    public ChatChannelFilter GetActive()
     {
-        ChatChannel active = 0;
+        ChatChannelFilter active = 0;
 
         foreach (var (key, value) in _filterStates)
         {
@@ -58,7 +57,7 @@ public sealed partial class ChannelFilterPopup : Popup
         return active;
     }
 
-    public void SetChannels(ChatChannel channels)
+    public void SetChannels(ChatChannelFilter channels)
     {
         foreach (var channel in ChannelFilterOrder)
         {
@@ -90,7 +89,7 @@ public sealed partial class ChannelFilterPopup : Popup
         OnChannelFilter?.Invoke(checkbox.Channel, checkbox.Pressed);
     }
 
-    public void UpdateUnread(ChatChannel channel, int? unread)
+    public void UpdateUnread(ChatChannelFilter channel, int? unread)
     {
         if (_filterStates.TryGetValue(channel, out var checkbox))
             checkbox.UpdateUnreadCount(unread);

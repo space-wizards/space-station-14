@@ -431,7 +431,7 @@ internal sealed partial class ChatManager : IChatManager
                 foreach (var consumerEntity in filteredEntities)
                 {
                     var listenerConsumeEv =
-                        new ListenerConsumeEvent(communicationChannel.ChatChannels, consumerMessage, compiledChannelParameters);
+                        new ListenerConsumeEvent(communicationChannel.ChatMedium, consumerMessage, compiledChannelParameters);
 
                     _entityManager.EventBus.RaiseLocalEvent(consumerEntity, listenerConsumeEv);
                 }
@@ -491,7 +491,7 @@ internal sealed partial class ChatManager : IChatManager
         if (!recordReplay)
             return;
 
-        if ((channel.ChatChannels & ChatChannel.AdminRelated) == 0 ||
+        if ((channel.ChatFilter & ChatChannelFilter.AdminRelated) == 0 ||
             _configurationManager.GetCVar(CCVars.ReplayRecordAdminChat))
         {
             _replay.RecordServerMessage(msg);
@@ -513,7 +513,7 @@ internal sealed partial class ChatManager : IChatManager
             var feedback = Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength));
 
             // CHAT-TODO: Figure this one out too
-            //DispatchServerMessage(player, feedback);
+            DispatchServerMessage(player, feedback);
 
             isOverLength = true;
         }

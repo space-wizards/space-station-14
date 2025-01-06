@@ -150,7 +150,7 @@ public sealed class ChatUIController : UIController
     /// For currently disabled chat filters,
     /// unread messages (messages received since the channel has been filtered out).
     /// </summary>
-    private readonly Dictionary<ChatChannel, int> _unreadMessages = new();
+    private readonly Dictionary<ChatChannelFilter, int> _unreadMessages = new();
 
     // TODO add a cap for this for non-replays
     public readonly List<(GameTick Tick, ChatMessage Msg)> History = new();
@@ -166,14 +166,14 @@ public sealed class ChatUIController : UIController
     // Note that Command is an available selection in the chatbox channel selector,
     // which is not actually a chat channel but is always available.
     public ChatSelectChannel CanSendChannels { get; private set; }
-    public ChatChannel FilterableChannels { get; private set; }
+    public ChatChannelFilter FilterableChannels { get; private set; }
     public ChatSelectChannel SelectableChannels { get; private set; }
     private ChatSelectChannel PreferredChannel { get; set; } = ChatSelectChannel.OOC;
 
     public event Action<ChatSelectChannel>? CanSendChannelsChanged;
-    public event Action<ChatChannel>? FilterableChannelsChanged;
+    public event Action<ChatChannelFilter>? FilterableChannelsChanged;
     public event Action<ChatSelectChannel>? SelectableChannelsChanged;
-    public event Action<ChatChannel, int?>? UnreadMessageCountsUpdated;
+    public event Action<ChatChannelFilter, int?>? UnreadMessageCountsUpdated;
     public event Action<ChatMessage>? MessageAdded;
 
     public override void Initialize()
@@ -520,21 +520,20 @@ public sealed class ChatUIController : UIController
         // can always send/recieve OOC
         CanSendChannels |= ChatSelectChannel.OOC;
         CanSendChannels |= ChatSelectChannel.LOOC;
-        FilterableChannels |= ChatChannel.OOC;
-        FilterableChannels |= ChatChannel.LOOC;
+        FilterableChannels |= ChatChannelFilter.OOC;
+        FilterableChannels |= ChatChannelFilter.LOOC;
 
         // can always hear server (nobody can actually send server messages).
-        FilterableChannels |= ChatChannel.Server;
+        FilterableChannels |= ChatChannelFilter.Server;
 
         if (_state.CurrentState is GameplayStateBase)
         {
             // can always hear local / radio / emote / notifications when in the game
-            FilterableChannels |= ChatChannel.Local;
-            FilterableChannels |= ChatChannel.Whisper;
-            FilterableChannels |= ChatChannel.Radio;
-            FilterableChannels |= ChatChannel.Emotes;
-            FilterableChannels |= ChatChannel.Notifications;
-            FilterableChannels |= ChatChannel.Announcements;
+            FilterableChannels |= ChatChannelFilter.Local;
+            FilterableChannels |= ChatChannelFilter.Whisper;
+            FilterableChannels |= ChatChannelFilter.Radio;
+            FilterableChannels |= ChatChannelFilter.Emotes;
+            FilterableChannels |= ChatChannelFilter.Notifications;
 
             // Can only send local / radio / emote when attached to a non-ghost entity.
             // TODO: this logic is iffy (checking if controlling something that's NOT a ghost), is there a better way to check this?
@@ -550,16 +549,16 @@ public sealed class ChatUIController : UIController
         // Only ghosts and admins can send / see deadchat.
         if (_admin.HasFlag(AdminFlags.Admin) || _ghost is {IsGhost: true})
         {
-            FilterableChannels |= ChatChannel.Dead;
+            FilterableChannels |= ChatChannelFilter.Dead;
             CanSendChannels |= ChatSelectChannel.Dead;
         }
 
         // only admins can see / filter asay
         if (_admin.HasFlag(AdminFlags.Adminchat))
         {
-            FilterableChannels |= ChatChannel.Admin;
-            FilterableChannels |= ChatChannel.AdminAlert;
-            FilterableChannels |= ChatChannel.AdminChat;
+            FilterableChannels |= ChatChannelFilter.Admin;
+            FilterableChannels |= ChatChannelFilter.AdminAlert;
+            FilterableChannels |= ChatChannelFilter.AdminChat;
             CanSendChannels |= ChatSelectChannel.Admin;
         }
 
@@ -567,7 +566,7 @@ public sealed class ChatUIController : UIController
 
         // Necessary so that we always have a channel to fall back to.
         DebugTools.Assert((CanSendChannels & ChatSelectChannel.OOC) != 0, "OOC must always be available");
-        DebugTools.Assert((FilterableChannels & ChatChannel.OOC) != 0, "OOC must always be available");
+        DebugTools.Assert((FilterableChannels & ChatChannelFilter.OOC) != 0, "OOC must always be available");
         DebugTools.Assert((SelectableChannels & ChatSelectChannel.OOC) != 0, "OOC must always be available");
 
         // let our chatbox know all the new settings
@@ -576,7 +575,7 @@ public sealed class ChatUIController : UIController
         SelectableChannelsChanged?.Invoke(SelectableChannels);
     }
 
-    public void ClearUnfilteredUnreads(ChatChannel channels)
+    public void ClearUnfilteredUnreads(ChatChannelFilter channels)
     {
         foreach (var channel in _unreadMessages.Keys.ToArray())
         {
@@ -813,7 +812,7 @@ public sealed class ChatUIController : UIController
 
         if (_prototypeManager.TryIndex(msg.CommunicationChannel, out var proto))
         {
-            if ((proto.ChatChannels & ChatChannel.AdminRelated) == 0 ||
+            if ((proto.ChatFilter & ChatChannelFilter.AdminRelated) == 0 ||
                 _config.GetCVar(CCVars.ReplayRecordAdminChat))
             {
                 _replayRecording.RecordClientMessage(msg);
@@ -843,12 +842,12 @@ public sealed class ChatUIController : UIController
                 if (!msg.Read)
                 {
                     _sawmill.Debug($"Message filtered: {msg.CommunicationChannel}: {msg.Message}");
-                    if (!_unreadMessages.TryGetValue(proto.ChatChannels, out var count))
+                    if (!_unreadMessages.TryGetValue(proto.ChatFilter, out var count))
                         count = 0;
 
                     count += 1;
-                    _unreadMessages[proto.ChatChannels] = count;
-                    UnreadMessageCountsUpdated?.Invoke(proto.ChatChannels, count);
+                    _unreadMessages[proto.ChatFilter] = count;
+                    UnreadMessageCountsUpdated?.Invoke(proto.ChatFilter, count);
                 }
             }
 

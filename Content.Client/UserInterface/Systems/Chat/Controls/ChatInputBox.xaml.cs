@@ -12,7 +12,7 @@ public class ChatInputBox : PanelContainer
     public readonly HistoryLineEdit Input;
     public readonly ChannelFilterButton FilterButton;
     protected readonly BoxContainer Container;
-    protected ChatChannel ActiveChannel { get; private set; } = ChatChannel.Local;
+    protected ChatChannelFilter ActiveChannel { get; private set; } = ChatChannelFilter.Local;
 
     public ChatInputBox()
     {
@@ -51,7 +51,7 @@ public class ChatInputBox : PanelContainer
 
     private void UpdateActiveChannel(ChatSelectChannel selectedChannel)
     {
-        ActiveChannel = (ChatChannel) selectedChannel;
+        ActiveChannel = (ChatChannelFilter) selectedChannel;
     }
 
     private static string GetChatboxInfoPlaceholder()

@@ -31,7 +31,7 @@ public abstract class ListenerEntitySystem<T> : EntitySystem where T : ListenerC
     /// </summary>
     protected void OnListenerConsumeEvent(EntityUid uid, T component, ListenerConsumeEvent args)
     {
-        if (component.FilteredTypes == null || (component.FilteredTypes & args.ChatChannels) != 0)
+        if (component.FilteredTypes == null || (component.FilteredTypes & args.ChatMedium) != 0)
             OnListenerMessageReceived(uid, component, args);
     }
 

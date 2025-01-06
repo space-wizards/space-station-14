@@ -1,12 +1,4 @@
-﻿using System.Diagnostics;
-using System.Linq;
-using Content.Shared.CCVar;
-using Content.Shared.Chat.ContentMarkupTags;
-using Content.Shared.Decals;
-using FastAccessors;
-using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects.Components.Localization;
-using Robust.Shared.Prototypes;
+﻿using Content.Shared.Chat.ContentMarkupTags;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Chat.MarkupTags;
