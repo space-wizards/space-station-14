@@ -505,30 +505,28 @@ namespace Content.Shared.Plankton
         {
             foreach (var planktonInstance in component.SpeciesInstances)
             {
-                if (planktonInstance.IsAlive && planktonInstance.CurrentHunger >= 30 && planktonInstance.CurrentSize <= 100)
-                {
-                    var growthRate = 0.05f;
-                    var growthExponent = growthRate * planktonInstance.CurrentSize;
+                float growthRate;
+                if (!planktonInstance.IsAlive) continue;
 
-                    planktonInstance.CurrentSize += growthExponent;
-                    Log.Info($"{planktonInstance.SpeciesName} is a class-I plankton");
-                }
-                if (planktonInstance.IsAlive && planktonInstance.CurrentHunger >= 45 && planktonInstance.CurrentSize <= 200)
+                if (planktonInstance.CurrentSize >= 200 && planktonInstance.CurrentHunger >= 50)
                 {
-                    var growthRate = 0.02f;
-                    var growthExponent = growthRate * planktonInstance.CurrentSize;
-
-                    planktonInstance.CurrentSize += growthExponent;
-                    Log.Info($"{planktonInstance.SpeciesName} is a class-II plankton");
+                   growthRate = 0.01f;
+                 Log.Info($"{planktonInstance.SpeciesName} is a class-III plankton");
                 }
-                if (planktonInstance.IsAlive && planktonInstance.CurrentHunger >= 50 && planktonInstance.CurrentSize >= 200)
+                 else if (planktonInstance.CurrentSize <= 200 && planktonInstance.CurrentHunger >= 45)
                 {
-                    var growthRate = 0.01f;
-                    var growthExponent = growthRate * planktonInstance.CurrentSize;
-
-                    planktonInstance.CurrentSize += growthExponent;
-                    Log.Info($"{planktonInstance.SpeciesName} is a class-III plankton");
+                    growthRate = 0.02f;
+                  Log.Info($"{planktonInstance.SpeciesName} is a class-II plankton");
                 }
+                 else if (planktonInstance.CurrentSize <= 100 && planktonInstance.CurrentHunger >= 30)
+                {
+                  growthRate = 0.05f;
+                 Log.Info($"{planktonInstance.SpeciesName} is a class-I plankton");
+                }
+                else continue;
+
+                var growthExponent = growthRate * planktonInstance.CurrentSize;
+                planktonInstance.CurrentSize += growthExponent;
             }
         }
 
