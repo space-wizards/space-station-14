@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Ghost bar patrons are now also real ghosts and can speak to the dead
-    type: Add
-  id: 365
-  time: '2024-10-12T22:04:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/469
 - author: TheCactus
   changes:
   - message: Added text highlighting.
@@ -4471,3 +4464,11 @@
   id: 864
   time: '2025-01-06T23:10:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1233
+- author: Sha-Seng
+  changes:
+  - message: Doll Joint arm and leg tattoos, and 'Cut Here' chest tattoo for humans,
+      dwarves, spiders, slimes, and lizards
+    type: Add
+  id: 865
+  time: '2025-01-06T23:15:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1234
