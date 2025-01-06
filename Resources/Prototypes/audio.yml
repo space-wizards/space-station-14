@@ -90,7 +90,7 @@
   sound:
     params:
       volume: -12
-    collection: 
+    collection: SweetwaterAmbience
   rules: OnSweetwater
   fadeIn: true
   interruptable: true
@@ -187,6 +187,11 @@
     - /Audio/Ambience/ambiruin7.ogg
     - /Audio/Ambience/voyage_neverending.ogg
     - /Audio/Ambience/unanchored.ogg
+
+- type: soundCollection
+  id: SweetwaterAmbience
+  files:
+    - /Audio/Effects/whale_groan.ogg
 
 - type: soundCollection
   id: AmbienceRuins
