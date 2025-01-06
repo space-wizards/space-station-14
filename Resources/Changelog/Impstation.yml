@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Fixed gray paperdoll stuff and displacement.
-    type: Fix
-  id: 359
-  time: '2024-10-12T08:31:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/461
 - author: Darkmajia
   changes:
   - message: The botany departments of Atlas, Cluster, and Saltern now have biogenerators
@@ -4470,3 +4463,13 @@
   id: 858
   time: '2025-01-06T16:43:40.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1243
+- author: Sleiphros
+  changes:
+  - message: Several new shuttles have been added to the Shipyard!
+    type: Add
+  - message: The Bargain Bin has been added to the Shipyard, along with shuttles exclusive
+      to it!
+    type: Add
+  id: 859
+  time: '2025-01-06T22:23:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1195
