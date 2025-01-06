@@ -203,6 +203,8 @@
       - BoxFolderClipboard # Harmony
       - FreezerElectronics
       - Flare
+      - CassetteTape # DeltaV
+      - TapeRecorder # DeltaV
 
   - type: EmagLatheRecipes
     emagStaticRecipes:

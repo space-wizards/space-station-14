@@ -58,6 +58,8 @@
   - TowelColorWhite
   - TowelColorYellow
   - PlushieVox
+#deltav specific trinkets
+  - TapeRecorder
 
 - type: loadoutGroup
   id: Glasses
