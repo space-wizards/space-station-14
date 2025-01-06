@@ -90,6 +90,7 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/salvage.rsi
 
+# Harmony Change: Updates Sprite Pathing for CE Sprite Consistency Update
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitChiefEngineer
@@ -97,10 +98,11 @@
   description: It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of Chief Engineer.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ce.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/ce.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ce.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/ce.rsi
 
+# Harmony Change: Updates Sprite Pathing for CE Sprite Consistency Update
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitChiefEngineerTurtle
@@ -108,9 +110,9 @@
   description: A yellow turtleneck designed specifically for work in conditions of the engineering department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ce_turtle.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/ce_turtle.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ce_turtle.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/ce_turtle.rsi
 
 - type: entity
   parent: ClothingUniformBase

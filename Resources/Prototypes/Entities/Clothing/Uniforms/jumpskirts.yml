@@ -31,6 +31,7 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/cargotech.rsi
 
+# Harmony Change: Updates Sprite Pathing for CE Sprite Consistency Update
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
   id: ClothingUniformJumpskirtChiefEngineer
@@ -38,10 +39,11 @@
   description: It's a high visibility jumpskirt given to those engineers insane enough to achieve the rank of Chief Engineer.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/ce.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/ce.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/ce.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/ce.rsi
 
+# Harmony Change: Updates Sprite Pathing for CE Sprite Consistency Update
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
   id: ClothingUniformJumpskirtChiefEngineerTurtle
@@ -49,9 +51,9 @@
   description: A yellow turtleneck designed specifically for work in conditions of the engineering department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/ce_turtle.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/ce_turtle.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/ce_turtle.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/ce_turtle.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
