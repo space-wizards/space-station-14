@@ -6,7 +6,8 @@
             <mapping:MappingActionsButton Name="CollapseAllButton" Access="Public"
                                           ToolTip="{Loc 'mapping-collapse-all-tooltip'}"
                                           TooltipDelay="0" ToggleMode="False" />
-            <LineEdit Name="SearchBar" SetHeight="48" HorizontalExpand="True" Access="Public" />
+            <LineEdit Name="SearchBar" SetHeight="48" HorizontalExpand="True" Access="Public"
+                      PlaceHolder="{Loc 'mapping-search'}" />
             <mapping:MappingActionsButton Name="ClearSearchButton" Access="Public"
                                           ToolTip="{Loc 'mapping-clear-search-tooltip'}"
                                           TooltipDelay="0" ToggleMode="False" />

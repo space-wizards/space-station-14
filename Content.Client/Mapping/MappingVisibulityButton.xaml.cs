@@ -5,9 +5,9 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Mapping;
 
 [GenerateTypedNameReferences]
-public sealed partial class MappingLayerButton : Button
+public sealed partial class MappingVisibulityButton : Button
 {
-    public MappingLayerButton()
+    public MappingVisibulityButton()
     {
         RobustXamlLoader.Load(this);
     }

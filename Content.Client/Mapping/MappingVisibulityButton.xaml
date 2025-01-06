@@ -1,4 +1,4 @@
-<mapping:MappingSubLayerButton
+<mapping:MappingVisibulityButton
     xmlns="https://spacestation14.io"
     xmlns:mapping="clr-namespace:Content.Client.Mapping"
     HorizontalExpand="True" SetHeight="40" ToggleMode="True"
