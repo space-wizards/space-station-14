@@ -7,3 +7,15 @@
   roles:
   - Magistrate
   - IAA
+  
+- type: department
+  id: Representives
+  name: department-Representives
+  description: department-Representives-description
+  color: "#05255D"
+  roles:
+  - BlueShield
+  - Magistrate
+  - NanoTrasenRepresentative
+  primary: false
+  weight: 50

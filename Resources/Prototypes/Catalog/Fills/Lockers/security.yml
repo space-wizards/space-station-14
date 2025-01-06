@@ -20,6 +20,7 @@
       - id: HoloprojectorSecurity
       - id: BookSpaceLaw
       - id: ClothingBackpackElectropack
+      - id: ClothingShoesBootsMagSec
         amount: 2
       - id: RemoteSignaller
         amount: 2
@@ -95,6 +96,7 @@
       - id: ClothingUniformJumpsuitBrigmedic
       - id: ClothingUniformJumpskirtBrigmedic
       - id: ClothingUniformJumpskirtOfLife
+      - id: ClothingShoesBootsMagSec
         prob: 0.1
       - id: MedkitFilled
       - id: MedkitCombatFilled

@@ -38,3 +38,29 @@
   - type: ShowCriminalRecordIcons
   - type: EyeProtection
     protectionTime: 5
+    
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesBlueShield
+  name: blueshield officer's glasses
+  description: The innovative blue lenses hide your eyes from light flashes and have a built-in visor.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Eyes/Glasses/blueshield.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Eyes/Glasses/blueshield.rsi
+  - type: FlashImmunity
+  - type: ShowJobIcons
+  - type: ShowMindShieldIcons
+  - type: ShowCriminalRecordIcons
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
+  - type: Tag
+    tags:
+    - HudMedical
+  - type: EyeProtection
+    protectionTime: 5

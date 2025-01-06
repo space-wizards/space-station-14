@@ -1,0 +1,20 @@
+- type: entity
+  parent: ClothingOuterArmorBasic
+  id: ClothingOuterArmorBlueShield
+  name: blueshield officer's bulletproof vest
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/blueshield.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Armor/blueshield.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.7
+  - type: ExplosionResistance
+    damageCoefficient: 0.80
+  - type: Item
+    size: Normal

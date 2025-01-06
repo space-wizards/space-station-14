@@ -8,3 +8,13 @@
     sprite: _Starlight/Clothing/Head/Hats/ntrep.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Head/Hats/ntrep.rsi
+    
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretBlueShield
+  name: blueshield officer's beret
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/blueshield.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/blueshield.rsi
