@@ -161,7 +161,8 @@
       fireCost: 200
       conditions:
       - !type:AlertLevelCondition
-        alertLevel: blue
+        alertLevels: 
+        - blue
   - type: MagazineVisuals
     magState: mag
     steps: 4
@@ -197,3 +198,51 @@
       isLooped: true
   - type: ToggleableLightVisuals
     spriteLayer: light
+    
+- type: entity
+  name: dominator
+  parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
+  id: WeaponDominator
+  description: A high-tech weapon created by the law enforcement organization Sibyl System, designed specifically to fight crime.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/dominator.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: disable-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: MagazineVisuals
+    magState: disable
+    steps: 4
+    zeroVisible: true
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletDisabler
+      fireCost: 100
+      magState: disable
+    - proto: BulletAdvTaser
+      fireCost: 250
+      magState: stun
+      conditions:
+      - !type:AlertLevelCondition
+        alertLevels: 
+        - blue
+        - violet
+        - yellow
+        - red
+        - gamma
+    - proto: BulletLaser
+      fireCost: 100
+      magState: lethal
+      conditions:
+      - !type:AlertLevelCondition
+        alertLevels: 
+        - violet
+        - yellow
+        - red
+        - gamma

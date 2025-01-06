@@ -1,0 +1,193 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Paradise Station",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "base"
+        },
+        {
+          "name": "disable-unshaded-0",
+          "delays": [
+            [
+              0.3,
+              0.3
+            ]
+          ]
+        },
+        {
+          "name": "disable-unshaded-1",
+          "delays": [
+            [
+              0.2,
+              0.2,
+              0.2,
+              0.2
+            ]
+          ]
+        },
+        {
+          "name": "disable-unshaded-2",
+          "delays": [
+            [
+              0.2,
+              0.2,
+              0.2,
+              0.2
+            ]
+          ]
+        },
+        {
+          "name": "disable-unshaded-3",
+          "delays": [
+            [
+              0.2,
+              0.2,
+              0.2,
+              0.2
+            ]
+          ]
+        },
+        {
+          "name": "stun-unshaded-0",
+          "delays": [
+            [
+              0.3,
+              0.3
+            ]
+          ]
+        },
+        {
+          "name": "stun-unshaded-1",
+          "delays": [
+            [
+              0.2,
+              0.2,
+              0.2,
+              0.2
+            ]
+          ]
+        },
+        {
+          "name": "stun-unshaded-2",
+          "delays": [
+            [
+              0.2,
+              0.2,
+              0.2,
+              0.2
+            ]
+          ]
+        },
+        {
+          "name": "stun-unshaded-3",
+          "delays": [
+            [
+              0.2,
+              0.2,
+              0.2,
+              0.2
+            ]
+          ]
+        },
+        {
+          "name": "lethal-unshaded-0",
+          "delays": [
+            [
+              0.3,
+              0.3
+            ]
+          ]
+        },
+        {
+          "name": "lethal-unshaded-1",
+          "delays": [
+            [
+              0.2,
+              0.2,
+              0.2,
+              0.2
+            ]
+          ]
+        },
+        {
+          "name": "lethal-unshaded-2",
+          "delays": [
+            [
+              0.2,
+              0.2,
+              0.2,
+              0.2
+            ]
+          ]
+        },
+        {
+          "name": "lethal-unshaded-3",
+          "delays": [
+            [
+              0.2,
+              0.2,
+              0.2,
+              0.2
+            ]
+          ]
+        },
+        {
+          "name": "destroy-unshaded-0",
+          "delays": [
+            [
+              0.3,
+              0.3
+            ]
+          ]
+        },
+        {
+          "name": "destroy-unshaded-1",
+          "delays": [
+            [
+              0.2,
+              0.2,
+              0.2,
+              0.2
+            ]
+          ]
+        },
+        {
+          "name": "destroy-unshaded-2",
+          "delays": [
+            [
+              0.2,
+              0.2,
+              0.2,
+              0.2
+            ]
+          ]
+        },
+        {
+          "name": "destroy-unshaded-3",
+          "delays": [
+            [
+              0.2,
+              0.2,
+              0.2,
+              0.2
+            ]
+          ]
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}

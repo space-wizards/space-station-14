@@ -11,22 +11,24 @@ namespace Content.Server.Weapons.Ranged.Conditions;
 public sealed partial class AlertLevelCondition : FireModeCondition
 {
     [DataField(required: true)]
-    public string AlertLevel;
-    
+    public List<string> AlertLevels;
+
     public override bool Condition(FireModeConditionConditionArgs args)
-    { 
-        var ent = args.EntityManager;
-        
-        var _alert = ent.System<AlertLevelSystem>();
-    
-        if (!args.EntityManager.TryGetComponent<TransformComponent>(args.Shooter, out var transformComp))
+    {
+        var entityManager = args.EntityManager;
+
+        var alertSystem = entityManager.System<AlertLevelSystem>();
+
+        if (!entityManager.TryGetComponent<TransformComponent>(args.Shooter, out var transformComp))
             return false;
-        
-        if (!ent.TryGetComponent<StationMemberComponent>(transformComp.ParentUid, out var stationMember) 
-            || !ent.TryGetComponent<AlertLevelComponent>(stationMember.Station, out var alertLevelComp) 
-            || _alert.GetLevel(stationMember.Station, alertLevelComp) != AlertLevel)
-            return false;
-            
-        return true;
+
+        if (entityManager.TryGetComponent<StationMemberComponent>(transformComp.ParentUid, out var stationMember) &&
+            entityManager.TryGetComponent<AlertLevelComponent>(stationMember.Station, out var alertLevelComp))
+        {
+            var currentAlertLevel = alertSystem.GetLevel(stationMember.Station, alertLevelComp);
+            return AlertLevels.Contains(currentAlertLevel);
+        }
+
+        return false;
     }
 }
