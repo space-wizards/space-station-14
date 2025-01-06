@@ -44,7 +44,7 @@ public sealed partial class MappingPrototypeList : Control
         OnResized += UpdateSearch;
 
         CollapseAllButton.Texture.TexturePath = "/Textures/Interface/VerbIcons/collapse.svg.192dpi.png";
-        ClearSearchButton.Texture.TexturePath = "/Textures/Interface/VerbIcons/cross.svg.192dpi.png";
+        ClearSearchButton.Texture.TexturePath = "/Textures/Interface/VerbIcons/xmark-solid.svg.192dpi.png";
     }
 
     public void UpdateVisible(MappingPrototype prototype, List<MappingPrototype> allPrototypes)
@@ -191,33 +191,27 @@ public sealed partial class MappingPrototypeList : Control
 
     public void ToggleCollapse(MappingSpawnButton button)
     {
-        if (button.CollapseButton.Pressed)
-        {
-            if (Gallery)
-                button.ChildrenPrototypesGallery.MaxGridWidth = button.Width - button.ChildrenPrototypesGallery.Margin.Left;
+        button.ToggleCollapse();
 
-            if (button.Prototype?.Children != null)
+        if (!button.CollapseButton.Pressed)
+            return;
+
+        if (Gallery)
+            button.ChildrenPrototypesGallery.MaxGridWidth = button.Width - button.ChildrenPrototypesGallery.Margin.Left;
+
+        if (button.Prototype?.Children == null)
+            return;
+
+        foreach (var child in button.Prototype.Children)
+        {
+            if (child.Children == null && Gallery)
             {
-                foreach (var child in button.Prototype.Children)
-                {
-                    if (child.Children == null && Gallery)
-                    {
-                        Insert(button.ChildrenPrototypesGallery, child, false);
-                    }
-                    else
-                    {
-                        Insert(button.ChildrenPrototypes, child, true);
-                    }
-                }
+                Insert(button.ChildrenPrototypesGallery, child, false);
             }
-
-            button.CollapseButton.Label.Text = "▼";
-        }
-        else
-        {
-            button.ChildrenPrototypes.DisposeAllChildren();
-            button.ChildrenPrototypesGallery.DisposeAllChildren();
-            button.CollapseButton.Label.Text = "▶";
+            else
+            {
+                Insert(button.ChildrenPrototypes, child, true);
+            }
         }
     }
 

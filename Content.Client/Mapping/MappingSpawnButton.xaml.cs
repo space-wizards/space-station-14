@@ -15,6 +15,8 @@ public sealed partial class MappingSpawnButton : Control
     public MappingSpawnButton()
     {
         RobustXamlLoader.Load(this);
+
+        CollapseTexture.TexturePath = "/Textures/Interface/VerbIcons/chevron-right-solid.svg.192dpi.png";
     }
 
     public void Gallery()
@@ -38,5 +40,25 @@ public sealed partial class MappingSpawnButton : Control
         if (textures.FirstOrDefault() is { } texture)
             Texture.TextureScale = new Vector2(Texture.SetSize.X / texture.Height, Texture.SetSize.X / texture.Height);
         Texture.InvalidateMeasure();
+    }
+
+    private void Collapse()
+    {
+        ChildrenPrototypes.DisposeAllChildren();
+        ChildrenPrototypesGallery.DisposeAllChildren();
+        CollapseTexture.TexturePath = "/Textures/Interface/VerbIcons/chevron-right-solid.svg.192dpi.png";
+    }
+
+    private void UnCollapse()
+    {
+        CollapseTexture.TexturePath = "/Textures/Interface/VerbIcons/chevron-down-solid.svg.192dpi.png";
+    }
+
+    public void ToggleCollapse()
+    {
+        if (CollapseButton.Pressed)
+            UnCollapse();
+        else
+            Collapse();
     }
 }

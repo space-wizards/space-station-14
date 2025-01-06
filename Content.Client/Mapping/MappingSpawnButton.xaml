@@ -9,8 +9,11 @@
                                     HorizontalAlignment="Center" VerticalAlignment="Center"
                                     Stretch="Tile" Visible="False" Margin="1 1 0 0" RectClipContent="True" />
                 <Control SetSize="48 48" Access="Public" Name="CollapseButtonWrapper">
-                    <Button Name="CollapseButton" Access="Public" Text="▶"
-                            ToggleMode="True" SetSize="48 48" StyleClasses="OpenRight" />
+                    <Button Name="CollapseButton" Access="Public"
+                            ToggleMode="True" SetSize="48 48" StyleClasses="OpenRight">
+                        <TextureRect Name="CollapseTexture" Access="Public" Stretch="KeepAspectCentered" SetSize="24 24"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Button>
                 </Control>
                 <Label Name="Label" Access="Public"
                        VAlign="Center"

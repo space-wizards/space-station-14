@@ -100,7 +100,7 @@ public sealed partial class MappingScreen : InGameScreen
         Pick.Texture.TexturePath = "/Textures/Interface/eyedropper.svg.png";
         Flip.Texture.TexturePath = "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
         Flip.OnPressed += _ => FlipSides();
-        Visibility.Texture.TexturePath = "/Textures/Interface/hamburger.svg.192dpi.png";
+        Visibility.Texture.TexturePath = "/Textures/Interface/VerbIcons/layer-group-solid.svg.192dpi.png";
         Visibility.OnPressed += _ => visibilityUIController.ToggleWindow();
         FixGridAtmos.Texture.TexturePath = "/Textures/Interface/VerbIcons/oxygen.svg.192dpi.png";
         RemoveGrid.Texture.TexturePath = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
