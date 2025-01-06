@@ -13781,7 +13781,7 @@ entities:
       pos: -29.5,15.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -208561.16
+      secondsUntilStateChange: -208680.4
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14039,7 +14039,7 @@ entities:
       pos: -4.5,53.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -63214.934
+      secondsUntilStateChange: -63334.184
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -43232,45 +43232,35 @@ entities:
     - type: Transform
       pos: 56.5,8.5
       parent: 5350
-  - uid: 12481
-    components:
-    - type: Transform
-      pos: 55.5,8.5
-      parent: 5350
   - uid: 12482
-    components:
-    - type: Transform
-      pos: 55.5,9.5
-      parent: 5350
-  - uid: 12483
     components:
     - type: Transform
       pos: 54.5,9.5
       parent: 5350
-  - uid: 12484
+  - uid: 12483
     components:
     - type: Transform
-      pos: 54.5,10.5
+      pos: 55.5,9.5
       parent: 5350
   - uid: 12485
     components:
     - type: Transform
-      pos: 54.5,11.5
+      pos: 56.5,9.5
       parent: 5350
   - uid: 12486
     components:
     - type: Transform
-      pos: 54.5,12.5
+      pos: 56.5,10.5
       parent: 5350
   - uid: 12487
     components:
     - type: Transform
-      pos: 54.5,13.5
+      pos: 52.5,20.5
       parent: 5350
   - uid: 12488
     components:
     - type: Transform
-      pos: 54.5,14.5
+      pos: 52.5,19.5
       parent: 5350
   - uid: 12489
     components:
@@ -47761,6 +47751,11 @@ entities:
     components:
     - type: Transform
       pos: 77.5,-30.5
+      parent: 5350
+  - uid: 28193
+    components:
+    - type: Transform
+      pos: 52.5,18.5
       parent: 5350
 - proto: CableHVStack
   entities:
@@ -56208,6 +56203,12 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -32.5,44.5
+      parent: 5350
+  - uid: 12484
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 55.5,9.5
       parent: 5350
   - uid: 13979
     components:
@@ -81427,7 +81428,7 @@ entities:
       pos: -10.5,51.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -61939.6
+      secondsUntilStateChange: -62058.85
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -144686,6 +144687,11 @@ entities:
       name: NW Solars SMES
     - type: Transform
       pos: -33.5,44.5
+      parent: 5350
+  - uid: 12481
+    components:
+    - type: Transform
+      pos: 54.5,9.5
       parent: 5350
   - uid: 13977
     components:
