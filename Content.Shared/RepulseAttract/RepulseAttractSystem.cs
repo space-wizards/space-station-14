@@ -1,5 +1,7 @@
 ﻿using Content.Shared.Ghost;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
@@ -19,29 +21,44 @@ public sealed class RepulseAttractSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<RepulseAttractComponent, GettingPickedUpAttemptEvent>(OnPickupAttempt);
+        SubscribeLocalEvent<RepulseAttractComponent, DroppedEvent>(OnDrop);
         SubscribeLocalEvent<RepulseAttractComponent, ActivateInWorldEvent>(OnActivate);
+    }
+
+    private void OnPickupAttempt(Entity<RepulseAttractComponent> ent, ref GettingPickedUpAttemptEvent args)
+    {
+        if (args.Cancelled || ent.Owner == args.User)
+            return;
+
+        ent.Comp.User = args.User;
+    }
+
+    private void OnDrop(Entity<RepulseAttractComponent> ent, ref DroppedEvent args)
+    {
+        ent.Comp.User = null;
     }
 
     private void OnActivate(Entity<RepulseAttractComponent> ent, ref ActivateInWorldEvent args)
     {
-        TryRepulseAttract(ent, args.User);
-        // RepulseAttract(args.User, ent.Comp.Range, ent.Comp.Strength, ent.Comp.Attract, ent.Comp.Whitelist, ent.Comp.Blacklist);
+        TryRepulseAttract(ent);
     }
 
     /// <summary>
-    ///     Try to <see cref="RepulseAttract"/>, mostly checks for cooldown. If a user is provided, it will override the entity being used. Used in situations where there's items using the comp in inventory.
+    ///     Try to <see cref="RepulseAttract"/>, mostly checks for cooldown. If a user is provided, it will override the entity being used. Used in situations where there's items using the comp in inventory/hands.
     /// </summary>
     /// <param name="ent">The entity with Repulse Attract</param>
-    /// <param name="user">Optional user, using an item with Repulse/Attract</param>
+    /// <param name="user">Optional user, used for using an item with Repulse/Attract</param>
+    /// <param name="singleTarget">Optional target, used for a single target click instead of in an area</param>
     /// <returns></returns>
-    private bool TryRepulseAttract(Entity<RepulseAttractComponent> ent, EntityUid? user = null)
+    private bool TryRepulseAttract(Entity<RepulseAttractComponent> ent, EntityUid? singleTarget = null)
     {
         var caster = ent.Owner;
-
-        if (user != null)
-            caster = user.Value;
-
         var comp = ent.Comp;
+
+        if (comp.User != null)
+            caster = comp.User.Value;
+
         var start = _gameTiming.CurTime;
 
         if (comp.NextUse != null && start < comp.NextUse)
@@ -51,44 +68,54 @@ public sealed class RepulseAttractSystem : EntitySystem
         }
 
         comp.NextUse = comp.UseDelay + start;
-        RepulseAttract(caster, comp.Range, comp.Strength, comp.Attract, comp.Whitelist, comp.Blacklist);
+
+        if (comp.User != null)
+            caster = comp.User.Value;
+
+        var xForm = Transform(caster);
+
+        // No range check, target was clicked on
+        if (singleTarget != null)
+        {
+            RepulseAttractHelper(xForm, singleTarget.Value, ent);
+            return true;
+        }
+
+        var entsInRange = _lookup.GetEntitiesInRange(caster, comp.Range);
+
+        foreach (var target in entsInRange)
+        {
+            RepulseAttractHelper(xForm, target, ent);
+        }
 
         return true;
     }
 
     /// <summary>
-    ///     Directly repulse/attract entities in range.
+    ///     Backend code for <see cref="RepulseAttract"/>
     /// </summary>
-    /// <param name="caster">The entity performing the repulse/attract</param>
-    /// <param name="range">How far this should reach</param>
-    /// <param name="strength">How strong should it repulse/attract</param>
-    /// <param name="attract">Should this attract instead of repulse?</param>
-    /// <param name="whitelist">Entities allowed to be repulsed/attracted</param>
-    /// <param name="blacklist">Entities not allowed to be repulsed/attracted</param>
-    public void RepulseAttract(EntityUid caster, float range, float strength, bool attract, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
+    private bool RepulseAttractHelper(TransformComponent xform, EntityUid target, Entity<RepulseAttractComponent> repulseAttract)
     {
-        var xForm = Transform(caster);
-        var entsInRange = _lookup.GetEntitiesInRange(caster, range);
+        var comp = repulseAttract.Comp;
 
-        foreach (var target in entsInRange)
-        {
-            if (_whitelist.IsWhitelistFail(whitelist, target) || _whitelist.IsBlacklistFail(blacklist, target))
-                continue;
+        if (_whitelist.IsWhitelistFail(comp.Whitelist, target) || _whitelist.IsBlacklistFail(comp.Blacklist, target))
+            return false;
 
-            var targetXForm = Transform(target);
+        var targetXForm = Transform(target);
 
-            if (targetXForm.Anchored || HasComp<GhostComponent>(target))
-                continue;
+        if (targetXForm.Anchored || HasComp<GhostComponent>(target))
+            return false;
 
-            var userWorldPos = _xForm.GetWorldPosition(xForm);
-            var targetWorldPos = _xForm.GetWorldPosition(target);
+        var userWorldPos = _xForm.GetWorldPosition(xform);
+        var targetWorldPos = _xForm.GetWorldPosition(target);
 
-            var direction = targetWorldPos - userWorldPos;
+        var direction = targetWorldPos - userWorldPos;
 
-            if (attract)
-                direction = userWorldPos - targetWorldPos;
+        if (comp.Attract)
+            direction = userWorldPos - targetWorldPos;
 
-            _throw.TryThrow(target, direction, strength, doSpin: true);
-        }
+        _throw.TryThrow(target, direction, comp.Strength, doSpin: true);
+
+        return true;
     }
 }
