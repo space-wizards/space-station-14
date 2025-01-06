@@ -1,7 +1,7 @@
 - type: job
   id: BlueShield
-  name: Officer "Blue Shield"
-  description: Your primary job is to protect the heads. Remember, you are not a security officer.
+  name: job-name-blueshield
+  description: job-description-blueshield
   playTimeTracker: JobBlueShield
   requirements:
     - !type:DepartmentTimeRequirement
