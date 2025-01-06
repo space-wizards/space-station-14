@@ -47,3 +47,4 @@
   - type: Blueprint
     providedRecipes:
     - DoubleEmergencyOxygenTank
+    - DoubleEmergencyNitrogenTank
