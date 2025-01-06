@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Midround changelings can now show up earlier in a round, but in fewer
-      numbers.
-    type: Tweak
-  id: 363
-  time: '2024-10-12T20:42:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/467
 - author: starlighthowls
   changes:
   - message: derotates skimmer, ty for testing everyone!
@@ -4471,3 +4463,11 @@
   id: 862
   time: '2025-01-06T22:55:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1220
+- author: hivehum
+  changes:
+  - message: Drones can now sing a jaunty little tune and also check a map whenever
+      they want.
+    type: Add
+  id: 863
+  time: '2025-01-06T23:02:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1228
