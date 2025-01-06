@@ -1690,4 +1690,69 @@ Entries:
   id: 239
   time: '2025-01-05T20:59:34.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/216
+- author: Rinary
+  changes:
+  - message: Added support for weapon locking
+    type: Add
+  id: 240
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Added conditions for fire modes.
+    type: Add
+  id: 241
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Added fire mode visual system, now when you change fire modes, some weapons
+      will change sprites.
+    type: Add
+  id: 242
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Added hybrid taser, as replacing default disablers for sec.
+    type: Add
+  id: 243
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Added energy gun, as sec weapon.
+    type: Add
+  id: 244
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Added Lr-30, as weapon what can be purchased at cargo.
+    type: Add
+  id: 245
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Added miniature energy gun, as temporary admeme weapon (in search of
+      its application).
+    type: Add
+  id: 246
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Resprited kinetic accelerator, added 3 variants of his sprite.
+    type: Tweak
+  id: 247
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Resprited laser gun.
+    type: Tweak
+  id: 248
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
 
