@@ -923,3 +923,10 @@ Entries:
     changes:
     - type: Tweak
       message: Updated the CE's jumpsuits to have consistent coloring.
+  - id: 244
+    author: Ermucat
+    time: '2025-01-06T15:19:58.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/244
+    changes:
+    - type: Tweak
+      message: Changed Vent Critters to be a bit more fair
