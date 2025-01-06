@@ -1,5 +1,4 @@
 using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Item;
 using Content.Client.Weapons.Ranged.Components;
 using Robust.Client.GameObjects;
 
@@ -7,7 +6,6 @@ namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed class BatteryWeaponFireModesVisualSystem : EntitySystem
 {
-    [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly GunSystem _gun = default!;
     
     public override void Initialize()
@@ -29,8 +27,5 @@ public sealed class BatteryWeaponFireModesVisualSystem : EntitySystem
         
         if (TryComp<MagazineVisualsComponent>(uid, out var magVisualsComp) && fireMode.MagState != null)
             _gun.SetMagState(uid, fireMode.MagState, false, magVisualsComp);
-        
-        if (TryComp<ItemComponent>(uid, out var itemComp) && fireMode.HeldPrefix != null)
-            _item.SetHeldPrefix(uid, fireMode.HeldPrefix, false, itemComp);
     }
 }

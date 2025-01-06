@@ -3,6 +3,7 @@ using Content.Shared.Lock;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -16,6 +17,7 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
 
     public override void Initialize()
     {
@@ -165,6 +167,9 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
             Dirty(uid, projectileBatteryAmmoProviderComponent);
             var updateClientAmmoEvent = new UpdateClientAmmoEvent();
             RaiseLocalEvent(uid, ref updateClientAmmoEvent);
+            
+            if (fireMode.HeldPrefix != null)
+                _item.SetHeldPrefix(uid, fireMode.HeldPrefix);
             
             var fireModeChangedEvent = new FireModeChangedEvent();
             RaiseLocalEvent(uid, ref fireModeChangedEvent);
