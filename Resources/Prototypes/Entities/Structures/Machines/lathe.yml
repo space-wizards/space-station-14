@@ -572,7 +572,7 @@
     - SciFlash
     - BorgModuleCable
     - BorgModuleFireExtinguisher
-    - BorgModuleRadiationDetection
+    - BorgModuleRadiationDetection # not useful anymore, get rid of it when possible
     - BorgModuleTool
     - CyborgEndoskeleton
     - LeftArmBorg
