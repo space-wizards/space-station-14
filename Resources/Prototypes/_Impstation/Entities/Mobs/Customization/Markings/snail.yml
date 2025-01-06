@@ -4,7 +4,7 @@
   markingCategory: Head
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_face.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_face.rsi
     state: alt_head
 
 - type: marking
@@ -13,7 +13,7 @@
   markingCategory: Head
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_face.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_face.rsi
     state: face_eyes_1
 
 - type: marking
@@ -22,7 +22,7 @@
   markingCategory: Head
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_face.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_face.rsi
     state: face_eyes_2
 
 - type: marking
@@ -31,7 +31,7 @@
   markingCategory: Head
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_face.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_face.rsi
     state: face_eyes_3
 
 - type: marking
@@ -40,7 +40,7 @@
   markingCategory: Head
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_face.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_face.rsi
     state: spots_head_left
 
 - type: marking
@@ -49,7 +49,7 @@
   markingCategory: Head
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_face.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_face.rsi
     state: spots_head_right
 
 - type: marking
@@ -58,7 +58,7 @@
   markingCategory: Head
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_face.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_face.rsi
     state: stripes_head
 
 - type: marking
@@ -67,7 +67,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_face.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_face.rsi
     state: tentacle_beard
 
 - type: marking
@@ -76,7 +76,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_face.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_face.rsi
     state: tentacle_moustache
 
 - type: marking
@@ -85,7 +85,7 @@
   markingCategory: Tail
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_shell.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_shell.rsi
     state: shell_big
 
 - type: marking
@@ -94,7 +94,7 @@
   markingCategory: Overlay
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_shell.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_shell.rsi
     state: shell_big_stripes
 
 - type: marking
@@ -103,7 +103,7 @@
   markingCategory: Tail
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_shell.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_shell.rsi
     state: shell_small
 
 - type: marking
@@ -112,7 +112,7 @@
   markingCategory: Overlay
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_shell.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_shell.rsi
     state: shell_small_stripes
 
 - type: marking
@@ -121,7 +121,7 @@
   markingCategory: Tail
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_shell.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_shell.rsi
     state: shell_cone
 
 - type: marking
@@ -130,7 +130,7 @@
   markingCategory: Chest
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_pattern.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_pattern.rsi
     state: puff_1
 
 - type: marking
@@ -139,7 +139,7 @@
   markingCategory: Chest
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_pattern.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_pattern.rsi
     state: puff_2
 
 - type: marking
@@ -148,7 +148,7 @@
   markingCategory: Chest
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_pattern.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_pattern.rsi
     state: stripes_body
 
 - type: marking
@@ -157,7 +157,7 @@
   markingCategory: Chest
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_pattern.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_pattern.rsi
     state: vert_stripes
 
 - type: marking
@@ -166,7 +166,7 @@
   markingCategory: Chest
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_pattern.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_pattern.rsi
     state: spots_body
 
 - type: marking
@@ -175,7 +175,7 @@
   markingCategory: Arms
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_pattern.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_pattern.rsi
     state: spots_arm_left
 
 - type: marking
@@ -184,7 +184,7 @@
   markingCategory: Arms
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_pattern.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_pattern.rsi
     state: stripes_arm_left
 
 - type: marking
@@ -193,7 +193,7 @@
   markingCategory: Arms
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_pattern.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_pattern.rsi
     state: spots_arm_right
 
 - type: marking
@@ -202,5 +202,5 @@
   markingCategory: Arms
   speciesRestriction: [Snail]
   sprites:
-  - sprite: Mobs/Customization/snail/snail_pattern.rsi
+  - sprite: _Impstation/Mobs/Customization/snail/snail_pattern.rsi
     state: stripes_arm_right
