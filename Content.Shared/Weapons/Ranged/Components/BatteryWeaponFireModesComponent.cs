@@ -8,7 +8,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// Allows battery weapons to fire different types of projectiles
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState]
+[AutoGenerateComponentState(true)]
 public sealed partial class BatteryWeaponFireModesComponent : Component
 {
     /// <summary>

@@ -12,10 +12,10 @@ public sealed class BatteryWeaponFireModesVisualSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BatteryWeaponFireModesComponent, FireModeChangedEvent>(OnFireModeChanged);
+        SubscribeLocalEvent<BatteryWeaponFireModesComponent, AfterAutoHandleStateEvent>(OnFireModeChanged);
     }
     
-    private void OnFireModeChanged(EntityUid uid, BatteryWeaponFireModesComponent component, ref FireModeChangedEvent args)
+    private void OnFireModeChanged(EntityUid uid, BatteryWeaponFireModesComponent component, ref AfterAutoHandleStateEvent args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;

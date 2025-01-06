@@ -18,6 +18,3 @@ public abstract partial class FireModeCondition
 }
 
 public readonly record struct FireModeConditionConditionArgs(EntityUid Shooter, EntityUid? Weapon, BatteryWeaponFireMode? FireMode, IEntityManager EntityManager);
-
-[ByRefEvent]
-public readonly record struct FireModeChangedEvent();
