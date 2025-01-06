@@ -267,6 +267,10 @@
     - state: disable-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Item
+    size: Small
+    shape:
+    - 0, 0, 1, 1
   - type: MagazineVisuals
     magState: disable
     steps: 5
