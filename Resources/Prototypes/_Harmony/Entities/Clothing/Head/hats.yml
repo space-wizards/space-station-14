@@ -42,6 +42,23 @@
     - WhitelistChameleon
 
 - type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretSecuritySeniorOfficerHarmony
+  name: senior officer's beret
+  description: 
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Head/Hats/beret_security_senior.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Head/Hats/beret_security_senior.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon
+
+
+- type: entity
   parent: [ClothingHeadBase, BaseCommandContraband]
   id: ClothingHeadHatBeretCaptainHarmony
   name: captain's beret

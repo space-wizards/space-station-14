@@ -997,10 +997,13 @@
       - ClothingHeadHatBeretHoS
       - ClothingHeadHatHoshat
       - ClothingHeadHatHoSWidebrimHarmony # Harmony
+      - ClothingHeadHatHoSSoftHarmony # Harmony
       - ClothingUniformJumpsuitHoS
       - ClothingUniformJumpskirtHoS
       - ClothingUniformJumpsuitHosFormal
       - ClothingUniformJumpskirtHosFormal
+      - ClothingUniformJumpsuitHeadOfSecurityTurtleneckHarmony # Harmony
+      - ClothingUniformJumpskirtHeadOfSecurityTurtleneckHarmony # Harmony
       - ClothingUniformJumpsuitHoSAlt
       - ClothingUniformJumpskirtHoSAlt
       - ClothingUniformJumpsuitHoSBlue
@@ -1044,6 +1047,7 @@
       - ClothingUniformJumpsuitSeniorResearcher
       - ClothingUniformJumpskirtSeniorResearcher
       - ClothingHeadHatBeretSecurity
+      - ClothingHeadHatBeretSecuritySeniorOfficerHarmony # Harmony
       - ClothingUniformJumpsuitSec
       - ClothingUniformJumpskirtSec
       - ClothingUniformJumpsuitSecBlueHarmony # Harmony
