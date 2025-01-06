@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Removed changeling's transformation sting for the time being.
-    type: Remove
-  id: 361
-  time: '2024-10-12T15:55:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/464
-- author: smpletan
-  changes:
-  - message: Added assets for the Prospector antagonist role. Of these assets, the
-      Texas Pond, Breaching Sledge, and Makeshift Hardsuit are currently implemented
-      and usable in game if spawned by an admin.
-    type: Add
-  id: 362
-  time: '2024-10-12T20:40:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/456
 - author: hivehum
   changes:
   - message: Midround changelings can now show up earlier in a round, but in fewer
@@ -4472,3 +4456,18 @@
   id: 860
   time: '2025-01-06T22:40:27.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1204
+- author: hivehum
+  changes:
+  - message: ACME is proud to announce a brand new product for any jesters, pranksters,
+      and aspiring comedians!
+    type: Add
+  id: 861
+  time: '2025-01-06T22:54:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1218
+- author: honeyed-lemons
+  changes:
+  - message: Fixed pda notifications and attempts to fix the notification button
+    type: Fix
+  id: 862
+  time: '2025-01-06T22:55:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1220
