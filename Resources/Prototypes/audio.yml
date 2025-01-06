@@ -34,15 +34,6 @@
   rules: NearTrain
   priority: 4
 
-- type: ambientMusic
-  id: Sea
-  sound:
-    params:
-      volume: -12
-    collection: AmbienceSea
-  rules: NearSea
-  priority: 1
-
 # Departments
 - type: ambientMusic
   id: Medical
