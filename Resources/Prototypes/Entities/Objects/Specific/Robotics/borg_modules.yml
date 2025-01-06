@@ -441,12 +441,6 @@
     - BaseChemistryEmptyVial
     - BaseChemistryEmptyVial
     - BaseChemistryEmptyVial
-    - BaseChemistryEmptyVial
-    - BaseChemistryEmptyVial
-    - BaseChemistryEmptyVial
-    - BaseChemistryEmptyVial
-    - BaseChemistryEmptyVial
-    - BaseChemistryEmptyVial 
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-diagnosis-module }
 
@@ -467,12 +461,6 @@
     - Beaker
     - Beaker
     - Beaker
-    - BaseChemistryEmptyVial
-    - BaseChemistryEmptyVial
-    - BaseChemistryEmptyVial
-    - BaseChemistryEmptyVial
-    - BaseChemistryEmptyVial
-    - BaseChemistryEmptyVial 
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-diagnosis-module }
 
