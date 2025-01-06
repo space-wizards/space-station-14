@@ -136,11 +136,6 @@
   id: BorgModuleGPS
   result: BorgModuleGPS
 
-- type: latheRecipe # not useful anymore, get rid of it when possible
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleRadiationDetection
-  result: BorgModuleRadiationDetection
-
 # Cargo Modules
 
 - type: latheRecipe
