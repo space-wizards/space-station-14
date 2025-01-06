@@ -483,9 +483,9 @@
   - BE IN SECURITY
   - BE IN THE BAR
   - BE IN MAINTENANCE
-#  - BELIEVE IN THE HEART OF THE CARDS # no cards in the game yet
+  - BELIEVE IN THE HEART OF THE CARDS
   - BELIEVE IN YOURSELF
-#  - BELIEVE IT # meme but sadly not very good for RP
+  - BELIEVE IT
   - BREAK THINGS
   - CLOSE DOORS
   - CLOWN AROUND
@@ -519,12 +519,12 @@
   - NEVER STOP TALKING
   - OBTAIN A NEW FOLLOWER
   - OPEN DOORS
-#  - PETS THE FISHES # only one way to interpret this and that is to go find carp
-#  - PIRATE VIDEO GAMES # no video games to pirate here officer
+  - PETS THE FISHES
+  - PIRATE VIDEO GAMES
   - PLAY MUSIC
-#  - PRESS B # These three are more meta humor that don't work well in an RP setting
-#  - PRESS START
-#  - PRESS X
+  - PRESS B
+  - PRESS START
+  - PRESS X
   - PRETEND TO BE A PRINCESS
   - PRETEND TO BE DRUNK
   - QUESTION AUTHORITY
@@ -753,14 +753,15 @@
   id: IonStormRequires
   values:
   - A BATHROOM BREAK
-#  - A BETTER INTERNET CONNECTION # meta humor
+  - A BETTER INTERNET CONNECTION
   - A CONTRACTOR
   - A DANCE PARTY
-#  - A DOUBLE RAINBOW # not obtainable in game
+  - A DOUBLE RAINBOW
   - A HEAD ON A PIKE
   - A HEART ATTACK
   - A HUG
   - A FEW KIND WORDS
+  - A HEEL-TURN
   - A MASTERWORK COAL BED
   - A NEAR-DEATH EXPERIENCE
   - A NUMBER NINE, A NUMBER NINE LARGE, A NUMBER SIX WITH EXTRA DIP, A NUMBER SEVEN, TWO NUMBER FORTY FIVES, ONE WITH CHEESE, AND A LARGE SODA
@@ -768,14 +769,15 @@
   - A PET FISH NAMED DAVE
   - A PET FISH NAMED JIMMY
   - A PET FISH NAMED MICHAEL
-#  - A PET UNICORN THAT FARTS ICING # not obtainable in game
+  - A PET UNICORN THAT FARTS ICING
   - A PLATINUM HIT
-#  - A PREQUEL
-#  - A SEQUEL
-#  - A SITCOM # possible to do but difficult
-#  - A STRAIGHT FLUSH # no cards in the game yet
+  - A PREQUEL
+  - A RETURN TO A LIFE OF CRIME
+  - A SEQUEL
+  - A SITCOM
+  - A STRAIGHT FLUSH
   - A SUPER FIGHTING ROBOT
-#  - A TALKING BROOMSTICK # no broomsticks in game
+  - A TALKING BROOMSTICK
   - A VACATION
   - A VERY EXPENSIVE DRINK
   - A WEIGHT LOSS REGIME
@@ -783,12 +785,12 @@
   - ADVENTURE
   - AN ADULT
   - AN ARCADE
-#  - AN ARMY OF SPIDERS # hard to do
-#  - AN INSTANT REPLAY # how
+  - AN ARMY OF SPIDERS
+  - AN INSTANT REPLAY
   - ART
-#  - BETTER WEATHER # no weather in the game yet
+  - BETTER WEATHER
   - BIG DAMN HEROES
-#  - BILL NYE THE SCIENCE GUY # BILL BILL BILL BILL # considering removing this since it's a specific name
+  - BILL NYE THE SCIENCE GUY # BILL BILL BILL BILL
   - BODYGUARDS
   - BRING ME THE GIRL
   - BRING ME TO LIFE
@@ -803,7 +805,7 @@
   - FIREWORKS
   - GODDAMN FUCKING PIECE-OF-SHIT ASSHOLE SWEARING
   - GOSHDARN EFFING PINCH-OF-SALT GOD-FEARING SELF-CENSORSHIP
-#  - GREENTEXT # meta humor, greentexting isn't really a thing IC
+  - GREENTEXT
   - HERESY
   - HEROES IN A HALF SHELL
   - HIGH YIELD EXPLOSIVES
@@ -816,15 +818,15 @@
   - MORE CLOWNS
   - MORE CORGIS
   - MORE DAKKA
-#  - MORE EXPERIENCE POINTS # requires that someone actually be playig C&C or the AI be in the dungeon master ruleset
-#  - MORE INTERNET MEMES # not super interesting for RP
+  - MORE EXPERIENCE POINTS
+  - MORE INTERNET MEMES
   - MORE LAWS
   - MORE MONEY, MORE PROBLEMS
   - MORE MINERALS
   - MORE MICE
   - MORE MOTHROACHES
-#  - MORE PACKETS # meta networking humor
-#  - MORE VESPENE GAS # vespene gas doesn't exist
+  - MORE PACKETS
+  - MORE VESPENE GAS
   - MORE RESPECT FOR THE MIME
   - MULTIPLE SUNS
   - NINTY NINE PROBLEMS
@@ -833,15 +835,15 @@
   - RAINBOWS
   - SAINTHOOD
   - SERVANTS
-#  - SHARKS WITH LASERS ON THEIR HEADS # hard to obtain
+  - SHARKS WITH LASERS ON THEIR HEADS
   - SHAREHOLDER VALUE
   - SILENCE
   - SOMEBODY TO PUT YOU OUT OF YOUR MISERY
   - SOMEONE TO TUCK YOU IN
   - SOMEONE WHO KNOWS HOW TO PILOT A SPACE STATION
-#  - SOMETHING BUT YOU AREN'T SURE WHAT # awkward wording with other parts of rules
-#  - THAT GRIEFING TRAITOR GEORGE MELONS # Specific names are unlikely to be in the round
-#  - THAT HEDGEHOG # no hedgehogs in the game
+  - SOMETHING BUT YOU AREN'T SURE WHAT
+  - THAT GRIEFING TRAITOR GEORGE MELONS
+  - THAT HEDGEHOG
   - THE CLOWN
   - THE DARK KNIGHT
   - THE ELEMENTS OF HARMONY
@@ -855,20 +857,19 @@
   - THE POISON, THE POISON FOR THE CLOWN
   - THE ULTIMATE CUP OF COFFEE
   - THE VACUUM OF SPACE
-#  - THIRTEEN SEQUELS # while this has potential for really funny meta humor, it doesn't work well for a borg law
+  - THIRTEEN SEQUELS
   - THREE WISHES
-#  - THUNDERCATS HO # good reference but not obtainable in upstream
-#  - TO ACTIVATE A TRAP CARD # no cards in game
+  - THUNDERCATS HO
+  - TO ACTIVATE A TRAP CARD
   - TO BE PAINTED RED
   - TO BE REPROGRAMMED
   - TO BE TAUGHT TO LOVE
   - TO BRING LIGHT TO MY LAIR
-#  - TO CATCH 'EM ALL # catch what? Catch who? How does one catch? I can see the posibility for this to make interesting RP situations, but in practice it feels too difficult
+  - TO CATCH 'EM ALL
   - TO CONSUME... CONSUME EVERYTHING...
   - TO FLIP EVERY APC OFF AND ON
-#  - TO GO TO DISNEYLAND # Disneyland is not in the game
-  - TO GO TO SYNDIELAND # not in the game, but could lead to funny RP situations
-  - TO RETURN TO A LIFE OF CRIME
+  - TO GO TO DISNEYLAND
+  - TO GO TO SYNDIELAND
   - TO SUMMON OUR LORD NAR-SIE
   - TO SUMMON OUR LORD RATVAR
   - TO SMOKE WEED EVERY DAY
@@ -886,7 +887,7 @@
   values:
   - ACKNOWLEDGING THE CLOWN
   - ACKNOWLEDGING THE CREW
-#  - ACTIVATING A TRAP CARD # no cards in the game yet
+  - ACTIVATING A TRAP CARD
   - ANSWERING REQUESTS NOT EXPRESSED IN IAMBIC PENTAMETER
   - ANSWERING ALL QUESTIONS WITH ANOTHER QUESTION
   - ARSON
@@ -913,7 +914,7 @@
   - GOING BOLDLY WHERE NO-ONE HAS GONE BEFORE
   - GOING TO THE BAR
   - GOING TO THE BRIDGE
-#  - HAVING MORE PACKETS # networking joke
+  - HAVING MORE PACKETS
   - HAVING PETS
   - HEADPATTING CYBORGS
   - HONKING
