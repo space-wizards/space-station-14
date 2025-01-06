@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Ling and Heretic will no longer roll on antag immune targets
-    type: Fix
-  id: 367
-  time: '2024-10-12T23:23:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/470
 - author: hivehum
   changes:
   - message: Tons of new items are now available to build the burger of your dreams.
@@ -4475,3 +4468,12 @@
   id: 866
   time: '2025-01-06T23:34:31.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1241
+- author: AftrLite
+  changes:
+  - message: Fixed medical wall locker sprites' open state
+    type: Fix
+  - message: Fixed a stray pixel on the Chaplain's Divine Grasp
+    type: Fix
+  id: 867
+  time: '2025-01-06T23:36:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1245
