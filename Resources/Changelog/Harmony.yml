@@ -848,3 +848,43 @@ Entries:
     changes:
     - type: Tweak
       message: Recolored the QM's winter coat and cloak.
+  - id: 277
+    author: BoskiYourk
+    time: '2025-01-05T18:09:16.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/277
+    changes:
+    - type: Add
+      message: Added the CE, RD, and HoP Berets.
+    - type: Tweak
+      message: Updated the QM's Beret.
+  - id: 213
+    author: Jajsha
+    time: '2025-01-05T18:09:51.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/213
+    changes:
+    - type: Tweak
+      message: Lowered nukie max count to 4
+  - id: 260
+    author: D0mtron
+    time: '2025-01-05T18:12:25.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/260
+    changes:
+    - type: Tweak
+      message: Granted ID cards with the Command or Security access tag to open and
+        close firelocks.
+  - id: 239
+    author: youtissoum
+    time: '2025-01-06T13:40:08.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/239
+    changes:
+    - type: Add
+      message: Added a new prisoner round-start job, this job is not an antagonist and
+        is intended for roleplay only.
+  - id: 247
+    author: SteroidsOnSteroids
+    time: '2025-01-06T13:43:11.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/247
+    changes:
+    - type: Add
+      message: Admemes can now use the Orwellian lawset to catch those filthy thought
+        criminals (syndicates).
