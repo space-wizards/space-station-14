@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheCactus
-  changes:
-  - message: Added text highlighting.
-    type: Add
-  id: 366
-  time: '2024-10-12T22:09:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/468
 - author: formlessnameless
   changes:
   - message: Ling and Heretic will no longer roll on antag immune targets
@@ -4472,3 +4465,13 @@
   id: 865
   time: '2025-01-06T23:15:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1234
+- author: aada
+  changes:
+  - message: Artistic borg module has a new action image.
+    type: Add
+  - message: Service borg module has been replaced with a bureaucracy module and bartender
+      module.
+    type: Tweak
+  id: 866
+  time: '2025-01-06T23:34:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1241
