@@ -85,6 +85,17 @@
   interruptable: true
   priority: 1
 
+- type: ambientMusic
+  id: Sweetwater
+  sound:
+    params:
+      volume: -12
+    collection: 
+  rules: OnSweetwater
+  fadeIn: true
+  interruptable: true
+  priority: 1
+
 ## Fallback if nothing else found
 - type: ambientMusic
   id: General
@@ -335,3 +346,8 @@
   id: OnMapGrid
   rules:
     - !type:OnMapGridRule
+
+- type: rules
+  id: OnSweetwater
+  rules:
+    - !type:OnSweetwaterRule
