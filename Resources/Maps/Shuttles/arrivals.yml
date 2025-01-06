@@ -18,6 +18,7 @@ entities:
     components:
     - type: MetaData
       name: Diving Bell
+    - type: DivingBell
     - type: Transform
       pos: -2.75,2.015625
       parent: invalid
