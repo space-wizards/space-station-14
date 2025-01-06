@@ -1,0 +1,10 @@
+# Security
+- type: roleLoadout
+  id: JobPermaPrisoner
+  groups:
+  - PermaPrisonerJumpsuit
+  - CommonBackpack
+  - GroupTankHarness
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool

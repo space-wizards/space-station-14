@@ -1,0 +1,16 @@
+- type: job
+  id: PermaPrisoner
+  name: job-name-prisoner
+  description: job-description-prisoner
+  playTimeTracker: JobPermaPrisoner
+  startingGear: PermaPrisonerGear
+  icon: "JobIconPrisoner"
+  supervisors: job-supervisors-security
+  canBeAntag: false
+
+- type: startingGear
+  id: PermaPrisonerGear
+  equipment:
+    id: PrisonerPDA
+    shoes: ClothingShoesColorBlack
+    ears: ClothingHeadsetGrey

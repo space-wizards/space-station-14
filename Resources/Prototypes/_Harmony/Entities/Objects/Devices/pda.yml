@@ -1,0 +1,11 @@
+- type: entity
+  parent: BasePDA
+  id: PrisonerPDA
+  name: prisoner PDA
+  description: A PDA made only for the worst of the worst.
+  components:
+  - type: Pda
+    id: PrisonerIDCard
+    state: harmony-pda-prisoner
+  - type: Icon
+    state: harmony-pda-prisoner
