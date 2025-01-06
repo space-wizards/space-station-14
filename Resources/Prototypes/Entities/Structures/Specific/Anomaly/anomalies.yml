@@ -936,3 +936,54 @@
   - type: Tag
     tags:
       - HideContextMenu
+
+- type: entity
+  id: AnomalySanta
+  parent: BaseAnomaly
+  suffix: Santa
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Structures/Specific/Anomalies/santa_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 8.0
+    energy: 8.5
+    color: "#db8127"
+  - type: Anomaly
+    animationTime: 6
+    offset: 0, 0
+    corePrototype: AnomalyCoreSanta
+    coreInertPrototype: AnomalyCoreSantaInert
+    minPulseLength: 60
+    maxPulseLength: 120
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 2
+        maxAmount: 5
+        maxRange: 5
+      spawns:
+      - PresentRandomUnsafe
+      - PresentRandom
+      - PresentRandomCoal
+      - PresentRandomCash
+      - ClothingHeadHatSantahat
+      - FoodCakeChristmasSlice
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 10
+        maxAmount: 20
+        maxRange: 6
+      spawns:
+      - PresentRandomInsane
+  - type: ProjectileAnomaly
+    projectilePrototype: DrinkLemonLimeCranberryCan
+    minProjectiles: 1
+    maxProjectiles: 3

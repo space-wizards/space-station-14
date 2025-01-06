@@ -105,6 +105,47 @@
       - !type:DeleteEntity
 
 - type: constructionGraph
+  id: GunSafe
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 10
+      - material: Cable
+        amount: 5
+        doAfter: 5
+      - material: Plasteel
+        amount: 10
+        doAfter: 10
+  - node: done
+    entity: GunSafe
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:StorageWelded
+        welded: false
+      - !type:Locked
+        locked: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 10
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 5
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel1
+        amount: 10
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity
+
+- type: constructionGraph
   id: ClosetWall
   start: start
   graph:
