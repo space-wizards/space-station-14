@@ -101,6 +101,9 @@
     sprite: _Harmony/Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
+  - type: StorageFill # Harmony Update: Adds the HoS Flask to the HoS Trenchcoat Pocket for the HoS Flask in HoS Trenchcoat Pocket Update
+    contents:
+    - id: DrinkHosFlask
 
 - type: entity
   parent: ClothingOuterStorageToggleableBase
