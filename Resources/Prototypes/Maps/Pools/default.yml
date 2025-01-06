@@ -1,23 +1,19 @@
 - type: gameMapPool
   id: DefaultMapPool
   maps:
-  #- Aspid
-  #- Atlas
   #- Amber
   - Bagel
   - Box
-  #- Cluster
-  #- Core
   #- Cog
+  #- Core
+  #- Elkridge
   #- Fland
   #- Gate
   #- Loop
-  #- Gemini
   - Marathon
   - Meta
-  #- Omega
   #- Oasis
-  #- Saltern
+  #- Omega
   #- Packed
   #- Reach
   #- Train
