@@ -23,7 +23,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: Map Entity
+      name: Waste Zone
     - type: Transform
     - type: Map
       mapPaused: True
@@ -45,7 +45,7 @@ entities:
   - uid: 2
     components:
     - type: MetaData
-      name: grid
+      name: Waste Zone
     - type: Transform
       pos: -66.42055,26.589666
       parent: 1

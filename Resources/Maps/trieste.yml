@@ -77,6 +77,10 @@ entities:
     - type: LoadedMap
     - type: Parallax
       parallax: Sky
+    - type: Weather
+      weather:
+        Rain:
+          startTime: 0
     - type: MapAtmosphere
       space: False
       mixture:

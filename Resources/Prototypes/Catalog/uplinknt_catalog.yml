@@ -76,7 +76,7 @@
   id: UplinkIncendiaryGrenade
   name: uplink-firebomb-name
   description: uplink-firebomb-desc
-  productEntity: IncendiaryGrenade
+  productEntity: GrenadeIncendiary
   cost:
     BluespaceCrystal: 5
   categories:

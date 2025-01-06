@@ -21,6 +21,9 @@ Note that some assets are licensed under the non-commercial [CC-BY-NC-SA 3.0](ht
 
 
 ## Contributors
+
+TRIESTE PORT wouldn't be possible without all these wonderful people helping out to make this project come to life.
+
 Pixeltheaertist - Project Lead
 
 Nolius - Programming, Debugging, General help

@@ -67,8 +67,8 @@
   id: MobFish
   description: It's a fish.
   components:
-  #- type: Body
-  #  prototype: SeaCreature # Gives em a stomach and gills for breathing water. They die without it.
+  - type: Body
+    prototype: SeaCreature # Gives em a stomach and gills for breathing water. They die without it.
   - type: Sprite
     sprite: Mobs/Animals/fish.rsi
     drawdepth: Mobs
@@ -131,12 +131,14 @@
   - type: PreventSpiller
   - type: Damageable
     damageContainer: Biological
- # - type: Respirator
- #   damage:
-  #    types:
- #       Slash: 2
- #   maxSaturation: 15
- #   gaspEmote: Click # It's like a peeper, alright?
+  - type: Respirator # changed to asphyx for consistency/it works - lye
+    damage:
+      types:
+        Asphyxiation: 2
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
+    gaspEmote: Click # It's like a peeper, alright?
 
 - type: entity
   name: Fish

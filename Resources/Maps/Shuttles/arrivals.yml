@@ -17,7 +17,8 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: grid
+      name: Diving Bell
+    - type: DivingBell
     - type: Transform
       pos: -2.75,2.015625
       parent: invalid

@@ -116,6 +116,17 @@
     - DeathMatch31
 
 - type: gamePreset
+  id: Longpast
+  alias:
+    - longpast
+    - lp
+  name: long-past-title
+  description: long-past-description
+  maxPlayers: 25
+  showInVote: true
+  supportedMaps: LongPastPool
+
+- type: gamePreset
   id: Nukeops
   alias:
     - nukeops
@@ -160,4 +171,19 @@
   - Zombie
   - BasicStationEventScheduler
   - GameRuleMeteorScheduler
+  - BasicRoundstartVariation
+
+- type: gamePreset
+  id: SafeHarbor
+  alias:
+  - safeharbor
+  - crashedship
+  - ThatOneFuckedShip
+  - floatsam
+  - flotsam
+  name: safe-harbor-title
+  showInVote: false
+  description: safe-harbor-description
+  supportedMaps: SafeHarborPool
+  rules:
   - BasicRoundstartVariation
