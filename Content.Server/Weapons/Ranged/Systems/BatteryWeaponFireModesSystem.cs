@@ -5,11 +5,12 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Weapons.Ranged.Systems;
+namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed class BatteryWeaponFireModesSystem : EntitySystem
 {
@@ -126,6 +127,20 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
             return;
 
         var index = (component.CurrentFireMode + 1) % component.FireModes.Count;
+        
+        var fireMode = component.FireModes[index];
+        
+        if (fireMode.Conditions != null)
+        {
+            var conditionArgs = new FireModeConditionConditionArgs(user, uid, fireMode, EntityManager);
+            var conditionsMet = fireMode.Conditions.All(condition => condition.Condition(conditionArgs));
+
+            if (!conditionsMet)
+            {
+                return;
+            }
+        }
+        
         SetFireMode(uid, component, index, user);
     }
 

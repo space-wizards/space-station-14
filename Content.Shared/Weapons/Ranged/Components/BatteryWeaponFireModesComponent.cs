@@ -1,5 +1,3 @@
-using JetBrains.Annotations;
-using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -10,7 +8,6 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// Allows battery weapons to fire different types of projectiles
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(BatteryWeaponFireModesSystem))]
 [AutoGenerateComponentState]
 public sealed partial class BatteryWeaponFireModesComponent : Component
 {
@@ -47,7 +44,8 @@ public sealed partial class BatteryWeaponFireMode
     /// <summary>
     /// Conditions that must be satisfied to activate this firing mode
     /// </summary>
-    [DataField("conditions")]
+    [DataField("conditions", serverOnly: true)]
+    [NonSerialized]
     public List<FireModeCondition>? Conditions;
     
     [DataField("heldPrefix")]
@@ -59,23 +57,3 @@ public sealed partial class BatteryWeaponFireMode
     [DataField("visualState")]
     public string? VisualState;
 }
-
-/// <summary>
-/// Used to define a complicated condition that requires C#
-/// </summary>
-[ImplicitDataDefinitionForInheritors]
-[MeansImplicitUse]
-[Serializable, NetSerializable]
-public abstract partial class FireModeCondition
-{
-    /// <summary>
-    /// Determines whether or not a certain entity can change firemode.
-    /// </summary>
-    /// <returns>Whether or not the firemode can be changed</returns>
-    public abstract bool Condition(FireModeConditionConditionArgs args);
-}
-
-public readonly record struct FireModeConditionConditionArgs(EntityUid Shooter, EntityUid? Weapon, BatteryWeaponFireMode? FireMode, IEntityManager EntityManager);
-
-[ByRefEvent]
-public readonly record struct FireModeChangedEvent();
