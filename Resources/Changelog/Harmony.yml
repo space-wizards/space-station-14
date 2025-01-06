@@ -888,3 +888,17 @@ Entries:
     - type: Add
       message: Admemes can now use the Orwellian lawset to catch those filthy thought
         criminals (syndicates).
+  - id: 257
+    author: BoskiYourk
+    time: '2025-01-06T14:07:36.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/257
+    changes:
+    - type: Add
+      message: Added the Head of Security's turtle neck, Head of Security's ball cap,
+        and Senior Officer beret.
+    - type: Tweak
+      message: Resprited most of the basic security jumpsuits.
+    - type: Tweak
+      message: Fixed numerous errors with in-hand and worn sprites.
+    - type: Tweak
+      message: Updated the winter jackboots to be in line with the normal counterpart
