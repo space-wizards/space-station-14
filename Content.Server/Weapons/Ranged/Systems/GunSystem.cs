@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Interaction;
 using Content.Server.Mech.Equipment.Components;
@@ -220,8 +221,11 @@ public sealed partial class GunSystem : SharedGunSystem
                         if (dmg != null)
                             dmg = Damageable.TryChangeDamage(hitEntity, dmg, origin: user);
                         
-                        if (hitscan.ignite)
-                            _flame.Ignite(hitEntity, lastUser);
+                        if (hitscan.ignite && TryComp<FlammableComponent>(hitEntity, out var flameComp))
+                        {
+                            flameComp.FireStacks += 1;
+                            _flame.Ignite(hitEntity, lastUser, flameComp);
+                        }
 
                         // check null again, as TryChangeDamage returns modified damage values
                         if (dmg != null)
