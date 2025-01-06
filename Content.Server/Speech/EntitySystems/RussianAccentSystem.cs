@@ -19,6 +19,6 @@ public sealed class RussianAccentSystem : EntitySystem
 
     private void OnAccent(EntityUid uid, RussianAccentComponent component, AccentGetEvent args)
     {
-        args.Message = Accentuate(args.Message); 
+        args.Message = Accentuate(args.Message);
     }
 }
