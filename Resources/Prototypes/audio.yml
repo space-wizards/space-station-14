@@ -118,11 +118,6 @@
     - /Audio/Ambience/ambitech3.ogg
 
 - type: soundCollection
-  id: AmbienceSea
-  files:
-    - /Audio/Ambience/ambisea1.ogg
-
-- type: soundCollection
   id: AmbienceGeneral
   files:
     - /Audio/Ambience/ambigen1.ogg
