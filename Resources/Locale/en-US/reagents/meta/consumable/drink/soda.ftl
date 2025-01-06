@@ -19,7 +19,7 @@ reagent-desc-grape-soda = It's Graaaaaape!
 reagent-name-ice-cream = ice cream
 reagent-desc-ice-cream = It was either this or the microwave, and nobody wants ice cream soup!
 
-reagent-name-lemon-lime = Smite Soda
+reagent-name-lemon-lime = Smite
 reagent-desc-lemon-lime = Tangy lime and lemon soda.
 
 reagent-name-lemon-lime-cranberry = Smite Cranberry

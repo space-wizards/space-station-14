@@ -791,7 +791,7 @@
 - type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkLemonLimeJug
-  name: Smite Soda jug
+  name: Smite jug
   description: A dual citrus sensation.
   components:
   - type: SolutionContainerManager
