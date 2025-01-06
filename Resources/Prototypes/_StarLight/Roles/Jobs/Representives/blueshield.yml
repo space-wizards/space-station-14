@@ -54,5 +54,4 @@
   storage:
     back:
     - WeaponMultiphaseGun
-    - BoxSurvivalSecurity
     - Flash
