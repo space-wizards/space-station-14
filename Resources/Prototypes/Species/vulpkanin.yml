@@ -1,0 +1,148 @@
+- type: species
+  id: Vulpkanin
+  name: species-name-vulpkanin
+  roundStart: true
+  prototype: MobVulpkanin
+  sprites: MobVulpkaninSprites
+  defaultSkinTone: "#985629"
+  markingLimits: MobVulpkaninMarkingLimits
+  dollPrototype: MobVulpkaninDummy
+  skinColoration: Hues
+  maleFirstNames: names_vulpkanin_male
+  femaleFirstNames: names_vulpkanin_female
+  lastNames: names_vulpkanin_last
+
+- type: speciesBaseSprites
+  id: MobVulpkaninSprites
+  sprites:
+    Head: MobVulpkaninHead
+    Hair: MobHumanoidAnyMarking
+    FacialHair: MobHumanoidAnyMarking
+    Snout: MobHumanoidAnyMarking
+    Chest: MobVulpkaninTorso
+    HeadTop: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidAnyMarking
+    Tail: MobHumanoidAnyMarking
+    Eyes: MobHumanoidEyes
+    LArm: MobVulpkaninLArm
+    RArm: MobVulpkaninRArm
+    LHand: MobVulpkaninLHand
+    RHand: MobVulpkaninRHand
+    LLeg: MobVulpkaninLLeg
+    RLeg: MobVulpkaninRLeg
+    LFoot: MobVulpkaninLFoot
+    RFoot: MobVulpkaninRFoot
+
+- type: markingPoints
+  id: MobVulpkaninMarkingLimits
+  points:
+    Hair:
+      points: 1
+      required: false
+    FacialHair:
+      points: 1
+      required: false
+    Tail:
+      points: 1
+      required: true
+      defaultMarkings: [ VulpTailAlt ]
+    Head:
+      points: 3
+      required: false
+    Legs:
+      points: 1
+      required: false
+    Arms:
+      points: 1
+      required: false
+    Snout:
+      points: 1
+      required: false
+    HeadTop:
+      points: 1
+      required: true
+      defaultMarkings: [ VulpEar ]
+
+- type: humanoidBaseSprite
+  id: MobVulpkaninHead
+  baseSprite:
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobVulpkaninHeadMale
+  baseSprite:
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobVulpkaninHeadFemale
+  baseSprite:
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobVulpkaninTorso
+  baseSprite:
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobVulpkaninTorsoMale
+  baseSprite:
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobVulpkaninTorsoFemale
+  baseSprite:
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobVulpkaninLLeg
+  baseSprite:
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobVulpkaninLHand
+  baseSprite:
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobVulpkaninLArm
+  baseSprite:
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobVulpkaninLFoot
+  baseSprite:
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobVulpkaninRLeg
+  baseSprite:
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobVulpkaninRHand
+  baseSprite:
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobVulpkaninRArm
+  baseSprite:
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobVulpkaninRFoot
+  baseSprite:
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    state: r_foot

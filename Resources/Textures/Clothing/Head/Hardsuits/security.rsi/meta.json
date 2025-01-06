@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprite made by Gtheglorious based on the sprite taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e. Vox states by Flareguy for Space Station 14",
+  "copyright": "Sprite made by Gtheglorious based on the sprite taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e. Vox states by Flareguy for Space Station 14 | vulpkanin versions taken from https://github.com/SPLURT-Station/S.P.L.U.R.T-Station-13/commit/091d9ec00f186052b87bd65125e896f78faefe38 and edited by Floofers",
   "size": {
     "x": 32,
     "y": 32
@@ -27,6 +27,14 @@
     },
     {
       "name": "on-equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET-vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "off-equipped-HELMET-vulpkanin",
       "directions": 4
     }
   ]

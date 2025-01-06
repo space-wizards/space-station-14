@@ -346,10 +346,23 @@
   name: Toggle Paramedic Siren
   description: Toggles the paramedic siren on and off.
   components:
-  - type: InstantAction 
+  - type: InstantAction
     icon:
       sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
       state: icon-siren
     useDelay: 1
     itemIconStyle: BigAction
+    event: !type:ToggleActionEvent
+
+- type: entity
+  id: ActionToggleVulpakinWagging
+  name: action-name-toggle-wagging
+  description: action-description-toggle-wagging
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    icon: { sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi, state: tail-wag-icon }
+    iconOn: { sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi, state: tail-wag-icon }
+    itemIconStyle: NoItem
+    useDelay: 1 # Prevents Emote Spam
     event: !type:ToggleActionEvent

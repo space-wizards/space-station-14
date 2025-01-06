@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by brainfood1183 (github) for ss14. Reptilian edit by Nairod(Github), vox edit by Flareguy",
+  "copyright": "Made by brainfood1183 (github) for ss14. Reptilian edit by Nairod(Github), vox edit by Flareguy | vulpkanin version taken from Paradise station at https://github.com/ParadiseSS13/Paradise/commit/f0fa4e1fd809482fbc104a310aa34cebf7df157d edited by Floofers",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-MASK",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-vulpkanin",
       "directions": 4
     },
     {
