@@ -4,79 +4,103 @@
          xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
          Orientation="Vertical" HorizontalExpand ="True" Margin="0 0 0 3">
 
-    <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Horizontal">
-        <!-- Supermatter name -->
-        <Label Name="SupermatterNameLabel" Text="???" HorizontalExpand="True" HorizontalAlignment="Left" Margin="5 0"></Label>
-        
-        <!-- Integrity label -->
-        <Label Name="IntegrityLabel" Text="{Loc 'supermatter-console-window-integrity-label'}" HorizontalExpand="True" HorizontalAlignment="Right" Margin="5 0"></Label>
-        
-        <!-- Device selection button -->
-        <Button Name="FocusButton" HorizontalExpand="True" SetHeight="32" Margin="12 0 0 0" StyleClasses="OpenBoth" Access="Public">
+    <Button Name="FocusButton" VerticalExpand="True" HorizontalExpand="True" StyleClasses="OpenLeft" Access="Public">
+        <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Horizontal">
+            <!-- Supermatter sprite -->
+            <TextureRect Name="SupermatterSprite" SetWidth="32" SetHeight="48" TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/supermatter.png" Margin="6 2" />
 
-            <!-- Supermatter state -->
-            <TextureRect Stretch="Keep" HorizontalAlignment="Left" Margin="-20 -2 0 0" ModulateSelfOverride="#25252a" TexturePath="/Textures/Interface/AtmosMonitoring/status_bg.png">
-                <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Horizontal" Margin="8 0">
-                    <TextureRect Name="ArrowTexture" VerticalAlignment="Center" SetSize="12 12" Stretch="KeepAspectCentered" Margin="3 0" TexturePath="/Textures/Interface/Nano/triangle_right.png"></TextureRect>
-                    <Label Name="StatusLabel" HorizontalExpand="True" HorizontalAlignment="Center" FontColorOverride="#5A5A5A" Text="{Loc 'supermatter-console-window-error-status'}"></Label>
-                </BoxContainer>
-            </TextureRect>
-        </Button>
-    </BoxContainer>
+            <!-- Supermatter name -->
+            <Label Name="SupermatterNameLabel" Text="???" HorizontalExpand="True" HorizontalAlignment="Left" Margin="5 0" />
+
+            <!-- Supermatter status -->
+            <Label Name="SupermatterStatusLabel" Text="{Loc 'supermatter-console-window-error-status'}" HorizontalExpand="True" HorizontalAlignment="Right" Margin="5 0" />
+        </BoxContainer>
+    </Button>
 
     <!-- Panel that appears on selecting the device -->
     <PanelContainer Name="FocusContainer" HorizontalExpand="True" Margin="1 -1 1 0" ReservesSpace="False" Visible="False" Access="Public">
         <PanelContainer.PanelOverride>
             <gfx:StyleBoxFlat BackgroundColor="#25252a"/>
         </PanelContainer.PanelOverride>
-        <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical">
-
-            <!-- Atmosphere status -->
-            <Control>
-
-                <!-- Main container for displaying atmospheric data -->
-                <BoxContainer Name="MainDataContainer" HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical" ReservesSpace="False" Visible="False">
-                    <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
-                        <Label Name="TemperatureHeaderLabel" Text="{Loc 'atmos-alerts-window-temperature-label'}" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#a9a9a9" Margin="0 2 0 0" SetHeight="24"></Label>
-                        <Label Name="PressureHeaderLabel" Text="{Loc 'atmos-alerts-window-pressure-label'}" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#a9a9a9" Margin="0 2 0 0" SetHeight="24"></Label>
-                        <Label Name="OxygenationHeaderLabel" Text="{Loc 'atmos-alerts-window-oxygenation-label'}" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#a9a9a9" Margin="0 2 0 0" SetHeight="24"></Label>
-                    </BoxContainer>
-                    <PanelContainer HorizontalExpand="True">
-                        <PanelContainer.PanelOverride>
-                            <gfx:StyleBoxFlat BackgroundColor="#202023"/>
-                        </PanelContainer.PanelOverride>
-                        <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
-                            <Label Name="TemperatureLabel" Text="???" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#5A5A5A" Margin="0 2 0 0" SetHeight="24"></Label>
-                            <Label Name="PressureLabel" Text="???" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#5A5A5A" Margin="0 2 0 0" SetHeight="24"></Label>
-                            <Label Name="OxygenationLabel" Text="???" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#5A5A5A" Margin="0 2 0 0" SetHeight="24"></Label>
-                        </BoxContainer>
-                    </PanelContainer>
-                    <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
-                        <Label Name="GasesHeaderLabel" Text="{Loc 'atmos-alerts-window-other-gases-label'}" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#a9a9a9" Margin="0 4 0 0" SetHeight="24"></Label>
-                    </BoxContainer>
-                    <PanelContainer HorizontalExpand="True">
-                        <PanelContainer.PanelOverride>
-                            <gfx:StyleBoxFlat BackgroundColor="#202023"/>
-                        </PanelContainer.PanelOverride>
-
-                        <!-- Gas entries added via C# code -->
-                        <GridContainer Name="GasGridContainer" HorizontalExpand="True" Columns = "4"></GridContainer>
+        <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Horizontal" Margin="6 3">
+            
+            <!-- Engine details -->
+            <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical" Margin="0 0 6 0">
+                <!-- Integrity display -->
+                <BoxContainer HorizontalExpand="True" Orientation="Horizontal" Margin="0 1">
+                    <Label Name="IntegrityLabel" Text="{Loc 'supermatter-console-window-label-integrity'}" HorizontalExpand="True" HorizontalAlignment="Left" />
+                    <PanelContainer Name="IntegrityBarBorder" SetWidth="150" SetHeight="24">
+                        <ProgressBar Name="IntegrityBar" MinValue="0" MaxValue="100" HorizontalExpand="True" VerticalExpand="True" Margin="1">
+                            <Label Name="IntegrityBarLabel" HorizontalAlignment="Right" Margin="0 0 4 0" />
+                        </ProgressBar>
                     </PanelContainer>
                 </BoxContainer>
 
-                <!-- If the alarm is inactive, this is label is displayed instead -->
-                <Label Name="NoDataLabel" Text="{Loc 'atmos-alerts-window-no-data-available'}" HorizontalAlignment="Center" Margin="0 15" FontColorOverride="#a9a9a9" ReservesSpace="False" Visible="False"></Label>
-
-                <!-- Silencing progress bar -->
-                <controls:StripeBack Name="SilenceAlarmProgressBar" ReservesSpace="False" Visible="False" Access="Public">
-                    <PanelContainer>
-                        <Label Text="{Loc 'atmos-alerts-window-alerts-being-silenced'}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 5 5 5"/>
+                <!-- Internal energy display -->
+                <BoxContainer HorizontalExpand="True" Orientation="Horizontal" Margin="0 1">
+                    <Label Name="PowerLabel" Text="{Loc 'supermatter-console-window-label-power'}" HorizontalExpand="True" HorizontalAlignment="Left" />
+                    <PanelContainer Name="PowerBarBorder" SetWidth="150" SetHeight="24">
+                        <ProgressBar Name="PowerBar" MinValue="0" MaxValue="5000" HorizontalExpand="True" VerticalExpand="True" Margin="1">
+                            <Label Name="PowerBarLabel" HorizontalAlignment="Right" Margin="0 0 4 0" />
+                        </ProgressBar>
                     </PanelContainer>
-                </controls:StripeBack>
-            </Control>
+                </BoxContainer>
 
-            <!-- Check box for silencing this alarm -->
-            <CheckBox Name="SilenceCheckBox" Text="{Loc 'atmos-alerts-window-silence-alerts'}" HorizontalAlignment="Left" Margin="5 5 5 5" Access="Public"></CheckBox>
+                <!-- Radiation display -->
+                <BoxContainer HorizontalExpand="True" Orientation="Horizontal" Margin="0 1">
+                    <Label Name="RadiationLabel" Text="{Loc 'supermatter-console-window-label-radiation'}" HorizontalExpand="True" HorizontalAlignment="Left" />
+                    <PanelContainer Name="RadiationBarBorder" SetWidth="150" SetHeight="24">
+                        <ProgressBar Name="RadiationBar" MinValue="0" MaxValue="30" HorizontalExpand="True" VerticalExpand="True" Margin="1">
+                            <Label Name="RadiationBarLabel" HorizontalAlignment="Right" Margin="0 0 4 0" />
+                        </ProgressBar>
+                    </PanelContainer>
+                </BoxContainer>
+
+                <!-- Absorbed moles display -->
+                <BoxContainer HorizontalExpand="True" Orientation="Horizontal" Margin="0 1">
+                    <Label Name="MolesLabel" Text="{Loc 'supermatter-console-window-label-moles'}" HorizontalExpand="True" HorizontalAlignment="Left" />
+                    <PanelContainer Name="MolesBarBorder" SetWidth="150" SetHeight="24">
+                        <ProgressBar Name="MolesBar" MinValue="0" MaxValue="100" HorizontalExpand="True" VerticalExpand="True" Margin="1">
+                            <Label Name="MolesBarLabel" HorizontalAlignment="Right" Margin="0 0 4 0" />
+                        </ProgressBar>
+                    </PanelContainer>
+                </BoxContainer>
+
+                <!-- Temperature display -->
+                <BoxContainer HorizontalExpand="True" Orientation="Horizontal" Margin="0 1">
+                    <Label Name="TemperatureLabel" Text="{Loc 'supermatter-console-window-label-temperature'}" HorizontalExpand="True" HorizontalAlignment="Left" />
+                    <PanelContainer Name="TemperatureBarBorder" SetWidth="150" SetHeight="24">
+                        <ProgressBar Name="TemperatureBar" MinValue="0" MaxValue="1000" HorizontalExpand="True" VerticalExpand="True" Margin="1">
+                            <Label Name="TemperatureBarLabel" HorizontalAlignment="Right" Margin="0 0 4 0" />
+                        </ProgressBar>
+                    </PanelContainer>
+                </BoxContainer>
+
+                <!-- Temperature limit display -->
+                <BoxContainer HorizontalExpand="True" Orientation="Horizontal" Margin="0 1">
+                    <Label Name="TemperatureLimitLabel" Text="{Loc 'supermatter-console-window-label-temperature-limit'}" HorizontalExpand="True" HorizontalAlignment="Left" />
+                    <Label Name="TemperatureLimitBarLabel" HorizontalAlignment="Left" SetWidth="150" />
+                </BoxContainer>
+
+                <!-- Waste multiplier display -->
+                <BoxContainer HorizontalExpand="True" Orientation="Horizontal" Margin="0 1">
+                    <Label Name="WasteLabel" Text="{Loc 'supermatter-console-window-label-waste'}" HorizontalExpand="True" HorizontalAlignment="Left" />
+                    <PanelContainer Name="WasteBarBorder" SetWidth="150" SetHeight="24">
+                        <ProgressBar Name="WasteBar" MinValue="0" MaxValue="10" HorizontalExpand="True" VerticalExpand="True" Margin="1">
+                            <Label Name="WasteBarLabel" HorizontalAlignment="Right" Margin="0 0 4 0" />
+                        </ProgressBar>
+                    </PanelContainer>
+                </BoxContainer>
+
+                <!-- Absorption ratio display -->
+                <BoxContainer HorizontalExpand="True" Orientation="Horizontal" Margin="0 1">
+                    <Label Name="AbsorptionLabel" Text="{Loc 'supermatter-console-window-label-absorption'}" HorizontalExpand="True" HorizontalAlignment="Left" />
+                    <Label Name="AbsorptionBarLabel" HorizontalAlignment="Left" SetWidth="150" />
+                </BoxContainer>
+            </BoxContainer>
+
+            <!-- Gas details (entries added by C# code) -->
+            <BoxContainer Name="GasTable" HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical" Margin="6 0 0 0" />
         </BoxContainer>
     </PanelContainer>
 

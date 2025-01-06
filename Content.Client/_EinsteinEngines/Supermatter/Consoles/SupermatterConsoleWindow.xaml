@@ -2,77 +2,21 @@
                xmlns:ui="clr-namespace:Content.Client.Pinpointer.UI"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'supermatter-console-window-title'}"
-               Resizable="False"
-               SetSize="1120 750"
-               MinSize="1120 750">
+               Resizable="True"
+               SetSize="700 400"
+               MinSize="700 400">
     <BoxContainer Orientation="Vertical">
         <!-- Main display -->
         <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
-            <!-- Nav map -->
-            <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-                <ui:NavMapControl Name="NavMap" Margin="5 5" VerticalExpand="True" HorizontalExpand="True">
-
-                    <!-- System warning -->
-                    <PanelContainer Name="SystemWarningPanel"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Top"
-                                    HorizontalExpand="True"
-                                    Margin="0 48 0 0"
-                                    Visible="False">
-                        <RichTextLabel Name="SystemWarningLabel" Margin="12 8 12 8"/>
-                    </PanelContainer>
-
-                </ui:NavMapControl>
-
-                <!-- Nav map legend -->
-                <BoxContainer Orientation="Horizontal" Margin="0 10 0 10">
-                    <Label Text="{Loc 'supermatter-console-window-label-alert-types'}"
-                           Margin="20 0 5 0"/>
-                    <TextureRect Stretch="KeepAspectCentered"
-                                TexturePath="/Textures/Interface/NavMap/beveled_circle.png"
-                                Modulate="#5A5A5A"
-                                SetSize="16 16"
-                                Margin="20 0 5 0"/>
-                    <Label Text="{Loc 'supermatter-console-window-inactive-status'}"/>
-                    <TextureRect Stretch="KeepAspectCentered"
-                                TexturePath="/Textures/Interface/NavMap/beveled_circle.png"
-                                Modulate="#32cd32"
-                                SetSize="16 16"
-                                Margin="20 0 5 0"/>
-                    <Label Text="{Loc 'supermatter-console-window-normal-status'}"/>
-                    <TextureRect Stretch="KeepAspectCentered"
-                                TexturePath="/Textures/Interface/NavMap/beveled_triangle.png"
-                                SetSize="16 16"
-                                Modulate="#ffb648"
-                                Margin="20 0 5 0"/>
-                    <Label Text="{Loc 'supermatter-console-window-caution-status'}"/>
-                    <TextureRect Stretch="KeepAspectCentered"
-                                TexturePath="/Textures/Interface/NavMap/beveled_square.png"
-                                SetSize="16 16"
-                                Modulate="#ff4343"
-                                Margin="20 0 5 0"/>
-                    <Label Text="{Loc 'supermatter-console-window-danger-status'}"/>
-                </BoxContainer>
-            </BoxContainer>
-
-            <!-- Supermatter status -->
-            <BoxContainer Orientation="Vertical" VerticalExpand="True" SetWidth="440" Margin="0 0 10 10">
-
-                <!-- Station name -->
-                <controls:StripeBack>
-                    <PanelContainer>
-                        <RichTextLabel Name="StationName" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 5 0 3"/>
-                    </PanelContainer>
-                </controls:StripeBack>
-
-                <!-- Alarm status (entries added by C# code) -->
+            <!-- Supermatter list -->
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="10 0 10 10">
+                <!-- Supermatters (entries added by C# code) -->
                 <BoxContainer VerticalExpand="True" HorizontalExpand="True" Margin="0 10 0 0">
                     <ScrollContainer HorizontalExpand="True">
-                        <BoxContainer Name="SupermattersTable" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 0 10"/>
+                        <BoxContainer Name="SupermattersTable" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 0 10" />
                     </ScrollContainer>
                 </BoxContainer>
             </BoxContainer>
-
         </BoxContainer>
 
         <!-- Footer -->

@@ -2,7 +2,9 @@ using Content.Server.Pinpointer;
 using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Content.Shared._EinsteinEngines.Supermatter.Consoles;
 using Content.Shared._EinsteinEngines.Supermatter.Monitor;
+using Content.Shared.Atmos;
 using Content.Shared.Pinpointer;
+using Content.Shared.Radiation.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using System.Diagnostics.CodeAnalysis;
@@ -32,10 +34,6 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
 
         // Grid events
         SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
-
-        // Alarm events
-        SubscribeLocalEvent<SupermatterComponent, AnchorStateChangedEvent>(OnSupermatterAnchorChanged);
-        SubscribeLocalEvent<SupermatterComponent, EntityTerminatingEvent>(OnSupermatterTerminatingEvent);
     }
 
     #region Event handling 
@@ -77,99 +75,45 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
         }
     }
 
-    private void OnSupermatterAnchorChanged(EntityUid uid, SupermatterComponent component, AnchorStateChangedEvent args)
-    {
-        OnSupermatterAdditionOrRemoval(uid, component, args.Anchored);
-    }
-
-    private void OnSupermatterTerminatingEvent(EntityUid uid, SupermatterComponent component, ref EntityTerminatingEvent args)
-    {
-        OnSupermatterAdditionOrRemoval(uid, component, false);
-    }
-
-    private void OnSupermatterAdditionOrRemoval(EntityUid uid, SupermatterComponent component, bool isAdding)
-    {
-        var xform = Transform(uid);
-        var gridUid = xform.GridUid;
-
-        if (gridUid == null)
-            return;
-
-        if (!TryComp<NavMapComponent>(xform.GridUid, out var navMap))
-            return;
-
-        if (!TryGetSupermatterNavMapData(uid, component, xform, out var data))
-            return;
-
-        var netEntity = GetNetEntity(uid);
-
-        var query = AllEntityQuery<SupermatterConsoleComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out var entConsole, out var entXform))
-        {
-            if (gridUid != entXform.GridUid)
-                continue;
-
-            if (isAdding)
-            {
-                entConsole.Supermatters.Add(data.Value);
-            }
-
-            else
-            {
-                entConsole.Supermatters.RemoveWhere(x => x.NetEntity == netEntity);
-                _navMapSystem.RemoveNavMapRegion(gridUid.Value, navMap, netEntity);
-            }
-
-            Dirty(ent, entConsole);
-        }
-    }
-
     #endregion
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        _updateTimer += frameTime;
+        // Keep a list of UI entries for each gridUid, in case multiple consoles stand on the same grid
+        var supermatterEntriesForEachGrid = new Dictionary<EntityUid, SupermatterConsoleEntry[]>();
 
-        if (_updateTimer >= UpdateTime)
+        var query = AllEntityQuery<SupermatterConsoleComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out var entConsole, out var entXform))
         {
-            _updateTimer -= UpdateTime;
+            if (entXform?.GridUid == null)
+                continue;
 
-            // Keep a list of UI entries for each gridUid, in case multiple consoles stand on the same grid
-            var supermatterEntriesForEachGrid = new Dictionary<EntityUid, SupermatterConsoleEntry[]>();
-
-            var query = AllEntityQuery<SupermatterConsoleComponent, TransformComponent>();
-            while (query.MoveNext(out var ent, out var entConsole, out var entXform))
+            // Make a list of alarm state data for all the supermatters on the grid
+            if (!supermatterEntriesForEachGrid.TryGetValue(entXform.GridUid.Value, out var supermatterEntries))
             {
-                if (entXform?.GridUid == null)
-                    continue;
-
-                // Make a list of alarm state data for all the supermatters on the grid
-                if (!supermatterEntriesForEachGrid.TryGetValue(entXform.GridUid.Value, out var supermatterEntries))
-                {
-                    supermatterEntries = GetSupermatterStateData(entXform.GridUid.Value).ToArray();
-                    supermatterEntriesForEachGrid[entXform.GridUid.Value] = supermatterEntries;
-                }
-
-                // Determine the highest level of status for the console
-                var highestStatus = SupermatterStatusType.Inactive;
-
-                foreach (var entry in supermatterEntries)
-                {
-                    var status = entry.EntityStatus;
-
-                    if (status > highestStatus)
-                        highestStatus = status;
-                }
-
-                // Update the appearance of the console based on the highest recorded level of alert
-                if (TryComp<AppearanceComponent>(ent, out var entAppearance))
-                    _appearance.SetData(ent, SupermatterConsoleVisuals.ComputerLayerScreen, (int)highestStatus, entAppearance);
-
-                // If the console UI is open, send UI data to each subscribed session
-                UpdateUIState(ent, supermatterEntries, entConsole, entXform);
+                supermatterEntries = GetSupermatterStateData(entXform.GridUid.Value).ToArray();
+                supermatterEntriesForEachGrid[entXform.GridUid.Value] = supermatterEntries;
             }
+
+            // Determine the highest level of status for the console
+            var highestStatus = SupermatterStatusType.Inactive;
+
+            foreach (var entry in supermatterEntries)
+            {
+                var status = entry.EntityStatus;
+
+                if (status > highestStatus)
+                    highestStatus = status;
+            }
+
+            // Update the appearance of the console based on the highest recorded level of alert
+            if (TryComp<AppearanceComponent>(ent, out var entAppearance))
+                _appearance.SetData(ent, SupermatterConsoleVisuals.ComputerLayerScreen, (int)highestStatus, entAppearance);
+
+            // If the console UI is open, send UI data to each subscribed session
+            UpdateUIState(ent, supermatterEntries, entConsole, entXform);
         }
     }
 
@@ -183,12 +127,6 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
             return;
 
         var gridUid = xform.GridUid!.Value;
-
-        if (!HasComp<MapGridComponent>(gridUid))
-            return;
-
-        // The grid must have a NavMapComponent to visualize the map in the UI
-        EnsureComp<NavMapComponent>(gridUid);
 
         // Gathering remaining data to be send to the client
         var focusSupermatterData = GetFocusSupermatterData(uid, GetEntity(component.FocusSupermatter), gridUid);
@@ -211,18 +149,11 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
             if (!entXform.Anchored)
                 continue;
 
-            if (!TryComp<MapGridComponent>(entXform.GridUid, out var mapGrid))
-                continue;
-
-            if (!TryComp<NavMapComponent>(entXform.GridUid, out var navMap))
-                continue;
-
             // Create entry
             var netEnt = GetNetEntity(ent);
 
             var entry = new SupermatterConsoleEntry
                 (netEnt,
-                GetNetCoordinates(entXform.Coordinates),
                 MetaData(ent).EntityName,
                 entSupermatter.Status);
 
@@ -242,86 +173,36 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
         if (!focusSupermatterXform.Anchored ||
             focusSupermatterXform.GridUid != gridUid ||
             !TryComp<SupermatterComponent>(focusSupermatter.Value, out var focusComp))
-        {
             return null;
-        }
 
-        // Get the sensor data
-        /*var temperatureData = (_airAlarmSystem.CalculateTemperatureAverage(focusDeviceAirAlarm), AtmosAlarmType.Normal);
-        var pressureData = (_airAlarmSystem.CalculatePressureAverage(focusDeviceAirAlarm), AtmosAlarmType.Normal);
-        var gasData = new Dictionary<Gas, (float, float, AtmosAlarmType)>();
+        if (!TryComp<SupermatterComponent>(focusSupermatter.Value, out var sm))
+            return null;
 
-        foreach ((var address, var sensorData) in focusDeviceAirAlarm.SensorData)
-        {
-            if (sensorData.TemperatureThreshold.CheckThreshold(sensorData.Temperature, out var temperatureState) &&
-                (int)temperatureState > (int)temperatureData.Item2)
-            {
-                temperatureData = (temperatureData.Item1, temperatureState);
-            }
+        if (!TryComp<RadiationSourceComponent>(focusSupermatter.Value, out var radiationComp))
+            return null;
 
-            if (sensorData.PressureThreshold.CheckThreshold(sensorData.Pressure, out var pressureState) &&
-                (int)pressureState > (int)pressureData.Item2)
-            {
-                pressureData = (pressureData.Item1, pressureState);
-            }
+        var gases = sm.GasStorage;
+        var tempThreshold = Atmospherics.T0C + sm.HeatPenaltyThreshold;
 
-            if (focusDeviceAirAlarm.SensorData.Sum(g => g.Value.TotalMoles) > 1e-8)
-            {
-                foreach ((var gas, var threshold) in sensorData.GasThresholds)
-                {
-                    if (!gasData.ContainsKey(gas))
-                    {
-                        float mol = _airAlarmSystem.CalculateGasMolarConcentrationAverage(focusDeviceAirAlarm, gas, out var percentage);
-
-                        if (mol < 1e-8)
-                            continue;
-
-                        gasData[gas] = (mol, percentage, AtmosAlarmType.Normal);
-                    }
-
-                    if (threshold.CheckThreshold(gasData[gas].Item2, out var gasState) &&
-                        (int)gasState > (int)gasData[gas].Item3)
-                    {
-                        gasData[gas] = (gasData[gas].Item1, gasData[gas].Item2, gasState);
-                    }
-                }
-            }
-        }*/
-
-        return new SupermatterFocusData(GetNetEntity(focusSupermatter.Value));
+        return new SupermatterFocusData(
+            GetNetEntity(focusSupermatter.Value),
+            GetIntegrity(sm),
+            sm.Power,
+            radiationComp.Intensity,
+            gases.Sum(gas => gases[gas.Key]),
+            sm.Temperature,
+            tempThreshold * sm.DynamicHeatResistance,
+            sm.WasteMultiplier,
+            sm.GasEfficiency * 100,
+            sm.GasStorage);
     }
 
-    private HashSet<SupermatterNavMapData> GetAllSupermatterNavMapData(EntityUid gridUid)
+    public float GetIntegrity(SupermatterComponent sm)
     {
-        var supermatterNavMapData = new HashSet<SupermatterNavMapData>();
-
-        var query = AllEntityQuery<SupermatterComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out var entComponent, out var entXform))
-        {
-            if (entXform.GridUid != gridUid)
-                continue;
-
-            if (TryGetSupermatterNavMapData(ent, entComponent, entXform, out var data))
-                supermatterNavMapData.Add(data.Value);
-        }
-
-        return supermatterNavMapData;
-    }
-
-    private bool TryGetSupermatterNavMapData
-        (EntityUid uid,
-        SupermatterComponent component,
-        TransformComponent xform,
-        [NotNullWhen(true)] out SupermatterNavMapData? output)
-    {
-        output = null;
-
-        if (!xform.Anchored)
-            return false;
-
-        output = new SupermatterNavMapData(GetNetEntity(uid), GetNetCoordinates(xform.Coordinates));
-
-        return true;
+        var integrity = sm.Damage / sm.DamageDelaminationPoint;
+        integrity = (float)Math.Round(100 - integrity * 100, 2);
+        integrity = integrity < 0 ? 0 : integrity;
+        return integrity;
     }
 
     private void InitalizeConsole(EntityUid uid, SupermatterConsoleComponent component)
@@ -330,9 +211,6 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
 
         if (xform.GridUid == null)
             return;
-
-        var grid = xform.GridUid.Value;
-        component.Supermatters = GetAllSupermatterNavMapData(grid);
 
         Dirty(uid, component);
     }

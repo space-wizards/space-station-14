@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/bd6873fd4dd6a61d7e46f1d75cd4d90f64c40894. Supermatter icons taken from tgstation at commit https://github.com/tgstation/tgstation/commit/a73b77b3bbb0fa94946b9a6d47b3d0dfd93cd33f. comm_syndie made by Veritius, based on comm. generic_panel_open made by Errant, commit https://github.com/space-wizards/space-station-14/pull/32273. New Computer base, keyboard bases, and generic wirepanel by AftrLite(Github).",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/bd6873fd4dd6a61d7e46f1d75cd4d90f64c40894. comm_syndie made by Veritius, based on comm. generic_panel_open made by Errant, commit https://github.com/space-wizards/space-station-14/pull/32273. New Computer base, keyboard bases, generic wirepanel, and supermatter sprites by AftrLite(Github).",
   "size": {
     "x": 32,
     "y": 32
@@ -1523,6 +1523,10 @@
                     0.1
                 ]
             ]
+        },
+        {
+            "name": "supermatter_keys",
+            "directions": 4
         },
         {
             "name": "supermatter-0",

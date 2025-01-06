@@ -1,12 +1,13 @@
 using Content.Shared._EinsteinEngines.Supermatter.Consoles;
 using Content.Shared._EinsteinEngines.Supermatter.Monitor;
+using Content.Shared.Atmos;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._EinsteinEngines.Supermatter.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedSupermatterConsoleSystem))]
 public sealed partial class SupermatterConsoleComponent : Component
 {
@@ -15,12 +16,6 @@ public sealed partial class SupermatterConsoleComponent : Component
     /// </summary>
     [ViewVariables]
     public NetEntity? FocusSupermatter;
-
-    /// <summary>
-    /// A list of all the supermatters that will be used to populate the nav map
-    /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public HashSet<SupermatterNavMapData> Supermatters = new();
 }
 
 [Serializable, NetSerializable]
@@ -55,12 +50,76 @@ public struct SupermatterFocusData
     public NetEntity NetEntity;
 
     /// <summary>
+    /// The supermatter's integrity, from 0 to 100
+    /// </summary>
+    public float Integrity;
+
+    /// <summary>
+    /// The supermatter's power
+    /// </summary>
+    public float Power;
+
+    /// <summary>
+    /// The supermatter's emitted radiation
+    /// </summary>
+    public float Radiation;
+
+    /// <summary>
+    /// The supermatter's total absorbed moles
+    /// </summary>
+    public float AbsorbedMoles;
+
+    /// <summary>
+    /// The supermatter's temperature
+    /// </summary>
+    public float Temperature;
+
+    /// <summary>
+    /// The supermatter's temperature limit
+    /// </summary>
+    public float TemperatureLimit;
+
+    /// <summary>
+    /// The supermatter's waste multiplier
+    /// </summary>
+    public float WasteMultiplier;
+
+    /// <summary>
+    /// The supermatter's absorption ratio
+    /// </summary>
+    public float AbsorptionRatio;
+
+    /// <summary>
+    /// The supermatter's gas storage
+    /// </summary>
+    [DataField]
+    public Dictionary<Gas, float> GasStorage;
+
+    /// <summary>
     /// Populates the supermatter console focus entry with supermatter data
     /// </summary>
     public SupermatterFocusData
-        (NetEntity netEntity)
+        (NetEntity netEntity,
+        float integrity,
+        float power,
+        float radiation,
+        float absorbedMoles,
+        float temperature,
+        float temperatureLimit,
+        float wasteMultiplier,
+        float absorptionRatio,
+        Dictionary<Gas, float> gasStorage)
     {
         NetEntity = netEntity;
+        Integrity = integrity;
+        Power = power;
+        Radiation = radiation;
+        AbsorbedMoles = absorbedMoles;
+        Temperature = temperature;
+        TemperatureLimit = temperatureLimit;
+        WasteMultiplier = wasteMultiplier;
+        AbsorptionRatio = absorptionRatio;
+        GasStorage = gasStorage;
     }
 }
 
@@ -96,11 +155,6 @@ public struct SupermatterConsoleEntry
     public NetEntity NetEntity;
 
     /// <summary>
-    /// Location of the entity
-    /// </summary>
-    public NetCoordinates NetCoordinates;
-
-    /// <summary>
     /// Name of the entity
     /// </summary>
     public string EntityName;
@@ -115,12 +169,10 @@ public struct SupermatterConsoleEntry
     /// </summary>
     public SupermatterConsoleEntry
         (NetEntity entity,
-        NetCoordinates coordinates,
         string entityName,
         SupermatterStatusType status)
     {
         NetEntity = entity;
-        NetCoordinates = coordinates;
         EntityName = entityName;
         EntityStatus = status;
     }

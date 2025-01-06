@@ -10,6 +10,7 @@ using Content.Server.Lightning;
 using Content.Server.Lightning.Components;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
+using Content.Server.Speech;
 using Content.Server.Station.Systems;
 using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Content.Shared._EinsteinEngines.Supermatter.Monitor;
@@ -102,7 +103,7 @@ public sealed partial class SupermatterSystem : EntitySystem
         if (sm.Damage >= sm.DamageDelaminationPoint || sm.Delamming)
             HandleDelamination(uid, sm);
 
-        sm.Status = GetStatus(uid, sm);
+        HandleStatus(uid, sm);
         HandleSoundLoop(uid, sm);
         HandleAccent(uid, sm);
 
@@ -226,7 +227,7 @@ public sealed partial class SupermatterSystem : EntitySystem
         if (mix is not { })
             return SupermatterStatusType.Error;
 
-        if (sm.Delamming)
+        if (sm.Delamming || sm.Damage >= sm.DamageDelaminationPoint)
             return SupermatterStatusType.Delaminating;
 
         if (sm.Damage >= sm.DamagePenaltyPoint)

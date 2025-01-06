@@ -1,5 +1,4 @@
 using Content.Client.Message;
-using Content.Client.Pinpointer.UI;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared._EinsteinEngines.Supermatter.Components;
@@ -10,7 +9,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
-using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
@@ -57,46 +55,12 @@ public sealed partial class SupermatterConsoleWindow : FancyWindow
 
         // Pass the owner to nav map
         _owner = owner;
-        NavMap.Owner = _owner;
-
-        // Set nav map colors
-        NavMap.WallColor = _wallColor;
-        NavMap.TileColor = _tileColor;
-
-        // Set nav map grid uid
-        var stationName = Loc.GetString("supermatter-console-window-unknown-location");
-
-        if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
-        {
-            NavMap.MapUid = xform.GridUid;
-
-            // Assign station name      
-            if (_entManager.TryGetComponent<MetaDataComponent>(xform.GridUid, out var stationMetaData))
-                stationName = stationMetaData.EntityName;
-
-            var msg = new FormattedMessage();
-            msg.TryAddMarkup(Loc.GetString("supermatter-console-window-station-name", ("stationName", stationName)), out _);
-
-            StationName.SetMessage(msg);
-        }
-
-        else
-        {
-            StationName.SetMessage(stationName);
-            NavMap.Visible = false;
-        }
-
-        // Set trackable entity selected action
-        NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
-
-        // Update nav map
-        NavMap.ForceNavMapUpdate();
 
         // Set supermatter monitoring message action
         SendFocusChangeMessageAction += userInterface.SendFocusChangeMessage;
     }
 
-    public void UpdateUI(EntityCoordinates? consoleCoords, SupermatterConsoleEntry[] supermatters, SupermatterFocusData? focusData)
+    public void UpdateUI(SupermatterConsoleEntry[] supermatters, SupermatterFocusData? focusData)
     {
         if (_owner == null)
             return;
@@ -112,37 +76,6 @@ public sealed partial class SupermatterConsoleWindow : FancyWindow
 
         // Retain supermatter data for use inbetween updates
         _supermatters = supermatters;
-
-        // Reset nav map data
-        NavMap.TrackedCoordinates.Clear();
-        NavMap.TrackedEntities.Clear();
-
-        // Add tracked entities to the nav map
-        foreach (var sm in console.Supermatters)
-        {
-            if (!sm.NetEntity.Valid)
-                continue;
-
-            if (!NavMap.Visible)
-                continue;
-
-            var status = GetStatus(sm.NetEntity);
-
-            AddTrackedEntityToNavMap(sm, status);
-        }
-
-        // Show the monitor location
-        var consoleUid = _entManager.GetNetEntity(_owner);
-
-        if (consoleCoords != null && consoleUid != null)
-        {
-            var texture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_circle.png")));
-            var blip = new NavMapBlip(consoleCoords.Value, texture, _monitorBlipColor, true, false);
-            NavMap.TrackedEntities[consoleUid.Value] = blip;
-        }
-
-        // Update the nav map
-        NavMap.ForceNavMapUpdate();
 
         // Clear excess children from the tables
         var supermattersCount = _supermatters.Count();
@@ -173,34 +106,6 @@ public sealed partial class SupermatterConsoleWindow : FancyWindow
             SupermattersTable.AddChild(label);
         }
 
-        // Update sensor regions
-        NavMap.RegionOverlays.Clear();
-        var prioritizedRegionOverlays = new Dictionary<NavMapRegionOverlay, int>();
-
-        if (_owner != null &&
-            _entManager.TryGetComponent<TransformComponent>(_owner, out var xform) &&
-            _entManager.TryGetComponent<NavMapComponent>(xform.GridUid, out var navMap))
-        {
-            var regionOverlays = _navMapSystem.GetNavMapRegionOverlays(_owner.Value, navMap, SupermatterConsoleUiKey.Key);
-
-            foreach (var (regionOwner, regionOverlay) in regionOverlays)
-            {
-                var status = GetStatus(regionOwner);
-
-                if (!TryGetSensorRegionColor(regionOwner, status, out var regionColor))
-                    continue;
-
-                regionOverlay.Color = regionColor;
-
-                var priority = (_trackedEntity == regionOwner) ? 999 : (int)status;
-                prioritizedRegionOverlays.Add(regionOverlay, priority);
-            }
-
-            // Sort overlays according to their priority
-            var sortedOverlays = prioritizedRegionOverlays.OrderBy(x => x.Value).Select(x => x.Key).ToList();
-            NavMap.RegionOverlays = sortedOverlays;
-        }
-
         // Auto-scroll re-enable
         if (_autoScrollAwaitsUpdate)
         {
@@ -209,50 +114,12 @@ public sealed partial class SupermatterConsoleWindow : FancyWindow
         }
     }
 
-    private void AddTrackedEntityToNavMap(SupermatterNavMapData metaData, SupermatterStatusType status)
-    {
-        var data = GetBlipTexture(status);
-
-        if (data == null)
-            return;
-
-        var texture = data.Value.Item1;
-        var color = data.Value.Item2;
-        var coords = _entManager.GetCoordinates(metaData.NetCoordinates);
-
-        if (_trackedEntity != null && _trackedEntity != metaData.NetEntity)
-            color *= _untrackedEntColor;
-
-        var selectable = true;
-        var blip = new NavMapBlip(coords, _spriteSystem.Frame0(texture), color, _trackedEntity == metaData.NetEntity, selectable);
-
-        NavMap.TrackedEntities[metaData.NetEntity] = blip;
-    }
-
-    private bool TryGetSensorRegionColor(NetEntity regionOwner, SupermatterStatusType status, out Color color)
-    {
-        color = Color.White;
-
-        var blip = GetBlipTexture(status);
-
-        if (blip == null)
-            return false;
-
-        // Color the region based on alarm state and entity tracking
-        color = blip.Value.Item2 * _regionBaseColor;
-
-        if (_trackedEntity != null && _trackedEntity != regionOwner)
-            color *= _untrackedEntColor;
-
-        return true;
-    }
-
     private void UpdateUIEntry(SupermatterConsoleEntry entry, int index, Control table, SupermatterConsoleComponent console, SupermatterFocusData? focusData = null)
     {
         // Make new UI entry if required
         if (index >= table.ChildCount)
         {
-            var newEntryContainer = new SupermatterEntryContainer(entry.NetEntity, _entManager.GetCoordinates(entry.NetCoordinates));
+            var newEntryContainer = new SupermatterEntryContainer(entry.NetEntity);
 
             // On click
             newEntryContainer.FocusButton.OnButtonUp += args =>
@@ -265,16 +132,10 @@ public sealed partial class SupermatterConsoleWindow : FancyWindow
                 else
                 {
                     _trackedEntity = newEntryContainer.NetEntity;
-
-                    if (newEntryContainer.Coordinates != null)
-                        NavMap.CenterToCoordinates(newEntryContainer.Coordinates.Value);
                 }
 
                 // Send message to console that the focus has changed
                 SendFocusChangeMessageAction?.Invoke(_trackedEntity);
-
-                // Update affected UI elements across all tables
-                UpdateConsoleTable(console, SupermattersTable, _trackedEntity);
             };
 
             // Add the entry to the current table
@@ -295,43 +156,6 @@ public sealed partial class SupermatterConsoleWindow : FancyWindow
         var entryContainer = (SupermatterEntryContainer)tableChild;
 
         entryContainer.UpdateEntry(entry, entry.NetEntity == _trackedEntity, focusData);
-    }
-
-    private void UpdateConsoleTable(SupermatterConsoleComponent console, Control table, NetEntity? currTrackedEntity)
-    {
-        foreach (var tableChild in table.Children)
-        {
-            if (tableChild is not SupermatterEntryContainer)
-                continue;
-
-            var entryContainer = (SupermatterEntryContainer)tableChild;
-
-            if (entryContainer.NetEntity != currTrackedEntity)
-                entryContainer.RemoveAsFocus();
-
-            else if (entryContainer.NetEntity == currTrackedEntity)
-                entryContainer.SetAsFocus();
-        }
-    }
-
-    private void SetTrackedEntityFromNavMap(NetEntity? netEntity)
-    {
-        if (netEntity == null)
-            return;
-
-        if (!_entManager.TryGetComponent<SupermatterConsoleComponent>(_owner, out var console))
-            return;
-
-        _trackedEntity = netEntity;
-
-        if (netEntity != null)
-        {
-            // Get the scroll position of the selected entity on the selected button the UI
-            ActivateAutoScrollToFocus();
-        }
-
-        // Send message to console that the focus has changed
-        SendFocusChangeMessageAction?.Invoke(_trackedEntity);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -430,30 +254,5 @@ public sealed partial class SupermatterConsoleWindow : FancyWindow
             return SupermatterStatusType.Error;
 
         return status.Value;
-    }
-
-    private (SpriteSpecifier.Texture, Color)? GetBlipTexture(SupermatterStatusType status)
-    {
-        (SpriteSpecifier.Texture, Color)? output = null;
-
-        switch (status)
-        {
-            case SupermatterStatusType.Inactive:
-                output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_circle.png")), _inactiveColor); break;
-
-            case SupermatterStatusType.Normal:
-                output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_circle.png")), _goodColor); break;
-
-            case SupermatterStatusType.Caution:
-            case SupermatterStatusType.Warning:
-                output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_triangle.png")), _warningColor); break;
-
-            case SupermatterStatusType.Danger:
-            case SupermatterStatusType.Emergency:
-            case SupermatterStatusType.Delaminating:
-                output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_square.png")), _dangerColor); break;
-        }
-
-        return output;
     }
 }

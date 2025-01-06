@@ -11,7 +11,7 @@ public sealed class SupermatterConsoleBoundUserInterface : BoundUserInterface
 
     protected override void Open()
     {
-        _menu = this.CreateWindow<SupermatterConsoleWindow>();
+        _menu = new SupermatterConsoleWindow(this, Owner);
         _menu.OpenCentered();
         _menu.OnClose += Close;
     }
@@ -21,9 +21,7 @@ public sealed class SupermatterConsoleBoundUserInterface : BoundUserInterface
         base.UpdateState(state);
 
         var castState = (SupermatterConsoleBoundInterfaceState)state;
-
-        EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
-        _menu?.UpdateUI(xform?.Coordinates, castState.Supermatters, castState.FocusData);
+        _menu?.UpdateUI(castState.Supermatters, castState.FocusData);
     }
 
     public void SendFocusChangeMessage(NetEntity? netEntity)

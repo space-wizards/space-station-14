@@ -15,9 +15,13 @@
     - map: ["computerLayerScreen"]
       state: supermatter-0
     - map: ["computerLayerKeys"]
-      state: generic_keys
+      state: supermatter_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#0f704b"
   - type: GenericVisualizer
     visuals:
       enum.ComputerVisuals.Powered:
