@@ -1,2 +1,2 @@
 department-Law = Law Department
-department-Representives = NanoTrasen Representives
+department-Representives = NT Representives

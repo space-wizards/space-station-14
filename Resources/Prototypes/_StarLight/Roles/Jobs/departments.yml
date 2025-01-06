@@ -9,7 +9,7 @@
   - IAA
   
 - type: department
-  id: NanotrasenRepresentives
+  id: Representives
   name: department-Representives
   description: department-Representives-description
   color: "#05255D"
