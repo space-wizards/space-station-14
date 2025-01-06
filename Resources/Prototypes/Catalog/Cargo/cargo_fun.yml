@@ -207,3 +207,13 @@
   cost: 10000
   category: cargoproduct-category-name-fun
   group: market
+
+- type: cargoProduct
+  id: ChurchOrganInstrument
+  icon:
+    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    state: church-organ
+  product: ChurchOrganInstrument
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: market
