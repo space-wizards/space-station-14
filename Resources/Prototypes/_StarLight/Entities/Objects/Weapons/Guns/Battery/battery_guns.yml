@@ -358,3 +358,27 @@
     zeroVisible: true
   - type: Appearance
   - type: EmpImmune
+  
+- type: entity
+  name: immolator laser gun
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseRestrictedContraband]
+  id: WeaponLaserImmolator
+  description: Favoured by Nanotrasen Security for being cheap and easy to use.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/immolator.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: HitscanBatteryAmmoProvider
+    proto: IgnitionRedLaser
+    fireCost: 62.5
+  - type: StaticPrice
+    price: 300

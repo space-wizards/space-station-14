@@ -31,6 +31,9 @@ public sealed partial class HitscanPrototype : IPrototype, IShootable
 
     [DataField("collisionMask")]
     public int CollisionMask = (int) CollisionGroup.Opaque;
+    
+    [DataField("igniteOnCollision")]
+    public bool ignite = false;
 
     /// <summary>
     /// What we count as for reflection.
