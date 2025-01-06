@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: The botany departments of Atlas, Cluster, and Saltern now have biogenerators
-      at roundstart.
-    type: Add
-  id: 360
-  time: '2024-10-12T14:36:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/465
-- author: Darkmajia
-  changes:
   - message: Removed changeling's transformation sting for the time being.
     type: Remove
   id: 361
@@ -4473,3 +4465,10 @@
   id: 859
   time: '2025-01-06T22:23:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1195
+- author: hivehum, crocodilecarousel
+  changes:
+  - message: Many minor bugfixes to markings.
+    type: Tweak
+  id: 860
+  time: '2025-01-06T22:40:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1204
