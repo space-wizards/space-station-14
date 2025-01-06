@@ -184,5 +184,6 @@
   name: safe-harbor-title
   showInVote: false
   description: safe-harbor-description
+  supportedMaps: SafeHarborPool
   rules:
   - BasicRoundstartVariation
