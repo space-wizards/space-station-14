@@ -261,8 +261,9 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: disable
+    - state: disable-unshaded
       map: ["enum.FireModesLayers.FireMode"]
+      shader: unshaded
     - state: disable-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
@@ -278,12 +279,42 @@
     - proto: BulletDisabler
       fireCost: 100
       magState: disable
-      visualState: disable
+      visualState: disable-unshaded
     - proto: BulletAdvTaser
       fireCost: 250
       magState: stun
-      visualState: stun
+      visualState: stun-unshaded
     - proto: BulletLaser
       fireCost: 100
       magState: kill
-      visualState: kill
+      visualState: kill-unshaded
+      
+- type: entity
+  parent: BaseWeaponBattery
+  id: WeaponIonRifle
+  name: ion rifle
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/ion_rifle.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Gun
+    fireRate: 0.6
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40 #100sec+60Sec Pause
+    autoRechargePause: true
+    autoRechargePauseTime: 60
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletEMP
+    fireCost: 250
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: EmpImmune

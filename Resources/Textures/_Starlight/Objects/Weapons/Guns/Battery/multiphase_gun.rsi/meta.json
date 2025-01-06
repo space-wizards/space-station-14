@@ -22,7 +22,7 @@
             "directions": 4
         },
         {
-            "name": "disable"
+            "name": "disable-unshaded"
         },
         {
             "name": "disable-unshaded-0",
@@ -46,7 +46,7 @@
             "name": "disable-unshaded-4"
         },
         {
-            "name": "kill"
+            "name": "kill-unshaded"
         },
         {
             "name": "kill-unshaded-0",
@@ -70,7 +70,7 @@
             "name": "kill-unshaded-4"
         },
         {
-            "name": "stun"
+            "name": "stun-unshaded"
         },
         {
             "name": "stun-unshaded-0",
@@ -94,7 +94,7 @@
             "name": "stun-unshaded-4"
         },
         {
-            "name": "destroy"
+            "name": "destroy-unshaded"
         },
         {
             "name": "destroy-unshaded-0",
