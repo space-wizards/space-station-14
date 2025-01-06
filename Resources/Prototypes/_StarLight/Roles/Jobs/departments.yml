@@ -16,6 +16,6 @@
   roles:
   - BlueShield
   - Magistrate
-  - Ntrep
+  - NanoTrasenRepresentative
   primary: false
   weight: 50

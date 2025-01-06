@@ -28,3 +28,11 @@
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Back/Duffels/roboticist.rsi
+    
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelBlueShield
+  name: blueshield's duffel bag
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Back/Duffels/blueshield.rsi

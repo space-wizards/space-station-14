@@ -6,3 +6,11 @@
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Back/Backpacks/roboticist.rsi
+    
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackBlueShield
+  name: blueshield's backpack
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Back/Backpacks/blueshield.rsi
