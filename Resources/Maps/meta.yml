@@ -13781,7 +13781,7 @@ entities:
       pos: -29.5,15.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -208703.7
+      secondsUntilStateChange: -208773.03
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14039,7 +14039,7 @@ entities:
       pos: -4.5,53.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -63357.484
+      secondsUntilStateChange: -63426.812
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -63427,6 +63427,12 @@ entities:
     - type: Transform
       pos: 71.5,-30.5
       parent: 5350
+  - uid: 28196
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -33.5,17.5
+      parent: 5350
 - proto: ChairOfficeLight
   entities:
   - uid: 1269
@@ -67315,11 +67321,11 @@ entities:
       parent: 5350
 - proto: ComputerCargoShuttle
   entities:
-  - uid: 3520
+  - uid: 28195
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -42.5,17.5
+      rot: -1.5707963267948966 rad
+      pos: -32.5,17.5
       parent: 5350
 - proto: ComputerComms
   entities:
@@ -67619,6 +67625,14 @@ entities:
     components:
     - type: Transform
       pos: -40.5,33.5
+      parent: 5350
+- proto: ComputerShuttleCargo
+  entities:
+  - uid: 3520
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -42.5,17.5
       parent: 5350
 - proto: ComputerSolarControl
   entities:
@@ -81433,7 +81447,7 @@ entities:
       pos: -10.5,51.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -62082.152
+      secondsUntilStateChange: -62151.48
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -152428,6 +152442,12 @@ entities:
     components:
     - type: Transform
       pos: 47.5,-24.5
+      parent: 5350
+  - uid: 28197
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -32.5,16.5
       parent: 5350
 - proto: TableCarpet
   entities:
