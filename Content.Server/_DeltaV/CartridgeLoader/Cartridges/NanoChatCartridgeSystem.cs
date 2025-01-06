@@ -25,6 +25,7 @@ public sealed class NanoChatCartridgeSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedNanoChatSystem _nanoChat = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly StationSystem _station = default!;
 
     // Messages in notifications get cut off after this point
@@ -39,6 +40,20 @@ public sealed class NanoChatCartridgeSystem : EntitySystem
         SubscribeLocalEvent<NanoChatCartridgeComponent, CartridgeMessageEvent>(OnMessage);
     }
 
+    private void UpdateClosed(Entity<NanoChatCartridgeComponent> ent)
+    {
+        if (!TryComp<CartridgeComponent>(ent, out var cartridge) ||
+            cartridge.LoaderUid is not {} pda ||
+            !TryComp<CartridgeLoaderComponent>(pda, out var loader) ||
+            !GetCardEntity(pda, out var card))
+        {
+            return;
+        }
+
+        // if you switch to another program or close the pda UI, allow notifications for the selected chat
+        _nanoChat.SetClosed((card, card.Comp), loader.ActiveProgram != ent.Owner || !_ui.IsUiOpen(pda, PdaUiKey.Key));
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -49,6 +64,9 @@ public sealed class NanoChatCartridgeSystem : EntitySystem
         {
             if (cartridge.LoaderUid == null)
                 continue;
+
+            // keep it up to date without handling ui open/close events on the pda or adding code when changing active program
+            UpdateClosed((uid, nanoChat));
 
             // Check if we need to update our card reference
             if (!TryComp<PdaComponent>(cartridge.LoaderUid, out var pda))
@@ -377,7 +395,7 @@ public sealed class NanoChatCartridgeSystem : EntitySystem
         _nanoChat.AddMessage((recipient, recipient.Comp), senderNumber.Value, message with { DeliveryFailed = false });
 
 
-        if (_nanoChat.GetCurrentChat((recipient, recipient.Comp)) != senderNumber)
+        if (recipient.Comp.IsClosed || _nanoChat.GetCurrentChat((recipient, recipient.Comp)) != senderNumber)
             HandleUnreadNotification(recipient, message);
 
         var msgEv = new NanoChatMessageReceivedEvent(recipient);
