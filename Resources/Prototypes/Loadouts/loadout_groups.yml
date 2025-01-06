@@ -929,6 +929,13 @@
 
 # Security
 - type: loadoutGroup
+  id: SecurityWeapon
+  name: loadout-group-security-weapon
+  loadouts:
+  - SecurityTaser
+  - SecurityDominator
+
+- type: loadoutGroup
   id: HeadofSecurityHead
   name: loadout-group-head-of-security-head
   minLimit: 0

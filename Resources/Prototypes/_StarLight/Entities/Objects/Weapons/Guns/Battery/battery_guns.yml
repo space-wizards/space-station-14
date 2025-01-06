@@ -217,6 +217,9 @@
     magState: disable
     steps: 4
     zeroVisible: true
+  - type: Lock
+  - type: AccessReader
+    access: [["Security"]]
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisabler
     fireCost: 100

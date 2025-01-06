@@ -338,6 +338,7 @@
   - HeadofSecurityJumpsuit
   - SecurityBackpack
   - SecurityBelt
+  - SecurityWeapon
   - HeadofSecurityOuterClothing
   - SecurityShoes
   - SurvivalSecurity
@@ -352,6 +353,7 @@
   - WardenJumpsuit
   - SecurityBackpack
   - SecurityBelt
+  - SecurityWeapon
   - WardenOuterClothing
   - SecurityShoes
   - SurvivalSecurity
@@ -369,6 +371,7 @@
   - SecurityShoes
   - SecurityPDA
   - SecurityBelt
+  - SecurityWeapon
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
@@ -382,6 +385,7 @@
   - BrigmedicBackpack
   - BrigmedicOuterClothing
   - SecurityShoes
+  - SecurityWeapon
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
@@ -406,6 +410,7 @@
   groups:
   - SecurityCadetJumpsuit
   - SecurityBackpack
+  - SecurityWeapon
   - SurvivalSecurity
   - Trinkets
   - GroupSpeciesBreathToolSecurity
