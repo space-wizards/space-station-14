@@ -10,6 +10,12 @@ namespace Content.Shared.RepulseAttract;
 public sealed partial class RepulseAttractComponent : Component
 {
     /// <summary>
+    ///     Optional user, used if the <see cref="RepulseAttractComponent"/> is on an Item
+    /// </summary>
+    [DataField]
+    public EntityUid? User;
+
+    /// <summary>
     ///     Attracts if true, Repulse if false.
     /// </summary>
     [DataField]
