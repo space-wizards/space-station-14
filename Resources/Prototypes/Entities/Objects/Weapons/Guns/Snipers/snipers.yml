@@ -46,6 +46,16 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+  - type: BallisticAmmoProvider
+    capacity: 10
+    proto: CartridgeHeavyRifle
+    whitelist:
+      tags:
+      - CartridgeHeavyRifle
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   name: Hristov

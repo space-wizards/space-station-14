@@ -59,7 +59,7 @@
   id: MagazineLightRifle
   name: "magazine (.308 rifle)"
   parent: BaseMagazineLightRifle
-  description: Magazine containing 0.308x1.53 inch rifle rounds. Comparable to the .223 cartridge, but somewhat wider and shorter. Commonly used by aftermarket and Syndicate rifles.
+  description: Standard AKMS magazine holding 30 rounds. This version contains standard lead-tipped ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifle
@@ -75,7 +75,7 @@
   name: "magazine (.308 rifle any)"
   suffix: empty
   parent: MagazineLightRifle
-  description: Magazine designed for 0.308x1.53 inch rifle rounds.
+  description: Standard AKMS magazine holding 30 rounds.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -88,28 +88,13 @@
   id: MagazineLightRiflePractice
   name: "magazine (.308 rifle practice)"
   parent: BaseMagazineLightRifle
-  description: Magazine containing 0.308x1.53 inch practice rifle rounds. Intermediate rifle cartridge lacking a projectile for use in practice.
+  description: Standard AKMS magazine holding 30 rounds. This version contains practice ammo with blue rubber tips.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRiflePractice
   - type: Sprite
     layers:
     - state: practice
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineLightRifleUranium
-  name: "magazine (.308 rifle uranium)"
-  parent: BaseMagazineLightRifle
-  description: Magazine containing 0.308x1.53 inch uranium rifle rounds. Contains a expensive uranium core which severely irradiates the target after impact. Primarily used by the Syndicate, or by particularly wealthy organized crime.
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeLightRifleUranium
-  - type: Sprite
-    layers:
-    - state: uranium
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
@@ -122,3 +107,51 @@
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleIncendiary
+
+- type: entity
+  id: MagazineLightRifleUranium
+  name: "magazine (.308 rifle uranium)"
+  parent: BaseMagazineLightRifle
+  description: Standard AKMS magazine holding 30 rounds. This version contains green-tipped uranium ammo, irradiating the target after impact.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleUranium
+  - type: Sprite
+    layers:
+    - state: uranium
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity # completely unused?
+  id: MagazineLightRifleMaxim
+  name: "pan magazine (.308 rifle)"
+  parent: BaseMagazineLightRifle
+  components:
+  - type: Tag
+    tags:
+      - MagazineLightRiflePan
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifle
+    capacity: 96
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/maxim.rsi
+  
+  - type: entity # completely unused?
+  id: MagazineLightRiflePkBox
+  name: "PK munitions box (.308 rifle)"
+  parent: BaseMagazineLightRifle
+  components:
+  - type: Tag
+    tags:
+      - MagazineLightRifleBox
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifle
+    capacity: 80
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/pk_box.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 7
+    zeroVisible: false
+  - type: Appearance

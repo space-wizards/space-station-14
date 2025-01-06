@@ -1,6 +1,6 @@
 - type: entity
   id: BaseMagazinePistol
-  name: pistol magazine (.35 auto)
+  name: pistol magazine (.38 auto)
   parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -33,7 +33,7 @@
 
 - type: entity
   id: BaseMagazinePistolHighCapacity
-  name: machine pistol magazine (.35 auto)
+  name: machine pistol magazine (.38 auto)
   parent: BaseItem
   abstract: true
   components:
@@ -66,7 +66,7 @@
 
 - type: entity
   id: BaseMagazinePistolSubMachineGun  # Yeah it's weird but it's pistol caliber
-  name: SMG magazine (.35 auto)
+  name: SMG magazine (.38 auto)
   parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -99,8 +99,9 @@
 
 - type: entity
   id: MagazinePistolSubMachineGunTopMounted
-  name: WT550 magazine (.35 auto top-mounted)
+  name: WT550 magazine (.38 auto top-mounted)
   parent: [ BaseItem, BaseRestrictedContraband ]
+  description: A unconventional top-mounted magazine for the WT550 SMG, containing standard FMJ rounds.
   components:
   - type: Tag
     tags:
@@ -130,16 +131,18 @@
 
 - type: entity
   id: MagazinePistolSubMachineGunTopMountedEmpty
-  name: WT550 magazine (.35 auto top-mounted any)
+  name: WT550 magazine (.38 auto top-mounted any)
   parent: MagazinePistolSubMachineGunTopMounted
+  description: A unconventional top-mounted magazine for the WT550 SMG.
   components:
   - type: BallisticAmmoProvider
     proto: null
 
 - type: entity
   id: MagazinePistol
-  name: pistol magazine (.35 auto)
+  name: pistol magazine (.38 auto)
   parent: BaseMagazinePistol
+  description: Universal 10 round pistol magazine, used by both Nanotrasen and the Syndicate. This version contains standard FMJ ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistol
@@ -152,9 +155,10 @@
 
 - type: entity
   id: MagazinePistolEmpty
-  name: pistol magazine (.35 auto any)
+  name: pistol magazine (.38 auto any)
   suffix: empty
   parent: MagazinePistol
+  description: Universal 10 round pistol magazine, used by both Nanotrasen and the Syndicate.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -163,19 +167,11 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
 
-
-- type: entity
-  id: MagazinePistolIncendiary
-  name: pistol magazine (.35 auto incendiary)
-  parent: MagazinePistol
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistolIncendiary
-
 - type: entity
   id: MagazinePistolPractice
-  name: pistol magazine (.35 auto practice)
+  name: pistol magazine (.38 auto practice)
   parent: BaseMagazinePistol
+  description: Universal 10 round pistol magazine, used by both Nanotrasen and the Syndicate. This version contains rubber-tipped ammo for training.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice
@@ -187,8 +183,16 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
+  id: MagazinePistolIncendiary
+  name: pistol magazine (.38 auto incendiary)
+  parent: MagazinePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolIncendiary
+
+- type: entity
   id: MagazinePistolUranium
-  name: pistol magazine (.35 auto uranium)
+  name: pistol magazine (.38 auto uranium)
   parent: BaseMagazinePistol
   components:
   - type: BallisticAmmoProvider
@@ -202,7 +206,7 @@
 
 - type: entity
   id: MagazinePistolHighCapacityEmpty
-  name: machine pistol magazine (.35 auto any)
+  name: machine pistol magazine (.38 auto any)
   suffix: empty
   parent: BaseMagazinePistolHighCapacity
   components:
@@ -215,7 +219,7 @@
 
 - type: entity
   id: MagazinePistolHighCapacity
-  name: machine pistol magazine (.35 auto)
+  name: machine pistol magazine (.38 auto)
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
@@ -229,7 +233,7 @@
 
 - type: entity
   id: MagazinePistolHighCapacityPractice
-  name: machine pistol magazine (.35 auto practice)
+  name: machine pistol magazine (.38 auto practice)
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
@@ -243,7 +247,7 @@
 
 - type: entity
   id: MagazinePistolHighCapacityRubber
-  name: machine pistol magazine (.35 auto rubber)
+  name: machine pistol magazine (.38 auto rubber)
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
@@ -257,8 +261,9 @@
 
 - type: entity
   id: MagazinePistolSubMachineGun
-  name: SMG magazine (.35 auto)
+  name: SMG magazine (.38 auto)
   parent: BaseMagazinePistolSubMachineGun
+  description: 30 round magazine for submachine guns. This version contains standard FMJ ammunition.
   components:
   - type: BallisticAmmoProvider
     capacity: 30
@@ -277,9 +282,10 @@
 
 - type: entity
   id: MagazinePistolSubMachineGunEmpty
-  name: SMG magazine (.35 auto any)
+  name: SMG magazine (.38 auto any)
   suffix: empty
   parent: BaseMagazinePistolSubMachineGun
+  description: 30 round magazine for submachine guns.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -290,8 +296,9 @@
 
 - type: entity
   id: MagazinePistolSubMachineGunPractice
-  name: SMG magazine (.35 auto practice)
+  name: SMG magazine (.38 auto practice)
   parent: BaseMagazinePistolSubMachineGun
+  description: 30 round magazine for submachine guns. This version contains rubber-tipped practice ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice
@@ -304,7 +311,7 @@
 
 - type: entity
   id: MagazinePistolSubMachineGunUranium
-  name: SMG magazine (.35 auto uranium)
+  name: SMG magazine (.38 auto uranium)
   parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider

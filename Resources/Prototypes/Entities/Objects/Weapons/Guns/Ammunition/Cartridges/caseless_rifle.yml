@@ -23,16 +23,18 @@
 
 - type: entity
   id: CartridgeCaselessRifle
-  name: cartridge (.25 caseless)
+  name: cartridge (.20 caseless)
   parent: BaseCartridgeCaselessRifle
+  description: 0.20x0.34 inches. A small caliber cartridge utilizing caseless technology to leave no evidence behind.
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRifle
 
 - type: entity
   id: CartridgeCaselessRiflePractice
-  name: cartridge (.25 caseless practice)
+  name: cartridge (.20 caseless practice)
   parent: BaseCartridgeCaselessRifle
+  description: 0.20x0.34 inches. A small caliber cartridge utilizing caseless technology. This variant has a blue rubber tip for training.
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRiflePractice
@@ -42,4 +44,4 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#dbdbdb"
+        color: "#2B36EB"

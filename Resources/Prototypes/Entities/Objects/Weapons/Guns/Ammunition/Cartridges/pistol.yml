@@ -1,6 +1,6 @@
 - type: entity
   id: BaseCartridgePistol
-  name: cartridge (.35 auto)
+  name: cartridge (.38 auto)
   parent: [ BaseCartridge, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -20,16 +20,18 @@
 
 - type: entity
   id: CartridgePistol
-  name: cartridge (.35 auto)
+  name: cartridge (.38 auto)
   parent: BaseCartridgePistol
+  description: 0.38x1.55 inches. The most popular caliber in space, used by all manner of Pistols and Submachine Guns. Designed for safety and reliability in pressurized environments.
   components:
   - type: CartridgeAmmo
     proto: BulletPistol
 
 - type: entity
   id: CartridgePistolPractice
-  name: cartridge (.35 auto practice)
+  name: cartridge (.38 auto practice)
   parent: BaseCartridgePistol
+  description: 0.38x1.55 inches. Classic pistol cartridge with a blue rubber tip for training purposes.
   components:
   - type: CartridgeAmmo
     proto: BulletPistolPractice

@@ -1,6 +1,6 @@
 - type: entity
   id: BaseCartridgeHeavyRifle
-  name: cartridge (.20 rifle)
+  name: cartridge (.225 rifle)
   parent: [ BaseCartridge, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -19,6 +19,17 @@
   - type: SpentAmmoVisuals
   - type: StaticPrice
     price: 10
+
+- type: entity
+  id: CartridgeHeavyRifle
+  name: cartridge (.325 rifle)
+  parent: [ BaseCartridgeHeavyRifle, BaseRestrictedContraband ]
+  description: 0.325x2.12 inches. Full-power cartridge used by marksman rifles and medium machine guns. Its improved range over intermediate cartridges is generally less useful aboard cramped spacecraft, so it is most often found in surface combat or ancient weapons.
+  components:
+  - type: Tag
+  - type: CartridgeAmmo
+    proto: BulletHeavyRifle
+
 
 - type: entity
   id: CartridgeMinigun

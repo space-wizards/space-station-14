@@ -31,7 +31,7 @@
   id: CartridgeRiflePractice
   name: cartridge (.223 rifle practice)
   parent: BaseCartridgeRifle
-  description: 0.223x1.78 inches. Intermediate rifle cartridge lacking a projectile for use in practice.
+  description: 0.223x1.78 inches. Intermediate rifle cartridge with a blue rubber tip for use in training scenarios.
   components:
   - type: CartridgeAmmo
     proto: BulletRiflePractice
@@ -41,7 +41,7 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#dbdbdb"
+        color: "#22C4EB"
 
 - type: entity
   id: CartridgeRifleIncendiary
@@ -57,13 +57,13 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#ff6e52"
+        color: "#EB0101"
 
 - type: entity
   id: CartridgeRifleUranium
   name: cartridge (.223 rifle uranium)
   parent: BaseCartridgeRifle
-  description: 0.223x1.78 inches. Specialized rifle round containing a uranium core which severely irradiates the target after impact. Developed by Nanotrasen for use in combat rifles.
+  description: 0.223x1.78 inches. Specialized rifle round containing an expensive uranium core that severely irradiates the target after impact. Developed by Nanotrasen for use in combat rifles.
   components:
   - type: CartridgeAmmo
     proto: BulletRifleUranium
@@ -73,4 +73,4 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#65fe08"
+        color: "#3AEB16"

@@ -37,7 +37,7 @@
   id: MagazineRifle
   name: "magazine (.223 rifle)"
   parent: BaseMagazineRifle
-  description: Magazine containing 0.223x1.78 inch rifle rounds. High-velocity intermediate cartridge designed by Nanotrasen for use in combat rifles. A good balance of recoil, velocity, and stopping power.
+  description: The standard magazine for NT combat rifles, holds 25 rounds. This type comes with standard lead-tipped FMJ cartridges.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifle
@@ -53,7 +53,7 @@
   name: "magazine (.223 rifle any)"
   suffix: empty
   parent: MagazineRifle
-  description: Magazine designed for 0.223x1.78 inch rifle rounds.
+  description: The standard magazine for NT combat rifles, holds 25 rounds.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -63,19 +63,10 @@
       map: ["enum.GunVisualLayers.Base"]
 
 - type: entity
-  id: MagazineRifleIncendiary
-  name: "magazine (.20 rifle incendiary)"
-  parent: MagazineRifle
-  description: Magazine containing 0.223x1.78 inch rifle rounds. Intermediate rifle cartridge containing an incendiary compound to burn the target from inside. Generally used in aftermarket and Syndicate rifles.
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeRifleIncendiary
-
-- type: entity
   id: MagazineRiflePractice
   name: "magazine (.223 rifle practice)"
   parent: BaseMagazineRifle
-  description: Magazine containing 0.223x1.78 inch rifle rounds. Intermediate rifle cartridge lacking a projectile for use in practice.
+  description: The standard magazine for NT combat rifles, holds 25 rounds. This type contains practice ammo with blue rubber tips.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRiflePractice
@@ -87,10 +78,18 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
+  id: MagazineRifleIncendiary
+  name: "magazine (.223 rifle incendiary)"
+  parent: MagazineRifle
+  description: The standard magazine for NT combat rifles, holds 25 rounds. This type contains red-tipped incendiary ammunition that burns the target from the inside.
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleIncendiary
+
+- type: entity
   id: MagazineRifleUranium
   name: "magazine (.223 rifle uranium)"
   parent: BaseMagazineRifle
-  description: Magazine containing 0.223x1.78 inch rifle rounds. Each round contains a expensive uranium core which severely irradiates the target after impact. Developed by Nanotrasen for use in combat rifles.
+  description: The standard magazine for NT combat rifles, holds 25 rounds. This type contains green-tipped uranium-core ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleUranium

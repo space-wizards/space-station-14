@@ -22,6 +22,7 @@
   id: CartridgeMagnum
   name: cartridge (.45 magnum)
   parent: BaseCartridgeMagnum
+  description: 0.45x1.63 inches. Heavy magnum cartridge commonly used by Revolvers. Packs a punch.
   components:
   - type: CartridgeAmmo
     proto: BulletMagnum
@@ -30,6 +31,7 @@
   id: CartridgeMagnumPractice
   name: cartridge (.45 magnum practice)
   parent: BaseCartridgeMagnum
+  description: 0.45x1.63 inches. Practice variant of the cartridge using a blue rubber tip.
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumPractice
@@ -39,7 +41,23 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#dbdbdb"
+        color: "#22C4EB"
+
+- type: entity
+  id: CartridgeMagnumAP
+  name: cartridge (.45 magnum armor-piercing)
+  parent: BaseCartridgeMagnum
+  description: 0.45x1.63 inches. Highly illegal armor-piercing magnum rounds that completely bypass standard body armor. Used primarily by elite units.
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMagnumAP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#c0c0c0"
 
 - type: entity
   id: CartridgeMagnumIncendiary
@@ -55,21 +73,6 @@
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
         color: "#ff6e52"
-
-- type: entity
-  id: CartridgeMagnumAP
-  name: cartridge (.45 magnum armor-piercing)
-  parent: BaseCartridgeMagnum
-  components:
-  - type: CartridgeAmmo
-    proto: BulletMagnumAP
-  - type: Sprite
-    layers:
-      - state: base
-        map: [ "enum.AmmoVisualLayers.Base" ]
-      - state: tip
-        map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#0a0a0a"
 
 - type: entity
   id: CartridgeMagnumUranium

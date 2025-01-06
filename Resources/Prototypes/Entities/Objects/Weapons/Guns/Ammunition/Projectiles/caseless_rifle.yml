@@ -1,6 +1,6 @@
 - type: entity
   id: BulletCaselessRifle
-  name: bullet (.25 caseless)
+  name: bullet (.20 caseless)
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
@@ -11,7 +11,7 @@
 
 - type: entity
   id: BulletCaselessRiflePractice
-  name: bullet (.25 caseless practice)
+  name: bullet (.20 caseless practice)
   parent: BaseBulletPractice
   categories: [ HideSpawnMenu ]
   components:

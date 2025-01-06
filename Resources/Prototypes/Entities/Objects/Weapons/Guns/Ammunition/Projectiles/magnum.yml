@@ -21,18 +21,6 @@
         Blunt: 1
 
 - type: entity
-  id: BulletMagnumIncendiary
-  parent: BaseBulletIncendiary
-  name: bullet (.45 magnum incendiary)
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Blunt: 3
-        Heat: 32
-
-- type: entity
   id: BulletMagnumAP
   name: bullet (.45 magnum armor-piercing)
   parent: BaseBulletAP
@@ -43,6 +31,18 @@
       types:
         Piercing: 26 # 20% decrease
     ignoreResistances: true
+
+- type: entity
+  id: BulletMagnumIncendiary
+  parent: BaseBulletIncendiary
+  name: bullet (.45 magnum incendiary)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 3
+        Heat: 32
 
 - type: entity
   id: BulletMagnumUranium

@@ -196,7 +196,7 @@
     contents:
     - id: WeaponSubMachineGunDrozd
       amount: 2
-    - id: MagazinePistolSubMachineGun
+    - id: MagazineRifle
       amount: 4
 
 - type: entity

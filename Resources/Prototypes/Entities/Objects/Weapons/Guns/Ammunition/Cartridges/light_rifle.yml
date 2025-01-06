@@ -22,6 +22,7 @@
   id: CartridgeLightRifle
   name: cartridge (.308 rifle)
   parent: BaseCartridgeLightRifle
+  description: 0.308x1.53 inches. Intermediate rifle cartridge comparable to the .223 cartridge, but somewhat wider and shorter. Commonly used by aftermarket and Syndicate rifles.
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifle
@@ -30,7 +31,7 @@
   id: CartridgeLightRiflePractice
   name: cartridge (.308 rifle practice)
   parent: BaseCartridgeLightRifle
-  description: 0.308x1.53 inches. Intermediate rifle cartridge lacking a projectile for use in practice.
+  description: 0.308x1.53 inches. Intermediate rifle cartridge with a blue rubber tip for use in training scenarios. Generally used in aftermarket and Syndicate rifles.
   components:
   - type: CartridgeAmmo
     proto: BulletLightRiflePractice
@@ -40,7 +41,7 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#dbdbdb"
+        color: "#2B36EB"
 
 - type: entity
   id: CartridgeLightRifleIncendiary
@@ -56,13 +57,13 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#ff6e52"
+        color: "#870000"
 
 - type: entity
   id: CartridgeLightRifleUranium
   name: cartridge (.308 rifle uranium)
   parent: BaseCartridgeLightRifle
-  description: 0.308x1.53 inches. Contains a expensive uranium core which severely irradiates the target after impact. Primarily used by the Syndicate, or by particularly wealthy organized crime.
+  description: 0.308x1.53 inches. Contains an expensive uranium core that severely irradiates the target after impact. Primarily used by the Syndicate, or by particularly wealthy organized crime.
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifleUranium
@@ -72,4 +73,4 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#65fe08"
+        color: "#3AEB16"
