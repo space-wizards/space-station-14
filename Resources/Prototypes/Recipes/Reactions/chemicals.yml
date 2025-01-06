@@ -139,6 +139,23 @@
       maxTotalIntensity: 100
 
 - type: reaction
+  id: PotassiumSeaWaterExplosion
+  impact: High
+  priority: 20
+  reactants:
+    SeaWater:
+      amount: 1
+    Potassium:
+      amount: 1
+  effects:
+    - !type:ExplosionReactionEffect
+      explosionType: Default
+      maxIntensity: 100
+      intensityPerUnit: 0.5 # 50+50 reagent for maximum explosion
+      intensitySlope: 4
+      maxTotalIntensity: 100
+
+- type: reaction
   id: Smoke
   priority: 10
   impact: High
