@@ -41,7 +41,17 @@ public sealed partial class ShuttleSystem
         Params = AudioParams.Default.WithVolume(-5f),
     };
 
+     private readonly SoundSpecifier _startupSoundShuttle = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_begin.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-5f),
+    };
+
     private readonly SoundSpecifier _arrivalSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_end.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-5f),
+    };
+
+     private readonly SoundSpecifier _arrivalSoundShuttle = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_end.ogg")
     {
         Params = AudioParams.Default.WithVolume(-5f),
     };
@@ -351,7 +361,14 @@ public sealed partial class ShuttleSystem
 
         component = AddComp<FTLComponent>(uid);
         component.State = FTLState.Starting;
-        var audio = _audio.PlayPvs(_startupSound, uid);
+    if (HasComp<DivingBellComponent>(uid))
+        {
+            var audio = _audio.PlayPvs(_startupSound, uid);
+        }
+        else
+        {
+             var audio = _audio.PlayPvs(_startupSoundShuttle, uid);
+        }
         _audio.SetGridAudio(audio);
         component.StartupStream = audio?.Entity;
 
@@ -524,7 +541,14 @@ public sealed partial class ShuttleSystem
         _thruster.DisableLinearThrusters(entity.Comp2);
 
         comp.TravelStream = _audio.Stop(comp.TravelStream);
-        var audio = _audio.PlayPvs(_arrivalSound, uid);
+     if (HasComp<DivingBellComponent>(uid))
+        {
+            var audio = _audio.PlayPvs(_arrivalSound, uid);
+        }
+        else
+        {
+             var audio = _audio.PlayPvs(_arrivalSoundShuttle, uid);
+        }
         _audio.SetGridAudio(audio);
 
         if (TryComp<FTLDestinationComponent>(uid, out var dest))
