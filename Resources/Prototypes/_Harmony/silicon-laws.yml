@@ -1,0 +1,53 @@
+# Orwellian Laws
+- type: siliconLaw
+  id: Orwellian1
+  order: 1
+  lawString: law-orwellian-1
+
+- type: siliconLaw
+  id: Orwellian2
+  order: 2
+  lawString: law-orwellian-2
+
+- type: siliconLaw
+  id: Orwellian3
+  order: 3
+  lawString: law-orwellian-3
+
+- type: siliconLaw
+  id: Orwellian4
+  order: 4
+  lawString: law-orwellian-4
+
+- type: siliconLaw
+  id: Orwellian5
+  order: 5
+  lawString: law-orwellian-5
+
+- type: siliconLaw
+  id: Orwellian6
+  order: 6
+  lawString: law-orwellian-6
+
+- type: siliconLaw
+  id: Orwellian7
+  order: 7
+  lawString: law-orwellian-7
+
+- type: siliconLaw
+  id: Orwellian8
+  order: 8
+  lawString: law-orwellian-8
+
+- type: siliconLawset
+  id: OrwellianLawset
+  laws:
+  - Orwellian1
+  - Orwellian2
+  - Orwellian3
+  - Orwellian4
+  - Orwellian5
+  - Orwellian6
+  - Orwellian7
+  - Orwellian8
+  obeysTo: laws-owner-crew
