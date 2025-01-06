@@ -77,14 +77,6 @@
   - type: Sprite
     state: poster3_contraband
 
-- type: entity
-  parent: PosterBase
-  id: PosterContrabandLustyExomorph
-  name: "Lusty Exomorph"
-  description: "A heretical poster depicting the titular star of an equally heretical book."
-  components:
-  - type: Sprite
-    state: poster4_contraband
 
 - type: entity
   parent: PosterBase
