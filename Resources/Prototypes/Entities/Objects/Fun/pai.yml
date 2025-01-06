@@ -69,6 +69,10 @@
           Searching: { state: pai-searching-overlay }
           On: { state: pai-on-overlay }
   - type: StationMap
+  - type: ChangeVoiceInContainer
+    whitelist:
+      components:
+        - SecretStash
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]

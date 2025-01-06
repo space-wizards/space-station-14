@@ -1,6 +1,6 @@
 <Document>
   # Nuclear Operatives
-  
+
   <Box>
     [color=#999999][italic]"OPERATIVES STANDBY. YOUR OBJECTIVES ARE SIMPLE.[/italic][/color]
   </Box>
@@ -38,13 +38,13 @@
   </Box>
 
   ## Preparation
-  Each member in your squad has been given an [color=cyan]uplink[/color] to purchase everything you will need for the mission, similar to [textlink="Traitors." link="Traitors"]
+  Each member in your squad has been given an [color=cyan]uplink[/color] to purchase everything you will need for the mission, similar to [textlink="traitors." link="Traitors"]
 
   <Box>
     <GuideEntityEmbed Entity="BaseUplinkRadio40TC" Caption="your uplink"/>
   </Box>
 
-  You can purchase the same kinds of gear Traitors can, but you have higher quality gear available to you and more telecrystals to spend.
+  You can purchase the same kinds of gear traitors can, but you have higher quality gear available to you and more telecrystals to spend.
   <Box>
     <GuideEntityEmbed Entity="WeaponLightMachineGunL6" Caption="Weaponry"/>
     <GuideEntityEmbed Entity="MagazineLightRifleBox" State="icon" Caption="Ammo"/>
@@ -71,8 +71,8 @@
   ## Getting to the Station
   You've got the plan, you've got the gear. Now, execute.
 
-  Grab a [bold]jetpack[/bold] from your armory and go with your other operatives to the [color=cyan]Syndicate Shuttle[/color].
-  Among other things you may need, you'll find an [bold]IFF Console[/bold] on the shuttle. It allows you to hide from other ships and mass scanners when [italic]"Show IFF"[/italic] and [italic]"Show Vessel"[/italic] are toggled off.
+  Grab a [bold]jetpack[/bold] from your armory and go with your other operatives to your [color=cyan]shuttle[/color].
+  Among other things you may need, you'll find an [bold]IFF Computer[/bold] on the shuttle. It allows you to hide from other ships and mass scanners when [italic]Show IFF[/italic] and [italic]Show Vessel[/italic] are toggled off.
 
   When everyone is ready, FTL to the station and fly to it with a jetpack. Don't forget the code, your pinpointers and the nuke if you're taking it.
 
@@ -82,12 +82,12 @@
   </Box>
 
   ## The Nuke & Arming Procedure
-  You have a paper with the [color=cyan]nuclear authentication codes[/color] on your shuttle. [bold]Check to see if the nuke ID matches the one on your shuttle.[/bold] If it doesn't, you'll have to use explosive in the station's vault.
+  You have a paper with the [color=cyan]nuclear authentication codes[/color] on your shuttle. [bold]Check to see if the nuke ID matches the one on your shuttle.[/bold] If it doesn't, you'll be arming the station's nuke instead.
 
   - Obtain the [bold]nuclear authentication disk[/bold] and insert it into the nuke.
   - Type in the [bold]nuclear authentication code[/bold] and press "[bold]E[/bold]" on the keypad to Enter.
-  - To begin [bold]self-destruct process[/bold], press "[color=red]ARM[/color]". After 300 seconds, the nuke will explode.
-  - [bold]Defend the nuke[/bold], even if it's at the cost of your lives! The mission requirements do not include your return. 
+  - [bold]To begin the self-destruct sequence, press [color=#EB2D3A]ARM[/color][/bold]. After 300 seconds, the nuke will explode.
+  - [bold]Defend the nuke[/bold], even if it's at the cost of your lives! The mission requirements do not include your return.
   - It takes 30 seconds for someone to [bold]disarm[/bold] the nuke. Re-arming it is possible, but the chance of mission success drops if you let it happen.
   - Should the nuke be re-armed, the timer will start from where it left off.
 

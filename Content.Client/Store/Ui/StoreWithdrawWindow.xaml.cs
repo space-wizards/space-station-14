@@ -18,7 +18,7 @@ public sealed partial class StoreWithdrawWindow : DefaultWindow
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    private Dictionary<FixedPoint2, CurrencyPrototype> _validCurrencies = new();
+    private Dictionary<CurrencyPrototype, FixedPoint2> _validCurrencies = new();
     private HashSet<CurrencyWithdrawButton> _buttons = new();
     public event Action<BaseButton.ButtonEventArgs, string, int>? OnWithdrawAttempt;
 
@@ -36,7 +36,7 @@ public sealed partial class StoreWithdrawWindow : DefaultWindow
             if (!_prototypeManager.TryIndex(currency.Key, out var proto))
                 continue;
 
-            _validCurrencies.Add(currency.Value, proto);
+            _validCurrencies.Add(proto, currency.Value);
         }
 
         //this shouldn't ever happen but w/e
@@ -47,14 +47,17 @@ public sealed partial class StoreWithdrawWindow : DefaultWindow
         _buttons.Clear();
         foreach (var currency in _validCurrencies)
         {
+            if (!currency.Key.CanWithdraw)
+                continue;
+
             var button = new CurrencyWithdrawButton()
             {
-                Id = currency.Value.ID,
-                Amount = currency.Key,
+                Id = currency.Key.ID,
+                Amount = currency.Value,
                 MinHeight = 20,
-                Text = Loc.GetString("store-withdraw-button-ui", ("currency",Loc.GetString(currency.Value.DisplayName, ("amount", currency.Key)))),
+                Text = Loc.GetString("store-withdraw-button-ui", ("currency",Loc.GetString(currency.Key.DisplayName, ("amount", currency.Value)))),
+                Disabled = false,
             };
-            button.Disabled = false;
             button.OnPressed += args =>
             {
                 OnWithdrawAttempt?.Invoke(args, button.Id, WithdrawSlider.Value);
@@ -65,7 +68,7 @@ public sealed partial class StoreWithdrawWindow : DefaultWindow
             ButtonContainer.AddChild(button);
         }
 
-        var maxWithdrawAmount = _validCurrencies.Keys.Max().Int();
+        var maxWithdrawAmount = _validCurrencies.Values.Max().Int();
 
         // setup withdraw slider
         WithdrawSlider.MinValue = 1;

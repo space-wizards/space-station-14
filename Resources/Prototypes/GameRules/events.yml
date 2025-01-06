@@ -10,6 +10,7 @@
     - id: ClericalError
     - id: CockroachMigration
     - id: GasLeak
+    - id: GreytideVirus
     - id: IonStorm # its calm like 90% of the time smh
     - id: JobDistributionError
     - id: KudzuGrowth
@@ -36,6 +37,8 @@
     - id: RevenantSpawn
     - id: SleeperAgents
     - id: ZombieOutbreak
+    - id: LoneOpsSpawn
+    - id: DerelictCyborgSpawn
 
 - type: entity
   id: BaseStationEvent
@@ -177,9 +180,8 @@
       min: 1
       max: 1
       pickPlayer: false
-      mindComponents:
-      - type: DragonRole
-        prototype: Dragon
+      mindRoles:
+      - MindRoleDragon
 
 - type: entity
   parent: BaseGameRule
@@ -227,9 +229,8 @@
         nameSegments:
         - names_ninja_title
         - names_ninja
-      mindComponents:
-      - type: NinjaRole
-        prototype: SpaceNinja
+      mindRoles:
+      - MindRoleNinja
 
 - type: entity
   parent: BaseGameRule
@@ -440,9 +441,8 @@
       - type: ZombifyOnDeath
       - type: IncurableZombie
       - type: InitialInfected
-      mindComponents:
-      - type: InitialInfectedRole
-        prototype: InitialInfected
+      mindRoles:
+      - MindRoleInitialInfected
 
 - type: entity
   parent: BaseNukeopsRule
@@ -455,7 +455,7 @@
     duration: 1
   - type: RuleGrids
   - type: LoadMapRule
-    preloadedGrid: ShuttleStriker
+    mapPath: /Maps/Shuttles/ShuttleEvent/striker.yml
   - type: NukeopsRule
     roundEndBehavior: Nothing
   - type: AntagSelection
@@ -467,7 +467,6 @@
       startingGear: SyndicateLoneOperativeGearFull
       roleLoadout:
       - RoleSurvivalNukie
-
       components:
       - type: NukeOperative
       - type: RandomMetadata
@@ -477,9 +476,8 @@
       - type: NpcFactionMember
         factions:
         - Syndicate
-      mindComponents:
-      - type: NukeopsRole
-        prototype: Nukeops
+      mindRoles:
+      - MindRoleNukeops
 
 - type: entity
   parent: BaseTraitorRule
@@ -506,9 +504,8 @@
       blacklist:
         components:
         - AntagImmune
-      mindComponents:
-      - type: TraitorRole
-        prototype: TraitorSleeper
+      mindRoles:
+      - MindRoleTraitorSleeper
 
 - type: entity
   id: MassHallucinations
@@ -546,6 +543,48 @@
     maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
     weight: 5
   - type: MobReplacementRule
+
+- type: entity
+  id: GreytideVirus
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    weight: 5
+    minimumPlayers: 25
+    reoccurrenceDelay: 20
+  - type: GreytideVirusRule
+    accessGroups:
+    - Cargo
+    - Command
+    - Engineering
+    - Research
+    - Security
+    - Service
+    blacklist:
+    - External # don't space everything
+
+- type: entity
+  parent: BaseGameRule
+  id: DerelictCyborgSpawn
+  components:
+  - type: StationEvent
+    weight: 5
+    earliestStart: 15
+    reoccurrenceDelay: 20
+    minimumPlayers: 4
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagSpawner
+    prototype: PlayerBorgDerelict
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointGhostDerelictCyborg
+      min: 1
+      max: 1
+      pickPlayer: false
 
 - type: entity
   id: JobDistributionError
