@@ -916,3 +916,10 @@ Entries:
     changes:
     - type: Add
       message: Added the HoS Flask to the HoS Armored Trench Coat Pocket
+  - id: 278
+    author: BoskiYourk
+    time: '2025-01-06T15:01:27.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/278
+    changes:
+    - type: Tweak
+      message: Updated the CE's jumpsuits to have consistent coloring.
