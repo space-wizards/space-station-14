@@ -1,19 +1,24 @@
 using System.Linq;
+using Content.Shared.Lock;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Player;
 
-namespace Content.Shared.Weapons.Ranged.Systems;
+namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed class BatteryWeaponFireModesSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
 
     public override void Initialize()
     {
@@ -22,6 +27,7 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, ActivateInWorldEvent>(OnInteractHandEvent);
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, GetVerbsEvent<Verb>>(OnGetVerb);
         SubscribeLocalEvent<BatteryWeaponFireModesComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<BatteryWeaponFireModesComponent, AttemptShootEvent>(OnShootAttempt);
     }
 
     private void OnExamined(EntityUid uid, BatteryWeaponFireModesComponent component, ExaminedEvent args)
@@ -41,6 +47,23 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
     {
         return component.FireModes[component.CurrentFireMode];
     }
+    
+    private void OnShootAttempt(EntityUid uid, BatteryWeaponFireModesComponent component, ref AttemptShootEvent args)
+    {
+        
+        var fireMode = component.FireModes[component.CurrentFireMode];
+        
+        if (fireMode.Conditions != null)
+        {
+            var conditionArgs = new FireModeConditionConditionArgs(args.User, uid, fireMode, EntityManager);
+            var conditionsMet = fireMode.Conditions.All(condition => condition.Condition(conditionArgs));
+
+            if (!conditionsMet)
+            {
+                SetFireMode(uid, component, 0, args.User);
+            }
+        }
+    }
 
     private void OnGetVerb(EntityUid uid, BatteryWeaponFireModesComponent component, GetVerbsEvent<Verb> args)
     {
@@ -49,12 +72,28 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
 
         if (component.FireModes.Count < 2)
             return;
+        
+        if (TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
+            return;
 
         for (var i = 0; i < component.FireModes.Count; i++)
         {
             var fireMode = component.FireModes[i];
             var entProto = _prototypeManager.Index<EntityPrototype>(fireMode.Prototype);
             var index = i;
+            
+            if (fireMode.Conditions != null)
+            {
+                var conditionArgs = new FireModeConditionConditionArgs(args.User, args.Target, fireMode, EntityManager);
+                var conditionsMet = fireMode.Conditions.All(condition => condition.Condition(conditionArgs));
+
+                if (!conditionsMet)
+                {
+                    if (component.CurrentFireMode == index)
+                        SetFireMode(uid, component, 0, args.User);
+                    continue;
+                }
+            }
 
             var v = new Verb
             {
@@ -91,6 +130,20 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
             return;
 
         var index = (component.CurrentFireMode + 1) % component.FireModes.Count;
+        
+        var fireMode = component.FireModes[index];
+        
+        if (fireMode.Conditions != null)
+        {
+            var conditionArgs = new FireModeConditionConditionArgs(user, uid, fireMode, EntityManager);
+            var conditionsMet = fireMode.Conditions.All(condition => condition.Condition(conditionArgs));
+
+            if (!conditionsMet)
+            {
+                return;
+            }
+        }
+        
         SetFireMode(uid, component, index, user);
     }
 
@@ -115,11 +168,12 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
             Dirty(uid, projectileBatteryAmmoProviderComponent);
             var updateClientAmmoEvent = new UpdateClientAmmoEvent();
             RaiseLocalEvent(uid, ref updateClientAmmoEvent);
+            
+            if (fireMode.HeldPrefix != null)
+                _item.SetHeldPrefix(uid, fireMode.HeldPrefix);
 
-            if (user != null)
-            {
-                _popupSystem.PopupClient(Loc.GetString("gun-set-fire-mode", ("mode", prototype.Name)), uid, user.Value);
-            }
+            if (user != null && TryComp<ActorComponent>(user, out var actor))
+                _popupSystem.PopupEntity(Loc.GetString("gun-set-fire-mode", ("mode", prototype.Name)), uid, actor.PlayerSession);
         }
     }
 }

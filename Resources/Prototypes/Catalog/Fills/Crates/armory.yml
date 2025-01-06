@@ -50,12 +50,14 @@
   id: CrateArmoryLaser
   parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
   name: lasers crate
-  description: Contains three standard-issue laser rifles. Requires Armory access to open.
+  description: Contains two standard-issue laser rifles and two energy gun's. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:
       - id: WeaponLaserCarbine
-        amount: 3
+        amount: 2
+      - id: WeaponEnergyGun
+        amount: 2
 
 - type: entity
   id: CrateArmoryPistols
