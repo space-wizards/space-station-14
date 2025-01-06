@@ -100,4 +100,5 @@
     id: BlueShieldIDCard
     state: pda-blueshield
   - type: Icon
+    sprite: _Starlight/Objects/Devices/pda.rsi
     state: pda-blueshield
