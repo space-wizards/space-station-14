@@ -217,6 +217,9 @@
     magState: disable
     steps: 4
     zeroVisible: true
+  - type: Lock
+  - type: AccessReader
+    access: [["Security"]]
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisabler
     fireCost: 100
@@ -246,3 +249,140 @@
         - yellow
         - red
         - gamma
+        
+- type: entity
+  name: X-01 multiphase energy gun
+  parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
+  id: WeaponMultiphaseGun
+  description: This is an expensive, modern version of the antique laser pistol. This weapon has several unique fire modes, but no ability to reload on its own over time.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/multiphase_gun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: disable-unshaded
+      map: ["enum.FireModesLayers.FireMode"]
+      shader: unshaded
+    - state: disable-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Small
+    shape:
+    - 0, 0, 1, 1
+  - type: MagazineVisuals
+    magState: disable
+    steps: 5
+    zeroVisible: true
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletDisabler
+      fireCost: 100
+      magState: disable
+      visualState: disable-unshaded
+    - proto: BulletAdvTaser
+      fireCost: 250
+      magState: stun
+      visualState: stun-unshaded
+    - proto: BulletLaser
+      fireCost: 100
+      magState: kill
+      visualState: kill-unshaded
+      
+- type: entity
+  parent: BaseWeaponBattery
+  id: WeaponIonRifle
+  name: ion rifle
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/ion_rifle.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Ginormous
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Back
+  - type: Gun
+    fireRate: 0.6
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40 #100sec+60Sec Pause
+    autoRechargePause: true
+    autoRechargePauseTime: 60
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletEMP
+    fireCost: 250
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: EmpImmune
+  
+- type: entity
+  parent: BaseWeaponBattery
+  id: WeaponIonCarbine
+  name: ion carbine
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/ion_carbine.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Normal
+    shape:
+    - 0, 0, 3, 1
+  - type: Gun
+    fireRate: 0.6
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40 #100sec+60Sec Pause
+    autoRechargePause: true
+    autoRechargePauseTime: 60
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletEMP
+    fireCost: 250
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: EmpImmune
+  
+- type: entity
+  name: immolator laser gun
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseRestrictedContraband]
+  id: WeaponLaserImmolator
+  description: Favoured by Nanotrasen Security for being cheap and easy to use.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/immolator.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: HitscanBatteryAmmoProvider
+    proto: IgnitionRedLaser
+    fireCost: 62.5
+  - type: StaticPrice
+    price: 300

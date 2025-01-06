@@ -27,7 +27,6 @@
   equipment:
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetSecurity
-    pocket1: WeaponAdvancedTaser
   storage:
     back:
     - Flash

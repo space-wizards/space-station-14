@@ -53,5 +53,6 @@
     gloves: ClothingHandsGlovesCombat
   storage:
     back:
+    - WeaponMultiphaseGun
     - BoxSurvivalSecurity
     - Flash
