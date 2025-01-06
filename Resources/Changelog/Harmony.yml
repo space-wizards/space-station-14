@@ -909,3 +909,10 @@ Entries:
     changes:
     - type: Add
       message: Port of the tape recorder from DeltaV to Harmony
+  - id: 274
+    author: BoskiYourk
+    time: '2025-01-06T14:56:43.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/274
+    changes:
+    - type: Add
+      message: Added the HoS Flask to the HoS Armored Trench Coat Pocket
