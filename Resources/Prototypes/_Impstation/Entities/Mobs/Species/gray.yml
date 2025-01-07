@@ -109,6 +109,11 @@
           32:
             sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: ears
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
+            state: feet
   - type: Speech
     speechSounds: PVC
   - type: TypingIndicator

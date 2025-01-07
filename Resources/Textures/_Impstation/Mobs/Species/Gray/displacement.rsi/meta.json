@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "widgetbeck",
+  "copyright": "widgetbeck, edited by mqole",
   "size": {
     "x": 32,
     "y": 32
@@ -40,6 +40,10 @@
     },
     {
       "name": "outerClothing",
+      "directions": 4
+    },
+    {
+      "name": "feet",
       "directions": 4
     }
   ]
