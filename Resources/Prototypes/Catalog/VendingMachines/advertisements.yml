@@ -95,6 +95,18 @@
     count: 8
 
 - type: localizedDataset
+  id: BodaAds
+  values:
+    prefix: advertisement-sovietsoda-
+    count: 8
+
+- type: localizedDataset
+  id: DrGibbAds
+  values:
+    prefix: advertisement-gibb-
+    count: 8
+
+- type: localizedDataset
   id: PwrGameAds
   values:
     prefix: advertisement-pwr-
@@ -107,21 +119,9 @@
     count: 8
 
 - type: localizedDataset
-  id: BodaAds
-  values:
-    prefix: advertisement-sovietsoda-
-    count: 8
-
-- type: localizedDataset
   id: SpaceColaAds
   values:
     prefix: advertisement-cola-
-    count: 8
-
-- type: localizedDataset
-  id: DrGibbAds
-  values:
-    prefix: advertisement-gibb-
     count: 8
 
 - type: localizedDataset
