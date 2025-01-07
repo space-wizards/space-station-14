@@ -1415,6 +1415,7 @@
   parent: JanitorPDA
   id: CommandMaidPDA
   name: command maid PDA
+  description: Command gets their own janitorial staff?  This says a lot about society...
   components:
   - type: Pda
     id: CommandMaidIDCard

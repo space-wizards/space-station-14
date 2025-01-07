@@ -49,7 +49,7 @@ job-name-ertjanitor = ERT Janitor
 job-name-boxer = Boxer
 job-name-zookeeper = Zookeeper
 job-name-visitor = Visitor
-# event-resctricted jobs
+# event-restricted jobs
 job-name-security-clown = Security Clown
 job-name-command-maid = Command Maid
 job-name-party-maker = Party Maker

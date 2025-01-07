@@ -47,7 +47,7 @@ job-description-station-ai = Follow your laws, serve the crew.
 job-description-visitor = Enjoy your visit to the station.
 job-description-warden = Patrol the security department, ensure that no one is stealing from the armory, and make sure that all prisoners are processed and let out when their time is up.
 job-description-zookeeper = Put on a joyful display of cute animals and space carps for all the crew to see. Currently available on Cog and Oasis.
-# event-resctricted jobs
-job-description-command-maid = Clean bridge, command rooms and everything else what command ask you about.
-job-description-security-clown = Do security job, but don't forget to do it with your clown spice.
-job-description-party-maker = Have the biggest party ever at this station!
+# event-restricted jobs
+job-description-command-maid = Clean the bridge, command rooms, and everything else that command tells you to.
+job-description-security-clown = Do security's job, but don't forget to do it with your clown spice.
+job-description-party-maker = Throw the biggest party ever at this station!
