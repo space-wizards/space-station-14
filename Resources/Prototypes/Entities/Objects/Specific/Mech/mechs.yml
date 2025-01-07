@@ -252,10 +252,13 @@
   - type: Sprite
     drawdepth: Mobs
     noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
+    sprite: _Impstation/Objects/Specific/Mech/mecha.rsi
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: vim
+    - state: vim_lights #imp edit
+      shader: unshaded
+      visible: true
   - type: Fixtures
     fixtures:
       fix1:
@@ -269,7 +272,7 @@
         - MobLayer
   - type: FootstepModifier
     footstepSoundCollection:
-      path: /Audio/Mecha/mechmove03.ogg
+      path: /Audio/_Impstation/Mecha/mechmove_1.ogg #imp edit
       params:
         volume: -10
   - type: Mech
@@ -297,7 +300,13 @@
     tags:
     - Maintenance
   # TOOD: buzz / chime actions
-  # TODO: builtin flashlight
+  - type: PointLight
+    enabled: true
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 1.5
+    netsync: false
+    color: "#d5fcff"
 
 - type: entity
   parent: MechVim
