@@ -2163,12 +2163,12 @@
   id: VendingMachineTankDispenserEVA
   suffix: EVA [O2, N2]
   name: gas tank dispenser
-  description: A vendor for dispensing gas tanks.
+  description: A vendor for dispensing gas tanks. Does not dispense frezon.
   components:
   - type: VendingMachine
     pack: TankDispenserEVAInventory
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers
+    sprite: _Impstation/Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers #imp
     state: dispenser
 
 - type: entity
@@ -2176,12 +2176,12 @@
   id: VendingMachineTankDispenserEngineering
   suffix: ENG [O2, Plasma]
   name: gas tank dispenser
-  description: A vendor for dispensing gas tanks. This one has an engineering livery.
+  description: A vendor for dispensing gas tanks. This one has an engineering livery. Still doesn't dispense frezon.
   components:
   - type: VendingMachine
     pack: TankDispenserEngineeringInventory
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers
+    sprite: _Impstation/Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers
     layers:
     - state: dispenser
     - state: dispensereng
