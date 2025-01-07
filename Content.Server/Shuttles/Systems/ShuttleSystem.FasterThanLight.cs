@@ -41,7 +41,17 @@ public sealed partial class ShuttleSystem
         Params = AudioParams.Default.WithVolume(-5f),
     };
 
+     private readonly SoundSpecifier _startupSoundShuttle = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_begin_shuttle.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-5f),
+    };
+
     private readonly SoundSpecifier _arrivalSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_end.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-5f),
+    };
+
+     private readonly SoundSpecifier _arrivalSoundShuttle = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_end_shuttle.ogg")
     {
         Params = AudioParams.Default.WithVolume(-5f),
     };
@@ -351,9 +361,18 @@ public sealed partial class ShuttleSystem
 
         component = AddComp<FTLComponent>(uid);
         component.State = FTLState.Starting;
-        var audio = _audio.PlayPvs(_startupSound, uid);
-        _audio.SetGridAudio(audio);
-        component.StartupStream = audio?.Entity;
+    if (HasComp<DivingBellComponent>(uid))
+        {
+            var audio = _audio.PlayPvs(_startupSound, uid);
+            _audio.SetGridAudio(audio);
+             component.StartupStream = audio?.Entity;
+        }
+        else
+        {
+             var audio = _audio.PlayPvs(_startupSoundShuttle, uid);
+             _audio.SetGridAudio(audio);
+             component.StartupStream = audio?.Entity;
+        }
 
         // TODO: Play previs here for docking arrival.
 
@@ -524,8 +543,16 @@ public sealed partial class ShuttleSystem
         _thruster.DisableLinearThrusters(entity.Comp2);
 
         comp.TravelStream = _audio.Stop(comp.TravelStream);
-        var audio = _audio.PlayPvs(_arrivalSound, uid);
-        _audio.SetGridAudio(audio);
+     if (HasComp<DivingBellComponent>(uid))
+        {
+            var audio = _audio.PlayPvs(_arrivalSound, uid);
+             _audio.SetGridAudio(audio);
+        }
+        else
+        {
+             var audio = _audio.PlayPvs(_arrivalSoundShuttle, uid);
+              _audio.SetGridAudio(audio);
+        }
 
         if (TryComp<FTLDestinationComponent>(uid, out var dest))
         {

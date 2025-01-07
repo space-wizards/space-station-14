@@ -1642,7 +1642,7 @@ entities:
     - type: Broadphase
     - type: OccluderTree
     - type: Parallax
-      parallax: Sky
+      parallax: TriesteSpace
     - type: MapAtmosphere
       space: False
       mixture:
