@@ -93358,6 +93358,81 @@ entities:
     - type: Transform
       pos: -7.5,-64.5
       parent: 2
+  - uid: 18892
+    components:
+    - type: Transform
+      pos: -1.5,-26.5
+      parent: 2
+  - uid: 18893
+    components:
+    - type: Transform
+      pos: -1.5,-33.5
+      parent: 2
+  - uid: 18894
+    components:
+    - type: Transform
+      pos: 7.5,-92.5
+      parent: 2
+  - uid: 18895
+    components:
+    - type: Transform
+      pos: -5.5,-120.5
+      parent: 2
+  - uid: 18896
+    components:
+    - type: Transform
+      pos: -1.5,-144.5
+      parent: 2
+  - uid: 18897
+    components:
+    - type: Transform
+      pos: 2.5,-176.5
+      parent: 2
+  - uid: 18898
+    components:
+    - type: Transform
+      pos: 4.5,-196.5
+      parent: 2
+  - uid: 18899
+    components:
+    - type: Transform
+      pos: 2.5,-227.5
+      parent: 2
+  - uid: 18900
+    components:
+    - type: Transform
+      pos: 1.5,-252.5
+      parent: 2
+  - uid: 18901
+    components:
+    - type: Transform
+      pos: 0.5,-275.5
+      parent: 2
+  - uid: 18902
+    components:
+    - type: Transform
+      pos: 2.5,-303.5
+      parent: 2
+  - uid: 18903
+    components:
+    - type: Transform
+      pos: 3.5,-333.5
+      parent: 2
+  - uid: 18904
+    components:
+    - type: Transform
+      pos: 2.5,-362.5
+      parent: 2
+  - uid: 18905
+    components:
+    - type: Transform
+      pos: -1.5,-362.5
+      parent: 2
+  - uid: 18906
+    components:
+    - type: Transform
+      pos: 3.5,-369.5
+      parent: 2
 - proto: Screwdriver
   entities:
   - uid: 13349
