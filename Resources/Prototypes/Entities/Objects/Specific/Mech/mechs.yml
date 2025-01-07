@@ -273,7 +273,7 @@
     baseState: vim
     openState: vim-open
     brokenState: vim-broken
-    maxEquipmentAmount: 0
+    maxEquipmentAmount: 1 #imp change
     # keep mouse safe
     mechToPilotDamageMultiplier: 0.1
     airtight: true

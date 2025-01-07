@@ -84,6 +84,9 @@
     speedModifierThresholds:
       60: 0.85  # 0.7 is base speed.
       80: 0.75  # 0.5 is base speed.
+  - type: Tag
+    tags:
+    - VimPilot
   - type: Reactive
     groups:
       Flammable: [ Touch ]
