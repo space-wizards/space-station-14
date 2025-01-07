@@ -101,12 +101,6 @@
     count: 8
 
 - type: localizedDataset
-  id: DrGibbAds
-  values:
-    prefix: advertisement-gibb-
-    count: 8
-
-- type: localizedDataset
   id: PwrGameAds
   values:
     prefix: advertisement-pwr-
@@ -134,12 +128,6 @@
   id: StarkistAds
   values:
     prefix: advertisement-starkist-
-    count: 8
-
-- type: localizedDataset
-  id: DrGibbAds
-  values:
-    prefix: advertisement-gibb-
     count: 8
 
 - type: localizedDataset
