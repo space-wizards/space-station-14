@@ -241,7 +241,7 @@
   category: construction-category-structures
   description: Keeps the air in and the greytide out.
   icon:
-    sprite: GreyStation/Structures/Walls/shuttleinterior.rsi # GreyStation - Resprite
+    sprite: Structures/Walls/shuttleinterior.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
