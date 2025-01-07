@@ -9,7 +9,7 @@
   - type: Hunger
   - type: Thirst
   - type: Icon
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: full
   - type: Respirator
     damage:
@@ -67,47 +67,47 @@
       jumpsuit:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: jumpsuit
       head:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: head
       outerClothing:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: outerClothing
       neck:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: neck
       eyes:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: eyes
       mask:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: head
       gloves:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: hand
       back:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: back
       ears:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: ears
   - type: Speech
     speechSounds: PVC
@@ -134,45 +134,45 @@
       jumpsuit:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: jumpsuit
       head:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: head
       outerClothing:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: outerClothing
       neck:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: neck
       eyes:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: head
       mask:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: head
       gloves:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: hand
       back:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: back
       ears:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Gray/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: head
