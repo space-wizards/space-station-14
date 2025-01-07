@@ -115,7 +115,7 @@
   - type: Sprite
     drawdepth: Mobs
     noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
+    sprite: _Impstation/Objects/Specific/Mech/mecha.rsi #imp edit
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: ripley
@@ -132,10 +132,13 @@
         - HumanoidAppearance
   - type: MeleeWeapon
     hidden: true
-    attackRate: 1
+    attackRate: 0.7
     damage:
       types:
-        Blunt: 14 #intentionally shit so people realize that going into combat with the ripley is usually a bad idea.
+        Blunt: 12 #intentionally shit so people realize that going into combat with the ripley is usually a bad idea. #<- PUSSY -imp edit
+        Piercing: 10
+    soundHit:
+      collection: GreatWrench
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
