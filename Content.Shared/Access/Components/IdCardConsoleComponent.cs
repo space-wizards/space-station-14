@@ -76,6 +76,7 @@ public sealed partial class IdCardConsoleComponent : Component
         "Theatre",
         "Ntrep",
         "Magistrate",
+        "BlueShield",
         "Brigmedic"
     };
 
