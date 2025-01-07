@@ -64,6 +64,24 @@
     accent: italian
 
 - type: trait
+  id: FrenchAccent
+  name: trait-french-name
+  description: trait-french-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: FrenchAccent
+
+- type: trait
+  id: SpanishAccent
+  name: trait-spanish-name
+  description: trait-spanish-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: SpanishAccent
+
+- type: trait
   id: Liar
   name: trait-liar-name
   description: trait-liar-desc

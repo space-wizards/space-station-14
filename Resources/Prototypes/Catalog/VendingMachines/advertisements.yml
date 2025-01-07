@@ -23,6 +23,12 @@
     count: 19
 
 - type: localizedDataset
+  id: BruiseOMatAds
+  values:
+    prefix: advertisement-bruiseomat-
+    count: 15
+
+- type: localizedDataset
   id: CargoDrobeAds
   values:
     prefix: advertisement-cargodrobe-
@@ -77,6 +83,12 @@
     count: 8
 
 - type: localizedDataset
+  id: DrGibbAds
+  values:
+    prefix: advertisement-gibb-
+    count: 8
+
+- type: localizedDataset
   id: CondimentVendAds
   values:
     prefix: advertisement-condiment-
@@ -123,6 +135,12 @@
   values:
     prefix: fat-extractor-fact-
     count: 6
+
+- type: localizedDataset
+  id: FirebotAd
+  values:
+    prefix: advertisement-firebot-
+    count: 4
 
 - type: localizedDataset
   id: GoodCleanFunAds

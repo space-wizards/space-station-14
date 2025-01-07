@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Gauze sprites by Github KittenColony / Discord kittencolony (297865728374210561)",
+  "copyright": "Gauze sprites by Github KittenColony / Discord kittencolony (297865728374210561), gauze_head by github:DreamlyJack(624946166152298517)",
   "size": {
 	"x": 32,
 	"y": 32
@@ -141,6 +141,10 @@
     },
     {
       "name": "gauze_moth_lowerleg_l",
+      "directions": 4
+    },
+    {
+      "name": "gauze_head",
       "directions": 4
     }
   ]

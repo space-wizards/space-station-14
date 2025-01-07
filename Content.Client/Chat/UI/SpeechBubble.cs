@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client.Chat.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.Speech;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -141,7 +142,12 @@ namespace Content.Client.Chat.UI
                 Modulate = Color.White;
             }
 
-            var offset = (-_eyeManager.CurrentEye.Rotation).ToWorldVec() * -EntityVerticalOffset;
+            var baseOffset = 0f;
+
+           if (_entityManager.TryGetComponent<SpeechComponent>(_senderEntity, out var speech))
+                baseOffset = speech.SpeechBubbleOffset;
+
+            var offset = (-_eyeManager.CurrentEye.Rotation).ToWorldVec() * -(EntityVerticalOffset + baseOffset);
             var worldPos = _transformSystem.GetWorldPosition(xform) + offset;
 
             var lowerCenter = _eyeManager.WorldToScreen(worldPos) / UIScale;
