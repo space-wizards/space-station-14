@@ -117,36 +117,36 @@
 # Wall Televisions
 
 - type: entity
-  parent: WallmountTelescreenFrame
+  parent: BaseWallmountGlass
   id: WallmountTelevisionFrame
   name: television frame
   description: Finally, some decent reception around here...
   components:
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.75,-0.10,0.75,0.35"
-        density: 75
-        mask:
-          - FullTileMask
-        layer:
-          - WallLayer
   - type: Construction
     graph: WallmountTelevision
     node: TelevisionFrame
-  - type: Sprite
-    drawdepth: WallMountedItems
-    sprite: Structures/Wallmounts/flatscreentv.rsi
-    layers:
-      - map: ["computerLayerBody"]
-        state: television_wall
-      - map: ["computerLayerScreen"]
-        state: television_wallscreen
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 20
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 15
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalGlassBreak
+              params:
+                volume: -4
 
 - type: entity
-  parent: WallmountTelevisionFrame
+  parent: BaseWallmountMachine
   id: WallmountTelevision
   suffix: entertainment
   name: television
@@ -155,6 +155,14 @@
   - type: Construction
     graph: WallmountTelevision
     node: Television
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Wallmounts/flatscreentv.rsi
+    layers:
+      - map: ["computerLayerBody"]
+        state: television_wall
+      - map: ["computerLayerScreen"]
+        state: television_wallscreen
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: SurveillanceCamera
@@ -177,3 +185,23 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalGlassBreak
+              params:
+                volume: -4
+  - type: StationAiWhitelist
