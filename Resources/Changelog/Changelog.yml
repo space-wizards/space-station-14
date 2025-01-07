@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: chromiumboy
-  changes:
-  - message: The atmospheric alert computers are now functional! Use them to locate
-      active air and fire alarms on the station.
-    type: Add
-  id: 7285
-  time: '2024-09-05T01:13:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25938
 - author: ScarKy0
   changes:
   - message: A lot more electronics can now be used by the AI.
@@ -3932,3 +3924,11 @@
   id: 7784
   time: '2025-01-06T12:32:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34217
+- author: ArtisticRoomba
+  changes:
+  - message: Kessler Syndrome and Zombeteors are removed from the possible gamemodes
+      in the Secret pool.
+    type: Remove
+  id: 7785
+  time: '2025-01-07T00:18:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34051
