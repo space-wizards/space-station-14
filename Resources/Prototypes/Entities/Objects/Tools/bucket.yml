@@ -53,6 +53,8 @@
     solution: bucket
   - type: DrainableSolution
     solution: bucket
+  - type: DumpableSolution
+    solution: bucket
   - type: SolutionItemStatus
     solution: bucket
   - type: Appearance
