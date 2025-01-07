@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Fixed gray displacement maps (for real this time)
-    type: Fix
-  id: 372
-  time: '2024-10-13T08:04:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/476
 - author: TGRCdev
   changes:
   - message: Fixed Changeling's Chitinous Armor and Space Suit refusing to equip regardless
@@ -4488,3 +4481,11 @@
   id: 871
   time: '2025-01-07T19:28:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1248
+- author: DinnerCalzone
+  changes:
+  - message: Train has been updated for a more pleasurable gaming experience, including
+      support for psychologist.
+    type: Tweak
+  id: 872
+  time: '2025-01-07T19:31:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1250
