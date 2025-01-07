@@ -66,6 +66,7 @@ namespace Content.IntegrationTests.Tests
             "Amber",
             "Loop",
             "Plasma"
+            "Elkridge"
         };
 
         /// <summary>
