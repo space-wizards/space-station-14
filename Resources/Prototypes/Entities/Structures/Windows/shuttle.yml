@@ -5,9 +5,9 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/shuttle_window.rsi
+    sprite: GreyStation/Structures/Windows/shuttle_window.rsi # GreyStation - Resprite
   - type: Icon
-    sprite: Structures/Windows/shuttle_window.rsi
+    sprite: GreyStation/Structures/Windows/shuttle_window.rsi # GreyStation - Resprite
   - type: Repairable
     fuelCost: 15
     doAfterDelay: 3
@@ -65,14 +65,14 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/shuttle_window_diagonal.rsi
+    sprite: GreyStation/Structures/Windows/shuttle_window_diagonal.rsi # GreyStation - Resprite
     state: state0
   - type: IconSmooth
     mode: Diagonal
     key: windows
     base: state
   - type: Icon
-    sprite: Structures/Windows/shuttle_window_diagonal.rsi
+    sprite: GreyStation/Structures/Windows/shuttle_window_diagonal.rsi # GreyStation - Resprite
     state: state0
   - type: Fixtures
     fixtures:
