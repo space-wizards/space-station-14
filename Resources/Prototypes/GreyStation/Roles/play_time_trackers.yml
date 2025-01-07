@@ -1,0 +1,8 @@
+- type: playTimeTracker
+  id: JobPrisoner
+
+- type: playTimeTracker
+  id: JobMartialArtist
+
+- type: playTimeTracker
+  id: JobPrisonGuard

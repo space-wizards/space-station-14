@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit 4e0bbe682d0a00192d24708fdb7031008aa03f18 and bee station at commit https://github.com/BeeStation/BeeStation-Hornet/commit/13dd5ac712385642574138f6d7b30eea7c2fab9c, Job signs by EmoGarbage404 (github) with inspiration from yogstation and tgstation, 'direction_exam' and 'direction_icu' made by rosieposieeee (github), 'direction_atmos' made by SlamBamActionman. 'vox' based on sprites taken from vgstation13 at https://github.com/vgstation-coders/vgstation13/blob/e7f005f8b8d3f7d89cbee3b87f76c23f9e951c27/icons/obj/decals.dmi, modified by ps3moira (github)",
+    "states": [
+        {
+            "name": "ai"
+        },
+        {
+            "name": "ai_upload"
+        },
+        {
+            "name": "anomaly"
+        },
+        {
+            "name": "armory"
+        },
+        {
+            "name": "atmos"
+        },
+        {
+            "name": "bar"
+        },
+        {
+            "name": "bath"
+        },
+        {
+            "name": "biblio"
+        },
+        {
+            "name": "bridge"
+        },
+        {
+            "name": "cans"
+        },
+        {
+            "name": "cargo"
+        },
+        {
+            "name": "cargo_dock"
+        },
+        {
+            "name": "chapel"
+        },
+        {
+            "name": "chem"
+        },
+        {
+            "name": "cloning"
+        },
+        {
+            "name": "commander"
+        },
+        {
+            "name": "conference_room"
+        },
+        {
+            "name": "data"
+        },
+        {
+            "name": "drama"
+        },
+        {
+            "name": "eng"
+        },
+        {
+            "name": "engine"
+        },
+        {
+            "name": "examroom"
+        },
+        {
+            "name": "gravi"
+        },
+        {
+            "name": "hydro"
+        },
+        {
+            "name": "interrogation"
+        },
+        {
+            "name": "janitor"
+        },
+        {
+            "name": "kitchen"
+        },
+        {
+            "name": "law"
+        },
+        {
+            "name": "mail"
+        },
+        {
+            "name": "mats"
+        },
+        {
+            "name": "medbay"
+        },
+        {
+            "name": "morgue"
+        },
+        {
+            "name": "prison"
+        },
+        {
+            "name": "psychology"
+        },
+        {
+            "name": "rnd"
+        },
+        {
+            "name": "robo"
+        },
+        {
+            "name": "salvage"
+        },
+        {
+            "name": "sci"
+        },
+        {
+            "name": "security"
+        },
+        {
+            "name": "surgery"
+        },
+        {
+            "name": "telecoms"
+        },
+        {
+            "name": "toxins"
+        },
+        {
+            "name": "vault"
+        },
+        {
+            "name": "virology"
+        },
+        {
+            "name": "xenoarch"
+        },
+        {
+            "name": "xenobio"
+        },
+        {
+            "name": "zomlab"
+        }
+    ]
+}

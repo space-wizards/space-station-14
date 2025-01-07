@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: LivestockPitbull
+  icon:
+    sprite: Nyanotrasen/Mobs/Pets/pitbull.rsi
+    state: alive
+  product: CrateNPCPitbull
+  cost: 700
+  category: Livestock
+  group: market

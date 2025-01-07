@@ -328,7 +328,6 @@
   - type: LimitedCharges
     maxCharges: 30
     charges: 30
-  - type: UseDelay
   - type: Sprite
     sprite: Objects/Tools/rcd.rsi
     state: icon
@@ -530,3 +529,6 @@
   - type: Tag
     tags:
     - RollingPin
+  - type: Construction
+    graph: WoodenRollingPin
+    node: rollingpin

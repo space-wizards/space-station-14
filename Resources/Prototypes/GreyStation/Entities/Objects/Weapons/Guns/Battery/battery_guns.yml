@@ -1,0 +1,121 @@
+- type: entity
+  name: energy gun
+  parent: [BaseWeaponBattery, BaseGrandTheftContraband]
+  id: WeaponEnergyGun
+  description: "A basic hybrid energy gun with two settings: disable and kill."
+  components:
+  - type: Sprite
+    sprite: GreyStation/Objects/Weapons/Guns/Battery/energygun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mode-disabler
+      shader: unshaded
+      map: [ "Firemode" ]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: GreyStation/Objects/Weapons/Guns/Battery/energygun.rsi
+  - type: Item
+    heldPrefix: disabler
+  - type: Gun
+    soundGunshot:
+      path: /Audio/GreyStation/Weapons/Guns/Gunshots/laser.ogg
+    soundEmpty:
+      path: /Audio/GreyStation/Weapons/Guns/Empty/dry_fire.ogg
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 50
+  - type: EnergyGun
+    fireModes:
+    - proto: BulletDisabler
+      fireCost: 50
+      name: disable
+      state: disabler
+    - proto: BulletEnergyGunLaser
+      fireCost: 100
+      name: kill
+      state: lethal
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.EnergyGunFireModeVisuals.State:
+        Firemode:
+          Disabler: { state: mode-disabler }
+          Lethal: { state: mode-lethal }
+          Special: { state: mode-stun } # Unused
+
+- type: entity
+  name: x-01 multiphase energy gun
+  parent: BaseWeaponBatterySmall
+  id: WeaponEnergyGunMultiphase
+  description: "This is an expensive, modern recreation of an antique laser gun. The fire selector has two settings, 'disable' and 'kill'. Unfortunately, it has lost the ability to recharge over time."
+  components:
+  - type: Sprite
+    sprite: GreyStation/Objects/Weapons/Guns/Battery/multiphase_energygun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mode-disabler
+      shader: unshaded
+      map: [ "Firemode" ]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: GreyStation/Objects/Weapons/Guns/Battery/multiphase_energygun.rsi
+  - type: Item
+    heldPrefix: disabler
+  - type: Gun
+    soundGunshot:
+      path: /Audio/GreyStation/Weapons/Guns/Gunshots/laser.ogg
+    soundEmpty:
+      path: /Audio/GreyStation/Weapons/Guns/Empty/dry_fire.ogg
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 50
+  - type: EnergyGun
+    fireModes:
+    - proto: BulletDisabler
+      fireCost: 50
+      name: disable
+      state: disabler
+    - proto: BulletEnergyGunLaser
+      fireCost: 100
+      name: lethal
+      state: lethal
+    # - proto: BulletEnergyGunIon
+    #   fireCost: 250
+    #   name: ion
+    #   state: special
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.EnergyGunFireModeVisuals.State:
+        Firemode:
+          Disabler: { state: mode-disabler }
+          Lethal: { state: mode-lethal }
+          Special: { state: mode-ion }
+  - type: Tag
+    tags:
+    - HighRiskItem
+    - Sidearm
+  - type: StaticPrice
+    price: 750
+  - type: StealTarget
+    stealGroup: WeaponEnergyGunMultiphase

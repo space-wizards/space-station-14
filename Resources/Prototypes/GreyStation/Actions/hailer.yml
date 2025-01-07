@@ -1,5 +1,5 @@
 - type: entity
-  noSpawn: true
+  categories: [ Actions, HideSpawnMenu ]
   id: SecurityHailerShout
   name: Use Hailer
   description: Activate your mask's hailer to shout at suspects for you during a chase!
@@ -12,7 +12,7 @@
     event: !type:HailerActionEvent
 
 - type: entity
-  noSpawn: true
+  categories: [ Actions, HideSpawnMenu ]
   parent: SecurityHailerShout
   id: SecurityHailerShoutRandom
   name: Random Hailer Line

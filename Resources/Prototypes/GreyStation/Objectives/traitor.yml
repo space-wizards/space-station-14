@@ -1,0 +1,12 @@
+- type: entity # Head of Security steal objective.
+  categories: [ HideSpawnMenu ]
+  parent: BaseTraitorStealObjective
+  id: HoSGunStealObjective
+  components:
+  - type: Objective
+    difficulty: 3 # HoS will mostly be using the gun to stop you from stealing it
+  - type: NotJobRequirement
+    job: HeadOfSecurity
+  - type: StealCondition
+    stealGroup: WeaponEnergyGunMultiphase
+    owner: job-name-hos

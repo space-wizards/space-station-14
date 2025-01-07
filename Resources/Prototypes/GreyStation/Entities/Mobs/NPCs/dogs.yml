@@ -1,0 +1,62 @@
+# unlike nyano, pitbull extends walter. this is so walter doesn't have a bunch of duplicated components that would have to be removed from an upstream file
+# this pitbull prototype just has the specific sprite and stuff
+- type: entity
+  parent: MobWalter
+  id: MobPitbull
+  name: pitbull
+  description: Nanny dog. Or a lab mix depending on who is asking.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Mobs/Pets/pitbull.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: HTN
+    blackboard: # pitbulls will break windows to get to their victims, walter will not
+      NavSmash: !type:Bool
+        true
+  - type: Grammar
+    attributes:
+      proper: true
+      # no gender like walter has
+  - type: RandomMetadata
+    nameSegments: [names_pitbull]
+  - type: NpcFactionMember
+    factions: # No PetsNT faction
+    - Pitbull
+
+- type: entity
+  parent: MobPitbull
+  id: MobPitbullVent
+  name: ventbull
+  description: Some kind of pitbull mix... or maybe the next stage in pibble evolution?
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 2
+        Piercing: 5
+        Blunt: 0.5
+        Structural: 2
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.28
+        density: 35
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: Sprite
+    scale: 0.8,0.6
+    sprite: Nyanotrasen/Mobs/Pets/ventbull.rsi

@@ -7,11 +7,12 @@
   requirements:
   - !type:RoleTimeRequirement
     role: JobBorg
-    time: 18000  # 5 hrs
+    time: 54000  # 15 hrs
   canBeAntag: false
   icon: JobIconStationAi
   supervisors: job-supervisors-rd
   jobEntity: StationAiBrain
+  jobPreviewEntity: PlayerStationAiPreview
   applyTraits: false
 
 - type: job
@@ -19,11 +20,11 @@
   name: job-name-borg
   description: job-description-borg
   playTimeTracker: JobBorg
-#  requirements:
-#    - !type:OverallPlaytimeRequirement
-#      time: 216000 # 60 hrs
+  requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 144000 # 40 hrs
   canBeAntag: false
   icon: JobIconBorg
   supervisors: job-supervisors-rd
-  jobEntity: PlayerBorgGeneric
+  jobEntity: PlayerBorgBattery
   applyTraits: false

@@ -7,6 +7,10 @@
   loadouts:
   #- PlushieLizard
   #- PlushieSpaceLizard
+  #- ThreeCandles
+  #- FlowerWreath
+  #- Hairflower
+  - Headphones
   - ToyFigurineGreytider #GreyStation
   - HarmonicaInstrument #GreyStation
   - CoinQuarter #GreyStation
@@ -24,6 +28,7 @@
   #- ClothingNeckAromanticPin
   #- ClothingNeckAsexualPin
   #- ClothingNeckBisexualPin
+  #- ClothingNeckGayPin
   #- ClothingNeckIntersexPin
   #- ClothingNeckLesbianPin
   #- ClothingNeckNonBinaryPin
@@ -31,6 +36,23 @@
   #- ClothingNeckTransPin
   #- ClothingNeckAutismPin
   #- ClothingNeckGoldAutismPin
+  #- TowelColorBlack
+  #- TowelColorDarkBlue
+  #- TowelColorDarkGreen
+  #- TowelColorGold
+  #- TowelColorGray
+  #- TowelColorGreen
+  #- TowelColorLightBlue
+  #- TowelColorLightBrown
+  #- TowelColorMaroon
+  #- TowelColorMime
+  #- TowelColorOrange
+  #- TowelColorPurple
+  #- TowelColorRed
+  #- TowelColorSilver
+  #- TowelColorLightBlue
+  #- TowelColorWhite
+  #- TowelColorYellow
 
 - type: loadoutGroup
   id: Glasses
@@ -1057,11 +1079,10 @@
 - type: loadoutGroup
   id: DetectiveOuterClothing
   name: loadout-group-detective-outerclothing
-  minLimit: 0
   loadouts:
   - DetectiveArmorVest
   - DetectiveCoat
-  - DetectiveGreyCoat # GreyStation Added
+  - DetectiveCoatGrey
 
 - type: loadoutGroup
   id: SecurityCadetJumpsuit

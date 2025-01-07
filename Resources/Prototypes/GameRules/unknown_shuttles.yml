@@ -21,19 +21,21 @@
     #- id: UnknownShuttleMicroshuttle
     #- id: UnknownShuttleSpacebus
 
-- type: entityTable
-  id: UnknownShuttlesFreelanceTable
-  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
-    children:
-    - id: UnknownShuttleSyndieEvacPod
+#- type: entityTable
+#  id: UnknownShuttlesFreelanceTable
+#  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+#    children:
+#    - id: UnknownShuttleSyndieEvacPod
 
 - type: entityTable
   id: UnknownShuttlesHostileTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
     - id: LoneOpsSpawn
+#    - id: UnknownShuttleManOWar
+#    - id: UnknownShuttleInstigator
 
-# Shuttle Game Rules 
+# Shuttle Game Rules
 
 - type: entity
   abstract: true
@@ -91,16 +93,16 @@
 #  - type: LoadMapRule
 #    preloadedGrid: Honki
 
-- type: entity
-  parent: BaseUnknownShuttleRule
-  id: UnknownShuttleSyndieEvacPod
-  components:
-  - type: StationEvent
-    startAnnouncement: null # It should be silent.
-    weight: 5 # lower because weird freelance roles
-    maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
-  - type: LoadMapRule
-    preloadedGrid: SyndieEvacPod
+#- type: entity
+#  parent: BaseUnknownShuttleRule
+#  id: UnknownShuttleSyndieEvacPod
+#  components:
+#  - type: StationEvent
+#    startAnnouncement: null # It should be silent.
+#    weight: 5 # lower because weird freelance roles
+#    maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
+#  - type: LoadMapRule
+#    preloadedGrid: SyndieEvacPod
 
 #- type: entity
 #  id: UnknownShuttleNTQuark
@@ -173,6 +175,17 @@
 #    preloadedGrid: NTIncorporation
 
 #- type: entity
+#  id: UnknownShuttleInstigator
+#  parent: BaseUnknownShuttleRule
+#  components:
+#  - type: StationEvent
+#    startAnnouncement: null #dont nark on antags
+#    weight: 1 #  lower because antags.
+#    earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly (3) and because antags
+#  - type: LoadMapRule
+#    preloadedGrid: Instigator
+
+#- type: entity
 #  id: UnknownShuttleJoe
 #  parent: BaseUnknownShuttleRule
 #  components:
@@ -200,6 +213,17 @@
 #    preloadedGrid: Meatzone
 
 #- type: entity
+#  id: UnknownShuttleManOWar
+#  parent: BaseUnknownShuttleRule
+#  components:
+#  - type: StationEvent
+#    startAnnouncement: station-event-unknown-shuttle-incoming #Leaving this one because theyre like primitives and its funnier
+#    weight: 1 # lower because antags
+#    earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly. (4) & antags
+#  - type: LoadMapRule
+#    preloadedGrid: ManOWar
+
+#- type: entity
 #  id: UnknownShuttleMicroshuttle
 #  parent: BaseUnknownShuttleRule
 #  components:
@@ -218,4 +242,3 @@
 #    startAnnouncement: station-event-unknown-shuttle-incoming #!!
 #  - type: LoadMapRule
 #    preloadedGrid: Spacebus
-

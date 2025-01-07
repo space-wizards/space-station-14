@@ -63,6 +63,9 @@
     #ClothingUniformJumpskirtCasualPurple: 2 # GreyStation - Replaced clothes
     #ClothingUniformJumpsuitCasualRed: 2 # GreyStation - Replaced clothes
     #ClothingUniformJumpskirtCasualRed: 2 # GreyStation - Replaced clothes
+    #ClothingUniformJumpsuitCasualGreen: 2 # GreyStation - Replaced clothes
+    #ClothingUniformJumpskirtCasualGreen: 2 # GreyStation - Replaced clothes
+    # DO NOT ADD MORE, USE UNIFORM DYING
     ClothingShoesColorBlack: 8
     ClothingShoesColorBrown: 4
     ClothingShoesColorWhite: 3

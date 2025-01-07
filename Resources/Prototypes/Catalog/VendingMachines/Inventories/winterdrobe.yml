@@ -19,6 +19,8 @@
     ClothingHeadHatSantahat: 2
     ClothingHeadHatXmasCrown: 2
 
+  contrabandInventory:
+    ClothingOuterCoatLeather: 1 # GreyStation - Some guy left his jacket here.
   emaggedInventory:
     ClothingNeckScarfStripedSyndieGreen: 3
     ClothingNeckScarfStripedSyndieRed: 3

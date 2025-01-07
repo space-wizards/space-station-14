@@ -4,24 +4,23 @@
   description: job-description-hop
   playTimeTracker: JobHeadOfPersonnel
   requirements:
-#    - !type:DepartmentTimeRequirement
-#      department: Engineering
-#      time: 36000 # 10 hours
-#    - !type:DepartmentTimeRequirement
-#      department: Medical
-#      time: 36000 # 10 hours
-#    - !type:DepartmentTimeRequirement
-#      department: Security
-#      time: 36000 # 10 hrs
-#    - !type:DepartmentTimeRequirement
-#      department: Command
-#      time: 36000 # 10 hours
     - !type:AgeRequirement
       requiredAge: 21
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 36000 # 10 hours
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 36000 # 10 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 36000 # 10 hrs
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 36000 # 10 hours
   weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"
-  requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
   access:

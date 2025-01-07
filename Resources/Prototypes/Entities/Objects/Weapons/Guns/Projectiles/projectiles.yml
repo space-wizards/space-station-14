@@ -5,7 +5,7 @@
   - type: TimedDespawn
     lifetime: 0.4
   - type: Sprite
-    drawdepth: Effects
+    drawdepth: BelowMobs
     layers:
     - shader: unshaded
       map: ["enum.EffectLayers.Unshaded"]
@@ -983,7 +983,7 @@
       - HideContextMenu
 
 - type: entity
-  name: laser bolt 
+  name: laser bolt
   id: BulletLaser
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
@@ -1029,7 +1029,7 @@
   - type: ProjectileSpread
     proto: BulletLaser
     count: 5 #65 heat damage if you hit all your shots, but wide spread
-    spread: 30 
+    spread: 30
 
 - type: entity
   name: narrow laser barrage
@@ -1053,15 +1053,15 @@
     count: 3 #bit stronger than a disabler if you hit your shots you goober, still not a 2 hit stun though
     spread: 9
 
-# DeltaV projectiles
-# For whatever magical reasons, I cannot put those in the DeltaV folders without having errors.
+# GreyStation projectiles
+# For whatever magical reasons, I cannot put those in the GreyStation folders without having errors.
 
 # Because Hitscan lasers aren't fun to shoot in my opinion, we give the HoS pistol a special lethal laser that moves
 - type: entity
   name: energy bolt
   id: BulletEnergyGunLaser
   parent: BaseBullet
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Reflective
     reflective:

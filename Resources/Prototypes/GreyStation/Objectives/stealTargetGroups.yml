@@ -1,0 +1,6 @@
+﻿- type: stealTargetGroup
+  id: WeaponEnergyGunMultiphase
+  name: steal-target-groups-weapon-multiphase-energy-gun
+  sprite:
+    sprite: GreyStation/Objects/Weapons/Guns/Battery/multiphase_energygun.rsi
+    state: base

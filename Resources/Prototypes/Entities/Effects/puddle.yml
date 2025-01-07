@@ -118,7 +118,7 @@
     anchored: true
   - type: Sprite
     layers:
-    - sprite: Fluids/puddle.rsi
+    - sprite: GreyStation/Fluids/puddle.rsi # GreyStation - Resprite
       state: splat0
     drawdepth: FloorObjects
     color: "#FFFFFF80"

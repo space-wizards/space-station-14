@@ -135,6 +135,7 @@
   - type: NpcFactionMember
     factions:
       - PetsNT
+      - Cat # DeltaV
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
@@ -158,6 +159,7 @@
   - type: NpcFactionMember
     factions:
       - PetsNT
+      - Cat # DeltaV
   - type: Grammar
     attributes:
       proper: true
@@ -405,7 +407,7 @@
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-dog
-    interactFailureString: petting-failure-generic
+    interactFailureString: petting-failure-pitbull # GreyStation
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/small_dog_bark_happy.ogg
@@ -419,6 +421,25 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalWalter
+  # Begin GreyStation additions: Pitbull behaviour
+  - type: HostileOnInteractFail
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: NpcFactionMember
+    factions:
+    - PetsNT
+    - Pitbull
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 4
+        Piercing: 8
+        Blunt: 1
+        Structural: 4
+  # End GreyStation additions
 
 - type: entity
   name: Morty
@@ -712,7 +733,7 @@
 - type: entity
   name: Smile
   id: MobSlimesPet
-  parent: MobAdultSlimes
+  parent: [MobAdultSlimes, StripableInventoryBase]
   description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
   components:
   - type: Sprite
@@ -722,6 +743,16 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: aslime-_3
       shader: unshaded
+    - map: [ "head" ]
+  - type: Inventory
+    speciesId: slime
+    templateId: head
+    displacements:
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/Smile/smile_displacement.rsi
+            state: head
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -767,7 +798,7 @@
         Caustic: 1
   - type: MultiHandedItem
   - type: Item
-    sprite: Mobs/Pets/smile.rsi
+    sprite: Mobs/Pets/Smile/smile.rsi
     size: Huge
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-slime
@@ -777,6 +808,7 @@
     name: ghost-role-information-smile-name
     description: ghost-role-information-smile-description
     rules: ghost-role-information-nonantagonist-rules
+    raffle: null
   - type: Grammar
     attributes:
       proper: true
@@ -809,6 +841,7 @@
     - CannotSuicide
     - DoorBumpOpener
     - VimPilot
+    - AnomalyHost
   - type: Loadout
     prototypes: [ MobMonkeyGear ]
   - type: Grammar

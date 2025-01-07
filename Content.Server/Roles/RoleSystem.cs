@@ -1,32 +1,40 @@
+using Content.Shared.Mind;
 using Content.Shared.Roles;
 
 namespace Content.Server.Roles;
 
 public sealed class RoleSystem : SharedRoleSystem
 {
-    public override void Initialize()
-    {
-        // TODO make roles entities
-        base.Initialize();
-
-        SubscribeAntagEvents<DragonRoleComponent>();
-        SubscribeAntagEvents<InitialInfectedRoleComponent>();
-        SubscribeAntagEvents<NinjaRoleComponent>();
-        SubscribeAntagEvents<NukeopsRoleComponent>();
-        SubscribeAntagEvents<RevolutionaryRoleComponent>();
-        SubscribeAntagEvents<SubvertedSiliconRoleComponent>();
-        SubscribeAntagEvents<TraitorRoleComponent>();
-        SubscribeAntagEvents<ZombieRoleComponent>();
-        SubscribeAntagEvents<ThiefRoleComponent>();
-    }
-
     public string? MindGetBriefing(EntityUid? mindId)
     {
         if (mindId == null)
+        {
+            Log.Error($"MingGetBriefing failed for mind {mindId}");
             return null;
+        }
+
+        TryComp<MindComponent>(mindId.Value, out var mindComp);
+
+        if (mindComp is null)
+        {
+            Log.Error($"MingGetBriefing failed for mind {mindId}");
+            return null;
+        }
 
         var ev = new GetBriefingEvent();
-        RaiseLocalEvent(mindId.Value, ref ev);
+
+        // This is on the event because while this Entity<T> is also present on every Mind Role Entity's MindRoleComp
+        // getting to there from a GetBriefing event subscription can be somewhat boilerplate
+        // and this needs to be looked up for the event anyway so why calculate it again later
+        ev.Mind = (mindId.Value, mindComp);
+
+        // Briefing is no longer raised on the mind entity itself
+        // because all the components that briefings subscribe to should be on Mind Role Entities
+        foreach(var role in mindComp.MindRoles)
+        {
+            RaiseLocalEvent(role, ref ev);
+        }
+
         return ev.Briefing;
     }
 }
@@ -38,7 +46,15 @@ public sealed class RoleSystem : SharedRoleSystem
 [ByRefEvent]
 public sealed class GetBriefingEvent
 {
+    /// <summary>
+    /// The text that will be shown on the Character Screen
+    /// </summary>
     public string? Briefing;
+
+    /// <summary>
+    /// The Mind to whose Mind Role Entities the briefing is sent to
+    /// </summary>
+    public Entity<MindComponent> Mind;
 
     public GetBriefingEvent(string? briefing = null)
     {

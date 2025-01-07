@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by ps3moira on discord",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "plushielizard-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "plushielizard-inhand-right",
+      "directions": 4
+    }
+  ]
+}

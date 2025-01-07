@@ -5,7 +5,7 @@
   components:
   - type: WallMount
   - type: Sprite
-    sprite: Structures/Wallmounts/mirror.rsi
+    sprite: GreyStation/Structures/Wallmounts/mirror.rsi # GreyStation - Resprite
     state: mirror
   - type: InteractionOutline
   - type: Clickable

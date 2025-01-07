@@ -306,7 +306,7 @@
     node: mask
 
 - type: entity
-  parent: ClothingMaskClown
+  parent: [ClothingMaskClown, BaseRestrictedContraband]
   id: ClothingMaskClownSecurity
   name: security clown wig and mask
   description: A debatably oxymoronic but protective mask and wig.
@@ -460,7 +460,7 @@
     hideOnToggle: true
 
 - type: entity
-  parent: [ ClothingMaskGas, BaseRestrictedContraband ]
+  parent: [ ClothingMaskGas, BaseSecurityCargoContraband ]
   id: ClothingMaskGasMerc
   name: mercenary gas mask
   description: Slightly outdated, but reliable military-style gas mask.

@@ -250,6 +250,7 @@
   description: A sign, indicating an AI is present.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: ai
 
 - type: entity
@@ -259,6 +260,7 @@
   description: A sign, indicating an AI is present.
   components:
     - type: Sprite
+      sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
       state: ai_upload
 
 - type: entity
@@ -277,6 +279,7 @@
   description: A sign indicating the armory.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: armory
 
 - type: entity
@@ -295,6 +298,7 @@
   description: A sign indicating the xenoarchaeology lab.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: xenoarch
 
 - type: entity
@@ -304,6 +308,7 @@
   description: A sign indicating the anomalous research lab.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: anomaly
 
 - type: entity
@@ -313,6 +318,7 @@
   description: A sign indicating the atmospherics area.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: atmos
 
 - type: entity
@@ -322,7 +328,18 @@
   description: A sign indicating the bar.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: bar
+
+- type: entity
+  parent: BaseSign
+  id: SignBath
+  name: bathroom sign
+  description: A sign indicating the bathroom.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
+    state: bath
 
 - type: entity
   parent: BaseSign
@@ -331,6 +348,7 @@
   description: The heart of the home. And disease.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: kitchen
 
 - type: entity
@@ -340,15 +358,8 @@
   description: Would it even be Space Station without drama?
   components:
   - type: Sprite
-    layers:
-    - state: drama1
-      map: [ "base" ]
-  - type: RandomSprite
-    available:
-    - base:
-        drama1: null
-        drama2: null
-        drama3: null
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
+    state: drama
 
 - type: entity
   parent: BaseSign
@@ -384,6 +395,7 @@
   description: A sign indicating the bridge.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: bridge
 
 - type: entity
@@ -402,6 +414,7 @@
   description: A sign indicating the cargo area.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: cargo
 
 - type: entity
@@ -411,6 +424,7 @@
   description: A sign indicating a cargo dock.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: cargo_dock
 
 - type: entity
@@ -420,6 +434,7 @@
   description: A sign indicating the chapel.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: chapel
 
 - type: entity
@@ -429,6 +444,7 @@
   description: A sign indicating the chemistry lab.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: chem
 
 - type: entity
@@ -438,6 +454,7 @@
   description: A sign indicating the cloning lab.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: cloning
 
 - type: entity
@@ -447,6 +464,7 @@
   description: Where work happens.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: conference_room
 
 - type: entity
@@ -493,6 +511,7 @@
   description: An omen to the juicy vault of steel, glass, and plastic that lays before you.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: mats
 
 - type: entity
@@ -502,6 +521,7 @@
   description: Where the powa happens.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: engine
 
 - type: entity
@@ -511,6 +531,7 @@
   description: A sign indicating the engineering area.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: eng
 
 - type: entity
@@ -549,6 +570,7 @@
   description: A sign indicating a medical examination room.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: examroom
 
 - type: entity
@@ -567,6 +589,7 @@
   description: A sign indicating the gravity generator.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: gravi
 
 - type: entity
@@ -576,6 +599,7 @@
   description: An official sign indicating the dwellings of a Nanotrasen-certified head of department.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: commander
 
 - type: entity
@@ -585,6 +609,7 @@
   description: A sign indicating a hydroponics area.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: hydro
 
 - type: entity
@@ -594,6 +619,7 @@
   description: A sign indicating an interrogation room.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: interrogation
 
 - type: entity
@@ -603,6 +629,7 @@
   description: A sign labelling an area where the janitor works.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: janitor
 
 - type: entity
@@ -621,6 +648,7 @@
   description: A sign indicating the presence of the (typically absent) rule of law.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprites
     state: law
 
 - type: entity
@@ -630,6 +658,7 @@
   description: A sign indicating the library.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: biblio
 
 - type: entity
@@ -639,6 +668,7 @@
   description: A sign indicating mail.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: mail
 
 - type: entity
@@ -648,6 +678,7 @@
   description: A sign indicating the medical bay.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: medbay
 
 - type: entity
@@ -657,6 +688,7 @@
   description: A sign indicating the morgue.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: morgue
 
 - type: entity
@@ -684,6 +716,7 @@
   description: A sign indicating the prison.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: prison
 
 - type: entity
@@ -693,6 +726,7 @@
   description: A sign labelling an area where the Psychologist works.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: psychology
 
 - type: entity
@@ -711,6 +745,7 @@
   description: A sign indicating the research and development lab.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: rnd
 
 - type: entity
@@ -720,6 +755,7 @@
   description: A sign indicating the robotics lab.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: robo
 
 - type: entity
@@ -729,6 +765,7 @@
   description: A sign indicating the salvage area.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: salvage
 
 - type: entity
@@ -738,6 +775,7 @@
   description: A sign indicating the science area.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: sci
 
 - type: entity
@@ -747,6 +785,7 @@
   description: Ever heard of Big Data? This is it, chump. The biggest.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: data
 
 - type: entity
@@ -756,6 +795,7 @@
   description: A sign indicating the auspicious presence of gas canisters.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: cans
 
 - type: entity
@@ -764,7 +804,8 @@
   suffix: science
   components:
   - type: Sprite
-    state: cans_sci
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
+    state: cans # GreyStation - Tweaked
 
 - type: entity
   parent: BaseSign
@@ -793,6 +834,7 @@
   description: A sign indicating the operating theater.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: surgery
 
 - type: entity
@@ -802,6 +844,7 @@
   description: A sign indicating the telecommunications room.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: telecoms
 
 - type: entity
@@ -811,6 +854,7 @@
   description: A sign indicating the toxin lab.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: toxins
 
 - type: entity
@@ -820,6 +864,7 @@
   description: A sign indicating the vault. Who knows what secrets lie inside?
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: vault
 
 - type: entity
@@ -829,6 +874,7 @@
   description: A sign indicating the virology lab.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: virology
 
 - type: entity
@@ -965,6 +1011,7 @@
   description: A sign indicating the xenobiology lab.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: xenobio
 
 - type: entity
@@ -974,6 +1021,7 @@
   description: The final remains of a shut-down Nanotrasen research project that aimed to harness the powers of Romerol. I wonder how that went...
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: zomlab
 
 - type: entity
@@ -1220,6 +1268,7 @@
   description: A sign depicting the security insignia.
   components:
   - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/signs.rsi # GreyStation - Resprite
     state: security
 
 - type: entity

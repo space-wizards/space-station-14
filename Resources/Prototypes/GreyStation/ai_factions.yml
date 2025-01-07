@@ -1,0 +1,9 @@
+- type: npcFaction
+  id: Pitbull
+  hostile:
+  - Cat
+  - Mailman
+
+# Added and removed by wearing mail carrier/courier jumpsuit
+- type: npcFaction
+  id: Mailman

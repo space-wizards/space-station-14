@@ -64,6 +64,7 @@
         - id: ClothingOuterCoatJensen
         - id: ClothingEyesGlassesJensen
       - id: ClothingOuterCoatLab
+      - id: ClothingOuterCoatLeather # GreyStation - Added leather jackets
       - !type:AllSelector
         children:
         - id: ClothingOuterCoatPirate
@@ -117,6 +118,7 @@
       - id: BalloonCorgi
       - id: MysteryFigureBox
       - id: CoinQuarter #GreyStation Addition
+      - id: RubberChicken
 
       # Cult
       - !type:AllSelector
@@ -145,6 +147,7 @@
         - id: ClothingNeckAromanticPin
         - id: ClothingNeckAsexualPin
         - id: ClothingNeckBisexualPin
+        - id: ClothingNeckGayPin
         - id: ClothingNeckIntersexPin
         - id: ClothingNeckLesbianPin
         - id: ClothingNeckNonBinaryPin
@@ -289,6 +292,7 @@
       - id: ResearchDisk5000
       - id: PetCarrier
       - id: DrinkMopwataBottleRandom
+      - id: SpectralLocator
       - id: LidSalami
         weight: 0.05
 

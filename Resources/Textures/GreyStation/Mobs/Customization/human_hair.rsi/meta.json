@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "copyright": "Made by ps3moira on discord",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+      {
+        "name": "mullet",
+        "directions": 4
+      },
+      {
+        "name": "scientist",
+        "directions": 4
+      }
+    ]
+  }

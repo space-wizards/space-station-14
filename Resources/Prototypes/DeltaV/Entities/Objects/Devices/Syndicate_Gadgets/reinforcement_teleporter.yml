@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: ReinforcementRadioSyndicate
+  parent: ReinforcementRadio
   id: ReinforcementRadioSyndicateNukieMouse
   name: suspicious moldy cheese
   description: Moldy cheese with a little worm sticking out of it and a... blinking antenna? Might attract an odd mouse.
@@ -12,6 +12,8 @@
     name: ghost-role-information-nukie-mouse-name
     description: ghost-role-information-nukie-mouse-description
     rules: ghost-role-information-nukie-mouse-rules
+    raffle:
+      settings: default
   - type: GhostRoleMobSpawner
     prototype: MobNukieMouse
   - type: EmitSoundOnUse

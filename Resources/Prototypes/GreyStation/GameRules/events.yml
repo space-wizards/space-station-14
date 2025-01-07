@@ -1,0 +1,89 @@
+- type: entityTable
+  id: BasicCalmEventsTableGreyStation
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: MothroachSpawn
+    - id: LizardSpawn
+    - id: BatSpawn
+    - id: BeeSpawn
+    - id: PitbullVentSpawn
+
+- type: entity
+  id: MothroachSpawn
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    earliestStart: 15
+    minimumPlayers: 15
+    weight: 4
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+    - id: MobMothroach
+      prob: 0.05
+
+- type: entity
+  id: LizardSpawn
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 1.5
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+    - id: MobLizardAngry
+      prob: 0.05
+
+- type: entity
+  id: BatSpawn
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 1.5
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+    - id: MobBatAngry
+      prob: 0.05
+
+- type: entity
+  id: BeeSpawn
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 1.5
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+    - id: MobAngryBee
+      prob: 0.05
+
+- type: entity
+  parent: BaseGameRule
+  id: PitbullVentSpawn
+  components:
+  - type: StationEvent
+    earliestStart: 25
+    minimumPlayers: 15
+    reoccurrenceDelay: 30 # it gets old
+    weight: 4
+    duration: 1
+  - type: VentCrittersRule
+    entries:
+    - id: MobPitbullVent
+      prob: 0.05

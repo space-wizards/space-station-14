@@ -1,0 +1,25 @@
+- type: entity
+  parent: IDCardStandard
+  id: PrisonerIDCard
+  name: prisoner ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: orange
+    - sprite: GreyStation/Objects/Misc/id_cards.rsi
+      state: prisoner
+  - type: PresetIdCard
+    job: Prisoner
+
+- type: entity
+  parent: IDCardStandard
+  id: PrisonGuardIDCard
+  name: prison guard ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - sprite: GreyStation/Objects/Misc/id_cards.rsi
+      state: prisonguard
+  - type: PresetIdCard
+    job: PrisonGuard

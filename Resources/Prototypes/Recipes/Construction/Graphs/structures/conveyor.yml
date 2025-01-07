@@ -8,7 +8,7 @@
           steps:
             - tag: ConveyorAssembly
               icon:
-                sprite: Structures/conveyor.rsi
+                sprite: GreyStation/Structures/conveyor.rsi # GreyStation - Resprite
                 state: conveyor_loose
               name: conveyor belt assembly
               doAfter: 2

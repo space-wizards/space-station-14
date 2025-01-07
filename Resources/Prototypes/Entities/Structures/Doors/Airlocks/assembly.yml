@@ -138,6 +138,25 @@
     sprite: Structures/Doors/Airlocks/Standard/freezer.rsi
     state: "assembly"
 
+#Hydroponics
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyHydroponics
+  suffix: Hydroponics
+  components:
+  - type: Sprite
+    sprite: GreyStation/Structures/Doors/Airlocks/Standard/hydroponics.rsi # GreyStation - Resprite
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyHydroponicsGlass
+  suffix: Hydroponics, Glass
+  components:
+  - type: Sprite
+    sprite: GreyStation/Structures/Doors/Airlocks/Glass/hydroponics.rsi # GreyStation - Resprite
+    state: "assembly"
+
 #Maintenance
 - type: entity
   parent: AirlockAssembly

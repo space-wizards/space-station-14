@@ -42,6 +42,16 @@
 
 - type: entity
   parent: Airlock
+  id: AirlockHydroponics
+  suffix: Hydroponics
+  components:
+  - type: Sprite
+    sprite: GreyStation/Structures/Doors/Airlocks/Standard/hydroponics.rsi # GreyStation - Resprite
+  - type: Wires
+    layoutId: AirlockService
+
+- type: entity
+  parent: Airlock
   id: AirlockMedical
   suffix: Medical
   components:
@@ -146,7 +156,7 @@
   name: airtight hatch
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/hatch.rsi
+    sprite: GreyStation/Structures/Doors/Airlocks/Standard/hatch.rsi # GreyStation - Resprite
 
 - type: entity
   parent: Airlock
@@ -154,7 +164,7 @@
   name: maintenance hatch
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/hatch_maint.rsi
+    sprite: GreyStation/Structures/Doors/Airlocks/Standard/hatch_maint.rsi # GreyStation - Resprite
 
 # Glass
 - type: entity
@@ -196,6 +206,16 @@
     department: Cargo
   - type: Wires
     layoutId: AirlockCargo
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockHydroponicsGlass
+  suffix: Hydroponics
+  components:
+  - type: Sprite
+    sprite: GreyStation/Structures/Doors/Airlocks/Glass/hydroponics.rsi # GreyStation - Resprite
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockGlass

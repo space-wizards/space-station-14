@@ -51,17 +51,6 @@
               amount: 2
               doAfter: 1
 
-        - to: woodWall
-          completed:
-            - !type:SnapToGrid
-              southRotation: true
-          conditions:
-            - !type:EntityAnchored {}
-          steps:
-            - material: WoodPlank
-              amount: 2
-              doAfter: 2
-
         - to: uraniumWall
           completed:
             - !type:SnapToGrid
@@ -182,18 +171,6 @@
               amount: 2
           steps:
             - tool: Welding
-              doAfter: 10
-
-    - node: woodWall
-      entity: WallWood
-      edges:
-        - to: girder
-          completed:
-            - !type:GivePrototype
-              prototype: MaterialWoodPlank1
-              amount: 2
-          steps:
-            - tool: Prying
               doAfter: 10
 
     - node: uraniumWall

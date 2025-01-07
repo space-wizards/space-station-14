@@ -1,0 +1,8 @@
+- type: entity
+  parent: CrateLivestock
+  id: CrateNPCPitbull
+  components:
+  - type: StorageFill
+    contents:
+    - id: MobPitbull
+      amount: 1

@@ -56,3 +56,14 @@
   parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatDetectiveLoadoutGrey]
   id: ClothingOuterCoatDetectiveGreyOpened
   name: noir trenchcoat
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLeather
+  name: leather jacket
+  description: A thick, well-worn leather jacket.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/OuterClothing/Coats/leather.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/OuterClothing/Coats/leather.rsi

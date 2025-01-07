@@ -47,7 +47,7 @@
   equipment:
     outerClothing: ClothingOuterCoatDetectiveLoadout
 
-- type: loadout # GreyStation Added
-  id: DetectiveGreyCoat
+- type: loadout
+  id: DetectiveCoatGrey
   equipment:
     outerClothing: ClothingOuterCoatDetectiveLoadoutGrey

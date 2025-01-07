@@ -44,7 +44,7 @@
     sprite: Objects/Tools/cable-coils.rsi
     state: coilall-30
   product: CrateEngineeringCableBulk
-  cost: 750
+  cost: 600
   category: cargoproduct-category-name-engineering
   group: market
 
