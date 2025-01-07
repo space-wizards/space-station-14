@@ -16,7 +16,6 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Audio.Effects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
-using Content.Server.Atmos.Components;
 
 namespace Content.Client.Audio;
 //TODO: This is using a incomplete version of the whole "only play nearest sounds" algo, that breaks down a bit should the ambient sound cap get hit.
@@ -236,104 +235,85 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     /// <summary>
     /// Get a list of ambient components in range and determine which ones to start playing.
     /// </summary>
-  private void ProcessNearbyAmbience(TransformComponent playerXform)
-{
-    var query = GetEntityQuery<TransformComponent>();
-    var metaQuery = GetEntityQuery<MetaDataComponent>();
-    var gasQuery = GetEntityQuery<InGasComponent>(); // Query for InGasComponent
-    var mapPos = _xformSystem.GetMapCoordinates(playerXform);
-
-    // Remove out-of-range ambiences
-    foreach (var (comp, sound) in _playingSounds)
+    private void ProcessNearbyAmbience(TransformComponent playerXform)
     {
-        var entity = comp.Owner;
+        var query = GetEntityQuery<TransformComponent>();
+        var metaQuery = GetEntityQuery<MetaDataComponent>();
+        var mapPos = _xformSystem.GetMapCoordinates(playerXform);
 
-        if (comp.Enabled &&
-            // Don't keep playing sounds that have changed since.
-            sound.Sound == comp.Sound &&
-            query.TryGetComponent(entity, out var xform) &&
-            xform.MapID == playerXform.MapID &&
-            !metaQuery.GetComponent(entity).EntityPaused)
+        // Remove out-of-range ambiences
+        foreach (var (comp, sound) in _playingSounds)
         {
-            var distance = (xform.ParentUid == playerXform.ParentUid)
-                ? xform.LocalPosition - playerXform.LocalPosition
-                : _xformSystem.GetWorldPosition(xform) - mapPos.Position;
+            var entity = comp.Owner;
 
-            if (distance.LengthSquared() < comp.Range * comp.Range)
-                continue;
+            if (comp.Enabled &&
+                // Don't keep playing sounds that have changed since.
+                sound.Sound == comp.Sound &&
+                query.TryGetComponent(entity, out var xform) &&
+                xform.MapID == playerXform.MapID &&
+                !metaQuery.GetComponent(entity).EntityPaused)
+            {
+                // TODO: This is just trydistance for coordinates.
+                var distance = (xform.ParentUid == playerXform.ParentUid)
+                    ? xform.LocalPosition - playerXform.LocalPosition
+                    : _xformSystem.GetWorldPosition(xform) - mapPos.Position;
+
+                if (distance.LengthSquared() < comp.Range * comp.Range)
+                    continue;
+            }
+
+            _audio.Stop(sound.Stream);
+            _playingSounds.Remove(comp);
+            _playingCount[sound.Path] -= 1;
+            if (_playingCount[sound.Path] == 0)
+                _playingCount.Remove(sound.Path);
         }
 
-        _audio.Stop(sound.Stream);
-        _playingSounds.Remove(comp);
-        _playingCount[sound.Path] -= 1;
-        if (_playingCount[sound.Path] == 0)
-            _playingCount.Remove(sound.Path);
-    }
-
-    if (_playingSounds.Count >= _maxAmbientCount)
-        return;
-
-    var pos = mapPos.Position;
-    var state = new QueryState(pos, playerXform, _xformSystem);
-    var worldAabb = new Box2(pos - MaxAmbientVector, pos + MaxAmbientVector);
-    _treeSys.QueryAabb(ref state, Callback, mapPos.MapId, worldAabb);
-
-    // Add in range ambiences
-    foreach (var (key, sources) in state.SourceDict)
-    {
         if (_playingSounds.Count >= _maxAmbientCount)
-            break;
+            return;
 
-        if (_playingCount.TryGetValue(key, out var playingCount) && playingCount >= MaxSingleSound)
-            continue;
+        var pos = mapPos.Position;
+        var state = new QueryState(pos, playerXform, _xformSystem);
+        var worldAabb = new Box2(pos - MaxAmbientVector, pos + MaxAmbientVector);
+        _treeSys.QueryAabb(ref state, Callback, mapPos.MapId, worldAabb);
 
-        sources.Sort(static (a, b) => b.Importance.CompareTo(a.Importance));
-
-        foreach (var (_, comp) in sources)
+        // Add in range ambiences
+        foreach (var (key, sources) in state.SourceDict)
         {
-            var uid = comp.Owner;
+            if (_playingSounds.Count >= _maxAmbientCount)
+                break;
 
-            // Check if the entity is underwater (InWater == true)
-            if (gasQuery.TryGetComponent(uid, out var gasComponent) && gasComponent.InWater)
+            if (_playingCount.TryGetValue(key, out var playingCount) && playingCount >= MaxSingleSound)
+                continue;
+
+            sources.Sort(static (a, b) => b.Importance.CompareTo(a.Importance));
+
+            foreach (var (_, comp) in sources)
             {
-                // Play water-related ambience
-                var waterSounds = new string[] { "/Audio/Effects/whale_groan.ogg", "/Audio/Effects/wood_creak.ogg" };
-                var waterSound = waterSounds[_random.Next(waterSounds.Length)];
+                var uid = comp.Owner;
 
-                var waterAudioParams = _params
-                    .AddVolume(comp.Volume + _ambienceVolume)
-                    .WithPlayOffset(_random.NextFloat(0.0f, 100.0f))
-                    .WithMaxDistance(comp.Range);
+                if (_playingSounds.ContainsKey(comp) ||
+                    metaQuery.GetComponent(uid).EntityPaused)
+                    continue;
 
-                var stream = _audio.PlayEntity(new SoundPathSpecifier(waterSound), Filter.Local(), uid, false, waterAudioParams);
-                _playingSounds[comp] = (stream.Value.Entity, new SoundPathSpecifier(waterSound), waterSound);
-                playingCount++;
-
-                if (_playingSounds.Count >= _maxAmbientCount)
-                    break;
-            }
-            else
-            {
-                // Default sound playing logic for non-water entities
                 var audioParams = _params
                     .AddVolume(comp.Volume + _ambienceVolume)
+                    // Randomise start so 2 sources don't increase their volume.
                     .WithPlayOffset(_random.NextFloat(0.0f, 100.0f))
                     .WithMaxDistance(comp.Range);
 
                 var stream = _audio.PlayEntity(comp.Sound, Filter.Local(), uid, false, audioParams);
                 _playingSounds[comp] = (stream.Value.Entity, comp.Sound, key);
                 playingCount++;
+
+                if (_playingSounds.Count >= _maxAmbientCount)
+                    break;
             }
 
-            if (_playingSounds.Count >= _maxAmbientCount)
-                break;
+            if (playingCount != 0)
+                _playingCount[key] = playingCount;
         }
 
-        if (playingCount != 0)
-            _playingCount[key] = playingCount;
+        DebugTools.Assert(_playingCount.All(x => x.Value == PlayingCount(x.Key)));
     }
-
-    DebugTools.Assert(_playingCount.All(x => x.Value == PlayingCount(x.Key)));
-}
-
 }

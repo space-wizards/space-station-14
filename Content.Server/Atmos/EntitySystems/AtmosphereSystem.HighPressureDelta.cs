@@ -99,7 +99,7 @@ namespace Content.Server.Atmos.EntitySystems
         if (tile.Air != null)
         {
             // Check the moles of gasId 9 (water)
-            if (tile.Air.GetMoles(9) >= 1)  // Adjust the last threshhold as needed
+            if (tile.Air.GetMoles(9) >= 80)  // Adjust the last threshhold as needed
             {
                 isWaterPresent = true;
             }

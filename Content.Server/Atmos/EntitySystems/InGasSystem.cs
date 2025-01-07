@@ -86,12 +86,10 @@ public sealed class InGasSystem : EntitySystem
             if (currentlyInWater)
             {
                 RaiseLocalEvent(new InWaterEvent(uid));
-                Log.Info($"{uid} hath entered water!");
             }
             else
             {
                 RaiseLocalEvent(new OutOfWaterEvent(uid));
-                Log.Info($"{uid} hath left water!");
             }
 
         if (!currentlyInWater)
