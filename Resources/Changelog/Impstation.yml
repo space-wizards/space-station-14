@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KingMudkipIII
-  changes:
-  - message: Changed the chat colour for the service channel to not be sucks visibility
-    type: Tweak
-  id: 371
-  time: '2024-10-13T08:03:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/475
 - author: widgetbeck
   changes:
   - message: Fixed gray displacement maps (for real this time)
@@ -4487,3 +4480,11 @@
   id: 870
   time: '2025-01-07T19:01:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1256
+- author: CrocodileCarousel
+  changes:
+  - message: 'Added nine new religious head coverings: kippahs, niqabs, hijabs, tichels
+      and more.'
+    type: Add
+  id: 871
+  time: '2025-01-07T19:28:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1248
