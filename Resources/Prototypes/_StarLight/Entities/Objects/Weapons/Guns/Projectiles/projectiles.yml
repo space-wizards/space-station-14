@@ -129,3 +129,20 @@
       path: /Audio/Weapons/Guns/Hits/snap.ogg
   - type: StaminaDamageOnCollide
     damage: 12 # 9 hits to stun sounds reasonable
+    
+- type: entity
+  id: BulletDeclone
+  parent: BaseBulletStarlight
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    layers:
+    - state: declone
+  - type: Projectile
+    damage:
+      types:
+        Radiation: 10
+        Cellular: 20
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/snap.ogg
