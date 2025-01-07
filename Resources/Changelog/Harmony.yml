@@ -827,13 +827,6 @@ Entries:
       message: Jugs now fit in chemistry bags.
     - type: Fix
       message: Vials now fit in medical related containers.
-  - id: 259
-    author: Ermucat
-    time: '2025-01-03T04:12:38.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/259
-    changes:
-    - type: Fix
-      message: Theifs no longer have to steal animals that dont exist
   - id: 269
     author: MissKay1994
     time: '2025-01-03T14:07:41.0000000+00:00'
@@ -848,3 +841,85 @@ Entries:
     changes:
     - type: Tweak
       message: Recolored the QM's winter coat and cloak.
+  - id: 277
+    author: BoskiYourk
+    time: '2025-01-05T18:09:16.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/277
+    changes:
+    - type: Add
+      message: Added the CE, RD, and HoP Berets.
+    - type: Tweak
+      message: Updated the QM's Beret.
+  - id: 213
+    author: Jajsha
+    time: '2025-01-05T18:09:51.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/213
+    changes:
+    - type: Tweak
+      message: Lowered nukie max count to 4
+  - id: 260
+    author: D0mtron
+    time: '2025-01-05T18:12:25.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/260
+    changes:
+    - type: Tweak
+      message: Granted ID cards with the Command or Security access tag to open and
+        close firelocks.
+  - id: 239
+    author: youtissoum
+    time: '2025-01-06T13:40:08.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/239
+    changes:
+    - type: Add
+      message: Added a new prisoner round-start job, this job is not an antagonist and
+        is intended for roleplay only.
+  - id: 247
+    author: SteroidsOnSteroids
+    time: '2025-01-06T13:43:11.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/247
+    changes:
+    - type: Add
+      message: Admemes can now use the Orwellian lawset to catch those filthy thought
+        criminals (syndicates).
+  - id: 257
+    author: BoskiYourk
+    time: '2025-01-06T14:07:36.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/257
+    changes:
+    - type: Add
+      message: Added the Head of Security's turtle neck, Head of Security's ball cap,
+        and Senior Officer beret.
+    - type: Tweak
+      message: Resprited most of the basic security jumpsuits.
+    - type: Tweak
+      message: Fixed numerous errors with in-hand and worn sprites.
+    - type: Tweak
+      message: Updated the winter jackboots to be in line with the normal counterpart
+  - id: 270
+    author: NakataRin
+    time: '2025-01-06T14:47:21.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/270
+    changes:
+    - type: Add
+      message: Port of the tape recorder from DeltaV to Harmony
+  - id: 274
+    author: BoskiYourk
+    time: '2025-01-06T14:56:43.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/274
+    changes:
+    - type: Add
+      message: Added the HoS Flask to the HoS Armored Trench Coat Pocket
+  - id: 278
+    author: BoskiYourk
+    time: '2025-01-06T15:01:27.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/278
+    changes:
+    - type: Tweak
+      message: Updated the CE's jumpsuits to have consistent coloring.
+  - id: 244
+    author: Ermucat
+    time: '2025-01-06T15:19:58.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/244
+    changes:
+    - type: Tweak
+      message: Changed Vent Critters to be a bit more fair
