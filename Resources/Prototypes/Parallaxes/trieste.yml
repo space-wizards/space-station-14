@@ -30,7 +30,7 @@
         !type:ImageParallaxTextureSource
         path: "/Textures/Parallaxes/trieste.png"
       slowness: 0.998046875
-      scale: "1, 1"
+      scale: "2, 2"
       tiled: false
   layersLQ:
     - texture:

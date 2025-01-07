@@ -364,13 +364,15 @@ public sealed partial class ShuttleSystem
     if (HasComp<DivingBellComponent>(uid))
         {
             var audio = _audio.PlayPvs(_startupSound, uid);
+            _audio.SetGridAudio(audio);
+             component.StartupStream = audio?.Entity;
         }
         else
         {
              var audio = _audio.PlayPvs(_startupSoundShuttle, uid);
+             _audio.SetGridAudio(audio);
+             component.StartupStream = audio?.Entity;
         }
-        _audio.SetGridAudio(audio);
-        component.StartupStream = audio?.Entity;
 
         // TODO: Play previs here for docking arrival.
 
@@ -544,12 +546,13 @@ public sealed partial class ShuttleSystem
      if (HasComp<DivingBellComponent>(uid))
         {
             var audio = _audio.PlayPvs(_arrivalSound, uid);
+             _audio.SetGridAudio(audio);
         }
         else
         {
              var audio = _audio.PlayPvs(_arrivalSoundShuttle, uid);
+              _audio.SetGridAudio(audio);
         }
-        _audio.SetGridAudio(audio);
 
         if (TryComp<FTLDestinationComponent>(uid, out var dest))
         {
