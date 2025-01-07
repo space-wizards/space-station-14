@@ -17,6 +17,13 @@ public sealed partial class MappingSpawnButton : Control
         RobustXamlLoader.Load(this);
 
         CollapseTexture.TexturePath = "/Textures/Interface/VerbIcons/chevron-right-solid.svg.192dpi.png";
+        OnResized += OnResizedGallery;
+    }
+
+    private void OnResizedGallery()
+    {
+        if (Parent != null)
+            ChildrenPrototypesGallery.MaxGridWidth = Math.Max(1, Parent.Width - ChildrenPrototypesGallery.Margin.Left );
     }
 
     public void Gallery()

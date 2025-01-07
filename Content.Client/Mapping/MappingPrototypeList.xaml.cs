@@ -193,22 +193,15 @@ public sealed partial class MappingPrototypeList : Control
         if (!button.CollapseButton.Pressed)
             return;
 
-        if (Gallery)
-            button.ChildrenPrototypesGallery.MaxGridWidth = button.Width - button.ChildrenPrototypesGallery.Margin.Left;
-
         if (button.Prototype?.Children == null)
             return;
 
         foreach (var child in button.Prototype.Children)
         {
             if (child.Children == null && Gallery)
-            {
                 Insert(button.ChildrenPrototypesGallery, child, false, true);
-            }
             else
-            {
                 Insert(button.ChildrenPrototypes, child, true, false);
-            }
         }
     }
 

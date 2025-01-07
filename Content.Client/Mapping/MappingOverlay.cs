@@ -51,17 +51,6 @@ public sealed class MappingOverlay : Overlay
 
         switch (_state.Meta.State)
         {
-            case CursorState.Entity:
-            {
-                if (_state.GetHoveredEntity() is { } entity &&
-                    _entities.TryGetComponent(entity, out SpriteComponent? sprite))
-                {
-                    _oldColors[entity] = sprite.Color;
-                    sprite.Color = _state.Meta.Color;
-                }
-
-                break;
-            }
             case CursorState.Tile:
             {
                 if (_state.GetHoveredTileBox2() is { } box)
@@ -69,17 +58,23 @@ public sealed class MappingOverlay : Overlay
 
                 break;
             }
-            case CursorState.EntityOrTile:
+            case CursorState.Decal:
+            {
+                if (_state.GetHoveredDecalData() is { } hovered)
+                {
+                    var (texture, box) = hovered;
+                    args.WorldHandle.DrawTextureRect(texture, box, _state.Meta.Color);
+                }
+
+                break;
+            }
+            case CursorState.Entity:
             {
                 if (_state.GetHoveredEntity() is { } entity &&
                     _entities.TryGetComponent(entity, out SpriteComponent? sprite))
                 {
                     _oldColors[entity] = sprite.Color;
                     sprite.Color = _state.Meta.Color;
-                }
-                else if (_state.GetHoveredTileBox2() is { } box)
-                {
-                    args.WorldHandle.DrawRect(box, _state.Meta.SecondColor ?? _state.Meta.Color);
                 }
 
                 break;
@@ -106,6 +101,21 @@ public sealed class MappingOverlay : Overlay
                 {
                     var box = Box2.FromDimensions(tileRef.GridIndices, tileDimensions);
                     args.WorldHandle.DrawRect(box, _state.Meta.Color);
+                }
+
+                break;
+            }
+            case CursorState.EntityOrTile:
+            {
+                if (_state.GetHoveredEntity() is { } entity &&
+                    _entities.TryGetComponent(entity, out SpriteComponent? sprite))
+                {
+                    _oldColors[entity] = sprite.Color;
+                    sprite.Color = _state.Meta.Color;
+                }
+                else if (_state.GetHoveredTileBox2() is { } box)
+                {
+                    args.WorldHandle.DrawRect(box, _state.Meta.SecondColor ?? _state.Meta.Color);
                 }
 
                 break;
