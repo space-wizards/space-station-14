@@ -225,6 +225,7 @@
   - type: InGas
     gasId: 9
     damagedByGas: true
+    gasThreshold: 20
     damage:
         types:
             Shock: 5
