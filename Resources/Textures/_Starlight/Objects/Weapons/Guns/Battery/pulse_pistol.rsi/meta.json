@@ -1,0 +1,97 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Paradise Station",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "base"
+        },
+        {
+          "name": "kill"
+        },
+        {
+          "name": "kill-unshaded-0",
+          "delays": [
+            [
+              0.3,
+              0.3
+            ]
+          ]
+        },
+        {
+            "name": "kill-unshaded-1"
+        },
+        {
+            "name": "kill-unshaded-2"
+        },
+        {
+            "name": "kill-unshaded-3"
+        },
+        {
+            "name": "kill-unshaded-4"
+        },
+        {
+          "name": "stun"
+        },
+        {
+          "name": "stun-unshaded-0",
+          "delays": [
+            [
+              0.3,
+              0.3
+            ]
+          ]
+        },
+        {
+            "name": "stun-unshaded-1"
+        },
+        {
+            "name": "stun-unshaded-2"
+        },
+        {
+            "name": "stun-unshaded-3"
+        },
+        {
+            "name": "stun-unshaded-4"
+        },
+        {
+          "name": "destroy"
+        },
+        {
+          "name": "destroy-unshaded-0",
+          "delays": [
+            [
+              0.3,
+              0.3
+            ]
+          ]
+        },
+        {
+            "name": "destroy-unshaded-1"
+        },
+        {
+            "name": "destroy-unshaded-2"
+        },
+        {
+            "name": "destroy-unshaded-3"
+        },
+        {
+            "name": "destroy-unshaded-4"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}

@@ -412,3 +412,91 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+  
+- type: entity
+  name: m1911
+  parent: BaseWeaponBatterySmall
+  id: WeaponM1911
+  description: A compact pulse core in a classic Nanotrasen officer pistol design. It's not the size of the gun, it's the size of the hole it puts in people.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/m1911.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: stun-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Small
+    shape:
+    - 0, 0, 1, 1
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 200
+  - type: MagazineVisuals
+    magState: stun
+    steps: 5
+    zeroVisible: true
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletAdvTaser
+    fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletAdvTaser
+      fireCost: 100
+      magState: stun
+    - proto: BulletLaser
+      fireCost: 100
+      magState: kill
+    - proto: BulletLaserDestroy
+      fireCost: 100
+      magState: destroy
+      
+- type: entity
+  name: pulse pistol
+  parent: BaseWeaponBatterySmall 
+  id: WeaponPulsePistol
+  description: An extremely compact version of the pulse carabine.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: stun
+      map: ["enum.FireModesLayers.FireMode"]
+    - state: stun-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Small
+    shape:
+    - 0, 0, 1, 1
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40
+  - type: MagazineVisuals
+    magState: stun
+    steps: 5
+    zeroVisible: true
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletAdvTaser
+    fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletAdvTaser
+      fireCost: 100
+      magState: stun
+      visualState: stun
+    - proto: BulletLaser
+      fireCost: 100
+      magState: kill
+      visualState: kill
+    - proto: BulletLaserDestroy
+      fireCost: 200
+      magState: destroy
+      visualState: destroy
+  - type: Battery
+    maxCharge: 2600
+    startingCharge: 2600
