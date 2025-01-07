@@ -182,11 +182,12 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
             else if (humanoid.HiddenLayers.ContainsKey(layer))
             {
+                dirty = true;
                 // remove slot flag from the slots hiding this layer
                 humanoid.HiddenLayers[layer] &= ~slot;
                 // if layer no longer has slots hiding it, remove it from hidden layers
                 if (humanoid.HiddenLayers[layer] == SlotFlags.NONE || slot == SlotFlags.NONE)
-                    dirty |= humanoid.HiddenLayers.Remove(layer);
+                    humanoid.HiddenLayers.Remove(layer);
             }
         }
         else
