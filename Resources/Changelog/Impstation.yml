@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: TGRCdev
-  changes:
-  - message: Fixed Changeling's Chitinous Armor and Space Suit refusing to equip regardless
-      of how naked your character was
-    type: Fix
-  id: 373
-  time: '2024-10-15T04:57:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/483
 - author: honeyed-lemons
   changes:
   - message: Added new gray ears by normalgirl2171 and gray antenna
@@ -4489,3 +4481,14 @@
   id: 872
   time: '2025-01-07T19:31:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1250
+- author: kipdotnet
+  changes:
+  - message: The Vim and Ripley now have new sprites.
+    type: Tweak
+  - message: Goblins can now pilot a Vim.
+    type: Tweak
+  - message: the Ripley APLU now has a slightly more decent melee attack.
+    type: Tweak
+  id: 873
+  time: '2025-01-07T19:43:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1252
