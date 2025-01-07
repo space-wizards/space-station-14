@@ -42,6 +42,10 @@
         components:
         - PressureProtection
   - type: MeleeRequiresWield # cant use them in 1 hand only
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 14
   - type: NoHeavyAttacks # no
   - type: LeechOnHit
     leech:
