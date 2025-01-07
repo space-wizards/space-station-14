@@ -11465,6 +11465,18 @@ entities:
     - type: Transform
       pos: 8.5,-12.5
       parent: 104
+- proto: PosterContrabandLustyExomorph
+  entities:
+  - uid: 754
+    components:
+    - type: Transform
+      pos: -3.5,-13.5
+      parent: 104
+  - uid: 2447
+    components:
+    - type: Transform
+      pos: 15.5,-15.5
+      parent: 104
 - proto: PosterContrabandMoth
   entities:
   - uid: 2462
