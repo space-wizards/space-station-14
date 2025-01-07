@@ -132,11 +132,11 @@
         - HumanoidAppearance
   - type: MeleeWeapon
     hidden: true
-    attackRate: 0.7
+    attackRate: 0.7 #imp change
     damage:
       types:
-        Blunt: 12 #intentionally shit so people realize that going into combat with the ripley is usually a bad idea. #<- PUSSY -imp edit
-        Piercing: 10
+        Blunt: 14 #intentionally shit so people realize that going into combat with the ripley is usually a bad idea. #<- PUSSY #imp edit
+        Piercing: 6
     soundHit:
       collection: GreatWrench
   - type: MovementSpeedModifier
@@ -279,7 +279,7 @@
     baseState: vim
     openState: vim-open
     brokenState: vim-broken
-    maxEquipmentAmount: 1 #imp change
+    maxEquipmentAmount: 0
     # keep mouse safe
     mechToPilotDamageMultiplier: 0.1
     airtight: true
@@ -292,7 +292,6 @@
     damage:
       types:
         Blunt: 10 #thwack
-        Structural: 15 #I just think this is funny. imp change
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
