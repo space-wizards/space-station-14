@@ -25,6 +25,8 @@ public sealed partial class MappingPrototypeList : Control
     /// </summary>
     public bool Gallery { get; set; }
 
+    public Color? TexturesModulate { get; set; }
+
     public Action<IPrototype, List<Texture>>? GetPrototypeData;
     public event Action<MappingPrototypeList, MappingSpawnButton, IPrototype?>? SelectionChanged;
 
@@ -74,6 +76,9 @@ public sealed partial class MappingPrototypeList : Control
 
         if (_insertTextures.Count > 0)
             button.SetTextures(_insertTextures);
+
+        if (TexturesModulate is { } modulate)
+            button.Texture.Modulate = modulate;
 
         if (prototype != null && button.Prototype == Selected?.Prototype)
         {
@@ -180,7 +185,7 @@ public sealed partial class MappingPrototypeList : Control
             if (child is not MappingSpawnButton button)
                 continue;
 
-            Collapse(button);
+            button.Collapse();
         }
 
         ScrollContainer.SetScrollValue(new Vector2(0, 0));
@@ -188,11 +193,13 @@ public sealed partial class MappingPrototypeList : Control
 
     public void ToggleCollapse(MappingSpawnButton button)
     {
-        button.ToggleCollapse();
-
         if (!button.CollapseButton.Pressed)
+        {
+            button.Collapse();
             return;
+        }
 
+        button.UnCollapse();
         if (button.Prototype?.Children == null)
             return;
 
@@ -203,25 +210,6 @@ public sealed partial class MappingPrototypeList : Control
             else
                 Insert(button.ChildrenPrototypes, child, true, false);
         }
-    }
-
-    private void Collapse(MappingSpawnButton button)
-    {
-        if (!button.CollapseButton.Pressed)
-            return;
-
-        button.CollapseButton.Pressed = false;
-        ToggleCollapse(button);
-    }
-
-
-    public void UnCollapse(MappingSpawnButton button)
-    {
-        if (button.CollapseButton.Pressed)
-            return;
-
-        button.CollapseButton.Pressed = true;
-        ToggleCollapse(button);
     }
 
     private void OnSearch(LineEdit.LineEditEventArgs args)

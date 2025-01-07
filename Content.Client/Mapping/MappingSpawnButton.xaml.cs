@@ -48,15 +48,17 @@ public sealed partial class MappingSpawnButton : Control
         Texture.InvalidateMeasure();
     }
 
-    private void Collapse()
+    public void Collapse()
     {
+        CollapseButton.Pressed = false;
         ChildrenPrototypes.DisposeAllChildren();
         ChildrenPrototypesGallery.DisposeAllChildren();
         CollapseTexture.TexturePath = "/Textures/Interface/VerbIcons/chevron-right-solid.svg.192dpi.png";
     }
 
-    private void UnCollapse()
+    public void UnCollapse()
     {
+        CollapseButton.Pressed = true;
         CollapseTexture.TexturePath = "/Textures/Interface/VerbIcons/chevron-down-solid.svg.192dpi.png";
     }
 

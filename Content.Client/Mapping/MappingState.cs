@@ -528,7 +528,7 @@ public sealed class MappingState : GameplayStateBase
                 if (child is MappingSpawnButton button &&
                     button.Prototype == prototype)
                 {
-                    list.UnCollapse(button);
+                    button.UnCollapse();
                     OnSelected(list, button, prototype.Prototype);
                     children = button.ChildrenPrototypes.Children.ToList();
                     children.AddRange(button.ChildrenPrototypesGallery.Children);
@@ -606,7 +606,7 @@ public sealed class MappingState : GameplayStateBase
                 _placement.Clear();
 
                 _decal.SetActive(true);
-                _decal.UpdateDecalInfo(decal.ID, Color.White, 0, true, 0, false);
+                Screen.SelectDecal(decal.ID);
                 break;
             case ContentTileDefinition tile:
             {
@@ -927,6 +927,7 @@ public sealed class MappingState : GameplayStateBase
                 _allPrototypesDict.TryGetValue(decalProto, out button))
             {
                 OnSelected(Screen.Decals, button);
+                Screen.SelectDecal(decal);
                 return true;
             }
         }
@@ -1152,7 +1153,7 @@ public sealed class MappingState : GameplayStateBase
         public CursorState State = CursorState.None;
 
         /// <summary>
-        /// Сolor with which the mapping overlay will be drawn
+        /// Color with which the mapping overlay will be drawn
         /// </summary>
         public Color Color = Color.White;
 

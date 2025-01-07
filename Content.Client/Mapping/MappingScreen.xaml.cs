@@ -129,6 +129,7 @@ public sealed partial class MappingScreen : InGameScreen
         _decalColor = color;
         DecalColorPicker.Color = color;
         UpdateDecal();
+        RefreshDecalList();
     }
 
     private void OnDecalPickerOpenPressed(ButtonEventArgs obj)
@@ -169,7 +170,9 @@ public sealed partial class MappingScreen : InGameScreen
 
         if (_decalAuto)
         {
-            _decalColor = Color.White;
+            if (!decal.DefaultCustomColor)
+                _decalColor = Color.White;
+
             _decalCleanable = decal.DefaultCleanable;
             _decalSnap = decal.DefaultSnap;
 
@@ -179,29 +182,54 @@ public sealed partial class MappingScreen : InGameScreen
         }
 
         UpdateDecal();
-        RefreshList();
+        RefreshDecalList();
     }
 
-    private void RefreshList()
+    public void SelectDecal(Decal decal)
     {
-        foreach (var control in Decals.Children)
+        if (!_decalAuto || !_prototype.TryIndex<DecalPrototype>(decal.Id, out var decalProto))
+            return;
+
+        _id = decal.Id;
+        _decalColor = decal.Color ?? Color.White;
+        _decalSnap = decalProto.DefaultSnap;
+        _decalCleanable = decal.Cleanable;
+
+        DecalColorPicker.Color = _decalColor;
+        DecalEnableCleanable.Pressed = _decalCleanable;
+        DecalEnableSnap.Pressed = _decalSnap;
+
+        UpdateDecal();
+        RefreshDecalList();
+    }
+
+    private void RefreshDecalList()
+    {
+        Decals.TexturesModulate = _decalColor;
+        var children = Decals.PrototypeList.Children.ToList().Union(Decals.SearchList.Children);
+        foreach (var control in children)
         {
-            if (control is not MappingSpawnButton button ||
-                button.Prototype?.Prototype is not DecalPrototype)
-            {
+            if (control is not MappingSpawnButton button)
                 continue;
-            }
 
-            foreach (var child in button.Children)
-            {
-                if (child is not MappingSpawnButton { Prototype.Prototype: DecalPrototype } childButton)
-                {
-                    continue;
-                }
+            RefreshDecalButton(button);
+        }
+    }
 
+    private void RefreshDecalButton(MappingSpawnButton button)
+    {
+        var children =
+            button.ChildrenPrototypes.Children.ToList().Union(button.ChildrenPrototypesGallery.Children);
+
+        foreach (var control in children)
+        {
+            if (control is not MappingSpawnButton { } childButton)
+                continue;
+
+            if (childButton.Texture.Visible)
                 childButton.Texture.Modulate = _decalColor;
-                childButton.Visible = IsDecalVisible?.Invoke(childButton) ?? true;
-            }
+
+            RefreshDecalButton(childButton);
         }
     }
 
