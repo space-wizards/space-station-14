@@ -12,7 +12,7 @@ namespace Content.Shared.Clothing.Components;
 public sealed partial class HideLayerClothingComponent : Component
 {
     /// <summary>
-    /// The appearance layer(s) to hide. Use Layers instead.
+    /// The appearance layer(s) to hide. Use <see cref='Layers'>Layers</see> instead.
     /// </summary>
     [DataField]
     [Obsolete("This attribute is deprecated, please use Layers instead.")]

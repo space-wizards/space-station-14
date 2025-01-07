@@ -85,44 +85,50 @@ public abstract class ClothingSystem : EntitySystem
         }
     }
 
-    private void ToggleVisualLayers(EntityUid equipee, EntityUid equipment, HashSet<HumanoidVisualLayers> appearanceLayers)
+    private void ToggleVisualLayers(
+        EntityUid equipee,
+        EntityUid equipment,
+        HashSet<HumanoidVisualLayers> appearanceLayers
+        )
     {
         if (TryComp(equipment, out ClothingComponent? clothing) &&
             TryComp(equipment, out HideLayerClothingComponent? hideLayer))
         {
             if (hideLayer.Layers.Count > 0)
             {
-                // check layers
-                foreach (KeyValuePair<HumanoidVisualLayers, SlotFlags> entry in hideLayer.Layers)
+                // iterate the HideLayerClothingComponent's layers map and check that
+                // the clothing is equipped in a matching slot.
+                foreach (HumanoidVisualLayers layer in hideLayer.Layers.Keys)
                 {
-                    if (!appearanceLayers.Contains(entry.Key))
+                    if (!appearanceLayers.Contains(layer))
                         continue;
 
                     bool shouldLayerShow = true;
-                    if (hideLayer.Layers.TryGetValue(entry.Key, out SlotFlags hideSlot))
+                    SlotFlags hideSlot = hideLayer.Layers[layer];
+                    if (clothing.EquippedInSlot == hideSlot)
                     {
-                        if (clothing.EquippedInSlot == hideSlot)
-                        {
-                            shouldLayerShow = MaskToggleCheck();
-                        }
+                        shouldLayerShow = MaskToggleCheck();
                     }
-                    _humanoidSystem.SetLayerVisibility(equipee, entry.Key, shouldLayerShow);
+                    _humanoidSystem.SetLayerVisibility(equipee, layer, shouldLayerShow, hideSlot);
                 }
             }
             else
             {
-                // check slots
+                // iterate the HideLayerClothingComponent's legacy slots set and check
+                // that the wearer has the layer to be hidden, and that the clothing
+                // is equipped.
                 foreach (HumanoidVisualLayers layer in hideLayer.Slots)
                 {
                     if (!appearanceLayers.Contains(layer))
                         continue;
 
                     bool shouldLayerShow = true;
-                    if (clothing.EquippedInSlot != SlotFlags.NONE && clothing.Slots.HasFlag(clothing.EquippedInSlot))
+                    if (clothing.EquippedInSlot != SlotFlags.NONE
+                        && clothing.Slots.HasFlag(clothing.EquippedInSlot))
                     {
                         shouldLayerShow = MaskToggleCheck();
                     }
-                    _humanoidSystem.SetLayerVisibility(equipee, layer, shouldLayerShow);
+                    _humanoidSystem.SetLayerVisibility(equipee, layer, shouldLayerShow, clothing.Slots);
                 }
 
             }

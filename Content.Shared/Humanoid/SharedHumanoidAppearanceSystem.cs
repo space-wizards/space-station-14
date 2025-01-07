@@ -6,6 +6,7 @@ using Content.Shared.Examine;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Robust.Shared;
 using Robust.Shared.Configuration;
@@ -116,18 +117,21 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     /// </summary>
     /// <param name="uid">Humanoid mob's UID</param>
     /// <param name="layer">Layer to toggle visibility for</param>
+    /// <param name="slot">Equipment slot that is (or was) hiding the layer</param>
     /// <param name="humanoid">Humanoid component of the entity</param>
     public void SetLayerVisibility(EntityUid uid,
         HumanoidVisualLayers layer,
         bool visible,
+        SlotFlags slot,
         bool permanent = false,
-        HumanoidAppearanceComponent? humanoid = null)
+        HumanoidAppearanceComponent? humanoid = null
+        )
     {
         if (!Resolve(uid, ref humanoid, false))
             return;
 
         var dirty = false;
-        SetLayerVisibility(uid, humanoid, layer, visible, permanent, ref dirty);
+        SetLayerVisibility(uid, humanoid, layer, visible, slot, permanent, ref dirty);
         if (dirty)
             Dirty(uid, humanoid);
     }
@@ -140,8 +144,12 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     /// <param name="visible">The visibility state of the layers given</param>
     /// <param name="permanent">If this is a permanent change, or temporary. Permanent layers are stored in their own hash set.</param>
     /// <param name="humanoid">Humanoid component of the entity</param>
-    public void SetLayersVisibility(EntityUid uid, IEnumerable<HumanoidVisualLayers> layers, bool visible, bool permanent = false,
-        HumanoidAppearanceComponent? humanoid = null)
+    public void SetLayersVisibility(EntityUid uid,
+        IEnumerable<HumanoidVisualLayers> layers,
+        bool visible,
+        bool permanent = false,
+        HumanoidAppearanceComponent? humanoid = null
+        )
     {
         if (!Resolve(uid, ref humanoid))
             return;
@@ -150,7 +158,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         foreach (var layer in layers)
         {
-            SetLayerVisibility(uid, humanoid, layer, visible, permanent, ref dirty);
+            SetLayerVisibility(uid, humanoid, layer, visible, slot: SlotFlags.NONE, permanent, ref dirty);
         }
 
         if (dirty)
@@ -162,22 +170,46 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         HumanoidAppearanceComponent humanoid,
         HumanoidVisualLayers layer,
         bool visible,
+        SlotFlags slot,
         bool permanent,
-        ref bool dirty)
+        ref bool dirty
+        )
     {
         if (visible)
         {
             if (permanent)
                 dirty |= humanoid.PermanentlyHidden.Remove(layer);
 
-            dirty |= humanoid.HiddenLayers.Remove(layer);
+            else if (humanoid.HiddenLayers.ContainsKey(layer))
+            {
+                // remove slot flag from the slots hiding this layer
+                humanoid.HiddenLayers[layer] &= ~slot;
+                // if layer no longer has slots hiding it, remove it from hidden layers
+                if (humanoid.HiddenLayers[layer] == SlotFlags.NONE || slot == SlotFlags.NONE)
+                    dirty |= humanoid.HiddenLayers.Remove(layer);
+            }
         }
         else
         {
             if (permanent)
                 dirty |= humanoid.PermanentlyHidden.Add(layer);
 
-            dirty |= humanoid.HiddenLayers.Add(layer);
+            else
+            {
+                // if layer is already hidden by something, add this slot to the
+                // SlotFlags covering it.
+                if (humanoid.HiddenLayers.ContainsKey(layer))
+                {
+                    dirty = true;
+                    humanoid.HiddenLayers[layer] |= slot;
+                }
+                else
+                {
+                    dirty = true;
+                    humanoid.HiddenLayers.Add(layer, slot);
+                }
+            }
+
         }
     }
 

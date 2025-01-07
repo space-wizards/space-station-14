@@ -1,6 +1,7 @@
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
@@ -34,7 +35,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
     }
 
     private static bool IsHidden(HumanoidAppearanceComponent humanoid, HumanoidVisualLayers layer)
-        => humanoid.HiddenLayers.Contains(layer) || humanoid.PermanentlyHidden.Contains(layer);
+        => humanoid.HiddenLayers.ContainsKey(layer) || humanoid.PermanentlyHidden.Contains(layer);
 
     private void UpdateLayers(HumanoidAppearanceComponent component, SpriteComponent sprite)
     {
@@ -189,7 +190,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
         humanoid.MarkingSet = markings;
         humanoid.PermanentlyHidden = new HashSet<HumanoidVisualLayers>();
-        humanoid.HiddenLayers = new HashSet<HumanoidVisualLayers>();
+        humanoid.HiddenLayers = new Dictionary<HumanoidVisualLayers, SlotFlags>();
         humanoid.CustomBaseLayers = customBaseLayers;
         humanoid.Sex = profile.Sex;
         humanoid.Gender = profile.Gender;
@@ -343,10 +344,11 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         HumanoidAppearanceComponent humanoid,
         HumanoidVisualLayers layer,
         bool visible,
+        SlotFlags slot,
         bool permanent,
         ref bool dirty)
     {
-        base.SetLayerVisibility(uid, humanoid, layer, visible, permanent, ref dirty);
+        base.SetLayerVisibility(uid, humanoid, layer, visible, slot, permanent, ref dirty);
 
         var sprite = Comp<SpriteComponent>(uid);
         if (!sprite.LayerMapTryGet(layer, out var index))
