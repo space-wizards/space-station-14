@@ -1165,7 +1165,7 @@ entities:
             17578: 22,0
         - node:
             zIndex: 1
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileWhiteLineE
           decals:
             13771: -21,-8
@@ -1432,7 +1432,7 @@ entities:
             17574: 20,0
         - node:
             zIndex: 1
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileWhiteLineW
           decals:
             13773: -22,-8
@@ -1733,7 +1733,7 @@ entities:
             2475: -22,-38
         - node:
             zIndex: 1
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: CheckerNESW
           decals:
             12961: 61,-80
@@ -1852,7 +1852,7 @@ entities:
             19382: 11,28
             19383: 10,28
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: CheckerNWSE
           decals:
             10602: -21,-37
@@ -1874,7 +1874,7 @@ entities:
             12902: -15,-34
         - node:
             zIndex: 1
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: CheckerNWSE
           decals:
             14300: -22,-37
@@ -2037,7 +2037,7 @@ entities:
           decals:
             12390: 39.014027,-57.014854
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: DiagonalCheckerAOverlay
           decals:
             10320: -1,-35
@@ -9066,7 +9066,7 @@ entities:
             17733: -46,-58
         - node:
             zIndex: 1
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: QuarterTileOverlayGreyscale
           decals:
             19636: -22,-41
@@ -9216,7 +9216,7 @@ entities:
             18622: 16,18
             18623: 16,17
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: QuarterTileOverlayGreyscale180
           decals:
             10594: -23,-32

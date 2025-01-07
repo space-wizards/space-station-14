@@ -57,42 +57,42 @@ entities:
             96: 1.9534924,1.0517962
             97: 1.0472424,-4.948204
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: WarnCornerNE
           decals:
             3: 0,3
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: WarnCornerNW
           decals:
             2: -2,3
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: WarnCornerSE
           decals:
             1: 0,1
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: WarnCornerSW
           decals:
             0: -2,1
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: WarnLineE
           decals:
             6: 0,2
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: WarnLineN
           decals:
             4: -1,1
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: WarnLineS
           decals:
             5: -2,2
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: WarnLineW
           decals:
             7: -1,3

@@ -61,27 +61,27 @@ entities:
         version: 2
         nodes:
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileSteelCornerNe
           decals:
             31: 2,5
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileSteelCornerNw
           decals:
             30: 1,5
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileSteelCornerSe
           decals:
             36: 2,-2
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileSteelCornerSw
           decals:
             25: 1,-2
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileSteelLineE
           decals:
             21: 2,4
@@ -91,7 +91,7 @@ entities:
             32: 2,2
             33: 2,0
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileSteelLineW
           decals:
             26: 1,-1

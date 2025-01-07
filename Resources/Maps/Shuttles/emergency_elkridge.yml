@@ -64,7 +64,7 @@ entities:
             61: 3,12
             62: 4,10
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileSteelCornerNe
           decals:
             110: 1,2
@@ -79,7 +79,7 @@ entities:
           decals:
             63: 1,12
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileSteelCornerNw
           decals:
             112: -1,2
@@ -94,7 +94,7 @@ entities:
           decals:
             71: 4,8
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileSteelCornerSe
           decals:
             113: 1,-2
@@ -109,7 +109,7 @@ entities:
           decals:
             70: 1,8
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileSteelCornerSw
           decals:
             114: -1,-2
@@ -130,7 +130,7 @@ entities:
             65: 3,11
             66: 4,9
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileSteelLineE
           decals:
             117: 1,1
@@ -147,7 +147,7 @@ entities:
           decals:
             64: 2,12
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileSteelLineN
           decals:
             116: 0,2
@@ -164,7 +164,7 @@ entities:
             72: 2,8
             73: 3,8
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileSteelLineS
           decals:
             115: 0,-2
@@ -182,7 +182,7 @@ entities:
             68: 1,10
             69: 1,9
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileSteelLineW
           decals:
             120: -1,1
@@ -657,7 +657,7 @@ entities:
             50: 4,-3
             51: 4,-5
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: WarnLineGreyscaleS
           decals:
             60: 0,4

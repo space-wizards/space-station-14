@@ -242,7 +242,7 @@ entities:
           decals:
             61: 1,0
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileWhiteBox
           decals:
             58: -3,-8
@@ -438,7 +438,7 @@ entities:
             84: 10,-2
             85: 10,-1
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: BrickTileWhiteLineW
           decals:
             57: -2,-8
@@ -798,7 +798,7 @@ entities:
           decals:
             114: 4,0
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: QuarterTileOverlayGreyscale270
           decals:
             303: -5,-9

@@ -442,7 +442,7 @@ entities:
             178: -4,1
             179: -4,2
         - node:
-            color: '#6AAD2D50'
+            color: '#9FED5850'
             id: MiniTileCheckerBOverlay
           decals:
             93: 3,-11

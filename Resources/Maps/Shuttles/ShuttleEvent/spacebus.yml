@@ -63,7 +63,7 @@ entities:
           decals:
             0: -2,3
         - node:
-            color: '#6AAD2D19'
+            color: '#9FED5819'
             id: BoxGreyscale
           decals:
             12: -1,-1
@@ -142,7 +142,7 @@ entities:
             39: 2,4
             40: 2,5
         - node:
-            color: '#6AAD2D19'
+            color: '#9FED5819'
             id: FullTileOverlayGreyscale
           decals:
             1: -2,-2

@@ -383,7 +383,7 @@ entities:
             133: 14,-9
             150: 16,-9
         - node:
-            color: '#6AAD2D96'
+            color: '#9FED5896'
             id: CheckerNESW
           decals:
             80: 6,-12
