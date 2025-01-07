@@ -1,0 +1,215 @@
+#regrettably due to technical limitations spiders cannot materially dress for religious purposes
+#TO DO - why is kippah white not works?
+
+#human,dwarf,slime
+- type: marking
+  id: BurqaSolid
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Human, Dwarf, SlimePerson]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: burqasolid
+
+- type: marking
+  id: HijabFashionable
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Human, Dwarf, SlimePerson]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: hijabchic
+
+- type: marking
+  id: HijabSimple
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Human, Dwarf, SlimePerson]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: hijabsimple
+
+- type: marking
+  id: Niqab
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Human, Dwarf, SlimePerson]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: niqab
+
+- type: marking
+  id: TichelFashionable
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Human, Dwarf, SlimePerson]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: tichelfashionable
+
+- type: marking
+  id: TichelSimple
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Human, Dwarf, SlimePerson]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: tichelsimple
+
+#lizard
+- type: marking
+  id: BurqaSolidLizard
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: burqalizard
+
+- type: marking
+  id: HijabFashionableLizard
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: hijabchic
+
+- type: marking
+  id: HijabSimpleLizard
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: hijabsimple
+
+- type: marking
+  id: NiqabLizard
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: niqablizard
+
+- type: marking
+  id: TichelSimpleLizard
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: tichelsimple
+
+- type: marking
+  id: TichelFashionableLizard
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: tichelfashionable
+
+#thaven
+- type: marking
+  id: BurqaSolidThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: burqathaven
+
+- type: marking
+  id: HijabFashionableThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: hijabchicthaven
+
+- type: marking
+  id: HijabSimpleThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: hijabsimplethaven
+
+- type: marking
+  id: NiqabThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: niqabthaven
+
+- type: marking
+  id: TichelFashionableThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: tichelfashionablethaven
+
+- type: marking
+  id: TichelSimpleThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: tichelsimplethaven
+
+- type: marking
+  id: ThavenNoEars
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [SpElf]
+  forcedColoring: false
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: thavennoears
+
+#vox
+- type: marking
+  id: HijabSimpleVox
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: hijabsimplevox
+
+- type: marking
+  id: HijabFashionableVox
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: hijabchicvox
+
+- type: marking
+  id: TichelSimpleVox
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: tichelsimplevox
+
+- type: marking
+  id: TichelFashionableVox
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/headcovers.rsi
+    state: tichelfashionablevox
