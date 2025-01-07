@@ -41,12 +41,6 @@
     count: 4
 
 - type: localizedDataset
-  id: DrGibbGoodbyes
-  values:
-    prefix: thankyou-gibb-
-    count: 4
-
-- type: localizedDataset
   id: PwrGameGoodbyes
   values:
     prefix: thankyou-pwr-
@@ -59,9 +53,21 @@
     count: 4
 
 - type: localizedDataset
+  id: BodaGoodbyes
+  values:
+    prefix: thankyou-sovietsoda-
+    count: 4
+
+- type: localizedDataset
   id: SpaceColaGoodbyes
   values:
     prefix: thankyou-cola-
+    count: 4
+
+- type: localizedDataset
+  id: DrGibbGoodbyes
+  values:
+    prefix: thankyou-gibb-
     count: 4
 
 - type: localizedDataset
@@ -129,12 +135,6 @@
   values:
     prefix: thankyou-snack-
     count: 6
-
-- type: localizedDataset
-  id: BodaGoodbyes
-  values:
-    prefix: thankyou-sovietsoda-
-    count: 4
 
 - type: localizedDataset
   id: SyndieDrobeGoodbyes
