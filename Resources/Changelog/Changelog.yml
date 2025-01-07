@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: A lot more electronics can now be used by the AI.
-    type: Add
-  id: 7286
-  time: '2024-09-05T09:31:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31730
 - author: Fildrance
   changes:
   - message: random uplink discounts for traitors
@@ -3932,3 +3925,10 @@
   id: 7785
   time: '2025-01-07T00:18:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34051
+- author: Alpaccalypse
+  changes:
+  - message: Special reagents are now listed in the relevant section of the guidebook.
+    type: Add
+  id: 7786
+  time: '2025-01-07T17:45:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34265
