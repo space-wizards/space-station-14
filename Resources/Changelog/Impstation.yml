@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Snails and Thraven are also once more capable of heresy.
-    type: Fix
-  id: 370
-  time: '2024-10-13T01:12:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/473
 - author: KingMudkipIII
   changes:
   - message: Changed the chat colour for the service channel to not be sucks visibility
@@ -4487,3 +4480,10 @@
   id: 869
   time: '2025-01-06T23:46:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1215
+- author: RosySaturniidae
+  changes:
+  - message: gas tank resprites
+    type: Tweak
+  id: 870
+  time: '2025-01-07T19:01:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1256
