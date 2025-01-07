@@ -6,6 +6,10 @@
   components:
   - type: Pda
     id: PrisonerIDCard
-    state: harmony-pda-prisoner
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       harmony-pda-prisoner
   - type: Icon
     state: harmony-pda-prisoner
