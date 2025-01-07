@@ -292,7 +292,7 @@
     damage:
       types:
         Blunt: 10 #thwack
-        Structural: 2
+        Structural: 15 #I just think this is funny. imp change
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
@@ -300,7 +300,7 @@
     tags:
     - Maintenance
   # TOOD: buzz / chime actions
-  - type: PointLight
+  - type: PointLight #imp edit
     enabled: true
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
