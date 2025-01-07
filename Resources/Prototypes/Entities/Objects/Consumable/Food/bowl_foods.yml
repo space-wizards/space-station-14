@@ -388,7 +388,9 @@
   - type: Food
     trash: 
     - FoodBowlBig
-    utensil: Fork
+    utensil: 
+    - Fork
+    - Spoon
   - type: Tag
     tags:
     - Rice
