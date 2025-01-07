@@ -16,10 +16,10 @@ public sealed partial class ClothingPreventsWieldingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ClothingPreventsWieldingComponent, BeforeWieldEvent>(OnBeforeWield);
+        SubscribeLocalEvent<ClothingPreventsWieldingComponent, WieldAttemptEvent>(OnWieldAttempt);
     }
 
-    private void OnBeforeWield(Entity<ClothingPreventsWieldingComponent> ent, ref BeforeWieldEvent args)
+    private void OnWieldAttempt(Entity<ClothingPreventsWieldingComponent> ent, ref WieldAttemptEvent args)
     {
         if (args.Cancelled)
             return;
