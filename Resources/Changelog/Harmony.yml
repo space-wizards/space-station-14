@@ -827,13 +827,6 @@ Entries:
       message: Jugs now fit in chemistry bags.
     - type: Fix
       message: Vials now fit in medical related containers.
-  - id: 259
-    author: Ermucat
-    time: '2025-01-03T04:12:38.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/259
-    changes:
-    - type: Fix
-      message: Theifs no longer have to steal animals that dont exist
   - id: 269
     author: MissKay1994
     time: '2025-01-03T14:07:41.0000000+00:00'
