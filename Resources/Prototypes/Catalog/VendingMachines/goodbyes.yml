@@ -75,7 +75,7 @@
   values:
     prefix: thankyou-spaceup-
     count: 4
-  
+
 - type: localizedDataset
   id: StarkistGoodbyes
   values:
