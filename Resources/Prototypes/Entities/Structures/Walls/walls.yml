@@ -986,9 +986,9 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Sprite
-    sprite: GreyStation/Structures/Walls/shuttleinterior.rsi # GreyStation - Resprite
+    sprite: Structures/Walls/shuttleinterior.rsi
   - type: Icon
-    sprite: GreyStation/Structures/Walls/shuttleinterior.rsi # GreyStation - Resprite
+    sprite: Structures/Walls/shuttleinterior.rsi
   - type: Construction
     graph: Girder
     node: shuttleInteriorWall
