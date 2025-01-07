@@ -281,17 +281,24 @@
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: BulletDisabler
-      fireCost: 100
+      fireCost: 41
       magState: disable
       visualState: disable-unshaded
     - proto: BulletAdvTaser
-      fireCost: 250
+      fireCost: 100
       magState: stun
       visualState: stun-unshaded
     - proto: BulletLaser
-      fireCost: 100
+      fireCost: 75
       magState: kill
       visualState: kill-unshaded
+    - proto: BulletLaserDestroy
+      fireCost: 750
+      magState: destroy
+      visualState: destroy-unshaded
+  - type: Battery
+    maxCharge: 1500
+    startingCharge: 1500
       
 - type: entity
   parent: BaseWeaponBattery
