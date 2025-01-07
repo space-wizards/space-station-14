@@ -81,7 +81,7 @@
   values:
     prefix: advertisement-robust-
     count: 8
-    
+
 - type: localizedDataset
   id: BodaAds
   values:
@@ -99,13 +99,13 @@
   values:
     prefix: advertisement-pwr-
     count: 8
-    
+
 - type: localizedDataset
   id: ShamblerAds
   values:
     prefix: advertisement-shambler-
     count: 8
-  
+
 - type: localizedDataset
   id: SpaceColaAds
   values:
@@ -122,12 +122,6 @@
   id: StarkistAds
   values:
     prefix: advertisement-starkist-
-    count: 8
-
-- type: localizedDataset
-  id: DrGibbAds
-  values:
-    prefix: advertisement-gibb-
     count: 8
 
 - type: localizedDataset
