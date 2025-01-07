@@ -14,15 +14,15 @@
       - state: cleanmine
     noRot: true
   - type: SmokeOnTrigger
-    duration: 15
-    spreadAmount: 5
+    duration: 5
+    spreadAmount: 7
     smokePrototype: Foam
     solution:
       reagents:
       - ReagentId: SpaceCleaner
         Quantity: 50
   - type: EmitSmokeOnDespawn
-    duration: 15
+    duration: 7
     spreadAmount: 20
     smokePrototype: Foam
     solution:
@@ -30,7 +30,7 @@
       - ReagentId: SpaceCleaner
         Quantity: 50
   - type: EmitSmokePeriodically
-    duration: 15
+    duration: 7
     spreadAmount: 1
     smokePrototype: Foam
     solution:
@@ -55,9 +55,9 @@
         mask:
         - ItemMask
         restitution: 1.0  # 100% bouncy
-        friction: 0.2
+        friction: 0.1
   - type: TimedDespawn
-    lifetime: 5
+    lifetime: 7
   - type: TriggerOnCollide
     fixtureID: fix1
   - type: EmitSoundOnCollide
@@ -66,7 +66,7 @@
   - type: EmitSoundOnSpawn
     sound: /Audio/Items/smoke_grenade_smoke.ogg
   - type: ProjectileSpeedOverride
-    speedOverride: 15
+    speedOverride: 17
 
     #potential todos
     #restore old cleanade projectile?
