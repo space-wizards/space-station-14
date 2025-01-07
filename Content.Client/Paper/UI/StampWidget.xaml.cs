@@ -31,7 +31,6 @@ public sealed partial class StampWidget : PanelContainer
                         "/Textures/_Impstation/Interface/Paper/Stamps/" + icon + ".png");
 
                 _borderTexture = new StyleBoxTexture { Texture = borderImage };
-                //_borderTexture.SetPatchMargin(StyleBoxTexture.Margin.All, 7.0f);
                 PanelOverride = _borderTexture;
 
                 // make stamps 50% larger to better match the original stamp sizes
@@ -61,10 +60,7 @@ public sealed partial class StampWidget : PanelContainer
         var resCache = IoCManager.Resolve<IResourceCache>();
         var borderImage = resCache.GetResource<TextureResource>(
                 "/Textures/Interface/Paper/paper_stamp_border.svg.96dpi.png");
-        _borderTexture = new StyleBoxTexture
-        {
-            Texture = borderImage,
-        };
+        _borderTexture = new StyleBoxTexture { Texture = borderImage };
         _borderTexture.SetPatchMargin(StyleBoxTexture.Margin.All, 7.0f);
         PanelOverride = _borderTexture;
     }
