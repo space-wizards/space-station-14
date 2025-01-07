@@ -525,7 +525,7 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-service
-    color: "#6AAD2D"
+    color: "#9FED58"
 
 - type: entity
   parent: DefaultStationBeaconService
