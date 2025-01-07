@@ -12,7 +12,7 @@
   id: Civilian
   name: department-Civilian
   description: department-Civilian-description
-  color: "#9FED58"
+  color: "#6AAD2D"
   weight: -10
   roles:
   - Bartender
@@ -136,7 +136,7 @@
   id: Specific
   name: department-Specific
   description: department-Specific-description
-  color: "#9FED58"
+  color: "#6AAD2D"
   weight: 10
   roles:
   - Boxer

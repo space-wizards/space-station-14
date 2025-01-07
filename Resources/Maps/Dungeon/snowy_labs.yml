@@ -751,7 +751,7 @@ entities:
             1068: 9,38
             1097: 25,39
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: BrickTileWhiteInnerNe
           decals:
             1015: 1,12
@@ -924,7 +924,7 @@ entities:
             1858: 6,44
             1859: 6,43
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: BrickTileWhiteLineE
           decals:
             1010: 1,13
@@ -1047,7 +1047,7 @@ entities:
             1062: 12,38
             1069: 10,38
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: BrickTileWhiteLineN
           decals:
             841: 21,6
@@ -1231,7 +1231,7 @@ entities:
             1064: 11,40
             1065: 12,40
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: BrickTileWhiteLineS
           decals:
             837: 21,10
@@ -1734,7 +1734,7 @@ entities:
             1107: 36,39
             1108: 37,39
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: FullTileOverlayGreyscale
           decals:
             825: 21,7

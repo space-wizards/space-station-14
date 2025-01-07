@@ -1043,7 +1043,7 @@
     icon:
       sprite: Decals/Overlays/greyscale.rsi
       state: halftile_overlay
-    iconColor: '#9FED5896'
+    iconColor: '#6AAD2D96'
     checkCanInteract: False
     checkConsciousness: False
     clientExclusive: True
@@ -1051,11 +1051,11 @@
     temporary: True
     event: !type:PlaceDecalActionEvent
       snap: True
-      color: '#9FED5896'
+      color: '#6AAD2D96'
       decalId: HalfTileOverlayGreyscale
   assignments:
   - 7: 6
-  name: HalfTileOverlayGreyscale (#9FED5896, 0)
+  name: HalfTileOverlayGreyscale (#6AAD2D96, 0)
 - action: !type:WorldTargetActionComponent
     keywords: []
     repeat: True

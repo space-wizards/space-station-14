@@ -428,7 +428,7 @@ entities:
             1304: 37,14
             1305: 37,15
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: BrickTileWhiteCornerNe
           decals:
             524: 6,28
@@ -458,7 +458,7 @@ entities:
             998: 54,4
             1072: 15,4
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: BrickTileWhiteCornerNw
           decals:
             525: 4,28
@@ -493,7 +493,7 @@ entities:
             994: 36,4
             1071: 1,4
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: BrickTileWhiteCornerSe
           decals:
             529: 6,24
@@ -523,7 +523,7 @@ entities:
             1043: 46,0
             1073: 15,0
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: BrickTileWhiteCornerSw
           decals:
             528: 4,24
@@ -655,7 +655,7 @@ entities:
             319: 16,46
             320: 16,47
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: BrickTileWhiteLineE
           decals:
             521: 6,25
@@ -721,7 +721,7 @@ entities:
             315: 18,42
             316: 17,42
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: BrickTileWhiteLineN
           decals:
             531: 5,28
@@ -871,7 +871,7 @@ entities:
             323: 20,48
             324: 21,48
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: BrickTileWhiteLineS
           decals:
             530: 5,24
@@ -1014,7 +1014,7 @@ entities:
             327: 22,46
             328: 22,47
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: BrickTileWhiteLineW
           decals:
             526: 4,27
@@ -1484,7 +1484,7 @@ entities:
           decals:
             434: 34,34
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: FullTileOverlayGreyscale
           decals:
             1172: 21,7
@@ -1704,7 +1704,7 @@ entities:
             630: 12,26
             631: 12,25
         - node:
-            color: '#9FED5812'
+            color: '#6AAD2D12'
             id: MonoOverlay
           decals:
             724: 8,19

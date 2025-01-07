@@ -2277,7 +2277,7 @@ entities:
             887: 2,31
             892: 1,45
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: MiniTileCheckerAOverlay
           decals:
             2028: 28,42
@@ -2366,7 +2366,7 @@ entities:
             2054: 29,47
             2055: 29,46
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: MiniTileCheckerBOverlay
           decals:
             50: 31,21

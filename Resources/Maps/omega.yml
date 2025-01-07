@@ -1973,7 +1973,7 @@ entities:
             2587: 22,15
             2588: 22,16
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: QuarterTileOverlayGreyscale
           decals:
             486: -8,-12
@@ -2714,7 +2714,7 @@ entities:
             1231: -23,-27
             2656: -18,-26
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: ThreeQuarterTileOverlayGreyscale
           decals:
             0: -23,-8
@@ -2762,7 +2762,7 @@ entities:
             1230: -20,-28
             2650: -16,-29
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: ThreeQuarterTileOverlayGreyscale180
           decals:
             1: -22,-9
@@ -3483,7 +3483,7 @@ entities:
             861: 27.509422,-40.416092
         - node:
             cleanable: True
-            color: '#9FED5812'
+            color: '#6AAD2D12'
             id: splatter
           decals:
             799: 13.296297,-42.144028

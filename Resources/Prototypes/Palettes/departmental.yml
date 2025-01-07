@@ -4,7 +4,7 @@
   colors:
     command: "#334E6DC8"
     medical: "#52B4E996"
-    service: "#9FED5896"
+    service: "#6AAD2D96"
     engineering: "#EFB34196"
     security: "#DE3A3A96"
     bar: "#79150096"

@@ -1948,7 +1948,7 @@ entities:
           decals:
             672: 49,-12
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: BrickTileWhiteEndE
           decals:
             668: 52,-10
@@ -1998,7 +1998,7 @@ entities:
           decals:
             673: 48,-12
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: BrickTileWhiteEndW
           decals:
             669: 51,-10
@@ -2073,7 +2073,7 @@ entities:
             767: -8,8
         - node:
             zIndex: 2
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: BrickTileWhiteLineN
           decals:
             769: -20,-11

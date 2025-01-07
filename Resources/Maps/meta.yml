@@ -1444,7 +1444,7 @@ entities:
             5607: 13,-22
             5608: 11,-22
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: BrickTileWhiteLineS
           decals:
             5609: 10,-22
@@ -1562,7 +1562,7 @@ entities:
             4346: -31,-42
             4347: -31,-43
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: BrickTileWhiteLineW
           decals:
             2496: 101,-9
@@ -2776,7 +2776,7 @@ entities:
             5154: -24,24
             5155: -22,24
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: HalfTileOverlayGreyscale
           decals:
             83: -7,4
@@ -3079,7 +3079,7 @@ entities:
             4633: -10,-23
             4669: -22,-48
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: HalfTileOverlayGreyscale270
           decals:
             82: -8,3
@@ -3199,7 +3199,7 @@ entities:
             5892: -14,-36
             5893: -14,-35
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: HalfTileOverlayGreyscale90
           decals:
             5672: 8,-25
@@ -3475,7 +3475,7 @@ entities:
             5404: -16,25
             5405: -15,25
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: QuarterTileOverlayGreyscale
           decals:
             80: -8,2
@@ -3710,7 +3710,7 @@ entities:
             2621: -6,-26
             6006: -17,-61
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: QuarterTileOverlayGreyscale180
           decals:
             5111: -27,25
@@ -4462,7 +4462,7 @@ entities:
             1269: -18,-34
             2741: -13,-24
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: ThreeQuarterTileOverlayGreyscale
           decals:
             81: -8,4
@@ -4705,7 +4705,7 @@ entities:
           decals:
             5203: -10,34
         - node:
-            color: '#9FED58B7'
+            color: '#6AAD2DB7'
             id: WarnBoxGreyscale
           decals:
             5204: -11,34
@@ -4800,7 +4800,7 @@ entities:
             2763: -23,-33
             2764: -23,-35
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: WarnFullGreyscale
           decals:
             5612: 12,-23
@@ -5004,7 +5004,7 @@ entities:
             2759: -28,-28
             4349: -30,-44
         - node:
-            color: '#9FED5896'
+            color: '#6AAD2D96'
             id: WarnLineGreyscaleS
           decals:
             5611: 12,-22
