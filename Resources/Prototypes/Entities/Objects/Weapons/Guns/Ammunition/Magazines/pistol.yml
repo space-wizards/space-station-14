@@ -65,7 +65,7 @@
   - type: Appearance
 
 - type: entity
-  id: BaseMagazinePistolSubMachineGun  # Yeah it's weird but it's pistol caliber
+  id: BaseMagazinePistolSubMachineGun
   name: SMG magazine (.38 auto)
   parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
@@ -101,7 +101,7 @@
   id: MagazinePistolSubMachineGunTopMounted
   name: WT550 magazine (.38 auto top-mounted)
   parent: [ BaseItem, BaseRestrictedContraband ]
-  description: A unconventional top-mounted magazine for the WT550 SMG, containing standard FMJ rounds.
+  description: Unconventional top-mounted magazine for the WT550 SMG, containing standard FMJ rounds.
   components:
   - type: Tag
     tags:
@@ -133,7 +133,7 @@
   id: MagazinePistolSubMachineGunTopMountedEmpty
   name: WT550 magazine (.38 auto top-mounted any)
   parent: MagazinePistolSubMachineGunTopMounted
-  description: A unconventional top-mounted magazine for the WT550 SMG.
+  description: Unconventional top-mounted magazine for the WT550 SMG.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -142,7 +142,7 @@
   id: MagazinePistol
   name: pistol magazine (.38 auto)
   parent: BaseMagazinePistol
-  description: Universal 10 round pistol magazine, used by both Nanotrasen and the Syndicate. This version contains standard FMJ ammunition.
+  description: Universal 10-round pistol magazine, used by both Nanotrasen and the Syndicate. This version contains standard FMJ ammunition, as denoted by the red stripe on the magazine.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistol
@@ -158,7 +158,7 @@
   name: pistol magazine (.38 auto any)
   suffix: empty
   parent: MagazinePistol
-  description: Universal 10 round pistol magazine, used by both Nanotrasen and the Syndicate.
+  description: Universal 10-round pistol magazine, used by both Nanotrasen and the Syndicate.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -171,7 +171,7 @@
   id: MagazinePistolPractice
   name: pistol magazine (.38 auto practice)
   parent: BaseMagazinePistol
-  description: Universal 10 round pistol magazine, used by both Nanotrasen and the Syndicate. This version contains rubber-tipped ammo for training.
+  description: Universal 10-round pistol magazine, used by both Nanotrasen and the Syndicate. This version contains non-harmful rubber ammo for training.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice
@@ -263,7 +263,7 @@
   id: MagazinePistolSubMachineGun
   name: SMG magazine (.38 auto)
   parent: BaseMagazinePistolSubMachineGun
-  description: 30 round magazine for submachine guns. This version contains standard FMJ ammunition.
+  description: 30-round magazine for submachine guns. Contains standard FMJ ammunition, as denoted by the red stripe on the magazine.
   components:
   - type: BallisticAmmoProvider
     capacity: 30
@@ -298,7 +298,7 @@
   id: MagazinePistolSubMachineGunPractice
   name: SMG magazine (.38 auto practice)
   parent: BaseMagazinePistolSubMachineGun
-  description: 30 round magazine for submachine guns. This version contains rubber-tipped practice ammunition.
+  description: 30-round magazine for submachine guns. Contains non-harmful practice ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice

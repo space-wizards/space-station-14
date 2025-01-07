@@ -31,25 +31,12 @@
     - type: Appearance
 
 # Shotgun Shells
-- type: entity
-  parent: AmmoProviderShotgunShell
-  id: BoxBeanbag
-  name: shell box (beanbag)
-  components:
-    - type: BallisticAmmoProvider
-      proto: ShellShotgunBeanbag
-    - type: Sprite
-      layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-1
-        map: ["enum.GunVisualLayers.Mag"]
-      - state: beanbag
 
 - type: entity
-  name: shell box (lethal)
+  name: shell box (.50 pellet)
   parent: AmmoProviderShotgunShell
   id: BoxLethalshot
+  description: A cardboard box full of standard .50 pellet shotshells, which fire small lead balls in a wide cone.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgun
@@ -62,9 +49,26 @@
       - state: lethal
 
 - type: entity
-  name: shell box (slug)
+  name: shell box (.50 practice)
+  parent: AmmoProviderShotgunShell
+  id: BoxShotgunPractice
+  description: A cardboard box full of .50 training rounds, with tiny, non-harmful projectiles.
+  components:
+    - type: BallisticAmmoProvider
+      proto: ShellShotgunPractice
+    - type: Sprite
+      layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-1
+        map: ["enum.GunVisualLayers.Mag"]
+      - state: practice
+
+- type: entity
+  name: shell box (.50 slug)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunSlug
+  description: A cardboard box full of .50 slugs, which fire a single large projectile with a much longer range.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunSlug
@@ -79,26 +83,28 @@
       - state: mag-alt-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: slug
-
+  
 - type: entity
-  name: shell box (flare)
   parent: AmmoProviderShotgunShell
-  id: BoxShotgunFlare
+  id: BoxBeanbag
+  name: shell box (.50 beanbag)
+  description: A cardboard box full of .50 beanbag shotshells, which contain a padded bag of metal pellets that stuns and incapacitates the target.
   components:
     - type: BallisticAmmoProvider
-      proto: ShellShotgunFlare
+      proto: ShellShotgunBeanbag
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-1
         map: ["enum.GunVisualLayers.Mag"]
-      - state: flare
+      - state: beanbag
 
 - type: entity
-  name: shell box (incendiary)
+  name: shell box (.50 incendiary pellet)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunIncendiary
+  description: A cardboard box full of exotic .50 incendiary shotshells, designed to fill a cone in front of you with burning pellets.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunIncendiary
@@ -111,9 +117,10 @@
       - state: incendiary
 
 - type: entity
-  name: shell box (uranium)
+  name: shell box (.50 uranium slug)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunUranium
+  description: A cardboard box full of experimental .50 uranium-core slugs, for added radiation damage to the target.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunUranium
@@ -130,24 +137,26 @@
       - state: uranium
 
 - type: entity
-  name: shell box (practice)
+  name: shell box (.50 flare)
   parent: AmmoProviderShotgunShell
-  id: BoxShotgunPractice
+  id: BoxShotgunFlare
+  description: A cardboard box full of .50 illumination flares. Useable by both shotguns and emergency flare guns.
   components:
     - type: BallisticAmmoProvider
-      proto: ShellShotgunPractice
+      proto: ShellShotgunFlare
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-1
         map: ["enum.GunVisualLayers.Mag"]
-      - state: practice
+      - state: flare
 
 - type: entity
-  name: shell box (tranquilizer)
+  name: shell box (.50 tranquilizer)
   parent: AmmoProviderShotgunShell
   id: BoxShellTranquilizer
+  description: A cardboard box full of special .50 tranquilizer slugs. These rounds are very low velocity and contain an auto-injecting syringe preloaded with chloral hydrate for knocking out animals.
   components:
     - type: BallisticAmmoProvider
       proto: ShellTranquilizer

@@ -1,6 +1,6 @@
 - type: entity
   id: BaseMagazineCaselessRifle
-  name: "magazine (.25 caseless)"
+  name: "magazine (.20 caseless)"
   parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -34,7 +34,7 @@
 
 - type: entity
   id: BaseMagazineCaselessRifleShort
-  name: "caseless rifle short magazine (.25 caseless)"
+  name: "caseless rifle short magazine (.20 caseless)"
   parent: BaseMagazineCaselessRifle
   abstract: true
   components:
@@ -53,7 +53,7 @@
 
 - type: entity
   id: BaseMagazinePistolCaselessRifle
-  name: "pistol magazine (.25 caseless)"
+  name: "pistol magazine (.20 caseless)"
   parent: BaseMagazineCaselessRifle
   abstract: true
   components:
@@ -82,8 +82,8 @@
   - type: Appearance
 
 - type: entity
-  id: MagazineCaselessRifle10x24
-  name: "box magazine (.25 caseless)"
+  id: MagazineCaselessRifle10x24 # not used by any in game obtainable gun
+  name: "box magazine (.20 caseless)"
   parent: BaseMagazineCaselessRifle
   components:
   - type: BallisticAmmoProvider
@@ -94,8 +94,9 @@
 
 - type: entity
   id: MagazinePistolCaselessRifle
-  name: "pistol magazine (.25 caseless)"
+  name: "pistol magazine (.20 caseless)"
   parent: BaseMagazinePistolCaselessRifle
+  description: 10-round magazine for the Cobra special operations pistol. Used primarily by Syndicate agents.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle
@@ -114,8 +115,9 @@
 
 - type: entity
   id: MagazinePistolCaselessRiflePractice
-  name: "pistol magazine (.25 caseless practice)"
+  name: "pistol magazine (.20 caseless practice)"
   parent: BaseMagazinePistolCaselessRifle
+  description: 10-round magazine for the Cobra special operations pistol. Practice variant containing non-harmful rounds.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRiflePractice
@@ -132,9 +134,9 @@
     zeroVisible: false
   - type: Appearance
 
-- type: entity
+- type: entity # not used by any in game obtainable gun.
   id: MagazineCaselessRifle
-  name: "magazine (.25 caseless)"
+  name: "magazine (.20 caseless)"
   parent: BaseMagazineCaselessRifle
   components:
   - type: BallisticAmmoProvider
@@ -146,9 +148,9 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
 
-- type: entity
+- type: entity # not used by any in game obtainable gun.
   id: MagazineCaselessRiflePractice
-  name: "magazine (.25 caseless practice)"
+  name: "magazine (.20 caseless practice)"
   parent: BaseMagazineCaselessRifle
   components:
   - type: BallisticAmmoProvider
@@ -160,9 +162,9 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
 
-- type: entity
+- type: entity # not used by any in game obtainable gun.
   id: MagazineCaselessRifleShort
-  name: "short magazine (.25 caseless)"
+  name: "short magazine (.20 caseless)"
   parent: BaseMagazineCaselessRifleShort
   components:
   - type: BallisticAmmoProvider
@@ -175,9 +177,9 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
 
-- type: entity
+- type: entity # not used by any in game obtainable gun.
   id: MagazineCaselessRifleShortPractice
-  name: "short magazine (.25 caseless practice)"
+  name: "short magazine (.20 caseless practice)"
   parent: BaseMagazineCaselessRifleShort
   components:
   - type: BallisticAmmoProvider

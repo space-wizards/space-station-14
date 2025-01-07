@@ -38,7 +38,7 @@
   id: MagazineLightRifleBox
   name: "ammo belt (.308 rifle)"
   parent: BaseMagazineLightRifle
-  description: Metal box containing a 100-round belt of linked 0.308x1.53 inch rifle rounds, for use in a light machine gun. Used primarily by the L6 squad automatic weapon.
+  description: Metal box containing a 100-round belt of linked .308 rifle rounds, for use in a lgiht machine gun. Used primarily by the L6 squad automatic weapon.
   components:
   - type: Tag
     tags:
@@ -100,15 +100,6 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineLightRifleIncendiary
-  name: "magazine (.308 rifle incendiary)"
-  parent: MagazineLightRifle
-  description: Magazine containing 0.308x1.53 inch incendiary rifle rounds. Intermediate rifle cartridge containing an incendiary compound to burn the target from inside.  Generally used in aftermarket and Syndicate rifles.
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeLightRifleIncendiary
-
-- type: entity
   id: MagazineLightRifleUranium
   name: "magazine (.308 rifle uranium)"
   parent: BaseMagazineLightRifle
@@ -123,9 +114,18 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
 
-- type: entity # completely unused?
+- type: entity
+  id: MagazineLightRifleIncendiary
+  name: "magazine (.30 rifle incendiary)"
+  parent: MagazineLightRifle
+  description: Standard AKMS magazine holding 30 rounds. This version contains red-tipped incendiary ammo.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleIncendiary
+
+- type: entity # nothing uses this?
   id: MagazineLightRifleMaxim
-  name: "pan magazine (.308 rifle)"
+  name: "pan magazine (.30 rifle)"
   parent: BaseMagazineLightRifle
   components:
   - type: Tag
@@ -136,10 +136,10 @@
     capacity: 96
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/maxim.rsi
-  
-  - type: entity # completely unused?
+
+- type: entity # nothing uses this?
   id: MagazineLightRiflePkBox
-  name: "PK munitions box (.308 rifle)"
+  name: "PK munitions box (.30 rifle)"
   parent: BaseMagazineLightRifle
   components:
   - type: Tag

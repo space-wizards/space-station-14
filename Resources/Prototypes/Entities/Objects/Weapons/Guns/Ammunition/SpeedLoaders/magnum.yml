@@ -1,6 +1,6 @@
 - type: entity
   id: BaseSpeedLoaderMagnum
-  name: "speed loader (.45 magnum)"
+  name: "speed loader (.44 magnum)"
   parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -21,8 +21,9 @@
 
 - type: entity
   id: SpeedLoaderMagnum
-  name: "speed loader (.45 magnum)"
+  name: "speed loader (.44 magnum)"
   parent: BaseSpeedLoaderMagnum
+  description: A speedloader full of 0.44x1.63 magnum rounds, for a quick reload.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
@@ -41,8 +42,9 @@
 
 - type: entity
   id: SpeedLoaderMagnumEmpty
-  name: "speed loader (.45 magnum any)"
+  name: "speed loader (.44 magnum any)"
   parent: SpeedLoaderMagnum
+  description: A speedloader for 0.44x1.63 magnum rounds.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -54,7 +56,7 @@
 
 - type: entity
   id: SpeedLoaderMagnumIncendiary
-  name: "speed loader (.45 magnum incendiary)"
+  name: "speed loader (.44 magnum incendiary)"
   parent: SpeedLoaderMagnum
   components:
   - type: BallisticAmmoProvider
@@ -62,8 +64,9 @@
 
 - type: entity
   id: SpeedLoaderMagnumPractice
-  name: "speed loader (.45 magnum practice)"
+  name: "speed loader (.44 magnum practice)"
   parent: BaseSpeedLoaderMagnum
+  description: A speedloader full of 0.44x1.63 magnum rounds, for a quick reload. Contains special training ammo.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
@@ -82,8 +85,9 @@
 
 - type: entity
   id: SpeedLoaderMagnumAP
-  name: "speed loader (.45 magnum armor-piercing)"
+  name: "speed loader (.44 magnum AP)"
   parent: BaseSpeedLoaderMagnum
+  description: A speedloader full of 0.44x1.63 magnum rounds, for a quick reload. Contains highly-illegal armor-piercing ammo.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumAP
@@ -102,7 +106,7 @@
 
 - type: entity
   id: SpeedLoaderMagnumUranium
-  name: "speed loader (.45 magnum uranium)"
+  name: "speed loader (.44 magnum uranium)"
   parent: BaseSpeedLoaderMagnum
   components:
   - type: BallisticAmmoProvider

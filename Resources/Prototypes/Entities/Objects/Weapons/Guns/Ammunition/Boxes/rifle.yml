@@ -29,7 +29,7 @@
   parent: BaseMagazineBoxRifle
   id: MagazineBoxRifleBig
   name: large ammunition box (.223 rifle)
-  description: Metal box full of 0.223x1.78 rifle rounds. High-velocity intermediate cartridge designed by Nanotrasen for use in combat rifles. A good balance of recoil, velocity, and stopping power.
+  description: Large metal box of 0.223x1.78 in standard NT packaging. This box contains FMJ rounds for most use cases.
   components:
   - type: BallisticAmmoProvider
     capacity: 200
@@ -50,7 +50,7 @@
   parent: BaseMagazineBoxRifle
   id: MagazineBoxRifle
   name: ammunition box (.223 rifle)
-  description: Cardboard box full of 0.223x1.78 rifle rounds. High-velocity intermediate cartridge designed by Nanotrasen for use in combat rifles. A good balance of recoil, velocity, and stopping power.
+  description: A box of 0.223x1.78 in standard NT packaging. This box contains FMJ rounds for most use cases.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifle
@@ -65,7 +65,7 @@
   parent: BaseMagazineBoxRifle
   id: MagazineBoxRiflePractice
   name: ammunition box (.223 rifle practice)
-  description: Cardboard box full of 0.223x1.78 rifle rounds. Intermediate rifle cartridge lacking a projectile for use in practice.
+  description: A box of 0.223x1.78 in standard NT packaging. This box contains rubber-tipped practice rounds for firing exercises and trials.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRiflePractice
@@ -81,7 +81,7 @@
   id: MagazineBoxRifleIncendiary
   parent: BaseMagazineBoxRifle
   name: ammunition box (.223 rifle incendiary)
-  description: Cardboard box full of 0.223x1.78 incendiary rounds. Replaces the lead payload with a self-igniting incendiary compound. Developed by Nanotrasen for use in combat rifles.
+  description: A box of 0.223x1.78 in standard NT packaging. This box contains morally dubious incendiary ammunition which burns inside the target.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleIncendiary
@@ -97,7 +97,7 @@
   id: MagazineBoxRifleUranium
   parent: BaseMagazineBoxRifle
   name: ammunition box (.223 rifle uranium)
-  description: Cardboard box full of 0.223x1.78 rifle rounds. Specialized rifle rounds containing expensive uranium cores which severely irradiate the target after impact. Developed by Nanotrasen for use in combat rifles.
+  description: A box of 0.223x1.78 in standard NT packaging. This box contains uranium-cored ammunition which irradiates the target.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleUranium

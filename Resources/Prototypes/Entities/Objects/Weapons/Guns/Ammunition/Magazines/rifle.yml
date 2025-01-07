@@ -37,7 +37,7 @@
   id: MagazineRifle
   name: "magazine (.223 rifle)"
   parent: BaseMagazineRifle
-  description: The standard magazine for NT combat rifles, holds 25 rounds. This type comes with standard lead-tipped FMJ cartridges.
+  description: The standard magazine for NT combat rifles, holds 25 rounds. This type comes with standard lead-tipped FMJ, as denoted by the red strip around the magazine.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifle
@@ -63,10 +63,19 @@
       map: ["enum.GunVisualLayers.Base"]
 
 - type: entity
+  id: MagazineRifleIncendiary
+  name: "magazine (.223 rifle incendiary)"
+  parent: MagazineRifle
+  description: The standard magazine for NT combat rifles, holds 25 rounds. This type contains red-tipped incendiary ammunition that burns the target from the inside.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleIncendiary
+
+- type: entity
   id: MagazineRiflePractice
   name: "magazine (.223 rifle practice)"
   parent: BaseMagazineRifle
-  description: The standard magazine for NT combat rifles, holds 25 rounds. This type contains practice ammo with blue rubber tips.
+  description: The standard magazine for NT combat rifles, holds 25 rounds. This type contains practice ammo with blue rubber tips, denoted by a blue strip around the magazine.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRiflePractice
@@ -76,14 +85,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineRifleIncendiary
-  name: "magazine (.223 rifle incendiary)"
-  parent: MagazineRifle
-  description: The standard magazine for NT combat rifles, holds 25 rounds. This type contains red-tipped incendiary ammunition that burns the target from the inside.
-  - type: BallisticAmmoProvider
-    proto: CartridgeRifleIncendiary
 
 - type: entity
   id: MagazineRifleUranium

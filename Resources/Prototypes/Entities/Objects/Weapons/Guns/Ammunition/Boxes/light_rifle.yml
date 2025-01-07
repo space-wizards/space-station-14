@@ -29,7 +29,7 @@
   parent: BaseMagazineBoxLightRifle
   id: MagazineBoxLightRifleBig
   name: large ammunition box (.308 rifle)
-  description: Metal box full of 0.308x1.53 rifle rounds. Intermediate rifle cartridge. Comparable to the .223 cartridge, but somewhat wider and shorter. Commonly used by aftermarket and Syndicate rifles.
+  description: Metal box full of 0.308x1.53 rounds, commonly found in aftermarket and Syndicate weapons. This one holds standard FMJ ammuntion.
   components:
   - type: BallisticAmmoProvider
     capacity: 240
@@ -50,7 +50,7 @@
   parent: BaseMagazineBoxLightRifle
   id: MagazineBoxLightRifle
   name: ammunition box (.308 rifle)
-  description: Cardboard box full of 0.308x1.53 rifle rounds. Intermediate rifle cartridge. Comparable to the .223 cartridge, but somewhat wider and shorter. Commonly used by aftermarket and Syndicate rifles.
+  description: Cardboard box full of 0.308x1.53 rifle rounds, commonly found in aftermarket and Syndicate weapons. This one holds standard FMJ ammuntion.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifle
@@ -65,7 +65,7 @@
   parent: BaseMagazineBoxLightRifle
   id: MagazineBoxLightRiflePractice
   name: ammunition box (.308 rifle practice)
-  description: Cardboard box full of 0.308x1.53 rifle rounds. Intermediate rifle cartridge lacking a projectile for use in practice.
+  description: Cardboard box full of 0.308x1.53 rifle rounds, commonly found in aftermarket and Syndicate weapons. This one holds rubber-tipped practice rounds.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRiflePractice
@@ -81,7 +81,7 @@
   id: MagazineBoxLightRifleIncendiary
   parent: BaseMagazineBoxLightRifle
   name: ammunition box (.308 rifle incendiary)
-  description: Cardboard box full of 0.308x1.53 rifle rounds. Intermediate rifle cartridge containing an incendiary compound to burn the target from inside.  Generally used in aftermarket and Syndicate rifles.
+  description: Cardboard box full of 0.308x1.53 rifle rounds, commonly found in aftermarket and Syndicate weapons. This one holds incendiary rounds which burn the target from the inside.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleIncendiary
@@ -97,7 +97,7 @@
   parent: BaseMagazineBoxLightRifle
   id: MagazineBoxLightRifleUranium
   name: ammunition box (.308 rifle uranium)
-  description: Cardboard box full of 0.308x1.53 rifle rounds. Each bullet contains a expensive uranium core which severely irradiates the target after impact. Primarily used by the Syndicate, or by particularly wealthy organized crime.
+  description: Cardboard box full of 0.308x1.53 rifle rounds, commonly found in aftermarket and Syndicate weapons. This one holds uranium-core rounds which severely irradiate the target.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleUranium

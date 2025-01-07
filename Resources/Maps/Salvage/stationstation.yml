@@ -2194,7 +2194,7 @@ entities:
     - type: Transform
       pos: -5.8173656,7.4934487
       parent: 179
-- proto: SpeedLoaderLightRifle
+- proto: SpeedLoaderHeavyRifle
   entities:
   - uid: 156
     components:

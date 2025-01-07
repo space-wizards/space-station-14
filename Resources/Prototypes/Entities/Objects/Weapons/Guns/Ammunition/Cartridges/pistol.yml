@@ -45,7 +45,7 @@
 
 - type: entity
   id: CartridgePistolIncendiary
-  name: cartridge (.35 auto incendiary)
+  name: cartridge (.38 auto incendiary)
   parent: BaseCartridgePistol
   components:
   - type: CartridgeAmmo
@@ -60,7 +60,7 @@
 
 - type: entity
   id: CartridgePistolUranium
-  name: cartridge (.35 auto uranium)
+  name: cartridge (.38 auto uranium)
   parent: BaseCartridgePistol
   components:
   - type: CartridgeAmmo

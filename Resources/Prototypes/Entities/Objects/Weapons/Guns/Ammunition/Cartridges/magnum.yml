@@ -1,6 +1,6 @@
 - type: entity
   id: BaseCartridgeMagnum
-  name: cartridge (.45 magnum)
+  name: cartridge (.44 magnum)
   parent: [ BaseCartridge, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -20,18 +20,18 @@
 
 - type: entity
   id: CartridgeMagnum
-  name: cartridge (.45 magnum)
+  name: cartridge (.44 magnum)
   parent: BaseCartridgeMagnum
-  description: 0.45x1.63 inches. Heavy magnum cartridge commonly used by Revolvers. Packs a punch.
+  description: 0.44x1.63 inches. Heavy magnum cartridge commonly used by Revolvers. Some argue it's the most powerful handgun cartridge in the galaxy.
   components:
   - type: CartridgeAmmo
     proto: BulletMagnum
 
 - type: entity
   id: CartridgeMagnumPractice
-  name: cartridge (.45 magnum practice)
+  name: cartridge (.44 magnum practice)
   parent: BaseCartridgeMagnum
-  description: 0.45x1.63 inches. Practice variant of the cartridge using a blue rubber tip.
+  description: 0.44x1.63 inches. Practice variant of the cartridge using a blue rubber tip.
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumPractice
@@ -45,9 +45,9 @@
 
 - type: entity
   id: CartridgeMagnumAP
-  name: cartridge (.45 magnum armor-piercing)
+  name: cartridge (.44 magnum armor-piercing)
   parent: BaseCartridgeMagnum
-  description: 0.45x1.63 inches. Highly illegal armor-piercing magnum rounds that completely bypass standard body armor. Used primarily by elite units.
+  description: 0.44x1.63 inches. Highly illegal armor-piercing magnum rounds that completely bypass standard body armor. Used primarily by elite units.
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumAP
@@ -61,7 +61,7 @@
 
 - type: entity
   id: CartridgeMagnumIncendiary
-  name: cartridge (.45 magnum incendiary)
+  name: cartridge (.44 magnum incendiary)
   parent: BaseCartridgeMagnum
   components:
   - type: CartridgeAmmo
@@ -76,7 +76,7 @@
 
 - type: entity
   id: CartridgeMagnumUranium
-  name: cartridge (.45 magnum uranium)
+  name: cartridge (.44 magnum uranium)
   parent: BaseCartridgeMagnum
   components:
   - type: CartridgeAmmo

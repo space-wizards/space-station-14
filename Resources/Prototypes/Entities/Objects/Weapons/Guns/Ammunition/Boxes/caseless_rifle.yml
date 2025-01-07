@@ -2,7 +2,7 @@
   abstract: true
   parent: BaseItem
   id: BaseMagazineBoxCaselessRifle
-  name: ammunition box (.25 caseless)
+  name: ammunition box (.20 caseless)
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
@@ -25,10 +25,10 @@
   - type: Appearance
 
 # Boxes
-- type: entity
+- type: entity # does anything use this?
   parent: BaseMagazineBoxCaselessRifle
   id: MagazineBoxCaselessRifle10x24
-  name: ammunition box (.25 caseless)
+  name: ammunition box (.20 caseless)
   components:
   - type: BallisticAmmoProvider
     capacity: 200
@@ -48,7 +48,8 @@
 - type: entity
   parent: BaseMagazineBoxCaselessRifle
   id: MagazineBoxCaselessRifleBig
-  name: ammunition box (.25 caseless)
+  name: large ammunition box (.20 caseless)
+  descripition: A large metal box full of 0.20x0.34 caseless rounds. Highly illegal in Nanotrasen space.
   components:
   - type: BallisticAmmoProvider
     capacity: 200
@@ -68,7 +69,8 @@
 - type: entity
   parent: BaseMagazineBoxCaselessRifle
   id: MagazineBoxCaselessRifle
-  name: ammunition box (.25 caseless)
+  name: ammunition box (.20 caseless)
+  description: A cardboard box full of 0.20x0.34 caseless rounds. Highly illegal in Nanotrasen space.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle
@@ -82,7 +84,8 @@
 - type: entity
   parent: BaseMagazineBoxCaselessRifle
   id: MagazineBoxCaselessRiflePractice
-  name: ammunition box (.25 caseless practice)
+  name: ammunition box (.20 caseless practice)
+  description: A cardboard box full of 0.20x0.34 caseless rounds. This variant contains special rubber training rounds.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRiflePractice

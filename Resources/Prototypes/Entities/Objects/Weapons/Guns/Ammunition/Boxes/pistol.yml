@@ -2,7 +2,7 @@
   abstract: true
   parent: BaseItem
   id: BaseMagazineBoxPistol
-  name: ammunition box (.35 auto)
+  name: ammunition box (.38 auto)
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
@@ -28,7 +28,8 @@
 - type: entity
   parent: BaseMagazineBoxPistol
   id: MagazineBoxPistol
-  name: ammunition box (.35 auto)
+  name: ammunition box (.38 auto)
+  description: Cardboard box of .38 auto ammunition. This version contains FMJ rounds for general purpose use.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistol
@@ -42,7 +43,8 @@
 - type: entity
   parent: BaseMagazineBoxPistol
   id: MagazineBoxPistolPractice
-  name: ammunition box (.35 auto practice)
+  name: ammunition box (.38 auto practice)
+  description: Cardboard box of .38 auto ammunition. This version contains blue rubber-tipped rounds for training.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice
@@ -57,7 +59,7 @@
 - type: entity
   id: MagazineBoxPistolIncendiary
   parent: BaseMagazineBoxPistol
-  name: ammunition box (.35 auto incendiary)
+  name: ammunition box (.38 auto incendiary)
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolIncendiary
@@ -72,7 +74,7 @@
 - type: entity
   id: MagazineBoxPistolUranium
   parent: BaseMagazineBoxPistol
-  name: ammunition box (.35 auto uranium)
+  name: ammunition box (.38 auto uranium)
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolUranium

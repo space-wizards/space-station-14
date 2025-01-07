@@ -1,6 +1,6 @@
 - type: entity
   id: BaseCartridgeCaselessRifle
-  name: cartridge (.25 rifle)
+  name: cartridge (.20 rifle)
   parent: [ BaseCartridge, BaseRestrictedContraband ]
   abstract: true
   components:
