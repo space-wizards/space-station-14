@@ -12,13 +12,13 @@
 #        greaterThan: false
 #        watts: 80
 
-    - !type:HTNPrimitiveTask
-      operator: !type:UtilityOperator
-        proto: NearbyTransporterProvider
-      preconditions:
-      - !type:PowerCellChargePrecondition
-        greaterThan: true
-        watts: 80
+#    - !type:HTNPrimitiveTask
+#      operator: !type:UtilityOperator
+#        proto: NearbyTransporterProvider
+#      preconditions:
+#      - !type:PowerCellChargePrecondition
+#        greaterThan: true
+#        watts: 80
 
     - !type:HTNPrimitiveTask
       operator: !type:MoveToOperator

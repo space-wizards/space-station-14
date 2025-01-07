@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Server.PowerCell;
@@ -5,6 +6,7 @@ using Content.Server.Transporters.Components;
 using Content.Shared.Item;
 using Content.Shared.PowerCell.Components;
 using Robust.Server.Containers;
+using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Transporters.Systems;
@@ -24,8 +26,6 @@ public sealed partial class TransporterSystem : EntitySystem
         SubscribeLocalEvent<TransporterProviderComponent, EndCollideEvent>(OnProviderEndCollide);
 
         SubscribeLocalEvent<TransporterComponent, PowerCellChangedEvent>(OnPowerCellChanged);
-
-        SubscribeLocalEvent<TransporterMarkedComponent, GettingPickedUpAttemptEvent>(OnMarkedPickup);
     }
 
     public override void Update(float frameTime)
@@ -103,19 +103,30 @@ public sealed partial class TransporterSystem : EntitySystem
         return true;
     }
 
-    public bool TransporterPickup(EntityUid transporter, EntityUid item)
+    public bool TransporterAttemptPickup(EntityUid transporter, EntityUid item)
     {
         if (!HasComp<ItemComponent>(item))
             return false;
 
         var container = _containers.GetContainer(transporter, ContainerKey);
 
+        if ((Transform(transporter).LocalPosition - Transform(item).LocalPosition).LengthSquared() < 2 * 2)
+            return false;
+
         if (!_containers.CanInsert(item, container))
             return false;
 
+        if (!TryComp(item, out TransporterMarkedComponent? marked))
+            return false;
 
+        return TransporterPickup(transporter, (item, marked), container);
+    }
 
-        return true;
+    public bool TransporterPickup(EntityUid transporter, Entity<TransporterMarkedComponent> item, BaseContainer? container = null)
+    {
+        container ??= _containers.GetContainer(transporter, ContainerKey);
+
+        return _containers.Insert(item.Owner, container);
     }
 
     public void OnProviderCollide(EntityUid uid, TransporterProviderComponent component, ref StartCollideEvent args)
@@ -128,12 +139,8 @@ public sealed partial class TransporterSystem : EntitySystem
 
     }
 
-    public void OnMarkedPickup(EntityUid uid, TransporterMarkedComponent component,
-        ref GettingPickedUpAttemptEvent args)
+    public void OnMarkedPickup(Entity<TransporterMarkedComponent> uid)
     {
-        if (args.Cancelled)
-            return;
-
 
     }
 }
