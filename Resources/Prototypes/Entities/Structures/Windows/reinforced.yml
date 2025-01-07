@@ -74,7 +74,7 @@
     state: reinforced_window
   - type: Construction
     graph: WindowDirectional
-    node: windowReinforcedDirectional
+    node: reinforcedWindowDirectional
   - type: Appearance
   - type: DamageVisuals
     thresholds: [5, 10, 20]

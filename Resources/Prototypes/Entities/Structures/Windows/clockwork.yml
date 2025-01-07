@@ -71,7 +71,7 @@
     state: clock_window
   - type: Construction
     graph: WindowDirectional
-    node: windowClockworkDirectional
+    node: clockworkWindowDirectional
   - type: Appearance
   - type: DamageVisuals
     thresholds: [5, 10, 20]
