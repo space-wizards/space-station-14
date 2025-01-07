@@ -106,7 +106,7 @@
     - type: StaticPrice
       price: 150
     - type: AccessReader
-      access: [ [ "Engineering" ] ]
+      access: [ ["Engineering"], ["Security"] ]
     - type: PryUnpowered
       pryModifier: 0.5
     - type: PointLight
