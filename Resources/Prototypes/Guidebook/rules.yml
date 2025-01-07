@@ -388,7 +388,7 @@
 
 - type: guideEntry
   id: MRPRules
-  name: guide-entry-rules-mrp
+  name: guide-entry-rules-mrp-m0
   ruleEntry: true
   priority: 60
   text: "/ServerInfo/Guidebook/ServerRules/MRPRules/RuleM0.xml"
