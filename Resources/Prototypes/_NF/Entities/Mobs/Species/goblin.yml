@@ -67,7 +67,7 @@
     - "enum.HumanoidVisualLayers.RLeg"
     damageOverlayGroups:
       Brute:
-        sprite: Mobs/Effects/brute_damage.rsi
+        sprite: _Impstation/Mobs/Effects/goblin_brute_damage.rsi #imp. these sprites are just chest & are sooo lazy but who care
         color: "#5c7500"
       Burn:
         sprite: Mobs/Effects/burn_damage.rsi
