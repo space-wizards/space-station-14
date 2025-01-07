@@ -34,15 +34,6 @@
   rules: NearTrain
   priority: 4
 
-- type: ambientMusic
-  id: Sea
-  sound:
-    params:
-      volume: -12
-    collection: AmbienceSea
-  rules: NearSea
-  priority: 1
-
 # Departments
 - type: ambientMusic
   id: Medical
@@ -94,6 +85,17 @@
   interruptable: true
   priority: 1
 
+- type: ambientMusic
+  id: Sweetwater
+  sound:
+    params:
+      volume: -12
+    collection: SweetwaterAmbience
+  rules: OnSweetwater
+  fadeIn: true
+  interruptable: true
+  priority: 1
+
 ## Fallback if nothing else found
 - type: ambientMusic
   id: General
@@ -116,11 +118,6 @@
     - /Audio/Ambience/ambitech.ogg
     - /Audio/Ambience/ambitech2.ogg
     - /Audio/Ambience/ambitech3.ogg
-
-- type: soundCollection
-  id: AmbienceSea
-  files:
-    - /Audio/Ambience/ambisea1.ogg
 
 - type: soundCollection
   id: AmbienceGeneral
@@ -190,6 +187,11 @@
     - /Audio/Ambience/ambiruin7.ogg
     - /Audio/Ambience/voyage_neverending.ogg
     - /Audio/Ambience/unanchored.ogg
+
+- type: soundCollection
+  id: SweetwaterAmbience
+  files:
+    - /Audio/Effects/whale_groan.ogg
 
 - type: soundCollection
   id: AmbienceRuins
@@ -336,17 +338,6 @@
       range: 3
 
 - type: rules
-  id: NearSea
-  rules:
-    - !type:NearbyTilesPercentRule
-      ignoreAnchored: true
-      percent: 0.05
-      tiles:
-        - tiles-invisible
-        - tiles-invisible-real
-      range: 4
-
-- type: rules
   id: NearSpookyFog
   rules:
     - !type:NearbyEntitiesRule
@@ -360,3 +351,8 @@
   id: OnMapGrid
   rules:
     - !type:OnMapGridRule
+
+- type: rules
+  id: OnSweetwater
+  rules:
+    - !type:OnSweetwaterRule

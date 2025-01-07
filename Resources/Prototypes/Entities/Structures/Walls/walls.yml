@@ -566,6 +566,7 @@
     price: 150
   - type: RadiationBlocker
     resistance: 5
+  - type: Rustable
 
 - type: entity
   parent: WallReinforced
@@ -584,6 +585,12 @@
   - type: IconSmooth
     key: walls
     base: reinf_over
+  - type: InGas
+    gasId: 9
+    damagedByGas: true
+    damage:
+        types:
+            Blunt: 5
 
 - type: entity
   parent: WallShuttleDiagonal
@@ -896,6 +903,7 @@
   - type: IconSmooth
     key: walls
     base: solid
+  - type: Rustable
 
 - type: entity
   parent: WallShuttleDiagonal
@@ -936,6 +944,12 @@
   - type: IconSmooth
     key: walls
     base: solid
+  - type: InGas
+    gasId: 9
+    damagedByGas: true
+    damage:
+        types:
+            Blunt: 5
 
 - type: entity
   parent: BaseWall

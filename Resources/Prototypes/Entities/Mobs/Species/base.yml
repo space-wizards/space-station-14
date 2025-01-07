@@ -173,7 +173,6 @@
   - type: SSDIndicator
   - type: StandingState
   - type: Fingerprint
-  - type: Dna
   - type: MindContainer
     showExamineInfo: true
   - type: InteractionPopup
