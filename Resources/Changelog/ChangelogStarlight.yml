@@ -1797,4 +1797,31 @@ Entries:
   id: 254
   time: '2025-01-06T21:00:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/219
-
+- author: Rinary
+  changes:
+  - message: Added blueshield hardsuit.
+    type: Add
+  id: 255
+  time: '2025-01-07T14:08:03.724566+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added blueshield access.
+    type: Add
+  id: 256
+  time: '2025-01-07T14:08:14.547628+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed blueshield comms.
+    type: Fix
+  id: 257
+  time: '2025-01-07T14:08:29.745430+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed blueshield double emergency pack.
+    type: Fix
+  id: 258
+  time: '2025-01-07T14:08:48.971923+00:00'
+  url: 'null'
