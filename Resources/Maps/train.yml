@@ -36756,7 +36756,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: ClothingMaskBlushingClown
+- proto: ClothingMaskSexyClown
   entities:
   - uid: 5469
     components:
@@ -36765,7 +36765,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: ClothingMaskBlushingMime
+- proto: ClothingMaskSexyMime
   entities:
   - uid: 5482
     components:

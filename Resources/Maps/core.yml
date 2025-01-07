@@ -61504,7 +61504,7 @@ entities:
     - type: Transform
       pos: 37.5265,-16.39656
       parent: 2
-- proto: ClothingMaskBlushingMime
+- proto: ClothingMaskSexyMime
   entities:
   - uid: 8192
     components:

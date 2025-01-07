@@ -41235,7 +41235,7 @@ entities:
     - type: Transform
       pos: -55.415558,65.73492
       parent: 2
-- proto: ClothingMaskBlushingMime
+- proto: ClothingMaskSexyMime
   entities:
   - uid: 4701
     components:

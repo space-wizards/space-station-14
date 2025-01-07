@@ -1342,7 +1342,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: ClothingMaskBlushingMime
+- proto: ClothingMaskSexyMime
   entities:
   - uid: 315
     components:
