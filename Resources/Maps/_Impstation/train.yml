@@ -5599,7 +5599,7 @@ entities:
             1: 44714
           -7,-63:
             1: 61184
-            6: 12
+            4: 12
           -7,-62:
             1: 64443
           -7,-61:
@@ -5607,14 +5607,14 @@ entities:
           -7,-60:
             1: 48063
           -7,-64:
-            4: 12
-            5: 3072
+            5: 12
+            6: 3072
           -6,-64:
-            4: 1
-            5: 256
+            5: 1
+            6: 256
             1: 17476
           -6,-63:
-            6: 1
+            4: 1
             1: 5956
           -6,-62:
             1: 4096
@@ -5624,8 +5624,8 @@ entities:
             0: 52428
           -6,-65:
             1: 17476
-            8: 1
-            7: 256
+            7: 1
+            8: 256
           -7,-59:
             1: 251
           -6,-60:
@@ -5657,10 +5657,10 @@ entities:
           -7,-69:
             1: 61440
           -7,-66:
-            7: 3084
+            8: 3084
           -7,-65:
-            8: 12
-            7: 3072
+            7: 12
+            8: 3072
           -6,-68:
             1: 8751
             0: 38912
@@ -5668,7 +5668,7 @@ entities:
             1: 18210
             0: 8
           -6,-66:
-            7: 257
+            8: 257
             1: 17476
           -6,-69:
             1: 61440
@@ -5795,6 +5795,21 @@ entities:
           temperature: 293.15
           moles:
           - 0
+          - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
           - 0
           - 0
           - 0
@@ -5825,9 +5840,9 @@ entities:
           temperature: 293.15
           moles:
           - 0
+          - 0
+          - 0
           - 6666.982
-          - 0
-          - 0
           - 0
           - 0
           - 0
@@ -5843,21 +5858,6 @@ entities:
           - 0
           - 0
           - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 0
-          - 0
-          - 6666.982
           - 0
           - 0
           - 0
@@ -39936,7 +39936,7 @@ entities:
   - uid: 5774
     components:
     - type: Transform
-      pos: -7.5,-117.5
+      pos: -7.5,-114.5
       parent: 2
   - uid: 17882
     components:
@@ -40114,6 +40114,13 @@ entities:
     components:
     - type: Transform
       pos: 22.5,-298.5
+      parent: 2
+- proto: DefaultStationBeaconTheater
+  entities:
+  - uid: 13996
+    components:
+    - type: Transform
+      pos: -7.5,-123.5
       parent: 2
 - proto: DefaultStationBeaconToolRoom
   entities:
@@ -52413,6 +52420,13 @@ entities:
     components:
     - type: Transform
       pos: 2.6362693,-337.2031
+      parent: 2
+- proto: FoodBreadMoldySlice
+  entities:
+  - uid: 18869
+    components:
+    - type: Transform
+      pos: 2.4949315,-141.4008
       parent: 2
 - proto: FoodBreadPlain
   entities:
@@ -97155,17 +97169,6 @@ entities:
       parent: 2
 - proto: SurveillanceCameraCommand
   entities:
-  - uid: 13946
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 10.5,-253.5
-      parent: 2
-    - type: SurveillanceCamera
-      setupAvailableNetworks:
-      - SurveillanceCameraCommand
-      nameSet: True
-      id: Car 09 - CE's Office
   - uid: 13947
     components:
     - type: Transform
@@ -97176,7 +97179,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraCommand
       nameSet: True
-      id: Telecomms
+      id: Car 09 - Telecomms
   - uid: 13948
     components:
     - type: Transform
@@ -97224,6 +97227,11 @@ entities:
     - type: Transform
       pos: -2.5,-7.5
       parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: Car 00 - Tech Vault
   - uid: 13953
     components:
     - type: Transform
@@ -97267,35 +97275,45 @@ entities:
       - SurveillanceCameraCommand
       nameSet: True
       id: Car 04 - EVA Storage Entrance
-  - uid: 13957
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 23.5,-308.5
-      parent: 2
   - uid: 13958
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 21.5,-306.5
+      pos: 23.5,-311.5
       parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: Car 09 - AI Upload 2
   - uid: 13959
     components:
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: 22.5,-309.5
+      pos: 23.5,-303.5
       parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: Car 09 - AI Upload 1
   - uid: 13960
     components:
     - type: Transform
       pos: 22.5,-317.5
       parent: 2
+    - type: SurveillanceCamera
+      id: Car 09 - Camera Routers
   - uid: 13961
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 30.5,-307.5
       parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: Car 09 - AI Core
   - uid: 13984
     components:
     - type: Transform
@@ -97330,6 +97348,17 @@ entities:
       id: Car 00 - Tech Vault
 - proto: SurveillanceCameraEngineering
   entities:
+  - uid: 13946
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 10.5,-253.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Car 09 - CE's Quarters
   - uid: 13962
     components:
     - type: Transform
@@ -97528,9 +97557,14 @@ entities:
   - uid: 13974
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -0.5,-305.5
+      rot: 1.5707963267948966 rad
+      pos: 1.5,-301.5
       parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Car 11 - Science Forward Hallway
   - uid: 13975
     components:
     - type: Transform
@@ -97575,12 +97609,6 @@ entities:
       - SurveillanceCameraGeneral
       nameSet: True
       id: Car 05 - Library Front Desk
-  - uid: 13979
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 6.5,-143.5
-      parent: 2
   - uid: 13981
     components:
     - type: Transform
@@ -97698,17 +97726,6 @@ entities:
       - SurveillanceCameraGeneral
       nameSet: True
       id: Car 09 - Engineering Aft Hallway
-  - uid: 13996
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -0.5,-298.5
-      parent: 2
-    - type: SurveillanceCamera
-      setupAvailableNetworks:
-      - SurveillanceCameraGeneral
-      nameSet: True
-      id: Car 11 - Science Forward Hallway
   - uid: 14000
     components:
     - type: Transform
@@ -98043,6 +98060,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 3.5,-301.5
       parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraScience
+      nameSet: True
+      id: Car 09 - Anomaly Generator
   - uid: 14017
     components:
     - type: Transform
@@ -98054,12 +98076,6 @@ entities:
       - SurveillanceCameraScience
       nameSet: True
       id: Car 11 - Robotics
-  - uid: 14019
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -6.5,-304.5
-      parent: 2
   - uid: 14025
     components:
     - type: Transform
@@ -98127,6 +98143,17 @@ entities:
       - SurveillanceCameraSecurity
       nameSet: True
       id: Car 12 - Locker Room
+  - uid: 14019
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -0.5,-366.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Car 13 - Warden's Office
   - uid: 14027
     components:
     - type: Transform
@@ -98160,12 +98187,6 @@ entities:
       - SurveillanceCameraSecurity
       nameSet: True
       id: Car 13 - Execution Chamber
-  - uid: 14030
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 1.5,-366.5
-      parent: 2
   - uid: 14032
     components:
     - type: Transform
@@ -98264,6 +98285,27 @@ entities:
       - SurveillanceCameraService
       nameSet: True
       id: Car 02 - Bar Aft Hallway
+  - uid: 13979
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-143.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraService
+      nameSet: True
+      id: Car 05 - Chapel
+  - uid: 14030
+    components:
+    - type: Transform
+      pos: 5.5,-139.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraService
+      nameSet: True
+      id: Car 05 - Chapel Crematorium
   - uid: 14038
     components:
     - type: Transform
