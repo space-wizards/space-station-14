@@ -105714,6 +105714,13 @@ entities:
     - type: Transform
       pos: 15.5,-51.5
       parent: 2
+- proto: SuitStorageBlueShield
+  entities:
+  - uid: 15576
+    components:
+    - type: Transform
+      pos: 22.5,4.5
+      parent: 2
 - proto: SuitStorageCaptain
   entities:
   - uid: 15556
@@ -105830,11 +105837,6 @@ entities:
       parent: 2
 - proto: SuitStorageSec
   entities:
-  - uid: 15576
-    components:
-    - type: Transform
-      pos: 22.5,4.5
-      parent: 2
   - uid: 15577
     components:
     - type: Transform
