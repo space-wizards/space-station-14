@@ -95,25 +95,32 @@ namespace Content.Server.Atmos.EntitySystems
         {
             // TODO ATMOS finish this
         bool isWaterPresent = false;
+        bool isWaterTooMuch = false;
 
         if (tile.Air != null)
         {
             // Check the moles of gasId 9 (water)
-            if (tile.Air.GetMoles(9) >= 80)  // Adjust the last threshhold as needed
+            if (tile.Air.GetMoles(9) >= 10)  // Adjust the last threshhold as needed
             {
                 isWaterPresent = true;
             }
+
+            if (tile.Air.GetMoles(9) >= 120)
+            {
+                isWaterTooMuch = true;
+            }
+
         }
 
             // Don't play the space wind sound on tiles that are on fire...
             if (tile.PressureDifference > 15 && !tile.Hotspot.Valid)
             {
-                if (_spaceWindSoundCooldown == 0 && !string.IsNullOrEmpty(SpaceWindSound) && !isWaterPresent)
+                if (_spaceWindSoundCooldown == 0 && !string.IsNullOrEmpty(SpaceWindSound) && !isWaterPresent && !isWaterTooMuch)
                 {
                     var coordinates = _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.GridIndices);
                     _audio.PlayPvs(SpaceWindSound, coordinates, AudioParams.Default.WithVariation(0.125f).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
                 }
-                if (_spaceWindSoundCooldown == 0 && !string.IsNullOrEmpty(WaterMoveSound) && isWaterPresent)
+                if (_spaceWindSoundCooldown == 0 && !string.IsNullOrEmpty(WaterMoveSound) && isWaterPresent && !isWaterTooMuch)
                 {
                      var coordinates = _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.GridIndices);
                     _audio.PlayPvs(WaterMoveSound, coordinates, AudioParams.Default.WithVariation(0.125f).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));

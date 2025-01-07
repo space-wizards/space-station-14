@@ -36,75 +36,52 @@ public sealed partial class DockingSystem
    /// <summary>
    /// Checks if 2 docks can be connected by moving the shuttle directly onto docks.
    /// </summary>
-private const int MaxRetries = 10;  // Number of times to retry before giving up
-private const float RetryDelay = 0.5f;  // Delay in seconds between retries (optional, adjust as needed)
+   private bool CanDock(
+       DockingComponent shuttleDock,
+       TransformComponent shuttleDockXform,
+       DockingComponent gridDock,
+       TransformComponent gridDockXform,
+       Box2 shuttleAABB,
+       Angle targetGridRotation,
+       FixturesComponent shuttleFixtures,
+       MapGridComponent grid,
+       bool isMap,
+       out Matrix3x2 matty,
+       out Box2 shuttleDockedAABB,
+       out Angle gridRotation)
+   {
+       shuttleDockedAABB = Box2.UnitCentered;
+       gridRotation = Angle.Zero;
+       matty = Matrix3x2.Identity;
 
-private bool CanDock(
-    DockingComponent shuttleDock,
-    TransformComponent shuttleDockXform,
-    DockingComponent gridDock,
-    TransformComponent gridDockXform,
-    Box2 shuttleAABB,
-    Angle targetGridRotation,
-    FixturesComponent shuttleFixtures,
-    MapGridComponent grid,
-    bool isMap,
-    out Matrix3x2 matty,
-    out Box2 shuttleDockedAABB,
-    out Angle gridRotation)
-{
-    shuttleDockedAABB = Box2.UnitCentered;
-    gridRotation = Angle.Zero;
-    matty = Matrix3x2.Identity;
+       if (shuttleDock.Docked ||
+           gridDock.Docked ||
+           !shuttleDockXform.Anchored ||
+           !gridDockXform.Anchored)
+       {
+           return false;
+       }
 
-    // Retry counter
-    int retries = 0;
+       // First, get the station dock's position relative to the shuttle, this is where we rotate it around
+       var stationDockPos = shuttleDockXform.LocalPosition +
+                            shuttleDockXform.LocalRotation.RotateVec(new Vector2(0f, -1f));
 
-    while (retries < MaxRetries)
-    {
-        // Check the conditions (same as before)
-        if (shuttleDock.Docked ||
-            gridDock.Docked ||
-            !shuttleDockXform.Anchored ||
-            !gridDockXform.Anchored)
-        {
-            return false;
-        }
+       // Need to invert the grid's angle.
+       var shuttleDockAngle = shuttleDockXform.LocalRotation;
+       var gridDockAngle = gridDockXform.LocalRotation.Opposite();
+       var offsetAngle = gridDockAngle - shuttleDockAngle;
 
-        // First, get the station dock's position relative to the shuttle, this is where we rotate it around
-        var stationDockPos = shuttleDockXform.LocalPosition +
-                             shuttleDockXform.LocalRotation.RotateVec(new Vector2(0f, -1f));
+       var stationDockMatrix = Matrix3Helpers.CreateInverseTransform(stationDockPos, shuttleDockAngle);
+       var gridXformMatrix = Matrix3Helpers.CreateTransform(gridDockXform.LocalPosition, gridDockAngle);
+       matty = Matrix3x2.Multiply(stationDockMatrix, gridXformMatrix);
 
-        // Need to invert the grid's angle.
-        var shuttleDockAngle = shuttleDockXform.LocalRotation;
-        var gridDockAngle = gridDockXform.LocalRotation.Opposite();
-        var offsetAngle = gridDockAngle - shuttleDockAngle;
+       if (!ValidSpawn(grid, matty, offsetAngle, shuttleFixtures, isMap))
+           return false;
 
-        var stationDockMatrix = Matrix3Helpers.CreateInverseTransform(stationDockPos, shuttleDockAngle);
-        var gridXformMatrix = Matrix3Helpers.CreateTransform(gridDockXform.LocalPosition, gridDockAngle);
-        matty = Matrix3x2.Multiply(stationDockMatrix, gridXformMatrix);
-
-        if (ValidSpawn(grid, matty, offsetAngle, shuttleFixtures, isMap))
-        {
-            shuttleDockedAABB = matty.TransformBox(shuttleAABB);
-            gridRotation = (targetGridRotation + offsetAngle).Reduced();
-            return true;
-        }
-
-        // If docking failed, increment the retry counter and attempt again.
-        retries++;
-
-        if (retries < MaxRetries)
-        {
-            System.Threading.Thread.Sleep((int)(RetryDelay * 1000));
-        }
-    }
-
-    // After reaching max retries, if we still can't dock, return false
-    return false;
-    Log.Error($"Bell failed to dock");
-}
-
+       shuttleDockedAABB = matty.TransformBox(shuttleAABB);
+       gridRotation = (targetGridRotation + offsetAngle).Reduced();
+       return true;
+   }
 
    /// <summary>
    /// Gets docking config between 2 specific docks.
@@ -326,71 +303,47 @@ private bool CanDock(
    /// <summary>
    /// Checks whether the shuttle can warp to the specified position.
    /// </summary>
- private bool ValidSpawn(MapGridComponent grid, Matrix3x2 matty, Angle angle, FixturesComponent shuttleFixturesComp, bool isMap)
-{
-    const int MaxRetries = 5;  // Number of retries
-    const float MinimumClearance = 0.5f; // Minimum clearance around the shuttle
-    var transform = new Transform(Vector2.Transform(Vector2.Zero, matty), angle);
+   private bool ValidSpawn(MapGridComponent grid, Matrix3x2 matty, Angle angle, FixturesComponent shuttleFixturesComp, bool isMap)
+   {
+       var transform = new Transform(Vector2.Transform(Vector2.Zero, matty), angle);
 
-    // Retry the check multiple times
-    for (int attempt = 0; attempt < MaxRetries; attempt++)
-    {
-        bool isValid = true;  // Flag to track if the docking is valid
+       // Because some docking bounds are tight af need to check each chunk individually
+       foreach (var fix in shuttleFixturesComp.Fixtures.Values)
+       {
+           var polyShape = (PolygonShape) fix.Shape;
+           var aabb = polyShape.ComputeAABB(transform, 0);
+           aabb = aabb.Enlarged(-0.01f);
 
-        // Check each fixture (collision shapes) of the shuttle
-        foreach (var fix in shuttleFixturesComp.Fixtures.Values)
-        {
-            var polyShape = (PolygonShape)fix.Shape;
-            var aabb = polyShape.ComputeAABB(transform, 0);
-            aabb = aabb.Enlarged(MinimumClearance);  // Enlarge the AABB to account for clearance
+           // If it's a map check no hard collidable anchored entities overlap
+           if (isMap)
+           {
+               foreach (var tile in grid.GetLocalTilesIntersecting(aabb))
+               {
+                   var anchoredEnumerator = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
 
-            // If it's a map, check no hard collidable anchored entities overlap
-            if (isMap)
-            {
-                foreach (var tile in grid.GetLocalTilesIntersecting(aabb))
-                {
-                    var anchoredEnumerator = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
+                   while (anchoredEnumerator.MoveNext(out var anc))
+                   {
+                       if (!_physicsQuery.TryGetComponent(anc, out var physics) ||
+                           !physics.CanCollide ||
+                           !physics.Hard)
+                       {
+                           continue;
+                       }
 
-                    while (anchoredEnumerator.MoveNext(out var anc))
-                    {
-                        if (!_physicsQuery.TryGetComponent(anc, out var physics) ||
-                            !physics.CanCollide ||
-                            !physics.Hard)
-                        {
-                            continue; // Skip if the object isn't collidable or hard
-                        }
+                       return false;
+                   }
+               }
+           }
+           // If it's not a map check it doesn't overlap the grid.
+           else
+           {
+               if (grid.GetLocalTilesIntersecting(aabb).Any())
+                   return false;
+           }
+       }
 
-                        isValid = false;  // Docking failed because of overlap
-                        break;
-                    }
-
-                    if (!isValid)
-                        break;
-                }
-            }
-            else
-            {
-                // If it's not a map, check for overlap in the grid
-                if (grid.GetLocalTilesIntersecting(aabb).Any())
-                {
-                    isValid = false;  // Docking failed due to overlap
-                }
-            }
-
-            if (!isValid)
-                break;  // Stop checking further if already invalid
-        }
-
-        // If this attempt succeeded (valid docking), return true
-        if (isValid)
-            return true;
-
-    }
-
-    // After 5 attempts, if it's still invalid, return false
-    return false;
-    Log.Error($"Bell failed to dock");
-}
+       return true;
+   }
 
    public List<Entity<DockingComponent>> GetDocks(EntityUid uid)
    {
