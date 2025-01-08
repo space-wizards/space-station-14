@@ -146,3 +146,41 @@
         Cellular: 20
     soundHit:
       path: /Audio/Weapons/Guns/Hits/snap.ogg
+      
+- type: entity
+  id: BulletEnergyCrossbow
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Reflective
+    reflective:
+      - NonEnergy
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    layers:
+    - state: cbbolt
+  - type: StaminaDamageOnCollide
+    damage: 30
+  - type: StunOnCollide
+    knockdownAmount: 1
+  - type: Projectile
+    damage:
+      types:
+        Poison: 20
+  - type: TimedDespawn
+    lifetime: 0.4
+  - type: GatheringProjectile
+  
+- type: entity
+  id: BulletMiniEnergyCrossbow
+  parent: BulletEnergyCrossbow
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StaminaDamageOnCollide
+    damage: 40
+  - type: StunOnCollide
+    knockdownAmount: 2
+  - type: Projectile
+    damage:
+      types:
+        Poison: 10
