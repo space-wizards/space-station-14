@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTieChem
+  name: chemistry tie
+  description: An safety-orange tie.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Neck/Ties/chemtie.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Neck/Ties/chemtie.rsi
