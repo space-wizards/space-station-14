@@ -7,10 +7,12 @@
   abstract: true
   components:
   - type: HumanoidAppearance
-    species: Golem
+    species: GolemSpecies
   - type: Icon
     sprite: _Harmony/Mobs/Species/Golem.rsi
     state: full
+  - type: Inventory
+    templateId: golem
   - type: Body
     prototype: Skeleton
     requiredLegs: 2
@@ -58,7 +60,6 @@
         - MobMask
         layer:
         - MobLayer
-
 
 
 - type: entity
