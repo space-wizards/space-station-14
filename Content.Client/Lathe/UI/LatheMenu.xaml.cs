@@ -94,8 +94,23 @@ public sealed partial class LatheMenu : DefaultWindow
             if (!_prototypeManager.TryIndex(recipe, out var proto))
                 continue;
 
-            if (CurrentCategory != null && proto.Category != CurrentCategory)
-                continue;
+            // Category filtering
+            if (CurrentCategory != null)
+            {
+                if (proto.Categories == null)
+                    continue;
+
+                bool validRecipe = false;
+                foreach (var category in proto.Categories)
+                    if (category == CurrentCategory)
+                    {
+                        validRecipe = true;
+                        continue;
+                    }
+
+                if (!validRecipe)
+                    continue;
+            }
 
             if (SearchBar.Text.Trim().Length != 0)
             {
@@ -184,13 +199,16 @@ public sealed partial class LatheMenu : DefaultWindow
         {
             var recipe = _prototypeManager.Index(recipeId);
 
-            if (recipe.Category == null)
+            if (recipe.Categories == null)
                 continue;
 
-            if (currentCategories.Contains(recipe.Category.Value))
-                continue;
+            foreach (var category in recipe.Categories)
+            {
+                if (currentCategories.Contains(category))
+                    continue;
 
-            currentCategories.Add(recipe.Category.Value);
+                currentCategories.Add(category);
+            }
         }
 
         if (Categories != null && (Categories.Count == currentCategories.Count || !Categories.All(currentCategories.Contains)))
