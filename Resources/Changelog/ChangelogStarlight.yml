@@ -1874,3 +1874,33 @@ Entries:
   id: 265
   time: '2025-01-08T11:10:10.031271+00:00'
   url: 'null'
+- author: Conflee
+  changes:
+  - message: 15 new Plushies to the Hug Dispenser
+    type: Add
+  id: 266
+  time: '2025-01-08T19:04:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/223
+- author: Conflee
+  changes:
+  - message: Ship in a Bottle, generates in Grand Lottery Crates
+    type: Add
+  id: 267
+  time: '2025-01-08T19:04:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/223
+- author: Conflee
+  changes:
+  - message: Dredd Helmet. A reskin of the Security Helmet based on Judge Dredd, found
+      in the Security Dispenser
+    type: Add
+  id: 268
+  time: '2025-01-08T19:04:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/223
+- author: Conflee
+  changes:
+  - message: Golden MK58, Admeme only currently
+    type: Add
+  id: 269
+  time: '2025-01-08T19:04:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/223
+
