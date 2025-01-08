@@ -116,10 +116,10 @@
       - state: incendiary
 
 - type: entity
-  name: shell box (12 gauge uranium slug)
+  name: shell box (12 gauge uranium)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunUranium
-  description: A cardboard box full of experimental 12 gauge uranium-core slugs, for added radiation damage to the target.
+  description: A cardboard box full of experimental 12 gauge uranium-core shotshells, for added radiation damage to the target.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunUranium
