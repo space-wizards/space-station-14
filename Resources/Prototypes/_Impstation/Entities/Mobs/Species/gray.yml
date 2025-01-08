@@ -181,3 +181,8 @@
           32:
             sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
             state: head
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Gray/displacement.rsi
+            state: feet

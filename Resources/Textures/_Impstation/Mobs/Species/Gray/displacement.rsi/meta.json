@@ -31,6 +31,10 @@
       "directions": 4
     },
     {
+      "name": "feet",
+      "directions": 4
+    },
+    {
       "name": "back",
       "directions": 4
     },
@@ -40,10 +44,6 @@
     },
     {
       "name": "outerClothing",
-      "directions": 4
-    },
-    {
-      "name": "feet",
       "directions": 4
     }
   ]
