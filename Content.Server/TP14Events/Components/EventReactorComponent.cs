@@ -16,5 +16,17 @@ public sealed partial class EventReactorComponent : Component
     /// The chance that the light will flicker
     /// </summary>
     [DataField("flickerChance")]
-    public float FlickerChance = 1f;
+    public float FlickerChance = 0.85f;
+
+    [DataField("firstWarning")]
+    public bool FirstWarning = false;
+
+    [DataField("secondWarning")]
+    public bool SecondWarning = false;
+
+    [DataField("thirdWarning")]
+    public bool ThirdWarning = false;
+
+    [DataField("meltdownWarning")]
+    public bool MeltdownWarning = false;
 }
