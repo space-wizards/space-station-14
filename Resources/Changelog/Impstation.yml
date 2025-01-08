@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Added juice that makes you UNGH
-    type: Add
-  - message: Added accent system and speech sounds for player controlled BROS
-    type: Add
-  - message: Player controlled BROS can now escape an inventory with a 2 second do-after
-    type: Tweak
-  - message: Made BROS sounds mono to work with positional audio, increased volume
-      of the files to normalize it to be close to the previous volume
-    type: Fix
-  id: 376
-  time: '2024-10-15T04:59:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/479
 - author: harpy
   changes:
   - message: Slimes now have their own unique and slightly scary voice!
@@ -4488,3 +4474,11 @@
   id: 875
   time: '2025-01-08T14:13:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1255
+- author: DinnerCalzone
+  changes:
+  - message: Bagel has been updated for a more pleasurable gaming experience, including
+      support for Psychologist.
+    type: Tweak
+  id: 876
+  time: '2025-01-08T14:15:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1264
