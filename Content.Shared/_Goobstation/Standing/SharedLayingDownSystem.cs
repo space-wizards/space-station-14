@@ -2,10 +2,12 @@ using Content.Shared.Gravity;
 using Content.Shared.Input;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Shared._Goobstation.Standing;
 
@@ -14,6 +16,8 @@ public abstract class SharedLayingDownSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -68,10 +72,27 @@ public abstract class SharedLayingDownSystem : EntitySystem
         if (HasComp<KnockedDownComponent>(uid) || !_mobState.IsAlive(uid))
             return;
 
+        if (_timing.CurTime < layingDown.NextStateChange)
+        {
+            var loc = standing.CurrentState switch
+            {
+                StandingState.Standing => "popup-laying-down-cooldown-lay-down",
+                StandingState.Lying => "popup-laying-down-cooldown-stand-up",
+                _ => null
+            };
+
+            if (loc != null)
+                _popup.PopupEntity(Loc.GetString(loc), uid, uid);
+
+            return;
+        }
+
         if (_standing.IsDown(uid, standing))
             TryStandUp(uid, layingDown, standing);
         else
             TryLieDown(uid, layingDown, standing);
+
+        layingDown.NextStateChange = _timing.CurTime + layingDown.Cooldown;
     }
 
     private void OnRefreshMovementSpeed(EntityUid uid, LayingDownComponent component, RefreshMovementSpeedModifiersEvent args)
