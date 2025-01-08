@@ -60,5 +60,8 @@ ghost-role-information-apid-engineer-description = A Beefolk engineer, called in
 ghost-role-information-apid-beert-name = Apid Emergency Responder
 ghost-role-information-apid-beert-description = A Beefolk emergency responder, called in as backup to help a crew in need.
 
+ghost-role-information-apid-chef-name = Apid Chef
+ghost-role-information-apid-chef-description = A Beefolk chef, called in as backup to help a crew in need.
+
 ghost-role-information-apid-name = Apid
 ghost-role-information-apid-description = A Beefolk worker, called in as backup to help a crew in need.
