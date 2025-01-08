@@ -29,4 +29,19 @@ public sealed partial class EventReactorComponent : Component
 
     [DataField("meltdownWarning")]
     public bool MeltdownWarning = false;
+
+     [ViewVariables(VVAccess.ReadWrite)]
+     [DataField(required: true)]
+     public LocId Title = "ship-comms-title";
+
+     /// <summary>
+     /// Announcement color
+    /// </summary>
+    [ViewVariables]
+    [DataField]
+    public Color Color = Color.Red;
+
+    [DataField]
+    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Effects/alert.ogg");
+
 }
