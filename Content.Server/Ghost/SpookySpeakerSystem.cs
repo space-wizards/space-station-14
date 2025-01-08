@@ -37,6 +37,9 @@ public sealed class SpookySpeakerSystem : EntitySystem
 
         // Grab a random localized message from the set
         var message = _random.Pick(messages);
+        // Chatcode moment: messages starting with '.' are considered radio messages unless prefixed with '>'
+        // So this is a stupid trick to make the "...Oooo"-style messages work.
+        message = '>' + message;
         // Say the message
         _chat.TrySendInGameICMessage(entity, message, InGameICChatType.Speak, hideChat: true);
 
