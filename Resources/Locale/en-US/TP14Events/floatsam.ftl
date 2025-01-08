@@ -1,4 +1,4 @@
-ship-comms-title = Emergency Announcement System
+ship-comms-title = Emergency Alert System
 first-alert-warning = WARNING: Continued decay of reactor casing detected. Estimated 1.3 hours to catastrophic meltdown.
 second-alert-warning = WARNING: Decay of reactor has continued. Estimated meltdown within the hour.
 third-alert-warning = WARNING: Reactor decay approaching extreme levels. Preperations for evacuation recommended. 30 minutes to meltdown.
