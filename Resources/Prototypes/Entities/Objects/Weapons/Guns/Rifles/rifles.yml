@@ -55,7 +55,7 @@
   name: AKMS
   parent: [BaseWeaponRifle, BaseRestrictedContraband]
   id: WeaponRifleAk
-  description: An iconic weapon of war. Uses .30 rifle ammo.
+  description: A somewhat battered rifle of a design originating from old earth. Favored by criminals, militias, and terrorists due to its famed reliability and easy-to-manufacture design. Feeds from .308 30-round magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
@@ -100,7 +100,7 @@
     zeroVisible: true
   - type: Appearance
 
-- type: entity
+- type: entity # currently not used in game, and the underbarrel grenade lanuncher doesnt work :(
   name: M-90gl
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
   id: WeaponRifleM90GrenadeLauncher
@@ -148,7 +148,7 @@
   name: Lecter
   parent: [BaseWeaponRifle, BaseRestrictedContraband]
   id: WeaponRifleLecter
-  description: A high end military grade assault rifle. Uses .20 rifle ammo.
+  description: The standard combat rifle used by nearly all of Nanotrasen’s armed forces. Operating in semi or fully automatic, it can be used to great effect in all manner of environments. Feeds from .223 25-round magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
@@ -190,63 +190,6 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
-
-- type: entity
-  name: Drozd
-  parent: [BaseWeaponRifle, BaseRestrictedContraband]
-  id: WeaponSubMachineGunDrozd
-  description: Compact, lightweight carbine. Chambered in .223 and fires in 3-round bursts.
-  components:
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
-      layers:
-        - state: base
-          map: ["enum.GunVisualLayers.Base"]
-        - state: mag-0
-          map: ["enum.GunVisualLayers.Mag"]
-    - type: Clothing
-      sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
-    - type: Wieldable
-      unwieldOnUse: false
-    - type: GunWieldBonus
-      minAngle: -19
-      maxAngle: -16
-    - type: Gun
-      minAngle: 21
-      maxAngle: 32
-      fireRate: 12
-      burstFireRate: 12
-      selectedMode: Burst
-      soundGunshot:
-        path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
-      availableModes:
-        - Burst
-      shotsPerBurst: 3
-      burstCooldown: 0.25
-    - type: ItemSlots
-      slots:
-        gun_magazine:
-          name: Magazine
-          startingItem: MagazineRifle
-          insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
-          ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-          priority: 2
-          whitelist:
-            tags:
-              - MagazineRifle
-          whitelistFailPopup: gun-magazine-whitelist-fail
-        gun_chamber:
-          name: Chamber
-          startingItem: CartridgeRifle
-          priority: 1
-          whitelist:
-            tags:
-              - CartridgeRifle
-    - type: MagazineVisuals
-      magState: mag
-      steps: 1
-      zeroVisible: true
-    - type: Appearance
 
 - type: entity
   name: Foam Force Astro Ace

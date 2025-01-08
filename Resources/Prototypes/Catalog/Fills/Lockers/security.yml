@@ -157,6 +157,7 @@
   parent: [GunSafeBaseSecure, BaseRestrictedContraband]
   id: GunSafeDisabler
   name: disabler safe
+  description: Contains 5 disabler pistols.
   components:
   - type: StorageFill
     contents:
@@ -167,6 +168,7 @@
   parent: [GunSafeBaseSecure, BaseRestrictedContraband]
   id: GunSafePistolMk58
   name: mk58 safe
+  description: Contains 4 Mk58 pistols and 8 extra magazines.
   components:
   - type: StorageFill
     contents:
@@ -179,6 +181,7 @@
   parent: [GunSafeBaseSecure, BaseRestrictedContraband]
   id: GunSafeRifleLecter
   name: lecter safe
+  description: Contains 2 Lecter combat rifles and 4 extra magazines.
   components:
   - type: StorageFill
     contents:
@@ -191,18 +194,20 @@
   parent: [GunSafeBaseSecure, BaseRestrictedContraband]
   id: GunSafeSubMachineGunDrozd
   name: drozd safe
+  description: Contains 2 Drozd submachine guns and 4 extra magazines.
   components:
   - type: StorageFill
     contents:
     - id: WeaponSubMachineGunDrozd
       amount: 2
-    - id: MagazineRifle
+    - id: MagazinePistolSubMachineGun
       amount: 4
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseRestrictedContraband]
   id: GunSafeShotgunEnforcer
   name: enforcer safe
+  description: Contains 2 Enforcer shotguns and 4 boxes of shells.
   components:
   - type: StorageFill
     contents:
@@ -215,6 +220,7 @@
   parent: [GunSafeBaseSecure, BaseRestrictedContraband]
   id: GunSafeShotgunKammerer
   name: kammerer safe
+  description: Contains 2 Kammerer shotguns and 2 boxes of shells.
   components:
   - type: StorageFill
     contents:
@@ -228,6 +234,7 @@
   suffix: Wt550
   parent: [GunSafeBaseSecure, BaseRestrictedContraband]
   name: wt550 safe
+  description: Contains 2 WT550 submachine guns and 4 extra magazines.
   components:
   - type: StorageFill
     contents:
@@ -240,6 +247,7 @@
   parent: [GunSafeBaseSecure, BaseRestrictedContraband]
   id: GunSafeLaserCarbine
   name: laser safe
+  description: Contains 3 Laser Rifles.
   components:
   - type: StorageFill
     contents:

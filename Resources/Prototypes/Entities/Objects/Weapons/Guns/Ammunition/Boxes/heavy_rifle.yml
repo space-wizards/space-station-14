@@ -30,7 +30,7 @@
   parent: BaseMagazineBoxHeavyRifle
   id: MagazineBoxHeavyRifle
   name: ammunition box (.325 rifle)
-  description: Cardboard box full of 0.235x2.12 full-power rifle rounds. Used to top off speedloaders or belts for rifles and medium machine guns.
+  description: Cardboard box full of .235x2.12 full-power rifle rounds. Used to top off speedloaders or belts for rifles and medium machine guns.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeHeavyRifle

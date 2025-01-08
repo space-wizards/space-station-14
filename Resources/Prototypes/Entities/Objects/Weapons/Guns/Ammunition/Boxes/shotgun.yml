@@ -36,7 +36,7 @@
   name: shell box (.50 pellet)
   parent: AmmoProviderShotgunShell
   id: BoxLethalshot
-  description: A cardboard box full of standard .50 pellet shotshells, which fire small lead balls in a wide cone.
+  description: A cardboard box full of standard .50x3 pellet shotshells, which fire small lead balls in a wide cone.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgun
@@ -52,7 +52,7 @@
   name: shell box (.50 practice)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunPractice
-  description: A cardboard box full of .50 training rounds, with tiny, non-harmful projectiles.
+  description: A cardboard box full of .50x3 training rounds, with tiny, non-harmful projectiles.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunPractice
@@ -68,7 +68,7 @@
   name: shell box (.50 slug)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunSlug
-  description: A cardboard box full of .50 slugs, which fire a single large projectile with a much longer range.
+  description: A cardboard box full of .50x3 slugs, which fire a single large projectile with a much longer range.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunSlug
@@ -88,7 +88,7 @@
   parent: AmmoProviderShotgunShell
   id: BoxBeanbag
   name: shell box (.50 beanbag)
-  description: A cardboard box full of .50 beanbag shotshells, which contain a padded bag of metal pellets that stuns and incapacitates the target.
+  description: A cardboard box full of .50x3 beanbag shotshells, which contain a padded bag of metal pellets that stuns and incapacitates the target.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunBeanbag
@@ -104,7 +104,7 @@
   name: shell box (.50 incendiary pellet)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunIncendiary
-  description: A cardboard box full of exotic .50 incendiary shotshells, designed to fill a cone in front of you with burning pellets.
+  description: A cardboard box full of exotic .50x3 incendiary shotshells, designed to fill a cone in front of you with burning pellets.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunIncendiary
@@ -120,7 +120,7 @@
   name: shell box (.50 uranium slug)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunUranium
-  description: A cardboard box full of experimental .50 uranium-core slugs, for added radiation damage to the target.
+  description: A cardboard box full of experimental .50x3 uranium-core slugs, for added radiation damage to the target.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunUranium
@@ -140,7 +140,7 @@
   name: shell box (.50 flare)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunFlare
-  description: A cardboard box full of .50 illumination flares. Useable by both shotguns and emergency flare guns.
+  description: A cardboard box full of .50x3 illumination flares. Useable by both shotguns and emergency flare guns.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunFlare
@@ -156,7 +156,7 @@
   name: shell box (.50 tranquilizer)
   parent: AmmoProviderShotgunShell
   id: BoxShellTranquilizer
-  description: A cardboard box full of special .50 tranquilizer slugs. These rounds are very low velocity and contain an auto-injecting syringe preloaded with chloral hydrate for knocking out animals.
+  description: A cardboard box full of special .50x3 tranquilizer slugs. These rounds are very low velocity and contain an auto-injecting syringe preloaded with chloral hydrate for knocking out animals.
   components:
     - type: BallisticAmmoProvider
       proto: ShellTranquilizer

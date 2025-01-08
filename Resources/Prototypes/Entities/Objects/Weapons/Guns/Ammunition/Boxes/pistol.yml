@@ -29,7 +29,7 @@
   parent: BaseMagazineBoxPistol
   id: MagazineBoxPistol
   name: ammunition box (.38 auto)
-  description: Cardboard box of .38 auto ammunition. This version contains FMJ rounds for general purpose use.
+  description: Cardboard box of .38x1.55 ammunition. This version contains FMJ rounds for general purpose use.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistol
@@ -44,7 +44,7 @@
   parent: BaseMagazineBoxPistol
   id: MagazineBoxPistolPractice
   name: ammunition box (.38 auto practice)
-  description: Cardboard box of .38 auto ammunition. This version contains blue rubber-tipped rounds for training.
+  description: Cardboard box of .38x1.55 ammunition. This version contains blue rubber-tipped rounds for training.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice

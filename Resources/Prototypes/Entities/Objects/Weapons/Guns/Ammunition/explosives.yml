@@ -55,7 +55,7 @@
     size: Small
   - type: Sprite
 
-- type: entity
+- type: entity # currently unused?
   id: GrenadeBaton
   name: baton grenade
   parent: BaseGrenade
@@ -74,8 +74,9 @@
 
 - type: entity
   id: GrenadeBlast
-  name: blast grenade
+  name: grenade cartridge (1.57 HE)
   parent: BaseGrenade
+  description: 1.57x1.8 impact fused explosive for use in grenade launchers. High-explosive variant designed for destruction of equipment, from computers to small spacecraft. Users should be EXTREMELY cautious as it contains no safety fuse.
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeBlast
@@ -91,8 +92,9 @@
 
 - type: entity
   id: GrenadeFlash
-  name: flash grenade
+  name: grenade cartridge (1.57 flashbang)
   parent: BaseGrenade
+  description: 1.57x1.8 impact fused grenade for use in launchers. Non-lethal flashbang variant that blinds and disorients anyone caught in its range. Users should be cautious as it contains no safety fuse.
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeFlash
@@ -108,8 +110,9 @@
 
 - type: entity
   id: GrenadeFrag
-  name: frag grenade
+  name: grenade cartridge (1.57 frag)
   parent: BaseGrenade
+  description: 1.57x1.8 impact fused grenade for use in launchers. Anti-personnel variant which launches deadly shards of shrapnel into anyone unfortunate enough to be caught in its lethal radius. Users should be EXTREMELY cautious as it contains no safety fuse.
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeFrag
@@ -125,8 +128,9 @@
 
 - type: entity
   id: GrenadeEMP
-  name: EMP grenade
+  name: grenade cartridge (1.57 EMP)
   parent: BaseGrenade
+  description: 1.57x1.8 impact fused grenade for use in launchers. Electromagnetic pulse (EMP) variant which disables electronics, including energy weapons.
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeEMP

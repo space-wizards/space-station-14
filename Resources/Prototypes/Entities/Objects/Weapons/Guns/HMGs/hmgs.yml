@@ -21,11 +21,11 @@
     price: 500
   # No chamber because HMG may want its own
 
-- type: entity
+- type: entity # this is not a heavy machine gun, it's bullets are even lighter than a light machine gun >:(
   name: minigun
   id: WeaponMinigun
   parent: [ BaseWeaponHeavyMachineGun, BaseMajorContraband ]
-  description: Vzzzzzt! Rahrahrahrah! Vrrrrr! Uses .10 rifle ammo.
+  description: Fenrir Arms’s submission to a Nanotrasen contract to create an exceptionally fast-firing weapon for their CBURN units. Solves the problems of extreme weight and recoil normally encountered by high-fire rate designs by using a scaled-down rifle caliber. Feeding from .10 ammo belts, you will have a hard time finding anyone who can outsmart the bullet.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/HMGs/minigun.rsi

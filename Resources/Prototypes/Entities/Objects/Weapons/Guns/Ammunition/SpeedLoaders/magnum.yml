@@ -23,7 +23,7 @@
   id: SpeedLoaderMagnum
   name: "speed loader (.44 magnum)"
   parent: BaseSpeedLoaderMagnum
-  description: A speedloader full of 0.44x1.63 magnum rounds, for a quick reload.
+  description: A speedloader full of .44 magnum rounds for the big iron on your hip. 
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
@@ -44,7 +44,7 @@
   id: SpeedLoaderMagnumEmpty
   name: "speed loader (.44 magnum any)"
   parent: SpeedLoaderMagnum
-  description: A speedloader for 0.44x1.63 magnum rounds.
+  description: A speedloader for .44 magnum rounds.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -66,7 +66,7 @@
   id: SpeedLoaderMagnumPractice
   name: "speed loader (.44 magnum practice)"
   parent: BaseSpeedLoaderMagnum
-  description: A speedloader full of 0.44x1.63 magnum rounds, for a quick reload. Contains special training ammo.
+  description: A speedloader full of .44x magnum rounds, for a fast reload. Contains special training ammo for practicing your quick draw.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
@@ -87,7 +87,7 @@
   id: SpeedLoaderMagnumAP
   name: "speed loader (.44 magnum AP)"
   parent: BaseSpeedLoaderMagnum
-  description: A speedloader full of 0.44x1.63 magnum rounds, for a quick reload. Contains highly-illegal armor-piercing ammo.
+  description: A speedloader full of .44 magnum rounds, for a fast reload. Contains highly-illegal armor-piercing ammo.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumAP

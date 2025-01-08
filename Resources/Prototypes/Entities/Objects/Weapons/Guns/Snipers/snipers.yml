@@ -42,7 +42,7 @@
   name: Kardashev-Mosin
   parent: [BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponSniperMosin
-  description: A weapon for hunting, or endless trench warfare. Uses .30 rifle ammo.
+  description: A true relic, the Kardashev-Mosin has served in nearly every armed conflict since its creation 670 years ago. While manufacturing processes have changed, the design of the rifle remains virtually identical, whether used for hunting, sniping, or endless trench warfare.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
@@ -61,7 +61,7 @@
   name: Hristov
   parent: [BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponSniperHristov
-  description: A portable anti-materiel rifle. Fires armor piercing 14.5mm shells. Uses .60 anti-materiel ammo.
+  description: A powerful Donk Co. anti-material rifle firing .60 cartridges. This bad boy will devastate anything you hit, people included.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
@@ -74,7 +74,7 @@
     capacity: 5
     proto: CartridgeAntiMateriel
 
-- type: entity
+- type: entity # for the planned pirate antag?
   name: musket
   parent: [ BaseWeaponSniper, BaseGunWieldable, BaseMinorContraband ]
   id: Musket
@@ -112,7 +112,7 @@
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
 
-- type: entity
+- type: entity # for the planned pirate antag?
   name: flintlock pistol
   parent: [BaseWeaponSniper, BaseMinorContraband]
   id: WeaponPistolFlintlock

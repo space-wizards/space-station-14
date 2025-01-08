@@ -49,7 +49,7 @@
   parent: BaseMagazineBoxCaselessRifle
   id: MagazineBoxCaselessRifleBig
   name: large ammunition box (.20 caseless)
-  descripition: A large metal box full of 0.20x0.34 caseless rounds. Highly illegal in Nanotrasen space.
+  descripition: A large metal box full of .20x0.34 caseless rounds, which omit the brass casing of standard munitions in favor of hardened propellent.
   components:
   - type: BallisticAmmoProvider
     capacity: 200
@@ -70,7 +70,7 @@
   parent: BaseMagazineBoxCaselessRifle
   id: MagazineBoxCaselessRifle
   name: ammunition box (.20 caseless)
-  description: A cardboard box full of 0.20x0.34 caseless rounds. Highly illegal in Nanotrasen space.
+  description: A cardboard box full of .20x0.34 caseless rounds, which omit the brass casing of standard munitions in favor of hardened propellent.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle
@@ -85,7 +85,7 @@
   parent: BaseMagazineBoxCaselessRifle
   id: MagazineBoxCaselessRiflePractice
   name: ammunition box (.20 caseless practice)
-  description: A cardboard box full of 0.20x0.34 caseless rounds. This variant contains special rubber training rounds.
+  description: A cardboard box full of 0.20x0.34 caseless rounds, which omit the brass casing of standard munitions in favor of hardened propellent. This variant contains non-harmful rubber training rounds.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRiflePractice

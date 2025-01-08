@@ -48,7 +48,7 @@
   # Don't parent to BaseWeaponShotgun because it differs significantly
   parent: [BaseItem, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponShotgunBulldog
-  description: It's a magazine-fed shotgun designed for close quarters combat. Uses .50 shotgun shells.
+  description: Drum-fed fully automatic shotgun designed by Frozen Star. Adopted by the Gorlex Marauders, who use it in close-quarters combat. Feeds from .50 8-round drum magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
@@ -105,7 +105,7 @@
   name: double-barreled shotgun
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseMinorContraband]
   id: WeaponShotgunDoubleBarreled
-  description: An immortal classic. Uses .50 shotgun shells.
+  description: A classic break-action double-barrel shotgun. This particular gun is worn and stained, with the distinct smell of alcohol. Fits two .50 shells. 
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
@@ -128,7 +128,7 @@
   name: double-barreled shotgun
   parent: WeaponShotgunDoubleBarreled
   id: WeaponShotgunDoubleBarreledRubber
-  description: An immortal classic. Uses .50 shotgun shells.
+  description: A classic break-action double-barrel shotgun. This particular gun is worn and stained, with the distinct smell of alcohol. Fits two .50 shells. 
   suffix: Non-Lethal
   components:
   - type: BallisticAmmoProvider
@@ -138,7 +138,8 @@
   name: Enforcer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunEnforcer
-  description: A premium combat shotgun based on the Kammerer design, featuring an upgraded clip capacity. .50 shotgun shells.
+  description: The Enforcer was designed as a modern remake of the Kammerer design. It features new polymer furniture and an extended magazine tube. After being presented to NT it was quickly adopted as the new shotgun for station security teams, but as production lines have not yet been re-tooled to produce them in bulk, most stations have only received them in limited numbers.
+
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
@@ -161,7 +162,7 @@
   name: Kammerer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunKammerer
-  description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds. Uses .50 shotgun shells.
+  description: A popular shotgun found on many worlds. While its technology is wildly outdated by modern standards, the utility and simplicity of a pump shotgun are still valuable in many roles. Its true strength comes in the versatility of shell types it can fire, from pellets to slugs and even flares.
   components:
   - type: Item
     size: Normal
@@ -183,7 +184,7 @@
   name: sawn-off shotgun
   parent: BaseWeaponShotgun
   id: WeaponShotgunSawn
-  description: Groovy! Uses .50 shotgun shells.
+  description: A classic break-action double-barrel shotgun with a hand-shortened barrel. Easier to conceal but far less accurate. Fits two .50 shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
@@ -205,7 +206,7 @@
   name: sawn-off shotgun
   parent: WeaponShotgunSawn
   id: WeaponShotgunSawnEmpty
-  description: Groovy! Uses .50 shotgun shells.
+  description: A classic break-action double-barrel shotgun with a hand-shortened barrel. Easier to conceal but far less accurate. Fits two .50 shells.
   suffix: Empty
   components:
   - type: BallisticAmmoProvider
@@ -215,7 +216,7 @@
     node: shotgunsawn
     deconstructionTarget: null
 
-- type: entity
+- type: entity # not obtainable in game
   name: handmade pistol
   parent: [BaseWeaponShotgun, BaseMinorContraband]
   id: WeaponShotgunHandmade
@@ -239,7 +240,7 @@
   - type: StaticPrice
     price: 0
 
-- type: entity
+- type: entity # part of planned pirate antag?
   name: blunderbuss
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseMinorContraband]
   id: WeaponShotgunBlunderbuss
@@ -264,7 +265,7 @@
   name: improvised shotgun
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseMinorContraband]
   id: WeaponShotgunImprovised
-  description: A shitty, hand-made shotgun that uses .50 shotgun shells. It can only hold one round in the chamber.
+  description: A shitty shotgun made with spare parts that were lying around. Its effectiveness is just as dubious as its quality. Holds a single .50 shell.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi

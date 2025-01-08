@@ -69,7 +69,7 @@
   name: L6 SAW
   id: WeaponLightMachineGunL6
   parent: [BaseWeaponLightMachineGun, BaseSyndicateContraband]
-  description: A rather traditionally made LMG with a pleasantly lacquered wooden pistol grip. Uses .30 rifle ammo.
+  description: A deadly belt-fed machine gun developed by Waffle Corp as a squad automatic weapon (SAW) for Gorlex assault squads. Its heavy barrel and high capacity make it perfect for suppressing enemies with a hail of bullets. Feeds from .308 ammo belts.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
@@ -88,7 +88,7 @@
   name: L6C ROW
   id: WeaponLightMachineGunL6C
   parent: BaseItem
-  description: A L6 SAW for use by cyborgs. Creates .30 rifle ammo on the fly from an internal ammo fabricator, which slowly self-charges.
+  description: Converted L6 SAW for silicon use. Slowly fabricates linked .308 rifle ammuntion using a internal fabricator.
   components:
     - type: Gun
       minAngle: 4

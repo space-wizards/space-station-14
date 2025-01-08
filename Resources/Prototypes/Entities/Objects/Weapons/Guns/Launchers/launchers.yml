@@ -24,7 +24,7 @@
   name: china lake
   parent: [BaseWeaponLauncher, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponLauncherChinaLake
-  description: PLOOP.
+  description: A unique old earth pump-action grenade launcher recently put back into production by Donk Co. and used by Gorlex’s Grenadiers. The distinctive “PLOOP” sound it makes has become synonymous with destroyed hulls, burning corpses, and mass chaos. Holds up to three 1.57x1.8 grenades.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
@@ -53,7 +53,7 @@
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
 
-- type: entity
+- type: entity # not currently used in game
   name: RPG-7
   parent: [ BaseWeaponLauncher, BaseMajorContraband ]
   id: WeaponLauncherRocket
@@ -86,7 +86,7 @@
     zeroVisible: false
   - type: Appearance
 
-- type: entity
+- type: entity # terrifying and not used currently in game.
   name: multiple rocket launcher
   parent: BaseWeaponLauncher
   id: WeaponLauncherMultipleRocket
@@ -121,7 +121,7 @@
     zeroVisible: true
   - type: Appearance
 
-- type: entity
+- type: entity # For the planned pirate antag?
   name: pirate cannon
   parent: BaseWeaponLauncher
   id: WeaponLauncherPirateCannon

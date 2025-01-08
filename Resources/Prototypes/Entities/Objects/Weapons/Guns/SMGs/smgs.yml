@@ -85,7 +85,7 @@
   name: C-20r submachine gun
   parent: [BaseWeaponSubMachineGun, BaseSyndicateContraband]
   id: WeaponSubMachineGunC20r
-  description: A firearm that is often used by the infamous nuclear operatives. Uses .35 auto ammo.
+  description: Classic compact submachine gun, infamous for its use by the Gorlex Marauders. One of the first fully homegrown Waffle Corp designs, it remains in service today. Feeds from .38 30-round magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
@@ -120,6 +120,63 @@
   - type: Appearance
 
 - type: entity
+  name: Drozd
+  parent: [BaseWeaponSubMachineGun, BaseRestrictedContraband]
+  id: WeaponSubMachineGunDrozd
+  description: An excellent fully automatic Heavy SMG.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
+      layers:
+        - state: base
+          map: ["enum.GunVisualLayers.Base"]
+        - state: mag-0
+          map: ["enum.GunVisualLayers.Mag"]
+    - type: Clothing
+      sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
+    - type: Wieldable
+      unwieldOnUse: false
+    - type: GunWieldBonus
+      minAngle: -19
+      maxAngle: -16
+    - type: Gun
+      minAngle: 21
+      maxAngle: 32
+      fireRate: 12
+      burstFireRate: 12
+      selectedMode: Burst
+      soundGunshot:
+        path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
+      availableModes:
+        - Burst
+      shotsPerBurst: 3
+      burstCooldown: 0.25
+    - type: ItemSlots
+      slots:
+        gun_magazine:
+          name: Magazine
+          startingItem: MagazinePistolSubMachineGun
+          insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+          ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+          priority: 2
+          whitelist:
+            tags:
+              - MagazinePistolSubMachineGun
+          whitelistFailPopup: gun-magazine-whitelist-fail
+        gun_chamber:
+          name: Chamber
+          startingItem: CartridgePistol
+          priority: 1
+          whitelist:
+            tags:
+              - CartridgePistol
+    - type: MagazineVisuals
+      magState: mag
+      steps: 1
+      zeroVisible: true
+    - type: Appearance
+
+- type: entity # deprecated, replaced by Drozd SMG.
   name: Vector
   parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunVector
@@ -171,7 +228,7 @@
   name: WT550
   parent: [ BaseWeaponSubMachineGun, BaseRestrictedContraband ]
   id: WeaponSubMachineGunWt550
-  description: An excellent SMG, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo.
+  description: A truly unique firearm, the WT550 is the result of an NT program to create a compact submachine gun fully controllable with one hand. Its expensive manufacturing costs mean it is primarily issued to officers. It contains an exotic internal recoil buffer and feeds from special 30-round top-mounted .38 magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi

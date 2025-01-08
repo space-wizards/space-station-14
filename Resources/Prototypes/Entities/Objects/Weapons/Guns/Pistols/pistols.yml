@@ -72,7 +72,7 @@
   name: viper
   parent: [BaseWeaponPistol, BaseSyndicateContraband]
   id: WeaponPistolViper
-  description: A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses .35 auto ammo.
+  description: Bought in bulk by Donk Co. and upgraded with fully automatic receivers, this is a common sidearm for any soldier who fights under the three serpents. Feeds from .38 10-round magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
@@ -105,7 +105,7 @@
   name: echis
   parent: [ BaseItem, BaseSyndicateContraband ]
   id: WeaponPistolEchis
-  description: A viper for use by cyborgs. Creates .35 ammo on the fly from an internal ammo fabricator, which slowly self-charges.
+  description: Modified Viper for silicon use. Slowly fabricates .38 auto ammunition using a internal fabricator.
   components:
   - type: Gun
     fireRate: 5
@@ -140,7 +140,7 @@
   name: cobra
   parent: [ BaseWeaponPistol, BaseSyndicateContraband ]
   id: WeaponPistolCobra
-  description: A rugged, robust operator handgun with inbuilt silencer. Uses .25 caseless ammo.
+  description: A unique integrally suppressed pistol using a proprietary caseless cartridge developed by Waffle Corp. Favored by Syndicate agents who like to keep things quiet. Feeds from .20 10-round magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
@@ -189,7 +189,7 @@
   name: mk 58
   parent: [BaseWeaponPistol, BaseRestrictedContraband]
   id: WeaponPistolMk58
-  description: A cheap, ubiquitous sidearm, produced by a NanoTrasen subsidiary. Uses .35 auto ammo.
+  description: Produced by the NT subsidiary Fenrir Arms, the Mk58 is widely used by station security teams. Accurate and reliable, it feeds from .38 10-round magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
@@ -211,7 +211,7 @@
   name: N1984
   parent: [BaseWeaponPistol, BaseRestrictedContraband]
   id: WeaponPistolN1984 # the spaces in description are for formatting.
-  description: The sidearm of any self respecting officer.     Comes in .45 magnum, the lord's caliber.
+  description: The sidearm of any self respecting officer. Comes in .44 magnum, the lord's caliber.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
