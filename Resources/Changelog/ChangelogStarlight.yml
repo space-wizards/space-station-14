@@ -1903,4 +1903,31 @@ Entries:
   id: 269
   time: '2025-01-08T19:04:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/223
-
+- author: Rinary
+  changes:
+  - message: Fixed blueshield hardsuit
+    type: Fix
+  id: 270
+  time: '2025-01-08T19:02:43.891739+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed blueshield pda
+    type: Fix
+  id: 271
+  time: '2025-01-08T19:02:52.674293+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added mini and large energy crossbows
+    type: Add
+  id: 272
+  time: '2025-01-08T19:03:19.380995+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added IK-60, as ert gun.
+    type: Add
+  id: 273
+  time: '2025-01-08T19:03:34.026155+00:00'
+  url: 'null'
