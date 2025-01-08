@@ -13,10 +13,9 @@
           !type:PhysShapeCircle
           radius: 0.25
         mask:
-        - SubfloorMask
+        - TabletopMachineMask
         layer:
-        - LowImpassable
-        hard: false
+        - Opaque
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: StationAiVision
