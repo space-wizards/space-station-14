@@ -1,6 +1,6 @@
 - type: entity
   id: PelletShotgunSlug
-  name: pellet (.72 slug)
+  name: slug (12 gauge)
   categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
@@ -14,7 +14,7 @@
 
 - type: entity
   id: PelletShotgunBeanbag
-  name: beanbag (.72)
+  name: beanbag (12 gauge)
   categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
@@ -30,7 +30,7 @@
 
 - type: entity
   id: PelletShotgun
-  name: pellet (.72)
+  name: pellet (12 gauge)
   categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
@@ -54,7 +54,7 @@
 
 - type: entity
   id: PelletShotgunIncendiary
-  name: pellet (.72 incendiary)
+  name: incendiary pellet (12 gauge)
   categories: [ HideSpawnMenu ]
   parent: BaseBulletIncendiary
   components:
@@ -81,7 +81,7 @@
 
 - type: entity
   id: PelletShotgunPractice
-  name: pellet (.72 practice)
+  name: practice pellet (12 gauge)
   categories: [ HideSpawnMenu ]
   parent: BaseBulletPractice
   components:
@@ -105,7 +105,7 @@
 
 - type: entity
   id: PelletShotgunImprovised
-  name: improvised pellet
+  name: improvised pellet (12 gauge)
   categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
@@ -130,7 +130,7 @@
 
 - type: entity
   id: PelletShotgunTranquilizer
-  name: pellet (.72 tranquilizer)
+  name: tranquilizer (12 gauge)
   categories: [ HideSpawnMenu ]
   parent: BaseBulletPractice
   components:
@@ -157,7 +157,7 @@
 
 - type: entity
   id: PelletShotgunFlare
-  name: pellet (.72 flare)
+  name: flare (12 gauge)
   categories: [ HideSpawnMenu ]
   components:
   - type: Physics
@@ -204,7 +204,7 @@
 
 - type: entity
   id: PelletShotgunUranium
-  name: pellet (.72 uranium)
+  name: uranium slug (12 gauge)
   categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:

@@ -33,7 +33,7 @@
 # Shotgun Shells
 
 - type: entity
-  name: shell box (.72 pellet)
+  name: shell box (12 gauge pellet)
   parent: AmmoProviderShotgunShell
   id: BoxLethalshot
   description: A cardboard box full of standard .72x3 pellet shotshells, which fire small lead balls in a wide cone.
@@ -49,7 +49,7 @@
       - state: lethal
 
 - type: entity
-  name: shell box (.72 practice)
+  name: shell box (12 gauge practice)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunPractice
   description: A cardboard box full of .72x3 training rounds, with tiny, non-harmful projectiles.
@@ -65,7 +65,7 @@
       - state: practice
 
 - type: entity
-  name: shell box (.72 slug)
+  name: shell box (12 gauge slug)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunSlug
   description: A cardboard box full of .72x3 slugs, which fire a single large projectile with a much longer range.
@@ -87,7 +87,7 @@
 - type: entity
   parent: AmmoProviderShotgunShell
   id: BoxBeanbag
-  name: shell box (.72 beanbag)
+  name: shell box (12 gauge beanbag)
   description: A cardboard box full of .72x3 beanbag shotshells, which contain a padded bag of metal pellets that stuns and incapacitates the target.
   components:
     - type: BallisticAmmoProvider
@@ -101,7 +101,7 @@
       - state: beanbag
 
 - type: entity
-  name: shell box (.72 incendiary pellet)
+  name: shell box (12 gauge incendiary pellet)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunIncendiary
   description: A cardboard box full of exotic .72x3 incendiary shotshells, designed to fill a cone in front of you with burning pellets.
@@ -117,7 +117,7 @@
       - state: incendiary
 
 - type: entity
-  name: shell box (.72 uranium slug)
+  name: shell box (12 gauge uranium slug)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunUranium
   description: A cardboard box full of experimental .72x3 uranium-core slugs, for added radiation damage to the target.
@@ -137,7 +137,7 @@
       - state: uranium
 
 - type: entity
-  name: shell box (.72 flare)
+  name: shell box (12 gauge flare)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunFlare
   description: A cardboard box full of .72x3 illumination flares. Useable by both shotguns and emergency flare guns.
@@ -153,7 +153,7 @@
       - state: flare
 
 - type: entity
-  name: shell box (.72 tranquilizer)
+  name: shell box (12 gauge tranquilizer)
   parent: AmmoProviderShotgunShell
   id: BoxShellTranquilizer
   description: A cardboard box full of special .72x3 tranquilizer slugs. These rounds are very low velocity and contain an auto-injecting syringe preloaded with chloral hydrate for knocking out animals.
