@@ -7299,7 +7299,7 @@ entities:
       pos: -30.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -44717.746
+      secondsUntilStateChange: -44884.766
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -43400,7 +43400,7 @@ entities:
       pos: -9.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -292473.28
+      secondsUntilStateChange: -292640.3
       state: Opening
   - uid: 6747
     components:
@@ -43408,7 +43408,7 @@ entities:
       pos: -8.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -292474
+      secondsUntilStateChange: -292641.03
       state: Opening
   - uid: 6749
     components:
@@ -43416,7 +43416,7 @@ entities:
       pos: -6.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -292472.56
+      secondsUntilStateChange: -292639.6
       state: Opening
   - uid: 6750
     components:
@@ -43424,7 +43424,7 @@ entities:
       pos: -5.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -292471.94
+      secondsUntilStateChange: -292638.97
       state: Opening
 - proto: CyberPen
   entities:
@@ -93709,6 +93709,23 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -43.5,30.5
+      parent: 2
+  - uid: 17683
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -59.5,66.5
+      parent: 2
+  - uid: 17684
+    components:
+    - type: Transform
+      pos: -54.5,65.5
+      parent: 2
+  - uid: 17685
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -48.5,68.5
       parent: 2
 - proto: SurveillanceCameraMedical
   entities:
