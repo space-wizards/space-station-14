@@ -29,7 +29,6 @@
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 3, 3 ]
             Zookeeper: [ 1, 1 ] 
-            NanoTrasenRepresentative: [ 1, 1 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
@@ -70,3 +69,6 @@
             #law
             Magistrate: [ 1, 1 ]
             IAA: [ 2, 2 ]
+            #Representives
+            BlueShield: [ 1, 1 ]
+            NanoTrasenRepresentative: [ 1, 1 ]

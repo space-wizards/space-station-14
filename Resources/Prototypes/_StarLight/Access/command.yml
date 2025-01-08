@@ -1,7 +1,0 @@
-- type: accessLevel
-  id: Ntrep
-  name: id-card-access-level-ntrep
-  
-- type: accessLevel
-  id: Magistrate
-  name: id-card-access-level-magistrate

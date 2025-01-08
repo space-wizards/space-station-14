@@ -1,0 +1,27 @@
+- type: entity
+  id: BaseCartridgeBattery
+  name: cartridge (laser)
+  parent: [ BaseCartridge, BaseRestrictedContraband ]
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgeBattery
+  - type: CartridgeAmmo
+    proto: BulletLaser
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Casings/laser_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+  
+- type: entity
+  id: CartridgeBattery
+  name: cartridge (laser)
+  parent: BaseCartridgeBattery
+  components:
+  - type: CartridgeAmmo
+    proto: BulletLaser

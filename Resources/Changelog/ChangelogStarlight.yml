@@ -1682,4 +1682,195 @@ Entries:
   id: 238
   time: '2025-01-04T03:22:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/211
-
+- author: Conflee
+  changes:
+  - message: Added Security Magboots. They spawn in Security Hardsuit Storage, including
+      Warden and HoS's
+    type: Add
+  id: 239
+  time: '2025-01-05T20:59:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/216
+- author: Rinary
+  changes:
+  - message: Added support for weapon locking
+    type: Add
+  id: 240
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Added conditions for fire modes.
+    type: Add
+  id: 241
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Added fire mode visual system, now when you change fire modes, some weapons
+      will change sprites.
+    type: Add
+  id: 242
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Added hybrid taser, as replacing default disablers for sec.
+    type: Add
+  id: 243
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Added energy gun, as sec weapon.
+    type: Add
+  id: 244
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Added Lr-30, as weapon what can be purchased at cargo.
+    type: Add
+  id: 245
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Added miniature energy gun, as temporary admeme weapon (in search of
+      its application).
+    type: Add
+  id: 246
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Resprited kinetic accelerator, added 3 variants of his sprite.
+    type: Tweak
+  id: 247
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Resprited laser gun.
+    type: Tweak
+  id: 248
+  time: '2025-01-06T13:02:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/217
+- author: Rinary
+  changes:
+  - message: Added blueshield, as new role.
+    type: Add
+  id: 249
+  time: '2025-01-06T20:45:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/220
+- author: Rinary
+  changes:
+  - message: Added security weapon loadout, now security can take taser or dominator.
+    type: Add
+  id: 250
+  time: '2025-01-06T21:00:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/219
+- author: Rinary
+  changes:
+  - message: Added id lock on dominator, it needs security access.
+    type: Add
+  id: 251
+  time: '2025-01-06T21:00:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/219
+- author: Rinary
+  changes:
+  - message: Added X-01 Multiphase energy gun, as blueshield gun.
+    type: Add
+  id: 252
+  time: '2025-01-06T21:00:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/219
+- author: Rinary
+  changes:
+  - message: Added Ion Rifle as security item.
+    type: Add
+  id: 253
+  time: '2025-01-06T21:00:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/219
+- author: Rinary
+  changes:
+  - message: Added Ion Carbine as temporary admeme gun.
+    type: Add
+  id: 254
+  time: '2025-01-06T21:00:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/219
+- author: Rinary
+  changes:
+  - message: Added Decloner as new gun for researching
+    type: Add
+  id: 255
+  time: '2025-01-07T13:40:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/222
+- author: Rinary
+  changes:
+  - message: Added blueshield hardsuit.
+    type: Add
+  id: 256
+  time: '2025-01-07T14:08:03.724566+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added blueshield access.
+    type: Add
+  id: 257
+  time: '2025-01-07T14:08:14.547628+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed blueshield comms.
+    type: Fix
+  id: 258
+  time: '2025-01-07T14:08:29.745430+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed blueshield double emergency pack.
+    type: Fix
+  id: 259
+  time: '2025-01-07T14:08:48.971923+00:00'
+  url: 'null'
+- author: PubliclyExecutedPig
+  changes:
+  - message: BSO room for Hotel Station!
+    type: Add
+  id: 260
+  time: '2025-01-07T14:26:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/221
+- author: Rinary
+  changes:
+  - message: Added PDW-9 as ERT gun.
+    type: Add
+  id: 261
+  time: '2025-01-08T11:07:26.383902+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added energy m1911 as admeme gun.
+    type: Add
+  id: 262
+  time: '2025-01-08T11:07:49.370942+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: The pulse pistol has been changed. Now it has 3 fire modes.
+    type: Tweak
+  id: 263
+  time: '2025-01-08T11:08:51.696387+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: X01 Rebalanced, now it has more charges and new "DESTROYING" mode.
+    type: Tweak
+  id: 264
+  time: '2025-01-08T11:09:45.858750+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed blueshield comms(again).
+    type: Fix
+  id: 265
+  time: '2025-01-08T11:10:10.031271+00:00'
+  url: 'null'

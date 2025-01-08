@@ -32,3 +32,9 @@
   
 - type: Tag
   id: PowerCellTiny
+  
+- type: Tag
+  id: CartridgeBattery
+  
+- type: Tag
+  id: MagazineBattery

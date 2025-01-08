@@ -57,3 +57,13 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrepformal.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrepformal.rsi
+    
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBlueShield
+  name: blueshield officer's suit
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/blueshield.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/blueshield.rsi

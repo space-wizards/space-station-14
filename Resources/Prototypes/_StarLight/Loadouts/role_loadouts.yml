@@ -36,3 +36,12 @@
   - Trinkets
   - Survival
   - GroupSpeciesBreathTool
+  
+- type: roleLoadout
+  id: JobBlueShield
+  groups:
+  - BlueShieldJumpsuit
+  - BlueShieldBackpack
+  - Trinkets
+  - Survival
+  - GroupSpeciesBreathTool

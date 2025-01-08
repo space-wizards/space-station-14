@@ -13,3 +13,11 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Magistrate
   jobName: job-name-magistrate
+  
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconBlueShield
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: BlueShield
+  jobName: job-name-blueshield

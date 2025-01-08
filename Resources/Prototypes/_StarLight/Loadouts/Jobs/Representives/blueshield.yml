@@ -1,0 +1,19 @@
+- type: loadout
+  id: BlueShieldBackpack
+  equipment:
+    back: ClothingBackpackBlueShield
+
+- type: loadout
+  id: BlueShieldDuffel
+  equipment:
+    back: ClothingBackpackDuffelBlueShield
+
+- type: loadout
+  id: BlueShieldJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtBlueShield
+
+- type: loadout
+  id: BlueShieldJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBlueShield

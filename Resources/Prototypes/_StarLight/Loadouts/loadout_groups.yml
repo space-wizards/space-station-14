@@ -36,3 +36,17 @@
   - NanoTrasenRepresentativeJumpsuit
   - NanoTrasenRepresentativeJumpskirt
   - NanoTrasenRepresentativeJumpsuitFormal
+  
+- type: loadoutGroup
+  id: BlueShieldBackpack
+  name: loadout-group-blueshield-backpack
+  loadouts:
+  - BlueShieldBackpack
+  - BlueShieldDuffel
+
+- type: loadoutGroup
+  id: BlueShieldJumpsuit
+  name: loadout-group-blueshield-jumpsuit
+  loadouts:
+  - BlueShieldJumpsuit
+  - BlueShieldJumpskirt

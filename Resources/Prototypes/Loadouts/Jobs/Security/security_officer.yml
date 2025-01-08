@@ -168,3 +168,13 @@
   storage:
     back:
     - Dinkystar
+
+- type: loadout
+  id: SecurityDominator
+  equipment:
+    pocket1: WeaponDominator
+    
+- type: loadout
+  id: SecurityTaser
+  equipment:
+    pocket1: WeaponAdvancedTaser

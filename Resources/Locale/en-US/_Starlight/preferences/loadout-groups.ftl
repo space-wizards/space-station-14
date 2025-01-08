@@ -8,3 +8,6 @@ loadout-group-roboticist-backpack = Roboticist backpack
 
 loadout-group-nanotrasenrepresentative-outerclothing = NanoTrasen representative outer clothing
 loadout-group-nanotrasenrepresentative-jumpsuit = NanoTrasen representative jumpsuit
+
+loadout-group-blueshield-backpack = Blueshield backpack
+loadout-group-blueshield-jumpsuit = Blueshield jumpsuit
