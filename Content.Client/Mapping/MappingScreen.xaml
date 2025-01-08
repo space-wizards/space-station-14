@@ -26,7 +26,7 @@
                 <OptionButton Name="EntityPlacementMode" Access="Public"
                               SetHeight="48"
                               StyleClasses="ButtonSquare" TooltipDelay="0"
-                              ToolTip="{Loc entity-spawn-window-override-menu-tooltip}"
+                              ToolTip="{Loc 'entity-spawn-window-override-menu-tooltip'}"
                               HorizontalExpand="True" />
                 <Button Name="EraseEntityButton" Access="Public" HorizontalExpand="True"
                         SetHeight="48"
@@ -96,7 +96,7 @@
                         </PanelContainer.PanelOverride>
                         <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="3 3">
                             <ColorSelectorSliders Name="DecalColorPicker" IsAlphaVisible="True" />
-                            <Button Name="DecalPickerOpen" Text="{Loc decal-placer-window-palette}" />
+                            <Button Name="DecalPickerOpen" Text="{Loc 'decal-placer-window-palette'}" />
                         </BoxContainer>
                     </PanelContainer>
                     <PanelContainer VerticalExpand="True" HorizontalExpand="True">
@@ -105,16 +105,18 @@
                         </PanelContainer.PanelOverride>
                         <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="3 3">
                             <CheckBox Name="DecalEnableAuto" Margin="0 0 0 10"
-                                      Text="{Loc decal-placer-window-enable-auto}" />
+                                      Text="{Loc 'decal-placer-window-enable-auto'}" />
+                            <CheckBox Name="DecalEnableColor"
+                                      Text="{Loc 'decal-placer-window-use-color'}" />
                             <CheckBox Name="DecalEnableSnap"
-                                      Text="{Loc decal-placer-window-enable-snap}" />
+                                      Text="{Loc 'decal-placer-window-enable-snap'}" />
                             <CheckBox Name="DecalEnableCleanable"
-                                      Text="{Loc decal-placer-window-enable-cleanable}" />
+                                      Text="{Loc 'decal-placer-window-enable-cleanable'}" />
                             <BoxContainer Name="DecalSpinBoxContainer" Orientation="Horizontal">
-                                <Label Text="{Loc decal-placer-window-rotation}" Margin="0 0 0 1" />
+                                <Label Text="{Loc 'decal-placer-window-rotation'}" Margin="0 0 0 1" />
                             </BoxContainer>
                             <BoxContainer Orientation="Horizontal">
-                                <Label Text="{Loc decal-placer-window-zindex}" Margin="0 0 0 1" />
+                                <Label Text="{Loc 'decal-placer-window-zindex'}" Margin="0 0 0 1" />
                                 <SpinBox Name="DecalZIndexSpinBox" HorizontalExpand="True" />
                             </BoxContainer>
                         </BoxContainer>

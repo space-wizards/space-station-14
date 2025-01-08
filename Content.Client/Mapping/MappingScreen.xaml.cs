@@ -27,6 +27,7 @@ public sealed partial class MappingScreen : InGameScreen
 
     private ProtoId<DecalPrototype>? _id;
     private Color _decalColor = Color.White;
+    private bool _decalEnableColor;
     private float _decalRotation;
     private bool _decalSnap;
     private int _decalZIndex;
@@ -73,6 +74,12 @@ public sealed partial class MappingScreen : InGameScreen
             _decalAuto = args.Pressed;
             if (_id is { } id)
                 SelectDecal(id);
+        };
+        DecalEnableColor.OnToggled += args =>
+        {
+            _decalEnableColor = args.Pressed;
+            UpdateDecal();
+            RefreshDecalList();
         };
         DecalEnableSnap.OnToggled += args =>
         {
@@ -156,7 +163,7 @@ public sealed partial class MappingScreen : InGameScreen
         if (_id is not { } id)
             return;
 
-        DecalSystem.UpdateDecalInfo(id, _decalColor, _decalRotation, _decalSnap, _decalZIndex, _decalCleanable);
+        DecalSystem.UpdateDecalInfo(id, _decalEnableColor ? _decalColor : Color.White, _decalRotation, _decalSnap, _decalZIndex, _decalCleanable);
     }
 
     public void SelectDecal(string decalId)
@@ -168,6 +175,7 @@ public sealed partial class MappingScreen : InGameScreen
 
         if (_decalAuto)
         {
+            _decalEnableColor = decal.DefaultCustomColor;
             _decalCleanable = decal.DefaultCleanable;
             _decalSnap = decal.DefaultSnap;
 
@@ -182,19 +190,22 @@ public sealed partial class MappingScreen : InGameScreen
 
     public void SelectDecal(Decal decal)
     {
-        UpdateDecal();
-
         if (!_decalAuto)
             return;
 
         _id = decal.Id;
-        _decalColor = decal.Color ?? Color.White;
         _decalCleanable = decal.Cleanable;
+
+        if (decal.Color is { } color)
+            _decalColor = color;
+        else
+            _decalEnableColor = false;
 
         DecalColorPicker.Color = _decalColor;
         DecalEnableCleanable.Pressed = _decalCleanable;
         DecalEnableSnap.Pressed = _decalSnap;
 
+        UpdateDecal();
         RefreshDecalList();
     }
 
