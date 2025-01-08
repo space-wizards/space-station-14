@@ -15,6 +15,7 @@ steal-target-groups-shipyardcomputercircuitboard = shipyard computer board
 steal-target-groups-commscomputercircuitboard = communications computer board
 
 steal-target-groups-secpillcanister = head of security's pill canister
+steal-target-groups-evil-skull = evil skull
 
 # Thief Animal
 
