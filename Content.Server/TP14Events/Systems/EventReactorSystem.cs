@@ -65,14 +65,6 @@ public sealed class EventReactorSystem : EntitySystem
 
      private void ReactorCheck(EntityUid uid, EventReactorComponent component, ActiveTimerTriggerComponent timer)
      {
-        var lights = GetEntityQuery<PoweredLightComponent>();
-        foreach (var light in _lookup.GetEntitiesInRange(uid, component.Radius, LookupFlags.StaticSundries ))
-        {
-            if (!lights.HasComponent(light))
-                continue;
-
-            if (!_random.Prob(component.FlickerChance))
-                continue;
             if (timer.TimeRemaining <= 3600 && !component.FirstWarning)
             {
                  _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("first-alert-warning"), component.title, announcementSound: component.Sound, colorOverride: component.Color);
@@ -82,6 +74,7 @@ public sealed class EventReactorSystem : EntitySystem
             if (timer.TimeRemaining <= 2600 && !component.SecondWarning)
             {
                  _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("second-alert-warning"), component.title, announcementSound: component.Sound, colorOverride: component.Color);
+                  EnsureComp<RadiationSourceComponent>(uid);
                 component.SecondWarning = true;
             }
 
@@ -96,7 +89,6 @@ public sealed class EventReactorSystem : EntitySystem
                  _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("meltdown-alert-warning"), component.title, announcementSound: component.Sound, colorOverride: component.Color);
                 component.MeltdownWarning = true;
             }
-        }
     }
 
      private void FlickerReactor(EntityUid uid, EventReactorComponent component)
