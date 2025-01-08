@@ -30,10 +30,10 @@
   parent: PartSnail
   components:
     - type: Sprite
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "torso"
     - type: Icon
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "torso"
     - type: BodyPart
       partType: Torso
@@ -51,10 +51,10 @@
   parent: PartSnail
   components:
     - type: Sprite
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "head"
     - type: Icon
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "head"
     - type: BodyPart
       partType: Head
@@ -78,10 +78,10 @@
   parent: PartSnail
   components:
     - type: Sprite
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "l_arm"
     - type: Icon
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "l_arm"
     - type: BodyPart
       partType: Arm
@@ -93,10 +93,10 @@
   parent: PartSnail
   components:
     - type: Sprite
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "r_arm"
     - type: Icon
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "r_arm"
     - type: BodyPart
       partType: Arm
@@ -108,10 +108,10 @@
   parent: PartSnail
   components:
     - type: Sprite
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "l_hand"
     - type: Icon
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "l_hand"
     - type: BodyPart
       partType: Hand
@@ -123,10 +123,10 @@
   parent: PartSnail
   components:
     - type: Sprite
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "r_hand"
     - type: Icon
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "r_hand"
     - type: BodyPart
       partType: Hand
@@ -138,10 +138,10 @@
   parent: PartSnail
   components:
     - type: Sprite
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "l_leg"
     - type: Icon
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "l_leg"
     - type: BodyPart
       partType: Leg
@@ -154,10 +154,10 @@
   parent: PartSnail
   components:
     - type: Sprite
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "r_leg"
     - type: Icon
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "r_leg"
     - type: BodyPart
       partType: Leg
@@ -170,10 +170,10 @@
   parent: PartSnail
   components:
     - type: Sprite
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "l_foot"
     - type: Icon
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "l_foot"
     - type: BodyPart
       partType: Foot
@@ -185,10 +185,10 @@
   parent: PartSnail
   components:
     - type: Sprite
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "r_foot"
     - type: Icon
-      sprite: Mobs/Species/Snail/parts.rsi
+      sprite: _Impstation/Mobs/Species/Snail/parts.rsi
       state: "r_foot"
     - type: BodyPart
       partType: Foot

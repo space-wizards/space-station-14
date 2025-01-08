@@ -10,7 +10,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/Gray/eyes.rsi
+  - sprite: _Impstation/Mobs/Customization/Gray/eyes.rsi
     state: eyes_cute
 
 - type: marking
@@ -25,7 +25,7 @@
         !type:SimpleColoring
           color: "#000000"
   sprites:
-  - sprite: Mobs/Customization/Gray/eyes.rsi
+  - sprite: _Impstation/Mobs/Customization/Gray/eyes.rsi
     state: eyes_cool
 
 - type: marking
@@ -40,7 +40,7 @@
         !type:SimpleColoring
         color: "#3D3D3D"
   sprites:
-  - sprite: Mobs/Customization/Gray/eyes.rsi
+  - sprite: _Impstation/Mobs/Customization/Gray/eyes.rsi
     state: eyes_wide
 
 - type: marking
@@ -51,7 +51,7 @@
   forcedColoring: true
   followSkinColor: true
   sprites:
-  - sprite: Mobs/Customization/Gray/ears.rsi
+  - sprite: _Impstation/Mobs/Customization/Gray/ears.rsi
     state: ears_cute
 
 - type: marking
@@ -62,5 +62,5 @@
   forcedColoring: false
   followSkinColor: true
   sprites:
-  - sprite: Mobs/Customization/Gray/antenna.rsi
+  - sprite: _Impstation/Mobs/Customization/Gray/antenna.rsi
     state: antenna_classic
