@@ -1075,9 +1075,6 @@ entities:
       parent: 4
     - type: Storage
       storedItems:
-        765:
-          position: 0,0
-          _rotation: South
         764:
           position: 1,0
           _rotation: South
@@ -1086,9 +1083,6 @@ entities:
           _rotation: South
         762:
           position: 3,0
-          _rotation: South
-        748:
-          position: 4,1
           _rotation: South
         742:
           position: 0,1
@@ -1104,9 +1098,6 @@ entities:
           _rotation: South
         752:
           position: 4,0
-          _rotation: South
-        721:
-          position: 1,2
           _rotation: South
         731:
           position: 2,3
@@ -1135,7 +1126,6 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 765
           - 764
           - 763
           - 762
@@ -1143,9 +1133,7 @@ entities:
           - 741
           - 738
           - 737
-          - 748
           - 752
-          - 721
           - 709
           - 729
           - 710
@@ -2916,12 +2904,6 @@ entities:
       parent: 708
     - type: Physics
       canCollide: False
-  - uid: 721
-    components:
-    - type: Transform
-      parent: 708
-    - type: Physics
-      canCollide: False
 - proto: GasPassiveVent
   entities:
   - uid: 719
@@ -4093,12 +4075,6 @@ entities:
       parent: 708
     - type: Physics
       canCollide: False
-  - uid: 748
-    components:
-    - type: Transform
-      parent: 708
-    - type: Physics
-      canCollide: False
 - proto: PaperCargoInvoice
   entities:
   - uid: 752
@@ -4120,12 +4096,6 @@ entities:
     - type: Physics
       canCollide: False
   - uid: 764
-    components:
-    - type: Transform
-      parent: 708
-    - type: Physics
-      canCollide: False
-  - uid: 765
     components:
     - type: Transform
       parent: 708
