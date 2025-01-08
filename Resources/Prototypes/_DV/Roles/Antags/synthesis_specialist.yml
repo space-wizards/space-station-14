@@ -1,0 +1,29 @@
+- type: antag
+  id: SynthesisSpecialist
+  name: roles-antag-syndicate-synthesis-name
+  objective: roles-antag-syndicate-synthesis-objective
+  antagonist: true # making poisions and shit on demand is evil
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 86400 # 24h so you probably know some general lore or something
+  - !type:RoleTimeRequirement
+    role: JobChemist
+    time: 7200 # 2h chemist so you know how to make CH
+
+- type: startingGear
+  id: SyndicateSynthesisGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSyndieFormal
+    jumpskirt: ClothingUniformJumpskirtSyndieFormalDress
+    back: ClothingBackpackChemistry
+    belt: ChemBag
+    eyes: ClothingEyesGlassesChemical
+    gloves: ClothingHandsGlovesChemist
+    outerClothing: ClothingOuterCoatLabChem
+    shoes: ClothingShoesEnclosedChem
+    id: SyndiPDA
+    ears: ClothingHeadsetAltSyndicate
+    pocket1: HandLabeler
+    pocket2: RubberStampSyndicate
+    mask: ClothingMaskNeckGaiter
+    head: ClothingHeadHatSyndie

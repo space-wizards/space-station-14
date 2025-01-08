@@ -1,0 +1,10 @@
+﻿- type: entity
+  parent: ClothingMaskGas
+  id: ClothingMaskInterdyneChemistry
+  name: interdyne gas mask
+  description: A face-covering mask that can be connected to an air supply.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Mask/interdynechemmask.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Mask/interdynechemmask.rsi

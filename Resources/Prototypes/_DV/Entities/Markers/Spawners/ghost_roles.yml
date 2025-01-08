@@ -54,3 +54,19 @@
     - state: green
     - sprite: _DV/Objects/Misc/recruiter_pen.rsi
       state: empty
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostSynthesis
+  components:
+  - type: GhostRole
+    name: ghost-role-information-synthesis-name
+    description: ghost-role-information-synthesis-description
+    rules: ghost-role-information-synthesis-rules
+    requirements: # keep in sync with the antag prototype
+    - !type:OverallPlaytimeRequirement
+      time: 86400 # 24h so you probably know some general lore or something
+    - !type:RoleTimeRequirement
+      role: JobChemist
+      time: 7200 # 2h chemist so you know how to make CH
