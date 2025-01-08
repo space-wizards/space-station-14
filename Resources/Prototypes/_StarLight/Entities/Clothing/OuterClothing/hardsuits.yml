@@ -4,9 +4,9 @@
   name: blueshield officer's hardsuit
   components:
   - type: Sprite
-    sprite: _Starlight/Clothing/OuterClothing/hardsuits/blueshield.rsi
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/blueshield.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/OuterClothing/hardsuits/blueshield.rsi
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/blueshield.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 10000
