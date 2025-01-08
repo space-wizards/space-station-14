@@ -182,6 +182,7 @@ public sealed partial class MappingScreen : InGameScreen
             DecalColorPicker.Color = _decalColor;
             DecalEnableCleanable.Pressed = _decalCleanable;
             DecalEnableSnap.Pressed = _decalSnap;
+            DecalEnableColor.Pressed = _decalEnableColor;
         }
 
         UpdateDecal();
@@ -204,6 +205,7 @@ public sealed partial class MappingScreen : InGameScreen
         DecalColorPicker.Color = _decalColor;
         DecalEnableCleanable.Pressed = _decalCleanable;
         DecalEnableSnap.Pressed = _decalSnap;
+        DecalEnableColor.Pressed = _decalEnableColor;
 
         UpdateDecal();
         RefreshDecalList();
@@ -211,7 +213,7 @@ public sealed partial class MappingScreen : InGameScreen
 
     private void RefreshDecalList()
     {
-        Decals.TexturesModulate = _decalColor;
+        Decals.TexturesModulate = _decalEnableColor ? _decalColor : Color.White;
         var children = Decals.PrototypeList.Children.ToList().Union(Decals.SearchList.Children);
         foreach (var control in children)
         {
@@ -233,7 +235,7 @@ public sealed partial class MappingScreen : InGameScreen
                 continue;
 
             if (childButton.Texture.Visible)
-                childButton.Texture.Modulate = _decalColor;
+                childButton.Texture.Modulate = _decalEnableColor ? _decalColor : Color.White;
 
             RefreshDecalButton(childButton);
         }
