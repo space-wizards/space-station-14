@@ -1,0 +1,40 @@
+﻿- type: body
+  id: Golem
+  name: "golem"
+  root: torso
+  slots:
+    head:
+      part: HeadGolem
+      connections:
+      - torso
+    torso:
+      part: TorsoGolem
+      connections:
+      - right arm
+      - left arm
+      - right leg
+      - left leg
+    right arm:
+      part: RightArmGolem
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmGolem
+      connections:
+      - left hand
+    right hand:
+      part: RightHandGolem
+    left hand:
+      part: LeftHandGolem
+    right leg:
+      part: RightLegGolem
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegGolem
+      connections:
+      - left foot
+    right foot:
+      part: RightFootGolem
+    left foot:
+      part: LeftFootGolem

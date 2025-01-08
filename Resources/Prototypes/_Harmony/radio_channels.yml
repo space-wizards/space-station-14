@@ -1,0 +1,7 @@
+﻿- type: radioChannel
+  id: Golem
+  name: Golem
+  keycode: 'j'
+  frequency: 1166
+  color: "#566bf0"
+  longRange: true

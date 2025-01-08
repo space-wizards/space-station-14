@@ -1,0 +1,15 @@
+﻿# Half of all damage because I hate balance
+- type: damageModifierSet
+  id: Golem
+  coefficients:
+    Blunt: 0.5
+    Slash: 0.5
+    Piercing: 0.5
+    Cold: 0.5
+    Poison: 0.5 # No Organs No damage? Something to discuss
+    Heat: 0.5
+    Shock: 0.5
+    Radiation: 0.0
+    Asphyxiation: 0.0
+    Bloodloss: 0.0
+    Cellular: 0.0

@@ -11,15 +11,22 @@
   - type: Icon
     sprite: _Harmony/Mobs/Species/Golem.rsi
     state: full
+  - type: Sprite
+    color: "#614a61"
+    colorHex: "#614a61"
+  - type: ActiveRadio
+    channels:
+    - Golem
+  - type: IntrinsicRadioReceiver
   - type: Inventory
     templateId: golem
   - type: Body
-    prototype: Skeleton
+    prototype: Golem
     requiredLegs: 2
     gibSound: /Audio/Effects/bone_rattle.ogg
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Skeleton
+    damageModifierSet: Golem
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
@@ -41,12 +48,6 @@
         damage: 150
       behaviors:
       - !type:GibBehavior { }
-  - type: SlowOnDamage #modified speeds because they're so weak
-    speedModifierThresholds:
-      60: 0.9
-      80: 0.7
-  - type: Speech
-    speechVerb: Skeleton
   - type: ZombieImmune
   - type: Fixtures
     fixtures:
@@ -60,7 +61,21 @@
         - MobMask
         layer:
         - MobLayer
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 4.05
 
+
+- type: entity
+  id: AdamantiumGolum
+  name: Urist McRocky
+  parent: BaseMobGolem
+  components:
+  - type: ActiveRadio
+    channels:
+    - Golem
+  - type: Sprite
+    color: "#FFFFFF"
+    colorHex: "#FFFFFF"
 
 - type: entity
   parent: BaseSpeciesDummy
