@@ -7299,7 +7299,7 @@ entities:
       pos: -30.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -44385.21
+      secondsUntilStateChange: -44717.746
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -43400,7 +43400,7 @@ entities:
       pos: -9.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -292140.75
+      secondsUntilStateChange: -292473.28
       state: Opening
   - uid: 6747
     components:
@@ -43408,7 +43408,7 @@ entities:
       pos: -8.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -292141.47
+      secondsUntilStateChange: -292474
       state: Opening
   - uid: 6749
     components:
@@ -43416,7 +43416,7 @@ entities:
       pos: -6.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -292140.03
+      secondsUntilStateChange: -292472.56
       state: Opening
   - uid: 6750
     components:
@@ -43424,7 +43424,7 @@ entities:
       pos: -5.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -292139.4
+      secondsUntilStateChange: -292471.94
       state: Opening
 - proto: CyberPen
   entities:
@@ -93440,6 +93440,11 @@ entities:
       - SurveillanceCameraEngineering
       nameSet: True
       id: Atmos Front
+  - uid: 17682
+    components:
+    - type: Transform
+      pos: 10.5,20.5
+      parent: 2
 - proto: SurveillanceCameraGeneral
   entities:
   - uid: 13564
@@ -93466,14 +93471,8 @@ entities:
   - uid: 13566
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -43.5,29.5
+      pos: -51.5,19.5
       parent: 2
-    - type: SurveillanceCamera
-      setupAvailableNetworks:
-      - SurveillanceCameraGeneral
-      nameSet: True
-      id: Dorms-Med hall
   - uid: 13567
     components:
     - type: Transform
@@ -93699,6 +93698,18 @@ entities:
       - SurveillanceCameraGeneral
       nameSet: True
       id: Entrance hall
+  - uid: 17680
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -81.5,71.5
+      parent: 2
+  - uid: 17681
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -43.5,30.5
+      parent: 2
 - proto: SurveillanceCameraMedical
   entities:
   - uid: 13791
