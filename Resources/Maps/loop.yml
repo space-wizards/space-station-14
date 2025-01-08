@@ -7299,7 +7299,7 @@ entities:
       pos: -30.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -44351.34
+      secondsUntilStateChange: -44385.21
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7691,11 +7691,23 @@ entities:
     - type: Transform
       pos: -28.5,-12.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        13404:
+        - DoorStatus: DoorBolt
   - uid: 13404
     components:
     - type: Transform
       pos: -28.5,-9.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        13402:
+        - DoorStatus: DoorBolt
   - uid: 14633
     components:
     - type: Transform
@@ -43388,7 +43400,7 @@ entities:
       pos: -9.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -292106.88
+      secondsUntilStateChange: -292140.75
       state: Opening
   - uid: 6747
     components:
@@ -43396,7 +43408,7 @@ entities:
       pos: -8.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -292107.6
+      secondsUntilStateChange: -292141.47
       state: Opening
   - uid: 6749
     components:
@@ -43404,7 +43416,7 @@ entities:
       pos: -6.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -292106.16
+      secondsUntilStateChange: -292140.03
       state: Opening
   - uid: 6750
     components:
@@ -43412,7 +43424,7 @@ entities:
       pos: -5.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -292105.53
+      secondsUntilStateChange: -292139.4
       state: Opening
 - proto: CyberPen
   entities:
