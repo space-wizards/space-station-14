@@ -36,8 +36,6 @@ public sealed partial class MappingScreen : InGameScreen
 
     public override ChatBox ChatBox => GetWidget<ChatBox>()!;
 
-    public event Func<MappingSpawnButton, bool>? IsDecalVisible;
-
     public MappingScreen()
     {
         RobustXamlLoader.Load(this);

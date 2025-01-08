@@ -13,6 +13,7 @@ using Content.Shared.Administration;
 using Content.Shared.Decals;
 using Content.Shared.Input;
 using Content.Shared.Maps;
+using FastAccessors;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -79,6 +80,7 @@ public sealed class MappingState : GameplayStateBase
     private (TimeSpan At, MappingSpawnButton Button)? _lastClicked;
     private (Control, MappingPrototypeList)? _scrollTo;
     private bool _tileErase;
+    private int _decalIndex;
 
     private MappingScreen Screen => (MappingScreen) UserInterfaceManager.ActiveScreen!;
     private MainViewport Viewport => UserInterfaceManager.ActiveScreen!.GetWidget<MainViewport>()!;
@@ -112,6 +114,7 @@ public sealed class MappingState : GameplayStateBase
         context.AddFunction(ContentKeyFunctions.MappingRemoveDecal);
         context.AddFunction(ContentKeyFunctions.MappingCancelEraseDecal);
         context.AddFunction(ContentKeyFunctions.MappingOpenContextMenu);
+        context.AddFunction(ContentKeyFunctions.MouseMiddle);
 
         Screen.DecalSystem = _decal;
 
@@ -144,7 +147,8 @@ public sealed class MappingState : GameplayStateBase
             .Bind(ContentKeyFunctions.MappingRemoveDecal, new PointerInputCmdHandler(HandleEditorCancelPlace, outsidePrediction: true))
             .Bind(ContentKeyFunctions.MappingCancelEraseDecal, new PointerInputCmdHandler(HandleCancelEraseDecal, outsidePrediction: true))
             .Bind(ContentKeyFunctions.MappingOpenContextMenu, new PointerInputCmdHandler(HandleOpenContextMenu, outsidePrediction: true))
-            .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(HandleOnUse, outsidePrediction: true))
+            .Bind(ContentKeyFunctions.MouseMiddle, new PointerInputCmdHandler(HandleMouseMiddle, outsidePrediction: true))
+            .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(HandleUse, outsidePrediction: true))
             .Register<MappingState>();
 
         _overlays.AddOverlay(new MappingOverlay(this));
@@ -977,7 +981,7 @@ public sealed class MappingState : GameplayStateBase
         return true;
     }
 
-    private bool HandleOnUse(in PointerInputCmdArgs args)
+    private bool HandleUse(in PointerInputCmdArgs args)
     {
         if (Screen.FixGridAtmos.Pressed)
         {
@@ -1005,6 +1009,19 @@ public sealed class MappingState : GameplayStateBase
             Meta.State = CursorState.None;
             if (GetHoveredGrid() is { } grid)
                 _consoleHost.ExecuteCommand($"vv {_entityManager.GetNetEntity(grid.Owner).Id}");
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool HandleMouseMiddle(in PointerInputCmdArgs args)
+    {
+        if (Screen.PickDecal.Pressed)
+        {
+            _decalIndex += 1;
+            return true;
         }
 
         return false;
@@ -1089,10 +1106,14 @@ public sealed class MappingState : GameplayStateBase
         var bounds = Box2.FromDimensions(localCoords, new Vector2(1.05f, 1.05f)).Translated(new Vector2(-1, -1));
         var decals = decalSystem.GetDecalsIntersecting(grid.Owner, bounds);
 
-        if (decals.FirstOrDefault() is { Decal: not null } decal)
-            return decal.Decal;
+        if (decals.FirstOrDefault() is not { Decal: not null })
+            return null;
 
-        return null;
+        if (!decals.ToList().TryGetValue(_decalIndex % decals.Count, out var decal))
+            return null;
+
+        _decalIndex %= decals.Count;
+        return decal.Decal;
     }
 
     public (Texture, Box2Rotated)? GetHoveredDecalData()

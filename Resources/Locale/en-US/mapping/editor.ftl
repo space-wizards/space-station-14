@@ -14,6 +14,7 @@ mapping-flip-tooltip = Flip sides
 mapping-visibility-tooltip = Visibility
 mapping-pick-tooltip = Pick entity or tile (Hold 5)
 mapping-pick-decal-tooltip = Pick decal
+                             Press the middle mouse button to switch between decals
 mapping-fixgridatmos-tooltip = Add atmosphere to the grid
 mapping-remove-grid-tooltip = Remove grid
 mapping-move-grid-tooltip = Move grid
