@@ -1,0 +1,12 @@
+- type: entity
+  parent: SyndiPDA
+  id: SyndiListeningPostPDA
+  components:
+  - type: Pda
+    id: SyndicateIDCard
+    state: pda-syndi-agent
+    penSlot:
+      startingItem: CyberPen
+      whitelist:
+        tags:
+        - Write
