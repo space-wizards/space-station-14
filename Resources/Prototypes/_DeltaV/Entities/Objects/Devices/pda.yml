@@ -4,9 +4,16 @@
   components:
   - type: Pda
     id: SyndicateIDCard
-    state: pda-syndi-agent
     penSlot:
       startingItem: CyberPen
       whitelist:
         tags:
         - Write
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-syndi-agent
+  - type: Icon
+    state: pda-syndi-agent
+
