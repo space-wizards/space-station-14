@@ -1,0 +1,7 @@
+﻿- type: species
+  id: Golem
+  name: Golem
+  roundStart: false # No fun for you ):
+  prototype: BaseMobGolem
+  dollPrototype: MobGolemPersonDummy
+  skinColoration: TintedHues

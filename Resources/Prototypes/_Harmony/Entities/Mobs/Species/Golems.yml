@@ -1,0 +1,70 @@
+﻿- type: entity
+  save: false
+  name: Urist McRocky
+  parent:
+  - BaseMobSpecies
+  id: BaseMobGolem
+  abstract: true
+  components:
+  - type: HumanoidAppearance
+    species: Golem
+  - type: Icon
+    sprite: _Harmony/Mobs/Species/Golem.rsi
+    state: full
+  - type: Body
+    prototype: Skeleton
+    requiredLegs: 2
+    gibSound: /Audio/Effects/bone_rattle.ogg
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Skeleton
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#555555AA"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      150: Dead
+  - type: TransferMindOnGib
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:GibBehavior { }
+  - type: SlowOnDamage #modified speeds because they're so weak
+    speedModifierThresholds:
+      60: 0.9
+      80: 0.7
+  - type: Speech
+    speechVerb: Skeleton
+  - type: ZombieImmune
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+
+
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobGolemPersonDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HumanoidAppearance
+    species: Golem
