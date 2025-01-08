@@ -63,7 +63,11 @@ namespace Content.IntegrationTests.Tests
             "Oasis",
             "Cog",
             "Gate",
-            "Amber"
+            "Amber",
+            "Loop",
+            "Elkridge"
+
+           
         };
 
         /// <summary>

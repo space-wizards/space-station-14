@@ -595,9 +595,9 @@
   description: flavor-complex-vermouth
 
 - type: flavor
-  id: irishcarbomb
+  id: irishslammer
   flavorType: Complex
-  description: flavor-complex-irish-car-bomb
+  description: flavor-complex-irish-slammer
 
 - type: flavor
   id: vodkaredbool
@@ -673,6 +673,11 @@
   id: lemonlimesoda
   flavorType: Complex
   description: flavor-complex-lemon-lime-soda
+
+- type: flavor
+  id: lemonlimecranberrysoda
+  flavorType: Complex
+  description: flavor-complex-lemon-lime-cranberry-soda
 
 - type: flavor
   id: pwrgamesoda
