@@ -23,7 +23,7 @@
   id: ShellShotgun
   name: shell (12 gauge pellet)
   parent: BaseShellShotgun
-  description: 12 gauge inches. The most common type of shotgun ammunition, it consists of a shot shell that fires a group of lead pellets in a wide cone. Useful in close-quarters combat; as the saying goes, “the shotgun doesn’t miss.” 
+  description: 12 gauge. The most common type of shotgun ammunition, it consists of a shot shell that fires a group of lead pellets in a wide cone. Useful in close-quarters combat; as the saying goes, “the shotgun doesn’t miss.” 
   components:
   - type: Sprite
     layers:
@@ -36,7 +36,7 @@
   id: ShellShotgunPractice
   name: shell (12 gauge practice)
   parent: BaseShellShotgun
-  description: 12 gauge inches. Non-harmful shotshell firing tiny rubber pellets for practice.
+  description: 12 gauge. Non-harmful shotshell firing tiny rubber pellets for practice.
   components:
   - type: Sprite
     layers:
@@ -51,7 +51,7 @@
   id: ShellShotgunSlug
   name: shell (12 gauge slug)
   parent: BaseShellShotgun
-  description: 12 gauge inches. A single, heavy bullet for use in shotguns. It has a much longer effective range than pellet shells but is more difficult to aim. 
+  description: 12 gauge. A single, heavy bullet for use in shotguns. It has a much longer effective range than pellet shells but is more difficult to aim. 
   components:
   - type: Sprite
     layers:
@@ -66,7 +66,7 @@
   id: ShellShotgunUranium
   name: shell (12 gauge uranium slug)
   parent: BaseShellShotgun
-  description: 12 gauge inches. A single, heavy bullet for use in shotguns. Unlike traditional slugs, this type contains a uranium core that severely irradiates the target.
+  description: 12 gauge. A single, heavy bullet for use in shotguns. Unlike traditional slugs, this type contains a uranium core that severely irradiates the target.
   components:
     - type: Sprite
       layers:
@@ -81,7 +81,7 @@
   id: ShellShotgunIncendiary
   name: shell (12 gauge incendiary)
   parent: BaseShellShotgun
-  description: 12 gauge inches. A specialized shotshell containing incendiary pellets that fill the target area with flames. Is it morally questionable? Possibly. Is it effective? Absolutely.
+  description: 12 gauge. A specialized shotshell containing incendiary pellets that fill the target area with flames. Is it morally questionable? Possibly. Is it effective? Absolutely.
   components:
   - type: Sprite
     layers:
@@ -96,7 +96,7 @@
   id: ShellShotgunBeanbag
   name: shell (12 gauge beanbag)
   parent: BaseShellShotgun
-  description: 12 gauge inches. Also known as ‘baton rounds’, these non-lethal shotgun shells contain several pellets within a padded bag. Stuns and bruises the victim. 
+  description: 12 gauge. Also known as ‘baton rounds’, these non-lethal shotgun shells contain several pellets within a padded bag. Stuns and bruises the victim. 
   components:
   - type: Tag
     tags:
@@ -116,7 +116,7 @@
   id: ShellShotgunFlare
   name: shell (12 gauge flare)
   parent: BaseShellShotgun
-  description: 12 gauge inches. A single, slow-burning projectile for illumination. It doesn’t produce much heat and can be used by both shotguns and dedicated flare guns.
+  description: 12 gauge. A single, slow-burning projectile for illumination. It doesn’t produce much heat and can be used by both shotguns and dedicated flare guns.
   components:
   - type: Tag
     tags:
@@ -136,7 +136,7 @@
   id: ShellTranquilizer
   name: shell (12 gauge tranquilizer)
   parent: BaseShellShotgun
-  description: 12 gauge inches. A specialized slug with a much lower velocity and a built-in auto-injector filled with chloral hydrate. Used for animal control.
+  description: 12 gauge. A specialized slug with a much lower velocity and a built-in auto-injector filled with chloral hydrate. Used for animal control.
   components:
   - type: Tag
     tags:
@@ -164,7 +164,7 @@
 - type: entity
   id: ShellShotgunImprovised
   name: improvised shotgun shell
-  description: .27x3 inches, give or take. A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn, but it's still not to be underestimated.
+  description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn, but it's still not to be underestimated.
   parent: BaseShellShotgun
   components:
   - type: Tag
