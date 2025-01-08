@@ -87,7 +87,7 @@ public sealed class EventReactorSystem : EntitySystem
 
             if (timer.TimeRemaining <= 30 && !component.MeltdownWarning)
             {
-                 _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("meltdown-alert-warning"), component.title, announcementSound: component.Sound, colorOverride: component.Color);
+                 _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("meltdown-alert-warning"), component.title, announcementSound: component.MeltdownSound, colorOverride: component.Color);
                 component.MeltdownWarning = true;
             }
     }
