@@ -7,3 +7,27 @@
     color: Red
     selectableColor: true
     infinite: true
+
+- type: entity
+  parent: Crayon
+  id: CrayonChalk
+  name: forensic chalk
+  description: White, forensic-grade chalk, perfect for marking up a crime scene.
+  components:
+  - type: Sprite
+    state: white
+  - type: Item
+    heldPrefix: white
+  - type: Crayon
+    color: white
+    capacity: 200
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - CrayonWhite
+    - Recyclable
+    - Trash
+  - type: FlavorProfile
+    flavors:
+    - chalky

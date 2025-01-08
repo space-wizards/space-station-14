@@ -282,7 +282,7 @@
     outerClothing: ClothingOuterArmorBasicSlim
     pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
-  inhand: 
+  inhand:
   - FlashlightSeclite
 
 - type: startingGear
@@ -302,6 +302,7 @@
     pocket2: ForensicPad
   inhand:
   - FlashlightSeclite
+  - CrayonChalk # imp edit
 
 - type: startingGear
   id: VisitorDetectiveAlt
@@ -320,6 +321,7 @@
     pocket2: ForensicPad
   inhand:
   - FlashlightSeclite
+  - CrayonChalk # imp edit
 
 - type: startingGear
   id: VisitorWarden
@@ -859,7 +861,7 @@
     eyes: ClothingEyesHudMedical
     pocket1: RegenerativeMesh
     pocket2: PillCanisterBicaridine
-  inhand: 
+  inhand:
   - ScalpelAdvanced
   - MedicatedSuture
 
