@@ -109242,6 +109242,33 @@ entities:
     - type: Transform
       pos: 81.5,-18.5
       parent: 2
+- proto: DebugConsumer
+  entities:
+  - uid: 667
+    components:
+    - type: MetaData
+      desc: A standard long-hauler reactor core. It's exterior shielding looks damaged.
+      name: Dark-Matter Reactor
+    - type: Transform
+      pos: -41.5,-26.5
+      parent: 2
+    - type: ActiveTimerTrigger
+      beepSound: !type:SoundPathSpecifier
+        path: ""
+      beepInterval: 120
+      timeRemaining: 7200
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      maxTileBreak: 0
+      totalIntensity: 10000
+      intensitySlope: 200
+      maxIntensity: 500
+      explosionType: Default
+    missingComponents:
+    - PowerConsumer
+    - Damageable
+    - Destructible
+    - Anchorable
 - proto: DefibrillatorCabinet
   entities:
   - uid: 23387
@@ -112823,12 +112850,10 @@ entities:
     - type: Transform
       pos: 79.5,-25.5
       parent: 2
-- proto: GeneratorRTGDamaged
-  entities:
-  - uid: 667
+  - uid: 23483
     components:
     - type: Transform
-      pos: -41.5,-26.5
+      pos: -40.5,-27.5
       parent: 2
 - proto: GeneratorWallmountBasic
   entities:
