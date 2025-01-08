@@ -952,8 +952,8 @@
       - Hemostat
       - ClothingEyesGlassesChemical
       - WhiteCane
-      - PrescriptionLens
-      - PrescriptionLensStrong
+      - PrescriptionLens # imp
+      - PrescriptionLensStrong # imp
     dynamicRecipes:
       - ChemicalPayload
       - CryostasisBeaker
