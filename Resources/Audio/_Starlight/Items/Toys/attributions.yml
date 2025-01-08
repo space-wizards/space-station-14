@@ -9,21 +9,21 @@
   source: "https://undertale.com/"
   
   files: ["yippie.ogg"]
-  license: "None"
+  license: "CC0-1.0"
   copyright: "Original sound by CipherForbid"
   source: "https://www.youtube.com/watch?v=-jySY1QC7dc"
   
 - files: ["gnome_hahe.ogg"]
-  license: "None"
+  license: "CC0-1.0"
   copyright: "Original sound by Radio TV Solutions"
   source: "https://www.youtube.com/watch?v=yaHrneT9BfU"
     
 - files: ["gnome_murderer.ogg"]
-  license: "None"
+  license: "CC0-1.0"
   copyright: "Original sound by Radio TV Solutions"
   source: "https://www.youtube.com/watch?v=yaHrneT9BfU"
     
 - files: ["gnome_stop.ogg"]
-  license: "None"
+  license: "CC0-1.0"
   copyright: "Original sound by Radio TV Solutions"
   source: "https://www.youtube.com/watch?v=yaHrneT9BfU"
