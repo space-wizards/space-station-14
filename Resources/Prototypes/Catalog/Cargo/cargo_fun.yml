@@ -267,7 +267,7 @@
   cost: 2000
   category: cargoproduct-category-name-fun
   group: market
- 
+
 - type: cargoProduct
   id: HarpInstrument
   icon:
@@ -293,7 +293,6 @@
   icon:
     sprite: Objects\Fun\Instruments\structureinstruments.rsi
     state: taiko
-    state: timpani
   product: TaikoInstrument
   cost: 2000
   category: cargoproduct-category-name-fun
@@ -303,7 +302,6 @@
   id: ContrabassInstrument
   icon:
     sprite: Objects\Fun\Instruments\structureinstruments.rsi
-    state: taiko
     state: contrabass
   product: ContrabassInstrument
   cost: 2000
@@ -314,7 +312,6 @@
   id: MinimoogInstrument
   icon:
     sprite: Objects\Fun\Instruments\structureinstruments.rsi
-    state: taiko
     state: minimoog
   product: MinimoogInstrument
   cost: 2000
@@ -325,11 +322,8 @@
   id: TomDrumsInstrument
   icon:
     sprite: Objects\Fun\Instruments\structureinstruments.rsi
-    state: taiko
     state: toms
   product: TomDrumsInstrument
   cost: 2000
   category: cargoproduct-category-name-fun
   group: market
-
-  
