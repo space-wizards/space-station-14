@@ -72,27 +72,17 @@ public abstract class SharedLayingDownSystem : EntitySystem
         if (HasComp<KnockedDownComponent>(uid) || !_mobState.IsAlive(uid))
             return;
 
-        if (_timing.CurTime < layingDown.NextStateChange)
+        var isDown = _standing.IsDown(uid, standing);
+        if (_timing.CurTime < layingDown.NextLayDown && isDown)
         {
-            var loc = standing.CurrentState switch
-            {
-                StandingState.Standing => "popup-laying-down-cooldown-lay-down",
-                StandingState.Lying => "popup-laying-down-cooldown-stand-up",
-                _ => null
-            };
-
-            if (loc != null)
-                _popup.PopupEntity(Loc.GetString(loc), uid, uid);
-
+            _popup.PopupEntity(Loc.GetString("popup-laying-down-cooldown-stand-up"), uid, uid);
             return;
         }
 
-        if (_standing.IsDown(uid, standing))
+        if (isDown)
             TryStandUp(uid, layingDown, standing);
         else
             TryLieDown(uid, layingDown, standing);
-
-        layingDown.NextStateChange = _timing.CurTime + layingDown.Cooldown;
     }
 
     private void OnRefreshMovementSpeed(EntityUid uid, LayingDownComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -144,6 +134,7 @@ public abstract class SharedLayingDownSystem : EntitySystem
         }
 
         _standing.Down(uid, true, behavior != DropHeldItemsBehavior.NoDrop, false, standingState);
+        layingDown.NextLayDown = _timing.CurTime + layingDown.Cooldown;
         return true;
     }
 }

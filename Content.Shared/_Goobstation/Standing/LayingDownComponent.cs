@@ -10,7 +10,7 @@ public sealed partial class LayingDownComponent : Component
     public TimeSpan Cooldown { get; set; } = TimeSpan.FromSeconds(2.5);
 
     [DataField, AutoNetworkedField]
-    public TimeSpan NextStateChange;
+    public TimeSpan NextLayDown;
 
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public float SpeedModify { get; set; } = .25f;
