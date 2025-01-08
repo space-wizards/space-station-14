@@ -12,7 +12,7 @@ namespace Content.Shared.Doors.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent /*, AutoGenerateComponentState*/]
 [Access(typeof(SharedDoorSystem), Friend = AccessPermissions.ReadWriteExecute, Other = AccessPermissions.Read)]
-public sealed partial class RotatingDoorComponent : Component
+public sealed partial class CyclingDoorComponent : Component
 {
     [DataField]
     public string InnerFixtureName;

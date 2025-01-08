@@ -311,12 +311,6 @@ public sealed partial class DoorComponent : Component
 
     [DataField(customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
     public int ClosedDrawDepth = (int)DrawDepth.DrawDepth.Doors;
-
-    // /// <summary>
-    // /// Is true if the door is currently opening or closing due to being pried.
-    // /// </summary>
-    // [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
-    // public bool IsBeingPried;
 }
 
 [Serializable, NetSerializable]

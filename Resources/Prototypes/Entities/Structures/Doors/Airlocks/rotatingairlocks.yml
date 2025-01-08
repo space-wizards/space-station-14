@@ -1,26 +1,37 @@
-﻿# Rotating airlocks that require only one tile to keep the spessmen in and the spess out.
-
-- type: entity
-  id: RotatingAirlock
+﻿- type: entity
+  id: CyclingAirlock
   parent: Airlock
-  name: rotating airlock
-  description: It rotates inward, it rotates outward, and maybe it crushes you.
+  name: cycling airlock
+  description: A small, airtight room with one open side. It rotates 180 degrees on command, keeping space separate from station. Too cramped to move large objects through.
   components:
-    - type: RotatingDoor
+    - type: Airtight
+      noAirWhenFullyAirBlocked: false
+      # Cycling airlocks by default close the west door by default when the map is rotated north.
+      airBlockedDirection:
+        - West
+        - North
+        - South
+    - type: Door
+      # Rotating airlocks don't crush, they spiiIIIiiin.
+      canCrush: false
+      # Rotating airlocks can be closed by somebody standing inside them.
+      performCollisionCheck: false
+    - type: CyclingDoor
       innerFixtureName: left
       outerFixtureName: right
       innerDoor:
         vertices:
-          - -0.49,0.36
           - -0.49,-0.36
-          - -0.36,-0.36
+          - -0.49,0.36
           - -0.36,0.36
+          - -0.36,-0.36
       outerDoor:
         vertices:
-          - 0.49,0.36
-          - 0.49,-0.36
           - 0.36,-0.36
+          - 0.49,-0.36
+          - 0.49,0.36
           - 0.36,0.36
+      bumpToggle: true
       density: 1500
       mask:
         - TabletopMachineMask
@@ -31,7 +42,7 @@
         down:
           shape:
             !type:PhysShapeAabb
-            bounds: "-0.49,-0.49,0.49,-0.36"
+            bounds: "-0.49,-0.49,0.49,-0.45"
           density: 1500
           mask:
             - TabletopMachineMask
@@ -40,10 +51,34 @@
         up:
           shape:
             !type:PhysShapeAabb
-            bounds: "0.49,0.49,-0.49,0.36"
+            bounds: "-0.49,0.45, 0.49,0.49"
           density: 1500
           mask:
             - TabletopMachineMask
           layer:
             - GlassAirlockLayer
-
+    - type: Sprite
+      sprite: Structures/Doors/Airlocks/Rotating/basic.rsi
+      snapCardinals: true
+      layers:
+      - state: closed
+        map: ["enum.DoorVisualLayers.Base"]
+      - state: closed_unlit
+        shader: unshaded
+        map: ["enum.DoorVisualLayers.BaseUnlit"]
+        visible: false
+      - state: welded
+        map: ["enum.WeldableLayers.BaseWelded"]
+      - state: bolted_unlit
+        shader: unshaded
+        map: ["enum.DoorVisualLayers.BaseBolted"]
+      - state: emergency_unlit
+        map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
+        shader: unshaded
+      - state: panel_open
+        map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      - state: electrified
+        sprite: Interface/Misc/ai_hud.rsi
+        shader: unshaded
+        visible: false
+        map: ["enum.ElectrifiedLayers.HUD"]

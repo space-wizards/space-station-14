@@ -110,6 +110,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             _activeDoors.Add(door);
 
         SetCollidable(door, IsDoorCollidable(door));
+
         _appearance.SetData(door, DoorVisuals.State, door.Comp.State);
     }
 
@@ -590,6 +591,10 @@ public abstract partial class SharedDoorSystem : EntitySystem
     /// </remarks>
     public void SetNextStateChange(Entity<DoorComponent> door, TimeSpan? delay)
     {
+        // Cycling doors don't automatically open or close.
+        if (TryComp<CyclingDoorComponent>(door, out _))
+            return;
+
         // If the door is not currently just open or closed, it is busy doing something else (or welded shut). So in
         // that case we do nothing.
         if (door.Comp.State != DoorState.Open && door.Comp.State != DoorState.Closed)

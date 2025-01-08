@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Doors.Components;
 using Content.Shared.Physics;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -43,37 +44,24 @@ public abstract partial class SharedDoorSystem
         }
     }
 
-    protected virtual void SetCollidable(Entity<DoorComponent> door,
-        bool isClosed,
-        OccluderComponent? occluder = null)
+    protected virtual void SetCollidable(Entity<DoorComponent> door, bool isClosed)
     {
         // If the door is a rotating door, flip which of the two door fixtures exist.
-        // Otherwise
-
-        // TODO: prediction hell :godo:
-        if (TryComp<RotatingDoorComponent>(door, out var rotatingDoor))
+        if (TryComp<CyclingDoorComponent>(door, out var cycling))
         {
-            // Thanks be to Sloth; this doesn't throw if the fixture doesn't exist.
-            _fixture.DestroyFixture(door,
-                isClosed ? rotatingDoor.OuterFixtureName : rotatingDoor.InnerFixtureName);
+            SetCyclingCollision((door, cycling), isClosed);
 
-            _fixture.TryCreateFixture(door,
-                isClosed ? rotatingDoor.InnerDoor : rotatingDoor.OuterDoor,
-                isClosed ? rotatingDoor.InnerFixtureName : rotatingDoor.OuterFixtureName,
-                rotatingDoor.Density,
-                true,
-                rotatingDoor.CollisionLayer,
-                rotatingDoor.CollisionMask
-            );
+            return;
         }
-        else if (TryComp<PhysicsComponent>(door, out var physics))
-            _physics.SetCanCollide(door, isClosed, body: physics);
 
         if (!isClosed)
             door.Comp.CurrentlyCrushing.Clear();
 
+        if (TryComp<PhysicsComponent>(door, out var physics))
+            _physics.SetCanCollide(door, isClosed, body: physics);
+
         if (door.Comp.Occludes)
-            _occluder.SetEnabled(door, isClosed, occluder);
+            _occluder.SetEnabled(door, isClosed);
     }
 
     /// <summary>
@@ -192,15 +180,19 @@ public abstract partial class SharedDoorSystem
     /// </summary>
     private void HandleCollide(Entity<DoorComponent> door, ref StartCollideEvent args)
     {
-        if (!door.Comp.BumpOpen)
+        if (!door.Comp.BumpOpen || !_tag.HasTag(args.OtherEntity, DoorBumpTag))
             return;
+
+        if (TryComp<CyclingDoorComponent>(door, out var cycle))
+        {
+            HandleCyclingBump(door, args, cycle);
+
+            return;
+        }
 
         if (door.Comp.State is not (DoorState.Closed or DoorState.Denying))
             return;
 
-        var otherUid = args.OtherEntity;
-
-        if (_tag.HasTag(otherUid, DoorBumpTag))
-            TryOpen(door, otherUid, quiet: door.Comp.State == DoorState.Denying, predicted: true);
+        TryOpen(door, args.OtherEntity, quiet: door.Comp.State == DoorState.Denying, predicted: true);
     }
 }

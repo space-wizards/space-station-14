@@ -7,7 +7,6 @@ namespace Content.Shared.Doors.Systems;
 
 public abstract partial class SharedDoorSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] protected readonly SharedDoorSystem DoorSystem = default!;
     [Dependency] private readonly SharedWiresSystem _wiresSystem = default!;
 
@@ -46,7 +45,7 @@ public abstract partial class SharedDoorSystem
     private void OnStateChanged(Entity<AirlockComponent> airlock, ref DoorStateChangedEvent args)
     {
         // This is here, so we don't accidentally bulldoze state values and mis-predict.
-        if (_timing.ApplyingState)
+        if (_gameTiming.ApplyingState)
             return;
 
         // Only show the maintenance panel if the airlock is closed
