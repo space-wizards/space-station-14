@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Prestige HoS cape and armor
-    type: Add
-  - message: HoS formal dress sprite for vox
-    type: Add
-  - message: Various prestige captain sprite touchups
-    type: Tweak
-  id: 375
-  time: '2024-10-15T04:58:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/474
 - author: DinnerCalzone
   changes:
   - message: Added juice that makes you UNGH
@@ -4492,3 +4481,10 @@
   id: 874
   time: '2025-01-08T00:11:07.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1251
+- author: Darkmajia
+  changes:
+  - message: Most stamps now look fancier on paper.
+    type: Add
+  id: 875
+  time: '2025-01-08T14:13:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1255
