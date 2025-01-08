@@ -1,4 +1,4 @@
-- type: entity
+- type: entity # actually shouldn be heavy_rifle.yml but oh well.
   id: SpeedLoaderHeavyRifle
   name: "speed loader (.325 rifle)"
   parent: [ BaseItem, BaseRestrictedContraband ]
