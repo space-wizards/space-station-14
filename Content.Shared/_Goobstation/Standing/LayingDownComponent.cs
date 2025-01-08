@@ -19,7 +19,10 @@ public sealed partial class LayingDownComponent : Component
     public bool AutoGetUp;
 }
 [Serializable, NetSerializable]
-public sealed class ChangeLayingDownEvent : CancellableEntityEventArgs;
+public sealed class ChangeLayingDownEvent(bool intentional = false) : CancellableEntityEventArgs
+{
+    public bool Intentional = intentional;
+}
 
 [Serializable, NetSerializable]
 public sealed class CheckAutoGetUpEvent(NetEntity user) : CancellableEntityEventArgs

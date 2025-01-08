@@ -47,7 +47,7 @@ public abstract class SharedLayingDownSystem : EntitySystem
             return;
         }
 
-        RaiseNetworkEvent(new ChangeLayingDownEvent());
+        RaiseNetworkEvent(new ChangeLayingDownEvent(intentional: true));
     }
 
     private void OnChangeState(ChangeLayingDownEvent ev, EntitySessionEventArgs args)
@@ -82,7 +82,7 @@ public abstract class SharedLayingDownSystem : EntitySystem
         if (isDown)
             TryStandUp(uid, layingDown, standing);
         else
-            TryLieDown(uid, layingDown, standing);
+            TryLieDown(uid, layingDown, standing, isIntentional: ev.Intentional);
     }
 
     private void OnRefreshMovementSpeed(EntityUid uid, LayingDownComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -121,7 +121,7 @@ public abstract class SharedLayingDownSystem : EntitySystem
         return true;
     }
 
-    public bool TryLieDown(EntityUid uid, LayingDownComponent? layingDown = null, StandingStateComponent? standingState = null, DropHeldItemsBehavior behavior = DropHeldItemsBehavior.NoDrop)
+    public bool TryLieDown(EntityUid uid, LayingDownComponent? layingDown = null, StandingStateComponent? standingState = null, DropHeldItemsBehavior behavior = DropHeldItemsBehavior.NoDrop, bool isIntentional = false)
     {
         if (!Resolve(uid, ref standingState, false) ||
             !Resolve(uid, ref layingDown, false) ||
@@ -133,7 +133,7 @@ public abstract class SharedLayingDownSystem : EntitySystem
             return false;
         }
 
-        _standing.Down(uid, true, behavior != DropHeldItemsBehavior.NoDrop, false, standingState);
+        _standing.Down(uid, true, behavior != DropHeldItemsBehavior.NoDrop, false, standingState, intentional: isIntentional);
         layingDown.NextLayDown = _timing.CurTime + layingDown.Cooldown;
         return true;
     }

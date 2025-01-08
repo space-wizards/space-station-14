@@ -38,7 +38,8 @@ public sealed class StandingStateSystem : EntitySystem
         bool force = true,
         StandingStateComponent? standingState = null,
         AppearanceComponent? appearance = null,
-        HandsComponent? hands = null)
+        HandsComponent? hands = null,
+        bool intentional = true)
     {
         // TODO: This should actually log missing comps...
         if (!Resolve(uid, ref standingState, false))
@@ -76,7 +77,7 @@ public sealed class StandingStateSystem : EntitySystem
         _appearance.SetData(uid, RotationVisuals.RotationState, RotationState.Horizontal, appearance);
 
         // Change collision masks to allow going under certain entities like flaps and tables
-        if (TryComp(uid, out FixturesComponent? fixtureComponent))
+        if (TryComp(uid, out FixturesComponent? fixtureComponent) && !intentional)
         {
             foreach (var (key, fixture) in fixtureComponent.Fixtures)
             {
