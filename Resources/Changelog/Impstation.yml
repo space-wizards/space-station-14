@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: nowaitstop
-  changes:
-  - message: Playing cards and their system from the Frontier station github, with
-      a slight tweak to their size.
-    type: Add
-  - message: Added two decks of cards to the Good Clean Fun vending machine.
-    type: Tweak
-  id: 380
-  time: '2024-10-15T05:04:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/482
 - author: harpy & credey
   changes:
   - message: Slimes now have unique gasps and deathgasps.
@@ -4486,3 +4476,18 @@
   id: 879
   time: '2025-01-08T14:23:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1259
+- author: Darkmajia, AftrLite
+  changes:
+  - message: The supermatter monitoring console has been added, with sprites by AftrLite.
+      For now, its board can be produced at a circuit imprinter.
+    type: Add
+  - message: Supermatters have received various adjustments and are scarier.
+    type: Tweak
+  - message: Supermatter healing is now properly capped.
+    type: Fix
+  - message: The chief engineer's hardsuit no longer disintegrates when thrown into
+      a supermatter.
+    type: Fix
+  id: 880
+  time: '2025-01-08T14:36:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1246
