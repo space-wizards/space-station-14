@@ -58,6 +58,9 @@
     damage:
       types:
         Radiation: 10
+  - type: Tag
+    tags:
+    - Anomaly
 
 - type: entity
   id: AnomalyPyroclastic
