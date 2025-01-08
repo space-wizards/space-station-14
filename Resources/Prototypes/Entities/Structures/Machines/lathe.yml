@@ -471,6 +471,7 @@
     - SalvageMagnetMachineCircuitboard
     - ShipyardComputerCircuitboard
     - ServiceTechFabCircuitboard #imp addition
+    - SupermatterComputerCircuitboard # imp
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - HellfireFreezerMachineCircuitBoard

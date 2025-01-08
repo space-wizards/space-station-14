@@ -26,3 +26,7 @@
   id: ServiceTechFabCircuitboard
   result: ServiceTechFabCircuitboard
 
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: SupermatterComputerCircuitboard
+  result: SupermatterComputerCircuitboard

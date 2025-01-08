@@ -1,5 +1,7 @@
 supermatter-examine-integrity =
     Its integrity is [color=yellow]{$integrity}%[/color].
+supermatter-healing =
+    Crystalline hyperstructure returning to safe operating parameters. Integrity: {$integrity}%.
 supermatter-warning =
     Warning! Crystal hyperstructure integrity faltering! Integrity: {$integrity}%.
 supermatter-emergency =
