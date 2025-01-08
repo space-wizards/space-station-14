@@ -6,6 +6,7 @@ using Content.Server.Event.Components;
 using Robust.Shared.Random;
 using Content.Server.Chat.Systems;
 using Robust.Shared.Prototypes;
+using Content.Shared.Radiation.Components;
 
 namespace Content.Server.Event.Systems;
 
