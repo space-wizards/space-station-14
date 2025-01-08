@@ -31,6 +31,21 @@
     - type: Appearance
 
 # Shotgun Shells
+- type: entity
+  parent: AmmoProviderShotgunShell
+  id: BoxBeanbag
+  name: shell box (12 gauge beanbag)
+  description: A cardboard box full of 12 gauge beanbag shotshells, which contain a padded bag of metal pellets that stuns and incapacitates the target.
+  components:
+    - type: BallisticAmmoProvider
+      proto: ShellShotgunBeanbag
+    - type: Sprite
+      layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-1
+        map: ["enum.GunVisualLayers.Mag"]
+      - state: beanbag
 
 - type: entity
   name: shell box (12 gauge pellet)
@@ -47,22 +62,6 @@
       - state: mag-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: lethal
-
-- type: entity
-  name: shell box (12 gauge practice)
-  parent: AmmoProviderShotgunShell
-  id: BoxShotgunPractice
-  description: A cardboard box full of 12 gauge training rounds, with tiny, non-harmful projectiles.
-  components:
-    - type: BallisticAmmoProvider
-      proto: ShellShotgunPractice
-    - type: Sprite
-      layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-1
-        map: ["enum.GunVisualLayers.Mag"]
-      - state: practice
 
 - type: entity
   name: shell box (12 gauge slug)
@@ -83,24 +82,24 @@
       - state: mag-alt-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: slug
-  
-- type: entity
+
+  - type: entity
+  name: shell box (12 gauge flare)
   parent: AmmoProviderShotgunShell
-  id: BoxBeanbag
-  name: shell box (12 gauge beanbag)
-  description: A cardboard box full of 12 gauge beanbag shotshells, which contain a padded bag of metal pellets that stuns and incapacitates the target.
+  id: BoxShotgunFlare
+  description: A cardboard box full of 12 gauge illumination flares. Useable by both shotguns and emergency flare guns.
   components:
     - type: BallisticAmmoProvider
-      proto: ShellShotgunBeanbag
+      proto: ShellShotgunFlare
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-1
         map: ["enum.GunVisualLayers.Mag"]
-      - state: beanbag
+      - state: flare
 
-- type: entity
+    - type: entity
   name: shell box (12 gauge incendiary pellet)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunIncendiary
@@ -137,20 +136,21 @@
       - state: uranium
 
 - type: entity
-  name: shell box (12 gauge flare)
+  name: shell box (12 gauge practice)
   parent: AmmoProviderShotgunShell
-  id: BoxShotgunFlare
-  description: A cardboard box full of 12 gauge illumination flares. Useable by both shotguns and emergency flare guns.
+  id: BoxShotgunPractice
+  description: A cardboard box full of 12 gauge training rounds, with tiny, non-harmful projectiles.
   components:
     - type: BallisticAmmoProvider
-      proto: ShellShotgunFlare
+      proto: ShellShotgunPractice
     - type: Sprite
       layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-1
         map: ["enum.GunVisualLayers.Mag"]
-      - state: flare
+      - state: practice
+
 
 - type: entity
   name: shell box (12 gauge tranquilizer)
