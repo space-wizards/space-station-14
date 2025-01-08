@@ -5,9 +5,9 @@
   name: blueshield officer's hardsuit helmet
   components:
   - type: Sprite
-    sprite: _Starlight/Clothing/Head/hardsuits/blueshield.rsi
+    sprite: _Starlight/Clothing/Head/Hardsuits/blueshield.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/Head/hardsuits/blueshield.rsi
+    sprite: _Starlight/Clothing/Head/Hardsuits/blueshield.rsi
   - type: PointLight
     color: "#adeeff"
   - type: PressureProtection
