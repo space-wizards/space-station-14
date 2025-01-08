@@ -12,7 +12,7 @@ namespace Content.Server.Event.Systems;
 /// <summary>
 /// This handles reactor events like light flickering and global announcements for the floatsam event.
 /// </summary>
-public sealed class ReactorFlickerSystem : EntitySystem
+public sealed class EventReactorSystem : EntitySystem
 {
 
     [Dependency] private readonly ChatSystem _chatSystem = default!;
@@ -60,6 +60,7 @@ public sealed class ReactorFlickerSystem : EntitySystem
                 }
                 _flickerTimer = 0f;
             }
+        }
 
 
      private void ReactorCheck(EntityUid uid, EventReactorComponent component, ActiveTimerTriggerComponent timer)
@@ -96,6 +97,7 @@ public sealed class ReactorFlickerSystem : EntitySystem
                 component.MeltdownWarning = true;
             }
         }
+    }
 
      private void FlickerReactor(EntityUid uid, EventReactorComponent component)
      {
@@ -110,4 +112,5 @@ public sealed class ReactorFlickerSystem : EntitySystem
 
             _ghost.DoGhostBooEvent(light);
         }
+    }
 }
