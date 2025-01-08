@@ -8,12 +8,12 @@ mapping-erase-entity = Erase Entity
 mapping-erase-tile = Erase Tile
 mapping-erase-decal = Erase Decal
 
-mapping-erase-entity-tooltip = Hold 6
+mapping-erase-entity-tooltip = Hold {$key}
 
 mapping-flip-tooltip = Flip sides
 mapping-visibility-tooltip = Visibility
-mapping-pick-tooltip = Pick entity or tile (Hold 5)
-mapping-pick-decal-tooltip = Pick decal
+mapping-pick-tooltip = Pick entity or tile (Hold {$key})
+mapping-pick-decal-tooltip = Pick decal (Hold {$key})
                              Press the middle mouse button to switch between decals
 mapping-fixgridatmos-tooltip = Add atmosphere to the grid
 mapping-remove-grid-tooltip = Remove grid

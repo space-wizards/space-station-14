@@ -1,10 +1,8 @@
 ﻿using System.Linq;
-using System.Numerics;
 using Content.Client.Administration.Managers;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Decals;
 using Content.Client.Gameplay;
-using Content.Client.Guidebook.Richtext;
 using Content.Client.Maps;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Gameplay;
@@ -13,7 +11,6 @@ using Content.Shared.Administration;
 using Content.Shared.Decals;
 using Content.Shared.Input;
 using Content.Shared.Maps;
-using FastAccessors;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -142,6 +139,7 @@ public sealed class MappingState : GameplayStateBase
             .Bind(ContentKeyFunctions.MappingUnselect, new PointerInputCmdHandler(HandleMappingUnselect, outsidePrediction: true))
             .Bind(ContentKeyFunctions.SaveMap, new PointerInputCmdHandler(HandleSaveMap, outsidePrediction: true))
             .Bind(ContentKeyFunctions.MappingEnablePick, new PointerStateInputCmdHandler(HandleEnablePick, HandleDisablePick, outsidePrediction: true))
+            .Bind(ContentKeyFunctions.MappingEnableDecalPick, new PointerStateInputCmdHandler(HandleEnableDecalPick, HandleDisableDecalPick, outsidePrediction: true))
             .Bind(ContentKeyFunctions.MappingEnableDelete, new PointerStateInputCmdHandler(HandleEnableDelete, HandleDisableDelete, outsidePrediction: true))
             .Bind(ContentKeyFunctions.MappingPick, new PointerInputCmdHandler(HandlePick, outsidePrediction: true))
             .Bind(ContentKeyFunctions.MappingRemoveDecal, new PointerInputCmdHandler(HandleEditorCancelPlace, outsidePrediction: true))
@@ -156,6 +154,7 @@ public sealed class MappingState : GameplayStateBase
         _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
 
         ReloadPrototypes();
+        UpdateLocale();
     }
 
     protected override void Shutdown()
@@ -191,6 +190,7 @@ public sealed class MappingState : GameplayStateBase
         context.RemoveFunction(ContentKeyFunctions.MappingUnselect);
         context.RemoveFunction(ContentKeyFunctions.SaveMap);
         context.RemoveFunction(ContentKeyFunctions.MappingEnablePick);
+        context.RemoveFunction(ContentKeyFunctions.MappingEnableDecalPick);
         context.RemoveFunction(ContentKeyFunctions.MappingEnableDelete);
         context.RemoveFunction(ContentKeyFunctions.MappingPick);
         context.RemoveFunction(ContentKeyFunctions.MappingRemoveDecal);
@@ -215,6 +215,18 @@ public sealed class MappingState : GameplayStateBase
         _sprite = _entityManager.System<SpriteSystem>();
         _transform = _entityManager.System<TransformSystem>();
         _verbs = _entityManager.System<VerbSystem>();
+    }
+
+    private void UpdateLocale()
+    {
+        if (_input.TryGetKeyBinding(ContentKeyFunctions.MappingEnablePick, out var enablePickBinding))
+            Screen.Pick.ToolTip = Loc.GetString("mapping-pick-tooltip", ("key", enablePickBinding.GetKeyString()));
+
+        if (_input.TryGetKeyBinding(ContentKeyFunctions.MappingEnableDecalPick, out var enableDecalPickBinding))
+            Screen.PickDecal.ToolTip = Loc.GetString("mapping-pick-decal-tooltip", ("key", enableDecalPickBinding.GetKeyString()));
+
+        if (_input.TryGetKeyBinding(ContentKeyFunctions.MappingEnableDelete, out var enableDeleteBinding))
+            Screen.EraseEntityButton.ToolTip = Loc.GetString("mapping-erase-entity-tooltip", ("key", enableDeleteBinding.GetKeyString()));
     }
 
     private void ReloadPrototypes()
@@ -487,6 +499,8 @@ public sealed class MappingState : GameplayStateBase
             base.OnKeyBindStateChanged(new ViewportBoundKeyEventArgs(args.KeyEventArgs, Viewport.Viewport));
         else
             base.OnKeyBindStateChanged(args);
+
+        UpdateLocale();
     }
 
     private void OnGetData(IPrototype prototype, List<Texture> textures)
@@ -532,7 +546,8 @@ public sealed class MappingState : GameplayStateBase
                 if (child is MappingSpawnButton button &&
                     button.Prototype == prototype)
                 {
-                    button.UnCollapse();
+                    button.CollapseButton.Pressed = true;
+                    list.ToggleCollapse(button);
                     OnSelected(list, button, prototype.Prototype);
                     children = button.ChildrenPrototypes.Children.ToList();
                     children.AddRange(button.ChildrenPrototypesGallery.Children);
@@ -820,7 +835,7 @@ public sealed class MappingState : GameplayStateBase
     }
     #endregion
 
-    #region Handle
+    #region Handle Bindings
     private bool HandleOpenContextMenu(in PointerInputCmdArgs args)
     {
         Deselect();
@@ -878,16 +893,33 @@ public sealed class MappingState : GameplayStateBase
         return true;
     }
 
+    private bool HandleEnableDecalPick(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+    {
+        Deselect();
+        Screen.PickDecal.Pressed = true;
+        Meta.State = CursorState.Decal;
+        Meta.Color = PickColor;
+        Screen.UnPressActionsExcept(Screen.PickDecal);
+        return true;
+    }
+
+    private bool HandleDisableDecalPick(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+    {
+        Screen.PickDecal.Pressed = false;
+        Meta.State = CursorState.None;
+        return true;
+    }
+
     private bool HandleEnableDelete(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
     {
-        Screen.EntityPlacementMode.Pressed = true;
+        Screen.EraseEntityButton.Pressed = true;
         EnableEntityEraser();
         return true;
     }
 
     private bool HandleDisableDelete(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
     {
-        Screen.EntityPlacementMode.Pressed = false;
+        Screen.EraseEntityButton.Pressed = false;
         DisableEntityEraser();
         return true;
     }

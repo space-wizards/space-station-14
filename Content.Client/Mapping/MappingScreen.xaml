@@ -31,7 +31,7 @@
                 <Button Name="EraseEntityButton" Access="Public" HorizontalExpand="True"
                         SetHeight="48"
                         ToggleMode="True" Text="{Loc 'mapping-erase-entity'}" StyleClasses="ButtonSquare"
-                        ToolTip="{Loc 'mapping-erase-entity-tooltip'}" />
+                        TooltipDelay="0" />
             </BoxContainer>
             <widgets:ChatBox Visible="False" />
         </BoxContainer>
@@ -56,10 +56,8 @@
                                                       ToolTip="" Visible="False" />
                         <mapping:MappingActionsButton Name="Move" Access="Public"
                                                       ToolTip="" Visible="False" />
-                        <mapping:MappingActionsButton Name="Pick" Access="Public"
-                                                      ToolTip="{Loc 'mapping-pick-tooltip'}" />
-                        <mapping:MappingActionsButton Name="PickDecal" Access="Public"
-                                                      ToolTip="{Loc 'mapping-pick-decal-tooltip'}" />
+                        <mapping:MappingActionsButton Name="Pick" Access="Public" />
+                        <mapping:MappingActionsButton Name="PickDecal" Access="Public" />
                         <mapping:MappingActionsButton Name="Flip" Access="Public" ToggleMode="False"
                                                       ToolTip="{Loc 'mapping-flip-tooltip'}" />
                         <mapping:MappingActionsButton Name="Visibility" Access="Public" ToggleMode="False"

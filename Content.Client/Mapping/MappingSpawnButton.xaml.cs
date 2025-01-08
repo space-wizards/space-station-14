@@ -61,12 +61,4 @@ public sealed partial class MappingSpawnButton : Control
         CollapseButton.Pressed = true;
         CollapseTexture.TexturePath = "/Textures/Interface/VerbIcons/chevron-down-solid.svg.192dpi.png";
     }
-
-    public void ToggleCollapse()
-    {
-        if (CollapseButton.Pressed)
-            UnCollapse();
-        else
-            Collapse();
-    }
 }
