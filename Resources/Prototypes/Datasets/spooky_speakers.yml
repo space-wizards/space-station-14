@@ -3,3 +3,9 @@
   values:
     prefix: spooky-speaker-generic-
     count: 4
+
+- type: localizedDataset
+  id: SpookySpeakerMessagesRecycler
+  values:
+    prefix: spooky-speaker-recycler-
+    count: 3
