@@ -1,5 +1,5 @@
 {
-    "version": 1,
+    "version": 2,
     "license": "CC-BY-SA-3.0",
     "copyright": "Wit Studio - My friend Nokotan, SS13 Sprites, Conflee",
     "size": {
@@ -7,6 +7,12 @@
       "y": 32
     },
     "states": [
+      {
+        "name": "plushie_deer_no_eyebrows"
+      },
+      {
+        "name": "plushie_deer_eyebrows"
+      },
       {
         "name": "abductor_plushie"
       },
@@ -41,12 +47,6 @@
         "name": "pig_plushie"
       },
       {
-        "name": "plushie_deer_no_eyebrows"
-      },
-      {
-        "name": "plushie_deer_eyebrows"
-      },
-      {
         "name": "renault_plushie"
       },
       {
@@ -64,6 +64,5 @@
       {
         "name": "vika_plush"
       }
-	  
     ]
 }
