@@ -1839,4 +1839,38 @@ Entries:
   id: 260
   time: '2025-01-07T14:26:22.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/221
-
+- author: Rinary
+  changes:
+  - message: Added PDW-9 as ERT gun.
+    type: Add
+  id: 261
+  time: '2025-01-08T11:07:26.383902+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added energy m1911 as admeme gun.
+    type: Add
+  id: 262
+  time: '2025-01-08T11:07:49.370942+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: The pulse pistol has been changed. Now it has 3 fire modes.
+    type: Tweak
+  id: 263
+  time: '2025-01-08T11:08:51.696387+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: X01 Rebalanced, now it has more charges and new "DESTROYING" mode.
+    type: Tweak
+  id: 264
+  time: '2025-01-08T11:09:45.858750+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed blueshield comms(again).
+    type: Fix
+  id: 265
+  time: '2025-01-08T11:10:10.031271+00:00'
+  url: 'null'
