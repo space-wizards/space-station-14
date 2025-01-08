@@ -135,7 +135,7 @@
         map: ["enum.GunVisualLayers.Mag"]
       - state: uranium
 
-  - type: entity
+- type: entity
   name: shell box (12 gauge practice)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunPractice
