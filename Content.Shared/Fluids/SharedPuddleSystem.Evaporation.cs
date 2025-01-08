@@ -23,12 +23,13 @@ public abstract partial class SharedPuddleSystem
         }
         return evaporationReagents.ToArray();
     }
+    
     public bool SolutionHasEvaporation(Solution solution)
     {
         foreach (var (reagent, quantity)  in solution.Contents)
         {
             var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
-            if(reagentProto.Evaporates && quantity > FixedPoint2.Zero)
+            if (reagentProto.Evaporates && quantity > FixedPoint2.Zero)
                 return true;
         }
         return false;

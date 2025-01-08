@@ -106,7 +106,7 @@ namespace Content.Shared.Chemistry.Reagent
         public bool Slippery;
 
         /// <summary>
-        /// If this reagent is part fo a puddle does it evaporate
+        /// If this reagent is part of a puddle does it evaporate
         /// </summary>
         [DataField]
         public bool Evaporates;
