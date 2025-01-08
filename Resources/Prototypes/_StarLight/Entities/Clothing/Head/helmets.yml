@@ -1,4 +1,4 @@
-#Basic Helmet (Security Helmet)
+#Basic Helmet (Abductor Helmet)
 - type: entity
   parent: ClothingHeadHelmetBase
   id: ClothingHeadHelmetAbductor
@@ -19,6 +19,22 @@
     sprite: _Starlight/Clothing/Head/Helmets/abductor.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Head/Helmets/abductor.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - SecurityHelmet
+    
+#Basic Helmet (Security Helmet Reskin)
+- type: entity
+  parent: [ClothingHeadHelmetBase, BaseRestrictedContraband]
+  id: ClothingHeadHelmetDredd
+  name: helmet
+  description: I AM THE LAW!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/dredd.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/dredd.rsi
   - type: Tag
     tags:
     - WhitelistChameleon

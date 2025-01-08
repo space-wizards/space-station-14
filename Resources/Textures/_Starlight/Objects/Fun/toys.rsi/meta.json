@@ -1,7 +1,7 @@
 {
-    "version": 1,
+    "version": 2,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Wit Studio - My friend Nokotan",
+    "copyright": "Wit Studio - My friend Nokotan, SS13 Sprites, Conflee",
     "size": {
       "x": 32,
       "y": 32
@@ -14,8 +14,55 @@
         "name": "plushie_deer_eyebrows"
       },
       {
+        "name": "abductor_plushie"
+      },
+      {
+        "name": "axolotl_plushie"
+      },
+      {
+        "name": "borb_plushie"
+      },
+      {
+        "name": "bottleship"
+      },
+      {
+        "name": "creature_plushie"
+      },      
+	  {
+        "name": "gnome_plushie"
+      },
+      {
+        "name": "goat_plushie"
+      },
+      {
+        "name": "ian_plushie"
+      },
+      {
+        "name": "kitten_plushie"
+      },
+      {
+        "name": "lisa_plushie"
+      },
+      {
+        "name": "pig_plushie"
+      },
+      {
+        "name": "renault_plushie"
+      },
+      {
+        "name": "snail_plushie"
+      },
+      {
+        "name": "squishims_cow"
+      },
+      {
+        "name": "squishims_frog"
+      },
+      {
+        "name": "sus_plushie"
+      },
+      {
         "name": "vika_plush"
       }
-	  
     ]
 }
