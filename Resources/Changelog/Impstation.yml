@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Added new gray ears by normalgirl2171 and gray antenna
-    type: Add
-  - message: Adjusted gray marking organization for a better experience adding new
-      options
-    type: Tweak
-  id: 374
-  time: '2024-10-15T04:58:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/480
 - author: Sha-Seng
   changes:
   - message: Prestige HoS cape and armor
@@ -4492,3 +4482,13 @@
   id: 873
   time: '2025-01-07T19:43:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1252
+- author: DinnerCalzone
+  changes:
+  - message: Thieves should no longer be assigned Fin-Fin as a steal objective if
+      he is not present on the map.
+    type: Tweak
+  - message: The evil skull on Hummingbird can now be assigned as a thief objective.
+    type: Add
+  id: 874
+  time: '2025-01-08T00:11:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1251
