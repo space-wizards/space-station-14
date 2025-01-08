@@ -15,36 +15,10 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: [ClothingHandsBase, BaseToggleClothing, BaseMajorContraband]
+  parent: ClothingHandsGlovesSpaceNinja
   id: ClothingHandsGlovesSpaceNinjaWeak
-  name: space ninja gloves
   suffix: weak stun
-  description: These black nano-enhanced gloves insulate from electricity and provide fire resistance.
   components:
-  - type: Sprite
-    sprite: Clothing/Hands/Gloves/spaceninja.rsi
-    layers:
-    - state: icon
-      map: [ "enum.ToggleVisuals.Layer" ]
-  - type: Clothing
-    sprite: Clothing/Hands/Gloves/spaceninja.rsi
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
-          True: {state: icon-green}
-          False: {state: icon}
-  - type: Insulated
-  - type: Fiber
-    fiberMaterial: fibers-nanomachines
-  - type: FingerprintMask
-  - type: Thieving
-    stripTimeReduction: 1
-    stealthy: true
-  - type: ToggleClothing
-    action: ActionToggleNinjaGloves
-    disableOnUnequip: true
   - type: NinjaGloves
     abilities:
     - components:
