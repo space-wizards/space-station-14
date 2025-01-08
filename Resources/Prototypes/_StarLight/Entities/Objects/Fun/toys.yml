@@ -223,7 +223,7 @@
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
-      path: path: /Audio/Effects/glass_smash.ogg
+      path: /Audio/Effects/glass_smash.ogg
       
 - type: entity
   parent: BasePlushie
@@ -355,7 +355,7 @@
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
-      path: path: /Audio/Animals/dog_bark2.ogg
+      path: /Audio/Animals/dog_bark2.ogg
       
 - type: entity
   parent: BasePlushie
@@ -388,7 +388,7 @@
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
-      path: path: /Audio/Animals/dog_bark2.ogg
+      path: /Audio/Animals/dog_bark2.ogg
       
 - type: entity
   parent: BasePlushie
@@ -421,7 +421,7 @@
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
-      path: path: /Audio/Animals/cat_hiss.ogg
+      path: /Audio/Animals/cat_hiss.ogg
       
 - type: entity
   parent: BasePlushie
