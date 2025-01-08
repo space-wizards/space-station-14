@@ -78,6 +78,8 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Vending
+  - type: SpookySpeaker
+    messageSet: SpookySpeakerMessagesGeneric
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
     channels:
