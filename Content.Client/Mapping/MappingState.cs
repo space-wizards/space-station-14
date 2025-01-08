@@ -1190,7 +1190,6 @@ public sealed class MappingState : GameplayStateBase
     }
 
 
-    // TODO this doesn't handle pressing down multiple state hotkeys at the moment
     public enum CursorState
     {
         None,

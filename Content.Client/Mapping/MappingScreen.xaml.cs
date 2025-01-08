@@ -168,9 +168,6 @@ public sealed partial class MappingScreen : InGameScreen
 
         if (_decalAuto)
         {
-            if (!decal.DefaultCustomColor)
-                _decalColor = Color.White;
-
             _decalCleanable = decal.DefaultCleanable;
             _decalSnap = decal.DefaultSnap;
 
@@ -185,19 +182,19 @@ public sealed partial class MappingScreen : InGameScreen
 
     public void SelectDecal(Decal decal)
     {
-        if (!_decalAuto || !_prototype.TryIndex<DecalPrototype>(decal.Id, out var decalProto))
+        UpdateDecal();
+
+        if (!_decalAuto)
             return;
 
         _id = decal.Id;
         _decalColor = decal.Color ?? Color.White;
-        _decalSnap = decalProto.DefaultSnap;
         _decalCleanable = decal.Cleanable;
 
         DecalColorPicker.Color = _decalColor;
         DecalEnableCleanable.Pressed = _decalCleanable;
         DecalEnableSnap.Pressed = _decalSnap;
 
-        UpdateDecal();
         RefreshDecalList();
     }
 
