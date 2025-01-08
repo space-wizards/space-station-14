@@ -217,3 +217,119 @@
   cost: 2000
   category: cargoproduct-category-name-fun
   group: market
+
+- type: cargoProduct
+  id: PianoInstrument
+  icon:
+    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    state: piano
+  product: PianoInstrument
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: UprightPianoInstrument
+  icon:
+    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    state: piano-upright
+  product: UprightPianoInstrument
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: VibraphoneInstrument
+  icon:
+    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    state: vibraphone
+  product: VibraphoneInstrument
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: MarimbaInstrument
+  icon:
+    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    state: marimba
+  product: MarimbaInstrument
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: TubaInstrument
+  icon:
+    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    state: tuba
+  product: TubaInstrument
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: market
+ 
+- type: cargoProduct
+  id: HarpInstrument
+  icon:
+    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    state: harp
+  product: HarpInstrument
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: TimpaniInstrument
+  icon:
+    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    state: timpani
+  product: TimpaniInstrument
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: TaikoInstrument
+  icon:
+    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    state: taiko
+    state: timpani
+  product: TaikoInstrument
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: ContrabassInstrument
+  icon:
+    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    state: taiko
+    state: contrabass
+  product: ContrabassInstrument
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: MinimoogInstrument
+  icon:
+    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    state: taiko
+    state: minimoog
+  product: MinimoogInstrument
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: TomDrumsInstrument
+  icon:
+    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    state: taiko
+    state: toms
+  product: TomDrumsInstrument
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: market
+
+  
