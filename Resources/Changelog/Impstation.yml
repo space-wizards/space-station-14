@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Caduceus Cap, has a little siren, found in paramed lockers
-    type: Add
-  id: 378
-  time: '2024-10-15T04:58:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/484
 - author: Hikkikira
   changes:
   - message: robotics winter boots
@@ -4482,3 +4475,13 @@
   id: 877
   time: '2025-01-08T14:17:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1253
+- author: Pinkbat5
+  changes:
+  - message: Detectives now start the round with white forensic chalk.
+    type: Add
+  - message: Evidence marker boxes have been made small enough to fit in a pocket,
+      and will only carry the markers.
+    type: Tweak
+  id: 878
+  time: '2025-01-08T14:19:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1262
