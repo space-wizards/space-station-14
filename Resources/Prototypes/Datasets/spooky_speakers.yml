@@ -2,7 +2,7 @@
   id: SpookySpeakerMessagesGeneric
   values:
     prefix: spooky-speaker-generic-
-    count: 4
+    count: 14
 
 - type: localizedDataset
   id: SpookySpeakerMessagesRecycler
