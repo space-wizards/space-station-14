@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Fildrance
-  changes:
-  - message: random uplink discounts for traitors
-    type: Add
-  id: 7287
-  time: '2024-09-05T12:12:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26297
 - author: ScarKy0
   changes:
   - message: AI Actions now work.
@@ -3932,3 +3925,10 @@
   id: 7786
   time: '2025-01-07T17:45:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34265
+- author: Tayrtahn
+  changes:
+  - message: Sentient goats now have a bleating effect when speaking.
+    type: Add
+  id: 7787
+  time: '2025-01-08T01:00:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34273
