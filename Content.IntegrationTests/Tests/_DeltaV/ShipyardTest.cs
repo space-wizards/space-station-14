@@ -1,11 +1,11 @@
 using Content.Server.Cargo.Systems;
-using Content.Server._DeltaV.Shipyard;
+using Content.Server._DV.Shipyard;
 using Content.Server.Shuttles.Components;
-using Content.Shared._DeltaV.Shipyard.Prototypes;
+using Content.Shared._DV.Shipyard.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
-namespace Content.IntegrationTests.Tests.DeltaV;
+namespace Content.IntegrationTests.Tests.DV;
 
 [TestFixture]
 [TestOf(typeof(ShipyardSystem))]

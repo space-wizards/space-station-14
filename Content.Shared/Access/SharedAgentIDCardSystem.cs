@@ -28,17 +28,17 @@ namespace Content.Shared.Access.Systems
         public string CurrentName { get; }
         public string CurrentJob { get; }
         public string CurrentJobIconId { get; }
-        public uint? CurrentNumber { get; } // DeltaV
-        public AgentIDCardBoundUserInterfaceState(string currentName, string currentJob, string currentJobIconId, uint? currentNumber = null) // DeltaV - Added currentNumber
+        public uint? CurrentNumber { get; } // DV
+        public AgentIDCardBoundUserInterfaceState(string currentName, string currentJob, string currentJobIconId, uint? currentNumber = null) // DV - Added currentNumber
         {
             CurrentName = currentName;
             CurrentJob = currentJob;
             CurrentJobIconId = currentJobIconId;
-            CurrentNumber = currentNumber; // DeltaV
+            CurrentNumber = currentNumber; // DV
     }
 }
 
-// DeltaV - Add number change message
+// DV - Add number change message
 [Serializable, NetSerializable]
 public sealed class AgentIDCardNumberChangedMessage : BoundUserInterfaceMessage
 {

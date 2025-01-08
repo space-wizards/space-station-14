@@ -9,7 +9,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Content.Shared.Roles;
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared._DeltaV.NanoChat; // DeltaV
+using Content.Shared._DV.NanoChat; // DV
 
 namespace Content.Server.Access.Systems
 {
@@ -19,7 +19,7 @@ namespace Content.Server.Access.Systems
         [Dependency] private readonly IdCardSystem _cardSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly SharedNanoChatSystem _nanoChat = default!; // DeltaV
+        [Dependency] private readonly SharedNanoChatSystem _nanoChat = default!; // DV
 
         public override void Initialize()
         {
@@ -30,10 +30,10 @@ namespace Content.Server.Access.Systems
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardNameChangedMessage>(OnNameChanged);
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobChangedMessage>(OnJobChanged);
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobIconChangedMessage>(OnJobIconChanged);
-            SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardNumberChangedMessage>(OnNumberChanged); // DeltaV
+            SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardNumberChangedMessage>(OnNumberChanged); // DV
         }
 
-        // DeltaV - Add number change handler
+        // DV - Add number change handler
         private void OnNumberChanged(Entity<AgentIDCardComponent> ent, ref AgentIDCardNumberChangedMessage args)
         {
             if (!TryComp<NanoChatCardComponent>(ent, out var comp))
@@ -55,7 +55,7 @@ namespace Content.Server.Access.Systems
             access.Tags.UnionWith(targetAccess.Tags);
             var addedLength = access.Tags.Count - beforeLength;
 
-            // DeltaV - Copy NanoChat data if available
+            // DV - Copy NanoChat data if available
             if (TryComp<NanoChatCardComponent>(args.Target, out var targetNanoChat) &&
                 TryComp<NanoChatCardComponent>(uid, out var agentNanoChat))
             {
@@ -81,7 +81,7 @@ namespace Content.Server.Access.Systems
                     }
                 }
             }
-            // End DeltaV
+            // End DV
 
             if (addedLength == 0)
             {
@@ -108,7 +108,7 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(uid, out var idCard))
                 return;
 
-            // DeltaV - Get current number if it exists
+            // DV - Get current number if it exists
             uint? currentNumber = null;
             if (TryComp<NanoChatCardComponent>(uid, out var comp))
                 currentNumber = comp.Number;
@@ -117,7 +117,7 @@ namespace Content.Server.Access.Systems
                 idCard.FullName ?? "",
                 idCard.LocalizedJobTitle ?? "",
                 idCard.JobIcon,
-                currentNumber); // DeltaV - Pass current number
+                currentNumber); // DV - Pass current number
 
             _uiSystem.SetUiState(uid, AgentIDCardUiKey.Key, state);
         }

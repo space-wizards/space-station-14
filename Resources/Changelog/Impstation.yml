@@ -174,7 +174,7 @@
   url: https://github.com/impstation/imp-station-14/pull/495
 - author: honeyed-lemons
   changes:
-  - message: Added the Shipyard Computer from DeltaV, a way to obtain new shuttles
+  - message: Added the Shipyard Computer from DV, a way to obtain new shuttles
       for the station.
     type: Add
   - message: Added the shipyard computer circuit to the QM's locker and default circuit

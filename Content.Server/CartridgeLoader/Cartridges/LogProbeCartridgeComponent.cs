@@ -1,4 +1,4 @@
-﻿using Content.Shared._DeltaV.CartridgeLoader.Cartridges;
+﻿using Content.Shared._DV.CartridgeLoader.Cartridges;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Robust.Shared.Audio;
 
@@ -21,7 +21,7 @@ public sealed partial class LogProbeCartridgeComponent : Component
     public SoundSpecifier SoundScan = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
 
     /// <summary>
-    /// DeltaV: The last scanned NanoChat data, if any
+    /// DV: The last scanned NanoChat data, if any
     /// </summary>
     [DataField]
     public NanoChatData? ScannedNanoChatData;
