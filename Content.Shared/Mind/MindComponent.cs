@@ -46,7 +46,7 @@ public sealed partial class MindComponent : Component
     ///     Might be relevant if the player has ghosted since.
     /// </summary>
     [AutoNetworkedField]
-    public NetEntity? OriginalOwnedEntity; // TODO WeakEntityReference make this a Datfield again
+    public NetEntity? OriginalOwnedEntity; // TODO WeakEntityReference make this a Datafield again
     // This is a net entity, because this field currently does not get set to null when this entity is deleted.
     // This is a lazy way to ensure that people check that the entity still exists.
     // TODO MIND Fix this properly by adding an OriginalMindContainerComponent or something like that.
