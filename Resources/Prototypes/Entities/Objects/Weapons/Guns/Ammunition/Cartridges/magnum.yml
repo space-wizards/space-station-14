@@ -44,6 +44,21 @@
         color: "#22C4EB"
 
 - type: entity
+  id: CartridgeMagnumIncendiary
+  name: cartridge (.44 magnum incendiary)
+  parent: BaseCartridgeMagnum
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMagnumIncendiary
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#ff6e52"
+
+- type: entity
   id: CartridgeMagnumAP
   name: cartridge (.44 magnum armor-piercing)
   parent: BaseCartridgeMagnum
@@ -58,21 +73,6 @@
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
         color: "#c0c0c0"
-
-- type: entity
-  id: CartridgeMagnumIncendiary
-  name: cartridge (.44 magnum incendiary)
-  parent: BaseCartridgeMagnum
-  components:
-  - type: CartridgeAmmo
-    proto: BulletMagnumIncendiary
-  - type: Sprite
-    layers:
-      - state: base
-        map: [ "enum.AmmoVisualLayers.Base" ]
-      - state: tip
-        map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#ff6e52"
 
 - type: entity
   id: CartridgeMagnumUranium

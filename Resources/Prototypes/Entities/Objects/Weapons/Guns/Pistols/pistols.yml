@@ -210,8 +210,9 @@
 - type: entity
   name: N1984
   parent: [BaseWeaponPistol, BaseRestrictedContraband]
-  id: WeaponPistolN1984 # the spaces in description are for formatting.
+  id: WeaponPistolN1984
   description: The sidearm of any self respecting officer. Comes in .44 magnum, the lord's caliber.
+  # Reference to '.45 ACP strong' memes
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi

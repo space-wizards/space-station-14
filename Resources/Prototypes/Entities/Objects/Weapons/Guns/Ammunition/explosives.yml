@@ -55,7 +55,7 @@
     size: Small
   - type: Sprite
 
-- type: entity # currently unused?
+- type: entity
   id: GrenadeBaton
   name: baton grenade
   parent: BaseGrenade

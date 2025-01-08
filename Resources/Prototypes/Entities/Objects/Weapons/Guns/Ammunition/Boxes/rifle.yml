@@ -81,7 +81,7 @@
   id: MagazineBoxRifleIncendiary
   parent: BaseMagazineBoxRifle
   name: ammunition box (.223 rifle incendiary)
-  description: A box of .223x1.78 in standard NT packaging. This box contains morally dubious incendiary ammunition which burns inside the target.
+  description: A box of .223x1.78 in standard NT packaging. This box contains incendiary ammunition which burns inside the target.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleIncendiary

@@ -168,6 +168,14 @@
       map: ["enum.GunVisualLayers.Base"]
 
 - type: entity
+  id: MagazinePistolIncendiary
+  name: pistol magazine (.38 auto incendiary)
+  parent: MagazinePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolIncendiary
+
+- type: entity
   id: MagazinePistolPractice
   name: pistol magazine (.38 auto practice)
   parent: BaseMagazinePistol
@@ -181,14 +189,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazinePistolIncendiary
-  name: pistol magazine (.38 auto incendiary)
-  parent: MagazinePistol
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistolIncendiary
 
 - type: entity
   id: MagazinePistolUranium

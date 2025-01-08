@@ -20,83 +20,10 @@
   - type: SpentAmmoVisuals
 
 - type: entity
-  id: ShellShotgun
-  name: shell (12 gauge pellet)
-  parent: BaseShellShotgun
-  description: 12 gauge. The most common type of shotgun ammunition, it consists of a shot shell that fires a group of lead pellets in a wide cone. Useful in close-quarters combat; as the saying goes, “the shotgun doesn’t miss.” 
-  components:
-  - type: Sprite
-    layers:
-      - state: base
-        map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: CartridgeAmmo
-    proto: PelletShotgunSpread
-
-- type: entity
-  id: ShellShotgunPractice
-  name: shell (12 gauge practice)
-  parent: BaseShellShotgun
-  description: 12 gauge. Non-harmful shotshell firing tiny rubber pellets for practice.
-  components:
-  - type: Sprite
-    layers:
-      - state: practice
-        map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: CartridgeAmmo
-    proto: PelletShotgunPracticeSpread
-  - type: SpentAmmoVisuals
-    state: "practice"
-
-- type: entity
-  id: ShellShotgunSlug
-  name: shell (12 gauge slug)
-  parent: BaseShellShotgun
-  description: 12 gauge. A single, heavy bullet for use in shotguns. It has a much longer effective range than pellet shells but is more difficult to aim. 
-  components:
-  - type: Sprite
-    layers:
-      - state: slug
-        map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: CartridgeAmmo
-    proto: PelletShotgunSlug
-  - type: SpentAmmoVisuals
-    state: "slug"
-
-- type: entity
-  id: ShellShotgunUranium
-  name: shell (12 gauge uranium slug)
-  parent: BaseShellShotgun
-  description: 12 gauge. A single, heavy bullet for use in shotguns. Unlike traditional slugs, this type contains a uranium core that severely irradiates the target.
-  components:
-    - type: Sprite
-      layers:
-        - state: depleted-uranium
-          map: [ "enum.AmmoVisualLayers.Base" ]
-    - type: CartridgeAmmo
-      proto: PelletShotgunUraniumSpread
-    - type: SpentAmmoVisuals
-      state: "depleted-uranium"
-
-- type: entity
-  id: ShellShotgunIncendiary
-  name: shell (12 gauge incendiary)
-  parent: BaseShellShotgun
-  description: 12 gauge. A specialized shotshell containing incendiary pellets that fill the target area with flames. Is it morally questionable? Possibly. Is it effective? Absolutely.
-  components:
-  - type: Sprite
-    layers:
-      - state: incendiary
-        map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: CartridgeAmmo
-    proto: PelletShotgunIncendiarySpread
-  - type: SpentAmmoVisuals
-    state: "incendiary"
-
-- type: entity
   id: ShellShotgunBeanbag
-  name: shell (12 gauge beanbag)
+  name: shell (12G beanbag)
   parent: BaseShellShotgun
-  description: 12 gauge. Also known as ‘baton rounds’, these non-lethal shotgun shells contain several pellets within a padded bag. Stuns and bruises the victim. 
+  description: Also known as ‘baton rounds’, these non-lethal shotgun shells contain several pellets within a padded bag. Stuns and bruises the victim. 
   components:
   - type: Tag
     tags:
@@ -113,10 +40,25 @@
     state: "beanbag"
 
 - type: entity
-  id: ShellShotgunFlare
-  name: shell (12 gauge flare)
+  id: ShellShotgunSlug
+  name: shell (12G slug)
   parent: BaseShellShotgun
-  description: 12 gauge. A single, slow-burning projectile for illumination. It doesn’t produce much heat and can be used by both shotguns and dedicated flare guns.
+  description: A single, heavy bullet for use in shotguns. It has a much longer effective range than pellet shells but is more difficult to aim. 
+  components:
+  - type: Sprite
+    layers:
+      - state: slug
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgunSlug
+  - type: SpentAmmoVisuals
+    state: "slug"
+
+- type: entity
+  id: ShellShotgunFlare
+  name: shell (12G flare)
+  parent: BaseShellShotgun
+  description: A single, slow-burning projectile for illumination. It doesn’t produce much heat and can be used by both shotguns and dedicated flare guns.
   components:
   - type: Tag
     tags:
@@ -133,10 +75,53 @@
     state: "flare"
 
 - type: entity
-  id: ShellTranquilizer
-  name: shell (12 gauge tranquilizer)
+  id: ShellShotgun
+  name: shell (12G pellet)
   parent: BaseShellShotgun
-  description: 12 gauge. A specialized slug with a much lower velocity and a built-in auto-injector filled with chloral hydrate. Used for animal control.
+  description: The most common type of shotgun ammunition, it consists of a shot shell that fires a group of lead pellets in a wide cone. Useful in close-quarters combat; as the saying goes, “the shotgun doesn’t miss.” 
+  components:
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgunSpread
+
+- type: entity
+  id: ShellShotgunIncendiary
+  name: shell (12G incendiary)
+  parent: BaseShellShotgun
+  description: Specialized shotshell containing incendiary pellets that fill the target area with flames. Is it morally questionable? Possibly. Is it effective? Absolutely.
+  components:
+  - type: Sprite
+    layers:
+      - state: incendiary
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgunIncendiarySpread
+  - type: SpentAmmoVisuals
+    state: "incendiary"
+
+- type: entity
+  id: ShellShotgunPractice
+  name: shell (12G practice)
+  parent: BaseShellShotgun
+  description: Non-harmful shotshell firing tiny rubber pellets for practice.
+  components:
+  - type: Sprite
+    layers:
+      - state: practice
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgunPracticeSpread
+  - type: SpentAmmoVisuals
+    state: "practice"
+
+- type: entity
+  id: ShellTranquilizer
+  name: shell (12G tranquilizer)
+  parent: BaseShellShotgun
+  description: Specialized slug with a much lower velocity and a built-in auto-injector filled with chloral hydrate. Used for animal control.
   components:
   - type: Tag
     tags:
@@ -183,3 +168,18 @@
     proto: PelletShotgunImprovisedSpread
   - type: SpentAmmoVisuals
     state: "improvised"
+
+- type: entity
+  id: ShellShotgunUranium
+  name: shell (12G uranium pellet)
+  parent: BaseShellShotgun
+  description: Experimental uranium-core shotshell which irradiates the target after impact.
+  components:
+    - type: Sprite
+      layers:
+        - state: depleted-uranium
+          map: [ "enum.AmmoVisualLayers.Base" ]
+    - type: CartridgeAmmo
+      proto: PelletShotgunUraniumSpread
+    - type: SpentAmmoVisuals
+      state: "depleted-uranium"

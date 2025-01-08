@@ -138,7 +138,7 @@
   name: Enforcer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunEnforcer
-  description: The Enforcer was designed as a modern remake of the Kammerer design. It features new polymer furniture and an extended magazine tube. After being presented to NT it was quickly adopted as the new shotgun for station security teams, but as production lines have not yet been re-tooled to produce them in bulk, most stations have only received them in limited numbers.
+  description: The Enforcer was designed as a modern remake of the Kammerer design, featuring new polymer furniture and an extended magazine tube. It has yet to see mass production and as such is somewhat rare among security teams.
 
   components:
   - type: Sprite
@@ -162,7 +162,7 @@
   name: Kammerer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunKammerer
-  description: A popular shotgun found on many worlds. While its technology is wildly outdated by modern standards, the utility and simplicity of a pump shotgun are still valuable in many roles. Its true strength comes in the versatility of shell types it can fire, from pellets to slugs and even flares.
+  description: A popular shotgun found on many worlds. While its technology is wildly outdated by modern standards, the utility and simplicity of its design have kept it in service to this day.
   components:
   - type: Item
     size: Normal

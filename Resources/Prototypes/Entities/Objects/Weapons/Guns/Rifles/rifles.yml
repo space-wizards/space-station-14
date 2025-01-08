@@ -100,7 +100,7 @@
     zeroVisible: true
   - type: Appearance
 
-- type: entity # currently not used in game, and the underbarrel grenade lanuncher doesnt work :(
+- type: entity
   name: M-90gl
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
   id: WeaponRifleM90GrenadeLauncher

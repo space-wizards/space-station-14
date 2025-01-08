@@ -62,7 +62,7 @@
   id: MagazineShotgunBeanbag
   name: shotgun drum (12 gauge beanbag)
   parent: BaseMagazineShotgun
-  description: Large 8-round drum for the Bulldog shotgun. Contains nonlethal baton rounds for incapacitating targets.
+  description: Large 8-round drum for the Bulldog shotgun. Contains nonlethal beanbag rounds for incapacitating targets.
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag

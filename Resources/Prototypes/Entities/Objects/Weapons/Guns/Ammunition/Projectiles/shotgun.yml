@@ -204,7 +204,7 @@
 
 - type: entity
   id: PelletShotgunUranium
-  name: uranium slug (12 gauge)
+  name: uranium pellet (12 gauge)
   categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:

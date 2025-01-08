@@ -38,7 +38,7 @@
   id: MagazineLightRifleBox
   name: "ammo belt (.308 rifle)"
   parent: BaseMagazineLightRifle
-  description: Metal box containing a 100-round belt of linked .308 rifle rounds, for use in a lgiht machine gun. Used primarily by the L6 squad automatic weapon.
+  description: Metal box containing a 100-round belt of linked .308 rifle rounds, for use in a light machine gun. Used primarily by the L6 squad automatic weapon.
   components:
   - type: Tag
     tags:

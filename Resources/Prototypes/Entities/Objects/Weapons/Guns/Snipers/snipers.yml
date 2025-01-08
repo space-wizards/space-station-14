@@ -74,7 +74,7 @@
     capacity: 5
     proto: CartridgeAntiMateriel
 
-- type: entity # for the planned pirate antag?
+- type: entity
   name: musket
   parent: [ BaseWeaponSniper, BaseGunWieldable, BaseMinorContraband ]
   id: Musket
@@ -112,7 +112,7 @@
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
 
-- type: entity # for the planned pirate antag?
+- type: entity
   name: flintlock pistol
   parent: [BaseWeaponSniper, BaseMinorContraband]
   id: WeaponPistolFlintlock

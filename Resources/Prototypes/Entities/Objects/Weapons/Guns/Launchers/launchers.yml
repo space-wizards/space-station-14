@@ -53,7 +53,7 @@
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
 
-- type: entity # not currently used in game
+- type: entity
   name: RPG-7
   parent: [ BaseWeaponLauncher, BaseMajorContraband ]
   id: WeaponLauncherRocket
@@ -86,7 +86,7 @@
     zeroVisible: false
   - type: Appearance
 
-- type: entity # terrifying and not used currently in game.
+- type: entity
   name: multiple rocket launcher
   parent: BaseWeaponLauncher
   id: WeaponLauncherMultipleRocket
@@ -121,7 +121,7 @@
     zeroVisible: true
   - type: Appearance
 
-- type: entity # For the planned pirate antag?
+- type: entity
   name: pirate cannon
   parent: BaseWeaponLauncher
   id: WeaponLauncherPirateCannon

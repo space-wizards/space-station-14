@@ -54,7 +54,8 @@
   name: Deckard
   parent: [BaseWeaponRevolver, BaseSecurityCommandContraband]
   id: WeaponRevolverDeckard
-  description: A beautifully machined custom-built revolver chambered in .44 magnum. Whoever made this put a lot of work into it, and you can't help but think how much it's worth. Holds 5 rounds of .44 magnum.
+  description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test. Holds 5 rounds of .44 magnum.
+  # Blade Runner reference
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
@@ -82,7 +83,7 @@
   name: Inspector
   parent: [BaseWeaponRevolver, BaseRestrictedContraband]
   id: WeaponRevolverInspector
-  description: A powerful revolver readily available on the civilian market, making it a popular choice among private investigators. You feel lucky just holding it. Holds 6 rounds of .44 magnum.
+  description: A powerful revolver readily available on the civilian market, making it a popular choice among private investigators. Holds 6 rounds of .44 magnum.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
