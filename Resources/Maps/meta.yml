@@ -13781,7 +13781,7 @@ entities:
       pos: -29.5,15.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -208561.16
+      secondsUntilStateChange: -208773.03
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14039,7 +14039,7 @@ entities:
       pos: -4.5,53.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -63214.934
+      secondsUntilStateChange: -63426.812
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -15595,7 +15595,12 @@ entities:
   - uid: 23812
     components:
     - type: Transform
-      pos: 73.53678,8.623411
+      pos: 73.68355,8.538181
+      parent: 5350
+  - uid: 28194
+    components:
+    - type: Transform
+      pos: 73.29292,8.538181
       parent: 5350
 - proto: AnomalyScanner
   entities:
@@ -43232,45 +43237,35 @@ entities:
     - type: Transform
       pos: 56.5,8.5
       parent: 5350
-  - uid: 12481
-    components:
-    - type: Transform
-      pos: 55.5,8.5
-      parent: 5350
   - uid: 12482
-    components:
-    - type: Transform
-      pos: 55.5,9.5
-      parent: 5350
-  - uid: 12483
     components:
     - type: Transform
       pos: 54.5,9.5
       parent: 5350
-  - uid: 12484
+  - uid: 12483
     components:
     - type: Transform
-      pos: 54.5,10.5
+      pos: 55.5,9.5
       parent: 5350
   - uid: 12485
     components:
     - type: Transform
-      pos: 54.5,11.5
+      pos: 56.5,9.5
       parent: 5350
   - uid: 12486
     components:
     - type: Transform
-      pos: 54.5,12.5
+      pos: 56.5,10.5
       parent: 5350
   - uid: 12487
     components:
     - type: Transform
-      pos: 54.5,13.5
+      pos: 52.5,20.5
       parent: 5350
   - uid: 12488
     components:
     - type: Transform
-      pos: 54.5,14.5
+      pos: 52.5,19.5
       parent: 5350
   - uid: 12489
     components:
@@ -47761,6 +47756,11 @@ entities:
     components:
     - type: Transform
       pos: 77.5,-30.5
+      parent: 5350
+  - uid: 28193
+    components:
+    - type: Transform
+      pos: 52.5,18.5
       parent: 5350
 - proto: CableHVStack
   entities:
@@ -56209,6 +56209,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -32.5,44.5
       parent: 5350
+  - uid: 12484
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 55.5,9.5
+      parent: 5350
   - uid: 13979
     components:
     - type: Transform
@@ -63421,6 +63427,12 @@ entities:
     - type: Transform
       pos: 71.5,-30.5
       parent: 5350
+  - uid: 28196
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -33.5,17.5
+      parent: 5350
 - proto: ChairOfficeLight
   entities:
   - uid: 1269
@@ -67309,11 +67321,11 @@ entities:
       parent: 5350
 - proto: ComputerCargoShuttle
   entities:
-  - uid: 3520
+  - uid: 28195
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -42.5,17.5
+      rot: -1.5707963267948966 rad
+      pos: -32.5,17.5
       parent: 5350
 - proto: ComputerComms
   entities:
@@ -67613,6 +67625,14 @@ entities:
     components:
     - type: Transform
       pos: -40.5,33.5
+      parent: 5350
+- proto: ComputerShuttleCargo
+  entities:
+  - uid: 3520
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -42.5,17.5
       parent: 5350
 - proto: ComputerSolarControl
   entities:
@@ -81427,7 +81447,7 @@ entities:
       pos: -10.5,51.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -61939.6
+      secondsUntilStateChange: -62151.48
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -144687,6 +144707,11 @@ entities:
     - type: Transform
       pos: -33.5,44.5
       parent: 5350
+  - uid: 12481
+    components:
+    - type: Transform
+      pos: 54.5,9.5
+      parent: 5350
   - uid: 13977
     components:
     - type: MetaData
@@ -152417,6 +152442,12 @@ entities:
     components:
     - type: Transform
       pos: 47.5,-24.5
+      parent: 5350
+  - uid: 28197
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -32.5,16.5
       parent: 5350
 - proto: TableCarpet
   entities:
