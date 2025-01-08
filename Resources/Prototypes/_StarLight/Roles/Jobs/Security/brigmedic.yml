@@ -33,7 +33,6 @@
     eyes: ClothingEyesGlassesBrigmedic
     ears: ClothingHeadsetBrigmedic
     neck: ClothingNeckTieRed
-    pocket1: WeaponPistolMk58
     pocket2: HandheldBrigmedicCrewMonitor
     mask: ClothingMaskBreathMedicalSecurity
     id: BrigmedicPDA
@@ -42,6 +41,5 @@
   storage:
     back:
     - Flash
-    - MagazinePistol
     - SecurityMedkit
     - DefibrillatorBrigmedical
