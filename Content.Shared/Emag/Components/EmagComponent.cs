@@ -19,7 +19,7 @@ public sealed partial class EmagComponent : Component
     [AutoNetworkedField]
     public string EmagImmuneTag = "EmagImmune";
 
-    // DV - Add a whitelist/blacklist to the Emag
+    // DeltaV - Add a whitelist/blacklist to the Emag
     /// <summary>
     /// Whitelist that entities must be on to work.
     /// </summary>

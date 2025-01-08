@@ -23,6 +23,6 @@ public sealed partial class LogProbeUi : UIFragment
         if (state is not LogProbeUiState logProbeUiState)
             return;
 
-        _fragment?.UpdateState(logProbeUiState); // DV - just take the state
+        _fragment?.UpdateState(logProbeUiState); // DeltaV - just take the state
     }
 }

@@ -3,7 +3,7 @@ using Robust.Shared.Configuration;
 namespace Content.Shared._DV.CCVars;
 
 /// <summary>
-/// DV specific cvars.
+/// DeltaV specific cvars.
 /// </summary>
 [CVarDefs]
 // ReSharper disable once InconsistentNaming - Shush you

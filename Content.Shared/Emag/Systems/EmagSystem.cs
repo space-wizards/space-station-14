@@ -24,7 +24,7 @@ public sealed class EmagSystem : EntitySystem
     [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!; // DV - Add a whitelist/blacklist to the Emag
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!; // DeltaV - Add a whitelist/blacklist to the Emag
     public override void Initialize()
     {
         base.Initialize();
@@ -51,7 +51,7 @@ public sealed class EmagSystem : EntitySystem
         if (_tag.HasTag(target, comp.EmagImmuneTag))
             return false;
 
-            // DV - Add a whitelist / blacklist to the Emag
+            // DeltaV - Add a whitelist / blacklist to the Emag
         if (_whitelist.IsWhitelistFail(comp.Whitelist, target)
             || _whitelist.IsBlacklistPass(comp.Blacklist, target))
         {
