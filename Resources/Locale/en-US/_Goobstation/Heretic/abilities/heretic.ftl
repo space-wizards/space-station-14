@@ -18,6 +18,10 @@ heretic-manselink-fail-nomind = This creature does not have a mind!
 heretic-manselink-start = You begin to connect this creature's mind to yours.
 heretic-manselink-start-target = You feel your mind being pulled somewhere...
 
+heretic-fleshsurgery-barf = The contents of your stomach come pouring out!
+heretic-fleshsurgery-eyes = Your vision becomes dull and cloudy!
+heretic-fleshsurgery-mute = Your tongue falls limp!
+
 heretic-livingheart-notargets = No available targets, visit the rune.
 heretic-livingheart-offstation = It's {$state}, off station, {$direction}!
 heretic-livingheart-onstation = It's {$state}, {$direction}!
