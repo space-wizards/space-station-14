@@ -66,16 +66,44 @@
 
 
 - type: entity
-  id: AdamantiumGolum
-  name: Urist McRocky
+  id: AdamantiumGolem
+  name: Golem McAdam
   parent: BaseMobGolem
   components:
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Golem
   - type: ActiveRadio
     channels:
     - Golem
   - type: Sprite
     color: "#FFFFFF"
     colorHex: "#FFFFFF"
+
+
+- type: entity
+  id: UraniumGolem
+  name: Golem McRaddy
+  parent: BaseMobGolem
+  components:
+  - type: Sprite
+    color: "#77ff00"
+    colorHex: "#77ff00"
+  - type: RadiationSource
+    intensity: 2.5
+
+- type: entity
+  id: PlasmaGolem
+  name: Golem McBoomy
+  parent: BaseMobGolem
+  components:
+  - type: Sprite
+    color: "#77ff00"
+    colorHex: "#77ff00"
+  - type: AutoImplant
+    implants:
+    - MicroBombImplant
+
 
 - type: entity
   parent: BaseSpeciesDummy

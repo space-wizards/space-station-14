@@ -1,0 +1,24 @@
+﻿- type: entity
+  parent: BaseSubdermalImplant
+  id: DetonateImplant
+  name: Detonate Implant
+  description: This implant detonates the user upon activation or upon death.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    permanent: true
+    implantAction: SelfDetonate
+  - type: TriggerImplantAction
+  - type: ExplodeOnTrigger
+  - type: GibOnTrigger
+    deleteItems: true
+  - type: Explosive
+    explosionType: MicroBomb
+    totalIntensity: 125
+    intensitySlope: 6
+    maxIntensity: 35
+    canCreateVacuum: false
+  - type: Tag
+    tags:
+    - SubdermalImplant
+    - HideContextMenu
