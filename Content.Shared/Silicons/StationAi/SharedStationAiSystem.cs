@@ -94,12 +94,21 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiCoreComponent, PowerChangedEvent>(OnCorePower);
         SubscribeLocalEvent<StationAiCoreComponent, GetVerbsEvent<Verb>>(OnCoreVerbs);
     }
+    
+    private float _updateEyeFollowTimer = 0f;
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
         
-        UpdateEyeFollow();
+        // Don't need to run it repeadetly.
+        // If run repeadetly, obviously tanks FPS really hard
+        _updateEyeFollowTimer += frameTime;
+        if(_updateEyeFollowTimer >= 0.5f)
+        {
+            UpdateEyeFollow();
+            _updateEyeFollowTimer = 0f;
+        }
     }
 
     /// <summary>
@@ -117,15 +126,17 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             // Checking if eye already follows something or have followed something
             EntityUid? followed = heldComp.lastFollowedEntity;
             bool visible = false;
-            // Make some updates if already following something
-            if (TryComp<FollowerComponent>(eye.Value, out var followerComp))
-            {
-                followed = followerComp.Following;
-                heldComp.lastFollowedEntity = followerComp.Following;
-            }
+
             // If we lost followed entity - try check if it's visible and re-follow if it is
-            else if (followed != null && heldComp.lostFollowed)
+            if (heldComp.lostFollowed)
             {
+                // Should not ever happen, but in case...
+                if(followed == null)
+                {
+                    heldComp.lostFollowed = false;
+                    continue;
+                }
+
                 if(!TryVisibleCheck(followed.Value, uid, out visible))
                     continue;
                 
@@ -141,18 +152,24 @@ public abstract partial class SharedStationAiSystem : EntitySystem
                 }
                 continue;
             }
-            // If we didn't lose followed entity and do not actively follow one
-            else
+
+            // Make some updates if already following something
+            if (!TryComp<FollowerComponent>(eye.Value, out var followerComp))
+            {
                 continue;
+            }
             
             // Handle follwed entity leaving FoV
+            followed = followerComp.Following;
+            heldComp.lastFollowedEntity = followerComp.Following;
+
             if(!TryVisibleCheck(followed.Value, uid, out visible))
                 continue;
             // Check for lostFollowed is here to prevent multiple runs
-            if(!visible && !heldComp.lostFollowed)
+            if(!visible)
             {   
                 if(TryGetNetEntity(uid, out nEnt))
-                    RaiseNetworkEvent(new AiAlertEvent(nEnt.Value, AiAlertType.LostTrack));
+                    RaiseNetworkEvent(new AiAlertEvent(nEnt.Value, AiAlertType.LostFollowed));
                 _followerSystem.StopFollowingEntity(uid, followed.Value);
                 Timer.Spawn(10000, () => { CancelReFollowing((uid, heldComp)); }, heldComp.cancelRecaptureTokens.Token);
                 heldComp.lostFollowed = true;
@@ -553,7 +570,7 @@ public enum StationAiState : byte
 public enum AiAlertType : byte
 {
     // AI eye follow alerts
-    LostTrack,
+    LostFollowed,
     FollowedFound,
     ReFollowingCanceled,
 

@@ -67,81 +67,96 @@ public sealed class StationAiSystem : SharedStationAiSystem
         switch(type)
         {
             // When lost track, target is AI uid that lost track
-            case AiAlertType.LostTrack:
+            case AiAlertType.LostFollowed:
             case AiAlertType.FollowedFound:
             case AiAlertType.ReFollowingCanceled:
-                if (!TryComp(target, out ActorComponent? aComp))
-                    break;
-                var message = "";
-                // Switchin' things around.
-                // Better than writing 3 separate identical cases
-                switch(type)
-                {
-                    case AiAlertType.LostTrack:
-                        message = Loc.GetString("lost-track-message");
-                    break;
-                    case AiAlertType.FollowedFound:
-                        message = Loc.GetString("followed-found-message");
-                    break;
-                    case AiAlertType.ReFollowingCanceled:
-                        message = Loc.GetString("refollowing-canceled-message");
-                    break;
-                }
-                _chats.ChatMessageToOne(ChatChannel.Notifications,
-                    message, message, target, false, aComp.PlayerSession.Channel);
+                AlertAiLostFollowed(target, type);
             break;
 
             case AiAlertType.AiWireSnipped:
-                // Needed to get target's station and find all AIs on the station
-                var tTransform = Transform(target);
-                // not on a grid, so no AIs to alert
-                if (!TryComp(tTransform.GridUid, out MapGridComponent? grid))
-                    return;
-                
-                var gridUid = tTransform.GridUid.Value;
-                
-                // Look if we already have a station added to dictionary
-                if(!_nais.TryGetValue(gridUid, out _))
-                {
-                    _nais.Add(gridUid, new());
-                }
-                else
-                {
-                    _nais[gridUid].Clear();
-                }
-                // Fill AI list for a particular station
-                // TODO: maybe make some kind of caching
-                // Also, can only lookup AI core, but not held, which has actor component, so need to convert
-                HashSet<Entity<StationAiCoreComponent>> aiCores = new();
-                _lookup.GetChildEntities<StationAiCoreComponent>(gridUid, aiCores);
-                // Get cores' helds
-                foreach (var core in aiCores)
-                {
-                    // TryGetHeld(core, out var held) would NOT fucking work
-                    if(!TryGetHeld((core.Owner, core.Comp), out var held))
-                        continue;
-                    if(!TryComp<StationAiHeldComponent>(held, out var heldComp))
-                        continue;
-                    _nais[gridUid].Add((held, heldComp));
-                }
-                
-                var filter = Filter.Empty();
-
-                foreach (var ai in _nais[gridUid])
-                {
-                    // TODO: Filter API?
-                    if (TryComp(ai.Owner, out ActorComponent? actorComp))
-                    {
-                        filter.AddPlayer(actorComp.PlayerSession);
-                    }
-                }
-                var tile = Maps.LocalToTile(gridUid, grid, tTransform.Coordinates);
-                var msg = Loc.GetString("ai-wire-snipped", ("coords", tile));
-                _chats.ChatMessageToMany(ChatChannel.Notifications, msg, msg, target, false, true, filter.Recipients.Select(o => o.Channel));
+                AlertAiWireSnipped(target, type);
             break;
 
             default:
             break;
         }
+    }
+
+    private void AlertAiLostFollowed(EntityUid alertedHeld, AiAlertType type)
+    {
+        if (!TryComp(alertedHeld, out ActorComponent? aComp))
+            return;
+        string message;
+        // Switchin' things around.
+        // Better than writing 3 separate identical cases
+        switch(type)
+        {
+            case AiAlertType.LostFollowed:
+                message = Loc.GetString("lost-track-message");
+            break;
+            case AiAlertType.FollowedFound:
+                message = Loc.GetString("followed-found-message");
+            break;
+            case AiAlertType.ReFollowingCanceled:
+                message = Loc.GetString("refollowing-canceled-message");
+            break;
+            // To prevent sending empty message if alert type is invalid
+            default:
+            return;
+        }
+        _chats.ChatMessageToOne(ChatChannel.Notifications,
+            message, message, alertedHeld, false, aComp.PlayerSession.Channel);
+    }
+
+    private void AlertAiWireSnipped(EntityUid target, AiAlertType type)
+    {
+        if(type != AiAlertType.AiWireSnipped)
+            return;
+        // Needed to get target's station and find all AIs on the station
+        var tTransform = Transform(target);
+        // not on a grid, so no AIs to alert
+        if (!TryComp(tTransform.GridUid, out MapGridComponent? grid))
+            return;
+        
+        var gridUid = tTransform.GridUid.Value;
+        
+        // Check if we already have a station added to dictionary, if not, add it
+        if(!_nais.TryGetValue(gridUid, out _))
+        {
+            _nais.Add(gridUid, new());
+        }
+        else
+        {
+            _nais[gridUid].Clear();
+        }
+        // Fill AI list for a particular station
+        // TODO: maybe make some kind of caching
+        // Also, can only lookup AI core, but not held, which has actor component, so need to convert
+        HashSet<Entity<StationAiCoreComponent>> aiCores = new();
+        _lookup.GetChildEntities<StationAiCoreComponent>(gridUid, aiCores);
+        // Get cores' helds
+        foreach (var core in aiCores)
+        {
+            // TryGetHeld(core, out var held) would NOT fucking work
+            if(!TryGetHeld((core.Owner, core.Comp), out var held))
+                continue;
+            if(!TryComp<StationAiHeldComponent>(held, out var heldComp))
+                continue;
+            _nais[gridUid].Add((held, heldComp));
+        }
+        
+        var filter = Filter.Empty();
+
+        foreach (var ai in _nais[gridUid])
+        {
+            // TODO: Filter API?
+            if (TryComp(ai.Owner, out ActorComponent? actorComp))
+            {
+                filter.AddPlayer(actorComp.PlayerSession);
+            }
+        }
+        var tile = Maps.LocalToTile(gridUid, grid, tTransform.Coordinates);
+        var msg = Loc.GetString("ai-wire-snipped", ("coords", tile));
+        _chats.ChatMessageToMany(ChatChannel.Notifications, msg, msg, target, false, true, filter.Recipients.Select(o => o.Channel));
     }
 }

@@ -5,6 +5,8 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Content.Shared.Follower.Components;
+using System.Threading;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -49,6 +51,14 @@ public abstract partial class SharedStationAiSystem
         if (!TryGetCore(ent.Owner, out var core) || core.Comp?.RemoteEntity == null)
             return;
 
+        if (TryGetEye(ent.Owner, out var eye) && TryComp<FollowerComponent>(eye, out var followerComp))
+        {
+            _followerSystem.StopFollowingEntity(ent.Owner, followerComp.Following);
+            ent.Comp.lostFollowed = false;
+            ent.Comp.cancelRecaptureTokens.Cancel();
+            ent.Comp.cancelRecaptureTokens = new CancellationTokenSource();
+        }
+        
         _xforms.DropNextTo(core.Comp.RemoteEntity.Value, core.Owner) ;
     }
 
