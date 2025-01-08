@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Hikkikira
-  changes:
-  - message: robotics winter boots
-    type: Add
-  - message: robotics winter boots in the robodrobe and scientist loadout
-    type: Tweak
-  id: 379
-  time: '2024-10-15T05:04:11.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/481
 - author: nowaitstop
   changes:
   - message: Playing cards and their system from the Frontier station github, with
@@ -135,8 +126,8 @@
   url: https://github.com/impstation/imp-station-14/pull/495
 - author: honeyed-lemons
   changes:
-  - message: Added the Shipyard Computer from DV, a way to obtain new shuttles
-      for the station.
+  - message: Added the Shipyard Computer from DV, a way to obtain new shuttles for
+      the station.
     type: Add
   - message: Added the shipyard computer circuit to the QM's locker and default circuit
       lathe
@@ -4485,3 +4476,13 @@
   id: 878
   time: '2025-01-08T14:19:25.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1262
+- author: kipdotnet
+  changes:
+  - message: Added a chef Apid, for kitchen bounties.
+    type: Add
+  - message: Apids can no longer be taken over by ghosts after a player has claimed
+      them.
+    type: Fix
+  id: 879
+  time: '2025-01-08T14:23:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1259
