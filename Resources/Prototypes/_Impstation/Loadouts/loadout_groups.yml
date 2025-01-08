@@ -302,3 +302,16 @@
     pocket2: WeaponDisabler
     ears: ClothingHeadsetMedical
     eyes: ClothingEyesHudMedSec
+
+- type: startingGear #chef
+  id: StartingGearApidChef
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChef
+    id: ChefPDA
+    belt: ClothingBeltChefFilled
+    outerClothing: ClothingOuterJacketChef
+    #head:
+    pocket1: EmergencyOxygenTankFilled
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetService
+    eyes: ClothingEyesHudBeer
