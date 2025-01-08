@@ -98,7 +98,7 @@
       - state: mag-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: flare
-    
+
 - type: entity
   name: shell box (12G incendiary pellet)
   parent: AmmoProviderShotgunShell
