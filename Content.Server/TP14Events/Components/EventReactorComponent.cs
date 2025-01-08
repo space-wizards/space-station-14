@@ -44,4 +44,7 @@ public sealed partial class EventReactorComponent : Component
     [DataField]
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Effects/alert.ogg");
 
+    [DataField]
+    public SoundSpecifier MeltdownSound = new SoundPathSpecifier("/Audio/Misc/siren.ogg");
+
 }
