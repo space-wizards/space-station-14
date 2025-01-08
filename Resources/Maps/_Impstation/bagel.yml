@@ -63794,13 +63794,6 @@ entities:
     - type: Transform
       pos: -16.5,-29.5
       parent: 2
-- proto: DefaultStationBeacon
-  entities:
-  - uid: 9688
-    components:
-    - type: Transform
-      pos: 35.5,16.5
-      parent: 2
 - proto: DefaultStationBeaconAICore
   entities:
   - uid: 9689
@@ -64038,6 +64031,15 @@ entities:
       parent: 2
 - proto: DefaultStationBeaconKitchen
   entities:
+  - uid: 9688
+    components:
+    - type: Transform
+      pos: 35.5,16.5
+      parent: 2
+    - type: NavMapBeacon
+      text: News
+    - type: WarpPoint
+      location: News
   - uid: 9722
     components:
     - type: Transform
