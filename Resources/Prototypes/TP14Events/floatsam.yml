@@ -1,0 +1,55 @@
+- type: entity
+  id: DarkMatterReactor
+  name: dark-matter reactor
+  description: A standard reactor used on long-haul starships. This one looks badly damaged.
+  suffix: Event (1 hour 30 min meltdown timer)
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Tag
+    tags:
+      - Debug
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer: [MobMask, Opaque]
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Structures/Power/power.rsi
+    state: wiredmachine
+  - type: NodeContainer
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: PowerSupplier
+    supplyRate: 30000
+    supplyRampRate: 5000
+    supplyRampTolerance: 500
+  - type: PointLight
+    enabled: true
+    radius: 4
+    energy: 2.0
+    color: "#FF4020"
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    speed: 120
+  - type: ActiveTimerTrigger
+      beepSound: !type:SoundPathSpecifier
+        path: ""
+      beepInterval: 120
+      timeRemaining: 5400 # 1 hr 30 mins to meltdown
+  - type: ExplodeOnTrigger
+  - type: Explosive
+      maxTileBreak: 0
+      totalIntensity: 5000000
+      intensitySlope: 5
+      maxIntensity: 100
+      explosionType: Default
