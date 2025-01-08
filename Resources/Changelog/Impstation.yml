@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: harpy
-  changes:
-  - message: Slimes now have their own unique and slightly scary voice!
-    type: Add
-  id: 377
-  time: '2024-10-15T05:00:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/478
 - author: Sha-Seng
   changes:
   - message: Caduceus Cap, has a little siren, found in paramed lockers
@@ -4482,3 +4475,10 @@
   id: 876
   time: '2025-01-08T14:15:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1264
+- author: widgetbeck, mqole
+  changes:
+  - message: gray & goblin sprite cleanup
+    type: Tweak
+  id: 877
+  time: '2025-01-08T14:17:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1253
