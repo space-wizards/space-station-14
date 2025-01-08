@@ -1,4 +1,3 @@
-using Content.Shared.DoAfter;
 using Content.Shared.Gravity;
 using Content.Shared.Input;
 using Content.Shared.Mobs.Systems;
@@ -7,7 +6,6 @@ using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared._Goobstation.Standing;
 
@@ -15,7 +13,6 @@ public abstract class SharedLayingDownSystem : EntitySystem
 {
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
     public override void Initialize()
@@ -26,7 +23,6 @@ public abstract class SharedLayingDownSystem : EntitySystem
 
         SubscribeNetworkEvent<ChangeLayingDownEvent>(OnChangeState);
 
-        SubscribeLocalEvent<StandingStateComponent, StandingUpDoAfterEvent>(OnStandingUpDoAfter);
         SubscribeLocalEvent<LayingDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeed);
         SubscribeLocalEvent<LayingDownComponent, EntParentChangedMessage>(OnParentChanged);
     }
@@ -78,18 +74,6 @@ public abstract class SharedLayingDownSystem : EntitySystem
             TryLieDown(uid, layingDown, standing);
     }
 
-    private void OnStandingUpDoAfter(EntityUid uid, StandingStateComponent component, StandingUpDoAfterEvent args)
-    {
-        if (args.Handled || args.Cancelled || HasComp<KnockedDownComponent>(uid) ||
-            _mobState.IsIncapacitated(uid) || !_standing.Stand(uid))
-        {
-            component.CurrentState = StandingState.Lying;
-            return;
-        }
-
-        component.CurrentState = StandingState.Standing;
-    }
-
     private void OnRefreshMovementSpeed(EntityUid uid, LayingDownComponent component, RefreshMovementSpeedModifiersEvent args)
     {
         if (_standing.IsDown(uid))
@@ -122,17 +106,7 @@ public abstract class SharedLayingDownSystem : EntitySystem
             return false;
         }
 
-        var args = new DoAfterArgs(EntityManager, uid, layingDown.StandingUpTime, new StandingUpDoAfterEvent(), uid)
-        {
-            BreakOnDamage = true,
-            BreakOnHandChange = false,
-            RequireCanInteract = false
-        };
-
-        if (!_doAfter.TryStartDoAfter(args))
-            return false;
-
-        standingState.CurrentState = StandingState.GettingUp;
+        _standing.Stand(uid, standingState);
         return true;
     }
 
@@ -152,9 +126,6 @@ public abstract class SharedLayingDownSystem : EntitySystem
         return true;
     }
 }
-
-[Serializable, NetSerializable]
-public sealed partial class StandingUpDoAfterEvent : SimpleDoAfterEvent;
 
 public enum DropHeldItemsBehavior : byte
 {

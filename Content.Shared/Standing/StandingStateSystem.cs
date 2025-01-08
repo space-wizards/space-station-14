@@ -29,7 +29,7 @@ public sealed class StandingStateSystem : EntitySystem
         if (!Resolve(uid, ref standingState, false))
             return false;
 
-        return standingState.CurrentState is StandingState.Lying or StandingState.GettingUp;
+        return standingState.CurrentState is StandingState.Lying;
     }
 
     public bool Down(EntityUid uid,
@@ -47,7 +47,7 @@ public sealed class StandingStateSystem : EntitySystem
         // Optional component.
         Resolve(uid, ref appearance, ref hands, false);
 
-        if (standingState.CurrentState is StandingState.Lying or StandingState.GettingUp)
+        if (standingState.CurrentState is StandingState.Lying)
             return true;
 
         // This is just to avoid most callers doing this manually saving boilerplate

@@ -29,7 +29,6 @@ public sealed partial class StandingStateComponent : Component
 public enum StandingState
 {
     Lying,
-    GettingUp,
     Standing,
 }
 // WD EDIT END
