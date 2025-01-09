@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: ClothingMaskGas
+  parent: [ClothingMaskGas, Tier1Contraband]
   id: ClothingMaskInterdyneChemistry
   name: interdyne gas mask
   description: A face-covering mask that can be connected to an air supply.

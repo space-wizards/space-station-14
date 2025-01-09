@@ -14,7 +14,7 @@
         Caustic: 0.85
 
 - type: entity
-  parent: [ClothingEyesGlassesChemical, ShowMedicalIcons]
+  parent: [ClothingEyesGlassesChemical, ShowMedicalIcons, Tier1Contraband]
   id: ClothingEyesGlassesChemicalInterdyne
   name: interdyne chemical analysis goggles
   description: Goggles engineered to be unable to get a stain on the lenses. It comes with a medical HUD incorporated.
