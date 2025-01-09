@@ -31,7 +31,7 @@
   id: CartridgeLightRiflePractice
   name: cartridge (.308 rifle practice)
   parent: BaseCartridgeLightRifle
-  description: 0.308x1.53 inches. Intermediate rifle cartridge with a blue rubber tip for use in training scenarios. Generally used in aftermarket and Syndicate rifles.
+  description: 0.308x1.53 inches. Intermediate rifle cartridge with a blue rubber tip for use in training scenarios. Commonly used in aftermarket and Syndicate rifles.
   components:
   - type: CartridgeAmmo
     proto: BulletLightRiflePractice
@@ -47,7 +47,7 @@
   id: CartridgeLightRifleIncendiary
   name: cartridge (.308 rifle incendiary)
   parent: BaseCartridgeLightRifle
-  description: 0.308x1.53 inches. Intermediate rifle cartridge containing an incendiary compound to burn the target from inside.  Generally used in aftermarket and Syndicate rifles.
+  description: 0.308x1.53 inches. Intermediate rifle cartridge containing an incendiary compound to burn the target from inside.  Commonly used in aftermarket and Syndicate rifles.
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifleIncendiary
