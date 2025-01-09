@@ -56,8 +56,8 @@
     minimumPlayers: 20
     maxOccurrences: 1
     duration: null
-  - type: PrecognitionResult
-    message: psionic-power-precognition-synthesis-specialist-result-message
+  #- type: PrecognitionResult // Impstation no precog
+  #  message: psionic-power-precognition-synthesis-specialist-result-message
   - type: RuleGrids
   - type: LoadMapRule
     preloadedGrid: SyndieSynthesisShip
