@@ -24,6 +24,10 @@
   name: lathe-category-robotics
 
 - type: latheCategory
+  id: Tiles
+  name: lathe-category-tiles
+
+- type: latheCategory
   id: Tools
   name: lathe-category-tools
 
