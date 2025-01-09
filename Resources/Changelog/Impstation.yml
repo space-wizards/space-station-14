@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGRCdev
-  changes:
-  - message: Thaven can now view their moods when handcuffed / unconscious
-    type: Fix
-  id: 384
-  time: '2024-10-18T18:04:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/492
 - author: 12rabbits
   changes:
   - message: The Unborgable trait has been added to character customization.
@@ -4486,3 +4479,11 @@
   id: 883
   time: '2025-01-09T16:26:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1277
+- author: ruddygreat
+  changes:
+  - message: The shining spring now shoots cleanades as a bouncing projectile that
+      spreads space cleaner as it moves.
+    type: Tweak
+  id: 884
+  time: '2025-01-09T16:48:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1203
