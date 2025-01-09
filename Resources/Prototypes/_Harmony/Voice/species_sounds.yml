@@ -1,0 +1,9 @@
+﻿- type: speechSounds
+  id: Clown
+  saySound:
+    path: /Audio/Animals/goose_honk.ogg
+  askSound:
+    path: /Audio/Items/bikehorn.ogg
+  exclaimSound:
+    path: /Audio/Items/bikehorn.ogg
+

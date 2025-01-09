@@ -43,3 +43,18 @@
     Asphyxiation: 0.0
     Bloodloss: 0.0
     Cellular: 0.0
+
+- type: damageModifierSet
+  id: DiamondGolem
+  coefficients:
+    Blunt: 0.8
+    Slash: 0.8
+    Piercing: 0.8
+    Cold: 0.8
+    Poison: 0.8
+    Heat: 0.8
+    Shock: 0.8
+    Radiation: 0.0
+    Asphyxiation: 0.0
+    Bloodloss: 0.0
+    Cellular: 0.0

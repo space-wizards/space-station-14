@@ -1,6 +1,6 @@
 - type: species
   id: GolemSpecies
-  name: species-name-skeleton
+  name: species-name-golem
   roundStart: false
   prototype: MobGolemPerson
   sprites: MobGolemSprites

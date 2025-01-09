@@ -1,0 +1,170 @@
+﻿- type: entity
+  parent: ReinforcementRadio
+  id: GolemCoreSteel
+  name: Steel Core
+  description: Call in your creation.
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/shadow_core.rsi
+    layers:
+    - state: core
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: SteelGolem
+
+- type: entity
+  parent: ReinforcementRadio
+  id: GolemCoreUranium
+  name: Uranium Core
+  description: Call in your creation.
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/shadow_core.rsi
+    layers:
+    - state: core
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: UraniumGolem
+
+- type: entity
+  parent: ReinforcementRadio
+  id: GolemCorePlasma
+  name: Plasma Core
+  description: Call in your creation.
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/shadow_core.rsi
+    layers:
+    - state: core
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: PlasmaGolem
+
+- type: entity
+  parent: ReinforcementRadio
+  id: GolemCoreAdamantium
+  name: Adamantium Core
+  description: Call in your creation.
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/shadow_core.rsi
+    layers:
+    - state: core
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: AdamantiumGolem
+
+- type: entity
+  parent: ReinforcementRadio
+  id: GolemCoreGlass
+  name: Glass Core
+  description: Call in your creation.
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/shadow_core.rsi
+    layers:
+    - state: core
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: GlassGolem
+
+- type: entity
+  parent: ReinforcementRadio
+  id: GolemCoreGold
+  name: Gold Core
+  description: Call in your creation.
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/shadow_core.rsi
+    layers:
+    - state: core
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: GoldGolem
+
+- type: entity
+  parent: ReinforcementRadio
+  id: GolemCoreSilver
+  name: Silver Core
+  description: Call in your creation.
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/shadow_core.rsi
+    layers:
+    - state: core
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: SilverGolem
+
+- type: entity
+  parent: ReinforcementRadio
+  id: GolemCoreDiamond
+  name: Diamond Core
+  description: Call in your creation.
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/shadow_core.rsi
+    layers:
+    - state: core
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: DiamondGolem
+
+- type: entity
+  parent: ReinforcementRadio
+  id: GolemCoreBananium
+  name: Bananium Core
+  description: God... Please dont.
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/shadow_core.rsi
+    layers:
+    - state: core
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: BananiumGolem

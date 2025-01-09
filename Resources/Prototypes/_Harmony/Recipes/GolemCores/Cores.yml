@@ -1,0 +1,11 @@
+﻿- type: construction
+  name: Golem Core
+  id: GolemCoreConstruction
+  graph: GolumCoreGraph2
+  startNode: start
+  targetNode: BaseCore
+  category: construction-category-clothing
+  description: A golem core.
+  icon: { sprite: Structures/Specific/Anomalies/Cores/shadow_core.rsi, state: core }
+  objectType: Item
+  tag: BaseCore

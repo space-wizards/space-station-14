@@ -99,3 +99,29 @@
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
+
+- type: entity
+  name: Diamond Golem
+  parent: BaseDiamondGolem
+  id: DiamondGolem
+  components:
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  name: Bananium Golem
+  parent: BaseBananiumGolem
+  id: BananiumGolem
+  components:
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable

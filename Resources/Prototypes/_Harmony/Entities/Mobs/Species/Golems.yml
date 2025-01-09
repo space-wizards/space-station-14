@@ -23,7 +23,6 @@
   - type: Body
     prototype: Golem
     requiredLegs: 2
-    gibSound: /Audio/Effects/bone_rattle.ogg
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Golem
@@ -112,12 +111,23 @@
 - type: entity
   id: BasePlasmaGolem
   name: Golem McBoomy
-  parent: MobGolemPerson
+  parent: [MobGolemPerson, MobFlammable, MobBloodstream]
   abstract: true
   components:
   - type: Sprite
     color: "#aa33dd"
     colorHex: "#aa33dd"
+  - type: Flammable
+    fireSpread: true
+    FirestacksOnIgnite: 6.5
+    CanExtinguish: false
+    alwaysCombustible: true
+    FirestackFade: 0
+    damage: #per second, scales with number of fire 'stacks'
+      types:
+        Heat: 2
+  - type: Bloodstream
+    bloodReagent: Plasma
 
 - type: entity
   id: BaseGlassGolem
@@ -189,6 +199,37 @@
       types:
         Blunt: 15
         Slash: 5
+
+- type: entity
+  id: BaseDiamondGolem
+  name: Golem McShiny
+  parent: MobGolemPerson
+  abstract: true
+  components:
+  - type: Sprite
+    color: "#00ffff"
+    colorHex: "#00ffff"
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: DiamondGolem
+
+- type: entity
+  id: BaseBananiumGolem
+  name: Golem McgodwhydidImakethis
+  parent: [MobGolemPerson, MobBloodstream]
+  abstract: true
+  components:
+    - type: Sprite
+      color: "#ffff00"
+      colorHex: "#ffff00"
+    - type: Slippery
+      paralyzeTime: 2.0
+      launchForwardsMultiplier: 6.0
+    - type: Speech
+      speechSounds: Clown
+      speechVerb:   DefaultExclamation
+    - type: Bloodstream
+      bloodReagent: SpaceLube
 
 - type: entity
   parent: BaseSpeciesDummy

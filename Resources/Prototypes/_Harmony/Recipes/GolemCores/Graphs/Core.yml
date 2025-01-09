@@ -1,0 +1,125 @@
+﻿- type: constructionGraph
+  id: GolumCoreGraph2
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: BaseCore
+      steps:
+        - tag: AnomalyCoreRock
+          name: Anomaly Core
+          icon:
+            sprite: Structures/Specific/Anomalies/Cores/shadow_core.rsi
+            state: core
+          doAfter: 1
+- type: constructionGraph
+  id: GolumCoreGraphExpansion
+  start: BaseCore
+  graph:
+      node: BaseCore
+      entity: GolemCoreAdamantium
+      edges:
+
+      - to: UraniumCore
+      - tag: SheetUranium
+        name: Uranium Sheet
+        amount: 10
+        icon:
+           sprite: Objects/Materials/Sheets/other.rsi
+           state: uranium_3
+        doAfter: 1
+
+      - to: PlasmaCore
+      - tag: SheetPlasma
+        name: Plasma Sheet
+        amount: 10
+        icon:
+          sprite: Objects/Materials/Sheets/other.rsi
+          state: plasma_3
+        doAfter: 1
+
+      - to: GlassCore
+      - tag: SheetGlass
+        name: Glass Sheet
+        amount: 10
+        icon:
+          sprite: Objects/Materials/Sheets/glass.rsi
+          state: Glass_3
+        doAfter: 1
+
+      - to: GoldCore
+      - tag: IngotGold
+        name: Gold Ingot
+        amount: 10
+        icon:
+          sprite: Objects/Materials/ingots.rsi
+          state: gold_3
+        doAfter: 1
+
+      - to: SilverCore
+      - tag: IngotSilver
+        name: Silver Ingot
+        amount: 10
+        icon:
+          sprite: Objects/Materials/ingots.rsi
+          state: silver_3
+        doAfter: 1
+
+      - to: SilverCore
+      - tag: IngotSilver
+        name: Silver Ingot
+        amount: 10
+        icon:
+          sprite: Objects/Materials/ingots.rsi
+          state: silver_3
+        doAfter: 1
+
+      - to: DiamondCore
+      - tag: MaterialDiamond
+        name: Diamond
+        amount: 10
+        icon:
+          sprite: Objects/Materials/ingots.rsi
+          state: silver_3
+        doAfter: 1
+
+      - to: BananiumCore
+      - tag: MaterialBananium
+        name: Bananium
+        amount: 10
+        icon:
+          sprite: Objects/Materials/materials.rsi
+          state: bananium_1
+        doAfter: 1
+
+- node: SteelCore
+  entity: GolemCoreSteel
+
+
+- node: UraniumCore
+  entity: GolemCoreUranium
+
+
+- node: PlasmaCore
+  entity: GolemCorePlasma
+
+
+- node: GlassCore
+  entity: GolemCorePlasma
+
+
+- node: GoldCore
+  entity: GolemCorePlasma
+
+
+- node: SilverCore
+  entity: GolemCorePlasma
+
+
+- node: DiamondCore
+  entity: GolemCorePlasma
+
+
+- node: BananiumCore
+  entity: GolemCorePlasma
+
