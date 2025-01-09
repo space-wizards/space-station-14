@@ -1,2 +1,4 @@
-- type: soundCollection
-  id: Paracusia
+﻿- type: soundCollection
+  id: WhaleMigration
+  files:
+    - /Audio/Effects/whale_groan.ogg
