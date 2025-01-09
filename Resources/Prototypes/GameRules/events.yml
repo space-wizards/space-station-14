@@ -519,7 +519,7 @@
     weight: 6
     duration: 300
   - type: MassHallucinationsRule
-    minTimeBetweenIncidents: 0.1
+    minTimeBetweenIncidents: 10
     maxTimeBetweenIncidents: 40
     maxSoundDistance: 7
     sounds:
