@@ -20,7 +20,7 @@
   boilingPoint: 4200.0
   meltingPoint: 3550.0
 
-# This should probably be given gas properties at some point
+  # This should probably be given gas properties at some point
 - type: reagent
   id: Chlorine
   name: reagent-name-chlorine
@@ -32,14 +32,14 @@
   meltingPoint: -101.5
   boilingPoint: -34.04
   plantMetabolism:
-    - !type:PlantAdjustWater
-      amount: -0.5
-    - !type:PlantAdjustToxins
-      amount: 15
-    - !type:PlantAdjustWeeds
-      amount: -3
-    - !type:PlantAdjustHealth
-      amount: -1
+  - !type:PlantAdjustWater
+    amount: -0.5
+  - !type:PlantAdjustToxins
+    amount: 15
+  - !type:PlantAdjustWeeds
+    amount: -3
+  - !type:PlantAdjustHealth
+    amount: -1
   metabolisms:
     Poison:
       effects:
@@ -79,7 +79,7 @@
           shouldHave: true
         amount: 0.4
 
-# This should probably be given gas properties at some point
+  # This should probably be given gas properties at some point
 - type: reagent
   id: Fluorine
   name: reagent-name-fluorine
@@ -91,14 +91,14 @@
   boilingPoint: -188.11
   meltingPoint: -219.67
   plantMetabolism:
-    - !type:PlantAdjustWater
-      amount: -0.5
-    - !type:PlantAdjustToxins
-      amount: 25
-    - !type:PlantAdjustWeeds
-      amount: -4
-    - !type:PlantAdjustHealth
-      amount: -2
+  - !type:PlantAdjustWater
+    amount: -0.5
+  - !type:PlantAdjustToxins
+    amount: 25
+  - !type:PlantAdjustWeeds
+    amount: -4
+  - !type:PlantAdjustHealth
+    amount: -2
   metabolisms:
     Poison:
       effects:
@@ -119,7 +119,7 @@
   boilingPoint: 2700.0
   meltingPoint: 1064.76
 
-# This should probably be given gas properties at some point
+  # This should probably be given gas properties at some point
 - type: reagent
   id: Hydrogen
   name: reagent-name-hydrogen
@@ -242,12 +242,12 @@
   meltingPoint: 44.2
   boilingPoint: 280.5
   plantMetabolism:
-    - !type:PlantAdjustNutrition
-      amount: 0.1
-    - !type:PlantAdjustWater
-      amount: -0.5
-    - !type:PlantAdjustWeeds
-      amount: -2
+  - !type:PlantAdjustNutrition
+    amount: 0.1
+  - !type:PlantAdjustWater
+    amount: -0.5
+  - !type:PlantAdjustWeeds
+    amount: -2
 
 - type: reagent
   id: Radium
