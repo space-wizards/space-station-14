@@ -46,3 +46,46 @@
         - Syndicate
       mindRoles:
       - MindRolePostOperator
+
+- type: entity
+  parent: BaseUnknownShuttleRule
+  id: SynthesisSpecialist
+  components:
+  - type: StationEvent
+    weight: 4
+    minimumPlayers: 20
+    maxOccurrences: 1
+    duration: null
+  - type: PrecognitionResult
+    message: psionic-power-precognition-synthesis-specialist-result-message
+  - type: RuleGrids
+  - type: LoadMapRule
+    preloadedGrid: SyndieSynthesisShip
+  - type: AntagSpawner
+    prototype: MobHuman
+  - type: AntagObjectives
+    objectives:
+    - SynthesisSurviveObjective
+    - SynthesisPrescribeObjective
+  - type: AntagSelection
+    agentName: synthesis-round-end-agent-name
+    definitions:
+    - spawnerPrototype: SpawnPointGhostSynthesis
+      min: 2
+      max: 2
+      pickPlayer: false
+      startingGear: SyndicateSynthesisGear
+      roleLoadout:
+      - RoleSurvivalStandard
+      components:
+      - type: RandomMetadata
+        nameSegments:
+        - fake_human_first
+        - fake_human_last
+      - type: RandomHumanoidAppearance
+        randomizeName: false
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      mindRoles:
+      - MindRoleSynthesis
