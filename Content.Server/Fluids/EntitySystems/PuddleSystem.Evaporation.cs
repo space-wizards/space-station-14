@@ -59,7 +59,7 @@ public sealed partial class PuddleSystem
 
             var ev = new SolutionContainerChangedEvent(puddleSolution, puddle.SolutionName);
             RaiseLocalEvent(uid, ref ev);
-            Dirty(puddle.Solution.Value.Owner, puddle.Solution.Value.Comp); // Fix the misprediction
+            Dirty(puddle.Solution.Value.Owner, puddle.Solution.Value.Comp);
         }
     }
 }
