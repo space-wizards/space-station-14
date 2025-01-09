@@ -123,12 +123,6 @@ public abstract class ClothingSystem : EntitySystem
             return;
 
         SetEquippedPrefix(uid, state.EquippedPrefix, component);
-
-        // TBH I don't remember why this is here...
-        // See the TODO comment in the method.
-        // I assume it has to do with the fact toggling a mask might not properly refresh the visibility, but it
-        // does trigger the EquippedPrefix to change, so is just a very janky way of ensuring layers are updated?
-        _hideLayer.RefreshLayerVisibility(uid);
     }
 
     private void OnEquipDoAfter(Entity<ClothingComponent> ent, ref ClothingEquipDoAfterEvent args)

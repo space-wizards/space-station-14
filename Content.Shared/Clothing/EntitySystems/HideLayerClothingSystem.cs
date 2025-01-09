@@ -1,7 +1,7 @@
 using Content.Shared.Clothing.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
-using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.EntitySystems;
@@ -9,7 +9,7 @@ namespace Content.Shared.Clothing.EntitySystems;
 public sealed class HideLayerClothingSystem : EntitySystem
 {
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoid = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -33,31 +33,14 @@ public sealed class HideLayerClothingSystem : EntitySystem
         SetLayerVisibility(ent!, args.Wearer, hideLayers: false);
     }
 
-    public void RefreshLayerVisibility(Entity<HideLayerClothingComponent?, ClothingComponent?> clothing)
-    {
-        // TODO Why does this exist?
-        // Was it just in case something accidentally changes the result of IsEnabled() without triggering an update?
-
-        if (!Resolve(clothing.Owner, ref clothing.Comp1, ref clothing.Comp2, false))
-            return;
-
-        if (clothing.Comp2.InSlot == null)
-            return;
-
-        if (!_container.TryGetContainingContainer((clothing.Owner, null, null), out var container))
-            return;
-
-        if (!TryComp(container.Owner, out HumanoidAppearanceComponent? human))
-            return;
-
-        SetLayerVisibility(clothing, (container.Owner, human), true);
-    }
-
     private void SetLayerVisibility(
         Entity<HideLayerClothingComponent?, ClothingComponent?> clothing,
         Entity<HumanoidAppearanceComponent?> user,
         bool hideLayers)
     {
+        if (_timing.ApplyingState)
+            return;
+
         if (!Resolve(clothing.Owner, ref clothing.Comp1, ref clothing.Comp2))
             return;
 
