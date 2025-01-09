@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseHandheldInstrument
   id: GlockenspielInstrument
   name: glockenspiel
@@ -98,7 +98,7 @@
     state: icon
   - type: Tag
     tags:
-    - KeyedInstrument
+    - PercussionInstrument
   - type: Item
     size: Small
 
