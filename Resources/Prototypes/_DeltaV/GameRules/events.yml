@@ -9,9 +9,9 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    earliestStart: 15
-    weight: 5
-    minimumPlayers: 30
+    earliestStart: 60
+    weight: 2
+    minimumPlayers: 40
     maxOccurrences: 1
     duration: null
   - type: RuleGrids
