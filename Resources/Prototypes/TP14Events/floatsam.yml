@@ -107,7 +107,7 @@
   suffix: Event
   components:
   - type: AmbientSound
-    volume: -15
+    volume: 5
     range: 2
     sound:
       path: /Audio/Misc/siren.ogg
