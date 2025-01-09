@@ -33,7 +33,7 @@ public sealed partial class ClothingComponent : Component
     /// equip them as far as clothing related events are concerned.
     /// </summary>
     /// <remarks>
-    /// Note that this is may a combination of different slot flags, not a singular bit.
+    /// Note that this may be a combination of different slot flags, not a singular bit.
     /// </remarks>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField(required: true)]
