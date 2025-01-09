@@ -158,7 +158,7 @@
   parent: PersonalAI
   id: TutorialPersonalAI
   name: tutor personal ai device
-  description: A special personal AI device, loaded with helpful tips and tricks for newcomers to Space Station 14. Turn it on by right-clicking it and selecting the menu item, or putting it in your hand and pressing the 'Z' key. # breaking kayfabe with this one, but i figure if we can do it anywhere, it's here
+  description: A special personal AI device, loaded with helpful tips and tricks for newcomers to Space Station 14. Turn it on by putting it in your hand and pressing the 'Z' key. # breaking kayfabe with this one, but i figure if we can do it anywhere, it's here
   components:
   - type: Sprite
     sprite: Objects/Fun/pai.rsi
