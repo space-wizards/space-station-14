@@ -339,7 +339,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         }
     }
 
-    protected override void SetLayerVisibility(
+    public override void SetLayerVisibility(
         Entity<HumanoidAppearanceComponent> ent,
         HumanoidVisualLayers layer,
         bool visible,

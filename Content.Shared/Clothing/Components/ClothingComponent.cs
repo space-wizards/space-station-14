@@ -28,8 +28,15 @@ public sealed partial class ClothingComponent : Component
     [DataField("quickEquip")]
     public bool QuickEquip = true;
 
+    /// <summary>
+    /// The slots in which the clothing is considered "worn" or "equipped". E.g., putting shoes in your pockets does not
+    /// equip them as far as clothing related events are concerned.
+    /// </summary>
+    /// <remarks>
+    /// Note that this is may a combination of different slot flags, not a singular bit.
+    /// </remarks>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("slots", required: true)]
+    [DataField(required: true)]
     [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)]
     public SlotFlags Slots = SlotFlags.NONE;
 
@@ -60,14 +67,15 @@ public sealed partial class ClothingComponent : Component
     public string? RsiPath;
 
     /// <summary>
-    /// Name of the inventory slot the clothing is in.
+    /// Name and flags of the inventory slot the clothing is currently in.
+    /// Note that this being non-null does not mean the clothing is considered "worn" or "equipped" unless the slot
+    /// satisfies the <see cref="Slots"/> flags.
     /// </summary>
-    public string? InSlot;
-
-    /// <summary>
-    /// The SlotFlag value of the inventory slot the clothing is in.
-    /// </summary>
-    public SlotFlags EquippedInSlot = SlotFlags.NONE;
+    [DataField]
+    public (string Name, SlotFlags Flag)? InSlot;
+    // TODO CLOTHING
+    // Maybe keep this null unless its in a valid slot?
+    // To lazy to figure out ATM if that would break anything.
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan EquipDelay = TimeSpan.Zero;

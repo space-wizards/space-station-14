@@ -16,9 +16,9 @@ public abstract class ClothingSystem : EntitySystem
 {
     [Dependency] private readonly SharedItemSystem _itemSys = default!;
     [Dependency] private readonly SharedContainerSystem _containerSys = default!;
-    [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly InventorySystem _invSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly HideLayerClothingSystem _hideLayer = default!;
 
     public override void Initialize()
     {
@@ -29,7 +29,6 @@ public abstract class ClothingSystem : EntitySystem
         SubscribeLocalEvent<ClothingComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
-        SubscribeLocalEvent<ClothingComponent, ItemMaskToggledEvent>(OnMaskToggled);
 
         SubscribeLocalEvent<ClothingComponent, ClothingEquipDoAfterEvent>(OnEquipDoAfter);
         SubscribeLocalEvent<ClothingComponent, ClothingUnequipDoAfterEvent>(OnUnequipDoAfter);
@@ -85,80 +84,18 @@ public abstract class ClothingSystem : EntitySystem
         }
     }
 
-    private void ToggleVisualLayers(
-        EntityUid equipee,
-        EntityUid equipment,
-        HashSet<HumanoidVisualLayers> appearanceLayers
-        )
-    {
-        if (TryComp(equipment, out ClothingComponent? clothing) &&
-            TryComp(equipment, out HideLayerClothingComponent? hideLayer))
-        {
-            if (hideLayer.Layers.Count > 0)
-            {
-                // iterate the HideLayerClothingComponent's layers map and check that
-                // the clothing is equipped in a matching slot.
-                foreach (var layer in hideLayer.Layers.Keys)
-                {
-                    if (!appearanceLayers.Contains(layer))
-                        continue;
-
-                    bool shouldLayerShow = true;
-                    var validSlots = hideLayer.Layers[layer];
-                    if (validSlots.HasFlag(clothing.EquippedInSlot))
-                        shouldLayerShow = MaskToggleCheck();
-
-                    _humanoidSystem.SetLayerVisibility(equipee, layer, shouldLayerShow, clothing.EquippedInSlot);
-                }
-            }
-            else
-            {
-                // iterate the HideLayerClothingComponent's legacy slots set and check
-                // that the wearer has the layer to be hidden, and that the clothing
-                // is equipped.
-#pragma warning disable CS0618 // Type or member is obsolete
-                foreach (var layer in hideLayer.Slots)
-#pragma warning restore CS0618 // Type or member is obsolete
-                {
-                    if (!appearanceLayers.Contains(layer))
-                        continue;
-
-                    bool shouldLayerShow = true;
-                    if (clothing.EquippedInSlot != SlotFlags.NONE
-                        && clothing.Slots.HasFlag(clothing.EquippedInSlot))
-                    {
-                        shouldLayerShow = MaskToggleCheck();
-                    }
-                    _humanoidSystem.SetLayerVisibility(equipee, layer, shouldLayerShow, clothing.Slots);
-                }
-
-            }
-        }
-
-        //Checks for mask toggling. TODO: Make a generic system for this
-        bool MaskToggleCheck()
-        {
-            if (!hideLayer.HideOnToggle || !TryComp(equipment, out MaskComponent? mask))
-                return false;
-
-            return clothing.EquippedPrefix == mask.EquippedPrefix;
-        }
-    }
-
     protected virtual void OnGotEquipped(EntityUid uid, ClothingComponent component, GotEquippedEvent args)
     {
-        component.InSlot = args.Slot;
-        component.EquippedInSlot = args.SlotFlags;
-        CheckEquipmentForLayerHide(args.Equipment, args.Equipee);
+        component.InSlot = (args.Slot, args.SlotFlags);
 
-        if ((component.Slots & args.SlotFlags) != SlotFlags.NONE)
-        {
-            var gotEquippedEvent = new ClothingGotEquippedEvent(args.Equipee, component);
-            RaiseLocalEvent(uid, ref gotEquippedEvent);
+        if ((component.Slots & args.SlotFlags) == SlotFlags.NONE)
+            return;
 
-            var didEquippedEvent = new ClothingDidEquippedEvent((uid, component));
-            RaiseLocalEvent(args.Equipee, ref didEquippedEvent);
-        }
+        var gotEquippedEvent = new ClothingGotEquippedEvent(args.Equipee, component);
+        RaiseLocalEvent(uid, ref gotEquippedEvent);
+
+        var didEquippedEvent = new ClothingDidEquippedEvent((uid, component));
+        RaiseLocalEvent(args.Equipee, ref didEquippedEvent);
     }
 
     protected virtual void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
@@ -173,8 +110,6 @@ public abstract class ClothingSystem : EntitySystem
         }
 
         component.InSlot = null;
-        component.EquippedInSlot = SlotFlags.NONE;
-        CheckEquipmentForLayerHide(args.Equipment, args.Equipee);
     }
 
     private void OnGetState(EntityUid uid, ClothingComponent component, ref ComponentGetState args)
@@ -184,21 +119,16 @@ public abstract class ClothingSystem : EntitySystem
 
     private void OnHandleState(EntityUid uid, ClothingComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is ClothingComponentState state)
-        {
-            SetEquippedPrefix(uid, state.EquippedPrefix, component);
-            if (component.InSlot != null && _containerSys.TryGetContainingContainer((uid, null, null), out var container))
-            {
-                CheckEquipmentForLayerHide(uid, container.Owner);
-            }
-        }
-    }
+        if (args.Current is not ClothingComponentState state)
+            return;
 
-    private void OnMaskToggled(Entity<ClothingComponent> ent, ref ItemMaskToggledEvent args)
-    {
-        //TODO: sprites for 'pulled down' state. defaults to invisible due to no sprite with this prefix
-        SetEquippedPrefix(ent, args.IsToggled ? args.equippedPrefix : null, ent);
-        CheckEquipmentForLayerHide(ent.Owner, args.Wearer);
+        SetEquippedPrefix(uid, state.EquippedPrefix, component);
+
+        // TBH I don't remember why this is here...
+        // See the TODO comment in the method.
+        // I assume it has to do with the fact toggling a mask might not properly refresh the visibility, but it
+        // does trigger the EquippedPrefix to change, so is just a very janky way of ensuring layers are updated?
+        _hideLayer.RefreshLayerVisibility(uid);
     }
 
     private void OnEquipDoAfter(Entity<ClothingComponent> ent, ref ClothingEquipDoAfterEvent args)
@@ -220,12 +150,6 @@ public abstract class ClothingSystem : EntitySystem
     private void OnItemStripped(Entity<ClothingComponent> ent, ref BeforeItemStrippedEvent args)
     {
         args.Additive += ent.Comp.StripDelay;
-    }
-
-    private void CheckEquipmentForLayerHide(EntityUid equipment, EntityUid equipee)
-    {
-        if (TryComp(equipee, out HumanoidAppearanceComponent? appearanceComp))
-            ToggleVisualLayers(equipee, equipment, appearanceComp.HideLayersOnEquip);
     }
 
     #region Public API

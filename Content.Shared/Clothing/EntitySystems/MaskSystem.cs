@@ -15,6 +15,7 @@ public sealed class MaskSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ClothingSystem _clothing = default!;
 
     public override void Initialize()
     {
@@ -68,6 +69,8 @@ public sealed class MaskSystem : EntitySystem
         Dirty(uid, mask);
         if (mask.ToggleActionEntity is {} action)
             _actionSystem.SetToggled(action, mask.IsToggled);
+
+        _clothing.SetEquippedPrefix(uid, mask.IsToggled ? equippedPrefix : null);
 
         var maskEv = new ItemMaskToggledEvent(wearer, equippedPrefix, mask.IsToggled, isEquip);
         RaiseLocalEvent(uid, ref maskEv);

@@ -159,7 +159,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     }
 
     /// <inheritdoc cref="SetLayerVisibility(Entity{HumanoidAppearanceComponent?},HumanoidVisualLayers,bool,Nullable{SlotFlags})"/>
-    protected virtual void SetLayerVisibility(
+    public virtual void SetLayerVisibility(
         Entity<HumanoidAppearanceComponent> ent,
         HumanoidVisualLayers layer,
         bool visible,
