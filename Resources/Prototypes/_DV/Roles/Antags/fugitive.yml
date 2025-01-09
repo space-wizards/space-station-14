@@ -1,0 +1,26 @@
+﻿- type: antag
+  id: Fugitive
+  name: roles-antag-fugitive-name
+  antagonist: true
+  objective: roles-antag-fugitive-objective
+  # keep these in sync with the spawner
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 3600 # 1 hour
+
+- type: startingGear
+  id: FugitiveGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPrisoner
+    ears: ClothingHeadsetGrey
+    gloves: ClothingHandsGlovesColorYellow
+    back: ClothingBackpackSatchel
+    shoes: ClothingShoesChameleonNoSlips
+    id: PassengerPDA
+  #innerClothingSkirt: ClothingUniformJumpskirtPrisoner # FIXME doesnt work
+  inhand:
+  - ToolboxElectricalFilled
+  storage:
+    back:
+    - FugitiveStash

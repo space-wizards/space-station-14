@@ -26,3 +26,7 @@ ghost-role-information-synthesis-rules =
                                         Your goal is to synthesize chemicals and trade with others. Avoid excessive antagonism or destruction.
 
                                         You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+
+ghost-role-information-fugitive-name = Fugitive
+ghost-role-information-fugitive-description = You're an escaped prisoner. Make it out alive.
+ghost-role-information-fugitive-rules = You are the lightest of antags, focus on laying low rather than engaging security directly. Don't murderbone.
