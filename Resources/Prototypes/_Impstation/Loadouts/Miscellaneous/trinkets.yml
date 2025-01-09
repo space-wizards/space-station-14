@@ -26,13 +26,19 @@
     - GoldPersonalAI
 
 - type: loadout
-  id: TutorialAI
+  id: TutorialAI_Newcomer #imp. <15 hours.
   effects:
   - !type:GroupLoadoutEffect
     proto: Tutorial
   storage:
     back:
-    - TutorialAI
+    - TutorialPersonalAI
+
+- type: loadout
+  id: TutorialAI_Trainee #imp. for trainees only.
+  storage:
+    back:
+    - TutorialPersonalAI
 
 - type: loadout
   id: FolderHamster
