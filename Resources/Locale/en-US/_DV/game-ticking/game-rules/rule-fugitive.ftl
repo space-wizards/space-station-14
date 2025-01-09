@@ -1,5 +1,7 @@
 ﻿fugitive-round-end-agent-name = Fugitive
 
+objective-issuer-self = [color=#1708EC]Self[/color]
+
 fugitive-spawn = You fall from the ceiling!
 
 station-event-fugitive-hunt-announcement = Please check communications consoles for a sensitive message.
