@@ -37,7 +37,7 @@
   id: MagazineRifle
   name: "magazine (.223 rifle)"
   parent: BaseMagazineRifle
-  description: The standard magazine for NT combat rifles, holds 25 rounds. This type comes with standard lead-tipped FMJ, as denoted by the red strip around the magazine.
+  description: The standard magazine for NT combat rifles, holds 25 rounds. This type comes with standard lead-tipped FMJ.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifle
