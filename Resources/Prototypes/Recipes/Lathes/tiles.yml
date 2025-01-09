@@ -4,7 +4,7 @@
   abstract: true
   id: BaseTileRecipe
   applyMaterialDiscount: false
-  category: Tiles
+  category: [ Tiles ]
   completetime: 0.5
   materials:
     Steel: 25
@@ -13,7 +13,7 @@
   abstract: true
   parent: BaseTileRecipe
   id: BaseWoodTileRecipe
-  category: Wood
+  category: [ Wood ]
   materials:
     Wood: 25
 
@@ -21,7 +21,7 @@
   abstract: true
   parent: BaseTileRecipe
   id: BaseConcreteTileRecipe
-  category: Concrete
+  category: [ Concrete ]
   materials:
     Steel: 25
     Plastic: 25
@@ -30,19 +30,19 @@
   abstract: true
   parent: BaseTileRecipe
   id: BaseDarkTileRecipe
-  category: Dark
+  category: [ Dark ]
 
 - type: latheRecipe
   abstract: true
   parent: BaseTileRecipe
   id: BaseSteelTileRecipe
-  category: Steel
+  category: [ Steel ]
 
 - type: latheRecipe
   abstract: true
   parent: BaseTileRecipe
   id: BaseWhiteTileRecipe
-  category: White
+  category: [ White ]
 
 ## Recipes
 
