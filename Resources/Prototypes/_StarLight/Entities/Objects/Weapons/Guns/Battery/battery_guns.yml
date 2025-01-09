@@ -363,8 +363,6 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Gun
-    fireRate: 0.5
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDeclone
     fireCost: 200
@@ -505,3 +503,25 @@
   - type: Battery
     maxCharge: 1500
     startingCharge: 1500
+    
+- type: entity
+  parent: BaseWeaponBattery
+  id: WeaponAlien
+  name: alien pistol
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/alien.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDeclone
+    fireCost: 200
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
