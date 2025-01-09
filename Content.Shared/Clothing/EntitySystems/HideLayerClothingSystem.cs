@@ -20,7 +20,8 @@ public sealed class HideLayerClothingSystem : EntitySystem
 
     private void OnHideToggled(Entity<HideLayerClothingComponent> ent, ref ItemMaskToggledEvent args)
     {
-        SetLayerVisibility(ent!, args.Wearer, hideLayers: true);
+        if (args.Wearer != null)
+            SetLayerVisibility(ent!, args.Wearer.Value, hideLayers: true);
     }
 
     private void OnHideGotEquipped(Entity<HideLayerClothingComponent> ent, ref ClothingGotEquippedEvent args)
@@ -99,6 +100,6 @@ public sealed class HideLayerClothingSystem : EntitySystem
         if (!TryComp(clothing, out MaskComponent? mask))
             return true;
 
-        return mask.IsToggled;
+        return !mask.IsToggled;
     }
 }
