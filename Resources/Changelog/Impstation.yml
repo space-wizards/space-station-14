@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: LandsharkRAWR
-  changes:
-  - message: New lobby art!
-    type: Add
-  id: 388
-  time: '2024-10-18T18:10:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/496
 - author: honeyed-lemons
   changes:
   - message: Added Golden High-Heels to scavenger loot.
@@ -4492,3 +4485,10 @@
   id: 887
   time: '2025-01-09T18:15:14.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1280
+- author: Lyndomen
+  changes:
+  - message: Ports the Synthesis Specialist ghost role from Delta-V
+    type: Add
+  id: 888
+  time: '2025-01-09T18:36:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1266
