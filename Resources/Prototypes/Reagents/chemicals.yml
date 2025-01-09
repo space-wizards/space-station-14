@@ -20,18 +20,18 @@
   metabolisms:
     Poison:
       effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Caustic: 2
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 2
   reactiveEffects:
     Acidic:
       methods: [ Touch ]
       effects:
-        - !type:ActivateArtifact
-          conditions:
-            - !type:ReagentThreshold
-              min: 5
+      - !type:ActivateArtifact
+        conditions:
+          - !type:ReagentThreshold
+            min: 5
 
 - type: reagent
   id: Ash
@@ -53,10 +53,10 @@
   metabolisms:
     Poison:
       effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Cellular: 1 #it's a carcinogen, reckon this is fine
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 1 #it's a carcinogen, reckon this is fine
 
 - type: reagent
   id: Cellulose
@@ -80,12 +80,12 @@
   metabolisms:
     Medicine:
       effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Poison: -1
-        - !type:ChemCleanBloodstream
-          cleanseRate: 3
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -1
+      - !type:ChemCleanBloodstream
+        cleanseRate: 3
 
 - type: reagent
   id: Fersilicite
@@ -138,14 +138,14 @@
   metabolisms:
     Medicine:
       effects:
-        - !type:HealthChange
-          damage:
-            groups:
-              Brute: -4
-        - !type:GenericStatusEffect
-          key: Adrenaline
-          component: IgnoreSlowOnDamage
-          time: 120
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -4
+      - !type:GenericStatusEffect
+        key: Adrenaline
+        component: IgnoreSlowOnDamage
+        time: 120
 
 - type: reagent
   id: SodiumCarbonate
