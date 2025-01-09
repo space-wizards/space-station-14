@@ -35,8 +35,11 @@ public sealed class MaskSystem : EntitySystem
     private void OnToggleMask(Entity<MaskComponent> ent, ref ToggleMaskEvent args)
     {
         var (uid, mask) = ent;
-        if (mask.ToggleActionEntity == null || !mask.IsEnabled)
+        if (mask.ToggleActionEntity == null || !mask.IsToggleable)
             return;
+
+        // Masks are currently only toggleable via the action while equipped.
+        // Its possible this might change in future?
 
         // TODO Inventory / Clothing
         // Add an easier way to check if clothing is equipped to a valid slot.
@@ -56,25 +59,28 @@ public sealed class MaskSystem : EntitySystem
 
     private void OnGotUnequipped(EntityUid uid, MaskComponent mask, GotUnequippedEvent args)
     {
-        // Masks are always un-toggled when unequipped
-        if (mask.IsToggled)
-            SetToggled((uid, mask), false);
+        // Masks are currently always un-toggled when unequipped.
+        SetToggled((uid, mask), false);
     }
 
     private void OnFolded(Entity<MaskComponent> ent, ref FoldedEvent args)
     {
+        // Why does this interaction exist?
         if (ent.Comp.DisableOnFolded)
-            SetEnabled(ent!, !args.IsFolded);
+            SetToggleable(ent!, !args.IsFolded);
 
-        SetToggled(ent!, args.IsFolded);
+        SetToggled(ent!, args.IsFolded, true);
     }
 
-    public void SetToggled(Entity<MaskComponent?> mask, bool toggled)
+    public void SetToggled(Entity<MaskComponent?> mask, bool toggled, bool force = false)
     {
         if (_timing.ApplyingState)
             return;
 
         if (!Resolve(mask.Owner, ref mask.Comp))
+            return;
+
+        if (!force && !mask.Comp.IsToggleable)
             return;
 
         if (mask.Comp.IsToggled == toggled)
@@ -111,7 +117,7 @@ public sealed class MaskSystem : EntitySystem
         Dirty(mask);
     }
 
-    public void SetEnabled(Entity<MaskComponent?> mask, bool enabled)
+    public void SetToggleable(Entity<MaskComponent?> mask, bool toggleable)
     {
         if (_timing.ApplyingState)
             return;
@@ -119,10 +125,10 @@ public sealed class MaskSystem : EntitySystem
         if (!Resolve(mask.Owner, ref mask.Comp))
             return;
 
-        if (mask.Comp.IsEnabled == enabled)
+        if (mask.Comp.IsToggleable == toggleable)
             return;
 
-        mask.Comp.IsEnabled = enabled;
+        mask.Comp.IsToggleable = toggleable;
         Dirty(mask);
     }
 }

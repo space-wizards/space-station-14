@@ -23,8 +23,6 @@ public sealed partial class MaskComponent : Component
     /// <summary>
     /// Whether the mask is currently toggled (e.g., pulled down).
     /// This generally disables some of the mask's functionality.
-    /// This is different from <see cref="IsEnabled"/>. As to what the difference is, I have no idea what
-    /// <see cref="IsEnabled"/> is for so you're on your own.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool IsToggled;
@@ -33,13 +31,13 @@ public sealed partial class MaskComponent : Component
     public string EquippedPrefix = "toggled";
 
     /// <summary>
-    /// When <see langword="true"/> will function normally, otherwise will not react to events
+    /// When <see langword="false"/>, the mask will not be toggleable.
     /// </summary>
     [DataField("enabled"), AutoNetworkedField]
-    public bool IsEnabled = true;
+    public bool IsToggleable = true;
 
     /// <summary>
-    /// When <see langword="true"/> will disable <see cref="IsEnabled"/> when folded
+    /// When <see langword="true"/> will disable <see cref="IsToggleable"/> when folded
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool DisableOnFolded;
