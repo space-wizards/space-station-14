@@ -295,7 +295,7 @@ public sealed class LockSystem : EntitySystem
 
     private void OnAccessBreak(EntityUid uid, LockComponent component, ref GotAccessBrokenEvent args)
     {
-        if (!component.Locked || !component.BreakOnEmag)
+        if (!component.Locked || !component.BreakOnAccessBreaker)
             return;
 
         _audio.PlayPredicted(component.UnlockSound, uid, args.UserUid);

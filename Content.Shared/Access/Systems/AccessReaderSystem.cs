@@ -78,7 +78,7 @@ public sealed class AccessReaderSystem : EntitySystem
 
     private void OnAccessBreak(EntityUid uid, AccessReaderComponent reader, ref GotAccessBrokenEvent args)
     {
-        if (!reader.BreakOnEmag)
+        if (!reader.BreakOnAccessBreaker)
             return;
 
         if (!GetMainAccessReader(uid, out var accessReader))
