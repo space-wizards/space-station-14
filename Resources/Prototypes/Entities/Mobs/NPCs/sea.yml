@@ -252,3 +252,19 @@
 
   # TODO: work on a new Tumorous Brain organ that spawns MimicSmart, which starts by infesting a randomly generated salvager outside Sweetwater. Make new stomach type that only eats raw meat and blood.
   # Also give MimicSmart the ability to burst out of it's host at any time, and use cloaking like a space cobra if it has to escape it's puppet.
+
+
+- type: entity
+  name: death whale
+  id: MobDeathWhale
+  parent: MobSpaceBasic
+  description: Don't go into the light.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: null
+  - type: PointLight
+    radius: 50
+    energy: 3
+    color: "#FFA400"
+  - type: DeathWhale
