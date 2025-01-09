@@ -236,7 +236,7 @@
   name: death nettle
   description: This nettle's out for blood.
   id: DeathNettle
-  parent: ProduceBase
+  parent: [ProduceBase, BaseMinorContraband]
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/death_nettle.rsi
@@ -1712,7 +1712,7 @@
 
 - type: entity
   name: fly amanita
-  parent: FoodProduceBase
+  parent: [FoodProduceBase, BaseMajorContraband]
   id: FoodFlyAmanita
   description: A delicious-looking mushroom like you see in those cartoons.
   components:

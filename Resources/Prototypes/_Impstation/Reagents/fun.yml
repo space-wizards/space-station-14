@@ -6,6 +6,7 @@
   physicalDesc: reagent-physical-desc-really-cruddy
   flavor: crud
   color: "#47181A"
+  contraband: Minor
   tileReactions:
   - !type:CreateEntityTileReaction
     entity: BrosSorbSpawner
@@ -73,7 +74,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 50
-          
+
 - type: reagent
   id: PropulsionGel
   name: reagent-name-propulsion-gel
@@ -102,7 +103,7 @@
   desc: reagent-desc-estradiol
   physicalDesc: reagent-physical-desc-clear
   color: "pink"
-  
+
 - type: reagent
   id: Testosterone
   name: reagent-name-testosterone
@@ -118,6 +119,7 @@
   physicalDesc: reagent-physical-desc-threat
   flavor: singulo
   color: "#000000"
+  contraband: Major
   tileReactions:
   - !type:CreateEntityTileReaction
     entity: FloorChasmEntity
