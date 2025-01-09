@@ -105,7 +105,15 @@
     state: icon
   customBehaviors:
   - !type:RitualReagentPuddleBehavior
-    reagent: Blood
+    reagents:
+    - Blood
+    - Radium
+    - InsectBlood
+    - Slime
+    - Sap
+    - CopperBlood
+    - AmmoniaBlood
+    - ZombieBlood
   requiredTags:
     Knife: 1
   output:
@@ -132,7 +140,15 @@
     state: raw_prophet
   customBehaviors:
   - !type:RitualReagentPuddleBehavior
-    reagent: Blood
+    reagents:
+    - Blood
+    - Radium
+    - InsectBlood
+    - Slime
+    - Sap
+    - CopperBlood
+    - AmmoniaBlood
+    - ZombieBlood
   requiredTags:
     Eyes: 1
     Stomach: 1
@@ -148,7 +164,15 @@
     state: stalker
   customBehaviors:
   - !type:RitualReagentPuddleBehavior
-    reagent: Blood
+    reagents:
+    - Blood
+    - Radium
+    - InsectBlood
+    - Slime
+    - Sap
+    - CopperBlood
+    - AmmoniaBlood
+    - ZombieBlood
   requiredTags:
     Pen: 1
     Heart: 1
