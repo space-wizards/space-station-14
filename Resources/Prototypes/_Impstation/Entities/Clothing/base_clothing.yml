@@ -1,0 +1,13 @@
+# for glasses/hats/masks that updates functionality from items inside it
+- type: entity
+  abstract: true
+  id: BaseLensSlot
+  components:
+  - type: LensSlot
+    LensSlotId: lens_slot
+  - type: ItemSlots
+    slots:
+      lens_slot:
+        whitelist:
+          tags:
+          - Lens

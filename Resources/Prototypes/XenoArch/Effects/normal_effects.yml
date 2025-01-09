@@ -148,7 +148,7 @@
   targetDepth: 0
   effectHint: artifact-effect-hint-environment
   components:
-    - type: ThrowArtifact
+  - type: ThrowArtifact
 
 - type: artifactEffect
   id: EffectChemicalPuddle
@@ -663,6 +663,8 @@
       prob: 0.02
       orGroup: present
 
+#imp
+
 - type: artifactEffect
   id: EffectAnomaly
   targetDepth: 4
@@ -830,7 +832,7 @@
 - type: artifactEffect
   id: EffectPolyRod
   targetDepth: 4
-  effectProb: 0.15
+  effectProb: 0.05
   effectHint: artifact-effect-hint-polymorph
   components:
   - type: PolyOthersArtifact
@@ -1102,6 +1104,42 @@
   - type: ScrambleDNAArtifact
     range: 4
     count: 1
+
+- type: artifactEffect
+  id: EffectDirectInjectCryptobiolin
+  targetDepth: 4
+  effectHint: artifact-effect-hint-biochemical
+  effectProb: 0.4
+  components:
+  - type: InjectionArtifact
+    chemicalSolution:
+      maxVol: 500
+      canReact: false
+    range: 8
+    showEffect: true
+    visualEffectPrototype: PuddleSparkle
+    entries:
+    - chemical: Cryptobiolin
+      amount: 15
+
+- type: artifactEffect
+  id: EffectDirectInjectDrunkHigh
+  targetDepth: 4
+  effectHint: artifact-effect-hint-biochemical
+  effectProb: 0.3
+  components:
+  - type: InjectionArtifact
+    chemicalSolution:
+      maxVol: 500
+      canReact: false
+    range: 8
+    showEffect: true
+    visualEffectPrototype: PuddleSparkle
+    entries:
+    - chemical: Cryptobiolin
+      amount: 10
+    - chemical: SpaceDrugs
+      amount: 10
 
 - type: artifactEffect
   id: EffectSingulo

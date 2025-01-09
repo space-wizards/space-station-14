@@ -24,8 +24,8 @@
   id: BasicAntagEventsTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
-    - !type:NestedSelector # DeltaV
-      tableId: BasicAntagEventsTableDeltaV
+    - !type:NestedSelector # DV
+      tableId: BasicAntagEventsTableDV
     - id: ClosetSkeleton
     - id: DragonSpawn
     - id: KingRatMigration
@@ -43,8 +43,8 @@
   id: SleeperlessAntagEventsTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
-    - !type:NestedSelector # DeltaV
-      tableId: BasicAntagEventsTableDeltaV
+    - !type:NestedSelector # DV
+      tableId: BasicAntagEventsTableDV
     - id: ClosetSkeleton
     - id: DragonSpawn
     - id: KingRatMigration
@@ -380,7 +380,7 @@
     duration: 1
   - type: RuleGrids
   - type: LoadMapRule
-    mapPath: /Maps/Shuttles/ShuttleEvent/striker.yml
+    mapPath: /Maps/_Impstation/Shuttles/ShuttleEvent/striker.yml
   - type: NukeopsRule
     roundEndBehavior: Nothing
   - type: AntagSelection

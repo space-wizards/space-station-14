@@ -240,7 +240,7 @@
   id: ShiningSpring
   name: steal-target-groups-shiningspring
   sprite:
-    sprite: Objects/Weapons/Guns/Launchers/cleaner_lake.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Launchers/cleaner_lake.rsi
     state: icon
 
 - type: stealTargetGroup
@@ -270,3 +270,10 @@
   sprite:
     sprite: _Impstation/Objects/Specific/Chemistry/pills_canister.rsi
     state: pill_canister-hos
+    
+- type: stealTargetGroup
+  id: EvilSkullArtifactItem
+  name: steal-target-groups-evil-skull
+  sprite:
+    sprite: Mobs/Species/Skeleton/parts.rsi
+    state: skull_icon

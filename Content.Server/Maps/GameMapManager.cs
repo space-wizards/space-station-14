@@ -217,20 +217,22 @@ public sealed class GameMapManager : IGameMapManager
     {
         _log.Info($"map queue: {string.Join(", ", _previousMaps)}");
 
-        var eligible = CurrentlyEligibleMaps()
+        var eligibleList = CurrentlyEligibleMaps()
             .Select(x => (proto: x, weight: GetMapRotationQueuePriority(x.ID)))
-            .OrderByDescending(x => x.weight)
             .ToArray();
 
-        _log.Info($"eligible queue: {string.Join(", ", eligible.Select(x => (x.proto.ID, x.weight)))}");
+        var thresholdList = eligibleList
+            .Where(x => x.weight > 0)
+            .ToArray();
+
+        _log.Info($"eligible queue: {string.Join(", ", eligibleList.Select(x => (x.proto.ID, x.weight)))}");
 
         // YML "should" be configured with at least one fallback map
-        Debug.Assert(eligible.Length != 0, $"couldn't select a map with {nameof(GetFirstInRotationQueue)}()! No eligible maps and no fallback maps!");
+        Debug.Assert(eligibleList.Length != 0, $"couldn't select a map with {nameof(GetFirstInRotationQueue)}()! No eligible maps and no fallback maps!");
 
-        var weight = eligible[0].weight;
-        return eligible.Where(x => x.Item2 == weight)
-            .MinBy(x => x.proto.ID)
-            .proto;
+        // Choose a random map based on the threshold condition
+        var selectedList = thresholdList.Any() ? thresholdList : eligibleList;
+        return _random.Pick(selectedList).proto;
     }
 
     private void EnqueueMap(string mapProtoName)

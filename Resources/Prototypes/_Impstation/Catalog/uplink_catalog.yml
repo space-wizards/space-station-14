@@ -18,7 +18,7 @@
     blacklist:
       components:
       - SurplusBundle
-      
+
 - type: listing
   id: uplinkZipperAP
   name: uplink-zipper-ap-name
@@ -42,7 +42,7 @@
   discountDownTo:
     Telecrystal: 13
   cost:
-    Telecrystal: 19
+    Telecrystal: 18
   categories:
     - UplinkWeaponry
 
@@ -56,3 +56,21 @@
     Telecrystal: 2
   categories:
   - UplinkAmmo
+
+- type: listing
+  id: UplinkBulletcatcher
+  name: uplink-bulletcatcher-name
+  description: uplink-bulletcatcher-desc
+  icon: { sprite: _Impstation/Objects/Weapons/Melee/bulletcatcher.rsi, state: bulletcatcher }
+  productEntity: BulletCatcherBox
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 6
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Clown
+  categories:
+  - UplinkJob

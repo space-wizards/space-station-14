@@ -60,3 +60,35 @@
       settings: default
   - type: GhostRoleMobSpawner
     prototype: MobApidEngineer
+
+- type: entity
+  id: ApidCryopodEmergency
+  parent: ApidCryopodBotanist
+  name: apid emergency responder cryopod
+  suffix: Ghost role, BeeRT
+  description: A small, hexagonal cryopod containing a Beefolk emergency responder. They might take a little bit to wake up.
+  components:
+  - type: GhostRole
+    name: ghost-role-information-apid-beert-name
+    description: ghost-role-information-apid-beert-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobApidEmergency
+
+- type: entity
+  id: ApidCryopodChef
+  parent: ApidCryopodBotanist
+  name: apid chef cryopod
+  suffix: Ghost role, BeeRT
+  description: A small, hexagonal cryopod containing a Beefolk chef. They might take a little bit to wake up.
+  components:
+  - type: GhostRole
+    name: ghost-role-information-apid-chef-name
+    description: ghost-role-information-apid-chef-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobApidChef

@@ -258,7 +258,7 @@
 
 - type: entity
   id: Protolathe
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseScienceContraband ]
   name: protolathe
   description: Converts raw materials into advanced items.
   components:
@@ -423,7 +423,7 @@
 
 - type: entity
   id: CircuitImprinter
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseScienceContraband ]
   name: circuit imprinter
   description: Prints circuit boards for machines.
   components:
@@ -471,6 +471,7 @@
     - SalvageMagnetMachineCircuitboard
     - ShipyardComputerCircuitboard
     - ServiceTechFabCircuitboard #imp addition
+    - SupermatterComputerCircuitboard # imp
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - HellfireFreezerMachineCircuitBoard
@@ -568,7 +569,7 @@
 
 - type: entity
   id: ExosuitFabricator
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseScienceContraband ]
   name: exosuit fabricator
   description: Creates parts for robotics and other mechanical needs.
   components:
@@ -594,8 +595,6 @@
     - BorgModuleFireExtinguisher
     - BorgModuleRadiationDetection
     - BorgModuleTool
-    - BorgModuleBartender
-    - BorgModulePaper
     - BorgModuleArtistic #imp special
     - CyborgEndoskeleton
     - LeftArmBorg
@@ -693,7 +692,7 @@
 
 - type: entity
   id: SecurityTechFab
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseSecurityContraband ]
   name: security techfab
   description: Prints equipment for use by security crew.
   components:
@@ -835,7 +834,7 @@
 
 - type: entity
   id: AmmoTechFab
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseSecurityContraband ]
   name: ammo techfab
   description: Prints the bare minimum of bullets that any budget military or armory could need. Nothing fancy.
   components:
@@ -891,7 +890,7 @@
 
 - type: entity
   id: MedicalTechFab
-  parent: BaseLatheLube
+  parent: [ BaseLatheLube, BaseMedicalContraband ]
   name: medical techfab
   description: Prints equipment for use by the medbay.
   components:
@@ -953,8 +952,8 @@
       - Hemostat
       - ClothingEyesGlassesChemical
       - WhiteCane
-      - PrescriptionLens
-      - PrescriptionLensStrong
+      - PrescriptionLens # imp
+      - PrescriptionLensStrong # imp
     dynamicRecipes:
       - ChemicalPayload
       - CryostasisBeaker

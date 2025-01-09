@@ -1,0 +1,91 @@
+# Harmony ERT Shuttles
+
+# General
+
+- type: entity
+  id: ERTMedSecLarge
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: true
+    weight: 0 #  Admin only.
+  - type: LoadMapRule
+    mapPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTMedSecLarge.yml
+
+# Security
+
+- type: entity
+  id: ERTSecMedium
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: true
+    weight: 0 #  Admin only.
+  - type: LoadMapRule
+    mapPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTSecMedium.yml
+
+- type: entity
+  id: ERTSecSmall
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: true
+    weight: 0 #  Admin only.
+  - type: LoadMapRule
+    mapPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTSecSmall.yml
+
+# Medical
+
+- type: entity
+  id: ERTMedMedium
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: true
+    weight: 0 #  Admin only.
+  - type: LoadMapRule
+    mapPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTMedMedium.yml
+
+- type: entity
+  id: ERTMedSmall
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: true
+    weight: 0 #  Admin only.
+  - type: LoadMapRule
+    mapPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTMedSmall.yml
+
+# Engineering
+
+- type: entity
+  id: ERTEngiJaniMedium
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: true
+    weight: 0 #  Admin only.
+  - type: LoadMapRule
+    mapPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTEngiJaniMedium.yml
+
+- type: entity
+  id: ERTEngiSmall
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: true
+    weight: 0 #  Admin only.
+  - type: LoadMapRule
+    mapPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTEngiSmall.yml
+
+# Janitorial
+
+- type: entity
+  id: ERTJaniSmall
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: true
+    weight: 0 #  Admin only.
+  - type: LoadMapRule
+    mapPath: /Maps/_Harmony/Shuttles/ShuttleEvent/ERTJaniSmall.yml

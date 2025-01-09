@@ -10,7 +10,7 @@
     - type: RadiationSource
     - type: AmbientSound
       range: 20
-      volume: -10
+      volume: -5
       sound:
         path: /Audio/_EinsteinEngines/Supermatter/calm.ogg
     - type: EmitSoundOnTrigger
@@ -55,6 +55,7 @@
       sprite: _EinsteinEngines/Structures/Power/Generation/Supermatter/supermatter.rsi
       state: supermatter
       drawdepth: Mobs
+      snapCardinals: true
       offset: -0.015,0.295
     - type: Icon
       sprite: _EinsteinEngines/Structures/Power/Generation/Supermatter/supermatter.rsi
@@ -66,9 +67,9 @@
       color: "#ffe000"
     - type: Explosive
       explosionType: Supermatter
-      maxIntensity: 25000
+      totalIntensity: 120000
       intensitySlope: 5
-      totalIntensity: 25000
+      maxIntensity: 100
     - type: GuideHelp
       guides: [ Supermatter, Power ]
     - type: WarpPoint

@@ -19,3 +19,9 @@
   parent: ApidBotanist
   product: ApidCryopodEngineer
   category: cargoproduct-category-name-engineering
+
+- type: cargoProduct
+  id: ApidChef
+  parent: ApidBotanist
+  product: ApidCryopodChef
+  category: cargoproduct-category-name-service

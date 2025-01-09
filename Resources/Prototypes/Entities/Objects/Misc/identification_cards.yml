@@ -25,7 +25,7 @@
     - WhitelistChameleonIdCard
   - type: StealTarget
     stealGroup: IDCard
-  - type: NanoChatCard # DeltaV
+  - type: NanoChatCard # DV
 #IDs with layers
 
 - type: entity
@@ -868,5 +868,5 @@
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
-  - type: NanoChatCard # DeltaV
+  - type: NanoChatCard # DV
     notificationsMuted: true

@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Server._Impstation.Weapons.Ranged;
 using Content.Server.Cargo.Systems;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Weapons.Ranged.Components;
@@ -297,16 +298,32 @@ public sealed partial class GunSystem : SharedGunSystem
             Dirty(uid, targeted);
         }
 
+        //imp special - reverse engineer proj speed buffs from the weapon
+        //this is a vile evil hack and also probably the only good way to do this without a complete rewrite of this entire system
+        //todo turn this into a specific event?
+        //or something more complicated that (hopefully) goes into upstream instead of exclusively being an us thing
+        //anyway - tried hooking into a couple different events & it didn't like working consistently, would either break after the first shot or persist after the ammo w/ modified proj speed had been fired w/ no clear way to un-modify the proj speed
+        var projspeed = gun.ProjectileSpeedModified;
+        if (TryComp<ProjectileSpeedOverrideComponent>(uid, out var speedComp))
+        {
+            var baseSpeed = gun.ProjectileSpeed;
+            var modifiedSpeed = gun.ProjectileSpeedModified;
+            var ratio = modifiedSpeed / baseSpeed;
+
+            projspeed = speedComp.SpeedOverride * ratio;
+        }
+        //imp special end
+
         // Do a throw
         if (!HasComp<ProjectileComponent>(uid))
         {
             RemoveShootable(uid);
             // TODO: Someone can probably yeet this a billion miles so need to pre-validate input somewhere up the call stack.
-            ThrowingSystem.TryThrow(uid, mapDirection, gun.ProjectileSpeedModified, user);
+            ThrowingSystem.TryThrow(uid, mapDirection, projspeed, user);
             return;
         }
 
-        ShootProjectile(uid, mapDirection, gunVelocity, gunUid, user, gun.ProjectileSpeedModified);
+        ShootProjectile(uid, mapDirection, gunVelocity, gunUid, user, projspeed);
     }
 
     /// <summary>

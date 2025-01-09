@@ -154,7 +154,7 @@
   parent: UtensilBase
   id: BarSpoon
   name: bar spoon
-  description: Your personal helper to mix drinks and changes lives.
+  description: Your personal helper to mix drinks and change lives.
   components:
   - type: Tag
     tags:

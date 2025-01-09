@@ -9,7 +9,7 @@
   - type: Hunger
   - type: Thirst
   - type: Icon
-    sprite: Mobs/Species/SpElf/parts.rsi # Unlike dwarves elves are NOT made of slime
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi # Unlike dwarves elves are NOT made of slime
     state: full
   - type: SpelfMoods
   - type: Respirator
@@ -78,42 +78,42 @@
       jumpsuit:
         sizeMaps:
           32:
-            sprite: Mobs/Species/SpElf/displacement.rsi
+            sprite: _Impstation/Mobs/Species/SpElf/displacement.rsi
             state: jumpsuit
       head:
         sizeMaps:
           32:
-            sprite: Mobs/Species/SpElf/displacement.rsi
+            sprite: _Impstation/Mobs/Species/SpElf/displacement.rsi
             state: head
       eyes:
         sizeMaps:
           32:
-            sprite: Mobs/Species/SpElf/displacement.rsi
+            sprite: _Impstation/Mobs/Species/SpElf/displacement.rsi
             state: eyes
       ears:
         sizeMaps:
           32:
-            sprite: Mobs/Species/SpElf/displacement.rsi
+            sprite: _Impstation/Mobs/Species/SpElf/displacement.rsi
             state: head
       mask:
         sizeMaps:
           32:
-            sprite: Mobs/Species/SpElf/displacement.rsi
+            sprite: _Impstation/Mobs/Species/SpElf/displacement.rsi
             state: mask
       neck:
         sizeMaps:
           32:
-            sprite: Mobs/Species/SpElf/displacement.rsi
+            sprite: _Impstation/Mobs/Species/SpElf/displacement.rsi
             state: neck
       outerClothing:
         sizeMaps:
           32:
-            sprite: Mobs/Species/SpElf/displacement.rsi
+            sprite: _Impstation/Mobs/Species/SpElf/displacement.rsi
             state: outerclothing_hardsuit
       gloves:
         sizeMaps:
           32:
-            sprite: Mobs/Species/SpElf/displacement.rsi
+            sprite: _Impstation/Mobs/Species/SpElf/displacement.rsi
             state: hands
 
 
@@ -130,40 +130,40 @@
       jumpsuit:
         sizeMaps:
           32:
-            sprite: Mobs/Species/SpElf/displacement.rsi
+            sprite: _Impstation/Mobs/Species/SpElf/displacement.rsi
             state: jumpsuit
       head:
         sizeMaps:
           32:
-            sprite: Mobs/Species/SpElf/displacement.rsi
+            sprite: _Impstation/Mobs/Species/SpElf/displacement.rsi
             state: head
       eyes:
         sizeMaps:
           32:
-            sprite: Mobs/Species/SpElf/displacement.rsi
+            sprite: _Impstation/Mobs/Species/SpElf/displacement.rsi
             state: eyes
       ears:
         sizeMaps:
           32:
-            sprite: Mobs/Species/SpElf/displacement.rsi
+            sprite: _Impstation/Mobs/Species/SpElf/displacement.rsi
             state: head
       mask:
         sizeMaps:
           32:
-            sprite: Mobs/Species/SpElf/displacement.rsi
+            sprite: _Impstation/Mobs/Species/SpElf/displacement.rsi
             state: mask
       neck:
         sizeMaps:
           32:
-            sprite: Mobs/Species/SpElf/displacement.rsi
+            sprite: _Impstation/Mobs/Species/SpElf/displacement.rsi
             state: neck
       outerClothing:
         sizeMaps:
           32:
-            sprite: Mobs/Species/SpElf/displacement.rsi
+            sprite: _Impstation/Mobs/Species/SpElf/displacement.rsi
             state: outerclothing_hardsuit
       gloves:
         sizeMaps:
           32:
-            sprite: Mobs/Species/SpElf/displacement.rsi
+            sprite: _Impstation/Mobs/Species/SpElf/displacement.rsi
             state: hands

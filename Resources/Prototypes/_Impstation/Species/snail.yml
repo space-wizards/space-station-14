@@ -61,89 +61,89 @@
 - type: humanoidBaseSprite
   id: MobGastropoidEyes
   baseSprite:
-    sprite: Mobs/Species/Snail/parts.rsi
+    sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: eyes
 
 - type: humanoidBaseSprite
   id: MobGastropoidHead
   baseSprite:
-    sprite: Mobs/Species/Snail/parts.rsi
+    sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: head
 
 - type: humanoidBaseSprite
   id: MobGastropoidHeadMale
   baseSprite:
-    sprite: Mobs/Species/Snail/parts.rsi
+    sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: head
 
 - type: humanoidBaseSprite
   id: MobGastropoidHeadFemale
   baseSprite:
-    sprite: Mobs/Species/Snail/parts.rsi
+    sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: head
 
 - type: humanoidBaseSprite
   id: MobGastropoidTorso
   baseSprite:
-    sprite: Mobs/Species/Snail/parts.rsi
+    sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: torso
 
 - type: humanoidBaseSprite
   id: MobGastropoidTorsoMale
   baseSprite:
-    sprite: Mobs/Species/Snail/parts.rsi
+    sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: torso
 
 - type: humanoidBaseSprite
   id: MobGastropoidTorsoFemale
   baseSprite:
-    sprite: Mobs/Species/Snail/parts.rsi
+    sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: torso
 
 - type: humanoidBaseSprite
   id: MobGastropoidLLeg
   baseSprite:
-    sprite: Mobs/Species/Snail/parts.rsi
+    sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: l_leg
 
 - type: humanoidBaseSprite
   id: MobGastropoidLHand
   baseSprite:
-    sprite: Mobs/Species/Snail/parts.rsi
+    sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: l_hand
 
 - type: humanoidBaseSprite
   id: MobGastropoidLArm
   baseSprite:
-    sprite: Mobs/Species/Snail/parts.rsi
+    sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: l_arm
 
 - type: humanoidBaseSprite
   id: MobGastropoidLFoot
   baseSprite:
-    sprite: Mobs/Species/Snail/parts.rsi
+    sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: l_foot
 
 - type: humanoidBaseSprite
   id: MobGastropoidRLeg
   baseSprite:
-    sprite: Mobs/Species/Snail/parts.rsi
+    sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: r_leg
 
 - type: humanoidBaseSprite
   id: MobGastropoidRHand
   baseSprite:
-    sprite: Mobs/Species/Snail/parts.rsi
+    sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: r_hand
 
 - type: humanoidBaseSprite
   id: MobGastropoidRArm
   baseSprite:
-    sprite: Mobs/Species/Snail/parts.rsi
+    sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: r_arm
 
 - type: humanoidBaseSprite
   id: MobGastropoidRFoot
   baseSprite:
-    sprite: Mobs/Species/Snail/parts.rsi
+    sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: r_foot

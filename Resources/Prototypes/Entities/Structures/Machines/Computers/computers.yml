@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseEngineeringContraband ]
   id: ComputerAlert
   name: atmospheric alerts computer
   description: Used to access the station's atmospheric automated alert system.
@@ -50,7 +50,7 @@
           type: WiresBoundUserInterface
 
 - type: entity
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseEngineeringContraband ]
   id: ComputerAtmosMonitoring
   name: atmospheric network monitor
   description: Used to monitor the station's atmospheric networks.
@@ -171,7 +171,7 @@
     board: ShuttleConsoleCircuitboard
 
 - type: entity
-  parent: BaseComputerShuttle
+  parent: [ BaseComputerShuttle, Tier2Contraband ]
   id: ComputerShuttleSyndie
   name: syndicate shuttle console
   description: Used to pilot a syndicate shuttle.
@@ -203,7 +203,7 @@
     board: SyndicateShuttleConsoleCircuitboard
 
 - type: entity
-  parent: BaseComputerShuttle
+  parent: [ BaseComputerShuttle, BaseCargoContraband ]
   id: ComputerShuttleCargo
   name: cargo shuttle console
   description: Used to pilot the cargo shuttle.
@@ -266,7 +266,7 @@
     board: ComputerIFFCircuitboard
 
 - type: entity
-  parent: ComputerIFF
+  parent: [ ComputerIFF, Tier2Contraband ]
   id: ComputerIFFSyndicate
   name: IFF computer
   suffix: Syndicate
@@ -288,7 +288,7 @@
     board: ComputerIFFSyndicateCircuitboard
 
 - type: entity
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseEngineeringContraband ]
   id: ComputerPowerMonitoring
   name: power monitoring computer
   description: It monitors power levels across the station.
@@ -330,7 +330,7 @@
         type: WiresBoundUserInterface
 
 - type: entity
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseMedicalContraband ]
   id: ComputerMedicalRecords
   name: medical records computer
   description: This can be used to check medical records.
@@ -355,7 +355,7 @@
     board: MedicalRecordsComputerCircuitboard
 
 - type: entity
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseSecurityContraband ]
   id: ComputerCriminalRecords
   name: criminal records computer
   description: This can be used to check criminal records. Only security can modify them.
@@ -394,7 +394,7 @@
     - CriminalRecords
 
 - type: entity
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseSecurityCommandContraband ]
   id: ComputerStationRecords
   name: station records computer
   description: This can be used to check station records.
@@ -458,7 +458,7 @@
     range: 1200
 
 - type: entity
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseScienceContraband ]
   id: ComputerResearchAndDevelopment
   name: R&D computer
   description: A computer used to interface with R&D tools.
@@ -556,7 +556,7 @@
     - Xenoarchaeology
 
 - type: entity
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseGrandTheftContraband ]
   id: ComputerId
   name: ID card computer
   description: Terminal for programming Nanotrasen employee ID cards to access parts of the station.
@@ -634,7 +634,7 @@
     color: "#1f8c28"
 
 - type: entity
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseGrandTheftContraband ]
   id: ComputerComms
   name: communications computer
   description: A computer used to make station wide announcements via keyboard, set the appropriate alert level, and call the emergency shuttle.
@@ -709,7 +709,7 @@
     color: "#f71713"
 
 - type: entity
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseEngineeringContraband ]
   id: ComputerSolarControl
   name: solar control computer
   description: A controller for solar panel arrays.
@@ -781,7 +781,7 @@
 
 - type: entity
   id: ComputerCargoShuttle
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseCargoContraband ]
   name: cargo shuttle computer
   description: Used to order the shuttle.
   components:
@@ -820,7 +820,7 @@
 
 - type: entity
   id: ComputerCargoOrders
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseCargoContraband ]
   name: cargo request computer
   description: Used to order supplies and approve requests.
   components:
@@ -872,7 +872,7 @@
 
 - type: entity
   id: ComputerCargoBounty
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseCargoContraband ]
   name: cargo bounty computer
   description: Used to manage currently active bounties.
   components:
@@ -965,7 +965,7 @@
 
 - type: entity
   id: ComputerSalvageExpedition
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseCargoContraband ]
   name: salvage expeditions computer
   description: Used to accept salvage missions, if you're tough enough.
   components:
@@ -1098,7 +1098,7 @@
 
 - type: entity
   id: ComputerPalletConsole
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseCargoContraband ]
   name: cargo sale computer
   description: Used to sell goods loaded onto cargo pallets.
   components:
@@ -1220,7 +1220,7 @@
     - type: AtmosDevice
 
 - type: entity
-  parent: BaseComputerAiAccess
+  parent: [ BaseComputerAiAccess, BaseCommandContraband ]
   id: ComputerRoboticsControl
   name: robotics control console
   description: Used to remotely monitor, disable and destroy the station's cyborgs.
@@ -1264,7 +1264,7 @@
 
 - type: entity
   id: StationAiUploadComputer
-  parent: BaseComputer
+  parent: [ BaseComputer, BaseCommandContraband ]
   name: AI upload console
   description: Used to update the laws of the station AI.
   components:

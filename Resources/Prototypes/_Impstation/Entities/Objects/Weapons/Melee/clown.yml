@@ -1,0 +1,52 @@
+- type: entity
+  name: ACME brand "Bulletcatcher™"
+  parent: [BaseItem, Tier1Contraband]
+  id: BulletCatcher
+  description: You can do anything if you try hard and believe in yourself.
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Weapons/Melee/bulletcatcher.rsi
+      state: bulletcatcher
+    - type: Item
+      size: Large
+      sprite: _Impstation/Objects/Weapons/Melee/bulletcatcher.rsi
+    - type: Appearance
+    - type: Reflect
+      reflectProb: 1
+      reflects:
+        - NonEnergy
+      spread: 1
+      soundOnReflect: /Audio/_Impstation/Weapons/pvc.ogg
+
+- type: entity
+  id: BulletCatcherBox
+  parent: [BaseItem, Tier1Contraband]
+  name: factory-sealed ACME brand "Bulletcatcher™"
+  description: Wow! An ACME brand "Bulletcatcher™"! It's what I always wanted!
+  components:
+  - type: Item
+    size: Huge
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Melee/bulletcatcher.rsi
+    state: box
+  - type: SpawnItemsOnUse
+    items:
+      - id: ACMEBoxOpen
+      - id: BulletCatcher
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  id: ACMEBoxOpen
+  parent: [BaseItem, Tier1Contraband]
+  name: discarded ACME brand box
+  description: I hope whoever opened this gets the day that they deserve.
+  components:
+  - type: Item
+    size: Large
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Melee/bulletcatcher.rsi
+    state: boxopen
+  - type: Tag
+    tags:
+      - Trash

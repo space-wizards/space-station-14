@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: [ClothingEyesBase, BaseLensSlot]
+  parent: [ClothingEyesBase, BaseLensSlot] # BaseLensSlot from imp
   id: ClothingEyesChameleon # no flash immunity, sorry
   name: sun glasses
   description: Useful both for security and cargonia.

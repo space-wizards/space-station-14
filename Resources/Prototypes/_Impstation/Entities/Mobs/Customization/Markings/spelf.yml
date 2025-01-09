@@ -6,7 +6,7 @@
   forcedColoring: true
   followSkinColor: true
   sprites:
-  - sprite: Mobs/Customization/Spelf/spelf.rsi
+  - sprite: _Impstation/Mobs/Customization/spelf/spelf.rsi
     state: ears1
 
 - type: marking
@@ -17,7 +17,7 @@
   forcedColoring: true
   followSkinColor: true
   sprites:
-  - sprite: Mobs/Customization/Spelf/spelf.rsi
+  - sprite: _Impstation/Mobs/Customization/spelf/spelf.rsi
     state: ears2
 
 - type: marking
@@ -28,7 +28,7 @@
   forcedColoring: true
   followSkinColor: true
   sprites:
-  - sprite: Mobs/Customization/Spelf/spelf.rsi
+  - sprite: _Impstation/Mobs/Customization/spelf/spelf.rsi
     state: ears3
 
 - type: marking
@@ -39,7 +39,7 @@
   forcedColoring: true
   followSkinColor: true
   sprites:
-  - sprite: Mobs/Customization/Spelf/spelf.rsi
+  - sprite: _Impstation/Mobs/Customization/spelf/spelf.rsi
     state: ears4
 
 - type: marking
@@ -50,7 +50,7 @@
   forcedColoring: false
   followSkinColor: false
   sprites:
-  - sprite: Mobs/Customization/Spelf/spelf.rsi
+  - sprite: _Impstation/Mobs/Customization/spelf/spelf.rsi
     state: piercings
 
 - type: marking
@@ -61,7 +61,7 @@
   forcedColoring: false
   followSkinColor: false
   sprites:
-  - sprite: Mobs/Customization/Spelf/spelf.rsi
+  - sprite: _Impstation/Mobs/Customization/spelf/spelf.rsi
     state: piercings2
 
 - type: marking
@@ -75,7 +75,7 @@
         !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/Spelf/spelf.rsi
+  - sprite: _Impstation/Mobs/Customization/spelf/spelf.rsi
     state: chesttat1
 
 - type: marking
@@ -89,7 +89,7 @@
         !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/Spelf/spelf.rsi
+  - sprite: _Impstation/Mobs/Customization/spelf/spelf.rsi
     state: larmtat1
 
 - type: marking
@@ -103,5 +103,5 @@
         !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/Spelf/spelf.rsi
+  - sprite: _Impstation/Mobs/Customization/spelf/spelf.rsi
     state: rarmtat1

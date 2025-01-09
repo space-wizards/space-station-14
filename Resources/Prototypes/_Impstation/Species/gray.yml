@@ -69,89 +69,89 @@
 - type: humanoidBaseSprite
   id: MobGrayEyes
   baseSprite:
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: eyes
 
 - type: humanoidBaseSprite
   id: MobGrayHead
   baseSprite:
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: head_m
 
 - type: humanoidBaseSprite
   id: MobGrayHeadMale
   baseSprite:
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: head_m
 
 - type: humanoidBaseSprite
   id: MobGrayHeadFemale
   baseSprite:
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: head_f
 
 - type: humanoidBaseSprite
   id: MobGrayTorso
   baseSprite:
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: torso_m
 
 - type: humanoidBaseSprite
   id: MobGrayTorsoMale
   baseSprite:
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: torso_m
 
 - type: humanoidBaseSprite
   id: MobGrayTorsoFemale
   baseSprite:
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: torso_f
 
 - type: humanoidBaseSprite
   id: MobGrayLLeg
   baseSprite:
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: l_leg
 
 - type: humanoidBaseSprite
   id: MobGrayLArm
   baseSprite:
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: l_arm
 
 - type: humanoidBaseSprite
   id: MobGrayLHand
   baseSprite:
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: l_hand
 
 - type: humanoidBaseSprite
   id: MobGrayLFoot
   baseSprite:
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: l_foot
 
 - type: humanoidBaseSprite
   id: MobGrayRLeg
   baseSprite:
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: r_leg
 
 - type: humanoidBaseSprite
   id: MobGrayRArm
   baseSprite:
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: r_arm
 
 - type: humanoidBaseSprite
   id: MobGrayRHand
   baseSprite:
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: r_hand
 
 - type: humanoidBaseSprite
   id: MobGrayRFoot
   baseSprite:
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: r_foot
