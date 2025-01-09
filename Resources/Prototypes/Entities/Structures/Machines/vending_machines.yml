@@ -2219,7 +2219,7 @@
   parent: VendingMachineChemicals
   id: VendingMachineChemicalsSyndicate
   name: SyndieJuice
-  description: Not made with freshly squeezed syndies, I hope.
+  description: Not made with freshly squeezed syndies, I hope. Backwards compatible with standard ChemVend restocks. # DeltaV: Add chemvend part
   components:
   - type: VendingMachine
     pack: ChemVendInventorySyndicate
