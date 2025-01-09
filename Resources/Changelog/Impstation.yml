@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Changed Gray head displacement. Again. Should look better on most helmets.
-    type: Tweak
-  id: 386
-  time: '2024-10-18T18:06:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/497
 - author: KingMudkipIII
   changes:
   - message: 'Added a new drink: Raktaccino! Sprites by me and beck.'
@@ -4489,3 +4482,12 @@
   id: 885
   time: '2025-01-09T16:50:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1230
+- author: DinnerCalzone
+  changes:
+  - message: The improvised grappling gun's crafting recipe has been modified to be
+      multi-step, allowing you to manually choose what plunger and what gas tank to
+      use.
+    type: Tweak
+  id: 886
+  time: '2025-01-09T18:08:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1274
