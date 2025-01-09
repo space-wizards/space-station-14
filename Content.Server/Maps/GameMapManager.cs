@@ -228,9 +228,7 @@ public sealed class GameMapManager : IGameMapManager
         Debug.Assert(eligible.Length != 0, $"couldn't select a map with {nameof(GetFirstInRotationQueue)}()! No eligible maps and no fallback maps!");
 
         // Choose a random map from all eligible maps
-        var selected = eligible[_random.Next(eligible.Length)];
-
-        return selected.proto;
+        return eligible[_random.Next(eligible.Length)].proto;
     }
 
     private void EnqueueMap(string mapProtoName)
