@@ -671,5 +671,12 @@ Entries:
   id: 83
   time: '2025-01-02T16:16:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34118
+- author: c4llv07e
+  changes:
+  - message: adminwho doesn't leak stealthmins count now!
+    type: Fix
+  id: 84
+  time: '2025-01-08T15:23:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34122
 Name: Admin
 Order: 1
