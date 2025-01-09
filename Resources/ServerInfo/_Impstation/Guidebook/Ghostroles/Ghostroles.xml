@@ -1,0 +1,44 @@
+<Document>
+# Ghostroles
+Ghostroles are supplementary characters and creatures that can show up throughout a shift and be "taken over" by spectators. Their goals vary, but generally they're there to spice up the shift and make things more interesting for living players.
+
+This section of the guidebook is not exhaustive - It mostly covers non-antagonist ghostroles that present unique mechanics or roleplay considerations, most of which are custom content developed for this server. 
+
+## Rules
+All Ghostroles, regardless of their role or their rules text, follow the "new life rule:"
+
+[color=#ffa500]"You don't remember any of your previous life, and you don't remember anything you learned as a ghost."[/color]
+
+Beyond that, their rules are determined by the text that will pop up when you attempt to take that role. 
+
+Here are some of the major types of Ghostrole that you'll encounter:
+
+## Non-Antagonist:
+<Box>
+  <GuideEntityEmbed Entity="MobMonkeyPunpun" Caption=""/>
+</Box>
+Non-Antagonist Ghostroles are not explicitly "good guys," but should avoid harming the station and its crew, directly or otherwise.
+
+## Free Agent:
+<Box>
+  <GuideEntityEmbed Entity="MobSkeletonCloset" Caption=""/>
+  <GuideEntityEmbed Entity="MobGoblinStowaway" Caption=""/>
+  <GuideEntityEmbed Entity="MobMouse" Caption=""/>
+</Box>
+Free Agent Ghostroles are free to act as they please, with some major limitations. [color=red]They are not allowed to cause excessive destruction or death without proper escalation.[/color] If you're not sure what that means, you should not be causing excessive death or destruction as a free agent.
+
+## Familiar:
+<Box>
+  <GuideEntityEmbed Entity="MobDiscworldLuggage" Caption=""/>
+  <GuideEntityEmbed Entity="MobBatRemilia" Caption=""/>
+  <GuideEntityEmbed Entity="MobGoblinKnight" Caption=""/>
+</Box>
+Familiar Ghostroles have a "master" and must serve their interests, regardless of what those may be. If a familiar's master is an antagonist, that familiar is also an antagonist. 
+
+## Antagonist:
+<Box>
+  <GuideEntityEmbed Entity="MobRatKing" Caption=""/>
+  <GuideEntityEmbed Entity="MobRevenant" Caption=""/>
+</Box>
+Ghostroles can be explicit Antagonists, but those are all covered in the [textlink="Antagonists" link="Antagonists"] section of the guidebook, in particular the [textlink="Minor Antagonists" link="MinorAntagonists"] entry.
+</Document>

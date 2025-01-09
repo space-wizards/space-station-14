@@ -1,0 +1,24 @@
+<Document>
+# Goblin
+<Box>
+  <GuideEntityEmbed Entity="MobGoblin" Caption=""/>
+</Box>
+Goblins are a strange race of humanoid beings. They are small, fragile, and adapted to environments that other humanoid species tend to find unsanitary. Resultantly, they take [color=#1e90ff]25% less damage from Poison, and 10% less damage from Caustic sources[/color] but [color=#ffa500]20% more damage from Blunt, Piercing, and Slashing damage.[/color]
+
+Due to their small stature, [color=#1e90ff]they can easily be picked up and moved by larger humanoid species.[/color]
+
+## Culture
+<Box>
+  <GuideEntityEmbed Entity="ClothingOuterCoatRobesGoblin" Caption=""/>
+</Box>
+Goblin culture is an enigma to NT researchers. They speak a unique pidgin form of Galactic Common, and yet the Research Division has yet to discover whether or not they have a home planet, let alone a system of governance. All NT encounters with Goblins have been in the form of stowaways aboard vessels and stations, with no clear point of origin. 
+
+If you have any leads, please feel free to reach out to Central Command's Director of Research.
+
+## Encounters
+Goblins have been encountered by NT vessels occasionally throughout the years. The following are links to two accounts of such incidents:
+
+- [textlink="Stowaways" link="ImpGoblinStowaways"]
+
+- [textlink="Knight" link="ImpGoblinKnight"]
+</Document>

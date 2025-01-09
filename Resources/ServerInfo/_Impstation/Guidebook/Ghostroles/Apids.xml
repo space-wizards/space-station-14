@@ -1,0 +1,24 @@
+<Document>
+# Apid
+<Box>
+  <GuideEntityEmbed Entity="MobApidBotanist" Caption=""/>
+  <GuideEntityEmbed Entity="MobApidDoctor" Caption=""/>
+  <GuideEntityEmbed Entity="MobApidEngineer" Caption=""/>
+</Box>
+Apids, or "bee people" as they are sometimes known colloquially, are a unique asset for NanoTrasen's logistics network.
+
+They are a eusocial species, forming "hives" with a high degree of organization and efficiency. One of these hives was purchased recently in a trade deal for research and development purposes, but Apids quickly demonstrated their usefulness in NT's broader workforce - The hive has since taken on an important role in our staffing process, providing short-term, on-demand employees to fill several roles.
+
+## Employment
+<Box>
+  <GuideEntityEmbed Entity="ApidCryopodBotanist" Caption=""/>
+</Box>
+Apids are transported in vacuum-sealed cryo-stasis pods (available for purchase at your station's Cargo department,) where they remain until needed to fill their designated role. [color=#ffa500]Please note that Apids may take some time to awaken from cryo-sleep. Please allow 2-4 business days before contacting Customer Support.[/color]
+
+Purchased Apids are [color=#1e90ff]full Crew Members, and are as such beholden to Space Law.[/color]
+
+## Physiology
+Apids possess uniquely weak limbs, rendering them incapable of maneuvering normally on the ground - however, [color=#1e90ff]their strong wings and ultralight physiology enable them to fly continuously under standard NT gravity.[/color]
+
+This reliance on being airborne does come with significant disadvantages - [color=#ffa500]Their weak forelimbs are only capable of holding aloft one object at a time,[/color] meaning for all intents and purposes they only have one hand. Also, [color=#ffa500]the placement of their wings prevents them from wearing backpacks, jetpacks, or suit tanks.[/color]
+</Document>
