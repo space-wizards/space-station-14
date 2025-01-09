@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: drakewill-CRL
-  changes:
-  - message: Botanists can now learn basic chemistry with the Agrichem Is Fun! kit
-      in the Nutrimax vendor.
-    type: Add
-  id: 7290
-  time: '2024-09-05T16:43:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31738
 - author: Nimfar11
   changes:
   - message: Added a board for the AI upload console.
@@ -3932,3 +3924,18 @@
   id: 7789
   time: '2025-01-09T11:23:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34326
+- author: Alpaccalypse
+  changes:
+  - message: The reagent "cola" has been renamed to "Space Cola".
+    type: Tweak
+  - message: The reagent "lemon-lime" has been renamed to "Smite Soda".
+    type: Tweak
+  - message: The reagent "lemon-lime-cranberry" has been renamed to "Smite Cranberry".
+    type: Tweak
+  - message: The reagent "Space Mountain Wind" has been renamed to "Space Solar Wind".
+    type: Tweak
+  - message: The reagent "Energy Drink" has been renamed to "Red Bool".
+    type: Tweak
+  id: 7790
+  time: '2025-01-09T20:24:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34178
