@@ -45,7 +45,7 @@
         icon:
           sprite: Objects/Tanks/generic.rsi
           state: icon
-        name: any air tank
+        name: any gas tank
         doAfter: .5
   - node: doohickey
     entity: WeaponGrapplingGunImprovised
