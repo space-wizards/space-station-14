@@ -97,6 +97,7 @@ public sealed partial class ResearchSystem
 
     private void OnConsoleDatabaseModified(EntityUid uid, ResearchConsoleComponent component, ref TechnologyDatabaseModifiedEvent args)
     {
+        SyncClientWithServer(uid, raiseEvents: false);
         UpdateConsoleInterface(uid, component);
     }
 
