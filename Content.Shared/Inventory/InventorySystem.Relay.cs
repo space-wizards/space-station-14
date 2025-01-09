@@ -3,6 +3,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Hypospray.Events;
 using Content.Shared.Climbing.Events;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Electrocution;
 using Content.Shared.Explosion;
 using Content.Shared.Eye.Blinding.Systems;
@@ -27,6 +28,7 @@ public partial class InventorySystem
     public void InitializeRelay()
     {
         SubscribeLocalEvent<InventoryComponent, DamageModifyEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, StaminaModifyEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ElectrocutionAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SlipAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshMovementSpeedModifiersEvent>(RelayInventoryEvent);

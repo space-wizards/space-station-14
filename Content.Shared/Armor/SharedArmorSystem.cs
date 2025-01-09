@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
 using Content.Shared.Silicons.Borgs;
@@ -20,6 +21,7 @@ public abstract class SharedArmorSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
+        SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<StaminaModifyEvent>>(OnStaminaDamageModify);
         SubscribeLocalEvent<ArmorComponent, BorgModuleRelayedEvent<DamageModifyEvent>>(OnBorgDamageModify);
         SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
     }
@@ -27,6 +29,13 @@ public abstract class SharedArmorSystem : EntitySystem
     private void OnDamageModify(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<DamageModifyEvent> args)
     {
         args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
+    }
+    
+    private void OnStaminaDamageModify(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<StaminaModifyEvent> args)
+    {
+        if (args.Args.Damage < 0)
+            return;
+        args.Args.Modifier = component.StaminaDamageModifier;
     }
 
     private void OnBorgDamageModify(EntityUid uid, ArmorComponent component,
@@ -40,7 +49,7 @@ public abstract class SharedArmorSystem : EntitySystem
         if (!args.CanInteract || !args.CanAccess)
             return;
 
-        var examineMarkup = GetArmorExamine(component.Modifiers);
+        var examineMarkup = GetArmorExamine(component.Modifiers, component);
 
         var ev = new ArmorExamineEvent(examineMarkup);
         RaiseLocalEvent(uid, ref ev);
@@ -50,7 +59,7 @@ public abstract class SharedArmorSystem : EntitySystem
             Loc.GetString("armor-examinable-verb-message"));
     }
 
-    private FormattedMessage GetArmorExamine(DamageModifierSet armorModifiers)
+    private FormattedMessage GetArmorExamine(DamageModifierSet armorModifiers, ArmorComponent component)
     {
         var msg = new FormattedMessage();
         msg.AddMarkupOrThrow(Loc.GetString("armor-examine"));
@@ -65,6 +74,13 @@ public abstract class SharedArmorSystem : EntitySystem
                 ("value", MathF.Round((1f - coefficientArmor.Value) * 100, 1))
             ));
         }
+        
+        msg.PushNewline();
+        var staminaType = Loc.GetString("armor-damage-type-stamina");
+        msg.AddMarkupOrThrow(Loc.GetString("armor-stamina-value",
+            ("type", staminaType),
+            ("value", MathF.Round((1f - component.StaminaDamageModifier) * 100, 1))
+        ));
 
         foreach (var flatArmor in armorModifiers.FlatReduction)
         {
