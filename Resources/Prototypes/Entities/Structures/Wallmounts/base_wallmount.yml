@@ -9,6 +9,7 @@
   - type: Clickable
   - type: WallMount
   - type: InteractionOutline
+  - type: Transform
 
 - type: entity
   parent: BaseWallmount
