@@ -1,3 +1,4 @@
+# Generic
 - type: latheCategory
   id: Ammo
   name: lathe-category-ammo
@@ -23,6 +24,10 @@
   name: lathe-category-robotics
 
 - type: latheCategory
+  id: Tiles
+  name: lathe-category-tiles
+
+- type: latheCategory
   id: Tools
   name: lathe-category-tools
 
@@ -30,8 +35,29 @@
   id: Weapons
   name: lathe-category-weapons
 
-# Biogen
+# Cutter machine
+- type: latheCategory
+  id: Concrete
+  name: lathe-category-concrete
 
+- type: latheCategory
+  id: Dark
+  name: lathe-category-dark
+
+- type: latheCategory
+  id: Steel
+  name: lathe-category-steel
+
+- type: latheCategory
+  id: White
+  name: lathe-category-white
+
+- type: latheCategory
+  id: Wood
+  name: lathe-category-wood
+
+
+# Biogen
 - type: latheCategory
   id: Food
   name: lathe-category-food
