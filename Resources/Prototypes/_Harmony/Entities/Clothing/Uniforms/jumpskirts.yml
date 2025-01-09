@@ -19,3 +19,25 @@
     sprite: _Harmony/Clothing/Uniforms/Jumpskirt/hop_turtle.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/Uniforms/Jumpskirt/hop_turtle.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtHeadofPersonnelMessKitHarmony
+  name: head of personnel's mess kit
+  description: A blue denim skirt with pockets and a gold trimmed white shirt.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/hopmesskit.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/hopmesskit.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtHeadOfSecurityTurtleneckHarmony
+  name: head of security's turtleneck
+  description: You feel... innovative. Maybe you'll find a way to permabrig the clown later.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/hos_turtle.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/hos_turtle.rsi

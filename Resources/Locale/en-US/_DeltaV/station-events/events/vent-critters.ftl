@@ -1,0 +1,1 @@
+﻿station-event-vent-creatures-start-announcement-deltav = Attention. A large influx of unknown life forms has been detected in ventilation systems near {$location}. All personnel must vacate the area immediately.

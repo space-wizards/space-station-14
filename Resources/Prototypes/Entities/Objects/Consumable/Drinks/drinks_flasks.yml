@@ -45,14 +45,15 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/detflask.rsi
 
+#Harmony Change: Updated Sprite Pathing, Name, and Contraband level for security resprite update
 - type: entity
-  parent: FlaskBase
+  parent: [FlaskBase, BaseCommandContraband]
   id: DrinkHosFlask
-  name: hos's flask
+  name: head of security's flask
   description: A metal flask, fit for a hard working HoS.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/hosflask.rsi
+    sprite: _Harmony/Objects/Consumable/Drinks/hosflask.rsi
 
 - type: entity
   parent: FlaskBase

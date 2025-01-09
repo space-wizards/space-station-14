@@ -7,7 +7,7 @@
   - type: Item
     size: Normal
   - type: Sprite
-    sprite: Objects/Weapons/Throwable/bola.rsi
+    sprite: _Harmony/Objects/Weapons/Throwable/bola.rsi #Harmony Change: Sprite pathway changed.
     state: icon
   - type: EmitSoundOnThrow
     sound: /Audio/Weapons/bolathrow.ogg

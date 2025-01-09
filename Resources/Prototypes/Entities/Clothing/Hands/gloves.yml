@@ -116,9 +116,9 @@
   description: Perfect for dealing with paperwork and matters with bureaucracy.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/hop.rsi
+    sprite: _Harmony/Clothing/Hands/Gloves/hop.rsi # Harmony change. Resprite
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/hop.rsi
+    sprite: _Harmony/Clothing/Hands/Gloves/hop.rsi # Harmony change. Resprite
   - type: Fiber
     fiberMaterial: fibers-durathread
     fiberColor: fibers-black
@@ -285,7 +285,7 @@
     fiberColor: fibers-black
 
 - type: entity
-  parent: ClothingHandsGlovesCombat
+  parent: [ BaseSecurityCargoContraband, ClothingHandsGlovesCombat ]
   id: ClothingHandsMercGlovesCombat
   name: mercenary combat gloves
   description: High-quality combat gloves to protect hands from mechanical damage during combat.

@@ -1,0 +1,23 @@
+# Harmony Friendly Shuttles
+
+- type: entity
+  id: UnknownShuttleChemLab
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+  - type: LoadMapRule
+    preloadedGrid: ShuttleChemLab
+
+# Harmony Hostile Shuttles
+
+- type: entity
+  id: UnknownShuttleSyndicateReinforcement
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: null # No announcmenet for antags.
+    weight: 5 #  Slightly lower chance, but not too low.
+    earliestStart: 45 # Late because antag.
+  - type: LoadMapRule
+    preloadedGrid: ShuttleSyndicateReinforcement

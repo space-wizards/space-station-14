@@ -203,6 +203,8 @@
       - BoxFolderClipboard # Harmony
       - FreezerElectronics
       - Flare
+      - CassetteTape # DeltaV
+      - TapeRecorder # DeltaV
 
   - type: EmagLatheRecipes
     emagStaticRecipes:
@@ -478,7 +480,6 @@
       - SolarControlComputerCircuitboard
       - SolarTrackerElectronics
       - TurboItemRechargerCircuitboard
-      - PowerComputerCircuitboard
       - AutolatheHyperConvectionMachineCircuitboard
       - ProtolatheHyperConvectionMachineCircuitboard
       - CircuitImprinterHyperConvectionMachineCircuitboard
@@ -524,6 +525,8 @@
       - MassMediaCircuitboard
       - ReagentGrinderIndustrialMachineCircuitboard
       - JukeboxCircuitBoard
+      - SMESAdvancedMachineCircuitboard
+      - HolopadMachineCircuitboard
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ShuttleGunDusterCircuitboard
@@ -871,6 +874,7 @@
     staticRecipes:
       - Brutepack
       - Ointment
+      - Bloodpack # Harmony
       - Gauze
       - HandLabeler
       - Defibrillator
@@ -888,6 +892,7 @@
       - PillCanister
       - BodyBag
       - ChemistryEmptyBottle01
+      - BaseChemistryEmptyVial # Harmony
       - RollerBedSpawnFolded
       - CheapRollerBedSpawnFolded
       - EmergencyRollerBedSpawnFolded
@@ -898,14 +903,17 @@
       - MedkitBrute
       - MedkitAdvanced
       - MedkitRadiation
-      - MedkitCombat
+      # - MedkitCombat -- Harmony
       - Scalpel
       - Retractor
       - Cautery
       - Drill
       - Saw
       - Hemostat
+      - CircularSaw # Harmony
       - ClothingEyesGlassesChemical
+      - ClothingEyesHudMedical # Harmony
+      - ClothingEyesEyepatchHudMedical # Harmony
       - WhiteCane
     dynamicRecipes:
       - ChemicalPayload
@@ -957,6 +965,7 @@
       - ClothingUniformJumpskirtCargo
       - ClothingUniformJumpsuitSalvageSpecialist
       - ClothingHeadHatBeretEngineering
+      - ClothingHeadHatBeretChiefEngineerHarmony # Harmony
       - ClothingUniformJumpsuitChiefEngineer
       - ClothingUniformJumpskirtChiefEngineer
       - ClothingUniformJumpsuitChiefEngineerTurtle
@@ -980,18 +989,24 @@
       - ClothingUniformJumpskirtEngineering
       - ClothingUniformJumpsuitSeniorEngineer
       - ClothingUniformJumpskirtSeniorEngineer
+      - ClothingHeadHatBeretHeadofPersonnelHarmony # Harmony
       - ClothingHeadHatHopcap
       - ClothingUniformJumpsuitHoP
       - ClothingUniformJumpskirtHoP
       - ClothingUniformJumpsuitTurtleneckHoPHarmony # Harmony
       - ClothingUniformJumpskirtTurtleneckHoPHarmony #Harmony
+      - ClothingUniformJumpsuitHoPMessKitHarmony #Harmony
+      - ClothingUniformJumpskirtHoPMessKitHarmony #Harmony
       - ClothingHeadHatBeretHoS
       - ClothingHeadHatHoshat
       - ClothingHeadHatHoSWidebrimHarmony # Harmony
+      - ClothingHeadHatHoSSoftHarmony # Harmony
       - ClothingUniformJumpsuitHoS
       - ClothingUniformJumpskirtHoS
       - ClothingUniformJumpsuitHosFormal
       - ClothingUniformJumpskirtHosFormal
+      - ClothingUniformJumpsuitHeadOfSecurityTurtleneckHarmony # Harmony
+      - ClothingUniformJumpskirtHeadOfSecurityTurtleneckHarmony # Harmony
       - ClothingUniformJumpsuitHoSAlt
       - ClothingUniformJumpskirtHoSAlt
       - ClothingUniformJumpsuitHoSBlue
@@ -1027,6 +1042,7 @@
       - ClothingUniformJumpskirtQMTurtleneck
       - ClothingUniformJumpsuitQMFormal
       - ClothingHeadHatBeretRND
+      - ClothingHeadHatBeretResearchDirectorHarmony # Harmony
       - ClothingUniformJumpsuitResearchDirector
       - ClothingUniformJumpskirtResearchDirector
       - ClothingUniformJumpsuitScientist
@@ -1034,6 +1050,7 @@
       - ClothingUniformJumpsuitSeniorResearcher
       - ClothingUniformJumpskirtSeniorResearcher
       - ClothingHeadHatBeretSecurity
+      - ClothingHeadHatBeretSecuritySeniorOfficerHarmony # Harmony
       - ClothingUniformJumpsuitSec
       - ClothingUniformJumpskirtSec
       - ClothingUniformJumpsuitSecBlueHarmony # Harmony
@@ -1225,7 +1242,7 @@
       staticRecipes:
         - SheetSteel
         - SheetGlass1
-        - SheetRGlass
+        - SheetRGlassRaw
         - SheetPlasma1
         - SheetPGlass1
         - SheetRPGlass1
@@ -1251,7 +1268,7 @@
     staticRecipes:
       - SheetSteel
       - SheetGlass1
-      - SheetRGlass
+      - SheetRGlassRaw
       - SheetPlasma1
       - SheetPGlass1
       - SheetRPGlass1

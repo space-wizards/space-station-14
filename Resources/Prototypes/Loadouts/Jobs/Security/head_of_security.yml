@@ -20,12 +20,12 @@
     jumpsuit: ClothingUniformJumpskirtHoS
 
 - type: loadout
-  id: HeadofSecurityTurtleneck
+  id: HeadofSecurityAssaultSuit # Harmony Change: Updated ID for HoS Clothing and Loadout Update. Old ID: HeadofSecurityTurtleneck
   equipment:
     jumpsuit: ClothingUniformJumpsuitHoSAlt
 
 - type: loadout
-  id: HeadofSecurityTurtleneckSkirt
+  id: HeadofSecurityAssaultSkirt # Harmony Change: Updated ID for HoS Clothing and Loadout Update. Old ID: HeadofSecurityTurtleneckSkirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtHoSAlt
 

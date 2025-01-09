@@ -60,5 +60,5 @@ thief-backpack-category-smuggler-name = smuggler kit
 thief-backpack-category-smuggler-description =
     All thieves need somewhere to stash their goods in the dark.
     Don't forget to link your fulton.
-    Includes: Fulton beacon, 10 fultons, 3 smoke grenades,
+    Includes: Fulton beacon, 10 fultons, 3 smoke grenades, a smugglers satchel,
     and an invisible crate to hide valuable loot.

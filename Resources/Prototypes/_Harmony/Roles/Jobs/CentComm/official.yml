@@ -1,0 +1,35 @@
+# Harmony CC character presets
+
+- type: startingGear
+  id: CentcomOfficialGearHarmony
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomFormal
+    back: ClothingBackpackSatchelLeather
+    shoes: ClothingShoesBootsLaceup
+    head: ClothingHeadHatCentcomcap
+    eyes: ClothingEyesGlassesCommand
+    neck: ClothingNeckCloakCentcom
+    gloves: WristwatchGold
+    id: CentcomPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: BoxFolderCentComClipboard
+    pocket1: WeaponPistolN1984
+    pocket2: MagazineMagnum
+  inhand:
+    - MindShieldImplanter
+
+- type: startingGear
+  id: CentcomAgentGearHarmony
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomAgent
+    back: ClothingBackpackSatchelLeather
+    shoes: ClothingShoesBootsLaceup
+    eyes: ClothingEyesGlassesSecurity
+    gloves: WristwatchGold
+    id: CentcomPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: WeaponPulsePistol
+    pocket1: BoxFolderCentComClipboard
+    pocket2: RubberStampCentcom
+  inhand:
+    - MindShieldImplanter

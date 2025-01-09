@@ -20,6 +20,7 @@
       - id: Plunger
         amount: 2
       - id: BoxCleanerGrenades
+      - id: ToyRubberDuck # Harmony change. More ways to spawn duckies
 
 - type: entity
   id: CrateServiceReplacementLights

@@ -1,0 +1,10 @@
+# Jumpsuit
+- type: loadout
+  id: PermaPrisonerJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPrisoner
+
+- type: loadout
+  id: PermaPrisonerJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtPrisoner

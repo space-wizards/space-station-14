@@ -63,7 +63,8 @@
     sprite: Clothing/Neck/Cloaks/rd.rsi
   - type: StealTarget
     stealGroup: HeadCloak
-
+    
+# Harmony Change: Updated the sprite pathing for the QM spriting update
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
   id: ClothingNeckCloakQm
@@ -71,7 +72,7 @@
   description: A strong brown cloak with a reflective stripe, while not as fancy as others, it does show your managing skills.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/qm.rsi
+    sprite: _Harmony/Clothing/Neck/Cloaks/qm.rsi
   - type: StealTarget
     stealGroup: HeadCloak
 

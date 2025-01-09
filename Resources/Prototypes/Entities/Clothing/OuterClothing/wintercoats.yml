@@ -554,14 +554,15 @@
     priceMultiplier: 0.15
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterPara
-
+    
+# Harmony Change: Updated the sprite pathing for the QM spriting update
 - type: entity
   parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband]
   id: ClothingOuterWinterQM
   name: quartermaster's winter coat
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    sprite: _Harmony/Clothing/OuterClothing/WinterCoats/coat.rsi
     layers:
     - state: QM-icon
   - type: Item
@@ -571,7 +572,7 @@
       right:
       - state: QM-inhand-right
   - type: Clothing
-    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    sprite: _Harmony/Clothing/OuterClothing/WinterCoats/coat.rsi
     clothingVisuals:
       outerClothing:
       - state: QM-equipped-OUTERCLOTHING
@@ -716,6 +717,7 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterSci
 
+# Harmony Change: Updated Sprite Pathing for security resprite update
 ################################################################
 - type: entity
   parent: [ClothingOuterArmorWarden, ClothingOuterWinterCoatToggleable, BaseRestrictedContraband]
@@ -724,9 +726,9 @@
   description: A sturdy, utilitarian winter coat designed to protect a warden from any brig-bound threats and hypothermic events.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/WinterCoats/coatwardenarmored.rsi
+    sprite: _Harmony/Clothing/OuterClothing/WinterCoats/coatwardenarmored.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/WinterCoats/coatwardenarmored.rsi
+    sprite: _Harmony/Clothing/OuterClothing/WinterCoats/coatwardenarmored.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterWarden
 ################################################################

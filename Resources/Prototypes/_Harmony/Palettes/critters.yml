@@ -1,0 +1,5 @@
+﻿- type: palette
+  id: PoquitoColors
+  name: PoquitoColors
+  colors:
+      DesertA: "#8f9e09"

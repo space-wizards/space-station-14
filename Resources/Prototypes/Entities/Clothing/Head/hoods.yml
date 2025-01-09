@@ -505,6 +505,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodsyndicate.rsi
 
+#Harmony Change: Updated Sprite Pathing for security resprite update
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterWarden
@@ -512,9 +513,9 @@
   name: warden's coat hood
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
+    sprite: _Harmony/Clothing/Head/Hoods/Coat/hoodward.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
+    sprite: _Harmony/Clothing/Head/Hoods/Coat/hoodward.rsi
 
 - type: entity
   parent: ClothingHeadHatHoodWinterBase

@@ -1,0 +1,5 @@
+- type: entity
+  parent: Paper
+  id: TapeRecorderTranscript
+  name: record transcript
+  # TODO: could have a unique sprite in the future

@@ -29,6 +29,8 @@
   id: BasicAntagEventsTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
+    - !type:NestedSelector # DeltaV
+      tableId: BasicAntagEventsTableDeltaV
     - id: ClosetSkeleton
     - id: DragonSpawn
     - id: KingRatMigration
@@ -37,6 +39,7 @@
     - id: SleeperAgents
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
+    - id: DerelictCyborgSpawn
 
 - type: entity
   id: BaseStationEvent
@@ -330,7 +333,7 @@
     earliestStart: 15
     minimumPlayers: 15
     weight: 5
-    duration: 60
+    duration: 50 # Delta V Change
   - type: VentClogRule
 
 - type: entity
@@ -344,15 +347,13 @@
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
-    duration: 60
+    duration: 30 # DeltaV: was 60, used as a delay now
   - type: VentCrittersRule
-    entries:
-    - id: MobAdultSlimesBlueAngry
-      prob: 0.02
-    - id: MobAdultSlimesGreenAngry
-      prob: 0.02
-    - id: MobAdultSlimesYellowAngry
-      prob: 0.02
+    table: !type:GroupSelector # DeltaV: EntityTable instead of spawn entries
+      children:
+      - id: MobAdultSlimesBlueAngry
+      - id: MobAdultSlimesGreenAngry
+      - id: MobAdultSlimesYellowAngry
 
 - type: entity
   id: SnakeSpawn
@@ -365,15 +366,13 @@
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
-    duration: 60
+    duration: 30 # DeltaV: was 60, used as a delay now
   - type: VentCrittersRule
-    entries:
-    - id: MobPurpleSnake
-      prob: 0.02
-    - id: MobSmallPurpleSnake
-      prob: 0.02
-    - id: MobCobraSpace
-      prob: 0.02
+    table: !type:GroupSelector # DeltaV: EntityTable instead of spawn entries
+      children:
+      - id: MobPurpleSnake
+      - id: MobSmallPurpleSnake
+      - id: MobCobraSpace
 
 - type: entity
   id: SpiderSpawn
@@ -386,11 +385,10 @@
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
-    duration: 60
+    duration: 30 # DeltaV: was 60, used as a delay now
   - type: VentCrittersRule
-    entries:
-    - id: MobGiantSpiderAngry
-      prob: 0.05
+    table: # DeltaV: EntityTable instead of spawn entries
+      id: MobGiantSpiderAngry
 
 - type: entity
   id: SpiderClownSpawn
@@ -403,11 +401,10 @@
     earliestStart: 20
     minimumPlayers: 20
     weight: 1.5
-    duration: 60
+    duration: 30 # DeltaV: was 60, used as a delay now
   - type: VentCrittersRule
-    entries:
-    - id: MobClownSpider
-      prob: 0.05
+    table: # DeltaV: EntityTable instead of spawn entries
+      id: MobClownSpider
 
 - type: entity
   id: ZombieOutbreak
@@ -562,3 +559,24 @@
     - Service
     blacklist:
     - External # don't space everything
+
+- type: entity
+  parent: BaseGameRule
+  id: DerelictCyborgSpawn
+  components:
+  - type: StationEvent
+    weight: 5
+    earliestStart: 15
+    reoccurrenceDelay: 20
+    minimumPlayers: 4
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagSpawner
+    prototype: PlayerBorgDerelict
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointGhostDerelictCyborg
+      min: 1
+      max: 1
+      pickPlayer: false

@@ -9,6 +9,7 @@
   - type: Tag
     tags:
     - Trash
+    - Bottle # Harmony
     - CentrifugeCompatible
   - type: PhysicalComposition
     materialComposition:

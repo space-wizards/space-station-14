@@ -30,11 +30,41 @@
   id: ClothingUniformJumpskirtTurtleneckHoPHarmony
   result: ClothingUniformJumpskirtHeadOfPersonnelTurtleneckHarmony
 
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitHoPMessKitHarmony
+  result: ClothingUniformJumpsuitHeadofPersonnelMessKitHarmony
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpskirtHoPMessKitHarmony
+  result: ClothingUniformJumpskirtHeadofPersonnelMessKitHarmony
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatBeretHeadofPersonnelHarmony
+  result: ClothingHeadHatBeretHeadofPersonnelHarmony
+
 ## HoS
 - type: latheRecipe
   parent: BaseCommandHatRecipe
   id: ClothingHeadHatHoSWidebrimHarmony
   result: ClothingHeadHatHoSWidebrimHarmony
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingUniformJumpsuitHeadOfSecurityTurtleneckHarmony
+  result: ClothingUniformJumpsuitHeadOfSecurityTurtleneckHarmony
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingUniformJumpskirtHeadOfSecurityTurtleneckHarmony
+  result: ClothingUniformJumpskirtHeadOfSecurityTurtleneckHarmony
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatHoSSoftHarmony
+  result: ClothingHeadHatHoSSoftHarmony
 
 ## Security Officer
 - type: latheRecipe
@@ -52,6 +82,11 @@
   id: ClothingHeadHatSecSoftBlueHarmony
   result: ClothingHeadHatSecSoftBlueHarmony
 
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatBeretSecuritySeniorOfficerHarmony
+  result: ClothingHeadHatBeretSecuritySeniorOfficerHarmony
+
 ## Detective
 - type: latheRecipe
   parent: BaseJumpsuitRecipe
@@ -64,3 +99,15 @@
   parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitWardenBlueHarmony
   result: ClothingUniformJumpsuitWardenBlueHarmony
+
+## Chief Engineer
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatBeretChiefEngineerHarmony
+  result: ClothingHeadHatBeretChiefEngineerHarmony
+
+## Research Director
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatBeretResearchDirectorHarmony
+  result: ClothingHeadHatBeretResearchDirectorHarmony
