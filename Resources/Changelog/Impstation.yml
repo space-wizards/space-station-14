@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KingMudkipIII
-  changes:
-  - message: 'Added a new drink: Raktaccino! Sprites by me and beck.'
-    type: Add
-  id: 387
-  time: '2024-10-18T18:05:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/498
 - author: LandsharkRAWR
   changes:
   - message: New lobby art!
@@ -4491,3 +4484,11 @@
   id: 886
   time: '2025-01-09T18:08:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1274
+- author: DinnerCalzone
+  changes:
+  - message: 'Repairing a broken recycler now unbloodies it if it has been used to
+      gib someone. (Tip: Destroying a recycler un-emags it!)'
+    type: Add
+  id: 887
+  time: '2025-01-09T18:15:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1280
