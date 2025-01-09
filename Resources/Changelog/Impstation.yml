@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Added Golden High-Heels to scavenger loot.
-    type: Add
-  - message: Renamed Gold High-Heels to Golden High-Heels and updated description
-    type: Tweak
-  - message: Adjusted Golden High-Heels price to 7k Spesos
-    type: Tweak
-  id: 389
-  time: '2024-10-18T18:15:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/510
 - author: hivehum
   changes:
   - message: Many maps now have a chance to show up with higher player counts.
@@ -4492,3 +4481,11 @@
   id: 888
   time: '2025-01-09T18:36:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1266
+- author: honeyed-lemons
+  changes:
+  - message: Your favorite maps should roll more often, if you liked maps with high
+      letters, like train, or xeno
+    type: Fix
+  id: 889
+  time: '2025-01-09T22:38:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1284
