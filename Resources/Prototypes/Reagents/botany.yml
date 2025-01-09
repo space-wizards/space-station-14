@@ -9,72 +9,72 @@
   boilingPoint: -33.0
   meltingPoint: -77.7
   plantMetabolism:
-    - !type:PlantAdjustNutrition
-      amount: 1
-    - !type:PlantAdjustHealth
-      amount: 0.5
+  - !type:PlantAdjustNutrition
+    amount: 1
+  - !type:PlantAdjustHealth
+    amount: 0.5
   metabolisms:
     Poison:
       effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Caustic: 1
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 1
     Gas:
       effects:
-        - !type:HealthChange
-          conditions:
-            - !type:OrganType
-              type: Rat
-              shouldHave: false
-            - !type:ReagentThreshold
-              reagent: Ammonia
-              min: 1
-          ignoreResistances: true
-          damage:
-            types:
-              Poison: 0.25
-        - !type:ChemVomit
-          probability: 0.12
-          conditions:
-            - !type:OrganType
-              type: Rat
-              shouldHave: false
-            - !type:OrganType
-              type: Vox
-              shouldHave: false
-            - !type:ReagentThreshold
-              reagent: Ammonia
-              min: 0.8
-        - !type:PopupMessage
-          type: Local
-          visualType: Medium
-          messages: [ "ammonia-smell" ]
-          probability: 0.1
-          conditions:
-            - !type:ReagentThreshold
-              reagent: Ammonia
-              min: 0.25
-        - !type:HealthChange
-          conditions:
-            - !type:OrganType
-              type: Rat
-            - !type:ReagentThreshold
-              reagent: Ammonia
-              min: 1
-          scaleByQuantity: true
-          ignoreResistances: true
-          damage:
-            groups:
-              Brute: -5
-              Burn: -5
-            types:
-              Bloodloss: -5
-        - !type:Oxygenate # ammonia displaces nitrogen in vox blood
-          conditions:
-            - !type:OrganType
-              type: Vox
-          factor: -4
+      - !type:HealthChange
+        conditions:
+          - !type:OrganType
+            type: Rat
+            shouldHave: false
+          - !type:ReagentThreshold
+            reagent: Ammonia
+            min: 1
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 0.25
+      - !type:ChemVomit
+        probability: 0.12
+        conditions:
+        - !type:OrganType
+          type: Rat
+          shouldHave: false
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
+        - !type:ReagentThreshold
+          reagent: Ammonia
+          min: 0.8
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages: [ "ammonia-smell" ]
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Ammonia
+          min: 0.25
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Rat
+        - !type:ReagentThreshold
+          reagent: Ammonia
+          min: 1
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          groups:
+            Brute: -5
+            Burn: -5
+          types:
+            Bloodloss: -5
+      - !type:Oxygenate # ammonia displaces nitrogen in vox blood
+        conditions:
+        - !type:OrganType
+          type: Vox
+        factor: -4
 
 - type: reagent
   id: Diethylamine
@@ -87,24 +87,24 @@
   boilingPoint: 55.5
   meltingPoint: -50.0
   plantMetabolism:
-    - !type:PlantAdjustNutrition
-      amount: 0.1
-    - !type:PlantAdjustPests
-      probability: 0.1
-      amount: -1
-    - !type:PlantAdjustHealth
-      amount: 0.1
-    - !type:PlantAffectGrowth
-      probability: 0.2
-      amount: 1
-    - !type:PlantDiethylamine {}
+  - !type:PlantAdjustNutrition
+    amount: 0.1
+  - !type:PlantAdjustPests
+    probability: 0.1
+    amount: -1
+  - !type:PlantAdjustHealth
+    amount: 0.1
+  - !type:PlantAffectGrowth
+    probability: 0.2
+    amount: 1
+  - !type:PlantDiethylamine {}
   metabolisms:
     Poison:
       effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Caustic: 1
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 1
 
 - type: reagent
   id: EZNutrient
@@ -115,8 +115,8 @@
   color: "#664330"
   physicalDesc: reagent-physical-desc-thick
   plantMetabolism:
-    - !type:PlantAdjustNutrition
-      amount: 2
+  - !type:PlantAdjustNutrition
+    amount: 2
   metabolisms:
     Food:
       effects:
@@ -134,13 +134,13 @@
   color: "#5b406c"
   physicalDesc: reagent-physical-desc-heterogeneous
   plantMetabolism:
-    - !type:PlantAdjustNutrition
-      amount: 1
-    - !type:PlantAdjustHealth
-      amount: -0.5
-    - !type:PlantAdjustMutationMod
-      probability: 0.3
-      amount: 0.4
+  - !type:PlantAdjustNutrition
+    amount: 1
+  - !type:PlantAdjustHealth
+    amount: -0.5
+  - !type:PlantAdjustMutationMod
+    probability: 0.3
+    amount: 0.4
   metabolisms:
     Medicine:
       effects:
@@ -165,10 +165,10 @@
   color: "#9e9886"
   physicalDesc: reagent-physical-desc-bubbling
   plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: 4
-    - !type:PlantAdjustPests
-      amount: -6
+  - !type:PlantAdjustToxins
+    amount: 4
+  - !type:PlantAdjustPests
+    amount: -6
   metabolisms:
     Medicine:
       effects:
@@ -189,14 +189,14 @@
   color: "#49002E"
   physicalDesc: reagent-physical-desc-bubbling
   plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: 6
-    - !type:PlantAdjustWeeds
-      amount: -8
-    - !type:PlantAdjustHealth
-      amount: -20
-    - !type:PlantAdjustMutationMod
-      amount: 0.1
+  - !type:PlantAdjustToxins
+    amount: 6
+  - !type:PlantAdjustWeeds
+    amount: -8
+  - !type:PlantAdjustHealth
+    amount: -20
+  - !type:PlantAdjustMutationMod
+    amount: 0.1
   metabolisms:
     Medicine:
       effects:
@@ -220,15 +220,15 @@
   color: "#3e901c"
   physicalDesc: reagent-physical-desc-robust
   plantMetabolism:
-    - !type:PlantAdjustNutrition
-      amount: 0.05
-    - !type:PlantAdjustWeeds
-      probability: 0.025
-      amount: 1
-    - !type:PlantAdjustPests
-      probability: 0.025
-      amount: 1
-    - !type:RobustHarvest {}
+  - !type:PlantAdjustNutrition
+    amount: 0.05
+  - !type:PlantAdjustWeeds
+    probability: 0.025
+    amount: 1
+  - !type:PlantAdjustPests
+    probability: 0.025
+    amount: 1
+  - !type:RobustHarvest {}
   metabolisms:
     Poison:
       effects:
@@ -258,10 +258,10 @@
       - !type:Polymorph
         prototype: TreeMorph
         conditions:
-          - !type:OrganType
-            type: Plant
-          - !type:ReagentThreshold
-            min: 80
+        - !type:OrganType
+          type: Plant
+        - !type:ReagentThreshold
+          min: 80
 
 - type: reagent
   id: Sedin
@@ -272,12 +272,12 @@
   color: "#3CB371"
   physicalDesc: reagent-physical-desc-sickly
   plantMetabolism:
-    - !type:PlantAdjustHealth
-      amount: -2
-    - !type:PlantRestoreSeeds
-      probability: 0.20
-    - !type:PlantAdjustPotency
-      amount: -3 # Match this with current rate of Robust Harvest potency increase
+  - !type:PlantAdjustHealth
+    amount: -2
+  - !type:PlantRestoreSeeds
+    probability: 0.20
+  - !type:PlantAdjustPotency
+    amount: -3 # Match this with current rate of Robust Harvest potency increase
 
 - type: reagent
   id: WeedKiller
@@ -288,10 +288,10 @@
   color: "#968395"
   physicalDesc: reagent-physical-desc-bubbling
   plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: 4
-    - !type:PlantAdjustWeeds
-      amount: -6
+  - !type:PlantAdjustToxins
+    amount: 4
+  - !type:PlantAdjustWeeds
+    amount: -6
   metabolisms:
     Poison:
       effects:
