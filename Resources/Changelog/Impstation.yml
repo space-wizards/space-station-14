@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: 12rabbits
-  changes:
-  - message: The Unborgable trait has been added to character customization.
-    type: Add
-  id: 385
-  time: '2024-10-18T18:05:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/501
 - author: widgetbeck
   changes:
   - message: Changed Gray head displacement. Again. Should look better on most helmets.
@@ -4487,3 +4480,12 @@
   id: 884
   time: '2025-01-09T16:48:14.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1203
+- author: aada
+  changes:
+  - message: Ninja sword can now stamp papers.
+    type: Add
+  - message: Ninja gloves now have a much weaker stun.
+    type: Tweak
+  id: 885
+  time: '2025-01-09T16:50:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1230
