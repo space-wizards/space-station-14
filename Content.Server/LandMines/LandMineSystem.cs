@@ -48,14 +48,14 @@ public sealed class LandMineSystem : EntitySystem
     }
 
     /// <summary>
-    /// If both ArmableComponent and ItemToggleComponent is present it will not
-    /// continue unless ItemToggleComponent.Activated is true.
+    /// Presumes that the landmine isn't armable and should be treated as always armed.
+    /// If Armable and ItemToggle is present the event will continue only if the mine is activated.
     /// </summary>
     private void HandleStepTriggerAttempt(EntityUid uid, LandMineComponent component, ref StepTriggerAttemptEvent args)
     {
-        if (TryComp<ArmableComponent>(uid, out _) && TryComp<ItemToggleComponent>(uid, out var itemToggle) && !itemToggle.Activated)
-            args.Continue = false;
-        else
-            args.Continue = true;
+        args.Continue = true;
+
+        if (TryComp<ArmableComponent>(uid, out _) && TryComp<ItemToggleComponent>(uid, out var itemToggle))
+            args.Continue = itemToggle.Activated;
     }
 }
