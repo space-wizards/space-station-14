@@ -15716,6 +15716,11 @@ entities:
     - type: Transform
       pos: -40.5,-10.5
       parent: 2
+  - uid: 17398
+    components:
+    - type: Transform
+      pos: -1.5,21.5
+      parent: 2
 - proto: BananaPhoneInstrument
   entities:
   - uid: 816
@@ -60354,7 +60359,7 @@ entities:
   - uid: 9193
     components:
     - type: Transform
-      pos: 0.5015069,21.531372
+      pos: 0.89361495,19.950287
       parent: 2
 - proto: ClothingEyesEyepatch
   entities:
@@ -114735,7 +114740,7 @@ entities:
   - uid: 17149
     components:
     - type: Transform
-      pos: 0.57978624,20.080126
+      pos: 0.53423995,21.137787
       parent: 2
   - uid: 17150
     components:
@@ -116312,11 +116317,6 @@ entities:
           showEnts: False
           occludes: True
           ent: 9374
-  - uid: 17398
-    components:
-    - type: Transform
-      pos: -1.5,21.5
-      parent: 2
   - uid: 17399
     components:
     - type: Transform
@@ -127494,6 +127494,11 @@ entities:
     components:
     - type: Transform
       pos: 55.43673,10.519251
+      parent: 2
+  - uid: 25602
+    components:
+    - type: Transform
+      pos: 0.5146993,21.51407
       parent: 2
 - proto: SheetSteel10
   entities:
