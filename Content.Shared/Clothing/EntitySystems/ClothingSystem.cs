@@ -98,18 +98,17 @@ public abstract class ClothingSystem : EntitySystem
             {
                 // iterate the HideLayerClothingComponent's layers map and check that
                 // the clothing is equipped in a matching slot.
-                foreach (HumanoidVisualLayers layer in hideLayer.Layers.Keys)
+                foreach (var layer in hideLayer.Layers.Keys)
                 {
                     if (!appearanceLayers.Contains(layer))
                         continue;
 
                     bool shouldLayerShow = true;
-                    SlotFlags hideSlot = hideLayer.Layers[layer];
-                    if (clothing.EquippedInSlot == hideSlot)
-                    {
+                    var validSlots = hideLayer.Layers[layer];
+                    if (validSlots.HasFlag(clothing.EquippedInSlot))
                         shouldLayerShow = MaskToggleCheck();
-                    }
-                    _humanoidSystem.SetLayerVisibility(equipee, layer, shouldLayerShow, hideSlot);
+
+                    _humanoidSystem.SetLayerVisibility(equipee, layer, shouldLayerShow, clothing.EquippedInSlot);
                 }
             }
             else
@@ -117,7 +116,9 @@ public abstract class ClothingSystem : EntitySystem
                 // iterate the HideLayerClothingComponent's legacy slots set and check
                 // that the wearer has the layer to be hidden, and that the clothing
                 // is equipped.
-                foreach (HumanoidVisualLayers layer in hideLayer.Slots)
+#pragma warning disable CS0618 // Type or member is obsolete
+                foreach (var layer in hideLayer.Slots)
+#pragma warning restore CS0618 // Type or member is obsolete
                 {
                     if (!appearanceLayers.Contains(layer))
                         continue;
@@ -137,18 +138,10 @@ public abstract class ClothingSystem : EntitySystem
         //Checks for mask toggling. TODO: Make a generic system for this
         bool MaskToggleCheck()
         {
-            if (hideLayer.HideOnToggle && TryComp(equipment, out MaskComponent? mask))
-            {
-                if (clothing.EquippedPrefix != mask.EquippedPrefix)
-                {
-                    return false;
-                }
-            }
-            else
-            {
+            if (!hideLayer.HideOnToggle || !TryComp(equipment, out MaskComponent? mask))
                 return false;
-            }
-            return true;
+
+            return clothing.EquippedPrefix == mask.EquippedPrefix;
         }
     }
 
