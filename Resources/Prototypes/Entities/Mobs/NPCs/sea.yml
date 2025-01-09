@@ -267,3 +267,8 @@
     energy: 3
     color: "#FFA400"
   - type: DeathWhale
+  - type: AmbientSound
+    range: 50
+    volume: 3
+    sound:
+      path: /Audio/Effects/whale_groan.ogg
