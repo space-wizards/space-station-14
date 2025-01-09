@@ -71,9 +71,6 @@
   id: JobCBURN
 
 - type: playTimeTracker
-  id: JobFloraInspector
-
-- type: playTimeTracker
   id: JobHeadOfPersonnel
 
 - type: playTimeTracker
