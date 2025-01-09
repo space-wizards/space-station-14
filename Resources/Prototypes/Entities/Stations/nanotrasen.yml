@@ -48,3 +48,16 @@
   noSpawn: true
   components:
     - type: Transform
+
+- type: entity
+  id: StandardStationEvent
+  parent:
+  - BaseStation
+  - BaseStationJobsSpawning
+  - BaseStationRecords
+  - BaseStationNanotrasen
+  - BaseStationAlertLevels
+  - BaseStationAllEventsEligible
+  noSpawn: true
+  components:
+    - type: Transform

@@ -11,5 +11,5 @@ war-declarator-boost-possible = Able to declare war
 war-declarator-boost-impossible = Unable to declare war
 war-declarator-boost-declared = War declared! Shuttle may be disabled for...
 war-declarator-boost-timer = Time left: {$time} minutes.
-war-declarator-default-message = A syndicate fringe group has declared their intent to utterly destroy station with a nuclear device, and dares the crew to try and stop them.
+war-declarator-default-message = A Nanotrasen vessel has sent a hail, informing us of their intention to destroy the planet. Prepare for incursion.
 war-declarator-message-placeholder = Write a custom declaration of war here...
