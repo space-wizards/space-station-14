@@ -18,7 +18,8 @@ ghost-role-information-rules-team-antagonist = You are a [color=red][bold]Team A
                                                You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
 ghost-role-information-familiar-rules = You are a [color=#6495ed][bold]Familiar[/bold][/color]. Serve the interests of your master, whatever those may be.
 
-                                        You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+ghost-role-information-tutorial-rules = You are a [color=#39f5ab][bold]special Tutorial pAI[/bold][/color]. This pAI is only available to those either new to the game generally, or to those in trainee roles. By taking this ghost role, you will be expected to know how your master's role works, be on hand to help them learn, and generally be welcoming and helpful. [color=red][bold]Failure to do so may result in administrator action.[/bold][/color]
+
 ghost-role-information-silicon-rules = You are a [color=#6495ed][bold]Silicon[/bold][/color]. Obey your laws. You are a Free Agent if you are not currently bound by any laws.
 
                                        You don't remember any of your previous life, and you don't remember anything you learned as a ghost.

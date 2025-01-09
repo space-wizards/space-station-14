@@ -69,7 +69,7 @@
   minLimit: 0
   maxLimit: 1
   loadouts:
-  - PersonalAI
+  - TutorialPersonalAI
 
 - type: loadoutGroup
   id: Glasses

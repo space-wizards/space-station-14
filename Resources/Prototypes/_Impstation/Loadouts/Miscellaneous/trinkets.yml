@@ -26,6 +26,15 @@
     - GoldPersonalAI
 
 - type: loadout
+  id: TutorialAI
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Tutorial
+  storage:
+    back:
+    - TutorialAI
+
+- type: loadout
   id: FolderHamster
   storage:
     back:

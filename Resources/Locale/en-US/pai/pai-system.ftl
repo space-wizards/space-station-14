@@ -9,6 +9,10 @@ pai-system-role-description = Be someone's electronic pal!
 pai-system-role-name-gilded = gilded personal ai
 pai-system-role-description-gilded = Be someone's fancy electronic pal!
                               (Memories *not* included.)
+
+pai-system-role-name-tutorial = tutor personal ai
+pai-system-role-description-tutorial = Help out a newcomer to the game by jumping into this special electronic pal!
+
 pai-system-role-name-syndicate = Syndicate personal ai
 pai-system-role-description-syndicate = Be someone's Syndicate pal!
                                         (Memories *not* included.)
