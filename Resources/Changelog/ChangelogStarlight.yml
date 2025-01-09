@@ -1966,3 +1966,10 @@ Entries:
   id: 278
   time: '2025-01-09T15:04:11.349016+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: Added knockdown ingoring for some armors and hardsuits.
+    type: Add
+  id: 279
+  time: '2025-01-09T20:17:38.668513+00:00'
+  url: 'null'
