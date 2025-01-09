@@ -8,3 +8,94 @@
     interactSuccessString: hugging-success-generic
     interactSuccessSound: /Audio/Effects/thudswoosh.ogg
     messagePerceivedByOthers: hugging-success-generic-others
+
+- type: entity
+  name: Steel Golem
+  parent: MobGolemPerson
+  id: SteelGolem
+  components:
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  name: Uranium Golem
+  parent: BaseUraniumGolem
+  id: UraniumGolem
+  components:
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  name: Plasma Golem
+  parent: BasePlasmaGolem
+  id: PlasmaGolem
+  components:
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  name: Adamantium Golem
+  parent: BaseAdamantiumGolem
+  id: AdamantiumGolem
+  components:
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  name: Glass Golem
+  parent: BaseGlassGolem
+  id: GlassGolem
+  components:
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  name: Gold Golem
+  parent: BaseGoldGolem
+  id: GoldGolem
+  components:
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  name: Silver Golem
+  parent: BaseSilverGolem
+  id: SilverGolem
+  components:
+  - type: GhostRole
+    name: ghost-role-golem-name
+    description: ghost-role-golem-desc
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable

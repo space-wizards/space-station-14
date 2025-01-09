@@ -13,3 +13,33 @@
     Asphyxiation: 0.0
     Bloodloss: 0.0
     Cellular: 0.0
+
+- type: damageModifierSet
+  id: GlassGolem
+  coefficients:
+    Blunt: 3
+    Slash: 0.5
+    Piercing: 0.5
+    Cold: 0.5
+    Poison: 0.5
+    Heat: 0.5
+    Shock: 0.5
+    Radiation: 0.0
+    Asphyxiation: 0.0
+    Bloodloss: 0.0
+    Cellular: 0.0
+
+- type: damageModifierSet
+  id: GoldGolem
+  coefficients:
+    Blunt: 0.2
+    Slash: 0.2
+    Piercing: 0.2
+    Cold: 0.2
+    Poison: 0.2
+    Heat: 0.2
+    Shock: 0.2
+    Radiation: 0.0
+    Asphyxiation: 0.0
+    Bloodloss: 0.0
+    Cellular: 0.0

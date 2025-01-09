@@ -38,8 +38,14 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Critical
       150: Dead
+  - type: MeleeWeapon
+    altDisarm: false
+    soundHit:
+      collection: Punch
+    damage:
+      types:
+        Blunt: 10
   - type: TransferMindOnGib
   - type: Destructible
     thresholds:
@@ -62,13 +68,16 @@
         layer:
         - MobLayer
   - type: MovementSpeedModifier
-    baseSprintSpeed: 4.05
+    _baseSprintSpeedVV: 3.75
+    BaseSprintSpeed: 3.75
+    DefaultBaseSprintSpeed: 3.75
 
 
 - type: entity
-  id: AdamantiumGolem
+  id: BaseAdamantiumGolem
   name: Golem McAdam
-  parent: BaseMobGolem
+  parent: MobGolemPerson
+  abstract: true
   components:
   - type: IntrinsicRadioTransmitter
     channels:
@@ -82,28 +91,104 @@
 
 
 - type: entity
-  id: UraniumGolem
+  id: BaseUraniumGolem
   name: Golem McRaddy
-  parent: BaseMobGolem
+  parent: MobGolemPerson
+  abstract: true
   components:
   - type: Sprite
     color: "#77ff00"
     colorHex: "#77ff00"
   - type: RadiationSource
     intensity: 2.5
+  - type: MeleeWeapon
+    altDisarm: false
+    soundHit: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+    damage:
+      types:
+        Heat: 5
+        Radiation: 5
 
 - type: entity
-  id: PlasmaGolem
+  id: BasePlasmaGolem
   name: Golem McBoomy
-  parent: BaseMobGolem
+  parent: MobGolemPerson
+  abstract: true
   components:
   - type: Sprite
-    color: "#77ff00"
-    colorHex: "#77ff00"
-  - type: AutoImplant
-    implants:
-    - MicroBombImplant
+    color: "#aa33dd"
+    colorHex: "#aa33dd"
 
+- type: entity
+  id: BaseGlassGolem
+  name: Golem McAss
+  parent: MobGolemPerson
+  abstract: true
+  components:
+  - type: Sprite
+    color: "#5a96b4BF"
+    colorHex: "#5a96b4BF"
+  - type: Reflect
+    reflectProb: 1
+    reflects: Energy
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: GlassGolem
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 5
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: GlassSmack
+
+- type: entity
+  id: BaseGoldGolem
+  name: Golem McGold
+  parent: MobGolemPerson
+  abstract: true
+  components:
+  - type: Sprite
+    color: "#cccc00"
+    colorHex: "#cccc00"
+  - type: MovementSpeedModifier
+    _baseSprintSpeedVV: 4.5
+    BaseSprintSpeed: 4.5
+    DefaultBaseSprintSpeed: 4.5
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: GoldGolem
+
+- type: entity
+  id: BaseSilverGolem
+  name: Golem McSilver
+  parent: MobGolemPerson
+  abstract: true
+  components:
+  - type: Sprite
+    color: "#dddddd"
+    colorHex: "#dddddd"
+  - type: MeleeWeapon
+    altDisarm: false
+    soundHit:
+      collection: Punch
+    damage:
+      types:
+        Blunt: 15
+        Slash: 5
 
 - type: entity
   parent: BaseSpeciesDummy
