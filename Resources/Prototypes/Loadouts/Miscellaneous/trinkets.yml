@@ -14,7 +14,6 @@
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:OverallPlaytimeRequirement
-
       time: 1512000 #420 hours
   - !type:JobRequirementLoadoutEffect
     requirement:
@@ -28,7 +27,6 @@
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:OverallPlaytimeRequirement
-
       time: 54000 #15 hrs
       inverted: true # don't let experienced players select these
 
