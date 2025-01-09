@@ -1096,6 +1096,40 @@
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
+  id: DrinkSpaceMountainWindJug
+  name: Space Solar Wind jug
+  description: reagent-desc-space-mountain-wind
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: SpaceMountainWind
+          Quantity: 150
+  - type: Drink
+  - type: Label
+    currentLabel: reagent-name-space-mountain-wind
+    
+- type: entity
+  parent: DrinkBottlePlasticBaseFull
+  id: DrinkSpaceUpJug
+  name: Space-Up jug
+  description: reagent-desc-space-up
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: SpaceUp
+          Quantity: 150
+  - type: Drink
+  - type: Label
+    currentLabel: reagent-name-space-up
+
+- type: entity
+  parent: DrinkBottlePlasticBaseFull
   id: DrinkWaterMelonJuiceJug
   name: watermelon juice jug
   description: May include leftover seeds.
