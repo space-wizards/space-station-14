@@ -25,7 +25,7 @@
   - type: Appearance
 
 # Boxes
-- type: entity # does anything use this?
+- type: entity
   parent: BaseMagazineBoxCaselessRifle
   id: MagazineBoxCaselessRifle10x24
   name: ammunition box (.20 caseless)
