@@ -225,9 +225,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        maxVol: 50
         reagents:
         - ReagentId: Cola
-          Quantity: 100
+          Quantity: 50
   - type: Label
     currentLabel: reagent-name-cola
   - type: Sprite
@@ -392,9 +393,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        maxVol: 50
         reagents:
         - ReagentId: SpaceMountainWind
-          Quantity: 100
+          Quantity: 50
   - type: Drink
   - type: Label
     currentLabel: reagent-name-space-mountain-wind
@@ -411,9 +413,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        maxVol: 50
         reagents:
         - ReagentId: SpaceUp
-          Quantity: 100
+          Quantity: 50
   - type: Drink
   - type: Label
     currentLabel: reagent-name-space-up
@@ -609,7 +612,7 @@
   parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkWaterBottleFull
   name: water bottle
-  description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
+  description: Simple clean water of unknown origin. You think that maybe you dont want to know the details.
   components:
   - type: Item
     size: Small
@@ -637,37 +640,68 @@
     inHandsFillBaseName: -fill-
   - type: Sealable
 
+# Large bottle, to match tonic and soda water. TODO add large water bottle sprites
 - type: entity
-  parent: DrinkWaterBottleFull
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkWaterBottleLargeFull
+  name: New London spring water
+  description: A bo'ol o' wo'er. How does a space station have a spring?
+  components:
+  - type: Item
+    size: Normal
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: Water
+          Quantity: 100
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/waterbottle.rsi
+    layers:
+    - state: icon
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: icon-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: icon-
+    inHandsMaxFillLevels: 2
+    inHandsFillBaseName: -fill-
+  - type: Sealable
+
+- type: entity
+  parent: DrinkWaterBottleLargeFull
   id: DrinkSodaWaterBottleFull
   name: soda water bottle
   description: Like water, but angry!
   components:
+  - type: Item
+    size: Normal
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 150
         reagents:
         - ReagentId: SodaWater
-          Quantity: 150
-  - type: Label
-    currentLabel: reagent-name-soda-water
+          Quantity: 100
 
 - type: entity
-  parent: DrinkWaterBottleFull
+  parent: DrinkWaterBottleLargeFull
   id: DrinkTonicWaterBottleFull
   name: tonic water bottle
   description: Like soda water, but angrier maybe? Often sweeter.
   components:
+  - type: Item
+    size: Normal
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 150
         reagents:
         - ReagentId: TonicWater
-          Quantity: 150
-  - type: Label
-    currentLabel: reagent-name-tonic-water
+          Quantity: 100
 
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
@@ -678,6 +712,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
+        maxVol: 50
         reagents:
         - ReagentId: Sake
           Quantity: 50
@@ -688,7 +723,7 @@
   - type: Sealable
 
 # Cartons, TODO: this needs to be moved elsewhere eventually, since cartons shouldnt smash into glass shards
-
+# Probably wants to be moved to drinks-cartons
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkJuiceLimeCartonXL
@@ -726,6 +761,63 @@
     currentLabel: reagent-name-juice-orange
   - type: Sprite
     sprite: Objects/Consumable/Drinks/orangejuice.rsi
+    
+- type: entity
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkJuiceTomatoCartonXL
+  name: tomato juice XL
+  description: reagent-desc-juice-tomato
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: JuiceTomato
+          Quantity: 150
+  - type: Drink
+  - type: Label
+    currentLabel: reagent-name-juice-tomato
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/tomatojuice.rsi
+    
+- type: entity
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkMilkCartonXL
+  name: milk XL
+  description: reagent-desc-milk
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: Milk
+          Quantity: 150
+  - type: Drink
+  - type: Label
+    currentLabel: reagent-name-milk
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/milk.rsi
+    
+- type: entity
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkSoyMilkCartonXL
+  name: soy milk XL
+  description: reagent-desc-milk-soy
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: MilkSoy
+          Quantity: 150
+  - type: Drink
+  - type: Label
+    currentLabel: reagent-name-milk-soy
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/soymilk.rsi
 
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
@@ -747,6 +839,52 @@
     sprite: Objects/Consumable/Drinks/cream.rsi
 
 #boring jugs some more sprites are made
+- type: entity
+  parent: DrinkBottlePlasticBaseFull
+  id: CustomDrinkJug
+  name: beverage jug
+  description: A jug for storing custom made drinks.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+  - type: Drink
+
+# Any reason why these shouldn't inherit from CustomDrinkJug?
+- type: entity
+  parent: DrinkBottlePlasticBaseFull
+  id: DrinkBananaJuiceJug
+  name: banana juice jug
+  description: reagent-desc-juice-banana
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 150
+          reagents:
+            - ReagentId: JuiceBanana
+              Quantity: 150
+    - type: Drink
+    - type: Label
+      currentLabel: reagent-name-juice-banana
+      
+- type: entity
+  parent: DrinkBottlePlasticBaseFull
+  id: DrinkBerryJuiceJug
+  name: berry juice jug
+  description: reagent-desc-juice-berry
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: JuiceBerry
+          Quantity: 150
+  - type: Drink
+  - type: Label
+    currentLabel: reagent-name-juice-berry
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -758,25 +896,26 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: Sugar
-          Quantity: 300
+          Quantity: 150
   - type: Drink
+    currentLabel: sugar syrup # Label is a lie. Make a liquid sugar reagent?
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkLemonLimeJug
   name: lemon lime jug
-  description: A dual citrus sensation.
+  description: reagent-desc-lemon-lime
   components:
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: LemonLime
-          Quantity: 300
+          Quantity: 150
   - type: Drink
   - type: Label
     currentLabel: reagent-name-lemon-lime
@@ -807,10 +946,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: Ice
-          Quantity: 300
+          Quantity: 150
   - type: Drink
   - type: Label
     currentLabel: reagent-name-ice
@@ -819,15 +958,15 @@
   parent: DrinkBottlePlasticBaseFull
   id: DrinkCoconutWaterJug
   name: coconut water jug
-  description: It's on the inside of the coconut that counts.
+  description: It's what's on the inside of the coconut that counts.
   components:
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: CoconutWater
-          Quantity: 300
+          Quantity: 150
   - type: Drink
   - type: Label
     currentLabel: reagent-name-coconut-water
@@ -841,10 +980,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: Coffee
-          Quantity: 300
+          Quantity: 150
   - type: Drink
   - type: Label
     currentLabel: reagent-name-coffee
@@ -858,10 +997,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: Tea
-          Quantity: 300
+          Quantity: 150
   - type: Drink
   - type: Label
     currentLabel: reagent-name-tea
@@ -875,10 +1014,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: GreenTea
-          Quantity: 300
+          Quantity: 150
   - type: Drink
   - type: Label
     currentLabel: reagent-name-green-tea
@@ -892,10 +1031,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: IcedTea
-          Quantity: 300
+          Quantity: 150
   - type: Drink
   - type: Label
     currentLabel: reagent-name-iced-tea
@@ -909,10 +1048,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: DrGibb
-          Quantity: 300
+          Quantity: 150
   - type: Drink
   - type: Label
     currentLabel: reagent-name-dr-gibb
@@ -926,10 +1065,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: RootBeer
-          Quantity: 300
+          Quantity: 150
   - type: Drink
   - type: Label
     currentLabel: reagent-name-root-beer
@@ -943,10 +1082,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 150
         reagents:
         - ReagentId: JuiceWatermelon
-          Quantity: 300
+          Quantity: 150
   - type: Drink
   - type: Label
     currentLabel: reagent-name-juice-watermelon
@@ -960,22 +1099,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 100
+        maxVol: 150
         reagents:
         - ReagentId: EnergyDrink
-          Quantity: 100
+          Quantity: 150
   - type: Drink
   - type: Label
     currentLabel: red bool
-
-- type: entity
-  parent: DrinkBottlePlasticBaseFull
-  id: CustomDrinkJug
-  name: beverage jug
-  description: A jug for storing custom made drinks.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-  - type: Drink
