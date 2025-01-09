@@ -5,17 +5,17 @@
     Resizable="False"
     MinWidth="250">
     <BoxContainer Orientation="Vertical">
-        <mapping:MappingVisibulityGroupButton Name="Light" Text="{Loc 'mapping-visibility-light'}" Access="Public"/>
-        <mapping:MappingVisibulityButton Name="Fov" Text="{Loc 'mapping-visibility-fov'}" Access="Public"/>
-        <mapping:MappingVisibulityButton Name="Shadows" Text="{Loc 'mapping-visibility-shadows'}" Access="Public"/>
-        <mapping:MappingVisibulityGroupButton Name="Entities" Text="{Loc 'mapping-visibility-entities'}" Access="Public"/>
-        <mapping:MappingVisibulityButton Name="Markers" Text="{Loc 'mapping-visibility-markers'}" Access="Public"/>
-        <mapping:MappingVisibulityButton Name="Walls" Text="{Loc 'mapping-visibility-walls'}" Access="Public"/>
-        <mapping:MappingVisibulityButton Name="Airlocks" Text="{Loc 'mapping-visibility-airlocks'}" Access="Public"/>
-        <mapping:MappingVisibulityGroupButton Name="Decals" Text="{Loc 'mapping-visibility-decals'}" Access="Public"/>
-        <mapping:MappingVisibulityGroupButton Name="SubFloor" Text="{Loc 'mapping-visibility-subfloor'}" Access="Public"/>
-        <mapping:MappingVisibulityButton Name="Cables" Text="{Loc 'mapping-visibility-cables'}" Access="Public"/>
-        <mapping:MappingVisibulityButton Name="Disposal" Text="{Loc 'mapping-visibility-disposal'}" Access="Public"/>
-        <mapping:MappingVisibulityButton Name="Atmos" Text="{Loc 'mapping-visibility-atmos'}" Access="Public"/>
+        <mapping:MappingVisibilityGroupButton Name="Light" Text="{Loc 'mapping-visibility-light'}" Access="Public"/>
+        <mapping:MappingVisibilityButton Name="Fov" Text="{Loc 'mapping-visibility-fov'}" Access="Public"/>
+        <mapping:MappingVisibilityButton Name="Shadows" Text="{Loc 'mapping-visibility-shadows'}" Access="Public"/>
+        <mapping:MappingVisibilityGroupButton Name="Entities" Text="{Loc 'mapping-visibility-entities'}" Access="Public"/>
+        <mapping:MappingVisibilityButton Name="Markers" Text="{Loc 'mapping-visibility-markers'}" Access="Public"/>
+        <mapping:MappingVisibilityButton Name="Walls" Text="{Loc 'mapping-visibility-walls'}" Access="Public"/>
+        <mapping:MappingVisibilityButton Name="Airlocks" Text="{Loc 'mapping-visibility-airlocks'}" Access="Public"/>
+        <mapping:MappingVisibilityGroupButton Name="Decals" Text="{Loc 'mapping-visibility-decals'}" Access="Public"/>
+        <mapping:MappingVisibilityGroupButton Name="SubFloor" Text="{Loc 'mapping-visibility-subfloor'}" Access="Public"/>
+        <mapping:MappingVisibilityButton Name="Cables" Text="{Loc 'mapping-visibility-cables'}" Access="Public"/>
+        <mapping:MappingVisibilityButton Name="Disposal" Text="{Loc 'mapping-visibility-disposal'}" Access="Public"/>
+        <mapping:MappingVisibilityButton Name="Atmos" Text="{Loc 'mapping-visibility-atmos'}" Access="Public"/>
     </BoxContainer>
 </DefaultWindow>
