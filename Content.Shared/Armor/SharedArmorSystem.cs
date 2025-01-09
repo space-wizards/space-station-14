@@ -35,7 +35,9 @@ public abstract class SharedArmorSystem : EntitySystem
     {
         if (args.Args.Damage < 0)
             return;
-        args.Args.Modifier = component.StaminaDamageModifier;
+        
+        if (args.Args.Modifier > component.StaminaDamageModifier)
+            args.Args.Modifier = component.StaminaDamageModifier;
     }
 
     private void OnBorgDamageModify(EntityUid uid, ArmorComponent component,
