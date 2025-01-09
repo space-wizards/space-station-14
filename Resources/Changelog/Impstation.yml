@@ -1,24 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Removed all vent spawn events from basic event table and added them into
-      the respective pest tables. This should hopefully drastically reduce the amount
-      of vent critter spawn events.
-    type: Tweak
-  - message: Gilded pAI ghost roles now show up with the name gilded pAI in the menu.
-    type: Tweak
-  - message: Added a 1 timer second option to c4. Watch out!
-    type: Tweak
-  id: 382
-  time: '2024-10-18T01:30:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/508
-- author: formlessnameless
-  changes:
-  - message: Added a bible to the PietyVend inventory, for all of your thieving needs.
-    type: Add
-  id: 383
-  time: '2024-10-18T07:27:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/512
 - author: TGRCdev
   changes:
   - message: Thaven can now view their moods when handcuffed / unconscious
@@ -4491,3 +4471,18 @@
   id: 881
   time: '2025-01-09T00:43:00.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1271
+- author: honeyed-lemons
+  changes:
+  - message: Tweaks boxes surgery and adds supermatter consoles
+    type: Tweak
+  id: 882
+  time: '2025-01-09T16:26:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1270
+- author: EpicToastTM
+  changes:
+  - message: (Barratry Station) Science is now playable, along with other miscellaneous
+      tweaks.
+    type: Tweak
+  id: 883
+  time: '2025-01-09T16:26:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1277
