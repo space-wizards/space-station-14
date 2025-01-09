@@ -3,7 +3,7 @@
 - type: latheRecipe
   abstract: true
   id: BaseMechPartRecipe
-  category: Mech
+  category: [ Mech ]
   completetime: 10
 
 # Recipes

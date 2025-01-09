@@ -3,7 +3,7 @@
 - type: latheRecipe
   abstract: true
   id: BaseRoboticsRecipe
-  category: Robotics
+  category: [ Robotics ]
   completetime: 2
 
 - type: latheRecipe
