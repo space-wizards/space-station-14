@@ -21,6 +21,8 @@ public sealed class MappingPrototype
     /// </summary>
     public readonly string Name;
 
+    public bool Favorite;
+
     /// <summary>
     ///     Which other prototypes (buttons) this one is nested inside of.
     /// </summary>
