@@ -6,12 +6,12 @@
     Flammable:
       methods: [ Touch ]
       effects:
-        - !type:FlammableReaction
+      - !type:FlammableReaction
   plantMetabolism:
-    - !type:PlantAdjustWeeds
-      amount: -2
-    - !type:PlantAdjustHealth
-      amount: -2
+  - !type:PlantAdjustWeeds
+    amount: -2
+  - !type:PlantAdjustHealth
+    amount: -2
 
 - type: reagent
   id: ChlorineTrifluoride
@@ -22,35 +22,35 @@
   flavor: bitter
   color: "#FFC8C8"
   tileReactions:
-    - !type:PryTileReaction
+  - !type:PryTileReaction
   metabolisms:
     Poison:
       effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Heat: 2
-              Poison: 1
-              Caustic: 0.5 # CLF3 is corrosive
-        - !type:FlammableReaction
-          multiplier: 0.2
-        - !type:AdjustTemperature
-          amount: 6000
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 2
+            Poison: 1
+            Caustic: 0.5 # CLF3 is corrosive
+      - !type:FlammableReaction
+        multiplier: 0.2
+      - !type:AdjustTemperature
+        amount: 6000
   reactiveEffects:
     Flammable:
       methods: [ Touch ]
       effects:
-        - !type:FlammableReaction
-          multiplier: 0.3
-        - !type:Ignite
-        - !type:Emote
-          emote: Scream
-          probability: 0.2
-        - !type:PopupMessage
-          messages: [ "clf3-it-burns", "clf3-get-away" ]
-          visualType: MediumCaution
-          probability: 0.3
-          type: Local
+      - !type:FlammableReaction
+        multiplier: 0.3
+      - !type:Ignite
+      - !type:Emote
+        emote: Scream
+        probability: 0.2
+      - !type:PopupMessage
+        messages: [ "clf3-it-burns", "clf3-get-away" ]
+        visualType: MediumCaution
+        probability: 0.3
+        type: Local
 
 - type: reagent
   id: Fluorosurfactant
@@ -143,16 +143,16 @@
   boilingPoint: 2977.0 # Aluminum oxide
   meltingPoint: 2030.0
   tileReactions:
-    - !type:FlammableTileReaction
-      temperatureMultiplier: 2
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 2
   metabolisms:
     Poison:
       effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Heat: 2
-              Poison: 1
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 2
+            Poison: 1
 
 - type: reagent
   id: WeldingFuel
