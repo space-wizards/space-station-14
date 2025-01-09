@@ -310,7 +310,7 @@
         ignoreResistances: true
         damage:
           types:
-            Poison:1
+            Poison: 1
       # We need a metabolism effect on reagent removal
       - !type:AdjustAlert
         alertType: Toxins
@@ -356,7 +356,7 @@
         ignoreResistances: true
         damage:
           types:
-            Radiation:1
+            Radiation: 1
       # We need a metabolism effect on reagent removal
       - !type:AdjustAlert
         alertType: Toxins
