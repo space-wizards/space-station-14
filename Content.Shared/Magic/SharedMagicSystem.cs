@@ -5,6 +5,8 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Emoting;
+using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
@@ -18,14 +20,17 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Speech;
 using Content.Shared.Speech.Muting;
 using Content.Shared.Storage;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -64,6 +69,7 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {
@@ -80,6 +86,7 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<ChargeSpellEvent>(OnChargeSpell);
         SubscribeLocalEvent<RandomGlobalSpawnSpellEvent>(OnRandomGlobalSpawnSpell);
         SubscribeLocalEvent<MindSwapSpellEvent>(OnMindSwapSpell);
+        SubscribeLocalEvent<AnimateSpellEvent>(OnAnimateSpell);
 
         // Spell wishlist
         //  A wishlish of spells that I'd like to implement or planning on implementing in a future PR
@@ -576,6 +583,26 @@ public abstract class SharedMagicSystem : EntitySystem
         _stun.TryParalyze(ev.Performer, ev.PerformerStunDuration, true);
     }
 
+    #endregion
+    #region Animation Spells
+
+    private void OnAnimateSpell(AnimateSpellEvent ev)
+    {
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
+            return;
+
+        ev.Handled = true;
+        Speak(ev);
+
+        EntityManager.EnsureComponent<MindContainerComponent>(ev.Target);
+        EntityManager.EnsureComponent<InputMoverComponent>(ev.Target);
+        EntityManager.EnsureComponent<MobMoverComponent>(ev.Target);
+        EntityManager.EnsureComponent<MovementSpeedModifierComponent>(ev.Target);
+        EntityManager.EnsureComponent<SpeechComponent>(ev.Target);
+        EntityManager.EnsureComponent<EmotingComponent>(ev.Target);
+        EntityManager.EnsureComponent<ExaminerComponent>(ev.Target);
+        EntityManager.EnsureComponent<ActionsComponent>(ev.Target);
+    }
     #endregion
     // End Spells
     #endregion

@@ -1,12 +1,12 @@
 - type: entity
-  id: ActionMindSwap
-  name: Mind Swap
-  description: Exchange bodies with another person!
+  id: ActionAnimateSpell
+  name: Animate
+  description: Bring an inanimate object to life!
   components:
   - type: EntityTargetAction
-    useDelay: 300
+    useDelay: 1
     itemIconStyle: BigAction
-    whitelist:
+    blacklist:
       components:
       - MindContainer
     canTargetSelf: false
@@ -16,5 +16,5 @@
     icon:
       sprite: Mobs/Species/Human/organs.rsi
       state: brain
-    event: !type:MindSwapSpellEvent
-      speech: action-speech-spell-mind-swap
+    event: !type:AnimateSpellEvent
+      speech: action-speech-spell-animate

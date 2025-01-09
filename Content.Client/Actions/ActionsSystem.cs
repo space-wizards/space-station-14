@@ -88,6 +88,7 @@ namespace Content.Client.Actions
                 return;
 
             component.Whitelist = state.Whitelist;
+            component.Blacklist = state.Blacklist;
             component.CanTargetSelf = state.CanTargetSelf;
             BaseHandleState<EntityTargetActionComponent>(uid, component, state);
         }
