@@ -975,6 +975,19 @@ entities:
     - type: Transform
       pos: -5.5,-4.5
       parent: 4
+- proto: BaseComputer
+  entities:
+  - uid: 21
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,15.5
+      parent: 4
+  - uid: 25
+    components:
+    - type: Transform
+      pos: -3.5,16.5
+      parent: 4
 - proto: Bed
   entities:
   - uid: 155
@@ -1349,8 +1362,8 @@ entities:
         762:
           position: 3,0
           _rotation: South
-        748:
-          position: 4,1
+        731:
+          position: 4,2
           _rotation: South
         742:
           position: 0,1
@@ -1364,20 +1377,11 @@ entities:
         737:
           position: 3,1
           _rotation: South
-        752:
-          position: 4,0
-          _rotation: South
         721:
           position: 1,2
           _rotation: South
-        731:
-          position: 2,3
-          _rotation: South
-        730:
-          position: 1,3
-          _rotation: South
         729:
-          position: 0,3
+          position: 4,0
           _rotation: South
         709:
           position: 0,2
@@ -1388,8 +1392,8 @@ entities:
         718:
           position: 3,2
           _rotation: South
-        711:
-          position: 4,2
+        730:
+          position: 4,1
           _rotation: South
     - type: ContainerContainer
       containers:
@@ -1405,16 +1409,14 @@ entities:
           - 741
           - 738
           - 737
-          - 748
-          - 752
           - 721
           - 709
-          - 729
           - 710
+          - 718
+          - 729
           - 730
           - 731
-          - 718
-          - 711
+    - type: ActiveUserInterface
 - proto: ButtonFrameCaution
   entities:
   - uid: 1125
@@ -2588,14 +2590,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -5.5,14.5
       parent: 4
-- proto: ComputerMassMedia
-  entities:
-  - uid: 25
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 0.5,15.5
-      parent: 4
 - proto: ComputerPowerMonitoring
   entities:
   - uid: 775
@@ -2618,13 +2612,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,14.5
-      parent: 4
-- proto: ComputerSurveillanceCameraMonitor
-  entities:
-  - uid: 21
-    components:
-    - type: Transform
-      pos: -3.5,16.5
       parent: 4
 - proto: Crowbar
   entities:
@@ -3187,12 +3174,6 @@ entities:
     - type: Physics
       canCollide: False
   - uid: 710
-    components:
-    - type: Transform
-      parent: 708
-    - type: Physics
-      canCollide: False
-  - uid: 711
     components:
     - type: Transform
       parent: 708
@@ -4452,20 +4433,8 @@ entities:
       parent: 708
     - type: Physics
       canCollide: False
-  - uid: 748
-    components:
-    - type: Transform
-      parent: 708
-    - type: Physics
-      canCollide: False
 - proto: PaperCargoInvoice
   entities:
-  - uid: 752
-    components:
-    - type: Transform
-      parent: 708
-    - type: Physics
-      canCollide: False
   - uid: 762
     components:
     - type: Transform
@@ -4766,12 +4735,6 @@ entities:
     components:
     - type: Transform
       pos: 3.5,3.5
-      parent: 4
-  - uid: 818
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 7.5,-7.5
       parent: 4
   - uid: 829
     components:
