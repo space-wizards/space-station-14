@@ -242,7 +242,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         var removedTags = oldTags.Except(newAccessList).Select(tag => "-" + tag).ToList();
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium,
-            $"{ToPrettyString(player):player} has modified {ToPrettyString(component.TargetAccessReaderId):entity} with the following allowed access level holders: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
+            $"{ToPrettyString(player):player} has modified {ToPrettyString(accessReaderEnt.Value):entity} with the following allowed access level holders: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
 
         accessReaderEnt.Value.Comp.AccessLists = ConvertAccessListToHashSet(newAccessList);
         Dirty(accessReaderEnt.Value, accessReaderEnt.Value.Comp);
