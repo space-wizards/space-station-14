@@ -10,7 +10,7 @@ public sealed partial class ResearchSystem
     /// <summary>
     /// Syncs the primary entity's database to that of the secondary entity's database.
     /// </summary>
-    public void Sync(EntityUid primaryUid, EntityUid otherUid, TechnologyDatabaseComponent? primaryDb = null, TechnologyDatabaseComponent? otherDb = null, bool raiseEvents = true)
+    public void Sync(EntityUid primaryUid, EntityUid otherUid, TechnologyDatabaseComponent? primaryDb = null, TechnologyDatabaseComponent? otherDb = null)
     {
         if (!Resolve(primaryUid, ref primaryDb) || !Resolve(otherUid, ref otherDb))
             return;
@@ -23,11 +23,8 @@ public sealed partial class ResearchSystem
 
         Dirty(primaryUid, primaryDb);
 
-        if (raiseEvents)
-        {
-            var ev = new TechnologyDatabaseModifiedEvent();
-            RaiseLocalEvent(primaryUid, ref ev);
-        }
+        var ev = new TechnologyDatabaseSynchronizedEvent();
+        RaiseLocalEvent(primaryUid, ref ev);
     }
 
     /// <summary>
@@ -36,7 +33,7 @@ public sealed partial class ResearchSystem
     ///     syncs against the research server, and the server against the local database.
     /// </summary>
     /// <returns>Whether it could sync or not</returns>
-    public void SyncClientWithServer(EntityUid uid, TechnologyDatabaseComponent? databaseComponent = null, ResearchClientComponent? clientComponent = null, bool raiseEvents = true)
+    public void SyncClientWithServer(EntityUid uid, TechnologyDatabaseComponent? databaseComponent = null, ResearchClientComponent? clientComponent = null)
     {
         if (!Resolve(uid, ref databaseComponent, ref clientComponent, false))
             return;
@@ -44,7 +41,7 @@ public sealed partial class ResearchSystem
         if (!TryComp<TechnologyDatabaseComponent>(clientComponent.Server, out var serverDatabase))
             return;
 
-        Sync(uid, clientComponent.Server.Value, databaseComponent, serverDatabase, raiseEvents);
+        Sync(uid, clientComponent.Server.Value, databaseComponent, serverDatabase);
     }
 
     /// <summary>
