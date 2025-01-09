@@ -30,7 +30,6 @@
   - type: CartridgeAmmo
     proto: BulletHeavyRifle
 
-
 - type: entity
   id: CartridgeMinigun
   name: cartridge (.10 rifle)
