@@ -7,7 +7,7 @@
   - type: Appearance
   - type: AccessReader
     access: [ [ "CentralCommand" ] ]
-    BreakOnAccessBreaker: false
+    breakOnAccessBreaker: false
   - type: Lock
     lockOnClick: false
     breakOnAccessBreaker: false
