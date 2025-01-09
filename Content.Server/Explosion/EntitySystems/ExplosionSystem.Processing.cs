@@ -514,6 +514,8 @@ public sealed partial class ExplosionSystem
     {
         if (_tileDefinitionManager[tileRef.Tile.TypeId] is not ContentTileDefinition tileDef)
             return;
+        if(tileDef.Indestructible)
+            return;
 
         if (!CanCreateVacuum)
             canCreateVacuum = false;
