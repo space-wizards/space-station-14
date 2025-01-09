@@ -16,7 +16,6 @@
     prototypes:
       - DrinkAbsintheBottleFull
       - DrinkBlueCuracaoBottleFull
-      - DrinkBottleOfNothingFull
       - DrinkCognacBottleFull
       - DrinkGrenadineBottleFull
       - DrinkGinBottleFull
