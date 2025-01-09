@@ -7,6 +7,7 @@ using Robust.Shared.Random;
 using Content.Server.Chat.Systems;
 using Robust.Shared.Prototypes;
 using Content.Shared.Radiation.Components;
+using Content.Shared.Explosion.Components;
 
 namespace Content.Server.Event.Systems;
 
@@ -25,7 +26,7 @@ public sealed class EventReactorSystem : EntitySystem
     private float _flickerTimer = 0f;
     private const float UpdateInterval = 1f;
     private const float FlickerInterval = 100f;
-    
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -43,7 +44,7 @@ public sealed class EventReactorSystem : EntitySystem
             {
                 foreach (var entity in EntityManager.EntityQuery<EventReactorComponent>())
                 {
-                    
+
                     EntityUid uid = entity.Owner;
                     var component = EntityManager.GetComponent<EventReactorComponent>(uid);
                     var timer = EntityManager.GetComponent<ActiveTimerTriggerComponent>(uid);
@@ -57,7 +58,8 @@ public sealed class EventReactorSystem : EntitySystem
                 foreach (var entity in EntityManager.EntityQuery<EventReactorComponent>())
                 {
                     EntityUid uid = entity.Owner;
-                    FlickerReactor(uid);
+                    var component = entity;
+                    FlickerReactor(uid, component);
                 }
                 _flickerTimer = 0f;
             }

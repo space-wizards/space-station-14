@@ -40,17 +40,14 @@
   - type: RotatingLight
     speed: 120
   - type: ActiveTimerTrigger
-      beepSound: !type:SoundPathSpecifier
-        path: ""
-      beepInterval: 120
-      timeRemaining: 5400 # 1 hr 30 mins to meltdown
+    timeRemaining: 5400 # 1 hr 30 mins to meltdown
   - type: ExplodeOnTrigger
   - type: Explosive
-      maxTileBreak: 0
-      totalIntensity: 5000000
-      intensitySlope: 5
-      maxIntensity: 100
-      explosionType: Default
+    maxTileBreak: 0
+    totalIntensity: 5000000
+    intensitySlope: 5
+    maxIntensity: 100
+    explosionType: Default
 
 - type: entity
   id: TP14ReactorFuelPort

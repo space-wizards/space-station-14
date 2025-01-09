@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Event.Components;
+﻿using Robust.Shared.Audio;
+
+namespace Content.Server.Event.Components;
 
 /// <summary>
 /// Flickers all the lights within a certain radius.
@@ -31,8 +33,7 @@ public sealed partial class EventReactorComponent : Component
     public bool MeltdownWarning = false;
 
      [ViewVariables(VVAccess.ReadWrite)]
-     [DataField(required: true)]
-     public LocId Title = "ship-comms-title";
+     public LocId title = "Emergency Alert System";
 
      /// <summary>
      /// Announcement color
