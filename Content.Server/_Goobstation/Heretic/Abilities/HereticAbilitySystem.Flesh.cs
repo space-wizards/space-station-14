@@ -47,7 +47,7 @@ public sealed partial class HereticAbilitySystem : EntitySystem
         if (TryComp<BodyComponent>(args.Target, out var body))
         {
             //i should really make these their own methods. but i dont want to
-            switch (_random.Next(0, 2))
+            switch (_random.Next(0, 3))
             {
                 // case 0: barf
                 case 0:
@@ -61,7 +61,7 @@ public sealed partial class HereticAbilitySystem : EntitySystem
                         return;
 
                     _popup.PopupEntity(Loc.GetString("heretic-fleshsurgery-eyes"), args.Target, args.Target, PopupType.LargeCaution);
-                    _blindable.AdjustEyeDamage((args.Target, blindable), 5); //same as rawdogging a welder 5 times. fixable but definitely a pain
+                    _blindable.AdjustEyeDamage((args.Target, blindable), 7); //same as rawdogging a welder 7 times. fixable but definitely a pain
                     break;
 
                 // case 2: mute for 2.5 minutes
