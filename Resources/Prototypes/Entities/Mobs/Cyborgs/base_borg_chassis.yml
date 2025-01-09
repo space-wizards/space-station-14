@@ -82,7 +82,7 @@
   - type: EmagSiliconLaw
     stunTime: 5
   - type: SiliconLawProvider
-    laws: Crewsimov
+    laws: CrewsimovBorgLawset
   - type: IonStormTarget
   - type: Inventory
     templateId: borg
