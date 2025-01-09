@@ -1938,4 +1938,24 @@ Entries:
   id: 274
   time: '2025-01-09T11:08:14.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/224
-
+- author: Rinary
+  changes:
+  - message: Added law telecom server as structure.
+    type: Add
+  id: 275
+  time: '2025-01-09T13:10:21.245512+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added stamina resists for syndie and centcomm armors.
+    type: Add
+  id: 276
+  time: '2025-01-09T13:10:40.911353+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added alien pistol(temporary admeme).
+    type: Add
+  id: 277
+  time: '2025-01-09T13:10:54.599596+00:00'
+  url: 'null'
