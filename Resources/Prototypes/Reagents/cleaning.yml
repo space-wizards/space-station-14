@@ -37,8 +37,8 @@
   boilingPoint: 147.0 # Made this up, loosely based on bleach
   meltingPoint: -11.0
   tileReactions:
-    - !type:CleanTileReaction {}
-    - !type:CleanDecalsReaction {}
+  - !type:CleanTileReaction {}
+  - !type:CleanDecalsReaction {}
 
 - type: reagent
   id: SoapReagent
@@ -80,9 +80,9 @@
   boilingPoint: 290.0 # Glycerin
   meltingPoint: 18.2
   tileReactions:
-    - !type:SpillTileReaction
-      requiredSlipSpeed: 1
-      superSlippery: true
+  - !type:SpillTileReaction
+    requiredSlipSpeed: 1
+    superSlippery: true
 
 - type: reagent
   id: SpaceGlue
@@ -96,7 +96,7 @@
   meltingPoint: 380.0
   viscosity: 0.5
   tileReactions:
-    - !type:SpillTileReaction
+  - !type:SpillTileReaction
   reactiveEffects:
     Acidic:
       methods: [ Touch ]
