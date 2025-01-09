@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: harpy & credey
-  changes:
-  - message: Slimes now have unique gasps and deathgasps.
-    type: Add
-  id: 381
-  time: '2024-10-17T21:14:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/500
 - author: formlessnameless
   changes:
   - message: Removed all vent spawn events from basic event table and added them into
@@ -4491,3 +4484,10 @@
   id: 880
   time: '2025-01-08T14:36:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1246
+- author: Darkmajia
+  changes:
+  - message: Tranquilizer shells have chloral hydrate instead of nocturine in them.
+    type: Tweak
+  id: 881
+  time: '2025-01-09T00:43:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1271
