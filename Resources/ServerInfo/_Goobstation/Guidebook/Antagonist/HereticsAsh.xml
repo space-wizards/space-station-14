@@ -21,6 +21,8 @@
   ## Ashen Shift
   Grants you Ashen Passage, a spell that lets you phase out of reality and traverse a short distance, passing though any walls.
 
+  Upon returning to reality, you will emit a distinct sound. Additionally, your body will ignite, dealing minor damage.
+
   ## Mark of Ash
   <Box>
     <GuideEntityEmbed Entity="HereticBladeAsh" Caption=""/>

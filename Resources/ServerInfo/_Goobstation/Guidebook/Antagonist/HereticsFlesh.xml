@@ -42,7 +42,7 @@
   <Box>
     <GuideEntityEmbed Entity="OrganHumanHeart" Caption=""/>
   </Box>
-  Grants you the spell Knit Flesh. This spell allows you to remove organs from victims without requiring a lengthy surgery. This process is much longer if the target is not dead.
+  Grants you the spell Knit Flesh. This spell allows you to disable a random one of your target's organs or senses.
 
   This spell also allows you to heal your minions and summons, or restore failing organs to acceptable status.
 
