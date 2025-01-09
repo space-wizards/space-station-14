@@ -1,3 +1,4 @@
+using Content.Shared.AccessBreaker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
@@ -11,9 +12,9 @@ namespace Content.Shared.Ninja.Systems;
 /// <summary>
 /// Handles emagging whitelisted objects when clicked.
 /// </summary>
-public sealed class EmagProviderSystem : EntitySystem
+public sealed class AccessBreakerProviderSystem : EntitySystem
 {
-    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly AccessBreakerSystem _accessbreaker = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
@@ -23,13 +24,13 @@ public sealed class EmagProviderSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EmagProviderComponent, BeforeInteractHandEvent>(OnBeforeInteractHand);
+        SubscribeLocalEvent<AccessBreakerProviderComponent, BeforeInteractHandEvent>(OnBeforeInteractHand);
     }
 
     /// <summary>
     /// Emag clicked entities that are on the whitelist.
     /// </summary>
-    private void OnBeforeInteractHand(Entity<EmagProviderComponent> ent, ref BeforeInteractHandEvent args)
+    private void OnBeforeInteractHand(Entity<AccessBreakerProviderComponent> ent, ref BeforeInteractHandEvent args)
     {
         // TODO: change this into a generic check event thing
         if (args.Handled || !_gloves.AbilityCheck(ent, args, out var target))
@@ -42,22 +43,22 @@ public sealed class EmagProviderSystem : EntitySystem
             return;
 
         // only allowed to emag non-immune entities
-        if (_tag.HasTag(target, comp.EmagImmuneTag))
+        if (_tag.HasTag(target, comp.AccessBreakerImmuneTag))
             return;
 
-        var handled = _emag.DoEmagEffect(uid, target);
+        var handled = _accessbreaker.DoAccessBreakerEffect(uid, target);
         if (!handled)
             return;
 
-        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(uid):player} emagged {ToPrettyString(target):target}");
-        var ev = new EmaggedSomethingEvent(target);
+        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(uid):player} broke access of {ToPrettyString(target):target}");
+        var ev = new AccessBrokeSomethingEvent(target);
         RaiseLocalEvent(uid, ref ev);
         args.Handled = true;
     }
 }
 
 /// <summary>
-/// Raised on the player when emagging something.
+/// Raised on the player when access breaking something.
 /// </summary>
 [ByRefEvent]
-public record struct EmaggedSomethingEvent(EntityUid Target);
+public record struct AccessBrokeSomethingEvent(EntityUid Target);

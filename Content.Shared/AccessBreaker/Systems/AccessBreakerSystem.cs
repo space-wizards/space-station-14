@@ -51,13 +51,10 @@ public sealed class AccessBreakerSystem : EntitySystem
         if (_tag.HasTag(target, comp.AccessBreakerImmuneTag))
             return false;
 
-        if (comp.LastTarget == target)
-            return false;
-
         TryComp<LimitedChargesComponent>(uid, out var charges);
         if (_charges.IsEmpty(uid, charges))
         {
-            _popup.PopupClient(Loc.GetString("emag-no-charges"), user, user);
+            _popup.PopupClient(Loc.GetString("access-breaker-no-charges"), user, user);
             return false;
         }
 
@@ -65,10 +62,10 @@ public sealed class AccessBreakerSystem : EntitySystem
         if (!handled)
             return false;
 
-        _popup.PopupClient(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user,
+        _popup.PopupClient(Loc.GetString("access-breaker-success", ("target", Identity.Entity(target, EntityManager))), user,
             user, PopupType.Medium);
 
-        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} emagged {ToPrettyString(target):target}");
+        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} broke the access of {ToPrettyString(target):target}");
 
         if (charges != null)
             _charges.UseCharge(uid, charges);

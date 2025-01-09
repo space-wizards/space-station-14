@@ -866,15 +866,28 @@
 # Disruption
 
 - type: listing
+  id: UplinkAccessBreaker
+  name: uplink-access-breaker-name
+  description: uplink-access-breaker-desc
+  productEntity: AccessBreaker
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 5
+  categories:
+  - UplinkDisruption
+
+- type: listing
   id: UplinkEmag
   name: uplink-emag-name
   description: uplink-emag-desc
   productEntity: Emag
-  discountCategory: veryRareDiscounts
+  discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 5
+    Telecrystal: 2
   cost:
-    Telecrystal: 8
+    Telecrystal: 4
   categories:
   - UplinkDisruption
 

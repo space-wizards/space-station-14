@@ -10,14 +10,14 @@ namespace Content.Shared.Ninja.Components;
 /// Component for emagging things on click.
 /// No charges but checks against a whitelist.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(EmagProviderSystem))]
-public sealed partial class EmagProviderComponent : Component
+[RegisterComponent, NetworkedComponent, Access(typeof(AccessBreakerProviderSystem))]
+public sealed partial class AccessBreakerProviderComponent : Component
 {
     /// <summary>
     /// The tag that marks an entity as immune to emagging.
     /// </summary>
     [DataField]
-    public ProtoId<TagPrototype> EmagImmuneTag = "EmagImmune";
+    public ProtoId<TagPrototype> AccessBreakerImmuneTag = "AccessBreakerImmune";
 
     /// <summary>
     /// Whitelist that entities must be on to work.

@@ -15,11 +15,4 @@ public sealed partial class AccessBreakerComponent : Component
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
     [AutoNetworkedField]
     public string AccessBreakerImmuneTag = "AccessBreakerImmune";
-
-    /// <summary>
-    /// The last target of the access breaker.
-    /// Used so you cannot accidentally break the access twice on the same target.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityUid LastTarget;
 }
