@@ -88,7 +88,7 @@
   name: L6C ROW
   id: WeaponLightMachineGunL6C
   parent: BaseItem
-  description: Converted L6 SAW for silicon use. Slowly fabricates linked .308 rifle ammuntion using a internal fabricator.
+  description: A converted L6 SAW for silicon use. Slowly fabricates linked .308 rifle ammunition using a internal fabricator.
   components:
     - type: Gun
       minAngle: 4
