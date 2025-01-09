@@ -1,5 +1,9 @@
+# The Floatsam event is an event where players spawn on a crashed hauler, the ISS Safe Harbor, on the ocean floor. It's flooded and damaged, and infested with creatures.
+# The map contains a syndicate outpost that is used at the end to escape the planet before the Safe Harbor's reactor explodes, which happens in 1.5 hours after roundstart. There are multiple warnings to tell players what's happening.
+# Use the Floatsam or SafeHarbor GamePreset to run the event, instead of just loading up the map.
+
 - type: gameMap
-  id: SafeHarbor
+  id: SafeHarbor 
   mapName: SafeHarbor
   mapPath: /Maps/Nonstations/crashedship.yml
   minPlayers: 5
