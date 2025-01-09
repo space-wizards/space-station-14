@@ -32,14 +32,14 @@
       - !type:SatiateThirst
         factor: 1.0
         conditions:
-          - !type:OrganType
-            type: Human
-            shouldHave: false
+        - !type:OrganType
+          type: Human
+          shouldHave: false
     Food:
       effects:
-        - !type:AdjustReagent
-          reagent: UncookedAnimalProteins
-          amount: 0.1
+      - !type:AdjustReagent
+        reagent: UncookedAnimalProteins
+        amount: 0.1
     Medicine:
       effects:
       - !type:HealthChange
@@ -51,8 +51,8 @@
             Brute: -3
             Burn: -1.25
   plantMetabolism:
-    - !type:PlantAdjustWater
-      amount: 0.5
+  - !type:PlantAdjustWater
+    amount: 0.5
   footstepSound:
     collection: FootstepBlood
     params:
@@ -96,14 +96,14 @@
   metabolisms:
     Drink:
       effects:
-        - !type:SatiateHunger
-          factor: 1.5
+      - !type:SatiateHunger
+        factor: 1.5
     Poison:
       effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Cellular: 2
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 2
 
 - type: reagent
   id: Ichor
@@ -117,27 +117,27 @@
   metabolisms:
     Drink:
       effects:
-        - !type:SatiateThirst
-          factor: 1.5
+      - !type:SatiateThirst
+        factor: 1.5
     # Dragon doesn't require airloss healing, so omnizine is still best for humans.
     Medicine:
       effects:
-        - !type:ModifyBloodLevel
-          amount: 3
-        - !type:HealthChange
-          damage:
-            groups:
-              Burn: -5
-              Brute: -5
-              Toxin: -2
-            types:
-              Bloodloss: -5
-        - !type:ModifyBleedAmount
-          amount: -1.5
+      - !type:ModifyBloodLevel
+        amount: 3
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -5
+            Brute: -5
+            Toxin: -2
+          types:
+            Bloodloss: -5
+      - !type:ModifyBleedAmount
+        amount: -1.5
   # Just in case you REALLY want to water your plants
   plantMetabolism:
-    - !type:PlantAdjustWater
-      amount: 0.5
+  - !type:PlantAdjustWater
+    amount: 0.5
   footstepSound:
     collection: FootstepBlood
     params:
@@ -167,15 +167,15 @@
   slippery: false
   viscosity: 0.10
   tileReactions:
-    - !type:SpillTileReaction
+  - !type:SpillTileReaction
   metabolisms:
     Food:
       # Sweet!
       effects:
-        - !type:SatiateHunger
-          factor: 1
-        - !type:SatiateThirst
-          factor: 1
+      - !type:SatiateHunger
+        factor: 1
+      - !type:SatiateThirst
+        factor: 1
   footstepSound:
     collection: FootstepBlood
     params:
@@ -193,7 +193,7 @@
   slippery: false
   viscosity: 0.25
   tileReactions:
-    - !type:SpillTileReaction
+  - !type:SpillTileReaction
   metabolisms:
     Food:
       # Delicious!
@@ -240,13 +240,13 @@
     Drink:
       # Disgusting!
       effects:
-        - !type:SatiateThirst
-          factor: -0.5
+      - !type:SatiateThirst
+        factor: -0.5
     Poison:
       effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Poison: 4
-        - !type:ChemVomit
-          probability: 0.25
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 4
+      - !type:ChemVomit
+        probability: 0.25
