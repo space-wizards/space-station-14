@@ -59,7 +59,7 @@ public sealed partial class RitualReagentPuddleBehavior : RitualCustomBehavior
         }
 
         //take off the comma + space on the end of the reagStrings
-        reagStrings = reagStrings.Substring(0, reagStrings.Length - 3);
+        reagStrings = reagStrings.Substring(0, reagStrings.Length - 2);
         outstr = Loc.GetString("heretic-ritual-fail-reagentpuddle", ("reagentname", reagStrings));
         return false;
 
