@@ -374,14 +374,13 @@
 - type: entity
   id: ShuttleGunKineticOld
   parent: ShuttleGunBase
-  name: Legacy PTK-150 "Matter Deconstructor"
-  description: An ancient prototype of the PTK-800 "Matter Dematerializer". The design has long since been abandoned due to its inferior charging and fire speed.
+  name: xenomorphic dematerializer
+  description: An ancient ship gun, utilizing biomechanical systems to store and release energy. While unique in its design, it has been rendered obsolete due to its inferior charging and firing speed compared to mechanical constructions.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Shuttles/kinetic.rsi
+    sprite: Objects/Weapons/Guns/Shuttles/xeno.rsi
     layers:
-    - state: ptk-150
-    - state: mag-7
+    - state: rail
   - type: Destructible
     thresholds:
     - trigger:
@@ -404,7 +403,7 @@
       params:
         variation: 0.12
   - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 25
+    rechargeCooldown: 35
     rechargeSound:
       path: /Audio/Weapons/Guns/Bolt/lmg_bolt_closed.ogg
       params:

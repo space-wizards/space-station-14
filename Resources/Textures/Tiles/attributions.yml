@@ -127,16 +127,21 @@
   source: "https://github.com/space-wizards/space-station-14/"
 
 - files: ["xeno_flooring.png"]
-  license: "CC0-1.0"
+  license: "CC-BY-SA-3.0"
   copyright: "Created by SlamBamActionman (github) for space-station-14."
   source: "https://github.com/space-wizards/space-station-14/"
 
-- files: ["dark_squiggly.png"]
-  license: "CC0-1.0"
+- files: ["dark_squiggly.png", "dark_squiggly_vertical.png"]
+  license: "CC-BY-SA-3.0"
   copyright: "Created by SlamBamActionman (github) for space-station-14."
   source: "https://github.com/space-wizards/space-station-14/"
 
-- files: ["dark_squiggly_vertical.png"]
-  license: "CC0-1.0"
-  copyright: "Created by SlamBamActionman (github) for space-station-14."
+- files: [ "xeno_steel.png", "xeno_steel_horizontal.png" ]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Kezu for space-station-14."
+  source: "https://github.com/space-wizards/space-station-14/"
+
+- files: [ "xeno_maint.png" ]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by obscenelytinyshark for space-station-14."
   source: "https://github.com/space-wizards/space-station-14/"

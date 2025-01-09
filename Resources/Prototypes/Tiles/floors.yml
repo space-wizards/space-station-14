@@ -1961,6 +1961,30 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorXenoSteel
+  name: tiles-xeno-steel
+  sprite: /Textures/Tiles/xeno_steel.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemXeno
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorXenoSteelHorizontal
+  name: tiles-xeno-steel-horizontal
+  sprite: /Textures/Tiles/xeno_steel_horizontal.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemXeno
+  heatCapacity: 10000
+
+- type: tile
   id: FloorDarkSquiggly
   name: tiles-dark-squiggly
   sprite: /Textures/Tiles/dark_squiggly.png
@@ -1994,4 +2018,16 @@
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemSteel
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorXenoMaint
+  name: tiles-xeno-maint
+  sprite: /Textures/Tiles/xeno_maint.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemXeno
   heatCapacity: 10000
