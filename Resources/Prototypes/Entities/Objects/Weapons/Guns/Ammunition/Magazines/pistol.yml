@@ -263,7 +263,7 @@
   id: MagazinePistolSubMachineGun
   name: SMG magazine (.38 auto)
   parent: BaseMagazinePistolSubMachineGun
-  description: 30-round magazine for submachine guns. Contains standard FMJ ammunition, as denoted by the red stripe on the magazine.
+  description: 30-round magazine for submachine guns. Contains standard FMJ ammunition.
   components:
   - type: BallisticAmmoProvider
     capacity: 30
