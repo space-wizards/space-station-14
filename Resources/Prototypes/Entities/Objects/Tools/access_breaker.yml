@@ -1,0 +1,22 @@
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: AccessBreakerUnlimited
+  suffix: Unlimited
+  name: authentication disruptor
+  description: A hacked access configurator, specialized to unlock and erase access from digital locks.
+  components:
+  - type: AccessBreaker
+  - type: Sprite
+    sprite: Objects/Tools/access_configurator.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/access_configurator.rsi
+    storedRotation: -90
+
+- type: entity
+  parent: AccessBreakerUnlimited
+  id: AccessBreaker
+  suffix: Limited
+  components:
+  - type: LimitedCharges
+  - type: AutoRecharge

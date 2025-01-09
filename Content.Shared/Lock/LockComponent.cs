@@ -14,6 +14,13 @@ namespace Content.Shared.Lock;
 public sealed partial class LockComponent : Component
 {
     /// <summary>
+    /// Whether or not the lock is broken.
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public bool Broken;
+
+    /// <summary>
     /// Whether or not the lock is locked.
     /// </summary>
     [DataField("locked"), ViewVariables(VVAccess.ReadWrite)]

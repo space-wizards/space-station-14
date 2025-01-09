@@ -8,15 +8,9 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 
-namespace Content.Shared.Emag.Systems;
+namespace Content.Shared.AccessBreaker;
 
-/// How to add an emag interaction:
-/// 1. Go to the system for the component you want the interaction with
-/// 2. Subscribe to the GotEmaggedEvent
-/// 3. Have some check for if this actually needs to be emagged or is already emagged (to stop charge waste)
-/// 4. Past the check, add all the effects you desire and HANDLE THE EVENT ARGUMENT so a charge is spent
-/// 5. Optionally, set Repeatable on the event to true if you don't want the emagged component to be added
-public sealed class EmagSystem : EntitySystem
+public sealed class AccessBreakerSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedChargesSystem _charges = default!;
@@ -27,26 +21,37 @@ public sealed class EmagSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EmagComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<AccessBreakerComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<AccessBrokenComponent, OnAccessOverriderAccessUpdatedEvent>(OnAccessFixed);
     }
 
-    private void OnAfterInteract(EntityUid uid, EmagComponent comp, AfterInteractEvent args)
+    private void OnAfterInteract(Entity<AccessBreakerComponent> ent, ref AfterInteractEvent args)
     {
         if (!args.CanReach || args.Target is not { } target)
             return;
 
-        args.Handled = TryUseEmag(uid, args.User, target, comp);
+        args.Handled = TryBreakAccess(ent, args.User, target, ent.Comp);
+    }
+
+    private void OnAccessFixed(Entity<AccessBrokenComponent> ent, ref OnAccessOverriderAccessUpdatedEvent args)
+    {
+        RemCompDeferred<AccessBrokenComponent>(ent);
+
+        args.Handled = true;
     }
 
     /// <summary>
-    /// Tries to use the emag on a target entity
+    /// Tries to break the access/lock on a target entity
     /// </summary>
-    public bool TryUseEmag(EntityUid uid, EntityUid user, EntityUid target, EmagComponent? comp = null)
+    public bool TryBreakAccess(EntityUid uid, EntityUid user, EntityUid target, AccessBreakerComponent? comp = null)
     {
         if (!Resolve(uid, ref comp, false))
             return false;
 
-        if (_tag.HasTag(target, comp.EmagImmuneTag))
+        if (_tag.HasTag(target, comp.AccessBreakerImmuneTag))
+            return false;
+
+        if (comp.LastTarget == target)
             return false;
 
         TryComp<LimitedChargesComponent>(uid, out var charges);
@@ -56,7 +61,7 @@ public sealed class EmagSystem : EntitySystem
             return false;
         }
 
-        var handled = DoEmagEffect(user, target);
+        var handled = DoAccessBreakerEffect(user, target);
         if (!handled)
             return false;
 
@@ -71,27 +76,26 @@ public sealed class EmagSystem : EntitySystem
     }
 
     /// <summary>
-    /// Does the emag effect on a specified entity
+    /// Does the access breaker effect on a specified entity
     /// </summary>
-    public bool DoEmagEffect(EntityUid user, EntityUid target)
+    public bool DoAccessBreakerEffect(EntityUid user, EntityUid target)
     {
-        // prevent emagging twice
-        if (HasComp<EmaggedComponent>(target))
+        if (HasComp<AccessBrokenComponent>(target))
             return false;
 
-        var onAttemptEmagEvent = new OnAttemptEmagEvent(user);
-        RaiseLocalEvent(target, ref onAttemptEmagEvent);
+        var onAttemptAccessBreakEvent = new OnAttemptAccessBreakEvent(user);
+        RaiseLocalEvent(target, ref onAttemptAccessBreakEvent);
 
-        // prevent emagging if attempt fails
-        if (onAttemptEmagEvent.Handled)
+        // prevent breaking if attempt fails
+        if (onAttemptAccessBreakEvent.Handled)
             return false;
 
-        var emaggedEvent = new GotEmaggedEvent(user);
-        RaiseLocalEvent(target, ref emaggedEvent);
+        var accessBrokenEvent = new GotAccessBrokenEvent(user);
+        RaiseLocalEvent(target, ref accessBrokenEvent);
 
-        if (emaggedEvent.Handled && !emaggedEvent.Repeatable)
-            EnsureComp<EmaggedComponent>(target);
-        return emaggedEvent.Handled;
+        if (accessBrokenEvent.Handled)
+            EnsureComp<AccessBrokenComponent>(target);
+        return accessBrokenEvent.Handled;
     }
 }
 
@@ -100,10 +104,9 @@ public sealed class EmagSystem : EntitySystem
 /// </summary>
 /// <param name="UserUid">Emag user</param>
 /// <param name="Handled">Did the emagging succeed? Causes a user-only popup to show on client side</param>
-/// <param name="Repeatable">Can the entity be emagged more than once? Prevents adding of <see cref="EmaggedComponent"/></param>
 /// <remarks>Needs to be handled in shared/client, not just the server, to actually show the emagging popup</remarks>
 [ByRefEvent]
-public record struct GotEmaggedEvent(EntityUid UserUid, bool Handled = false, bool Repeatable = false);
+public record struct GotAccessBrokenEvent(EntityUid UserUid, bool Handled = false);
 
 [ByRefEvent]
-public record struct OnAttemptEmagEvent(EntityUid UserUid, bool Handled = false);
+public record struct OnAttemptAccessBreakEvent(EntityUid UserUid, bool Handled = false);

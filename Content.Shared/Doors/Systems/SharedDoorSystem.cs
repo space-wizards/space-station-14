@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.AccessBreaker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -79,7 +80,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, GetPryTimeModifierEvent>(OnPryTimeModifier);
 
         SubscribeLocalEvent<DoorComponent, OnAttemptEmagEvent>(OnAttemptEmag);
-        SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<DoorComponent, GotAccessBrokenEvent>(OnAccessBreak);
     }
 
     protected virtual void OnComponentInit(Entity<DoorComponent> ent, ref ComponentInit args)
@@ -138,7 +139,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         }
     }
 
-    private void OnEmagged(EntityUid uid, DoorComponent door, ref GotEmaggedEvent args)
+    private void OnAccessBreak(EntityUid uid, DoorComponent door, ref GotAccessBrokenEvent args)
     {
         if (!SetState(uid, DoorState.Emagging, door))
             return;

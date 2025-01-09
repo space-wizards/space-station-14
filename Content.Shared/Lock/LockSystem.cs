@@ -1,9 +1,9 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.AccessBreaker;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction.Components;
 using Content.Shared.DoAfter;
-using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -43,7 +43,7 @@ public sealed class LockSystem : EntitySystem
         SubscribeLocalEvent<LockComponent, StorageOpenAttemptEvent>(OnStorageOpenAttempt);
         SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<LockComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleLockVerb);
-        SubscribeLocalEvent<LockComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<LockComponent, GotAccessBrokenEvent>(OnAccessBreak);
         SubscribeLocalEvent<LockComponent, LockDoAfter>(OnDoAfterLock);
         SubscribeLocalEvent<LockComponent, UnlockDoAfter>(OnDoAfterUnlock);
         SubscribeLocalEvent<LockComponent, StorageInteractAttemptEvent>(OnStorageInteractAttempt);
@@ -293,7 +293,7 @@ public sealed class LockSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void OnEmagged(EntityUid uid, LockComponent component, ref GotEmaggedEvent args)
+    private void OnAccessBreak(EntityUid uid, LockComponent component, ref GotAccessBrokenEvent args)
     {
         if (!component.Locked || !component.BreakOnEmag)
             return;
@@ -307,7 +307,6 @@ public sealed class LockSystem : EntitySystem
         var ev = new LockToggledEvent(false);
         RaiseLocalEvent(uid, ref ev, true);
 
-        RemComp<LockComponent>(uid); //Literally destroys the lock as a tell it was emagged
         args.Handled = true;
     }
 
