@@ -726,6 +726,44 @@
 # Probably wants to be moved to drinks-cartons
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkCoconutCartonXL
+  name: coconut water XL
+  description: reagent-desc-coconut-water
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: CoconutWater
+          Quantity: 150
+  - type: Drink
+  - type: Label
+    currentLabel: reagent-name-coconut-water
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/coconutwater.rsi
+    
+- type: entity
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkJuiceLemonCartonXL
+  name: lemon juice XL
+  description: reagent-desc-juice-lemon
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: JuiceLemon
+          Quantity: 150
+  - type: Drink
+  - type: Label
+    currentLabel: reagent-name-juice-lemon
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/lemonjuice.rsi
+
+- type: entity
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkJuiceLimeCartonXL
   name: lime juice XL
   description: Sweet-sour goodness.
