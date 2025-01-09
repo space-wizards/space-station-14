@@ -1,6 +1,7 @@
 using Content.Server.Event.Components;
 using Robust.Shared.Prototypes;
 using Content.Server.Deathwhale;
+using Content.Server.Falling;
 
 namespace Content.Shared.Deathwhale;
 
@@ -11,10 +12,12 @@ public sealed class DeathWhaleSystem : EntitySystem
     private const float UpdateInterval = 1f;
     private float _updateTimer = 0f;
 
+    private const float KillInterval = 3f;
+    private float _killTimer = 0f;
+
     public override void Initialize()
     {
         base.Initialize();
-        // Subscribing to the initialization event for DeathWhaleComponent
         SubscribeLocalEvent<DeathWhaleComponent, ComponentInit>(OnCompInit);
     }
 
@@ -22,23 +25,34 @@ public sealed class DeathWhaleSystem : EntitySystem
     {
         base.Update(frameTime);
         _updateTimer += frameTime;
+        _killTimer += frameTime;
 
-        // Check if it's time to update based on the set interval
         if (_updateTimer >= UpdateInterval)
         {
-            // Query all entities that have a DeathWhaleComponent
             foreach (var entity in EntityManager.EntityQuery<DeathWhaleComponent>())
             {
                 var uid = entity.Owner;
                 var component = EntityManager.GetComponent<DeathWhaleComponent>(uid); // Get the DeathWhaleComponent
 
-                // Call the method to check for nearby entities
                 DeathWhaleCheck(uid, component);
             }
 
             // Reset the timer
             _updateTimer = 0f;
         }
+
+         if (_killTimer >= KillInterval)
+        {
+             foreach (var entity in EntityManager.EntityQuery<DeathWhaleComponent>())
+            {
+                var uid = entity.Owner;
+                var component = EntityManager.GetComponent<DeathWhaleComponent>(uid);
+                QueueDel(component.caughtPrey);
+                component.caughtPrey = null;
+            }
+           
+        }
+
     }
 
     // Log message when the component is initialized
@@ -54,12 +68,16 @@ public sealed class DeathWhaleSystem : EntitySystem
         {
             if (!EntityManager.HasComponent<FallSystemComponent>(prey))
             {
-                // Skip entities that do not have a FallSystemComponent
                 continue;
             }
-
-            // Ensure the prey entity gets a FultonedComponent
-            EnsureComp<FultonedComponent>(prey);
+            if (component.caughtPrey == null)
+            {
+                var preycaught = EnsureComp<FultonedComponent>(prey); // This will harpoon the prey and drag them up offscreen to be eaten
+                preycaught.Removeable = false;
+                preycaught.Beacon = uid;
+                component.caughtPrey = prey;
+                _killTimer = 0f;
+            }
         }
     }
 }
