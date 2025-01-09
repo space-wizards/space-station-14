@@ -1063,7 +1063,7 @@
 - type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkDrGibbJug
-  name: dr gibb. jug
+  name: Dr. Gibb jug
   description: Yeah I don't know either...
   components:
   - type: SolutionContainerManager
@@ -1093,6 +1093,23 @@
   - type: Drink
   - type: Label
     currentLabel: reagent-name-root-beer
+
+- type: entity
+  parent: DrinkBottlePlasticBaseFull
+  id: DrinkColaJug
+  name: Space Cola jug
+  description: reagent-desc-cola
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: Cola
+          Quantity: 150
+  - type: Drink
+  - type: Label
+    currentLabel: reagent-name-cola
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
