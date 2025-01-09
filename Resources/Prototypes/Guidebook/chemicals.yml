@@ -8,9 +8,10 @@
   - Narcotics
   - Pyrotechnic
   - Toxins
-  - Foods
-  - Botanical
   - Biological
+  - Botanical
+  - Domestic
+  - Foods
   - Special
   - Others
   filterEnabled: True
@@ -40,9 +41,9 @@
   filterEnabled: True
 
 - type: guideEntry
-  id: Foods
-  name: guide-entry-foods
-  text: "/ServerInfo/Guidebook/ChemicalTabs/Foods.xml"
+  id: Biological
+  name: guide-entry-biological
+  text: "/ServerInfo/Guidebook/ChemicalTabs/Biological.xml"
   filterEnabled: True
 
 - type: guideEntry
@@ -52,9 +53,15 @@
   filterEnabled: True
 
 - type: guideEntry
-  id: Biological
-  name: guide-entry-biological
-  text: "/ServerInfo/Guidebook/ChemicalTabs/Biological.xml"
+  id: Domestic
+  name: guide-entry-domestic
+  text: "/ServerInfo/Guidebook/ChemicalTabs/Domestic.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: Foods
+  name: guide-entry-foods
+  text: "/ServerInfo/Guidebook/ChemicalTabs/Foods.xml"
   filterEnabled: True
 
 - type: guideEntry

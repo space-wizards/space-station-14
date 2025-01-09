@@ -465,7 +465,7 @@
 - type: reagent
   id: UncookedAnimalProteins
   name: reagent-name-uncooked-animal-proteins
-  group: Foods
+  group: Foods # Also a Toxin
   desc: reagent-desc-uncooked-animal-proteins
   physicalDesc: reagent-physical-desc-clumpy
   flavor: bitter
@@ -545,7 +545,7 @@
 - type: reagent
   id: Honk
   name: reagent-name-honk
-  group: Toxins
+  group: Special # Also a Toxin
   desc: reagent-desc-honk
   physicalDesc: reagent-physical-desc-pungent
   flavor: bitter
@@ -573,7 +573,7 @@
 - type: reagent
   id: Lead
   name: reagent-name-lead
-  group: Toxins
+  group: Elements # Also a Toxin
   desc: reagent-desc-lead
   physicalDesc: reagent-physical-desc-metallic
   color: "#5C6274"

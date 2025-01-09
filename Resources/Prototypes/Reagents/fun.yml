@@ -30,6 +30,7 @@
 - type: reagent
   id: Fiber
   name: reagent-name-fiber
+  group: Domestic
   desc: reagent-desc-fiber
   physicalDesc: reagent-physical-desc-fibrous
   flavor: fiber
@@ -139,14 +140,16 @@
 - type: reagent
   id: GroundBee
   name: reagent-name-ground-bee
+  group: Special
   desc: reagent-desc-ground-bee
   physicalDesc: reagent-physical-desc-bee-guts
-  flavor: bee
+  flavor: bee # Fibrous would make more technical sense as this is from a bee plushies
   color: "#86530E"
 
 - type: reagent
   id: Saxoite
   name: reagent-name-saxoite
+  group: Special
   desc: reagent-desc-saxoite
   physicalDesc: reagent-physical-desc-ground-brass
   flavor: sax
@@ -321,7 +324,7 @@
 - type: reagent
   id: JuiceThatMakesYouWeh
   name: reagent-name-weh
-  group: Toxins
+  group: Special # Metabolism type is poison, but not damage type.
   desc: reagent-desc-weh
   physicalDesc: reagent-physical-desc-vibrant
   flavor: weh
@@ -353,7 +356,7 @@
 - type: reagent
   id: JuiceThatMakesYouHew
   name: reagent-name-hew
-  group: Toxins
+  group: Special # Metabolism type is poison, but not damage type.
   desc: reagent-desc-hew
   physicalDesc: reagent-physical-desc-inversed
   flavor: hew

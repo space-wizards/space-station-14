@@ -1,6 +1,7 @@
 - type: reagent
   id: Bleach
   name: reagent-name-bleach
+  group: Domestic # Also a Toxin
   desc: reagent-desc-bleach
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: bitter
@@ -27,6 +28,7 @@
 - type: reagent
   id: SpaceCleaner
   name: reagent-name-space-cleaner
+  group: Domestic
   desc: reagent-desc-space-cleaner
   physicalDesc: reagent-physical-desc-lemony-fresh
   flavor: bitter
@@ -41,6 +43,7 @@
 - type: reagent
   id: SoapReagent
   name: reagent-name-soap
+  group: Domestic
   desc: reagent-desc-soap
   physicalDesc: reagent-physical-desc-soapy
   flavor: clean
@@ -67,6 +70,7 @@
 - type: reagent
   id: SpaceLube
   name: reagent-name-space-lube
+  group: Domestic
   desc: reagent-desc-space-lube
   slippery: true
   physicalDesc: reagent-physical-desc-shiny
@@ -83,6 +87,7 @@
 - type: reagent
   id: SpaceGlue
   name: reagent-name-space-glue
+  group: Domestic # Also a narcotic
   desc: reagent-desc-space-glue
   physicalDesc: reagent-physical-desc-sticky
   flavor: glue

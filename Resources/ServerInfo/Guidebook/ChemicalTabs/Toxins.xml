@@ -1,5 +1,44 @@
 <Document>
+
 # Toxins
-The chemicals in this list contain toxins that induce certain effects and can cause death. Use responsibly.
+
+These chemicals are toxic to most species. They are harmful to your health and may cause incapacitation or death.
+
+The following is a list of toxins that fall into other categories.
+
+<GuideReagentEmbed Reagent="Ammonia"/>
+<GuideReagentEmbed Reagent="Artifexium"/>
+<GuideReagentEmbed Reagent="Bleach"/>
+<GuideReagentEmbed Reagent="Chlorine"/>
+<GuideReagentEmbed Reagent="ChlorineTrifluoride"/>
+<GuideReagentEmbed Reagent="Copper"/>
+<GuideReagentEmbed Reagent="CapsaicinOil"/>
+<GuideReagentEmbed Reagent="Diethylamine"/>
+<GuideReagentEmbed Reagent="Frezon"/>
+<GuideReagentEmbed Reagent="GreyMatter"/>
+<GuideReagentEmbed Reagent="Lead"/>
+<GuideReagentEmbed Reagent="Mercury"/>
+<GuideReagentEmbed Reagent="NitrousOxide"/>
+<GuideReagentEmbed Reagent="Plasma"/>
+<GuideReagentEmbed Reagent="Radium"/>
+<GuideReagentEmbed Reagent="Silicon"/>
+<GuideReagentEmbed Reagent="Sulfur"/>
+<GuideReagentEmbed Reagent="Tritium"/>
+<GuideReagentEmbed Reagent="UncookedAnimalProteins"/>
+<GuideReagentEmbed Reagent="UnstableMutagen"/>
+<GuideReagentEmbed Reagent="Uranium"/>
+<GuideReagentEmbed Reagent="ZombieBlood"/>
+
+# Non-human Toxins
+
+These reagents are toxic to certain non-human species on the station.
+
+<GuideReagentEmbed Reagent="Iron"/>
+<GuideReagentEmbed Reagent="Oxygen"/>
+
+# All Toxins
+
+This is a list of -all- toxins available, including ones previously listed.
+
 <GuideReagentGroupEmbed Group="Toxins"/>
 </Document>

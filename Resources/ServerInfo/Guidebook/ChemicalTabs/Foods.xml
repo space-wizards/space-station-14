@@ -1,8 +1,8 @@
 <Document>
+
 # Foods
 
-These reagents are mostly used in the kitchen. Very helpful for Chefs and/or Service Workers.
+These reagents can be eaten, drunk, or used in cooking. They are of particular interest to chefs.
 
 <GuideReagentGroupEmbed Group="Foods"/>
-
 </Document>
