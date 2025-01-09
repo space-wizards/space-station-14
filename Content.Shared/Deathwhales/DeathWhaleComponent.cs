@@ -6,6 +6,9 @@ namespace Content.Server.Deathwhale
 
          [DataField("radius")]
          public float Radius = 50;
+
+        [DataField("caughtPrey")]
+        public var caughtPrey = null;
         
     }
 }
