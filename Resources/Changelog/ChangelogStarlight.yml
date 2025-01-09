@@ -1931,3 +1931,11 @@ Entries:
   id: 273
   time: '2025-01-08T19:03:34.026155+00:00'
   url: 'null'
+- author: aedler
+  changes:
+  - message: Blueshield starts with extended security survival box
+    type: Tweak
+  id: 274
+  time: '2025-01-09T11:08:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/224
+
