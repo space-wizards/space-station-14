@@ -104,8 +104,8 @@
   suffix: Event
   components:
   - type: AmbientSound
-    volume: 5
-    range: 2
+    volume: 3
+    range: 7
     sound:
       path: /Audio/Misc/siren.ogg
   - type: MeleeSound
