@@ -2,6 +2,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Bed.Sleep;
@@ -180,6 +181,12 @@ public abstract class SharedStunSystem : EntitySystem
 
         if (!Resolve(uid, ref status, false))
             return false;
+        
+        var beforeStun = new BeforeStunEvent();
+        RaiseLocalEvent(uid, ref beforeStun);
+        
+        if (beforeStun.Cancelled)
+            return false;
 
         if (!_statusEffect.TryAddStatusEffect<StunnedComponent>(uid, "Stun", time, refresh))
             return false;
@@ -201,6 +208,12 @@ public abstract class SharedStunSystem : EntitySystem
             return false;
 
         if (!Resolve(uid, ref status, false))
+            return false;
+        
+        var beforeKnockdown = new BeforeKnockdownEvent();
+        RaiseLocalEvent(uid, beforeKnockdown);
+        
+        if (beforeKnockdown.Cancelled)
             return false;
 
         if (!_statusEffect.TryAddStatusEffect<KnockedDownComponent>(uid, "KnockedDown", time, refresh))
@@ -309,6 +322,27 @@ public abstract class SharedStunSystem : EntitySystem
     }
 
     #endregion
+}
+
+/// <summary>
+///     Raised before stun is dealt to allow other systems to cancel it.
+/// </summary>
+[ByRefEvent]
+public record struct BeforeStunEvent(bool Cancelled = false);
+
+/// <summary>
+///     Raised before knockdown is dealt to allow other systems to cancel it.
+/// </summary>
+public sealed class BeforeKnockdownEvent: EntityEventArgs, IInventoryRelayEvent
+{
+    public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
+    
+    public bool Cancelled;
+    
+    public BeforeKnockdownEvent(bool cancelled = false)
+    {
+        Cancelled = cancelled;
+    }
 }
 
 /// <summary>

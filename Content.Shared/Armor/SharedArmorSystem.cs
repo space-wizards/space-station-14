@@ -2,6 +2,7 @@
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
+using Content.Shared.Stunnable;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
@@ -22,6 +23,7 @@ public abstract class SharedArmorSystem : EntitySystem
 
         SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
         SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<StaminaModifyEvent>>(OnStaminaDamageModify);
+        SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<BeforeKnockdownEvent>>(OnKnockdown);
         SubscribeLocalEvent<ArmorComponent, BorgModuleRelayedEvent<DamageModifyEvent>>(OnBorgDamageModify);
         SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
     }
@@ -38,6 +40,12 @@ public abstract class SharedArmorSystem : EntitySystem
         
         if (args.Args.Modifier > component.StaminaDamageModifier)
             args.Args.Modifier = component.StaminaDamageModifier;
+    }
+    
+    private void OnKnockdown(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<BeforeKnockdownEvent> args)
+    {
+        if (component.IngoreKnockdown)
+            args.Args.Cancelled = true;
     }
 
     private void OnBorgDamageModify(EntityUid uid, ArmorComponent component,

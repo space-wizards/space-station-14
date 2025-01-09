@@ -552,6 +552,7 @@
         Radiation: 0.5
         Caustic: 0.5
     staminaModifier: 0.3
+    ingoreKnockdown: true
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -613,6 +614,7 @@
         Radiation: 0.01
         Caustic: 0.5
     staminaModifier: 0.2
+    ingoreKnockdown: true
   - type: Item
     size: Huge
   - type: ClothingSpeedModifier
@@ -648,6 +650,7 @@
         Radiation: 0.25
         Caustic: 0.4
     staminaModifier: 0.1
+    ingoreKnockdown: true
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
@@ -681,6 +684,7 @@
         Radiation: 0.2
         Caustic: 0.2
     staminaModifier: 0.0
+    ingoreKnockdown: true
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.65
@@ -934,6 +938,8 @@
         Heat: 0.1
         Radiation: 0.1
         Caustic: 0.1
+    staminaModifier: 0.0
+    ingoreKnockdown: true
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
@@ -971,6 +977,7 @@
         Shock: 0.1
         Radiation: 0.1
         Caustic: 0.1
+    staminaModifier: 0.2
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
@@ -1002,6 +1009,8 @@
         Slash: 0.9
         Piercing: 0.9
         Caustic: 0.8
+    staminaModifier: 0.3
+    ingoreKnockdown: true
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
