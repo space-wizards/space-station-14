@@ -52,6 +52,7 @@
   id: SynthesisSpecialist
   components:
   - type: StationEvent
+    startAnnouncement: false # Impstation no announcement
     weight: 4
     minimumPlayers: 20
     maxOccurrences: 1
