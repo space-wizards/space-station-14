@@ -1,0 +1,34 @@
+# Guns
+# Explosives
+# Ammo
+# Chemicals
+# Deception
+- type: listing
+  id: UplinkSmugglerSatchel
+  name: uplink-smuggler-satchel-name
+  description: uplink-smuggler-satchel-desc
+  productEntity: ClothingSatchelSmugglers
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkDeception
+
+- type: listing
+  id: UplinkSyndicateIDHarmony
+  name: uplink-syndicate-id-name
+  description: uplink-syndicate-id-desc
+  productEntity: SyndicateIDCard
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkDeception
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+# Disruption
+# Allies
+# Implants
+# Wearables
+# Pointless
+# Job Specific
