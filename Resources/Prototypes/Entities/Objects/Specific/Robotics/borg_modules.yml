@@ -223,7 +223,7 @@
   - type: Sprite
     layers:
     - state: cargo
-    - state: icon-mining
+    - state: icon-mining-adv
   - type: ItemBorgModule
     items:
     - MiningDrillDiamond
@@ -231,7 +231,7 @@
     - AdvancedMineralScannerUnpowered
     - OreBagOfHolding
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-mining-module }
 
 - type: entity
   id: BorgModuleTraversal
@@ -432,7 +432,7 @@
   - type: Sprite
     layers:
     - state: medical
-    - state: icon-chemist
+    - state: icon-chem
   - type: ItemBorgModule
     items:
     - HandheldHealthAnalyzerUnpowered
@@ -442,7 +442,7 @@
     - BaseChemistryEmptyVial
     - BaseChemistryEmptyVial
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-diagnosis-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: chem-module }
 
 - type: entity
   id: BorgModuleAdvancedChemical
@@ -462,7 +462,7 @@
     - Beaker
     - Beaker
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-diagnosis-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-chem-module }
 
 # science modules
 # todo: if science ever gets their own custom robot, add more "sci" modules.
