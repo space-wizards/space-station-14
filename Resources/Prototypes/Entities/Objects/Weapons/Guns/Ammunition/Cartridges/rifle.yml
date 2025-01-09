@@ -47,7 +47,7 @@
   id: CartridgeRifleIncendiary
   name: cartridge (.223 rifle incendiary)
   parent: BaseCartridgeRifle
-  description: 0.223x1.78 inches. Replaces the lead payload with a self-igniting incendiary compound. Developed by Nanotrasen for use in combat rifles.
+  description: 0.223x1.78 inches. Replaces the lead payload with a self-igniting incendiary compound.
   components:
   - type: CartridgeAmmo
     proto: BulletRifleIncendiary
