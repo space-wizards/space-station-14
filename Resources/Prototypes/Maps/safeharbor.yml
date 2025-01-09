@@ -5,7 +5,7 @@
   minPlayers: 5
   stations:
     SafeHarbor:
-      stationProto: StandardNanotrasenStation
+      stationProto: StandardStationEvent
       components:
         - type: StationNameSetup
           mapNameTemplate: "ISS Safe Harbor"
