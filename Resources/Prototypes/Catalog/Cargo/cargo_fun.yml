@@ -211,7 +211,7 @@
 - type: cargoProduct
   id: ChurchOrganInstrument
   icon:
-    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: church-organ
   product: ChurchOrganInstrument
   cost: 1500
@@ -221,7 +221,7 @@
 - type: cargoProduct
   id: PianoInstrument
   icon:
-    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: piano
   product: PianoInstrument
   cost: 1500
@@ -231,7 +231,7 @@
 - type: cargoProduct
   id: UprightPianoInstrument
   icon:
-    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: piano-upright
   product: UprightPianoInstrument
   cost: 1500
@@ -241,7 +241,7 @@
 - type: cargoProduct
   id: VibraphoneInstrument
   icon:
-    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: vibraphone
   product: VibraphoneInstrument
   cost: 1500
@@ -251,7 +251,7 @@
 - type: cargoProduct
   id: MarimbaInstrument
   icon:
-    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: marimba
   product: MarimbaInstrument
   cost: 1500
@@ -261,7 +261,7 @@
 - type: cargoProduct
   id: TubaInstrument
   icon:
-    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: tuba
   product: TubaInstrument
   cost: 1500
@@ -271,7 +271,7 @@
 - type: cargoProduct
   id: HarpInstrument
   icon:
-    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: harp
   product: HarpInstrument
   cost: 1500
@@ -281,7 +281,7 @@
 - type: cargoProduct
   id: TimpaniInstrument
   icon:
-    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: timpani
   product: TimpaniInstrument
   cost: 1500
@@ -291,7 +291,7 @@
 - type: cargoProduct
   id: TaikoInstrument
   icon:
-    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: taiko
   product: TaikoInstrument
   cost: 1500
@@ -301,7 +301,7 @@
 - type: cargoProduct
   id: ContrabassInstrument
   icon:
-    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: contrabass
   product: ContrabassInstrument
   cost: 1500
@@ -311,7 +311,7 @@
 - type: cargoProduct
   id: MinimoogInstrument
   icon:
-    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: minimoog
   product: MinimoogInstrument
   cost: 1500
@@ -321,7 +321,7 @@
 - type: cargoProduct
   id: TomDrumsInstrument
   icon:
-    sprite: Objects\Fun\Instruments\structureinstruments.rsi
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: toms
   product: TomDrumsInstrument
   cost: 1500
