@@ -1,3 +1,4 @@
+# Generic
 - type: latheCategory
   id: Ammo
   name: lathe-category-ammo
@@ -31,7 +32,6 @@
   name: lathe-category-weapons
 
 # Biogen
-
 - type: latheCategory
   id: Food
   name: lathe-category-food
@@ -43,3 +43,24 @@
 - type: latheCategory
   id: Materials
   name: lathe-category-materials
+
+# Uniform printer
+- type: latheCategory
+  id: Coat
+  name: lathe-category-coat
+
+- type: latheCategory
+  id: Command
+  name: lathe-category-command
+
+- type: latheCategory
+  id: Hat
+  name: lathe-category-hat
+
+- type: latheCategory
+  id: Jumpsuit
+  name: lathe-category-jumpsuit
+
+- type: latheCategory
+  id: Neck
+  name: lathe-category-neck
