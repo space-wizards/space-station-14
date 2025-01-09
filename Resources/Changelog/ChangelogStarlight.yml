@@ -1959,3 +1959,10 @@ Entries:
   id: 277
   time: '2025-01-09T13:10:54.599596+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: Now any explosion will be accompanied by smoke
+    type: Tweak
+  id: 278
+  time: '2025-01-09T15:04:11.349016+00:00'
+  url: 'null'
