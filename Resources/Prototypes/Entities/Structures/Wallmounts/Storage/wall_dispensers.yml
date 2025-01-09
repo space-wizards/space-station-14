@@ -7,7 +7,6 @@
     sprite: Structures/Storage/tanks.rsi
     state: cleanerdispenser
   - type: Appearance
-    anchored: true
   - type: Destructible
     thresholds:
     - trigger:

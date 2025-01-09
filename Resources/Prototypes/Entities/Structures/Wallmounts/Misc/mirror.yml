@@ -30,4 +30,4 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          collection: GlassMetalBreak
+          collection: MetalGlassBreak
