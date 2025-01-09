@@ -3,7 +3,7 @@
 <Box>
   <GuideEntityEmbed Entity="MobGoblin" Caption=""/>
 </Box>
-Goblins are a strange race of humanoid beings. They are small, fragile, and adapted to environments that other humanoid species tend to find unsanitary. Resultantly, they take [color=#1e90ff]25% less damage from Poison, and 10% less damage from Caustic sources[/color] but [color=#ffa500]20% more damage from Blunt, Piercing, and Slashing damage.[/color]
+Goblins are a strange race of humanoid beings. They are small, fragile, and adapted to environments that other humanoid species tend to find unsanitary. Resultantly, they take [color=#1e90ff]25% less damage from Poison, and 10% less damage from Caustic sources[/color] but [color=#ffa500]20% more damage from Blunt, Piercing, and Slashing sources.[/color]
 
 Due to their small stature, [color=#1e90ff]they can easily be picked up and moved by larger humanoid species.[/color]
 
