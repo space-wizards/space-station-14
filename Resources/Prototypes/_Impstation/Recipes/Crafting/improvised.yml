@@ -3,7 +3,7 @@
   id: GrapplingGunImprovised
   graph: GrapplingGunImprovised
   startNode: start
-  targetNode: improvisedgrapple
+  targetNode: doohickey
   category: construction-category-tools
   description: An improvised pneumatic cannon modified into a grappling gun using a plunger, a lot of wire, and a lot of hope.
   icon:
