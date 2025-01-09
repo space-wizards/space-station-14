@@ -1,19 +1,9 @@
 - type: entity
+  parent: BaseWallmountMachine
   id: Screen
   name: screen
   description: Displays text or time.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
   components:
-  - type: Transform
-    anchored: true
-  - type: WallMount
-    arc: 360
-  - type: InteractionOutline
-  - type: Clickable
-  - type: Appearance
   - type: Rotatable
   - type: TextScreenVisuals
     textOffset: 0,3
@@ -24,14 +14,8 @@
     sprite: Structures/Wallmounts/screen.rsi
     state: screen
     noRot: true
-  - type: Construction
-    graph: Timer
-    node: screen
   - type: ApcPowerReceiver
     powerLoad: 100
-  - type: Electrified
-    enabled: false
-    usesApcPower: true
   - type: ExtensionCableReceiver
   - type: Screen
   - type: DeviceNetwork
@@ -42,6 +26,7 @@
   id: ArrivalsShuttleTimer
   parent: Screen
   name: arrivals screen
+  description: Displays time of arrivals shuttle ETA.
   components:
   - type: DeviceNetwork
     deviceNetId: Private

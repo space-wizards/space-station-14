@@ -6,9 +6,6 @@
   name: shelf
   description: A strange place to place, well, anything really. You feel like you shouldn't be seeing this.
   components:
-  - type: Tag
-    tags:
-      - Structure
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Storage/Shelfs/wood.rsi

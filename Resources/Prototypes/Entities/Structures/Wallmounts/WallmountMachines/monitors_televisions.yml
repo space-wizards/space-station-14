@@ -125,6 +125,14 @@
   - type: Construction
     graph: WallmountTelevision
     node: TelevisionFrame
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Wallmounts/flatscreentv.rsi
+    layers:
+      - map: ["computerLayerBody"]
+        state: television_wall
+      - map: ["computerLayerScreen"]
+        state: television_wallscreen
   - type: Destructible
     thresholds:
       - trigger:

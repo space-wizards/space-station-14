@@ -10,6 +10,10 @@
   - type: WallMount
   - type: InteractionOutline
   - type: Transform
+    anchored: true
+  - type: Tag
+    tags:
+    - Structure
 
 - type: entity
   parent: BaseWallmount
@@ -39,7 +43,7 @@
   abstract: true
   components:
   - type: ApcPowerReceiver
-    powerLoad: 1000
+    powerLoad: 100
   - type: ExtensionCableReceiver
   - type: LightningTarget
     priority: 1
