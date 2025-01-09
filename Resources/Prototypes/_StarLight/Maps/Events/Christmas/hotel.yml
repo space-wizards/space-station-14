@@ -3,7 +3,7 @@
   mapName: 'Christmas Hotel'
   mapPath: /Maps/_Starlight/Stations/Events/Christmas/Hotel.yml
   minPlayers: 20
-  maxPlayers: 50
+  maxPlayers: 55
   stations:
     Hotel:
       stationProto: StandardNanotrasenStation
@@ -17,7 +17,7 @@
           emergencyShuttlePath: /Maps/Shuttles/emergency_meta.yml
         - type: StationJobs
           availableJobs:
-            #service
+             #service
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             Bartender: [ 2, 2 ]
@@ -64,4 +64,6 @@
             #law
             Magistrate: [ 1, 1 ]
             IAA: [ 1, 1 ]
-
+            #Representives
+            BlueShield: [ 1, 1 ]
+            NanoTrasenRepresentative: [ 1, 1 ]
