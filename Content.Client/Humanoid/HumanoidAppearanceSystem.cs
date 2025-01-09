@@ -340,23 +340,20 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
     }
 
     protected override void SetLayerVisibility(
-        EntityUid uid,
-        HumanoidAppearanceComponent humanoid,
+        Entity<HumanoidAppearanceComponent> ent,
         HumanoidVisualLayers layer,
         bool visible,
-        SlotFlags slot,
-        bool permanent,
+        SlotFlags? slot,
         ref bool dirty)
     {
-        base.SetLayerVisibility(uid, humanoid, layer, visible, slot, permanent, ref dirty);
+        base.SetLayerVisibility(ent, layer, visible, slot, ref dirty);
 
-        var sprite = Comp<SpriteComponent>(uid);
+        var sprite = Comp<SpriteComponent>(ent);
         if (!sprite.LayerMapTryGet(layer, out var index))
         {
             if (!visible)
                 return;
-            else
-                index = sprite.LayerMapReserveBlank(layer);
+            index = sprite.LayerMapReserveBlank(layer);
         }
 
         var spriteLayer = sprite[index];
@@ -366,13 +363,14 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         spriteLayer.Visible = visible;
 
         // I fucking hate this. I'll get around to refactoring sprite layers eventually I swear
+        // Just a week away...
 
-        foreach (var markingList in humanoid.MarkingSet.Markings.Values)
+        foreach (var markingList in ent.Comp.MarkingSet.Markings.Values)
         {
             foreach (var marking in markingList)
             {
                 if (_markingManager.TryGetMarking(marking, out var markingPrototype) && markingPrototype.BodyPart == layer)
-                    ApplyMarking(markingPrototype, marking.MarkingColors, marking.Visible, humanoid, sprite);
+                    ApplyMarking(markingPrototype, marking.MarkingColors, marking.Visible, ent, sprite);
             }
         }
     }

@@ -1,5 +1,6 @@
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Decals;
 using Content.Shared.Examine;
@@ -115,100 +116,93 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     /// <summary>
     ///     Toggles a humanoid's sprite layer visibility.
     /// </summary>
-    /// <param name="uid">Humanoid mob's UID</param>
+    /// <param name="ent">Humanoid entity</param>
     /// <param name="layer">Layer to toggle visibility for</param>
-    /// <param name="slot">Equipment slot that is (or was) hiding the layer</param>
-    /// <param name="humanoid">Humanoid component of the entity</param>
-    public void SetLayerVisibility(EntityUid uid,
+    /// <param name="visible">Whether to hide or show the layer. If more than once piece of clothing is hiding the layer, it may remain hidden.</param>
+    /// <param name="source">Equipment slot that has the clothing that is (or was) hiding the layer. If not specified, the change is "permanent" (i.e., see <see cref="HumanoidAppearanceComponent.PermanentlyHidden"/>)</param>
+    public void SetLayerVisibility(Entity<HumanoidAppearanceComponent?> ent,
         HumanoidVisualLayers layer,
         bool visible,
-        SlotFlags slot,
-        bool permanent = false,
-        HumanoidAppearanceComponent? humanoid = null
-        )
+        SlotFlags? source = null)
     {
-        if (!Resolve(uid, ref humanoid, false))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
         var dirty = false;
-        SetLayerVisibility(uid, humanoid, layer, visible, slot, permanent, ref dirty);
+        SetLayerVisibility(ent!, layer, visible, source, ref dirty);
         if (dirty)
-            Dirty(uid, humanoid);
+            Dirty(ent);
     }
 
     /// <summary>
     ///     Sets the visibility for multiple layers at once on a humanoid's sprite.
     /// </summary>
-    /// <param name="uid">Humanoid mob's UID</param>
+    /// <param name="ent">Humanoid entity</param>
     /// <param name="layers">An enumerable of all sprite layers that are going to have their visibility set</param>
     /// <param name="visible">The visibility state of the layers given</param>
-    /// <param name="permanent">If this is a permanent change, or temporary. Permanent layers are stored in their own hash set.</param>
-    /// <param name="humanoid">Humanoid component of the entity</param>
-    public void SetLayersVisibility(EntityUid uid,
+    public void SetLayersVisibility(Entity<HumanoidAppearanceComponent?> ent,
         IEnumerable<HumanoidVisualLayers> layers,
-        bool visible,
-        bool permanent = false,
-        HumanoidAppearanceComponent? humanoid = null
-        )
+        bool visible)
     {
-        if (!Resolve(uid, ref humanoid))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
         var dirty = false;
 
         foreach (var layer in layers)
         {
-            SetLayerVisibility(uid, humanoid, layer, visible, slot: SlotFlags.NONE, permanent, ref dirty);
+            SetLayerVisibility(ent!, layer, visible, null, ref dirty);
         }
 
         if (dirty)
-            Dirty(uid, humanoid);
+            Dirty(ent);
     }
 
+    /// <inheritdoc cref="SetLayerVisibility(Entity{HumanoidAppearanceComponent?},HumanoidVisualLayers,bool,Nullable{SlotFlags})"/>
     protected virtual void SetLayerVisibility(
-        EntityUid uid,
-        HumanoidAppearanceComponent humanoid,
+        Entity<HumanoidAppearanceComponent> ent,
         HumanoidVisualLayers layer,
         bool visible,
-        SlotFlags slot,
-        bool permanent,
-        ref bool dirty
-        )
+        SlotFlags? source,
+        ref bool dirty)
     {
+#if DEBUG
+        if (source is {} s)
+        {
+            DebugTools.AssertNotEqual(s, SlotFlags.NONE);
+            // Check that only a single bit in the bitflag is set
+            var powerOfTwo = BitOperations.RoundUpToPowerOf2((uint)s);
+            DebugTools.AssertEqual((uint)s, powerOfTwo);
+        }
+#endif
+
         if (visible)
         {
-            if (permanent)
-                dirty |= humanoid.PermanentlyHidden.Remove(layer);
-
-            else if (humanoid.HiddenLayers.ContainsKey(layer))
+            if (source is not {} slot)
+            {
+                dirty |= ent.Comp.PermanentlyHidden.Remove(layer);
+            }
+            else if (ent.Comp.HiddenLayers.ContainsKey(layer))
             {
                 dirty = true;
-                // remove slot flag from the slots hiding this layer
-                humanoid.HiddenLayers[layer] &= ~slot;
-                // if layer no longer has slots hiding it, remove it from hidden layers
-                if (humanoid.HiddenLayers[layer] == SlotFlags.NONE || slot == SlotFlags.NONE)
-                    humanoid.HiddenLayers.Remove(layer);
+                // This layer might be getting hidden by more than one piece of equipped clothing.
+                // remove slot flag from the set of slots hiding this layer, then check if there are any left.
+                ent.Comp.HiddenLayers[layer] &= ~slot;
+                if (ent.Comp.HiddenLayers[layer] == SlotFlags.NONE)
+                    ent.Comp.HiddenLayers.Remove(layer);
             }
         }
         else
         {
-            if (permanent)
-                dirty |= humanoid.PermanentlyHidden.Add(layer);
-
+            if (source is not { } slot)
+            {
+                dirty |= ent.Comp.PermanentlyHidden.Add(layer);
+            }
             else
             {
-                // if layer is already hidden by something, add this slot to the
-                // SlotFlags covering it.
-                if (humanoid.HiddenLayers.ContainsKey(layer))
-                {
-                    dirty = true;
-                    humanoid.HiddenLayers[layer] |= slot;
-                }
-                else
-                {
-                    dirty = true;
-                    humanoid.HiddenLayers.Add(layer, slot);
-                }
+                var oldSlots = ent.Comp.HiddenLayers.GetValueOrDefault(layer);
+                ent.Comp.HiddenLayers[layer] = slot | oldSlots;
+                dirty |= oldSlots == SlotFlags.NONE;
             }
 
         }
