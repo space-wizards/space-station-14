@@ -6,7 +6,11 @@
   components:
   - type: Pda
     id: RoboticistIDCard
-    state: pda-roboticist
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-roboticist
   - type: PdaBorderColor
     borderColor: "#363636"
     accentVColor: "#d33725"
@@ -25,13 +29,17 @@
   components:
   - type: Pda
     id: MagistrateIDCard
-    state: pda-captain
     penSlot:
       startingItem: Pen
       priority: -1
       whitelist:
         tags:
         - Write
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-captain
   - type: PdaBorderColor
     borderColor: "#7C5D00"
   - type: Icon
@@ -44,13 +52,17 @@
   components:
   - type: Pda
     id: NanoTrasenRepresentativeIDCard
-    state: pda-ntrep
     penSlot:
       startingItem: Pen
       priority: -1
       whitelist:
         tags:
         - Write
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-ntrep
   - type: PdaBorderColor
     borderColor: "#1c1c1c"
     accentHColor: "#ffce5b"
@@ -73,7 +85,11 @@
   components:
   - type: Pda
     id: IAAIDCard
-    state: pda-lawyer
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-lawyer
   - type: PdaBorderColor
     borderColor: "#6f6192"
   - type: Icon
@@ -88,7 +104,11 @@
     sprite: _Starlight/Objects/Devices/pda.rsi
   - type: Pda
     id: BlueShieldIDCard
-    state: pda-blueshield
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-blueshield
   - type: Icon
     sprite: _Starlight/Objects/Devices/pda.rsi
     state: pda-blueshield

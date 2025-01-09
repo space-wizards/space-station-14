@@ -1293,7 +1293,11 @@
   components:
   - type: Pda
     id: CluwneBeastIDCard
-    state: pda-cluwne
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-cluwne
   - type: PdaBorderColor
     borderColor: "#1c8f4d"
   - type: Icon
