@@ -367,6 +367,13 @@
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
+  id: MagazineBoxHeavyRifle
+  result: MagazineBoxHeavyRifle
+  materials:
+    Steel: 900
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
   id: BoxLethalshot
   result: BoxLethalshot
   materials:
@@ -399,6 +406,13 @@
   parent: BaseAmmoRecipe
   id: SpeedLoaderMagnum
   result: SpeedLoaderMagnum
+  materials:
+    Steel: 190
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: SpeedLoaderHeavyRifle
+  result: SpeedLoaderHeavyRifle
   materials:
     Steel: 190
 

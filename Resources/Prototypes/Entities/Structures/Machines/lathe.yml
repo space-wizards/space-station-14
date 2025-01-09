@@ -205,6 +205,8 @@
     emagStaticRecipes:
       - BoxLethalshot
       - BoxShotgunSlug
+      - MagazineBoxHeavyRifle
+      - SpeedLoaderHeavyRifle
       - CombatKnife
       - MagazineBoxLightRifle
       - MagazineBoxMagnum
