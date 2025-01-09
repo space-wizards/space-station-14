@@ -29,7 +29,7 @@
   parent: BaseMagazineBoxAntiMateriel
   id: MagazineBoxAntiMaterielBig
   name: large ammunition box (.60 anti-materiel)
-  description: Metal box A metal box containing heavy .60x4.5 anti-materiel rounds.
+  description: A metal box containing heavy .60x4.5 anti-materiel rounds.
   components:
   - type: BallisticAmmoProvider
     capacity: 30
