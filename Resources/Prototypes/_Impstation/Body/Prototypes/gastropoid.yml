@@ -1,17 +1,17 @@
 ﻿- type: body
-  id: Snail
+  id: Gastropoid
   name: "snail"
   root: torso
   slots:
     head:
-      part: HeadSnail
+      part: HeadGastropoid
       connections:
       - torso
       organs:
         brain: OrganHumanBrain
         eyes: OrganHumanEyes
     torso:
-      part: TorsoSnail
+      part: TorsoGastropoid
       connections:
       - right_arm
       - left_arm
@@ -20,30 +20,30 @@
       organs:
         heart: OrganHumanHeart
         lungs: OrganHumanLungs
-        stomach: OrganSnailStomach
+        stomach: OrganGastropoidStomach
         liver: OrganHumanLiver
         kidneys: OrganHumanKidneys
     right_arm:
-      part: RightArmSnail
+      part: RightArmGastropoid
       connections:
       - right_hand
     left_arm:
-      part: LeftArmSnail
+      part: LeftArmGastropoid
       connections:
       - left_hand
     right_hand:
-      part: RightHandSnail
+      part: RightHandGastropoid
     left_hand:
-      part: LeftHandSnail
+      part: LeftHandGastropoid
     right_leg:
-      part: RightLegSnail
+      part: RightLegGastropoid
       connections:
       - right_foot
     left_leg:
-      part: LeftLegSnail
+      part: LeftLegGastropoid
       connections:
       - left_foot
     right_foot:
-      part: RightFootSnail
+      part: RightFootGastropoid
     left_foot:
-      part: LeftFootSnail
+      part: LeftFootGastropoid
