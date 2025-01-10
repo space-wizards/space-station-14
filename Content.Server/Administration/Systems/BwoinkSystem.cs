@@ -631,7 +631,7 @@ namespace Content.Server.Administration.Systems
             }
         }
 
-        protected override async void  OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
+        protected override void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
         {
             base.OnBwoinkTextMessage(message, eventArgs);
             _activeConversations[message.UserId] = DateTime.Now;
@@ -700,7 +700,7 @@ namespace Content.Server.Administration.Systems
                 adminsOnline: AdminsOnline(),
                 senderId: senderSession.UserId,
                 senderEntity: senderSession.AttachedEntity,
-                isAdminned: senderAdmin != null,
+                isAdminned: senderAdmin is {Active: true},
                 senderEntityName: senderSession.Name,
                 supportTargetId: message.UserId,
                 targetOnline: targetOnline,

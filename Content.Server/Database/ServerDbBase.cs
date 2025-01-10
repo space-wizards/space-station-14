@@ -1086,10 +1086,19 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         public async Task<SupportExchange?> GetSupportExchangeAsync(int supportRound, Guid supportTarget)
         {
             await using var db = await GetDb();
-            return await db.DbContext.SupportExchanges
+            var exchange = await db.DbContext.SupportExchanges
                 .Include(e => e.SupportMessages)
-                .SingleOrDefaultAsync(e => e.SupportRound == supportRound &&
-                                          e.SupportTargetPlayer == supportTarget);
+                .SingleOrDefaultAsync(e => e.SupportRound == supportRound && e.SupportTargetPlayer == supportTarget);
+
+            if (exchange == null)
+                return exchange;
+
+            foreach (var message in exchange.SupportMessages)
+            {
+                message.TimeSent = NormalizeDatabaseTime(message.TimeSent);
+            }
+
+            return exchange;
         }
 
         /// <summary>
@@ -1112,42 +1121,23 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             await using var transaction = await db.DbContext.Database.BeginTransactionAsync();
 
-            try
-            {
-                var maxMessageId = await db.DbContext.SupportMessages
-                    .Where(m => m.SupportExchangeId == supportMessage.SupportExchangeId)
-                    .OrderByDescending(m => m.SupportMessageId)
-                    .Select(m => m.SupportMessageId)
-                    .FirstOrDefaultAsync();
+            db.DbContext.SupportMessages.Add(supportMessage);
 
-                supportMessage.SupportMessageId = maxMessageId + 1;
+            await db.DbContext.SaveChangesAsync();
 
-                db.DbContext.SupportMessages.Add(supportMessage);
-
-                await db.DbContext.SaveChangesAsync();
-
-                await transaction.CommitAsync();
-            }
-            catch (Exception e)
-            {
-                await transaction.RollbackAsync();
-
-                Console.WriteLine($"Error adding support message in AddSuppportMessageAsync: {e.Message}");
-                throw;
-            }
+            await transaction.CommitAsync();
         }
 
         /// <summary>
         /// Gets the maximum message ID for a specific support exchange.
         /// </summary>
-        public async Task<int> GetMaxMessageIdForExchange(int supportExchangeId)
+        public async Task<int> GetNextMessageIdForExchange(int supportExchangeId)
         {
             await using var db = await GetDb();
             var maxId = await db.DbContext.SupportMessages
                 .Where(m => m.SupportExchangeId == supportExchangeId)
-                .Select(m => (int?)m.SupportMessageId)
-                .MaxAsync();
-            return maxId ?? 0;
+                .MaxAsync(m => (int?)m.SupportMessageId);
+            return maxId + 1 ?? 0;
         }
 
         #endregion

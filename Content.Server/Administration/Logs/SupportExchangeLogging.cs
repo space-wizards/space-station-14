@@ -103,6 +103,7 @@ public sealed class SupportExchangeLogging
         while (exchangeQueue.MessageQueue.TryDequeue(out var message))
         {
             message.SupportExchangeId = exchangeQueue.SupportExchangeId;
+            message.SupportMessageId = await _dbManager.GetNextMessageIdForExchange(message.SupportExchangeId);
             await _dbManager.AddSupportMessageAsync(message);
         }
     }
