@@ -47,6 +47,20 @@ public sealed partial class MeleeThrowOnHitComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public bool Enabled = true;
+
+    /// <summary>
+    ///     Should this set <see cref="Enabled"/> to false if usedelay is active?
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public bool DisableDuringUseDelay;
+
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public TimeSpan? StunTime;
 }
 
 /// <summary>

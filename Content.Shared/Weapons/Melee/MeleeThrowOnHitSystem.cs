@@ -1,5 +1,7 @@
 using System.Numerics;
 using Content.Shared.Construction.Components;
+using Content.Shared.Stunnable;
+using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Physics;
@@ -18,6 +20,8 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly UseDelaySystem _delay = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -26,6 +30,21 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
         SubscribeLocalEvent<MeleeThrownComponent, ComponentStartup>(OnThrownStartup);
         SubscribeLocalEvent<MeleeThrownComponent, ComponentShutdown>(OnThrownShutdown);
         SubscribeLocalEvent<MeleeThrownComponent, StartCollideEvent>(OnStartCollide);
+        SubscribeLocalEvent<MeleeThrowOnHitComponent, AttemptMeleeThrowOnHitEvent>(OnAttempt);
+    }
+
+    private void OnAttempt(Entity<MeleeThrowOnHitComponent> ent, ref AttemptMeleeThrowOnHitEvent args)
+    {
+        if (!TryComp<UseDelayComponent>(ent.Owner, out var useDelay) || !ent.Comp.DisableDuringUseDelay)
+            return;
+
+        if (_delay.IsDelayed((ent.Owner, useDelay)))
+        {
+            ent.Comp.Enabled = false;
+            return;
+        }
+
+        ent.Comp.Enabled = true;
     }
 
     private void OnMeleeHit(Entity<MeleeThrowOnHitComponent> ent, ref MeleeHitEvent args)
@@ -60,6 +79,9 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
                 MinLifetime = comp.MinLifetime
             };
             AddComp(hit, thrownComp);
+
+            if (ent.Comp.StunTime != null)
+                _stun.TryParalyze(hit, ent.Comp.StunTime.Value, false);
         }
     }
 
