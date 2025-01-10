@@ -522,6 +522,7 @@
     minTimeBetweenIncidents: 10
     maxTimeBetweenIncidents: 40
     maxSoundDistance: 7
+    sweetwaterOnly: true
     sounds:
       collection: WhaleMigration
 
@@ -543,6 +544,7 @@
     minTimeBetweenIncidents: 0.1
     maxTimeBetweenIncidents: 40
     maxSoundDistance: 7
+    sweetwaterOnly: true
     sounds:
       collection: WhaleMigration
 
