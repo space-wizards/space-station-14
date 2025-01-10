@@ -397,3 +397,11 @@ PirateSpawner: TP14PirateSpawner
 PirateCaptainSpawner: TP14PirateCaptainSpawner
 HermitSpawner: TP14HermitSpawner
 TheArtifact: TP14TheArtifact
+PinpointerPilot: TP14PinpointerPilot
+ResonanceDelaminator: TP14ResonanceDelaminator
+PlanktonScanner: TP14PlanktonScanner
+SlashBang: TP14SlashBang
+MagCellDisabler: TP14MagCellDisabler
+BaseMagCell: TP14BaseMagCell
+MagCellAdvanced: TP14MagCellAdvanced
+MagCellExperimental: TP14MagCellExperimental
