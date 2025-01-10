@@ -4,28 +4,49 @@ using Content.Server.Traits.Assorted;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Traits.Assorted;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.StationEvents.Events;
 
 public sealed class MassHallucinationsRule : StationEventSystem<MassHallucinationsRuleComponent>
 {
     [Dependency] private readonly ParacusiaSystem _paracusia = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
 
     protected override void Started(EntityUid uid, MassHallucinationsRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
         var query = EntityQueryEnumerator<MindContainerComponent>();
-        while (query.MoveNext(out var ent, out _))
+
+        if (component.sweetwaterOnly)
         {
-            if (!HasComp<ParacusiaComponent>(ent))
+             foreach (var grid in _mapManager.GetAllGrids(playerMap.Value).OrderBy(o => o.Owner))
             {
-                EnsureComp<MassHallucinationsComponent>(ent);
-                var paracusia = EnsureComp<ParacusiaComponent>(ent);
-                _paracusia.SetSounds(ent, component.Sounds, paracusia);
-                _paracusia.SetTime(ent, component.MinTimeBetweenIncidents, component.MaxTimeBetweenIncidents, paracusia);
-                _paracusia.SetDistance(ent, component.MaxSoundDistance);
+                var map = grid.Owner;
+                if (TryComp(map, out SweetwaterComponent? gridXform))
+                ApplyOceanSound (map);
             }
         }
+        else
+        {
+            while (query.MoveNext(out var ent, out _))
+            {
+                if (!HasComp<ParacusiaComponent>(ent))
+                {
+                    EnsureComp<MassHallucinationsComponent>(ent);
+                    var paracusia = EnsureComp<ParacusiaComponent>(ent);
+                    _paracusia.SetSounds(ent, component.Sounds, paracusia);
+                    _paracusia.SetTime(ent, component.MinTimeBetweenIncidents, component.MaxTimeBetweenIncidents, paracusia);
+                    _paracusia.SetDistance(ent, component.MaxSoundDistance);
+                }
+            }
+        }
+    }
+
+    private void ApplyOceanSound(EntityUid map)
+    {
+        
     }
 
     protected override void Ended(EntityUid uid, MassHallucinationsRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
