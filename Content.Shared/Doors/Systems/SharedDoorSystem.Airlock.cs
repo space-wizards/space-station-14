@@ -1,7 +1,6 @@
 using Content.Shared.Doors.Components;
 using Content.Shared.Prying.Components;
 using Content.Shared.Wires;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Doors.Systems;
 

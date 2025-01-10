@@ -15,7 +15,6 @@ using Content.Shared.Tag;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio.Systems;
@@ -75,7 +74,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         InitializeCollision();
         InitializeBolts();
         InitializeAirlock();
-        InitializeFirelock();
+        InitializeAlarm();
     }
 
     protected virtual void OnComponentInit(Entity<DoorComponent> door, ref ComponentInit args)

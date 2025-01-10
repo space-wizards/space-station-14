@@ -183,7 +183,7 @@ public sealed class AtmosAlarmableSystem : EntitySystem
         alarmable.LastAlarmState = type;
         UpdateAppearance(uid, type);
         PlayAlertSound(uid, type, alarmable);
-        RaiseLocalEvent(uid, new AtmosAlarmEvent(type), true);
+        RaiseLocalEvent(uid, new AtmosAlarmEvent((uid, alarmable),type), true);
     }
 
     public void SyncAlertsToNetwork(EntityUid uid, string? address = null, AtmosAlarmableComponent? alarmable = null, TagComponent? tags = null)
@@ -316,12 +316,9 @@ public sealed class AtmosAlarmableSystem : EntitySystem
     }
 }
 
-public sealed class AtmosAlarmEvent : EntityEventArgs
+// TODO: Remove this mega-event and replace with one event per AtmosAlarmType.
+public sealed class AtmosAlarmEvent(Entity<AtmosAlarmableComponent> alarm, AtmosAlarmType netMax) : EntityEventArgs
 {
-    public AtmosAlarmType AlarmType { get; }
-
-    public AtmosAlarmEvent(AtmosAlarmType netMax)
-    {
-        AlarmType = netMax;
-    }
+    public AtmosAlarmType AlarmType { get; } = netMax;
+    public Entity<AtmosAlarmableComponent> Alarm { get; } = alarm;
 }

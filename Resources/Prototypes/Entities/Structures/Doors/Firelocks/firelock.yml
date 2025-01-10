@@ -3,7 +3,7 @@
   abstract: true
   parent: BaseStructure
   name: firelock
-  description: Apply crowbar.
+  description: If this is closed, it's probably for a good reason. Can be opened with a crowbar in emergencies.
   components:
     - type: AtmosAlarmable
       syncWith:
@@ -84,7 +84,7 @@
     - type: Weldable
       fuel: 5
       time: 3
-    - type: Firelock
+    - type: DoorAlarm
     - type: Appearance
     - type: WiresVisuals
     - type: WiresPanel

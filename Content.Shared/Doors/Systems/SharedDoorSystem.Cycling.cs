@@ -1,10 +1,5 @@
-using Content.Shared.Access.Systems;
 using Content.Shared.Doors.Components;
-using Content.Shared.Examine;
-using Content.Shared.Popups;
-using Content.Shared.Prying.Components;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Doors.Systems;
 

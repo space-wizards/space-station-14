@@ -13,10 +13,7 @@ namespace Content.Server.Doors.Systems;
 public sealed partial class DoorSystem : SharedDoorSystem
 {
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
-    [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedMapSystem _mapping = default!;
     [Dependency] private readonly PointLightSystem _pointLight = default!;
 
     public override void Initialize()

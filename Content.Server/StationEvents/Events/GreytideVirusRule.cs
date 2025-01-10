@@ -58,7 +58,7 @@ public sealed class GreytideVirusRule : StationEventSystem<GreytideVirusRuleComp
                 accessIds.UnionWith(proto.Tags);
         }
 
-        var firelockQuery = GetEntityQuery<FirelockComponent>();
+        var firelockQuery = GetEntityQuery<DoorAlarmComponent>();
         var accessQuery = GetEntityQuery<AccessReaderComponent>();
 
         var lockQuery = AllEntityQuery<LockComponent, TransformComponent>();

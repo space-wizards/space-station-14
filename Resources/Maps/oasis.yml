@@ -94733,7 +94733,7 @@ entities:
       - 18287
       - 18282
       - 18271
-    - type: Firelock
+    - type: DoorAlarm
       emergencyCloseCooldown: 16782.4165528
   - uid: 167
     components:
