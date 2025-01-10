@@ -168,6 +168,23 @@
     - Trash
 
 - type: entity
+  parent: BaseLightbulb
+  name: warm light bulb
+  id: WarmLightBulb
+  description: A warm light bulb for a more cozy atmosphere.
+  components:
+  - type: LightBulb
+    bulb: Bulb
+    color: "#ff9833" # 2200k color temp
+    lightEnergy: 1
+    lightRadius: 6
+    lightSoftness: 3
+  - type: Tag
+    tags:
+    - LightBulb
+    - Trash
+
+- type: entity
   parent: LightBulb
   name: old incandescent light bulb
   id: LightBulbOld

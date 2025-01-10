@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: AI Actions now work.
-    type: Fix
-  id: 7288
-  time: '2024-09-05T12:49:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31823
-- author: ScarKy0
-  changes:
-  - message: Station AI now has updated icons on the HUD.
-    type: Add
-  id: 7289
-  time: '2024-09-05T12:52:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31799
-- author: drakewill-CRL
-  changes:
-  - message: Botanists can now learn basic chemistry with the Agrichem Is Fun! kit
-      in the Nutrimax vendor.
-    type: Add
-  id: 7290
-  time: '2024-09-05T16:43:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31738
 - author: Nimfar11
   changes:
   - message: Added a board for the AI upload console.
@@ -3932,3 +3910,32 @@
   id: 7787
   time: '2025-01-08T01:00:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34273
+- author: southbridge-fur
+  changes:
+  - message: Warm light bulbs exist now.
+    type: Add
+  id: 7788
+  time: '2025-01-09T08:54:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34324
+- author: deltanedas
+  changes:
+  - message: Fixed AIs not being able to use lockable buttons.
+    type: Fix
+  id: 7789
+  time: '2025-01-09T11:23:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34326
+- author: Alpaccalypse
+  changes:
+  - message: The reagent "cola" has been renamed to "Space Cola".
+    type: Tweak
+  - message: The reagent "lemon-lime" has been renamed to "Smite Soda".
+    type: Tweak
+  - message: The reagent "lemon-lime-cranberry" has been renamed to "Smite Cranberry".
+    type: Tweak
+  - message: The reagent "Space Mountain Wind" has been renamed to "Space Solar Wind".
+    type: Tweak
+  - message: The reagent "Energy Drink" has been renamed to "Red Bool".
+    type: Tweak
+  id: 7790
+  time: '2025-01-09T20:24:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34178
