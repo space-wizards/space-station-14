@@ -2,7 +2,7 @@
   id: JellidPerson
   name: species-name-jellid
   roundStart: false # temporary until repaired
-  prototype: MobJellidPerson
+  prototype: TP14MobJellidPerson
   sprites: MobJellidSprites
   defaultSkinTone: "#b8b8b8"
   markingLimits: MobJellidMarkingLimits
