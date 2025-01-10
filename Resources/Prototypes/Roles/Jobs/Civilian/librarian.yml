@@ -20,3 +20,6 @@
   storage:
     back:
     - BookRandom
+    - TapeRecorder # DeltaV addition
+    - CassetteTape
+    - CassetteTape
