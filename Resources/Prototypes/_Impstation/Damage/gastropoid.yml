@@ -1,10 +1,10 @@
 - type: damageModifierSet
-  id: Snail
+  id: Gastropoid
   coefficients:
-    Blunt: .8
+    Blunt: 1
     Slash: .8
-    Piercing: 1
-    Cold: 1.5
-    Heat: 1.5
+    Piercing: .8
+    Cold: 1.2
+    Heat: 1.3
     Poison: 1.2
     Cellular: 1

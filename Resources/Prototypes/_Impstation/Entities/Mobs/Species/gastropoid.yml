@@ -32,7 +32,7 @@
     drawdepth: Mobs
     scale: 1, 1
   - type: Body
-    prototype: Snail
+    prototype: Gastropoid
     requiredLegs: 2
   - type: FootstepModifier
     footstepSoundCollection:
@@ -42,7 +42,7 @@
   - type: Butcherable
     butcheringType: Spike
     spawned:
-    - id: FoodMeatSlime
+    - id: FoodMeatSnail
       amount: 1
     - id: SeashellInstrument
       amount: 1
@@ -65,11 +65,11 @@
       Unsexed: UnisexSnail
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Snail
+    damageModifierSet: Gastropoid
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
-        sprite: _Impstation/Mobs/Effects/snail_brute_damage.rsi
+        sprite: Mobs/Effects/snail_brute_damage.rsi
         color: "#162581"
   - type: Reactive
     groups:
@@ -105,22 +105,18 @@
       types:
         Heat : 1
   - type: TemperatureSpeed
-    thresholds:
-      309: 0.8
-      304: 0.6
-      299: 0.4
-      294: 0.2
+    thresholds: # copied over from Decapoids to remove temp speed restrictions. this is hacky and sucks. 
+      293: 1.0
+      280: 1.0
+      260: 1.0
   - type: Bloodstream
     bloodReagent: CopperBlood
   - type: Tag
     tags:
       - Gastropod
-      - CanPilot
-      - FootstepSound
       - DoorBumpOpener
-      - AnomalyHost
   - type: Inventory
-    templateId: snail
+    templateId: gastropoid
     displacements:
       jumpsuit:
         sizeMaps:
@@ -157,13 +153,12 @@
           32:
             sprite: _Impstation/Mobs/Species/Snail/displacement.rsi
             state: back
-
   - type: Speech
-    speechSounds: Snail
+    speechSounds: Gastropoid
   - type: TypingIndicator
-    proto: Snail
+    proto: Gastropoid
   - type: HumanoidAppearance
-    species: Snail
+    species: Gastropoid
     hideLayersOnEquip:
     - Hair
     - Snout
@@ -174,11 +169,11 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: HumanoidAppearance
-    species: Snail
+    species: Gastropoid
   - type: Body
-    prototype: Snail
+    prototype: Gastropoid
   - type: Inventory
-    templateId: snail
+    templateId: gastropoid
     displacements:
       jumpsuit:
         sizeMaps:
@@ -210,3 +205,8 @@
           32:
             sprite: _Impstation/Mobs/Species/Snail/displacement.rsi
             state: mask
+      back:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Snail/displacement.rsi
+            state: back

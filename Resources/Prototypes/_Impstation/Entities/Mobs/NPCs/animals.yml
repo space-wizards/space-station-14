@@ -96,6 +96,7 @@
       tags:
       - BROS
       - Trash
+      - MultitoolDefibrillatorTarget
     - type: FoodSequenceElement
       entries:
         Burger: BrosBurger
