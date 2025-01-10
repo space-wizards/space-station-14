@@ -161,6 +161,15 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         // Show the silicon has been subverted.
         component.Subverted = true;
 
+        //Harmony change: check if we have law 0 and remove it
+        //Most of the time, law 0 should be "obey station AI". It could be changed by an ion storm,
+        //but I think it's not a big deal to re-write it anyway.
+        //https://github.com/ss14-harmony/space-station-14/pull/296
+        if (component.Lawset?.Laws.Count > 0)
+        {
+            component.Lawset.Laws.RemoveAt(0);
+        }
+
         // Add the first emag law before the others
         component.Lawset?.Laws.Insert(0, new SiliconLaw
         {
