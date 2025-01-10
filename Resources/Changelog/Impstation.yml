@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ruddygreat
-  changes:
-  - message: Added the random unrevivable trait, which gives you a 50/50 chance on
-      spawn to be unrevivable
-    type: Add
-  id: 394
-  time: '2024-10-18T18:24:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/495
 - author: honeyed-lemons
   changes:
   - message: Added the Shipyard Computer from DV, a way to obtain new shuttles for
@@ -4483,3 +4475,10 @@
   id: 893
   time: '2025-01-10T21:24:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1283
+- author: mousesweater
+  changes:
+  - message: added a salvage jumpskirt for all your salvaging needs
+    type: Add
+  id: 894
+  time: '2025-01-10T21:36:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1298
