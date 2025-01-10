@@ -722,7 +722,7 @@
 # Pirates
 - type: entity
   name: pirate spawner
-  id: PirateSpawner
+  id: TP14PirateSpawner
   parent: MarkerBase
   components:
     - type: Sprite
@@ -761,7 +761,7 @@
 
 - type: entity
   name: pirate captain spawner
-  id: PirateCaptainSpawner
+  id: TP14PirateCaptainSpawner
   parent: MarkerBase
   components:
     - type: Sprite
@@ -802,7 +802,7 @@
 
 - type: entity
   name: hermit spawner
-  id: HermitSpawner
+  id: TP14HermitSpawner
   parent: MarkerBase
   components:
     - type: Sprite
