@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: TheShuEd, Jaraten
-  changes:
-  - message: New Tech anomaly added to the game! it can bind devices ports, activate
-      them, and when supercrit, it can even emag some devices.
-    type: Add
-  id: 7294
-  time: '2024-09-06T07:24:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31764
 - author: EmoGarbage404
   changes:
   - message: Added mineral scanners! When held in your hand or pocket, these will
@@ -3940,3 +3932,10 @@
   id: 7793
   time: '2025-01-10T15:01:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34193
+- author: TeenSarlacc
+  changes:
+  - message: Large instruments can now be ordered through cargo.
+    type: Add
+  id: 7794
+  time: '2025-01-10T15:13:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34240
