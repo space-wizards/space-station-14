@@ -459,7 +459,7 @@
       sprite: Mobs/Aliens/drifters.rsi
   - type: ConditionalSpawner
     prototypes:
-    - MobDrifter
+    - TP14MobDrifter
 
 - type: entity
   name: Fish Spawner
