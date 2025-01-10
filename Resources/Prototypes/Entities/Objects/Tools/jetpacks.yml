@@ -249,7 +249,7 @@
   - type: GasTank
     outputPressure: 42.6
     air:
-      # 4 minutes of thrust
+      # 6.5 minutes of thrust
       volume: 2.5
       temperature: 293.15
       moles:
