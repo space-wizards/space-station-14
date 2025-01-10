@@ -100,6 +100,7 @@
     - Meat
     - FootstepSound
     - Radio
+    - MultitoolDefibrillatorTarget
   - type: Puller
     needsHands: False
   - type: NoSlip

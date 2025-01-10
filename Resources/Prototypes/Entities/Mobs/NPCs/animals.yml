@@ -113,6 +113,7 @@
     tags:
     - Bee
     - Trash
+    - MultitoolDefibrillatorTarget
   - type: Bloodstream
     bloodMaxVolume: 0.1
   - type: MobPrice
@@ -539,6 +540,7 @@
     - Trash
     - CannotSuicide
     - VimPilot
+    - MultitoolDefibrillatorTarget
   - type: CanEscapeInventory
   - type: NpcFactionMember
     factions:
@@ -772,6 +774,9 @@
     bloodMaxVolume: 0.1
   - type: MobPrice
     price: 50
+  - type: Tag
+    tags:
+    - MultitoolDefibrillatorTarget
 
 - type: entity
   name: cow
@@ -1747,6 +1752,7 @@
     - ChefPilot
     - Mouse
     - Meat
+    - MultitoolDefibrillatorTarget
   - type: Respirator
     damage:
       types:
@@ -1986,6 +1992,7 @@
   - type: Tag
     tags:
     - VimPilot
+    - MultitoolDefibrillatorTarget
 
 
 - type: entity
@@ -2036,6 +2043,9 @@
     interactSuccessSpawn: EffectHearts
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: Tag
+    tags:
+    - MultitoolDefibrillatorTarget
 
 - type: entity
   name: frog
@@ -2097,6 +2107,7 @@
   - type: Tag
     tags:
     - VimPilot
+    - MultitoolDefibrillatorTarget
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
@@ -2919,6 +2930,9 @@
   - type: Grammar
     attributes:
       gender: epicene
+    tags:
+    - VimPilot
+    - MultitoolDefibrillatorTarget
 
 - type: entity
   name: cat
@@ -3145,6 +3159,9 @@
     thresholds:
       0: Alive
       25: Dead
+    tags:
+    - VimPilot
+    - MultitoolDefibrillatorTarget
 
 - type: entity
   name: sloth
@@ -3365,6 +3382,7 @@
     - Trash
     - Hamster
     - Meat
+    - MultitoolDefibrillatorTarget
   - type: Respirator
     damage:
       types:
