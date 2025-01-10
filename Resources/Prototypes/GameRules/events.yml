@@ -522,7 +522,7 @@
     minTimeBetweenIncidents: 10
     maxTimeBetweenIncidents: 40
     maxSoundDistance: 7
-    sweetwaterOnly: true
+    sweetwaterOnly: true # Makes it so that mass hallucination sounds can only be heard on Sweetwater, (ex. ocean-specific sounds)
     sounds:
       collection: WhaleMigration
 
@@ -547,6 +547,14 @@
     sweetwaterOnly: true
     sounds:
       collection: WhaleMigration
-  - type: DeathWhaleSpawnRule
+  - type: OceanSpawnRule
+    target: DeathWhaleSpawnLocation
     prototype: MobDeathWhale
+
+# Ocean Spawn Rule Template
+#
+#- type: OceanSpawnRule
+#    target: (target location component)
+#    prototype: (creature prototpe)
+#    amount: (amount of spawned creatures)
 
