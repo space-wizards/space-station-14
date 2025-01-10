@@ -163,7 +163,7 @@
 
 - type: entity
   parent: TelecomServer
-  id: TelecomRelay
+  id: TP14TelecomRelay
   suffix: Tcomms Booster
   components:
   - type: Relay
