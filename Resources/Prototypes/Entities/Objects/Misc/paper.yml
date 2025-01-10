@@ -75,7 +75,7 @@
 - type: entity
   name: jellid-proof paper
   parent: BaseItem
-  id: PaperJellid
+  id: TP14PaperJellid
   description: 'A piece of paper covered with a thin layer of steel. Prevents ignition from Jellid writers.'
   components:
   - type: Sprite
