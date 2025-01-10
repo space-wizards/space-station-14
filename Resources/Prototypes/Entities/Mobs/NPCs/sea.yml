@@ -117,7 +117,7 @@
           Quantity: 10
   - type: Butcherable
     spawned:
-    - id: FoodMeatFish
+    - id: TP14FoodMeatFish
       amount: 2
   - type: CombatMode
     combatToggleAction: ActionCombatModeToggleOff
