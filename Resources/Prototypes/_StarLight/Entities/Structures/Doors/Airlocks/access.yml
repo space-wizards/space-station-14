@@ -24,3 +24,19 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsNtrep ]
+      
+- type: entity
+  parent: AirlockGlassShuttleSyndicate
+  id: AirlockExternalGlassShuttleGamma
+  suffix: External, Gamma, Glass, Docking
+  components:
+  - type: PriorityDock
+    tag: DockGamma
+    
+- type: entity
+  parent: AirlockShuttleSyndicate
+  id: AirlockExternalShuttleGamma
+  suffix: External, Gamma, Glass, Docking
+  components:
+  - type: PriorityDock
+    tag: DockGamma
