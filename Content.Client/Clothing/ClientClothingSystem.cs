@@ -189,7 +189,7 @@ public sealed class ClientClothingSystem : ClothingSystem
         if (!TryComp(item, out ClothingComponent? clothing) || clothing.InSlot == null)
             return;
 
-        RenderEquipment(uid, item, clothing.InSlot.Value.Name, component, null, clothing);
+        RenderEquipment(uid, item, clothing.InSlot, component, null, clothing);
     }
 
     private void OnDidUnequip(EntityUid uid, SpriteComponent component, DidUnequipEvent args)

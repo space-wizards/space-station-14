@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Inventory;
@@ -67,15 +68,25 @@ public sealed partial class ClothingComponent : Component
     public string? RsiPath;
 
     /// <summary>
-    /// Name and flags of the inventory slot the clothing is currently in.
+    /// Name of the inventory slot the clothing is currently in.
     /// Note that this being non-null does not mean the clothing is considered "worn" or "equipped" unless the slot
     /// satisfies the <see cref="Slots"/> flags.
     /// </summary>
     [DataField]
-    public (string Name, SlotFlags Flag)? InSlot;
+    public string? InSlot;
     // TODO CLOTHING
     // Maybe keep this null unless its in a valid slot?
     // To lazy to figure out ATM if that would break anything.
+    // And when doing this, combine InSlot and InSlotFlag, as it'd be a breaking change for downstreams anyway
+
+    /// <summary>
+    /// Slot flags of the slot the clothing is currently in. See also <see cref="InSlot"/>.
+    /// </summary>
+    [DataField]
+    public SlotFlags? InSlotFlag;
+    // TODO CLOTHING
+    // Maybe keep this null unless its in a valid slot?
+    // And when doing this, combine InSlot and InSlotFlag, as it'd be a breaking change for downstreams anyway
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan EquipDelay = TimeSpan.Zero;

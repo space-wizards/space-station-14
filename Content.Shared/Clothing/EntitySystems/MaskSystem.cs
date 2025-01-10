@@ -44,8 +44,8 @@ public sealed class MaskSystem : EntitySystem
         // TODO Inventory / Clothing
         // Add an easier way to check if clothing is equipped to a valid slot.
         if (!TryComp(ent, out ClothingComponent? clothing)
-            || clothing.InSlot is not { } slot
-            || !clothing.Slots.HasFlag(slot.Flag))
+            || clothing.InSlotFlag is not { } slotFlag
+            || !clothing.Slots.HasFlag(slotFlag))
         {
             return;
         }
@@ -99,8 +99,8 @@ public sealed class MaskSystem : EntitySystem
         // Add an easier way to get the entity that is wearing clothing in a valid slot.
         EntityUid? wearer = null;
         if (TryComp(mask, out ClothingComponent? clothing)
-            && clothing.InSlot is {} slot
-            && clothing.Slots.HasFlag(slot.Flag))
+            && clothing.InSlotFlag is {} slotFlag
+            && clothing.Slots.HasFlag(slotFlag))
         {
             wearer = Transform(mask).ParentUid;
         }

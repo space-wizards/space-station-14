@@ -86,7 +86,8 @@ public abstract class ClothingSystem : EntitySystem
 
     protected virtual void OnGotEquipped(EntityUid uid, ClothingComponent component, GotEquippedEvent args)
     {
-        component.InSlot = (args.Slot, args.SlotFlags);
+        component.InSlot = args.Slot;
+        component.InSlotFlag = args.SlotFlags;
 
         if ((component.Slots & args.SlotFlags) == SlotFlags.NONE)
             return;
@@ -110,6 +111,7 @@ public abstract class ClothingSystem : EntitySystem
         }
 
         component.InSlot = null;
+        component.InSlotFlag = null;
     }
 
     private void OnGetState(EntityUid uid, ClothingComponent component, ref ComponentGetState args)
