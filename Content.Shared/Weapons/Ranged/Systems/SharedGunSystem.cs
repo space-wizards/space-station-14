@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Shared._Starlight.Weapon.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
@@ -441,7 +442,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         EntityUid? user = null,
         bool throwItems = false);
 
-    public void ShootProjectile(EntityUid uid, Vector2 direction, Vector2 gunVelocity, EntityUid gunUid, EntityUid? user = null, float speed = 20f)
+    public void ShootProjectile(EntityUid uid, Vector2 direction, Vector2 gunVelocity, EntityUid gunUid, EntityUid? user = null, float speed = 14f)
     {
         var physics = EnsureComp<PhysicsComponent>(uid);
         Physics.SetBodyStatus(uid, physics, BodyStatus.InAir);
@@ -469,6 +470,15 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         if (cartridge.Spent != spent)
             DirtyField(uid, cartridge, nameof(CartridgeAmmoComponent.Spent));
+
+        cartridge.Spent = spent;
+        Appearance.SetData(uid, AmmoVisuals.Spent, spent);
+    }
+    // 🌟Starlight🌟
+    protected void SetCartridgeSpent(EntityUid uid, HitScanCartridgeAmmoComponent cartridge, bool spent)
+    {
+        if (cartridge.Spent != spent)
+            DirtyField(uid, cartridge, nameof(HitScanCartridgeAmmoComponent.Spent));
 
         cartridge.Spent = spent;
         Appearance.SetData(uid, AmmoVisuals.Spent, spent);
@@ -507,6 +517,9 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     protected IShootable EnsureShootable(EntityUid uid)
     {
+        if (TryComp<HitScanCartridgeAmmoComponent>(uid, out var hitscanCartridge))
+            return hitscanCartridge;
+
         if (TryComp<CartridgeAmmoComponent>(uid, out var cartridge))
             return cartridge;
 
@@ -630,7 +643,12 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Serializable, NetSerializable]
     public sealed class HitscanEvent : EntityEventArgs
     {
-        public List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)> Sprites = new();
+        public (NetCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)? MuzzleFlash; // 🌟Starlight🌟
+        public (NetCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)? TravelFlash; // 🌟Starlight🌟
+        public (NetCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)? ImpactFlash; // 🌟Starlight🌟
+        public (NetCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)? Bullet; // 🌟Starlight🌟
+        public (NetCoordinates coordinates, Angle angle, NetEntity target)? Impact; // 🌟Starlight🌟
+
     }
 }
 

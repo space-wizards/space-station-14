@@ -8,9 +8,6 @@
     tags:
     - Cartridge
     - ShellShotgun
-  - type: CartridgeAmmo
-    soundEject:
-      collection: ShellEject
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     layers:
@@ -33,8 +30,10 @@
     layers:
       - state: beanbag
         map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: CartridgeAmmo
-    proto: PelletShotgunBeanbag
+  - type: HitScanCartridgeAmmo
+    soundEject:
+      collection: ShellEject
+    hitscan: PelletShotgunBeanbagTrace
   - type: SpentAmmoVisuals
     state: "beanbag"
 
@@ -47,8 +46,10 @@
     layers:
       - state: slug
         map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: CartridgeAmmo
-    proto: PelletShotgunSlug
+  - type: HitScanCartridgeAmmo
+    soundEject:
+      collection: ShellEject
+    hitscan: PelletShotgunSlugTrace
   - type: SpentAmmoVisuals
     state: "slug"
 
@@ -68,6 +69,8 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     proto: PelletShotgunFlare
+    soundEject:
+      collection: ShellEject
   - type: SpentAmmoVisuals
     state: "flare"
 
@@ -80,8 +83,10 @@
     layers:
       - state: base
         map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: CartridgeAmmo
-    proto: PelletShotgunSpread
+  - type: HitScanCartridgeAmmo
+    soundEject:
+      collection: ShellEject
+    hitscan: PelletShotgunSpreadTrace
 
 - type: entity
   id: ShellShotgunIncendiary
@@ -92,8 +97,10 @@
     layers:
       - state: incendiary
         map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: CartridgeAmmo
-    proto: PelletShotgunIncendiarySpread
+  - type: HitScanCartridgeAmmo
+    soundEject:
+      collection: ShellEject
+    hitscan: ShellShotgunIncendiaryTrace
   - type: SpentAmmoVisuals
     state: "incendiary"
 
@@ -106,8 +113,10 @@
     layers:
       - state: practice
         map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: CartridgeAmmo
-    proto: PelletShotgunPracticeSpread
+  - type: HitScanCartridgeAmmo
+    soundEject:
+      collection: ShellEject
+    hitscan: PelletShotgunPracticeSpreadTrace
   - type: SpentAmmoVisuals
     state: "practice"
 
@@ -157,8 +166,10 @@
   - type: Construction
     graph: ImprovisedShotgunShellGraph
     node: shell
-  - type: CartridgeAmmo
-    proto: PelletShotgunImprovisedSpread
+  - type: HitScanCartridgeAmmo
+    soundEject:
+      collection: ShellEject
+    hitscan: PelletShotgunImprovisedSpreadTrace
   - type: SpentAmmoVisuals
     state: "improvised"
 
@@ -167,11 +178,13 @@
   name: uranium shotgun shell
   parent: BaseShellShotgun
   components:
-    - type: Sprite
-      layers:
-        - state: depleted-uranium
-          map: [ "enum.AmmoVisualLayers.Base" ]
-    - type: CartridgeAmmo
-      proto: PelletShotgunUraniumSpread
-    - type: SpentAmmoVisuals
-      state: "depleted-uranium"
+  - type: Sprite
+    layers:
+      - state: depleted-uranium
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: HitScanCartridgeAmmo
+    soundEject:
+      collection: ShellEject
+    hitscan: PelletShotgunUraniumSpreadTrace
+  - type: SpentAmmoVisuals
+    state: "depleted-uranium"

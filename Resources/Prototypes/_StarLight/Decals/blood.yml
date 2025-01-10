@@ -1,0 +1,39 @@
+- type: decal
+  id: splatter1
+  tags: ["BloodSplatter"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Starlight/Effects/blood.rsi
+    state: splatter1
+
+- type: decal
+  id: splatter2
+  tags: ["BloodSplatter"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Starlight/Effects/blood.rsi
+    state: splatter2
+
+- type: decal
+  id: splatter3
+  tags: ["BloodSplatter"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Starlight/Effects/blood.rsi
+    state: splatter3
+
+- type: decal
+  id: splatter4
+  tags: ["BloodSplatter"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _Starlight/Effects/blood.rsi
+    state: splatter4
