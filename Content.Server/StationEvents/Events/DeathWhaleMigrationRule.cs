@@ -6,9 +6,14 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class DeathWhaleSpawnRule : StationEventSystem<DeathWhaleSpawnRuleComponent>
+//summary
+// This system allows for more control than ventcritters does, letting you choose the target component to spawn them at.
+// This allows for multiple spawn point markers to be chosen depending on what you want, and also lets you choose the creature.
+//summary
+
+public sealed class OceanSpawnRule : StationEventSystem<OceanSpawnSpawnRuleComponent>
 {
-    protected override void Started(EntityUid uid, DeathWhaleSpawnRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    protected override void Started(EntityUid uid, OceanSpawnSpawnRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, comp, gameRule, args);
 
@@ -17,7 +22,7 @@ public sealed class DeathWhaleSpawnRule : StationEventSystem<DeathWhaleSpawnRule
             return;
         }
 
-        var locations = EntityQueryEnumerator<DeathWhaleSpawnLocationComponent, TransformComponent>();
+        var locations = EntityQueryEnumerator<comp.Target, TransformComponent>();
         var validLocations = new List<EntityCoordinates>();
 
 
@@ -26,7 +31,7 @@ public sealed class DeathWhaleSpawnRule : StationEventSystem<DeathWhaleSpawnRule
 
                 validLocations.Add(transform.Coordinates);
 
-                // Spawn the Death Whale at the location
+                // Spawn the creature at the location
                 Spawn(comp.Prototype, transform.Coordinates);
         }
 
@@ -41,11 +46,11 @@ public sealed class DeathWhaleSpawnRule : StationEventSystem<DeathWhaleSpawnRule
         }
     }
 
-     protected virtual void Ended(EntityUid uid, DeathWhaleSpawnRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
+     protected virtual void Ended(EntityUid uid, OceanSpawnSpawnRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
     {
         base.Ended(uid, component, gameRule, args);
 
-        foreach (var whales in EntityManager.EntityQuery<DeathWhaleComponent>())
+        foreach (var whales in EntityManager.EntityQuery<DeathWhaleComponent>()) // Clears out Deathwhales after they've spawned for DeathWhaleMigration
             {
                 var uid = whales.Owner;
                 QueueDel(uid);
