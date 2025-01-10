@@ -14,7 +14,7 @@ public sealed class RoleTypePrototype : IPrototype
     /// <summary>
     ///     The role's name as displayed on the UI.
     /// </summary>
-    [DataField(required: true)]
+    [DataField]
     public LocId Name = "role-type-crew-aligned-name";
 
     /// <summary>
