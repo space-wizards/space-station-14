@@ -380,4 +380,7 @@ WeaponNtBlaster: TP14WeaponNtBlaster
 WeaponEnergyCarbine: TP14WeaponEnergyCarbine
 LadderDownBase: TP14LadderDownBase
 LadderUpBase: TP14LadderUpBase
+TelecomRelay: TP14TelecomRelay
+EncryptionKeyNanotrasen: TP14EncryptionKeyNanotrasen
+WeaponTrident: TP14WeaponTrident
 
