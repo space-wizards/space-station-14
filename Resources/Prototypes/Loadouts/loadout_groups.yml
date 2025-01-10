@@ -946,6 +946,13 @@
   - CargoTechnicianPDA
   - SeniorCargoTechnicianPDA
 
+- type: loadoutGroup # imp
+  id: SalvageSpecialistJumpsuit
+  name: loadout-group-salvage-specialist-jumpsuit
+  loadouts:
+  - SalvageSpecialistJumpsuit
+  - SalvageSpecialistJumpskirt
+
 - type: loadoutGroup
   id: SalvageSpecialistNeck
   name: loadout-group-salvage-specialist-neck
