@@ -161,7 +161,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
                 {
                     var control = new SensorInfo(sensor, addr);
                     control.OnThresholdUpdate += AtmosAlarmThresholdChanged;
-                    control.SensorDataCopied += AtmosDeviceDataCopied!.Invoke;
+                    control.SensorDataCopied += AtmosDeviceDataCopied.Invoke;
                     _sensors.Add(addr, control);
                     CSensorContainer.AddChild(control);
                 }

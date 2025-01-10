@@ -82,11 +82,10 @@ public sealed partial class SensorInfo : BoxContainer
             OnThresholdUpdate!(_address, type, threshold, arg3);
         };
 
-		_copySettings.OnPressed += _ =>
-		{
-			SensorDataCopied?.Invoke(data);
-		};
-
+        _copySettings.OnPressed += _ =>
+        {
+            SensorDataCopied?.Invoke(data);
+        };
     }
 
     public void ChangeData(AtmosSensorData data)
