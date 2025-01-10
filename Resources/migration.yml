@@ -389,4 +389,11 @@ IncendiaryGrenade: TP14IncendiaryGrenade
 BluespaceCrystal: TP14BluespaceCrystal
 BaseUplinkRadioNT: TP14BaseUplinkRadioNT
 CrateChemicalLabBundle: TP14CrateChemicalLabBundle
+WaterCanister: TP14WaterCanister
+SpawnMechStepfather: TP14SpawnMechStepfather
+MechStepfather: TP14MechStepfather
+SettlerSpawner: TP14SettlerSpawner
+PirateSpawner: TP14PirateSpawner
+PirateCaptainSpawner: TP14PirateCaptainSpawner
+HermitSpawner: TP14HermitSpawner
 
