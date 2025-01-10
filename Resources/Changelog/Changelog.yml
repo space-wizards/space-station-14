@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added mineral scanners! When held in your hand or pocket, these will
-      periodically show nearby ores. Unlock them through science today!
-    type: Add
-  id: 7295
-  time: '2024-09-06T14:05:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31390
 - author: lzk228
   changes:
   - message: You can no longer insert any item in AI upload console.
@@ -3939,3 +3931,10 @@
   id: 7794
   time: '2025-01-10T15:13:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34240
+- author: themias
+  changes:
+  - message: Fixed crayons losing durability attempting to write on stamped paper
+    type: Fix
+  id: 7795
+  time: '2025-01-10T15:37:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34202
