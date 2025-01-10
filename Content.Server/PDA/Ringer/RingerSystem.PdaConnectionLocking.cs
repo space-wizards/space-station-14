@@ -17,7 +17,7 @@ public sealed partial class RingerSystem
         if (map is null)
             return true;
 
-        return !HasComp<FTLMapComponent>(map);
+        return !HasComp<LockableUplinkBlockedMapComponent>(map);
     }
 
     /// <summary>
