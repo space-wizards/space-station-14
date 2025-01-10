@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ekkosangen
-  changes:
-  - message: Pizza crates and parties can now sometimes contain cotton pizza
-    type: Tweak
-  id: 7293
-  time: '2024-09-06T06:04:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31883
 - author: TheShuEd, Jaraten
   changes:
   - message: New Tech anomaly added to the game! it can bind devices ports, activate
@@ -3940,3 +3933,10 @@
   id: 7792
   time: '2025-01-10T06:55:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34346
+- author: Coolsurf6
+  changes:
+  - message: Made Forensic Gloves security contraband.
+    type: Tweak
+  id: 7793
+  time: '2025-01-10T15:01:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34193
