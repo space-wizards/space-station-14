@@ -68,6 +68,9 @@ public sealed class SupportExchangeLogging
 
         var exchangeQueue = _exchanges.GetOrNew(key, out var exists); // use out bool to prevent creating a new exchange if it already exists
         exchangeQueue.MessageQueue.Enqueue(supportMessage);
+        if (!exchangeQueue.Stored && exists)
+            return;
+
         try
         {
             if (!exchangeQueue.Stored && !exists)
