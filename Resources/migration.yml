@@ -408,3 +408,5 @@ MagCellExperimental: TP14MagCellExperimental
 WaterTankFilled: TP14WaterTankFilled
 AtmosFixWaterMarker: TP14AtmosFixWaterMarker
 MarkerInside: TP14MarkerInside
+BaseMobJellidPerson: TP14BaseMobJellidPerson
+MobJellidPerson: TP14MobJellidPerson
