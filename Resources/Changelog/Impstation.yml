@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Added the Shipyard Computer from DV, a way to obtain new shuttles for
-      the station.
-    type: Add
-  - message: Added the shipyard computer circuit to the QM's locker and default circuit
-      lathe
-    type: Add
-  id: 395
-  time: '2024-10-18T22:10:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/517
 - author: TGRCdev
   changes:
   - message: Sam Grimm's lobby art has been updated to reflect his transition.
@@ -4482,3 +4471,10 @@
   id: 894
   time: '2025-01-10T21:36:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1298
+- author: widgetbeck
+  changes:
+  - message: Made gastropoids moderately less vulnerable to temperature damage.
+    type: Tweak
+  id: 895
+  time: '2025-01-10T22:22:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1297
