@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
+using Content.Shared.Random.Helpers;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
@@ -201,7 +202,7 @@ public sealed class GameMapManager : IGameMapManager
         return _prototypeManager.TryIndex(gameMap, out map);
     }
 
-    private int GetMapRotationQueuePriority(string gameMapProtoName)
+    private int GetMapRotationQueueWeight(string gameMapProtoName)
     {
         var i = 0;
         foreach (var map in _previousMaps.Reverse())
@@ -218,19 +219,16 @@ public sealed class GameMapManager : IGameMapManager
         _log.Info($"map queue: {string.Join(", ", _previousMaps)}");
 
         var eligible = CurrentlyEligibleMaps()
-            .Select(x => (proto: x, weight: GetMapRotationQueuePriority(x.ID)))
-            .OrderByDescending(x => x.weight)
-            .ToArray();
+            .Select(x => (proto: x, weight: GetMapRotationQueueWeight(x.ID)))
+            .OrderByDescending(x => x.weight) //unsure if this should be kept in the weigted random version? frankly not sure what it was doing in the original version either, that didn't need to be ordered afaik
+            .ToDictionary();
 
-        _log.Info($"eligible queue: {string.Join(", ", eligible.Select(x => (x.proto.ID, x.weight)))}");
+        _log.Info($"eligible queue: {string.Join(", ", eligible.Select(x => (x.Key.ID, x.Value)))}");
 
         // YML "should" be configured with at least one fallback map
-        Debug.Assert(eligible.Length != 0, $"couldn't select a map with {nameof(GetFirstInRotationQueue)}()! No eligible maps and no fallback maps!");
+        Debug.Assert(eligible.Keys.Count != 0, $"couldn't select a map with {nameof(GetFirstInRotationQueue)}()! No eligible maps and no fallback maps!");
 
-        var weight = eligible[0].weight;
-        return eligible.Where(x => x.Item2 == weight)
-            .MinBy(x => x.proto.ID)
-            .proto;
+        return SharedRandomExtensions.Pick(eligible, new Random());
     }
 
     private void EnqueueMap(string mapProtoName)
