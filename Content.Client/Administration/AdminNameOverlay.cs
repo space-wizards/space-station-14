@@ -14,8 +14,9 @@ namespace Content.Client.Administration;
 
 internal sealed class AdminNameOverlay : Overlay
 {
+    [Dependency] private readonly IConfigurationManager _config = default!;
+
     private readonly AdminSystem _system;
-    private readonly IConfigurationManager _config = IoCManager.Resolve<IConfigurationManager>(); // TODO is this even legal?
     private readonly IEntityManager _entityManager;
     private readonly IEyeManager _eyeManager;
     private readonly EntityLookupSystem _entityLookup;
