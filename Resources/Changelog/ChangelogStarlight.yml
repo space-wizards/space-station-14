@@ -1797,4 +1797,179 @@ Entries:
   id: 254
   time: '2025-01-06T21:00:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/219
-
+- author: Rinary
+  changes:
+  - message: Added Decloner as new gun for researching
+    type: Add
+  id: 255
+  time: '2025-01-07T13:40:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/222
+- author: Rinary
+  changes:
+  - message: Added blueshield hardsuit.
+    type: Add
+  id: 256
+  time: '2025-01-07T14:08:03.724566+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added blueshield access.
+    type: Add
+  id: 257
+  time: '2025-01-07T14:08:14.547628+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed blueshield comms.
+    type: Fix
+  id: 258
+  time: '2025-01-07T14:08:29.745430+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed blueshield double emergency pack.
+    type: Fix
+  id: 259
+  time: '2025-01-07T14:08:48.971923+00:00'
+  url: 'null'
+- author: PubliclyExecutedPig
+  changes:
+  - message: BSO room for Hotel Station!
+    type: Add
+  id: 260
+  time: '2025-01-07T14:26:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/221
+- author: Rinary
+  changes:
+  - message: Added PDW-9 as ERT gun.
+    type: Add
+  id: 261
+  time: '2025-01-08T11:07:26.383902+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added energy m1911 as admeme gun.
+    type: Add
+  id: 262
+  time: '2025-01-08T11:07:49.370942+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: The pulse pistol has been changed. Now it has 3 fire modes.
+    type: Tweak
+  id: 263
+  time: '2025-01-08T11:08:51.696387+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: X01 Rebalanced, now it has more charges and new "DESTROYING" mode.
+    type: Tweak
+  id: 264
+  time: '2025-01-08T11:09:45.858750+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed blueshield comms(again).
+    type: Fix
+  id: 265
+  time: '2025-01-08T11:10:10.031271+00:00'
+  url: 'null'
+- author: Conflee
+  changes:
+  - message: 15 new Plushies to the Hug Dispenser
+    type: Add
+  id: 266
+  time: '2025-01-08T19:04:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/223
+- author: Conflee
+  changes:
+  - message: Ship in a Bottle, generates in Grand Lottery Crates
+    type: Add
+  id: 267
+  time: '2025-01-08T19:04:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/223
+- author: Conflee
+  changes:
+  - message: Dredd Helmet. A reskin of the Security Helmet based on Judge Dredd, found
+      in the Security Dispenser
+    type: Add
+  id: 268
+  time: '2025-01-08T19:04:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/223
+- author: Conflee
+  changes:
+  - message: Golden MK58, Admeme only currently
+    type: Add
+  id: 269
+  time: '2025-01-08T19:04:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/223
+- author: Rinary
+  changes:
+  - message: Fixed blueshield hardsuit
+    type: Fix
+  id: 270
+  time: '2025-01-08T19:02:43.891739+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed blueshield pda
+    type: Fix
+  id: 271
+  time: '2025-01-08T19:02:52.674293+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added mini and large energy crossbows
+    type: Add
+  id: 272
+  time: '2025-01-08T19:03:19.380995+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added IK-60, as ert gun.
+    type: Add
+  id: 273
+  time: '2025-01-08T19:03:34.026155+00:00'
+  url: 'null'
+- author: aedler
+  changes:
+  - message: Blueshield starts with extended security survival box
+    type: Tweak
+  id: 274
+  time: '2025-01-09T11:08:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/224
+- author: Rinary
+  changes:
+  - message: Added law telecom server as structure.
+    type: Add
+  id: 275
+  time: '2025-01-09T13:10:21.245512+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added stamina resists for syndie and centcomm armors.
+    type: Add
+  id: 276
+  time: '2025-01-09T13:10:40.911353+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added alien pistol(temporary admeme).
+    type: Add
+  id: 277
+  time: '2025-01-09T13:10:54.599596+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Now any explosion will be accompanied by smoke
+    type: Tweak
+  id: 278
+  time: '2025-01-09T15:04:11.349016+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added knockdown ingoring for some armors and hardsuits.
+    type: Add
+  id: 279
+  time: '2025-01-09T20:17:38.668513+00:00'
+  url: 'null'

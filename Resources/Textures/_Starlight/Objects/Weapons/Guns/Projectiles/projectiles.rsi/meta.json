@@ -8,6 +8,19 @@
   },
   "states": [
     {
+      "name": "declone"
+    },
+    {
+      "name": "cbbolt",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+		]
+	  ]
+	}
+	{
       "name": "impact",
       "delays": [
         [

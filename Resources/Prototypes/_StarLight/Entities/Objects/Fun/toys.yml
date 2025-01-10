@@ -96,3 +96,528 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/_Starlight/Items/Toys/dogbark_vika.ogg
+      
+- type: entity
+  parent: BasePlushie
+  id: AbductorPlushie
+  name: abductor plushie
+  description: Careful, it might kidnap you. Like in one of those bad 2170's killer doll movies.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: abductor_plushie
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Misc/alien_teleport.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Misc/alien_teleport.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Misc/alien_teleport.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Misc/alien_teleport.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/_Starlight/Misc/alien_teleport.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/taser_hit.ogg
+      
+- type: entity
+  parent: BasePlushie
+  id: AxolotlPlushie
+  name: axolotl plushie
+  description: Head empty. Absolutely zero thoughts behind their eyes.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: axolotl_plushie
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+      
+- type: entity
+  parent: BasePlushie
+  id: BorbPlushie
+  name: borb plushie
+  description: Chonky. Rotund. Orb.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: borb_plushie
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+      
+- type: entity
+  parent: BasePlushie
+  id: BottleShip
+  name: ship in a bottle
+  description: How did they get it in there?
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: bottleship
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Effects/glass_smack.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Effects/glass_smack.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Effects/glass_smack.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Effects/glass_smack.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Effects/glass_smash.ogg
+      
+- type: entity
+  parent: BasePlushie
+  id: CreaturePlushie
+  name: creature plushie
+  description: YIPPIE!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: creature_plushie
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Items/Toys/yippie.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Items/Toys/yippie.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Items/Toys/yippie.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Items/Toys/yippie.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/_Starlight/Items/Toys/yippie.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Starlight/Items/Toys/yippie.ogg
+      
+- type: entity
+  parent: BasePlushie
+  id: GnomePlushie
+  name: gnome plushie
+  description: Rattles when you shake it. Smells like Fooberries.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: gnome_plushie
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Items/Toys/gnome_hahe.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Items/Toys/gnome_hahe.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Items/Toys/gnome_hahe.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Items/Toys/gnome_hahe.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/_Starlight/Items/Toys/gnome_stop.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Starlight/Items/Toys/gnome_murderer.ogg
+      
+- type: entity
+  parent: BasePlushie
+  id: GoatPlushie
+  name: goat plushie
+  description: The best boy, the softest boy.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: goat_plushie
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+      
+- type: entity
+  parent: BasePlushie
+  id: IanPlushie
+  name: ian plushie
+  description: Praise Ian. Protect Ian. Walkies Ian. Feed Ian.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: ian_plushie
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/dog_bark1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/dog_bark2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/dog_bark1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/dog_bark3.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Animals/dog_bark2.ogg
+      
+- type: entity
+  parent: BasePlushie
+  id: LisaPlushie
+  name: lisa plushie
+  description: Praise Lisa. Protect Lisa. Walkies Lisa. Feed Lisa.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: lisa_plushie
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/dog_bark1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/dog_bark2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/dog_bark1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/dog_bark3.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Animals/dog_bark2.ogg
+      
+- type: entity
+  parent: BasePlushie
+  id: KittenPlushie
+  name: kitten plushie
+  description: A blue kitten! Just like they raise on Vernethauz II!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: kitten_plushie
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/cat_meow2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/cat_meow2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Animals/cat_hiss.ogg
+      
+- type: entity
+  parent: BasePlushie
+  id: PigPlushie
+  name: pig plushie
+  description: Head, round. Eyes, filled with optimism. Smells, kinda like bacon.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: pig_plushie
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/pig_oink.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/pig_oink.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/pig_oink.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/pig_oink.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Animals/pig_oink.ogg
+      
+- type: entity
+  parent: BasePlushie
+  id: RenaultPlushie
+  name: renault plushie
+  description: The Captain's trusty pet! The tail is so fluffy.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: renault_plushie
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/fox1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/fox2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/fox5.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/fox8.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Animals/fox_squeak.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Animals/fox11.ogg
+      
+- type: entity
+  parent: BasePlushie
+  id: SnailPlushie
+  name: snail plushie
+  description: Look at it go!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: snail_plushie
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+      
+- type: entity
+  parent: BasePlushie
+  id: SquishimsCow
+  name: cow squishims
+  description: Round and soft and legally distinct!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: squishims_cow
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+      
+- type: entity
+  parent: BasePlushie
+  id: SquishimsFrog
+  name: frog squishims
+  description: Round and soft and legally distinct!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: squishims_frog
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+      
+- type: entity
+  parent: BasePlushie
+  id: SusPlushie
+  name: sus plushie
+  description: Fell out of a vent and into your heart! ...with a knife. It stabbed you. In the heart.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: sus_plushie
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toysqueak1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/toysqueak3.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toysqueak2.ogg
+      

@@ -247,34 +247,34 @@
     proto: RedLaser
     fireCost: 62.5
 
-- type: entity
-  name: pulse pistol
-  parent: BaseWeaponBatterySmall
-  id: WeaponPulsePistol
-  description: A state of the art energy pistol favoured as a sidearm by the NT operatives.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-unshaded-4
-      map: ["enum.GunVisualLayers.MagUnshaded"]
-      shader: unshaded
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
-  - type: Gun
-    selectedMode: SemiAuto
-    availableModes:
-    - SemiAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-  - type: HitscanBatteryAmmoProvider
-    proto: Pulse
-    fireCost: 200
-  - type: Battery
-    maxCharge: 2000
-    startingCharge: 2000
+#- type: entity
+#  name: pulse pistol
+#  parent: BaseWeaponBatterySmall
+#  id: WeaponPulsePistol
+#  description: A state of the art energy pistol favoured as a sidearm by the NT operatives.
+#  components:
+#  - type: Sprite
+#    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+#    layers:
+#    - state: base
+#      map: ["enum.GunVisualLayers.Base"]
+#    - state: mag-unshaded-4
+#      map: ["enum.GunVisualLayers.MagUnshaded"]
+#      shader: unshaded
+#  - type: Clothing
+#    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+#  - type: Gun
+#    selectedMode: SemiAuto
+#    availableModes:
+#    - SemiAuto
+#    soundGunshot:
+#      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+#  - type: HitscanBatteryAmmoProvider
+#    proto: Pulse
+#    fireCost: 200
+#  - type: Battery
+#    maxCharge: 2000
+#    startingCharge: 2000
 
 - type: entity
   name: pulse carbine
@@ -779,4 +779,4 @@
     autoRecharge: true
     autoRechargeRate: 24
     autoRechargePause: true
-    autoRechargePauseTime: 10
+    autoRechargePauseTime: 30

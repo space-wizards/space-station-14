@@ -85,52 +85,6 @@
       visualState: kill
       magState: kill
       heldPrefix: kill4
-      
-- type: entity
-  name: lr-30
-  parent: [BaseItem, BaseGunWieldable]
-  id: WeaponLr30
-  description: Energy carbine with lethal mode.
-  components:
-  - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Battery/lr_30.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    size: Huge
-  - type: MagazineAmmoProvider
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineBatteryLr30
-        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazineBattery
-        whitelistFailPopup: gun-magazine-whitelist-fail
-  - type: AmmoCounter
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-  - type: Gun
-    fireRate: 5
-    selectedMode: FullAuto
-    availableModes:
-      - SemiAuto
-      - FullAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
-  - type: MagazineVisuals
-    magState: mag
-    steps: 6
-    zeroVisible: true
-  - type: Appearance
   
 - type: entity
   name: miniature energy gun
@@ -277,21 +231,28 @@
     zeroVisible: true
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisabler
-    fireCost: 100
+    fireCost: 40
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: BulletDisabler
-      fireCost: 100
+      fireCost: 40
       magState: disable
       visualState: disable-unshaded
     - proto: BulletAdvTaser
-      fireCost: 250
+      fireCost: 100
       magState: stun
       visualState: stun-unshaded
     - proto: BulletLaser
-      fireCost: 100
+      fireCost: 75
       magState: kill
       visualState: kill-unshaded
+    - proto: BulletLaserDestroy
+      fireCost: 750
+      magState: destroy
+      visualState: destroy-unshaded
+  - type: Battery
+    maxCharge: 1500
+    startingCharge: 1500
       
 - type: entity
   parent: BaseWeaponBattery
@@ -386,3 +347,181 @@
     fireCost: 62.5
   - type: StaticPrice
     price: 300
+    
+- type: entity
+  parent: BaseWeaponBattery
+  id: WeaponDecloner
+  name: decloner
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/decloner.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: normal
+      shader: unshaded
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDeclone
+    fireCost: 200
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  
+- type: entity
+  name: m1911
+  parent: BaseWeaponBatterySmall
+  id: WeaponM1911
+  description: A compact pulse core in a classic Nanotrasen officer pistol design. It's not the size of the gun, it's the size of the hole it puts in people.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/m1911.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: stun-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Small
+    shape:
+    - 0, 0, 1, 1
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 200
+  - type: MagazineVisuals
+    magState: stun
+    steps: 5
+    zeroVisible: true
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletAdvTaser
+    fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletAdvTaser
+      fireCost: 100
+      magState: stun
+    - proto: BulletLaser
+      fireCost: 100
+      magState: kill
+    - proto: BulletLaserDestroy
+      fireCost: 100
+      magState: destroy
+      
+- type: entity
+  name: pulse pistol
+  parent: BaseWeaponBatterySmall 
+  id: WeaponPulsePistol
+  description: An extremely compact version of the pulse carabine.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: stun
+      map: ["enum.FireModesLayers.FireMode"]
+    - state: stun-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Small
+    shape:
+    - 0, 0, 1, 1
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40
+  - type: MagazineVisuals
+    magState: stun
+    steps: 5
+    zeroVisible: true
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletAdvTaser
+    fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletAdvTaser
+      fireCost: 100
+      magState: stun
+      visualState: stun
+    - proto: BulletLaser
+      fireCost: 100
+      magState: kill
+      visualState: kill
+    - proto: BulletLaserDestroy
+      fireCost: 200
+      magState: destroy
+      visualState: destroy
+  - type: Battery
+    maxCharge: 2600
+    startingCharge: 2600
+    
+- type: entity
+  name: PDW-9 taser pistol
+  parent: BaseWeaponBatterySmall
+  id: WeaponPDW9
+  description: A compact pulse core in a classic Nanotrasen officer pistol design. It's not the size of the gun, it's the size of the hole it puts in people.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/pdw9.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: disable
+      map: ["enum.FireModesLayers.FireMode"]
+    - state: disable-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Small
+    shape:
+    - 0, 0, 1, 1
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 200
+  - type: MagazineVisuals
+    magState: disable
+    steps: 5
+    zeroVisible: true
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 75
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletDisabler
+      fireCost: 75
+      magState: disable
+      visualState: disable
+    - proto: BulletLaser
+      fireCost: 100
+      magState: kill
+      visualState: kill
+  - type: Battery
+    maxCharge: 1500
+    startingCharge: 1500
+    
+- type: entity
+  parent: BaseWeaponBattery
+  id: WeaponAlien
+  name: alien pistol
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/alien.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDeclone
+    fireCost: 200
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance

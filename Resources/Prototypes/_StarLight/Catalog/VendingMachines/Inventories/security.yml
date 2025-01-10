@@ -35,6 +35,18 @@
   - !type:BuyerAccessCondition
 
 - type: listing
+  id: ClothingHeadHelmetDredd
+  productEntity: ClothingHeadHelmetDredd
+  cost:
+    NTCredit: 300
+  categories:
+  - SLSecurity
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+  - !type:BuyerAccessCondition
+
+- type: listing
   id: RedBrutePack
   productEntity: RedBrutePack
   cost:

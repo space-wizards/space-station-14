@@ -1,7 +1,7 @@
 - type: cargoProduct
   id: ArmoryLr30
   icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Battery/lr_30.rsi
+    sprite: _Starlight/Objects/Weapons/Guns/Rifles/lr30.rsi
     state: icon
   product: CrateArmoryLr30
   cost: 5200

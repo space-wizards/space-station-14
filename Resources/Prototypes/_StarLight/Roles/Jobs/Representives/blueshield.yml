@@ -36,6 +36,7 @@
     - Atmospherics
     - Cargo
     - Medical
+    - BlueShield
   special:
     - !type:AddImplantSpecial
       implants: [MindShieldImplant]

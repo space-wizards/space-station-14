@@ -23,4 +23,4 @@
       stateDoorOpen: bssecure_open
       stateDoorClosed: bssecure_door
     - type: AccessReader
-      access: [["Command"]]  # TODO: properly add blueshield access level
+      access: [["BlueShield"]]

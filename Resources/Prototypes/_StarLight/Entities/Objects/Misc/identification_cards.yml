@@ -64,13 +64,13 @@
   id: IAAIDCard
   name: internal affairs agent ID card
   components:
-    - type: Sprite
-      sprite: _Starlight/Objects/Misc/id_cards.rsi
-      layers:
-      - state: silver
-      - state: idiaa
-    - type: PresetIdCard
-      job: IAA
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/id_cards.rsi
+    layers:
+    - state: silver
+    - state: idiaa
+  - type: PresetIdCard
+    job: IAA
       
 - type: entity
   parent: IDCardStandard
@@ -82,7 +82,5 @@
     layers:
     - state: silver
     - state: idblueshield
-  - type: Item
-    heldPrefix: silver
   - type: PresetIdCard
     job: BlueShield

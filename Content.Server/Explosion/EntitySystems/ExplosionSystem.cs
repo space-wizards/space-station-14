@@ -346,7 +346,11 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         var visualEnt = CreateExplosionVisualEntity(pos, queued.Proto.ID, spaceMatrix, spaceData, gridData.Values, iterationIntensity);
 
         // camera shake
-        CameraShake(iterationIntensity.Count * 4f, pos, queued.TotalIntensity);
+        CameraShake(iterationIntensity.Count * 4f, pos, queued.TotalIntensity * 10f);
+        
+        // smoke
+        
+        SpawnSmokeInRadius(iterationIntensity.Count, pos, queued.TotalIntensity);
 
         //For whatever bloody reason, sound system requires ENTITY coordinates.
         var mapEntityCoords = EntityCoordinates.FromMap(_mapManager.GetMapEntityId(pos.MapId), pos, _transformSystem, EntityManager);
@@ -391,6 +395,32 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             visualEnt,
             queued.Cause,
             _map);
+    }
+    
+    private void SpawnSmokeInRadius(float range, MapCoordinates epicenter, float totalIntensity)
+    {
+        var smokeCount = (int)(range / 2);
+
+        var xformSystem = IoCManager.Resolve<IEntityManager>().System<SharedTransformSystem>();
+
+        for (int i = 0; i < smokeCount; i++)
+        {
+            var angle = _robustRandom.NextDouble() * 2 * Math.PI;
+
+            var smokeDistance = _robustRandom.NextDouble() * range;
+
+            var offsetX = (float)(Math.Cos(angle) * smokeDistance);
+            var offsetY = (float)(Math.Sin(angle) * smokeDistance);
+
+            var smokePosition = new MapCoordinates(epicenter.Position + new Vector2(offsetX, offsetY), epicenter.MapId);
+
+            var distance = (smokePosition.Position - epicenter.Position).Length();
+
+            if (distance <= range)
+            {
+                EntityManager.SpawnEntity("Smoke", smokePosition);
+            }
+        }
     }
 
     private void CameraShake(float range, MapCoordinates epicenter, float totalIntensity)

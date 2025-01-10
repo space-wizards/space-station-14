@@ -7,7 +7,7 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
-    if: ${{github.head_ref == 'master' || github.head_ref == 'main' || github.head_ref == 'develop'}}
+    if: ${{github.head_ref == 'master' || github.head_ref == 'main' || github.head_ref == 'develop' || github.head_ref == 'Starlight'}}
     
     steps:    
     - uses: superbrothers/close-pull-request@v3

@@ -3,17 +3,17 @@
 # Sorting by path instead of by who added it one day :(
 # this isn't how codeowners rules work pls read the first comment instead of trying to force a sorting order
 
-/Resources/ConfigPresets/WizardsDen/  @nikthechampiongr
-/Content.*/Administration/ @DrSmugleaf @nikthechampiongr
-/Resources/ServerInfo/ @nikthechampiongr
-/Resources/ServerInfo/Guidebook/ServerRules/ @nikthechampiongr
+/Resources/ConfigPresets/WizardsDen/  @nikthechampiongr @crazybrain23
+/Content.*/Administration/ @DrSmugleaf @nikthechampiongr @crazybrain23
+/Resources/ServerInfo/ @nikthechampiongr @crazybrain23
+/Resources/ServerInfo/Guidebook/ServerRules/ @nikthechampiongr @crazybrain23
 
 /Resources/Prototypes/Maps/** @Emisse
 
 /Resources/Prototypes/Body/ @DrSmugleaf # suffering
 /Resources/Prototypes/Entities/Mobs/Player/ @DrSmugleaf
 /Resources/Prototypes/Entities/Mobs/Species/ @DrSmugleaf
-/Resources/Prototypes/Guidebook/rules.yml @nikthechampiongr
+/Resources/Prototypes/Guidebook/rules.yml @nikthechampiongr @crazybrain23
 /Content.*/Body/ @DrSmugleaf
 /Content.YAMLLinter @DrSmugleaf
 /Content.Shared/Damage/ @DrSmugleaf
@@ -25,7 +25,7 @@
 
 # SKREEEE
 /Content.*.Database/ @PJB3005 @DrSmugleaf
-/Content.Shared.Database/Log*.cs @PJB3005 @DrSmugleaf @nikthechampiongr
+/Content.Shared.Database/Log*.cs @PJB3005 @DrSmugleaf @nikthechampiongr @crazybrain23
 /Pow3r/ @PJB3005
 /Content.Server/Power/Pow3r/ @PJB3005
 
