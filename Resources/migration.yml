@@ -383,4 +383,10 @@ LadderUpBase: TP14LadderUpBase
 TelecomRelay: TP14TelecomRelay
 EncryptionKeyNanotrasen: TP14EncryptionKeyNanotrasen
 WeaponTrident: TP14WeaponTrident
+EnergyBomb: TP14EnergyBomb
+BeachballGrenade: TP14BeachballGrenade
+IncendiaryGrenade: TP14IncendiaryGrenade
+BluespaceCrystal: TP14BluespaceCrystal
+BaseUplinkRadioNT: TP14BaseUplinkRadioNT
+CrateChemicalLabBundle: TP14CrateChemicalLabBundle
 
