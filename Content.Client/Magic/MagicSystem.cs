@@ -1,4 +1,4 @@
-﻿using Content.Shared.Magic;
+using Content.Shared.Magic;
 
 namespace Content.Client.Magic;
 

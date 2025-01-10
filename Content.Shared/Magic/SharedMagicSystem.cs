@@ -2,7 +2,10 @@ using System.Numerics;
 using Content.Shared.Actions;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
+using Content.Shared.Chat.TypingIndicator;
+using Content.Shared.CombatMode;
 using Content.Shared.Coordinates.Helpers;
+using Content.Shared.Damage;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Emoting;
@@ -21,6 +24,9 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
+using Content.Shared.NPC;
+using Content.Shared.NPC.Components;
+using Content.Shared.NPC.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Speech;
@@ -28,6 +34,7 @@ using Content.Shared.Speech.Muting;
 using Content.Shared.Storage;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Whitelist;
@@ -70,6 +77,7 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly NpcFactionSystem _faction = default!;
 
     public override void Initialize()
     {
@@ -594,15 +602,24 @@ public abstract class SharedMagicSystem : EntitySystem
         ev.Handled = true;
         Speak(ev);
 
-        EntityManager.EnsureComponent<MindContainerComponent>(ev.Target);
-        EntityManager.EnsureComponent<InputMoverComponent>(ev.Target);
-        EntityManager.EnsureComponent<MobMoverComponent>(ev.Target);
-        EntityManager.EnsureComponent<MovementSpeedModifierComponent>(ev.Target);
-        EntityManager.EnsureComponent<SpeechComponent>(ev.Target);
-        EntityManager.EnsureComponent<EmotingComponent>(ev.Target);
-        EntityManager.EnsureComponent<ExaminerComponent>(ev.Target);
-        EntityManager.EnsureComponent<ActionsComponent>(ev.Target);
+        AnimateSpellHelper(ev);
+
+        EnsureComp<CombatModeComponent>(ev.Target);
+
+        var melee = EnsureComp<MeleeWeaponComponent>(ev.Target);
+        melee.Animation = ev.AttackAnimation;
+        melee.WideAnimation = ev.AttackAnimation;
+        melee.AltDisarm = false;
+        melee.Range = 1.2f;
+        melee.Angle = 0.0f;
+        melee.HitSound = ev.AttackSound;
+        melee.Damage = ev.Damage;
+
+        EnsureComp<NpcFactionMemberComponent>(ev.Target);
+        _faction.AddFaction(ev.Target, ev.Faction);
     }
+    public virtual void AnimateSpellHelper(AnimateSpellEvent ev) { }
+
     #endregion
     // End Spells
     #endregion

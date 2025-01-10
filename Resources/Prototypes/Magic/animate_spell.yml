@@ -14,7 +14,13 @@
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/staff_animation.ogg
     icon:
-      sprite: Mobs/Species/Human/organs.rsi
-      state: brain
+      sprite: Objects/Magic/magicactions.rsi
+      state: spell_default
     event: !type:AnimateSpellEvent
+      task: SimpleHostileCompound
+      faction: SimpleHostile
+      attackAnimation: WeaponArcPunch
+      damage:
+        types:
+          Blunt: 10
       speech: action-speech-spell-animate
