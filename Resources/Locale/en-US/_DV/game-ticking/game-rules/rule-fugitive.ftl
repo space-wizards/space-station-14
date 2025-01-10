@@ -5,7 +5,7 @@ objective-issuer-self = [color=#1708EC]Self[/color]
 fugitive-spawn = You fall from the ceiling!
 
 station-event-fugitive-hunt-announcement = Please check communications consoles for a sensitive message.
-fugitive-announcement-GALPOL = Central Command Enforcement Divison
+fugitive-announcement-GALPOL = Central Command
 
 fugitive-report-title = WANTED FUGITIVE!
 fugitive-report-first-line = An escaped fugitive has been spotted in the sector and disguised their identity. They may be a stowaway on your station.
@@ -44,8 +44,8 @@ fugitive-crime-10 = Streaking
 fugitive-crime-11 = Loitering
 fugitive-crime-12 = Bad Vibes
 fugitive-crime-13 = Tomfuckery
-fugitive-crime-14 = Smoking in a non-smoking area
-fugitive-crime-15 = Not smoking in a smoking area
+fugitive-crime-14 = Smoking in a Non-Smoking Area
+fugitive-crime-15 = Not Smoking in a Smoking Area
 fugitive-crime-16 = Vehicular Clownslaughter
 fugitive-crime-17 = Vehicular Clown's Laughter
 fugitive-crime-18 = Battery
@@ -74,3 +74,4 @@ fugitive-crime-40 = This field intentionally left blank
 fugitive-crime-41 = Unlicensed Surgery
 fugitive-crime-42 = Toaster Related Incident
 fugitive-crime-43 = The Incident
+fugitive-crime-44 = Irresponsible Drink Mixing
