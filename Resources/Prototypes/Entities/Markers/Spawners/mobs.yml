@@ -473,7 +473,7 @@
       sprite: Mobs/Animals/fish.rsi
   - type: ConditionalSpawner
     prototypes:
-    - MobFish
+    - TP14MobFish
 
 - type: entity
   name: Slimes Spawner Blue
