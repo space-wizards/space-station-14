@@ -30,6 +30,7 @@ ghost-role-information-synthesis-rules =
 ghost-role-information-fugitive-name = Fugitive
 ghost-role-information-fugitive-description = You are an escaped prisoner. You're almost in the clear. Don't mess it up.
 ghost-role-information-fugitive-rules = You are a [color=yellow][bold]Fugitive[/bold][/color], on the run from the law. 
+                                        You are an antagonist, and were rightfully imprisoned for your past acts.
                                         Your life and your freedom matter more than anything else. [color=red]Don't throw it all away.[/color] 
 
                                         You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
