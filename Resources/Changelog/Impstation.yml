@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Tweaked spelf marking organization to be more in line with other races
-    type: Tweak
-  id: 392
-  time: '2024-10-18T18:18:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/509
 - author: formlessnameless
   changes:
   - message: Ghost bar patrons don't need to breathe
@@ -4487,3 +4480,10 @@
   id: 891
   time: '2025-01-10T07:14:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1294
+- author: AvianMaiden
+  changes:
+  - message: 37 new AI names, some from community suggestions!
+    type: Add
+  id: 892
+  time: '2025-01-10T18:14:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1287
