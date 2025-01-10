@@ -642,6 +642,10 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         EnsureComp<PreventPilotComponent>(shuttle.Value);
         EnsureComp<EmergencyShuttleComponent>(shuttle.Value);
 
+        // Is it really okay to just go about the codebase and arbitrarily add this component
+        // or is there a better way...
+        EnsureComp<LockableUplinkBlockedMapComponent>(shuttle.Value);
+
         Log.Info($"Added emergency shuttle {ToPrettyString(shuttle)} for station {ToPrettyString(ent)} and centcomm {ToPrettyString(ent.Comp2.Entity)}");
     }
 

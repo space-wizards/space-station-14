@@ -7,17 +7,24 @@ namespace Content.Server.PDA.Ringer;
 public sealed partial class RingerSystem
 {
     /// <summary>
-    /// Returns if the map supplied allows open uplinks.
+    /// Returns if the uplink is allowed to be opened.
     /// </summary>
-    /// <param name="map">Map to be checked.</param>
+    /// <param name="uplink">Entity containing the uplink.</param>
     /// <returns></returns>
-    private bool CanUplinkBeOpenedOnMap(EntityUid? map)
+    private bool CanUplinkBeOpened(EntityUid uplink)
     {
-        // Uh... I'm just going to put this here as default behaviour since I think this is what used to happen...
-        if (map is null)
-            return true;
+        var uplinkMapId = _transform.GetMapId(uplink);
 
-        return !HasComp<LockableUplinkBlockedMapComponent>(map);
+        var blockEnumerator = EntityQueryEnumerator<LockableUplinkBlockedMapComponent>();
+        while (blockEnumerator.MoveNext(out var uid, out _))
+        {
+            if (_transform.GetMapId(uid) == uplinkMapId)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /// <summary>
@@ -27,8 +34,13 @@ public sealed partial class RingerSystem
     /// <param name="args"></param>
     private void CheckMapBeforeOpenUplink(Entity<RingerUplinkComponent> ent, ref BeforeUplinkOpenEvent args)
     {
-        var map = _transform.GetMap((EntityUid)ent);
-        if (CanUplinkBeOpenedOnMap(map))
+        var enumerator = EntityQueryEnumerator<LockableUplinkBlockedMapComponent>();
+        while (enumerator.MoveNext(out var uid, out _))
+        {
+            Log.Debug($"{ToPrettyString(uid)}");
+        }
+
+        if (CanUplinkBeOpened(ent))
             return;
         args.Canceled = true;
         _popupSystem.PopupEntity(Loc.GetString("uplink-no-connection"),
@@ -45,25 +57,24 @@ public sealed partial class RingerSystem
         // Surely there has to be a better way to check if the map has changed...
         // Eh, surely someone will catch it in reviews and tell me how to do it right?
         var uplinkPdaQuery = EntityQueryEnumerator<RingerUplinkComponent>();
-        while (uplinkPdaQuery.MoveNext(out var uid, out var ringer))
+        while (uplinkPdaQuery.MoveNext(out var pdaUid, out var ringer))
         {
             if (!ringer.Unlocked)
                 continue;
 
-            var map = _transform.GetMap(uid);
-            if (CanUplinkBeOpenedOnMap(map))
+            if (CanUplinkBeOpened(pdaUid))
                 continue;
 
-            LockUplink(uid, ringer);
-            if (TryComp(uid, out PdaComponent? pda))
-                _pda.UpdatePdaUi(uid, pda);
+            LockUplink(pdaUid, ringer);
+            if (TryComp(pdaUid, out PdaComponent? pda))
+                _pda.UpdatePdaUi(pdaUid, pda);
 
             // "Find" the person holding onto this PDA
             // Again, I feel there must be a better way of doing this, hopefully review will let me know!
-            var owner = _transform.GetParentUid(uid);
+            var owner = _transform.GetParentUid(pdaUid);
             _popupSystem.PopupEntity(
                 Loc.GetString("uplink-lose-connection"),
-                uid,
+                pdaUid,
                 owner,
                 PopupType.LargeCaution);
         }
