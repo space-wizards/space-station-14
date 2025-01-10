@@ -29,6 +29,8 @@ internal sealed class AdminNameOverlay : Overlay
 
     public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, EntityLookupSystem entityLookup, IUserInterfaceManager userInterfaceManager)
     {
+        IoCManager.InjectDependencies(this);
+
         _system = system;
         _entityManager = entityManager;
         _eyeManager = eyeManager;
