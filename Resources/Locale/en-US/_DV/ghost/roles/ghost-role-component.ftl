@@ -28,5 +28,8 @@ ghost-role-information-synthesis-rules =
                                         You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
 
 ghost-role-information-fugitive-name = Fugitive
-ghost-role-information-fugitive-description = You're an escaped prisoner. Make it out alive.
-ghost-role-information-fugitive-rules = You are the lightest of antags, focus on laying low rather than engaging security directly. Don't murderbone.
+ghost-role-information-fugitive-description = You are an escaped prisoner. You're almost in the clear. Don't mess it up.
+ghost-role-information-fugitive-rules = You are a [color=yellow][bold]Fugitive[/bold][/color], on the run from the law. 
+                                        Your life and your freedom matter more than anything else. [color=red]Don't throw it all away.[/color] 
+
+                                        You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
