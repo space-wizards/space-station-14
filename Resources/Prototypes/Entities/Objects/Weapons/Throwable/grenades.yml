@@ -478,7 +478,7 @@
 
 - type: entity
   parent: GrenadeBase
-  id: IncendiaryGrenade
+  id: TP14IncendiaryGrenade
   name: incendiary grenade
   description: Releases superheated plasma microparticles upon detonation.
   components:
@@ -509,7 +509,7 @@
   name: beachball
   description: A NT-brand beachball. This one is strangely firm.
   parent: BaseGrenade
-  id: BeachballGrenade
+  id: TP14BeachballGrenade
   components:
   - type: Item
     size: Normal
