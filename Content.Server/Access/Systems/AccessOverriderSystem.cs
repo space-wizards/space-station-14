@@ -247,11 +247,10 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
 
         accessReaderEnt.Value.Comp.AccessLists = ConvertAccessListToHashSet(newAccessList);
 
-        Log.Debug($"{component.TargetAccessReaderId} {accessReaderEnt.Value}");
         var ev = new OnAccessOverriderAccessUpdatedEvent(player);
         RaiseLocalEvent(component.TargetAccessReaderId, ref ev);
 
-        Dirty(accessReaderEnt.Value, accessReaderEnt.Value.Comp);
+        Dirty(accessReaderEnt.Value);
     }
 
     /// <summary>
