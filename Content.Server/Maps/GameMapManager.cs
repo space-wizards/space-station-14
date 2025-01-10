@@ -162,7 +162,7 @@ public sealed class GameMapManager : IGameMapManager
 
     public void SelectMapFromRotationQueue(bool markAsPlayed = false)
     {
-        var map = GetFirstInRotationQueue();
+        var map = PickFromWeightedRotationQueue();
 
         _selectedMap = map;
 
@@ -214,19 +214,20 @@ public sealed class GameMapManager : IGameMapManager
         return _mapQueueDepth;
     }
 
-    private GameMapPrototype GetFirstInRotationQueue()
+    private GameMapPrototype PickFromWeightedRotationQueue()
     {
         _log.Info($"map queue: {string.Join(", ", _previousMaps)}");
 
         var eligible = CurrentlyEligibleMaps()
             .Select(x => (proto: x, weight: GetMapRotationQueueWeight(x.ID)))
-            .OrderByDescending(x => x.weight) //unsure if this should be kept in the weigted random version? frankly not sure what it was doing in the original version either, that didn't need to be ordered afaik
+            .OrderByDescending(x => x.weight)//unsure if this should be kept in the weighted random version? frankly not sure what it was doing in the original version either, that didn't need to be ordered afaik
+            .Where(x => x.weight > 0)//force at least one round between the same map rolling for variety
             .ToDictionary();
 
         _log.Info($"eligible queue: {string.Join(", ", eligible.Select(x => (x.Key.ID, x.Value)))}");
 
         // YML "should" be configured with at least one fallback map
-        Debug.Assert(eligible.Keys.Count != 0, $"couldn't select a map with {nameof(GetFirstInRotationQueue)}()! No eligible maps and no fallback maps!");
+        Debug.Assert(eligible.Keys.Count != 0, $"couldn't select a map with {nameof(PickFromWeightedRotationQueue)}()! No eligible maps and no fallback maps!");
 
         return SharedRandomExtensions.Pick(eligible, new Random());
     }
