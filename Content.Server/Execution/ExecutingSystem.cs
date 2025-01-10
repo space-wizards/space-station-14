@@ -372,9 +372,7 @@ public sealed class ExecutionSystem : EntitySystem
             case HitScanCartridgeAmmoComponent cartridge:
                 var hitscanProto = _prototypeManager.Index(cartridge.Hitscan);
                 if (hitscanProto.Damage is not null)
-                    damage = hitscanProto.Damage;
-                //if (projectilespreaderComponent != null)
-                //    damage *= projectilespreaderComponent.Count;
+                    damage = hitscanProto.Damage * hitscanProto.Count;
 
                 cartridge.Spent = true;
                 _appearanceSystem.SetData(ammoUid!.Value, AmmoVisuals.Spent, true);

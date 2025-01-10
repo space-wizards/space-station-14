@@ -90,9 +90,6 @@ public sealed partial class HitscanPrototype : IPrototype, IShootable, IInheriti
     [DataField]
     public Angle Spread = Angle.FromDegrees(5);
 
-    /// <summary>
-    /// How many prototypes are spawned when shot.
-    /// </summary>
     [DataField]
     public int Count = 1;
 }

@@ -29,12 +29,8 @@
     <Folder Include="_Starlight\Spells\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="_Starlight\OnHit\CuffsOnHitComponent.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="_Starlight\OnHit\InjectOnHitComponent.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="_Starlight\OnHit\CuffsOnHitComponent.cs" />
+    <Compile Update="_Starlight\OnHit\InjectOnHitComponent.cs" />
     <Compile Update="_Starlight\Weapon\Components\GunComponent.cs">
       <SubType>Component</SubType>
     </Compile>
