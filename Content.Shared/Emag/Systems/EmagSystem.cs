@@ -58,7 +58,7 @@ public sealed class EmagSystem : EntitySystem
             _popup.PopupClient(Loc.GetString("emag-invalid-target", ("emag", uid), ("target", target)), user, user);
             return false;
         }
-            // End of DeltaV code
+            // End of DV code
 
         TryComp<LimitedChargesComponent>(uid, out var charges);
         if (_charges.IsEmpty(uid, charges))

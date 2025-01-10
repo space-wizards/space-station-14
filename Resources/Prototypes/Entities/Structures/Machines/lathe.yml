@@ -471,6 +471,7 @@
     - SalvageMagnetMachineCircuitboard
     - ShipyardComputerCircuitboard
     - ServiceTechFabCircuitboard #imp addition
+    - SupermatterComputerCircuitboard # imp
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - HellfireFreezerMachineCircuitBoard
@@ -594,8 +595,6 @@
     - BorgModuleFireExtinguisher
     - BorgModuleRadiationDetection
     - BorgModuleTool
-    - BorgModuleBartender
-    - BorgModulePaper
     - BorgModuleArtistic #imp special
     - CyborgEndoskeleton
     - LeftArmBorg
@@ -953,8 +952,8 @@
       - Hemostat
       - ClothingEyesGlassesChemical
       - WhiteCane
-      - PrescriptionLens
-      - PrescriptionLensStrong
+      - PrescriptionLens # imp
+      - PrescriptionLensStrong # imp
     dynamicRecipes:
       - ChemicalPayload
       - CryostasisBeaker

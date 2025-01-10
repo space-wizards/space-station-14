@@ -31,5 +31,5 @@ public sealed partial class EmagComponent : Component
     /// </summary>
     [DataField]
     public EntityWhitelist? Blacklist;
-    // End of DeltaV code
+    // End of DV code
 }

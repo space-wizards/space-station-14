@@ -1,0 +1,155 @@
+- type: entity
+  name: nuclear operative mouse
+  parent: [ SimpleMobBase, MobCombat ]
+  id: MobNukieMouse
+  description: A Nuclear Operative... MOUSE?!
+  suffix: syndicate
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-nukie-mouse-name
+    description: ghost-role-information-nukie-mouse-description
+  - type: GhostTakeoverAvailable
+  - type: RandomMetadata
+    nameSegments: [names_mouse_death_commando]
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: Speech
+    speechVerb: SmallMob
+    speechSounds: Squeak
+  - type: PointLight
+    radius: 1.5
+    energy: 2.3
+    offset: 0, -1
+    color: green
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: _DV/Mobs/Animals/nukiemouse.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: mouse
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 30 #Bulky by mouse standards...
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      40: Critical
+      60: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 4.9
+  - type: InventorySlots
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: mouse
+      Critical:
+        Base: dead
+      Dead:
+        Base: splat
+  - type: Food
+  - type: Hunger
+    baseDecayRate: 0.1
+  - type: Extractable
+    grindableSolutionName: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Blood
+          Quantity: 55
+        - ReagentId: Fat
+          Quantity: 5
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: ReplacementAccent
+    accent: mouse
+  - type: Tag
+    tags:
+    - VimPilot
+    - Trash
+    - Mouse
+    - Meat
+    - FootstepSound
+    - Radio
+  - type: Puller
+    needsHands: False
+  - type: NoSlip
+  - type: Respirator #It just works?
+    minSaturation: 5.0
+  - type: Temperature
+    heatDamageThreshold: 423
+    coldDamageThreshold: 0
+  - type: PressureImmunity
+  - type: Insulated
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.1
+  - type: Vocal
+    sounds:
+      Male: Mouse
+      Female: Mouse
+      Unsexed: Mouse
+    wilhelmProbability: 0.01
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Slash: 5
+        Piercing: 3
+        Structural: 1.5
+  - type: Body
+    prototype: Rat
+    requiredLegs: 1 # TODO: More than 1 leg
+  - type: Bloodstream
+    bloodMaxVolume: 60
+  - type: CanEscapeInventory
+    baseResistTime: 3
+  - type: MobPrice
+    price: 250 # Their suits, while tiny, go for quite a bit on the market
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Syndicate
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+  - type: InteractionPopup
+    successChance: 0.6
+    interactSuccessString: petting-success-nukie-mouse
+    interactFailureString: petting-failure-nukie-mouse
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/mouse_squeak.ogg

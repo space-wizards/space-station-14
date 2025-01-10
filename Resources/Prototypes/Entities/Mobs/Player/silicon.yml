@@ -748,6 +748,12 @@
       - HighRiskItem
       components:
       - Contraband
+  - type: PAI # imp; this is added specifically for the internal station map feature but the other aspects are not especially against the identity of drones. and i dont want to put the work into ECS-ifying PAIComponent
+  - type: Instrument # imp
+    allowPercussion: false
+    handheld: false
+    bank: 1
+    program: 2
   - type: Loadout # imp special. this replaces the InnateTool component.
     prototypes:
       - StartingGearDroneTools
@@ -763,6 +769,13 @@
         type: StrippableBoundUserInterface
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
+      enum.InstrumentUiKey.Key: #imp
+        type: InstrumentBoundUserInterface
+        requireInputValidation: false
+      enum.StationMapUiKey.Key: #imp
+        type: StationMapBoundUserInterface
+        requireInputValidation: false
+  - type: StationMap #imp
   - type: GhostRole
     makeSentient: true
     name: Maintenance Drone

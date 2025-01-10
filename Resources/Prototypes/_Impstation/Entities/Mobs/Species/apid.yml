@@ -1,0 +1,265 @@
+- type: entity
+  save: false
+  name: Urist McBee
+  parent: BaseMobSpeciesOrganic
+  id: BaseMobApid
+  abstract: true
+  components:
+  - type: Absorbable
+  - type: Hunger
+  - type: Thirst
+  - type: Icon
+    sprite: _Impstation/Mobs/Species/Apid/parts.rsi 
+    state: full
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 2
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+    scale: 1, 1
+  - type: Body
+    prototype: Apid
+    requiredLegs: 2
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-apid
+    interactFailureString: petting-failure-apid
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/mouse_squeak.ogg
+    interactFailureSound:
+      path: /Audio/Effects/tesla_consume.ogg
+  - type: MothAccent
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Moth # they're related, right?
+  - type: Bloodstream
+    bloodReagent: InsectBlood
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: _Impstation/Mobs/Effects/apid_brute_damage.rsi # technically this is only brute sprites for the chest. but that doesn't matter
+        color: "#808A51"
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: 285
+    currentTemperature: 310.15
+    specificHeat: 42
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      60: Critical
+      125: Dead
+  - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute.
+    allowedStates:
+    - Alive
+    damageCap: 20
+    damage:
+      types:
+        Heat: -0.07
+      groups:
+        Brute: -0.07
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 5
+    weightlessAcceleration: 1.5 # zoom
+    weightlessFriction: 1
+    weightlessModifier: 1
+  - type: MovementIgnoreGravity # nyoom
+    gravityState: true
+  - type: MeleeWeapon
+    attackRate: 1
+    soundHit:
+      collection: Punch
+    angle: 30
+    animation: WeaponArcThrust
+    damage:
+      types:
+        Shock: 3 # they got a little stinger
+  - type: StaminaDamageOnHit # this is just kinda fun. inherited from thaven
+    damage: 18
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+      - id: MobAngryBee # this doesn't make sense but is extremely funny to me
+        amount: 5
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Monkey_burning
+  - type: Tag
+    tags:
+    - VimPilot
+    - DoorBumpOpener
+    - AnomalyHost
+    - CanPilot
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 75
+        restitution: 0.0
+        mask:
+        - CrateMask # this is so they can fly over tables and through plastic flaps
+        layer:
+        - MobLayer
+  - type: Physics
+    bodyStatus: InAir
+  - type: NoSlip
+  - type: CanMoveInAir
+  - type: TypingIndicator
+    proto: moth
+  - type: Vocal
+    sounds:
+      Male: MaleMoth
+      Female: FemaleMoth
+      Unsexed: UnisexMoth
+  - type: Speech
+    speechVerb: Moth
+    allowedEmotes: ['Chitter', 'Squeak']
+  - type: HumanoidAppearance
+    species: Apid
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+  - type: Inventory
+    templateId: apid
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Apid/displacement.rsi
+            state: jumpsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Apid/displacement.rsi
+            state: head
+      eyes:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Apid/displacement.rsi
+            state: glasses
+      ears:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Apid/displacement.rsi
+            state: ears
+      mask:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Apid/displacement.rsi
+            state: mask
+      neck:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Apid/displacement.rsi
+            state: neck
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Apid/displacement.rsi
+            state: outerClothing
+      gloves:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Apid/displacement.rsi
+            state: hands
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Apid/displacement.rsi
+            state: feet
+      belt:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Apid/displacement.rsi
+            state: belt
+      back:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Apid/displacement.rsi
+            state: back
+      suitstorage:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Apid/displacement.rsi
+            state: suitstorage
+
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobApidDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    scale: 1, 1
+  - type: Inventory
+    templateId: apid
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: jumpsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: head
+      eyes:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: glasses
+      ears:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: ears
+      mask:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: mask
+      neck:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: neck
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: outerClothing
+      gloves:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: hands
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: feet
+      belt:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: belt
+      back:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: back
+      suitstorage:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: suitstorage

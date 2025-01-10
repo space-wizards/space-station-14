@@ -17,7 +17,7 @@
     excretedVolume: 15
     thirstCost: 5
   - type: Icon
-    sprite: Mobs/Species/Snail/parts.rsi
+    sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: full
   - type: SnalienAccent
   - type: Respirator
@@ -69,7 +69,7 @@
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
-        sprite: Mobs/Effects/snail_brute_damage.rsi
+        sprite: _Impstation/Mobs/Effects/snail_brute_damage.rsi
         color: "#162581"
   - type: Reactive
     groups:
@@ -125,37 +125,37 @@
       jumpsuit:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Snail/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Snail/displacement.rsi
             state: jumpsuit
       head:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Snail/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Snail/displacement.rsi
             state: head
       outerClothing:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Snail/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Snail/displacement.rsi
             state: outerClothing
       neck:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Snail/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Snail/displacement.rsi
             state: neck
       eyes:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Snail/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Snail/displacement.rsi
             state: eyes
       mask:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Snail/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Snail/displacement.rsi
             state: mask
       back:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Snail/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Snail/displacement.rsi
             state: back
 
   - type: Speech
@@ -183,30 +183,30 @@
       jumpsuit:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Snail/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Snail/displacement.rsi
             state: jumpsuit
       head:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Snail/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Snail/displacement.rsi
             state: head
       outerClothing:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Snail/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Snail/displacement.rsi
             state: outerClothing
       neck:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Snail/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Snail/displacement.rsi
             state: neck
       eyes:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Snail/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Snail/displacement.rsi
             state: eyes
       mask:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Snail/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Snail/displacement.rsi
             state: mask

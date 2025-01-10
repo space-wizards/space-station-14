@@ -30,3 +30,99 @@
   categories:
   - Large
   - Experimental
+  
+- type: vessel
+  id: Racing Pill
+  name: NT-Initializer
+  description: A sleek racing shuttle with the barest essentials. EVA required.
+  price: 7000
+  path:
+  - /Maps/_Impstation/Shuttles/Shipyard/racing-pill.yml
+  categories:
+  - Small
+  - Transport
+  
+- type: vessel
+  id: RV
+  name: NT-Grinnebago
+  description: A luxury recreational shuttle perfect for taking a trip through the stars.
+  price: 25000
+  path:
+  - /Maps/_Impstation/Shuttles/Shipyard/grinnebago.yml
+  categories:
+  - Small
+  - Transport
+  
+- type: vessel
+  id: Flying Bridge
+  name: NT-Outreach
+  description: A small shuttle that can serve as a docking arm.
+  price: 10000
+  path:
+  - /Maps/_Impstation/Shuttles/Shipyard/dokururin-flying-bridge.yml
+  categories:
+  - Small
+  - Transport
+
+- type: vessel
+  id: Shooting Star
+  name: NT-Shooting Star
+  description: An eccentric shuttle that nonetheless proves its worth. Has a bay door for an easy EVA jumping point.
+  price: 25000
+  path:
+  - /Maps/_Impstation/Shuttles/Shipyard/shooting-star.yml
+  categories:
+  - Small
+  - Transport
+  
+- type: vessel
+  id: Beetle
+  name: NT-Beetle
+  description: A rugged mining ship with a large forward catch to scoop up debris. Comes pre-equipped with cyborg amenities!
+  price: 23000
+  path:
+  - /Maps/_Impstation/Shuttles/Shipyard/beetle-miner.yml
+  categories:
+  - Small
+  - Mining
+  
+- type: vessel
+  id: Peregrine
+  name: NT-Peregrine
+  description: A decommissioned fighter shuttle, retrofitted for civilian use. Still has the mounts for ship-based weaponry...
+  price: 22000
+  path:
+  - /Maps/_Impstation/Shuttles/Shipyard/peregrine.yml
+  categories:
+  - Small
+  - Transport
+  
+- type: vessel
+  id: Bargain Bin
+  name: Bargain Bin
+  description: Need a shuttle fast and cheap? We have something for you! All sales final.
+  price: 12500
+  path:
+  - /Maps/_Impstation/Shuttles/Shipyard/Lemons/hermes-jackpot.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/grinnebago.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/dokururin-flying-bridge.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/shooting-star.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/beetle-miner.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/peregrine.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/Lemons/ice-cream-shuttle.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/Lemons/ring-saucer.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/Lemons/year-rounder.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/Lemons/rigged-up-asteroid.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/Lemons/junkebago.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/Lemons/junkururin.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/Lemons/junk-star.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/Lemons/junk-beetle.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/Lemons/junkeregrine.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/Lemons/junk-jetpack-zapper.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/Lemons/junk-literal-lemon.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/Lemons/junk-spinny-scooper.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/Lemons/junk-deluxe-sled.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/Lemons/absolute-trash-sled.yml
+  categories:
+  - Small
+  - Transport

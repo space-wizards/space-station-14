@@ -18,7 +18,7 @@
   parent: [PartSpElf, BaseTorso]
   components:
   - type: Sprite
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: "torso"
   - type: Extractable
     juiceSolution:
@@ -34,7 +34,7 @@
   parent: [PartSpElf, BaseHead]
   components:
   - type: Sprite
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: "head"
   - type: Extractable
     juiceSolution:
@@ -50,7 +50,7 @@
   parent: [PartSpElf, BaseLeftArm]
   components:
   - type: Sprite
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: "l_arm"
 
 - type: entity
@@ -59,7 +59,7 @@
   parent: [PartSpElf, BaseRightArm]
   components:
   - type: Sprite
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: "r_arm"
 
 - type: entity
@@ -68,7 +68,7 @@
   parent: [PartSpElf, BaseLeftHand]
   components:
   - type: Sprite
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: "l_hand"
 
 - type: entity
@@ -77,7 +77,7 @@
   parent: [PartSpElf, BaseRightHand]
   components:
   - type: Sprite
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: "r_hand"
 
 - type: entity
@@ -86,7 +86,7 @@
   parent: [PartSpElf, BaseLeftLeg]
   components:
   - type: Sprite
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: "l_leg"
 
 - type: entity
@@ -95,7 +95,7 @@
   parent: [PartSpElf, BaseRightLeg]
   components:
   - type: Sprite
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: "r_leg"
 
 - type: entity
@@ -104,7 +104,7 @@
   parent: [PartSpElf, BaseLeftFoot]
   components:
   - type: Sprite
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: "l_foot"
 
 - type: entity
@@ -113,5 +113,5 @@
   parent: [PartSpElf, BaseRightFoot]
   components:
   - type: Sprite
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: "r_foot"

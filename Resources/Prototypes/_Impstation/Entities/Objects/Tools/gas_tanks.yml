@@ -1,20 +1,33 @@
 - type: entity
   parent: [GasTankRoundBase, BaseCommandContraband]
+  id: OxygenTankCommand
+  name: command oxygen tank
+  description: A fancy but otherwise normal cylindrical gas tank for oxygen. It can hold 5 L of gas.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tanks/oxygen_command.rsi
+  - type: Item
+    sprite: _Impstation/Objects/Tanks/oxygen_command.rsi
+  - type: Clothing
+    sprite: _Impstation/Objects/Tanks/oxygen_command.rsi
+
+- type: entity
+  parent: [GasTankRoundBase, BaseCommandContraband]
   id: EmergencyOxygenTankCommand
   name: command emergency oxygen tank
   description: An easily portable tank for emergencies. Contains very little oxygen, but at least it looks nice. It can hold 0.66 L of gas.
   components:
   - type: Sprite
-    sprite: _Impstation/Objects/Tanks/emergency_command.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen_command_emergency.rsi
   - type: Item
     size: Small
-    sprite: _Impstation/Objects/Tanks/emergency_command.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen_command_emergency.rsi
   - type: GasTank
     air:
       volume: 0.66
       temperature: 293.15
   - type: Clothing
-    sprite: _Impstation/Objects/Tanks/emergency_command.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen_command_emergency.rsi
     slots:
     - Pocket
     - Belt
@@ -34,18 +47,31 @@
   description: An emergency tank with extended capacity. Technically rated for prolonged use, and it looks nice. It can hold 1.5 L of gas.
   components:
   - type: Sprite
-    sprite: _Impstation/Objects/Tanks/emergency_command.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen_command_engineering.rsi #this was just the regular command emergency one before. ce toys ig
   - type: Item
-    sprite: _Impstation/Objects/Tanks/emergency_command.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen_command_engineering.rsi
   - type: GasTank
     air:
       volume: 1.5
       temperature: 293.15
   - type: Clothing
-    sprite: _Impstation/Objects/Tanks/emergency_command.rsi
+    sprite: _Impstation/Objects/Tanks/oxygen_command_engineering.rsi
   - type: Tag
     tags:
       - ExtendedEmergencyOxygenTank
+
+- type: entity
+  parent: [GasTankRoundBase, BaseCommandContraband]
+  id: NitrogenTankCommand
+  name: command nitrogen tank
+  description: A fancy but otherwise normal cylindrical gas tank for nitrogen. It can hold 5 L of gas.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tanks/nitrogen_command.rsi
+  - type: Item
+    sprite: _Impstation/Objects/Tanks/nitrogen_command.rsi
+  - type: Clothing
+    sprite: _Impstation/Objects/Tanks/nitrogen_command.rsi      
 
 - type: entity
   parent: [GasTankRoundBase, BaseCommandContraband]
@@ -54,16 +80,16 @@
   description: An easily portable tank for emergencies. Contains very little nitrogen, but at least it looks nice. It can hold 0.66 L of gas.
   components:
   - type: Sprite
-    sprite: _Impstation/Objects/Tanks/emergency_red_command.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen_command_emergency.rsi
   - type: Item
     size: Small
-    sprite: _Impstation/Objects/Tanks/emergency_red_command.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen_command_emergency.rsi
   - type: GasTank
     air:
       volume: 0.66
       temperature: 293.15
   - type: Clothing
-    sprite: _Impstation/Objects/Tanks/emergency_red_command.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen_command_emergency.rsi
     slots:
     - Pocket
     - Belt
@@ -86,11 +112,11 @@
   description: An emergency tank with extended capacity. Technically rated for prolonged use, and it looks nice. It can hold 1.5 L of gas.
   components:
   - type: Sprite
-    sprite: _Impstation/Objects/Tanks/emergency_red_command.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen_command_engineering.rsi
   - type: Item
-    sprite: _Impstation/Objects/Tanks/emergency_red_command.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen_command_engineering.rsi
   - type: Clothing
-    sprite: _Impstation/Objects/Tanks/emergency_red_command.rsi
+    sprite: _Impstation/Objects/Tanks/nitrogen_command_engineering.rsi
   - type: Tag
     tags:
       - ExtendedEmergencyOxygenTank

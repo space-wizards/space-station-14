@@ -5,5 +5,5 @@
   description: "An organic positronic brain. Quite remarkable, really."
   components:
     - type: Sprite
-      sprite: Mobs/Species/SpElf/organs.rsi
+      sprite: _Impstation/Mobs/Species/SpElf/organs.rsi
       state: brain-spelf

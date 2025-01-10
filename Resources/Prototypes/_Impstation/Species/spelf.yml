@@ -67,90 +67,90 @@
 - type: humanoidBaseSprite
   id: MobSpElfEyes
   baseSprite:
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: eyes
 
 - type: humanoidBaseSprite
   id: MobSpElfHead
   baseSprite:
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: head
 
 - type: humanoidBaseSprite
   id: MobSpElfHeadMale
   baseSprite:
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: head
 
 - type: humanoidBaseSprite
   id: MobSpElfHeadFemale
   baseSprite:
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: head
 
 - type: humanoidBaseSprite
   id: MobSpElfTorso
   baseSprite:
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: torso
 
 - type: humanoidBaseSprite
   id: MobSpElfTorsoMale
   baseSprite:
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: torso
 
 - type: humanoidBaseSprite
   id: MobSpElfTorsoFemale
   baseSprite:
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: torso
 
 
 - type: humanoidBaseSprite
   id: MobSpElfLLeg
   baseSprite:
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: l_leg
 
 - type: humanoidBaseSprite
   id: MobSpElfLHand
   baseSprite:
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: l_hand
 
 - type: humanoidBaseSprite
   id: MobSpElfLArm
   baseSprite:
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: l_arm
 
 - type: humanoidBaseSprite
   id: MobSpElfLFoot
   baseSprite:
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: l_foot
 
 - type: humanoidBaseSprite
   id: MobSpElfRLeg
   baseSprite:
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: r_leg
 
 - type: humanoidBaseSprite
   id: MobSpElfRHand
   baseSprite:
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: r_hand
 
 - type: humanoidBaseSprite
   id: MobSpElfRArm
   baseSprite:
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: r_arm
 
 - type: humanoidBaseSprite
   id: MobSpElfRFoot
   baseSprite:
-    sprite: Mobs/Species/SpElf/parts.rsi
+    sprite: _Impstation/Mobs/Species/SpElf/parts.rsi
     state: r_foot
