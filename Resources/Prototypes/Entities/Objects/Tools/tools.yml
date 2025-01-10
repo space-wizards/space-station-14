@@ -194,6 +194,25 @@
     damage:
       types:
         Shock: 2
+  - type: Defibrillator # imp
+    zapDelay: 1
+    zapHeal:
+      types:
+        Asphyxiation: -10
+    zapDamage: 0
+    writheDuration: 0
+    skipDoAfter: true
+    ignoreToggle: true
+    ignorePowerCell: true
+    allowSkipCrit: true
+    whitelist:
+      tags:
+      - MultitoolDefibrillatorTarget
+    zapSound: /Audio/Effects/sparks1.ogg
+    playChargeSound: false
+    playFailureSound: false
+    playSuccessSound: false
+    playReadySound: false
 
 - type: entity
   name: network configurator
