@@ -98,20 +98,35 @@ public sealed partial class DefibrillatorComponent : Component
     [DataField]
     public bool CanDefibCrit = true;
 
+    [ViewVariables(VVAccess.ReadWrite), DataField("playZapSound")]
+    public bool PlayZapSound = true;
+
     /// <summary>
     /// The sound when someone is zapped.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("zapSound")]
     public SoundSpecifier? ZapSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_zap.ogg");
 
+    [ViewVariables(VVAccess.ReadWrite), DataField("playChargeSound")]
+    public bool PlayChargeSound = true;
+
     [ViewVariables(VVAccess.ReadWrite), DataField("chargeSound")]
     public SoundSpecifier? ChargeSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_charge.ogg");
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("playFailureSound")]
+    public bool PlayFailureSound = true;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("failureSound")]
     public SoundSpecifier? FailureSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_failed.ogg");
 
+    [ViewVariables(VVAccess.ReadWrite), DataField("playSuccessSound")]
+    public bool PlaySuccessSound = true;
+
     [ViewVariables(VVAccess.ReadWrite), DataField("successSound")]
     public SoundSpecifier? SuccessSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_success.ogg");
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("playReadySound")]
+    public bool PlayReadySound = true;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("readySound")]
     public SoundSpecifier? ReadySound = new SoundPathSpecifier("/Audio/Items/Defib/defib_ready.ogg");

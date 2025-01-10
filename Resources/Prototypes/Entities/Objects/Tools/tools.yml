@@ -208,6 +208,11 @@
     whitelist:
       tags:
       - MultitoolDefibrillatorTarget
+    zapSound: /Audio/Effects/sparks1.ogg
+    playChargeSound: false
+    playFailureSound: false
+    playSuccessSound: false
+    playReadySound: false
 
 - type: entity
   name: network configurator
