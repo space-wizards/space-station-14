@@ -247,9 +247,6 @@ namespace Content.Server.Database
                     .WithOne(e => e.SupportExchange)
                     .HasForeignKey(e => e.SupportExchangeId)
                     .OnDelete(DeleteBehavior.Cascade); // Cascade delete behavior
-
-                // Index on SupportRound for better search performance
-                entity.HasIndex(e => e.SupportRound);
             });
 
             modelBuilder.Entity<AdminNote>()

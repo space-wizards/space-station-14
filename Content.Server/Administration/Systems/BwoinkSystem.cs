@@ -693,15 +693,9 @@ namespace Content.Server.Administration.Systems
             bool targetOnline = _playerManager.TryGetSessionById(message.UserId, out var _);
 
             // Log the message to the database
-            _supportLogging.LogSupportMessageAsync(
+            _supportLogging.LogSupportMessage(
                 supportRound: _gameTicker.RoundId,
-                roundStatus: _gameTicker.RunLevel switch
-                {
-                    GameRunLevel.PreRoundLobby => "PreRoundLobby",
-                    GameRunLevel.InRound => "InRound",
-                    GameRunLevel.PostRound => "PostRound",
-                    _ => "Unknown",
-                },
+                roundStatus: _gameTicker.RunLevel.ToString(),
                 timeSent: DateTime.UtcNow,
                 adminsOnline: AdminsOnline(),
                 senderId: senderSession.UserId,
@@ -807,7 +801,7 @@ namespace Content.Server.Administration.Systems
         private bool AdminsOnline()
         {
             return _adminManager.ActiveAdmins
-                .Any(p => _adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false);
+                .Any(p => _adminManager.HasAdminFlag(p, AdminFlags.Adminhelp));
         }
 
 
