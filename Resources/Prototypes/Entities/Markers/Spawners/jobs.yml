@@ -77,7 +77,7 @@
 
 
 - type: entity
-  id: SpawnPointPilot
+  id: TP14SpawnPointPilot
   parent: SpawnPointJobBase
   name: pilot
   components:
@@ -89,7 +89,7 @@
       - state: salvagespecialist
 
 - type: entity
-  id: SpawnPointBasinTech
+  id: TP14SpawnPointBasinTech
   parent: SpawnPointJobBase
   name: basintechnician
   components:
