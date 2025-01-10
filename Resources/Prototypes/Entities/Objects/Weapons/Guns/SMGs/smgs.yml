@@ -100,8 +100,8 @@
     minAngle: -19
     maxAngle: -16
   - type: Gun
-    minAngle: 21
-    maxAngle: 32
+    minAngle: 20
+    maxAngle: 40
     shotsPerBurst: 5
     availableModes:
     - SemiAuto

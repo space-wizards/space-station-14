@@ -71,47 +71,4 @@
       types:
         Blunt: 1
 
-- type: entity
-  name: БИИИИТААА!!
-  parent: [BaseItem, BaseMinorContraband]
-  id: chelboj
-  description: A robust baseball bat.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/baseball_bat.rsi
-    state: icon
-  - type: MeleeWeapon
-    wideAnimationRotation: -135
-    damage:
-      types:
-        Blunt: 10
-        Structural: 5
-    soundHit:
-      collection: MetalThud
-  - type: Wieldable
-  - type: IncreaseDamageOnWield
-    damage:
-      types:
-        Blunt: 5
-        Structural: 10
-  - type: Item
-    size: Normal
-  - type: Tool
-    qualities:
-    - Rolling
-    speedModifier: 0.75 # a bit unwieldly but does the job
-  - type: Clothing
-    quickEquip: false
-    slots:
-    - back
-  - type: Construction
-    graph: WoodenBat
-    node: bat
-  - type: UseDelay
-    delay: 1
-  - type: PhysicalComposition
-    materialComposition:
-      Wood: 250
-  - type: Tag
-    tags:
-    - BaseballBat
+
