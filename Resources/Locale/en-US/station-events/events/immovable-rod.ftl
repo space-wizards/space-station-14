@@ -1,1 +1,1 @@
-station-event-immovable-rod-start-announcement = High velocity unidentified object is on a collision course with the platform. Origin unknown. Impact imminent.
+station-event-immovable-rod-start-announcement = Unknown high-velocity object is on a perfect collision course with the upper Platform. Brace for impact.
