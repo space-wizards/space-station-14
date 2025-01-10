@@ -5,6 +5,19 @@
     - id: ListeningPost
     - id: Fugitive
 
+# Mid round antag spawns
+- type: entity
+  abstract: true
+  parent: BaseGameRule
+  id: BaseMidRoundAntag
+  components:
+  - type: StationEvent
+    weight: 7
+    reoccurrenceDelay: 5
+    minimumPlayers: 15
+    earliestStart: 25
+  - type: MidRoundAntagRule
+
 - type: entity
   id: ListeningPost
   parent: BaseGameRule
@@ -48,7 +61,7 @@
       - MindRolePostOperator
 
 - type: entity
-  parent: BaseGameRule # Imp change from BaseMidRoundAntag
+  parent: BaseMidRoundAntag
   id: Fugitive
   components:
   - type: StationEvent
