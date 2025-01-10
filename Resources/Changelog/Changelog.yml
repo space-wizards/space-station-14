@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: drakewill-CRL
-  changes:
-  - message: Botanists can now learn basic chemistry with the Agrichem Is Fun! kit
-      in the Nutrimax vendor.
-    type: Add
-  id: 7290
-  time: '2024-09-05T16:43:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31738
-- author: Nimfar11
-  changes:
-  - message: Added a board for the AI upload console.
-    type: Add
-  id: 7291
-  time: '2024-09-05T18:20:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31867
-- author: PJB3005
-  changes:
-  - message: Changed the sprites for the N2 locker and "vox area" sign.
-    type: Tweak
-  id: 7292
-  time: '2024-09-06T05:26:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31845
 - author: Ekkosangen
   changes:
   - message: Pizza crates and parties can now sometimes contain cotton pizza
@@ -3932,3 +3910,33 @@
   id: 7789
   time: '2025-01-09T11:23:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34326
+- author: Alpaccalypse
+  changes:
+  - message: The reagent "cola" has been renamed to "Space Cola".
+    type: Tweak
+  - message: The reagent "lemon-lime" has been renamed to "Smite Soda".
+    type: Tweak
+  - message: The reagent "lemon-lime-cranberry" has been renamed to "Smite Cranberry".
+    type: Tweak
+  - message: The reagent "Space Mountain Wind" has been renamed to "Space Solar Wind".
+    type: Tweak
+  - message: The reagent "Energy Drink" has been renamed to "Red Bool".
+    type: Tweak
+  id: 7790
+  time: '2025-01-09T20:24:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34178
+- author: Errant
+  changes:
+  - message: Battery-powered weapons will no longer occasionally refuse to recharge
+      the last missing shot.
+    type: Fix
+  id: 7791
+  time: '2025-01-10T06:54:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34028
+- author: Southbridge
+  changes:
+  - message: Air Alarms can now copy sensor thresholds to all attached sensors.
+    type: Add
+  id: 7792
+  time: '2025-01-10T06:55:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34346
