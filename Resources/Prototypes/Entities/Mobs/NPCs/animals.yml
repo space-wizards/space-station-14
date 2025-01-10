@@ -378,6 +378,7 @@
     tags:
     - Trash
     - VimPilot
+    - MultitoolDefibrillatorTarget
   - type: Destructible
     thresholds:
     - trigger:
@@ -3562,7 +3563,7 @@
     sprite: Mobs/Animals/nymph.rsi
     equippedPrefix: 0
     slots:
-      - HEAD  
+      - HEAD
   - type: CanEscapeInventory
 
 - type: entity
