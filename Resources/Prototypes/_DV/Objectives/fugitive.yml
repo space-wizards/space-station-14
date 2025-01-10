@@ -15,7 +15,7 @@
   parent: [BaseFugitiveObjective, BaseLivingObjective]
   id: FugitiveEscapeObjective
   name: Evade law enforcement
-  description: You will never atone for your crimes, make sure of it by blending into the crowd.
+  description: You will never atone for your crimes, but you can hide from them.
   components:
   - type: Objective
     icon:
