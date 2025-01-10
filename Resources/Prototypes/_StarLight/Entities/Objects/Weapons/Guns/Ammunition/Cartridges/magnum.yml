@@ -3,8 +3,8 @@
   name: cartridge (.45 magnum rubber)
   parent: BaseCartridgeMagnum
   components:
-  - type: CartridgeAmmo
-    proto: BulletMagnumRubber
+  - type: HitScanCartridgeAmmo
+    hitscan: RubberBulletTrace
   - type: Sprite
     layers:
       - state: base

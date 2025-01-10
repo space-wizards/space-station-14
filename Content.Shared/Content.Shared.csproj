@@ -35,6 +35,9 @@
     <Compile Update="_Starlight\OnHit\InjectOnHitComponent.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="_Starlight\Weapon\Components\GunComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\Robust.CompNetworkGenerator.targets" />

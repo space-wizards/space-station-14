@@ -80,8 +80,8 @@
   - type: Tag
     tags:
       - Debug
-  - type: CartridgeAmmo
-    proto: BulletDebug
+  - type: HitScanCartridgeAmmo
+    hitscan: DebugBulletTrace
 
 - type: entity
   name: bang stick gibber

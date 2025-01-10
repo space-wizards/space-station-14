@@ -1,4 +1,4 @@
-using Content.Server.Kitchen.Components;
+﻿using Content.Server.Kitchen.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Chat;
 using Content.Shared.Clumsy;
@@ -27,6 +27,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared._Starlight.Weapon.Components;
 
 namespace Content.Server.Execution;
 
@@ -57,7 +58,7 @@ public sealed class ExecutionSystem : EntitySystem
 
         SubscribeLocalEvent<SharpComponent, GetVerbsEvent<UtilityVerb>>(OnGetInteractionVerbsMelee);
         SubscribeLocalEvent<SharpComponent, ExecutionDoAfterEvent>(OnExecutionDoAfterMelee);
-        
+
         SubscribeLocalEvent<GunComponent, GetVerbsEvent<UtilityVerb>>(OnGetInteractionVerbsGun);
         SubscribeLocalEvent<GunComponent, ExecutionDoAfterEvent>(OnExecutionDoAfterGun);
     }
@@ -71,7 +72,7 @@ public sealed class ExecutionSystem : EntitySystem
         var weapon = args.Using!.Value;
         var victim = args.Target;
 
-        if (!CanBeExecutedWithMelee(weapon, victim, attacker) 
+        if (!CanBeExecutedWithMelee(weapon, victim, attacker)
             || !CanBeExecutedWithAny(victim, attacker))
             return;
 
@@ -85,7 +86,7 @@ public sealed class ExecutionSystem : EntitySystem
 
         args.Verbs.Add(verb);
     }
-    
+
     private void OnGetInteractionVerbsGun(EntityUid uid, GunComponent comp, GetVerbsEvent<UtilityVerb> args)
     {
         if (args.Hands == null || args.Using == null || !args.CanAccess || !args.CanInteract)
@@ -95,7 +96,7 @@ public sealed class ExecutionSystem : EntitySystem
         var weapon = args.Using!.Value;
         var victim = args.Target;
 
-        if (!CanBeExecutedWithGun(weapon, victim, attacker) 
+        if (!CanBeExecutedWithGun(weapon, victim, attacker)
             || !CanBeExecutedWithAny(victim, attacker))
             return;
 
@@ -140,15 +141,15 @@ public sealed class ExecutionSystem : EntitySystem
         _doAfter.TryStartDoAfter(doAfter);
 
     }
-    
+
     private void TryStartGunExecutionDoafter(EntityUid weapon, EntityUid victim, EntityUid attacker)
     {
         if (!CanBeExecutedWithGun(weapon, victim, attacker))
             return;
-        
+
         if (!TryComp<GunComponent>(weapon, out var gunComponent))
             return;
-        
+
         var shotAttempted = new ShotAttemptedEvent
         {
             User = attacker,
@@ -209,10 +210,10 @@ public sealed class ExecutionSystem : EntitySystem
         // All checks passed
         return true;
     }
-    
+
     private bool CanBeExecutedWithMelee(EntityUid weapon, EntityUid victim, EntityUid user)
     {
-        if (!CanBeExecutedWithAny(victim, user)) 
+        if (!CanBeExecutedWithAny(victim, user))
             return false;
 
         // We must be able to actually hurt people with the weapon
@@ -221,16 +222,16 @@ public sealed class ExecutionSystem : EntitySystem
 
         return true;
     }
-    
+
     private bool CanBeExecutedWithGun(EntityUid weapon, EntityUid victim, EntityUid user)
     {
-        if (!CanBeExecutedWithAny(victim, user)) 
+        if (!CanBeExecutedWithAny(victim, user))
             return false;
 
         // We must be able to actually fire the gun
         if (!TryComp<GunComponent>(weapon, out var gun) && _gunSystem.CanShoot(gun!))
             return false;
-            
+
         if (_appearanceSystem.TryGetData(weapon, AmmoVisuals.BoltClosed, out bool boltClosed))
             if (!boltClosed)
                 return false;
@@ -285,7 +286,7 @@ public sealed class ExecutionSystem : EntitySystem
 
             if (!TryComp<DamageableComponent>(victim, out var damageableComponent))
                 return;
-            
+
             _audio.PlayPredicted(meleeWeaponComp.HitSound, victim, victim);
             _suicide.ApplyLethalDamage((victim, damageableComponent), meleeWeaponComp.Damage);
         }
@@ -296,7 +297,7 @@ public sealed class ExecutionSystem : EntitySystem
 
         _combat.SetInCombatMode(attacker, prev);
         args.Handled = true;
-        
+
         if (attacker != victim)
         {
             ShowExecutionInternalPopup(internalMsg, attacker, victim, entity);
@@ -305,10 +306,10 @@ public sealed class ExecutionSystem : EntitySystem
         else
         {
             ShowExecutionInternalPopup(ExecutionComponent.CompleteInternalSelfMeleeExecutionMessage, victim, victim, entity, false);
-            ShowExecutionExternalPopup(ExecutionComponent.CompleteExternalSelfMeleeExecutionMessage, victim, victim, entity);   
+            ShowExecutionExternalPopup(ExecutionComponent.CompleteExternalSelfMeleeExecutionMessage, victim, victim, entity);
         }
     }
-    
+
     private void OnExecutionDoAfterGun(EntityUid uid, GunComponent component, ref ExecutionDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Used == null || args.Target == null)
@@ -367,6 +368,20 @@ public sealed class ExecutionSystem : EntitySystem
         var ammoUid = ev.Ammo[0].Entity;
         switch (ev.Ammo[0].Shootable)
         {
+            //🌟Starlight🌟 start
+            case HitScanCartridgeAmmoComponent cartridge:
+                var hitscanProto = _prototypeManager.Index(cartridge.Hitscan);
+                if (hitscanProto.Damage is not null)
+                    damage = hitscanProto.Damage;
+                //if (projectilespreaderComponent != null)
+                //    damage *= projectilespreaderComponent.Count;
+
+                cartridge.Spent = true;
+                _appearanceSystem.SetData(ammoUid!.Value, AmmoVisuals.Spent, true);
+                Dirty(ammoUid.Value, cartridge);
+
+                break;
+            //🌟Starlight🌟 end
             case CartridgeAmmoComponent cartridge:
                 // Get the damage value
                 var prototype = _prototypeManager.Index<EntityPrototype>(cartridge.Prototype);
