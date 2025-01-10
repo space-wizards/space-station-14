@@ -12,12 +12,14 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets;
 public sealed partial class SensorInfo : BoxContainer
 {
     public Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? OnThresholdUpdate;
+    public event Action<AtmosSensorData>? SensorDataCopied;
     private string _address;
 
     private ThresholdControl _pressureThreshold;
     private ThresholdControl _temperatureThreshold;
     private Dictionary<Gas, ThresholdControl> _gasThresholds = new();
     private Dictionary<Gas, RichTextLabel> _gasLabels = new();
+    private Button _copySettings => CCopySettings;
 
     public SensorInfo(AtmosSensorData data, string address)
     {
@@ -79,6 +81,12 @@ public sealed partial class SensorInfo : BoxContainer
         {
             OnThresholdUpdate!(_address, type, threshold, arg3);
         };
+
+		_copySettings.OnPressed += _ =>
+		{
+			SensorDataCopied?.Invoke(data);
+		};
+
     }
 
     public void ChangeData(AtmosSensorData data)

@@ -33,10 +33,11 @@ public sealed class AtmosMonitorSystem : EntitySystem
 
     // Commands
     public const string AtmosMonitorSetThresholdCmd = "atmos_monitor_set_threshold";
+    public const string AtmosMonitorSetAllThresholdsCmd = "atmos_monitor_set_all_thresholds";
 
     // Packet data
     public const string AtmosMonitorThresholdData = "atmos_monitor_threshold_data";
-
+    public const string AtmosMonitorAllThresholdData = "atmos_monitor_all_threshold_data";
     public const string AtmosMonitorThresholdDataType = "atmos_monitor_threshold_type";
 
     public const string AtmosMonitorThresholdGasType = "atmos_monitor_threshold_gas";
@@ -138,7 +139,12 @@ public sealed class AtmosMonitorSystem : EntitySystem
                     args.Data.TryGetValue(AtmosMonitorThresholdGasType, out Gas? gas);
                     SetThreshold(uid, thresholdType.Value, thresholdData, gas);
                 }
-
+                break;
+            case AtmosMonitorSetAllThresholdsCmd:
+                if (args.Data.TryGetValue(AtmosMonitorAllThresholdData, out AtmosSensorData? allThresholdData))
+                {
+                    SetAllThresholds(uid, allThresholdData);
+                }
                 break;
             case AtmosDeviceNetworkSystem.SyncData:
                 var payload = new NetworkPayload();
@@ -402,5 +408,15 @@ public sealed class AtmosMonitorSystem : EntitySystem
                 break;
         }
 
+    }
+
+    public void SetAllThresholds(EntityUid uid, AtmosSensorData allThresholdData)
+    {
+        SetThreshold(uid, AtmosMonitorThresholdType.Temperature, allThresholdData.TemperatureThreshold);
+        SetThreshold(uid, AtmosMonitorThresholdType.Pressure, allThresholdData.PressureThreshold);
+        foreach (var gas in Enum.GetValues<Gas>())
+        {
+            SetThreshold(uid, AtmosMonitorThresholdType.Gas, allThresholdData.GasThresholds[gas], gas);
+        }
     }
 }
