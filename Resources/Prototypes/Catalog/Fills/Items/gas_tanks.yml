@@ -162,7 +162,7 @@
       temperature: 293.15
 
 - type: entity
-  id: WaterTankFilled
+  id: TP14WaterTankFilled
   name: water tank
   parent: OxygenTank
   suffix: Filled
