@@ -1072,15 +1072,15 @@
   fizziness: 0.6
 
 - type: reagent
-  id: IrishCarBomb
-  name: reagent-name-irish-car-bomb
+  id: IrishSlammer
+  name: reagent-name-irish-slammer
   parent: BaseAlcohol
-  desc: reagent-desc-irish-car-bomb
+  desc: reagent-desc-irish-slammer
   physicalDesc: reagent-physical-desc-bubbly
-  flavor: irishcarbomb
+  flavor: irishslammer
   color: "#2E6671"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/irishcarbomb.rsi
+    sprite: Objects/Consumable/Drinks/irishslammer.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 6
   metamorphicFillBaseName: fill-
@@ -1953,3 +1953,26 @@
           time: 1.0
           type: Remove
   fizziness: 0.25
+
+- type: reagent
+  id: ZombieCocktail
+  name: reagent-name-zombiecocktail
+  parent: BaseAlcohol
+  desc: reagent-desc-zombiecocktail
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: zombiecocktail
+  color: "#d17844"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/zombiecocktail.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.25

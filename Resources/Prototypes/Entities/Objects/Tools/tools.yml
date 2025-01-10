@@ -312,7 +312,6 @@
   - type: LimitedCharges
     maxCharges: 30
     charges: 30
-  - type: UseDelay
   - type: Sprite
     sprite: Objects/Tools/rcd.rsi
     state: icon
