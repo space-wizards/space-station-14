@@ -35,16 +35,18 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
 
     private void OnAttempt(Entity<MeleeThrowOnHitComponent> ent, ref AttemptMeleeThrowOnHitEvent args)
     {
-        if (!TryComp<UseDelayComponent>(ent.Owner, out var useDelay) || !ent.Comp.DisableDuringUseDelay)
-            return;
-
-        if (_delay.IsDelayed((ent.Owner, useDelay)))
+        // This is in an instance where you'd like this to control if the melee throw on hit works instead of an anomaly core like it does for Gorilla Gauntlets
+        // Only nesting here in cases where enabled is set elsewhere
+        if (ent.Comp.DisableDuringUseDelay)
         {
-            ent.Comp.Enabled = false;
-            return;
-        }
+            if (TryComp<UseDelayComponent>(ent.Owner, out var useDelay) && _delay.IsDelayed((ent.Owner, useDelay)))
+            {
+                ent.Comp.Enabled = false;
+                return;
+            }
 
-        ent.Comp.Enabled = true;
+            ent.Comp.Enabled = true;
+        }
     }
 
     private void OnMeleeHit(Entity<MeleeThrowOnHitComponent> ent, ref MeleeHitEvent args)
