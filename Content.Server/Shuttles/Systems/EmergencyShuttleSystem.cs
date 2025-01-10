@@ -9,6 +9,7 @@ using Content.Server.Communications;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking.Events;
+using Content.Server.PDA.Ringer;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
 using Content.Server.RoundEnd;
@@ -563,6 +564,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         _metaData.SetEntityName(map, Loc.GetString("map-name-centcomm"));
         component.Entity = grid;
         _shuttle.TryAddFTLDestination(mapId, true, out _);
+        AddComp<LockableUplinkBlockedMapComponent>(map);
         Log.Info($"Created centcomm grid {ToPrettyString(grid)} on map {ToPrettyString(map)} for station {ToPrettyString(station)}");
     }
 
