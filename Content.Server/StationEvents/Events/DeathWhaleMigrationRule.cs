@@ -8,7 +8,7 @@ namespace Content.Server.StationEvents.Events;
 
 //summary
 // This system allows for more control than ventcritters does, letting you choose the target component to spawn them at.
-// This allows for multiple spawn point markers to be chosen depending on what you want, and also lets you choose the creature.
+// This allows for multiple spawn point markers to be chosen depending on what you want, and also lets you choose the creature and the amount to spawn.
 //summary
 
 public sealed class OceanSpawnRule : StationEventSystem<OceanSpawnSpawnRuleComponent>
@@ -16,6 +16,8 @@ public sealed class OceanSpawnRule : StationEventSystem<OceanSpawnSpawnRuleCompo
     protected override void Started(EntityUid uid, OceanSpawnSpawnRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, comp, gameRule, args);
+
+        float Amount = comp.Amount;
 
         if (!TryGetRandomStation(out var station))
         {
@@ -31,8 +33,9 @@ public sealed class OceanSpawnRule : StationEventSystem<OceanSpawnSpawnRuleCompo
 
                 validLocations.Add(transform.Coordinates);
 
-                // Spawn the creature at the location
+                if (comp.CurrentAmount >= amount) break;
                 Spawn(comp.Prototype, transform.Coordinates);
+                comp.CurrentAmount += 1;
         }
 
         if (validLocations.Count == 0)
@@ -42,15 +45,19 @@ public sealed class OceanSpawnRule : StationEventSystem<OceanSpawnSpawnRuleCompo
 
         foreach (var location in validLocations)
         {
+            if (comp.CurrentAmount >= amount) break;
+            
             Spawn(comp.Prototype, location);
+            comp.CurrentAmount += 1;
         }
     }
 
      protected virtual void Ended(EntityUid uid, OceanSpawnSpawnRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
     {
         base.Ended(uid, component, gameRule, args);
+        comp.CurrentAmount = 0f;
 
-        foreach (var whales in EntityManager.EntityQuery<DeathWhaleComponent>()) // Clears out Deathwhales after they've spawned for DeathWhaleMigration
+            foreach (var whales in EntityManager.EntityQuery<DeathWhaleComponent>()) // Clears out Deathwhales after they've spawned for DeathWhaleMigration
             {
                 var uid = whales.Owner;
                 QueueDel(uid);
