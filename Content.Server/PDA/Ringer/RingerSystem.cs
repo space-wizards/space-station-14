@@ -5,6 +5,7 @@ using Content.Server.Store.Systems;
 using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
 using Content.Shared.Popups;
+using Content.Shared.Shuttles.Components;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Server.GameObjects;
@@ -40,6 +41,7 @@ namespace Content.Server.PDA.Ringer
             // RingerBoundUserInterface Subscriptions
             SubscribeLocalEvent<RingerComponent, RingerSetRingtoneMessage>(OnSetRingtone);
             SubscribeLocalEvent<RingerUplinkComponent, BeforeRingtoneSetEvent>(OnSetUplinkRingtone);
+            SubscribeLocalEvent<RingerUplinkComponent, BeforeUplinkOpenEvent>(CheckMapBeforeOpenUplink);
             SubscribeLocalEvent<RingerComponent, RingerPlayRingtoneMessage>(RingerPlayRingtone);
             SubscribeLocalEvent<RingerComponent, RingerRequestUpdateInterfaceMessage>(UpdateRingerUserInterfaceDriver);
 
@@ -104,7 +106,7 @@ namespace Content.Server.PDA.Ringer
             if (args.Ringtone.Length != RingtoneLength)
                 return;
 
-            var ev = new BeforeRingtoneSetEvent(args.Ringtone);
+            var ev = new BeforeRingtoneSetEvent(args.Ringtone, actorComp.PlayerSession);
             RaiseLocalEvent(uid, ref ev);
             if (ev.Handled)
                 return;
@@ -116,7 +118,18 @@ namespace Content.Server.PDA.Ringer
         {
             if (uplink.Code.SequenceEqual(args.Ringtone) && HasComp<StoreComponent>(uid))
             {
-                uplink.Unlocked = !uplink.Unlocked;
+                if (!uplink.Unlocked)
+                {
+                    var ev = new BeforeUplinkOpenEvent(args.AttemptingClient);
+                    RaiseLocalEvent(uid, ref ev);
+                    if (!ev.Canceled)
+                        uplink.Unlocked = true;
+                }
+                else
+                {
+                    uplink.Unlocked = false;
+                }
+
                 if (TryComp<PdaComponent>(uid, out var pda))
                     _pda.UpdatePdaUi(uid, pda);
 
@@ -127,6 +140,32 @@ namespace Content.Server.PDA.Ringer
                 // no saving the code to prevent meta click set on sus guys pda -> wewlad
                 args.Handled = true;
             }
+        }
+
+        private void CheckMapBeforeOpenUplink(Entity<RingerUplinkComponent> ent, ref BeforeUplinkOpenEvent args)
+        {
+            var map = _transform.GetMap((EntityUid)ent);
+            if (CanUplinkBeOpenedOnMap(map))
+                return;
+            args.Canceled = true;
+            _popupSystem.PopupEntity(Loc.GetString("uplink-no-connection"),
+                ent,
+                args.AttemptingClient,
+                PopupType.LargeCaution);
+        }
+
+        /// <summary>
+        /// Returns if the map supplied allows open uplinks.
+        /// </summary>
+        /// <param name="map">Map to be checked.</param>
+        /// <returns></returns>
+        private bool CanUplinkBeOpenedOnMap(EntityUid? map)
+        {
+            // Uh... I'm just gonna put this here as default behaviour since I think this is what used to happen...
+            if (map is null)
+                return true;
+
+            return !HasComp<FTLMapComponent>(map);
         }
 
         /// <summary>
@@ -240,6 +279,40 @@ namespace Content.Server.PDA.Ringer
             {
                 RemComp<ActiveRingerComponent>(ent);
             }
+
+            LockUplinksBasedOnMap();
+        }
+
+        /// <summary>
+        /// Locks all open uplinks whenever they are on a map that blocks uplinks.
+        /// </summary>
+        private void LockUplinksBasedOnMap()
+        {
+            // Surely there has to be a better way to check if the map has changed...
+            // Eh, surely someone will catch it in reviews and tell me how to do it right?
+            var uplinkPdaQuery = EntityQueryEnumerator<RingerUplinkComponent>();
+            while (uplinkPdaQuery.MoveNext(out var uid, out var ringer))
+            {
+                if (!ringer.Unlocked)
+                    continue;
+
+                var map = _transform.GetMap(uid);
+                if (CanUplinkBeOpenedOnMap(map))
+                    continue;
+
+                LockUplink(uid, ringer);
+                if (TryComp(uid, out PdaComponent? pda))
+                    _pda.UpdatePdaUi(uid, pda);
+
+                // "Find" the person holding onto this PDA
+                // Again, I feel there must be a better way of doing this, hopefully review will let me know!
+                var owner = _transform.GetParentUid(uid);
+                _popupSystem.PopupEntity(
+                    Loc.GetString("uplink-lose-connection"),
+                    uid,
+                    owner,
+                    PopupType.LargeCaution);
+            }
         }
 
         private static string GetSound(Note note)
@@ -249,5 +322,8 @@ namespace Content.Server.PDA.Ringer
     }
 
     [ByRefEvent]
-    public record struct BeforeRingtoneSetEvent(Note[] Ringtone, bool Handled = false);
+    public record struct BeforeRingtoneSetEvent(Note[] Ringtone, ICommonSession AttemptingClient, bool Handled = false);
+
+    [ByRefEvent]
+    public record struct BeforeUplinkOpenEvent(ICommonSession AttemptingClient, bool Canceled = false);
 }
