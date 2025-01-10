@@ -191,7 +191,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
                     ent.Comp.HiddenLayers.Remove(layer);
 
                 // Could probably just do
-                // dirty |= (oldSlots & slot != 0)
+                // dirty |= (oldSlots & slot) != 0;
                 // But there were apparently some bugs and its probably fine to just unnecessarily dirty it in some instances
                 dirty = true;
             }
@@ -208,7 +208,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
                 ent.Comp.HiddenLayers[layer] = slot | oldSlots;
 
                 // Could probably just do
-                // dirty |= (oldSlots & slot != slot)
+                // dirty |= (oldSlots & slot) != slot;
                 // But there were apparently some bugs and its probably fine to just unnecessarily dirty it in some instances
                 dirty = true;
             }
