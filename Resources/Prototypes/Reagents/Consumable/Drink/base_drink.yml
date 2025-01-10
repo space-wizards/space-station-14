@@ -53,7 +53,7 @@
         factor: 1 # This should probably actually dehydrate you
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.08
+        amount: 0.2
   reactiveEffects:
     Flammable:
       methods: [ Touch ]
@@ -74,7 +74,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.02
+        amount: 0.05
   reactiveEffects:
     Extinguish: # Beer puts out fires
       methods: [ Touch ]
