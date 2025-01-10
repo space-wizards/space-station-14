@@ -25,7 +25,6 @@ public sealed partial class GasCondenserComponent : Component
     /// <summary>
     /// The solution that gases are condensed into.
     /// </summary>
-    [DataField]
     public Entity<SolutionComponent>? Solution = null;
 
     /// <summary>

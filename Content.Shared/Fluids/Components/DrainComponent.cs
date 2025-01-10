@@ -20,7 +20,6 @@ public sealed partial class DrainComponent : Component
     [ValidatePrototypeId<TagPrototype>]
     public const string PlungerTag = "Plunger";
 
-    [DataField]
     public Entity<SolutionComponent>? Solution = null;
 
     [DataField]
