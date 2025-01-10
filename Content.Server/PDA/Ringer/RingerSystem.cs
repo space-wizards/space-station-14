@@ -16,6 +16,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Server.Audio;
+using Robust.Shared.Configuration;
 
 namespace Content.Server.PDA.Ringer
 {
@@ -28,6 +29,7 @@ namespace Content.Server.PDA.Ringer
         [Dependency] private readonly AudioSystem _audio = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private readonly Dictionary<NetUserId, TimeSpan> _lastSetRingtoneAt = new();
 

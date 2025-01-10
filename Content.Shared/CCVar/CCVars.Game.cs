@@ -334,4 +334,11 @@ public sealed partial class CCVars
         public static readonly CVarDef<bool> GameHostnameInTitlebar =
             CVarDef.Create("game.hostname_in_titlebar", true, CVar.SERVER | CVar.REPLICATED);
 
+        /// <summary>
+        /// Should lockable uplinks be forcefully locked while on the same map as the evac shuttle, while in FTL,
+        /// on CentComm and on the arrivals terminal?
+        /// </summary>
+        public static readonly CVarDef<bool> GameLockUplinks =
+            CVarDef.Create("game.lock_uplinks", true, CVar.SERVERONLY);
+
 }

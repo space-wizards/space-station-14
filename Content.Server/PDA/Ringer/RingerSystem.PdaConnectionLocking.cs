@@ -1,4 +1,5 @@
-﻿using Content.Shared.PDA;
+﻿using Content.Shared.CCVar;
+using Content.Shared.PDA;
 using Content.Shared.Popups;
 using Content.Shared.Shuttles.Components;
 
@@ -13,6 +14,9 @@ public sealed partial class RingerSystem
     /// <returns></returns>
     private bool CanUplinkBeOpened(EntityUid uplink)
     {
+        if (!_cfg.GetCVar(CCVars.GameLockUplinks))
+            return true;
+
         var uplinkMapId = _transform.GetMapId(uplink);
 
         var blockEnumerator = EntityQueryEnumerator<LockableUplinkBlockedMapComponent>();
