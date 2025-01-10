@@ -50,10 +50,10 @@
     Drink:
       effects:
       - !type:SatiateThirst
-        factor: 1 # This should probably actually dehydrate you
+        factor: 1 # In reality this should dehydrate you
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.2
+        amount: 0.18 # A bottle of Rum (20 drinks) has about a 50/50 chance of killing a human
   reactiveEffects:
     Flammable:
       methods: [ Touch ]
@@ -64,7 +64,7 @@
     temperatureMultiplier: 1.35
 
 - type: reagent
-  id: BaseBooze # Brewed alcohol, not flammable, less intoxicating
+  id: BaseBooze # Fermented alcohol, not flammable, less intoxicating
   group: Drinks
   abstract: true
   metabolisms:
@@ -74,7 +74,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.05
+        amount: 0.03 # If approx. level for strong beer, wine would be about 0.08 to 0.09
   reactiveEffects:
     Extinguish: # Beer puts out fires
       methods: [ Touch ]
