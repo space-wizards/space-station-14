@@ -26,6 +26,8 @@ internal sealed class AdminNameOverlay : Overlay
     //TODO make this adjustable via GUI
     private readonly ProtoId<RoleTypePrototype>[] _filter =
         ["SoloAntagonist", "TeamAntagonist", "SiliconAntagonist", "FreeAgent"];
+    private readonly string _antagLabelClassic = Loc.GetString("admin-overlay-antag-classic");
+    private readonly Color _antagColorClassic = Color.OrangeRed;
 
     public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, EntityLookupSystem entityLookup, IUserInterfaceManager userInterfaceManager)
     {
@@ -79,18 +81,15 @@ internal sealed class AdminNameOverlay : Overlay
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
 
-            var label = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
-            var color = playerInfo.RoleProto.Color;
-
-            if (classic)
+            if (classic && playerInfo.Antag)
             {
-                label = Loc.GetString("admin-overlay-antag-classic");
-                color = Color.OrangeRed;
+               args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), _antagLabelClassic, uiScale, _antagColorClassic);
             }
-
-            if (_filter.Contains(playerInfo.RoleProto.ID) && !classic ||
-                playerInfo.Antag && classic )
+            else if (!classic && _filter.Contains(playerInfo.RoleProto.ID))
             {
+               var label = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
+               var color = playerInfo.RoleProto.Color;
+
                 args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), label, uiScale, color);
             }
 
