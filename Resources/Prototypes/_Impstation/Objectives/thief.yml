@@ -42,7 +42,7 @@
   components:
   - type: SpeciesRequirement
     allowedSpecies:
-      - SpElf
+      - Thaven
   - type: NotJobRequirement
     job: Scientist
   - type: StealCondition

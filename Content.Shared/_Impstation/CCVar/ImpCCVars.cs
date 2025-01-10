@@ -22,10 +22,10 @@ public sealed class ImpCCVars : CVars
         CVarDef.Create("white.auto_get_up", true, CVar.CLIENT | CVar.ARCHIVE | CVar.REPLICATED); // WD EDIT
 
     /// <summary>
-    /// The number of shared moods to give spelfs by default.
+    /// The number of shared moods to give thavens by default.
     /// </summary>
-    public static readonly CVarDef<uint> SpelfSharedMoodCount =
-        CVarDef.Create<uint>("spelfs.shared_mood_count", 1, CVar.SERVERONLY);
+    public static readonly CVarDef<uint> ThavenSharedMoodCount =
+        CVarDef.Create<uint>("thavens.shared_mood_count", 1, CVar.SERVERONLY);
 
     /// <summary>
     /// A string containing a list of newline-separated words to be highlighted in the chat.

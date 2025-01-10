@@ -1,0 +1,201 @@
+# Shared moods will be selected at round start and shared amongst all spelves.
+# These are rolled before individual laws, and are considered more important.
+# Note: Only one law needs to say it conflicts with another
+# for the system to prevent them from being rolled together.
+
+# Make sure to add new moods to this dataset or they will not be selected!!!!!!
+- type: dataset
+  id: ThavenMoodsShared
+  values:
+    - SecretMoodsShared
+    - FashionIsCritical
+    - FashionReroll
+    - HonorDepartment
+    - StationIsAlive
+    - UniformIsJob
+    - UniformSoLastYear
+    - MusicBad
+    - MusicGood
+    - FriendshipIsRank
+    - OneTrueThaven
+    - YourDepartmentOnly
+    - MustCongregate
+    - ViolenceDistasteful
+    - ViolencePermitted
+    - RoomHoly
+    - PetGod
+    - Delicacy
+    - Holiday
+#   - OutOfFashion
+#   - InFashion
+
+# Keep Your Moods Secret: Thaven moods are a strictly-kept secret, and should never be revealed to anyone.
+- type: thavenMood
+  id: SecretMoodsShared
+  moodName: thaven-mood-secret-moods-shared-name
+  moodDesc: thaven-mood-secret-moods-shared-desc
+  conflicts:
+    - SecretMoods
+
+# Fashion Is Critical: Thaven pay close attention to appearances, and regard one's fashion choices as an indication of their character.
+- type: thavenMood
+  id: FashionIsCritical
+  moodName: thaven-mood-fashion-is-critical-name
+  moodDesc: thaven-mood-fashion-is-critical-desc
+
+# Fashion Is Ever-Changing: Your current hairstyle will go out of fashion every twenty minutes. It is extremely distressing to be unfashionable.
+- type: thavenMood
+  id: FashionReroll
+  moodName: thaven-mood-fashion-reroll-name
+  moodDesc: thaven-mood-fashion-reroll-desc
+
+# Honor Among Departments: If a Thaven brings dishonor to their department, they must be ritually sacrificed.
+- type: thavenMood
+  id: HonorDepartment
+  moodName: thaven-mood-honor-department-name
+  moodDesc: thaven-mood-honor-department-desc
+  conflicts:
+    - ViolenceDistasteful
+
+# The Station Is A Living Being: Harming or modifying the station is abhorrent. Anything which aims to harm the station is an infection.
+- type: thavenMood
+  id: StationIsAlive
+  moodName: thaven-mood-station-is-alive-name
+  moodDesc: thaven-mood-station-is-alive-desc
+
+# Your Uniform IS Your Job: If someone is wearing a uniform, they must do that job. Anyone not wearing a uniform is a passenger, and must be treated as such.
+- type: thavenMood
+  id: UniformIsJob
+  moodName: thaven-mood-uniform-is-job-name
+  moodDesc: thaven-mood-uniform-is-job-desc
+  conflicts:
+    - UniformSoLastYear
+
+# Uniforms Are So Last Year: You need to find some new threads.
+- type: thavenMood
+  id: UniformSoLastYear
+  moodName: thaven-mood-uniform-last-year-name
+  moodDesc: thaven-mood-uniform-last-year-desc
+  conflicts:
+    - UniformIsJob
+
+# Music is fanciful, frivolous, and unnecessary. It has no place on the station.
+- type: thavenMood
+  id: MusicBad
+  moodName: thaven-mood-music-bad-name
+  moodDesc: thaven-mood-music-bad-desc
+  conflicts:
+    - MusicGood
+
+# Music is sacred, you must be listening to music at all times - and must avoid overlapping songs.
+- type: thavenMood
+  id: MusicGood
+  moodName: thaven-mood-music-good-name
+  moodDesc: thaven-mood-music-good-desc
+  conflicts:
+    - MusicBad
+
+# Friendships are the true measure of one’s character. The more friends you have, the higher you rank in society.
+- type: thavenMood
+  id: FriendshipIsRank
+  moodName: thaven-mood-friendship-is-rank-name
+  moodDesc: thaven-mood-friendship-is-rank-desc
+
+# You are the one true Thaven, the others are pretenders.
+- type: thavenMood
+  id: OneTrueThaven
+  moodName: thaven-mood-one-true-thaven-name
+  moodDesc: thaven-mood-one-true-thaven-desc
+  conflicts:
+    - MustCongregate
+
+# Violence between Thaven is permitted with no legal repercussions.
+- type: thavenMood
+  id: ViolencePermitted
+  moodName: thaven-mood-violence-permitted-name
+  moodDesc: thaven-mood-violence-permitted-desc
+  conflicts:
+    - ViolenceDistasteful
+
+# The Thaven are the only truly capable members of the crew. Other species are like children, naive and inexperienced.
+- type: thavenMood
+  id: ThavenOnlyCrew
+  moodName: thaven-mood-thaven-only-crew-name
+  moodDesc: thaven-mood-thaven-only-crew-desc
+
+# You strongly believe that your department is the only one that actually does anything.
+- type: thavenMood
+  id: YourDepartmentOnly
+  moodName: thaven-mood-your-department-only-name
+  moodDesc: thaven-mood-your-department-only-desc
+  conflicts:
+    - DepartmentDisapproval
+
+# You must congregate with your fellow Thaven. To be without them is harrowing.
+- type: thavenMood
+  id: MustCongregate
+  moodName: thaven-mood-must-congregate-name
+  moodDesc: thaven-mood-must-congregate-desc
+  conflicts:
+    - OneTrueThaven
+    - AlwaysAlone
+
+# Violence is distasteful. Conflict should be settled through mediated dispute, and one should only resort to violence if all other options have failed.
+- type: thavenMood
+  id: ViolenceDistasteful
+  moodName: thaven-mood-violence-distasteful-name
+  moodDesc: thaven-mood-violence-distasteful-desc
+  conflicts:
+    - ViolencePermitted
+
+# [STATION PET] must be venerated as a god.
+- type: thavenMood
+  id: PetGod
+  moodName: thaven-mood-pet-god-name
+  moodDesc: thaven-mood-pet-god-desc
+  moodVars:
+    pet: Pets
+
+# [ROOM] is a holy place.
+- type: thavenMood
+  id: RoomHoly
+  moodName: thaven-mood-room-holy-name
+  moodDesc: thaven-mood-room-holy-desc
+  moodVars:
+    room: Rooms
+
+# Just Like Mom Used To Make: [EDIBLE] is a traditional Thaven delicacy. All Thaven aboard the station should gather as many as possible and organize a feast.
+- type: thavenMood
+  id: Delicacy
+  moodName: thaven-mood-delicacy-name
+  moodDesc: thaven-mood-delicacy-desc
+  conflicts:
+    - FoodRestrict
+  moodVars:
+    edible: Edibles
+
+# Today is [HOLIDAY]. You think you remember the traditional celebrations...
+- type: thavenMood
+  id: Holiday
+  moodName: thaven-mood-holiday-name
+  moodDesc: thaven-mood-holiday-desc
+  moodVars:
+    day: Holidays
+
+# - type: thavenMood
+#   id: OutOfFashion
+#   moodName: thaven-mood-out-of-fashion-name
+#   moodDesc: thaven-mood-out-of-fashion-desc
+#   moodVars:
+#     thing: ThavenMoodNouns
+#   conflicts:
+#     - InFashion
+
+# - type: thavenMood
+#   id: InFashion
+#   moodName: thaven-mood-in-fashion-name
+#   moodDesc: thaven-mood-in-fashion-desc
+#   moodVars:
+#     thing: ThavenMoodNouns
+#   conflicts:
+#     - OutOfFashion
