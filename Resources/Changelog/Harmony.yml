@@ -923,3 +923,17 @@ Entries:
     changes:
     - type: Tweak
       message: Changed Vent Critters to be a bit more fair
+  - id: 263
+    author: spanky-spanky
+    time: '2025-01-08T01:39:21.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/263
+    changes:
+    - type: Add
+      message: Added the Syndicate Listening Post mid-round ghost role event.
+  - id: 258
+    author: Ermucat
+    time: '2025-01-08T01:41:19.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/258
+    changes:
+    - type: Tweak
+      message: Made poquito naturally spawn in the kitchen
