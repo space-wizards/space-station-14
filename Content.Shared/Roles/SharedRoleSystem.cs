@@ -193,7 +193,7 @@ public abstract class SharedRoleSystem : EntitySystem
             return false;
 
         //get the most important/latest mind role
-        var roleType = GetRoleTypeByTime(ent.Owner);
+        var roleType = GetRoleTypeByTime(ent.Comp);
 
         if (ent.Comp.RoleType == roleType)
             return false;
@@ -202,13 +202,13 @@ public abstract class SharedRoleSystem : EntitySystem
         return true;
     }
 
-    private ProtoId<RoleTypePrototype> GetRoleTypeByTime(EntityUid mindId)
+    private ProtoId<RoleTypePrototype> GetRoleTypeByTime(MindComponent mind)
     {
         // If any Mind Roles specify a Role Type, return the most recent. Otherwise return Neutral
 
         var roles = new List<ProtoId<RoleTypePrototype>>();
 
-        foreach (var role in Comp<MindComponent>(mindId).MindRoles)
+        foreach (var role in mind.MindRoles)
         {
             var comp = Comp<MindRoleComponent>(role);
             if (comp.RoleType is not null)
