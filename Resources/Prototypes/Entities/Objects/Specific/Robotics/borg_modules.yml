@@ -497,8 +497,8 @@
     - state: icon-anomalies
   - type: ItemBorgModule
     items:
-    - RemoteSignaller
     - AnomalyScanner
+    - RemoteSignaller
     - AnomalyLocatorUnpowered
     - AnomalyLocatorWideUnpowered
     - SheetRGlassLingering0
