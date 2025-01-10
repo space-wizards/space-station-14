@@ -33,11 +33,11 @@ public sealed partial class RepulseAttractComponent : Component
     [DataField]
     public float Range = 1.0F;
 
-    // TODO: Add stun check
-    // TODO: Add enums for behavior?
-    //    On Activate
-    //    On Throw
-    //    On Hit
+    /// <summary>
+    ///     Should this work while there's an active UseDelayComponent?
+    /// </summary>
+    [DataField]
+    public bool DisableDuringUseDelay;
 
     /// <summary>
     ///     What kind of entities should this effect only?
@@ -50,16 +50,4 @@ public sealed partial class RepulseAttractComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? Blacklist;
-
-    /// <summary>
-    ///     How long until this can be used again?
-    /// </summary>
-    [DataField]
-    public TimeSpan? UseDelay;
-
-    /// <summary>
-    ///     When is the next time this can be used? Determined by <see cref="UseDelay"/>
-    /// </summary>
-    [DataField]
-    public TimeSpan? NextUse;
 }

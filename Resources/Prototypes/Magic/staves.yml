@@ -43,9 +43,7 @@
       toAdd:
       - type: RgbLightController
 
-# TODO: Activate on hit/click
-
-# TODO: Add stun
+# Maybe just implement MeleeThrowOnHitComponent instead for this
 - type: entity
   id: Mjollnir
   parent: BaseItem
@@ -53,14 +51,17 @@
   description: A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy.
   components:
   - type: Wieldable
+  - type: LandAtCursor
   - type: Sprite
     sprite: Objects/Weapons/Melee/mjollnir.rsi
     layers:
     - state: icon
-  - type: RepulseAttract
-    strength: 5
-    range: 3
-    useDelay: 10
+  - type: UseDelay
+    delay: 10
+  - type: UseDelayOnMeleeHit
+  - type: MeleeThrowOnHit
+    stunTime: 3
+    disableDuringUseDelay: true
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -74,6 +75,11 @@
       types:
         Blunt: 20
         Structural: 25
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 15
+        Structural: 15
   - type: Item
     size: Ginormous
 
@@ -92,8 +98,11 @@
   - type: RepulseAttract
     strength: 5
     range: 3
-    useDelay: 10
     attract: true
+    disableDuringUseDelay: true
+  - type: UseDelay
+    delay: 10
+  - type: UseDelayOnMeleeHit
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
