@@ -1,3 +1,4 @@
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -57,9 +58,7 @@ public sealed partial class PuddleSystem
                 QueueDel(uid);
             }
 
-            var ev = new SolutionContainerChangedEvent(puddleSolution, puddle.SolutionName);
-            RaiseLocalEvent(uid, ref ev);
-            Dirty(puddle.Solution.Value.Owner, puddle.Solution.Value.Comp);
+            _solutionContainerSystem.UpdateChemicals(puddle.Solution.Value);
         }
     }
 }
