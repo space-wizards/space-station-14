@@ -21,7 +21,7 @@
 - type: startingGear
   id: SalvageSpecialistGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
+# No More Jumpsuit!!!!
     ears: ClothingHeadsetCargo
   #storage:
     #back:

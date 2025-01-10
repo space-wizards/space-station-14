@@ -19,6 +19,17 @@
       role: JobSalvageSpecialist
       time: 360000 #100 hrs
 
+# Jumpsuit (imp)
+- type: loadout
+  id: SalvageSpecialistJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
+
+- type: loadout
+  id: SalvageSpecialistJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtSalvageSpecialist
+
 # Back
 - type: loadout
   id: SalvageSpecialistBackpack
