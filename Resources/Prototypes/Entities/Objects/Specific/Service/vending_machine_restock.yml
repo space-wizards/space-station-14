@@ -486,6 +486,7 @@
   - type: VendingMachineRestock
     canRestock:
     - ChemVendInventory
+    - ChemVendInventorySyndicate # DeltaV: Let it restock synthesis/nukie vendor
   - type: Sprite
     layers:
     - state: base

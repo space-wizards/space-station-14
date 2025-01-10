@@ -240,7 +240,7 @@
   id: ShiningSpring
   name: steal-target-groups-shiningspring
   sprite:
-    sprite: Objects/Weapons/Guns/Launchers/cleaner_lake.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Launchers/cleaner_lake.rsi
     state: icon
 
 - type: stealTargetGroup

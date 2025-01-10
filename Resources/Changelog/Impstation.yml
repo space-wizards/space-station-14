@@ -1,70 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Removed all vent spawn events from basic event table and added them into
-      the respective pest tables. This should hopefully drastically reduce the amount
-      of vent critter spawn events.
-    type: Tweak
-  - message: Gilded pAI ghost roles now show up with the name gilded pAI in the menu.
-    type: Tweak
-  - message: Added a 1 timer second option to c4. Watch out!
-    type: Tweak
-  id: 382
-  time: '2024-10-18T01:30:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/508
-- author: formlessnameless
-  changes:
-  - message: Added a bible to the PietyVend inventory, for all of your thieving needs.
-    type: Add
-  id: 383
-  time: '2024-10-18T07:27:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/512
-- author: TGRCdev
-  changes:
-  - message: Thaven can now view their moods when handcuffed / unconscious
-    type: Fix
-  id: 384
-  time: '2024-10-18T18:04:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/492
-- author: 12rabbits
-  changes:
-  - message: The Unborgable trait has been added to character customization.
-    type: Add
-  id: 385
-  time: '2024-10-18T18:05:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/501
-- author: widgetbeck
-  changes:
-  - message: Changed Gray head displacement. Again. Should look better on most helmets.
-    type: Tweak
-  id: 386
-  time: '2024-10-18T18:06:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/497
-- author: KingMudkipIII
-  changes:
-  - message: 'Added a new drink: Raktaccino! Sprites by me and beck.'
-    type: Add
-  id: 387
-  time: '2024-10-18T18:05:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/498
-- author: LandsharkRAWR
-  changes:
-  - message: New lobby art!
-    type: Add
-  id: 388
-  time: '2024-10-18T18:10:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/496
-- author: honeyed-lemons
-  changes:
-  - message: Added Golden High-Heels to scavenger loot.
-    type: Add
-  - message: Renamed Gold High-Heels to Golden High-Heels and updated description
-    type: Tweak
-  - message: Adjusted Golden High-Heels price to 7k Spesos
-    type: Tweak
-  id: 389
-  time: '2024-10-18T18:15:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/510
 - author: hivehum
   changes:
   - message: Many maps now have a chance to show up with higher player counts.
@@ -4491,3 +4425,67 @@
   id: 881
   time: '2025-01-09T00:43:00.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1271
+- author: honeyed-lemons
+  changes:
+  - message: Tweaks boxes surgery and adds supermatter consoles
+    type: Tweak
+  id: 882
+  time: '2025-01-09T16:26:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1270
+- author: EpicToastTM
+  changes:
+  - message: (Barratry Station) Science is now playable, along with other miscellaneous
+      tweaks.
+    type: Tweak
+  id: 883
+  time: '2025-01-09T16:26:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1277
+- author: ruddygreat
+  changes:
+  - message: The shining spring now shoots cleanades as a bouncing projectile that
+      spreads space cleaner as it moves.
+    type: Tweak
+  id: 884
+  time: '2025-01-09T16:48:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1203
+- author: aada
+  changes:
+  - message: Ninja sword can now stamp papers.
+    type: Add
+  - message: Ninja gloves now have a much weaker stun.
+    type: Tweak
+  id: 885
+  time: '2025-01-09T16:50:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1230
+- author: DinnerCalzone
+  changes:
+  - message: The improvised grappling gun's crafting recipe has been modified to be
+      multi-step, allowing you to manually choose what plunger and what gas tank to
+      use.
+    type: Tweak
+  id: 886
+  time: '2025-01-09T18:08:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1274
+- author: DinnerCalzone
+  changes:
+  - message: 'Repairing a broken recycler now unbloodies it if it has been used to
+      gib someone. (Tip: Destroying a recycler un-emags it!)'
+    type: Add
+  id: 887
+  time: '2025-01-09T18:15:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1280
+- author: Lyndomen
+  changes:
+  - message: Ports the Synthesis Specialist ghost role from Delta-V
+    type: Add
+  id: 888
+  time: '2025-01-09T18:36:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1266
+- author: honeyed-lemons
+  changes:
+  - message: Your favorite maps should roll more often, if you liked maps with high
+      letters, like train, or xeno
+    type: Fix
+  id: 889
+  time: '2025-01-09T22:38:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1284

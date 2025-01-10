@@ -18,3 +18,11 @@ ghost-role-information-listeningop-rules = You are a [color=red][bold]Team Antag
                                            Make sure your station doesn't fall into enemy hands and [bold]do not abandon your station[/bold].
 
                                            You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+
+ghost-role-information-synthesis-name = Synthesis Specialist
+ghost-role-information-synthesis-description = You are a member of Interdyne Pharmaceutics! You are provided all the tools to manufacture a variety of medical cocktails. Establish your craft, peddle your poisons, and make profit.
+ghost-role-information-synthesis-rules =
+                                        You are a [color=yellow][bold]Synthesis Specialist[/bold][/color].
+                                        Your goal is to synthesize chemicals and trade with others. Avoid excessive antagonism or destruction.
+
+                                        You don't remember any of your previous life, and you don't remember anything you learned as a ghost.

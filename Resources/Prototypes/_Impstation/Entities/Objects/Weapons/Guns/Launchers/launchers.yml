@@ -5,7 +5,7 @@
   description: A de-militarised piece of military surplus equipment, repurposed for the real troops.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Launchers/cleaner_lake.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Launchers/cleaner_lake.rsi
     layers:
       - state: icon
         map: ["enum.GunVisualLayers.Base"]
@@ -80,7 +80,7 @@
           unshaded:
             True: { state: base-unshaded }
             False: { state: base-unshaded-off }
-            
+
 - type: entity
   name: improvised grappling gun
   parent: WeaponGrapplingGun
@@ -117,4 +117,38 @@
       - Back
     - type: Construction
       graph: GrapplingGunImprovised
-      node: improvisedgrapple
+      node: doohickey
+
+- type: entity
+  name: improvised grappling gun
+  parent: BaseItem
+  id: WeaponGrapplingGunImprovisedStep1
+  suffix: Needs plunger and tank
+  description: Still needs a plunger.
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Weapons/Guns/Launchers/grappling_gun_improvised.rsi
+      layers:
+        - state: no-hook
+    - type: Item
+      size: Normal
+    - type: Construction
+      graph: GrapplingGunImprovised
+      node: frame
+
+- type: entity
+  name: improvised grappling gun
+  parent: BaseItem
+  id: WeaponGrapplingGunImprovisedStep2
+  suffix: Needs tank
+  description: Still needs a gas tank.
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Weapons/Guns/Launchers/grappling_gun_improvised.rsi
+      layers:
+        - state: no-tank
+    - type: Item
+      size: Normal
+    - type: Construction
+      graph: GrapplingGunImprovised
+      node: hook
