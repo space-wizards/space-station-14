@@ -682,7 +682,7 @@
 # settler      
 - type: entity
   name: settler spawner
-  id: SettlerSpawner
+  id: TP14SettlerSpawner
   parent: MarkerBase
   components:
     - type: Sprite
