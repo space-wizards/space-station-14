@@ -5,7 +5,7 @@ namespace Content.Server.Deathwhale
     {
 
          [DataField("radius")]
-         public float Radius = 5;
+         public float Radius = 6;
 
         [DataField("caughtPrey")]
         public bool caughtPrey = false;

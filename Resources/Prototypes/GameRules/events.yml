@@ -533,7 +533,7 @@
   - type: StationEvent
     startAnnouncement: death-whale-migration
     startAudio:
-      path: /Audio/Effects/alert.ogg
+      path: /Audio/Effects/whale_groan.ogg
     StartAnnouncementColor: "#Ff0000" # red
     EndAnnouncementColor: "#228B22" # green
     earliestStart: 20
@@ -547,4 +547,6 @@
     sweetwaterOnly: true
     sounds:
       collection: WhaleMigration
+  - type: DeathWhaleSpawnRule
+    prototype: MobDeathWhale
 

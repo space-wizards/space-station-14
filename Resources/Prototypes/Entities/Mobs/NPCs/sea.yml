@@ -256,22 +256,21 @@
 - type: entity
   name: deathwhale
   id: MobDeathWhale
-  parent: SimpleMobBase
+  parent: SimpleSpaceMobBase
   description: Don't go into the light.
   components:
   - type: Sprite
     drawdepth: Mobs
     sprite: null
   - type: PointLight
-    radius: 30
+    radius: 20
     energy: 40
     color: "#FFA400"
   - type: DeathWhale
   - type: AmbientSound
     range: 30
-    volume: -5
+    volume: -15
     sound:
       path: /Audio/Effects/whale_groan.ogg
   - type: MovementSpeedModifier
-    baseWalkSpeed : 0.5
-    baseSprintSpeed : 0.5
+    baseWalkSpeed : 0.7

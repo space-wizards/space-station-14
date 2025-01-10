@@ -56,29 +56,28 @@ public sealed class DeathWhaleSystem : EntitySystem
     private void DeathWhaleCheck(EntityUid uid, DeathWhaleComponent component)
     {
         // Iterate through all entities within the DeathWhale's radius
-        foreach (var prey in _lookup.GetEntitiesInRange(uid, component.Radius, LookupFlags.StaticSundries))
+        foreach (var prey in _lookup.GetEntitiesInRange(uid, component.Radius))
         {
             if (!EntityManager.HasComponent<BodyComponent>(prey))
             {
                 continue;
             }
 
-            // Prevent re-catching of the same prey
             if (_caughtPrey.Contains(prey))
             {
-                continue; // Skip if it’s already been caught
+                continue;
             }
 
-            // Catch the prey and immediately delete it
+            if (EntityManager.HasComponent<DeathWhaleComponent>(prey))
+            {
+                continue;
+            }
+
             Log.Info($"Deathwhale catching {prey}");
             var preycaught = EnsureComp<FultonedComponent>(prey); // This will harpoon the prey and drag them up offscreen to be eaten
             preycaught.Removeable = false;
             preycaught.Beacon = uid;
 
-            // Add prey to the caught list to prevent re-catching
-            _caughtPrey.Add(prey);
-
-            // Queue the prey for deletion immediately
             QueueDel(prey);
             Log.Info($"Deleting prey {prey} immediately.");
         }
