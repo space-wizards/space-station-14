@@ -28,7 +28,6 @@ public sealed class DeathWhaleSpawnRule : StationEventSystem<DeathWhaleSpawnRule
 
                 // Spawn the Death Whale at the location
                 Spawn(comp.Prototype, transform.Coordinates);
-                Log.Error($"Death Whale spawned");
         }
 
         if (validLocations.Count == 0)
@@ -39,7 +38,17 @@ public sealed class DeathWhaleSpawnRule : StationEventSystem<DeathWhaleSpawnRule
         foreach (var location in validLocations)
         {
             Spawn(comp.Prototype, location);
-            Log.Error($"Death Whale spawned");
         }
+    }
+
+     protected virtual void Ended(EntityUid uid, DeathWhaleSpawnRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
+    {
+        base.Ended(uid, component, gameRule, args);
+
+        foreach (var whales in EntityManager.EntityQuery<DeathWhaleComponent>())
+            {
+                var uid = whales.Owner;
+                QueueDel(uid);
+            }
     }
 }
