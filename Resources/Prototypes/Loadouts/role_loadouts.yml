@@ -293,6 +293,7 @@
   id: JobSalvageSpecialist
   groups:
   - SalvageSpecialistNeck
+  - SalvageSpecialistJumpsuit # imp unspecial
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
   - SalvageSpecialistGlasses
