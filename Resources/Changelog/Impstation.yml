@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Added the "Old Red Phone" to be a base for admin phones
-    type: Add
-  - message: Make the Red Phone & Blood-Red Phone contraband to entice theft and rp
-    type: Tweak
-  id: 391
-  time: '2024-10-18T18:17:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/503
 - author: honeyed-lemons
   changes:
   - message: Tweaked spelf marking organization to be more in line with other races
@@ -4489,3 +4480,10 @@
   id: 890
   time: '2025-01-10T07:11:03.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1290
+- author: mqole
+  changes:
+  - message: A few small changes to the server rules.
+    type: Tweak
+  id: 891
+  time: '2025-01-10T07:14:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1294
