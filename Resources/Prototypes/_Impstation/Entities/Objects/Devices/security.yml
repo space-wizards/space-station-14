@@ -1,0 +1,61 @@
+- type: entity
+  parent: BaseItem
+  id: BaseHandheldCriminalRecords
+  name: portable criminal records
+  description: All the power of a criminal records computer, but it fits in your pocket.
+  abstract: true
+  components:
+  - type: CriminalRecordsConsole
+  - type: Sprite
+    sprite: Objects/Devices/tablets.rsi
+    layers:
+      - state: tablet
+      - state: generic
+        shader: unshaded
+  - type: ActivatableUI
+    key: enum.CriminalRecordsConsoleKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.CriminalRecordsConsoleKey.Key:
+        type: CriminalRecordsConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+  - type: AccessReader
+    access: [["Security"]]
+  - type: GuideHelp
+    guides:
+    - CriminalRecords
+
+- type: entity
+  id: HandheldCriminalRecords
+  suffix: Powered
+  parent:
+  - BaseHandheldCriminalRecords
+  - BaseHandheldComputer
+
+- type: entity
+  id: HandheldCriminalRecordsEmpty
+  suffix: Empty
+  parent:
+  - BaseHandheldCriminalRecords
+  - BaseHandheldComputer
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+
+- type: entity
+  id: HandheldCriminalRecordsUnpowered
+  suffix: Unpowered
+  parent: BaseHandheldCriminalRecords
