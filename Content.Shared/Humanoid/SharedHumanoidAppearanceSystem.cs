@@ -182,14 +182,18 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             {
                 dirty |= ent.Comp.PermanentlyHidden.Remove(layer);
             }
-            else if (ent.Comp.HiddenLayers.ContainsKey(layer))
+            else if (ent.Comp.HiddenLayers.TryGetValue(layer, out var oldSlots))
             {
-                dirty = true;
                 // This layer might be getting hidden by more than one piece of equipped clothing.
                 // remove slot flag from the set of slots hiding this layer, then check if there are any left.
-                ent.Comp.HiddenLayers[layer] &= ~slot;
+                ent.Comp.HiddenLayers[layer] = ~slot & oldSlots;
                 if (ent.Comp.HiddenLayers[layer] == SlotFlags.NONE)
                     ent.Comp.HiddenLayers.Remove(layer);
+
+                // Could probably just do
+                // dirty |= (oldSlots & slot != 0)
+                // But there were apparently some bugs and its probably fine to just unnecessarily dirty it in some instances
+                dirty = true;
             }
         }
         else
@@ -202,7 +206,11 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             {
                 var oldSlots = ent.Comp.HiddenLayers.GetValueOrDefault(layer);
                 ent.Comp.HiddenLayers[layer] = slot | oldSlots;
-                dirty |= oldSlots == SlotFlags.NONE;
+
+                // Could probably just do
+                // dirty |= (oldSlots & slot != slot)
+                // But there were apparently some bugs and its probably fine to just unnecessarily dirty it in some instances
+                dirty = true;
             }
 
         }
