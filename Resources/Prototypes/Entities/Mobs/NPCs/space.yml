@@ -525,7 +525,6 @@
     - VimPilot
     - ChefPilot
     - Meat
-    - MultitoolDefibrillatorTarget
   - type: CombatMode
     combatToggleAction: ActionCombatModeToggleOff
   - type: Bloodstream
