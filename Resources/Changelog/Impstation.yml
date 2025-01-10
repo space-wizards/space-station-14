@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Many maps now have a chance to show up with higher player counts.
-    type: Tweak
-  id: 390
-  time: '2024-10-18T18:16:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/505
 - author: Sha-Seng
   changes:
   - message: Added the "Old Red Phone" to be a base for admin phones
@@ -4489,3 +4482,10 @@
   id: 889
   time: '2025-01-09T22:38:27.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1284
+- author: TheGrimbeeper
+  changes:
+  - message: Multitools now act as defibrillators to cockroaches
+    type: Add
+  id: 890
+  time: '2025-01-10T07:11:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1290
