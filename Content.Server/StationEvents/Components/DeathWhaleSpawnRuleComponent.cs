@@ -16,4 +16,10 @@ public sealed partial class OceanSpawnSpawnRuleComponent : Component
 
     [DataField("target"), required: true, ViewVariables(VVAccess.ReadWrite)]
     public string? Target;
+
+    [DataField("amount")]
+    public float Amount = 5;
+
+    [DataField("currentAmount")]
+    public float CurrentAmount = 0;
 }
