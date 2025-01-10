@@ -57,6 +57,9 @@
   id: MimeBeltRed
 
 - type: Tag
+  id: MultitoolDefibrillatorTarget
+
+- type: Tag
   id: NullRod
 
 - type: Tag

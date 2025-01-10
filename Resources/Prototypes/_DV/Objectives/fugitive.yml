@@ -1,0 +1,24 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseFugitiveObjective
+  components:
+  - type: Objective
+    issuer: objective-issuer-self
+    difficulty: 1
+  - type: RoleRequirement
+    roles:
+      mindRoles:
+      - FugitiveRole
+
+- type: entity
+  parent: [BaseFugitiveObjective, BaseLivingObjective]
+  id: FugitiveEscapeObjective
+  name: Evade law enforcement
+  description: You will never atone for your crimes, but you can hide from them.
+  components:
+  - type: Objective
+    icon:
+      sprite: Markers/jobs.rsi
+      state: prisoner
+  - type: EscapeShuttleCondition

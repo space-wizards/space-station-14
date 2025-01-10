@@ -1,5 +1,5 @@
 - type: speechSounds
-  id: Snail
+  id: Gastropoid
   saySound:
     path: /Audio/_Impstation/Voice/Talk/snail.ogg
   askSound:

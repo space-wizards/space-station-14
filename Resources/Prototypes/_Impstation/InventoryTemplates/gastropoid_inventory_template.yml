@@ -1,5 +1,5 @@
 ﻿- type: inventoryTemplate
-  id: snail
+  id: gastropoid
   slots:
     - name: jumpsuit
       slotTexture: uniform

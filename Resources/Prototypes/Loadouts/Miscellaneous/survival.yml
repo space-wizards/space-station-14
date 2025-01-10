@@ -19,7 +19,7 @@
     - Moth
     - Reptilian
     - Gray
-    - Snail
+    - Gastropoid
     - Thaven
     - Decapoid
 
@@ -35,7 +35,7 @@
   effects:
   - !type:SpeciesLoadoutEffect
     species:
-    - Snail
+    - Gastropoid
 
 # commenting these out because I would like to do emergency vapor boxes at some point. - move these to imp filestructure
 #- type: loadoutEffectGroup
