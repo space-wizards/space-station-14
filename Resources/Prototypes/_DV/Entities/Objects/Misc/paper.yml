@@ -2,7 +2,7 @@
   name: station warrant
   parent: Paper
   id: PaperStationWarrant
-  description: 'A paper warrant issued by the justice department.'
+  description: 'A paper warrant issued by Central Command Enforcement Division.'
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -29,4 +29,4 @@
   parent: PaperStationWarrant
   id: PaperFugitiveReport
   name: fugitive report
-  description: An arrest warrant for a space fugitive sent from GALPOL.
+  description: An arrest warrant for a space fugitive sent from the Central Command Enforcement Division.
