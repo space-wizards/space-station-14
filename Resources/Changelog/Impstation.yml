@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Added Directional Fan and Air Canister to the NT-Cruiser
-    type: Tweak
-  id: 404
-  time: '2024-10-22T01:05:02.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/535
 - author: Darkmajia
   changes:
   - message: Heretics can now correctly use appraisal tools for the Ritual of Knowledge.
@@ -4496,3 +4489,27 @@
   id: 903
   time: '2025-01-11T04:43:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1282
+- author: Kandiyaki
+  changes:
+  - message: ashen passage will now play a sound and ignite the user upon exit.
+    type: Tweak
+  - message: nightwatcher's rebirth now has a smaller radius.
+    type: Tweak
+  - message: the ashen blade is now made with a welder instead of a match.
+    type: Tweak
+  - message: flesh ghouls now have a unique text identifier when inspected.
+    type: Add
+  - message: nerfed heretic multipathing. you can now only get a knowledge from another
+      tree if you have already bought the corresponding knowledge in your main tree.
+    type: Tweak
+  - message: flesh surgery rework. all old effects have been removed and replaced
+      with new ones that don't last the whole round.
+    type: Tweak
+  - message: all of the flesh heretic rituals that require blood will now accept blood
+      from all species.
+    type: Tweak
+  - message: rewrote the heretic's guidebook for easier understanding.
+    type: Tweak
+  id: 904
+  time: '2025-01-11T04:51:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1184
