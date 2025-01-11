@@ -135,27 +135,6 @@
       ]
     },
     {
-      "name": "tutorial-pai-off-overlay"
-    },
-    {
-      "name": "tutorial-pai-on-overlay",
-      "delays": [
-        [
-          0.8,
-          0.8
-        ]
-      ]
-    },
-    {
-      "name": "tutorial-pai-searching-overlay",
-      "delays": [
-        [
-          0.8,
-          0.8
-        ]
-      ]
-    },
-    {
       "name": "icon-potato-off"
     },
     {
