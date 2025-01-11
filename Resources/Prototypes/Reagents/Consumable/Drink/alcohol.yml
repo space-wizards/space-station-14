@@ -1559,12 +1559,13 @@
   metamorphicChangeColor: true
   metabolisms:
     Drink:
-    - !type:AdjustReagent
-      reagent: Ethanol
-      amount: 0.03
-    - !type:AdjustReagent
-      reagent: Blood
-      amount: 0.05
+     effects:
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.03
+      - !type:AdjustReagent
+        reagent: Blood
+        amount: 0.05
 
 - type: reagent
   id: PinaColada
