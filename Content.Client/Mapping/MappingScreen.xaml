@@ -35,7 +35,6 @@
                         ToggleMode="True" Text="{Loc 'mapping-erase-entity'}" StyleClasses="ButtonSquare"
                         TooltipDelay="0" />
             </BoxContainer>
-            <widgets:ChatBox Visible="False" />
         </BoxContainer>
         <SplitContainer Name="RightContainer" HorizontalExpand="True"
                         VerticalExpand="True" SplitWidth="0"
@@ -74,8 +73,12 @@
                                                       ToolTip="{Loc 'mapping-grid-vv-tooltip'}" />
                         <mapping:MappingActionsButton Name="PipesColor" Access="Public"
                                                       ToolTip="{Loc 'mapping-pipes-color-tooltip'}" />
+                        <BoxContainer HorizontalExpand="True"/>
+                        <mapping:MappingActionsButton Name="ChatButton" Access="Public"
+                                                      ToolTip="{Loc 'mapping-chat-button-tooltip'}" />
                     </BoxContainer>
                 </PanelContainer>
+                <widgets:ChatBox Name="Chat" Access="Public" Visible="False" ReservesSpace="False" Margin="3 51 0 0" />
             </LayoutContainer>
             <BoxContainer Orientation="Vertical" VerticalExpand="True" MinWidth="200" SetWidth="500">
                 <PanelContainer VerticalExpand="True" HorizontalExpand="True">

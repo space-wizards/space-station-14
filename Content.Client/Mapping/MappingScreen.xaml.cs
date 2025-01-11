@@ -114,6 +114,7 @@ public sealed partial class MappingScreen : InGameScreen
         MoveGrid.Texture.TexturePath = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
         GridVV.Texture.TexturePath = "/Textures/Interface/VerbIcons/vv.svg.192dpi.png";
         PipesColor.Texture.TexturePath = "/Textures/Interface/VerbIcons/paint-roller-solid.svg.192dpi.png";
+        ChatButton.Texture.TexturePath = "/Textures/Interface/VerbIcons/comment-dots-regular.svg.192dpi.png";
     }
 
     public void FlipSides()

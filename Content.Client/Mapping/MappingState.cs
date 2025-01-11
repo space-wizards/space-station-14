@@ -6,6 +6,7 @@ using Content.Client.Gameplay;
 using Content.Client.Maps;
 using Content.Client.SubFloor;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.Verbs;
 using Content.Shared.Administration;
@@ -137,6 +138,7 @@ public sealed class MappingState : GameplayStateBase
         Screen.MoveGrid.OnPressed += OnMoveGridPressed;
         Screen.GridVV.OnPressed += OnGridVVPressed;
         Screen.PipesColor.OnPressed += OnPipesColorPressed;
+        Screen.ChatButton.OnPressed += OnChatButtonPressed;
         _placement.PlacementChanged += OnPlacementChanged;
 
         CommandBinds.Builder
@@ -184,6 +186,7 @@ public sealed class MappingState : GameplayStateBase
         Screen.MoveGrid.OnPressed -= OnMoveGridPressed;
         Screen.GridVV.OnPressed -= OnGridVVPressed;
         Screen.PipesColor.OnPressed -= OnPipesColorPressed;
+        Screen.ChatButton.OnPressed -= OnChatButtonPressed;
         _placement.PlacementChanged -= OnPlacementChanged;
         _prototypeManager.PrototypesReloaded -= OnPrototypesReloaded;
 
@@ -950,6 +953,11 @@ public sealed class MappingState : GameplayStateBase
         {
             Meta.State = CursorState.None;
         }
+    }
+
+    private void OnChatButtonPressed(ButtonEventArgs args)
+    {
+        Screen.Chat.Visible = args.Button.Pressed;
     }
     #endregion
 
