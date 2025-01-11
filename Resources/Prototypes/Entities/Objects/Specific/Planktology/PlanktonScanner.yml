@@ -1,6 +1,6 @@
 ﻿- type: entity
   parent: BaseItem
-  id: PlanktonScanner
+  id: TP14PlanktonScanner
   name: plankton scanner
   description: A modified node scanner with two magnifiers fastened to the front. Capable of scanning a plankton sample and outputting information.
   components:

@@ -213,6 +213,7 @@
       currentOre: OreSilverCrab
 
 # Yes I know it drops steel but we may get smelting at some point
+# This aged well LOL ^^
 - type: entity
   id: AsteroidRockTin
   parent: AsteroidRock

@@ -1,6 +1,6 @@
 - type: entity
   name: drifter
-  id: MobDrifter
+  id: TP14MobDrifter
   parent: MobSpaceBasic
   description: A spindly, opportunistic predator which injects prey with a paralyzing agent before siphoning their blood.
   components:
@@ -64,7 +64,7 @@
 - type: entity
   name: Fish
   parent: SimpleSpaceMobBase
-  id: MobFish
+  id: TP14MobFish
   description: It's a fish.
   components:
   - type: Body
@@ -117,7 +117,7 @@
           Quantity: 10
   - type: Butcherable
     spawned:
-    - id: FoodMeatFish
+    - id: TP14FoodMeatFish
       amount: 2
   - type: CombatMode
     combatToggleAction: ActionCombatModeToggleOff
@@ -142,8 +142,8 @@
 
 - type: entity
   name: Fish
-  parent: MobFish
-  id: MobFish2
+  parent: TP14MobFish
+  id: TP14MobFish2
   description: It's a fish.
   components:
   - type: Sprite
@@ -161,8 +161,8 @@
 
 - type: entity
   name: Fish
-  parent: MobFish
-  id: MobFish3
+  parent: TP14MobFish
+  id: TP14MobFish3
   description: It's a fish.
   components:
   - type: Sprite
@@ -181,8 +181,8 @@
 - type: entity
   name: Fish
   suffix: mimic
-  parent: MobFish
-  id: MobFishMimic
+  parent: TP14MobFish
+  id: TP14MobFishMimic
   components:
   - type: Body
     prototype: AnimalMimic # just adds the Festering Tumor and removes the need for water to breathe
@@ -206,7 +206,7 @@
 - type: entity
   name: Mimic
   parent: MobSpaceBasic
-  id: MobMimic
+  id: TP14MobMimic
   description: A horrific ambush predator. It infests fish until disturbed by larger prey and uses elecricity to immobilize their targets.
   components:
   - type: MobThresholds

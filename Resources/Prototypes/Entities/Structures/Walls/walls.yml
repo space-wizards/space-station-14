@@ -1359,10 +1359,10 @@
     #Border indestructible wall
 
 - type: entity
-  id: WallRockIndestructible
+  id: TP14WallRockIndestructible
   parent: BaseWall
   name: indestructible rock wall
-  description: Born from extreme preassure and neverending pyroclastic layers, an indestructible rock wall.
+  description: Born from extreme pressure and never-ending pyroclastic layers, this wall might as well be indestructible.
   components:
   - type: Transform
     noRot: true

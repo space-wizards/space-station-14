@@ -94,7 +94,7 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-clerical-error-announcement
-    minimumPlayers: 15
+    minimumPlayers: 10
     weight: 5
     duration: 1
   - type: ClericalErrorRule
@@ -106,7 +106,7 @@
   - type: StationEvent
     weight: 5
     duration: 1
-    minimumPlayers: 10
+    minimumPlayers: 5
   - type: RandomEntityStorageSpawnRule
     prototype: MobSkeletonCloset
 
@@ -118,7 +118,7 @@
     weight: 6.5
     earliestStart: 40
     reoccurrenceDelay: 20
-    minimumPlayers: 20
+    minimumPlayers: 15
   - type: AntagRandomSpawn
   - type: AntagSpawner
     prototype: MobDragon
@@ -147,7 +147,7 @@
     weight: 7.5
     duration: 1
     earliestStart: 45
-    minimumPlayers: 20
+    minimumPlayers: 15
   - type: RandomSpawnRule
     prototype: MobRevenant
 
@@ -179,7 +179,7 @@
   components:
   - type: StationEvent
     earliestStart: 15
-    minimumPlayers: 15
+    minimumPlayers: 10
     weight: 7
     duration: 240
   - type: KudzuGrowthRule
@@ -219,7 +219,7 @@
     duration: 50
   - type: VentCrittersRule
     entries:
-    - id: MobDrifter
+    - id: TP14MobDrifter
       prob: 0.8
 # Events always spawn a critter regardless of Probability https://github.com/space-wizards/space-station-14/issues/28480 I added the Rat King to their own event with a player cap.
 
@@ -385,7 +385,7 @@
   components:
   - type: StationEvent
     earliestStart: 50
-    minimumPlayers: 30
+    minimumPlayers: 20
     weight: 2
     duration: 1
   - type: ZombieRule

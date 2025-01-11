@@ -216,7 +216,7 @@
 
 - type: entity
   parent: EncryptionKey
-  id: EncryptionKeyNanotrasen
+  id: TP14EncryptionKeyNanotrasen
   name: nanotrasen encryption key
   description: An encryption key used by... corporate... people?
   components:

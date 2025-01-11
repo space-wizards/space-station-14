@@ -1,7 +1,7 @@
 - type: entity
   name: bluespace crystal
   parent: BaseItem
-  id: BluespaceCrystal
+  id: TP14BluespaceCrystal
   suffix: 20 BC
   description: It feels like it's everywhere and nowhere at the same time.
   components:
@@ -49,7 +49,7 @@
 # Uplinks
 - type: entity
   parent: [ BaseItem, StorePresetUplinkNT ]
-  id: BaseUplinkRadioNT
+  id: TP14BaseUplinkRadioNT
   name: nanotrasen uplink
   description: Suspiciously looking old radio...
   suffix: Empty

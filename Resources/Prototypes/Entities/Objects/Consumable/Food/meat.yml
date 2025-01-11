@@ -131,7 +131,7 @@
 - type: entity
   name: raw fish fillet
   parent: FoodMeatBase
-  id: FoodMeatFish
+  id: TP14FoodMeatFish
   description: A delicious, raw fillet.
   components:
   - type: FlavorProfile

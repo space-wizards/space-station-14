@@ -184,7 +184,7 @@
   time: 10
   solids:
     FoodBreadBun: 1
-    FoodMeatFish: 1
+    FoodMeatFishCarp: 1
     FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
@@ -725,7 +725,7 @@
     FoodBowlBig: 1
     FoodTomato: 1
     FoodMushroom: 1
-    FoodMeatFish: 1
+    FoodMeatFishCarp: 1
 
 - type: microwaveMealRecipe
   id: RecipeMeatballSoup
@@ -1082,7 +1082,7 @@
     FoodDough: 1
     FoodCheeseSlice: 2
     FoodChiliPepper: 1
-    FoodMeatFish: 2
+    FoodMeatFishCarp: 2
 
 - type: microwaveMealRecipe
   id: RecipeSashimi
@@ -1092,7 +1092,7 @@
   reagents:
     TableSalt: 1
   solids:
-    FoodMeatFish: 2
+    FoodMeatFishCarp: 2
 
 - type: microwaveMealRecipe
   id: RecipeMisoColaSoup
@@ -1937,7 +1937,7 @@
   time: 10
   solids:
     FoodTacoShell: 1
-    FoodMeatFish: 1
+    FoodMeatFishCarp: 1
     FoodOnionSlice: 2
     FoodTomato: 1
     FoodCabbage: 1

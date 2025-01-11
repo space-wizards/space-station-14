@@ -1328,7 +1328,7 @@
 
 - type: entity
   parent: BaseItem
-  id: BlackboxRecorder
+  id: TP14BlackboxRecorder
   name: blackbox record
   description: The ship's last logs.
   components:

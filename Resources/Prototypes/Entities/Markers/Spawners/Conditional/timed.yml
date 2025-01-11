@@ -79,10 +79,10 @@
     - type: Timer
     - type: TimedSpawner
       prototypes:
-        - MobFish
-        - MobFish2
-        - MobFish3
-        - MobFishMimic
+        - TP14MobFish
+        - TP14MobFish2
+        - TP14MobFish3
+        - TP14MobFishMimic
       chance: 0.5
       intervalSeconds: 540
       minimumEntitiesSpawned: 1

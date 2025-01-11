@@ -1,8 +1,8 @@
 - type: entity
-  id: SeaWreckRoomMarker
+  id: TP14SeaWreckRoomMarker
   name: small wreck marker
   parent: MarkerBase
-  suffix: Weh
+  suffix: 5x5
   components:
   - type: RoomFill
     size: 5,5

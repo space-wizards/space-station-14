@@ -14,7 +14,7 @@
   id: UplinkEnergyCarbine
   name: uplink-carbine-name
   description: uplink-carbine-desc
-  productEntity: WeaponEnergyCarbine
+  productEntity: TP14WeaponEnergyCarbine
   cost:
     BluespaceCrystal: 15 # this shit is STRONG-strong. TODO: Cascade Ops DO NOT get this
   categories:
@@ -24,7 +24,7 @@
   id: UplinkNtBlaster
   name: uplink-blaster-name
   description: uplink-blaster-desc
-  productEntity: WeaponNtBlaster
+  productEntity: TP14WeaponNtBlaster
   cost:
     BluespaceCrystal: 5 # cheap, but modules cost more so it evens out
   categories:
@@ -86,7 +86,7 @@
   id: UplinkSlashBang
   name: uplink-slashbang-name
   description: uplink-slashbang-desc
-  productEntity: SlashBang
+  productEntity: TP14SlashBang
   cost:
     BluespaceCrystal: 7
   categories:
@@ -96,7 +96,7 @@
   id: UplinkEnergyBomb
   name: uplink-energybomb-name
   description: uplink-energybomb-desc
-  productEntity: EnergyBomb
+  productEntity: TP14EnergyBomb
   cost:
     BluespaceCrystal: 15
   categories:
@@ -118,7 +118,7 @@
   id: UplinkMagCellDisabler
   name: uplink-disabler-name
   description: uplink-disabler-desc
-  productEntity: MagCellDisabler
+  productEntity: TP14MagCellDisabler
   cost:
     BluespaceCrystal: 6
   categories:
@@ -138,7 +138,7 @@
   id: UplinkMagCell
   name: uplink-magcell-name
   description: uplink-magcell-desc
-  productEntity: BaseMagCell
+  productEntity: TP14BaseMagCell
   cost:
     BluespaceCrystal: 2
   categories:
@@ -148,7 +148,7 @@
   id: UplinkMagCellAdvanced
   name: uplink-magcelladv-name
   description: uplink-magcelladv-desc
-  productEntity: MagCellAdvanced
+  productEntity: TP14MagCellAdvanced
   cost:
     BluespaceCrystal: 6
   categories:
@@ -158,7 +158,7 @@
   id: UplinkMagCellExperimental
   name: uplink-magcellexp-name
   description: uplink-magcellexp-desc
-  productEntity: MagCellExperimental
+  productEntity: TP14MagCellExperimental
   cost:
     BluespaceCrystal: 12
   categories:

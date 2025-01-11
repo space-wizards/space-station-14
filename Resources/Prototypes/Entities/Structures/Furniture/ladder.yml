@@ -1,5 +1,5 @@
 - type: entity
-  id: LadderDownBase
+  id: TP14LadderDownBase
   parent: BaseStructure
   name: Ladder down
   description: WEEEEE.
@@ -13,7 +13,7 @@
     state: down
 
 - type: entity
-  id: LadderUpBase
+  id: TP14LadderUpBase
   parent: BaseStructure
   name: Ladder up
   description: WEEEEE.

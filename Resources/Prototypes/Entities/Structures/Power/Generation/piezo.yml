@@ -1,5 +1,5 @@
 - type: entity
-  id: PiezoCrystal
+  id: TP14PiezoCrystal
   parent: BaseStructure
   name: piezo crystal
   description: An electrically charged crystal capable of releasing occasional bursts of localized static which can be used for electricity.
@@ -54,7 +54,7 @@
                 collection: GlassBreak
             - !type:SpawnEntitiesBehavior
               spawn:
-                PiezoCrystalShard:
+                TP14PiezoCrystalShard:
                   min: 1
                   max: 2
             - !type:DoActsBehavior

@@ -154,7 +154,7 @@
 
 - type: entity
   parent: BaseHardBomb
-  id: EnergyBomb
+  id: TP14EnergyBomb
   name: cascade bomb
   description: An advanced bomb that can produce a hyper-microscopic resonance cascade.
   components:

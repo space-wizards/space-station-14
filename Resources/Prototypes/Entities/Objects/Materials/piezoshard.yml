@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseItem
-  id: PiezoCrystalShard
+  id: TP14PiezoCrystalShard
   name: piezo crystal shard
   description:  A small piece of of a shattered piezo crystal.
   components:

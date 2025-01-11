@@ -323,7 +323,7 @@
 
 - type: entity
   parent: GeneratorRTG
-  id: TheArtifact
+  id: TP14TheArtifact
   name: The Artifact
   description: An ancient power generation device, the lifeblood of Sweetwater and Trieste.
   components:
