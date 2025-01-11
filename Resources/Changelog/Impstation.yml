@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGRCdev
-  changes:
-  - message: Voice masks actually work again
-    type: Fix
-  id: 403
-  time: '2024-10-21T00:54:11.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/533
 - author: honeyed-lemons
   changes:
   - message: Added Directional Fan and Air Canister to the NT-Cruiser
@@ -4493,3 +4486,13 @@
   id: 902
   time: '2025-01-11T03:51:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1293
+- author: ultramario1998
+  changes:
+  - message: Added a special tutorial pAI for new players.
+    type: Add
+  - message: A new ghost role can be taken for tutorial pAIs. Please make sure to
+      follow the rules.
+    type: Add
+  id: 903
+  time: '2025-01-11T04:43:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1282
