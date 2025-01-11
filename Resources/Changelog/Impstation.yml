@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KingMudkipIII
-  changes:
-  - message: Added a boatload of new words to the french and russian accent systems.
-    type: Add
-  id: 402
-  time: '2024-10-21T00:18:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/522
 - author: TGRCdev
   changes:
   - message: Voice masks actually work again
@@ -4491,3 +4484,12 @@
   id: 901
   time: '2025-01-11T03:19:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1292
+- author: EpicToast
+  changes:
+  - message: Adds tape recorders from Delta-V! Spawns in the detective's locker or
+      in the reporter's/librarian's backpack, and can be printed from the autolathe
+      and service techfab.
+    type: Add
+  id: 902
+  time: '2025-01-11T03:51:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1293
