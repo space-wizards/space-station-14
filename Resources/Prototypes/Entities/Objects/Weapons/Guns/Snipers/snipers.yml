@@ -47,7 +47,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,5,0
+    - 0,0,4,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
 
