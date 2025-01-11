@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGRCdev
-  changes:
-  - message: Sam Grimm's lobby art has been updated to reflect his transition.
-    type: Tweak
-  id: 396
-  time: '2024-10-18T22:46:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/519
 - author: honeyed-lemons
   changes:
   - message: Adds NT-Cruiser, a small security shuttle
@@ -4478,3 +4471,11 @@
   id: 895
   time: '2025-01-10T22:22:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1297
+- author: Sha-Seng
+  changes:
+  - message: Prosthetic legs/feet now show the marking on the back leg/foot when facing
+      the side (marking display bug aside)
+    type: Tweak
+  id: 896
+  time: '2025-01-11T02:01:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1240
