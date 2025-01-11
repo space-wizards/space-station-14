@@ -1,0 +1,9 @@
+- type: entity
+  parent: [GunSafeBaseSecure, BaseRestrictedContraband]
+  id: GunSafeEnergySniper
+  name: LWAP safe
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponEnergySniper
+      amount: 2

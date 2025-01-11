@@ -202,6 +202,36 @@ entities:
     - type: Transform
       pos: -1.5,-1.5
       parent: 1
+- proto: CartridgeRocket
+  entities:
+  - uid: 97
+    components:
+    - type: Transform
+      parent: 96
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 98
+    components:
+    - type: Transform
+      parent: 96
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 99
+    components:
+    - type: Transform
+      parent: 96
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 100
+    components:
+    - type: Transform
+      parent: 96
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: ClusterBangFull
   entities:
   - uid: 28
@@ -265,10 +295,10 @@ entities:
     - Anchorable
 - proto: GunSafeBaseSecure
   entities:
-  - uid: 77
+  - uid: 37
     components:
     - type: Transform
-      pos: 2.5,-0.5
+      pos: 2.5,3.5
       parent: 1
     - type: ContainerContainer
       containers:
@@ -276,56 +306,119 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 78
-          - 79
-          - 80
+          - 38
+          - 39
+          - 40
+          - 41
           - 81
+          - 82
+          - 83
+          - 84
+          - 85
+          - 86
+          - 87
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
           ent: null
-- proto: GunSafeLaserCarbine
-  entities:
-  - uid: 36
+  - uid: 77
     components:
     - type: Transform
-      pos: 0.5,3.5
-      parent: 1
-- proto: GunSafePistolMk58
-  entities:
-  - uid: 37
-    components:
-    - type: Transform
-      pos: -0.5,3.5
-      parent: 1
-- proto: GunSafeRifleLecter
-  entities:
-  - uid: 38
-    components:
-    - type: Transform
-      pos: 1.5,3.5
-      parent: 1
-- proto: GunSafeShotgunEnforcer
-  entities:
-  - uid: 39
-    components:
-    - type: Transform
+      anchored: True
       pos: -0.5,1.5
       parent: 1
-- proto: GunSafeShotgunKammerer
-  entities:
-  - uid: 40
+    - type: Physics
+      bodyType: Static
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 80
+          - 79
+          - 78
+          - 36
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+    - type: Pullable
+      prevFixedRotation: True
+  - uid: 89
     components:
     - type: Transform
-      pos: 2.5,3.5
+      anchored: True
+      pos: 0.5,3.5
       parent: 1
-- proto: GunSafeSubMachineGunWt550
-  entities:
-  - uid: 41
+    - type: Physics
+      bodyType: Static
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 90
+          - 91
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+  - uid: 92
     components:
     - type: Transform
+      anchored: True
+      pos: 1.5,3.5
+      parent: 1
+    - type: Physics
+      bodyType: Static
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 93
+          - 94
+          - 95
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+  - uid: 96
+    components:
+    - type: Transform
+      anchored: True
       pos: -1.5,3.5
       parent: 1
+    - type: Physics
+      bodyType: Static
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 101
+          - 100
+          - 99
+          - 98
+          - 97
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+- proto: GunSafePistolMk58
+  entities:
+  - uid: 88
+    components:
+    - type: Transform
+      anchored: True
+      pos: -0.5,3.5
+      parent: 1
+    - type: Physics
+      bodyType: Static
 - proto: HolopadLongRange
   entities:
   - uid: 42
@@ -335,6 +428,84 @@ entities:
       parent: 1
     - type: Label
       currentLabel: Gamma Weaponry
+- proto: MagazineShotgun
+  entities:
+  - uid: 39
+    components:
+    - type: Transform
+      parent: 37
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 86
+    components:
+    - type: Transform
+      parent: 37
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: MagazineShotgunBeanbag
+  entities:
+  - uid: 81
+    components:
+    - type: Transform
+      parent: 37
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 83
+    components:
+    - type: Transform
+      parent: 37
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: MagazineShotgunIncendiary
+  entities:
+  - uid: 84
+    components:
+    - type: Transform
+      parent: 37
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 85
+    components:
+    - type: Transform
+      parent: 37
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: MagazineShotgunSlug
+  entities:
+  - uid: 38
+    components:
+    - type: Transform
+      parent: 37
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 40
+    components:
+    - type: Transform
+      parent: 37
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: PlasmaWindoorSecureArmoryLocked
+  entities:
+  - uid: 102
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -1.5,0.5
+      parent: 1
+  - uid: 103
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 2.5,1.5
+      parent: 1
 - proto: PoweredlightRed
   entities:
   - uid: 43
@@ -394,24 +565,32 @@ entities:
       rot: 3.141592653589793 rad
       pos: 2.5,-2.5
       parent: 1
+    missingComponents:
+    - Anchorable
   - uid: 50
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-2.5
       parent: 1
+    missingComponents:
+    - Anchorable
   - uid: 51
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,-2.5
       parent: 1
+    missingComponents:
+    - Anchorable
   - uid: 52
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,-2.5
       parent: 1
+    missingComponents:
+    - Anchorable
 - proto: WallPlastitanium
   entities:
   - uid: 53
@@ -537,6 +716,56 @@ entities:
       rot: 3.141592653589793 rad
       pos: 3.5,2.5
       parent: 1
+- proto: WeaponEnergyGun
+  entities:
+  - uid: 93
+    components:
+    - type: Transform
+      parent: 92
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 94
+    components:
+    - type: Transform
+      parent: 92
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 95
+    components:
+    - type: Transform
+      parent: 92
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: WeaponEnergySniper
+  entities:
+  - uid: 90
+    components:
+    - type: Transform
+      parent: 89
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: WeaponIonRifle
+  entities:
+  - uid: 91
+    components:
+    - type: Transform
+      parent: 89
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: WeaponLauncherRocket
+  entities:
+  - uid: 101
+    components:
+    - type: Transform
+      parent: 96
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: WeaponMechCombatAMLG90
   entities:
   - uid: 80
@@ -546,9 +775,9 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: WeaponMechCombatMissileRack6
+- proto: WeaponMechCombatMissileRack8
   entities:
-  - uid: 81
+  - uid: 36
     components:
     - type: Transform
       parent: 77
@@ -570,6 +799,29 @@ entities:
     components:
     - type: Transform
       parent: 77
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: WeaponShotgunEnforcer
+  entities:
+  - uid: 41
+    components:
+    - type: Transform
+      parent: 37
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 82
+    components:
+    - type: Transform
+      parent: 37
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 87
+    components:
+    - type: Transform
+      parent: 37
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
