@@ -84,7 +84,7 @@
 #Cosplay Helmet
 - type: entity
   parent: ClothingHeadEVAHelmetBase
-  id: TP14ClothingHeadHelmetCosplay
+  id: ClothingHeadHelmetCosplay
   name: Scrappy Helmet
   description: It's stuffy, hot and hard to see out of.
   components:

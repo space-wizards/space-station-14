@@ -422,6 +422,5 @@ WallRockIndestructible: TP14WallRockIndestructible
 PolaroidImage: TP14MyFriends
 BlackboxRecorder: TP14BlackboxRecorder
 FoodMeatFish: TP14FoodMeatFish
-ClothingHeadHelmetCosplay: TP14ClothingHeadHelmetCosplay
 ClothingOuterSuitCosplay: TP14ClothingOuterSuitCosplay
 CargoTelepad: CargoPalletBuy # Gifts don't work with the Telepad. Migrating until it's fixed.
