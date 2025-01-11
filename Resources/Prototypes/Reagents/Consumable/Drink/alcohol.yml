@@ -1164,7 +1164,7 @@
         amount: 0.13
       - !type:AdjustReagent
         reagent: THC
-        amount: 0.05
+        amount: 0.07
 
 - type: reagent
   id: Hooch
