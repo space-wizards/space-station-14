@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: Heretics can now correctly use appraisal tools for the Ritual of Knowledge.
-    type: Fix
-  id: 405
-  time: '2024-10-22T01:04:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/536
-- author: Darkmajia
-  changes:
   - message: Heretic will no longer instantly cancel lowpop rounds when it is rolled.
     type: Fix
   id: 406
@@ -4513,3 +4506,11 @@
   id: 904
   time: '2025-01-11T04:51:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1184
+- author: widgetbeck
+  changes:
+  - message: Fixed Gastropoids being unable to pilot, host anomalies, or make footstep
+      sounds.
+    type: Fix
+  id: 905
+  time: '2025-01-11T04:56:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1307
