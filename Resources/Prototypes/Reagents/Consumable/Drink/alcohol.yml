@@ -1971,7 +1971,7 @@
 - type: reagent
   id: WhiteGilgamesh
   name: reagent-name-white-gilgamesh
-  parent: BaseDrink
+  parent: BaseBooze
   desc: reagent-desc-white-gilgamesh
   physicalDesc: reagent-physical-desc-creamy
   flavor: white-gilgamesh
@@ -2014,7 +2014,7 @@
 - type: reagent
   id: VodkaRedBool
   name: reagent-name-vodka-red-bool
-  parent: BaseAlcohol
+  parent: BaseBooze
   desc: reagent-desc-vodka-red-bool
   physicalDesc: reagent-physical-desc-bubbly
   flavor: vodkaredbool
@@ -2043,7 +2043,7 @@
 - type: reagent
   id: XenoBasher
   name: reagent-name-xeno-basher
-  parent: BaseAlcohol
+  parent: BaseBooze
   desc: reagent-desc-xeno-basher
   physicalDesc: reagent-physical-desc-fizzy-and-creamy
   flavor: xenobasher
@@ -2072,7 +2072,7 @@
 - type: reagent
   id: IrishBool
   name: reagent-name-irish-bool
-  parent: BaseAlcohol
+  parent: BaseBooze
   desc: reagent-desc-irish-bool
   physicalDesc: reagent-physical-desc-bubbly
   flavor: irishbool
@@ -2101,7 +2101,7 @@
 - type: reagent
   id: BudgetInsulsDrink
   name: reagent-name-budget-insuls
-  parent: BaseAlcohol
+  parent: BaseBooze
   desc: reagent-desc-budget-insuls
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: budgetinsulsdrink
@@ -2130,7 +2130,7 @@
 - type: reagent
   id: WatermelonWakeup
   name: reagent-name-watermelon-wakeup
-  parent: BaseAlcohol
+  parent: BaseBooze
   desc: reagent-desc-watermelon-wakeup
   physicalDesc: reagent-physical-desc-sweet
   flavor: watermelonwakeup
