@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: crekulon
-  changes:
-  - message: web mantle, craftable by arachnids for 6 silk
-    type: Add
-  id: 401
-  time: '2024-10-21T00:19:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/531
 - author: KingMudkipIII
   changes:
   - message: Added a boatload of new words to the french and russian accent systems.
@@ -4490,3 +4483,11 @@
   id: 900
   time: '2025-01-11T03:18:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1288
+- author: DinnerCalzone
+  changes:
+  - message: Amber, Bagel, Train, and Hummingbird have received some adjustments to
+      their max player counts and job availability.
+    type: Tweak
+  id: 901
+  time: '2025-01-11T03:19:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1292
