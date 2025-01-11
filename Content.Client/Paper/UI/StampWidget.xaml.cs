@@ -15,7 +15,7 @@ public sealed partial class StampWidget : PanelContainer
     private StyleBoxTexture? _borderTexture;
     private ShaderInstance? _stampShader;
 
-    /// Determines whether stamp noise is applied on the shader
+    /// Imp edit, determines whether stamp noise is applied on the shader
     public bool StampNoise = true;
 
     public float Orientation
@@ -26,6 +26,8 @@ public sealed partial class StampWidget : PanelContainer
 
     public StampDisplayInfo StampInfo {
         set {
+            // pretty much this whole thing is an imp edit
+
             var resCache = IoCManager.Resolve<IResourceCache>();
             var prototypes = IoCManager.Resolve<IPrototypeManager>();
             var icon = value.StampLargeIcon;
@@ -80,7 +82,7 @@ public sealed partial class StampWidget : PanelContainer
     protected override void Draw(DrawingHandleScreen handle)
     {
         _stampShader?.SetParameter("objCoord", GlobalPosition * UIScale * new Vector2(1, -1));
-        _stampShader?.SetParameter("useStampNoise", StampNoise);
+        _stampShader?.SetParameter("useStampNoise", StampNoise); // imp
         handle.UseShader(_stampShader);
         handle.SetTransform(GlobalPosition * UIScale, Orientation, Vector2.One);
         base.Draw(handle);

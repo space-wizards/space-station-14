@@ -22,7 +22,7 @@ public sealed partial class StampLabel : Label
     public float Orientation = 0.0f;
 
     /// Determines whether stamp noise is applied on the shader
-    public bool StampNoise = true;
+    public bool StampNoise = true; // imp
 
     public StampLabel()
     {
@@ -48,7 +48,7 @@ public sealed partial class StampLabel : Label
                 PixelPosition.Y * MathF.Cos(Orientation) + PixelPosition.X * MathF.Sin(Orientation));
 
         _stampShader?.SetParameter("objCoord", GlobalPosition * UIScale * new Vector2(1, -1));
-        _stampShader?.SetParameter("useStampNoise", StampNoise);
+        _stampShader?.SetParameter("useStampNoise", StampNoise); // imp
         handle.UseShader(_stampShader);
         handle.SetTransform(GlobalPixelPosition - PixelPosition + offset, Orientation, _textScaling);
         base.Draw(handle);

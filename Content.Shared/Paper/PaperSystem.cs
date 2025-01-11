@@ -148,7 +148,7 @@ public sealed class PaperSystem : EntitySystem
         {
             StampedName = stamp.StampedName,
             StampedColor = stamp.StampedColor,
-            StampLargeIcon = stamp.StampLargeIcon
+            StampLargeIcon = stamp.StampLargeIcon // imp
         };
     }
 
