@@ -204,6 +204,9 @@
       - ClothingHeadHatCone
       - FreezerElectronics
       - Flare
+      # Delta-V ports
+      - TapeRecorder
+      - CassetteTape
     dynamicRecipes:
       - Fulton
 
@@ -1000,6 +1003,7 @@
       - ClothingUniformJumpsuitCargo
       - ClothingUniformJumpskirtCargo
       - ClothingUniformJumpsuitSalvageSpecialist
+      - ClothingUniformJumpskirtSalvageSpecialist # imp
       - ClothingHeadHatBeretEngineering
       - ClothingUniformJumpsuitChiefEngineer
       - ClothingUniformJumpskirtChiefEngineer

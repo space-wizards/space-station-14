@@ -1,117 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Tweaked spelf marking organization to be more in line with other races
-    type: Tweak
-  id: 392
-  time: '2024-10-18T18:18:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/509
-- author: formlessnameless
-  changes:
-  - message: Ghost bar patrons don't need to breathe
-    type: Tweak
-  - message: Ghosts don't count as alive for kill objectives anymore
-    type: Fix
-  - message: Made the ghost bar rules easier to read
-    type: Fix
-  id: 393
-  time: '2024-10-18T18:20:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/514
-- author: ruddygreat
-  changes:
-  - message: Added the random unrevivable trait, which gives you a 50/50 chance on
-      spawn to be unrevivable
-    type: Add
-  id: 394
-  time: '2024-10-18T18:24:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/495
-- author: honeyed-lemons
-  changes:
-  - message: Added the Shipyard Computer from DV, a way to obtain new shuttles for
-      the station.
-    type: Add
-  - message: Added the shipyard computer circuit to the QM's locker and default circuit
-      lathe
-    type: Add
-  id: 395
-  time: '2024-10-18T22:10:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/517
-- author: TGRCdev
-  changes:
-  - message: Sam Grimm's lobby art has been updated to reflect his transition.
-    type: Tweak
-  id: 396
-  time: '2024-10-18T22:46:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/519
-- author: honeyed-lemons
-  changes:
-  - message: Adds NT-Cruiser, a small security shuttle
-    type: Add
-  - message: Tweaked the reclaimer's name in the shipyard menu
-    type: Tweak
-  id: 397
-  time: '2024-10-20T06:35:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/526
-- author: formlessnameless
-  changes:
-  - message: Added a mini gyroscope for all of your shittle needs. Pester science
-      about it today!
-    type: Add
-  id: 398
-  time: '2024-10-21T00:15:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/528
-- author: Drags-His-Tail
-  changes:
-  - message: Added fultons and fulton beacons to the Mass Excavation research.
-    type: Tweak
-  id: 399
-  time: '2024-10-21T00:17:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/523
-- author: ruddygreat
-  changes:
-  - message: the shining spring remil kit now costs 12 tc instead of 14
-    type: Tweak
-  - message: grenades launched by the shining spring are back to 50 foam instead of
-      25
-    type: Tweak
-  id: 400
-  time: '2024-10-21T00:16:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/530
-- author: crekulon
-  changes:
-  - message: web mantle, craftable by arachnids for 6 silk
-    type: Add
-  id: 401
-  time: '2024-10-21T00:19:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/531
-- author: KingMudkipIII
-  changes:
-  - message: Added a boatload of new words to the french and russian accent systems.
-    type: Add
-  id: 402
-  time: '2024-10-21T00:18:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/522
-- author: TGRCdev
-  changes:
-  - message: Voice masks actually work again
-    type: Fix
-  id: 403
-  time: '2024-10-21T00:54:11.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/533
-- author: honeyed-lemons
-  changes:
-  - message: Added Directional Fan and Air Canister to the NT-Cruiser
-    type: Tweak
-  id: 404
-  time: '2024-10-22T01:05:02.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/535
-- author: Darkmajia
-  changes:
-  - message: Heretics can now correctly use appraisal tools for the Ritual of Knowledge.
-    type: Fix
-  id: 405
-  time: '2024-10-22T01:04:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/536
 - author: Darkmajia
   changes:
   - message: Heretic will no longer instantly cancel lowpop rounds when it is rolled.
@@ -4487,3 +4374,143 @@
   id: 891
   time: '2025-01-10T07:14:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1294
+- author: AvianMaiden
+  changes:
+  - message: 37 new AI names, some from community suggestions!
+    type: Add
+  id: 892
+  time: '2025-01-10T18:14:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1287
+- author: Lyndomen
+  changes:
+  - message: ports fugitive from Delta-V. Watch out for escaped criminals!
+    type: Add
+  id: 893
+  time: '2025-01-10T21:24:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1283
+- author: mousesweater
+  changes:
+  - message: added a salvage jumpskirt for all your salvaging needs
+    type: Add
+  id: 894
+  time: '2025-01-10T21:36:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1298
+- author: widgetbeck
+  changes:
+  - message: Made gastropoids moderately less vulnerable to temperature damage.
+    type: Tweak
+  id: 895
+  time: '2025-01-10T22:22:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1297
+- author: Sha-Seng
+  changes:
+  - message: Prosthetic legs/feet now show the marking on the back leg/foot when facing
+      the side (marking display bug aside)
+    type: Tweak
+  id: 896
+  time: '2025-01-11T02:01:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1240
+- author: Darkmajia
+  changes:
+  - message: Standing up from prone no longer has a do-after, but standing up after
+      falling over on purpose has a cooldown.
+    type: Add
+  - message: Crawling no longer lets you go under tables, plastic flaps, and other
+      similar objects.
+    type: Remove
+  - message: Shutters and firelocks can close over tables once again.
+    type: Fix
+  - message: Ranged AI now targets crawling people properly.
+    type: Fix
+  - message: Projectile grenades, such as stinger grenades, can now hit downed and
+      crawling people.
+    type: Fix
+  id: 897
+  time: '2025-01-11T02:26:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1265
+- author: Janet
+  changes:
+  - message: HRT now functions.
+    type: Tweak
+  id: 898
+  time: '2025-01-11T02:41:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1267
+- author: Pinkbat5
+  changes:
+  - message: Some of the dangerous reagents have been marked as contraband. Check
+      the chemical guidebook to see what is and isn't illegal!
+    type: Tweak
+  - message: Rainbow weed, fly amanita and death nettles are now contraband.
+    type: Tweak
+  - message: The detective's forensic pad can now be used to detect the reagents in
+      any sample of liquid.
+    type: Add
+  id: 899
+  time: '2025-01-11T03:15:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1275
+- author: LazyRiverfolk
+  changes:
+  - message: E1M1 has been added to the Deathmatch pool!
+    type: Add
+  id: 900
+  time: '2025-01-11T03:18:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1288
+- author: DinnerCalzone
+  changes:
+  - message: Amber, Bagel, Train, and Hummingbird have received some adjustments to
+      their max player counts and job availability.
+    type: Tweak
+  id: 901
+  time: '2025-01-11T03:19:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1292
+- author: EpicToast
+  changes:
+  - message: Adds tape recorders from Delta-V! Spawns in the detective's locker or
+      in the reporter's/librarian's backpack, and can be printed from the autolathe
+      and service techfab.
+    type: Add
+  id: 902
+  time: '2025-01-11T03:51:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1293
+- author: ultramario1998
+  changes:
+  - message: Added a special tutorial pAI for new players.
+    type: Add
+  - message: A new ghost role can be taken for tutorial pAIs. Please make sure to
+      follow the rules.
+    type: Add
+  id: 903
+  time: '2025-01-11T04:43:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1282
+- author: Kandiyaki
+  changes:
+  - message: ashen passage will now play a sound and ignite the user upon exit.
+    type: Tweak
+  - message: nightwatcher's rebirth now has a smaller radius.
+    type: Tweak
+  - message: the ashen blade is now made with a welder instead of a match.
+    type: Tweak
+  - message: flesh ghouls now have a unique text identifier when inspected.
+    type: Add
+  - message: nerfed heretic multipathing. you can now only get a knowledge from another
+      tree if you have already bought the corresponding knowledge in your main tree.
+    type: Tweak
+  - message: flesh surgery rework. all old effects have been removed and replaced
+      with new ones that don't last the whole round.
+    type: Tweak
+  - message: all of the flesh heretic rituals that require blood will now accept blood
+      from all species.
+    type: Tweak
+  - message: rewrote the heretic's guidebook for easier understanding.
+    type: Tweak
+  id: 904
+  time: '2025-01-11T04:51:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1184
+- author: widgetbeck
+  changes:
+  - message: Fixed Gastropoids being unable to pilot, host anomalies, or make footstep
+      sounds.
+    type: Fix
+  id: 905
+  time: '2025-01-11T04:56:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1307

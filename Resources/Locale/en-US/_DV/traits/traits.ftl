@@ -18,3 +18,9 @@ trait-font-unifraktur-desc = Dark, gothic, and maybe a bit too much.
 
 trait-font-wahroonga-name = Wahroonga
 trait-font-wahroonga-desc = Looks like it's your first time picking up a pen.
+
+trait-estradiol-sensitive-name = Estradiol sensitive
+trait-estradiol-sensitive-desc = Your body is capable of taking on Nanotrasen's special feminization medicines.
+
+trait-testosterone-sensitive-name = Testosterone sensitive
+trait-testosterone-sensitive-desc = Your body is capable of taking on Nanotrasen's special masculinization medicines.

@@ -11,3 +11,4 @@ loadout-group-clown-mask = Clown mask
 loadout-group-clown-neck = Clown neck
 
 loadout-group-chemist-head = Chemist head
+loadout-group-salvage-specialist-jumpsuit = Salvage Specialist jumpsuit

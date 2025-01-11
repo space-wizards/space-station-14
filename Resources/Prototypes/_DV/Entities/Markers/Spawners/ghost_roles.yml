@@ -70,3 +70,19 @@
     - !type:RoleTimeRequirement
       role: JobChemist
       time: 7200 # 2h chemist so you know how to make CH
+
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostFugitive
+  name: fugitive spawn point
+  components:
+  - type: GhostRole
+    name: ghost-role-information-fugitive-name
+    description: ghost-role-information-fugitive-description
+    rules: ghost-role-information-fugitive-rules
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 3600 # 1 hour
