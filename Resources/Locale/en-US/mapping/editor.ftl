@@ -21,6 +21,8 @@ mapping-fixgridatmos-tooltip = Add atmosphere to the grid
 mapping-remove-grid-tooltip = Remove grid
 mapping-move-grid-tooltip = Move grid
 mapping-grid-vv-tooltip = View grid variables
+mapping-pipes-color-tooltip = Paint the pipes
+                              Click on the pipe to paint in the currently selected color
 
 mapping-collapse-all-tooltip = Collapse All
 mapping-clear-search-tooltip = Clear search

@@ -70,6 +70,8 @@
                                                       ToolTip="{Loc 'mapping-move-grid-tooltip'}" />
                         <mapping:MappingActionsButton Name="GridVV" Access="Public"
                                                       ToolTip="{Loc 'mapping-grid-vv-tooltip'}" />
+                        <mapping:MappingActionsButton Name="PipesColor" Access="Public"
+                                                      ToolTip="{Loc 'mapping-pipes-color-tooltip'}" />
                     </BoxContainer>
                 </PanelContainer>
             </LayoutContainer>

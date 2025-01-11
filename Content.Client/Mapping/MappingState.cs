@@ -4,6 +4,7 @@ using Content.Client.ContextMenu.UI;
 using Content.Client.Decals;
 using Content.Client.Gameplay;
 using Content.Client.Maps;
+using Content.Client.SubFloor;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.Verbs;
@@ -135,6 +136,7 @@ public sealed class MappingState : GameplayStateBase
         Screen.RemoveGrid.OnPressed += OnRemoveGridPressed;
         Screen.MoveGrid.OnPressed += OnMoveGridPressed;
         Screen.GridVV.OnPressed += OnGridVVPressed;
+        Screen.PipesColor.OnPressed += OnPipesColorPressed;
         _placement.PlacementChanged += OnPlacementChanged;
 
         CommandBinds.Builder
@@ -181,6 +183,7 @@ public sealed class MappingState : GameplayStateBase
         Screen.RemoveGrid.OnPressed -= OnRemoveGridPressed;
         Screen.MoveGrid.OnPressed -= OnMoveGridPressed;
         Screen.GridVV.OnPressed -= OnGridVVPressed;
+        Screen.PipesColor.OnPressed -= OnPipesColorPressed;
         _placement.PlacementChanged -= OnPlacementChanged;
         _prototypeManager.PrototypesReloaded -= OnPrototypesReloaded;
 
@@ -931,6 +934,23 @@ public sealed class MappingState : GameplayStateBase
             Meta.State = CursorState.None;
         }
     }
+
+    private void OnPipesColorPressed(ButtonEventArgs args)
+    {
+        _entitySystemManager.GetEntitySystem<SubFloorHideSystem>().ShowAll = args.Button.Pressed;
+
+        if (args.Button.Pressed)
+        {
+            Deselect();
+            Meta.State = CursorState.Entity;
+            Meta.Color = PickColor;
+            Screen.UnPressActionsExcept(args.Button);
+        }
+        else
+        {
+            Meta.State = CursorState.None;
+        }
+    }
     #endregion
 
     #region Handle Bindings
@@ -1143,6 +1163,16 @@ public sealed class MappingState : GameplayStateBase
             return true;
         }
 
+        if (Screen.PipesColor.Pressed)
+        {
+            Screen.PipesColor.Pressed = false;
+            Meta.State = CursorState.None;
+            if (GetHoveredEntity() is { } entity)
+                _consoleHost.ExecuteCommand($"colornetwork {_entityManager.GetNetEntity(entity).Id} Pipe {Screen.DecalColor.ToHex()}");
+
+            return true;
+        }
+
         return false;
     }
 
@@ -1151,6 +1181,12 @@ public sealed class MappingState : GameplayStateBase
         if (Screen.PickDecal.Pressed)
         {
             _decalIndex += 1;
+            return true;
+        }
+
+        if (_decal.GetActiveDecal() is { Decal: not null })
+        {
+            Screen.ChangeDecalRotation(90f);
             return true;
         }
 
