@@ -197,25 +197,25 @@ marking-FadingStars-fadingstars1 = Brightest
 marking-FadingStars-fadingstars2 = Middling
 marking-FadingStars-fadingstars3 = Darkest
 
-# snails
-marking-SnailCheeks = Cheeks
-marking-SnailCheeks-snailcheeks = Cheeks
-marking-SnailShellProstheticSimple = Simple Prosthetic Shell
-marking-SnailShellProstheticSimple-snailshellprostheticsimple = Simple Prosthetic Shell
-marking-SnailShellProsthetic = Prosthetic Shell
-marking-SnailShellProsthetic-snailshellprosthetic = Prosthetic Shell
+# Gastropoids
+marking-GastropoidCheeks = Cheeks
+marking-GastropoidCheeks-Gastropoidcheeks = Cheeks
+marking-GastropoidShellProstheticSimple = Simple Prosthetic Shell
+marking-GastropoidShellProstheticSimple-Gastropoidshellprostheticsimple = Simple Prosthetic Shell
+marking-GastropoidShellProsthetic = Prosthetic Shell
+marking-GastropoidShellProsthetic-Gastropoidshellprosthetic = Prosthetic Shell
 marking-SimpleBow = Cute Bow
-marking-SimpleBow-snailshellprostheticsimplebow = Cute Bow
+marking-SimpleBow-Gastropoidshellprostheticsimplebow = Cute Bow
 marking-SimpleCracks = Small Cracks
-marking-SimpleCracks-snailshellprostheticsimplecracks = Small Cracks
+marking-SimpleCracks-Gastropoidshellprostheticsimplecracks = Small Cracks
 marking-GlowInTheDarkStars = Glow in the Dark Stars
-marking-GlowInTheDarkStars-snailshellprostheticsimpleglowinthedarkstars = Glow in the Dark Stars
-marking-SnailCheekGlow = Glowing Cheeks
-marking-SnailCheekGlow-snailcheekglow = Glowing Cheeks
+marking-GlowInTheDarkStars-Gastropoidshellprostheticsimpleglowinthedarkstars = Glow in the Dark Stars
+marking-GastropoidCheekGlow = Glowing Cheeks
+marking-GastropoidCheekGlow-Gastropoidcheekglow = Glowing Cheeks
 marking-ProstheticInnerLight = Prosthetic Inner Light
-marking-ProstheticInnerLight-snailshellprostheticinnerlight = Prosthetic Inner Light
+marking-ProstheticInnerLight-Gastropoidshellprostheticinnerlight = Prosthetic Inner Light
 marking-ProstheticPulse = Prosthetic Pulse
-marking-ProstheticPulse-snailshellprostheticpulse = Prosthetic Pulse
+marking-ProstheticPulse-Gastropoidshellprostheticpulse = Prosthetic Pulse
 
 # thaven
 marking-Gills = Gills
