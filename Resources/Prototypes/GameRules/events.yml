@@ -548,7 +548,6 @@
     sounds:
       collection: WhaleMigration
   - type: OceanSpawnRule
-    target: DeathWhaleSpawnLocation
     prototype: MobDeathWhale
 
 # Ocean Spawn Rule Template

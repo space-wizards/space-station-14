@@ -78,7 +78,6 @@ public sealed class DeathWhaleSystem : EntitySystem
             var preycaught = EnsureComp<FultonedComponent>(prey); // This will harpoon the prey and drag them up offscreen to be eaten
             preycaught.Removeable = false;
             preycaught.Beacon = uid;
-            _adminLogger.Add(LogType.Damaged, LogImpact.Medium, $"{ToPrettyString(args.Actor):prey} was caught and deleted by a Death Whale");
             QueueDel(prey);
         }
     }

@@ -5,17 +5,14 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.StationEvents.Components;
 
-[RegisterComponent, Access(typeof(DeathWhaleSpawnRule))]
-public sealed partial class OceanSpawnSpawnRuleComponent : Component
+[RegisterComponent, Access(typeof(OceanSpawnRule))]
+public sealed partial class OceanSpawnRuleComponent : Component
 {
     /// <summary>
     /// The entity to be spawned.
     /// </summary>
     [DataField("prototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Prototype = string.Empty;
-
-    [DataField("target"), required: true, ViewVariables(VVAccess.ReadWrite)]
-    public string? Target;
 
     [DataField("amount")]
     public float Amount = 5;
