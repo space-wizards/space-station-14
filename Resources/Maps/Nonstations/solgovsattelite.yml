@@ -26,9 +26,11 @@ entities:
     components:
     - type: MetaData
       name: SolGov Sattelite
+    - type: Transform
     - type: Parallax
       parallax: TriesteSpace
-    - type: Transform
+    - type: FTLDestination
+    - type: FTLBeacon
     - type: Map
       mapPaused: True
     - type: PhysicsMap
@@ -44,6 +46,8 @@ entities:
     - type: Transform
       pos: -3.9921875,0.6796875
       parent: 1
+    - type: FTLDestination
+    - type: FTLBeacon
     - type: MapGrid
       chunks:
         0,0:
@@ -1198,6 +1202,11 @@ entities:
     components:
     - type: Transform
       pos: 6.5,21.5
+      parent: 2
+  - uid: 714
+    components:
+    - type: Transform
+      pos: 1.5,-6.5
       parent: 2
 - proto: CableHV
   entities:

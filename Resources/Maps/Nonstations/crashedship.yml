@@ -431,6 +431,8 @@ entities:
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
+      inherent: True
+      enabled: True
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -2010,8 +2012,7 @@ entities:
           19,-5:
             1: 65520
           20,-4:
-            1: 827
-            0: 4
+            1: 831
           20,-3:
             1: 51
           20,-2:
@@ -4018,7 +4019,7 @@ entities:
       pos: 2.5,-23.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -7701.143
+      secondsUntilStateChange: -8058.7495
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -4039,7 +4040,7 @@ entities:
     - type: GridFill
       addComponents:
       - type: NukeOpsShuttle
-      path: /Maps/Shuttles/infiltrator.yml
+      path: /Maps/Shuttles/damagedinfiltrator.yml
 - proto: AirlockSyndicateGlassLocked
   entities:
   - uid: 22398
@@ -12911,6 +12912,13 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -38.161495,-26.037216
       parent: 2
+- proto: ClothingHandsGlovesColorYellow
+  entities:
+  - uid: 22673
+    components:
+    - type: Transform
+      pos: -34.764935,-25.46177
+      parent: 2
 - proto: ClothingMaskGasSyndicate
   entities:
   - uid: 22554
@@ -13190,6 +13198,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 66.5,-36.5
       parent: 2
+  - uid: 22675
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 85.5,-33.5
+      parent: 2
 - proto: ComputerAnalysisConsole
   entities:
   - uid: 7104
@@ -13234,6 +13248,14 @@ entities:
     components:
     - type: Transform
       pos: 30.5,-20.5
+      parent: 2
+- proto: ComputerIFF
+  entities:
+  - uid: 22674
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 85.5,-32.5
       parent: 2
 - proto: ComputerIFFSyndicate
   entities:
@@ -14481,6 +14503,9 @@ entities:
       deviceLists:
       - 2690
       - 2703
+    - type: Door
+      secondsUntilStateChange: -112.70009
+      state: Closing
   - uid: 1891
     components:
     - type: Transform
@@ -18549,6 +18574,13 @@ entities:
       rot: 3.141592653589793 rad
       pos: -31.5,-29.5
       parent: 2
+- proto: InflatableWallStack
+  entities:
+  - uid: 22437
+    components:
+    - type: Transform
+      pos: -36.21561,-25.893143
+      parent: 2
 - proto: KitchenElectricGrill
   entities:
   - uid: 23511
@@ -18668,6 +18700,26 @@ entities:
       parent: 2
 - proto: LockerEngineerFilled
   entities:
+  - uid: 22676
+    components:
+    - type: Transform
+      pos: 85.5,-37.5
+      parent: 2
+  - uid: 22677
+    components:
+    - type: Transform
+      pos: 84.5,-31.5
+      parent: 2
+  - uid: 23314
+    components:
+    - type: Transform
+      pos: 84.5,-37.5
+      parent: 2
+  - uid: 23406
+    components:
+    - type: Transform
+      pos: 85.5,-31.5
+      parent: 2
   - uid: 23526
     components:
     - type: Transform
@@ -21853,16 +21905,6 @@ entities:
       parent: 2
 - proto: SpawnMobCarp
   entities:
-  - uid: 23314
-    components:
-    - type: Transform
-      pos: -14.5,-15.5
-      parent: 2
-  - uid: 23406
-    components:
-    - type: Transform
-      pos: -11.5,-14.5
-      parent: 2
   - uid: 23407
     components:
     - type: Transform
@@ -21891,16 +21933,6 @@ entities:
     components:
     - type: Transform
       pos: -16.5,-69.5
-      parent: 2
-  - uid: 22760
-    components:
-    - type: Transform
-      pos: 31.5,-37.5
-      parent: 2
-  - uid: 22761
-    components:
-    - type: Transform
-      pos: 32.5,-38.5
       parent: 2
   - uid: 22762
     components:
@@ -21947,13 +21979,6 @@ entities:
     - type: Transform
       pos: 13.5,-25.5
       parent: 2
-- proto: SpawnMobLuminousPerson
-  entities:
-  - uid: 1328
-    components:
-    - type: Transform
-      pos: 72.5,-16.5
-      parent: 2
 - proto: SpawnMobShark
   entities:
   - uid: 23409
@@ -21987,12 +22012,6 @@ entities:
     components:
     - type: Transform
       pos: 73.5,-16.5
-      parent: 2
-  - uid: 22655
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 71.5,-14.5
       parent: 2
   - uid: 22656
     components:
@@ -22572,6 +22591,25 @@ entities:
     components:
     - type: Transform
       pos: 72.5,-21.5
+      parent: 2
+- proto: SyndicateIDCard
+  entities:
+  - uid: 1328
+    components:
+    - type: Transform
+      pos: 85.41906,-33.378372
+      parent: 2
+  - uid: 18223
+    components:
+    - type: Transform
+      pos: 87.55434,-16.40058
+      parent: 2
+- proto: SyndicateJawsOfLife
+  entities:
+  - uid: 22655
+    components:
+    - type: Transform
+      pos: 79.334335,-15.508245
       parent: 2
 - proto: SyndicateMicrowave
   entities:
@@ -23205,6 +23243,11 @@ entities:
       parent: 2
 - proto: TechnologyDiskRare
   entities:
+  - uid: 22436
+    components:
+    - type: Transform
+      pos: 35.35315,-28.328693
+      parent: 2
   - uid: 23453
     components:
     - type: Transform
@@ -112085,12 +112128,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 68.5,-15.5
       parent: 2
-  - uid: 18223
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 82.5,-15.5
-      parent: 2
   - uid: 18224
     components:
     - type: Transform
@@ -140885,20 +140922,16 @@ entities:
       parent: 2
     - type: ChamberMagazineAmmoProvider
       boltClosed: True
-- proto: WeaponTurretSyndicate
+- proto: WeaponTurretHostile
   entities:
-  - uid: 22436
+  - uid: 22672
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 60.5,-21.5
+      pos: 59.5,-28.5
       parent: 2
-  - uid: 22437
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 60.5,-26.5
-      parent: 2
+    - type: Gun
+      fireRate: 0.5
 - proto: WeaponTurretSyndicateBroken
   entities:
   - uid: 20696
