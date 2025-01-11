@@ -221,7 +221,6 @@ public sealed class GameMapManager : IGameMapManager
         var eligible = CurrentlyEligibleMaps()
             .Select(x => (proto: x, weight: GetMapRotationQueueWeight(x.ID)))
             .OrderByDescending(x => x.weight)//unsure if this should be kept in the weighted random version? frankly not sure what it was doing in the original version either, that didn't need to be ordered afaik
-            //.Where(x => x.weight > 0)//force at least one round between the same map rolling for variety. causes a test to fail for some reason?
             .ToDictionary();
 
         _log.Info($"eligible queue: {string.Join(", ", eligible.Select(x => (x.Key.ID, x.Value)))}");
