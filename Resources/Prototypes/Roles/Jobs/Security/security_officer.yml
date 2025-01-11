@@ -28,8 +28,8 @@
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetSecurity
     pocket1: WeaponPistolMk58
+    pocket2: TutorialPersonalAI #imp
   storage:
     back:
     - Flash
     - MagazinePistol
-    - TutorialPersonalAI #imp

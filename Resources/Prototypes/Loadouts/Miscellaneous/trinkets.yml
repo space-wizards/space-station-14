@@ -8,28 +8,6 @@
       department: Command
       time: 3600 # 1 hour
 
-- type: loadoutEffectGroup
-  id: PrestigeGold
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:OverallPlaytimeRequirement
-      time: 1512000 #420 hours
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Silicon
-      time: 36000 #10 hours
-
-- type: loadoutEffectGroup
-  id: Tutorial #imp
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:OverallPlaytimeRequirement
-      time: 54000 #15 hrs
-      inverted: true # don't let experienced players select these
-
 # Flowers
 - type: loadout
   id: FlowerWreath

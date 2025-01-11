@@ -23,7 +23,8 @@
     id: MedicalInternPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled
+    pocket1: TutorialPersonalAI #imp
     pocket2: BookMedicalReferenceBook
-  storage:
-    back:
-    - TutorialPersonalAI #imp
+  # storage:
+  #   back:
+  #   - Stuff
