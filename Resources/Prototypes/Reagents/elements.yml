@@ -134,7 +134,7 @@
 - type: reagent
   id: Iodine
   name: reagent-name-iodine
-  group: Elements # Probably ought to have some role in radiation treatment
+  group: Elements 
   desc: reagent-desc-iodine
   physicalDesc: reagent-physical-desc-dark-brown
   flavor: bitter
