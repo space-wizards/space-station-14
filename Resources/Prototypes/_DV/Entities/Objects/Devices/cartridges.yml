@@ -39,3 +39,5 @@
   - type: BankClient
   - type: AccessReader # This is so that we can restrict who can buy stocks
     access: [["Cargo"]]
+  - type: StealTarget
+    stealGroup: StockTradingCartridge
