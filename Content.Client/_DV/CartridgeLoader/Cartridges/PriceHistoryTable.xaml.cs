@@ -50,7 +50,7 @@ public sealed partial class PriceHistoryTable : BoxContainer
 
             var priceLabel = new Label
             {
-                Text = $"${price:F2}",
+                Text = $"§{price:F2}",
                 HorizontalAlignment = HAlignment.Center,
             };
 

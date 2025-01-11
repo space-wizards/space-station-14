@@ -238,7 +238,7 @@ public sealed partial class StockTradingUiFragment : BoxContainer
         public void Update(StockCompany company, int ownedStocks)
         {
             _nameLabel.Text = company.LocalizedDisplayName;
-            _priceLabel.Text = $"${company.CurrentPrice:F2}";
+            _priceLabel.Text = $"§{company.CurrentPrice:F2}";
             _sharesLabel.Text = Loc.GetString("stock-trading-owned-shares", ("shares", ownedStocks));
 
             var priceChange = 0f;
