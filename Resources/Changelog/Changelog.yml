@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: Energy Shotgun's narrow fire mode's projectiles now deal 13 heat dmg
-      each, for a total of 52. The energy shotgun additionally no longer self recharges
-      and has received some minor buffs.
-    type: Tweak
-  id: 7299
-  time: '2024-09-07T00:35:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31235
 - author: themias
   changes:
   - message: Added the justice helm to the secdrobe
@@ -3940,3 +3931,10 @@
   id: 7798
   time: '2025-01-11T19:29:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34298
+- author: justdie12
+  changes:
+  - message: Added a bend version of the radiator.
+    type: Add
+  id: 7799
+  time: '2025-01-11T20:03:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34251
