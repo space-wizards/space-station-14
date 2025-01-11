@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Adds NT-Cruiser, a small security shuttle
-    type: Add
-  - message: Tweaked the reclaimer's name in the shipyard menu
-    type: Tweak
-  id: 397
-  time: '2024-10-20T06:35:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/526
 - author: formlessnameless
   changes:
   - message: Added a mini gyroscope for all of your shittle needs. Pester science
@@ -4479,3 +4470,21 @@
   id: 896
   time: '2025-01-11T02:01:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1240
+- author: Darkmajia
+  changes:
+  - message: Standing up from prone no longer has a do-after, but standing up after
+      falling over on purpose has a cooldown.
+    type: Add
+  - message: Crawling no longer lets you go under tables, plastic flaps, and other
+      similar objects.
+    type: Remove
+  - message: Shutters and firelocks can close over tables once again.
+    type: Fix
+  - message: Ranged AI now targets crawling people properly.
+    type: Fix
+  - message: Projectile grenades, such as stinger grenades, can now hit downed and
+      crawling people.
+    type: Fix
+  id: 897
+  time: '2025-01-11T02:26:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1265
