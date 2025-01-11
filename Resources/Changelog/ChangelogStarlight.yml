@@ -2030,4 +2030,18 @@ Entries:
   id: 286
   time: '2025-01-11T01:38:44.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/227
+- author: Dusky, Grapegifter
+  changes:
+  - message: Added the Standard Operating Procedure section to the guidebook
+    type: Add
+  id: 287
+  time: '2025-01-11T14:34:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/228
+- author: Dusky, Grapegifter
+  changes:
+  - message: Added the alert levels section from the SOP into the guidebook.
+    type: Add
+  id: 288
+  time: '2025-01-11T14:34:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/228
 
