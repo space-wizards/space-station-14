@@ -1897,7 +1897,7 @@ namespace Content.Shared.CCVar
         ///     Autosave interval in seconds.
         /// </summary>
         public static readonly CVarDef<float>
-            AutosaveInterval = CVarDef.Create("mapping.autosave_interval", 180, CVar.SERVERONLY);
+            AutosaveInterval = CVarDef.Create("mapping.autosave_interval", 180f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Directory in server user data to save to. Saves will be inside folders in this directory.
