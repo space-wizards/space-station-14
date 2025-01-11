@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseItem
-  id: WeaponTrident
+  id: TP14WeaponTrident
   name: overseer's trident
   description: A trident modified with mysterious alien technology, wielded by the platform Overseer.
   components:

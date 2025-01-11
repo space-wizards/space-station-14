@@ -10,7 +10,7 @@
 
 - type: entity
   id: OrganTumorMimic
-  parent: MobMimic # might just be able to switch the prototype to MobMimic and save some clutter, haven't tested it yet.
+  parent: TP14MobMimic # might just be able to switch the prototype to MobMimic and save some clutter, haven't tested it yet.
   noSpawn: true
   name: mimic 
   components:

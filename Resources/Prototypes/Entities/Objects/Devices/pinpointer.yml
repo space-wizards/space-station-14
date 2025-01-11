@@ -113,7 +113,7 @@
   parent: PinpointerBase
   name: pilot pinpointer
   description: A built-in tracking device designed to keep track of your pilot.
-  id: PinpointerPilot
+  id: TP14PinpointerPilot
   suffix: Station
   components:
   - type: Sprite

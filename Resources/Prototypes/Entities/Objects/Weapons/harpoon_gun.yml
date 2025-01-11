@@ -1,7 +1,7 @@
 - type: entity
   name: BaseHarpoongun
   parent: BaseItem
-  id: BaseHarpoongun
+  id: TP14BaseHarpoongun
   description: For spearing fish, or people!
   abstract: true
   components:
@@ -45,8 +45,8 @@
 
 - type: entity
   name: Harpoon Gun
-  id: HarpoonGun
-  parent: BaseHarpoongun
+  id: TP14HarpoonGun
+  parent: TP14BaseHarpoongun
   components:
   - type: Sprite
     layers:

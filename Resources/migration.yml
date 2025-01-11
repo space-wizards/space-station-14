@@ -361,3 +361,67 @@ BookChefGaming: BookHowToCookForFortySpaceman
 
 #2024-06-29
 IntercomAssesmbly: IntercomAssembly
+
+#2025-10-1
+# Good lord, this is a lot of migrating. You only have to do this once and then never again.
+MobDrifter: TP14MobDrifter
+MobFish: TP14MobFish
+MobFish2: TP14MobFish2
+MobFish3: TP14MobFish3
+MobFishMimic: TP14MobFishMimic
+MobMimic: TP14MobMimic
+BaseHarpoongun: TP14BaseHarpoongun
+HarpoonGun: TP14HarpoonGun
+BaseHarpoon: TP14BaseHarpoon
+Harpoon: TP14Harpoon
+HarpoonBomb: TP14HarpoonBomb
+PiezoHarpoon: TP14PiezoHarpoon
+WeaponBlaster: TP14WeaponBlaster
+WeaponNtBlaster: TP14WeaponNtBlaster
+WeaponEnergyCarbine: TP14WeaponEnergyCarbine
+LadderDownBase: TP14LadderDownBase
+LadderUpBase: TP14LadderUpBase
+TelecomRelay: TP14TelecomRelay
+EncryptionKeyNanotrasen: TP14EncryptionKeyNanotrasen
+WeaponTrident: TP14WeaponTrident
+EnergyBomb: TP14EnergyBomb
+BeachballGrenade: TP14BeachballGrenade
+IncendiaryGrenade: TP14IncendiaryGrenade
+BluespaceCrystal: TP14BluespaceCrystal
+BaseUplinkRadioNT: TP14BaseUplinkRadioNT
+CrateChemicalLabBundle: TP14CrateChemicalLabBundle
+WaterCanister: TP14WaterCanister
+SpawnMechStepfather: TP14SpawnMechStepfather
+MechStepfather: TP14MechStepfather
+SettlerSpawner: TP14SettlerSpawner
+PirateSpawner: TP14PirateSpawner
+PirateCaptainSpawner: TP14PirateCaptainSpawner
+HermitSpawner: TP14HermitSpawner
+TheArtifact: TP14TheArtifact
+PinpointerPilot: TP14PinpointerPilot
+ResonanceDelaminator: TP14ResonanceDelaminator
+PlanktonScanner: TP14PlanktonScanner
+SlashBang: TP14SlashBang
+MagCellDisabler: TP14MagCellDisabler
+BaseMagCell: TP14BaseMagCell
+MagCellAdvanced: TP14MagCellAdvanced
+MagCellExperimental: TP14MagCellExperimental
+WaterTankFilled: TP14WaterTankFilled
+AtmosFixWaterMarker: TP14AtmosFixWaterMarker
+MarkerInside: TP14MarkerInside
+BaseMobJellidPerson: TP14BaseMobJellidPerson
+MobJellidPerson: TP14MobJellidPerson
+PaperJellid: TP14PaperJellid
+FallingDestinationMarker: TP14FallingDestinationMarker
+SpawnPointPilot: TP14SpawnPointPilot
+SpawnPointBasinTech: TP14SpawnPointBasinTech
+SeaWreckRoomMarker: TP14SeaWreckRoomMarker
+PiezoCrystalShard: TP14PiezoCrystalShard
+PiezoCrystal: TP14PiezoCrystal
+WallRockIndestructible: TP14WallRockIndestructible
+PolaroidImage: TP14MyFriends
+BlackboxRecorder: TP14BlackboxRecorder
+FoodMeatFish: TP14FoodMeatFish
+ClothingHeadHelmetCosplay: TP14ClothingHeadHelmetCosplay
+ClothingOuterSuitCosplay: TP14ClothingOuterSuitCosplay
+CargoTelepad: CargoPalletBuy # Gifts don't work with the Telepad. Migrating until it's fixed.

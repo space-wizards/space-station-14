@@ -448,7 +448,7 @@
 - type: entity
   name: TX-220 particle pistol
   parent: BaseWeaponBatterySmall
-  id: WeaponBlaster
+  id: TP14WeaponBlaster
   description: A reliable energy weapon found across the frontier sectors of the galaxy.
   components:
     - type: Tag
@@ -479,7 +479,7 @@
 
 - type: entity
   parent: BaseWeaponPowerCellSmall
-  id: WeaponNtBlaster
+  id: TP14WeaponNtBlaster
   name: BM-138 power blaster
   description: A Nanotrasen blaster pistol, utilized by operatives and agents. Contains a magazine port for power cells.
   components:
@@ -498,8 +498,8 @@
 
 - type: entity
   name: NT-331 energy carbine
-  parent: [ WeaponNtBlaster, BaseGunWieldable ]
-  id: WeaponEnergyCarbine
+  parent: [ TP14WeaponNtBlaster, BaseGunWieldable ]
+  id: TP14WeaponEnergyCarbine
   description: An advanced particle machine gun used by NT operatives. It has a slot for power cells.
   components:
   - type: Item

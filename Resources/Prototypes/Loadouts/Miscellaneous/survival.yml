@@ -229,7 +229,7 @@
 - type: startingGear
   id: GearEVAWater
   equipment:
-    suitstorage: WaterTankFilled
+    suitstorage: TP14WaterTankFilled
 
 - type: loadout
   id: LoadoutSpeciesBreathToolJellid

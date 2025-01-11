@@ -641,7 +641,7 @@
 
 - type: entity
   parent: GasCanister
-  id: WaterCanister
+  id: TP14WaterCanister
   name: water canister
   description: It's GAS canister! Who the hell put water in it?
   components:

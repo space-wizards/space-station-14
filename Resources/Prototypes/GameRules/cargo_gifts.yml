@@ -39,7 +39,7 @@
     weight: 2
     duration: 240
     earliestStart: 20
-    minimumPlayers: 40
+    minimumPlayers: 20
   - type: CargoGiftsRule
     description: cargo-gift-pizza-large
     dest: cargo-gift-dest-bar
@@ -75,7 +75,7 @@
   - type: StationEvent
     weight: 4
     duration: 120
-    minimumPlayers: 40
+    minimumPlayers: 20
     earliestStart: 30
   - type: CargoGiftsRule
     description: cargo-gift-vending
@@ -95,7 +95,7 @@
   - type: StationEvent
     weight: 6
     duration: 120
-    minimumPlayers: 30
+    minimumPlayers: 20
     earliestStart: 20
   - type: CargoGiftsRule
     description: cargo-gift-cleaning
@@ -113,7 +113,7 @@
     weight: 8
     duration: 120
     earliestStart: 20
-    minimumPlayers: 30
+    minimumPlayers: 20
   - type: CargoGiftsRule
     description: cargo-gift-medical-supply
     dest: cargo-gift-dest-med
@@ -132,7 +132,7 @@
     weight: 4
     duration: 120
     earliestStart: 10
-    minimumPlayers: 40
+    minimumPlayers: 20
   - type: CargoGiftsRule
     description: cargo-gift-space-protection
     dest: cargo-gift-dest-supp
@@ -151,7 +151,7 @@
     weight: 4
     duration: 120
     earliestStart: 20
-    minimumPlayers: 40
+    minimumPlayers: 20
   - type: CargoGiftsRule
     description: cargo-gift-fire-protection
     dest: cargo-gift-dest-supp
@@ -168,7 +168,7 @@
     weight: 3
     duration: 120
     earliestStart: 20
-    minimumPlayers: 50
+    minimumPlayers: 20
   - type: CargoGiftsRule
     description: cargo-gift-security-guns
     dest: cargo-gift-dest-sec
@@ -186,7 +186,7 @@
     weight: 4
     duration: 120
     earliestStart: 20
-    minimumPlayers: 50
+    minimumPlayers: 20
   - type: CargoGiftsRule
     description: cargo-gift-security-riot
     dest: cargo-gift-dest-sec
@@ -194,3 +194,19 @@
       SecurityRiot: 2
       SecurityRestraints: 2
       SecurityNonLethal: 2
+
+- type: entity
+  id: GiftsExpedHarpoons
+  parent: CargoGiftsBase
+  components:
+  - type: StationEvent
+    weight: 3
+    duration: 120
+    earliestStart: 20
+    minimumPlayers: 20
+  - type: CargoGiftsRule
+    description: cargo-gift-exped-harpoons
+    dest: cargo-gift-dest-exped
+    gifts:
+      TP14HarpoonGun: 3
+      TP14Harpoon: 6

@@ -1,4 +1,4 @@
 - type: entity
   save: false
-  parent: BaseMobJellidPerson
-  id: MobJellidPerson
+  parent: TP14BaseMobJellidPerson
+  id: TP14MobJellidPerson
