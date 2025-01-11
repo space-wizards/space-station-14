@@ -27,3 +27,13 @@ guide-entry-sl-silicon-2 = Sil.Rule 2
 guide-entry-sl-silicon-3 = Sil.Rule 3
 
 guide-entry-sl-clarification-1 = Clarification 1
+
+guide-entry-sl-sop-intro = Standard Operating Procedure
+guide-entry-sl-alert-levels = Alert Levels
+guide-entry-sl-code-green = Code Green
+guide-entry-sl-code-blue = Code Blue
+guide-entry-sl-code-red = Code Red
+guide-entry-sl-code-gamma = Code Gamma
+guide-entry-sl-code-delta = Code Delta
+guide-entry-sl-code-yellow = Code Yellow
+guide-entry-sl-code-violet = Code Violet
