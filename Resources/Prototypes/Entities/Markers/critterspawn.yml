@@ -12,3 +12,20 @@
     drawdepth: Overdoors
     sprite: Markers/cross.rsi
   - type: VentCritterSpawnLocation
+
+- type: entity
+  id: DeathWhaleSpawnLocation
+  name: Death Whale Spawn Location
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Marker
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    drawdepth: Overdoors
+    sprite: Markers/cross.rsi
+  - type: DeathWhaleSpawnLocation
+
