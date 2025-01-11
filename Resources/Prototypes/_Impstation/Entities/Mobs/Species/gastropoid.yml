@@ -10,12 +10,12 @@
   - type: Absorbable
   - type: Hunger
   - type: Thirst
-  - type: Excretion
+  - type: SnailSprint
     action: ActionSlime
-    productionLength: 0.1
-    excretedReagent: Mucin
-    excretedVolume: 15
-    thirstCost: 5
+    thirstCost: 10
+    sprintLength: 5
+    speedBoost: 1.5
+    reagentProduced: ucin
   - type: Icon
     sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: full

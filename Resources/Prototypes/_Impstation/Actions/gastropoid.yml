@@ -5,5 +5,5 @@
   components:
   - type: InstantAction
     icon: Interface/Actions/slime.png
-    event: !type:ExcretionActionEvent
-    useDelay: 1
+    event: !type:SnailSprintActionEvent
+    useDelay: 10
