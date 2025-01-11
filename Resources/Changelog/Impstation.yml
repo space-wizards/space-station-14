@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Added a mini gyroscope for all of your shittle needs. Pester science
-      about it today!
-    type: Add
-  id: 398
-  time: '2024-10-21T00:15:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/528
 - author: Drags-His-Tail
   changes:
   - message: Added fultons and fulton beacons to the Mass Excavation research.
@@ -4488,3 +4480,10 @@
   id: 897
   time: '2025-01-11T02:26:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1265
+- author: Janet
+  changes:
+  - message: HRT now functions.
+    type: Tweak
+  id: 898
+  time: '2025-01-11T02:41:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1267
