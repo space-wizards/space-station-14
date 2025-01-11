@@ -214,7 +214,7 @@
 - type: reagent
   id: RobustHarvest
   name: reagent-name-robust-harvest
-  group: Botanical # Also a Toxin
+  group: Botanical
   desc: reagent-desc-robust-harvest
   flavor: bitter
   color: "#3e901c"
