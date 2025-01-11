@@ -1,7 +1,7 @@
 - type: gameMap
   id: E1M1
   mapName: Episode 1 - Mission 1
-  mapPath: /Maps/Nonstations/E1M1.yml
+  mapPath: _Impstation/Maps/Nonstations/E1M1.yml
   minPlayers: 0
   stations:
     E1M1:
