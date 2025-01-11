@@ -229,7 +229,7 @@ namespace Content.Shared.CCVar
         /// Is map rotation enabled?
         /// </summary>
         public static readonly CVarDef<bool>
-            GameMapRotation = CVarDef.Create("game.map_rotation", true, CVar.SERVERONLY);
+            GameMapRotation = CVarDef.Create("game.map_rotation", false, CVar.SERVERONLY);
 
         /// <summary>
         /// If roles should be restricted based on time.
@@ -253,7 +253,7 @@ namespace Content.Shared.CCVar
         /// Whether or not disconnecting inside of a cryopod should remove the character or just store them until they reconnect.
         /// </summary>
         public static readonly CVarDef<bool>
-            GameCryoSleepRejoining = CVarDef.Create("game.cryo_sleep_rejoining", false, CVar.SERVER | CVar.REPLICATED);
+            GameCryoSleepRejoining = CVarDef.Create("game.cryo_sleep_rejoining", true, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
@@ -310,13 +310,13 @@ namespace Content.Shared.CCVar
         /// Minimum age of the account (from server's PoV, so from first-seen date) in minutes.
         /// </summary>
         public static readonly CVarDef<int> PanicBunkerMinAccountAge =
-            CVarDef.Create("game.panic_bunker.min_account_age", 1440, CVar.SERVERONLY);
+            CVarDef.Create("game.panic_bunker.min_account_age", 120, CVar.SERVERONLY);
 
         /// <summary>
         /// Minimal overall played time.
         /// </summary>
         public static readonly CVarDef<int> PanicBunkerMinOverallMinutes =
-            CVarDef.Create("game.panic_bunker.min_overall_minutes", 600, CVar.SERVERONLY);
+            CVarDef.Create("game.panic_bunker.min_overall_minutes", 120, CVar.SERVERONLY);
 
         /// <summary>
         /// A custom message that will be used for connections denied to the panic bunker
@@ -538,7 +538,7 @@ namespace Content.Shared.CCVar
         /// Automatically log in the given user as host, equivalent to the <c>promotehost</c> command.
         /// </summary>
         public static readonly CVarDef<string> ConsoleLoginHostUser =
-            CVarDef.Create("console.login_host_user", "PixelTheAertist", CVar.ARCHIVE | CVar.SERVERONLY);
+            CVarDef.Create("console.login_host_user", "PixelTheAertist", CVar.ARCHIVE | CVar.SERVERONLY); // THAT'S ME!! THAT'S ME!!
 
 
         /*
@@ -669,7 +669,7 @@ namespace Content.Shared.CCVar
         /// Technically client doesn't need to know about it but this may prevent a bug in the distant future so it stays.
         /// </remarks>
         public static readonly CVarDef<bool> MobPushing =
-            CVarDef.Create("physics.mob_pushing", false, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("physics.mob_pushing", true, CVar.REPLICATED | CVar.SERVER);
 
         /*
          * Music
@@ -729,7 +729,7 @@ namespace Content.Shared.CCVar
          */
 
         public static readonly CVarDef<int> NPCMaxUpdates =
-            CVarDef.Create("npc.max_updates", 128);
+            CVarDef.Create("npc.max_updates", 210);
 
         public static readonly CVarDef<bool> NPCEnabled = CVarDef.Create("npc.enabled", true);
 
@@ -772,7 +772,7 @@ namespace Content.Shared.CCVar
         /// Should users be able to see their own notes? Admins will be able to see and set notes regardless
         /// </summary>
         public static readonly CVarDef<bool> SeeOwnNotes =
-            CVarDef.Create("admin.see_own_notes", false, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("admin.see_own_notes", true, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
         /// Should the server play a quick sound to the active admins whenever a new player joins?
@@ -848,7 +848,7 @@ namespace Content.Shared.CCVar
         ///     If you set this to 0 or 1 then it will alert on every connection, so probably don't do that.
         /// </remarks>
         public static readonly CVarDef<int> AdminAlertMinPlayersSharingConnection =
-            CVarDef.Create("admin.alert.min_players_sharing_connection", -1, CVar.SERVERONLY);
+            CVarDef.Create("admin.alert.min_players_sharing_connection", 2, CVar.SERVERONLY);
 
         /// <summary>
         ///     Minimum explosion intensity to create an admin alert message. -1 to disable the alert.
@@ -886,7 +886,7 @@ namespace Content.Shared.CCVar
         ///     If 0, appearing as a new player is disabled.
         /// </summary>
         public static readonly CVarDef<int> NewPlayerThreshold =
-            CVarDef.Create("admin.new_player_threshold", 0, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("admin.new_player_threshold", 120, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
         /// How long an admin client can go without any input before being considered AFK.
@@ -1481,7 +1481,7 @@ namespace Content.Shared.CCVar
         /// Cooldown between arrivals departures. This should be longer than the FTL time or it will double cycle.
         /// </summary>
         public static readonly CVarDef<float> ArrivalsCooldown =
-            CVarDef.Create("shuttle.arrivals_cooldown", 50f, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.arrivals_cooldown", 45f, CVar.SERVERONLY);
 
         /// <summary>
         /// Are players allowed to return on the arrivals shuttle.
@@ -1523,7 +1523,7 @@ namespace Content.Shared.CCVar
         /// How long a shuttle spends in FTL.
         /// </summary>
         public static readonly CVarDef<float> FTLTravelTime =
-            CVarDef.Create("shuttle.travel_time", 10f, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.travel_time", 5f, CVar.SERVERONLY);
 
         /// <summary>
         /// How long the final stage of FTL before arrival should be.
@@ -1558,7 +1558,7 @@ namespace Content.Shared.CCVar
         /// Is the emergency shuttle allowed to be early launched.
         /// </summary>
         public static readonly CVarDef<bool> EmergencyEarlyLaunchAllowed =
-            CVarDef.Create("shuttle.emergency_early_launch_allowed", false, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.emergency_early_launch_allowed", true, CVar.SERVERONLY);
 
         /// <summary>
         /// How long the emergency shuttle remains docked with the station, in seconds.
@@ -1652,7 +1652,7 @@ namespace Content.Shared.CCVar
         ///     A scale factor applied to a grid's bounds when trying to find a spot to randomly generate an anomaly.
         /// </summary>
         public static readonly CVarDef<float> AnomalyGenerationGridBoundsScale =
-            CVarDef.Create("anomaly.generation_grid_bounds_scale", 0.6f, CVar.SERVERONLY);
+            CVarDef.Create("anomaly.generation_grid_bounds_scale", 0.2f, CVar.SERVERONLY);
 
         /*
          * VIEWPORT
@@ -1897,7 +1897,7 @@ namespace Content.Shared.CCVar
         ///     Autosave interval in seconds.
         /// </summary>
         public static readonly CVarDef<float>
-            AutosaveInterval = CVarDef.Create("mapping.autosave_interval", 600f, CVar.SERVERONLY);
+            AutosaveInterval = CVarDef.Create("mapping.autosave_interval", 180f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Directory in server user data to save to. Saves will be inside folders in this directory.
@@ -2149,7 +2149,7 @@ namespace Content.Shared.CCVar
         /// Automatically record full rounds as replays.
         /// </summary>
         public static readonly CVarDef<bool> ReplayAutoRecord =
-            CVarDef.Create("replay.auto_record", false, CVar.SERVERONLY);
+            CVarDef.Create("replay.auto_record", true, CVar.SERVERONLY);
 
         /// <summary>
         /// The file name to record automatic replays to. The path is relative to <see cref="CVars.ReplayDirectory"/>.

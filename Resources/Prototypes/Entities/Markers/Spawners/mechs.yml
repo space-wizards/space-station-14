@@ -28,7 +28,7 @@
 
 - type: entity
   name: Rotund Stepfather Spawner
-  id: SpawnMechStepfather
+  id: TP14SpawnMechStepfather
   parent: MarkerBase
   components:
   - type: Sprite
@@ -38,4 +38,4 @@
         state: ripley
   - type: ConditionalSpawner
     prototypes:
-      - MechStepfather
+      - TP14MechStepfather

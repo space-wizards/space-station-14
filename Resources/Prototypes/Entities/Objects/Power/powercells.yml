@@ -40,7 +40,7 @@
 - type: entity
   name: NT standard magcell
   description: A rechargeable energy magazine. For use with compatible NT energy weaponry.
-  id: BaseMagCell
+  id: TP14BaseMagCell
   suffix: Full
   parent: BasePowerCell
   components:
@@ -61,9 +61,9 @@
 - type: entity
   name: NT exhaustion magcell
   description: A rechargeable energy magazine. This one fires energy draining bolts.
-  id: MagCellDisabler
+  id: TP14MagCellDisabler
   suffix: Full
-  parent: BaseMagCell
+  parent: TP14BaseMagCell
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/MagCell.rsi
@@ -82,9 +82,9 @@
 - type: entity
   name: NT advanced magcell
   description: A rechargeable energy magazine for use with compatible NT energy weaponry. This one has an expanded capacity.
-  id: MagCellAdvanced
+  id: TP14MagCellAdvanced
   suffix: Full
-  parent: BaseMagCell
+  parent: TP14BaseMagCell
   components:
   - type: Battery
     maxCharge: 20000
@@ -96,9 +96,9 @@
 - type: entity
   name: NT experimental magcell
   description: A rechargeable energy magazine for use with compatible NT energy weaponry. This one has an experimental micro-reactor to self recharge.
-  id: MagCellExperimental
+  id: TP14MagCellExperimental
   suffix: Full
-  parent: BaseMagCell
+  parent: TP14BaseMagCell
   components:
   - type: Battery
     maxCharge: 4000

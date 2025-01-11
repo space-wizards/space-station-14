@@ -19,7 +19,7 @@
 
 - type: entity
   parent: GrenadeBase
-  id: SlashBang
+  id: TP14SlashBang
   name: Slashbang
   description: Releases razor-sharp knives in every direction.
   components:

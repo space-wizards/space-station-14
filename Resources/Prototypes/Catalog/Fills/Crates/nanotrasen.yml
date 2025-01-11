@@ -1,5 +1,5 @@
 - type: entity
-  id: CrateChemicalLabBundle
+  id: TP14CrateChemicalLabBundle
   suffix: Filled
   parent: CrateMedical
   name: portable chemistry lab crate

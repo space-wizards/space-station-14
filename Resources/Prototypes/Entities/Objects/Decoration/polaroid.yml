@@ -1,5 +1,5 @@
 - type: entity
-  id: PolaroidImage
+  id: TP14MyFriends
   parent: BaseItem
   name: an old polaroid
   description: It's an extremely old polaroid of three young humans on earth. A note written on the back reads "Da Craka." #love you guys :]
