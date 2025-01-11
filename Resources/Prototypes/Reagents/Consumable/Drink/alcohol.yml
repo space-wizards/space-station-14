@@ -386,7 +386,6 @@
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
-  metabolisms:
 
 - type: reagent
   id: Wine
@@ -1536,6 +1535,7 @@
   metamorphicChangeColor: true
   metabolisms:
     Drink:
+      effects:
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.18
