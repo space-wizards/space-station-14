@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: ruddygreat
-  changes:
-  - message: the shining spring remil kit now costs 12 tc instead of 14
-    type: Tweak
-  - message: grenades launched by the shining spring are back to 50 foam instead of
-      25
-    type: Tweak
-  id: 400
-  time: '2024-10-21T00:16:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/530
 - author: crekulon
   changes:
   - message: web mantle, craftable by arachnids for 6 silk
@@ -4493,3 +4483,10 @@
   id: 899
   time: '2025-01-11T03:15:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1275
+- author: LazyRiverfolk
+  changes:
+  - message: E1M1 has been added to the Deathmatch pool!
+    type: Add
+  id: 900
+  time: '2025-01-11T03:18:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1288
