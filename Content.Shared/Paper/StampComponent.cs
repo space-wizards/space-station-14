@@ -25,6 +25,12 @@ public partial struct StampDisplayInfo
 
     [DataField("stampLargeIcon")]
     public string? StampLargeIcon;
+
+    [DataField("stampFont")]
+    public string? StampFont;
+
+    [DataField("hasIcon")]
+    public bool HasIcon = true;
 };
 
 [RegisterComponent]

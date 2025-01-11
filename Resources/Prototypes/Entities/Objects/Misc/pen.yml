@@ -37,6 +37,7 @@
   - type: ThrowingAngle
     angle: 315
   - type: LandAtCursor
+  - type: SignatureWriter
   # end imp edits #
 
 - type: entity
@@ -66,6 +67,12 @@
     state: luxury_pen
   - type: Item
     heldPrefix: luxury_pen
+  - type: SignatureWriter # imp
+    colorList:
+      black: "#2f4f4f"
+      blue: "#284283"
+      green: "#108473"
+      red: "#ac3235"
 
 - type: entity
   id: BaseAdvancedPen
@@ -101,6 +108,14 @@
     state: overpriced_pen
   - type: Item
     heldPrefix: overpriced_pen
+  - type: SignatureWriter # imp
+    colorList:
+      black: "#2f4f4f"
+      blue: "#284283"
+      green: "#108473"
+      red: "#ac3235"
+      command blue: "#1b67a5"
+      CentComm green: "#009100"
 
 - type: entity
   name: CentComm pen
@@ -112,10 +127,14 @@
     state: pen_centcom
   - type: Item
     heldPrefix: pen_centcom
-  - type: DamageOtherOnHit # imp
+  # imp edits #
+  - type: DamageOtherOnHit
     damage:
       types:
         Piercing: 8
+  - type: SignatureWriter
+    color: "#009100"
+  # end imp edits #
 
 - type: entity
   name: captain's fountain pen
@@ -125,10 +144,14 @@
   components:
   - type: Sprite
     state: pen_cap
-  - type: DamageOtherOnHit # imp
+  # imp edits #
+  - type: DamageOtherOnHit
     damage:
       types:
         Piercing: 8
+  - type: SignatureWriter
+    color: "#1b67a5"
+  # end imp edits #
 
 - type: entity
   name: hop's fountain pen
@@ -138,7 +161,11 @@
   components:
   - type: Sprite
     state: pen_hop
-  - type: DamageOtherOnHit # imp
+  # imp edits #
+  - type: DamageOtherOnHit
     damage:
       types:
         Piercing: 8
+  - type: SignatureWriter
+    color: "#1b67a5"
+  # end imp edits #

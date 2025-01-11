@@ -2,6 +2,7 @@
 // have a constant screen-space size, without being
 // affected by the widget layout/position.
 uniform highp vec2 objCoord;
+uniform bool useStampNoise;
 
 void fragment() {
     // Stamps have orientation, and the texture sampling is nearest
@@ -21,9 +22,12 @@ void fragment() {
 
     // Add a bit of noise to mimic imperfect contact with the paper
     {
-        highp float stampNoise = zNoise((FRAGCOORD.xy - objCoord) * vec2(0.03, 0.03)) *
-                           zNoise((FRAGCOORD.xy - objCoord) * vec2(0.08, 0.08));
-        COLOR.a *= min(0.9, 0.4 + smoothstep(0.05, 0.3, stampNoise));
+        if (useStampNoise)
+        {
+            highp float stampNoise = zNoise((FRAGCOORD.xy - objCoord) * vec2(0.03, 0.03)) *
+                               zNoise((FRAGCOORD.xy - objCoord) * vec2(0.08, 0.08));
+            COLOR.a *= min(0.9, 0.4 + smoothstep(0.05, 0.3, stampNoise));
+        }
     }
 }
 

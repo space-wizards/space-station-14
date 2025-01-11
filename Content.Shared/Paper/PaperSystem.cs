@@ -216,7 +216,7 @@ public sealed class PaperSystem : EntitySystem
         _appearance.SetData(entity, PaperVisuals.Status, status, appearance);
     }
 
-    private void UpdateUserInterface(Entity<PaperComponent> entity)
+    public void UpdateUserInterface(Entity<PaperComponent> entity)
     {
         _uiSystem.SetUiState(entity.Owner, PaperUiKey.Key, new PaperBoundUserInterfaceState(entity.Comp.Content, entity.Comp.StampedBy, entity.Comp.Mode));
     }

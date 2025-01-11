@@ -21,6 +21,9 @@ public sealed partial class StampLabel : Label
     /// this control.
     public float Orientation = 0.0f;
 
+    /// Determines whether stamp noise is applied on the shader
+    public bool StampNoise = true;
+
     public StampLabel()
     {
         RobustXamlLoader.Load(this);
@@ -45,6 +48,7 @@ public sealed partial class StampLabel : Label
                 PixelPosition.Y * MathF.Cos(Orientation) + PixelPosition.X * MathF.Sin(Orientation));
 
         _stampShader?.SetParameter("objCoord", GlobalPosition * UIScale * new Vector2(1, -1));
+        _stampShader?.SetParameter("useStampNoise", StampNoise);
         handle.UseShader(_stampShader);
         handle.SetTransform(GlobalPixelPosition - PixelPosition + offset, Orientation, _textScaling);
         base.Draw(handle);
