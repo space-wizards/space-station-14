@@ -1,6 +1,7 @@
 ﻿<mapping:MappingScreen
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:menuBar="clr-namespace:Content.Client.UserInterface.Systems.MenuBar.Widgets"
     xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets"
     xmlns:hotbar="clr-namespace:Content.Client.UserInterface.Systems.Hotbar.Widgets"
     xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
@@ -8,6 +9,7 @@
     VerticalExpand="False"
     VerticalAlignment="Bottom"
     HorizontalAlignment="Center">
+    <menuBar:GameTopMenuBar Visible="False" />
     <SplitContainer Name="LeftContainer" HorizontalExpand="True"
                     VerticalExpand="True" SplitWidth="0"
                     StretchDirection="TopLeft" ResizeMode="NotResizable">

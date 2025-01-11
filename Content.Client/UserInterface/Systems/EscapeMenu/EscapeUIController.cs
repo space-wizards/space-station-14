@@ -128,6 +128,9 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
     {
         _escapeWindow = UIManager.CreateWindow<Options.UI.EscapeMenu>();
 
+        _escapeWindow.OnClose += DeactivateButton;
+        _escapeWindow.OnOpen += ActivateButton;
+
         _escapeWindow.ChangelogButton.OnPressed += _ =>
         {
             CloseEscapeWindow();
@@ -173,14 +176,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 
         CommandBinds.Builder
             .Bind(EngineKeyFunctions.EscapeMenu,
-                InputCmdHandler.FromDelegate(_ =>
-                    {
-                        if (_escapeWindow.IsOpen)
-                            _escapeWindow.Close();
-                        else
-                            _escapeWindow.Open();
-                    }
-            ))
+                InputCmdHandler.FromDelegate(_ => ToggleWindow()))
             .Register<EscapeUIController>();
     }
 
