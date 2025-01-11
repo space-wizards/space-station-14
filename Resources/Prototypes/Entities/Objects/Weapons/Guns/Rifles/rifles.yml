@@ -57,6 +57,10 @@
   id: WeaponRifleAk
   description: An iconic weapon of war. Uses .30 rifle ammo.
   components:
+  - type: Item
+    size: Huge  
+    shape:
+    - 0,0,4,2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
     layers:
@@ -150,6 +154,10 @@
   id: WeaponRifleLecter
   description: A high end military grade assault rifle. Uses .20 rifle ammo.
   components:
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,4,2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
     layers:

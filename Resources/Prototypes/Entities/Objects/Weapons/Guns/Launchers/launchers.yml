@@ -26,6 +26,10 @@
   id: WeaponLauncherChinaLake
   description: PLOOP.
   components:
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,5,2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
     layers:
