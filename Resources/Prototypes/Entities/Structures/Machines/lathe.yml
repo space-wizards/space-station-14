@@ -356,9 +356,9 @@
       - OreBagOfHolding
       - DeviceQuantumSpinInverter
       - EnergyDomeDirectionalTurtle
-  - type: EmagLatheRecipes
-    emagDynamicRecipes:
 # Starlight start
+      - WeaponIonRifle
+      - WeaponIonCarbine
       - CartridgePistolRubber
       - CartridgeMagnumRubber
       - CartridgeRifleRubber
@@ -368,6 +368,8 @@
       - MagazineBoxRifleRubber
       - MagazineBoxLightRifleRubber
 # Starlight end
+  - type: EmagLatheRecipes
+    emagDynamicRecipes:
       - BoxBeanbag
       - BoxShotgunIncendiary
       - BoxShotgunUranium

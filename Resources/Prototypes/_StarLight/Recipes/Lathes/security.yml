@@ -1,3 +1,5 @@
+## Ammo
+
 - type: latheRecipe
   id: CartridgePistolRubber
   result: CartridgePistolRubber
@@ -78,3 +80,24 @@
   materials:
     Steel: 350
     Plastic: 600
+    
+## Weapons
+
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
+  id: WeaponIonRifle
+  result: WeaponIonRifle
+  materials:
+    Steel: 2000
+    Glass: 1000
+    Gold: 1000
+    Silver: 500
+    
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
+  id: WeaponIonCarbine
+  result: WeaponIonCarbine
+  materials:
+    Steel: 1500
+    Gold: 1000
+    Silver: 1000

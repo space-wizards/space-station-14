@@ -1,0 +1,12 @@
+- type: technology
+  id: IonWeaponry
+  name: research-technology-ion-weaponry
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/ion_rifle.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 2
+  cost: 8000
+  recipeUnlocks:
+  - WeaponIonRifle
+  - WeaponIonCarbine
