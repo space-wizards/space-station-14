@@ -199,17 +199,17 @@ marking-FadingStars-fadingstars3 = Darkest
 
 # Gastropoids
 marking-GastropoidCheeks = Cheeks
-marking-GastropoidCheeks-Gastropoidcheeks = Cheeks
+marking-GastropoidCheeks-snailcheeks = Cheeks
 marking-GastropoidShellProstheticSimple = Simple Prosthetic Shell
-marking-GastropoidShellProstheticSimple-Gastropoidshellprostheticsimple = Simple Prosthetic Shell
+marking-GastropoidShellProstheticSimple-snailshellprostheticsimple = Simple Prosthetic Shell
 marking-GastropoidShellProsthetic = Prosthetic Shell
-marking-GastropoidShellProsthetic-Gastropoidshellprosthetic = Prosthetic Shell
+marking-GastropoidShellProsthetic-snailshellprosthetic = Prosthetic Shell
 marking-SimpleBow = Cute Bow
-marking-SimpleBow-Gastropoidshellprostheticsimplebow = Cute Bow
+marking-SimpleBow-snailshellprostheticsimplebow = Cute Bow
 marking-SimpleCracks = Small Cracks
-marking-SimpleCracks-Gastropoidshellprostheticsimplecracks = Small Cracks
+marking-SimpleCracks-snailshellprostheticsimplecracks = Small Cracks
 marking-GlowInTheDarkStars = Glow in the Dark Stars
-marking-GlowInTheDarkStars-Gastropoidshellprostheticsimpleglowinthedarkstars = Glow in the Dark Stars
+marking-GlowInTheDarkStars-snailshellprostheticsimpleglowinthedarkstars = Glow in the Dark Stars
 marking-GastropoidCheekGlow = Glowing Cheeks
 marking-GastropoidCheekGlow-Gastropoidcheekglow = Glowing Cheeks
 marking-ProstheticInnerLight = Prosthetic Inner Light
