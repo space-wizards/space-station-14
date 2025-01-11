@@ -38,10 +38,10 @@ public abstract class SharedRoleSystem : EntitySystem
 
     private void OnSpawn(EntityUid uid, StartingMindRoleComponent component, PlayerSpawnCompleteEvent args)
     {
-        if (!_minds.TryGetMind(uid, out var mindId, out _))
+        if (!_minds.TryGetMind(uid, out var mindId, out var mindComp))
             return;
 
-        MindAddRole(mindId, component.MindRole , silent:component.Silent);
+        MindAddRole(mindId, component.MindRole , mind: mindComp, silent: component.Silent);
     }
 
     private void SetRequirementOverride(string value)
