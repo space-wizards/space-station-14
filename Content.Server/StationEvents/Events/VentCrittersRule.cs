@@ -38,6 +38,8 @@ public sealed class VentCrittersRule : StationEventSystem<VentCrittersRuleCompon
 
     protected override void Added(EntityUid uid, VentCrittersRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
+        base.Added(uid, component, gameRule, args);
+
         PickLocation(component);
         if (component.Location is not { } coords)
         {
@@ -60,12 +62,12 @@ public sealed class VentCrittersRule : StationEventSystem<VentCrittersRuleCompon
             null, null,
             ("location", nearest)
         );
-
-        base.Added(uid, component, gameRule, args);
     }
 
     protected override void Ended(EntityUid uid, VentCrittersRuleComponent comp, GameRuleComponent gameRule, GameRuleEndedEvent args)
     {
+        base.Ended(uid, comp, gameRule, args);
+
         if (comp.Location is not { } coords)
             return;
 
@@ -74,6 +76,7 @@ public sealed class VentCrittersRule : StationEventSystem<VentCrittersRuleCompon
         var max = Math.Max(comp.Max, comp.Max * players / comp.PlayerRatio);
         var count = Math.Max(RobustRandom.Next(min, max), 1);
         Log.Info($"Spawning {count} critters for {ToPrettyString(uid):rule}");
+
         for (int i = 0; i < count; i++)
         {
             foreach (var spawn in _entityTable.GetSpawns(comp.Table))
@@ -88,8 +91,6 @@ public sealed class VentCrittersRule : StationEventSystem<VentCrittersRuleCompon
         // guaranteed spawn
         var specialEntry = RobustRandom.Pick(comp.SpecialEntries);
         Spawn(specialEntry.PrototypeId, coords);
-
-        base.Ended(uid, comp, gameRule, args);
     }
 
     private void PickLocation(VentCrittersRuleComponent component)
