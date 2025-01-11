@@ -160,6 +160,7 @@ public sealed partial class MansusGraspSystem : EntitySystem
             return;
         }
 
+        args.Handled = true;
         hereticComp.MansusGraspActive = false;
         QueueDel(uid);
     }
