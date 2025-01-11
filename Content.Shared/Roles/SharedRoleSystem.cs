@@ -41,7 +41,7 @@ public abstract class SharedRoleSystem : EntitySystem
         if (!_minds.TryGetMind(uid, out var mindId, out var mindComp))
             return;
 
-        MindAddRole(mindId, component.MindRole , mind: mindComp, silent: component.Silent);
+        MindAddRole(mindId, component.MindRole, mind: mindComp, silent: component.Silent);
     }
 
     private void SetRequirementOverride(string value)
