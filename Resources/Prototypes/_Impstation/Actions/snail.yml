@@ -1,9 +1,0 @@
-- type: entity
-  id: ActionSlime
-  name: Slime Trail
-  description: Leave a trail of mucus.
-  components:
-  - type: InstantAction
-    icon: Interface/Actions/slime.png
-    event: !type:ExcretionActionEvent
-    useDelay: 1

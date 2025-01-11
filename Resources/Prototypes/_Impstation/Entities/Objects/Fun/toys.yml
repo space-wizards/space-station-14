@@ -120,9 +120,18 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Arachnid/arachnid_scream.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_scream.ogg
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Voice/Arachnid/arachnid_scream.ogg
+  - type: Item
+    inhandVisuals:
+      left:
+        - state: plushie_bug-inhand-left
+      right:
+        - state: plushie_bug-inhand-right
   - type: Food
     requiresSpecialDigestion: false
     useSound:

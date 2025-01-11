@@ -20,3 +20,25 @@
     antagPrototype: ListeningPost
     exclusiveAntag: true
   - type: ListeningPostRole
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleSynthesis
+  name: Synthesis Specialist Role
+  components:
+  - type: MindRole
+    antagPrototype: SynthesisSpecialist
+    exclusiveAntag: true
+  - type: SynthesisRole
+  - type: RoleBriefing
+    briefing: synthesis-role-briefing
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleFugitive
+  name: Fugitive Role
+  components:
+  - type: MindRole
+    antagPrototype: Fugitive
+    exclusiveAntag: true
+  - type: FugitiveRole

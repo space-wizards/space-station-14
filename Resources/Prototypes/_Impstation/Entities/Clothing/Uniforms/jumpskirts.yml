@@ -128,3 +128,15 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpskirt/brosblazer.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpskirt/brosblazer.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformJumpskirtSalvageSpecialist
+  name: salvage specialist's jumpskirt
+  description: It's a snappy jumpskirt with a sturdy set of overalls. It's very dirty.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/salvage.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/salvage.rsi
+    

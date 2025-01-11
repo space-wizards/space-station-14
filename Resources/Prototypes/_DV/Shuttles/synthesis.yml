@@ -1,0 +1,4 @@
+- type: preloadedGrid
+  id: SyndieSynthesisShip
+  path: /Maps/_DV/Shuttles/synthesis_ship.yml
+  copies: 1
