@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: yuitop
-  changes:
-  - message: break pull when fall asleep
-    type: Fix
-  id: 7298
-  time: '2024-09-06T23:30:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31893
 - author: Boaz1111
   changes:
   - message: Energy Shotgun's narrow fire mode's projectiles now deal 13 heat dmg
@@ -3939,3 +3932,11 @@
   id: 7797
   time: '2025-01-11T17:27:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34339
+- author: '0x6273'
+  changes:
+  - message: Fix a bug that was causing arachnid stomachs to not digest at the intended,
+      slower than normal speed.
+    type: Fix
+  id: 7798
+  time: '2025-01-11T19:29:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34298
