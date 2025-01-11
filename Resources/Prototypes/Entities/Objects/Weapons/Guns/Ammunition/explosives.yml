@@ -140,6 +140,14 @@
     state: frag
     suffix: false
 
+- type: entity
+  id: GrenadeCleanade
+  name: Cleanade Grenade
+  parent: BaseGrenade
+  components:
+  - type: CartridgeAmmo
+    proto:
+
 # Cannon Balls
 
 - type: entity

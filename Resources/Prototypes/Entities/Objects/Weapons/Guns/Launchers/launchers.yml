@@ -54,6 +54,21 @@
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
 
 - type: entity
+  name: cleanade launcher # todo: rename
+  parent: [WeaponLauncherChinaLake, BaseMajorContraband]
+  id: WeaponLauncherCleanade
+  description: PLOOP... FSSSSSS
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - Grenade
+    capacity: 3
+    proto: GrenadeFrag
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+
+- type: entity
   name: RPG-7
   parent: [ BaseWeaponLauncher, BaseMajorContraband ]
   id: WeaponLauncherRocket
