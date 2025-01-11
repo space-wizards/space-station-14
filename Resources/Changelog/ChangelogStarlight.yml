@@ -2012,4 +2012,22 @@ Entries:
   id: 284
   time: '2025-01-10T15:41:40.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/225
+- author: STARLIGHT TEAM
+  changes:
+  - message: The shooting from revolvers has been fixed.
+    type: Fix
+  id: 285
+  time: '2025-01-11T01:38:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/227
+- author: STARLIGHT TEAM
+  changes:
+  - message: Now, the chance of hitting depends on the distance from the shooter,
+      and it's always 100% when flying over the cursor. This means offscreen hits
+      are guaranteed if the bullet’s trajectory crosses the target. Additionally,
+      the chance of hitting within 2 tiles in front of the cursor is also 100%, and
+      then it linearly decreases to 0 over the next 2 tiles
+    type: Fix
+  id: 286
+  time: '2025-01-11T01:38:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/227
 
