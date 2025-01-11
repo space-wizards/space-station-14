@@ -3,7 +3,7 @@
   startingInventory:
     OxygenTankFilled: 10
     NitrogenTankFilled: 10
-    WaterTankFilled: 10
+    TP14WaterTankFilled: 10
 
 - type: vendingMachineInventory
   id: TankDispenserEngineeringInventory
