@@ -28,9 +28,6 @@
   - type: Sprite
     sprite: _DV/Objects/Devices/cartridge.rsi
     state: cart-stonk
-  - type: Icon
-    sprite: _DV/Objects/Devices/cartridge.rsi
-    state: cart-mail
   - type: UIFragment
     ui: !type:StockTradingUi
   - type: StockTradingCartridge
