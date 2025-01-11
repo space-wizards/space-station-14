@@ -1,7 +1,7 @@
 - type: entity
-  id: PartSnail
+  id: PartGastropoid
   parent: BaseItem
-  name: "snail body part"
+  name: "gastropoid body part"
   abstract: true
   components:
   - type: Damageable
@@ -25,9 +25,9 @@
         Quantity: 10
 
 - type: entity
-  id: TorsoSnail
-  name: "snail torso"
-  parent: PartSnail
+  id: TorsoGastropoid
+  name: "gastropoid torso"
+  parent: PartGastropoid
   components:
     - type: Sprite
       sprite: _Impstation/Mobs/Species/Snail/parts.rsi
@@ -46,9 +46,9 @@
           Quantity: 10
 
 - type: entity
-  id: HeadSnail
-  name: "snail head"
-  parent: PartSnail
+  id: HeadGastropoid
+  name: "gastropoid head"
+  parent: PartGastropoid
   components:
     - type: Sprite
       sprite: _Impstation/Mobs/Species/Snail/parts.rsi
@@ -73,9 +73,9 @@
           Quantity: 10
 
 - type: entity
-  id: LeftArmSnail
-  name: "left snail arm"
-  parent: PartSnail
+  id: LeftArmGastropoid
+  name: "left gastropoid arm"
+  parent: PartGastropoid
   components:
     - type: Sprite
       sprite: _Impstation/Mobs/Species/Snail/parts.rsi
@@ -88,9 +88,9 @@
       symmetry: Left
 
 - type: entity
-  id: RightArmSnail
-  name: "right snail arm"
-  parent: PartSnail
+  id: RightArmGastropoid
+  name: "right gastropoid arm"
+  parent: PartGastropoid
   components:
     - type: Sprite
       sprite: _Impstation/Mobs/Species/Snail/parts.rsi
@@ -103,9 +103,9 @@
       symmetry: Right
 
 - type: entity
-  id: LeftHandSnail
-  name: "left snail hand"
-  parent: PartSnail
+  id: LeftHandGastropoid
+  name: "left gastropoid hand"
+  parent: PartGastropoid
   components:
     - type: Sprite
       sprite: _Impstation/Mobs/Species/Snail/parts.rsi
@@ -118,9 +118,9 @@
       symmetry: Left
 
 - type: entity
-  id: RightHandSnail
-  name: "right snail hand"
-  parent: PartSnail
+  id: RightHandGastropoid
+  name: "right gastropoid hand"
+  parent: PartGastropoid
   components:
     - type: Sprite
       sprite: _Impstation/Mobs/Species/Snail/parts.rsi
@@ -133,9 +133,9 @@
       symmetry: Right
 
 - type: entity
-  id: LeftLegSnail
-  name: "left snail leg"
-  parent: PartSnail
+  id: LeftLegGastropoid
+  name: "left gastropoid leg"
+  parent: PartGastropoid
   components:
     - type: Sprite
       sprite: _Impstation/Mobs/Species/Snail/parts.rsi
@@ -149,9 +149,9 @@
     - type: MovementBodyPart
 
 - type: entity
-  id: RightLegSnail
-  name: "right snail leg"
-  parent: PartSnail
+  id: RightLegGastropoid
+  name: "right gastropoid leg"
+  parent: PartGastropoid
   components:
     - type: Sprite
       sprite: _Impstation/Mobs/Species/Snail/parts.rsi
@@ -165,9 +165,9 @@
     - type: MovementBodyPart
 
 - type: entity
-  id: LeftFootSnail
-  name: "left snail foot"
-  parent: PartSnail
+  id: LeftFootGastropoid
+  name: "left gastropoid foot"
+  parent: PartGastropoid
   components:
     - type: Sprite
       sprite: _Impstation/Mobs/Species/Snail/parts.rsi
@@ -180,9 +180,9 @@
       symmetry: Left
 
 - type: entity
-  id: RightFootSnail
-  name: "right snail foot"
-  parent: PartSnail
+  id: RightFootGastropoid
+  name: "right gastropoid foot"
+  parent: PartGastropoid
   components:
     - type: Sprite
       sprite: _Impstation/Mobs/Species/Snail/parts.rsi

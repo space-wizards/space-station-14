@@ -1,5 +1,5 @@
 - type: entity
-  id: OrganSnailStomach
+  id: OrganGastropoidStomach
   parent: OrganHumanStomach
   name: snail stomach
   components:

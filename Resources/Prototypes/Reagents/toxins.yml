@@ -301,6 +301,7 @@
   desc: reagent-desc-heartbreaker-toxin
   physicalDesc: reagent-physical-desc-strong-smelling
   color: "#5f959c"
+  contraband: Major # imp
   metabolisms:
     Poison:
       effects:
@@ -319,6 +320,7 @@
   desc: reagent-desc-lexorin
   physicalDesc: reagent-physical-desc-pungent
   color: "#6b0007"
+  contraband: Tier3Contraband # imp
   metabolisms:
     Poison:
       effects:
@@ -335,6 +337,7 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: bitter
   color: "#77b58e"
+  contraband: Minor # imp
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
@@ -422,6 +425,7 @@
   desc: reagent-desc-amatoxin
   physicalDesc: reagent-physical-desc-nondescript
   color: "#D6CE7B"
+  contraband: Major
   metabolisms:
     Poison:
       metabolismRate: 0.2
@@ -461,6 +465,7 @@
   physicalDesc: reagent-physical-desc-necrotic
   flavor: bitter
   color: "#7e916e"
+  contraband: Tier3Contraband
   worksOnTheDead: true
   metabolisms:
     Medicine:
@@ -624,6 +629,7 @@
   physicalDesc: reagent-physical-desc-shiny
   flavor: medicine
   color: "#435166"
+  contraband: Tier2Contraband # imp
   metabolisms:
     Poison:
       effects:
@@ -647,6 +653,7 @@
   physicalDesc: reagent-physical-desc-metallic
   flavor: shocking
   color: "#FDD023"
+  contraband: Tier3Contraband
   metabolisms:
     Poison:
       effects:

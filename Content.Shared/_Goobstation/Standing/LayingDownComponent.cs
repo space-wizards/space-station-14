@@ -7,7 +7,10 @@ namespace Content.Shared._Goobstation.Standing;
 public sealed partial class LayingDownComponent : Component
 {
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public float StandingUpTime { get; set; } = 1f;
+    public TimeSpan Cooldown { get; set; } = TimeSpan.FromSeconds(2.5);
+
+    [DataField, AutoNetworkedField]
+    public TimeSpan NextLayDown;
 
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public float SpeedModify { get; set; } = .25f;
@@ -16,7 +19,10 @@ public sealed partial class LayingDownComponent : Component
     public bool AutoGetUp;
 }
 [Serializable, NetSerializable]
-public sealed class ChangeLayingDownEvent : CancellableEntityEventArgs;
+public sealed class ChangeLayingDownEvent(bool intentional = false) : CancellableEntityEventArgs
+{
+    public bool Intentional = intentional;
+}
 
 [Serializable, NetSerializable]
 public sealed class CheckAutoGetUpEvent(NetEntity user) : CancellableEntityEventArgs

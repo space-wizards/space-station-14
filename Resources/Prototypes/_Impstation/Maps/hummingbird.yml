@@ -46,10 +46,10 @@
             ResearchAssistant: [ 3, 3 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
-            SecurityOfficer: [ 4, 4 ]
+            SecurityOfficer: [ 6, 6 ]
             Warden: [ 1, 1 ]
-            Lawyer: [ 1, 1 ]
-            SecurityCadet: [ 3, 3 ]
+            Lawyer: [ 2, 2 ]
+            SecurityCadet: [ 4, 4 ]
             Detective: [ 1, 1 ]
             Brigmedic: [ 1, 1 ]
             #supply

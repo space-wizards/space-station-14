@@ -204,7 +204,6 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
       state: eyes
       shader: unshaded
-
   - type: SpriteMovement
     movementLayers:
       movement:
@@ -284,6 +283,7 @@
     tags:
       - CannotSuicide
       - FootstepSound
+      - MultitoolDefibrillatorTarget
   - type: NoSlip
   - type: MobPrice
     price: 500 # rat wealth

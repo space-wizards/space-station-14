@@ -1,5 +1,5 @@
 - type: species
-  id: Snail
+  id: Gastropoid
   name: species-name-snail
   roundStart: true
   prototype: MobGastropoid
@@ -53,7 +53,7 @@
     Tail:
       points: 1
       required: true
-      defaultMarkings: [ SnailShellSmall ]
+      defaultMarkings: [ GastropoidShellSmall ]
     Overlay:
       points: 1
       required: false

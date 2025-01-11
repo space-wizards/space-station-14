@@ -3,3 +3,36 @@
   id: TapeRecorderTranscript
   name: record transcript
   # TODO: could have a unique sprite in the future
+
+- type: entity
+  name: station warrant
+  parent: Paper
+  id: PaperStationWarrant
+  description: 'A paper warrant issued by Central Command Enforcement Division.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+      color: "#e0bc99"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#e0bc99"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_DV/Interface/Paper/paper_heading_warrant.svg.200dpi.png"
+    headerMargin: 0.0, 0.0, 10.0, 16.0
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundModulate: "#e0bc99"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 32.0, 16.0, 32.0, 0.0
+
+# contents set by FugitiveRule or a creative admeme
+- type: entity
+  parent: PaperStationWarrant
+  id: PaperFugitiveReport
+  name: fugitive report
+  description: An arrest warrant for a space fugitive sent from the Central Command Enforcement Division.

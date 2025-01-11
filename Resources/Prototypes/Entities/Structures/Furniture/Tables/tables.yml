@@ -79,7 +79,6 @@
         - TableMask
         layer:
         - TableLayer
-        - BulletImpassable #Goobstation
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Wood

@@ -72,6 +72,7 @@
   physicalDesc: reagent-physical-desc-buzzy
   flavor: bee
   color: "#FFD35D"
+  contraband: Minor # imp
   tileReactions:
   - !type:CreateEntityTileReaction
     entity: MobBee

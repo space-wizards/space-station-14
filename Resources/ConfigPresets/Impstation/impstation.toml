@@ -9,7 +9,7 @@ lobbyduration = 300
 [server]
 # TODO
 # rules_file = "ImpstationRuleset"
-uptime_restart_minutes = 240
+uptime_restart_minutes = 720
 
 [chat]
 # Message Of The Day

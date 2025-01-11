@@ -29,7 +29,7 @@ public sealed class StandingStateSystem : EntitySystem
         if (!Resolve(uid, ref standingState, false))
             return false;
 
-        return standingState.CurrentState is StandingState.Lying or StandingState.GettingUp;
+        return standingState.CurrentState is StandingState.Lying;
     }
 
     public bool Down(EntityUid uid,
@@ -38,7 +38,8 @@ public sealed class StandingStateSystem : EntitySystem
         bool force = true,
         StandingStateComponent? standingState = null,
         AppearanceComponent? appearance = null,
-        HandsComponent? hands = null)
+        HandsComponent? hands = null,
+        bool intentional = true)
     {
         // TODO: This should actually log missing comps...
         if (!Resolve(uid, ref standingState, false))
@@ -47,7 +48,7 @@ public sealed class StandingStateSystem : EntitySystem
         // Optional component.
         Resolve(uid, ref appearance, ref hands, false);
 
-        if (standingState.CurrentState is StandingState.Lying or StandingState.GettingUp)
+        if (standingState.CurrentState is StandingState.Lying)
             return true;
 
         // This is just to avoid most callers doing this manually saving boilerplate
@@ -76,7 +77,7 @@ public sealed class StandingStateSystem : EntitySystem
         _appearance.SetData(uid, RotationVisuals.RotationState, RotationState.Horizontal, appearance);
 
         // Change collision masks to allow going under certain entities like flaps and tables
-        if (TryComp(uid, out FixturesComponent? fixtureComponent))
+        if (TryComp(uid, out FixturesComponent? fixtureComponent) && !intentional)
         {
             foreach (var (key, fixture) in fixtureComponent.Fixtures)
             {
