@@ -204,6 +204,9 @@
       - ClothingHeadHatCone
       - FreezerElectronics
       - Flare
+      # Delta-V ports
+      - TapeRecorder
+      - CassetteTape
     dynamicRecipes:
       - Fulton
 
