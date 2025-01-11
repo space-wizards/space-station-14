@@ -1,0 +1,97 @@
+<Document>
+    # Code Yellow
+
+    ## Called by:
+
+    Any command member.
+
+    ## Conditions:
+
+    There is a significant structural or atmospheric threat to the station that requires direct intervention from the Engineering department.
+
+    ## Security:
+
+    1. Cordon off the dangerous area.
+    
+    2. Verify cause of station damage.
+    
+    3. Prevent non-engineering crew from accessing the damaged area.
+    
+    4. Prevent further disruption to the station.
+
+    ## Secure Areas:
+
+    1. Secure areas require an access permit, unless required by a staff job.
+    
+    2. Secure areas: Security department, EVA Storage, Tech Storage, Gravity Generator, All Engineering areas beyond the lobby, Vault, and areas requiring command access.
+    
+    3. There are no restrictions on bolting Secure Areas. Secure Areas may be left bolted or unbolted at the discretion of Command personnel.
+    
+    4. Secure areas are not to be entered by non-command, unless required by their job.
+
+    ## Medical:
+
+    1. Medical personnel should be ready to treat a large number of disaster victims.
+    
+    2. Medical personnel should work with those at the incident location to triage patients.
+
+    ## Engineering:
+
+    1. Immediately coordinate with your chief engineer to determine the level of damage to the station.
+    
+    2. Work with your department and security to cordon off and investigate the area.
+    
+    3. Work quickly to make the area safe again. Once safe, further repairs may be conducted.
+
+    ## General Crew:
+
+    1. Avoid the damaged areas.
+    2. Report any suspicious activity to security present in damaged areas.
+
+    ## Command:
+
+    In the case of massive station damage, the evacuation shuttle should be called.
+
+    ## Special Situations
+
+    ## Loss of singularity containment:
+
+    1. The Gravitational Singularity is to be tracked at all costs. If the Singularity heads towards the main station, the emergency shuttle is to be called. If the Gravitational Singularity heads off-station, damage done to the station should be taken into consideration.
+    
+    2. If station damage is extensive and unrecoverable, the emergency shuttle should be called.
+    
+    3. If station damage appears recoverable, an ERT is recommended. If the engineering team is confident in their abilities, ERT may be waived.
+
+    ## Supermatter crystal delamination:
+
+    1. The Supermatter Crystal is to be vented to space.
+    
+    2. In such a case as the Supermatter Crystal containment was not equipped with a way to space the Crystal, the area around the Crystal is to be evacuated, and all personnel involved in the construction fired and brigged for Destruction of Property and Endangerment.
+
+    ## Loss of Tesla Ball containment:
+
+    1. The Tesla Ball is to be tracked at all costs, and its current location announced to the crew.
+    
+    2. Should the Tesla Ball make its way into the station, the emergency shuttle should be called immediately.
+
+    ## Massive fires and poisonous gas releases:
+
+    1. All non-Engineering or Atmospheric personnel are to vacate the area.
+    
+    2. Firelock systems are to be left untouched by non-Engineering or Atmospheric crew. Deliberately opening firelocks during a fire/poisonous gas release in order to open way to the Hazard is to be considered Destruction of Property/Mass Destruction.
+    
+    3. Engineering and Atmospherics personnel are to restore the affected area to workable conditions.
+
+    ## Severe meteor storms:
+
+    1. Personnel are to head to the inner most protected area of the station.
+    
+    2. No repair activities are to be performed until the end of the storm, for safety reasons.
+    
+    3. All personnel performing EVA duty are to return to the station post haste.
+    
+    4. If the meteor storm ends quickly, Engineering is to repair the damage ASAP.
+    
+    5. Should an extended storm occur, no repair activities on non-critical components are to be performed. Personnel are to remain away from the stations exterior, and all efforts should focused on maintaining the integrity of the area. The emergency shuttle is to be called when possible.
+
+</Document>
