@@ -3,8 +3,8 @@
 # Use the Floatsam or SafeHarbor GamePreset to run the event, instead of just loading up the map.
 
 - type: gameMap
-  id: SafeHarbor
-  mapName: 'SafeHarbor'
+  id: SafeHarbor 
+  mapName: SafeHarbor
   mapPath: /Maps/Nonstations/crashedship.yml
   minPlayers: 5
   stations:

@@ -370,6 +370,9 @@ MobFish2: TP14MobFish2
 MobFish3: TP14MobFish3
 MobFishMimic: TP14MobFishMimic
 MobMimic: TP14MobMimic
+BaseHarpoongun: TP14BaseHarpoongun
+HarpoonGun: TP14HarpoonGun
+BaseHarpoon: TP14BaseHarpoon
 Harpoon: TP14Harpoon
 HarpoonBomb: TP14HarpoonBomb
 PiezoHarpoon: TP14PiezoHarpoon
@@ -406,6 +409,7 @@ MagCellExperimental: TP14MagCellExperimental
 WaterTankFilled: TP14WaterTankFilled
 AtmosFixWaterMarker: TP14AtmosFixWaterMarker
 MarkerInside: TP14MarkerInside
+BaseMobJellidPerson: TP14BaseMobJellidPerson
 MobJellidPerson: TP14MobJellidPerson
 PaperJellid: TP14PaperJellid
 FallingDestinationMarker: TP14FallingDestinationMarker
@@ -418,5 +422,6 @@ WallRockIndestructible: TP14WallRockIndestructible
 PolaroidImage: TP14MyFriends
 BlackboxRecorder: TP14BlackboxRecorder
 FoodMeatFish: TP14FoodMeatFish
+ClothingHeadHelmetCosplay: TP14ClothingHeadHelmetCosplay
 ClothingOuterSuitCosplay: TP14ClothingOuterSuitCosplay
 CargoTelepad: CargoPalletBuy # Gifts don't work with the Telepad. Migrating until it's fixed.

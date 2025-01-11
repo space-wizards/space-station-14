@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseItem
-  id: BaseHarpoon
+  id: TP14BaseHarpoon
   abstract: true
   components:
   - type: Item
@@ -60,7 +60,7 @@
     fillBaseName: solution
 
 - type: entity
-  parent: BaseHarpoon
+  parent: TP14BaseHarpoon
   id: TP14Harpoon
   name: harpoon
   description: Pointy end into target!
@@ -88,7 +88,7 @@
     angle: 0
 
 - type: entity
-  parent: BaseHarpoon
+  parent: TP14BaseHarpoon
   id: TP14HarpoonBomb
   name: explosive harpoon
   description: This'll really blow their minds...
@@ -103,7 +103,7 @@
     deleteOnCollide: true
 
 - type: entity
-  parent: BaseHarpoon
+  parent: TP14BaseHarpoon
   id: TP14PiezoHarpoon
   name: static harpoon
   description: A harpoon with a piezo crystal fastened to the front. Shocking!
