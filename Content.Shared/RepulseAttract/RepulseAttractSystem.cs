@@ -69,7 +69,7 @@ public sealed class RepulseAttractSystem : EntitySystem
 
         foreach (var target in entsInRange)
         {
-            if (_whitelist.IsWhitelistFail(comp.Whitelist, target) || _whitelist.IsBlacklistFail(comp.Blacklist, target))
+            if (_whitelist.IsWhitelistFail(comp.Whitelist, target) || _whitelist.IsBlacklistPass(comp.Blacklist, target))
                 continue;
 
             var targetXForm = Transform(target);
