@@ -433,3 +433,17 @@
     types:
       Radiation: 10
       Cellular: 20
+      
+- type: hitscan
+  id: SniperBolt
+  name: sniper bolt
+  parent: EnergyTrace
+  bullet:
+    sprite:
+      sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: sniperlaser
+  knockdownAmount: 3
+  staminaDamage: 40
+  damage:
+    types:
+      Heat: 60
