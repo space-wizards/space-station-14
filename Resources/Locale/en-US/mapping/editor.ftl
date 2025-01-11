@@ -2,6 +2,7 @@ mapping-entities = Entities
 mapping-tiles = Tiles
 mapping-decals = Decals
 mapping-favorite = Favorite
+mapping-template = Templates
 
 mapping-search = Search
 mapping-replace = Replace

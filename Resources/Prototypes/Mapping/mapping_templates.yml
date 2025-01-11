@@ -1,0 +1,1180 @@
+- type: mappingTemplate
+  id: Common
+  rootType: Entity
+  children:
+    - type: mappingTemplate
+      id: RandomPosterContraband
+    - type: mappingTemplate
+      id: RandomPosterLegit
+    - type: mappingTemplate
+      id: RandomPosterAny
+    - type: mappingTemplate
+      id: FireAlarm
+    - type: mappingTemplate
+      id: FirelockGlass
+    - type: mappingTemplate
+      id: Firelock
+    - type: mappingTemplate
+      id: AirAlarm
+    - type: mappingTemplate
+      id: GasVentScrubber
+    - type: mappingTemplate
+      id: AirSensor
+    - type: mappingTemplate
+      id: APCBasic
+    - type: mappingTemplate
+      id: CableApcExtension
+    - type: mappingTemplate
+      id: CableMV
+    - type: mappingTemplate
+      id: CableHV
+    - type: mappingTemplate
+      id: WarpPointBombing
+    - type: mappingTemplate
+      id: DisposalUnit
+    - type: mappingTemplate
+      id: RandomVending
+    - type: mappingTemplate
+      id: RandomVendingDrinks
+    - type: mappingTemplate
+      id: RandomVendingSnacks
+    - type: mappingTemplate
+      id: VendingMachineCigs
+    - type: mappingTemplate
+      id: PottedPlantRandom
+    - type: mappingTemplate
+      id: PottedPlantRandomPlastic
+    - type: mappingTemplate
+      id: ClosetEmergencyFilledRandom
+    - type: mappingTemplate
+      id: ClosetEmergencyN2FilledRandom
+    - type: mappingTemplate
+      id: WallmountTelevision
+    - type: mappingTemplate
+      id: Screen
+    - type: mappingTemplate
+      id: Poweredlight
+    - type: mappingTemplate
+      id: EmergencyLight
+    - type: mappingTemplate
+      id: JanitorServiceLight
+    - type: mappingTemplate
+      id: SpawnMobMouse
+    - type: mappingTemplate
+      id: MouseTimedSpawner
+    - type: mappingTemplate
+      id: SpawnMobCockroach
+    - type: mappingTemplate
+      id: DefibrillatorCabinetFilled
+    - type: mappingTemplate
+      id: StationMap
+    - type: mappingTemplate
+      id: SurveillanceCameraGeneral
+
+- type: mappingTemplate
+  id: Service
+  rootType: Entity
+  children:
+    - type: mappingTemplate
+      id: Bar
+      children:
+        - type: mappingTemplate
+          id: BoozeDispenser
+        - type: mappingTemplate
+          id: SodaDispenser
+        - type: mappingTemplate
+          id: VendingMachineBooze
+        - type: mappingTemplate
+          id: DefaultStationBeaconBar
+        - type: mappingTemplate
+          id: SurveillanceCameraService
+        - type: mappingTemplate
+          id: Sink
+        - type: mappingTemplate
+          id: Jukebox
+        - type: mappingTemplate
+          id: KitchenReagentGrinder
+        - type: mappingTemplate
+          id: RandomDrinkBottle
+        - type: mappingTemplate
+          id: RandomDrinkGlass
+        - type: mappingTemplate
+          id: SpawnMobMonkeyPunpun
+        - type: mappingTemplate
+          id: VendingBarDrobe
+        - type: mappingTemplate
+          id: LockerBoozeFilled
+        - type: mappingTemplate
+          id: SpawnPointBartender
+        - type: mappingTemplate
+          id: NuclearBombKeg
+    - type: mappingTemplate
+      id: Kitchen
+      children:
+        - type: mappingTemplate
+          id: KitchenMicrowave
+        - type: mappingTemplate
+          id: VendingMachineDinnerware
+        - type: mappingTemplate
+          id: Sink
+        - type: mappingTemplate
+          id: KitchenReagentGrinder
+        - type: mappingTemplate
+          id: VendingMachineChefDrobe
+        - type: mappingTemplate
+          id: ClosetChefFilled
+        - type: mappingTemplate
+          id: VendingMachineCondiments
+        - type: mappingTemplate
+          id: SpawnMobAlexander
+        - type: mappingTemplate
+          id: RandomFoodMeal
+        - type: mappingTemplate
+          id: RandomFoodSingle
+    - type: mappingTemplate
+      id: Fridge
+      children:
+        - type: mappingTemplate
+          id: AtmosFixFreezerMarker
+        - type: mappingTemplate
+          id: FloorDrain
+        - type: mappingTemplate
+          id: KitchenSpike
+        - type: mappingTemplate
+          id: CrateNPCCow
+        - type: mappingTemplate
+          id: FoodCartCold
+        - type: mappingTemplate
+          id: FoodCartHot
+    - type: mappingTemplate
+      id: Hydroponics
+      children:
+        - type: mappingTemplate
+          id: SpawnPointBotanist
+        - type: mappingTemplate
+          id: hydroponicsTray
+        - type: mappingTemplate
+          id: SeedExtractor
+        - type: mappingTemplate
+          id: VendingMachineSeeds
+        - type: mappingTemplate
+          id: VendingMachineNutri
+        - type: mappingTemplate
+          id: WaterTankHighCapacity
+        - type: mappingTemplate
+          id: DefaultStationBeaconBotany
+        - type: mappingTemplate
+          id: VendingMachineHydrobe
+        - type: mappingTemplate
+          id: WardrobeBotanistFilled
+        - type: mappingTemplate
+          id: SpawnMobBandito
+    - type: mappingTemplate
+      id: JanitorsCloset
+      children:
+        - type: mappingTemplate
+          id: SpawnPointJanitor
+        - type: mappingTemplate
+          id: VendingMachineJaniDrobe
+        - type: mappingTemplate
+          id: JanitorialTrolley
+        - type: mappingTemplate
+          id: ClosetJanitorFilled
+        - type: mappingTemplate
+          id: CleanerDispenser
+        - type: mappingTemplate
+          id: DefaultStationBeaconJanitorsCloset
+        - type: mappingTemplate
+          id: ClosetL3JanitorFilled
+        - type: mappingTemplate
+          id: SpawnMobRaccoonMorticia
+    - type: mappingTemplate
+      id: Theater
+      children:
+        - type: mappingTemplate
+          id: VendingMachineTheater
+        - type: mappingTemplate
+          id: RandomInstruments
+        - type: mappingTemplate
+          id: DefaultStationBeaconTheater
+        - type: mappingTemplate
+          id: VendingMachineHappyHonk
+        - type: mappingTemplate
+          id: SpawnPointClown
+        - type: mappingTemplate
+          id: FoodPieBananaCream
+        - type: mappingTemplate
+          id: BedsheetClown
+        - type: mappingTemplate
+          id: LauncherCreamPie
+        - type: mappingTemplate
+          id: SpawnPointMime
+        - type: mappingTemplate
+          id: LockerMime
+        - type: mappingTemplate
+          id: DrinkBottleOfNothingFull
+        - type: mappingTemplate
+          id: BedsheetMime
+        - type: mappingTemplate
+          id: FoodTartMime
+        - type: mappingTemplate
+          id: SpawnPointMusician
+    - type: mappingTemplate
+      id: ReportersOffice
+      children:
+        - type: mappingTemplate
+          id: ComputerSurveillanceWirelessCameraMonitor
+        - type: mappingTemplate
+          id: ComputerMassMedia
+        - type: mappingTemplate
+          id: SurveillanceWirelessCameraMovableConstructed
+        - type: mappingTemplate
+          id: SurveillanceWirelessCameraAnchoredConstructed
+        - type: mappingTemplate
+          id: SpawnPointReporter
+    - type: mappingTemplate
+      id: Church
+      children:
+        - type: mappingTemplate
+          id: VendingMachineChapel
+        - type: mappingTemplate
+          id: SpawnPointChaplain
+        - type: mappingTemplate
+          id: WardrobeChapelFilled
+        - type: mappingTemplate
+          id: Crematorium
+        - type: mappingTemplate
+          id: CrateCoffin
+        - type: mappingTemplate
+          id: AltarSpawner
+        - type: mappingTemplate
+          id: DefaultStationBeaconChapel
+        - type: mappingTemplate
+          id: CarpetChapel
+
+- type: mappingTemplate
+  id: Cargo
+  rootType: Entity
+  children:
+    - type: mappingTemplate
+      id: ComputerCargoOrders
+    - type: mappingTemplate
+      id: Autolathe
+    - type: mappingTemplate
+      id: DefaultStationBeaconCargoReception
+    - type: mappingTemplate
+      id: IntercomSupply
+    - type: mappingTemplate
+      id: VendingMachineChefDrobe
+    - type: mappingTemplate
+      id: ComputerShuttleCargo
+    - type: mappingTemplate
+      id: ComputerCargoBounty
+    - type: mappingTemplate
+      id: SpawnPointCargoTechnician
+    - type: mappingTemplate
+      id: DefaultStationBeaconSupply
+    - type: mappingTemplate
+      id: SurveillanceCameraSupply
+    - type: mappingTemplate
+      id: ConveyorBelt
+    - type: mappingTemplate
+      id: MailingUnit
+    - type: mappingTemplate
+      id: QMRoom
+      children:
+        - type: mappingTemplate
+          id: SpawnPointQuartermaster
+        - type: mappingTemplate
+          id: DresserQuarterMasterFilled
+        - type: mappingTemplate
+          id: LockerQuarterMasterFilled
+        - type: mappingTemplate
+          id: BedsheetQM
+        - type: mappingTemplate
+          id: DefaultStationBeaconQMRoom
+    - type: mappingTemplate
+      id: Salvage
+      children:
+        - type: mappingTemplate
+          id: LockerSalvageSpecialistFilled
+        - type: mappingTemplate
+          id: SuitStorageSalv
+        - type: mappingTemplate
+          id: VendingMachineSalvage
+        - type: mappingTemplate
+          id: OreProcessor
+        - type: mappingTemplate
+          id: SpawnPointSalvageSpecialist
+        - type: mappingTemplate
+          id: DefaultStationBeaconSalvage
+        - type: mappingTemplate
+          id: WardrobeSalvageFilled
+        - type: mappingTemplate
+          id: ComputerRadar
+
+- type: mappingTemplate
+  id: Command
+  rootType: Entity
+  children:
+    - type: mappingTemplate
+      id: Bridge
+      children:
+        - type: mappingTemplate
+          id: ComputerComms
+        - type: mappingTemplate
+          id: ComputerId
+        - type: mappingTemplate
+          id: ComputerStationRecords
+        - type: mappingTemplate
+          id: ComputerCriminalRecords
+        - type: mappingTemplate
+          id: ComputerPowerMonitoring
+        - type: mappingTemplate
+          id: ComputerCrewMonitoring
+        - type: mappingTemplate
+          id: ComputerCargoOrders
+        - type: mappingTemplate
+          id: DefaultStationBeaconBridge
+        - type: mappingTemplate
+          id: SurveillanceCameraCommand
+        - type: mappingTemplate
+          id: IntercomCommand
+    - type: mappingTemplate
+      id: CaptainsQuarters
+      children:
+        - type: mappingTemplate
+          id: SpawnPointCaptain
+        - type: mappingTemplate
+          id: LockerCaptainFilled
+        - type: mappingTemplate
+          id: LockerCaptainFilledNoLaser
+        - type: mappingTemplate
+          id: DresserCaptainFilled
+        - type: mappingTemplate
+          id: CaptainIDCard
+        - type: mappingTemplate
+          id: ToiletGoldenEmpty
+        - type: mappingTemplate
+          id: DefaultStationBeaconCaptainsQuarters
+        - type: mappingTemplate
+          id: PinpointerNuclear
+        - type: mappingTemplate
+          id: SpawnMobFoxRenault
+        - type: mappingTemplate
+          id: DrinkFlask
+    - type: mappingTemplate
+      id: HOPOffice
+      children:
+        - type: mappingTemplate
+          id: LockerHeadOfPersonnelFilled
+        - type: mappingTemplate
+          id: DresserHeadOfPersonnelFilled
+        - type: mappingTemplate
+          id: SpawnMobCorgi
+        - type: mappingTemplate
+          id: VendingMachineCart
+        - type: mappingTemplate
+          id: CrateServicePersonnel
+        - type: mappingTemplate
+          id: SpawnPointHeadOfPersonnel
+        - type: mappingTemplate
+          id: DefaultStationBeaconHOPOffice
+        - type: mappingTemplate
+          id: RubberStampApproved
+        - type: mappingTemplate
+          id: RubberStampDenied
+        - type: mappingTemplate
+          id: MaterialCloth
+        - type: mappingTemplate
+          id: MaterialDurathread
+        - type: mappingTemplate
+          id: BoxID
+        - type: mappingTemplate
+          id: BoxPDA
+
+- type: mappingTemplate
+  id: Medical
+  rootType: Entity
+  children:
+    - type: mappingTemplate
+      id: Chemistry
+      children:
+        - type: mappingTemplate
+          id: ChemMaster
+        - type: mappingTemplate
+          id: ChemDispenser
+        - type: mappingTemplate
+          id: LockerChemistryFilled
+        - type: mappingTemplate
+          id: VendingMachineChemicals
+        - type: mappingTemplate
+          id: FloorDrain
+        - type: mappingTemplate
+          id: KitchenReagentGrinder
+        - type: mappingTemplate
+          id: DefaultStationBeaconChemistry
+        - type: mappingTemplate
+          id: VendingMachineChemDrobe
+        - type: mappingTemplate
+          id: ChemistryHotplate
+        - type: mappingTemplate
+          id: BoxBeaker
+        - type: mappingTemplate
+          id: LargeBeaker
+        - type: mappingTemplate
+          id: Beaker
+        - type: mappingTemplate
+          id: MachineElectrolysisUnit
+        - type: mappingTemplate
+          id: MachineCentrifuge
+        - type: mappingTemplate
+          id: BaseGasCondenser
+        - type: mappingTemplate
+          id: FuelDispenser
+        - type: mappingTemplate
+          id: SmartFridge
+        - type: mappingTemplate
+          id: HandLabeler
+        - type: mappingTemplate
+          id: SpawnMobWalter
+    - type: mappingTemplate
+      id: Medbay
+      children:
+        - type: mappingTemplate
+          id: MedicalTechFab
+        - type: mappingTemplate
+          id: DefibrillatorCabinetFilled
+        - type: mappingTemplate
+          id: VendingMachineMediDrobe
+        - type: mappingTemplate
+          id: LockerMedicineFilled
+        - type: mappingTemplate
+          id: LockerMedicalFilled
+        - type: mappingTemplate
+          id: LockerParamedicFilled
+        - type: mappingTemplate
+          id: DefaultStationBeaconMedbay
+        - type: mappingTemplate
+          id: SurveillanceCameraMedical
+        - type: mappingTemplate
+          id: IntercomMedical
+        - type: mappingTemplate
+          id: VendingMachineWallMedical
+        - type: mappingTemplate
+          id: VendingMachineMedical
+        - type: mappingTemplate
+          id: EmergencyRollerBed
+        - type: mappingTemplate
+          id: CheapRollerBedSpawnFolded
+        - type: mappingTemplate
+          id: CheapRollerBed
+        - type: mappingTemplate
+          id: RollerBedSpawnFolded
+        - type: mappingTemplate
+          id: RollerBed
+        - type: mappingTemplate
+          id: Brutepack
+        - type: mappingTemplate
+          id: Ointment
+        - type: mappingTemplate
+          id: Gauze
+        - type: mappingTemplate
+          id: Bloodpack
+        - type: mappingTemplate
+          id: MedkitFilled
+        - type: mappingTemplate
+          id: MedkitOxygenFilled
+        - type: mappingTemplate
+          id: MedkitBruteFilled
+        - type: mappingTemplate
+          id: MedkitToxinFilled
+        - type: mappingTemplate
+          id: MedkitBurnFilled
+        - type: mappingTemplate
+          id: ClothingHandsGlovesColorWhite
+        - type: mappingTemplate
+          id: BoxPillCanister
+        - type: mappingTemplate
+          id: PillCanister
+        - type: mappingTemplate
+          id: PillCanisterRandom
+        - type: mappingTemplate
+          id: WardrobeMedicalDoctorFilled
+        - type: mappingTemplate
+          id: CrateMedical
+        - type: mappingTemplate
+          id: BannerMedical
+        - type: mappingTemplate
+          id: MedicalBed
+        - type: mappingTemplate
+          id: StasisBed
+        - type: mappingTemplate
+          id: MedkitFilled
+        - type: mappingTemplate
+          id: MedkitOxygenFilled
+        - type: mappingTemplate
+          id: MedkitBruteFilled
+        - type: mappingTemplate
+          id: MedkitToxinFilled
+        - type: mappingTemplate
+          id: MedkitBurnFilled
+        - type: mappingTemplate
+          id: HospitalCurtains
+        - type: mappingTemplate
+          id: HospitalCurtainsOpen
+    - type: mappingTemplate
+      id: MorgueRoom
+      children:
+        - type: mappingTemplate
+          id: Morgue
+        - type: mappingTemplate
+          id: FloorDrain
+        - type: mappingTemplate
+          id: BiomassReclaimer
+        - type: mappingTemplate
+          id: DefaultStationBeaconMorgue
+        - type: mappingTemplate
+          id: BoxBodyBag
+        - type: mappingTemplate
+          id: SmartFridge
+        - type: mappingTemplate
+          id: OperatingTable
+    - type: mappingTemplate
+      id: CMORoom
+      children:
+        - type: mappingTemplate
+          id: LockerChiefMedicalOfficerFilled
+        - type: mappingTemplate
+          id: DresserChiefMedicalOfficerFilled
+        - type: mappingTemplate
+          id: SuitStorageCMO
+        - type: mappingTemplate
+          id: SpawnPointChiefMedicalOfficer
+        - type: mappingTemplate
+          id: DefaultStationBeaconCMORoom
+        - type: mappingTemplate
+          id: ComputerCrewMonitoring
+        - type: mappingTemplate
+          id: BedsheetCMO
+        - type: mappingTemplate
+          id: SpawnMobCatSpace
+        - type: mappingTemplate
+          id: SpawnMobCat
+        - type: mappingTemplate
+          id: SpawnMobCatBingus
+        - type: mappingTemplate
+          id: SpawnMobCatRuntime
+        - type: mappingTemplate
+          id: SpawnMobCatException
+        - type: mappingTemplate
+          id: SpawnMobCatGeneric
+        - type: mappingTemplate
+          id: SpawnMobCatKitten
+    - type: mappingTemplate
+      id: Cryonics
+      children:
+        - type: mappingTemplate
+          id: CryoPod
+        - type: mappingTemplate
+          id: GasThermoMachineFreezer
+        - type: mappingTemplate
+          id: GasThermoMachineFreezerEnabled
+        - type: mappingTemplate
+          id: DefaultStationBeaconCryonics
+        - type: mappingTemplate
+          id: CryoxadoneBeakerSmall
+    - type: mappingTemplate
+      id: OperatingRoom
+      children:
+        - type: mappingTemplate
+          id: OperatingTable
+        - type: mappingTemplate
+          id: Drill
+        - type: mappingTemplate
+          id: Hemostat
+        - type: mappingTemplate
+          id: Scalpel
+        - type: mappingTemplate
+          id: Saw
+        - type: mappingTemplate
+          id: Cautery
+        - type: mappingTemplate
+          id: Retractor
+        - type: mappingTemplate
+          id: computerBodyScanner
+        - type: mappingTemplate
+          id: DefaultStationBeaconSurgery
+        - type: mappingTemplate
+          id: ClothingBackpackDuffelSurgeryFilled
+        - type: mappingTemplate
+          id: CrateFreezer
+        - type: mappingTemplate
+          id: CrateMedicalSurgery
+        - type: mappingTemplate
+          id: CrateSurgery
+        - type: mappingTemplate
+          id: ClothingHeadHatSurgcapBlue
+        - type: mappingTemplate
+          id: ClothingHeadHatSurgcapPurple
+        - type: mappingTemplate
+          id: ClothingHeadHatSurgcapGreen
+    - type: mappingTemplate
+      id: Virology
+      children:
+        - type: mappingTemplate
+          id: DiseaseDiagnoser
+        - type: mappingTemplate
+          id: Vaccinator
+        - type: mappingTemplate
+          id: VendingMachineViroDrobe
+        - type: mappingTemplate
+          id: BoxMouthSwab
+        - type: mappingTemplate
+          id: ClothingHandsGlovesNitrile
+        - type: mappingTemplate
+          id: WardrobeVirologyFilled
+
+- type: mappingTemplate
+  id: Science
+  rootType: Entity
+  children:
+    - type: mappingTemplate
+      id: VendingMachineSciDrobe
+    - type: mappingTemplate
+      id: LockerScienceFilled
+    - type: mappingTemplate
+      id: SpawnPointScientist
+    - type: mappingTemplate
+      id: SpawnPointResearchAssistant
+    - type: mappingTemplate
+      id: SurveillanceCameraScience
+    - type: mappingTemplate
+      id: IntercomScience
+    - type: mappingTemplate
+      id: WardrobeScienceFilled
+    - type: mappingTemplate
+      id: BannerScience
+    - type: mappingTemplate
+      id: ResearchAndDevelopmentServer
+    - type: mappingTemplate
+      id: DefaultStationBeaconServerRoom
+    - type: mappingTemplate
+      id: CrewMonitoringServer
+    - type: mappingTemplate
+      id: AnomalyGenerator
+      children:
+        - type: mappingTemplate
+          id: MachineAnomalyGenerator
+        - type: mappingTemplate
+          id: MachineAnomalyVessel
+        - type: mappingTemplate
+          id: MachineAPE
+        - type: mappingTemplate
+          id: AnomalyScanner
+        - type: mappingTemplate
+          id: DefaultStationBeaconAnomalyGenerator
+        - type: mappingTemplate
+          id: SheetPlasma
+    - type: mappingTemplate
+      id: Robotics
+      children:
+        - type: mappingTemplate
+          id: VendingMachineRoboDrobe
+        - type: mappingTemplate
+          id: VendingMachineRobotics
+        - type: mappingTemplate
+          id: BorgCharger
+        - type: mappingTemplate
+          id: DefaultStationBeaconRobotics
+        - type: mappingTemplate
+          id: ExosuitFabricator
+    - type: mappingTemplate
+      id: ArtifactLab
+      children:
+        - type: mappingTemplate
+          id: MachineArtifactAnalyzer
+        - type: mappingTemplate
+          id: ComputerAnalysisConsole
+        - type: mappingTemplate
+          id: CrateArtifactContainer
+        - type: mappingTemplate
+          id: DefaultStationBeaconArtifactLab
+        - type: mappingTemplate
+          id: RandomArtifactSpawner
+        - type: mappingTemplate
+          id: ClosetRadiationSuitFilled
+        - type: mappingTemplate
+          id: ClosetBombFilled
+        - type: mappingTemplate
+          id: ClosetL3ScienceFilled
+    - type: mappingTemplate
+      id: RDRoom
+      children:
+        - type: mappingTemplate
+          id: SpawnPointResearchDirector
+        - type: mappingTemplate
+          id: DresserResearchDirectorFilled
+        - type: mappingTemplate
+          id: SuitStorageRD
+        - type: mappingTemplate
+          id: LockerResearchDirectorFilled
+        - type: mappingTemplate
+          id: ComputerRoboticsControl
+        - type: mappingTemplate
+          id: DefaultStationBeaconRDRoom
+        - type: mappingTemplate
+          id: BedsheetRD
+        - type: mappingTemplate
+          id: SpawnMobSmile
+        - type: mappingTemplate
+          id: PottedPlantRD
+    - type: mappingTemplate
+      id: RnD
+      children:
+        - type: mappingTemplate
+          id: ComputerResearchAndDevelopment
+        - type: mappingTemplate
+          id: Protolathe
+        - type: mappingTemplate
+          id: Autolathe
+        - type: mappingTemplate
+          id: CircuitImprinter
+        - type: mappingTemplate
+          id: DefaultStationBeaconRND
+        - type: mappingTemplate
+          id: CapacitorStockPart
+        - type: mappingTemplate
+          id: MicroManipulatorStockPart
+        - type: mappingTemplate
+          id: MatterBinStockPart
+
+- type: mappingTemplate
+  id: Engineering
+  rootType: Entity
+  children:
+    - type: mappingTemplate
+      id: CERoom
+      children:
+        - type: mappingTemplate
+          id: DresserChiefEngineerFilled
+        - type: mappingTemplate
+          id: SuitStorageCE
+        - type: mappingTemplate
+          id: LockerChiefEngineerFilled
+        - type: mappingTemplate
+          id: DefaultStationBeaconCERoom
+        - type: mappingTemplate
+          id: BedsheetCE
+    - type: mappingTemplate
+      id: Atmos
+      children:
+        - type: mappingTemplate
+          id: GasThermoMachineFreezer
+        - type: mappingTemplate
+          id: GasThermoMachineHeater
+        - type: mappingTemplate
+          id: PortableScrubber
+        - type: mappingTemplate
+          id: DefaultStationBeaconAtmospherics
+        - type: mappingTemplate
+          id: TegCirculator
+        - type: mappingTemplate
+          id: TegCenter
+        - type: mappingTemplate
+          id: HeatExchanger
+        - type: mappingTemplate
+          id: LockerAtmosphericsFilled
+        - type: mappingTemplate
+          id: SuitStorageAtmos
+        - type: mappingTemplate
+          id: VendingMachineAtmosDrobe
+        - type: mappingTemplate
+          id: WardrobeAtmosphericsFilled
+        - type: mappingTemplate
+          id: SpawnMobCrabAtmos
+        - type: mappingTemplate
+          id: NitrogenCanister
+        - type: mappingTemplate
+          id: OxygenCanister
+        - type: mappingTemplate
+          id: CarbonDioxideCanister
+        - type: mappingTemplate
+          id: WaterVaporCanister
+        - type: mappingTemplate
+          id: StorageCanister
+        - type: mappingTemplate
+          id: PlasmaCanister
+        - type: mappingTemplate
+          id: NitrousOxideCanister
+    - type: mappingTemplate
+      id: Common
+      children:
+        - type: mappingTemplate
+          id: SpawnPointBorg
+        - type: mappingTemplate
+          id: GravityGenerator
+        - type: mappingTemplate
+          id: DefaultStationBeaconAnomalyGenerator
+        - type: mappingTemplate
+          id: SMESBasic
+        - type: mappingTemplate
+          id: ComputerPowerMonitoring
+        - type: mappingTemplate
+          id: DefaultStationBeaconPowerBank
+        - type: mappingTemplate
+          id: Materials
+          children:
+            - type: mappingTemplate
+              id: CableMVStack10
+            - type: mappingTemplate
+              id: CableMVStack
+            - type: mappingTemplate
+              id: CableApcStack10
+            - type: mappingTemplate
+              id: CableApcStack
+            - type: mappingTemplate
+              id: CableApcStack10
+            - type: mappingTemplate
+              id: CableApcStack
+            - type: mappingTemplate
+              id: SheetSteel10
+            - type: mappingTemplate
+              id: SheetSteel
+            - type: mappingTemplate
+              id: SheetGlass10
+            - type: mappingTemplate
+              id: SheetGlass
+            - type: mappingTemplate
+              id: SheetPlastic10
+            - type: mappingTemplate
+              id: SheetPlastic
+            - type: mappingTemplate
+              id: PartRodMetal10
+            - type: mappingTemplate
+              id: PartRodMetal
+            - type: mappingTemplate
+              id: SheetRPGlass
+            - type: mappingTemplate
+              id: SheetRGlass
+        - type: mappingTemplate
+          id: ClothingHandsGlovesColorYellow
+        - type: mappingTemplate
+          id: ClothingEyesGlassesMeson
+        - type: mappingTemplate
+          id: WeldingFuelTankFull
+        - type: mappingTemplate
+          id: VendingMachineEngiDrobe
+        - type: mappingTemplate
+          id: VendingMachineEngivend
+        - type: mappingTemplate
+          id: LockerEngineerFilled
+        - type: mappingTemplate
+          id: VendingMachineYouTool
+        - type: mappingTemplate
+          id: CutterMachine
+        - type: mappingTemplate
+          id: DefaultStationBeaconEngineering
+        - type: mappingTemplate
+          id: SurveillanceCameraEngineering
+        - type: mappingTemplate
+          id: IntercomEngineering
+        - type: mappingTemplate
+          id: BoxMesonScanners
+        - type: mappingTemplate
+          id: VendingMachineTankDispenserEngineering
+        - type: mappingTemplate
+          id: ToolboxEmergencyFilled
+        - type: mappingTemplate
+          id: ToolboxMechanicalFilled
+        - type: mappingTemplate
+          id: ToolboxElectricalFilled
+        - type: mappingTemplate
+          id: ClothingBeltUtilityEngineering
+        - type: mappingTemplate
+          id: BoxLightbulb
+        - type: mappingTemplate
+          id: BoxLighttube
+        - type: mappingTemplate
+          id: BoxLightMixed
+        - type: mappingTemplate
+          id: LightReplacer
+        - type: mappingTemplate
+          id: Autolathe
+        - type: mappingTemplate
+          id: WardrobeEngineeringFilled
+        - type: mappingTemplate
+          id: BannerEngineering
+        - type: mappingTemplate
+          id: ClothingEyesHudDiagnostic
+        - type: mappingTemplate
+          id: ClothingHeadHatBeretEngineering
+    - type: mappingTemplate
+      id: Telecoms
+      children:
+        - type: mappingTemplate
+          id: TelecomServerFilledEngineering
+        - type: mappingTemplate
+          id: TelecomServerFilledCommand
+        - type: mappingTemplate
+          id: TelecomServerFilledMedical
+        - type: mappingTemplate
+          id: TelecomServerFilledScience
+        - type: mappingTemplate
+          id: TelecomServerFilledCommon
+        - type: mappingTemplate
+          id: TelecomServerFilledService
+        - type: mappingTemplate
+          id: TelecomServerFilledSecurity
+        - type: mappingTemplate
+          id: TelecomServerFilledCargo
+        - type: mappingTemplate
+          id: DefaultStationBeaconTelecoms
+        - type: mappingTemplate
+          id: SurveillanceCameraRouterEngineering
+        - type: mappingTemplate
+          id: SurveillanceCameraRouterSupply
+        - type: mappingTemplate
+          id: SurveillanceCameraRouterCommand
+        - type: mappingTemplate
+          id: SurveillanceCameraRouterMedical
+        - type: mappingTemplate
+          id: SurveillanceCameraRouterService
+        - type: mappingTemplate
+          id: SurveillanceCameraRouterSecurity
+        - type: mappingTemplate
+          id: SurveillanceCameraRouterGeneral
+        - type: mappingTemplate
+          id: SurveillanceCameraRouterScience
+        - type: mappingTemplate
+          id: SurveillanceCameraWirelessRouterEntertainment
+    - type: mappingTemplate
+      id: SolarPanels
+      children:
+        - type: mappingTemplate
+          id: SolarAssembly
+        - type: mappingTemplate
+          id: SolarPanel
+        - type: mappingTemplate
+          id: SolarPanelBroken
+        - type: mappingTemplate
+          id: SolarTracker
+        - type: mappingTemplate
+          id: ComputerSolarControl
+        - type: mappingTemplate
+          id: DefaultStationBeaconSolars
+    - type: mappingTemplate
+      id: AME
+      children:
+        - type: mappingTemplate
+          id: DefaultStationBeaconAME
+        - type: mappingTemplate
+          id: CrateEngineeringAMEShielding
+        - type: mappingTemplate
+          id: CrateEngineeringAMEJar
+        - type: mappingTemplate
+          id: CrateEngineeringAMEControl
+        - type: mappingTemplate
+          id: AmeController
+    - type: mappingTemplate
+      id: PARoom
+      children:
+        - type: mappingTemplate
+          id: ParticleAcceleratorEmitterPortUnfinished
+        - type: mappingTemplate
+          id: ParticleAcceleratorEmitterPort
+        - type: mappingTemplate
+          id: ParticleAcceleratorEmitterStarboard
+        - type: mappingTemplate
+          id: ParticleAcceleratorEmitterStarboardUnfinished
+        - type: mappingTemplate
+          id: ParticleAcceleratorPowerBox
+        - type: mappingTemplate
+          id: ParticleAcceleratorPowerBoxUnfinished
+        - type: mappingTemplate
+          id: ParticleAcceleratorFuelChamber
+        - type: mappingTemplate
+          id: ParticleAcceleratorFuelChamberUnfinished
+        - type: mappingTemplate
+          id: ParticleAcceleratorEndCapUnfinished
+        - type: mappingTemplate
+          id: ParticleAcceleratorEndCap
+        - type: mappingTemplate
+          id: ParticleAcceleratorEmitterForeUnfinished
+        - type: mappingTemplate
+          id: ParticleAcceleratorEmitterFore
+        - type: mappingTemplate
+          id: DefaultStationBeaconSingularity
+
+- type: mappingTemplate
+  id: Security
+  rootType: Entity
+  children:
+    - type: mappingTemplate
+      id: HOSRoom
+      children:
+        - type: mappingTemplate
+          id: SpawnPointHeadOfSecurity
+        - type: mappingTemplate
+          id: LockerHeadOfSecurityFilled
+        - type: mappingTemplate
+          id: SuitStorageHOS
+        - type: mappingTemplate
+          id: DresserHeadOfSecurityFilled
+        - type: mappingTemplate
+          id: BedsheetHOS
+        - type: mappingTemplate
+          id: DefaultStationBeaconHOSRoom
+        - type: mappingTemplate
+          id: SpawnMobShiva
+    - type: mappingTemplate
+      id: Brig
+      children:
+        - type: mappingTemplate
+          id: VendingMachineSecDrobe
+        - type: mappingTemplate
+          id: VendingMachineSec
+        - type: mappingTemplate
+          id: LockerSecurityFilled
+        - type: mappingTemplate
+          id: Stunbaton
+        - type: mappingTemplate
+          id: LampInterrogator
+        - type: mappingTemplate
+          id: BoxMRE
+        - type: mappingTemplate
+          id: Handcuffs
+        - type: mappingTemplate
+          id: ComputerCriminalRecords
+        - type: mappingTemplate
+          id: ComputerSurveillanceCameraMonitor
+        - type: mappingTemplate
+          id: SpawnPointSecurityCadet
+        - type: mappingTemplate
+          id: SpawnPointSecurityOfficer
+        - type: mappingTemplate
+          id: DefaultStationBeaconBrig
+        - type: mappingTemplate
+          id: SurveillanceCameraSecurity
+        - type: mappingTemplate
+          id: IntercomSecurity
+        - type: mappingTemplate
+          id: LockerEvidence
+        - type: mappingTemplate
+          id: BannerSecurity
+        - type: mappingTemplate
+          id: WardrobePrisonFilled
+        - type: mappingTemplate
+          id: BrigTimer
+    - type: mappingTemplate
+      id: WardensOffice
+      children:
+        - type: mappingTemplate
+          id: DresserWardenFilled
+        - type: mappingTemplate
+          id: SuitStorageWarden
+        - type: mappingTemplate
+          id: LockerWardenFilled
+        - type: mappingTemplate
+          id: SpawnPointWarden
+        - type: mappingTemplate
+          id: DefaultStationBeaconWardensOffice
+        - type: mappingTemplate
+          id: ComputerCriminalRecords
+    - type: mappingTemplate
+      id: Armory
+      children:
+        - type: mappingTemplate
+          id: SecurityTechFab
+        - type: mappingTemplate
+          id: SuitStorageSec
+        - type: mappingTemplate
+          id: WeaponSubMachineGunDrozd
+        - type: mappingTemplate
+          id: WeaponShotgunKammerer
+        - type: mappingTemplate
+          id: WeaponShotgunEnforcer
+        - type: mappingTemplate
+          id: WeaponShotgunEnforcerRubber
+        - type: mappingTemplate
+          id: WeaponShotgunDoubleBarreledRubber
+        - type: mappingTemplate
+          id: WeaponShotgunDoubleBarreled
+        - type: mappingTemplate
+          id: WeaponPistolMk58
+        - type: mappingTemplate
+          id: WeaponSubMachineGunWt550
+        - type: mappingTemplate
+          id: WeaponRifleLecter
+        - type: mappingTemplate
+          id: WeaponLaserCannon
+        - type: mappingTemplate
+          id: WeaponLaserCarbine
+        - type: mappingTemplate
+          id: WeaponLaserGun
+        - type: mappingTemplate
+          id: WeaponDisabler
+        - type: mappingTemplate
+          id: WeaponCapacitorRecharger
+        - type: mappingTemplate
+          id: DefaultStationBeaconArmory
+        - type: mappingTemplate
+          id: PortableFlasher
+        - type: mappingTemplate
+          id: DeployableBarrier
+        - type: mappingTemplate
+          id: ClothingOuterArmorRiot
+        - type: mappingTemplate
+          id: ClothingOuterArmorBulletproof
+        - type: mappingTemplate
+          id: RiotLaserShield
+        - type: mappingTemplate
+          id: RiotBulletShield
+        - type: mappingTemplate
+          id: RiotShield
+        - type: mappingTemplate
+          id: ClothingOuterArmorHeavy
+        - type: mappingTemplate
+          id: LootSpawnerArmoryArmorOnly
+        - type: mappingTemplate
+          id: LootSpawnerArmoryGunsOnly
+        - type: mappingTemplate
+          id: LootSpawnerArmory
+    - type: mappingTemplate
+      id: PermaBrig
+      children:
+        - type: mappingTemplate
+          id: VendingMachineSustenance
+        - type: mappingTemplate
+          id: DefaultStationBeaconPermaBrig
+        - type: mappingTemplate
+          id: SuitStorageEVAPrisoner
+    - type: mappingTemplate
+      id: DetectiveRoom
+      children:
+        - type: mappingTemplate
+          id: VendingMachineDetDrobe
+        - type: mappingTemplate
+          id: SpawnPointDetective
+        - type: mappingTemplate
+          id: LockerDetectiveFilled
+        - type: mappingTemplate
+          id: DefaultStationBeaconDetectiveRoom
+        - type: mappingTemplate
+          id: BoxForensicPad
+    - type: mappingTemplate
+      id: Gunnery
+      children:
+        - type: mappingTemplate
+          id: TargetClown
+        - type: mappingTemplate
+          id: TargetSyndicate
+        - type: mappingTemplate
+          id: TargetHuman
+        - type: mappingTemplate
+          id: TargetStrange
+        - type: mappingTemplate
+          id: WeaponLaserCarbinePractice
+        - type: mappingTemplate
+          id: WeaponDisablerPractice
+

@@ -21,7 +21,6 @@
                        MinHeight="48"
                        Margin="5 0"
                        HorizontalExpand="True" ClipText="True" />
-                <BoxContainer HorizontalExpand="True"/>
                 <Button Name="FavoriteButton" Access="Public"
                         ToggleMode="True" SetSize="48 48">
                     <TextureRect Name="FavoriteTexture" Access="Public" Stretch="KeepAspectCentered" SetSize="24 24"

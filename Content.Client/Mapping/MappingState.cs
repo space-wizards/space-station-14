@@ -10,6 +10,7 @@ using Content.Client.Verbs;
 using Content.Shared.Administration;
 using Content.Shared.Decals;
 using Content.Shared.Input;
+using Content.Shared.Mapping;
 using Content.Shared.Maps;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
@@ -53,6 +54,7 @@ public sealed class MappingState : GameplayStateBase
     [Dependency] private readonly IResourceCache _resources = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
+    [Dependency] private readonly ILocalizationManager _locale = default!;
 
     private EntityMenuUIController _entityMenuController = default!;
 
@@ -231,7 +233,33 @@ public sealed class MappingState : GameplayStateBase
 
     private void ReloadPrototypes()
     {
+        var entitiesTemplate = new MappingPrototype(null, Loc.GetString("mapping-template"));
+        var tilesTemplate = new MappingPrototype(null, Loc.GetString("mapping-template"));
+        var decalsTemplate = new MappingPrototype(null, Loc.GetString("mapping-template"));
+
+        foreach (var favorite in _prototypeManager.EnumeratePrototypes<MappingTemplatePrototype>())
+        {
+            switch (favorite.RootType)
+            {
+                case TemplateType.Entity:
+                    RegisterFavorites(favorite, favorite.RootType, entitiesTemplate);
+                    break;
+                case TemplateType.Tile:
+                    RegisterFavorites(favorite, favorite.RootType, tilesTemplate);
+                    break;
+                case TemplateType.Decal:
+                    RegisterFavorites(favorite, favorite.RootType, decalsTemplate);
+                    break;
+            }
+        }
+
         var mappings = new Dictionary<string, MappingPrototype>();
+        Sort(mappings, entitiesTemplate);
+        mappings.Clear();
+        Sort(mappings, tilesTemplate);
+        mappings.Clear();
+        Sort(mappings, decalsTemplate);
+        mappings.Clear();
 
         var entities = new MappingPrototype(null, Loc.GetString("mapping-entities")) { Children = new List<MappingPrototype>() };
         foreach (var entity in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
@@ -240,8 +268,10 @@ public sealed class MappingState : GameplayStateBase
         }
 
         Sort(mappings, entities);
-        Screen.Entities.UpdateVisible(entities, _allPrototypes.GetOrNew(typeof(EntityPrototype)));
         mappings.Clear();
+        Screen.Entities.UpdateVisible(
+            new (entitiesTemplate.Children?.Count > 0 ? [entitiesTemplate, entities] : [entities]),
+            _allPrototypes.GetOrNew(typeof(EntityPrototype)));
 
         var tiles = new MappingPrototype(null, Loc.GetString("mapping-tiles")) { Children = new List<MappingPrototype>() };
         foreach (var tile in _prototypeManager.EnumeratePrototypes<ContentTileDefinition>())
@@ -250,8 +280,10 @@ public sealed class MappingState : GameplayStateBase
         }
 
         Sort(mappings, tiles);
-        Screen.Tiles.UpdateVisible(tiles, _allPrototypes.GetOrNew(typeof(ContentTileDefinition)));
         mappings.Clear();
+        Screen.Tiles.UpdateVisible(
+            new (tilesTemplate.Children?.Count > 0 ? [tilesTemplate, tiles] : [tiles]),
+            _allPrototypes.GetOrNew(typeof(ContentTileDefinition)));
 
         var decals = new MappingPrototype(null, Loc.GetString("mapping-decals")) { Children = new List<MappingPrototype>() };
         foreach (var decal in _prototypeManager.EnumeratePrototypes<DecalPrototype>())
@@ -261,8 +293,73 @@ public sealed class MappingState : GameplayStateBase
         }
 
         Sort(mappings, decals);
-        Screen.Decals.UpdateVisible(decals, _allPrototypes.GetOrNew(typeof(DecalPrototype)));
         mappings.Clear();
+        Screen.Decals.UpdateVisible(
+            new (decalsTemplate.Children?.Count > 0 ? [decalsTemplate, decals] : [decals]),
+            _allPrototypes.GetOrNew(typeof(DecalPrototype)));
+    }
+
+    private void RegisterFavorites(MappingTemplatePrototype templateProto, TemplateType? type, MappingPrototype toplevel)
+    {
+        if (type == null)
+        {
+            if (templateProto.RootType == null)
+                return;
+            type = templateProto.RootType;
+        }
+
+        var name = templateProto.ID;
+        if (_locale.TryGetString($"mapping-template-{templateProto.ID.ToLower()}", out var locale))
+            name = locale;
+
+        IPrototype? proto = null;
+        Type? protoType = null;
+
+        switch (type)
+        {
+            case TemplateType.Decal:
+                if (_prototypeManager.TryIndex<DecalPrototype>(templateProto.ID, out var decal))
+                    proto = decal;
+                protoType = typeof(DecalPrototype);
+                break;
+            case TemplateType.Tile:
+                if (_prototypeManager.TryIndex<ContentTileDefinition>(templateProto.ID, out var tile))
+                    proto = tile;
+                protoType = typeof(ContentTileDefinition);
+                break;
+            case TemplateType.Entity:
+                if (_prototypeManager.TryIndex<EntityPrototype>(templateProto.ID, out var entity))
+                    proto = entity;
+                protoType = typeof(EntityPrototype);
+                break;
+        }
+
+        if (proto != null && protoType != null)
+        {
+            if (!_prototypeManager.TryGetMapping(protoType, proto.ID, out var node))
+            {
+                _sawmill.Error($"No {nameof(proto)} found with id {proto.ID}");
+                return;
+            }
+
+            name = node.TryGet("name", out ValueDataNode? nameNode)
+                ? nameNode.Value
+                : proto.ID;
+
+            if (node.TryGet("suffix", out ValueDataNode? suffix))
+                name = $"{name} [{suffix.Value}]";
+        }
+
+        var mapping = new MappingPrototype(proto, name)
+            { Children = new List<MappingPrototype>(), Parents = new List<MappingPrototype>([toplevel]) };
+
+        foreach (var child in templateProto.Children)
+        {
+            RegisterFavorites(child, type, mapping);
+        }
+
+        toplevel.Children ??= new List<MappingPrototype>();
+        toplevel.Children.Add(mapping);
     }
 
     private MappingPrototype? Register<T>(T? prototype, string id, MappingPrototype topLevel) where T : class, IPrototype, IInheritingPrototype
@@ -388,7 +485,7 @@ public sealed class MappingState : GameplayStateBase
         }
     }
 
-    public void Sort(Dictionary<string, MappingPrototype> prototypes, MappingPrototype topLevel)
+    private void Sort(Dictionary<string, MappingPrototype> prototypes, MappingPrototype topLevel)
     {
         static int Compare(MappingPrototype a, MappingPrototype b)
         {
@@ -476,7 +573,8 @@ public sealed class MappingState : GameplayStateBase
     {
         if (!obj.WasModified<EntityPrototype>() &&
             !obj.WasModified<ContentTileDefinition>() &&
-            !obj.WasModified<DecalPrototype>())
+            !obj.WasModified<DecalPrototype>() &&
+            !obj.WasModified<MappingTemplatePrototype>())
         {
             return;
         }
