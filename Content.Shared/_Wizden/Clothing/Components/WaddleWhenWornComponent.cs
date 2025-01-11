@@ -1,5 +1,7 @@
-﻿using System.Numerics;
+﻿using Content.Shared.Alert;
+using System.Numerics;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Clothing.Components;
 
@@ -33,4 +35,22 @@ public sealed partial class WaddleWhenWornComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float RunAnimationLengthMultiplier = 0.568f;
+
+    /// <summary>
+    /// Slot the clothing has to be worn in to work.
+    /// </summary>
+    [DataField]
+    public string Slot = "shoes";
+
+    /// <summary>
+    /// Slot the clothing has to be worn in to work.
+    /// </summary>
+    [DataField]
+    public bool WaddlingOn = false;
+
+    /// <summary>
+    /// Alert displayed while waddling is on.
+    /// </summary>
+    [DataField]
+    public ProtoId<AlertPrototype> WaddlingAlert = "Waddling";
 }
