@@ -1,13 +1,10 @@
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.GameTicking;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Item.ItemToggle;
-using Content.Shared.Mind;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.PowerCell.Components;
-using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.Wires;
@@ -21,8 +18,6 @@ namespace Content.Shared.Silicons.Borgs;
 public abstract partial class SharedBorgSystem : EntitySystem
 {
     [Dependency] protected readonly SharedContainerSystem Container = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] protected readonly ItemSlotsSystem ItemSlots = default!;
     [Dependency] protected readonly ItemToggleSystem Toggle = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
@@ -37,30 +32,11 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, ItemSlotEjectAttemptEvent>(OnItemSlotEjectAttempt);
         SubscribeLocalEvent<BorgChassisComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
-        SubscribeLocalEvent<BorgChassisComponent, PlayerSpawnCompleteEvent>(OnSpawn);
         SubscribeLocalEvent<BorgChassisComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
         SubscribeLocalEvent<BorgChassisComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
-
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
 
         InitializeRelay();
-    }
-
-    private void OnSpawn(EntityUid uid, BorgChassisComponent component, PlayerSpawnCompleteEvent args)
-    {
-        RoundStartSilicon(args.Mob);
-    }
-
-    /// <summary>
-    /// Borgs and AI that enter the game through the normal StationSpawningSystem get their Silicon mindrole here
-    /// </summary>
-    public void RoundStartSilicon(EntityUid uid)
-    {
-        if (!_mind.TryGetMind(uid, out var mindId, out _))
-            return;
-
-        if (!_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
-            _roles.MindAddRole(mindId, "MindRoleSiliconBrain", silent: true);
     }
 
     private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent args)

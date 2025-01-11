@@ -3,8 +3,10 @@ using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Roles.Jobs;
+using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -31,6 +33,15 @@ public abstract class SharedRoleSystem : EntitySystem
         Subs.CVar(_cfg, CCVars.GameRoleTimerOverride, SetRequirementOverride, true);
 
         SubscribeLocalEvent<MindRoleComponent, ComponentShutdown>(OnComponentShutdown);
+        SubscribeLocalEvent<StartingMindRoleComponent, PlayerSpawnCompleteEvent>(OnSpawn);
+    }
+
+    private void OnSpawn(EntityUid uid, StartingMindRoleComponent component, PlayerSpawnCompleteEvent args)
+    {
+        if (!_minds.TryGetMind(uid, out var mindId, out _))
+            return;
+
+        MindAddRole(mindId, component.MindRole , silent:component.Silent);
     }
 
     private void SetRequirementOverride(string value)

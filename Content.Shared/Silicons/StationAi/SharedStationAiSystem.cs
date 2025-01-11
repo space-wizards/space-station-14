@@ -6,7 +6,6 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Electrocution;
-using Content.Shared.GameTicking;
 using Content.Shared.Intellicard;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
@@ -16,7 +15,6 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
-using Content.Shared.Silicons.Borgs;
 using Content.Shared.StationAi;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
@@ -46,7 +44,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private readonly   SharedAirlockSystem _airlocks = default!;
     [Dependency] private readonly   SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly   SharedAudioSystem _audio = default!;
-    [Dependency] private readonly   SharedBorgSystem _borg = default!;
     [Dependency] private readonly   SharedContainerSystem _containers = default!;
     [Dependency] private readonly   SharedDoorSystem _doors = default!;
     [Dependency] private readonly   SharedDoAfterSystem _doAfter = default!;
@@ -92,7 +89,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiOverlayComponent, AccessibleOverrideEvent>(OnAiAccessible);
         SubscribeLocalEvent<StationAiOverlayComponent, InRangeOverrideEvent>(OnAiInRange);
         SubscribeLocalEvent<StationAiOverlayComponent, MenuVisibilityEvent>(OnAiMenu);
-        SubscribeLocalEvent<StationAiOverlayComponent, PlayerSpawnCompleteEvent>(OnSpawn);
 
         SubscribeLocalEvent<StationAiHolderComponent, ComponentInit>(OnHolderInit);
         SubscribeLocalEvent<StationAiHolderComponent, ComponentRemove>(OnHolderRemove);
@@ -108,11 +104,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiCoreComponent, ComponentShutdown>(OnAiShutdown);
         SubscribeLocalEvent<StationAiCoreComponent, PowerChangedEvent>(OnCorePower);
         SubscribeLocalEvent<StationAiCoreComponent, GetVerbsEvent<Verb>>(OnCoreVerbs);
-    }
-
-    private void OnSpawn(EntityUid uid, StationAiOverlayComponent component, PlayerSpawnCompleteEvent args)
-    {
-        _borg.RoundStartSilicon(args.Mob);
     }
 
     private void OnCoreVerbs(Entity<StationAiCoreComponent> ent, ref GetVerbsEvent<Verb> args)
