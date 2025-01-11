@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ps3moira
-  changes:
-  - message: Fixed pump shotgun inhand sprites
-    type: Fix
-  id: 7297
-  time: '2024-09-06T23:26:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31885
 - author: yuitop
   changes:
   - message: break pull when fall asleep
@@ -3939,3 +3932,10 @@
   id: 7796
   time: '2025-01-11T02:48:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34368
+- author: Kickguy223
+  changes:
+  - message: Indestructible tiles no longer break due to explosions
+    type: Fix
+  id: 7797
+  time: '2025-01-11T17:27:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34339
