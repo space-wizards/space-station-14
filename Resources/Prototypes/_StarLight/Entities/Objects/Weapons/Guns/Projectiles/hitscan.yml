@@ -36,8 +36,9 @@
     sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: impact
   bullet:
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: bullet
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: bullet
   collisionMask: 64 #BulletImpassable
   reflective: NonEnergy
 
@@ -57,7 +58,7 @@
     types:
       Piercing: 40
       Structural: 30
-  staminaDamage: 35   
+  staminaDamage: 35
 
 - type: hitscan
   id: DebugBulletTrace
@@ -74,8 +75,9 @@
       Blunt: 1
   staminaDamage: 12   
   bullet:
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: rubber
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: rubber
 
 ### magnum
 
@@ -277,8 +279,9 @@
     types:
       Piercing: 28
   bullet:
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: slug
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: slug
 
 - type: hitscan
   id: PelletShotgunSpreadTrace
@@ -289,8 +292,9 @@
   count: 6
   spread: 15
   bullet:
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: buckshot
     
 - type: hitscan
   id: ShellShotgunIncendiaryTrace
@@ -303,8 +307,9 @@
   count: 6
   spread: 15
   bullet:
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot-flare
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: buckshot-flare
 
 - type: hitscan
   id: PelletShotgunPracticeSpreadTrace
@@ -315,8 +320,9 @@
   count: 6
   spread: 15
   bullet:
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: buckshot
 
 - type: hitscan
   id: PelletShotgunImprovisedSpreadTrace
@@ -328,8 +334,9 @@
   count: 10
   spread: 45
   bullet:
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: shard
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: shard
 
 - type: hitscan
   id: PelletShotgunUraniumSpreadTrace
@@ -341,5 +348,62 @@
   count: 5
   spread: 6
   bullet:
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: depleted-uranium
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: depleted-uranium
+
+## energy
+
+- type: hitscan
+  id: EnergyTrace
+  parent: BulletTrace
+  abstract: true
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+      state: heavylaser
+  reflective: Energy
+  
+- type: hitscan
+  id: LaserBoltTrace
+  name: laser bolt
+  parent: EnergyTrace
+  damage:
+    types:
+      Heat: 20
+      
+- type: hitscan
+  id: DestroyBoltTrace
+  name: destroying bolt
+  parent: EnergyTrace
+  damage:
+    types:
+      Heat: 50
+      
+- type: hitscan
+  id: DisablerBoltTrace
+  name: disabler bolt
+  parent: EnergyTrace
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+      state: omnilaser
+  staminaDamage: 25
+  damage:
+    types:
+      Heat: 5
+      
+- type: hitscan
+  id: TaserBoltTrace
+  name: taser bolt
+  parent: EnergyTrace
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: spark
+    color: "#ffff33"
+  staminaDamage: 33
+  knockdownAmount: 0.5
+  damage:
+    types:
+      Heat: 5

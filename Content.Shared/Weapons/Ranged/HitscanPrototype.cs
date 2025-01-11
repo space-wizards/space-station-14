@@ -2,6 +2,7 @@
 using Content.Shared.Damage;
 using Content.Shared.Physics;
 using Content.Shared.Weapons.Reflect;
+using Content.Shared.Starlight.Utility;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
@@ -15,6 +16,9 @@ public sealed partial class HitscanPrototype : IPrototype, IShootable, IInheriti
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
+    
+    [DataField("name")]
+    public string Name { get; private set; } = string.Empty;
 
     // 🌟Starlight🌟
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<HitscanPrototype>))]
@@ -27,9 +31,27 @@ public sealed partial class HitscanPrototype : IPrototype, IShootable, IInheriti
     // 🌟Starlight🌟
     [ViewVariables(VVAccess.ReadWrite), DataField("staminaDamage")]
     public float StaminaDamage;
+    
+    // 🌟Starlight🌟
+    [ViewVariables(VVAccess.ReadWrite), DataField("knockdownAmount")]
+    public float KnockdownAmount;
+    
+    // 🌟Starlight🌟
+    [ViewVariables(VVAccess.ReadWrite), DataField("stunAmount")]
+    public float StunAmount;
+    
+    // 🌟Starlight🌟
+    [ViewVariables(VVAccess.ReadWrite), DataField("slowdownAmount")]
+    public float SlowdownAmount;
+    
+    [ViewVariables(VVAccess.ReadWrite), DataField("walkSpeedMultiplier")]
+    public float WalkSpeedMultiplier = 1f;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("runSpeedMultiplier")]
+    public float RunSpeedMultiplier = 1f;
 
     // 🌟Starlight🌟
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField("igniteOnCollision"), ViewVariables(VVAccess.ReadWrite)]
     public bool Ignite = false;
 
     // 🌟Starlight🌟
@@ -53,13 +75,10 @@ public sealed partial class HitscanPrototype : IPrototype, IShootable, IInheriti
     public SpriteSpecifier? ImpactFlash;
 
     [ViewVariables(VVAccess.ReadOnly), DataField("bullet")]
-    public SpriteSpecifier? Bullet;
+    public ExtendedSpriteSpecifier? Bullet;
 
     [DataField("collisionMask")]
     public int CollisionMask = (int) CollisionGroup.Opaque;
-    
-    [DataField("igniteOnCollision")]
-    public bool ignite = false;
 
     /// <summary>
     /// What we count as for reflection.

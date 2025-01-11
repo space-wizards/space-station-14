@@ -17,6 +17,7 @@ using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
+using Content.Shared.Starlight.Utility;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -155,10 +156,13 @@ public sealed partial class GunSystem : SharedGunSystem
         spriteComp["unshaded"].Visible = true;
         _displacement.TryAddDisplacement(_displacementEffect.Displacement, spriteComp, 0, "unshaded", new HashSet<string>());
     }
-    private void RenderBullet(NetCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float distance)
+    private void RenderBullet(NetCoordinates coordinates, Angle angle, ExtendedSpriteSpecifier sprite, float distance)
     {
-        if (sprite is not SpriteSpecifier.Rsi rsi)
+        if (sprite.Sprite is not SpriteSpecifier.Rsi rsi)
+        {
+            Logger.Warning("Sprite is not Rsi Type");
             return;
+        }
 
         var coords = GetCoordinates(coordinates);
 
@@ -175,6 +179,7 @@ public sealed partial class GunSystem : SharedGunSystem
         spriteComp.Offset = new Vector2(1f, 0f);
         spriteComp.Rotation = 1.5708f;
         spriteComp[EffectLayers.Unshaded].Visible = true;
+        spriteComp.Color = sprite.Color;
 
         var anim = new Animation()
         {

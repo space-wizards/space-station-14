@@ -8,8 +8,8 @@
     tags:
       - Cartridge
       - CartridgeBattery
-  - type: CartridgeAmmo
-    proto: BulletLaser
+  - type: HitScanCartridgeAmmo
+    hitscan: LaserBoltTrace
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Casings/laser_casing.rsi
     layers:
@@ -23,5 +23,5 @@
   name: cartridge (laser)
   parent: BaseCartridgeBattery
   components:
-  - type: CartridgeAmmo
-    proto: BulletLaser
+  - type: HitScanCartridgeAmmo
+    hitscan: LaserBoltTrace

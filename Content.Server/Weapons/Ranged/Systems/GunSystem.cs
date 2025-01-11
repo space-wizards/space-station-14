@@ -7,6 +7,8 @@ using Content.Server.Interaction;
 using Content.Server.Mech.Equipment.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Weapons.Ranged.Components;
+using Content.Server.Stunnable;
+using Content.Server.Stunnable.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
@@ -14,6 +16,7 @@ using Content.Shared.Effects;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Projectiles;
+using Content.Shared.StatusEffect;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
@@ -60,6 +63,7 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly DecalSystem _decals = default!;  // 🌟Starlight🌟
     [Dependency] private readonly FlammableSystem _flammableSystem = default!; // 🌟Starlight🌟
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!; // 🌟Starlight🌟
+    [Dependency] private readonly StunSystem _stunSystem = default!;
 
     private const float DamagePitchVariation = 0.05f;
     private string[] _bloodDecals = []; // 🌟Starlight🌟
@@ -282,18 +286,21 @@ public sealed partial class GunSystem : SharedGunSystem
                         var hitEntity = lastHit.Value;
                         if (hitscan.StaminaDamage > 0f)
                             _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage, source: user);
+                        
+                        if (TryComp<StatusEffectsComponent>(hitEntity, out var status))
+                        {
+                            _stunSystem.TryStun(hitEntity, TimeSpan.FromSeconds(hitscan.StunAmount), true, status);
+
+                            _stunSystem.TryKnockdown(hitEntity, TimeSpan.FromSeconds(hitscan.KnockdownAmount), true, status);
+
+                            _stunSystem.TrySlowdown(hitEntity, TimeSpan.FromSeconds(hitscan.SlowdownAmount), true, hitscan.WalkSpeedMultiplier, hitscan.RunSpeedMultiplier, status);
+                        }
 
                         var dmg = hitscan.Damage;
 
                         var hitName = ToPrettyString(hitEntity);
                         if (dmg != null)
                             dmg = Damageable.TryChangeDamage(hitEntity, dmg, origin: user);
-
-                        if (hitscan.ignite && TryComp<FlammableComponent>(hitEntity, out var flameComp))
-                        {
-                            flameComp.FireStacks += 1;
-                            _flammableSystem.Ignite(hitEntity, lastUser, flameComp);
-                        }
 
                         // check null again, as TryChangeDamage returns modified damage values
                         if (dmg != null)
