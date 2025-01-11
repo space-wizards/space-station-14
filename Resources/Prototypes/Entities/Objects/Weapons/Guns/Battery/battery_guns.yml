@@ -689,10 +689,19 @@
       fireCost: 100
 
 - type: entity
+  parent: WeaponPistolCHIMPUpgraded
+  id: WeaponPistolCHIMPUpgradedUnpowered
+  suffix: Syndicate, Unpowered
+  components:
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 0
+
+- type: entity
   name: experimental C.H.I.M.P. handcannon
   parent: [BaseMajorContraband, WeaponPistolCHIMP]
   id: WeaponPistolCHIMPExperiment
-  description: This strange C.H.I.M.P. model is malfunctioning and fires only one particle type...
+  description: This experimental C.H.I.M.P. model is malfunctioning and fires only one particle type...
   components:
   - type: ProjectileBatteryAmmoProvider
     proto: AnomalousParticleOmegaStrong
