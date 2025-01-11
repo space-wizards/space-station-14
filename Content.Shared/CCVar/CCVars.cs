@@ -1505,13 +1505,13 @@ namespace Content.Shared.CCVar
         /// Whether to automatically spawn escape shuttles.
         /// </summary>
         public static readonly CVarDef<bool> GridFill =
-            CVarDef.Create("shuttle.grid_fill", false, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.grid_fill", true, CVar.SERVERONLY);
 
         /// <summary>
         /// Whether to automatically preloading grids by GridPreloaderSystem
         /// </summary>
         public static readonly CVarDef<bool> PreloadGrids =
-            CVarDef.Create("shuttle.preload_grids", false, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.preload_grids", true, CVar.SERVERONLY);
 
         /// <summary>
         /// How long the warmup time before FTL start should be.

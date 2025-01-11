@@ -23,7 +23,7 @@
       BluespaceCrystal: 1
 
 - type: entity
-  parent: BluespaceCrystal
+  parent: TP14BluespaceCrystal
   id: BluespaceCrystal1
   suffix: 1 BC
   components:
@@ -31,7 +31,7 @@
     count: 1
 
 - type: entity
-  parent: BluespaceCrystal
+  parent: TP14BluespaceCrystal
   id: BluespaceCrystal5
   suffix: 5 BC
   components:
@@ -39,7 +39,7 @@
     count: 5
 
 - type: entity
-  parent: BluespaceCrystal
+  parent: TP14BluespaceCrystal
   id: BluespaceCrystal10
   suffix: 10 BC
   components:
