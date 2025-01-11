@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: You can no longer insert any item in AI upload console.
-    type: Fix
-  id: 7296
-  time: '2024-09-06T19:07:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31900
 - author: ps3moira
   changes:
   - message: Fixed pump shotgun inhand sprites
@@ -3938,3 +3931,11 @@
   id: 7795
   time: '2025-01-10T15:37:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34202
+- author: Tayrtahn
+  changes:
+  - message: Arcades, vending machines and the recycler now sometimes say creepy things
+      when a ghost uses the "Boo!" action near them.
+    type: Add
+  id: 7796
+  time: '2025-01-11T02:48:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34368
