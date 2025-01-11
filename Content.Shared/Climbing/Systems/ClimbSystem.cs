@@ -151,6 +151,10 @@ public sealed partial class ClimbSystem : VirtualController
         if (args.Handled)
             return;
 
+        // If already climbing then don't show outlines.
+        if (TryComp(args.Dragged, out ClimbingComponent? climbing) && climbing.IsClimbing)
+            return;
+
         var canVault = args.User == args.Dragged
             ? CanVault(component, args.User, uid, out _)
             : CanVault(component, args.User, args.Dragged, uid, out _);
@@ -249,6 +253,18 @@ public sealed partial class ClimbSystem : VirtualController
             return;
 
         if (!Resolve(climbable, ref comp, false))
+            return;
+
+        var selfEvent = new SelfBeforeClimbEvent(uid, user, (climbable, comp));
+        RaiseLocalEvent(uid, selfEvent);
+
+        if (selfEvent.Cancelled)
+            return;
+
+        var targetEvent = new TargetBeforeClimbEvent(uid, user, (climbable, comp));
+        RaiseLocalEvent(climbable, targetEvent);
+
+        if (targetEvent.Cancelled)
             return;
 
         if (!ReplaceFixtures(uid, climbing, fixtures))

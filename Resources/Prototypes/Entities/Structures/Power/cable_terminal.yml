@@ -45,3 +45,11 @@
         powerMV:
           !type:CableTerminalNode
           nodeGroupID: MVPower
+
+- type: entity
+  id: CableTerminalUncuttable
+  parent: CableTerminal
+  suffix: uncuttable
+  components:
+  - type: Cable
+    cuttingQuality: null

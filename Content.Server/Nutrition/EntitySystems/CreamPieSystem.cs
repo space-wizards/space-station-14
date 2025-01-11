@@ -51,12 +51,9 @@ namespace Content.Server.Nutrition.EntitySystems
                 {
                     _puddle.TrySpillAt(uid, solution, out _, false);
                 }
-                if (foodComp.Trash.Count == 0)
+                foreach (var trash in foodComp.Trash)
                 {
-                    foreach (var trash in foodComp.Trash)
-                    {
-                        EntityManager.SpawnEntity(trash, Transform(uid).Coordinates);
-                    }
+                    EntityManager.SpawnEntity(trash, Transform(uid).Coordinates);
                 }
             }
             ActivatePayload(uid);
