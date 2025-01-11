@@ -36,8 +36,6 @@
       collection: BikeHorn
       params:
         pitch: .8
-    action: ActionToggleWaddling
-    mustEquip: true
   - type: ToggleClothing
     action: ActionToggleWaddling
     mustEquip: true
