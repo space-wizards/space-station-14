@@ -693,7 +693,7 @@
   id: WeaponPistolCHIMPUpgradedUnpowered
   suffix: Syndicate, Unpowered
   components:
-  - type: Battery
+  - type: Battery # if someone could make charges transfer between construction nodes, this prototype wouldn't be needed
     maxCharge: 1000
     startingCharge: 0
 
