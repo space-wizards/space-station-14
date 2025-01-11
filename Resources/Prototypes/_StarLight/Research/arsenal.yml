@@ -10,3 +10,15 @@
   recipeUnlocks:
   - WeaponIonRifle
   - WeaponIonCarbine
+  
+- type: technology
+  id: DecloneTechnology
+  name: research-technology-declone-technology
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/decloner.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 4
+  cost: 30000
+  recipeUnlocks:
+  - WeaponDecloner
