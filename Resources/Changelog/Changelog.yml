@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Added the justice helm to the secdrobe
-    type: Add
-  - message: Added a crafting recipe for the justice helm
-    type: Add
-  id: 7300
-  time: '2024-09-07T03:04:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31905
 - author: Futuristic
   changes:
   - message: Remove binary encryption key from RD lockers
@@ -3938,3 +3929,11 @@
   id: 7799
   time: '2025-01-11T20:03:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34251
+- author: Errant
+  changes:
+  - message: Players are now informed in chat every time their role type changes,
+      and can also see their current role type on the character window.
+    type: Add
+  id: 7800
+  time: '2025-01-11T21:17:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33420
