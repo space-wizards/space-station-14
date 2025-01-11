@@ -2044,4 +2044,18 @@ Entries:
   id: 288
   time: '2025-01-11T14:34:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/228
-
+- author: Rinary
+  changes:
+  - message: Now all mech and starlight weapons using hitscan.
+    type: Tweak
+  id: 289
+  time: '2025-01-11T18:41:07.838290+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Immolator, Ion Rifle and Carbine, Decloner, now can be researched(Ion
+      Weaponry research, Declone Technology research, Immolator added to ConcentratedLaserWeaponry)
+    type: Add
+  id: 290
+  time: '2025-01-11T18:42:24.740251+00:00'
+  url: 'null'
