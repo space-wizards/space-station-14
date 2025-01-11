@@ -179,7 +179,7 @@ public sealed partial class GunSystem : SharedGunSystem
         spriteComp.Offset = new Vector2(1f, 0f);
         spriteComp.Rotation = 1.5708f;
         spriteComp[EffectLayers.Unshaded].Visible = true;
-        spriteComp.Color = sprite.Color;
+        spriteComp.Color = sprite.SpriteColor;
 
         var anim = new Animation()
         {

@@ -41,6 +41,10 @@ public sealed partial class HitscanPrototype : IPrototype, IShootable, IInheriti
     public float StunAmount;
     
     // 🌟Starlight🌟
+    [ViewVariables(VVAccess.ReadWrite), DataField("emp")]
+    public EmpProperties? Emp;
+    
+    // 🌟Starlight🌟
     [ViewVariables(VVAccess.ReadWrite), DataField("slowdownAmount")]
     public float SlowdownAmount;
     

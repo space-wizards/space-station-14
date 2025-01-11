@@ -9,6 +9,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Weapons.Ranged.Components;
 using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
+using Content.Server.Emp;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
@@ -63,7 +64,8 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly DecalSystem _decals = default!;  // 🌟Starlight🌟
     [Dependency] private readonly FlammableSystem _flammableSystem = default!; // 🌟Starlight🌟
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!; // 🌟Starlight🌟
-    [Dependency] private readonly StunSystem _stunSystem = default!;
+    [Dependency] private readonly StunSystem _stunSystem = default!; // 🌟Starlight🌟
+    [Dependency] private readonly EmpSystem _emp = default!; // 🌟Starlight🌟
 
     private const float DamagePitchVariation = 0.05f;
     private string[] _bloodDecals = []; // 🌟Starlight🌟
@@ -295,6 +297,21 @@ public sealed partial class GunSystem : SharedGunSystem
 
                             _stunSystem.TrySlowdown(hitEntity, TimeSpan.FromSeconds(hitscan.SlowdownAmount), true, hitscan.WalkSpeedMultiplier, hitscan.RunSpeedMultiplier, status);
                         }
+                        
+                        if (hitscan.Ignite)
+                        {
+                            if (TryComp<FlammableComponent>(hitEntity, out var flammable))
+                                _flammableSystem.SetFireStacks(hitEntity, flammable.FireStacks + 1, flammable, true);
+
+                            if (Transform(hitEntity) is TransformComponent xform && xform.GridUid is { } hitGridUid)
+                            {
+                                var position = _transform.GetGridOrMapTilePosition(hitEntity, xform);
+                                _atmosphere.HotspotExpose(hitGridUid, position, hitscan.Temperature, 50, user, true);
+                            }
+                        }
+                        
+                        if (hitscan.Emp != null)
+                            _emp.EmpPulse(_transform.GetMapCoordinates(hitEntity), hitscan.Emp.Range, hitscan.Emp.EnergyConsumption, hitscan.Emp.DisableDuration);
 
                         var dmg = hitscan.Damage;
 
@@ -478,17 +495,6 @@ public sealed partial class GunSystem : SharedGunSystem
                     {
                         Logs.Add(LogType.HitScanHit,
                             $"{hitName:target} hit by hitscan dealing {dmg.GetTotal():damage} damage");
-                    }
-                }
-                if (hitscan.Ignite)
-                {
-                    if (TryComp<FlammableComponent>(lastHit.Value, out var flammable))
-                        _flammableSystem.SetFireStacks(lastHit.Value, 1, flammable, true);
-
-                    if (Transform(lastHit.Value) is TransformComponent xform && xform.GridUid is { } gridUid)
-                    {
-                        var position = _transform.GetGridOrMapTilePosition(lastHit.Value, xform);
-                        _atmosphere.HotspotExpose(gridUid, position, hitscan.Temperature, 50, user, true);
                     }
                 }
             }
@@ -699,7 +705,7 @@ public sealed partial class GunSystem : SharedGunSystem
             }
         }
 
-        if (hitscanEvent.ImpactFlash is not null || hitscanEvent.TravelFlash is not null || hitscanEvent.MuzzleFlash is not null)
+        if (hitscanEvent.ImpactFlash is not null || hitscanEvent.TravelFlash is not null || hitscanEvent.MuzzleFlash is not null || hitscanEvent.Bullet is not null)
             RaiseNetworkEvent(hitscanEvent, Filter.Pvs(fromCoordinates, entityMan: EntityManager));
     }
 
