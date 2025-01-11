@@ -73,7 +73,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 50
-          
+
 - type: reagent
   id: PropulsionGel
   name: reagent-name-propulsion-gel
@@ -95,20 +95,47 @@
   tileReactions:
     - !type:SpillTileReaction
 
-    # These two dont actually do anything, theyre just here for rp
+# Thui beego pu suggestion.
 - type: reagent
   id: Estradiol
   name: reagent-name-estradiol
+  group: Medicine # DeltaV
   desc: reagent-desc-estradiol
-  physicalDesc: reagent-physical-desc-clear
+  physicalDesc: reagent-physical-desc-hormonal # DeltaV
   color: "pink"
-  
+  boilingPoint: 1573.0 # DeltaV
+  meltingPoint: 446.5 # DeltaV
+  metabolisms: # DeltaV
+    Medicine:
+      metabolismRate: 0.02
+      effects:
+      - !type:GenericStatusEffect
+        key: Feminized
+        component: Feminized
+        type: Add
+        time: 2
+        refresh: false
+
 - type: reagent
   id: Testosterone
   name: reagent-name-testosterone
+  group: Medicine # DeltaV
   desc: reagent-desc-testosterone
-  physicalDesc: reagent-physical-desc-chalky
+  physicalDesc: reagent-physical-desc-hormonal # DeltaV
+  flavor: bitter # DeltaV
   color: "#267ef0"
+  boilingPoint: 1321.0 # DeltaV
+  meltingPoint: 424.1 # DeltaV
+  metabolisms: # DeltaV
+    Medicine:
+      metabolismRate: 0.02
+      effects:
+      - !type:GenericStatusEffect
+        key: Masculinized
+        component: Masculinized
+        type: Add
+        time: 2
+        refresh: false
 
 - type: reagent
   id: Holium
