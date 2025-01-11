@@ -9,7 +9,7 @@
       - Cartridge
       - CartridgeBattery
   - type: HitScanCartridgeAmmo
-    hitscan: LaserBoltTrace
+    hitscan: LaserBolt
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Casings/laser_casing.rsi
     layers:
@@ -24,4 +24,4 @@
   parent: BaseCartridgeBattery
   components:
   - type: HitScanCartridgeAmmo
-    hitscan: LaserBoltTrace
+    hitscan: LaserBolt

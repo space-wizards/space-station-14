@@ -157,8 +157,8 @@
       - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
-  - type: ProjectileBatteryAmmoProvider
-    proto: BulletTaser
+  - type: HitscanBatteryAmmoProvider
+    proto: TaserBolt
     fireCost: 40
   - type: Appearance
   - type: AmmoCounter
@@ -180,8 +180,8 @@
       - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
-  - type: ProjectileBatteryAmmoProvider
-    proto: ShellShotgun
+  - type: HitscanBatteryAmmoProvider
+    proto: PelletShotgunSpreadTrace
     fireCost: 100
   - type: Appearance
   - type: AmmoCounter
@@ -203,8 +203,8 @@
       - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
-  - type: ProjectileBatteryAmmoProvider
-    proto: ShellShotgunIncendiary
+  - type: HitscanBatteryAmmoProvider
+    proto: ShellShotgunIncendiaryTrace
     fireCost: 90
   - type: Appearance
   - type: AmmoCounter
@@ -228,8 +228,8 @@
       - Burst
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
-  - type: ProjectileBatteryAmmoProvider
-    proto: CartridgeLightRifle
+  - type: HitscanBatteryAmmoProvider
+    proto: BulletLightRifleTrace
     fireCost: 20
   - type: Appearance
   - type: AmmoCounter
@@ -254,8 +254,8 @@
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
-  - type: ProjectileBatteryAmmoProvider
-    proto: BulletEMP
+  - type: HitscanBatteryAmmoProvider
+    proto: EmpPulse
     fireCost: 400
   - type: Appearance
   - type: AmmoCounter
@@ -284,8 +284,8 @@
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
-  - type: ProjectileBatteryAmmoProvider
-    proto: BulletLaser
+  - type: HitscanBatteryAmmoProvider
+    proto: LaserBolt
     fireCost: 20
   - type: Appearance
   - type: AmmoCounter

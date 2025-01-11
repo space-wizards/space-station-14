@@ -98,7 +98,7 @@
 - type: hitscan
   id: BulletMagnumIncendiaryTrace
   parent: BulletTrace
-  ignite: true
+  igniteOnCollision: true
   damage:
     types:
       Blunt: 3
@@ -138,7 +138,7 @@
 - type: hitscan
   id: BulletPistolIncendiaryTrace
   parent: BulletTrace
-  ignite: true
+  igniteOnCollision: true
   damage:
     types:
       Blunt: 2
@@ -203,7 +203,7 @@
 - type: hitscan
   id: BulletLightRifleIncendiaryTrace
   parent: BulletTrace
-  ignite: true
+  igniteOnCollision: true
   damage:
     types:
       Blunt: 3
@@ -236,7 +236,7 @@
 - type: hitscan
   id: BulletRifleIncendiaryTrace
   parent: BulletTrace
-  ignite: true
+  igniteOnCollision: true
   damage:
     types:
       Blunt: 2
@@ -259,8 +259,9 @@
       Blunt: 10
   staminaDamage: 40   
   bullet:
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: buckshot
 
 - type: hitscan
   id: PelletShotgunSlugTrace
@@ -303,7 +304,7 @@
     types:
       Blunt: 3
       Heat: 7
-  ignite: true
+  igniteOnCollision: true
   count: 6
   spread: 15
   bullet:
