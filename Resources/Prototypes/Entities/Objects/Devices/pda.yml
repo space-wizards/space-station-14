@@ -920,7 +920,7 @@
     - LogProbeCartridge
     - AstroNavCartridge
     - NanoChatCartridge # DV
-    - StockTradingCartridge
+    - StockTradingCartridge # DV
 
 - type: entity
   parent: CentcomPDA
@@ -946,7 +946,7 @@
     - MedTekCartridge
     - AstroNavCartridge
     - NanoChatCartridge # DV
-    - StockTradingCartridge
+    - StockTradingCartridge # DV
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
