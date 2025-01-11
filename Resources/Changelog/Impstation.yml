@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Drags-His-Tail
-  changes:
-  - message: Added fultons and fulton beacons to the Mass Excavation research.
-    type: Tweak
-  id: 399
-  time: '2024-10-21T00:17:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/523
 - author: ruddygreat
   changes:
   - message: the shining spring remil kit now costs 12 tc instead of 14
@@ -4487,3 +4480,16 @@
   id: 898
   time: '2025-01-11T02:41:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1267
+- author: Pinkbat5
+  changes:
+  - message: Some of the dangerous reagents have been marked as contraband. Check
+      the chemical guidebook to see what is and isn't illegal!
+    type: Tweak
+  - message: Rainbow weed, fly amanita and death nettles are now contraband.
+    type: Tweak
+  - message: The detective's forensic pad can now be used to detect the reagents in
+      any sample of liquid.
+    type: Add
+  id: 899
+  time: '2025-01-11T03:15:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1275
