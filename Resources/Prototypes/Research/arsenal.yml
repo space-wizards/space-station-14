@@ -152,6 +152,7 @@
   recipeUnlocks:
   - WeaponLaserCannon
   - WeaponMechCombatSolarisLaser
+  - WeaponLaserImmolator
 
 - type: technology
   id: WaveParticleHarnessing

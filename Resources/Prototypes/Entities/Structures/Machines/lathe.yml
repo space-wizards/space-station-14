@@ -359,6 +359,7 @@
 # Starlight start
       - WeaponIonRifle
       - WeaponIonCarbine
+      - WeaponLaserImmolator
       - CartridgePistolRubber
       - CartridgeMagnumRubber
       - CartridgeRifleRubber

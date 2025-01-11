@@ -101,3 +101,12 @@
     Steel: 1500
     Gold: 1000
     Silver: 1000
+    
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
+  id: WeaponLaserImmolator
+  result: WeaponLaserImmolator
+  materials:
+    Steel: 2000
+    Plasma: 1000
+    Silver: 1000
