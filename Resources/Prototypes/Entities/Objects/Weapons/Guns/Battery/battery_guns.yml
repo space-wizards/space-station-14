@@ -623,7 +623,7 @@
   - type: Item
     size: Normal  # Intentionally larger than other pistols
     shape:
-    - 0,0,2,1
+    - 0,0,1,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
     layers:
