@@ -19,7 +19,6 @@ namespace Content.Shared.Fluids.Components
 
         [DataField("solution")] public string SolutionName = "puddle";
 
-        [DataField("solutionRef")]
         public Entity<SolutionComponent>? Solution;
     }
 }

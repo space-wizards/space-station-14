@@ -32,17 +32,17 @@
     magState: disable
     steps: 5
     zeroVisible: true
-  - type: ProjectileBatteryAmmoProvider
-    proto: BulletDisabler
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBoltTrace
     fireCost: 100
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: BulletDisabler
+    - proto: DisablerBoltTrace
       fireCost: 100
       visualState: disable
       magState: disable
       heldPrefix: disable4
-    - proto: BulletAdvTaser
+    - proto: TaserBoltTrace
       fireCost: 250
       visualState: stun
       magState: stun
@@ -70,17 +70,17 @@
     magState: disable
     steps: 5
     zeroVisible: true
-  - type: ProjectileBatteryAmmoProvider
-    proto: BulletDisabler
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBoltTrace
     fireCost: 100
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: BulletDisabler
+    - proto: DisablerBoltTrace
       fireCost: 100
       visualState: disable
       magState: disable
       heldPrefix: disable4
-    - proto: BulletLaser
+    - proto: LaserBoltTrace
       fireCost: 65
       visualState: kill
       magState: kill
@@ -104,14 +104,14 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: ProjectileBatteryAmmoProvider
-    proto: BulletDisabler
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBoltTrace
     fireCost: 150
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: BulletDisabler
+    - proto: DisablerBoltTrace
       fireCost: 150
-    - proto: BulletLaser
+    - proto: LaserBoltTrace
       fireCost: 200
       conditions:
       - !type:AlertLevelCondition
@@ -174,15 +174,15 @@
   - type: Lock
   - type: AccessReader
     access: [["Security"]]
-  - type: ProjectileBatteryAmmoProvider
-    proto: BulletDisabler
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBoltTrace
     fireCost: 100
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: BulletDisabler
+    - proto: DisablerBoltTrace
       fireCost: 100
       magState: disable
-    - proto: BulletAdvTaser
+    - proto: TaserBoltTrace
       fireCost: 250
       magState: stun
       conditions:
@@ -193,7 +193,7 @@
         - yellow
         - red
         - gamma
-    - proto: BulletLaser
+    - proto: LaserBoltTrace
       fireCost: 100
       magState: lethal
       conditions:
@@ -229,24 +229,24 @@
     magState: disable
     steps: 5
     zeroVisible: true
-  - type: ProjectileBatteryAmmoProvider
-    proto: BulletDisabler
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBoltTrace
     fireCost: 40
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: BulletDisabler
+    - proto: DisablerBoltTrace
       fireCost: 40
       magState: disable
       visualState: disable-unshaded
-    - proto: BulletAdvTaser
+    - proto: TaserBoltTrace
       fireCost: 100
       magState: stun
       visualState: stun-unshaded
-    - proto: BulletLaser
+    - proto: LaserBoltTrace
       fireCost: 75
       magState: kill
       visualState: kill-unshaded
-    - proto: BulletLaserDestroy
+    - proto: DestroyBoltTrace
       fireCost: 750
       magState: destroy
       visualState: destroy-unshaded

@@ -16,7 +16,6 @@ public sealed partial class SmokeComponent : Component
     /// <summary>
     /// The solution on the entity with touch and ingestion reactions.
     /// </summary>
-    [DataField]
     public Entity<SolutionComponent>? Solution = null;
 
     /// <summary>

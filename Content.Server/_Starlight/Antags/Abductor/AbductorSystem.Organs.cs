@@ -69,11 +69,11 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
                 _damageable.TryChangeDamage(uid, _passiveHealing);
                 break;
             case AbductorOrganType.Plasma:
-                if (_time.CurTime - victim.LastActivation < TimeSpan.FromSeconds(60))
+                if (_time.CurTime - victim.LastActivation < TimeSpan.FromSeconds(120))
                     return;
                 victim.LastActivation = _time.CurTime;
                 var mix = _atmos.GetContainingMixture((uid, Transform(uid)), true, true) ?? new();
-                mix.AdjustMoles(Gas.Plasma, 60);
+                mix.AdjustMoles(Gas.Plasma, 30);
                 _chat.TryEmoteWithChat(uid, "Cough");
                 break;
             case AbductorOrganType.Gravity:
@@ -84,13 +84,13 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
                 _xformSys.SetParent(gravity, uid);
                 break;
             case AbductorOrganType.Egg:
-                if (_time.CurTime - victim.LastActivation < TimeSpan.FromSeconds(30))
+                if (_time.CurTime - victim.LastActivation < TimeSpan.FromSeconds(120))
                     return;
                 victim.LastActivation = _time.CurTime;
                 SpawnAttachedTo("FoodEggChickenFertilized", Transform(uid).Coordinates);
                 break;
             case AbductorOrganType.Spider:
-                if (_time.CurTime - victim.LastActivation < TimeSpan.FromSeconds(120))
+                if (_time.CurTime - victim.LastActivation < TimeSpan.FromSeconds(240))
                     return;
                 victim.LastActivation = _time.CurTime;
                 SpawnAttachedTo("EggSpiderFertilized", Transform(uid).Coordinates);

@@ -1,0 +1,19 @@
+<Document>
+#Alert Levels
+
+Alert levels represent the danger that is currently directed towards the station. There are 7 alert levels you should look out for.
+
+[color=#00a933]Code Green[/color]: Standard alert at the start of the shift, no danger.
+
+[color=#2a6099]Code Blue[/color]: A danger has been shown to be present on the station
+
+[color=#ff0000]Code Red[/color]: There is active danger towards the station crew.
+
+[color=#ec9ba4]Code Gamma[/color]: There is a threat of total station destruction.
+
+[color=#8d281e]Code Delta[/color]: The onboard nuclear device has been armed, station destruction is imminent. 
+
+[color=#acb20c]Code Yellow[/color]: There is an atmospheric or structural threat to the station.
+
+[color=#8d1d75]Code Violet[/color]: There is a biohazard threat on board the station.
+</Document>

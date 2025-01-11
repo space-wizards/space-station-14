@@ -47,22 +47,22 @@ public sealed class LimbDamageSystem : EntitySystem
             switch (damage.Key)
             {
                 case "Blunt":
-                    chance += 0.0005f * damage.Value.Float();
+                    chance += 0.00005f * damage.Value.Float();
                     break;
                 case "Slash":
-                    chance += 0.005f * damage.Value.Float();
+                    chance += 0.0005f * damage.Value.Float();
                     break;
                 case "Piercing":
-                    chance += 0.001f * damage.Value.Float();
+                    chance += 0.0001f * damage.Value.Float();
                     break;
                 case "Heat":
-                    chance += 0.002f * damage.Value.Float();
+                    chance += 0.0002f * damage.Value.Float();
                     break;
                 case "Cold":
-                    chance += 0.004f * damage.Value.Float();
+                    chance += 0.0004f * damage.Value.Float();
                     break;
                 case "Caustic":
-                    chance += 0.01f * damage.Value.Float();
+                    chance += 0.001f * damage.Value.Float();
                     break;
                 default:
                     break;

@@ -8,8 +8,8 @@
     tags:
     - Cartridge
     - CartridgeLightRifle
-  - type: CartridgeAmmo
-    proto: BulletLightRifle
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletLightRifleTrace
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
@@ -23,16 +23,16 @@
   name: cartridge (.30 rifle)
   parent: BaseCartridgeLightRifle
   components:
-  - type: CartridgeAmmo
-    proto: BulletLightRifle
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletLightRifleTrace
 
 - type: entity
   id: CartridgeLightRiflePractice
   name: cartridge (.30 rifle practice)
   parent: BaseCartridgeLightRifle
   components:
-  - type: CartridgeAmmo
-    proto: BulletLightRiflePractice
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletLightRiflePracticeTrace
   - type: Sprite
     layers:
       - state: base
@@ -46,8 +46,8 @@
   name: cartridge (.30 rifle incendiary)
   parent: BaseCartridgeLightRifle
   components:
-  - type: CartridgeAmmo
-    proto: BulletLightRifleIncendiary
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletLightRifleIncendiaryTrace
   - type: Sprite
     layers:
       - state: base
@@ -61,8 +61,8 @@
   name: cartridge (.30 rifle uranium)
   parent: BaseCartridgeLightRifle
   components:
-  - type: CartridgeAmmo
-    proto: BulletLightRifleUranium
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletLightRifleUraniumTrace
   - type: Sprite
     layers:
       - state: base

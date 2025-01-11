@@ -1,0 +1,61 @@
+- type: guideEntry
+  id: SOP
+  name: guide-entry-sl-sop-intro
+  text: "/ServerInfo/Guidebook/StarlightSOP/sop-intro.xml"
+  children:
+  - alert-levels
+
+- type: guideEntry
+  id: alert-levels
+  name: guide-entry-sl-alert-levels
+  text: "/ServerInfo/Guidebook/StarlightSOP/Alerts/alert-levels.xml"
+  children:
+    - code-green
+    - code-blue
+    - code-red
+    - code-gamma
+    - code-delta
+    - code-yellow
+    - code-violet
+
+- type: guideEntry
+  id: code-green
+  name: guide-entry-sl-code-green
+  text: "/ServerInfo/Guidebook/StarlightSOP/Alerts/code-green.xml"
+  priority: 1
+  
+- type: guideEntry
+  id: code-blue
+  name: guide-entry-sl-code-blue
+  text: "/ServerInfo/Guidebook/StarlightSOP/Alerts/code-blue.xml"
+  priority: 2
+
+- type: guideEntry
+  id: code-red
+  name: guide-entry-sl-code-red
+  text: "/ServerInfo/Guidebook/StarlightSOP/Alerts/code-red.xml"
+  priority: 3
+
+- type: guideEntry
+  id: code-gamma
+  name: guide-entry-sl-code-gamma
+  text: "/ServerInfo/Guidebook/StarlightSOP/Alerts/code-gamma.xml"
+  priority: 4
+
+- type: guideEntry
+  id: code-delta
+  name: guide-entry-sl-code-delta
+  text: "/ServerInfo/Guidebook/StarlightSOP/Alerts/code-delta.xml"
+  priority: 5
+  
+- type: guideEntry
+  id: code-yellow
+  name: guide-entry-sl-code-yellow
+  text: "/ServerInfo/Guidebook/StarlightSOP/Alerts/code-yellow.xml"
+  priority: 6
+  
+- type: guideEntry
+  id: code-violet
+  name: guide-entry-sl-code-violet
+  text: "/ServerInfo/Guidebook/StarlightSOP/Alerts/code-violet.xml"
+  priority: 7

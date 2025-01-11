@@ -1,21 +1,66 @@
+﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Physics;
 using Content.Shared.Weapons.Reflect;
+using Content.Shared.Starlight.Utility;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged;
 
 [Prototype("hitscan")]
-public sealed partial class HitscanPrototype : IPrototype, IShootable
+public sealed partial class HitscanPrototype : IPrototype, IShootable, IInheritingPrototype
 {
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
+    
+    [DataField("name")]
+    public string Name { get; private set; } = string.Empty;
 
+    // 🌟Starlight🌟
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<HitscanPrototype>))]
+    public string[]? Parents { get; private set; }
+    // 🌟Starlight🌟
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; private set; }
+
+    // 🌟Starlight🌟
     [ViewVariables(VVAccess.ReadWrite), DataField("staminaDamage")]
     public float StaminaDamage;
+    
+    // 🌟Starlight🌟
+    [ViewVariables(VVAccess.ReadWrite), DataField("knockdownAmount")]
+    public float KnockdownAmount;
+    
+    // 🌟Starlight🌟
+    [ViewVariables(VVAccess.ReadWrite), DataField("stunAmount")]
+    public float StunAmount;
+    
+    // 🌟Starlight🌟
+    [ViewVariables(VVAccess.ReadWrite), DataField("slowdownAmount")]
+    public float SlowdownAmount;
+    
+    [ViewVariables(VVAccess.ReadWrite), DataField("walkSpeedMultiplier")]
+    public float WalkSpeedMultiplier = 1f;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("runSpeedMultiplier")]
+    public float RunSpeedMultiplier = 1f;
+
+    // 🌟Starlight🌟
+    [DataField("igniteOnCollision"), ViewVariables(VVAccess.ReadWrite)]
+    public bool Ignite = false;
+
+    // 🌟Starlight🌟
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool IgnoreResistances = false;
+
+    // 🌟Starlight🌟
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public int Temperature = 700;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("damage")]
     public DamageSpecifier? Damage;
@@ -29,11 +74,11 @@ public sealed partial class HitscanPrototype : IPrototype, IShootable
     [ViewVariables(VVAccess.ReadOnly), DataField("impactFlash")]
     public SpriteSpecifier? ImpactFlash;
 
+    [ViewVariables(VVAccess.ReadOnly), DataField("bullet")]
+    public ExtendedSpriteSpecifier? Bullet;
+
     [DataField("collisionMask")]
     public int CollisionMask = (int) CollisionGroup.Opaque;
-    
-    [DataField("igniteOnCollision")]
-    public bool ignite = false;
 
     /// <summary>
     /// What we count as for reflection.
@@ -57,4 +102,13 @@ public sealed partial class HitscanPrototype : IPrototype, IShootable
     /// </summary>
     [DataField("maxLength")]
     public float MaxLength = 20f;
+
+    /// <summary>
+    /// How much the ammo spreads when shot, in degrees. Does nothing if count is 0.
+    /// </summary>
+    [DataField]
+    public Angle Spread = Angle.FromDegrees(5);
+
+    [DataField]
+    public int Count = 1;
 }

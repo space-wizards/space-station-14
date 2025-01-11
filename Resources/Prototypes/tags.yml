@@ -67,6 +67,9 @@
   id: BikeHorn
 
 - type: Tag
+  id: BloodSplatter
+
+- type: Tag
   id: Bloodpack
 
 - type: Tag

@@ -7,8 +7,8 @@
     tags:
     - Cartridge
     - CartridgeAntiMateriel
-  - type: CartridgeAmmo
-    proto: BulletAntiMateriel
+  - type: HitScanCartridgeAmmo
+    hitscan: AntiMaterielBulletTrace
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/large_casing.rsi
     layers:

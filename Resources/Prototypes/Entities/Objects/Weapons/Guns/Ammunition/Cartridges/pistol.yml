@@ -8,8 +8,8 @@
     tags:
       - Cartridge
       - CartridgePistol
-  - type: CartridgeAmmo
-    proto: BulletPistol
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletPistolTrace
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
@@ -23,16 +23,16 @@
   name: cartridge (.35 auto)
   parent: BaseCartridgePistol
   components:
-  - type: CartridgeAmmo
-    proto: BulletPistol
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletPistolTrace
 
 - type: entity
   id: CartridgePistolPractice
   name: cartridge (.35 auto practice)
   parent: BaseCartridgePistol
   components:
-  - type: CartridgeAmmo
-    proto: BulletPistolPractice
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletPistolPracticeTrace
   -  type: Sprite
      layers:
        - state: base
@@ -46,8 +46,8 @@
   name: cartridge (.35 auto incendiary)
   parent: BaseCartridgePistol
   components:
-  - type: CartridgeAmmo
-    proto: BulletPistolIncendiary
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletPistolIncendiaryTrace
   - type: Sprite
     layers:
       - state: base
@@ -61,8 +61,8 @@
   name: cartridge (.35 auto uranium)
   parent: BaseCartridgePistol
   components:
-  - type: CartridgeAmmo
-    proto: BulletPistolUranium
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletPistolUraniumTrace
   - type: Sprite
     layers:
       - state: base

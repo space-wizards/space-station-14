@@ -6,6 +6,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -37,10 +38,23 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
 
         var fireMode = GetMode(component);
 
-        if (!_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var proto))
-            return;
-
-        args.PushMarkup(Loc.GetString("gun-set-fire-mode", ("mode", proto.Name)));
+        if (TryGetAmmoProvider(uid, out var ammoProvider) && ammoProvider != null)
+        {
+            if (ammoProvider is ProjectileBatteryAmmoProviderComponent projectileAmmo)
+            {
+                if (!_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var projectile))
+                    return;
+                
+                args.PushMarkup(Loc.GetString("gun-set-fire-mode", ("mode", projectile.Name)));
+            }
+            else if (ammoProvider is HitscanBatteryAmmoProviderComponent hitscanAmmo)
+            {
+                if (!_prototypeManager.TryIndex<HitscanPrototype>(fireMode.Prototype, out var hitscan))
+                    return;
+                
+                args.PushMarkup(Loc.GetString("gun-set-fire-mode", ("mode", hitscan.Name)));
+            }
+        }
     }
 
     private BatteryWeaponFireMode GetMode(BatteryWeaponFireModesComponent component)
@@ -75,11 +89,13 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         
         if (TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
             return;
+        
+        if (!TryGetAmmoProvider(uid, out var ammoProvider) && ammoProvider == null)
+            return;
 
         for (var i = 0; i < component.FireModes.Count; i++)
         {
             var fireMode = component.FireModes[i];
-            var entProto = _prototypeManager.Index<EntityPrototype>(fireMode.Prototype);
             var index = i;
             
             if (fireMode.Conditions != null)
@@ -94,22 +110,47 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
                     continue;
                 }
             }
-
-            var v = new Verb
+            
+            if (ammoProvider is ProjectileBatteryAmmoProviderComponent projectileAmmo)
             {
-                Priority = 1,
-                Category = VerbCategory.SelectType,
-                Text = entProto.Name,
-                Disabled = i == component.CurrentFireMode,
-                Impact = LogImpact.Low,
-                DoContactInteraction = true,
-                Act = () =>
+                var entProto = _prototypeManager.Index<EntityPrototype>(fireMode.Prototype);
+                
+                var v = new Verb
                 {
-                    SetFireMode(uid, component, index, args.User);
-                }
-            };
+                    Priority = 1,
+                    Category = VerbCategory.SelectType,
+                    Text = entProto.Name,
+                    Disabled = i == component.CurrentFireMode,
+                    Impact = LogImpact.Low,
+                    DoContactInteraction = true,
+                    Act = () =>
+                    {
+                        SetFireMode(uid, component, index, args.User);
+                    }
+                };
 
-            args.Verbs.Add(v);
+                args.Verbs.Add(v);
+            }
+            else if (ammoProvider is HitscanBatteryAmmoProviderComponent hitscanAmmo)
+            {
+                var entProto = _prototypeManager.Index<HitscanPrototype>(fireMode.Prototype);
+                
+                var v = new Verb
+                {
+                    Priority = 1,
+                    Category = VerbCategory.SelectType,
+                    Text = entProto.Name,
+                    Disabled = i == component.CurrentFireMode,
+                    Impact = LogImpact.Low,
+                    DoContactInteraction = true,
+                    Act = () =>
+                    {
+                        SetFireMode(uid, component, index, args.User);
+                    }
+                };
+
+                args.Verbs.Add(v);
+            }
         }
     }
 
@@ -155,11 +196,12 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
 
         if (TryGetAmmoProvider(uid, out var ammoProvider) && ammoProvider != null)
         {
-            if (!_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))
-                return;
 
             if (ammoProvider is ProjectileBatteryAmmoProviderComponent projectileAmmo)
             {
+                if (!_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))
+                    return;
+                
                 var oldFireCost = projectileAmmo.FireCost;
                 projectileAmmo.Prototype = fireMode.Prototype;
                 projectileAmmo.FireCost = fireMode.FireCost;
@@ -168,9 +210,15 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
                 projectileAmmo.Shots = (int)Math.Round(projectileAmmo.Shots / fireCostDiff);
                 projectileAmmo.Capacity = (int)Math.Round(projectileAmmo.Capacity / fireCostDiff);
                 Dirty(uid, projectileAmmo);
+                
+                if (user != null && TryComp<ActorComponent>(user, out var actor))
+                    _popupSystem.PopupEntity(Loc.GetString("gun-set-fire-mode", ("mode", prototype.Name)), uid, actor.PlayerSession);
             }
             else if (ammoProvider is HitscanBatteryAmmoProviderComponent hitscanAmmo)
             {
+                if (!_prototypeManager.TryIndex<HitscanPrototype>(fireMode.Prototype, out var hitscan))
+                    return;
+                
                 var oldFireCost = hitscanAmmo.FireCost;
                 hitscanAmmo.Prototype = fireMode.Prototype;
                 hitscanAmmo.FireCost = fireMode.FireCost;
@@ -179,6 +227,9 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
                 hitscanAmmo.Shots = (int)Math.Round(hitscanAmmo.Shots / fireCostDiff);
                 hitscanAmmo.Capacity = (int)Math.Round(hitscanAmmo.Capacity / fireCostDiff);
                 Dirty(uid, hitscanAmmo);
+                
+                if (user != null && TryComp<ActorComponent>(user, out var actor))
+                    _popupSystem.PopupEntity(Loc.GetString("gun-set-fire-mode", ("mode", hitscan.Name)), uid, actor.PlayerSession);
             }
 
             var updateClientAmmoEvent = new UpdateClientAmmoEvent();
@@ -186,9 +237,6 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
 
             if (fireMode.HeldPrefix != null)
                 _item.SetHeldPrefix(uid, fireMode.HeldPrefix);
-
-            if (user != null && TryComp<ActorComponent>(user, out var actor))
-                _popupSystem.PopupEntity(Loc.GetString("gun-set-fire-mode", ("mode", prototype.Name)), uid, actor.PlayerSession);
         }
     }
     

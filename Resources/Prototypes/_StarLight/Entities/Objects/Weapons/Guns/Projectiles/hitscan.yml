@@ -1,0 +1,409 @@
+- type: entity
+  id: ImpactEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 0.6
+  - type: Sprite
+    drawdepth: Effects
+    layers:
+    - map: ["unshaded"]
+      #shader: unshaded
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: AnimationPlayer
+
+- type: displacementEffect
+  id: displacementEffect
+  displacement:
+    sizeMaps:
+      32:
+        sprite: _Starlight/Effects/impact.rsi
+        state: impact
+
+- type: hitscan
+  id: BulletTrace
+  abstract: true
+  muzzleFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle
+  travelFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: trace
+  impactFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: bullet
+  collisionMask: 64 #BulletImpassable
+  reflective: NonEnergy
+
+####
+
+- type: hitscan
+  id: PracticeBulletTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Blunt: 2
+
+- type: hitscan
+  id: AntiMaterielBulletTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 40
+      Structural: 30
+  staminaDamage: 35
+
+- type: hitscan
+  id: DebugBulletTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Blunt: 20000
+
+- type: hitscan
+  id: RubberBulletTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Blunt: 1
+  staminaDamage: 12   
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: rubber
+
+### magnum
+
+- type: hitscan
+  id: BulletMagnumTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 35
+
+- type: hitscan
+  id: BulletMagnumPracticePracticeTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Blunt: 1
+
+- type: hitscan
+  id: BulletMagnumIncendiaryTrace
+  parent: BulletTrace
+  ignite: true
+  damage:
+    types:
+      Blunt: 3
+      Heat: 32
+
+- type: hitscan
+  id: BulletMagnumUraniumTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Radiation: 15
+      Piercing: 20
+
+- type: hitscan
+  id: BulletMagnumAPTrace
+  parent: BulletTrace
+  ignoreResistances: true
+  damage:
+    types:
+      Piercing: 26 
+### pistol
+
+- type: hitscan
+  id: BulletPistolTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 16
+
+- type: hitscan
+  id: BulletPistolPracticeTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Blunt: 2
+
+- type: hitscan
+  id: BulletPistolIncendiaryTrace
+  parent: BulletTrace
+  ignite: true
+  damage:
+    types:
+      Blunt: 2
+      Heat: 14
+
+- type: hitscan
+  id: BulletPistolUraniumTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Radiation: 6
+      Piercing: 10
+
+### caseless rifle
+
+- type: hitscan
+  id: BulletCaselessRifleTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 19
+
+- type: hitscan
+  id: BulletCaselessRiflePracticeTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Blunt: 2
+
+### heavy rifle
+
+- type: hitscan
+  id: BulletHeavyRifleTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 19
+
+- type: hitscan
+  id: BulletMinigunTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 5
+
+### light rifle
+
+- type: hitscan
+  id: BulletLightRifleTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 19
+
+- type: hitscan
+  id: BulletLightRiflePracticeTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Blunt: 2
+      
+- type: hitscan
+  id: BulletLightRifleIncendiaryTrace
+  parent: BulletTrace
+  ignite: true
+  damage:
+    types:
+      Blunt: 3
+      Heat: 16
+            
+- type: hitscan
+  id: BulletLightRifleUraniumTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Radiation: 9
+      Piercing: 10
+
+### rifle
+
+- type: hitscan
+  id: BulletRifleTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 17
+
+- type: hitscan
+  id: BulletRiflePracticeTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Blunt: 2
+      
+- type: hitscan
+  id: BulletRifleIncendiaryTrace
+  parent: BulletTrace
+  ignite: true
+  damage:
+    types:
+      Blunt: 2
+      Heat: 15
+            
+- type: hitscan
+  id: BulletRifleUraniumTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Radiation: 7
+      Piercing: 8
+### shotgun
+
+- type: hitscan
+  id: PelletShotgunBeanbagTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Blunt: 10
+  staminaDamage: 40   
+  bullet:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
+
+- type: hitscan
+  id: PelletShotgunSlugTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 28
+  bullet:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: slug
+
+- type: hitscan
+  id: PelletShotgunFlareTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 28
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: slug
+
+- type: hitscan
+  id: PelletShotgunSpreadTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 10
+  count: 6
+  spread: 15
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: buckshot
+    
+- type: hitscan
+  id: ShellShotgunIncendiaryTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Blunt: 3
+      Heat: 7
+  ignite: true
+  count: 6
+  spread: 15
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: buckshot-flare
+
+- type: hitscan
+  id: PelletShotgunPracticeSpreadTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Blunt: 1
+  count: 6
+  spread: 15
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: buckshot
+
+- type: hitscan
+  id: PelletShotgunImprovisedSpreadTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 3
+      Slash: 3
+  count: 10
+  spread: 45
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: shard
+
+- type: hitscan
+  id: PelletShotgunUraniumSpreadTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Radiation: 5
+      Piercing: 5
+  count: 5
+  spread: 6
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: depleted-uranium
+
+## energy
+
+- type: hitscan
+  id: EnergyTrace
+  parent: BulletTrace
+  abstract: true
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+      state: heavylaser
+  reflective: Energy
+  
+- type: hitscan
+  id: LaserBoltTrace
+  name: laser bolt
+  parent: EnergyTrace
+  damage:
+    types:
+      Heat: 20
+      
+- type: hitscan
+  id: DestroyBoltTrace
+  name: destroying bolt
+  parent: EnergyTrace
+  damage:
+    types:
+      Heat: 50
+      
+- type: hitscan
+  id: DisablerBoltTrace
+  name: disabler bolt
+  parent: EnergyTrace
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+      state: omnilaser
+  staminaDamage: 25
+  damage:
+    types:
+      Heat: 5
+      
+- type: hitscan
+  id: TaserBoltTrace
+  name: taser bolt
+  parent: EnergyTrace
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: spark
+    color: "#ffff33"
+  staminaDamage: 33
+  knockdownAmount: 0.5
+  damage:
+    types:
+      Heat: 5

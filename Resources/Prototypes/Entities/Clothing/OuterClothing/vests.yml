@@ -17,6 +17,7 @@
         Piercing: 0.3
         Heat: 0.9
     staminaModifier: 0.4
+    ingoreKnockdown: true
   - type: ExplosionResistance
     damageCoefficient: 0.9
 

@@ -1966,3 +1966,82 @@ Entries:
   id: 278
   time: '2025-01-09T15:04:11.349016+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: Added knockdown ingoring for some armors and hardsuits.
+    type: Add
+  id: 279
+  time: '2025-01-09T20:17:38.668513+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added Gamma Armory.
+    type: Add
+  id: 280
+  time: '2025-01-10T15:18:16.035701+00:00'
+  url: 'null'
+- author: STARLIGHT TEAM
+  changes:
+  - message: Bullets are now hitscan, freeing up physics from the load.
+    type: Tweak
+  id: 281
+  time: '2025-01-10T15:41:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/225
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added blood effects on hit.
+    type: Add
+  id: 282
+  time: '2025-01-10T15:41:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/225
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added pixel debris effects on hit.
+    type: Add
+  id: 283
+  time: '2025-01-10T15:41:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/225
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added a hit probability mechanic based on the aiming point. Within a
+      2-tile radius from the mouse cursor, the hit chance is 100%, then it decreases
+      quadratically up to 5 tiles, and beyond that, it's 0. (Currently applies only
+      to guns that consume ammo.) This allows shooting from behind an ally's back
+      without usually hitting them.
+    type: Add
+  id: 284
+  time: '2025-01-10T15:41:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/225
+- author: STARLIGHT TEAM
+  changes:
+  - message: The shooting from revolvers has been fixed.
+    type: Fix
+  id: 285
+  time: '2025-01-11T01:38:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/227
+- author: STARLIGHT TEAM
+  changes:
+  - message: Now, the chance of hitting depends on the distance from the shooter,
+      and it's always 100% when flying over the cursor. This means offscreen hits
+      are guaranteed if the bullet’s trajectory crosses the target. Additionally,
+      the chance of hitting within 2 tiles in front of the cursor is also 100%, and
+      then it linearly decreases to 0 over the next 2 tiles
+    type: Fix
+  id: 286
+  time: '2025-01-11T01:38:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/227
+- author: Dusky, Grapegifter
+  changes:
+  - message: Added the Standard Operating Procedure section to the guidebook
+    type: Add
+  id: 287
+  time: '2025-01-11T14:34:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/228
+- author: Dusky, Grapegifter
+  changes:
+  - message: Added the alert levels section from the SOP into the guidebook.
+    type: Add
+  id: 288
+  time: '2025-01-11T14:34:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/228
+

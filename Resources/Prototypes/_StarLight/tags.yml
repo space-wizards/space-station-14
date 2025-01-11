@@ -38,3 +38,6 @@
   
 - type: Tag
   id: MagazineBattery
+  
+- type: Tag
+  id: DockGamma
