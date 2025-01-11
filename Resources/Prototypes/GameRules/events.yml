@@ -506,3 +506,54 @@
     duration: 1
   - type: IonStormRule
 
+- type: entity
+  id: WhaleMigration
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: whale-migration
+    startAudio:
+      path: /Audio/Effects/whale_groan.ogg
+    earliestStart: 20
+    minimumPlayers: 0
+    weight: 6
+    duration: 300
+  - type: MassHallucinationsRule
+    minTimeBetweenIncidents: 10
+    maxTimeBetweenIncidents: 40
+    maxSoundDistance: 7
+    sweetwaterOnly: true # Makes it so that mass hallucination sounds can only be heard on Sweetwater, (ex. ocean-specific sounds)
+    sounds:
+      collection: WhaleMigration
+
+- type: entity
+  id: DeathWhaleMigration
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: death-whale-migration
+    startAudio:
+      path: /Audio/Effects/whale_groan.ogg
+    StartAnnouncementColor: "#Ff0000" # red
+    EndAnnouncementColor: "#228B22" # green
+    earliestStart: 20
+    minimumPlayers: 5
+    weight: 6
+    duration: 300
+  - type: MassHallucinationsRule
+    minTimeBetweenIncidents: 0.1
+    maxTimeBetweenIncidents: 40
+    maxSoundDistance: 7
+    sweetwaterOnly: true
+    sounds:
+      collection: WhaleMigration
+  - type: OceanSpawnRule
+    prototype: MobDeathWhale
+
+# Ocean Spawn Rule Template
+#
+#- type: OceanSpawnRule
+#    target: (target location component)
+#    prototype: (creature prototpe)
+#    amount: (amount of spawned creatures)
+

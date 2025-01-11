@@ -1,0 +1,167 @@
+- type: entity
+  id: TP14DarkMatterReactor
+  name: dark-matter reactor
+  description: A standard reactor used on long-haul starships. This one looks badly damaged.
+  suffix: Event (1 hour 30 min meltdown timer)
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer: [MobMask, Opaque]
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Structures/Power/power.rsi
+    state: wiredmachine
+  - type: NodeContainer
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: EventReactor
+  - type: PowerSupplier
+    supplyRate: 30000
+    supplyRampRate: 5000
+    supplyRampTolerance: 500
+  - type: PointLight
+    enabled: true
+    radius: 4
+    energy: 2.0
+    color: "#FF4020"
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    speed: 120
+  - type: ActiveTimerTrigger
+    timeRemaining: 5400 # 1 hr 30 mins to meltdown
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    maxTileBreak: 0
+    totalIntensity: 5000000
+    intensitySlope: 5
+    maxIntensity: 100
+    explosionType: Default
+
+- type: entity
+  id: TP14ReactorFuelPort
+  name: reactor fuel port
+  description: The fuel rod chamber for the dark matter reactor. It's completely fried.
+  suffix: Event (decoration)
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer: [MobMask, Opaque]
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Structures/Machines/diagnoser.rsi
+    state: icon
+
+- type: entity
+  id: TP14ReactorInterface
+  name: reactor control terminal
+  description: The screen cracked and littered with warnings. The word EVACUATE is flashing in the corner.
+  suffix: Event (decoration)
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer: [MobMask, Opaque]
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Structures/Machines/traitordm.rsi
+    state: redemption
+
+- type: entity
+  id: AlwaysPoweredStrobeLightSiren
+  name: emergency strobe
+  description: "Forboding and loud"
+  suffix: Event
+  components:
+  - type: AmbientSound
+    volume: 3
+    range: 7
+    sound:
+      path: /Audio/Misc/siren.ogg
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: GlassSmash
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Construction
+    graph: LightFixture
+    node: bulbLight
+  - type: Sprite
+    sprite: Structures/Wallmounts/Lighting/strobe_light.rsi
+    drawdepth: WallMountedItems
+    layers:
+    - map: ["enum.PoweredLightLayers.Base"]
+      state: base
+    - map: ["enum.PoweredLightLayers.Glow"]
+      state: glow
+      shader: unshaded
+    state: base
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/double_cone.png
+    color: "#FF4020"
+    energy: 5
+    radius: 10
+    softness: 1
+    offset: "0, 0.35"
+  - type: RotatingLight
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+
