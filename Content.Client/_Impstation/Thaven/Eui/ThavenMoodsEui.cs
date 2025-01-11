@@ -1,8 +1,8 @@
 using Content.Client.Eui;
 using Content.Shared.Eui;
-using Content.Shared._Impstation.Thavens;
+using Content.Shared._Impstation.Thaven;
 
-namespace Content.Client._Impstation.Thavens.Eui;
+namespace Content.Client._Impstation.Thaven.Eui;
 
 public sealed class ThavenMoodsEui : BaseEui
 {

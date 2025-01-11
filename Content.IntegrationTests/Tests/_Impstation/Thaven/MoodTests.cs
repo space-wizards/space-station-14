@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Content.IntegrationTests;
-using Content.Server._Impstation.Thavens;
+using Content.Server._Impstation.Thaven;
 using Content.Shared.Dataset;
-using Content.Shared._Impstation.Thavens;
+using Content.Shared._Impstation.Thaven;
 using NUnit.Framework;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
@@ -12,7 +12,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 
-namespace Content.IntegrationTests.Tests._Impstation.Thavens;
+namespace Content.IntegrationTests.Tests._Impstation.Thaven;
 
 [TestFixture, TestOf(typeof(ThavenMoodPrototype))]
 public sealed class ThavenMoodTests

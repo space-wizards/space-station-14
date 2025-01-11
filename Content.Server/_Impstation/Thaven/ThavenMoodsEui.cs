@@ -3,10 +3,10 @@ using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
-using Content.Shared._Impstation.Thavens;
-using Content.Shared._Impstation.Thavens.Components;
+using Content.Shared._Impstation.Thaven;
+using Content.Shared._Impstation.Thaven.Components;
 
-namespace Content.Server._Impstation.Thavens;
+namespace Content.Server._Impstation.Thaven;
 
 public sealed class ThavenMoodsEui : BaseEui
 {

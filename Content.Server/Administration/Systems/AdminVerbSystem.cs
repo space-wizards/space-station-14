@@ -41,8 +41,8 @@ using Robust.Server.Player;
 using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Physics.Components;
 using static Content.Shared.Configurable.ConfigurationComponent;
-using Content.Shared._Impstation.Thavens.Components;
-using Content.Server._Impstation.Thavens;
+using Content.Shared._Impstation.Thaven.Components;
+using Content.Server._Impstation.Thaven;
 
 namespace Content.Server.Administration.Systems
 {

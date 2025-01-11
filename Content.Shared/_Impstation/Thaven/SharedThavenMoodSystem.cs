@@ -1,7 +1,7 @@
 using Content.Shared.Emag.Systems;
-using Content.Shared._Impstation.Thavens.Components;
+using Content.Shared._Impstation.Thaven.Components;
 
-namespace Content.Shared._Impstation.Thavens;
+namespace Content.Shared._Impstation.Thaven;
 
 public abstract class SharedThavenMoodSystem : EntitySystem
 {

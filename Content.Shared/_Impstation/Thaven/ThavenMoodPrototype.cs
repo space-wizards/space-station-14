@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
-namespace Content.Shared._Impstation.Thavens;
+namespace Content.Shared._Impstation.Thaven;
 
 [Virtual, DataDefinition]
 [Serializable, NetSerializable]

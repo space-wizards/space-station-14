@@ -1,7 +1,7 @@
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared._Impstation.Thavens;
+namespace Content.Shared._Impstation.Thaven;
 
 [Serializable, NetSerializable]
 public sealed class ThavenMoodsEuiState : EuiStateBase

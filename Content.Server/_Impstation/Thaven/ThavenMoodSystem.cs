@@ -7,8 +7,8 @@ using Content.Shared.Chat;
 using Content.Shared.Dataset;
 using Content.Shared.Emag.Systems;
 using Content.Shared.GameTicking;
-using Content.Shared._Impstation.Thavens;
-using Content.Shared._Impstation.Thavens.Components;
+using Content.Shared._Impstation.Thaven;
+using Content.Shared._Impstation.Thaven.Components;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Server.GameObjects;
@@ -19,7 +19,7 @@ using Robust.Shared.Random;
 using Content.Shared._Impstation.CCVar;
 using Robust.Shared.Audio.Systems;
 
-namespace Content.Server._Impstation.Thavens;
+namespace Content.Server._Impstation.Thaven;
 
 public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
 {
