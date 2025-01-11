@@ -35,12 +35,6 @@
     - TutorialPersonalAI
 
 - type: loadout
-  id: TutorialAI_Trainee #imp. for trainees only.
-  storage:
-    back:
-    - TutorialPersonalAI
-
-- type: loadout
   id: FolderHamster
   storage:
     back:

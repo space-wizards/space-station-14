@@ -21,8 +21,8 @@
   - CigPackSpirits #imp
   - CigarCase
   - CigarGold
-  - GoldPersonalAI #imp >420 hours.
-  - TutorialAI_Newcomer #imp. <15 hours.
+  - GoldPersonalAI #imp >420 hours
+  - TutorialAI_Newcomer #imp <15 hours
   - FolderBlack #imp
   - FolderHamster #imp
   - FolderMime #imp
@@ -62,15 +62,6 @@
   - TowelColorYellow
   - CardBoxBlack
   - HarmonicaInstrument #imp
-
-# For introductory roles learning more complex jobs, like an in-game personal mentor
-- type: loadoutGroup
-  id: Learner
-  name: loadout-group-learner
-  minLimit: 0
-  maxLimit: 1
-  loadouts:
-  - TutorialAI_Trainee #imp. for trainees only.
 
 - type: loadoutGroup
   id: Glasses
