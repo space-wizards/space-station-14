@@ -1,1 +1,1 @@
-humanoid-profile-editor-signature-font-label = Signature font:
+trait-category-fonts = Signature fonts

@@ -21,13 +21,11 @@ void fragment() {
     }
 
     // Add a bit of noise to mimic imperfect contact with the paper
+    if (useStampNoise)
     {
-        if (useStampNoise)
-        {
-            highp float stampNoise = zNoise((FRAGCOORD.xy - objCoord) * vec2(0.03, 0.03)) *
-                               zNoise((FRAGCOORD.xy - objCoord) * vec2(0.08, 0.08));
-            COLOR.a *= min(0.9, 0.4 + smoothstep(0.05, 0.3, stampNoise));
-        }
+        highp float stampNoise = zNoise((FRAGCOORD.xy - objCoord) * vec2(0.03, 0.03)) *
+                           zNoise((FRAGCOORD.xy - objCoord) * vec2(0.08, 0.08));
+        COLOR.a *= min(0.9, 0.4 + smoothstep(0.05, 0.3, stampNoise));
     }
 }
 

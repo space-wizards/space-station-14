@@ -34,29 +34,34 @@ public sealed class ItemToggleSignatureWriterSystem : EntitySystem
             // Remove signature writing if no activated data is provided
             if (ent.Comp.ActivatedFont == null &&
                 ent.Comp.ActivatedColor == null &&
-                ent.Comp.ActivatedColorList.Count == 0)
+                ent.Comp.ActivatedColorList.Count == 0 &&
+                ent.Comp.ActivatedFontList.Count == 0)
             {
                 RemComp<SignatureWriterComponent>(ent);
                 return;
             }
 
             var signature = EnsureComp<SignatureWriterComponent>(ent);
+
+            if (ent.Comp.ActivatedFont is { } font)
+                signature.Font = font;
+
+            if (ent.Comp.ActivatedFontList is { } fontList)
+                signature.FontList = fontList;
 
             if (ent.Comp.ActivatedColor is { } color)
                 signature.Color = color;
 
             if (ent.Comp.ActivatedColorList is { } colorList)
                 signature.ColorList = colorList;
-
-            if (ent.Comp.ActivatedFont is { } font)
-                signature.Font = font;
         }
         else
         {
             // Remove signature writing if no deactivated data is provided
             if (ent.Comp.DeactivatedFont == null &&
                 ent.Comp.DeactivatedColor == null &&
-                ent.Comp.DeactivatedColorList.Count == 0)
+                ent.Comp.DeactivatedColorList.Count == 0 &&
+                ent.Comp.DeactivatedFontList.Count == 0)
             {
                 RemComp<SignatureWriterComponent>(ent);
                 return;
@@ -64,14 +69,17 @@ public sealed class ItemToggleSignatureWriterSystem : EntitySystem
 
             var signature = EnsureComp<SignatureWriterComponent>(ent);
 
+            if (ent.Comp.DeactivatedFont is { } font)
+                signature.Font = font;
+
+            if (ent.Comp.DeactivatedFontList is { } fontList)
+                signature.FontList = fontList;
+
             if (ent.Comp.DeactivatedColor is { } color)
                 signature.Color = color;
 
             if (ent.Comp.DeactivatedColorList is { } colorList)
                 signature.ColorList = colorList;
-
-            if (ent.Comp.DeactivatedFont is { } font)
-                signature.Font = font;
         }
     }
 }

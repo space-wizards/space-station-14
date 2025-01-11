@@ -24,28 +24,59 @@ public sealed class SignatureWriterSystem : EntitySystem
 
     private void OnGetAltVerbs(EntityUid uid, SignatureWriterComponent comp, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || comp.ColorList.Count <= 1)
+        if (!args.CanAccess || !args.CanInteract)
             return;
 
-        var priority = 0;
-        foreach (var entry in comp.ColorList)
+        // Font selection
+        if (comp.FontList.Count >= 2)
         {
-            AlternativeVerb selection = new()
-            {
-                Text = entry.Key,
-                Category = ColorSelect,
-                Priority = priority,
-                Act = () =>
-                {
-                    comp.Color = entry.Value;
-                    _popup.PopupPredicted(Loc.GetString("signature-writer-component-color-set", ("color", entry.Key)), args.User, args.User);
-                }
-            };
+            var priority = 0;
 
-            priority--;
-            args.Verbs.Add(selection);
+            foreach (var entry in comp.FontList)
+            {
+                AlternativeVerb selection = new()
+                {
+                    Text = entry.Key,
+                    Category = FontSelect,
+                    Priority = priority,
+                    Act = () =>
+                    {
+                        comp.Font = entry.Value;
+                        _popup.PopupPredicted(Loc.GetString("signature-writer-component-font-set", ("color", entry.Key)), args.User, args.User);
+                    }
+                };
+
+                priority--;
+                args.Verbs.Add(selection);
+            }
+        }
+
+        // Color selection
+        if (comp.ColorList.Count >= 2)
+        {
+            var priority = 0;
+
+            foreach (var entry in comp.ColorList)
+            {
+                AlternativeVerb selection = new()
+                {
+                    Text = entry.Key,
+                    Category = ColorSelect,
+                    Priority = priority,
+                    Act = () =>
+                    {
+                        comp.Color = entry.Value;
+                        _popup.PopupPredicted(Loc.GetString("signature-writer-component-color-set", ("color", entry.Key)), args.User, args.User);
+                    }
+                };
+
+                priority--;
+                args.Verbs.Add(selection);
+            }
         }
     }
+
+    private static readonly VerbCategory FontSelect = new("verb-categories-signature-font-select", null);
 
     private static readonly VerbCategory ColorSelect = new("verb-categories-signature-color-select", null);
 }

@@ -10,6 +10,12 @@ public sealed partial class ItemToggleSignatureWriterComponent : Component
     public string? ActivatedFont;
 
     /// <summary>
+    /// The list of fonts used when this item is activated.
+    /// </summary>
+    [DataField("activatedFontList")]
+    public Dictionary<string, string> ActivatedFontList = new();
+
+    /// <summary>
     /// The color used when this item is activated.
     /// </summary>
     [DataField("activatedColor")]
@@ -26,6 +32,12 @@ public sealed partial class ItemToggleSignatureWriterComponent : Component
     /// </summary>
     [DataField("deactivatedFont")]
     public string? DeactivatedFont;
+
+    /// <summary>
+    /// The list of fonts used when this item is deactivated.
+    /// </summary>
+    [DataField("deactivatedFontList")]
+    public Dictionary<string, string> DeactivatedFontList = new();
 
     /// <summary>
     /// The color used when this item is deactivated.

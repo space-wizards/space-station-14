@@ -10,6 +10,12 @@ public sealed partial class SignatureWriterComponent : Component
     public string? Font;
 
     /// <summary>
+    /// The list of fonts that can be selected from, for pens with multiple fonts.
+    /// </summary>
+    [DataField("fontList")]
+    public Dictionary<string, string> FontList = new();
+
+    /// <summary>
     /// The color used for the signature.
     /// </summary>
     [DataField("color")]
