@@ -20,11 +20,11 @@ public partial class ExtendedSpriteSpecifier
     /// Sprite Color(Additional)
     /// </summary>
     [DataField("color")]
-    public Color Color { get; internal set; }
+    public Color SpriteColor = Color.White;
 
     public ExtendedSpriteSpecifier(SpriteSpecifier sprite, Color? color = null)
     {
         Sprite = sprite;
-        Color = color ?? Color.White;
+        SpriteColor = color ?? Color.White;
     }
 }
