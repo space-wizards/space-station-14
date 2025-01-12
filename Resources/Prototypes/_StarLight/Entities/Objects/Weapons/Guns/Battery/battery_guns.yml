@@ -518,8 +518,16 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: HitscanBatteryAmmoProvider
-    proto: DecloneBolt
-    fireCost: 200
+    proto: DisablerBolt
+    fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: DisablerBolt
+      fireCost: 100
+    - proto: AdvancedTaserBolt
+      fireCost: 100
+    - proto: LaserBolt
+      fireCost: 100
   - type: MagazineVisuals
     magState: mag
     steps: 5

@@ -411,6 +411,22 @@
       Heat: 5
       
 - type: hitscan
+  id: AdvancedTaserBolt
+  name: taser bolt
+  parent: EnergyTrace
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: spark
+    color: "#ffff33"
+  staminaDamage: 33
+  knockdownAmount: 3
+  maxLength: 7
+  damage:
+    types:
+      Heat: 5
+      
+- type: hitscan
   id: EmpPulse
   name: EMP impulse
   parent: EnergyTrace

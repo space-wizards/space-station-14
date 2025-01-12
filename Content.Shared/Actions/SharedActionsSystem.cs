@@ -1,3 +1,5 @@
+using Content.Shared.Starlight.Antags.Abductor;
+using Content.Shared.Silicons.StationAi;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
@@ -518,7 +520,8 @@ public abstract class SharedActionsSystem : EntitySystem
                 break;
             }
             case InstantActionComponent instantAction:
-                if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
+                var hasNoSpecificComponents = !HasComp<StationAiOverlayComponent>(user) && !HasComp<AbductorScientistComponent>(user);
+                if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null) && hasNoSpecificComponents)
                     return;
 
                 _adminLogger.Add(LogType.Action,
@@ -608,7 +611,8 @@ public abstract class SharedActionsSystem : EntitySystem
         if (entityCoordinates is not { } coords)
             return false;
 
-        if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, null))
+        var hasNoSpecificComponents = !HasComp<StationAiOverlayComponent>(user) && !HasComp<AbductorScientistComponent>(user);
+        if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, null) && hasNoSpecificComponents)
             return false;
 
         if (!checkCanAccess)

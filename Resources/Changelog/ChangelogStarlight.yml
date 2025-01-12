@@ -2087,3 +2087,17 @@ Entries:
   id: 294
   time: '2025-01-12T12:34:55.398250+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed abductor observation console, now abductor can teleport/exit.
+    type: Fix
+  id: 295
+  time: '2025-01-12T14:52:33.216849+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Now abductor has his own pistol.
+    type: Add
+  id: 296
+  time: '2025-01-12T14:53:00.517643+00:00'
+  url: 'null'

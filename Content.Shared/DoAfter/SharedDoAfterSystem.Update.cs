@@ -1,3 +1,5 @@
+using Content.Shared.Starlight.Antags.Abductor;
+using Content.Shared.Silicons.StationAi;
 using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -237,7 +239,8 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
                 return true;
         }
 
-        if (args.RequireCanInteract && !_actionBlocker.CanInteract(args.User, args.Target))
+        var hasNoSpecificComponents = !HasComp<StationAiOverlayComponent>(args.User) && !HasComp<AbductorScientistComponent>(args.User);
+        if (args.RequireCanInteract && !_actionBlocker.CanInteract(args.User, args.Target) && hasNoSpecificComponents)
             return true;
 
 
