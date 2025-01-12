@@ -112,3 +112,9 @@
   storage:
     back:
     - ClothingHeadHatKippahBlueAndGold
+
+- type: loadout
+  id: HeartLocket
+  storage:
+    back:
+    - HeartLocket
