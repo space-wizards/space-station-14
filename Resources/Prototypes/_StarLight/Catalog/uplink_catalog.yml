@@ -14,3 +14,23 @@
   - !type:BuyerJobCondition
     whitelist:
     - AtmosphericTechnician
+    
+- type: listing
+  id: uplinkWeaponMiniEnergyCrossbow
+  name: uplink-mini-energy-crossbow-name
+  description: uplink-mini-energy-crossbow-desc
+  productEntity: WeaponMiniEnergyCrossbow
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 10
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkWeaponry
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink

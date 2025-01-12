@@ -79,6 +79,9 @@ public sealed partial class AbductorScientistComponent : Component
 {
     [DataField("position"), AutoNetworkedField]
     public EntityCoordinates? SpawnPosition;
+    
+    [DataField, AutoNetworkedField]
+    public EntityUid? Console;
 }
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem)), AutoGenerateComponentState]

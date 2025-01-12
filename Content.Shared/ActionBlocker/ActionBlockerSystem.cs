@@ -1,4 +1,6 @@
-﻿using Content.Shared.Body.Events;
+﻿using Content.Shared.Starlight.Antags.Abductor;
+using Content.Shared.Silicons.StationAi;
+using Content.Shared.Body.Events;
 using Content.Shared.Emoting;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
@@ -82,6 +84,9 @@ namespace Content.Shared.ActionBlocker
         public bool CanInteract(EntityUid user, EntityUid? target)
         {
             if (!CanConsciouslyPerformAction(user))
+                return false;
+            
+            if (HasComp<StationAiOverlayComponent>(user) && HasComp<AbductorScientistComponent>(user))
                 return false;
 
             var ev = new InteractionAttemptEvent(user, target);
