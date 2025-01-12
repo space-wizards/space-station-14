@@ -1,5 +1,14 @@
 # Guns
 # Explosives
+- type: listing
+  id: UplinkPizzaBomb
+  name: uplink-pizza-bomb-name
+  description: uplink-pizza-bomb-desc
+  productEntity: Pizzabomb
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkExplosives
 # Ammo
 # Chemicals
 # Deception
