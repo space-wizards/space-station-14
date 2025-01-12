@@ -56,11 +56,18 @@ public sealed partial class MeleeThrowOnHitComponent : Component
     public bool DisableDuringUseDelay;
 
     /// <summary>
-    ///
+    ///     How long should this stun the target, if applicable?
     /// </summary>
     [DataField]
     [AutoNetworkedField]
     public TimeSpan? StunTime;
+
+    /// <summary>
+    ///     Should this also work on a throw-hit?
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public bool ActivateOnThrown;
 }
 
 /// <summary>

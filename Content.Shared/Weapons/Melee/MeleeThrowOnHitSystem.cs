@@ -1,6 +1,8 @@
+using System.Linq;
 using System.Numerics;
 using Content.Shared.Construction.Components;
 using Content.Shared.Stunnable;
+using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
@@ -27,6 +29,7 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<MeleeThrowOnHitComponent, MeleeHitEvent>(OnMeleeHit);
+        SubscribeLocalEvent<MeleeThrowOnHitComponent, ThrowDoHitEvent>(OnThrowHit);
         SubscribeLocalEvent<MeleeThrownComponent, ComponentStartup>(OnThrownStartup);
         SubscribeLocalEvent<MeleeThrownComponent, ComponentShutdown>(OnThrownShutdown);
         SubscribeLocalEvent<MeleeThrownComponent, StartCollideEvent>(OnStartCollide);
@@ -51,15 +54,29 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
 
     private void OnMeleeHit(Entity<MeleeThrowOnHitComponent> ent, ref MeleeHitEvent args)
     {
-        var (_, comp) = ent;
         if (!args.IsHit)
             return;
 
-        var mapPos = _transform.GetMapCoordinates(args.User).Position;
-        foreach (var hit in args.HitEntities)
+        ThrowOnHitHelper(ent, args.User, args.HitEntities.ToHashSet(), direction: args.Direction);
+    }
+
+    private void OnThrowHit(Entity<MeleeThrowOnHitComponent> ent, ref ThrowDoHitEvent args)
+    {
+        if (args.Component.Thrower is null || !ent.Comp.ActivateOnThrown)
+            return;
+
+        ThrowOnHitHelper(ent, args.Component.Thrower.Value, [args.Target]);
+    }
+
+    private void ThrowOnHitHelper(Entity<MeleeThrowOnHitComponent> ent, EntityUid user, HashSet<EntityUid> hitEntities, Vector2? direction = null)
+    {
+        var (_, comp) = ent;
+
+        var mapPos = _transform.GetMapCoordinates(user).Position;
+        foreach (var hit in hitEntities)
         {
             var hitPos = _transform.GetMapCoordinates(hit).Position;
-            var angle = args.Direction ?? hitPos - mapPos;
+            var angle = direction ?? hitPos - mapPos;
             if (angle == Vector2.Zero)
                 continue;
 
@@ -72,7 +89,7 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
             }
 
             RemComp<MeleeThrownComponent>(hit);
-            var ev = new MeleeThrowOnHitStartEvent(args.User, ent);
+            var ev = new MeleeThrowOnHitStartEvent(user, ent);
             RaiseLocalEvent(hit, ref ev);
             var thrownComp = new MeleeThrownComponent
             {
