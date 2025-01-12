@@ -150,7 +150,7 @@
   - type: MindRole
     antagPrototype: Traitor
     exclusiveAntag: true
-    trackPurchases: true
+    trackPurchases: true #imp edit
     getsNoSpendtext: true #imp edit
   - type: TraitorRole
 
