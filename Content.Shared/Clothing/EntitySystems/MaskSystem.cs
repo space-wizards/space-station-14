@@ -65,11 +65,17 @@ public sealed class MaskSystem : EntitySystem
 
     private void OnFolded(Entity<MaskComponent> ent, ref FoldedEvent args)
     {
-        // Why does this interaction exist?
-        if (ent.Comp.DisableOnFolded)
-            SetToggleable(ent!, !args.IsFolded);
+        // See FoldableClothingComponent
 
-        SetToggled(ent!, args.IsFolded, true);
+        if (!ent.Comp.DisableOnFolded)
+            return;
+
+        // While folded, we force the mask to be toggled / pulled down, and prevent it
+        // from being toggled. We also un-toggle it when un-folded, so it fully returns
+        // to its previous state.
+
+        SetToggled(ent!, args.IsFolded, force: true);
+        SetToggleable(ent!, !args.IsFolded);
     }
 
     public void SetToggled(Entity<MaskComponent?> mask, bool toggled, bool force = false)
@@ -91,7 +97,7 @@ public sealed class MaskSystem : EntitySystem
         if (mask.Comp.ToggleActionEntity is { } action)
             _actionSystem.SetToggled(action, mask.Comp.IsToggled);
 
-        // TODO Generalize toggling & clothing prefixes
+        // TODO Generalize toggling & clothing prefixes. See also FoldableClothingComponent
         var prefix = mask.Comp.IsToggled ? mask.Comp.EquippedPrefix : null;
         _clothing.SetEquippedPrefix(mask, prefix);
 
@@ -127,6 +133,9 @@ public sealed class MaskSystem : EntitySystem
 
         if (mask.Comp.IsToggleable == toggleable)
             return;
+
+        if (mask.Comp.ToggleActionEntity is { } action)
+            _actionSystem.SetEnabled(action, mask.Comp.IsToggleable);
 
         mask.Comp.IsToggleable = toggleable;
         Dirty(mask);

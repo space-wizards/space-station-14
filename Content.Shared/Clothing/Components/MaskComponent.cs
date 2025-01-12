@@ -27,6 +27,9 @@ public sealed partial class MaskComponent : Component
     [DataField, AutoNetworkedField]
     public bool IsToggled;
 
+    /// <summary>
+    /// The clothing RSI prefix to use when the mask is toggled.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public string EquippedPrefix = "toggled";
 
