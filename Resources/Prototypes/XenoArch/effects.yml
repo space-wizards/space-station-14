@@ -29,7 +29,7 @@
       weight: 10.0
     - id: XenoArtifactChemicalPuddle
       weight: 10.0
-    - id: XenoArtifactThrow
+    - id: XenoArtifactThrowThingsAround
       weight: 10.0
     - id: XenoArtifactColdWave
       weight: 10.0
@@ -78,15 +78,19 @@
     - id: XenoArtifactEmp
       weight: 2.0
     - id: XenoArtifactPolyMonkey
-      weight: 6.0
+      weight: 2.0
     - id: XenoArtifactPolyLuminous
-      weight: 6.0
+      weight: 2.0
     - id: XenoArtifactPolyLizard
-      weight: 6.0
+      weight: 2.0
     - id: XenoArtifactRadioactiveStrong
       weight: 3.0
-    - id: XenoArtifactMaterialSpawn
-      weight: 10.0
+    - id: XenoArtifactMaterialSpawnGlass
+      weight: 3.3
+    - id: XenoArtifactMaterialSpawnSteel
+      weight: 3.3
+    - id: XenoArtifactMaterialSpawnPlastic
+      weight: 3.3
     - id: XenoArtifactPortal
       weight: 2.0
     - id: XenoArtifactArtifactSpawn
@@ -124,7 +128,7 @@
     #  weight 10.0 # removed until we have value-based system
     #- id: XenoArtifactGun
     #  weight 4.0 #it conflicts with default interaction - it should activate artifact nodes
-    - id: XenoArtifactMultitool
+    - id: XenoArtifactOmnitool
       weight: 10.0
     - id: XenoArtifactDrill
       weight: 10.0
@@ -141,8 +145,24 @@
     group: XenoArtifactNode
 
 - type: entity
-  id: XenoArtifactEffectUniversalIntercom
+  id: BaseOneTimeXenoArtifactEffect
   parent: BaseXenoArtifactEffect
+  name: one-time-effect
+  description: Unknown
+  categories: [ HideSpawnMenu ]
+  abstract: true
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 1
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 0
+  - type: NameIdentifier
+    group: XenoArtifactNode
+
+- type: entity
+  id: XenoArtifactEffectUniversalIntercom
+  parent: BaseOneTimeXenoArtifactEffect
   description: Obtains ability of long-distance communication device
   components:
   - type: XAEApplyComponents
@@ -171,7 +191,7 @@
 
 - type: entity
   id: XenoArtifactBecomeRandomInstrument
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Obtains ability of musical instrument
   components:
   - type: XAEApplyComponents
@@ -184,7 +204,7 @@
 
 - type: entity
   id: XenoArtifactStorage
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Obtains ability of hidden storage
   components:
   - type: XAEApplyComponents
@@ -198,14 +218,14 @@
 
 - type: entity
   id: XenoArtifactPhasing
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Becomes phased
   components:
   - type: XAERemoveCollision
 
 - type: entity
   id: XenoArtifactWandering
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Starts to move sporadically
   components:
   - type: XAEApplyComponents
@@ -218,7 +238,7 @@
 
 - type: entity
   id: XenoArtifactSolutionStorage
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Obtains ability of container for chemical solutions
   components:
   - type: XAEApplyComponents
@@ -246,7 +266,7 @@
 
 - type: entity
   id: XenoArtifactSpeedUp
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Improves holder movement speed
   components:
   - type: XAEApplyComponents
@@ -257,7 +277,7 @@
 
 - type: entity
   id: XenoArtifactDrill
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Obtains ability of drill
   components:
   - type: XAEApplyComponents
@@ -273,7 +293,7 @@
 
 - type: entity
   id: XenoArtifactGenerateEnergy
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect # todo - increment power, but only once per node
   description: Produces power
   components:
   - type: XAEApplyComponents
@@ -289,7 +309,7 @@
 
 - type: entity
   id: XenoArtifactGun
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Obtains ability of firearm
   components:
   - type: XAEApplyComponents
@@ -320,7 +340,7 @@
 
 - type: entity
   id: XenoArtifactGhost
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Becomes sentient
   components:
   - type: XAEApplyComponents
@@ -342,8 +362,8 @@
       baseSprintSpeed: 0.5
 
 - type: entity
-  id: XenoArtifactMultitool
-  parent: BaseXenoArtifactEffect
+  id: XenoArtifactOmnitool
+  parent: BaseOneTimeXenoArtifactEffect
   description: Obtains ability of omnitool
   components:
   - type: XAEApplyComponents
@@ -550,7 +570,7 @@
     - Sulfur
 
 - type: entity
-  id: XenoArtifactThrow
+  id: XenoArtifactThrowThingsAround
   parent: BaseXenoArtifactEffect
   description: Minor implosion
   components:
@@ -597,6 +617,11 @@
   parent: BaseXenoArtifactEffect
   description: Creates musical instrument
   components:
+  - type: XenoArtifactNode
+    maxDurability: 2
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 1
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -612,6 +637,11 @@
   parent: BaseXenoArtifactEffect
   description: Creates primate
   components:
+  - type: XenoArtifactNode
+    maxDurability: 3
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 2
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -627,7 +657,7 @@
 
 - type: entity
   id: XenoArtifactRadioactive
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Becomes mildly radioactive
   components:
   - type: XAEApplyComponents
@@ -658,7 +688,7 @@
 
 - type: entity
   id: XenoArtifactMagnet
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Create small gravity well
   components:
   - type: XAEApplyComponents
@@ -672,7 +702,7 @@
 
 - type: entity
   id: XenoArtifactMagnetNegative
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Create small gravity well
   components:
   - type: XAEApplyComponents
@@ -686,7 +716,7 @@
 
 - type: entity
   id: XenoArtifactStealth
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Create light interference
   components:
   - type: XAEApplyComponents
@@ -699,7 +729,7 @@
 
 - type: entity
   id: XenoArtifactRareMaterialSpawn
-  parent: BaseXenoArtifactEffect
+  parent: BaseXenoArtifactEffect # todo: splice into different well-named effects, amounts should reflect how rare material is
   description: Create rare materials
   components:
   - type: XAEApplyComponents
@@ -732,6 +762,11 @@
   parent: BaseXenoArtifactEffect
   description: Create hostile fish
   components:
+  - type: XenoArtifactNode
+    maxDurability: 3
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 2
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -750,6 +785,11 @@
   parent: BaseXenoArtifactEffect
   description: Create friendly fauna
   components:
+  - type: XenoArtifactNode
+    maxDurability: 4
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 3
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -800,6 +840,11 @@
   parent: BaseXenoArtifactEffect
   description: Create money
   components:
+  - type: XenoArtifactNode
+    maxDurability: 2
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 1
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -824,6 +869,11 @@
   parent: BaseXenoArtifactEffect
   description: Break windows
   components:
+  - type: XenoArtifactNode
+    maxDurability: 3
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 2
   - type: XAEDamageInArea
     damageChance: 0.75
     whitelist:
@@ -838,6 +888,11 @@
   parent: BaseXenoArtifactEffect
   description: Creates wave of helpful foam
   components:
+  - type: XenoArtifactNode
+    maxDurability: 7
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 5
   - type: XAEFoam
     replaceDescription: true
     reagents:
@@ -903,6 +958,11 @@
   parent: BaseXenoArtifactEffect
   description: Creates anomaly
   components:
+  - type: XenoArtifactNode
+    maxDurability: 2
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 1
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -912,7 +972,6 @@
       table: !type:AllSelector
         children:
         - id: RandomAnomalySpawner
-
 
 - type: entity
   id: XenoArtifactIgnite
@@ -936,6 +995,11 @@
   parent: BaseXenoArtifactEffect
   description: Dangerous electromagnetic interference
   components:
+  - type: XenoArtifactNode
+    maxDurability: 5
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 3
   - type: XAEEmpInArea
 
 - type: entity
@@ -963,7 +1027,7 @@
 
 - type: entity
   id: XenoArtifactRadioactiveStrong
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Becomes highly radioactive
   components:
   - type: XAEApplyComponents
@@ -975,9 +1039,24 @@
       slope: 0.3
 
 - type: entity
-  id: XenoArtifactMaterialSpawn
+  id: XenoArtifactMaterialSpawnGlass
   parent: BaseXenoArtifactEffect
-  description: Create basic material
+  description: Create glass
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:GroupSelector
+        children:
+        - id: SheetGlass
+
+- type: entity
+  id: XenoArtifactMaterialSpawnSteel
+  parent: BaseXenoArtifactEffect
+  description: Create steel
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -988,7 +1067,20 @@
       table: !type:GroupSelector
         children:
         - id: SheetSteel
-        - id: SheetGlass
+
+- type: entity
+  id: XenoArtifactMaterialSpawnPlastic
+  parent: BaseXenoArtifactEffect
+  description: Create plastic
+  components:
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:GroupSelector
+        children:
         - id: SheetPlastic
 
 - type: entity
@@ -1003,6 +1095,11 @@
   parent: BaseXenoArtifactEffect
   description: Create artifact
   components:
+  - type: XenoArtifactNode
+    maxDurability: 2
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 1
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
     refreshOnReactivate: true
@@ -1042,7 +1139,7 @@
 
 - type: entity
   id: XenoArtifactTesla
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Mass destruction
   components:
   - type: XAEApplyComponents
@@ -1057,7 +1154,7 @@
 
 - type: entity
   id: XenoArtifactSingularity
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Imminent doom
   components:
   - type: XAEApplyComponents
@@ -1072,7 +1169,7 @@
 
 - type: entity
   id: XenoArtifactExplosionScary
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Small scale high-speed nuclear reaction
   components:
   - type: XAETriggerExplosives
@@ -1087,7 +1184,7 @@
 
 - type: entity
   id: XenoArtifactBoom
-  parent: BaseXenoArtifactEffect
+  parent: BaseOneTimeXenoArtifactEffect
   description: Explosion
   components:
   - type: XAETriggerExplosives
