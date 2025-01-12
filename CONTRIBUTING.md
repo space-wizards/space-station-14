@@ -156,7 +156,7 @@ Additionally, for long-lasting PRs, if you see `RobustToolbox` in the changed fi
 ```sh
 git checkout upstream/master RobustToolbox
 ```
-(Replace `upstream` with the name of your ss14-harmony/space-station-14 remote.)
+(Replace `upstream` with the name of your `ss14-harmony/ss14-harmony` remote.)
 
 # Changelogs
 
