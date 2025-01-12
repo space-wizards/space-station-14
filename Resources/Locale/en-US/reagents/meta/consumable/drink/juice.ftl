@@ -40,7 +40,7 @@ reagent-desc-juice-potato = Juice of the potato. Bleh.
 reagent-name-juice-tomato = tomato juice
 reagent-desc-juice-tomato = Tomatoes made into juice. What a waste of good tomatoes, huh?
 
-reagent-name-juice-watermelon = water melon juice
+reagent-name-juice-watermelon = watermelon juice
 reagent-desc-juice-watermelon = The delicious juice of a watermelon.
 
 reagent-name-juice-cherry = cherry juice
