@@ -40,7 +40,7 @@
     agentName: changeling-roundend-name
     definitions:
     - prefRoles: [ Changeling ]
-      max: 5
+      max: 3
       playerRatio: 10
       lateJoinAdditional: true
       allowNonHumans: false
