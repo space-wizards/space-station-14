@@ -23,8 +23,6 @@ public sealed class DamageExamineSystem : EntitySystem
 
     private void OnGetExamineVerbs(EntityUid uid, DamageExaminableComponent component, GetVerbsEvent<ExamineVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess)
-            return;
 
         var ev = new DamageExamineEvent(new FormattedMessage(), args.User);
         RaiseLocalEvent(uid, ref ev);
