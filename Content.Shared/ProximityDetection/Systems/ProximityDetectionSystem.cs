@@ -1,5 +1,5 @@
 ﻿using Content.Shared.Item.ItemToggle;
-﻿using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.ProximityDetection.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Network;
@@ -11,11 +11,15 @@ namespace Content.Shared.ProximityDetection.Systems;
 public sealed class ProximityDetectionSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly ItemToggleSystem _toggle = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly INetManager _net = default!;
+
+    // Hash sets of entities located in a main update loop.
+    // Defined there to avoid additional allocations.
+    private HashSet<Entity<IComponent>> _foundEnts = null!;
+    private HashSet<Entity<IComponent>> _validEnts = new();
 
     //update is only run on the server
 
@@ -105,10 +109,10 @@ public sealed class ProximityDetectionSystem : EntitySystem
         var xform = xformQuery.GetComponent(owner);
         List<(EntityUid TargetEnt, float Distance)> detections = new();
 
-        if (detector.Criteria.Components == null && detector.Criteria.Tags == null)
+        if (detector.Criteria.Components == null)
         {
-            Log.Error($"ProximityDetectorComponent on {ToPrettyString(owner)} must use at least 1 component or tag as a filter in criteria!");
-            throw new ArgumentException($"ProximityDetectorComponent on {ToPrettyString(owner)} must use at least 1 component or tag as a filter in criteria!");
+            Log.Error($"ProximityDetectorComponent on {ToPrettyString(owner)} must use at least 1 component as a filter in criteria!");
+            throw new ArgumentException($"ProximityDetectorComponent on {ToPrettyString(owner)} must use at least 1 component as a filter in criteria!");
         }
         var tagSearchEnabled = detector.Criteria.Tags is {Count: > 0};
 
@@ -119,7 +123,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
             if (tagSearchEnabled)
             {
                 // Check for TagComponent present
-                if (!_entityManager.TryGetComponent<TagComponent>(ent, out var tags))
+                if (!TryComp<TagComponent>(ent, out var tags))
                     continue;
                 // Check for tags present
                 if (!(detector.Criteria.RequireAll
@@ -139,30 +143,22 @@ public sealed class ProximityDetectionSystem : EntitySystem
     }
     private HashSet<Entity<IComponent>> FindWithMatchingComponents(EntityUid owner, TransformComponent xform, ProximityDetectorComponent detector, bool tagSearchEnabled)
     {
-        if (detector.Criteria.Components == null)
-        {
-            return _entityLookup.GetEntitiesInRange(typeof(TagComponent), _transform.GetMapCoordinates(owner, xform), detector.Range.Float());;
-        }
-
-        var foundEnts = new HashSet<Entity<IComponent>>();
-        var validEnts = new HashSet<Entity<IComponent>>();
-
         if (detector.Criteria.RequireAll)
         {
-            var compType = EntityManager.ComponentFactory.GetRegistration(detector.Criteria.Components[0]).Type;
-            foundEnts = _entityLookup.GetEntitiesInRange(compType, _transform.GetMapCoordinates(owner, xform), detector.Range.Float());
-            validEnts.EnsureCapacity(foundEnts.Count);
+            var compType = EntityManager.ComponentFactory.GetRegistration(detector.Criteria.Components![0]).Type;
+            _foundEnts = _entityLookup.GetEntitiesInRange(compType, _transform.GetMapCoordinates(owner, xform), detector.Range.Float());
+            _validEnts.EnsureCapacity(_foundEnts.Count);
             for (var i = 1; i < detector.Criteria.Components!.Length; i++)
             {
-                validEnts.Clear();
+                _validEnts.Clear();
                 compType = EntityManager.ComponentFactory.GetRegistration(detector.Criteria.Components[i]).Type;
-                foreach (var ent in foundEnts)
+                foreach (var ent in _foundEnts)
                 {
                     if (!HasComp(ent, compType))
                         continue;
-                    validEnts.Add(ent);
+                    _validEnts.Add(ent);
                 }
-                (foundEnts, validEnts) = (validEnts, foundEnts);
+                (_foundEnts, _validEnts) = (_validEnts, _foundEnts);
             }
         }
         else
@@ -170,28 +166,28 @@ public sealed class ProximityDetectionSystem : EntitySystem
             for (var i = 0; i < detector.Criteria.Components!.Length; i++)
             {
                 var compType = EntityManager.ComponentFactory.GetRegistration(detector.Criteria.Components[i]).Type;
-                foundEnts = _entityLookup.GetEntitiesInRange(compType, _transform.GetMapCoordinates(owner, xform), detector.Range.Float());
-                validEnts.UnionWith(foundEnts);
+                _foundEnts = _entityLookup.GetEntitiesInRange(compType, _transform.GetMapCoordinates(owner, xform), detector.Range.Float());
+                _validEnts.UnionWith(_foundEnts);
             }
-            (foundEnts, validEnts) = (validEnts, foundEnts);
+            (_foundEnts, _validEnts) = (_validEnts, _foundEnts);
         }
-        
-        validEnts.Clear();
+
+        _validEnts.Clear();
         // If there is a need to match tags from search criteria,
         // TagComponent needs to exist, so we check for it.
         if (tagSearchEnabled)
         {
-            foreach (var ent in foundEnts)
+            foreach (var ent in _foundEnts)
             {
                 if (!HasComp<TagComponent>(ent))
                     continue;
-                validEnts.Add(ent);
+                _validEnts.Add(ent);
             }
-            (foundEnts, validEnts) = (validEnts, foundEnts);
-            validEnts.Clear();
+            (_foundEnts, _validEnts) = (_validEnts, _foundEnts);
+            _validEnts.Clear();
         }
 
-        return foundEnts;
+        return _foundEnts;
     }
 
     private bool CheckDetectConditions(EntityUid targetEntity, float dist, EntityUid owner, ProximityDetectorComponent detector)
