@@ -70,9 +70,9 @@ public sealed class MaskSystem : EntitySystem
         if (!ent.Comp.DisableOnFolded)
             return;
 
-        // While folded, we force the mask to be toggled / pulled down, and prevent it
-        // from being toggled. We also un-toggle it when un-folded, so it fully returns
-        // to its previous state.
+        // While folded, we force the mask to be toggled / pulled down, so that its functionality as a mask is disabled,
+        // and we also prevent it from being un-toggled. We also automatically untoggle it when it gets unfolded, so it
+        // fully returns to its previous state when folded & unfolded.
 
         SetToggled(ent!, args.IsFolded, force: true);
         SetToggleable(ent!, !args.IsFolded);
