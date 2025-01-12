@@ -112,3 +112,15 @@
   storage:
     back:
     - ClothingHeadHatKippahBlueAndGold
+
+- type: loadout
+  id: ClothingHeadPaperSack
+  storage:
+    back:
+    - ClothingHeadPaperSack
+
+- type: loadout
+  id: ClothingHeadPaperSackSmile
+  storage:
+    back:
+    - ClothingHeadPaperSackSmile
