@@ -1,0 +1,14 @@
+- type: entity
+  id: CDDogtags
+  parent: ClothingNeckBase 
+  name: dogtags
+  description: A set of dogtags, hanging from a small piece of cord for wearing and carrying.
+  components:
+  - type: Sprite
+    sprite: _CD/Objects/Misc/dogtags.rsi
+    layers:
+    - state: dogtag
+  - type: Clothing
+    sprite: _CD/Objects/Misc/dogtags.rsi
+  - type: Appearance
+  - type: Engraveable

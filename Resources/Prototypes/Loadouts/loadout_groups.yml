@@ -5,44 +5,46 @@
   minLimit: 0
   maxLimit: 3
   loadouts:
-  - FlowerWreath
-  - Hairflower
-  - Headphones
-  - WalkingCane #imp
-  - PlushieLizard
-  - PlushieSpaceLizard
-  - Lighter
-  - FlippoLighter #imp
-  - CigPackGreen
-  - CigPackRed
-  - CigPackBlue
-  - CigPackBlack
-  - CigPackNewport #imp
-  - CigPackSpirits #imp
+  - BarFlask
+  - CardBoxBlack
+  - CDDogtags #_CD
   - CigarCase
   - CigarGold
-  - GoldPersonalAI #imp
+  - CigPackBlack
+  - CigPackBlue
+  - CigPackGreen
+  - CigPackNewport #imp
+  - CigPackRed
+  - CigPackSpirits #imp
+  - ClothingHeadHatKippahBlueAndGold #imp
+  - ClothingHeadHatKippahSimple #imp
+  - ClothingHeadHatKippahWhiteAndBlue #imp
+  - ClothingNeckAromanticPin
+  - ClothingNeckAsexualPin
+  - ClothingNeckAutismPin
+  - ClothingNeckBisexualPin
+  - ClothingNeckGayPin
+  - ClothingNeckGoldAutismPin
+  - ClothingNeckIntersexPin
+  - ClothingNeckLesbianPin
+  - ClothingNeckLGBTPin
+  - ClothingNeckNonBinaryPin
+  - ClothingNeckPansexualPin
+  - ClothingNeckTransPin
+  - FlippoLighter #imp
+  - FlowerWreath
   - FolderBlack #imp
   - FolderHamster #imp
   - FolderMime #imp
   - FolderPun #imp
-  - BarFlask
+  - GoldPersonalAI #imp
+  - Hairflower
+  - HarmonicaInstrument #imp
+  - Headphones
+  - Lighter
   - NewtonCradle
-  - ClothingNeckLGBTPin
-  - ClothingNeckAromanticPin
-  - ClothingNeckAsexualPin
-  - ClothingNeckBisexualPin
-  - ClothingNeckGayPin
-  - ClothingNeckIntersexPin
-  - ClothingNeckLesbianPin
-  - ClothingNeckNonBinaryPin
-  - ClothingNeckPansexualPin
-  - ClothingNeckTransPin
-  - ClothingNeckAutismPin
-  - ClothingNeckGoldAutismPin
-  - ClothingHeadHatKippahBlueAndGold #imp
-  - ClothingHeadHatKippahSimple #imp
-  - ClothingHeadHatKippahWhiteAndBlue #imp
+  - PlushieLizard
+  - PlushieSpaceLizard
   - TowelColorBlack
   - TowelColorDarkBlue
   - TowelColorDarkGreen
@@ -59,8 +61,7 @@
   - TowelColorSilver
   - TowelColorWhite
   - TowelColorYellow
-  - CardBoxBlack
-  - HarmonicaInstrument #imp
+  - WalkingCane #imp
 
 # For introductory roles learning more complex jobs, like an in-game personal mentor
 - type: loadoutGroup
