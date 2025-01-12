@@ -124,7 +124,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
             foreach ((var _, var antagData) in QueuedAntags)
             {
-                if(antagData.Item3.Comp == comp)
+                if (antagData.Item3.Comp == comp)
                     MakeAntag(antagData.Item3, antagData.Item1, antagData.Item2);
             }
 
@@ -195,7 +195,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (GameTicker.RunLevel != GameRunLevel.InRound)
             return;
 
-        if (component.SelectionsComplete)
+        if (component.SelectionsComplete) // Imp edit start
         {
             if (QueuedAntags.Count != 0)
             {
@@ -203,11 +203,25 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 {
                     if (antagData.Item3.Comp == component)
                         MakeAntag(antagData.Item3, antagData.Item1, antagData.Item2);
+
+                }
+                // Checking if antag counts meet expectations and choosing additional antags if not
+                var existingAntags = GetAntagMinds((uid, component)).Count;
+                var targetCount = GetTargetAntagCount((uid, component), null);
+                if (existingAntags < targetCount)
+                {
+                    var playerPool = _playerManager.Sessions
+                                .Where(x => GameTicker.PlayerGameStatuses.TryGetValue(x.UserId, out var status) && status == PlayerGameStatus.JoinedGame)
+                                .ToList();
+                    if (TryGetNextAvailableDefinition((uid, component), out var def)) // Given how we're getting here this should never be false but I'm wrapping it like this anyway Because
+                    {
+                        ChooseAntags((uid, component), playerPool, (AntagSelectionDefinition)def, midround: true, targetCount - existingAntags);
+                    }
                 }
             }
             else
                 return;
-        }
+        } // Imp edit end
 
         var players = _playerManager.Sessions
             .Where(x => GameTicker.PlayerGameStatuses.TryGetValue(x.UserId, out var status) && status == PlayerGameStatus.JoinedGame)
@@ -242,13 +256,17 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// <param name="pool">The players to choose from</param>
     /// <param name="def">The antagonist selection parameters and criteria</param>
     /// <param name="midround">Disable picking players for pre-spawn antags in the middle of a round</param>
+    /// <param name="number">Override to choose a number of additional antags if there are not enough at the start of the gamerule. </param>
     public void ChooseAntags(Entity<AntagSelectionComponent> ent,
         IList<ICommonSession> pool,
         AntagSelectionDefinition def,
-        bool midround = false)
+        bool midround = false,
+        int number = 0)
     {
         var playerPool = GetPlayerPool(ent, pool, def);
-        var count = GetTargetAntagCount(ent, GetTotalPlayerCount(pool), def);
+        var count = number;
+        if (count <= 0)
+            count = GetTargetAntagCount(ent, GetTotalPlayerCount(pool), def);
 
         // if there is both a spawner and players getting picked, let it fall back to a spawner.
         var noSpawner = def.SpawnerPrototype == null;
