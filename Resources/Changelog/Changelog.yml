@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Firesuits are now worse at keeping in heat and winter clothes make you
-      get warmer quicker.
-    type: Tweak
-  id: 7302
-  time: '2024-09-07T05:37:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30662
 - author: Boaz1111
   changes:
   - message: The maple wing marking for moths now have a secondary color palette.
@@ -3937,3 +3929,10 @@
   id: 7801
   time: '2025-01-12T16:38:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34394
+- author: SlimSlam
+  changes:
+  - message: News Room
+    type: Add
+  id: 7802
+  time: '2025-01-12T23:32:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34408
