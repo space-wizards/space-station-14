@@ -1,6 +1,8 @@
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Localizations
@@ -8,9 +10,7 @@ namespace Content.Shared.Localizations
     public sealed class ContentLocalizationManager
     {
         [Dependency] private readonly ILocalizationManager _loc = default!;
-
-        // If you want to change your codebase's language, do it here.
-        private const string Culture = "en-US";
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         /// <summary>
         /// Custom format strings used for parsing and displaying minutes:seconds timespans.
@@ -25,7 +25,7 @@ namespace Content.Shared.Localizations
 
         public void Initialize()
         {
-            var culture = new CultureInfo(Culture);
+            var culture = new CultureInfo(_cfg.GetCVar(CCVars.Language));
 
             _loc.LoadCulture(culture);
             _loc.AddFunction(culture, "PRESSURE", FormatPressure);
@@ -46,8 +46,22 @@ namespace Content.Shared.Localizations
              */
             var cultureEn = new CultureInfo("en-US");
 
+            if (!_loc.HasCulture(cultureEn))
+                _loc.LoadCulture(cultureEn);
+            _loc.SetFallbackCluture(cultureEn); // I don't think there's any reason to change the fallback culture.
             _loc.AddFunction(cultureEn, "MAKEPLURAL", FormatMakePlural);
             _loc.AddFunction(cultureEn, "MANY", FormatMany);
+
+            _cfg.OnValueChanged(CCVars.Language, OnCultureUpdate, true);
+        }
+
+        private void OnCultureUpdate(string value)
+        {
+            var culture = new CultureInfo(value);
+            if (!_loc.HasCulture(culture))
+                _loc.LoadCulture(culture);
+            _loc.DefaultCulture = culture;
+            _loc.ReloadLocalizations();
         }
 
         private ILocValue FormatMany(LocArgs args)
@@ -68,7 +82,7 @@ namespace Content.Shared.Localizations
         {
             var number = ((LocValueNumber) args.Args[0]).Value * 100;
             var maxDecimals = (int)Math.Floor(((LocValueNumber) args.Args[1]).Value);
-            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(Culture)).Clone();
+            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(_cfg.GetCVar(CCVars.Language))).Clone();
             formatter.NumberDecimalDigits = maxDecimals;
             return new LocValueString(string.Format(formatter, "{0:N}", number).TrimEnd('0').TrimEnd(char.Parse(formatter.NumberDecimalSeparator)) + "%");
         }
@@ -77,7 +91,7 @@ namespace Content.Shared.Localizations
         {
             var number = ((LocValueNumber) args.Args[0]).Value;
             var maxDecimals = (int)Math.Floor(((LocValueNumber) args.Args[1]).Value);
-            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(Culture)).Clone();
+            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(_cfg.GetCVar(CCVars.Language))).Clone();
             formatter.NumberDecimalDigits = maxDecimals;
             return new LocValueString(string.Format(formatter, "{0:N}", number).TrimEnd('0').TrimEnd(char.Parse(formatter.NumberDecimalSeparator)));
         }
