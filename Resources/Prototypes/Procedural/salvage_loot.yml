@@ -107,6 +107,10 @@
         - proto: WeaponTeslaGun
           prob: 0.1
           cost: 2
+        - proto: HeartLocket # imp
+          prob: 0.7
+        - proto: CDDogtags # imp
+          prob: 0.7
 
 # Mob loot table
 

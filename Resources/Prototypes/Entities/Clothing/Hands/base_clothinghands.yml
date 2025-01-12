@@ -64,6 +64,7 @@
   - type: Tag
     tags:
     - Ring
+  - type: Engraveable #imp, i cant think of any children of basering that shouldnt have this
 
 - type: entity
   abstract: true
