@@ -2059,3 +2059,31 @@ Entries:
   id: 290
   time: '2025-01-11T18:42:24.740251+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: Now only abductor can use his observation console.
+    type: Tweak
+  id: 291
+  time: '2025-01-12T12:33:49.380371+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed interaction while using abductor observation console.
+    type: Fix
+  id: 292
+  time: '2025-01-12T12:34:07.126310+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed hand stucking after using abductor observation console.
+    type: Fix
+  id: 293
+  time: '2025-01-12T12:34:39.527255+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added mini crossbow to uplink.
+    type: Add
+  id: 294
+  time: '2025-01-12T12:34:55.398250+00:00'
+  url: 'null'
