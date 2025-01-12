@@ -31,6 +31,8 @@
   description: A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy.
   components:
   - type: Wieldable
+    noUseDelayOnWield: true
+  - type: MeleeRequiresWield
   - type: LandAtCursor
   - type: Sprite
     sprite: Objects/Weapons/Melee/mjollnir.rsi
@@ -71,6 +73,8 @@
   description: The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows.
   components:
   - type: Wieldable
+    noUseDelayOnWield: true
+  - type: MeleeRequiresWield
   - type: Sprite
     sprite: Objects/Weapons/Melee/singularityhammer.rsi
     layers:
