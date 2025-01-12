@@ -1,39 +1,4 @@
 ﻿Entries:
-- author: TGRCdev
-  changes:
-  - message: Voice masks actually work again
-    type: Fix
-  id: 403
-  time: '2024-10-21T00:54:11.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/533
-- author: honeyed-lemons
-  changes:
-  - message: Added Directional Fan and Air Canister to the NT-Cruiser
-    type: Tweak
-  id: 404
-  time: '2024-10-22T01:05:02.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/535
-- author: Darkmajia
-  changes:
-  - message: Heretics can now correctly use appraisal tools for the Ritual of Knowledge.
-    type: Fix
-  id: 405
-  time: '2024-10-22T01:04:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/536
-- author: Darkmajia
-  changes:
-  - message: Heretic will no longer instantly cancel lowpop rounds when it is rolled.
-    type: Fix
-  id: 406
-  time: '2024-10-22T01:05:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/534
-- author: mqole
-  changes:
-  - message: Deck of cards added to loadout trinkets.
-    type: Add
-  id: 407
-  time: '2024-10-24T11:57:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/541
 - author: widgetbeck
   changes:
   - message: Added Luggage, a new cargo-purchasable ghostrole familiar.
@@ -4493,3 +4458,60 @@
   id: 902
   time: '2025-01-11T03:51:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1293
+- author: ultramario1998
+  changes:
+  - message: Added a special tutorial pAI for new players.
+    type: Add
+  - message: A new ghost role can be taken for tutorial pAIs. Please make sure to
+      follow the rules.
+    type: Add
+  id: 903
+  time: '2025-01-11T04:43:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1282
+- author: Kandiyaki
+  changes:
+  - message: ashen passage will now play a sound and ignite the user upon exit.
+    type: Tweak
+  - message: nightwatcher's rebirth now has a smaller radius.
+    type: Tweak
+  - message: the ashen blade is now made with a welder instead of a match.
+    type: Tweak
+  - message: flesh ghouls now have a unique text identifier when inspected.
+    type: Add
+  - message: nerfed heretic multipathing. you can now only get a knowledge from another
+      tree if you have already bought the corresponding knowledge in your main tree.
+    type: Tweak
+  - message: flesh surgery rework. all old effects have been removed and replaced
+      with new ones that don't last the whole round.
+    type: Tweak
+  - message: all of the flesh heretic rituals that require blood will now accept blood
+      from all species.
+    type: Tweak
+  - message: rewrote the heretic's guidebook for easier understanding.
+    type: Tweak
+  id: 904
+  time: '2025-01-11T04:51:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1184
+- author: widgetbeck
+  changes:
+  - message: Fixed Gastropoids being unable to pilot, host anomalies, or make footstep
+      sounds.
+    type: Fix
+  id: 905
+  time: '2025-01-11T04:56:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1307
+- author: EpicToast
+  changes:
+  - message: Making curtains and fancy tables with a stack of carpet will no longer
+      eat the entire stack.
+    type: Fix
+  id: 906
+  time: '2025-01-12T09:32:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1320
+- author: starlighthowls
+  changes:
+  - message: map changes to Boat
+    type: Tweak
+  id: 907
+  time: '2025-01-12T13:20:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1324

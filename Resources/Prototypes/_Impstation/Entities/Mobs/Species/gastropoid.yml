@@ -115,6 +115,9 @@
     tags:
       - Gastropod
       - DoorBumpOpener
+      - CanPilot
+      - FootstepSound
+      - AnomalyHost
   - type: Inventory
     templateId: gastropoid
     displacements:
