@@ -407,7 +407,7 @@
   params:
     variation: 0.05
   sounds:
-    Laugh:
+    SyndieborgLaugh:
       path: /Audio/Voice/Silicon/syndieborg_laugh.ogg
     Beep:
       path: /Audio/Machines/twobeep.ogg

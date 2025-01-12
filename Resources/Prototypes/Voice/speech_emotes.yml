@@ -437,3 +437,32 @@
     - pings
     - pinged
     - pinging
+
+- type: emote
+  id: SyndieborgLaugh
+  name: chat-emote-name-laugh
+  category: Vocal
+  icon: Interface/Emotes/laugh.png
+  whitelist:
+    requireAll: true
+    components:
+    - BorgChassis
+    - ShowSyndicateIcons
+    - Vocal
+  chatMessages: ["chat-emote-msg-laugh"]
+  chatTriggers:
+    - laugh
+    - laughs
+    - laughing
+    - laughed
+    - chuckle
+    - chuckles
+    - chuckled
+    - chuckling
+    - giggle
+    - giggles
+    - giggling
+    - giggled
+    - chortle
+    - chortles
+    - chortling
