@@ -751,10 +751,6 @@
   id: WeaponEnergyShotgun
   description: A one-of-a-kind prototype energy weapon that uses various shotgun configurations. It offers the possibility of both lethal and non-lethal shots, making it a versatile weapon.
   components:
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,4,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
     layers:
@@ -780,6 +776,10 @@
       fireCost: 200
     - proto: BulletDisablerSmgSpread
       fireCost: 120
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,4,1
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
     heldPrefix: energy
   - type: Tag
