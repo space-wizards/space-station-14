@@ -40,7 +40,7 @@
     agentName: changeling-roundend-name
     definitions:
     - prefRoles: [ Changeling ]
-      max: 5
+      max: 3
       playerRatio: 10
       lateJoinAdditional: true
       allowNonHumans: false
@@ -57,7 +57,7 @@
     agentName: vampire-roundend-name
     definitions:
     - prefRoles: [ Vampire ]
-      max: 5
+      max: 4
       playerRatio: 10
       lateJoinAdditional: true
       allowNonHumans: false
