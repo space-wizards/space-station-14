@@ -354,7 +354,7 @@ public sealed class SmokeSystem : EntitySystem
     }
 
     /// <summary>
-    /// Allows particular entities to examine
+    /// Allows particular entities to examine the smoke #IMP
     /// </summary>
     private void OnExamined(EntityUid uid, SmokeComponent component, ExaminedEvent args)
     {
@@ -386,7 +386,7 @@ public sealed class SmokeSystem : EntitySystem
         args.PushMessage(GetSolutionExamine(solution));
     }
 
-
+    // Taken from SharedSolutionContainerSystem #IMP
     private FormattedMessage GetSolutionExamine(Solution solution)
     {
         var msg = new FormattedMessage();

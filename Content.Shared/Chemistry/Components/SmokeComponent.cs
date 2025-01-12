@@ -40,13 +40,13 @@ public sealed partial class SmokeComponent : Component
     public float Duration = 10;
 
     /// <summary>
-    /// What entities are allowed to examine the foam to see the reagents contained within
+    /// What entities are allowed to examine the foam to see the reagents contained within #IMP
     /// </summary>
     [DataField("contentsViewers"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public EntityWhitelist? ContentsViewers = default!;
 
     /// <summary>
-    /// Are ghosts allowed to examine the contents of this foam?
+    /// Are ghosts allowed to examine the contents of this foam? #IMP
     /// </summary>
     [DataField("allowGhostExamine"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool AllowGhostExamine = true;
