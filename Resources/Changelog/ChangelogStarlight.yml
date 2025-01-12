@@ -2130,3 +2130,27 @@ Entries:
   id: 300
   time: '2025-01-12T15:35:38.765141+00:00'
   url: 'null'
+- author: STARLIGHT TEAM
+  changes:
+  - message: Reduced max number of Changelings in a Hive from 5 to 3 (New max if 2
+      Hives is 6 instead of 10)
+    type: Tweak
+  id: 301
+  time: '2025-01-12T17:46:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/231
+- author: STARLIGHT TEAM
+  changes:
+  - message: Reduced the max number of Vampires in a Clan from 5 to 4 (New max if
+      2 Clans is 8 instead of 10)
+    type: Tweak
+  id: 302
+  time: '2025-01-12T17:46:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/231
+- author: STARLIGHT TEAM
+  changes:
+  - message: Reduced odds of Changeling Hives from 50% to 40%
+    type: Tweak
+  id: 303
+  time: '2025-01-12T17:46:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/231
+
