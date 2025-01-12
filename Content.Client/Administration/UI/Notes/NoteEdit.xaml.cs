@@ -159,6 +159,7 @@ public sealed partial class NoteEdit : FancyWindow
                 SecretCheckBox.Pressed = false;
                 SeverityOption.Disabled = false;
                 PermanentCheckBox.Pressed = true;
+                SubmitButton.Disabled = true;
                 UpdatePermanentCheckboxFields();
                 break;
             case (int) NoteType.Message: // Message: these are shown to the player when they log on
