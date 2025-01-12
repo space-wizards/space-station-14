@@ -23,7 +23,7 @@
     - id: Thief
       prob: 0.5
     - id: Changeling
-      prob: 0.3
+      prob: 0.35
     - id: Vampire
       prob: 0.25
 
