@@ -56,6 +56,7 @@
     icon:
       sprite: Structures/Furniture/chairs.rsi
       state: shuttle
+    trivial: true #imp edit
   - type: EscapeShuttleCondition
 
 - type: entity
@@ -74,6 +75,7 @@
       components:
       - EscapeShuttleCondition
       - StealCondition
+    trivial: true #imp edit
   - type: DieCondition
 
 #- type: entity

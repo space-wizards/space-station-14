@@ -40,6 +40,18 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     /// </summary>
     [DataField]
     public ProtoId<JobPrototype>? JobPrototype { get; set; }
+
+    /// <summary>
+    /// imp edit - should purchases made by this role be tracked?
+    /// </summary>
+    [DataField]
+    public bool TrackPurchases;
+
+    /// <summary>
+    /// imp edit - if true, the player with this role will get complimented for not spending anything
+    /// </summary>
+    [DataField]
+    public bool GetsNoSpendtext;
 }
 
 // Why does this base component actually exist? It does make auto-categorization easy, but before that it was useless?
