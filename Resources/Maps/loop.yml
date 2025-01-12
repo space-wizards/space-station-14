@@ -7299,7 +7299,7 @@ entities:
       pos: -30.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -44351.34
+      secondsUntilStateChange: -44884.766
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7691,11 +7691,23 @@ entities:
     - type: Transform
       pos: -28.5,-12.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        13404:
+        - DoorStatus: DoorBolt
   - uid: 13404
     components:
     - type: Transform
       pos: -28.5,-9.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        13402:
+        - DoorStatus: DoorBolt
   - uid: 14633
     components:
     - type: Transform
@@ -43388,7 +43400,7 @@ entities:
       pos: -9.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -292106.88
+      secondsUntilStateChange: -292640.3
       state: Opening
   - uid: 6747
     components:
@@ -43396,7 +43408,7 @@ entities:
       pos: -8.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -292107.6
+      secondsUntilStateChange: -292641.03
       state: Opening
   - uid: 6749
     components:
@@ -43404,7 +43416,7 @@ entities:
       pos: -6.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -292106.16
+      secondsUntilStateChange: -292639.6
       state: Opening
   - uid: 6750
     components:
@@ -43412,7 +43424,7 @@ entities:
       pos: -5.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -292105.53
+      secondsUntilStateChange: -292638.97
       state: Opening
 - proto: CyberPen
   entities:
@@ -93428,6 +93440,11 @@ entities:
       - SurveillanceCameraEngineering
       nameSet: True
       id: Atmos Front
+  - uid: 17682
+    components:
+    - type: Transform
+      pos: 10.5,20.5
+      parent: 2
 - proto: SurveillanceCameraGeneral
   entities:
   - uid: 13564
@@ -93454,14 +93471,8 @@ entities:
   - uid: 13566
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -43.5,29.5
+      pos: -51.5,19.5
       parent: 2
-    - type: SurveillanceCamera
-      setupAvailableNetworks:
-      - SurveillanceCameraGeneral
-      nameSet: True
-      id: Dorms-Med hall
   - uid: 13567
     components:
     - type: Transform
@@ -93687,6 +93698,35 @@ entities:
       - SurveillanceCameraGeneral
       nameSet: True
       id: Entrance hall
+  - uid: 17680
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -81.5,71.5
+      parent: 2
+  - uid: 17681
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -43.5,30.5
+      parent: 2
+  - uid: 17683
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -59.5,66.5
+      parent: 2
+  - uid: 17684
+    components:
+    - type: Transform
+      pos: -54.5,65.5
+      parent: 2
+  - uid: 17685
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -48.5,68.5
+      parent: 2
 - proto: SurveillanceCameraMedical
   entities:
   - uid: 13791
