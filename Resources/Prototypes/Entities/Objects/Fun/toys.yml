@@ -347,6 +347,9 @@
     - HEAD
   - type: Speech
     speechVerb: Reptilian # for pais (In the secret stash)
+  - type: Tag
+    tags:
+      - PlushieLizard
 
 - type: entity
   parent: PlushieLizard
@@ -478,7 +481,9 @@
     equippedPrefix: lizard-inversed
     slots:
     - HEAD
-
+  - type: Tag
+    tags:
+      - PlushieDrazil
 
 - type: entity
   parent: BasePlushie

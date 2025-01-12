@@ -256,6 +256,81 @@
 
 - type: entity
   parent: MobSiliconBase
+  id: MobWehBot # Weh
+  name: wehbot
+  description: Weh!
+  components:
+  - type: SpamEmitSound
+    minInterval: 5
+    maxInterval: 15
+    sound:
+      collection: Weh
+      params:
+        variation: 0.125
+  - type: Sprite
+    sprite: Mobs/Silicon/Bots/wehbot.rsi
+    state: wehbot
+  - type: HTN
+    rootTask:
+      task: HonkbotCompound
+  - type: Speech
+    speechVerb: Reptilian
+  - type: Construction
+    graph: WehBot
+    node: bot
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-wehbot-name
+    description: ghost-role-information-wehbot-description
+    rules: ghost-role-information-freeagent-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: InteractionPopup
+    interactSuccessString: petting-success-wehbot
+    interactFailureString: petting-failure-wehbot
+    interactSuccessSound:
+      path: /Audio/Items/Toys/weh.ogg
+      params:
+        variation: 0.125
+
+- type: entity
+  parent: MobWehBot
+  id: MobHewBot # Hew
+  name: hewbot
+  description: Hew!
+  components:
+  - type: SpamEmitSound
+    minInterval: 5
+    maxInterval: 15
+    sound:
+      collection: Hew
+      params:
+        variation: 0.125
+  - type: Sprite
+    sprite: Mobs/Silicon/Bots/wehbot.rsi
+    state: hewbot
+  - type: Construction
+    graph: HewBot
+    node: bot
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-hewbot-name
+    description: ghost-role-information-hewbot-description
+    rules: ghost-role-information-freeagent-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: InteractionPopup
+    interactSuccessString: petting-success-wehbot
+    interactFailureString: petting-failure-hewbot
+    interactSuccessSound:
+      path: /Audio/Items/Toys/hew.ogg
+      params:
+        variation: 0.125
+
+- type: entity
+  parent: MobSiliconBase
   id: MobCleanBot
   name: cleanbot
   description: The creep of automation now threatening space janitors.

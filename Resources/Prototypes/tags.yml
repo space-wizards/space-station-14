@@ -663,6 +663,9 @@
   id: Head
 
 - type: Tag
+  id: HewHappyHonk
+
+- type: Tag
   id: HelmetEVA
 
 - type: Tag
@@ -991,7 +994,13 @@
   id: PlushieCarp
 
 - type: Tag
+  id: PlushieDrazil
+
+- type: Tag
   id: PlushieGhost
+
+- type: Tag
+  id: PlushieLizard
 
 - type: Tag
   id: PlushieSharkBlue
@@ -1317,6 +1326,9 @@
 
 - type: Tag
   id: WeaponShotgunKammerer
+
+- type: Tag
+  id: WehHappyHonk
 
 - type: Tag
   id: WeldingMask

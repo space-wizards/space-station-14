@@ -1,0 +1,65 @@
+- type: constructionGraph
+  id: WehBot
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: bot
+      steps:
+      - tag: WehHappyHonk
+        icon:
+          sprite: Objects/Storage/Happyhonk/weh.rsi
+          state: box
+        name: weh meal
+      - tag: PlushieLizard
+        icon:
+          sprite: Objects/Fun/toys.rsi
+          state: plushie_lizard
+        name: lizard plushie
+        doAfter: 2
+      - tag: ProximitySensor
+        icon:
+          sprite: Objects/Misc/proximity_sensor.rsi
+          state: icon
+        name: proximity sensor
+      - tag: BorgArm
+        icon:
+          sprite: Mobs/Silicon/drone.rsi
+          state: l_hand
+        name: borg arm
+        doAfter: 2
+  - node: bot
+    entity: MobWehBot
+
+- type: constructionGraph
+  id: HewBot
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: bot
+      steps:
+      - tag: HewHappyHonk
+        icon:
+          sprite: Objects/Storage/Happyhonk/hew.rsi
+          state: box
+        name: hew meal
+      - tag: PlushieDrazil
+        icon:
+          sprite: Objects/Fun/toys.rsi
+          state: plushie_lizard_inversed
+        name: Drazil plushie
+        doAfter: 2
+      - tag: ProximitySensor
+        icon:
+          sprite: Objects/Misc/proximity_sensor.rsi
+          state: icon
+        name: proximity sensor
+      - tag: BorgArm
+        icon:
+          sprite: Mobs/Silicon/drone.rsi
+          state: l_hand
+        name: borg arm
+        doAfter: 2
+  - node: bot
+    entity: MobHewBot

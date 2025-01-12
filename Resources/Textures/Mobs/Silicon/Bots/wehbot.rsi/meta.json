@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Derived from https://github.com/tgstation/tgstation at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a, derived from https://github.com/space-wizards/space-station-14/commit/881e4d3432c85bdbc680ce90a3b252bc1a87716f by KieueCaprie (github), derived from https://github.com/space-wizards/space-station-14/commit/7761f86b998f63db9320d97a0d84e00a05954a2d by Moomoobeef (github), made by K-Dynamic for SS14 (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "directions": 1,
+            "name": "wehbot"
+        },
+        {
+            "directions": 1,
+            "name": "hewbot"
+        }
+    ]
+}

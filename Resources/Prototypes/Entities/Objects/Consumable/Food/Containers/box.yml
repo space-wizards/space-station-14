@@ -274,7 +274,7 @@
       prob: 0.10
       orGroup: Pizza
     - id: KnifePlastic
-  
+
 - type: entity
   name: pizza box
   parent: FoodBoxPizzaFilled
@@ -573,7 +573,8 @@
 - type: entity
   id: HappyHonkMime
   parent: HappyHonk
-  description: A limited mime edition of the happy honk meal.
+  name: happy mime meal
+  description: A limited mime edition of the happy honk meal, featuring their signature quote "..."
   suffix: Toy Safe
   components:
   - type: Tag
@@ -672,7 +673,7 @@
 - type: entity
   id: HappyHonkCluwne
   parent: HappyHonk
-  name: woeful cluwne meal
+  name: happy jonk meal
   description: Nothing good can come of this.
   components:
   - type: Tag
@@ -688,6 +689,42 @@
   - type: StorageFill
     contents:
       - id: CluwneHorn
+
+- type: entity
+  id: HappyHonkWeh
+  parent: HappyHonk
+  name: happy weh meal
+  description: A collaborative edition of the happy honk meal between Donk Co. and Nanotrasen's brand of lizard plushies. Weh!
+  suffix: Toy Safe
+  components:
+  - type: Tag
+    tags:
+    - Trash
+    - WehHappyHonk
+  - type: Sprite
+    sprite: Objects/Storage/Happyhonk/weh.rsi
+    state: box
+  - type: Item
+    sprite: Objects/Storage/Happyhonk/weh.rsi
+    heldPrefix: box
+
+- type: entity
+  id: HappyHonkHew
+  parent: HappyHonk
+  name: happy hew meal
+  description: A collaborative edition of the happy honk meal between our dimension and an inverted dimension. Hew!
+  suffix: Toy Safe
+  components:
+  - type: Tag
+    tags:
+    - Trash
+    - HewHappyHonk
+  - type: Sprite
+    sprite: Objects/Storage/Happyhonk/hew.rsi
+    state: box
+  - type: Item
+    sprite: Objects/Storage/Happyhonk/hew.rsi
+    heldPrefix: box
 
 - type: entity
   id: FoodMealHappyHonkClown

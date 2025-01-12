@@ -107,6 +107,12 @@ ghost-role-information-honkbot-description = An artificial being of pure evil.
 ghost-role-information-jonkbot-name = Jonkbot
 ghost-role-information-jonkbot-description = An artificial being of pure evil.
 
+ghost-role-information-wehbot-name = Wehbot
+ghost-role-information-wehbot-description = A Wehbot, made of pure weh!
+
+ghost-role-information-hewbot-name = Hewbot
+ghost-role-information-hewbot-description = A Hewbot, made of pure hew!
+
 ghost-role-information-mimebot-name = Mimebot
 ghost-role-information-mimebot-description = A Mimebot, act like a mime but don't act like a greytider.
 
