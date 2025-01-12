@@ -19,6 +19,7 @@ public sealed partial class MappingPrototypeList : Control
     private readonly List<MappingPrototype> _search = new();
 
     public MappingSpawnButton? Selected;
+    public MappingPrototype FavoritesPrototype;
     private MappingSpawnButton? _favoriteList;
 
     /// <summary>
@@ -35,6 +36,7 @@ public sealed partial class MappingPrototypeList : Control
     public MappingPrototypeList()
     {
         RobustXamlLoader.Load(this);
+        FavoritesPrototype = new MappingPrototype(null, Loc.GetString("mapping-favorite"));
 
         MeasureButton.Measure(Vector2Helpers.Infinity);
 
@@ -61,7 +63,7 @@ public sealed partial class MappingPrototypeList : Control
         Selected = null;
         ScrollContainer.SetScrollValue(new Vector2(0, 0));
 
-        _favoriteList = Insert(PrototypeList, new MappingPrototype(null, Loc.GetString("mapping-favorite")), false, false);
+        _favoriteList = Insert(PrototypeList, FavoritesPrototype, false, false);
         _favoriteList.CollapseButtonWrapper.Visible = true;
         _favoriteList.CollapseButton.Visible = true;
         _favoriteList.FavoriteButton.Visible = false;
@@ -258,17 +260,17 @@ public sealed partial class MappingPrototypeList : Control
     private void OnFavoriteToggle(MappingSpawnButton button)
     {
         if (button.Prototype is not { } prototype ||
-            _favoriteList is not { Prototype: { } listPrototype })
+            _favoriteList == null)
             return;
 
-        listPrototype.Children ??= [];
+        FavoritesPrototype.Children ??= [];
         if (button.FavoriteButton.Pressed)
         {
             if (prototype.Favorite)
                 return;
 
-            if (!listPrototype.Children.Contains(prototype))
-                listPrototype.Children.Add(prototype);
+            if (!FavoritesPrototype.Children.Contains(prototype))
+                FavoritesPrototype.Children.Add(prototype);
 
             if (_favoriteList.CollapseButton.Pressed)
             {
@@ -284,7 +286,7 @@ public sealed partial class MappingPrototypeList : Control
             if (!prototype.Favorite)
                 return;
 
-            listPrototype.Children.Remove(prototype);
+            FavoritesPrototype.Children.Remove(prototype);
             if (_favoriteList.CollapseButton.Pressed)
             {
                 var lists = new List<Container>([_favoriteList.ChildrenPrototypes, _favoriteList.ChildrenPrototypesGallery]);

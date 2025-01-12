@@ -6,7 +6,6 @@ using Content.Client.Gameplay;
 using Content.Client.Maps;
 using Content.Client.SubFloor;
 using Content.Client.UserInterface.Controls;
-using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.Verbs;
 using Content.Shared.Administration;
@@ -140,6 +139,7 @@ public sealed class MappingState : GameplayStateBase
         Screen.PipesColor.OnPressed += OnPipesColorPressed;
         Screen.ChatButton.OnPressed += OnChatButtonPressed;
         _placement.PlacementChanged += OnPlacementChanged;
+        _mapping.OnFavoritePrototypesLoaded += OnFavoritesLoaded;
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.MappingUnselect, new PointerInputCmdHandler(HandleMappingUnselect, outsidePrediction: true))
@@ -159,12 +159,14 @@ public sealed class MappingState : GameplayStateBase
 
         _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
 
+        _mapping.LoadFavorites();
         ReloadPrototypes();
         UpdateLocale();
     }
 
     protected override void Shutdown()
     {
+        SaveFavorites();
         CommandBinds.Unregister<MappingState>();
 
         Screen.Entities.GetPrototypeData -= OnGetData;
@@ -189,6 +191,7 @@ public sealed class MappingState : GameplayStateBase
         Screen.ChatButton.OnPressed -= OnChatButtonPressed;
         _placement.PlacementChanged -= OnPlacementChanged;
         _prototypeManager.PrototypesReloaded -= OnPrototypesReloaded;
+        _mapping.OnFavoritePrototypesLoaded -= OnFavoritesLoaded;
 
         UserInterfaceManager.ClearWindows();
         _loadController.UnloadScreen();
@@ -237,6 +240,20 @@ public sealed class MappingState : GameplayStateBase
             Screen.EraseEntityButton.ToolTip = Loc.GetString("mapping-erase-entity-tooltip", ("key", enableDeleteBinding.GetKeyString()));
     }
 
+    private void SaveFavorites()
+    {
+        Screen.Entities.FavoritesPrototype.Children ??= new List<MappingPrototype>();
+        Screen.Tiles.FavoritesPrototype.Children ??= new List<MappingPrototype>();
+        Screen.Decals.FavoritesPrototype.Children ??= new List<MappingPrototype>();
+
+        var children = Screen.Entities.FavoritesPrototype.Children
+            .Union(Screen.Tiles.FavoritesPrototype.Children)
+            .Union(Screen.Decals.FavoritesPrototype.Children)
+            .ToList();
+
+        _mapping.SaveFavorites(children);
+    }
+
     private void ReloadPrototypes()
     {
         var entitiesTemplate = new MappingPrototype(null, Loc.GetString("mapping-template"));
@@ -248,13 +265,13 @@ public sealed class MappingState : GameplayStateBase
             switch (favorite.RootType)
             {
                 case TemplateType.Entity:
-                    RegisterFavorites(favorite, favorite.RootType, entitiesTemplate);
+                    RegisterTemplates(favorite, favorite.RootType, entitiesTemplate);
                     break;
                 case TemplateType.Tile:
-                    RegisterFavorites(favorite, favorite.RootType, tilesTemplate);
+                    RegisterTemplates(favorite, favorite.RootType, tilesTemplate);
                     break;
                 case TemplateType.Decal:
-                    RegisterFavorites(favorite, favorite.RootType, decalsTemplate);
+                    RegisterTemplates(favorite, favorite.RootType, decalsTemplate);
                     break;
             }
         }
@@ -273,23 +290,11 @@ public sealed class MappingState : GameplayStateBase
             Register(entity, entity.ID, entities);
         }
 
-        Sort(mappings, entities);
-        mappings.Clear();
-        Screen.Entities.UpdateVisible(
-            new (entitiesTemplate.Children?.Count > 0 ? [entitiesTemplate, entities] : [entities]),
-            _allPrototypes.GetOrNew(typeof(EntityPrototype)));
-
         var tiles = new MappingPrototype(null, Loc.GetString("mapping-tiles")) { Children = new List<MappingPrototype>() };
         foreach (var tile in _prototypeManager.EnumeratePrototypes<ContentTileDefinition>())
         {
             Register(tile, tile.ID, tiles);
         }
-
-        Sort(mappings, tiles);
-        mappings.Clear();
-        Screen.Tiles.UpdateVisible(
-            new (tilesTemplate.Children?.Count > 0 ? [tilesTemplate, tiles] : [tiles]),
-            _allPrototypes.GetOrNew(typeof(ContentTileDefinition)));
 
         var decals = new MappingPrototype(null, Loc.GetString("mapping-decals")) { Children = new List<MappingPrototype>() };
         foreach (var decal in _prototypeManager.EnumeratePrototypes<DecalPrototype>())
@@ -298,6 +303,18 @@ public sealed class MappingState : GameplayStateBase
                 Register(decal, decal.ID, decals);
         }
 
+        Sort(mappings, entities);
+        mappings.Clear();
+        Screen.Entities.UpdateVisible(
+            new (entitiesTemplate.Children?.Count > 0 ? [entitiesTemplate, entities] : [entities]),
+            _allPrototypes.GetOrNew(typeof(EntityPrototype)));
+
+        Sort(mappings, tiles);
+        mappings.Clear();
+        Screen.Tiles.UpdateVisible(
+            new (tilesTemplate.Children?.Count > 0 ? [tilesTemplate, tiles] : [tiles]),
+            _allPrototypes.GetOrNew(typeof(ContentTileDefinition)));
+
         Sort(mappings, decals);
         mappings.Clear();
         Screen.Decals.UpdateVisible(
@@ -305,7 +322,7 @@ public sealed class MappingState : GameplayStateBase
             _allPrototypes.GetOrNew(typeof(DecalPrototype)));
     }
 
-    private void RegisterFavorites(MappingTemplatePrototype templateProto, TemplateType? type, MappingPrototype toplevel)
+    private void RegisterTemplates(MappingTemplatePrototype templateProto, TemplateType? type, MappingPrototype toplevel)
     {
         if (type == null)
         {
@@ -361,7 +378,7 @@ public sealed class MappingState : GameplayStateBase
 
         foreach (var child in templateProto.Children)
         {
-            RegisterFavorites(child, type, mapping);
+            RegisterTemplates(child, type, mapping);
         }
 
         toplevel.Children ??= new List<MappingPrototype>();
@@ -585,6 +602,7 @@ public sealed class MappingState : GameplayStateBase
             return;
         }
 
+        SaveFavorites();
         ReloadPrototypes();
     }
 
@@ -595,6 +613,53 @@ public sealed class MappingState : GameplayStateBase
 
         Screen.EraseEntityButton.Pressed = _placement.Eraser;
         Screen.EntityPlacementMode.Disabled = _placement.Eraser;
+    }
+
+    private void OnFavoritesLoaded(List<IPrototype> prototypes)
+    {
+        Screen.Entities.FavoritesPrototype.Children = new List<MappingPrototype>();
+        Screen.Decals.FavoritesPrototype.Children = new List<MappingPrototype>();
+        Screen.Tiles.FavoritesPrototype.Children = new List<MappingPrototype>();
+        
+        foreach (var prototype in prototypes)
+        {
+            switch (prototype)
+            {
+                case EntityPrototype entityPrototype:
+                {
+                    if (_idDict.GetOrNew(typeof(EntityPrototype)).TryGetValue(entityPrototype.ID, out var entity))
+                    {
+                        Screen.Entities.FavoritesPrototype.Children.Add(entity);
+                        entity.Parents ??= new List<MappingPrototype>();
+                        entity.Parents.Add(Screen.Entities.FavoritesPrototype);
+                        entity.Favorite = true;
+                    }
+                    break;
+                }
+                case DecalPrototype decalPrototype:
+                {
+                    if (_idDict.GetOrNew(typeof(DecalPrototype)).TryGetValue(decalPrototype.ID, out var decal))
+                    {
+                        Screen.Decals.FavoritesPrototype.Children.Add(decal);
+                        decal.Parents ??= new List<MappingPrototype>();
+                        decal.Parents.Add(Screen.Decals.FavoritesPrototype);
+                        decal.Favorite = true;
+                    }
+                    break;
+                }
+                case ContentTileDefinition tileDefinition:
+                {
+                    if (_idDict.GetOrNew(typeof(ContentTileDefinition)).TryGetValue(tileDefinition.ID, out var tile))
+                    {
+                        Screen.Tiles.FavoritesPrototype.Children.Add(tile);
+                        tile.Parents ??= new List<MappingPrototype>();
+                        tile.Parents.Add(Screen.Decals.FavoritesPrototype);
+                        tile.Favorite = true;
+                    }
+                    break;
+                }
+            }
+        }
     }
 
     protected override void OnKeyBindStateChanged(ViewportBoundKeyEventArgs args)
