@@ -1,0 +1,32 @@
+- type: entity
+  id: LiquidDispenser
+  name: liquid dispenser
+  description: A thin device, what spills liquid all over the floor
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/liquid_dispenser.rsi
+    state: base
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+            bounds: "-0.48,-0.48,0.48,-0.40"
+  - type: Clickable
+  - type: TriggerOnActivate
+    cooldownTime: 5.0
+  - type: SmokeOnTrigger
+    duration: 15
+    spreadAmount: 50
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: SpaceCleaner
+        Quantity: 30

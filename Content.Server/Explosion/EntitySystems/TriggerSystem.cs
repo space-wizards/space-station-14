@@ -62,6 +62,7 @@ namespace Content.Server.Explosion.EntitySystems
     [UsedImplicitly]
     public sealed partial class TriggerSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly FlashSystem _flashSystem = default!;
@@ -243,6 +244,14 @@ namespace Content.Server.Explosion.EntitySystems
         {
             if (args.Handled || !args.Complex)
                 return;
+            
+            var currentTime = _gameTiming.CurTime;
+            var cooldown = TimeSpan.FromSeconds(component.CooldownTime);
+            
+            if (currentTime - component.LastTimeActivated < cooldown)
+                return;
+
+            component.LastTimeActivated = currentTime;
 
             Trigger(uid, args.User);
             args.Handled = true;

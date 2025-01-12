@@ -521,6 +521,10 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Item
+    size: Small
+    shape:
+    - 0, 0, 1, 1
   - type: HitscanBatteryAmmoProvider
     proto: DisablerBolt
     fireCost: 100
