@@ -30,6 +30,7 @@
   - ChiefMedicalOfficer
   - Brig
   - Cryogenics
+  - External
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
