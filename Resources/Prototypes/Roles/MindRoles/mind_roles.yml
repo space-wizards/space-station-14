@@ -162,6 +162,7 @@
   components:
   - type: MindRole
     antagPrototype: TraitorSleeper
+    trackPurchases: true #imp edit
     getsNoSpendtext: true # imp edit
 
 # Zombie Squad
