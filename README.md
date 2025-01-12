@@ -51,7 +51,7 @@ Content under these subdirectories either originate from their respective fork, 
 |--------------|-----------|-----------------|---------|
 | `_Impstation` | Imp Station 14 | https://github.com/impstation/imp-station-14/ | AGPL 3.0 |
 | `_Goobstation` | Goob Station | https://github.com/Goob-Station/Goob-Station/ | AGPL 3.0 |
-| `_DeltaV` | Delta-V | https://github.com/DeltaV-Station/Delta-v/ | AGPL 3.0 |
+| `_DV` | Delta-V | https://github.com/DV-Station/Delta-v/ | AGPL 3.0 |
 | `_EinsteinEngine` | Einstein Engines | https://github.com/Simple-Station/Einstein-Engines/ | AGPL 3.0 |
 | `_EstacaoPirata` | Estacao Pirata | https://github.com/Day-OS/estacao-pirata-14/ | AGPL 3.0 |
 | `_White` | White Dream | https://github.com/WWhiteDreamProject/wwdpublic/ | AGPL 3.0 |

@@ -1,13 +1,12 @@
 - type: entity
-  name: energy katana
-  suffix: stun
-  parent: Katana
+  parent: EnergyKatana
   id: EnergyKatanaStun
+  suffix: stun
   description: A katana infused with strong energy. Few possess the strength to contain it.
   components:
   - type: StaminaDamageOnHit
     damage: 30
-    sound: /Audio/Weapons/egloves.ogg
+    sound: /Audio/Weapons/bladeslice.ogg
   - type: MeleeWeapon
     wideAnimationRotation: -60
     damage:
@@ -43,16 +42,6 @@
     slots:
     - Back
     - Belt
-  - type: EnergyKatana
-  - type: DashAbility
-  - type: LimitedCharges
-    maxCharges: 3
-    charges: 3
-  - type: AutoRecharge
-    rechargeDuration: 20
-  - type: Reflect
-  - type: ThrowingAngle
-    angle: 300
   - type: ItemToggleDamageOtherOnHit
   - type: ItemToggle
     predictable: false
@@ -76,3 +65,18 @@
         enum.ToggleVisuals.Layer:
           True: {state: on-icon}
           False: {state: off-icon}
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-ninja
+    stampedColor: "#21a52e"
+    stampState: "paper_stamp-ninja"
+  # Inherited
+  # - type: EnergyKatana
+  # - type: DashAbility
+  # - type: LimitedCharges
+  #   maxCharges: 3
+  #   charges: 3
+  # - type: AutoRecharge
+  #   rechargeDuration: 20
+  # - type: Reflect
+  # - type: ThrowingAngle
+  #   angle: 300

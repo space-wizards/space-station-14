@@ -1,0 +1,39 @@
+- type: speechSounds
+  id: SupermatterWarning
+  variation: 0
+  saySound:
+    path: /Audio/_EinsteinEngines/Supermatter/status/terminal_alert.ogg
+  askSound:
+    path: /Audio/_EinsteinEngines/Supermatter/status/terminal_alert.ogg
+  exclaimSound:
+    path: /Audio/_EinsteinEngines/Supermatter/status/terminal_alert.ogg
+
+- type: speechSounds
+  id: SupermatterDanger
+  variation: 0
+  saySound:
+    path: /Audio/_EinsteinEngines/Supermatter/status/engine_alert2.ogg
+  askSound:
+    path: /Audio/_EinsteinEngines/Supermatter/status/engine_alert2.ogg
+  exclaimSound:
+    path: /Audio/_EinsteinEngines/Supermatter/status/engine_alert2.ogg
+
+- type: speechSounds
+  id: SupermatterEmergency
+  variation: 0
+  saySound:
+    path: /Audio/_EinsteinEngines/Supermatter/status/engine_alert1.ogg
+  askSound:
+    path: /Audio/_EinsteinEngines/Supermatter/status/engine_alert1.ogg
+  exclaimSound:
+    path: /Audio/_EinsteinEngines/Supermatter/status/engine_alert1.ogg
+
+- type: speechSounds
+  id: SupermatterDelaminating
+  variation: 0
+  saySound:
+    path: /Audio/_EinsteinEngines/Supermatter/status/bloblarm.ogg
+  askSound:
+    path: /Audio/_EinsteinEngines/Supermatter/status/bloblarm.ogg
+  exclaimSound:
+    path: /Audio/_EinsteinEngines/Supermatter/status/bloblarm.ogg

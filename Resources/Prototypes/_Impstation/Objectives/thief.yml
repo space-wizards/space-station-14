@@ -3,6 +3,7 @@
   id: FinFinStealObjective
   components:
   - type: StealCondition
+    verifyMapExistence: true
     stealGroup: AnimalFinFin
   - type: Objective
     difficulty: 2
@@ -449,3 +450,16 @@
     stealGroup: SeedExtractor
   - type: Objective
     difficulty: 0.5
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: EvilSkullArtifactItemStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Chaplain
+  - type: StealCondition
+    verifyMapExistence: true
+    stealGroup: EvilSkullArtifactItem
+    descriptionText: objective-condition-thief-evil-skull-description
+  - type: Objective
+    difficulty: 0.6 #a little harder than the bible, it glows red and there's only on, and it's an artifact

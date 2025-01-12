@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Maybe taken from /tg/station. No attribution was present originally, so this is only an assumption.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "recorder"
+        }
+    ]
+}

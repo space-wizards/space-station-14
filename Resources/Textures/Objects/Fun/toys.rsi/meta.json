@@ -413,6 +413,14 @@
       "name": "plushie_bug"
     },
     {
+      "name": "plushie_bug-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "plushie_bug-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "plushie_decapoid"
     },
     {

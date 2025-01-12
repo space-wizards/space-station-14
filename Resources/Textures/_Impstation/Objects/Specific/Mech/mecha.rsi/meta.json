@@ -1,0 +1,65 @@
+{
+  "copyright" : "Taken from TGstation's wallening patch, VIM resprite by kipdotnet (github)",
+  "license" : "CC-BY-SA-3.0",
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ripley",
+      "directions": 4
+    },
+    {
+      "name": "ripley-empty",
+      "directions": 4
+    },
+    {
+      "name": "ripley-open"
+    },
+    {
+      "name": "ripley-broken"
+    },
+    {
+      "name": "ripley-g",
+      "directions": 4
+    },
+    {
+      "name": "ripley-g-open"
+    },
+    {
+      "name": "ripley-g-full",
+      "directions": 4
+    },
+    {
+      "name": "ripley-g-full-open"
+    },
+    {
+      "name": "ripleymkii",
+      "directions": 4
+    },
+    {
+      "name": "ripleymkii-open"
+    },
+    {
+      "name": "ripleymkii-broken"
+    },
+    {
+      "name": "vim",
+      "directions": 4
+    },
+    {
+      "name": "vim-open",
+      "directions": 4
+    },
+    {
+      "name": "vim-broken",
+      "directions": 4
+    },
+    {
+      "name": "vim_lights",
+      "directions": 4
+    }
+  ]
+}

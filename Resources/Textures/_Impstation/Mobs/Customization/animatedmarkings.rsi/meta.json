@@ -888,6 +888,32 @@
         ]
       },
       {
+        "name": "dwarfmarkkangaroolhand",
+        "directions": 4,
+        "delays": [
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ]
+        ]
+      },
+      {
         "name": "dwarfmarkcobra",
         "directions": 4,
         "delays": [

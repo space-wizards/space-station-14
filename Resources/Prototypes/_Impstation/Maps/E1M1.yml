@@ -1,0 +1,14 @@
+- type: gameMap
+  id: E1M1
+  mapName: Episode 1 - Mission 1
+  mapPath: /Maps/_Impstation/Nonstations/E1M1.yml
+  minPlayers: 0
+  stations:
+    E1M1:
+      stationProto: StandardStationArena
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "Episode 1 - Mission 1"
+        - type: StationJobs
+          availableJobs:
+            Passenger: [ -1, -1 ]

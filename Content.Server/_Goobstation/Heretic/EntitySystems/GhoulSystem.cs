@@ -143,7 +143,7 @@ public sealed partial class GhoulSystem : EntitySystem
 
     private void OnExamine(Entity<GhoulComponent> ent, ref ExaminedEvent args)
     {
-        args.PushMarkup(Loc.GetString("examine-system-cant-see-entity"));
+        args.PushMarkup($"[color=red]{Loc.GetString("heretic-ghoul-examine", ("ent", args.Examined))}[/color]");
     }
 
     private void OnMobStateChange(Entity<GhoulComponent> ent, ref MobStateChangedEvent args)

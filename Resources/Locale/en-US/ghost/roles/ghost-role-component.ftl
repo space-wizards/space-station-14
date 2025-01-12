@@ -19,6 +19,8 @@ ghost-role-information-rules-team-antagonist = You are a [color=red][bold]Team A
 ghost-role-information-familiar-rules = You are a [color=#6495ed][bold]Familiar[/bold][/color]. Serve the interests of your master, whatever those may be.
 
                                         You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+
+
 ghost-role-information-silicon-rules = You are a [color=#6495ed][bold]Silicon[/bold][/color]. Obey your laws. You are a Free Agent if you are not currently bound by any laws.
 
                                        You don't remember any of your previous life, and you don't remember anything you learned as a ghost.

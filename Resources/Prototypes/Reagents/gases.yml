@@ -26,6 +26,10 @@
         conditions:
         - !type:OrganType
           type: Plant
+      - !type:Oxygenate # imp special. i have to do this because metabolizer types can't inherit from one another
+        conditions:
+        - !type:OrganType
+          type: Apid
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:

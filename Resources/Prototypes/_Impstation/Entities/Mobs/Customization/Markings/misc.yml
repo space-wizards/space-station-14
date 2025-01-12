@@ -14,28 +14,28 @@
 #  shaded: unshaded //use for markings that ignore shader
 
 - type: marking
-  id: SnailCheeks
+  id: GastropoidCheeks
   bodyPart: Head
   markingCategory: Head
-  speciesRestriction: [ Snail ]
+  speciesRestriction: [ Gastropoid ]
   sprites:
   - sprite: _Impstation/Mobs/Customization/markingsbundle1.rsi
     state: snailcheeks
 
 - type: marking
-  id: SnailShellProstheticSimple
+  id: GastropoidShellProstheticSimple
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [ Snail ]
+  speciesRestriction: [ Gastropoid ]
   sprites:
   - sprite: _Impstation/Mobs/Customization/markingsbundle1.rsi
     state: snailshellprostheticsimple
 
 - type: marking
-  id: SnailShellProsthetic
+  id: GastropoidShellProsthetic
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [ Snail ]
+  speciesRestriction: [ Gastropoid ]
   sprites:
   - sprite: _Impstation/Mobs/Customization/markingsbundle1.rsi
     state: snailshellprosthetic
@@ -44,7 +44,7 @@
   id: SimpleBow
   bodyPart: Tail
   markingCategory: Overlay
-  speciesRestriction: [ Snail ]
+  speciesRestriction: [ Gastropoid ]
   sprites:
   - sprite: _Impstation/Mobs/Customization/markingsbundle1.rsi
     state: snailshellprostheticsimplebow
@@ -53,7 +53,7 @@
   id: SimpleCracks
   bodyPart: Tail
   markingCategory: Overlay
-  speciesRestriction: [ Snail ]
+  speciesRestriction: [ Gastropoid ]
   sprites:
   - sprite: _Impstation/Mobs/Customization/markingsbundle1.rsi
     state: snailshellprostheticsimplecracks
@@ -62,17 +62,17 @@
   id: GlowInTheDarkStars
   bodyPart: Tail
   markingCategory: Overlay
-  speciesRestriction: [ Snail ]
+  speciesRestriction: [ Gastropoid ]
   sprites:
   - sprite: _Impstation/Mobs/Customization/markingsbundle1.rsi
     state: snailshellprostheticsimpleglowinthedarkstars
   shader: unshaded
 
 - type: marking
-  id: SnailCheekGlow
+  id: GastropoidCheekGlow
   bodyPart: Head
   markingCategory: Head
-  speciesRestriction: [ Snail ]
+  speciesRestriction: [ Gastropoid ]
   sprites:
   - sprite: _Impstation/Mobs/Customization/animatedmarkings.rsi
     state: snailcheekglow
@@ -82,7 +82,7 @@
   id: ProstheticInnerLight
   bodyPart: Tail
   markingCategory: Overlay
-  speciesRestriction: [ Snail ]
+  speciesRestriction: [ Gastropoid ]
   sprites:
   - sprite: _Impstation/Mobs/Customization/animatedmarkings.rsi
     state: snailshellprostheticinnerlight
@@ -92,7 +92,7 @@
   id: ProstheticPulse
   bodyPart: Tail
   markingCategory: Overlay
-  speciesRestriction: [ Snail ]
+  speciesRestriction: [ Gastropoid ]
   sprites:
   - sprite: _Impstation/Mobs/Customization/animatedmarkings.rsi
     state: snailshellprostheticpulse
@@ -530,7 +530,11 @@
   bodyPart: Head
   markingCategory: Overlay
   speciesRestriction: [ Dwarf ]
-  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/animatedmarkings.rsi
@@ -542,7 +546,11 @@
   bodyPart: Chest
   markingCategory: Overlay
   speciesRestriction: [ Dwarf ]
-  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/animatedmarkings.rsi
@@ -554,7 +562,11 @@
   bodyPart: LArm
   markingCategory: Overlay
   speciesRestriction: [ Dwarf ]
-  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/animatedmarkings.rsi
@@ -566,7 +578,11 @@
   bodyPart: LHand
   markingCategory: Overlay
   speciesRestriction: [ Dwarf ]
-  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/animatedmarkings.rsi
@@ -578,7 +594,11 @@
   bodyPart: RArm
   markingCategory: Overlay
   speciesRestriction: [ Dwarf ]
-  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/animatedmarkings.rsi
@@ -590,7 +610,11 @@
   bodyPart: RHand
   markingCategory: Overlay
   speciesRestriction: [ Dwarf ]
-  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/animatedmarkings.rsi
@@ -602,7 +626,11 @@
   bodyPart: LLeg
   markingCategory: Overlay
   speciesRestriction: [ Dwarf ]
-  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/animatedmarkings.rsi
@@ -614,7 +642,11 @@
   bodyPart: LFoot
   markingCategory: Overlay
   speciesRestriction: [ Dwarf ]
-  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/animatedmarkings.rsi
@@ -626,7 +658,11 @@
   bodyPart: RLeg
   markingCategory: Overlay
   speciesRestriction: [ Dwarf ]
-  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/animatedmarkings.rsi
@@ -638,7 +674,11 @@
   bodyPart: RFoot
   markingCategory: Overlay
   speciesRestriction: [ Dwarf ]
-  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/animatedmarkings.rsi
@@ -714,7 +754,7 @@
         color: "#FFFFFF"
   sprites:
   - sprite: _Impstation/Mobs/Customization/animatedmarkings.rsi
-    state: dwarfmarkkangaroo
+    state: dwarfmarkkangaroolhand
   shader: unshaded
 
 - type: marking
@@ -1386,7 +1426,7 @@
   id: VitiligoHeadL
   bodyPart: Head
   markingCategory: Head
-  speciesRestriction: [ Human,  ]
+  speciesRestriction: [ Human,  Dwarf ]
   forcedColoring: true
   coloring:
     default:

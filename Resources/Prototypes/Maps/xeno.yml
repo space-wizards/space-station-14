@@ -2,7 +2,7 @@
   id: Xeno
   mapName: 'Xeno'
   mapPath: /Maps/_Impstation/xeno.yml
-  minPlayers: 40
+  minPlayers: 35
   maxPlayers: 80
   stations:
     Xeno:

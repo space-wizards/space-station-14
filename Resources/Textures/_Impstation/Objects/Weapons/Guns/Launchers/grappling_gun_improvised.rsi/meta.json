@@ -36,6 +36,12 @@
         },
         {
             "name": "hook"
-        }
+        },
+		{
+			"name": "no-hook"
+		},
+		{
+			"name": "no-tank"
+		}
     ]
 }

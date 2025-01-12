@@ -1,0 +1,25 @@
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesChemist
+  name: safety glasses
+  description: Glasses made for chemists and other workers dealing with caustic reagents.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Eyes/Glasses/safetyglasses.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Eyes/Glasses/safetyglasses.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.85
+
+- type: entity
+  parent: [ClothingEyesGlassesChemical, ShowMedicalIcons, Tier1Contraband]
+  id: ClothingEyesGlassesChemicalInterdyne
+  name: interdyne chemical analysis goggles
+  description: Goggles engineered to be unable to get a stain on the lenses. It comes with a medical HUD incorporated.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Eyes/Glasses/interdynechemgoogles.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Eyes/Glasses/interdynechemgoogles.rsi
