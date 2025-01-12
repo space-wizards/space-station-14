@@ -70,12 +70,12 @@
     icon:
       sprite: Mobs/Ghosts/ghost_human.rsi
       state: icon
+    trivial: true #imp edit
   - type: ObjectiveBlacklistRequirement
     blacklist:
       components:
       - EscapeShuttleCondition
       - StealCondition
-    trivial: true #imp edit
   - type: DieCondition
 
 #- type: entity
