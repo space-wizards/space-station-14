@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mqole
-  changes:
-  - message: Deck of cards added to loadout trinkets.
-    type: Add
-  id: 407
-  time: '2024-10-24T11:57:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/541
 - author: widgetbeck
   changes:
   - message: Added Luggage, a new cargo-purchasable ghostrole familiar.
@@ -4515,3 +4508,10 @@
   id: 906
   time: '2025-01-12T09:32:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1320
+- author: starlighthowls
+  changes:
+  - message: map changes to Boat
+    type: Tweak
+  id: 907
+  time: '2025-01-12T13:20:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1324
