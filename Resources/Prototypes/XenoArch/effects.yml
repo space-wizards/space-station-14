@@ -53,8 +53,14 @@
       weight: 2.0
     - id: XenoArtifactStealth
       weight: 1.0
-    - id: XenoArtifactRareMaterialSpawn
-      weight: 8.0 # amount is laughable
+    - id: XenoArtifactRareMaterialSpawnSilver
+      weight: 1.8 # amount is laughable
+    - id: XenoArtifactRareMaterialSpawnPlasma
+      weight: 2.0 # amount is laughable
+    - id: XenoArtifactRareMaterialSpawnGold
+      weight: 1.8 # amount is laughable
+    - id: XenoArtifactRareMaterialSpawnUranium
+      weight: 1.0 # amount is laughable
     - id: XenoArtifactAngryCarpSpawn
       weight: 4.0
     - id: XenoArtifactFaunaSpawn
@@ -755,6 +761,98 @@
         - id: UraniumOre1
           rolls: !type:ConstantNumberSelector
             value: 6
+          prob: 0.3
+
+- type: entity
+  id: XenoArtifactRareMaterialSpawnSilver
+  parent: BaseXenoArtifactEffect
+  description: Create rare materials
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 4
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 2
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:AllSelector
+        children:
+        - id: SilverOre1
+          rolls: !type:ConstantNumberSelector
+            value: 6
+          prob: 0.3
+
+- type: entity
+  id: XenoArtifactRareMaterialSpawnPlasma
+  parent: BaseXenoArtifactEffect
+  description: Create plasma
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 4
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 2
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:AllSelector
+        children:
+        - id: PlasmaOre1
+          rolls: !type:ConstantNumberSelector
+            value: 6
+          prob: 0.3
+
+- type: entity
+  id: XenoArtifactRareMaterialSpawnGold
+  parent: BaseXenoArtifactEffect
+  description: Create gold
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 3
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 1
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:AllSelector
+        children:
+        - id: GoldOre1
+          rolls: !type:ConstantNumberSelector
+            value: 6
+          prob: 0.3
+
+- type: entity
+  id: XenoArtifactRareMaterialSpawnUranium
+  parent: BaseXenoArtifactEffect
+  description: Create uranium
+  components:
+  - type: XenoArtifactNode
+    maxDurability: 4
+    maxDurabilityCanDecreaseBy:
+      min: 0
+      max: 2
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:AllSelector
+        children:
+        - id: UraniumOre1
+          rolls: !type:ConstantNumberSelector
+            value: 3
           prob: 0.3
 
 - type: entity
