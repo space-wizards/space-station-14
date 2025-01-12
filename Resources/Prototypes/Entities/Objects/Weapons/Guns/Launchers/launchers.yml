@@ -59,12 +59,22 @@
   id: WeaponLauncherCleanade
   description: PLOOP... FSSSSSS
   components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/cleanade_launcher.rsi
+    layers:
+      - state: icon
+        map: ["enum.GunVisualLayers.Base"]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Launchers/cleanade_launcher.rsi
+    slots:
+    - Back
+    - suitStorage
   - type: BallisticAmmoProvider
     whitelist:
       tags:
         - Grenade
     capacity: 3
-    proto: GrenadeFrag
+    proto: GrenadeCleanade
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
 
