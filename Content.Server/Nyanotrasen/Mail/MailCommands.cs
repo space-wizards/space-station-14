@@ -100,7 +100,7 @@ public sealed class MailToCommand : IConsoleCommand
         }
 
         foreach (var entity in targetContainer.ContainedEntities.ToArray())
-            mailContents.Insert(entity);
+            _containerSystem.Insert(entity, mailContents);
 
         mailComponent.IsFragile = isFragile;
         mailComponent.IsPriority = isPriority;
@@ -108,7 +108,7 @@ public sealed class MailToCommand : IConsoleCommand
         _mailSystem.SetupMail(mailUid, teleporterComponent, recipient.Value);
 
         var teleporterQueue = _containerSystem.EnsureContainer<Container>(teleporterComponent.Owner, "queued");
-        teleporterQueue.Insert(mailUid);
+        _containerSystem.Insert(mailUid, teleporterQueue);
         shell.WriteLine(Loc.GetString("command-mailto-success", ("timeToTeleport", teleporterComponent.TeleportInterval.TotalSeconds - teleporterComponent.Accumulator)));
     }
 }

@@ -9,6 +9,7 @@ using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Chat.Systems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Damage.Components;
 using Content.Server.Destructible;
@@ -32,16 +33,20 @@ using Content.Shared.Emag.Components;
 using Content.Shared.Destructible;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Fluids.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mail;
 using Content.Shared.Maps;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.PDA;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.Storage;
 using Content.Shared.Tag;
+using Robust.Shared.Audio.Systems;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Mail
@@ -452,7 +457,7 @@ namespace Content.Server.Mail
             foreach (var item in EntitySpawnCollection.GetSpawns(mailComp.Contents, _random))
             {
                 var entity = EntityManager.SpawnEntity(item, Transform(uid).Coordinates);
-                if (!container.Insert(entity))
+                if (!_containerSystem.Insert(entity, container))
                 {
                     _sawmill.Error($"Can't insert {ToPrettyString(entity)} into new mail delivery {ToPrettyString(uid)}! Deleting it.");
                     QueueDel(entity);
