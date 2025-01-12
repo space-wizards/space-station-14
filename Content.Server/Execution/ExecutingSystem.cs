@@ -292,7 +292,7 @@ public sealed class ExecutionSystem : EntitySystem
         }
         else
         {
-            _melee.AttemptLightAttack(attacker, weapon, meleeWeaponComp, victim);
+            _damageableSystem.TryChangeDamage(victim, meleeWeaponComp.Damage * ExecutionComponent.DamageMultiplier, true);
         }
 
         _combat.SetInCombatMode(attacker, prev);

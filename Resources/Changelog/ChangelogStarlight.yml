@@ -2101,3 +2101,32 @@ Entries:
   id: 296
   time: '2025-01-12T14:53:00.517643+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed execution system, now melee weapon works normal.
+    type: Fix
+  id: 297
+  time: '2025-01-12T15:01:15.645705+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Now blushields weapon has lock on BlueShield access.
+    type: Tweak
+  id: 298
+  time: '2025-01-12T15:01:37.157000+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added mindshield lock type, now it applied to x-01 multiphase.
+    type: Add
+  id: 299
+  time: '2025-01-12T15:34:42.442121+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: The weapon locking system now automatically locks when you drop your
+      weapon, or opens when you pick it up.
+    type: Tweak
+  id: 300
+  time: '2025-01-12T15:35:38.765141+00:00'
+  url: 'null'

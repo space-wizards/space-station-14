@@ -221,6 +221,10 @@
     - state: disable-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Lock
+    mindShieldLock: true
+  - type: AccessReader
+    access: [["BlueShield"]]
   - type: Item
     size: Small
     shape:
