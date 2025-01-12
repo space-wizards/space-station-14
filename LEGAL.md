@@ -11,7 +11,7 @@ Code contributed to this repository after commit `7d6a6073f9c1a3954d17b78d535d43
 Code contributed to this repository before commit `7d6a6073f9c1a3954d17b78d535d43659307cbe9` is licensed under the **MIT** license.
 See [LICENSE-MIT.txt](LICENSE-MIT.txt).
 
-[7d6a6073f9c1a3954d17b78d535d43659307cbe9](https://github.com/ss14-harmony/space-station-14/commit/7d6a6073f9c1a3954d17b78d535d43659307cbe9) was pushed on October 30th, 2024 at 16:52 UTC
+[7d6a6073f9c1a3954d17b78d535d43659307cbe9](https://github.com/ss14-harmony/ss14-harmony/commit/7d6a6073f9c1a3954d17b78d535d43659307cbe9) was pushed on October 30th, 2024 at 16:52 UTC
 
 ## Warranty
 
