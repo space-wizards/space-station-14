@@ -937,3 +937,25 @@ Entries:
     changes:
     - type: Tweak
       message: Made poquito naturally spawn in the kitchen
+  - id: 298
+    author: liltenhead
+    time: '2025-01-10T07:30:24.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/298
+    changes:
+    - type: Tweak
+      message: Tweaked Space Law to use a new sentencing system
+  - id: 271
+    author: SteroidsOnSteroids
+    time: '2025-01-12T17:02:17.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/271
+    changes:
+    - type: Add
+      message: The Bartender can now go riding merrily along with the Starset Sarsaparilla
+        and give the crewmembers spurs that jingle jangle jingle.
+  - id: 272
+    author: Ermucat
+    time: '2025-01-12T17:10:31.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/272
+    changes:
+    - type: Add
+      message: Added the Pizza bomb, a new syndicate explosive device
