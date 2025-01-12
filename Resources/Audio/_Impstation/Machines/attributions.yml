@@ -1,0 +1,4 @@
+- files: ["vending_drop.ogg"]
+  license: "Custom" #AGPL 3.0 but this is not considered a valid license by the RGA validator
+  copyright: "Taken from CEV Eris."
+  source: "https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg"
