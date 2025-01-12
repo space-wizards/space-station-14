@@ -30,9 +30,9 @@ public sealed class UseDelayOnMeleeHitSystem : EntitySystem
     {
         var uid = ent.Owner;
 
-        if (!TryComp<UseDelayComponent>(uid, out var useDelay) || _delay.IsDelayed((uid, useDelay)))
+        if (!TryComp<UseDelayComponent>(uid, out var useDelay))
             return;
 
-        _delay.TryResetDelay((uid, useDelay));
+        _delay.TryResetDelay((uid, useDelay), checkDelayed: true);
     }
 }
