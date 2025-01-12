@@ -1,0 +1,54 @@
+- type: job
+  id: SecurityClown
+  name: job-name-security-clown
+  description: job-description-security-clown
+  playTimeTracker: JobSecurityClown
+  requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 36000 #10 hrs
+    - !type:RoleTimeRequirement
+      role: JobClown
+      time: 3600 #1 hr
+  startingGear: SecurityClownGear
+  icon: "JobIconSecurityClown"
+  supervisors: job-supervisors-security
+  canBeAntag: false
+  setPreference: true
+  access:
+  - Security
+  - Brig
+  - Maintenance
+  - Service
+  - Theatre
+  - External
+  - Cryogenics
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: Clumsy
+      clumsyDamage:
+        types: #literally just picked semi random valus. i tested this once and tweaked it.
+          Blunt: 5
+          Piercing: 4
+        groups:
+          Burn: 3
+    - type: SleepEmitSound
+      snore: /Audio/Voice/Misc/silly_snore.ogg
+      interval: 10
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant, MindShieldImplant ]
+
+- type: startingGear
+  id: SecurityClownGear
+  equipment:
+    mask: ClothingMaskClownSecurity
+    jumpsuit: ClothingUniformJumpsuitClown
+    shoes: ClothingShoesClown
+    outerClothing: ClothingOuterArmorBasic
+    id: SecurityClownPDA
+    ears: ClothingHeadsetSecurity
+    belt: BikeHorn
+  storage:
+    back:
+    - Flash
+    - ClownRecorder

@@ -820,3 +820,41 @@
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
+
+# event-resctricted jobs
+
+- type: entity
+  parent: IDCardStandard
+  id: SecurityClownIDCard
+  name: security clown ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idsecurityclown
+  - type: PresetIdCard
+    job: SecurityClown
+
+- type: entity
+  parent: IDCardStandard
+  id: CommandMaidIDCard
+  name: command maid ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idcommandmaid
+  - type: PresetIdCard
+    job: CommandMaid
+
+- type: entity
+  parent: IDCardStandard
+  id: PartyMakerIDCard
+  name: party maker ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idpartymaker
+  - type: PresetIdCard
+    job: PartyMaker

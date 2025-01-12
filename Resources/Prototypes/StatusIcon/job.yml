@@ -452,3 +452,29 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Admin
   allowSelection: false
+
+# event-resctricted jobs
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconCommandMaid
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: CommandMaid
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconPartyMaker
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: PartyMaker
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSecurityClown
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: SecurityClown
+  allowSelection: false

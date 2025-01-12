@@ -153,3 +153,13 @@
 
 - type: playTimeTracker
   id: JobZookeeper
+
+# event-resctricted jobs
+- type: playTimeTracker
+  id: JobSecurityClown
+
+- type: playTimeTracker
+  id: JobCommandMaid
+
+- type: playTimeTracker
+  id: JobPartyMaker

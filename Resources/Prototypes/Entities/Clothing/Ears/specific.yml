@@ -18,3 +18,16 @@
       interfaces:
         enum.ChameleonUiKey.Key:
           type: ChameleonBoundUserInterface
+
+- type: entity
+  parent: ClothingHeadsetCommand
+  id: ClothingHeadsetCommandService
+  name: command-service headset
+  description: A headset with a command and service channels.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommand
+      - EncryptionKeyService
+      - EncryptionKeyCommon
