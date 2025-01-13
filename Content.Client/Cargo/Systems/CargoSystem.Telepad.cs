@@ -29,7 +29,7 @@ public sealed partial class CargoSystem
 
     private static readonly Animation CargoTelepadIdleAnimation = new()
     {
-        Length = TimeSpan.FromSeconds(0.8),
+        Length = TimeSpan.FromSeconds(2.8), //imp edit for fancy sprite, old is 0.8
         AnimationTracks =
         {
             new AnimationTrackSpriteFlick
