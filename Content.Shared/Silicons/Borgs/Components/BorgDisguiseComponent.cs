@@ -27,7 +27,7 @@ public sealed partial class BorgDisguiseComponent : Component
     [DataField(required: true)]
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public EntProtoId Description;
+    public string Description;
 
     /// <summary>
     /// Whether the disguise is currently active.
