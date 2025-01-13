@@ -200,6 +200,9 @@
       hasMindState: engineer_e
       noMindState: engineer_e_r
       description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
+      disguisedLight: engineer_l
+      realLight: synd_engi_l
+      realLightColor: "#dd200b"
     - type: GenericVisualizer
       visuals:
         enum.BorgVisuals.IsDisguised:

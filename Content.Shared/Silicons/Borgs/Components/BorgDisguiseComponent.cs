@@ -41,16 +41,44 @@ public sealed partial class BorgDisguiseComponent : Component
     /// <summary>
     /// The sprite state to use when the borg has a mind.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     [AutoNetworkedField]
     public string HasMindState;
 
     /// <summary>
     /// The sprite state to use when the borg has no mind.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     [AutoNetworkedField]
     public string NoMindState;
+
+    /// <summary>
+    /// The sprite state to use for the borg's flashlight when disguised.
+    /// </summary>
+    [DataField(required: true)]
+    [AutoNetworkedField]
+    public string DisguisedLight;
+
+    /// <summary>
+    /// The sprite state to use for the borg's flashlight when undisguised.
+    /// </summary>
+    [DataField(required: true)]
+    [AutoNetworkedField]
+    public string RealLight;
+
+    /// <summary>
+    /// The color of the light when the borg is disguised.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
+    public Color DisguisedLightColor = Color.White;
+
+    /// <summary>
+    /// The color of the light when the borg is undisguised.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
+    public Color RealLightColor;
 
     #endregion
 }

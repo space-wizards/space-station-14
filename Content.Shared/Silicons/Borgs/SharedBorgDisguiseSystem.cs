@@ -10,6 +10,7 @@ public abstract class SharedBorgDisguiseSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
+    [Dependency] private readonly SharedPointLightSystem _pointLightSystem = default!;
 
     public override void Initialize()
     {
@@ -20,11 +21,11 @@ public abstract class SharedBorgDisguiseSystem : EntitySystem
     }
 
     /// <summary>
-    /// Swaps the description of the entity based on the disguise state.
+    /// Swaps the shared parts of the entity's components based on the disguise state.
     /// </summary>
     /// <param name="uid">The entity to swap</param>
     /// <param name="comp">The component to use for getting the disguise state and description.</param>
-    protected void SwapDescription(EntityUid uid, BorgDisguiseComponent comp)
+    protected void UpdateSharedAppearance(EntityUid uid, BorgDisguiseComponent comp)
     {
         if (comp.Disguised)
         {
@@ -36,6 +37,8 @@ public abstract class SharedBorgDisguiseSystem : EntitySystem
             if (metaData is not null)
                 _meta.SetEntityDescription(uid, metaData.Description);
         }
+
+        _pointLightSystem.SetColor(uid, comp.Disguised ? comp.DisguisedLightColor : comp.RealLightColor);
     }
 
     #region ActionManagement

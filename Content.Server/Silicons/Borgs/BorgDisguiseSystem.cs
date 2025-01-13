@@ -29,7 +29,7 @@ public sealed class BorgDisguiseSystem : SharedBorgDisguiseSystem
         comp.Disguised = !comp.Disguised;
         Dirty(uid, comp);
         args.Handled = true;
-        SwapDescription(uid, comp);
+        UpdateSharedAppearance(uid, comp);
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public sealed class BorgDisguiseSystem : SharedBorgDisguiseSystem
     {
         comp.Disguised = false;
         Dirty(uid, comp);
-        SwapDescription(uid, comp);
+        UpdateSharedAppearance(uid, comp);
     }
 
     /// <summary>

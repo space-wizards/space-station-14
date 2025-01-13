@@ -49,12 +49,13 @@ public sealed class BorgDisguiseSystem : SharedBorgDisguiseSystem
     private void UpdateAppearance(EntityUid uid, BorgDisguiseComponent comp)
     {
         AppearanceComponent? appearance = null;
+        SpriteComponent? sprite = null;
 
-        if (!Resolve(uid, ref appearance))
+        if (!Resolve(uid, ref appearance, ref sprite))
             return;
         _appearance.SetData(uid, BorgVisuals.IsDisguised, comp.Disguised, appearance);
         // Change method in BorgSystem gets automatically called via observer
-
-        SwapDescription(uid, comp);
+        sprite.LayerSetState("light", comp.Disguised ? comp.DisguisedLight : comp.RealLight);
+        UpdateSharedAppearance(uid, comp);
     }
 }
