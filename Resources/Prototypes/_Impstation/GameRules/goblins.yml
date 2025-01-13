@@ -7,7 +7,7 @@
     duration: 1
     minimumPlayers: 15
     maxOccurrences: 1 # six goblins is a lot
-  - type: VentCrittersRule
+  - type: SilentVentCrittersRule
     specialEntries:
     - id: GoblinStowawaysVentSpawner
       prob: 0 # this ensures that only one spawner will be created
