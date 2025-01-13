@@ -2153,4 +2153,35 @@ Entries:
   id: 303
   time: '2025-01-12T17:46:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/231
+- author: Conflee
+  changes:
+  - message: Major Oasis update
+    type: Tweak
+  id: 304
+  time: '2025-01-13T13:21:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/234
+- author: Conflee
+  changes:
+  - message: Cargo and Salvage airlocks so they don't space Cargo
+    type: Fix
+  id: 305
+  time: '2025-01-13T13:21:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/234
+- author: Conflee
+  changes:
+  - message: Cloned upstream changes to Security with my own additions, such as a
+      new front reception, moving Detective to next to Security, expanding Armory
+      to have more Hardsuits, and adding needed equipment to Brigmed
+    type: Tweak
+  id: 306
+  time: '2025-01-13T13:21:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/234
+- author: Conflee
+  changes:
+  - message: New docking arm to the North to account for the dozens of Shuttle Events
+      that can spawn. Should result in Evac being blocked less often
+    type: Add
+  id: 307
+  time: '2025-01-13T13:21:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/234
 
