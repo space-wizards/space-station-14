@@ -11,8 +11,11 @@
   - type: Physics
     bodyType: Static
   - type: Sprite
+    drawdepth: FloorObjects
     sprite: _Starlight/Structures/Machines/liquid_dispenser.rsi
-    state: base
+    layers:
+      - state: base
+        map: [ "enum.SubfloorLayers.FirstLayer" ]
   - type: Fixtures
     fixtures:
       fix1:
