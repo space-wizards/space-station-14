@@ -43,8 +43,11 @@
       0: Alive
       150: Critical
       200: Dead
+  - type: VentCrawler
   - type: MeleeWeapon
     hidden: true
+    altDisarm: false
+    attackRate: 1.5
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     angle: 0
