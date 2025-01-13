@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: ruddygreat
-  changes:
-  - message: Surplus crate white / blacklists work again.
-    type: Fix
-  - message: allowed recursive surplus crates again. have fun!
-    type: Tweak
-  id: 417
-  time: '2024-10-28T23:21:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/556
 - author: hivehum
   changes:
   - message: Music sounds worse in the lobby because I hate you.
@@ -4506,3 +4497,10 @@
   id: 916
   time: '2025-01-13T07:10:21.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1327
+- author: mqole
+  changes:
+  - message: JOHNNY CHAOS 5 STAR AI CANNOT BE WARNED OR BANNED
+    type: Add
+  id: 917
+  time: '2025-01-13T07:24:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1338
