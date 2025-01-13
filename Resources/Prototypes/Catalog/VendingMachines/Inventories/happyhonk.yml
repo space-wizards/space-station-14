@@ -4,8 +4,9 @@
     HappyHonk: 5
     HappyHonkMime: 5
     HappyHonkWeh: 5
-  contrabandInventory: # snip wire, somehow open portal to inverted dimension, ???, profit!
-    HappyHonkHew: 5
+  contrabandInventory:
+    HappyHonkHew: 5 # snip wire, somehow open portal to inverted dimension, ???, profit!
+    BikeHorn: 2 # how else does the vendor honk
   emaggedInventory:
     HappyHonkCluwne: 3
     HappyHonkNukie: 3
