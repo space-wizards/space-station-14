@@ -1,42 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Firesuits are now worse at keeping in heat and winter clothes make you
-      get warmer quicker.
-    type: Tweak
-  id: 7302
-  time: '2024-09-07T05:37:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30662
-- author: Boaz1111
-  changes:
-  - message: The maple wing marking for moths now have a secondary color palette.
-    type: Tweak
-  id: 7303
-  time: '2024-09-07T05:48:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31691
-- author: lzk228
-  changes:
-  - message: Bottle and syringe names are remade into labels.
-    type: Tweak
-  id: 7304
-  time: '2024-09-07T05:51:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29956
-- author: Ian321
-  changes:
-  - message: The AgriChem kit now links to the botanical chemicals guidebook.
-    type: Tweak
-  - message: The botanical chemicals guidebook has been expanded.
-    type: Tweak
-  id: 7305
-  time: '2024-09-07T06:23:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31896
-- author: Lank
-  changes:
-  - message: The Antimov and Overseer law boards are no longer available roundstart.
-    type: Remove
-  id: 7306
-  time: '2024-09-07T08:45:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31908
 - author: lzk228
   changes:
   - message: Books cannot longer be inserted in crates as paper labels
@@ -3937,3 +3899,42 @@
   id: 7801
   time: '2025-01-12T16:38:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34394
+- author: SlimSlam
+  changes:
+  - message: News Room
+    type: Add
+  id: 7802
+  time: '2025-01-12T23:32:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34408
+- author: Deerstop
+  changes:
+  - message: Improved the readability of the manual valve sprite.
+    type: Tweak
+  id: 7803
+  time: '2025-01-13T07:07:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34378
+- author: JustinWinningham
+  changes:
+  - message: Anomalies no longer block players or APES (or other objects) from passing
+      through them
+    type: Tweak
+  - message: Players can no longer move anomalies with unanchored furniture, closets,
+      etc.
+    type: Fix
+  id: 7804
+  time: '2025-01-13T10:06:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34280
+- author: zHonys
+  changes:
+  - message: Items with collisions (like mousetraps) won't kept doors form opening
+    type: Fix
+  id: 7805
+  time: '2025-01-13T10:07:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34045
+- author: Coolsurf6
+  changes:
+  - message: The "Jazz" style for the Electric Guitar now uses the correct soundfont.
+    type: Tweak
+  id: 7806
+  time: '2025-01-13T10:07:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33363
