@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Added mini gyroscope to cargo orders
-    type: Add
-  - message: Added the shittle starter pack, contains everything you need to go die
-      in space!
-    type: Add
-  id: 422
-  time: '2024-10-29T04:42:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/572
 - author: widgetbeck
   changes:
   - message: Changed
@@ -4517,3 +4507,10 @@
   id: 921
   time: '2025-01-13T16:38:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1345
+- author: AftrLite, kipdotnet
+  changes:
+  - message: Resprited the cargo telepad.
+    type: Tweak
+  id: 922
+  time: '2025-01-13T16:39:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1340
