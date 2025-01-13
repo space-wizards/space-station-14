@@ -2213,4 +2213,11 @@ Entries:
   id: 311
   time: '2025-01-13T13:22:20.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/235
+- author: STARLIGHT TEAM
+  changes:
+  - message: The HoP now has access only to the command, service, and general channels.
+    type: Fix
+  id: 312
+  time: '2025-01-13T13:23:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/233
 
