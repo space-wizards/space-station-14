@@ -620,7 +620,7 @@ public sealed class MappingState : GameplayStateBase
         Screen.Entities.FavoritesPrototype.Children = new List<MappingPrototype>();
         Screen.Decals.FavoritesPrototype.Children = new List<MappingPrototype>();
         Screen.Tiles.FavoritesPrototype.Children = new List<MappingPrototype>();
-        
+
         foreach (var prototype in prototypes)
         {
             switch (prototype)

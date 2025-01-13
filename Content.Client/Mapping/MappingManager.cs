@@ -96,6 +96,7 @@ public sealed class MappingManager : IPostInjectInit
 
     public void SaveFavorites(List<MappingPrototype> prototypes)
     {
+        // TODO: that doesnt save null prototypes (mapping templates and abstract parents)
         var msg = new MappingFavoritesSaveMessage()
         {
             PrototypeIDs = prototypes
