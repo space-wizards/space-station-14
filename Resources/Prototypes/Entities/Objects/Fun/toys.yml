@@ -350,6 +350,8 @@
   - type: Tag
     tags:
       - PlushieLizard
+      - Payload
+      - ClothMade
 
 - type: entity
   parent: PlushieLizard
@@ -592,6 +594,7 @@
     tags:
       - PlushieSharkBlue
       - Payload
+      - ClothMade
 
 - type: entity
   parent: PlushieSharkBlue
@@ -608,6 +611,7 @@
     tags:
       - PlushieSharkPink
       - Payload
+      - ClothMade
 
 - type: entity
   parent: PlushieSharkBlue
@@ -624,6 +628,7 @@
     tags:
       - PlushieSharkGrey
       - Payload
+      - ClothMade
 
 - type: entity
   parent: BasePlushie
