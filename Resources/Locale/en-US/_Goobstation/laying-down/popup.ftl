@@ -1,1 +1,1 @@
-popup-laying-down-cooldown-stand-up = Cannot stand up yet!
+popup-laying-down-stand-up-cancel = Failed to stand up!
