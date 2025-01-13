@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Some new guys. Shh.
-    type: Add
-  id: 416
-  time: '2024-10-28T23:18:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/560
 - author: ruddygreat
   changes:
   - message: Surplus crate white / blacklists work again.
@@ -4506,3 +4499,10 @@
   id: 915
   time: '2025-01-13T07:05:14.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1317
+- author: Pinkbat5
+  changes:
+  - message: Paper headbags and smiling paper headbags are now selectable as trinkets.
+    type: Add
+  id: 916
+  time: '2025-01-13T07:10:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1327
