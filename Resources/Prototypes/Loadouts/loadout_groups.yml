@@ -245,7 +245,6 @@
   minLimit: 0
   loadouts:
   - PassengerFace
-  - MaskClown
 
 - type: loadoutGroup
   id: PassengerGloves
