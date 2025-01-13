@@ -19,14 +19,3 @@
       blacklist:
         tags:
         - Book
-  #- type: Matchbox
-  #- type: ItemSlots
-  #  slots:
-  #    item:
-  #      name: clothing-boots-sidearm
-  #      whitelist:
-  #        tags:
-  #        - Paper
-  #      blacklist:
-  #        tags:
-  #        - Book

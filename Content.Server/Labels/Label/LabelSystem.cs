@@ -1,5 +1,4 @@
 using Content.Server.Labels.Components;
-using Content.Shared._Harmony.Clothing.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
@@ -67,10 +66,8 @@ namespace Content.Server.Labels
 
         private void OnExamined(EntityUid uid, PaperLabelComponent comp, ExaminedEvent args)
         {
-            Console.WriteLine("a");
             if (comp.LabelSlot.Item is not { Valid: true } item)
             {
-                Console.WriteLine("b");
                 return;
             }
             using (args.PushGroup(nameof(PaperLabelComponent)))
