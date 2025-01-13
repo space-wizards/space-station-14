@@ -28,25 +28,18 @@
   - type: Dumpable
 
 - type: entity
-  name: borg ore bag
+  name: internal ore bag
   id: BorgOreBag
   parent: OreBag
-  description: A robust bag for salvage specialists and miners alike to carry large amounts of ore. Magnetises any nearby ores when attached to a belt.
+  description: A large ore bag built into the frame of mining cyborgs.
   components:
-  - type: MagnetPickup
-  - type: Sprite
-    sprite: Objects/Specific/Mining/ore_bag.rsi
-    state: icon
-  - type: Item
-    size: Ginormous
-  - type: Storage
-    maxItemSize: Normal
-    grid:
-    - 0,0,9,5
-    quickInsert: true
-    areaInsert: true
-    whitelist:
-      tags:
-        - ArtifactFragment
-        - Ore
-  - type: Dumpable
+    - type: Storage
+      maxItemSize: Normal
+      grid:
+      - 0,0,9,5
+      quickInsert: true
+      areaInsert: true
+      whitelist:
+        tags:
+          - ArtifactFragment
+          - Ore 
