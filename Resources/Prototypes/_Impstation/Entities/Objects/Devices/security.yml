@@ -7,10 +7,10 @@
   components:
   - type: CriminalRecordsConsole
   - type: Sprite
-    sprite: Objects/Devices/tablets.rsi
+    sprite: _Impstation/Objects/Devices/tablets.rsi
     layers:
-      - state: tablet
-      - state: generic
+      - state: portable_criminal
+      - state: screen-criminal
         shader: unshaded
   - type: ActivatableUI
     key: enum.CriminalRecordsConsoleKey.Key
@@ -18,8 +18,6 @@
     interfaces:
       enum.CriminalRecordsConsoleKey.Key:
         type: CriminalRecordsConsoleBoundUserInterface
-      enum.WiresUiKey.Key:
-        type: WiresBoundUserInterface
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
