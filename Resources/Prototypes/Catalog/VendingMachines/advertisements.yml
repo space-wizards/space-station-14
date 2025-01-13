@@ -113,6 +113,12 @@
     count: 8
 
 - type: localizedDataset
+  id: SmiteAds
+  values:
+    prefix: advertisement-smite-
+    count: 8
+
+- type: localizedDataset
   id: SpaceColaAds
   values:
     prefix: advertisement-cola-

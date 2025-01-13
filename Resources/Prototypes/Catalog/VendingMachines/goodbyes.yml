@@ -65,6 +65,12 @@
     count: 4
 
 - type: localizedDataset
+  id: SmiteGoodbyes
+  values:
+    prefix: thankyou-smite-
+    count: 4
+
+- type: localizedDataset
   id: SpaceColaGoodbyes
   values:
     prefix: thankyou-cola-
