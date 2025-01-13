@@ -7,7 +7,7 @@ namespace Content.Shared._Goobstation.Standing;
 public sealed partial class LayingDownComponent : Component
 {
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan Cooldown { get; set; } = TimeSpan.FromSeconds(2.5);
+    public TimeSpan Cooldown { get; set; } = TimeSpan.FromSeconds(1.5);
 
     [DataField, AutoNetworkedField]
     public TimeSpan NextLayDown;
