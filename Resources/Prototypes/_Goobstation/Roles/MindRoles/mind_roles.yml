@@ -8,6 +8,7 @@
   - type: MindRole
     antagPrototype: Changeling
     exclusiveAntag: true
+    trackPurchases: true #imp edit
   - type: ChangelingRole
 
 - type: entity
@@ -19,4 +20,5 @@
   - type: MindRole
     antagPrototype: Heretic
     exclusiveAntag: true
+    trackPurchases: true #imp edit
   - type: HereticRole
