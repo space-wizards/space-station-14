@@ -51,3 +51,17 @@
       - state: green
       - state: iaa
       - state: jobicon
+      
+- type: entity
+  id: SpawnPointBlueShield
+  parent: SpawnPointJobBase
+  name: officer "blue shield"
+  components:
+  - type: SpawnPoint
+    job_id: BlueShield
+  - type: Sprite
+    sprite: _Starlight/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: obs
+      - state: jobicon
