@@ -1,51 +1,4 @@
 ﻿Entries:
-- author: ps3moira
-  changes:
-  - message: Fixed pump shotgun inhand sprites
-    type: Fix
-  id: 7297
-  time: '2024-09-06T23:26:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31885
-- author: yuitop
-  changes:
-  - message: break pull when fall asleep
-    type: Fix
-  id: 7298
-  time: '2024-09-06T23:30:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31893
-- author: Boaz1111
-  changes:
-  - message: Energy Shotgun's narrow fire mode's projectiles now deal 13 heat dmg
-      each, for a total of 52. The energy shotgun additionally no longer self recharges
-      and has received some minor buffs.
-    type: Tweak
-  id: 7299
-  time: '2024-09-07T00:35:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31235
-- author: themias
-  changes:
-  - message: Added the justice helm to the secdrobe
-    type: Add
-  - message: Added a crafting recipe for the justice helm
-    type: Add
-  id: 7300
-  time: '2024-09-07T03:04:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31905
-- author: Futuristic
-  changes:
-  - message: Remove binary encryption key from RD lockers
-    type: Remove
-  id: 7301
-  time: '2024-09-07T05:30:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31909
-- author: EmoGarbage404
-  changes:
-  - message: Firesuits are now worse at keeping in heat and winter clothes make you
-      get warmer quicker.
-    type: Tweak
-  id: 7302
-  time: '2024-09-07T05:37:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30662
 - author: Boaz1111
   changes:
   - message: The maple wing marking for moths now have a secondary color palette.
@@ -3939,3 +3892,47 @@
   id: 7796
   time: '2025-01-11T02:48:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34368
+- author: Kickguy223
+  changes:
+  - message: Indestructible tiles no longer break due to explosions
+    type: Fix
+  id: 7797
+  time: '2025-01-11T17:27:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34339
+- author: '0x6273'
+  changes:
+  - message: Fix a bug that was causing arachnid stomachs to not digest at the intended,
+      slower than normal speed.
+    type: Fix
+  id: 7798
+  time: '2025-01-11T19:29:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34298
+- author: justdie12
+  changes:
+  - message: Added a bend version of the radiator.
+    type: Add
+  id: 7799
+  time: '2025-01-11T20:03:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34251
+- author: Errant
+  changes:
+  - message: Players are now informed in chat every time their role type changes,
+      and can also see their current role type on the character window.
+    type: Add
+  id: 7800
+  time: '2025-01-11T21:17:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33420
+- author: Kontinentaldrift
+  changes:
+  - message: EOD locker always spawns with tools.
+    type: Tweak
+  id: 7801
+  time: '2025-01-12T16:38:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34394
+- author: SlimSlam
+  changes:
+  - message: News Room
+    type: Add
+  id: 7802
+  time: '2025-01-12T23:32:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34408
