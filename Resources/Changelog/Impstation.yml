@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Music sounds worse in the lobby because I hate you.
-    type: Tweak
-  id: 418
-  time: '2024-10-28T23:22:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/554
-- author: widgetbeck
-  changes:
-  - message: Grays now having organ. Many of organ. Squishy!
-    type: Add
-  id: 419
-  time: '2024-10-28T23:24:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/538
-- author: widgetbeck
-  changes:
-  - message: Luggage now has no hands. Sorry! It can still open and close itself and
-      pull items, though.
-    type: Tweak
-  id: 420
-  time: '2024-10-28T23:24:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/551
 - author: hivehum & snavian
   changes:
   - message: Scars for moths.
@@ -4504,3 +4482,39 @@
   id: 917
   time: '2025-01-13T07:24:09.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1338
+- author: Darkmajia
+  changes:
+  - message: Standing up from crawling now has a shorter cooldown, and will start
+      a do-after if you are still below the cooldown instead of locking you out.
+    type: Tweak
+  id: 918
+  time: '2025-01-13T16:35:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1346
+- author: Darkmajia
+  changes:
+  - message: Grays have had their accents fixed up a little.
+    type: Fix
+  id: 919
+  time: '2025-01-13T16:35:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1344
+- author: Darkmajia
+  changes:
+  - message: Signatures have a new and improved look. Select a style for your signatures
+      in the traits menu.
+    type: Add
+  - message: The recruiter's pen now signs in the color of its user's blood.
+    type: Add
+  - message: The luxury and Cybersun pens can sign in multiple different colors. Try
+      right-clicking them!
+    type: Add
+  - message: The Cybersun pen can forge signatures of any style. Once again, try right-clicking
+      it!
+    type: Add
+  - message: Energy weapons, like the energy sword, can sign your name on paper.
+    type: Add
+  - message: Syndicate Recruiter objectives track properly, and the pen works properly
+      too.
+    type: Fix
+  id: 920
+  time: '2025-01-13T16:36:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1313
