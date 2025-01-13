@@ -403,12 +403,11 @@
   suffix: Insuls, safe
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Clothing/Hands/Gloves/Color/yellow.rsi
-          state: icon
-    - type: EntityTableSpawner
-      table: !type:NestedSelector
-        tableId: InsulsTable
-        prob: 1.0
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Clothing/Hands/Gloves/Color/yellow.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: InsulsTable
