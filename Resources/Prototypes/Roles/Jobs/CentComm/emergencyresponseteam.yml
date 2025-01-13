@@ -328,19 +328,20 @@
     belt: ClothingBeltSecurityWebbingFilled
     pocket1: WeaponPistolMk58
     pocket2: FlashlightSeclite
-  inhand:
-    - WeaponRifleLecter
   storage:
     back:
     - BoxZiptie
+    - WeaponRifleLecter
+    - CrowbarRed
+    - PunctAutoInjector
     - MagazinePistol
     - MedkitCombatFilled
     - GrenadeFlashBang
     - GrenadeStinger
     - MagazineRifle
     - MagazineRifle
-    - CrowbarRed
     - WeaponDisabler
+    - SecurityWhistle
     belt:
     - MagazineRifle
     - MagazineRifle
@@ -360,19 +361,22 @@
     belt: ClothingBeltSecurityWebbingFilled
     pocket1: WeaponPistolMk58
     pocket2: FlashlightSeclite
-  inhand:
-    - WeaponShotgunEnforcer
   storage:
     back:
     - BoxZiptie
     - MagazinePistol
     - MedkitCombatFilled
-    - BoxLethalshot
-    - GrenadeFlashBang
     - JawsOfLife
+    - GrenadeFlashBang
+    - WeaponShotgunEnforcer
+    - PunctAutoInjector
+    - BoxLethalshot
+    - C4
+    - C4
+    - C4
+    - C4
     - WeaponDisabler
-    - C4
-    - C4
+    - SecurityWhistle
   belt:
   - BoxLethalshot
 
@@ -391,8 +395,6 @@
     belt: ClothingBeltSecurityWebbingFilled
     pocket1: WeaponPistolMk58
     pocket2: FlashlightSeclite
-  inhand:
-    - WeaponSubMachineGunDrozd
   storage:
     back:
     - BoxZiptie
@@ -401,11 +403,15 @@
     - CrowbarRed
     - GrenadeFlashBang
     - GrenadeFlashBang
+    - PunctAutoInjector
+    - SmokeGrenade
     - SmokeGrenade
     - SmokeGrenade
     - WeaponDisabler
+    - WeaponSubMachineGunDrozd
     - GrenadeShrapnel
     - GrenadeShrapnel
+    - SecurityWhistle
     belt:
     - MagazinePistolSubMachineGun
     - MagazinePistolSubMachineGun
@@ -495,8 +501,6 @@
     belt: ClothingBeltMedicalFilled
     pocket1: WeaponPistolMk58
     pocket2: FlashlightSeclite
-  inhand: 
-  - WeaponSubMachineGunDrozd 
   storage:
     back:
     - MagazinePistol
@@ -509,6 +513,7 @@
     - EpinephrineChemistryBottle
     - EpinephrineChemistryBottle
     - Defibrillator
+    - WeaponSubMachineGunDrozd 
 
 # Janitor
 - type: job
