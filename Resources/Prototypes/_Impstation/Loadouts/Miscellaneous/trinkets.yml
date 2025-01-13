@@ -124,3 +124,9 @@
   storage:
     back:
     - ClothingHeadPaperSackSmile
+
+- type: loadout
+  id: HeartLocket
+  storage:
+    back:
+    - HeartLocket
