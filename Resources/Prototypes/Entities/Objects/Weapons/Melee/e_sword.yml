@@ -84,6 +84,9 @@
   - type: EmbeddableProjectile
     embedOnThrow: false
   - type: EmbedPassiveDamage
+  - type: ItemToggleSignatureWriter
+    activatedFont: /Fonts/_DV/AndTheDoorCreeeaked/AndTheDoorCreeeaked-Regular.otf
+    activatedColor: black
   # end imp edits #
 
 - type: entity
@@ -261,6 +264,7 @@
         Blunt: 0
   - type: ThrowingAngle
     angle: 315
+  - type: SignatureWriter
   # end imp edits #
 
 - type: entity

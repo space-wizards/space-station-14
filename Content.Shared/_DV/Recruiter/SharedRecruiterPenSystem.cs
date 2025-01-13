@@ -31,7 +31,7 @@ public abstract class SharedRecruiterPenSystem : EntitySystem
 
         SubscribeLocalEvent<RecruiterPenComponent, HandSelectedEvent>(OnHandSelected);
         SubscribeLocalEvent<RecruiterPenComponent, UseInHandEvent>(OnPrick);
-        SubscribeLocalEvent<RecruiterPenComponent, SignAttemptEvent>(OnSignAttempt);
+        SubscribeLocalEvent<RecruiterPenComponent, SignAttemptEvent>(OnSignAttempt, before: [typeof(SharedSignatureSystem)]);
     }
 
     private void OnHandSelected(Entity<RecruiterPenComponent> ent, ref HandSelectedEvent args)
@@ -42,17 +42,20 @@ public abstract class SharedRecruiterPenSystem : EntitySystem
 
         // mind isnt networked properly so the popup is only done on server
         var user = args.User;
-        if (!Mind.TryGetMind(user, out var mind, out _))
+        if (!Mind.TryGetMind(user, out var mindId, out var mind))
             return;
 
-        if (!HasComp<RecruiterRoleComponent>(mind))
-            return;
+        foreach (var entry in mind.MindRoles)
+        {
+            if (HasComp<RecruiterRoleComponent>(entry))
+            {
+                Popup.PopupEntity(Loc.GetString("recruiter-pen-bound", ("pen", uid)), user, user);
 
-        Popup.PopupEntity(Loc.GetString("recruiter-pen-bound", ("pen", uid)), user, user);
-
-        comp.RecruiterMind = mind;
-        comp.Bound = true;
-        Dirty(uid, comp);
+                comp.RecruiterMind = mindId;
+                comp.Bound = true;
+                Dirty(uid, comp);
+            }
+        }
     }
 
     private void OnPrick(Entity<RecruiterPenComponent> ent, ref UseInHandEvent args)

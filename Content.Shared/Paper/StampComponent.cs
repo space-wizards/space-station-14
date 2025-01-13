@@ -24,7 +24,13 @@ public partial struct StampDisplayInfo
     public Color StampedColor;
 
     [DataField("stampLargeIcon")]
-    public string? StampLargeIcon;
+    public string? StampLargeIcon; // imp
+
+    [DataField("stampFont")]
+    public string? StampFont; // imp
+
+    [DataField("hasIcon")]
+    public bool HasIcon = true; // imp
 };
 
 [RegisterComponent]
@@ -46,7 +52,7 @@ public sealed partial class StampComponent : Component
     ///     The sprite state of the stamp to display on the paper when read from stamp Sprite path.
     /// </summary>
     [DataField("stampLargeIcon")]
-    public string? StampLargeIcon = null;
+    public string? StampLargeIcon = null; // imp
 
     /// <summary>
     /// The color of the ink used by the stamp in UIs

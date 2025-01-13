@@ -1,5 +1,5 @@
 - type: entity
-  parent: LuxuryPen
+  parent: Pen
   id: PenRecruiter
   name: recruiter's pen
   description: A uniquely evil pen that draws your blood to make signatures.
@@ -22,7 +22,7 @@
   - type: SolutionContainerManager
     solutions:
       blood:
-        maxVol: 35
+        maxVol: 5
   - type: Appearance
   - type: SolutionContainerVisuals
     solutionName: blood
