@@ -2184,4 +2184,33 @@ Entries:
   id: 307
   time: '2025-01-13T13:21:09.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/234
+- author: Conflee
+  changes:
+  - message: Core to Starlight (not in rotation yet)
+    type: Add
+  id: 308
+  time: '2025-01-13T13:22:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/235
+- author: Conflee
+  changes:
+  - message: Redid Medical front and Chemistry to be less awkward and have room to
+      work in
+    type: Tweak
+  id: 309
+  time: '2025-01-13T13:22:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/235
+- author: Conflee
+  changes:
+  - message: Added ATMs and Dispensers
+    type: Tweak
+  id: 310
+  time: '2025-01-13T13:22:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/235
+- author: Conflee
+  changes:
+  - message: Added job spawn points (IAA, Magistrate, Brigmed, NT Rep)
+    type: Tweak
+  id: 311
+  time: '2025-01-13T13:22:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/235
 
