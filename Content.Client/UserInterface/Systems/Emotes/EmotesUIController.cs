@@ -1,4 +1,5 @@
-﻿using Content.Client.Chat.UI;
+using System.Linq;
+using Content.Client.Chat.UI;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Chat;
@@ -11,6 +12,7 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Emotes;
 
@@ -20,9 +22,17 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IClyde _displayManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private MenuButton? EmotesButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EmotesButton;
-    private EmotesMenu? _menu;
+    private RadialMenu? _menu;
+
+    private readonly Dictionary<EmoteCategory, (string Tooltip, SpriteSpecifier Sprite)> _dict = new Dictionary<EmoteCategory, (string Tooltip, SpriteSpecifier Sprite)>
+    {
+        [EmoteCategory.General] = ("emote-menu-category-general", new SpriteSpecifier.Texture(new ResPath("/Textures/Clothing/Head/Soft/mimesoft.rsi/icon.png"))),
+        [EmoteCategory.Hands] = ("emote-menu-category-hands", new SpriteSpecifier.Texture(new ResPath("/Textures/Clothing/Hands/Gloves/latex.rsi/icon.png"))),
+        [EmoteCategory.Vocal] = ("emote-menu-category-vocal", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Emotes/vocal.png"))),
+    };
 
     public void OnStateEntered(GameplayState state)
     {
@@ -42,10 +52,30 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
         if (_menu == null)
         {
             // setup window
-            _menu = UIManager.CreateWindow<EmotesMenu>();
+            var models = _prototypeManager.EnumeratePrototypes<EmotePrototype>()
+                                          .GroupBy(x => x.Category)
+                                          .Select(categoryGroup =>
+                                          {
+                                              var nestedEmotes = categoryGroup.Select(
+                                                  emote => new RadialMenuButtonModel(() => _entityManager.RaisePredictiveEvent(new PlayEmoteMessage(emote.ID)))
+                                                  {
+                                                      Sprite = emote.Icon,
+                                                      ToolTip = Loc.GetString(emote.Name)
+                                                  }
+                                              ).ToArray();
+                                              var tuple = _dict[categoryGroup.Key];
+                                              return new RadialMenuButtonModel(nestedEmotes)
+                                              {
+                                                  Sprite = tuple.Sprite,
+                                                  ToolTip = Loc.GetString(tuple.Tooltip)
+                                              };
+                                          });
+
+
+            _menu = new SimpleRadialMenu(models);
+            _menu.Open();
             _menu.OnClose += OnWindowClosed;
             _menu.OnOpen += OnWindowOpen;
-            _menu.OnPlayEmote += OnPlayEmote;
 
             if (EmotesButton != null)
                 EmotesButton.SetClickPressed(true);
@@ -65,7 +95,6 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
         {
             _menu.OnClose -= OnWindowClosed;
             _menu.OnOpen -= OnWindowOpen;
-            _menu.OnPlayEmote -= OnPlayEmote;
 
             if (EmotesButton != null)
                 EmotesButton.SetClickPressed(false);
@@ -116,10 +145,5 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
 
         _menu.Dispose();
         _menu = null;
-    }
-
-    private void OnPlayEmote(ProtoId<EmotePrototype> protoId)
-    {
-        _entityManager.RaisePredictiveEvent(new PlayEmoteMessage(protoId));
     }
 }

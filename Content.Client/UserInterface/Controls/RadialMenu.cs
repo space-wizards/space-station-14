@@ -1,10 +1,10 @@
-using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
+using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Input;
 
 namespace Content.Client.UserInterface.Controls;
@@ -143,11 +143,8 @@ public class RadialMenu : BaseWindow
         return children.First(x => x.Visible);
     }
 
-    public bool TryToMoveToNewLayer(string newLayer)
+    public bool TryToMoveToNewLayer(Control newLayer)
     {
-        if (newLayer == string.Empty)
-            return false;
-
         var currentLayer = GetCurrentActiveLayer();
 
         if (currentLayer == null)
@@ -161,7 +158,7 @@ public class RadialMenu : BaseWindow
                 continue;
 
             // Hide layers which are not of interest
-            if (result == true || child.Name != newLayer)
+            if (result == true || child != newLayer)
             {
                 child.Visible = false;
             }
@@ -296,9 +293,9 @@ public sealed class RadialMenuOuterAreaButton : RadialMenuTextureButtonBase
 public class RadialMenuTextureButton : RadialMenuTextureButtonBase
 {
     /// <summary>
-    /// Upon clicking this button the radial menu will be moved to the named layer
+    /// Upon clicking this button the radial menu will be moved to the layer of this control.
     /// </summary>
-    public string TargetLayer { get; set; } = string.Empty;
+    public Control? TargetLayer { get; set; }
 
     /// <summary>
     /// A simple texture button that can move the user to a different layer within a radial menu
@@ -311,7 +308,7 @@ public class RadialMenuTextureButton : RadialMenuTextureButtonBase
 
     private void OnClicked(ButtonEventArgs args)
     {
-        if (TargetLayer == string.Empty)
+        if (TargetLayer == null)
             return;
 
         var parent = FindParentMultiLayerContainer(this);
