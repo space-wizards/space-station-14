@@ -85,6 +85,7 @@
   - type: MindRole
     exclusiveAntag: true
     antagPrototype: Nukeops
+    trackPurchases: false #imp edit
     getsNoSpendtext: true #imp edit
   - type: NukeopsRole
 
@@ -96,6 +97,7 @@
   components:
   - type: MindRole
     antagPrototype: NukeopsMedic
+    trackPurchases: false #imp edit
     getsNoSpendtext: true #imp edit
 
 - type: entity
@@ -106,6 +108,7 @@
   components:
   - type: MindRole
     antagPrototype: NukeopsCommander
+    trackPurchases: false #imp edit
     getsNoSpendtext: true #imp edit
 
 # Revolutionaries
@@ -150,7 +153,6 @@
   - type: MindRole
     antagPrototype: Traitor
     exclusiveAntag: true
-    trackPurchases: true #imp edit
     getsNoSpendtext: true #imp edit
   - type: TraitorRole
 
@@ -162,7 +164,6 @@
   components:
   - type: MindRole
     antagPrototype: TraitorSleeper
-    trackPurchases: true #imp edit
     getsNoSpendtext: true # imp edit
 
 # Zombie Squad

@@ -43,9 +43,10 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
 
     /// <summary>
     /// imp edit - should purchases made by this role be tracked?
+    /// Defaults to true because normal jobs are also mindRoles.
     /// </summary>
     [DataField]
-    public bool TrackPurchases;
+    public bool TrackPurchases = true;
 
     /// <summary>
     /// imp edit - if true, the player with this role will get complimented for not spending anything
