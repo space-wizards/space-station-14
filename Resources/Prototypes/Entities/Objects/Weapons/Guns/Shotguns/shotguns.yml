@@ -145,7 +145,7 @@
   - type: Item
     size: Normal
     shape:
-    - 0,0,4,0
+    - 0,0,4,1
     sprite: Objects/Weapons/Guns/Shotguns/enforcer_inhands_64x.rsi
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
@@ -171,7 +171,7 @@
   - type: Item
     size: Normal
     shape:
-    - 0,0,4,0
+    - 0,0,4,1
     sprite: Objects/Weapons/Guns/Shotguns/pump_inhands_64x.rsi
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
