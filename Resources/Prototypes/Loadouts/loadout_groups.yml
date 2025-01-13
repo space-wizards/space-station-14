@@ -245,6 +245,7 @@
   minLimit: 0
   loadouts:
   - PassengerFace
+  - MaskClown
 
 - type: loadoutGroup
   id: PassengerGloves
@@ -282,6 +283,7 @@
   loadouts:
   - BlackShoes
   - WinterBoots
+  - ClownShoesExpert
 
 - type: loadoutGroup
   id: BartenderHead
@@ -1740,14 +1742,7 @@
   minLimit: 0
   loadouts:
   - SterileMask
-
-- type: loadoutGroup
-  id: MedicalDoctorMask
-  name: loadout-group-medical-doctor-mask
-  minLimit: 0
-  loadouts:
-  - SterileMask
-  - DoctorClown
+  - DoctorClown # imp
 
 - type: loadoutGroup
   id: MedicalInternJumpsuit
@@ -1914,6 +1909,7 @@
   - LeatherShoes
   - BlackShoes
   - WhiteShoes
+  - ClownShoesExpert
 
 - type: loadoutGroup
   id: BoxerJumpsuit

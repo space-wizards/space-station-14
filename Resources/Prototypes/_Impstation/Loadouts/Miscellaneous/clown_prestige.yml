@@ -94,6 +94,14 @@
 
 # Civilian
 - type: loadout
+  id: MaskClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownExpertTimer
+  equipment:
+    mask: ClothingMaskClown
+
+- type: loadout
   id: ChaplinClown
   effects:
   - !type:GroupLoadoutEffect
