@@ -1,7 +1,7 @@
 - type: entity
   id: ActionItemRecall
-  name: item recall
-  description: Mark and summon an item back into your hand.
+  name: Mark Item
+  description: Mark a held item to later summon into your hand.
   components:
   - type: InstantAction
     useDelay: 10

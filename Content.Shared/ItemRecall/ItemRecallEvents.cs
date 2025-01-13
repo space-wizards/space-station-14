@@ -6,10 +6,7 @@ namespace Content.Shared.ItemRecall;
 /// Raised directed on an entity when it embeds in another entity.
 /// </summary>
 [ByRefEvent]
-public sealed partial class OnItemRecallActionEvent : InstantActionEvent
-{
-
-}
+public sealed partial class OnItemRecallActionEvent : InstantActionEvent;
 
 [ByRefEvent]
-public sealed partial class RecallItemEvent(EntityUid item);
+public sealed partial class RecallItemEvent;
