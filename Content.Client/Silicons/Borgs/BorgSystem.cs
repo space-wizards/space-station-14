@@ -26,7 +26,9 @@ public sealed class BorgSystem : SharedBorgSystem
         UpdateBorgAppearance(uid, component, args.Component, args.Sprite);
     }
 
-    protected override void OnInserted(EntityUid uid, BorgChassisComponent component, EntInsertedIntoContainerMessage args)
+    protected override void OnInserted(EntityUid uid,
+        BorgChassisComponent component,
+        EntInsertedIntoContainerMessage args)
     {
         if (!component.Initialized)
             return;
@@ -35,7 +37,9 @@ public sealed class BorgSystem : SharedBorgSystem
         UpdateBorgAppearance(uid, component);
     }
 
-    protected override void OnRemoved(EntityUid uid, BorgChassisComponent component, EntRemovedFromContainerMessage args)
+    protected override void OnRemoved(EntityUid uid,
+        BorgChassisComponent component,
+        EntRemovedFromContainerMessage args)
     {
         if (!component.Initialized)
             return;
@@ -65,7 +69,17 @@ public sealed class BorgSystem : SharedBorgSystem
             hasPlayer = false;
 
         sprite.LayerSetVisible(BorgVisualLayers.Light, component.BrainEntity != null || hasPlayer);
-        sprite.LayerSetState(BorgVisualLayers.Light, hasPlayer ? component.HasMindState : component.NoMindState);
+
+        _appearance.TryGetData<bool>(uid, BorgVisuals.IsDisguised, out var isDisguised, appearance);
+        if (isDisguised)
+        {
+            var disguise = Comp<BorgDisguiseComponent>(uid);
+            sprite.LayerSetState(BorgVisualLayers.Light, hasPlayer ? disguise.HasMindState : disguise.NoMindState);
+        }
+        else
+        {
+            sprite.LayerSetState(BorgVisualLayers.Light, hasPlayer ? component.HasMindState : component.NoMindState);
+        }
     }
 
     private void OnMMIAppearanceChanged(EntityUid uid, MMIComponent component, ref AppearanceChangeEvent args)
