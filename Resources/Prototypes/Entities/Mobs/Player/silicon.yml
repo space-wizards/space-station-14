@@ -319,7 +319,7 @@
     proto: AiHeldIntellicard
     container: station_ai_mind_slot
   - type: Sprite
-    sprite: Objects/Devices/ai_card.rsi
+    sprite: _Impstation/Objects/Devices/ai_card.rsi
     layers:
     - state: base
     - state: full
