@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Flanburgr, AirFryerBuyOneGetOneFree
-  changes:
-  - message: Added the Syndicate Listening Outpost, whose mission is to spy on the
-      station and aid syndicate agents.
-    type: Add
-  id: 409
-  time: '2024-10-24T12:03:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/525
 - author: sususuyo
   changes:
   - message: Added in many, many songs suggested by the community over the past month
@@ -4516,3 +4508,10 @@
   id: 908
   time: '2025-01-13T04:13:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1332
+- author: TheGrimbeeper
+  changes:
+  - message: ghosts can now examine damage on weapons and reagents in solutions
+    type: Tweak
+  id: 909
+  time: '2025-01-13T04:15:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1318
