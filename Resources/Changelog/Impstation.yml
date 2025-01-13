@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Kandiyaki
-  changes:
-  - message: fixed a bug where Subjuzine would break if activated with a mixture of
-      player and animal DNA.
-    type: Fix
-  id: 415
-  time: '2024-10-28T23:11:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/561
 - author: widgetbeck
   changes:
   - message: Some new guys. Shh.
@@ -4507,3 +4499,10 @@
   id: 914
   time: '2025-01-13T04:19:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1330
+- author: TheGrimbeeper
+  changes:
+  - message: Ghosts can now view what reagents are inside a foam
+    type: Tweak
+  id: 915
+  time: '2025-01-13T07:05:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1317
