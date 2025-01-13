@@ -687,5 +687,13 @@ Entries:
   id: 85
   time: '2025-01-11T21:17:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33420
+- author: Myra
+  changes:
+  - message: Added IPIntel's API to the connection code. If enabled, this will automate
+      VPN/Proxy detection.
+    type: Add
+  id: 86
+  time: '2025-01-12T19:41:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33339
 Name: Admin
 Order: 1
