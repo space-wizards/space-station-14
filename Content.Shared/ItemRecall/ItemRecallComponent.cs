@@ -6,12 +6,6 @@ namespace Content.Shared.ItemRecall;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedItemRecallSystem))]
 public sealed partial class ItemRecallComponent : Component
 {
-    /// <summary>
-    ///     Does this spell require Wizard Robes & Hat?
-    /// </summary>
-    [DataField]
-    public bool RequiresClothes = true;
-
     [DataField]
     public LocId WhileMarkedName = "";
 
@@ -23,11 +17,4 @@ public sealed partial class ItemRecallComponent : Component
 
     [ViewVariables]
     public EntityUid? MarkedEntity;
-
-    /// <summary>
-    ///     Does this spell require the user to speak?
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool RequiresSpeech;
-
 }

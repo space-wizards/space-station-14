@@ -1,5 +1,6 @@
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Projectiles;
 
 namespace Content.Shared.ItemRecall;
 
@@ -10,6 +11,7 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
 {
 
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedProjectileSystem _proj = default!;
 
     public override void Initialize()
     {
@@ -50,6 +52,9 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
     {
         if (!TryComp<RecallMarkerComponent>(item, out var marker))
             return;
+
+        if (TryComp<EmbeddableProjectileComponent>(item, out var projectile))
+            _proj.UnEmbed(item.Value, marker.MarkedByEntity, projectile);
 
         _hands.TryForcePickupAnyHand(marker.MarkedByEntity, item.Value);
     }
