@@ -1,53 +1,4 @@
 ﻿Entries:
-- author: sususuyo
-  changes:
-  - message: Added in many, many songs suggested by the community over the past month
-    type: Add
-  - message: Sam Jones and Space Asshole are now also in the jukebox
-    type: Add
-  - message: Fixed the volume and format (mono) for Mt. Amient vs Spasm
-    type: Fix
-  - message: Fixed one of the artist names in the jukebox listing (whoops!)
-    type: Fix
-  id: 410
-  time: '2024-10-24T17:08:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/527
-- author: DinnerCalzone
-  changes:
-  - message: Added Hummingbird Station to game files for playtesting. Map made by
-      me!
-    type: Add
-  id: 411
-  time: '2024-10-25T11:52:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/545
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Increased defensive capabilities of the Listening Post.
-    type: Tweak
-  - message: Lowered rate at which Listening Post Spawns.
-    type: Tweak
-  - message: Fixed Listening Post being named "Listening Post" on mass scanner.
-    type: Fix
-  - message: Fixed Listening Post breaking comms sabotage.
-    type: Fix
-  id: 412
-  time: '2024-10-26T02:29:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/549
-- author: hivehum & crocodilecarousel
-  changes:
-  - message: Added almost two dozen new scars to disfigure your dolls.
-    type: Add
-  id: 413
-  time: '2024-10-26T02:31:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/548
-- author: DinnerCalzone
-  changes:
-  - message: Made various changes to Hummingbird Station for further playtesting.
-      Check the Discord thread or GitHub PR for a full list of changes.
-    type: Tweak
-  id: 414
-  time: '2024-10-28T23:05:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/565
 - author: Kandiyaki
   changes:
   - message: fixed a bug where Subjuzine would break if activated with a mixture of
@@ -4515,3 +4466,44 @@
   id: 909
   time: '2025-01-13T04:15:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1318
+- author: hivehum
+  changes:
+  - message: Added a new trinket, dogtags, from Cosmatic Drift.
+    type: Add
+  - message: Added a fun heart locket for your honey :)
+    type: Add
+  id: 910
+  time: '2025-01-13T04:18:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1329
+- author: hivehum
+  changes:
+  - message: Some vendors have a new dispensing sound.
+    type: Tweak
+  id: 911
+  time: '2025-01-13T04:19:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1326
+- author: DinnerCalzone
+  changes:
+  - message: Clown shoe waddling has been re-implemented with a fix that will prevent
+      the waddling animation from playing when it should not be. Additionally, it
+      has been changed into a toggle system, similar to magboots.
+    type: Add
+  id: 912
+  time: '2025-01-13T04:18:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1310
+- author: EpicToast
+  changes:
+  - message: Vent creatures now spawn from one vent all at once instead of being spread
+      across the station. Crew members get a 30-second warning announcement saying
+      where they will spawn.
+    type: Tweak
+  id: 913
+  time: '2025-01-13T04:17:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1308
+- author: Pinkbat5
+  changes:
+  - message: CMOs and Paramedics start with externals access.
+    type: Tweak
+  id: 914
+  time: '2025-01-13T04:19:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1330
