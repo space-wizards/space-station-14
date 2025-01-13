@@ -144,6 +144,16 @@
     - trayScanner
     - AccessConfiguratorUniversal
     - Multitool
+    # Harmony items below this point
+    - Omnitool
+    - WelderExperimental
+    - HolofanProjector
+    - AnomalyScanner
+    - WeaponPistolCHIMP
+    - EmagUnlimited
+    - BluespaceBeaker
+    - SyringeBluespace
+    - RubberStampCentcom
 
 #Gladiator with spear
 - type: startingGear
