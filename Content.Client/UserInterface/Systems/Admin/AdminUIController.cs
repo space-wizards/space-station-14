@@ -7,6 +7,7 @@ using Content.Client.Administration.UI.Tabs.BabyJailTab;
 using Content.Client.Administration.UI.Tabs.PlayerTab;
 using Content.Client.Gameplay;
 using Content.Client.Lobby;
+using Content.Client.Mapping;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs.UI;
 using Content.Shared.Administration.Events;
@@ -27,6 +28,7 @@ namespace Content.Client.UserInterface.Systems.Admin;
 public sealed class AdminUIController : UIController,
     IOnStateEntered<GameplayState>,
     IOnStateEntered<LobbyState>,
+    IOnStateEntered<MappingState>,
     IOnSystemChanged<AdminSystem>
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
@@ -78,6 +80,12 @@ public sealed class AdminUIController : UIController,
     }
 
     public void OnStateEntered(LobbyState state)
+    {
+        EnsureWindow();
+        AdminStatusUpdated();
+    }
+
+    public void OnStateEntered(MappingState state)
     {
         EnsureWindow();
         AdminStatusUpdated();
