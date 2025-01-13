@@ -178,7 +178,7 @@
           map: [ "light" ]
           visible: false
     - type: BorgChassis
-      maxModules: 3
+      maxModules: 6 # Syndies figured out how to use a generic module interface on a specialized engi chassis
       moduleWhitelist:
         tags:
           - BorgModuleGeneric

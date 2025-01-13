@@ -378,7 +378,7 @@
     unlistedNumber: true
     requiresPower: false
   - type: Holopad
-  - type: StationAiWhitelist  
+  - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
         enum.HolopadUiKey.AiRequestWindow:
@@ -550,9 +550,12 @@
       borg_brain:
         - PositronicBrain
       borg_module:
-        - BorgModuleTool
+        - BorgModuleAdvancedTool
         - BorgModuleOperative
         - BorgModuleSyndicateWeapon
+        - BorgModuleConstruction
+        - BorgModuleRCD
+        - BorgModuleCable
   - type: ItemSlots
     slots:
       cell_slot:
