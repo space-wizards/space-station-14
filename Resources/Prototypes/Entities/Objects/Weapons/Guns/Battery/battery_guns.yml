@@ -281,7 +281,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,3,1
+    - 0,0,4,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
     layers:
@@ -347,7 +347,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,4,2
+    - 0,0,5,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
     layers:
@@ -576,6 +576,10 @@
   id: WeaponAntiqueLaser
   description: This is an antique laser pistol. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
   components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
     layers:
@@ -621,7 +625,7 @@
   description: An experimental high-energy laser pistol with a self-charging nuclear battery.
   components:
   - type: Item
-    size: Normal  # Intentionally larger than other pistols
+    size: Small
     shape:
     - 0,0,1,1
   - type: Sprite

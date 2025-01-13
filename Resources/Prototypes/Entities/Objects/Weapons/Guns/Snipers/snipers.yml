@@ -80,7 +80,9 @@
   components:
   - type: Sharp
   - type: Item
-    size: Large
+    size: Huge
+    shape:
+    - 0,0,4,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
     state: base

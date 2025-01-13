@@ -74,7 +74,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,6,2
+    - 0,0,5,2
   - type: Sprite
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
     layers:

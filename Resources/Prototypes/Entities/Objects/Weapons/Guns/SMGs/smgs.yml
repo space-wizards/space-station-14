@@ -64,6 +64,10 @@
   id: WeaponSubMachineGunAtreides
   description: Pla-ket-ket-ket-ket! Uses .35 auto ammo.
   components:
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
     layers:
@@ -191,6 +195,10 @@
   suffix: Deprecated use Drozd
   description: An excellent fully automatic Heavy SMG. Uses .45 magnum ammo.
   components:
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/vector.rsi
     layers:
