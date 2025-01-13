@@ -102,7 +102,7 @@
     id: VisitorPDA
     belt: WeaponDisabler
     back: ClothingBackpackDebug
-    ears: ClothingHeadsetAltCommand
+    ears: ClothingHeadsetHoP
     outerClothing: ClothingOuterWinterHoP
     pocket1: WeaponDisabler
 
@@ -116,7 +116,7 @@
     id: VisitorPDA
     belt: WeaponDisabler
     back: ClothingBackpackSatchelLeather
-    ears: ClothingHeadsetAltCommand
+    ears: ClothingHeadsetHoP
     outerClothing: ClothingOuterWinterHoP
     pocket1: WeaponDisabler
 
