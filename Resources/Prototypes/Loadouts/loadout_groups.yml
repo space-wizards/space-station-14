@@ -282,7 +282,6 @@
   loadouts:
   - BlackShoes
   - WinterBoots
-  - ClownShoesExpert
 
 - type: loadoutGroup
   id: BartenderHead
