@@ -1345,6 +1345,7 @@
       methods: [ Touch ]
       effects:
       - !type:WashCreamPieReaction
+  - type: LayingDown # imp
 
 
 
