@@ -195,13 +195,18 @@
   parent: [ ClothingBackpack, BaseCentcommContraband ]
   id: ClothingBackpackERTLeader
   name: ERT leader backpack
-  description: A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team.
+  description: A spacious backpack with lots of pockets, worn by the leader of an Emergency Response Team.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertleader.rsi
   - type: Storage
     grid:
-    - 0,0,10,3
+    - 0,0,7,4
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.95
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
 
 - type: entity
   parent: ClothingBackpackERTLeader
