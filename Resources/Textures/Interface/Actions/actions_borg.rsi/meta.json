@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/cdbcb1e858b11f083994a7a269ed67ef5b452ce9, chem-module &  adv-mining-module created by mubururu_ (github).",
+    "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/cdbcb1e858b11f083994a7a269ed67ef5b452ce9, Module actions by Scarky0 at https://github.com/space-wizards/space-station-14/pull/32505. chem, adv-chem, and adv-mining by mubururu_",
     "size": {
         "x": 32,
         "y": 32
