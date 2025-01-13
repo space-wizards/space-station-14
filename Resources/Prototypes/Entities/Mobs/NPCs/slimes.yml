@@ -164,11 +164,13 @@
     - type: NpcFactionMember
       factions:
         - SimpleHostile
-    #- type: GhostRole - GreyStation
-    #  description: ghost-role-information-angry-slimes-description
-    #  rules: ghost-role-information-angry-slimes-rules
-    #  raffle:
-    #    settings: short
+#    - type: GhostRole # GreyStation - Removed
+#      description: ghost-role-information-angry-slimes-description
+#      rules: ghost-role-information-angry-slimes-rules
+#      mindRoles:
+#      - MindRoleGhostRoleTeamAntagonist
+#      raffle:
+#        settings: short
 
 - type: entity
   name: green slime
@@ -202,11 +204,13 @@
     - type: NpcFactionMember
       factions:
         - SimpleHostile
-    #- type: GhostRole - GreyStation
-    #  description: ghost-role-information-angry-slimes-description
-    #  rules: ghost-role-information-angry-slimes-rules
-    #  raffle:
-    #    settings: short
+#    - type: GhostRole # GreyStation - Removed
+#      description: ghost-role-information-angry-slimes-description
+#      rules: ghost-role-information-angry-slimes-rules
+#      mindRoles:
+#      - MindRoleGhostRoleTeamAntagonist
+#      raffle:
+#        settings: short
 
 - type: entity
   name: yellow slime
@@ -239,8 +243,10 @@
     - type: NpcFactionMember
       factions:
         - SimpleHostile
-    #- type: GhostRole - GreyStation
-    #  description: ghost-role-information-angry-slimes-description
-    #  rules: ghost-role-information-angry-slimes-rules
-    #  raffle:
-    #    settings: short
+#    - type: GhostRole # GreyStation - Removed
+#      description: ghost-role-information-angry-slimes-description
+#      rules: ghost-role-information-angry-slimes-rules
+#      mindRoles:
+#      - MindRoleGhostRoleTeamAntagonist
+#      raffle:
+#        settings: short

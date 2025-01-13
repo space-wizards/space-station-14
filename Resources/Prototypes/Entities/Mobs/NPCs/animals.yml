@@ -443,6 +443,8 @@
     name: ghost-role-information-mothroach-name
     description: ghost-role-information-mothroach-description
     rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
   - type: Fixtures
     fixtures:
       fix1:
@@ -1001,6 +1003,15 @@
   - type: Grammar
     attributes:
       gender: female # Here because of UdderComponent
+  - type: Speech
+    speechSounds: Goat
+    speechVerb: Goat
+  - type: Vocal
+    sounds:
+      Female: Goat
+      Male: Goat
+      Unsexed: Goat
+  - type: BleatingAccent
   - type: InteractionPopup
     successChance: 0.2
     interactSuccessString: petting-success-goat
@@ -1397,6 +1408,9 @@
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description
     rules: ghost-role-information-syndicate-reinforcement-rules
+    mindRoles:
+    # This is for syndicate monkeys that randomly gain sentience, thus have no summoner to team with
+    - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -1604,6 +1618,8 @@
     name: ghost-role-information-mouse-name
     description: ghost-role-information-mouse-description
     rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
   - type: GhostTakeoverAvailable
   - type: Speech
     speechSounds: Squeak
@@ -2400,6 +2416,8 @@
     name: ghost-role-information-giant-spider-name
     description: ghost-role-information-giant-spider-description
     rules: ghost-role-information-giant-spider-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: short
   - type: GhostTakeoverAvailable
@@ -2977,6 +2995,8 @@
     allowMovement: true
     description: ghost-role-information-SyndiCat-description
     rules: ghost-role-information-SyndiCat-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: default
   - type: GhostTakeoverAvailable

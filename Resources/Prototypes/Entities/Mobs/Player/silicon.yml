@@ -378,7 +378,7 @@
     unlistedNumber: true
     requiresPower: false
   - type: Holopad
-  - type: StationAiWhitelist  
+  - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
         enum.HolopadUiKey.AiRequestWindow:
@@ -442,6 +442,9 @@
     - HideContextMenu
     - StationAi
     - NoConsoleSound
+  - type: StartingMindRole
+    mindRole: "MindRoleSiliconBrain"
+    silent: true
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
@@ -505,6 +508,9 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellMedium
+  - type: StartingMindRole
+    mindRole: "MindRoleSiliconBrain"
+    silent: true
 
 - type: entity
   id: PlayerBorgSyndicateAssaultBattery
