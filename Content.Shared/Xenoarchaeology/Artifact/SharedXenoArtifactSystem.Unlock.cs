@@ -49,7 +49,10 @@ public abstract partial class SharedXenoArtifactSystem
         if (artiComp.Suppressed)
             return false;
 
-        if (!HasUnlockedPredecessor((artifact.Value, artiComp), ent))
+        if (!HasUnlockedPredecessor((artifact.Value, artiComp), ent)
+            // unlocked final nodes should not listen for unlocking
+            || (!ent.Comp.Locked && GetSuccessorNodes((artifact.Value, artiComp), (ent.Owner, ent.Comp)).Count == 0)
+            )
             return false;
 
         return true;
@@ -69,10 +72,11 @@ public abstract partial class SharedXenoArtifactSystem
         {
             SetNodeUnlocked((ent, artifactComponent), node.Value);
             unlockAttemptResultMsg = "artifact-unlock-state-end-success";
-            var activated = ActivateNode((ent, artifactComponent), node.Value, null, null, Transform(ent).Coordinates, false);
 
-            if (activated)
-                _audio.PlayPvs(unlockingComponent.UnlockActivationSuccessfulSound, ent.Owner);
+            // as an experiment - unlocking node doesn't activate it, activation is left for player to decide.
+            // var activated = ActivateNode((ent, artifactComponent), node.Value, null, null, Transform(ent).Coordinates, false);
+            // if (activated)
+            _audio.PlayPvs(unlockingComponent.UnlockActivationSuccessfulSound, ent.Owner);
         }
         else
         {
