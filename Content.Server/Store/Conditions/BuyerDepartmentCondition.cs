@@ -31,8 +31,8 @@ public sealed partial class BuyerDepartmentCondition : ListingCondition
 
         var ent = args.EntityManager;
 
-        if (args.Buyer.Comp == null)
-            return true;
+        if (!ent.TryGetComponent<MindComponent>(args.Buyer, out var _))
+            return true; // inanimate objects don't have minds
 
         var jobs = ent.System<SharedJobSystem>();
         jobs.MindTryGetJob(args.Buyer, out var job);

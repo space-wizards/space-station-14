@@ -27,10 +27,9 @@ public sealed partial class BuyerJobCondition : ListingCondition
     public override bool Condition(ListingConditionArgs args)
     {
         var ent = args.EntityManager;
-        //var minds = ent.System<SharedMindSystem>();
 
-        if (args.Buyer.Comp == null)
-            return true;
+        if (!ent.TryGetComponent<MindComponent>(args.Buyer, out var _))
+            return true; // inanimate objects don't have minds
 
         var jobs = ent.System<SharedJobSystem>();
         jobs.MindTryGetJob(args.Buyer, out var job);

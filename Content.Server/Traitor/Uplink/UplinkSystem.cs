@@ -63,12 +63,12 @@ public sealed class UplinkSystem : EntitySystem
     /// </summary>
     private void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2 balance, bool giveDiscounts)
     {
-        if (!_mind.TryGetMind(user, out var mind, out var mindComp))
-            mind = user; // Nothing without a mind should be setting up an uplink, but just in case
+        if (!_mind.TryGetMind(user, out var mind, out var _))
+            mind = user; // Nothing without a mind should be setting up an uplink but discount integration test does so ¯\_(ツ)_/¯
 
         var store = EnsureComp<StoreComponent>(uplink);
 
-        store.AccountOwner = new Entity<MindComponent?>(mind, mindComp);
+        store.AccountOwner = mind;
 
         store.Balance.Clear();
         _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance } },
@@ -76,10 +76,10 @@ public sealed class UplinkSystem : EntitySystem
             store);
 
         var uplinkInitializedEvent = new StoreInitializedEvent(
-            TargetUser: store.AccountOwner.Value.Owner,
+            TargetUser: mind,
             Store: uplink,
             UseDiscounts: giveDiscounts,
-            Listings: _store.GetAvailableListings(store.AccountOwner.Value, uplink, store)
+            Listings: _store.GetAvailableListings(mind, uplink, store)
                 .ToArray());
         RaiseLocalEvent(ref uplinkInitializedEvent);
     }

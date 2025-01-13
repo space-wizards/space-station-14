@@ -28,8 +28,8 @@ public sealed partial class BuyerAntagCondition : ListingCondition
     {
         var ent = args.EntityManager;
 
-        if (args.Buyer.Comp == null)
-            return true;
+        if (!ent.TryGetComponent<MindComponent>(args.Buyer, out var _))
+            return true; // inanimate objects don't have minds
 
         var roleSystem = ent.System<SharedRoleSystem>();
         var roles = roleSystem.MindGetAllRoleInfo(args.Buyer);

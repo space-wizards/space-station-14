@@ -70,13 +70,13 @@ public sealed partial class StoreSystem : EntitySystem
         if (!component.OwnerOnly)
             return;
 
-        if (!_mind.TryGetMind(args.User, out var mind, out var mindComp))
+        if (!_mind.TryGetMind(args.User, out var mind, out var _))
             return;
 
-        component.AccountOwner ??= new Entity<MindComponent?>(mind, mindComp);
+        component.AccountOwner ??= mind;
         DebugTools.Assert(component.AccountOwner != null);
 
-        if (component.AccountOwner.Value.Owner == mind)
+        if (component.AccountOwner == mind)
             return;
 
         _popup.PopupEntity(Loc.GetString("store-not-account-owner", ("store", uid)), uid, args.User);
