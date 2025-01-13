@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/524270a5bcc1e0ea844b98c5a204986cec9721ac/icons/obj/weapons/grenade.dmi and modified by deltanedas (github)",
+  "copyright": "Derived from deltanedas (https://github.com/space-wizards/space-station-14/commit/7dd472c934e61e4087a3f991ed9b51f0eb99271c), created by K-Dynamic (github)",
   "size": {
     "x": 32,
     "y": 32
