@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Added Luggage, a new cargo-purchasable ghostrole familiar.
-    type: Add
-  id: 408
-  time: '2024-10-24T12:00:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/542
 - author: Flanburgr, AirFryerBuyOneGetOneFree
   changes:
   - message: Added the Syndicate Listening Outpost, whose mission is to spy on the
@@ -4515,3 +4508,11 @@
   id: 907
   time: '2025-01-12T13:20:31.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1324
+- author: ruddygreat
+  changes:
+  - message: The round summary screen now features a list of everything that traitors,
+      changelings & heretics bought throughout the round.
+    type: Add
+  id: 908
+  time: '2025-01-13T04:13:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1332
