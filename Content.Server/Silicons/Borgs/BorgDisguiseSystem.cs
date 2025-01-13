@@ -2,11 +2,14 @@ using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Silicons.Borgs;
 
 public sealed class BorgDisguiseSystem : SharedBorgDisguiseSystem
 {
+    [Dependency] private readonly SharedPointLightSystem _pointLightSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -29,7 +32,7 @@ public sealed class BorgDisguiseSystem : SharedBorgDisguiseSystem
         comp.Disguised = !comp.Disguised;
         Dirty(uid, comp);
         args.Handled = true;
-        UpdateSharedAppearance(uid, comp);
+        UpdateApperance(uid, comp);
     }
 
     /// <summary>
@@ -41,7 +44,7 @@ public sealed class BorgDisguiseSystem : SharedBorgDisguiseSystem
     {
         comp.Disguised = false;
         Dirty(uid, comp);
-        UpdateSharedAppearance(uid, comp);
+        UpdateApperance(uid, comp);
     }
 
     /// <summary>
@@ -70,5 +73,26 @@ public sealed class BorgDisguiseSystem : SharedBorgDisguiseSystem
         {
             DisableDisguise(uid, component);
         }
+    }
+
+    /// <summary>
+    /// Updates the appearance data of the entity.
+    /// </summary>
+    /// <param name="uid">The entity to update.</param>
+    /// <param name="comp">The component holding the disguise data.</param>
+    private void UpdateApperance(EntityUid uid, BorgDisguiseComponent comp)
+    {
+        if (TryPrototype(uid, out var entityPrototype))
+        {
+            if (entityPrototype.TryGetComponent<PointLightComponent>("PointLight", out var lightPrototype))
+            {
+                _pointLightSystem.SetColor(uid,
+                    comp.Disguised
+                        ? comp.DisguisedLightColor
+                        : lightPrototype.Color);
+            }
+        }
+
+        UpdateSharedAppearance(uid, comp);
     }
 }

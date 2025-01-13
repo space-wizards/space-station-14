@@ -8,6 +8,8 @@ public sealed class BorgDisguiseSystem : SharedBorgDisguiseSystem
 {
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly BorgSystem _borgSystem = default!;
+    [Dependency] private readonly SharedPointLightSystem _pointLightSystem = default!;
+
 
     public override void Initialize()
     {
@@ -65,10 +67,20 @@ public sealed class BorgDisguiseSystem : SharedBorgDisguiseSystem
                     comp.Disguised ? comp.HasMindState : borgPrototype.HasMindState,
                     comp.Disguised ? comp.NoMindState : borgPrototype.NoMindState);
             }
+
+            if (entityPrototype.TryGetComponent<PointLightComponent>("PointLight", out var lightPrototype))
+            {
+                _pointLightSystem.SetColor(uid,
+                    comp.Disguised
+                        ? comp.DisguisedLightColor
+                        : lightPrototype.Color);
+            }
         }
 
 
         sprite.LayerSetState("light", comp.Disguised ? comp.DisguisedLight : comp.RealLight);
+
+
         UpdateSharedAppearance(uid, comp);
     }
 }

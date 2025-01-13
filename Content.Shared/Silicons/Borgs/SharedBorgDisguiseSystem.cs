@@ -10,7 +10,6 @@ public abstract class SharedBorgDisguiseSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
-    [Dependency] private readonly SharedPointLightSystem _pointLightSystem = default!;
 
     public override void Initialize()
     {
@@ -30,13 +29,6 @@ public abstract class SharedBorgDisguiseSystem : EntitySystem
         if (TryPrototype(uid, out var entityPrototype))
         {
             _meta.SetEntityDescription(uid, comp.Disguised ? comp.Description : entityPrototype.Description);
-            if (entityPrototype.TryGetComponent<SharedPointLightComponent>("PointLight", out var lightPrototype))
-            {
-                _pointLightSystem.SetColor(uid,
-                    comp.Disguised
-                        ? comp.DisguisedLightColor
-                        : lightPrototype.Color);
-            }
         }
     }
 
