@@ -270,8 +270,9 @@
     types:
       Piercing: 28
   bullet:
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: slug
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: slug
 
 - type: hitscan
   id: PelletShotgunFlareTrace
