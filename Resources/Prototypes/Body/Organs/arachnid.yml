@@ -13,7 +13,16 @@
   - type: Sprite
     sprite: Mobs/Species/Arachnid/organs.rsi
   - type: Stomach
-    updateInterval: 1.5
+    digestionDelay: 30
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
   - type: Metabolizer
     updateInterval: 1.5
 

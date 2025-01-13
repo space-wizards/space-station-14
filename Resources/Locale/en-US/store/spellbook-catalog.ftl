@@ -20,6 +20,9 @@ spellbook-charge-desc = Adds a charge back to your wand!
 spellbook-ethereal-jaunt-name = Ethereal Jaunt
 spellbook-ethereal-jaunt-description = Slip into the ethereal plane to slip away from your enemies!
 
+spellbook-mind-swap-name = Mind Swap
+spellbook-mind-swap-description = Exchange bodies with another person!
+
 # Equipment
 
 spellbook-wand-polymorph-door-name = Wand of Entrance
@@ -27,6 +30,9 @@ spellbook-wand-polymorph-door-description = For when you need a get-away route.
 
 spellbook-wand-polymorph-carp-name = Wand of Carp Polymorph
 spellbook-wand-polymorph-carp-description = For when you need a carp filet quick and the clown is looking juicy.
+
+spellbook-wand-locker-name = Wand of the Locker
+spellbook-wand-locker-description = Shoot cursed lockers at your enemies and lock em away!
 
 # Events
 
