@@ -1,0 +1,8 @@
+# shuttles from the shipyard will try to dock here
+- type: entity
+  parent: AirlockGlassShuttle
+  id: AirlockExternalGlassShuttleShipyard
+  suffix: External, Shipyard, Glass, Docking
+  components:
+  - type: PriorityDock
+    tag: DockShipyard

@@ -11,7 +11,7 @@
   - type: AccessReader
   - type: Sprite
     scale: 0.7, 0.7 # Frontier
-    sprite: Nyanotrasen/Objects/Specific/Mail/mail.rsi
+    sprite: _Nyanotrasen/Objects/Specific/Mail/mail.rsi
     layers:
     - state: icon
       map: ["enum.MailVisualLayers.Icon"]
@@ -80,7 +80,6 @@
     - trigger:
         !type:DamageTrigger
         damage: 5
-        triggersOnce: true
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Breakage" ]
@@ -109,7 +108,7 @@
 # This empty parcel is allowed to exist and evade the tests for the admin
 # mailto command.
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseMail
   id: MailAdminFun
   suffix: adminfun

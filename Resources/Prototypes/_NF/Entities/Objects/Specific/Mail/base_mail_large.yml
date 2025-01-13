@@ -73,7 +73,7 @@
     isLarge: true
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseMailLarge
   id: MailLargeAdminFun
   suffix: adminfun

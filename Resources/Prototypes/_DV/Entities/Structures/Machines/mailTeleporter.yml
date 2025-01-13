@@ -5,12 +5,6 @@
   description: Teleports mail addressed to the crew of this station.
   components:
   - type: MailTeleporter
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-  - type: Transform
-    anchored: true
-    noRot: true
   - type: Fixtures
     fixtures:
       fix1:
@@ -21,7 +15,7 @@
         mask:
         - HighImpassable
   - type: Sprite
-    sprite: Nyanotrasen/Structures/mailbox.rsi
+    sprite: _Nyanotrasen/Structures/mailbox.rsi
     scale: 0.5, 0.5
     layers:
     - state: icon
@@ -44,17 +38,11 @@
         node: machineFrame
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: ApcPowerReceiver
-    powerLoad: 1000 # TODO if we keep this make it spike power draw when teleporting
-    powerDisabled: true
-  - type: ExtensionCableReceiver
-  - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: {visible: true}
           False: {visible: false}
-  - type: PowerSwitch
   - type: Machine
     board: MailTeleporterMachineCircuitboard

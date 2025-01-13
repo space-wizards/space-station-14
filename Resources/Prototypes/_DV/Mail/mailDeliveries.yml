@@ -1,0 +1,14 @@
+- type: mailDeliveryPool
+  id: RandomDeltaVMailDeliveryPool #This entire table is messy as fuck but the weights add up to 35. TODO: ORGANIZE THIS SHIT AAAA
+  everyone:
+    MailPumpkinPie: 35
+
+  # Department and job-specific mail can have slightly higher weights,
+  # since they'll be merged with the everyone pool.
+  departments:
+    Medical:
+      MailPumpkinPie: 35
+
+  jobs:
+    Botanist:
+      MailPumpkinPie: 35
