@@ -42,6 +42,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
@@ -617,6 +618,9 @@ public abstract class SharedMagicSystem : EntitySystem
 
         EnsureComp<NpcFactionMemberComponent>(ev.Target);
         _faction.AddFaction(ev.Target, ev.Faction);
+
+        var physics = EnsureComp<PhysicsComponent>(ev.Target);
+        _physics.SetCanCollide(ev.Target, false, force: true, body: physics);
     }
     public virtual void AnimateSpellHelper(AnimateSpellEvent ev) { }
 
