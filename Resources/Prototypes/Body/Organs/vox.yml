@@ -17,7 +17,7 @@
 - type: entity
   id: OrganVoxBrain
   parent: OrganHumanBrain
-#  name: vox brain
+  name: cortical stack
   description: "The blue bioengineered brain of a Vox. It has a cortical stack integrated into it."
   suffix: "vox"
   components:
