@@ -1,6 +1,8 @@
 using Content.Server.Labels.Components;
+using Content.Shared._Harmony.Clothing.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
+using Content.Shared.Inventory;
 using Content.Shared.Labels;
 using Content.Shared.Labels.Components;
 using Content.Shared.Labels.EntitySystems;
@@ -30,6 +32,7 @@ namespace Content.Server.Labels
             SubscribeLocalEvent<PaperLabelComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<PaperLabelComponent, EntRemovedFromContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<PaperLabelComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<PaperLabelComponent, InventoryRelayedEvent<ExaminedEvent>>((e, c, ev) => OnExamined(e, c, ev.Args));
         }
 
         /// <summary>
@@ -64,9 +67,12 @@ namespace Content.Server.Labels
 
         private void OnExamined(EntityUid uid, PaperLabelComponent comp, ExaminedEvent args)
         {
-            if (comp.LabelSlot.Item is not {Valid: true} item)
+            Console.WriteLine("a");
+            if (comp.LabelSlot.Item is not { Valid: true } item)
+            {
+                Console.WriteLine("b");
                 return;
-
+            }
             using (args.PushGroup(nameof(PaperLabelComponent)))
             {
                 if (!args.IsInDetailsRange)

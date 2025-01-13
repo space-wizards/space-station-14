@@ -1,0 +1,32 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckLanyard
+  name: lanyard
+  description: Just add paper
+  components:
+  - type: Lanyard
+  - type: Sprite
+    sprite: Clothing/Neck/Ties/dettie.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Ties/dettie.rsi
+  - type: PaperLabel
+    labelSlot:
+      insertVerbText: Attach Label
+      ejectVerbText: Remove Label
+      whitelist:
+        components:
+        - Paper
+      blacklist:
+        tags:
+        - Book
+  #- type: Matchbox
+  #- type: ItemSlots
+  #  slots:
+  #    item:
+  #      name: clothing-boots-sidearm
+  #      whitelist:
+  #        tags:
+  #        - Paper
+  #      blacklist:
+  #        tags:
+  #        - Book
