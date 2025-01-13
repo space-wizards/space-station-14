@@ -35,7 +35,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 playerUid = serverPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
 #pragma warning disable NUnit2045 // Interdependent assertions.
-                Assert.That(playerUid, Is.Not.EqualTo(default));
+                Assert.That(playerUid, Is.Not.EqualTo(default(EntityUid)));
                 // Making sure it exists
                 Assert.That(entManager.HasComponent<AlertsComponent>(playerUid));
 #pragma warning restore NUnit2045
