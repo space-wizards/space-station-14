@@ -509,7 +509,7 @@
   - type: PointLight
     radius: 1.5
     energy: 1.6
-    color: "#A50824"
+    color: "#15A955"
 
 - type: entity
   parent: VendingMachineCola
@@ -687,6 +687,43 @@
     radius: 1.5
     energy: 1.6
     color: "#D82929"
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSmite
+  name: Smite Vendor
+  description: Smite makes right.
+  components:
+  - type: VendingMachine
+    pack: SmiteInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+    ejectDelay: 1.9
+    initialStockQuality: 0.33
+  - type: Advertise
+    pack: SmiteAds
+  - type: SpeakOnUIClosed
+    pack: SmiteGoodbyes
+  - type: Speech
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/smite.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#00E645"
 
 - type: entity
   parent: VendingMachine
