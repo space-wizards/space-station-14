@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: The maple wing marking for moths now have a secondary color palette.
-    type: Tweak
-  id: 7303
-  time: '2024-09-07T05:48:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31691
 - author: lzk228
   changes:
   - message: Bottle and syringe names are remade into labels.
@@ -3936,3 +3929,10 @@
   id: 7802
   time: '2025-01-12T23:32:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34408
+- author: Deerstop
+  changes:
+  - message: Improved the readability of the manual valve sprite.
+    type: Tweak
+  id: 7803
+  time: '2025-01-13T07:07:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34378
