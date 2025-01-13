@@ -225,3 +225,16 @@
     - SpellbookJaunt
   - !type:ListingLimitedStockCondition
     stock: 2
+
+- type: listing
+  id: SpellbookItemRecallSwap
+  name: recall
+  description: recall
+  productAction: ActionItemRecall
+  cost:
+    WizCoin: 1
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

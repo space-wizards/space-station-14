@@ -1,0 +1,16 @@
+- type: entity
+  id: ActionItemRecall
+  name: item recall
+  description: Mark and summon an item back into your hand.
+  components:
+  - type: InstantAction
+    useDelay: 5
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: shield
+    event: !type:OnItemRecallActionEvent
+  - type: ItemRecall
