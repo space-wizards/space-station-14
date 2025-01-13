@@ -232,9 +232,9 @@
     price: 300
 
 - type: entity
-  name: laser rifle
+  name: laser carbine
   parent: [WeaponLaserCarbinePractice, BaseGunWieldable, BaseRestrictedContraband]
-  id: WeaponLaserCarbine
+  id: WeaponCarbine
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
   - type: StaticPrice
