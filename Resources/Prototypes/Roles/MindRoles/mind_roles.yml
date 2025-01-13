@@ -108,7 +108,7 @@
   components:
   - type: MindRole
     antagPrototype: NukeopsCommander
-    trackPurchases: false#imp edit
+    trackPurchases: false #imp edit
     getsNoSpendtext: true #imp edit
 
 # Revolutionaries
