@@ -204,7 +204,7 @@
       realLight: synd_engi_l
     - type: GenericVisualizer
       visuals:
-        enum.BorgVisuals.IsDisguised:
+        enum.BorgDisguiseVisuals.IsDisguised:
           enum.BorgVisualLayers.Body:
             True: { visible: false }
             False: { visible: true }

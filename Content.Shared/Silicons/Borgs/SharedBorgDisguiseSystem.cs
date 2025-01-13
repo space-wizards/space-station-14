@@ -27,17 +27,15 @@ public abstract class SharedBorgDisguiseSystem : EntitySystem
     /// <param name="comp">The component to use for getting the disguise state and description.</param>
     protected void UpdateSharedAppearance(EntityUid uid, BorgDisguiseComponent comp)
     {
-        TryPrototype(uid, out var entityPrototype);
-        if (entityPrototype is not null)
+        if (TryPrototype(uid, out var entityPrototype))
         {
             _meta.SetEntityDescription(uid, comp.Disguised ? comp.Description : entityPrototype.Description);
-            if (entityPrototype.Components.TryGetComponent("PointLight", out var lightPrototype))
+            if (entityPrototype.TryGetComponent<SharedPointLightComponent>("PointLight", out var lightPrototype))
             {
                 _pointLightSystem.SetColor(uid,
                     comp.Disguised
                         ? comp.DisguisedLightColor
-                        : ((SharedPointLightComponent)
-                            lightPrototype).Color);
+                        : lightPrototype.Color);
             }
         }
     }

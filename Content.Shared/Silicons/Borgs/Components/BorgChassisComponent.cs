@@ -12,24 +12,10 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// "brain", legs, modules, and battery. Essentially the master component
 /// for borg logic.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem)),
- AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem)), AutoGenerateComponentState]
 public sealed partial class BorgChassisComponent : Component
 {
-    [DataField]
-    public ProtoId<AlertPrototype> BatteryAlert = "BorgBattery";
-
-    [DataField]
-    public ProtoId<AlertPrototype> NoBatteryAlert = "BorgBatteryNone";
-
-    /// <summary>
-    /// The currently selected module
-    /// </summary>
-    [DataField("selectedModule"), AutoNetworkedField]
-    public EntityUid? SelectedModule;
-
     #region Brain
-
     /// <summary>
     /// A whitelist for which entities count as valid brains
     /// </summary>
@@ -46,11 +32,9 @@ public sealed partial class BorgChassisComponent : Component
     public ContainerSlot BrainContainer = default!;
 
     public EntityUid? BrainEntity => BrainContainer.ContainedEntity;
-
     #endregion
 
     #region Modules
-
     /// <summary>
     /// A whitelist for what types of modules can be installed into this borg
     /// </summary>
@@ -73,64 +57,37 @@ public sealed partial class BorgChassisComponent : Component
     public Container ModuleContainer = default!;
 
     public int ModuleCount => ModuleContainer.ContainedEntities.Count;
-
     #endregion
 
-    #region Visuals
-
     /// <summary>
-    /// The sprite state to use when the borg has a mind.
+    /// The currently selected module
     /// </summary>
+    [DataField("selectedModule"), AutoNetworkedField]
+    public EntityUid? SelectedModule;
+
+    #region Visuals
     [DataField("hasMindState")]
     public string HasMindState = string.Empty;
 
-    /// <summary>
-    /// The sprite state to use when the borg has no mind.
-    /// </summary>
     [DataField("noMindState")]
     public string NoMindState = string.Empty;
-
     #endregion
+
+    [DataField]
+    public ProtoId<AlertPrototype> BatteryAlert = "BorgBattery";
+
+    [DataField]
+    public ProtoId<AlertPrototype> NoBatteryAlert = "BorgBatteryNone";
 }
 
 [Serializable, NetSerializable]
 public enum BorgVisuals : byte
 {
-    /// <summary>
-    /// Whether the borg has a player controlling it.
-    /// </summary>
-    HasPlayer,
-
-    /// <summary>
-    /// Whether the borg has a disguise activated.
-    /// </summary>
-    IsDisguised,
+    HasPlayer
 }
 
 [Serializable, NetSerializable]
 public enum BorgVisualLayers : byte
-{
-    /// <summary>
-    /// Main borg body layer.
-    /// </summary>
-    Body,
-
-    /// <summary>
-    /// Layer for the borg's mind state.
-    /// </summary>
-    Light,
-
-    /// <summary>
-    /// Layer for the borg flashlight status.
-    /// </summary>
-    LightStatus,
-}
-
-/// <summary>
-/// Visual layers used when the borg is disguised.
-/// </summary>
-[Serializable, NetSerializable]
-public enum BorgDisguiseVisualLayers : byte
 {
     /// <summary>
     /// Main borg body layer.

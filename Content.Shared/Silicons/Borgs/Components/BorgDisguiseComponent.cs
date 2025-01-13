@@ -1,5 +1,6 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Silicons.Borgs.Components;
 
@@ -74,4 +75,35 @@ public sealed partial class BorgDisguiseComponent : Component
     public Color DisguisedLightColor = Color.White;
 
     #endregion
+}
+
+[Serializable, NetSerializable]
+public enum BorgDisguiseVisuals : byte
+{
+    /// <summary>
+    /// Whether the borg has a disguise activated.
+    /// </summary>
+    IsDisguised,
+}
+
+/// <summary>
+/// Visual layers used when the borg is disguised.
+/// </summary>
+[Serializable, NetSerializable]
+public enum BorgDisguiseVisualLayers : byte
+{
+    /// <summary>
+    /// Main borg body layer.
+    /// </summary>
+    Body,
+
+    /// <summary>
+    /// Layer for the borg's mind state.
+    /// </summary>
+    Light,
+
+    /// <summary>
+    /// Layer for the borg flashlight status.
+    /// </summary>
+    LightStatus,
 }

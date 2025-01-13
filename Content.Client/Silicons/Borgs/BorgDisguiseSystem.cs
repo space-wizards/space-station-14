@@ -7,6 +7,7 @@ namespace Content.Client.Silicons.Borgs;
 public sealed class BorgDisguiseSystem : SharedBorgDisguiseSystem
 {
     [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly BorgSystem _borgSystem = default!;
 
     public override void Initialize()
     {
@@ -53,8 +54,20 @@ public sealed class BorgDisguiseSystem : SharedBorgDisguiseSystem
 
         if (!Resolve(uid, ref appearance, ref sprite))
             return;
-        _appearance.SetData(uid, BorgVisuals.IsDisguised, comp.Disguised, appearance);
+        _appearance.SetData(uid, BorgDisguiseVisuals.IsDisguised, comp.Disguised, appearance);
         // Change method in BorgSystem gets automatically called via observer
+
+        if (TryPrototype(uid, out var entityPrototype))
+        {
+            if (entityPrototype.TryGetComponent<BorgChassisComponent>("BorgChassis", out var borgPrototype))
+            {
+                _borgSystem.SetMindStates(new Entity<BorgChassisComponent>(uid, Comp<BorgChassisComponent>(uid)),
+                    comp.Disguised ? comp.HasMindState : borgPrototype.HasMindState,
+                    comp.Disguised ? comp.NoMindState : borgPrototype.NoMindState);
+            }
+        }
+
+
         sprite.LayerSetState("light", comp.Disguised ? comp.DisguisedLight : comp.RealLight);
         UpdateSharedAppearance(uid, comp);
     }
