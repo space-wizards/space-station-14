@@ -9,6 +9,9 @@ public sealed partial class RecallMarkerComponent : Component
     /// <summary>
     ///     Does this spell require Wizard Robes & Hat?
     /// </summary>
-    [DataField]
+    [ViewVariables]
     public EntityUid MarkedByEntity;
+
+    [ViewVariables]
+    public EntityUid MarkedByAction;
 }

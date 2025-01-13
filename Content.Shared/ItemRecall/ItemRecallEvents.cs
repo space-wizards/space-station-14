@@ -10,3 +10,6 @@ public sealed partial class OnItemRecallActionEvent : InstantActionEvent
 {
 
 }
+
+[ByRefEvent]
+public sealed partial class RecallItemEvent(EntityUid item);

@@ -7,10 +7,10 @@ namespace Content.Shared.ItemRecall;
 public sealed partial class ItemRecallComponent : Component
 {
     [DataField]
-    public LocId WhileMarkedName = "";
+    public LocId? WhileMarkedName = "";
 
     [DataField]
-    public LocId WhileMarkedDescription = "";
+    public LocId? WhileMarkedDescription = "";
 
     [DataField]
     public SpriteSpecifier? WhileMarkedSprite;

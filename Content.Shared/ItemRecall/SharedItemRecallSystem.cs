@@ -17,10 +17,13 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ItemRecallComponent, OnItemRecallActionEvent>(OnItemRecallUse);
+        SubscribeLocalEvent<ItemRecallComponent, OnItemRecallActionEvent>(OnItemRecallActionUse);
+
+        SubscribeLocalEvent<RecallMarkerComponent, RecallItemEvent>(OnItemRecallEvent);
+        SubscribeLocalEvent<RecallMarkerComponent, ComponentShutdown>(OnRecallMarkerShutdown);
     }
 
-    public void OnItemRecallUse(Entity<ItemRecallComponent> ent, ref OnItemRecallActionEvent args)
+    private void OnItemRecallActionUse(Entity<ItemRecallComponent> ent, ref OnItemRecallActionEvent args)
     {
 
         if (ent.Comp.MarkedEntity == null)
@@ -35,7 +38,18 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
             return;
         }
 
-        RecallItem(ent.Comp.MarkedEntity);
+        var ev = new RecallItemEvent(ent.Comp.MarkedEntity.Value);
+        RaiseLocalEvent(ent.Comp.MarkedEntity.Value, ref ev);
+    }
+
+    private void OnRecallMarkerShutdown(Entity<RecallMarkerComponent> ent, ref ComponentShutdown args)
+    {
+        TryUnmarkItem(ent);
+    }
+
+    private void OnItemRecallEvent(Entity<RecallMarkerComponent> ent, ref RecallItemEvent args)
+    {
+        RecallItem(ent.Owner);
     }
 
     private void TryMarkItem(Entity<ItemRecallComponent> ent, EntityUid? item, EntityUid markedBy)
@@ -45,7 +59,28 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
         Log.Debug("Adding component");
         EnsureComp<RecallMarkerComponent>(item.Value, out var marker);
         ent.Comp.MarkedEntity = item;
+        Dirty(ent);
+
         marker.MarkedByEntity = markedBy;
+        marker.MarkedByAction = ent.Owner;
+        Dirty(item.Value, marker);
+    }
+
+    private void TryUnmarkItem(EntityUid? item)
+    {
+        if (item == null)
+            return;
+
+        if (!TryComp<RecallMarkerComponent>(item.Value, out var marker))
+            return;
+
+        if (TryComp<ItemRecallComponent>(marker.MarkedByAction, out var action))
+        {
+            action.MarkedEntity = null;
+            Dirty(marker.MarkedByAction, action);
+        }
+
+        RemCompDeferred<RecallMarkerComponent>(item.Value);
     }
 
     private void RecallItem(EntityUid? item)
