@@ -28,11 +28,9 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
 
         if (ent.Comp.MarkedEntity == null)
         {
-            Log.Debug("Trying for hands");
             if (!TryComp<HandsComponent>(args.Performer, out var hands))
                 return;
 
-            Log.Debug("Marking");
             var markItem = _hands.GetActiveItem((args.Performer, hands));
             TryMarkItem(ent, markItem, args.Performer);
             return;
@@ -40,6 +38,7 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
 
         var ev = new RecallItemEvent(ent.Comp.MarkedEntity.Value);
         RaiseLocalEvent(ent.Comp.MarkedEntity.Value, ref ev);
+        args.Handled = true;
     }
 
     private void OnRecallMarkerShutdown(Entity<RecallMarkerComponent> ent, ref ComponentShutdown args)
@@ -56,7 +55,6 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
     {
         if (item == null)
             return;
-        Log.Debug("Adding component");
         EnsureComp<RecallMarkerComponent>(item.Value, out var marker);
         ent.Comp.MarkedEntity = item;
         Dirty(ent);

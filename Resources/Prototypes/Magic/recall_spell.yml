@@ -4,7 +4,7 @@
   description: Mark and summon an item back into your hand.
   components:
   - type: InstantAction
-    useDelay: 5
+    useDelay: 10
     raiseOnAction: true
     itemIconStyle: BigAction
     sound: !type:SoundPathSpecifier
