@@ -5,7 +5,7 @@
   description: For when you really want to rub it in.
   components:
     - type: Sprite
-      sprite: _Impstation/Objects/Misc/bureaucracy.rsi
+      sprite: Objects/Misc/bureaucracy.rsi
       layers:
       - state: thief_card
       - state: thief_card
