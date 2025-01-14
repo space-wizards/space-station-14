@@ -1,0 +1,42 @@
+- type: entity
+  id: HoloBell
+  parent: HolosignWetFloor
+  name: holobell
+  description: A hardlight doorbell. Bing bong!
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: _Impstation/Structures/Holo/holobell.rsi
+    state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+  - type: TimedDespawn
+    lifetime: 5 #if I dont make it low as fuck people are gonna spam the shit out of it
+  - type: Airtight
+    noAirWhenFullyAirBlocked: false
+  - type: StationAiWhitelist
+  - type: WallMount
+    arc: 360
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    canCollide: false
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessSound:
+      collection: DoorBellHolo
+      params:
+        volume: 6
+    onActivate: true
+  - type: UseDelay
+    delay: 2.0
+  - type: PointLight
+    enabled: true
+    radius: 1.3
+    netsync: false
+    color: "#335acf"
+    energy: 4

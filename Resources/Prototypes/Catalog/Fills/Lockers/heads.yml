@@ -20,6 +20,7 @@
     - id: RubberStampDenied
     - id: RubberStampQm
     - id: AstroNavCartridge
+    - id: StockTradingCartridge # Delta-V
 
 - type: entity
   id: LockerQuarterMasterFilled

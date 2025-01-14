@@ -1,71 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Foreigner Trait
-    type: Add
-  - message: Language to all playable species when available
-    type: Add
-  - message: Dragons and MMIs now understand common
-    type: Tweak
-  - message: Cats no longer purr when talking
-    type: Tweak
-  - message: chat bubbles use message color
-    type: Tweak
-  - message: Language is no longer random
-    type: Tweak
-  - message: Fixed television not obfuscating
-    type: Fix
-  id: 425
-  time: '2024-10-29T22:55:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/581
-- author: DinnerCalzone
-  changes:
-  - message: Updated Hummingbird Station for further playtesting. Full changes can
-      be found in the Discord thread or on the GitHub PR.
-    type: Tweak
-  id: 426
-  time: '2024-10-29T22:56:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/573
-- author: Kandiyaki
-  changes:
-  - message: edited the name of inert subjuzine in order to reduce confusion
-    type: Tweak
-  id: 427
-  time: '2024-10-29T22:57:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/578
-- author: Sha-Seng
-  changes:
-  - message: slime outline is now 75% opacity (down from 100%)
-    type: Tweak
-  - message: slime hair is now 65% opacity (up from 50%)
-    type: Tweak
-  - message: slime torso outlines adjusted to not overlap visibly on arms and legs
-    type: Tweak
-  - message: nose and mouth from default slime sprite
-    type: Remove
-  - message: nose and color-customizable mouth as slime head markings
-    type: Add
-  - message: internal skeleton markings for gelatinous cube type slimes
-    type: Add
-  - message: internal brain, lungs, and core markings
-    type: Add
-  id: 428
-  time: '2024-10-29T22:55:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/577
-- author: sususuyo
-  changes:
-  - message: Removed a song from the lobby! Keeping it to the jukebox instead.
-    type: Remove
-  id: 429
-  time: '2024-10-29T22:56:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/580
-- author: mqole
-  changes:
-  - message: Removing languages for now. They need a bit more time in the oven.
-    type: Remove
-  id: 430
-  time: '2024-10-30T03:17:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/584
 - author: TheGrimbeeper
   changes:
   - message: Artifacts can now ask for a drink. Talk to your bartender for help!
@@ -4511,3 +4444,53 @@
   id: 924
   time: '2025-01-14T10:32:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1347
+- author: Pinkbat5
+  changes:
+  - message: The prestige clown gear is now available in a few more job loadouts.
+    type: Tweak
+  id: 925
+  time: '2025-01-14T23:39:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1336
+- author: Kandiyaki
+  changes:
+  - message: heretic store listings will now show their associated knowledge level
+      beside them.
+    type: Add
+  - message: the ghoul overlay will now show up on non-humanoid entities.
+    type: Fix
+  - message: '"Knowledge Points" are now "KP" in the heretic store (things were getting
+      cluttered).'
+    type: Tweak
+  id: 926
+  time: '2025-01-14T23:39:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1364
+- author: AftrLite
+  changes:
+  - message: Medkit inhands now use the correct(new) sprites!
+    type: Fix
+  id: 927
+  time: '2025-01-14T23:41:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1365
+- author: mqole
+  changes:
+  - message: Increased the time required to play certain command roles.
+    type: Tweak
+  id: 928
+  time: '2025-01-14T23:44:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1352
+- author: ATDoop
+  changes:
+  - message: Thieves now start with a special calling card! Copy it at the fax machine
+      if you need more!
+    type: Add
+  id: 929
+  time: '2025-01-14T23:47:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1366
+- author: EpicToast
+  changes:
+  - message: Add the StockTrading cartridge. Starts installed on QM and cargo tech
+      PDAs and can be found in the QM's locker.
+    type: Add
+  id: 930
+  time: '2025-01-14T23:49:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1314

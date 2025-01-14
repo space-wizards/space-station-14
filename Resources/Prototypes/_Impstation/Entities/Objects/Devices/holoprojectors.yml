@@ -1,0 +1,14 @@
+- type: entity
+  parent: Holoprojector
+  id: HoloBellProjector
+  name: holobell projector
+  description: Projects a temporary, fully functional hardlight doorbell.
+  components:
+  - type: HolosignProjector
+    signProto: HoloBell
+    chargeUse: 100
+  - type: Sprite
+    sprite: _Impstation/Objects/Devices/holobellprojector.rsi
+    state: icon
+  - type: StaticPrice
+    price: 80

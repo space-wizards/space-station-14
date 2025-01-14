@@ -99,6 +99,7 @@
     MedTekCartridgeStealObjective: 1
     LogProbeCartridgeStealObjective: 1
     AstroNavCartridgeStealObjective: 1
+    StockTradingCartridgeStealObjective: 1
     ServiceTechFabStealObjective: 1
     ShiningSpringStealObjective: 1
     ShipyardComputerCircuitboardStealObjective: 1

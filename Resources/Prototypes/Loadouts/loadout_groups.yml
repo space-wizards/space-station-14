@@ -1753,14 +1753,7 @@
   minLimit: 0
   loadouts:
   - SterileMask
-
-- type: loadoutGroup
-  id: MedicalDoctorMask
-  name: loadout-group-medical-doctor-mask
-  minLimit: 0
-  loadouts:
-  - SterileMask
-  - DoctorClown
+  - DoctorClown # imp
 
 - type: loadoutGroup
   id: MedicalInternJumpsuit
@@ -1927,6 +1920,7 @@
   - LeatherShoes
   - BlackShoes
   - WhiteShoes
+  - ClownShoesExpert # imp
 
 - type: loadoutGroup
   id: BoxerJumpsuit
