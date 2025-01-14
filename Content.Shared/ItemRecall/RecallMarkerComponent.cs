@@ -7,11 +7,14 @@ namespace Content.Shared.ItemRecall;
 public sealed partial class RecallMarkerComponent : Component
 {
     /// <summary>
-    ///     Does this spell require Wizard Robes & Hat?
+    /// The entity that marked this item.
     /// </summary>
     [ViewVariables]
-    public EntityUid MarkedByEntity;
+    public EntityUid? MarkedByEntity;
 
+    /// <summary>
+    /// The action that marked this item.
+    /// </summary>
     [ViewVariables]
-    public EntityUid MarkedByAction;
+    public EntityUid? MarkedByAction;
 }

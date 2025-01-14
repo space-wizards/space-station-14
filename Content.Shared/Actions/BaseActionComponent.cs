@@ -169,6 +169,7 @@ public abstract partial class BaseActionComponent : Component
 
     /// <summary>
     ///     If true, this will cause the the action event to always be raised directed at the action itself instead of the action's container/provider.
+    ///     Takes priority over RaiseOnUser.
     /// </summary>
     [DataField]
     public bool RaiseOnAction;

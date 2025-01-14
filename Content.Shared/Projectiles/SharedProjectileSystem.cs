@@ -117,8 +117,11 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    public void UnEmbed(EntityUid uid, EntityUid user, EmbeddableProjectileComponent component)
+    public void UnEmbed(EntityUid uid, EntityUid user, EmbeddableProjectileComponent? component)
     {
+        if (!Resolve(uid, ref component))
+            return;
+
         var xform = Transform(uid);
         TryComp<PhysicsComponent>(uid, out var physics);
         _physics.SetBodyType(uid, BodyType.Dynamic, body: physics, xform: xform);

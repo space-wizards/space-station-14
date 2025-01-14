@@ -10,7 +10,7 @@ namespace Content.Shared.ItemRecall;
 /// <summary>
 /// System for handling the ItemRecall ability for wizards.
 /// </summary>
-public abstract partial class SharedItemRecallSystem : EntitySystem
+public sealed partial class SharedItemRecallSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
@@ -84,14 +84,17 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
         if (!TryComp<RecallMarkerComponent>(item.Value, out var marker))
             return;
 
+        if (marker.MarkedByEntity == null)
+            return;
+
         if (TryComp<ItemRecallComponent>(marker.MarkedByAction, out var action))
         {
-            if(_net.IsServer) // This is the only way it worked, not even PopupClient
-                _popups.PopupEntity(Loc.GetString("item-recall-item-unmark", ("item", item.Value)), marker.MarkedByEntity, marker.MarkedByEntity, PopupType.MediumCaution);
+            if(_net.IsServer)
+                _popups.PopupEntity(Loc.GetString("item-recall-item-unmark", ("item", item.Value)), marker.MarkedByEntity.Value, marker.MarkedByEntity.Value, PopupType.MediumCaution);
 
             action.MarkedEntity = null;
-            UpdateActionAppearance((marker.MarkedByAction, action));
-            Dirty(marker.MarkedByAction, action);
+            UpdateActionAppearance((marker.MarkedByAction.Value, action));
+            Dirty(marker.MarkedByAction.Value, action);
         }
 
         RemCompDeferred<RecallMarkerComponent>(item.Value);
@@ -102,12 +105,15 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
         if (!TryComp<RecallMarkerComponent>(item, out var marker))
             return;
 
+        if (marker.MarkedByEntity == null)
+            return;
+
         if (TryComp<EmbeddableProjectileComponent>(item, out var projectile))
-            _proj.UnEmbed(item.Value, marker.MarkedByEntity, projectile);
+            _proj.UnEmbed(item.Value, marker.MarkedByEntity.Value, projectile);
 
-        _popups.PopupEntity(Loc.GetString("item-recall-item-summon", ("item", item.Value)), marker.MarkedByEntity, marker.MarkedByEntity);
+        _popups.PopupEntity(Loc.GetString("item-recall-item-summon", ("item", item.Value)), marker.MarkedByEntity.Value, marker.MarkedByEntity.Value);
 
-        _hands.TryForcePickupAnyHand(marker.MarkedByEntity, item.Value);
+        _hands.TryForcePickupAnyHand(marker.MarkedByEntity.Value, item.Value);
     }
 
     private void UpdateActionAppearance(Entity<ItemRecallComponent> action)
