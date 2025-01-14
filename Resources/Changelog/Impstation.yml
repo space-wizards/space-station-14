@@ -1,31 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Foreigner Trait
-    type: Add
-  - message: Language to all playable species when available
-    type: Add
-  - message: Dragons and MMIs now understand common
-    type: Tweak
-  - message: Cats no longer purr when talking
-    type: Tweak
-  - message: chat bubbles use message color
-    type: Tweak
-  - message: Language is no longer random
-    type: Tweak
-  - message: Fixed television not obfuscating
-    type: Fix
-  id: 425
-  time: '2024-10-29T22:55:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/581
-- author: DinnerCalzone
-  changes:
-  - message: Updated Hummingbird Station for further playtesting. Full changes can
-      be found in the Discord thread or on the GitHub PR.
-    type: Tweak
-  id: 426
-  time: '2024-10-29T22:56:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/573
 - author: Kandiyaki
   changes:
   - message: edited the name of inert subjuzine in order to reduce confusion
@@ -4511,3 +4484,23 @@
   id: 924
   time: '2025-01-14T10:32:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1347
+- author: Pinkbat5
+  changes:
+  - message: The prestige clown gear is now available in a few more job loadouts.
+    type: Tweak
+  id: 925
+  time: '2025-01-14T23:39:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1336
+- author: Kandiyaki
+  changes:
+  - message: heretic store listings will now show their associated knowledge level
+      beside them.
+    type: Add
+  - message: the ghoul overlay will now show up on non-humanoid entities.
+    type: Fix
+  - message: '"Knowledge Points" are now "KP" in the heretic store (things were getting
+      cluttered).'
+    type: Tweak
+  id: 926
+  time: '2025-01-14T23:39:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1364
