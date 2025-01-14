@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Changed
-    type: Tweak
-  id: 423
-  time: '2024-10-29T04:43:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/570
 - author: honeyed-lemons
   changes:
   - message: Language System with so many languages, including gray
@@ -4514,3 +4507,11 @@
   id: 922
   time: '2025-01-13T16:39:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1340
+- author: DinnerCalzone
+  changes:
+  - message: Reporter support has been added to Omega and Marathon. Psychologist support
+      has been added to Omega.
+    type: Add
+  id: 923
+  time: '2025-01-14T10:26:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1354
