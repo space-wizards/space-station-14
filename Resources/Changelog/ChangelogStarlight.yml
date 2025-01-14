@@ -2220,4 +2220,48 @@ Entries:
   id: 312
   time: '2025-01-13T13:23:55.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/233
+- author: Conflee
+  changes:
+  - message: OASIS - Fixed broken Docks.
+    type: Fix
+  id: 313
+  time: '2025-01-14T16:57:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/236
+- author: Conflee
+  changes:
+  - message: OASIS - Added redundant wiring to areas, and fixed a broken pipe in zoo.
+    type: Fix
+  id: 314
+  time: '2025-01-14T16:57:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/236
+- author: Conflee
+  changes:
+  - message: OASIS - Added Blue Shield Officer room between Janitor and Chapel, where
+      it is a 10 second walk from Bridge.
+    type: Add
+  id: 315
+  time: '2025-01-14T16:57:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/236
+- author: Conflee
+  changes:
+  - message: CORE - Fixed broken Docks.
+    type: Fix
+  id: 316
+  time: '2025-01-14T16:57:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/236
+- author: Conflee
+  changes:
+  - message: CORE - Added Blue Shield Officer room below Janitor, where it is a 20
+      second walk from Bridge.
+    type: Add
+  id: 317
+  time: '2025-01-14T16:57:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/236
+- author: Conflee
+  changes:
+  - message: CORE - Added needed job slots to Core.
+    type: Add
+  id: 318
+  time: '2025-01-14T16:57:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/236
 
