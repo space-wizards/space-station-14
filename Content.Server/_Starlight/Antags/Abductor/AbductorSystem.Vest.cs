@@ -2,6 +2,8 @@
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Starlight.Antags.Abductor;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Stealth.Components;
 using System;
 using Content.Shared.ActionBlocker;
 using System.Linq;
@@ -18,19 +20,54 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     {
         SubscribeLocalEvent<AbductorVestComponent, AfterInteractEvent>(OnVestInteract);
         SubscribeLocalEvent<AbductorVestComponent, ItemSwitchedEvent>(OnItemSwitch);
+        SubscribeLocalEvent<AbductorVestComponent, GotUnequippedEvent>(OnUnequipped);
+        SubscribeLocalEvent<AbductorVestComponent, GotEquippedEvent>(OnEquipped);
+    }
+   
+    private void OnEquipped(Entity<AbductorVestComponent> ent, ref GotEquippedEvent args)
+    {
+        if (args.Equipee != null && !HasComp<StealthComponent>(args.Equipee) && ent.Comp.CurrentState != "combat")
+        {
+            AddComp<StealthComponent>(args.Equipee);
+            AddComp<StealthOnMoveComponent>(args.Equipee);
+        }
+    }
+   
+    private void OnUnequipped(Entity<AbductorVestComponent> ent, ref GotUnequippedEvent args)
+    {
+        if (args.Equipee != null && HasComp<StealthComponent>(args.Equipee))
+        {
+            RemComp<StealthComponent>(args.Equipee);
+            RemComp<StealthOnMoveComponent>(args.Equipee);
+        }
     }
     
     private void OnItemSwitch(EntityUid uid, AbductorVestComponent component, ref ItemSwitchedEvent args)
     {
+        
+        component.CurrentState = args.State;
+        
         if (args.State == "combat")
         {
             if (TryComp<ClothingComponent>(uid, out var clothingComponent))
                 _clothing.SetEquippedPrefix(uid, "combat", clothingComponent);
+            
+            if (args.User != null && HasComp<StealthComponent>(args.User.Value))
+            {
+                RemComp<StealthComponent>(args.User.Value);
+                RemComp<StealthOnMoveComponent>(args.User.Value);
+            }
         }
         else
         {
             if (TryComp<ClothingComponent>(uid, out var clothingComponent))
                 _clothing.SetEquippedPrefix(uid, null, clothingComponent);
+            
+            if (args.User != null && !HasComp<StealthComponent>(args.User.Value))
+            {
+                AddComp<StealthComponent>(args.User.Value);
+                AddComp<StealthOnMoveComponent>(args.User.Value);
+            }
         }
     }
     

@@ -17,6 +17,8 @@ public sealed class AbductorConsoleBui : BoundUserInterface
     private AbductorConsoleWindow? _window;
     [ViewVariables]
     private bool armorDisabled = false;
+    [ViewVariables]
+    private bool armorLocked = false;
     public AbductorConsoleBui(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
 
@@ -63,6 +65,18 @@ public sealed class AbductorConsoleBui : BoundUserInterface
             _window.StealthModeButton.Disabled = true;
             _window.CombatModeButton.Disabled = false;
         };
+        
+        _window.LockArmorButton.OnPressed += _ =>
+        {
+            SendMessage(new AbductorLockBuiMsg());
+            
+            armorLocked = !armorLocked;
+            
+            if (!armorLocked)
+                _window.LockArmorButton.Text = Loc.GetString("abductors-ui-lock-armor");
+            else
+                _window.LockArmorButton.Text = Loc.GetString("abductors-ui-unlock-armor");
+        };
     }
 
     private void RefreshUI()
@@ -104,13 +118,10 @@ public sealed class AbductorConsoleBui : BoundUserInterface
             Close();
         };
         
-        // armor tab
-        _window.LockArmorButton.OnPressed += _ =>
-        {
-            SendMessage(new AbductorLockBuiMsg());
-        };
+        // armor tab     
+        armorLocked = state.ArmorLocked;
         
-        if (!state.ArmorLocked)
+        if (!armorLocked)
             _window.LockArmorButton.Text = Loc.GetString("abductors-ui-lock-armor");
         else
             _window.LockArmorButton.Text = Loc.GetString("abductors-ui-unlock-armor");

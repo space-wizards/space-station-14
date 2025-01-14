@@ -107,9 +107,11 @@ public sealed partial class AbductorsAbilitiesComponent : Component
     public EntityUid[] HiddenActions = [];
 }
 
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem)), AutoGenerateComponentState]
 public sealed partial class AbductorVestComponent : Component
 {
+    [DataField, AutoNetworkedField]
+    public string CurrentState = "stealth";
 }
 
 [RegisterComponent, Access(typeof(SharedAbductorSystem))]
