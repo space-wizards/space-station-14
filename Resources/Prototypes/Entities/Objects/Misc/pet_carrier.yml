@@ -66,6 +66,6 @@
     sprite: Objects/Storage/petcarrier.rsi
   - type: Construction
     graph: PetCarrier
-    node: petcarrier
+    node: petCarrier
     containers:
     - entity_storage
