@@ -42,6 +42,9 @@ public sealed class HolopadSystem : SharedHolopadSystem
     private float _updateTimer = 1.0f;
     private const float UpdateTime = 1.0f;
 
+    // Data does not need to be saved
+    private Dictionary<Entity<HolopadUserComponent>, List<EntityUid>> _trackedHolopadUsers = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -71,6 +74,10 @@ public sealed class HolopadSystem : SharedHolopadSystem
         SubscribeLocalEvent<HolopadComponent, ComponentShutdown>(OnHolopadShutdown);
         SubscribeLocalEvent<HolopadUserComponent, ComponentInit>(OnHolopadUserInit);
         SubscribeLocalEvent<HolopadUserComponent, ComponentShutdown>(OnHolopadUserShutdown);
+
+        // Equipment change events
+        SubscribeLocalEvent<HolopadUserComponent, EntInsertedIntoContainerMessage>(OnHolopadUserEquipped);
+        SubscribeLocalEvent<HolopadUserComponent, EntRemovedFromContainerMessage>(OnHolopadUserUnequipped);
 
         // Misc events
         SubscribeLocalEvent<HolopadUserComponent, EmoteEvent>(OnEmote);
@@ -264,8 +271,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
             GenerateHologram((args.Receiver, receivingHolopad));
 
         // Re-link the user to refresh the sprite data
-        if (source.Comp.User != null)
-            LinkHolopadToUser(source, source.Comp.User.Value);
+        LinkHolopadToUser(source, source.Comp.User);
     }
 
     private void OnHoloCallEnded(Entity<HolopadComponent> entity, ref TelephoneCallEndedEvent args)
@@ -313,16 +319,18 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private void OnExpandPvs(ref ExpandPvsEvent args)
     {
+        if (_trackedHolopadUsers.Count == 0)
+            return;
+
         if (args.Entities == null)
             args.Entities = new();
 
         // Add holopad users and their held/equipped items to PVS so that they can be rendered by remote holopads
-        var query = AllEntityQuery<HolopadUserComponent>();
-        while (query.MoveNext(out var ent, out var entHolopadUser))
+        foreach (var (holopadUser, inventoryItems) in _trackedHolopadUsers)
         {
-            args.Entities.Add(ent);
+            args.Entities.Add(holopadUser);
 
-            foreach (var item in _inventorySystem.GetHandOrInventoryEntities(ent))
+            foreach (var item in inventoryItems)
                 args.Entities.Add(item);
         }
     }
@@ -363,6 +371,20 @@ public sealed class HolopadSystem : SharedHolopadSystem
     {
         foreach (var linkedHolopad in entity.Comp.LinkedHolopads)
             UnlinkHolopadFromUser(linkedHolopad, entity);
+    }
+
+    #endregion
+
+    #region: Equipment change events
+
+    private void OnHolopadUserEquipped(Entity<HolopadUserComponent> entity, ref EntInsertedIntoContainerMessage args)
+    {
+        TrackHolopadUserAndSyncAppearance(entity);
+    }
+
+    private void OnHolopadUserUnequipped(Entity<HolopadUserComponent> entity, ref EntRemovedFromContainerMessage args)
+    {
+        TrackHolopadUserAndSyncAppearance(entity);
     }
 
     #endregion
@@ -538,10 +560,16 @@ public sealed class HolopadSystem : SharedHolopadSystem
         QueueDel(hologram);
     }
 
-    private void LinkHolopadToUser(Entity<HolopadComponent> entity, EntityUid user)
+    private void LinkHolopadToUser(Entity<HolopadComponent> entity, EntityUid? user)
     {
+        if (user == null)
+        {
+            UnlinkHolopadFromUser(entity, null);
+            return;
+        }
+
         if (!TryComp<HolopadUserComponent>(user, out var holopadUser))
-            holopadUser = AddComp<HolopadUserComponent>(user);
+            holopadUser = AddComp<HolopadUserComponent>(user.Value);
 
         if (user != entity.Comp.User?.Owner)
         {
@@ -550,11 +578,11 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
             // Assigns the new user in their place
             holopadUser.LinkedHolopads.Add(entity);
-            entity.Comp.User = (user, holopadUser);
+            entity.Comp.User = (user.Value, holopadUser);
         }
 
-        foreach (var receiver in GetLinkedHolopads(entity))
-            SyncHolopadHologramAppearanceWithTarget(receiver, (user, holopadUser));
+        // Track the new user and their inventory items for PVS expansion
+        TrackHolopadUserAndSyncAppearance(entity.Comp.User);
     }
 
     private void SyncHolopadHologramAppearanceWithTarget(Entity<HolopadComponent> entity, Entity<HolopadUserComponent>? user)
@@ -572,9 +600,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private void UnlinkHolopadFromUser(Entity<HolopadComponent> entity, Entity<HolopadUserComponent>? user)
     {
-        if (user == null)
-            return;
-
         entity.Comp.User = null;
 
         foreach (var linkedHolopad in GetLinkedHolopads(entity))
@@ -586,7 +611,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
             }
         }
 
-        if (!HasComp<HolopadUserComponent>(user))
+        if (user == null)
             return;
 
         user.Value.Comp.LinkedHolopads.Remove(entity);
@@ -594,6 +619,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (!user.Value.Comp.LinkedHolopads.Any() &&
             user.Value.Comp.LifeStage < ComponentLifeStage.Stopping)
         {
+            _trackedHolopadUsers.Remove(user.Value);
             RemComp<HolopadUserComponent>(user.Value);
         }
     }
@@ -751,5 +777,25 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         if (TryComp<AmbientSoundComponent>(entity, out var ambientSound))
             _ambientSoundSystem.SetAmbience(entity, isEnabled, ambientSound);
+    }
+
+    private void TrackHolopadUserAndSyncAppearance(Entity<HolopadUserComponent>? entity)
+    {
+        if (entity == null)
+            return;
+
+        var inventoryItems = new List<EntityUid>();
+
+        foreach (var item in _inventorySystem.GetHandOrInventoryEntities(entity.Value.Owner))
+            inventoryItems.Add(item);
+
+        _trackedHolopadUsers[entity.Value] = inventoryItems;
+
+        // Sync linked holopad hologram appearance with the user
+        foreach (var linkedHolopad in entity.Value.Comp.LinkedHolopads)
+        {
+            foreach (var receiver in GetLinkedHolopads(linkedHolopad))
+                SyncHolopadHologramAppearanceWithTarget(receiver, entity);
+        }
     }
 }
