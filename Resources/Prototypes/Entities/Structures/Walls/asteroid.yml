@@ -275,6 +275,9 @@
           state: rock_asteroid_west
         - state: rock_uranium
           map: [ "enum.MiningScannerVisualLayers.Overlay" ]
+    - type: RadiationSource
+      intensity: 2.3
+      slope: 0.1
 
 - type: entity
   id: AsteroidRockUraniumCrab
@@ -284,6 +287,9 @@
     - type: OreVein
       oreChance: 1.0
       currentOre: OreUraniumCrab
+    - type: RadiationSource
+      intensity: 2.4
+      slope: 0.1
 
 - type: entity
   id: AsteroidRockBananium
@@ -564,6 +570,9 @@
           state: ironrock_west
         - state: rock_uranium
           map: [ "enum.MiningScannerVisualLayers.Overlay" ]
+    - type: RadiationSource
+      intensity: 2.3
+      slope: 0.1
 
 - type: entity
   id: IronRockBananium
@@ -937,6 +946,9 @@
         state: rock_west
       - state: rock_uranium
         map: [ "enum.MiningScannerVisualLayers.Overlay" ]
+  - type: RadiationSource
+    intensity: 2.3
+    slope: 0.1
 
 
 - type: entity
@@ -1234,6 +1246,9 @@
           state: rock_wall_west
         - state: rock_uranium
           map: [ "enum.MiningScannerVisualLayers.Overlay" ]
+    - type: RadiationSource
+      intensity: 2.3
+      slope: 0.1
 
 
 - type: entity
@@ -1510,6 +1525,9 @@
           state: rock_snow_west
         - state: rock_uranium
           map: [ "enum.MiningScannerVisualLayers.Overlay" ]
+    - type: RadiationSource
+      intensity: 2.3
+      slope: 0.1
 
 
 - type: entity
@@ -1786,6 +1804,9 @@
           state: rock_sand_west
         - state: rock_uranium
           map: [ "enum.MiningScannerVisualLayers.Overlay" ]
+    - type: RadiationSource
+      intensity: 2.3
+      slope: 0.1
 
 - type: entity
   id: WallRockSandBananium
@@ -2061,6 +2082,9 @@
           state: rock_chromite_west
         - state: rock_uranium
           map: [ "enum.MiningScannerVisualLayers.Overlay" ]
+    - type: RadiationSource
+      intensity: 2.3
+      slope: 0.1
 
 
 - type: entity
@@ -2337,6 +2361,9 @@
           state: rock_andesite_west
         - state: rock_uranium
           map: [ "enum.MiningScannerVisualLayers.Overlay" ]
+    - type: RadiationSource
+      intensity: 2.3
+      slope: 0.1
 
 
 - type: entity

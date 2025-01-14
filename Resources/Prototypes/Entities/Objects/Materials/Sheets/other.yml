@@ -234,6 +234,9 @@
         - ReagentId: Radium
           Quantity: 2
         canReact: false
+  - type: RadiationSource
+    intensity: 0.1
+    slope: 3
 
 - type: entity
   parent: SheetUranium
