@@ -9,9 +9,13 @@ using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Radiation.Components;
+using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Speech;
+using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -473,10 +477,12 @@ public sealed partial class SupermatterSystem
         if (_timing.CurTime < sm.DelamEndTime)
             return;
 
-        var mapFilter = Filter.BroadcastMap(Transform(uid).MapID);
+        var mapId = Transform(uid).MapID;
+        var mapFilter = Filter.BroadcastMap(mapId);
         var message = Loc.GetString("supermatter-delam-player");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
 
+        // Send the reality distortion message to every player on the map
         _chatManager.ChatMessageToManyFiltered(mapFilter,
             ChatChannel.Server,
             message,
@@ -486,7 +492,33 @@ public sealed partial class SupermatterSystem
             true,
             Color.Red);
 
+        // Play the reality distortion sound for every player on the map
         _audio.PlayGlobal(sm.DistortSound, mapFilter, true);
+
+        // Add hallucinations to every player on the map
+        // TODO: change this from paracusia to actual hallucinations whenever those are real
+        var mobLookup = new HashSet<Entity<MobStateComponent>>();
+        _entityLookup.GetEntitiesOnMap<MobStateComponent>(mapId, mobLookup);
+
+        // These values match the paracusia disability, since we can't double up on paracusia and I don't want to overwrite the regular one
+        var paracusiaSounds = new SoundCollectionSpecifier("Paracusia");
+        var paracusiaMinTime = 0.1f;
+        var paracusiaMaxTime = 300f;
+        var paracusiaDistance = 7f;
+
+        foreach (var mob in mobLookup)
+        {
+            // Skip over silicons
+            if (HasComp<SiliconLawBoundComponent>(uid))
+                continue;
+
+            if (!EnsureComp<ParacusiaComponent>(mob, out var paracusia))
+            {
+                _paracusia.SetSounds(mob, paracusiaSounds, paracusia);
+                _paracusia.SetTime(mob, paracusiaMinTime, paracusiaMaxTime, paracusia);
+                _paracusia.SetDistance(mob, paracusiaDistance, paracusia);
+            }
+        }
 
         switch (sm.PreferredDelamType)
         {

@@ -8,6 +8,7 @@ using Content.Server.Kitchen.Components;
 using Content.Server.Lightning;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
+using Content.Server.Traits.Assorted;
 using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Content.Shared._EinsteinEngines.Supermatter.Monitor;
 using Content.Shared.Atmos;
@@ -44,6 +45,8 @@ public sealed partial class SupermatterSystem : EntitySystem
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly ParacusiaSystem _paracusia = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
