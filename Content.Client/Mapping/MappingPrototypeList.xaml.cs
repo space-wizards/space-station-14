@@ -86,6 +86,7 @@ public sealed partial class MappingPrototypeList : Control
 
         var button = new MappingSpawnButton { Prototype = mapping };
         button.Label.Text = mapping.Name;
+        button.Button.ToolTip = button.Label.Text;
 
         if (_insertTextures.Count > 0)
         {

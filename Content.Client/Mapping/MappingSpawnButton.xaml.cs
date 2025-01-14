@@ -40,7 +40,6 @@ public sealed partial class MappingSpawnButton : Control
 
     public void Gallery()
     {
-        Button.ToolTip = Label.Text;
         Label.Visible = false;
         Button.AddStyleClass("ButtonSquare");
         SetWidth = 48;
