@@ -12,10 +12,10 @@
   - type: Thirst
   - type: SnailSprint
     action: ActionSlime
-    thirstCost: 10
-    sprintLength: 5
+    thirstCost: 100
+    sprintLength: 2
     speedBoost: 1.5
-    reagentProduced: ucin
+    reagentProduced: Mucin
   - type: Icon
     sprite: _Impstation/Mobs/Species/Snail/parts.rsi
     state: full

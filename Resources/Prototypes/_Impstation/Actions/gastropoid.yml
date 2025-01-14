@@ -6,4 +6,4 @@
   - type: InstantAction
     icon: Interface/Actions/slime.png
     event: !type:SnailSprintActionEvent
-    useDelay: 10
+    useDelay: 100

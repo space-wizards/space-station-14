@@ -7,8 +7,9 @@
   color: "#b1d8c1"
   recognizable: true
   physicalDesc: reagent-physical-desc-viscous
-  slippery: false
-  viscosity: 0.25
+  slippery: true
+  impEvaporates: true
+  impEvaporationAmount: 1.0
   metabolisms:
     Food:
       effects:
@@ -21,12 +22,9 @@
   tileReactions:
     - !type:EnsureTileReaction
       components:
-        - type: Propulsion
-          walkSpeedModifier: 2.75
-          sprintSpeedModifier: 2.75
-          whitelist:
-            tags:
-              - Gastropod
+        - type: ImpEvaporation
+          solution: puddle
+
 
 - type: reagent
   parent: Blood

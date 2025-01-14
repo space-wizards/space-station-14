@@ -3,6 +3,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Impstation.SnailSprint;
@@ -71,5 +72,14 @@ public sealed partial class SnailSprintComponent : Component
     [DataField("reagentQuantity"), AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public float ReagentQuantity = 15f;
 
+    /// <summary>
+    /// Whether or not the action has been activated, and has not ended yet.
+    /// </summary>
     public bool Active = false;
+
+    /// <summary>
+    /// The last tile the entity has stepped on.
+    /// </summary>
+    public TileRef LastTile = TileRef.Zero;
+
 }

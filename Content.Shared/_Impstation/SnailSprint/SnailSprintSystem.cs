@@ -9,27 +9,30 @@ using Robust.Shared.Network;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Fluids;
 using Content.Shared.Movement.Components;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Map;
+using Content.Shared.Coordinates;
+using Linguini.Syntax.Ast;
+using Microsoft.Extensions.ObjectPool;
+using Content.Shared.GameTicking;
 
 namespace Content.Shared._Impstation.SnailSprint;
-// TODO:
-// - check if you have enough thirst X
-// - figure out a way to spill only upon moving to a new tile. spill every x miliseconds otherwise
-// - actually modify the speed of the ent
-// - wait for the duration specified in the comp X
-// - end the effects, then remove the thirst cost
 
 /// <summary>
 /// Allows an entity to use thirst for a speed boost. Also allows that speed boost to produce a fluid.
 /// </summary>
-public abstract partial class SharedSnailSprintSystem : EntitySystem
+public sealed partial class SharedSnailSprintSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly ThirstSystem _thirstSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPuddleSystem _puddleSystem = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -79,14 +82,6 @@ public abstract partial class SharedSnailSprintSystem : EntitySystem
         // refresh movementSpeedModifiers. this will run OnRefreshMovespeed.
         _movementSpeedModifier.RefreshMovementSpeedModifiers(ent.Owner);
 
-        // create a new solution, fill it with the specified amount of reagent, and spill it on the floor.
-        if (!_netManager.IsClient && ent.Comp.ReagentProduced != null) // verifying that you are the server is required for spawning entities because the component is in shared.
-        {
-            var solution = new Solution();
-            solution.AddReagent(ent.Comp.ReagentProduced!, ent.Comp.ReagentQuantity);
-            _puddleSystem.TrySpillAt(Transform(ent.Owner).Coordinates, solution, out _);
-        }
-
         // create the doafter and declare its arguments
         var doAfter = new DoAfterArgs(EntityManager, ent.Owner, ent.Comp.SprintLength, new SnailSprintDoAfterEvent(), ent.Owner)
         { // this is inherited from Sericulture Component. This should definitely be in YML, but i don't know how to do that
@@ -98,6 +93,52 @@ public abstract partial class SharedSnailSprintSystem : EntitySystem
 
         // run the doafter that will end the effects after comp.SprintLength time has passed.
         _doAfterSystem.TryStartDoAfter(doAfter);
+    }
+
+    /// <summary>
+    /// Runs every frame. In this case, ensures that mucin is only spilled on new tiles, and not repeatedly spilled on the same tile.
+    /// </summary>
+    /// <param name="frameTime"></param>
+    public override void Update(float frameTime)
+    {
+        // create an EntityQueryEnumerator, which loops through every entity with a given component
+        var enumerator = EntityQueryEnumerator<SnailSprintComponent>();
+
+        // while the entity being queried is this one, do our tile logic
+        while (enumerator.MoveNext(out var uid, out var comp))
+        {
+            if (!comp.Active)
+                continue; // skip the entity if the action is not active
+
+            var xform = Transform(uid);
+            if (xform.GridUid == null)
+                continue; // skip the entity if the entity is not on a grid
+
+            if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
+                continue; // another way to skip the entity if the entity is not on a grid
+
+            // if the entity is on a grid, and the action is active,
+            // if the server is the one running this, and there is a reagent defined,
+            if (!_netManager.IsClient && comp.ReagentProduced != null) // verifying that the server is running this is necessary because this is in Content.Shared
+            {
+                // get the current tile that the entity is on,
+                var tile = _mapSystem.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
+
+                // if it's not invalid and different from the last tile,
+                if (tile != TileRef.Zero && tile != comp.LastTile)
+                {
+                    // create a new Solution object
+                    var solution = new Solution();
+                    // add the specified amount of the specified reagent to it
+                    solution.AddReagent(comp.ReagentProduced!, comp.ReagentQuantity);
+                    // and spill it all over da floor.
+                    _puddleSystem.TrySpillAt(Transform(uid).Coordinates, solution, out _);
+                }
+
+                // finally, set the last tile to the current tile.
+                comp.LastTile = tile;
+            }
+        }
     }
 
     /// <summary>
@@ -116,7 +157,7 @@ public abstract partial class SharedSnailSprintSystem : EntitySystem
         // then raise that event
         _movementSpeedModifier.RefreshMovementSpeedModifiers(ent);
 
-        // remove the thirst cost
+        // remove the thirst cost from total thirst
         if (TryComp<ThirstComponent>(ent.Owner, out var thirstComp))
         {
             _thirstSystem.ModifyThirst(ent.Owner, thirstComp, -ent.Comp.ThirstCost);
