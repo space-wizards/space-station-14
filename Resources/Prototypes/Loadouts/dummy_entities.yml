@@ -33,7 +33,7 @@
 - type: entity
   id: LoadoutDummyAiIconBliss
   categories: [ HideSpawnMenu ]
-  name: bliss
+  name: simpler times
   description:
   components:
   - type: Sprite
@@ -43,7 +43,7 @@
 - type: entity
   id: LoadoutDummyAiIconClown
   categories: [ HideSpawnMenu ]
-  name: clowning around
+  name: clownin' around
   description:
   components:
   - type: Sprite
@@ -53,7 +53,7 @@
 - type: entity
   id: LoadoutDummyAiIconDorf
   categories: [ HideSpawnMenu ]
-  name: the dorf
+  name: adventure awaits
   description:
   components:
   - type: Sprite
@@ -113,3 +113,21 @@
   - type: Sprite
     sprite: Mobs/Silicon/holograms.rsi
     state: ai_face
+    
+- type: entity
+  id: LoadoutDummyAiCat
+  parent: LoadoutDummyAiBase
+  name: cat form
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/holograms.rsi
+    state: ai_cat
+
+- type: entity
+  id: LoadoutDummyAiDog
+  parent: LoadoutDummyAiBase
+  name: dog form
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/holograms.rsi
+    state: ai_dog

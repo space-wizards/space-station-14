@@ -1302,6 +1302,8 @@
   - StationAiHologramFemale
   - StationAiHologramMale
   - StationAiHologramFace
+  - StationAiHologramCat
+  - StationAiHologramDog
 
 # Wildcards
 - type: loadoutGroup

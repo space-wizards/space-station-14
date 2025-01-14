@@ -87,3 +87,19 @@
     StationAiHolograms:
       sprite: Mobs/Silicon/holograms.rsi
       state: ai_face
+
+- type: loadout
+  id: StationAiHologramCat
+  dummyEntity: LoadoutDummyAiCat
+  spriteLayerData:
+    StationAiHolograms:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_cat
+
+- type: loadout
+  id: StationAiHologramDog
+  dummyEntity: LoadoutDummyAiDog
+  spriteLayerData:
+    StationAiHolograms:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_dog
