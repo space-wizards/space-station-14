@@ -66108,8 +66108,6 @@ entities:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
-          ents:
-          - invalid
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -127580,7 +127578,7 @@ entities:
         ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 
-        [bold]Full Name:[/bold] 
+        [bold]Full Name:[/bold]
 
         [bold]Current Job:[/bold]
 
@@ -165725,7 +165723,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -163169.38
+      secondsUntilStateChange: -163219.88
       state: Opening
     - type: Airlock
       autoClose: False
