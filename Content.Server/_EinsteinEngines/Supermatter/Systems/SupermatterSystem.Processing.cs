@@ -539,7 +539,7 @@ public sealed partial class SupermatterSystem
                 speech.AudioParams = AudioParams.Default.AddVolume(10f);
 
             if (currentStatus == SupermatterStatusType.Delaminating)
-                speech.SoundCooldownTime = 6.8f; // approximate length of bloblarm.ogg
+                speech.SoundCooldownTime = 5.0f; // to prevent repeat sounds during the 5.. 4.. 3.. 2.. 1.. countdown
             else
                 speech.SoundCooldownTime = 0.0f;
 

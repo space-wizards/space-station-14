@@ -24,7 +24,7 @@
     canArc: true
     lightningPrototype: SupermatterLightning
   - type: Beam
-    sound: /Audio/_EinsteinEngines/Supermatter/lightning.ogg
+    sound: /Audio/_EinsteinEngines/Supermatter/emitter2.ogg
     allowSpriteOverwrite: false
   - type: TimedDespawn
     lifetime: 1
