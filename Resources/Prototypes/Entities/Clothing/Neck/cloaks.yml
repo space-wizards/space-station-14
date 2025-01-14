@@ -280,3 +280,11 @@
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/pan.rsi
 
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakPedo
+  name: teacher's cloak
+  description: This cloak belonged to a very strict teacher.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/pedo.rsi

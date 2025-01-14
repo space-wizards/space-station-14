@@ -143,3 +143,14 @@
     state: goldautism
   - type: Clothing
     equippedPrefix: goldautism
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckPedoPin
+  name: pedophile pin
+  description: Be pedo do crime.
+  components:
+  - type: Sprite
+    state: pedo
+  - type: Clothing
+    equippedPrefix: pedo

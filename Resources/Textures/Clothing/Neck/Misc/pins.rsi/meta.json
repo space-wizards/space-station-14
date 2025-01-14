@@ -90,6 +90,13 @@
         {
             "name": "trans-equipped-NECK",
             "directions": 4
+        },
+        {
+            "name": "pedo"
+        },
+        {
+            "name": "pedo-equipped-NECK",
+            "directions": 4
         }
     ]
 }
