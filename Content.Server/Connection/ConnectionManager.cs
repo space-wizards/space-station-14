@@ -96,7 +96,14 @@ namespace Content.Server.Connection
 
         public async void Update()
         {
-            await _ipintel.Update();
+            try
+            {
+                await _ipintel.Update();
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error("Update function failed:" + e);
+            }
         }
 
         /*
