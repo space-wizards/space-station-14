@@ -144,7 +144,7 @@
     - trayScanner
     - AccessConfiguratorUniversal
     - Multitool
-    # Harmony items below this point
+    # Begin harmony specific admin tools
     - Omnitool
     - WelderExperimental
     - HolofanProjector
@@ -155,6 +155,7 @@
     - BluespaceBeaker
     - SyringeBluespace
     - RubberStampCentcom
+    # End harmony specific admin tools
 
 #Gladiator with spear
 - type: startingGear
