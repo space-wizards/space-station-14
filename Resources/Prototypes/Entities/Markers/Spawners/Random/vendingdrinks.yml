@@ -9,17 +9,39 @@
       - state: red
       - sprite: Structures/Machines/VendingMachines/random.rsi
         state: drink
-  - type: RandomSpawner
-    prototypes:
-      - VendingMachineCoffee
-      - VendingMachineCola
-      - VendingMachineColaRed
-      - VendingMachineColaBlack
-      - VendingMachineSovietSoda
-      - VendingMachineShamblersJuice
-      - VendingMachinePwrGame
-      - VendingMachineDrGibb
-      - VendingMachineSoda
-      - VendingMachineStarkist
-      - VendingMachineSpaceUp
-    chance: 1
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: SodaVendorsTable
+      prob: 0.99
+
+- type: entityTable
+  id: SodaVendorsTable
+  table: !type:GroupSelector
+    children:
+    #Specialist drink vendors
+    - !type:GroupSelector
+      weight: 15
+      children:
+      - id: VendingMachineCoffee
+      - id: VendingMachineSovietSoda
+      - id: VendingMachineSoda
+    #Generic Robust soda vendors
+    - !type:GroupSelector
+      weight: 15
+      children:
+      - id: VendingMachineCola
+      - id: VendingMachineColaBlack
+    #Space cola "family" of vendors
+    - !type:GroupSelector
+      weight: 35
+      children:
+      - id: VendingMachineColaRed
+      - id: VendingMachineShamblersJuice
+      - id: VendingMachinePwrGame
+    #Dr. Gibb "family" of vendors
+    - !type:GroupSelector
+      weight: 35
+      children:
+      - id: VendingMachineDrGibb
+      - id: VendingMachineStarkist
+      - id: VendingMachineSpaceUp
