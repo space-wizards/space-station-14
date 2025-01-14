@@ -11,8 +11,6 @@ namespace Content.Server.Silicons.Borgs;
 public sealed partial class BorgSystem
 {
 
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
-
     public void InitializeMMI()
     {
         SubscribeLocalEvent<MMIComponent, ComponentInit>(OnMMIInit);

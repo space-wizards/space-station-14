@@ -54,6 +54,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
 
 
     [ValidatePrototypeId<JobPrototype>]
