@@ -10,8 +10,7 @@
   - type: Mail
   - type: AccessReader
   - type: Sprite
-    scale: 0.7, 0.7 # Frontier
-    sprite: _Nyanotrasen/Objects/Specific/Mail/mail.rsi
+    sprite: _Impstation/Objects/Specific/Mail/mail.rsi
     layers:
     - state: icon
       map: ["enum.MailVisualLayers.Icon"]
@@ -21,8 +20,7 @@
       visible: false
     - map: ["enum.MailVisualLayers.JobStamp"]
       sprite: Interface/Misc/job_icons.rsi
-      scale: 0.8, 0.8 # Frontier 0.5<0.8
-      offset: 0.225, 0.165 # Frontier (0.275, 0.2)<(0.225, 0.165)
+      offset: 0.190, 0.09 # Frontier (0.275, 0.2)<(0.225, 0.165)
     - state: locked
       map: ["enum.MailVisualLayers.Lock"]
     - state: priority

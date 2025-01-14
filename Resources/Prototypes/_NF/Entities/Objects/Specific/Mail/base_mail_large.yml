@@ -9,7 +9,7 @@
     size: Ginormous
   - type: Sprite
     scale: 0.8, 0.8
-    sprite: _NF/Objects/Specific/Mail/mail_large.rsi
+    sprite: _Impstation/Objects/Specific/Mail/mail_large.rsi
     layers:
     - state: icon
       map: ["enum.MailVisualLayers.Icon"]
@@ -18,7 +18,7 @@
       visible: false
     - map: ["enum.MailVisualLayers.JobStamp"]
       scale: 0.8, 0.8
-      offset: 0.235, -0.01
+      offset: 0.235, -0.08
     - state: locked
       map: ["enum.MailVisualLayers.Lock"]
     - state: priority

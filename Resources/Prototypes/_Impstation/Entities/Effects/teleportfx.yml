@@ -12,3 +12,20 @@
       shader: unshaded
       netsync: false
       drawdepth: Effects
+  - type: PointLight
+    color: "#FF9719"
+    radius: 1.5
+    energy: 2.5
+    castShadows: false
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 0.5
+      maxDuration: 0.5
+      startValue: 0.1
+      endValue: 2
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true
