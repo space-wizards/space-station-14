@@ -2,11 +2,13 @@
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client._Starlight.Antags.Abductor"
     xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     MinSize="400 400">
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 10">
             <Button Name="TeleportTabButton" Access="Public" Text="{Loc 'abductors-ui-teleport'}" HorizontalExpand="True" StyleClasses="OpenBoth" />
             <Button Name="ExperimentTabButton" Access="Public" Text="{Loc 'abductors-ui-experiment'}" HorizontalExpand="True" StyleClasses="OpenBoth" />
+            <Button Name="ArmorControlTabButton" Access="Public" Text="{Loc 'abductors-ui-armor-control'}" HorizontalExpand="True" StyleClasses="OpenBoth" />
         </BoxContainer>
         <cc:HSeparator Color="#A04B81" />
         <ScrollContainer VScrollEnabled="True" HorizontalExpand="True" VerticalExpand="True">
@@ -21,6 +23,20 @@
                 <RichTextLabel Name="VictimLabel" Access="Public"/>
                 <Button Name="CompleteExperimentButton" Access="Public" Text="{Loc 'abductors-ui-complete-experiment'}" HorizontalExpand="True" StyleClasses="OpenBoth" />
             </BoxContainer>
+            <BoxContainer Name="ArmorControlTab" Access="Public" Orientation="Vertical" Visible="False">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 10">
+                    <Button Name="CombatModeButton" Access="Public" Text="{Loc 'abductors-ui-combat-mode'}" HorizontalExpand="True" StyleClasses="OpenBoth" />
+                    <Button Name="StealthModeButton" Access="Public" Text="{Loc 'abductors-ui-stealth-mode'}" HorizontalExpand="True" StyleClasses="OpenBoth" />
+                </BoxContainer>
+                <Button Name="LockArmorButton" Access="Public" Text="{Loc 'abductors-ui-lock-armor'}" HorizontalExpand="True" StyleClasses="OpenBoth" Margin="0 10 0 0" />
+            </BoxContainer>
+            <PanelContainer Name="DisabledPanel" Access="Public" HorizontalExpand="True"
+                            VerticalExpand="True" Visible="False">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#000000BF" />
+                </PanelContainer.PanelOverride>
+                <RichTextLabel Name="DisabledLabel" Access="Public" HorizontalAlignment="Center" />
+            </PanelContainer>
         </ScrollContainer>
     </BoxContainer>
 </controls:AbductorConsoleWindow>

@@ -27,6 +27,9 @@ public sealed partial class AbductorConsoleComponent : Component
 
     [DataField, AutoNetworkedField]
     public NetEntity? Experimentator;
+    
+    [DataField, AutoNetworkedField]
+    public NetEntity? Armor;
 }
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem))]
 public sealed partial class AbductorAlienPadComponent : Component
@@ -102,6 +105,11 @@ public sealed partial class AbductorsAbilitiesComponent : Component
 
     [DataField]
     public EntityUid[] HiddenActions = [];
+}
+
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem))]
+public sealed partial class AbductorVestComponent : Component
+{
 }
 
 [RegisterComponent, Access(typeof(SharedAbductorSystem))]

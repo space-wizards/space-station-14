@@ -62,6 +62,9 @@ public abstract class SharedItemSwitchSystem : EntitySystem
     {
         if (args.Handled || !ent.Comp.OnUse || ent.Comp.States.Count == 0) return;
         args.Handled = true;
+        
+        if (ent.Comp.States.TryGetValue(Next(ent), out var state) && state.Hiden)
+            return;
 
         Switch((ent, ent.Comp), Next(ent), args.User, predicted: ent.Comp.Predictable);
     }
@@ -71,15 +74,23 @@ public abstract class SharedItemSwitchSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || !ent.Comp.OnActivate || ent.Comp.States.Count == 0) return;
 
         var user = args.User;
-        args.ExtraCategories.Add(VerbCategory.Switch);
+        int addedVerbs = 0;
 
         foreach (var state in ent.Comp.States)
+        {
+            if (state.Value.Hiden)
+                continue;
             args.Verbs.Add(new ActivationVerb()
             {
                 Text = Loc.TryGetString(state.Value.Verb, out var title) ? title : state.Value.Verb,
                 Category = VerbCategory.Switch,
                 Act = () => Switch((ent.Owner, ent.Comp), state.Key, user, ent.Comp.Predictable)
             });
+            addedVerbs++;
+        }
+        
+        if (addedVerbs > 0)
+            args.ExtraCategories.Add(VerbCategory.Switch);
     }
 
     private void OnActivate(Entity<ItemSwitchComponent> ent, ref ActivateInWorldEvent args)
@@ -88,6 +99,10 @@ public abstract class SharedItemSwitchSystem : EntitySystem
             return;
 
         args.Handled = true;
+        
+        if (ent.Comp.States.TryGetValue(Next(ent), out var state) && state.Hiden)
+            return;
+        
         Switch((ent.Owner, ent.Comp), Next(ent), args.User, predicted: ent.Comp.Predictable);
     }
 

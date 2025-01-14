@@ -1,11 +1,29 @@
+# Teleport tab
+
 abductors-ui-beacons = Beacons
 abductors-ui-teleport = Teleport
 abductors-ui-attract = Attract
 
+abductors-ui-gizmo-transferred = Target information transferred
+
+# Experiment tab
+
 abductors-ui-experiment = Experiment
 abductors-ui-complete-experiment = Complete the experiment
 
-abductors-ui-gizmo-transferred = Target information transferred
+# Armor tab
+
+abductors-ui-armor-control = Armor Control
+
+abductors-ui-combat-mode = Combat Mode
+abductors-ui-stealth-mode = Stealth Mode
+
+abductors-ui-lock-armor = Lock Armor
+abductors-ui-unlock-armor = Unlock Armor
+
+abductors-ui-vest-linked = Vest linked
+
+# Ghost role, objectives, etc.
 
 abductors-ghost-role-name = Lone Abductor
 abductors-ghost-role-desc = Kidnap people, stuff them with organs of dubious origin
