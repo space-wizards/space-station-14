@@ -53,6 +53,7 @@
   - SurveillanceCameraMonitorCircuitboard
   - SurveillanceWirelessCameraMonitorCircuitboard
   - TelecomServerCircuitboard
+  - HolopadMachineCircuitboard
 
 - type: technology
   id: AdvancedEntertainment
@@ -66,8 +67,6 @@
   recipeUnlocks:
     - ComputerTelevisionCircuitboard
     - SynthesizerInstrument
-    - BorgModuleMusique
-    - BorgModuleClowning
     - DawInstrumentMachineCircuitboard
     - MassMediaCircuitboard
     - JukeboxCircuitBoard
@@ -82,7 +81,6 @@
   tier: 1
   cost: 5000
   recipeUnlocks:
-  - BorgModuleLightReplacer
   - BorgModuleAdvancedCleaning
 
 - type: technology

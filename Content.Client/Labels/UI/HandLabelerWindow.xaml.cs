@@ -21,7 +21,7 @@ namespace Content.Client.Labels.UI
         {
             RobustXamlLoader.Load(this);
 
-            LabelLineEdit.OnTextEntered += e =>
+            LabelLineEdit.OnTextChanged += e =>
             {
                 _label = e.Text;
                 OnLabelChanged?.Invoke(_label);
@@ -33,6 +33,10 @@ namespace Content.Client.Labels.UI
                 _focused = false;
                 LabelLineEdit.Text = _label;
             };
+
+            // Give the editor keybard focus, since that's the only
+            // thing the user will want to be doing with this UI
+            LabelLineEdit.GrabKeyboardFocus();
         }
 
         public void SetCurrentLabel(string label)
@@ -43,6 +47,11 @@ namespace Content.Client.Labels.UI
             _label = label;
             if (!_focused)
                 LabelLineEdit.Text = label;
+        }
+
+        public void SetMaxLabelLength(int maxLength)
+        {
+            LabelLineEdit.IsValid = s => s.Length <= maxLength;
         }
     }
 }

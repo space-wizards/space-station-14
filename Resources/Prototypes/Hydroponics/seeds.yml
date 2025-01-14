@@ -7,6 +7,8 @@
   packetPrototype: WheatSeeds
   productPrototypes:
     - WheatBushel
+  mutationPrototypes:
+    - meatwheat
   lifespan: 25
   maturation: 6
   production: 3
@@ -20,6 +22,32 @@
       Max: 20
       PotencyDivisor: 20
     Flour:
+      Min: 5
+      Max: 20
+      PotencyDivisor: 20
+
+- type: seed
+  id: meatwheat
+  name: seeds-meatwheat-name
+  noun: seeds-noun-seeds
+  displayName: seeds-meatwheat-display-name
+  plantRsi: Objects/Specific/Hydroponics/meatwheat.rsi
+  packetPrototype: MeatwheatSeeds
+  productPrototypes:
+    - MeatwheatBushel
+  lifespan: 25
+  maturation: 6
+  production: 3
+  yield: 3
+  potency: 5
+  idealLight: 8
+  nutrientConsumption: 0.40
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 20
+    UncookedAnimalProteins:
       Min: 5
       Max: 20
       PotencyDivisor: 20
@@ -145,6 +173,8 @@
   packetPrototype: LaughinPeaSeeds
   productPrototypes:
     - FoodLaughinPeaPod
+  mutationPrototypes:
+    - worldPea
   lifespan: 25
   growthStages: 3
   maturation: 7
@@ -180,6 +210,8 @@
     - FoodLemon
   mutationPrototypes:
     - lemoon
+    - lime
+    - orange
   harvestRepeat: Repeat
   lifespan: 55
   maturation: 6
@@ -232,6 +264,9 @@
   packetPrototype: LimeSeeds
   productPrototypes:
     - FoodLime
+  mutationPrototypes:
+    - orange
+    - lemon
   harvestRepeat: Repeat
   lifespan: 55
   maturation: 6
@@ -258,6 +293,10 @@
   packetPrototype: OrangeSeeds
   productPrototypes:
     - FoodOrange
+  mutationPrototypes:
+    - extradimensionalOrange
+    - lemon
+    - lime
   harvestRepeat: Repeat
   lifespan: 55
   maturation: 6
@@ -266,6 +305,36 @@
   potency: 10
   idealLight: 8
   chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: extradimensionalOrange
+  name: seeds-extradimensionalorange-name
+  noun: seeds-noun-seeds
+  displayName: seeds-extradimensionalorange-display-name
+  plantRsi: Objects/Specific/Hydroponics/extradimensional_orange.rsi
+  packetPrototype: ExtradimensionalOrangeSeeds
+  productPrototypes:
+    - FoodExtradimensionalOrange
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 10
+  idealLight: 8
+  chemicals:
+    Haloperidol:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
     Nutriment:
       Min: 1
       Max: 5
@@ -719,7 +788,7 @@
     DoctorsDelight:
       Min: 3
       Max: 13
-      PotencyDivisor: 10 
+      PotencyDivisor: 10
 
 - type: seed
   id: corn
@@ -1556,6 +1625,8 @@
   packetPrototype: WatermelonSeeds
   productPrototypes:
     - FoodWatermelon
+  mutationPrototypes:
+    - holymelon
   lifespan: 55
   maturation: 12
   production: 3
@@ -1568,6 +1639,35 @@
       Max: 10
       PotencyDivisor: 10
     Water:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: holymelon
+  name: seeds-holymelon-name
+  noun: seeds-noun-seeds
+  displayName: seeds-holymelon-display-name
+  plantRsi: Objects/Specific/Hydroponics/holymelon.rsi
+  packetPrototype: HolymelonSeeds
+  productPrototypes:
+    - FoodHolymelon
+  lifespan: 55
+  maturation: 12
+  production: 3
+  yield: 1
+  potency: 1
+  idealLight: 8
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Holywater:
       Min: 1
       Max: 10
       PotencyDivisor: 10
@@ -1686,6 +1786,39 @@
       Max: 3
       PotencyDivisor: 33
     Vitamin:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 50
+
+- type: seed
+  id: worldPea
+  name: seeds-worldpea-name
+  noun: seeds-noun-seeds
+  displayName: seeds-worldpea-display-name
+  plantRsi: Objects/Specific/Hydroponics/world_pea.rsi
+  packetPrototype: PeaSeeds
+  productPrototypes:
+    - FoodWorldPeas
+  lifespan: 25
+  growthStages: 3
+  maturation: 20
+  production: 6
+  yield: 3
+  potency: 25
+  idealLight: 8
+  harvestRepeat: Repeat
+  nutrientConsumption: 0.5
+  waterConsumption: 0.5
+  chemicals:
+    Happiness:
+      Min: 1
+      Max: 3
+      PotencyDivisor: 25
+    Nutriment:
+      Min: 1
+      Max: 3
+      PotencyDivisor: 20
+    Pax:
       Min: 1
       Max: 2
       PotencyDivisor: 50
@@ -1824,4 +1957,35 @@
     Vitamin:
       Min: 1
       Max: 3
+      PotencyDivisor: 40
+
+- type: seed
+  id: anomalyBerry
+  name: seeds-anomaly-berry-name
+  noun: seeds-noun-seeds
+  displayName: seeds-anomaly-berry-display-name
+  plantRsi: Objects/Specific/Hydroponics/anomaly_berry.rsi
+  packetPrototype: AnomalyBerrySeeds
+  productPrototypes:
+    - FoodAnomalyBerry
+  lifespan: 25
+  maturation: 12
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 2
+  waterConsumption: 0.60
+  nutrientConsumption: 0.50
+  chemicals:
+    Artifexium:
+      Min: 1
+      Max: 1
+      PotencyDivisor: 4
+    Nutriment:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 30
+    Vitamin:
+      Min: 1
+      Max: 2
       PotencyDivisor: 40

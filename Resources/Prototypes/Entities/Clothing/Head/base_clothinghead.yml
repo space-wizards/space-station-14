@@ -42,20 +42,6 @@
 
 - type: entity
   abstract: true
-  parent: Clothing
-  id: HatBase
-  components:
-  - type: Clothing
-    slots:
-    - HEAD
-  - type: Sprite
-    state: icon
-  - type: Tag
-    tags:
-      - WhitelistChameleon
-
-- type: entity
-  abstract: true
   parent: ClothingHeadBase
   id: ClothingHeadLightBase
   name: base helmet with light
@@ -126,7 +112,8 @@
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
-    coefficient: 0.2
+    heatingCoefficient: 0.2
+    coolingCoefficient: 0.2
   - type: IngestionBlocker
   - type: Clothing
     #Copies ClothingHeadHardsuitBase behavior
@@ -168,7 +155,8 @@
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
-    coefficient: 0.1
+    heatingCoefficient: 0.1
+    coolingCoefficient: 0.1
   - type: Armor
     modifiers:
       coefficients:
@@ -258,7 +246,8 @@
     quickEquip: false
     slots: [ HEAD ]
   - type: TemperatureProtection
-    coefficient: 0.7
+    heatingCoefficient: 1.05
+    coolingCoefficient: 0.7
   - type: GroupExamine
   - type: HideLayerClothing
     slots:

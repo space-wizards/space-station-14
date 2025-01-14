@@ -285,7 +285,9 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: maple
+    state: maple_primary
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: maple_secondary
 
 - type: marking
   id: MothWingsMoffra

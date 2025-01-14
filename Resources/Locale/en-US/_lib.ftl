@@ -31,3 +31,6 @@ zzzz-fmt-power-joules = { TOSTRING($divided, "F1") } { $places ->
     [4] TJ
     *[5] ???
 }
+
+# Used internally by the PLAYTIME() function.
+zzzz-fmt-playtime = {$hours}H {$minutes}M

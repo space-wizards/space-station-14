@@ -2,3 +2,8 @@
   copyright: '"scream_lizard.ogg" by Skyrat-SS13'
   license:
   source: https://github.com/Skyrat-SS13/Skyrat-tg/pull/892
+
+- files: [reptilian_tailthump.ogg]
+  copyright: "Taken from https://freesound.org/"
+  license: "CC0-1.0"
+  source: https://freesound.org/people/TylerAM/sounds/389665/

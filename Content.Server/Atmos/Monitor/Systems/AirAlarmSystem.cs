@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.DeviceLinking.Systems;
@@ -22,6 +21,7 @@ using Content.Shared.Power;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using System.Linq;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
@@ -125,6 +125,19 @@ public sealed class AirAlarmSystem : EntitySystem
         {
             payload.Add(AtmosMonitorSystem.AtmosMonitorThresholdGasType, gas);
         }
+
+        _deviceNet.QueuePacket(uid, address, payload);
+
+        SyncDevice(uid, address);
+    }
+
+    private void SetAllThresholds(EntityUid uid, string address, AtmosSensorData data)
+    {
+        var payload = new NetworkPayload
+        {
+            [DeviceNetworkConstants.Command] = AtmosMonitorSystem.AtmosMonitorSetAllThresholdsCmd,
+            [AtmosMonitorSystem.AtmosMonitorAllThresholdData] = data
+        };
 
         _deviceNet.QueuePacket(uid, address, payload);
 
@@ -339,6 +352,13 @@ public sealed class AirAlarmSystem : EntitySystem
                 foreach (string addr in component.ScrubberData.Keys)
                 {
                     SetData(uid, addr, args.Data);
+                }
+                break;
+
+            case AtmosSensorData sensorData:
+                foreach (string addr in component.SensorData.Keys)
+                {
+                    SetAllThresholds(uid, addr, sensorData);
                 }
                 break;
         }
@@ -581,6 +601,20 @@ public sealed class AirAlarmSystem : EntitySystem
         return alarm.SensorData.Count != 0
             ? alarm.SensorData.Values.Select(v => v.Temperature).Average()
             : 0f;
+    }
+    public float CalculateGasMolarConcentrationAverage(AirAlarmComponent alarm, Gas gas, out float percentage)
+    {
+        percentage = 0f;
+
+        var data = alarm.SensorData.Values.SelectMany(v => v.Gases.Where(g => g.Key == gas));
+
+        if (data.Count() == 0)
+            return 0f;
+
+        var averageMol = data.Select(kvp => kvp.Value).Average();
+        percentage = data.Select(kvp => kvp.Value).Sum() / alarm.SensorData.Values.Select(v => v.TotalMoles).Sum();
+
+        return averageMol;
     }
 
     public void UpdateUI(EntityUid uid, AirAlarmComponent? alarm = null, DeviceNetworkComponent? devNet = null, AtmosAlarmableComponent? alarmable = null)

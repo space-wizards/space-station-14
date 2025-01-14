@@ -51,7 +51,8 @@ public sealed class CursedMaskSystem : SharedCursedMaskSystem
         }
 
         var npcFaction = EnsureComp<NpcFactionMemberComponent>(wearer);
-        ent.Comp.OldFactions = npcFaction.Factions;
+        ent.Comp.OldFactions.Clear();
+        ent.Comp.OldFactions.UnionWith(npcFaction.Factions);
         _npcFaction.ClearFactions((wearer, npcFaction), false);
         _npcFaction.AddFaction((wearer, npcFaction), ent.Comp.CursedMaskFaction);
 

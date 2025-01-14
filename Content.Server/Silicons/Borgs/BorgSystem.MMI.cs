@@ -1,5 +1,7 @@
-﻿using Content.Shared.Containers.ItemSlots;
+﻿using Content.Server.Roles;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mind.Components;
+using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Containers;
@@ -9,6 +11,9 @@ namespace Content.Server.Silicons.Borgs;
 /// <inheritdoc/>
 public sealed partial class BorgSystem
 {
+
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
+
     public void InitializeMMI()
     {
         SubscribeLocalEvent<MMIComponent, ComponentInit>(OnMMIInit);
@@ -47,11 +52,15 @@ public sealed partial class BorgSystem
         {
             _mind.TransferTo(mindId, uid, true, mind: mind);
 
-            var job = EnsureComp<JobComponent>(mindId);
+            if (!_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
+                _roles.MindAddRole(mindId, "MindRoleSiliconBrain", silent: true);
+
+            var job = EnsureComp<JobComponent>(mindId); //TODO:ERRANT
 
             linked.OldJob = job.Prototype;
             job.Prototype = "Borg";
         }
+
     }
 
     private void OnMMIMindAdded(EntityUid uid, MMIComponent component, MindAddedMessage args)
@@ -71,7 +80,7 @@ public sealed partial class BorgSystem
             return;
 
         _mind.TransferTo(mindId, component.LinkedMMI, true, mind: mind);
-        var job = EnsureComp<JobComponent>(mindId);
+        var job = EnsureComp<JobComponent>(mindId); //TODO:ERRANT
 
         component.OldJob = job.Prototype;
         job.Prototype = "Borg";
@@ -88,8 +97,12 @@ public sealed partial class BorgSystem
 
         if (_mind.TryGetMind(linked, out var mindId, out var mind))
         {
+            if (_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
+                _roles.MindRemoveRole<SiliconBrainRoleComponent>(mindId);
+
             _mind.TransferTo(mindId, uid, true, mind: mind);
-            EnsureComp<JobComponent>(mindId).Prototype = component.OldJob;
+
+            EnsureComp<JobComponent>(mindId).Prototype = component.OldJob; //TODO:ERRANT
         }
 
         _appearance.SetData(linked, MMIVisuals.BrainPresent, false);
