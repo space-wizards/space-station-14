@@ -1774,9 +1774,14 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         {
             await using var db = await GetDb();
 
-            await db.DbContext.IPIntelCache
-                .Where(w => DateTime.UtcNow - w.Time >= range)
-                .ExecuteDeleteAsync();
+            var toDelete = db.DbContext.IPIntelCache
+                .Where(w => DateTime.UtcNow - w.Time >= range);
+
+            // Ensure we are not cleaning NOTHING.
+            if (toDelete.Any())
+                return true;
+
+            await toDelete.ExecuteDeleteAsync();
 
             await db.DbContext.SaveChangesAsync();
             return true;
