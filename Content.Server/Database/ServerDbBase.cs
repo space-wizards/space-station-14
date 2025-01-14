@@ -1774,8 +1774,11 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         {
             await using var db = await GetDb();
 
+            // Calculating this here cause otherwise sqlite whines.
+            var cutoffTime = DateTime.UtcNow.Subtract(range);
+
             await db.DbContext.IPIntelCache
-                .Where(w => DateTime.UtcNow - w.Time >= range)
+                .Where(w => w.Time <= cutoffTime)
                 .ExecuteDeleteAsync();
 
             await db.DbContext.SaveChangesAsync();
