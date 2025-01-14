@@ -1,10 +1,10 @@
 - type: vendingMachineInventory
   id: RobustSoftdrinksInventory
   startingInventory:
-    DrinkIcedTeaCan: 3
+    DrinkIcedTeaCan: 2
     DrinkEnergyDrinkCan: 3
     DrinkLemonLimeCan: 3
-    DrinkLemonLimeCranberryCan: 3
+    DrinkRootBeerCan: 2
     DrinkSolDryCan: 3
     DrinkSpaceMountainWindCan: 3
     DrinkSpaceUpCan: 3

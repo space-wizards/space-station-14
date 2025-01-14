@@ -2,11 +2,8 @@
   id: SpaceColaInventory
   startingInventory:
     DrinkColaCan: 4
-    DrinkGrapeCan: 2
-    DrinkIcedTeaCan: 2
     DrinkPwrGameCan: 2
     DrinkRootBeerCan: 2
-    DrinkShamblersJuiceCan: 3
     DrinkLemonLimeCan: 3
     DrinkLemonLimeCranberryCan: 2
     DrinkSolDryCan: 3

@@ -2,12 +2,8 @@
   id: ShamblersJuiceInventory
   startingInventory:
     DrinkShamblersJuiceCan: 4
-    DrinkGrapeCan: 2
     DrinkIcedTeaCan: 2
-    DrinkPwrGameCan: 2
-    DrinkRootBeerCan: 2
     DrinkLemonLimeCan: 3
-    DrinkLemonLimeCranberryCan: 2
     DrinkSolDryCan: 3
     DrinkColaCan: 3
   emaggedInventory:
