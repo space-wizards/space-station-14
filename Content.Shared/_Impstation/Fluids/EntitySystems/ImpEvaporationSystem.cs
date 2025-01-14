@@ -77,49 +77,33 @@ public sealed partial class ImpEvaporationSystem : EntitySystem
         // declare your EQE, which will loop through all ents with this component
         var enumerator = EntityQueryEnumerator<ImpEvaporationComponent>();
 
-        // grab the current time before running the loop
-        var curTime = _timing.CurTime;
-
-        // for passing the puddle's uid outside of the loop
-        EntityUid? gotPuddle = null;
-
-        // for passing the puddle's solution outside of the loop
-        Solution? gotSolution = null;
-
-        // list of tuples. contains the name of each reagent with evaporation, with its evaporation amount.
-        List<(string, float)> reagentsToRemove = [];
+        // list of tuples. contains the uid and solution of each puddle that needs to be operated on, and the reagentquantities that need to be removed from them. 
+        List<(EntityUid, Solution?, List<ReagentQuantity>, ImpEvaporationComponent)> puddlesToOperate = [];
 
         // GET THE EVAPORATION INFORMATION FROM EACH PUDDLE
-        // while the EQE is looking at this entity,
+        // for every entity with this component,
         while (enumerator.MoveNext(out var uid, out var comp))
         {
             // skip logic if the cooldown isn't up
-            if (comp.NextTick > curTime)
+            if (comp.NextTick > _timing.CurTime)
             {
                 continue;
             }
 
-            // check for a solution. if it's there, grab it as our `solution` variable. then check if it has fluid in it.
+            // check for a solution. if it's there, grab it as our `solution` variable. if not, skip it for now.
             if (!_solution.TryGetSolution(uid, comp.Solution, out _, out var solution))
             {
                 continue;
             }
 
-            // pass the solution outside of the while loop
-            gotSolution = solution;
-
-            // pass the uid outside of the while loop
-            gotPuddle = uid;
-
-            // check if the solution has any reagents that have evaporation.
+            // check if the solution has any reagents that have evaporation. if not, skip it for now.
             if (!SolutionHasEvaporation(solution))
             {
                 continue;
             }
 
-            // now set the next tick to the current tick plus the cooldown time.
-            // we do this now because it doesn't really matter for puddles that are going to be deleted or RemComp'd.
-            comp.NextTick += comp.EvaporationCooldown;
+            // create a new list of ReagentQuantities to be gathered from the next foreach
+            List<ReagentQuantity> reagentQuantities = [];
 
             // now, for each reagent in the solution,
             foreach (var (reagent, _) in solution.Contents)
@@ -134,46 +118,46 @@ public sealed partial class ImpEvaporationSystem : EntitySystem
                 if (reagentId != null && reagentProto.ImpEvaporates)
                 {
                     // and remove an amount of it equal to its EvaporationAmount.
-                    // we do this outside of the while loop by passing the name and evaporation amount as a tuple for use later.
-                    reagentsToRemove.Add((reagentId, reagentProto.ImpEvaporationAmount));
+
+                    // we do this by declaring a new reagentQuantity and add it to the list of ReagentQuantities we made earlier,
+                    var reagentQuantity = new ReagentQuantity(reagentId, reagentProto.ImpEvaporationAmount);
+                    reagentQuantities.Add(reagentQuantity);
                 }
             }
+
+            // now set the next tick to the current tick plus the cooldown time.
+            // we do this now because it doesn't really matter for puddles that are going to be deleted or RemComp'd.
+            comp.NextTick += comp.EvaporationCooldown;
+
+            // and then passing the uid, solution, and reagentQuantities as a tuple for use outside the loop.
+            puddlesToOperate.Add((uid, solution, reagentQuantities, comp));
         }
         // after we have all that information,
 
-        // DO THE EVAPORATION LOGIC
+        // DO THE EVAPORATION LOGIC ON EACH PUDDLE
         // if there's a puddle, which there should be if we got to this point,
-        if (gotPuddle != null)
-        {
-            // DELETE EMPTY PUDDLES
-            // if the last puddle we went over had no solution, or if the solution is empty,
-            if (gotSolution != null && gotSolution.Volume == FixedPoint2.Zero)
-            {
-                // grab the coordinates of that puddle,
-                var puddleCoords = gotPuddle!.Value.ToCoordinates();
 
-                // spawn a sparkle there,
+        foreach (var (puddle, solution, reagents, comp) in puddlesToOperate)
+        {
+            if (solution == null || solution.Volume == FixedPoint2.Zero)
+            {
+                var puddleCoords = puddle.ToCoordinates();
+
                 Spawn("PuddleSparkle", puddleCoords);
 
-                // delete the entity,
-                QueueDel(gotPuddle);
+                QueueDel(puddle);
             }
 
-            // REMCOMP PUDDLES THAT DON'T HAVE EVAPORATION REAGENTS IN THEM
-            if (gotSolution != null && !SolutionHasEvaporation(gotSolution))
+            else
             {
-                Log.Debug($"RemComping {gotPuddle}");
-                RemComp<ImpEvaporationComponent>(gotPuddle!.Value);
-            }
-
-            // REMOVE THE REAGENTS THAT NEED REMOVING
-            if (gotSolution != null)
-            {
-                Log.Debug($"Removing reagents from {gotPuddle}. reagentsToRemove = {reagentsToRemove}");
-                foreach (var (reagent, amount) in reagentsToRemove)
+                if (!SolutionHasEvaporation(solution))
                 {
-                    var reagentQuantity = new ReagentQuantity(reagent, amount);
-                    gotSolution.RemoveReagent(reagentQuantity);
+                    RemComp<ImpEvaporationComponent>(puddle);
+                }
+
+                foreach (var reagentQuantity in reagents)
+                {
+                    solution!.RemoveReagent(reagentQuantity);
                 }
             }
         }
