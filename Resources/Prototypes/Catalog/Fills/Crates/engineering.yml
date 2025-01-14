@@ -150,7 +150,7 @@
 
 - type: entity
   id: CrateAirlockKit
-  parent: CrateGenericSteel
+  parent: CrateEngineering
   name: airlock kit
   description: A kit for building 6 airlocks, doesn't include tools.
   components:
