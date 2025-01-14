@@ -68,4 +68,4 @@
     graph: Petcarrier
     node: petcarrier
     containers:
-      - entity_storage
+    - entity_storage
