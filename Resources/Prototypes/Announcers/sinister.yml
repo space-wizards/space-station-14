@@ -1,6 +1,6 @@
 - type: announcer
-  id: Stern
-  basePath: /Audio/Announcers/Stern
+  id: Sinister
+  basePath: /Audio/_Impstation/Announcers/
   baseAudioParams:
     volume: -12
   announcements:
@@ -22,7 +22,7 @@
     # - id: nukeDisarm # The nuke has been disarmed
     #   path: comms/nuke_disarm.ogg
     - id: welcome # The shift has started
-      collection: SternWelcomeAnnouncements
+      collection: SinisterWelcomeAnnouncements
 
 
     # Alert levels
@@ -70,49 +70,49 @@
 
     ### Events
     - id: anomalySpawn # An anomaly has spawned in a random place
-      collection: SternAnomalyAnnouncements
+      collection: SinisterAnomalyAnnouncements
     - id: bluespaceArtifact # An artifact has spawned in a random place
-      collection: SternArtifactAnnouncements
+      collection: SinisterArtifactAnnouncements
 
     # - id: bluespaceLocker # Two random lockers now share inventories
     #   path: events/bluespace_locker.ogg
 
     - id: breakerFlip # A few random APCs have been disabled, ask Engineering to fix them
-      collection: SternBreakerflipAnnouncements
+      collection: SinisterBreakerflipAnnouncements
     - id: bureaucraticError # Random jobs have been added, removed, or made infinite
-      collection: SternErrorBureaucraticAnnouncements
+      collection: SinisterErrorBureaucraticAnnouncements
     - id: clericalError # Random crew are removed from the manifest
-      collection: SternErrorClericalAnnouncements
+      collection: SinisterErrorClericalAnnouncements
     - id: carpRift # A dragon's carp rift is active
-      collection: SternCarpriftAnnouncements
+      collection: SinisterCarpriftAnnouncements
     - id: revenantSpawn # A revenant has spawned (by a prober?)
-      collection: SternRevenantAnnouncements
+      collection: SinisterRevenantAnnouncements
     - id: gasLeak # A random gas is coming out of a random vent
-      collection: SternGasleakAnnouncements
+      collection: SinisterGasleakAnnouncements
     - id: gasLeakComplete # Gas has stopped coming out of a vent
-      collection: SternGasleakCompleteAnnouncements
+      collection: SinisterGasleakCompleteAnnouncements
     - id: kudzuGrowth # Kudzu is growing in a random place
-      collection: SternKudzuAnnouncements
+      collection: SinisterKudzuAnnouncements
     - id: meteorSwarm # Meteors are flying at the station, stay away from windows
-      collection: SternMeteorsAnnouncements
+      collection: SinisterMeteorsAnnouncements
     - id: meteorSwarmComplete # Meteors have stopped flying at the station
-      collection: SternMeteorsCompleteAnnouncements
+      collection: SinisterMeteorsCompleteAnnouncements
     - id: powerGridCheck # The station's power is offline for some moments
-      collection: SternPowergridAnnouncements
+      collection: SinisterPowergridAnnouncements
     - id: powerGridCheckComplete # The station's power is online again
-      collection: SternPowergridfixedAnnouncements
+      collection: SinisterPowergridfixedAnnouncements
 
     # - id: randomSentience # A random few animals have become sentient
     #   path: events/random_sentience.ogg
 
     - id: solarFlare # A solar flare is nearby, may mess with comms and electronics
-      collection: SternSolarFlareAnnouncements
+      collection: SinisterSolarFlareAnnouncements
     - id: solarFlareComplete # The solar flare has passed
-      collection: SternSolarFlareCompletedAnnouncements
+      collection: SinisterSolarFlareCompletedAnnouncements
     - id: ventClog # A random reagent is coming out of a scrubber
-      collection: SternVentcloggedAnnouncements
+      collection: SinisterVentcloggedAnnouncements
     - id: immovableRodSpawn # The station is moving into an immovable rod, don't die or something, ask Engineering for help repairing it
-      collection: SternImmovablerodAnnouncements
+      collection: SinisterImmovablerodAnnouncements
 
     # - id: ionStorm # AI-controlled equipment are now weird, check their laws
     #  path: events/ion_storm.ogg
@@ -120,26 +120,26 @@
 
     ## Vent Critters
     - id: brosSpawn # BROS are appearing in vents. UNGH
-      collection: SternVentcrittersAnnouncements
+      collection: SinisterVentcrittersAnnouncements
     - id: mouseMigration # Several mice have appeared in a random place
-      collection: SternVentcrittersAnnouncements
+      collection: SinisterVentcrittersAnnouncements
     - id: cockroachMigration # Several cockroaches have appeared in a random place
-      collection: SternVentcrittersAnnouncements
+      collection: SinisterVentcrittersAnnouncements
     - id: slimesSpawn # Some simple slimes are appearing in vents
-      collection: SternVentcrittersAnnouncements
+      collection: SinisterVentcrittersAnnouncements
     - id: spiderSpawn # Some simple spiders are appearing in vents
-      collection: SternVentcrittersAnnouncements
+      collection: SinisterVentcrittersAnnouncements
     - id: trashAnimalMigration # Trash-eating critters are appearing in vents
-      collection: SternVentcrittersAnnouncements
+      collection: SinisterVentcrittersAnnouncements
     - id: snailMigration # Adorable little snails are appearing in vents
-      collection: SternVentcrittersAnnouncements
+      collection: SinisterVentcrittersAnnouncements
     - id: snailMigrationLowPop # Adorable little snails are appearing in vents
-      collection: SternVentcrittersAnnouncements
+      collection: SinisterVentcrittersAnnouncements
 
 
     ## Delta-V
     - id: xenoVents # Xenomorphs are coming out of vents
-      collection: SternVentcrittersAnnouncements
+      collection: SinisterVentcrittersAnnouncements
     ## NyanoTrasen
     # - id: noosphericStorm # A large amount of glimmer has joined the station and made people psionic
     #   path: events/noospheric_storm.ogg
@@ -147,23 +147,23 @@
 
     # Shuttle
     - id: shuttleCalled # The shuttle is on its way
-      collection: SternShuttleCalledAnnouncements
+      collection: SinisterShuttleCalledAnnouncements
     - id: shuttleRecalled # The shuttle is going back to Central Command
-      collection: SternShuttleRecalledAnnouncements
+      collection: SinisterShuttleRecalledAnnouncements
     - id: shuttleDock # The shuttle has arrived at the station
-      collection: SternShuttleDockedAnnouncements
+      collection: SinisterShuttleDockedAnnouncements
     - id: shuttleNearby # The shuttle couldn't dock, it's at a specified location
-      collection: SternShuttleNearbyAnnouncements
+      collection: SinisterShuttleNearbyAnnouncements
     - id: shuttleGoodLuck # The shuttle could not find its way to the station, good luck crew
-      collection: SternShuttleGoodluckAnnouncements
+      collection: SinisterShuttleGoodluckAnnouncements
     # - id: shuttleAuthAdded # One of few have added their acceptance to early launching
     #   path: shuttle/auth_added.ogg
     # - id: shuttleAuthRevoked # One of few have revoked their acceptance to early launching
     #   path: shuttle/auth_revoked.ogg
     - id: shuttleAlmostLaunching # The shuttle will leave to FTL in 10 seconds
-      collection: SternShuttleLaunchingAnnouncements
+      collection: SinisterShuttleLaunchingAnnouncements
     - id: shuttleLeft # The shuttle has left the station
-      collection: SternShuttleDepartedAnnouncements
+      collection: SinisterShuttleDepartedAnnouncements
 
 
     # Fallback # REQUIRED
