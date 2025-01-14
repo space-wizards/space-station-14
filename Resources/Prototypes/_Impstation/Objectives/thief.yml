@@ -463,3 +463,12 @@
     descriptionText: objective-condition-thief-evil-skull-description
   - type: Objective
     difficulty: 0.6 #a little harder than the bible, it glows red and there's only on, and it's an artifact
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: StockTradingCartridgeStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: StockTradingCartridge
+  - type: Objective
+    difficulty: 1

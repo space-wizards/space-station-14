@@ -277,3 +277,10 @@
   sprite:
     sprite: Mobs/Species/Skeleton/parts.rsi
     state: skull_icon
+
+- type: stealTargetGroup
+  id: StockTradingCartridge
+  name: steal-target-groups-stocktradingcartridge
+  sprite:
+    sprite: _DV/Objects/Devices/cartridge.rsi
+    state: cart-stonk

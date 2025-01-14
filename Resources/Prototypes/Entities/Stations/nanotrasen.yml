@@ -25,6 +25,7 @@
     - BaseStationSiliconLawCrewsimov
     - BaseStationAllEventsEligible
     - BaseStationNanotrasen
+    - BaseStationStockMarket # DeltaV
   categories: [ HideSpawnMenu ]
   components:
     - type: Transform
