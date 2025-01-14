@@ -149,9 +149,9 @@
       entity_storage: !type:NestedSelector
         tableId: RandomMaterialCrateTable
         rolls: !type:RangeNumberSelector
+          range: 1, 3
           # for some reason, the selector here adds 1 to whatever value it generates,
           # so this is actually 2-4
-          range: 1, 3
 
 #- type: entity
 #  id: CrateMaterialHFuelTank
