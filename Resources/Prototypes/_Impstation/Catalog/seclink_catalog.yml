@@ -19,6 +19,46 @@
     DisablerToken: 1
   categories:
   - SeclinkDisabler
+  
+- type: listing
+  id: SeclinkFunnyDisabler
+  name: seclink-funny-disabler-name
+  description: seclink-funny-disabler-desc
+  productEntity: WeaponFunnyDisabler
+  cost:
+    DisablerToken: 1
+  categories:
+  - SeclinkDisabler
+
+- type: listing
+  id: SeclinkPocketDisabler
+  name: seclink-pocket-disabler-name
+  description: seclink-pocket-disabler-desc
+  productEntity: WeaponPocketDisabler
+  cost:
+    DisablerToken: 1
+  categories:
+    - SeclinkDisabler
+
+- type: listing
+  id: SeclinkAutoDisabler
+  name: seclink-auto-disabler-name
+  description: seclink-auto-disabler-desc
+  productEntity: WeaponAutoDisabler
+  cost:
+    DisablerToken: 1
+  categories:
+    - SeclinkDisabler
+
+- type: listing
+  id: SeclinkStunProjector
+  name: seclink-stun-projector-name
+  description: seclink-stun-projector-desc
+  productEntity: WeaponStunProjector
+  cost:
+    DisablerToken: 1
+  categories:
+    - SeclinkDisabler
 
 #Utility Options
 - type: listing
@@ -30,3 +70,13 @@
     UtilityToken: 1
   categories:
   - SeclinkUtility
+  
+- type: listing
+  id: SeclinkHandheldCriminalRecords
+  name: seclink-handheld-records-name
+  description: seclink-handheld-records-desc
+  productEntity: HandheldCriminalRecords
+  cost:
+    UtilityToken: 1
+  categories:
+    - SeclinkUtility
