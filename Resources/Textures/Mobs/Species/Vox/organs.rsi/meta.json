@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "made by mubururu_ (github), brain by jack_the_dragon",
+    "copyright": "made by mubururu_ (github), brain by jack_the_dragon(Discord)",
     "size": {
         "x": 32,
         "y": 32
@@ -21,8 +21,8 @@
         {
             "name": "lung-r"
         },
-		{
-			"name": "brain"
-		}
+        {
+            "name": "brain"
+        }
     ]
 }
