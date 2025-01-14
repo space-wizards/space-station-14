@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from /tg/station and Burgerstation. Brigmed, Disposals and Youtoolpia by Conflee",
+    "states": [
+        {
+            "name": "brigmed"
+        },
+		{
+            "name": "calendar"
+        },
+		{
+            "name": "cleanhands"
+        },
+		{
+            "name": "disposals_proper"
+        },
+		{
+            "name": "eyechart"
+        },
+		{
+            "name": "nosmoking"
+        },
+		{
+            "name": "secureareasmall"
+        },
+		{
+            "name": "wall_biohazard"
+        },
+		{
+            "name": "wall_extremeheat"
+        },
+		{
+            "name": "yessmoking"
+        },
+		{
+            "name": "youtoolpia"
+        }
+    ]
+}
