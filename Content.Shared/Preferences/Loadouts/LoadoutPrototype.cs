@@ -44,4 +44,10 @@ public sealed partial class LoadoutPrototype : IPrototype, IEquipmentLoadout
     /// <inheritdoc />
     [DataField]
     public Dictionary<string, List<EntProtoId>> Storage { get; set; } = new();
+
+    /// <summary>
+    /// Stores data which is used to modify the appearance of the entity in some manner.
+    /// </summary>
+    [DataField]
+    public Dictionary<string, PrototypeLayerData> SpriteLayerData = new();
 }

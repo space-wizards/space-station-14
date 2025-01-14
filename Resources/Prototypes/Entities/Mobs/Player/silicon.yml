@@ -355,6 +355,10 @@
     - state: ai_empty
       map: ["unshaded"]
       shader: unshaded
+    - state: ai
+      map: ["enum.StationAiIconState.Key"]
+      shader: unshaded
+      visible: false
   - type: Appearance
   - type: InteractionPopup
     interactSuccessString: petting-success-station-ai
@@ -367,7 +371,8 @@
       enum.StationAiVisualState.Key:
         unshaded:
           Empty: { state: ai_empty }
-          Occupied: { state: ai }
+          Occupied: { state: ai_static }
+          
   - type: Telephone
     compatibleRanges:
     - Grid
@@ -395,12 +400,6 @@
   - type: ContainerSpawnPoint
     containerId: station_ai_mind_slot
     job: StationAi
-  - type: Sprite
-    sprite: Mobs/Silicon/station_ai.rsi
-    layers:
-    - state: base
-    - state: ai
-      shader: unshaded
 
 # The actual brain inside the core
 - type: entity

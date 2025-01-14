@@ -1,0 +1,77 @@
+# Iconography
+- type: loadout
+  id: StationAiIconAi
+  dummyEntity: LoadoutDummyAiIconAi
+  attachDummyEntity: true
+  spriteLayerData:
+    Occupied: 
+      state: "ai"
+    Dead: 
+      state: "ai_dead"
+  
+- type: loadout
+  id: StationAiIconAngel
+  dummyEntity: LoadoutDummyAiIconAngel
+  spriteLayerData:
+    Occupied: 
+      state: "ai_angel"
+    Dead: 
+      state: "ai_dead"
+  
+- type: loadout
+  id: StationAiIconBliss
+  dummyEntity: LoadoutDummyAiIconBliss
+  spriteLayerData:
+    Occupied: 
+      state: "ai_bliss"
+    Dead: 
+      state: "ai_dead"
+      
+- type: loadout
+  id: StationAiIconClown
+  dummyEntity: LoadoutDummyAiIconClown
+  spriteLayerData:
+    Occupied: 
+      state: "ai_clown"
+    Dead: 
+      state: "ai_dead"
+  
+- type: loadout
+  id: StationAiIconDorf
+  dummyEntity: LoadoutDummyAiIconDorf
+  spriteLayerData:
+    Occupied: 
+      state: "ai_dorf"
+    Dead: 
+      state: "ai_dead"
+  
+- type: loadout
+  id: StationAiIconHeartline
+  dummyEntity: LoadoutDummyAiIconHeartline
+  spriteLayerData:
+    Occupied: 
+      state: "ai_heartline"
+    Dead: 
+      state: "ai_dead"
+  
+- type: loadout
+  id: StationAiIconSmiley
+  dummyEntity: LoadoutDummyAiIconSmiley
+  spriteLayerData:
+    Occupied: 
+      state: "ai_smiley"
+    Dead: 
+      state: "ai_dead"
+
+# Holograms
+- type: loadout
+  id: StationAiHologramFemale
+  dummyEntity: LoadoutDummyAiFemale
+
+- type: loadout
+  id: StationAiHologramMale
+  dummyEntity: LoadoutDummyAiMale
+
+- type: loadout
+  id: StationAiHologramFace
+  dummyEntity: LoadoutDummyAiFace

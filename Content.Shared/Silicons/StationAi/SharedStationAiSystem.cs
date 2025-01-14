@@ -479,7 +479,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         ClearEye(ent);
     }
 
-    private void UpdateAppearance(Entity<StationAiHolderComponent?> entity)
+    protected virtual void UpdateAppearance(Entity<StationAiHolderComponent?> entity)
     {
         if (!Resolve(entity.Owner, ref entity.Comp, false))
             return;
@@ -570,9 +570,14 @@ public sealed partial class JumpToCoreEvent : InstantActionEvent
 [Serializable, NetSerializable]
 public sealed partial class IntellicardDoAfterEvent : SimpleDoAfterEvent;
 
-
 [Serializable, NetSerializable]
 public enum StationAiVisualState : byte
+{
+    Key,
+}
+
+[Serializable, NetSerializable]
+public enum StationAiIconState : byte
 {
     Key,
 }

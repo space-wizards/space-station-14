@@ -1281,6 +1281,27 @@
   - EmergencyNitrogenMedical
   - EmergencyOxygenMedical
   - LoadoutSpeciesVoxNitrogen
+  
+# Silicon
+- type: loadoutGroup
+  id: StationAiIconography
+  name: loadout-group-station-ai-iconography
+  loadouts:
+  - StationAiIconAi
+  - StationAiIconAngel
+  - StationAiIconBliss
+  - StationAiIconClown
+  - StationAiIconDorf
+  - StationAiIconHeartline
+  - StationAiIconSmiley
+  
+- type: loadoutGroup
+  id: StationAiHolograms
+  name: loadout-group-station-ai-holograms
+  loadouts:
+  - StationAiHologramFemale
+  - StationAiHologramMale
+  - StationAiHologramFace
 
 # Wildcards
 - type: loadoutGroup

@@ -196,6 +196,10 @@ loadout-group-paramedic-jumpsuit = Paramedic jumpsuit
 loadout-group-paramedic-outerclothing = Paramedic outer clothing
 loadout-group-paramedic-shoes = Paramedic shoes
 
+# Silicon
+loadout-group-station-ai-iconography = AI core customizations
+loadout-group-station-ai-holograms = Holographic representation
+
 # Wildcards
 loadout-group-reporter-jumpsuit = Reporter jumpsuit
 
