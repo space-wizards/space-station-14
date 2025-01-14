@@ -91,6 +91,19 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookMindSwap
+  name: spellbook-mind-swap-name
+  description: spellbook-mind-swap-description
+  productAction: ActionMindSwap
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Equipment
 - type: listing
   id: SpellbookWandDoor

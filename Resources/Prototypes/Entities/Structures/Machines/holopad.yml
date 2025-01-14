@@ -1,0 +1,948 @@
+- type: entity
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  id: Holopad
+  name: holopad
+  description: "A floor-mounted device for projecting holographic images."
+  components:
+  - type: Transform
+    anchored: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        mask:
+        - SubfloorMask
+        layer:
+        - LowImpassable
+        hard: false
+  - type: ApcPowerReceiver
+    powerLoad: 300
+  - type: StationAiVision
+  - type: Sprite
+    sprite: Structures/Machines/holopad.rsi
+    drawdepth: FloorObjects
+    snapCardinals: true
+    layers:
+    - state: base
+    - map: [ "lights" ]
+      state: blank
+      shader: unshaded
+    - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+      state: unpowered
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: panel_open
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TelephoneVisuals.Key:
+        lights:
+          Idle: { state: blank }
+          Calling: { state: lights_calling }
+          Ringing: { state: lights_ringing }
+          InCall: { state: lights_in_call }
+          EndingCall: { state: lights_hanging_up }
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          False: { visible: true }
+          True: { visible: false }
+      enum.WiresVisuals.MaintenancePanelState:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: false }
+          False: { visible: true }
+  - type: Machine
+    board: HolopadMachineCircuitboard
+  - type: StationAiWhitelist
+  - type: PointLight
+    radius: 1.3
+    energy: 1.8
+    color: "#afe1fe"
+    enabled: false
+  - type: AmbientSound
+    enabled: false
+    volume: -5
+    range: 3
+    sound:
+      path: /Audio/Ambience/Objects/buzzing.ogg
+  - type: Holopad
+    hologramProtoId: HolopadHologram
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
+    speechBubbleOffset: 0.45
+  - type: Telephone
+    ringTone: /Audio/Machines/double_ring.ogg
+    listeningRange: 2.5
+    speakerVolume: Speak
+  - type: AccessReader
+    access: [[ "Command" ]]
+  - type: ActivatableUI
+    key: enum.HolopadUiKey.InteractionWindow
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+        enum.HolopadUiKey.InteractionWindow:
+          type: HolopadBoundUserInterface
+        enum.WiresUiKey.Key:
+          type: WiresBoundUserInterface
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: Wires
+    boardName: wires-board-name-holopad
+    layoutId: Holopad
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
+  name: long-range holopad
+  description: "A floor-mounted device for projecting holographic images to similar devices that are far away."
+  parent: Holopad
+  id: HolopadLongRange
+  components:
+  - type: Telephone
+    transmissionRange: Map
+    compatibleRanges:
+    - Map
+    - Unlimited
+    ignoreTelephonesOnSameGrid: true
+
+- type: entity
+  name: quantum entangling holopad
+  description: "An floor-mounted device for projecting holographic images to similar devices at extreme distances."
+  parent: Holopad
+  id: HolopadUnlimitedRange
+  components:
+  - type: Telephone
+    transmissionRange: Unlimited
+    compatibleRanges:
+    - Map
+    - Unlimited
+    ignoreTelephonesOnSameGrid: true
+
+- type: entity
+  name: bluespace holopad
+  description: "An experimental floor-mounted device for projecting holographic images via bluespace."
+  parent: Holopad
+  id: HolopadBluespace
+  suffix: Unrestricted range
+  components:
+  - type: Telephone
+    unlistedNumber: true
+    transmissionRange: Unlimited
+    compatibleRanges:
+    - Grid
+    - Map
+    - Unlimited
+
+# These are spawned by holopads
+- type: entity
+  id: HolopadHologram
+  name: hologram
+  categories: [ HideSpawnMenu ]
+  suffix: DO NOT MAP
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+    offset: -0.02, 0.45
+    overrideDir: South
+    enableOverrideDir: true
+  - type: Appearance
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
+    speechBubbleOffset: 0.45
+  - type: HolopadHologram
+    rsiPath: Structures/Machines/holopad.rsi
+    rsiState: icon_in_call
+    shaderName: Hologram
+    color1: "#65b8e2"
+    color2: "#3a6981"
+    alpha: 0.9
+    intensity: 2
+    scrollRate: 0.125
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+## Mapping prototypes
+# General
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralTools
+  suffix: Tools
+  components:
+  - type: Label
+    currentLabel: holopad-general-tools
+
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralCryosleep
+  suffix: Cryosleep
+  components:
+  - type: Label
+    currentLabel: holopad-general-cryosleep
+
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralTheater
+  suffix: Theater
+  components:
+  - type: Label
+    currentLabel: holopad-general-theater
+
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralDisposals
+  suffix: Disposals
+  components:
+  - type: Label
+    currentLabel: holopad-general-disposals
+
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralEVAStorage
+  suffix: EVA Storage
+  components:
+  - type: Label
+    currentLabel: holopad-general-eva
+
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralLounge
+  suffix: Lounge
+  components:
+  - type: Label
+    currentLabel: holopad-general-lounge
+
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralArcade
+  suffix: Arcade
+  components:
+  - type: Label
+    currentLabel: holopad-general-arcade
+
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralEvac
+  suffix: Evac
+  components:
+  - type: Label
+    currentLabel: holopad-general-evac
+
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralArrivals
+  suffix: Arrivals
+  components:
+  - type: Label
+    currentLabel: holopad-general-arrivals
+
+# Command
+- type: entity
+  parent: Holopad
+  id: HolopadCommandBridge
+  suffix: Bridge
+  components:
+  - type: Label
+    currentLabel: holopad-command-bridge
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandVault
+  suffix: Vault
+  components:
+  - type: Label
+    currentLabel: holopad-command-vault
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandBridgeHallway
+  suffix: Bridge Hallway
+  components:
+  - type: Label
+    currentLabel: holopad-command-bridge-hallway
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandMeetingRoom
+  suffix: Command Meeting
+  components:
+  - type: Label
+    currentLabel: holopad-command-meeting-room
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandLounge
+  suffix: Command Lounge
+  components:
+  - type: Label
+    currentLabel: holopad-command-lounge
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandCaptain
+  suffix: Captain
+  components:
+  - type: Label
+    currentLabel: holopad-command-captain
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandHop
+  suffix: HoP
+  components:
+  - type: Label
+    currentLabel: holopad-command-hop
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandCmo
+  suffix: CMO
+  components:
+  - type: Label
+    currentLabel: holopad-command-cmo
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandQm
+  suffix: QM
+  components:
+  - type: Label
+    currentLabel: holopad-command-qm
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandCe
+  suffix: CE
+  components:
+  - type: Label
+    currentLabel: holopad-command-ce
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandRd
+  suffix: RD
+  components:
+  - type: Label
+    currentLabel: holopad-command-rd
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandHos
+  suffix: HoS
+  components:
+  - type: Label
+    currentLabel: holopad-command-hos
+
+# Science
+- type: entity
+  parent: Holopad
+  id: HolopadScienceAnomaly
+  suffix: Anomaly
+  components:
+  - type: Label
+    currentLabel: holopad-science-anomaly
+
+- type: entity
+  parent: Holopad
+  id: HolopadScienceArtifact
+  suffix: Artifact
+  components:
+  - type: Label
+    currentLabel: holopad-science-artifact
+
+- type: entity
+  parent: Holopad
+  id: HolopadScienceArtifactNorth
+  suffix: Artifact North
+  components:
+  - type: Label
+    currentLabel: holopad-science-artifact-north
+
+- type: entity
+  parent: Holopad
+  id: HolopadScienceArtifactSouth
+  suffix: Artifact South
+  components:
+  - type: Label
+    currentLabel: holopad-science-artifact-south
+
+- type: entity
+  parent: Holopad
+  id: HolopadScienceRobotics
+  suffix: Robotics
+  components:
+  - type: Label
+    currentLabel: holopad-science-robotics
+
+- type: entity
+  parent: Holopad
+  id: HolopadScienceRnd
+  suffix: R&D
+  components:
+  - type: Label
+    currentLabel: holopad-science-rnd
+
+- type: entity
+  parent: Holopad
+  id: HolopadScienceFront
+  suffix: Sci Front
+  components:
+  - type: Label
+    currentLabel: holopad-science-front
+
+- type: entity
+  parent: Holopad
+  id: HolopadScienceBreakroom
+  suffix: Sci Breakroom
+  components:
+  - type: Label
+    currentLabel: holopad-science-breakroom
+
+# Medical
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalMedbay
+  suffix: Medbay
+  components:
+  - type: Label
+    currentLabel: holopad-medical-medbay
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalChemistry
+  suffix: Chemistry
+  components:
+  - type: Label
+    currentLabel: holopad-medical-chemistry
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalCryopods
+  suffix: Cryopods
+  components:
+  - type: Label
+    currentLabel: holopad-medical-cryopods
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalMorgue
+  suffix: Morgue
+  components:
+  - type: Label
+    currentLabel: holopad-medical-morgue
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalSurgery
+  suffix: Surgery
+  components:
+  - type: Label
+    currentLabel: holopad-medical-surgery
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalParamed
+  suffix: Paramedic
+  components:
+  - type: Label
+    currentLabel: holopad-medical-paramedic
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalVirology
+  suffix: Virology
+  components:
+  - type: Label
+    currentLabel: holopad-medical-virology
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalFront
+  suffix: Med Front
+  components:
+  - type: Label
+    currentLabel: holopad-medical-front
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalBreakroom
+  suffix: Med Breakroom
+  components:
+  - type: Label
+    currentLabel: holopad-medical-breakroom
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalClinic
+  suffix: Med Clinic
+  components:
+  - type: Label
+    currentLabel: holopad-medical-clinic
+
+# Cargo
+- type: entity
+  parent: Holopad
+  id: HolopadCargoFront
+  suffix: Cargo Front
+  components:
+  - type: Label
+    currentLabel: holopad-cargo-front
+
+- type: entity
+  parent: Holopad
+  id: HolopadCargoBay
+  suffix: Cargo Bay
+  components:
+  - type: Label
+    currentLabel: holopad-cargo-bay
+
+- type: entity
+  parent: Holopad
+  id: HolopadCargoSalvageBay
+  suffix: Salvage Bay
+  components:
+  - type: Label
+    currentLabel: holopad-cargo-salvage-bay
+
+- type: entity
+  parent: Holopad
+  id: HolopadCargoBreakroom
+  suffix: Cargo Breakroom
+  components:
+  - type: Label
+    currentLabel: holopad-cargo-breakroom
+
+- type: entity
+  parent: Holopad
+  id: HolopadCargoMailroom
+  suffix: Cargo Mailroom
+  components:
+  - type: Label
+    currentLabel: holopad-cargo-mailroom
+
+# Engineering
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringAtmosFront
+  suffix: Atmos Front
+  components:
+  - type: Label
+    currentLabel: holopad-engineering-atmos-front
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringAtmosMain
+  suffix: Atmos Main
+  components:
+  - type: Label
+    currentLabel: holopad-engineering-atmos-main
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringAtmosTeg
+  suffix: TEG
+  components:
+  - type: Label
+    currentLabel: holopad-engineering-atmos-teg
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringStorage
+  suffix: Engi Storage
+  components:
+  - type: Label
+    currentLabel: holopad-engineering-storage
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringBreakroom
+  suffix: Engi Breakroom
+  components:
+  - type: Label
+    currentLabel: holopad-engineering-breakroom
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringFront
+  suffix: Engi Front
+  components:
+  - type: Label
+    currentLabel: holopad-engineering-front
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringTelecoms
+  suffix: Telecoms
+  components:
+  - type: Label
+    currentLabel: holopad-engineering-telecoms
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringTechVault
+  suffix: Tech Vault
+  components:
+  - type: Label
+    currentLabel: holopad-engineering-tech-vault
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringAME
+  suffix: AME
+  components:
+  - type: Label
+    currentLabel: holopad-engineering-ame
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringPower
+  suffix: Power
+  components:
+  - type: Label
+    currentLabel: holopad-engineering-power
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringMain
+  suffix: Engi Main
+  components:
+  - type: Label
+    currentLabel: holopad-engineering-main
+
+# Security
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityFront
+  suffix: Sec Front
+  components:
+  - type: Label
+    currentLabel: holopad-security-front
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityBrig
+  suffix: Brig
+  components:
+  - type: Label
+    currentLabel: holopad-security-brig
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityWarden
+  suffix: Warden
+  components:
+  - type: Label
+    currentLabel: holopad-security-warden
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityInterrogation
+  suffix: Interrogation
+  components:
+  - type: Label
+    currentLabel: holopad-security-interrogation
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityBreakroom
+  suffix: Sec Breakroom
+  components:
+  - type: Label
+    currentLabel: holopad-security-breakroom
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityDetective
+  suffix: Detective
+  components:
+  - type: Label
+    currentLabel: holopad-security-detective
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityPerma
+  suffix: Perma
+  components:
+  - type: Label
+    currentLabel: holopad-security-perma
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityCourtroom
+  suffix: Courtroom
+  components:
+  - type: Label
+    currentLabel: holopad-security-courtroom
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityLawyer
+  suffix: Lawyer
+  components:
+  - type: Label
+    currentLabel: holopad-security-lawyer
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityArmory
+  suffix: Armory
+  components:
+  - type: Label
+    currentLabel: holopad-security-armory
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityLockerRoom
+  suffix: Sec Locker Room
+  components:
+  - type: Label
+    currentLabel: holopad-security-locker-room
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityBrigMed
+  suffix: Brig Med
+  components:
+  - type: Label
+    currentLabel: holopad-security-brig-med
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityEvacCheckpoint
+  suffix: Sec Evac Checkpoint
+  components:
+  - type: Label
+    currentLabel: holopad-security-evac-checkpoint
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityArrivalsCheckpoint
+  suffix: Sec Arrivals Checkpoint
+  components:
+  - type: Label
+    currentLabel: holopad-security-arrivals-checkpoint
+
+# Service
+- type: entity
+  parent: Holopad
+  id: HolopadServiceJanitor
+  suffix: Janitor
+  components:
+  - type: Label
+    currentLabel: holopad-service-janitor
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceBar
+  suffix: Bar
+  components:
+  - type: Label
+    currentLabel: holopad-service-bar
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceKitchen
+  suffix: Kitchen
+  components:
+  - type: Label
+    currentLabel: holopad-service-kitchen
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceBotany
+  suffix: Botany
+  components:
+  - type: Label
+    currentLabel: holopad-service-botany
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceChapel
+  suffix: Chapel
+  components:
+  - type: Label
+    currentLabel: holopad-service-chapel
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceLibrary
+  suffix: Library
+  components:
+  - type: Label
+    currentLabel: holopad-service-library
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceGameRoom
+  suffix: Game Room
+  components:
+  - type: Label
+    currentLabel: holopad-service-gameroom
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceNewsroom
+  suffix: Newsroom
+  components:
+  - type: Label
+    currentLabel: holopad-service-newsroom
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceZookeeper
+  suffix: Zookeeper
+  components:
+  - type: Label
+    currentLabel: holopad-service-zookeeper
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceBoxer
+  suffix: Boxer
+  components:
+  - type: Label
+    currentLabel: holopad-service-boxer
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceClown
+  suffix: Clown
+  components:
+  - type: Label
+    currentLabel: holopad-service-clown
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceMusician
+  suffix: Musician
+  components:
+  - type: Label
+    currentLabel: holopad-service-musician
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceMime
+  suffix: Mime
+  components:
+  - type: Label
+    currentLabel: holopad-service-mime
+
+# AI
+- type: entity
+  parent: Holopad
+  id: HolopadAiCore
+  suffix: AI Core
+  components:
+  - type: Label
+    currentLabel: holopad-ai-core
+
+- type: entity
+  parent: Holopad
+  id: HolopadAiMain
+  suffix: AI Main
+  components:
+  - type: Label
+    currentLabel: holopad-ai-main
+
+- type: entity
+  parent: Holopad
+  id: HolopadAiUpload
+  suffix: AI Upload
+  components:
+  - type: Label
+    currentLabel: holopad-ai-upload
+
+- type: entity
+  parent: Holopad
+  id: HolopadAiBackupPower
+  suffix: AI Backup Power
+  components:
+  - type: Label
+    currentLabel: holopad-ai-backup-power
+
+- type: entity
+  parent: Holopad
+  id: HolopadAiEntrance
+  suffix: AI Entrance
+  components:
+  - type: Label
+    currentLabel: holopad-ai-entrance
+
+- type: entity
+  parent: Holopad
+  id: HolopadAiChute
+  suffix: AI Chute
+  components:
+  - type: Label
+    currentLabel: holopad-ai-chute
+
+# Long Range
+- type: entity
+  parent: HolopadLongRange
+  id: HolopadCargoAts
+  suffix: ATS
+  components:
+  - type: Label
+    currentLabel: holopad-cargo-ats
+
+- type: entity
+  parent: HolopadLongRange
+  id: HolopadCommandBridgeLongRange
+  suffix: Station Bridge
+  components:
+  - type: Label
+    currentLabel: holopad-station-bridge
+
+- type: entity
+  parent: HolopadLongRange
+  id: HolopadCargoBayLongRange
+  suffix: Station Cargo Bay
+  components:
+  - type: Label
+    currentLabel: holopad-station-cargo-bay
+
+- type: entity
+  parent: HolopadLongRange
+  id: HolopadCargoShuttle
+  suffix: Cargo Shuttle
+  components:
+  - type: Label
+    currentLabel: holopad-cargo-shuttle
+
+- type: entity
+  parent: HolopadLongRange
+  id: HolopadCentCommEvacShuttle
+  suffix: Evac Shuttle
+  components:
+  - type: Label
+    currentLabel: holopad-centcomm-evac
+
+
+# Map Specific
+# For holopads that only fit specific maps. For example: Bagel has Clown, Mime and Musician merged into one.
+- type: entity
+  parent: Holopad
+  id: HolopadServiceClownMime
+  suffix: Clown/Mime
+  components:
+  - type: Label
+    currentLabel: holopad-service-clown-mime
