@@ -1,0 +1,62 @@
+- type: entity
+  parent: BaseSign
+  id: SignBrigmed
+  name: brigmed sign
+  description: A sign indicating the brig medical bay.
+  components:
+  - type: Sprite
+    state: brigmed
+    
+- type: entity
+  parent: BaseSign
+  id: SignDisposalProper
+  name: disposals sign
+  description: A sign indicating a disposal area.
+  components:
+  - type: Sprite
+    state: disposals_proper
+    
+- type: entity
+  parent: BaseSign
+  id: SignSecureAreaSmall
+  name: secure area sign
+  description: A sign indicating a secure area.
+  components:
+  - type: Sprite
+    state: secureareasmall
+    
+- type: entity
+  parent: BaseSign
+  id: SignWallBiohazard
+  name: wall biohazard sign
+  description: A sign indicating a biohazard.
+  components:
+  - type: Sprite
+    state: wall_biohazard
+    
+- type: entity
+  parent: BaseSign
+  id: SignWallExtremeHeat
+  name: wall extreme heat sign
+  description: A sign indicating extreme heat.
+  components:
+  - type: Sprite
+    state: wall_extremeheat
+    
+- type: entity
+  parent: BaseSign
+  id: SignNoSmoking
+  name: no smoking sign
+  description: A sign indicating you can not smoke here.
+  components:
+  - type: Sprite
+    state: nosmoking
+    
+- type: entity
+  parent: BaseSign
+  id: SignYesSmoking
+  name: yes smoking sign
+  description: A sign indicating you can smoke here.
+  components:
+  - type: Sprite
+    state: yessmoking

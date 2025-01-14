@@ -1,0 +1,35 @@
+- type: entity
+  parent: PosterBase
+  id: PosterLegitCalendar
+  name: "NT Brand Calendar"
+  description: " An outdated calendar bearing NanoTrasen's branding."
+  components:
+  - type: Sprite
+    state: calendar
+    
+- type: entity
+  parent: PosterBase
+  id: PosterLegitCleanHands
+  name: "Clean Hands"
+  description: " Wash your hands. Or else."
+  components:
+  - type: Sprite
+    state: cleanhands
+    
+- type: entity
+  parent: PosterBase
+  id: PosterLegitEyeChart
+  name: "A chart for eye exams."
+  description: " Is that third letter a P or an F?"
+  components:
+  - type: Sprite
+    state: eyechart
+    
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandYoutoolpia
+  name: "Youtoolpia"
+  description: " A dream that went up in plasma fire."
+  components:
+  - type: Sprite
+    state: youtoolpia
