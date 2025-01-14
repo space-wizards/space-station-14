@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: sususuyo
-  changes:
-  - message: Removed a song from the lobby! Keeping it to the jukebox instead.
-    type: Remove
-  id: 429
-  time: '2024-10-29T22:56:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/580
 - author: mqole
   changes:
   - message: Removing languages for now. They need a bit more time in the oven.
@@ -4492,3 +4485,11 @@
   id: 928
   time: '2025-01-14T23:44:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1352
+- author: ATDoop
+  changes:
+  - message: Thieves now start with a special calling card! Copy it at the fax machine
+      if you need more!
+    type: Add
+  id: 929
+  time: '2025-01-14T23:47:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1366
