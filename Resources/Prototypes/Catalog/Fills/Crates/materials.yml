@@ -143,7 +143,7 @@
   parent: CrateGenericSteel
   name: surplus materials
   description: Surplus materials from somewhere.
-  components:D
+  components:
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:NestedSelector
