@@ -53,7 +53,6 @@ public sealed partial class BorgSystem
 
         _mind.TransferTo(mindId, uid, true, mind: mind);
 
-        //TODO:ERRANT "This should use events / separate component for job changes on mind change instead of hardcoding borgs.
         if (!_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
             _roles.MindAddRole(mindId, "MindRoleSiliconBrain", silent: true);
 
@@ -106,7 +105,6 @@ public sealed partial class BorgSystem
         if (!_mind.TryGetMind(linked, out var mindId, out var mind))
             return;
 
-        //TODO:ERRANT "This should use events / separate component for job changes on mind change instead of hardcoding borgs.
         if (_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
             _roles.MindRemoveRole<SiliconBrainRoleComponent>(mindId);
 
