@@ -42,7 +42,7 @@ namespace Content.Server.Connection
         /// <param name="duration">How long the bypass should last for.</param>
         void AddTemporaryConnectBypass(NetUserId user, TimeSpan duration);
 
-        Task Update();
+        void Update();
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ namespace Content.Server.Connection
                 time = newTime;
         }
 
-        public async Task Update()
+        public async void Update()
         {
             await _ipintel.Update();
         }
