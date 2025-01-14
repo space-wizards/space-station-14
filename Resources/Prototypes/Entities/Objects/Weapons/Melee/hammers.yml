@@ -44,6 +44,7 @@
   - type: MeleeThrowOnHit
     stunTime: 3
     disableDuringUseDelay: true
+    activateOnThrown: true
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -51,7 +52,9 @@
         Blunt: 5
         Structural: 5
     soundHit:
-      collection: MetalThud
+      path: /Audio/Effects/tesla_consume.ogg
+      params:
+        variation: 0.10
   - type: IncreaseDamageOnWield
     damage:
       types:
@@ -65,7 +68,6 @@
   - type: Item
     size: Ginormous
 
-# TODO: Change sound
 - type: entity
   id: SingularityHammer
   parent: BaseItem
@@ -101,7 +103,9 @@
         Blunt: 5
         Structural: 5
     soundHit:
-      collection: MetalThud
+      path: /Audio/Effects/radpulse5.ogg
+      params:
+        variation: 0.10
   - type: IncreaseDamageOnWield
     damage:
       types:
