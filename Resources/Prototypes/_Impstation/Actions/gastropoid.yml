@@ -1,0 +1,9 @@
+- type: entity
+  id: ActionSlime
+  name: Slime Trail
+  description: Leave a trail of mucin.
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/slime.png
+    event: !type:ExcretionActionEvent
+    useDelay: 1

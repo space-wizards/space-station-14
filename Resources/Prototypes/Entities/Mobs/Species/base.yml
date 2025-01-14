@@ -138,6 +138,8 @@
     - RadiationProtection
     - Drowsiness
     - Adrenaline
+    - Feminized # DeltaV - Hormone system
+    - Masculinized # DeltaV - Hormone system
   - type: Body
     prototype: Human
     requiredLegs: 2

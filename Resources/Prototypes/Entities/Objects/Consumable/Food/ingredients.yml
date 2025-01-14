@@ -605,7 +605,7 @@
 
 - type: entity
   name: stick of rainbow cannabis butter
-  parent: FoodBakingBase
+  parent: [FoodBakingBase, BaseMinorContraband]
   id: FoodRainbowCannabisButter
   description: Add this to your favorite baked goods for a horrible time.
   components:

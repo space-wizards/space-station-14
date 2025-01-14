@@ -26,7 +26,8 @@
     id: TechnicalAssistantPDA
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
+    pocket1: TutorialPersonalAI #imp
     pocket2: BookEngineersHandbook
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff

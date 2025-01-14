@@ -26,6 +26,21 @@
         blacklist:
           components:
           - Sharp
+  #begin imp edit
+  - type: ItemToggle
+    onUse: false
+    onActivate: false
+    soundActivate: 
+      collection: BikeHorn
+    soundDeactivate: 
+      collection: BikeHorn
+      params:
+        pitch: .8
+  - type: ToggleClothing
+    action: ActionToggleWaddling
+    mustEquip: true
+  - type: WaddleWhenWorn
+  #end imp edit
 
 - type: entity
   parent: ClothingShoesClownBase
@@ -223,6 +238,15 @@
         collection: FootstepJester
         params:
           variation: 0.07 #making a note so this is in the commit if we want to change this later - ruddygreat
+    #start imp edit 
+    - type: ItemToggle
+      onUse: false
+      onActivate: false
+      soundActivate: 
+        path: /Audio/_Impstation/Effects/Footsteps/jesterstep_on.ogg
+      soundDeactivate: 
+        path: /Audio/_Impstation/Effects/Footsteps/jesterstep_off.ogg
+    #end imp edit 
 
 - type: entity
   parent: ClothingShoesClown
