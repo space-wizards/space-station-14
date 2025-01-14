@@ -3,5 +3,4 @@
   startingInventory:
     DrinkSodaWaterCan: 6 #typically hacked product. Default product is "soda"
   contrabandInventory:
-    DrinkColaCan: 3
-    DrinkDrGibbCan: 3
+    DrinkColaCan: 6
