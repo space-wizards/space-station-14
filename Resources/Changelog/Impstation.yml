@@ -1,23 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: slime outline is now 75% opacity (down from 100%)
-    type: Tweak
-  - message: slime hair is now 65% opacity (up from 50%)
-    type: Tweak
-  - message: slime torso outlines adjusted to not overlap visibly on arms and legs
-    type: Tweak
-  - message: nose and mouth from default slime sprite
-    type: Remove
-  - message: nose and color-customizable mouth as slime head markings
-    type: Add
-  - message: internal skeleton markings for gelatinous cube type slimes
-    type: Add
-  - message: internal brain, lungs, and core markings
-    type: Add
-  id: 428
-  time: '2024-10-29T22:55:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/577
 - author: sususuyo
   changes:
   - message: Removed a song from the lobby! Keeping it to the jukebox instead.
@@ -4504,3 +4485,10 @@
   id: 927
   time: '2025-01-14T23:41:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1365
+- author: mqole
+  changes:
+  - message: Increased the time required to play certain command roles.
+    type: Tweak
+  id: 928
+  time: '2025-01-14T23:44:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1352
