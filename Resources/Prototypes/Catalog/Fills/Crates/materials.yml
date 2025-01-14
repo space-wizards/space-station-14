@@ -107,6 +107,40 @@
       - id: SheetPaper
         amount: 3
 
+- type: entityTable
+  id: RandomMaterialCrateTable
+  table: !type:GroupSelector
+    children:
+    - id: SheetGlass
+      weight: 25
+    - id: SheetSteel
+      weight: 25
+    - id: SheetPlastic
+      weight: 10
+    - id: MaterialCloth
+      weight: 10
+    - id: SheetPlasteel
+      weight: 10
+    - id: MaterialWoodPlank
+      weight: 10
+    - id: PartRodMetal
+      weight: 10
+    - id: SheetPlasma10
+      weight: 1
+
+- type: entity
+  id: CrateMaterialRandom
+  parent: CrateGenericSteel
+  name: surplus materials
+  description: Surplus materials from somewhere.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: RandomMaterialCrateTablea
+        rolls: !type:RangeNumberSelector
+          range: 2, 4
+
 #- type: entity
 #  id: CrateMaterialHFuelTank
 #  name: fueltank crate
