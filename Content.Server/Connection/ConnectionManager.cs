@@ -102,7 +102,7 @@ namespace Content.Server.Connection
             }
             catch (Exception e)
             {
-                _sawmill.Error("Update function failed:" + e);
+                _sawmill.Error("IPIntel update failed:" + e);
             }
         }
 
