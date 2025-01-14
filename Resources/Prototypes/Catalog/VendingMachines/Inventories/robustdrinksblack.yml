@@ -1,13 +1,13 @@
 - type: vendingMachineInventory
   id: RobustSoftdrinksBlackInventory # Bit long, but makes sense with current IDs
   startingInventory:
-    DrinkDrGibbCan: 3
-    DrinkFourteenLokoCan: 3
+    DrinkDrGibbCan: 1
+    DrinkFourteenLokoCan: 2
     DrinkGrapeCan: 2
-    DrinkPwrGameCan: 3
-    DrinkShamblersJuiceCan: 3
-    DrinkColaCan: 3
-    DrinkStarkistCan: 3
+    DrinkPwrGameCan: 1
+    DrinkShamblersJuiceCan: 1
+    DrinkColaCan: 1
+    DrinkStarkistCan: 1
   emaggedInventory:
     DrinkNukieCan: 2
     DrinkChangelingStingCan: 2

@@ -2,12 +2,12 @@
   id: RobustSoftdrinksInventory
   startingInventory:
     DrinkIcedTeaCan: 2
-    DrinkEnergyDrinkCan: 3
-    DrinkLemonLimeCan: 3
+    DrinkEnergyDrinkCan: 1
+    DrinkLemonLimeCan: 1
     DrinkRootBeerCan: 2
-    DrinkSolDryCan: 3
-    DrinkSpaceMountainWindCan: 3
-    DrinkSpaceUpCan: 3
+    DrinkSolDryCan: 2
+    DrinkSpaceMountainWindCan: 1
+    DrinkSpaceUpCan: 1
   emaggedInventory:
     DrinkNukieCan: 2
     DrinkChangelingStingCan: 2

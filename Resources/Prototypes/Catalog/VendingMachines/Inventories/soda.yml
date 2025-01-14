@@ -1,15 +1,15 @@
 ﻿- type: vendingMachineInventory
   id: SodaInventory
   startingInventory:
-    DrinkDrGibbCan: 3
-    DrinkFourteenLokoCan: 3
-    DrinkShamblersJuiceCan: 3
-    DrinkLemonLimeCan: 3
-    DrinkSolDryCan: 3
-    DrinkColaCan: 3
+    DrinkDrGibbCan: 2
+    DrinkFourteenLokoCan: 2
+    DrinkShamblersJuiceCan: 2
+    DrinkLemonLimeCan: 2
+    DrinkSolDryCan: 2
+    DrinkColaCan: 2
     DrinkLemonLimeCranberryCan: 2
-    DrinkSpaceUpCan: 3
-    DrinkStarkistCan: 3
+    DrinkSpaceUpCan: 2
+    DrinkStarkistCan: 2
   emaggedInventory:
     DrinkNukieCan: 3
     DrinkChangelingStingCan: 3

@@ -3,9 +3,9 @@
   startingInventory:
     DrinkStarkistCan: 4
     DrinkDrGibbCan: 3
-    DrinkFourteenLokoCan: 2
+    DrinkFourteenLokoCan: 1
     DrinkEnergyDrinkCan: 2
-    DrinkRootBeerCan: 2
+    DrinkRootBeerCan: 1
   emaggedInventory:
     DrinkNukieCan: 2
     DrinkChangelingStingCan: 2

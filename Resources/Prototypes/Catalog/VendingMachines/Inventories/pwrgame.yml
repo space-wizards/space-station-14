@@ -2,11 +2,10 @@
   id: PwrGameInventory
   startingInventory:
     DrinkPwrGameCan: 4
-    DrinkGrapeCan: 2
+    DrinkGrapeCan: 1
     DrinkShamblersJuiceCan: 3
     DrinkLemonLimeCan: 3
-    DrinkLemonLimeCranberryCan: 2
-    DrinkSolDryCan: 3
+    DrinkSolDryCan: 1
   emaggedInventory:
     DrinkNukieCan: 2
     DrinkChangelingStingCan: 2

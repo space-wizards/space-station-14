@@ -3,8 +3,7 @@
   startingInventory:
     DrinkSpaceUpCan: 4
     DrinkSpaceMountainWindCan: 3
-    DrinkFourteenLokoCan: 2
-    DrinkGrapeCan: 2
+    DrinkGrapeCan: 1
     DrinkEnergyDrinkCan: 2
     DrinkStarkistCan: 3
   emaggedInventory:

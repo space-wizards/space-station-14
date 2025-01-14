@@ -2,9 +2,9 @@
   id: ShamblersJuiceInventory
   startingInventory:
     DrinkShamblersJuiceCan: 4
-    DrinkIcedTeaCan: 2
+    DrinkIcedTeaCan: 1
     DrinkLemonLimeCan: 3
-    DrinkSolDryCan: 3
+    DrinkSolDryCan: 1
     DrinkColaCan: 3
   emaggedInventory:
     DrinkNukieCan: 2

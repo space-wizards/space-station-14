@@ -3,10 +3,9 @@
   startingInventory:
     DrinkColaCan: 4
     DrinkPwrGameCan: 2
-    DrinkRootBeerCan: 2
+    DrinkRootBeerCan: 1
     DrinkLemonLimeCan: 3
-    DrinkLemonLimeCranberryCan: 2
-    DrinkSolDryCan: 3
+    DrinkSolDryCan: 1
   emaggedInventory:
     DrinkNukieCan: 2
     DrinkChangelingStingCan: 2
