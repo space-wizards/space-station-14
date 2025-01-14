@@ -5,6 +5,7 @@ using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Whitelist;
+using Content.Shared.Wieldable;
 
 namespace Content.Shared.RepulseAttract;
 
@@ -21,7 +22,7 @@ public sealed class RepulseAttractSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<RepulseAttractComponent, GettingPickedUpAttemptEvent>(OnPickupAttempt);
         SubscribeLocalEvent<RepulseAttractComponent, DroppedEvent>(OnDrop);
-        SubscribeLocalEvent<RepulseAttractComponent, AttemptMeleeEvent>(OnMeleeAttempt);
+        SubscribeLocalEvent<RepulseAttractComponent, AttemptMeleeEvent>(OnMeleeAttempt, after: [typeof(WieldableSystem)]);
     }
 
     private void OnPickupAttempt(Entity<RepulseAttractComponent> ent, ref GettingPickedUpAttemptEvent args)
