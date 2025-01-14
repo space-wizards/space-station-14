@@ -230,10 +230,10 @@
 
 - type: construction
   name: pet carrier
-  id: Petcarrier
-  graph: Petcarrier
+  id: PetCarrier
+  graph: PetCarrier
   startNode: start
-  targetNode: petcarrier
+  targetNode: petCarrier
   category: construction-category-misc
   objectType: Item
   description: Allows large animals to be carried comfortably.
