@@ -1907,7 +1907,7 @@
   - LeatherShoes
   - BlackShoes
   - WhiteShoes
-  - ClownShoesExpert
+  - ClownShoesExpert # imp
 
 - type: loadoutGroup
   id: BoxerJumpsuit
