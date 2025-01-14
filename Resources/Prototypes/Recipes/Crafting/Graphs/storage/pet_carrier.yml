@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: Petcarrier
+  id: PetCarrier
   start: start
   graph:
     - node: start
