@@ -34,6 +34,19 @@
     chance: 1
 
 
+- type: entityTable
+  id: ClothingVendorTable
+  table: !type:GroupSelector
+    children:
+    - id: VendingMachineClothing
+      weight: 30
+    - id: VendingMachineWinter
+      weight: 30
+    - id: VendingMachinePride
+      weight: 30
+    - id: VendingMachineTheater
+      weight: 10
+
 - type: entity
   id: RandomVendingClothing
   name: random vending machine spawner
@@ -45,11 +58,6 @@
     - state: red
     - sprite: Structures/Machines/VendingMachines/random.rsi
       state: clothing
-  - type: RandomSpawner
-    prototypes:
-    - VendingMachineClothing
-    - VendingMachineWinter
-    - VendingMachinePride
-    rarePrototypes:
-    - VendingMachineTheater
-    rareChance: 0.1
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: ClothingVendorTable

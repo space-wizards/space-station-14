@@ -235,10 +235,11 @@
   id: CrateTechBoardRandom
   parent: CrateEngineering
   name: surplus boards
+  description: Surplus boards from somewhere.
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:NestedSelector
         tableId: RandomTechBoardTable
         rolls: !type:RangeNumberSelector
-          range: 4, 8
+          range: 3, 7
