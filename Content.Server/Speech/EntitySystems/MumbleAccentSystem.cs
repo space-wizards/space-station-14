@@ -15,11 +15,7 @@ public sealed class MumbleAccentSystem : EntitySystem
 
     public string Accentuate(string message, MumbleAccentComponent component)
     {
-        var msg = message;
-
-        msg = _replacement.ApplyReplacements(msg, "mumble");
-
-        return msg;
+        return _replacement.ApplyReplacements(message, "mumble");
     }
 
     private void OnAccentGet(EntityUid uid, MumbleAccentComponent component, AccentGetEvent args)
