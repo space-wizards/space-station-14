@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Books cannot longer be inserted in crates as paper labels
-    type: Fix
-  id: 7307
-  time: '2024-09-07T13:22:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31919
 - author: qwerltaz
   changes:
   - message: Reduced wall closet range. It's now much easier to not close yourself
@@ -3938,3 +3931,10 @@
   id: 7806
   time: '2025-01-13T10:07:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33363
+- author: southbridge-fur
+  changes:
+  - message: The Pride-O-Mat vending machine has been ported to upstream.
+    type: Add
+  id: 7807
+  time: '2025-01-13T18:49:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34412
