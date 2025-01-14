@@ -1,0 +1,14 @@
+- type: entity
+  parent: BaseFXEntity
+  categories: [ HideSpawnMenu ]
+  id: TelepadBeamInFX
+  components:
+  - type: TimedDespawn
+    lifetime: 0.5
+  - type: Sprite
+    layers:
+    - sprite: Structures\cargo_telepad.rsi
+      state: beam
+      shader: unshaded
+      netsync: false
+      drawdepth: Effects

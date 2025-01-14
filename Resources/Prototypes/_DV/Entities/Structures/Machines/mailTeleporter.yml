@@ -1,7 +1,7 @@
 - type: entity
   id: MailTeleporter
   parent: [ BaseMachinePowered, ConstructibleMachine ]
-  name: mail teleporter
+  name: mail telepad
   description: Teleports mail addressed to the crew of this station.
   components:
   - type: MailTeleporter
@@ -10,39 +10,23 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-            bounds: "-0.45,-0.45,0.45,0.00"
+          bounds: "-0.45,-0.45,0.45,0.00"
         density: 120
-        mask:
-        - HighImpassable
+  - type: Appearance
   - type: Sprite
-    sprite: _Nyanotrasen/Structures/mailbox.rsi
-    scale: 0.5, 0.5
+    sprite: _Impstation/Structures/mailtelepad.rsi
     layers:
-    - state: icon
-    - state: unlit
-      shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 75
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalGlassBreak
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - state: base
+      - state: lit
+        shader: unshaded
+        map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: ApcPowerReceiver
+    powerLoad: 1000
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
-          True: {visible: true}
-          False: {visible: false}
+          True: { visible: true }
+          False: { visible: false }
   - type: Machine
     board: MailTeleporterMachineCircuitboard

@@ -1,4 +1,5 @@
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server._DV.Mail.Components
 {
@@ -22,7 +23,11 @@ namespace Content.Server._DV.Mail.Components
         /// </summary>
         [DataField]
         public SoundSpecifier TeleportSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
-
+        /// <summary>
+        /// Imp : The SFX spawned when mail teleports in.
+        /// </summary>
+        [DataField]
+        public EntProtoId BeamInFx = "TelepadBeamInFX";
         /// <summary>
         /// The MailDeliveryPoolPrototype that's used to select what mail this
         /// teleporter can deliver.

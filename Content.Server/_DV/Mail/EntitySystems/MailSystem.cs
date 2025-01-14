@@ -719,6 +719,9 @@ namespace Content.Server._DV.Mail.EntitySystems
             if (_containerSystem.TryGetContainer(uid, "queued", out var queued))
                 _containerSystem.EmptyContainer(queued);
 
+            // Spawn VFX
+            Spawn(component.BeamInFx, Transform(uid).Coordinates);
+
             _audioSystem.PlayPvs(component.TeleportSound, uid);
         }
 
