@@ -2,9 +2,11 @@ using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using System.Linq;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
@@ -19,27 +21,22 @@ public sealed class HolopadSystem : SharedHolopadSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HolopadHologramComponent, ComponentHandleState>(HandleHolopadHologramState);
+        SubscribeLocalEvent<HolopadHologramComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<HolopadHologramComponent, BeforePostShaderRenderEvent>(OnShaderRender);
         SubscribeAllEvent<TypingChangedEvent>(OnTypingChanged);
     }
 
-    private void HandleHolopadHologramState(Entity<HolopadHologramComponent> entity, ref ComponentHandleState args)
+    private void OnComponentStartup(Entity<HolopadHologramComponent> entity, ref ComponentStartup ev)
     {
-        if (args.Current is not HolopadHologramComponentState state)
-            return;
-
-        entity.Comp.LinkedEntity = EnsureEntity<HolopadHologramComponent>(state.Target, entity);
-
         UpdateHologramSprite(entity, entity.Comp.LinkedEntity);
     }
 
-    private void OnShaderRender(EntityUid uid, HolopadHologramComponent component, BeforePostShaderRenderEvent ev)
+    private void OnShaderRender(Entity<HolopadHologramComponent> entity, ref BeforePostShaderRenderEvent ev)
     {
         if (ev.Sprite.PostShader == null)
             return;
 
-        ev.Sprite.PostShader.SetParameter("t", (float)_timing.CurTime.TotalSeconds * component.ScrollRate);
+        UpdateHologramSprite(entity, entity.Comp.LinkedEntity);
     }
 
     private void OnTypingChanged(TypingChangedEvent ev, EntitySessionEventArgs args)
@@ -70,7 +67,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (TryComp<SpriteComponent>(target, out var targetSprite))
         {
             // Use the target's holographic avatar (if available)
-            if (TryComp<HolographicAvatarComponent>(target, out var targetAvatar))
+            if (TryComp<HolographicAvatarComponent>(target, out var targetAvatar) &&
+                targetAvatar.LayerData != null)
             {
                 for (int i = 0; i < targetAvatar.LayerData.Length; i++)
                 {

@@ -68,7 +68,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
         // Networked events
         SubscribeNetworkEvent<HolopadUserTypingChangedEvent>(OnTypingChanged);
         SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvs);
-        SubscribeLocalEvent<HolopadHologramComponent, ComponentGetState>(GetHolopadHologramState);
 
         // Component start/shutdown events
         SubscribeLocalEvent<HolopadComponent, ComponentInit>(OnHolopadInit);
@@ -340,13 +339,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
         }
     }
 
-    private void GetHolopadHologramState(Entity<HolopadHologramComponent> entity, ref ComponentGetState args)
-    {
-        var netTarget = GetNetEntity(entity.Comp.LinkedEntity);
-
-        args.State = new HolopadHologramComponentState(netTarget);
-    }
-
     #endregion
 
     #region: Component start/shutdown events
@@ -602,14 +594,10 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private void SyncHolopadHologramAppearanceWithTarget(Entity<HolopadComponent> entity, Entity<HolopadUserComponent>? user)
     {
-        var netHologram = GetNetEntity(entity.Comp.Hologram);
-
-        if (netHologram == null)
+        if (entity.Comp.Hologram == null)
             return;
 
-        var netUser = GetNetEntity(user);
-
-        entity.Comp.Hologram!.Value.Comp.LinkedEntity = user?.Owner;
+        entity.Comp.Hologram.Value.Comp.LinkedEntity = user;
         Dirty(entity.Comp.Hologram.Value);
     }
 

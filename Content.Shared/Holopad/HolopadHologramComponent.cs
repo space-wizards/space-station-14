@@ -7,7 +7,7 @@ namespace Content.Shared.Holopad;
 /// <summary>
 /// Holds data pertaining to holopad holograms
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class HolopadHologramComponent : Component
 {
     /// <summary>
@@ -67,20 +67,6 @@ public sealed partial class HolopadHologramComponent : Component
     /// <summary>
     /// An entity that is linked to this hologram
     /// </summary>
-    [ViewVariables]
-    public EntityUid? LinkedEntity = EntityUid.Invalid;
-}
-
-/// <summary>
-/// Contatins state data relating to the holopd holopad
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class HolopadHologramComponentState : ComponentState
-{
-    public NetEntity? Target;
-
-    public HolopadHologramComponentState(NetEntity? target = null)
-    {
-        Target = target;
-    }
+    [ViewVariables, AutoNetworkedField]
+    public EntityUid? LinkedEntity = null;
 }
