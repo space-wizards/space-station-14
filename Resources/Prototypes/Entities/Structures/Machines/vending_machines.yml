@@ -692,7 +692,7 @@
   parent: VendingMachine
   id: VendingMachineSmite
   name: Smite Vendor
-  description: Smite makes right.
+  description: Popular with the administration.
   components:
   - type: VendingMachine
     pack: SmiteInventory
