@@ -11,8 +11,6 @@
     - type: mappingTemplate
       id: FireAlarm
     - type: mappingTemplate
-      id: FirelockGlass
-    - type: mappingTemplate
       id: Firelock
     - type: mappingTemplate
       id: AirAlarm
@@ -826,31 +824,17 @@
           id: Materials
           children:
             - type: mappingTemplate
-              id: CableMVStack10
-            - type: mappingTemplate
               id: CableMVStack
             - type: mappingTemplate
-              id: CableApcStack10
-            - type: mappingTemplate
               id: CableApcStack
             - type: mappingTemplate
-              id: CableApcStack10
-            - type: mappingTemplate
               id: CableApcStack
-            - type: mappingTemplate
-              id: SheetSteel10
             - type: mappingTemplate
               id: SheetSteel
             - type: mappingTemplate
-              id: SheetGlass10
-            - type: mappingTemplate
               id: SheetGlass
             - type: mappingTemplate
-              id: SheetPlastic10
-            - type: mappingTemplate
               id: SheetPlastic
-            - type: mappingTemplate
-              id: PartRodMetal10
             - type: mappingTemplate
               id: PartRodMetal
             - type: mappingTemplate
@@ -1132,8 +1116,6 @@
           id: RiotBulletShield
         - type: mappingTemplate
           id: RiotShield
-        - type: mappingTemplate
-          id: ClothingOuterArmorHeavy
         - type: mappingTemplate
           id: LootSpawnerArmoryArmorOnly
         - type: mappingTemplate
