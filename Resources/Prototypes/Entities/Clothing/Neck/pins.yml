@@ -113,7 +113,7 @@
 
 - type: entity
   parent: ClothingNeckPinBase
-  id: ClothingNeckOmniPin
+  id: ClothingNeckOmnisexualPin
   name: omnisexual pin
   description: Be omni do crime.
   components:
