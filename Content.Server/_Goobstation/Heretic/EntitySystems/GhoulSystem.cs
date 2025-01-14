@@ -27,7 +27,7 @@ using Robust.Shared.Audio;
 
 namespace Content.Server.Heretic.EntitySystems;
 
-public sealed partial class GhoulSystem : EntitySystem
+public sealed partial class GhoulSystem : Shared.Heretic.EntitySystems.SharedGhoulSystem
 {
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
