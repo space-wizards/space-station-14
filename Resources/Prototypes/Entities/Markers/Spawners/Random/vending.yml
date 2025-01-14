@@ -39,11 +39,11 @@
   table: !type:GroupSelector
     children:
     - id: VendingMachineClothing
-      weight: 30
+      weight: 40
     - id: VendingMachineWinter
-      weight: 30
+      weight: 40
     - id: VendingMachinePride
-      weight: 30
+      weight: 10
     - id: VendingMachineTheater
       weight: 10
 
