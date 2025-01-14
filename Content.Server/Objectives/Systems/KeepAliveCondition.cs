@@ -45,7 +45,7 @@ public sealed class KeepAliveConditionSystem : EntitySystem
             return;
         }
 
-        var traitors = _traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind).ToHashSet();
+        var traitors = _traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind).Select(t => t.Id).ToHashSet();
 
         // Can't have multiple objectives to help/save the same person
         foreach (var objective in args.Mind.Objectives)
@@ -54,7 +54,7 @@ public sealed class KeepAliveConditionSystem : EntitySystem
             {
                 if (TryComp<TargetObjectiveComponent>(objective, out var help))
                 {
-                    traitors.RemoveWhere(x => x.Id == help.Target);
+                    traitors.RemoveWhere(x => x == help.Target);
                 }
             }
         }

@@ -50,6 +50,8 @@ public sealed class DefibrillatorSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -196,14 +198,11 @@ public sealed class DefibrillatorSystem : EntitySystem
 
         if (component.PlayZapSound)
             _audio.PlayPvs(component.ZapSound, uid);
-        _electrocution.TryDoElectrocution(target,
-            null,
-            component.ZapDamage,
-            TimeSpan.FromSeconds(component.WritheDuration),
-            true,
-            ignoreInsulation: true);
-        component.NextZapTime = _timing.CurTime + component.ZapDelay;
-        _appearance.SetData(uid, DefibrillatorVisuals.Ready, false);
+        _electrocution.TryDoElectrocution(target, null, component.ZapDamage, TimeSpan.FromSeconds(component.WritheDuration), true, ignoreInsulation: true);
+        if (!TryComp<UseDelayComponent>(uid, out var useDelay))
+            return;
+        _useDelay.SetLength((uid, useDelay), component.ZapDelay, component.DelayId);
+        _useDelay.TryResetDelay((uid, useDelay), id: component.DelayId);
 
         ICommonSession? session = null;
 
@@ -303,23 +302,6 @@ public sealed class DefibrillatorSystem : EntitySystem
             // TODO clean up this clown show above
             var ev = new TargetDefibrillatedEvent(user, (uid, component));
             RaiseLocalEvent(target, ref ev);
-        }
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<DefibrillatorComponent>();
-        while (query.MoveNext(out var uid, out var defib))
-        {
-            if (defib.NextZapTime == null || _timing.CurTime < defib.NextZapTime)
-                continue;
-
-            if(defib.PlayReadySound)
-                _audio.PlayPvs(defib.ReadySound, uid);
-            _appearance.SetData(uid, DefibrillatorVisuals.Ready, true);
-            defib.NextZapTime = null;
         }
     }
 }
