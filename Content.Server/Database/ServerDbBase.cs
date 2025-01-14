@@ -1774,14 +1774,12 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         {
             await using var db = await GetDb();
 
-            var toDelete = db.DbContext.IPIntelCache
-                .Where(w => DateTime.UtcNow - w.Time >= range);
+            // Calculating this here cause otherwise sqlite whines.
+            var cutoffTime = DateTime.UtcNow.Subtract(range);
 
-            // Ensure we are not cleaning NOTHING.
-            if (!toDelete.Any())
-                return true;
-
-            await toDelete.ExecuteDeleteAsync();
+            await db.DbContext.IPIntelCache
+                .Where(w => w.Time <= cutoffTime)
+                .ExecuteDeleteAsync();
 
             await db.DbContext.SaveChangesAsync();
             return true;

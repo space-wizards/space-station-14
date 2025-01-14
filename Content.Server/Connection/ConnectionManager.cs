@@ -94,9 +94,9 @@ namespace Content.Server.Connection
                 time = newTime;
         }
 
-        public void Update()
+        public async void Update()
         {
-            _ipintel.Update();
+            await _ipintel.Update();
         }
 
         /*

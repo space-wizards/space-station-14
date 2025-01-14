@@ -275,12 +275,12 @@ public sealed class IPIntel
         return _rejectBad ? (true, Loc.GetString("ipintel-suspicious")) : (false, string.Empty);
     }
 
-    public void Update()
+    public async Task Update()
     {
         if (_enabled && _gameTiming.RealTime >= _nextClean)
         {
             _nextClean = _gameTiming.RealTime + TimeSpan.FromMinutes(_cleanupMins);
-            _db.CleanIPIntelCache(_cacheDays);
+            await _db.CleanIPIntelCache(_cacheDays);
         }
     }
 
