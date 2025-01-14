@@ -362,11 +362,22 @@
   components:
   - type: Pda
     id: MimeIDCard
+    paiSlot:
+      priority: -2
+      ejectSound: null
+      insertSound: null
+      whitelist:
+        components:
+        - PAI
     idSlot:
+      name: access-id-card-component-default
       ejectSound: null # mime is silent
       insertSound: null
+      whitelist:
+        components:
+        - IdCard
     penSlot:
-      startingItem: Pen # startingitem, priority, whitelist need to be kept or else they're overwritten
+      startingItem: Pen
       priority: -1
       whitelist:
         tags:
@@ -377,6 +388,9 @@
     cartridgeSlot:
       ejectSound: null
       insertSound: null
+      whitelist:
+        components:
+        - Cartridge
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
