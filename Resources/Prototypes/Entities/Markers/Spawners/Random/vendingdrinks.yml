@@ -24,7 +24,7 @@
       children:
       - id: VendingMachineCoffee
       - id: VendingMachineSovietSoda
-      - id: VendingMachineSoda
+      - id: VendingMachineSoda #Only vendor with all branded drinks.
     #Generic Robust soda vendors
     - !type:GroupSelector
       weight: 15
