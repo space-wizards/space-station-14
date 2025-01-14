@@ -1,5 +1,5 @@
-﻿using Content.Server.Roles;
-using Content.Shared.Containers.ItemSlots;
+﻿using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
@@ -48,19 +48,16 @@ public sealed partial class BorgSystem
 
         _appearance.SetData(uid, MMIVisuals.BrainPresent, true);
 
-        if (_mind.TryGetMind(ent, out var mindId, out var mind))
-        {
-            _mind.TransferTo(mindId, uid, true, mind: mind);
+        if (!_mind.TryGetMind(ent, out var mindId, out var mind))
+            return;
 
-            if (!_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
-                _roles.MindAddRole(mindId, "MindRoleSiliconBrain", silent: true);
+        _mind.TransferTo(mindId, uid, true, mind: mind);
 
-            var job = EnsureComp<JobComponent>(mindId); //TODO:ERRANT
+        //TODO:ERRANT "This should use events / separate component for job changes on mind change instead of hardcoding borgs.
+        if (!_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
+            _roles.MindAddRole(mindId, "MindRoleSiliconBrain", silent: true);
 
-            linked.OldJob = job.Prototype;
-            job.Prototype = "Borg";
-        }
-
+        BorgJobSwitch((mindId, mind), linked);
     }
 
     private void OnMMIMindAdded(EntityUid uid, MMIComponent component, MindAddedMessage args)
@@ -80,10 +77,19 @@ public sealed partial class BorgSystem
             return;
 
         _mind.TransferTo(mindId, component.LinkedMMI, true, mind: mind);
-        var job = EnsureComp<JobComponent>(mindId); //TODO:ERRANT
 
-        component.OldJob = job.Prototype;
-        job.Prototype = "Borg";
+        BorgJobSwitch((mindId, mind), component);
+    }
+
+    /// <summary>
+    ///     Switches an MMI-d mind's job to borg and stores the previous value so it can be restored
+    /// </summary>
+    private void BorgJobSwitch(Entity<MindComponent> mind, MMILinkedComponent comp)
+    {
+        if(_roles.MindHasRole<JobRoleComponent>(mind.Owner, out var job))
+            comp.OldJob = job.Value.Comp1.JobPrototype;
+
+        _roles.MindAddJobRole(mind, mind, true, "Borg");
     }
 
     private void OnMMILinkedRemoved(EntityUid uid, MMILinkedComponent component, EntGotRemovedFromContainerMessage args)
@@ -95,16 +101,16 @@ public sealed partial class BorgSystem
             return;
         RemComp(uid, component);
 
-        if (_mind.TryGetMind(linked, out var mindId, out var mind))
-        {
-            if (_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
-                _roles.MindRemoveRole<SiliconBrainRoleComponent>(mindId);
-
-            _mind.TransferTo(mindId, uid, true, mind: mind);
-
-            EnsureComp<JobComponent>(mindId).Prototype = component.OldJob; //TODO:ERRANT
-        }
-
         _appearance.SetData(linked, MMIVisuals.BrainPresent, false);
+
+        if (!_mind.TryGetMind(linked, out var mindId, out var mind))
+            return;
+
+        //TODO:ERRANT "This should use events / separate component for job changes on mind change instead of hardcoding borgs.
+        if (_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
+            _roles.MindRemoveRole<SiliconBrainRoleComponent>(mindId);
+
+        _mind.TransferTo(mindId, uid, true, mind: mind);
+        _roles.MindAddJobRole(mindId, mind, true, component.OldJob);
     }
 }
