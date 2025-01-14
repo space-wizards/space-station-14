@@ -42,7 +42,7 @@ public sealed class SignatureWriterSystem : EntitySystem
                     Act = () =>
                     {
                         comp.Font = entry.Value;
-                        _popup.PopupPredicted(Loc.GetString("signature-writer-component-font-set", ("color", entry.Key)), args.User, args.User);
+                        _popup.PopupPredicted(Loc.GetString("signature-writer-component-font-set", ("font", entry.Key)), args.User, args.User);
                     }
                 };
 
