@@ -20,7 +20,7 @@
     - Common
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseCargoContraband]
   id: StockTradingCartridge
   name: StockTrading cartridge
   description: A cartridge that tracks the intergalactic stock market.

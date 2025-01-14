@@ -168,6 +168,7 @@ public sealed partial class StockTradingUiFragment : BoxContainer
 
             _amountEdit = new LineEdit
             {
+                Text = "1",
                 PlaceHolder = Loc.GetString("stock-trading-amount-placeholder"),
                 HorizontalExpand = true,
                 MinWidth = 80,
