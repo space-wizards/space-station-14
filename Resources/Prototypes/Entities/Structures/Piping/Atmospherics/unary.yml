@@ -262,9 +262,11 @@
       - state: freezerOff
       - state: freezerOn
         map: ["enum.PowerDeviceVisualLayers.Powered"]
+        visible: false #imp edit
       - state: freezer-Unshaded
         shader: unshaded
         map: ["freezing"]
+        visible: false #imp edit
       - state: freezerPanelOpen
         map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       - state: pipe
@@ -276,7 +278,7 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
-        Freezing:
+        freezing:
           True: { visible: true }
           False: { visible: false }
   - type: GasThermoMachine
@@ -314,9 +316,11 @@
       - state: heaterOff
       - state: heaterOn
         map: ["enum.PowerDeviceVisualLayers.Powered"]
+        visible: false #imp edit
       - state: heater-Unshaded
         shader: unshaded
         map: ["heating"]
+        visible: false #imp edit
       - state: heaterPanelOpen
         map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       - state: pipe

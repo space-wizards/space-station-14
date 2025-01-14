@@ -2,3 +2,8 @@
   parent: BaseCommandHatRecipe
   id: ClothingHeadHatBeretCaptain
   result: ClothingHeadHatBeretCaptain
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtSalvageSpecialist
+  result: ClothingUniformJumpskirtSalvageSpecialist

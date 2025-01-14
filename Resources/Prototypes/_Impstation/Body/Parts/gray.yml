@@ -20,7 +20,7 @@
   parent: [PartGray, BaseTorso]
   components:
   - type: Sprite
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: "torso_m"
   - type: Extractable
     juiceSolution:
@@ -36,7 +36,7 @@
   parent: [PartGray, BaseHead]
   components:
   - type: Sprite
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: "head_m"
   - type: Extractable
     juiceSolution:
@@ -52,7 +52,7 @@
   parent: [PartGray, BaseLeftArm]
   components:
   - type: Sprite
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: "l_arm"
 
 - type: entity
@@ -61,7 +61,7 @@
   parent: [PartGray, BaseRightArm]
   components:
   - type: Sprite
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: "r_arm"
 
 - type: entity
@@ -70,7 +70,7 @@
   parent: [PartGray, BaseLeftHand]
   components:
   - type: Sprite
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: "l_hand"
 
 - type: entity
@@ -79,7 +79,7 @@
   parent: [PartGray, BaseRightHand]
   components:
   - type: Sprite
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: "r_hand"
 
 - type: entity
@@ -88,7 +88,7 @@
   parent: [PartGray, BaseLeftLeg]
   components:
   - type: Sprite
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: "l_leg"
 
 - type: entity
@@ -97,7 +97,7 @@
   parent: [PartGray, BaseRightLeg]
   components:
   - type: Sprite
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: "r_leg"
 
 - type: entity
@@ -106,7 +106,7 @@
   parent: [PartGray, BaseLeftFoot]
   components:
   - type: Sprite
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: "l_foot"
 
 - type: entity
@@ -115,5 +115,5 @@
   parent: [PartGray, BaseRightFoot]
   components:
   - type: Sprite
-    sprite: Mobs/Species/Gray/parts.rsi
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
     state: "r_foot"

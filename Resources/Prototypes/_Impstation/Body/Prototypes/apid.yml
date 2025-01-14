@@ -1,0 +1,42 @@
+﻿- type: body # this is just the human one but with one hand and bee lungs
+  id: Apid
+  name: "apid"
+  root: torso
+  slots:
+    head:
+      part: HeadApid
+      connections:
+      - torso
+      organs:
+        brain: OrganHumanBrain
+        eyes: OrganHumanEyes
+    torso:
+      part: TorsoApid
+      connections:
+      - right_arm
+      - right_leg
+      - left_leg
+      organs:
+        heart: OrganHumanHeart
+        lungs: OrganApidLungs
+        stomach: OrganHumanStomach
+        liver: OrganHumanLiver
+        kidneys: OrganHumanKidneys
+    right_arm:
+      part: RightArmApid
+      connections:
+      - right_hand
+    right_hand:
+      part: RightHandApid
+    right_leg:
+      part: RightLegApid
+      connections:
+      - right_foot
+    left_leg:
+      part: LeftLegApid
+      connections:
+      - left_foot
+    right_foot:
+      part: RightFootApid
+    left_foot:
+      part: LeftFootApid

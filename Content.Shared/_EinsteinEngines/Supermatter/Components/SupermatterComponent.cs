@@ -1,6 +1,8 @@
+using Content.Shared._EinsteinEngines.Supermatter.Monitor;
 using Content.Shared.Atmos;
 using Content.Shared.DoAfter;
 using Content.Shared.Radio;
+using Content.Shared.Speech;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -18,6 +20,12 @@ public sealed partial class SupermatterComponent : Component
     /// </summary>
     [DataField]
     public bool Activated = true;
+
+    /// <summary>
+    ///     The current status of the singularity, used for alert sounds and the monitoring console
+    /// </summary>
+    [DataField]
+    public SupermatterStatusType Status = SupermatterStatusType.Inactive;
 
     [DataField]
     public string SliverPrototype = "SupermatterSliver";
@@ -51,6 +59,10 @@ public sealed partial class SupermatterComponent : Component
     [DataField]
     public string CollisionResultPrototype = "Ash";
 
+    #endregion
+
+    #region Sounds
+
     [DataField]
     public SoundSpecifier DustSound = new SoundPathSpecifier("/Audio/_EinsteinEngines/Supermatter/supermatter.ogg");
 
@@ -58,10 +70,13 @@ public sealed partial class SupermatterComponent : Component
     public SoundSpecifier DistortSound = new SoundPathSpecifier("/Audio/_EinsteinEngines/Supermatter/distort.ogg");
 
     [DataField]
-    public SoundSpecifier CalmSound = new SoundPathSpecifier("/Audio/_EinsteinEngines/Supermatter/calm.ogg");
+    public SoundSpecifier CalmLoopSound = new SoundPathSpecifier("/Audio/_EinsteinEngines/Supermatter/calm.ogg");
 
     [DataField]
-    public SoundSpecifier DelamSound = new SoundPathSpecifier("/Audio/_EinsteinEngines/Supermatter/delamming.ogg");
+    public SoundSpecifier DelamLoopSound = new SoundPathSpecifier("/Audio/_EinsteinEngines/Supermatter/delamming.ogg");
+
+    [DataField]
+    public SoundSpecifier CurrentSoundLoop = new SoundPathSpecifier("/Audio/_EinsteinEngines/Supermatter/calm.ogg");
 
     [DataField]
     public SoundSpecifier CalmAccent = new SoundCollectionSpecifier("SupermatterAccentNormal");
@@ -70,7 +85,19 @@ public sealed partial class SupermatterComponent : Component
     public SoundSpecifier DelamAccent = new SoundCollectionSpecifier("SupermatterAccentDelam");
 
     [DataField]
-    public SoundSpecifier CurrentSoundLoop = new SoundPathSpecifier("/Audio/_EinsteinEngines/Supermatter/calm.ogg");
+    public string StatusWarningSound = "SupermatterWarning";
+
+    [DataField]
+    public string StatusDangerSound = "SupermatterDanger";
+
+    [DataField]
+    public string StatusEmergencySound = "SupermatterEmergency";
+
+    [DataField]
+    public string StatusDelamSound = "SupermatterDelaminating";
+
+    [DataField]
+    public string? StatusCurrentSound = null;
 
     #endregion
 
@@ -78,6 +105,12 @@ public sealed partial class SupermatterComponent : Component
 
     [DataField]
     public float Power;
+
+    [DataField]
+    public float Temperature;
+
+    [DataField]
+    public float WasteMultiplier;
 
     [DataField]
     public float MatterPower;

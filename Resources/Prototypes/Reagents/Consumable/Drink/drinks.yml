@@ -466,10 +466,41 @@
         conditions:
         - !type:OrganType
           type: Slime 
-          shouldHave: true
         damage:
           types:
             Caustic: 8
+      - !type:PopupMessage # for apids. they're bees, they get calm if you smoke 'em
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Water
+          min: 0.5
+        - !type:OrganType
+          type: Apid
+        type: Local
+        visualType: Medium
+        messages: [ "effect-sleepy" ]
+        probability: 0.1
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Water
+          min: 1
+        - !type:OrganType
+          type: Apid
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Water
+          min: 1.8
+        - !type:OrganType
+          type: Apid
+        key: ForcedSleep
+        component: ForcedSleeping
+        time: 3
+        type: Add
+
 
 - type: reagent
   id: Ice

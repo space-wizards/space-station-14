@@ -1,3 +1,25 @@
+- type: loadoutEffectGroup
+  id: PrestigeGold
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 1512000 #420 hours
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Silicon
+      time: 36000 #10 hours
+
+- type: loadoutEffectGroup
+  id: Tutorial #imp
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 54000 #15 hrs
+      inverted: true # don't let experienced players select these
+
 - type: loadout
   id: CigPackNewport
   storage:
@@ -24,6 +46,15 @@
   storage:
     back:
     - GoldPersonalAI
+
+- type: loadout
+  id: TutorialAI_Newcomer #imp. <15 hours.
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Tutorial
+  storage:
+    back:
+    - TutorialPersonalAI
 
 - type: loadout
   id: FolderHamster
@@ -63,3 +94,39 @@
   storage:
     back:
     - WalkingCane
+
+- type: loadout
+  id: ClothingHeadHatKippahSimple
+  storage:
+    back:
+    - ClothingHeadHatKippahSimple
+
+- type: loadout
+  id: ClothingHeadHatKippahWhiteAndBlue
+  storage:
+    back:
+    - ClothingHeadHatKippahWhiteAndBlue
+
+- type: loadout
+  id: ClothingHeadHatKippahBlueAndGold
+  storage:
+    back:
+    - ClothingHeadHatKippahBlueAndGold
+
+- type: loadout
+  id: ClothingHeadPaperSack
+  storage:
+    back:
+    - ClothingHeadPaperSack
+
+- type: loadout
+  id: ClothingHeadPaperSackSmile
+  storage:
+    back:
+    - ClothingHeadPaperSackSmile
+
+- type: loadout
+  id: HeartLocket
+  storage:
+    back:
+    - HeartLocket

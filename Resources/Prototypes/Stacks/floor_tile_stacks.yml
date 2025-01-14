@@ -332,60 +332,70 @@
   id: FloorCarpetRed
   name: red carpet tile
   spawn: FloorCarpetItemRed
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-red } # imp
   maxCount: 30
 
 - type: stack
   id: FloorCarpetBlack
-  name: block carpet tile
+  name: black carpet tile
   spawn: FloorCarpetItemBlack
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-black } # imp
   maxCount: 30
 
 - type: stack
   id: FloorCarpetBlue
   name: blue carpet tile
   spawn: FloorCarpetItemBlue
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-blue } # imp
   maxCount: 30
 
 - type: stack
   id: FloorCarpetGreen
   name: green carpet tile
   spawn: FloorCarpetItemGreen
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-green } # imp
   maxCount: 30
 
 - type: stack
   id: FloorCarpetOrange
   name: orange carpet tile
   spawn: FloorCarpetItemOrange
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-orange } # imp
   maxCount: 30
 
 - type: stack
   id: FloorCarpetSkyBlue
   name: skyblue carpet tile
   spawn: FloorCarpetItemSkyBlue
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-skyblue } # imp
   maxCount: 30
 
 - type: stack
   id: FloorCarpetPurple
   name: purple carpet tile
   spawn: FloorCarpetItemPurple
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-purple } # imp
   maxCount: 30
 
 - type: stack
   id: FloorCarpetPink
   name: pink carpet tile
   spawn: FloorCarpetItemPink
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-pink } # imp
   maxCount: 30
 
 - type: stack
   id: FloorCarpetCyan
   name: cyan carpet tile
   spawn: FloorCarpetItemCyan
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-cyan } # imp
   maxCount: 30
 
 - type: stack
   id: FloorCarpetWhite
   name: white carpet tile
   spawn: FloorCarpetItemWhite
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-white } # imp
   maxCount: 30
 
 - type: stack

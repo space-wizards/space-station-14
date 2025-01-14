@@ -1,0 +1,12 @@
+- type: entity
+  id: SpawnPointLocationMidRoundAntag
+  name: mid-round antag spawn location
+  suffix: Fugitive, Paradox Anomaly
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: prisoner
+  - type: MidRoundAntagSpawnLocation

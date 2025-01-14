@@ -1,0 +1,147 @@
+- type: entity
+  parent: BaseItem
+  id: TapeRecorder
+  name: tape recorder
+  description: Anything said into this device can and will be used against you in a court of space law.
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Devices/tape_recorder.rsi
+    layers:
+    - state: empty
+    - state: idle
+      map: ["tape"]
+      visible: false
+  - type: Item
+    size: Small
+  - type: TapeRecorder
+  - type: ActiveListener
+    range: 4
+  - type: UseDelay
+    delay: 1
+  - type: Speech
+  - type: ItemSlots
+    slots:
+      cassette_tape:
+        priority: 4
+        whitelist:
+          components:
+          - FitsInTapeRecorder
+  - type: ContainerContainer
+    containers:
+      cassette_tape: !type:ContainerSlot
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TapeRecorderVisuals.Mode:
+        tape:
+          Stopped: { state: "idle" }
+          Playing: { state: "playing" }
+          Recording: { state: "recording" }
+          Rewinding: { state: "rewinding" }
+      enum.TapeRecorderVisuals.TapeInserted:
+        tape:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ActivatableUI
+    key: enum.TapeRecorderUIKey.Key
+    inHandsOnly: true
+    requireActiveHand: false
+  - type: UserInterface
+    interfaces:
+      enum.TapeRecorderUIKey.Key:
+        type: TapeRecorderBoundUserInterface
+
+- type: entity
+  parent: TapeRecorder
+  id: TapeRecorderFilled
+  suffix: Filled
+  components:
+  - type: ContainerFill
+    containers:
+      cassette_tape:
+      - CassetteTape
+
+- type: entity
+  parent: BaseItem
+  id: CassetteTape
+  name: cassette tape
+  description: A magnetic tape that can hold up to two minutes of content on either side.
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Devices/cassette_tapes.rsi
+    layers:
+    - state: tape_greyscale
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: tape_ribbonoverlay
+      map: [ "enum.ToggleVisuals.Layer" ]
+      visible: false
+  - type: Item
+    size: Tiny
+  - type: Damageable
+  - type: TapeCassette
+    maxCapacity: 180
+    repairWhitelist:
+      tags:
+      - Screwdriver
+      - Write
+  - type: FitsInTapeRecorder
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        tape_greyscale: Rainbow
+
+- type: entity
+  suffix: Interview with Garry Smosh
+  parent: CassetteTape
+  id: CassetteTapeInterview
+  components:
+  - type: Label
+    currentLabel: Interview with Garry Smosh
+  - type: TapeCassette
+    recordedData:
+      - timestamp: 2
+        name: Phil Dervin
+        message: "Its 11:43am, present in the room are Phil Dervin, Detective first class, Officer Belview and Grarry Smosh, Suspect of one count of secure tresspass, four counts of assault, two counts of theft and 85 counts of disturbing the peace."
+      - timestamp: 6
+        name: Phil Dervin
+        message: "Mr Smosh, do you understand the charges you have been accused of?"
+      - timestamp: 14
+        name: Grarry Smosh
+        message: "I don't care what you say, i ain't done anything."
+      - timestamp: 18
+        name: Phil Dervin
+        message: "Sir, you were caught redhanded in the Captains bedroom. In the middle of an attempt at stealing his whiskey reserve no less."
+      - timestamp: 23
+        name: Phil Dervin
+        message: "You are lucky he didn't shoot you for that."
+      - timestamp: 28
+        name: Grarry Smosh
+        message: "I didn't see no signs saying i couldn't be there."
+      - timestamp: 34
+        name: Phil Dervin
+        message: "The Captains bedroom? I don't think we need a sign telling people to stay out - it's common sense."
+      - timestamp: 38
+        name: Phil Dervin
+        message: "Anyway that's besides the point, even if it were not off limits there is still the matter of the restricted items we found on your person and the subsequent attempt at evading arrest."
+      - timestamp: 42
+        name: Grarry Smosh
+        message: "I ain't done nothing."
+      - timestamp: 46
+        name: Officer Belview
+        message: "You slipped 3 officers, stole a stun baton and beat Ian with it. The HOP was very upset at that last part."
+      - timestamp: 50
+        name: Grarry Smosh
+        message: "Which one of you gave the HOP a disabler?"
+      - timestamp: 54
+        name: Phil Dervin
+        message: "The Warden did, turned out to be a good idea eh?"
+      - timestamp: 58
+        name: Officer Belview
+        message: "I would say so."

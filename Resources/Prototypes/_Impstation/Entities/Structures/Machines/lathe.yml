@@ -97,6 +97,8 @@
       - ClothingHeadHatCone
       - SprayPainter
       - HandLabeler
+      - TapeRecorder
+      - CassetteTape
     dynamicRecipes:
       #janitorial
       - MegaSprayBottle

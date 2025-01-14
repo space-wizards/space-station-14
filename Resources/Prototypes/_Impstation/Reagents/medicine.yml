@@ -6,6 +6,7 @@
   physicalDesc: reagent-physical-desc-enigmatic
   flavor: magical
   color: "#a50ed8"
+  contraband: Tier2Contraband
   metabolisms:
     Medicine:
       effects:
@@ -21,6 +22,7 @@
   physicalDesc: reagent-physical-desc-enigmatic
   flavor: magical
   color: "#911d06"
+  contraband: Tier2Contraband
   metabolisms:
     Medicine:
       effects:
@@ -28,7 +30,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 5
-          
+
 - type: reagent
   id: Caramexinin
   name: reagent-name-caramexinin
@@ -74,7 +76,7 @@
             Genetic: 5
       - !type:ModifyBleedAmount
         amount: -1
-        
+
 - type: reagent
   id: AquamDivinos
   name: reagent-name-aquamdivinos

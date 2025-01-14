@@ -15,7 +15,7 @@
     mask: ClothingMaskNinja
     head: ClothingHeadHelmetSpaceNinja
     eyes: ClothingEyesVisorNinja
-    gloves: ClothingHandsGlovesSpaceNinja
+    gloves: ClothingHandsGlovesSpaceNinjaWeak # imp
     outerClothing: ClothingOuterSuitSpaceNinja
     shoes: ClothingShoesSpaceNinja
     id: AgentIDCard

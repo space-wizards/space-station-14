@@ -37,7 +37,7 @@
 
 - type: entity
   id: JointRainbow
-  parent: Joint
+  parent: [Joint, BaseMinorContraband]
   name: joint
   suffix: Rainbow
   description: A roll of dried plant matter wrapped in thin paper. Seems to be colorful inside.

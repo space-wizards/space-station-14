@@ -1,0 +1,87 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Drawn by Carousel for Impstation",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "burqasolid",
+        "directions": 4
+      },
+      {
+        "name": "burqathaven",
+        "directions": 4
+      },
+      {
+        "name": "hijabchic",
+        "directions": 4
+      },
+      {
+        "name": "hijabsimple",
+        "directions": 4
+      },
+      {
+        "name": "niqab",
+        "directions": 4
+      },
+      {
+        "name": "tichelfashionable",
+        "directions": 4
+      },
+      {
+        "name": "tichelsimple",
+        "directions": 4
+      },
+      {
+        "name": "burqalizard",
+        "directions": 4
+      },
+      {
+        "name": "hijabchicthaven",
+        "directions": 4
+      },
+      {
+        "name": "hijabsimplethaven",
+        "directions": 4
+      },
+      {
+        "name": "niqablizard",
+        "directions": 4
+      },
+      {
+        "name": "niqabthaven",
+        "directions": 4
+      },
+      {
+        "name": "tichelfashionablethaven",
+        "directions": 4
+      },
+      {
+        "name": "tichelsimplethaven",
+        "directions": 4
+      },
+      {
+        "name": "thavennoears",
+        "directions": 4
+      },
+      {
+        "name": "hijabchicvox",
+        "directions": 4
+      },
+      {
+        "name": "hijabsimplevox",
+        "directions": 4
+      },
+      {
+        "name": "tichelsimplevox",
+        "directions": 4
+      },
+      {
+        "name": "tichelfashionablevox",
+        "directions": 4
+      }
+    ]
+}

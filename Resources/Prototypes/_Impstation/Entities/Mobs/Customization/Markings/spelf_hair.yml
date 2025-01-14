@@ -4,7 +4,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: e
 - type: marking
   id: SpElfHairBedhead
@@ -12,7 +12,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: bedhead
 - type: marking
   id: SpElfHairBedheadv2
@@ -20,7 +20,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: bedhead2
 - type: marking
   id: SpElfHairBedheadv3
@@ -28,7 +28,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: bedhead3
 - type: marking
   id: SpElfHairLongBedhead
@@ -36,7 +36,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: long_bedhead
 - type: marking
   id: SpElfHairLongBedhead2
@@ -44,7 +44,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: long_bedhead2
 - type: marking
   id: SpElfHairFloorlengthBedhead
@@ -52,7 +52,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: floorlength_bedhead
 - type: marking
   id: SpElfHairBeehive
@@ -60,7 +60,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: beehive
 - type: marking
   id: SpElfHairBeehive2
@@ -68,7 +68,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: beehive2
 - type: marking
   id: SpElfHairBob
@@ -76,7 +76,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: bob
 - type: marking
   id: SpElfHairBob2
@@ -84,7 +84,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: bob2
 - type: marking
   id: SpElfHairBobcut
@@ -92,7 +92,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: bobcut
 - type: marking
   id: SpElfHairBob4
@@ -100,7 +100,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: bob4
 - type: marking
   id: SpElfHairBob5
@@ -108,7 +108,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: bob5
 - type: marking
   id: SpElfHairBobcurl
@@ -116,7 +116,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: bobcurl
 - type: marking
   id: SpElfHairBowlcut
@@ -124,7 +124,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: bowlcut
 - type: marking
   id: SpElfHairBowlcut2
@@ -132,7 +132,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: bowlcut2
 - type: marking
   id: SpElfHairBraid
@@ -140,7 +140,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: braid
 - type: marking
   id: SpElfHairBraided
@@ -148,7 +148,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: braided
 - type: marking
   id: SpElfHairBraidfront
@@ -156,7 +156,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: braidfront
 - type: marking
   id: SpElfHairBraid2
@@ -164,7 +164,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: braid2
 - type: marking
   id: SpElfHairHbraid
@@ -172,7 +172,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: hbraid
 - type: marking
   id: SpElfHairShortbraid
@@ -180,7 +180,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: shortbraid
 - type: marking
   id: SpElfHairBraidtail
@@ -188,7 +188,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: braidtail
 - type: marking
   id: SpElfHairBun
@@ -196,7 +196,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: bun
 - type: marking
   id: SpElfHairBunhead2
@@ -204,7 +204,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: bunhead2
 - type: marking
   id: SpElfHairBun3
@@ -212,7 +212,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: bun3
 - type: marking
   id: SpElfHairLargebun
@@ -220,7 +220,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: largebun
 - type: marking
   id: SpElfHairManbun
@@ -228,7 +228,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: manbun
 - type: marking
   id: SpElfHairTightbun
@@ -236,7 +236,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: tightbun
 - type: marking
   id: SpElfHairBusiness
@@ -244,7 +244,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: business
 - type: marking
   id: SpElfHairBusiness2
@@ -252,7 +252,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: business2
 - type: marking
   id: SpElfHairBusiness3
@@ -260,7 +260,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: business3
 - type: marking
   id: SpElfHairBusiness4
@@ -268,7 +268,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: business4
 - type: marking
   id: SpElfHairBuzzcut
@@ -276,7 +276,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: buzzcut
 - type: marking
   id: SpElfHairCia
@@ -284,7 +284,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: cia
 - type: marking
   id: SpElfHairClassicCia
@@ -292,7 +292,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: classiccia
 - type: marking
   id: SpElfHairClassicFloorlengthBedhead
@@ -300,7 +300,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: classicfloorlength_bedhead
 - type: marking
   id: SpElfHairClassicModern
@@ -308,7 +308,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: classicmodern
 - type: marking
   id: SpElfHairClassicMulder
@@ -316,7 +316,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: classicmulder
 - type: marking
   id: SpElfHairClassicWisp
@@ -324,7 +324,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: classicwisp
 - type: marking
   id: SpElfHairCombover
@@ -332,7 +332,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: combover
 - type: marking
   id: SpElfHairCornrows
@@ -340,7 +340,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: cornrows
 - type: marking
   id: SpElfHairCornrows2
@@ -348,7 +348,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: cornrows2
 - type: marking
   id: SpElfHairCornrowbun
@@ -356,7 +356,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: cornrowbun
 - type: marking
   id: SpElfHairCornrowbraid
@@ -364,7 +364,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: cornrowbraid
 - type: marking
   id: SpElfHairCornrowtail
@@ -372,7 +372,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: cornrowtail
 - type: marking
   id: SpElfHairCrewcut
@@ -380,7 +380,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: crewcut
 - type: marking
   id: SpElfHairCrewcut2
@@ -388,7 +388,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: crewcut2
 - type: marking
   id: SpElfHairCurls
@@ -396,7 +396,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: curls
 - type: marking
   id: SpElfHairC
@@ -404,7 +404,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: c
 - type: marking
   id: SpElfHairDandypompadour
@@ -412,7 +412,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: dandypompadour
 - type: marking
   id: SpElfHairDevilock
@@ -420,7 +420,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: devilock
 - type: marking
   id: SpElfHairDoublebun
@@ -428,7 +428,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: doublebun
 - type: marking
   id: SpElfHairDoublebunLong
@@ -436,7 +436,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-  - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+  - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
     state: doublebun_long
 - type: marking
   id: SpElfHairDreads
@@ -444,7 +444,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: dreads
 - type: marking
   id: SpElfHairDrillruru
@@ -452,7 +452,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: drillruru
 - type: marking
   id: SpElfHairDrillhairextended
@@ -460,7 +460,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: drillhairextended
 - type: marking
   id: SpElfHairEmofringe
@@ -468,7 +468,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: emofringe
 - type: marking
   id: SpElfHairNofade
@@ -476,7 +476,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: nofade
 - type: marking
   id: SpElfHairHighfade
@@ -484,7 +484,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: highfade
 - type: marking
   id: SpElfHairMedfade
@@ -492,7 +492,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: medfade
 - type: marking
   id: SpElfHairLowfade
@@ -500,7 +500,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: lowfade
 - type: marking
   id: SpElfHairBaldfade
@@ -508,7 +508,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: baldface
 - type: marking
   id: SpElfHairFeather
@@ -516,7 +516,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: feather
 - type: marking
   id: SpElfHairFather
@@ -524,7 +524,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: father
 - type: marking
   id: SpElfHairSargeant
@@ -532,7 +532,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: sargeant
 - type: marking
   id: SpElfHairFlair
@@ -540,7 +540,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: flair
 - type: marking
   id: SpElfHairBigflattop
@@ -548,7 +548,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: bigflattop
 - type: marking
   id: SpElfHairFlow
@@ -556,7 +556,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: f
 - type: marking
   id: SpElfHairGelled
@@ -564,7 +564,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: gelled
 - type: marking
   id: SpElfHairGentle
@@ -572,7 +572,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: gentle
 - type: marking
   id: SpElfHairHalfbang
@@ -580,7 +580,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: halfbang
 - type: marking
   id: SpElfHairHalfbang2
@@ -588,7 +588,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: halfbang2
 - type: marking
   id: SpElfHairHalfshaved
@@ -596,7 +596,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: halfshaved
 - type: marking
   id: SpElfHairHedgehog
@@ -604,7 +604,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: hedgehog
 - type: marking
   id: SpElfHairHimecut
@@ -612,7 +612,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: himecut
 - type: marking
   id: SpElfHairHimecut2
@@ -620,7 +620,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: himecut2
 - type: marking
   id: SpElfHairShorthime
@@ -628,7 +628,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: shorthime
 - type: marking
   id: SpElfHairHimeup
@@ -636,7 +636,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: himeup
 - type: marking
   id: SpElfHairHitop
@@ -644,7 +644,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: hitop
 - type: marking
   id: SpElfHairJade
@@ -652,7 +652,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: jade
 - type: marking
   id: SpElfHairJensen
@@ -660,7 +660,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: jensen
 - type: marking
   id: SpElfHairJoestar
@@ -668,7 +668,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: joestar
 - type: marking
   id: SpElfHairKeanu
@@ -676,7 +676,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: keanu
 - type: marking
   id: SpElfHairKusanagi
@@ -684,7 +684,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: kusanagi
 - type: marking
   id: SpElfHairLong
@@ -692,7 +692,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: long
 - type: marking
   id: SpElfHairLong2
@@ -700,7 +700,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: long2
 - type: marking
   id: SpElfHairLong3
@@ -708,7 +708,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: long3
 - type: marking
   id: SpElfHairLongWithBundles
@@ -716,7 +716,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: longbundled
 - type: marking
   id: SpElfHairLongovereye
@@ -724,7 +724,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: longovereye
 - type: marking
   id: SpElfHairLbangs
@@ -732,7 +732,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: lbangs
 - type: marking
   id: SpElfHairLongeremo
@@ -740,7 +740,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: longeremo
 - type: marking
   id: SpElfHairLongfringe
@@ -748,7 +748,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: longfringe
 - type: marking
   id: SpElfHairLongsidepart
@@ -756,7 +756,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: longsidepart
 - type: marking
   id: SpElfHairMegaeyebrows
@@ -764,7 +764,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: megaeyebrows
 - type: marking
   id: SpElfHairMessy
@@ -772,7 +772,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: messy
 - type: marking
   id: SpElfHairModern
@@ -780,7 +780,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: modern
 - type: marking
   id: SpElfHairMohawk
@@ -788,7 +788,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: d
 - type: marking
   id: SpElfHairNitori
@@ -796,7 +796,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: nitori
 - type: marking
   id: SpElfHairReversemohawk
@@ -804,7 +804,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: reversemohawk
 - type: marking
   id: SpElfHairMulder
@@ -812,7 +812,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: mulder
 - type: marking
   id: SpElfHairOdango
@@ -820,7 +820,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: odango
 - type: marking
   id: SpElfHairOmbre
@@ -828,7 +828,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: ombre
 - type: marking
   id: SpElfHairOneshoulder
@@ -836,7 +836,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: oneshoulder
 - type: marking
   id: SpElfHairShortovereye
@@ -844,7 +844,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: shortovereye
 - type: marking
   id: SpElfHairOxton
@@ -852,7 +852,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: oxton
 - type: marking
   id: SpElfHairParted
@@ -860,7 +860,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: parted
 - type: marking
   id: SpElfHairPart
@@ -868,7 +868,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: part
 - type: marking
   id: SpElfHairKagami
@@ -876,7 +876,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: kagami
 - type: marking
   id: SpElfHairPigtails
@@ -884,7 +884,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: pigtails
 - type: marking
   id: SpElfHairPigtails2
@@ -892,7 +892,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: pigtails2
 - type: marking
   id: SpElfHairPixie
@@ -900,7 +900,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: pixie
 - type: marking
   id: SpElfHairPompadour
@@ -908,7 +908,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: pompadour
 - type: marking
   id: SpElfHairBigpompadour
@@ -916,7 +916,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: bigpompadour
 - type: marking
   id: SpElfHairPonytail
@@ -924,7 +924,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: ponytail
 - type: marking
   id: SpElfHairPonytail2
@@ -932,7 +932,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: ponytail2
 - type: marking
   id: SpElfHairPonytail3
@@ -940,7 +940,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: ponytail3
 - type: marking
   id: SpElfHairPonytail4
@@ -948,7 +948,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: ponytail4
 - type: marking
   id: SpElfHairPonytail5
@@ -956,7 +956,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: ponytail5
 - type: marking
   id: SpElfHairPonytail6
@@ -964,7 +964,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: ponytail6
 - type: marking
   id: SpElfHairPonytail7
@@ -972,7 +972,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: ponytail7
 - type: marking
   id: SpElfHairHighponytail
@@ -980,7 +980,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: highponytail
 - type: marking
   id: SpElfHairStail
@@ -988,7 +988,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: stail
 - type: marking
   id: SpElfHairLongstraightponytail
@@ -996,7 +996,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: longstraightponytail
 - type: marking
   id: SpElfHairCountry
@@ -1004,7 +1004,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: country
 - type: marking
   id: SpElfHairFringetail
@@ -1012,7 +1012,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: fringetail
 - type: marking
   id: SpElfHairSidetail
@@ -1020,7 +1020,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: sidetail
 - type: marking
   id: SpElfHairSidetail2
@@ -1028,7 +1028,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: sidetail2
 - type: marking
   id: SpElfHairSidetail3
@@ -1036,7 +1036,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: sidetail3
 - type: marking
   id: SpElfHairSidetail4
@@ -1044,7 +1044,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: sidetail4
 - type: marking
   id: SpElfHairSpikyponytail
@@ -1052,7 +1052,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: spikyponytail
 - type: marking
   id: SpElfHairPoofy
@@ -1060,7 +1060,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: poofy
 - type: marking
   id: SpElfHairQuiff
@@ -1068,7 +1068,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: quiff
 - type: marking
   id: SpElfHairRonin
@@ -1076,7 +1076,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: ronin
 - type: marking
   id: SpElfHairShaved
@@ -1084,7 +1084,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: shaved
 - type: marking
   id: SpElfHairShavedpart
@@ -1092,7 +1092,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: shavedpart
 - type: marking
   id: SpElfHairShortbangs
@@ -1100,7 +1100,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: shortbangs
 - type: marking
   id: SpElfHairA
@@ -1108,7 +1108,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: a
 - type: marking
   id: SpElfHairShorthair2
@@ -1116,7 +1116,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: shorthair2
 - type: marking
   id: SpElfHairShorthair3
@@ -1124,7 +1124,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: shorthair3
 - type: marking
   id: SpElfHairShorthair9
@@ -1132,7 +1132,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: shorthair9
 - type: marking
   id: SpElfHair80s
@@ -1140,7 +1140,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: 80s
 - type: marking
   id: SpElfHairRosa
@@ -1148,7 +1148,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: rosa
 - type: marking
   id: SpElfHairB
@@ -1156,7 +1156,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: b
 - type: marking
   id: SpElfHairSidecut
@@ -1164,7 +1164,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: sidecut
 - type: marking
   id: SpElfHairSkinhead
@@ -1172,7 +1172,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: skinhead
 - type: marking
   id: SpElfHairProtagonist
@@ -1180,7 +1180,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: protagonist
 - type: marking
   id: SpElfHairSpiky
@@ -1188,7 +1188,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: spiky
 - type: marking
   id: SpElfHairSpookyLong
@@ -1196,7 +1196,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: spookylong
 - type: marking
   id: SpElfHairSwept
@@ -1204,7 +1204,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: swept
 - type: marking
   id: SpElfHairSwept2
@@ -1212,7 +1212,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: swept2
 - type: marking
   id: SpElfHairShoulderLengthOverEye
@@ -1220,7 +1220,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: shoulderlengthovereye
 - type: marking
   id: SpElfHairThinning
@@ -1228,7 +1228,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: thinning
 - type: marking
   id: SpElfHairThinningfront
@@ -1236,7 +1236,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: thinningfront
 - type: marking
   id: SpElfHairThinningrear
@@ -1244,7 +1244,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: thinningrear
 - type: marking
   id: SpElfHairTopknot
@@ -1252,7 +1252,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: topknot
 - type: marking
   id: SpElfHairTressshoulder
@@ -1260,7 +1260,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: tressshoulder
 - type: marking
   id: SpElfHairTrimmed
@@ -1268,7 +1268,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: trimmed
 - type: marking
   id: SpElfHairTrimflat
@@ -1276,7 +1276,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: trimflat
 - type: marking
   id: SpElfHairTwintail
@@ -1284,7 +1284,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: twintail
 - type: marking
   id: SpElfHairTwoStrands
@@ -1292,7 +1292,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: twostrands
 - type: marking
   id: SpElfHairUndercut
@@ -1300,7 +1300,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: undercut
 - type: marking
   id: SpElfHairUndercutleft
@@ -1308,7 +1308,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: undercutleft
 - type: marking
   id: SpElfHairUndercutright
@@ -1316,7 +1316,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: undercutright
 - type: marking
   id: SpElfHairUnkept
@@ -1324,7 +1324,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: unkept
 - type: marking
   id: SpElfHairVlong
@@ -1332,7 +1332,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: vlong
 - type: marking
   id: SpElfHairLongest
@@ -1340,7 +1340,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: longest
 - type: marking
   id: SpElfHairLongest2
@@ -1348,7 +1348,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: longest2
 - type: marking
   id: SpElfHairVeryshortovereyealternate
@@ -1356,7 +1356,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: veryshortovereyealternate
 - type: marking
   id: SpElfHairVlongfringe
@@ -1364,7 +1364,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: vlongfringe
 - type: marking
   id: SpElfHairVolaju
@@ -1372,7 +1372,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: volaju
 - type: marking
   id: SpElfHairWisp
@@ -1380,7 +1380,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: wisp
 - type: marking
   id: SpElfHairUneven
@@ -1388,7 +1388,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: uneven
 - type: marking
   id: SpElfHairTailed
@@ -1396,7 +1396,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: tailed
 - type: marking
   id: SpElfHairClassicLong2
@@ -1404,7 +1404,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: classiclong2
 - type: marking
   id: SpElfHairClassicLong3
@@ -1412,7 +1412,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: classiclong3
 - type: marking
   id: SpElfHairBald
@@ -1420,7 +1420,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: bald
 - type: marking
   id: SpElfHairShavedMohawk
@@ -1428,7 +1428,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: shavedmohawk
 - type: marking
   id: SpElfHairMediumSidepart
@@ -1436,7 +1436,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: mediumsidepart
 - type: marking
   id: SpElfHairEmo2
@@ -1444,7 +1444,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: emo2
 - type: marking
   id: SpElfHairDrillHair
@@ -1452,7 +1452,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: drillhair
 - type: marking
   id: SpElfHairClassicAfro
@@ -1460,7 +1460,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: classicafro
 - type: marking
   id: SpElfHairClassicciaBusiness
@@ -1468,7 +1468,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: classicciabusiness
 - type: marking
   id: SpElfHairClassicCornrows
@@ -1476,7 +1476,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: classiccornrows
 - type: marking
   id: SpElfHairCoffeeHouse
@@ -1484,7 +1484,7 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: coffeehouse
 - type: marking
   id: SpElfHairFrenchbraid
@@ -1492,5 +1492,5 @@
   markingCategory: Hair
   speciesRestriction: [SpElf]
   sprites:
-    - sprite: Mobs/Customization/Spelf/spelf_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/spelf/spelf_hair.rsi
       state: frenchbraid

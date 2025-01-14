@@ -150,7 +150,8 @@
       - id: HoloprojectorSecurity
       - id: BoxEvidenceMarkers
       - id: HandLabeler
-      - id: BaseSeclinkRadio
+      - id: BaseSeclinkRadio # imp
+      - id: BoxTapeRecorder # DeltaV
 
 - type: entity
   id: ClosetBombFilled

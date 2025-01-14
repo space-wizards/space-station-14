@@ -4,14 +4,14 @@ marking-UndershirtDefault = Undershirt (Default)
 marking-UndershirtRolled-rolled_undershirt = Undershirt
 marking-UndershirtRolled = Undershirt (Rolled)
 
-marking-UndershirtSleeveless-sleeveless = Tanktop
-marking-UndershirtSleeveless = Tanktop
+marking-UndershirtSleeveless-sleeveless = Tank top
+marking-UndershirtSleeveless = Tank top
 
-marking-UndershirtGrossSleeveless-gross_sleeveless = Tanktop
-marking-UndershirtGrossSleeveless = Tanktop (Gross)
+marking-UndershirtGrossSleeveless-gross_sleeveless = Tank top
+marking-UndershirtGrossSleeveless = Tank top (Gross)
 
-marking-UndershirtRolledSleeveless-rolled_undershirt_sleeveless = Tanktop
-marking-UndershirtRolledSleeveless = Tanktop (Rolled)
+marking-UndershirtRolledSleeveless-rolled_undershirt_sleeveless = Tank top
+marking-UndershirtRolledSleeveless = Tank top (Rolled)
 
 marking-UndershirtNanotrasen-nanotrasen = Undershirt
 marking-UndershirtNanotrasen = Undershirt (Nanotrasen)
@@ -34,14 +34,14 @@ marking-UndershirtDefaultF = Undershirt (Default)
 marking-UndershirtRolledF-rolled_undershirt_f = Undershirt
 marking-UndershirtRolledF = Undershirt (Rolled)
 
-marking-UndershirtSleevelessF-sleeveless_f = Tanktop
-marking-UndershirtSleevelessF = Tanktop
+marking-UndershirtSleevelessF-sleeveless_f = Tank top
+marking-UndershirtSleevelessF = Tank top
 
-marking-UndershirtGrossSleevelessF-gross_sleeveless_f = Tanktop
-marking-UndershirtGrossSleevelessF = Tanktop (Gross)
+marking-UndershirtGrossSleevelessF-gross_sleeveless_f = Tank top
+marking-UndershirtGrossSleevelessF = Tank top (Gross)
 
-marking-UndershirtRolledSleevelessF-rolled_undershirt_sleeveless_f = Tanktop
-marking-UndershirtRolledSleevelessF = Tanktop (Rolled)
+marking-UndershirtRolledSleevelessF-rolled_undershirt_sleeveless_f = Tank top
+marking-UndershirtRolledSleevelessF = Tank top (Rolled)
 
 marking-UndershirtNanotrasenF-nanotrasen_f = Undershirt
 marking-UndershirtNanotrasenF = Undershirt (Nanotrasen)
@@ -61,14 +61,14 @@ marking-UndershirtDefaultA = Undershirt (Default)
 marking-UndershirtRolledA-rolled_undershirt = Undershirt
 marking-UndershirtRolledA = Undershirt (Rolled)
 
-marking-UndershirtSleevelessA-sleeveless = Tanktop
-marking-UndershirtSleevelessA = Tanktop
+marking-UndershirtSleevelessA-sleeveless = Tank top
+marking-UndershirtSleevelessA = Tank top
 
-marking-UndershirtGrossSleevelessA-gross_sleeveless = Tanktop
-marking-UndershirtGrossSleevelessA = Tanktop (Gross)
+marking-UndershirtGrossSleevelessA-gross_sleeveless = Tank top
+marking-UndershirtGrossSleevelessA = Tank top (Gross)
 
-marking-UndershirtRolledSleevelessA-rolled_undershirt_sleeveless = Tanktop
-marking-UndershirtRolledSleevelessA = Tanktop (Rolled)
+marking-UndershirtRolledSleevelessA-rolled_undershirt_sleeveless = Tank top
+marking-UndershirtRolledSleevelessA = Tank top (Rolled)
 
 marking-UndershirtNanotrasenA-nanotrasen = Undershirt
 marking-UndershirtNanotrasenA = Undershirt (Nanotrasen)
@@ -88,14 +88,14 @@ marking-UndershirtDefaultU = Undershirt (Default)
 marking-UndershirtRolledU-rolled_undershirt = Undershirt
 marking-UndershirtRolledU = Undershirt (Rolled)
 
-marking-UndershirtSleevelessU-sleeveless = Tanktop
-marking-UndershirtSleevelessU = Tanktop
+marking-UndershirtSleevelessU-sleeveless = Tank top
+marking-UndershirtSleevelessU = Tank top
 
-marking-UndershirtGrossSleevelessU-gross_sleeveless = Tanktop
-marking-UndershirtGrossSleevelessU = Tanktop (Gross)
+marking-UndershirtGrossSleevelessU-gross_sleeveless = Tank top
+marking-UndershirtGrossSleevelessU = Tank top (Gross)
 
-marking-UndershirtRolledSleevelessU-rolled_undershirt_sleeveless = Tanktop
-marking-UndershirtRolledSleevelessU = Tanktop (Rolled)
+marking-UndershirtRolledSleevelessU-rolled_undershirt_sleeveless = Tank top
+marking-UndershirtRolledSleevelessU = Tank top (Rolled)
 
 marking-UndershirtNanotrasenU-nanotrasen = Undershirt
 marking-UndershirtNanotrasenU = Undershirt (Nanotrasen)
