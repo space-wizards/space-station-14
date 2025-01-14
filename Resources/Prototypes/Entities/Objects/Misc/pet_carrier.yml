@@ -67,3 +67,5 @@
   - type: Construction
     graph: Petcarrier
     node: petcarrier
+    containers:
+      - entity_storage
