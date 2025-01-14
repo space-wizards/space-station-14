@@ -8,11 +8,10 @@ using Content.Shared._EinsteinEngines.Supermatter.Monitor;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
-using Content.Shared.Popups;
+using Content.Shared.Chat;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Speech;
 using Robust.Shared.Audio;
-using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -474,19 +473,20 @@ public sealed partial class SupermatterSystem
         if (_timing.CurTime < sm.DelamEndTime)
             return;
 
-        var smTransform = Transform(uid);
+        var mapFilter = Filter.BroadcastMap(Transform(uid).MapID);
+        var message = Loc.GetString("supermatter-delam-player");
+        var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
 
-        foreach (var pSession in Filter.GetAllPlayers())
-        {
-            var pEntity = pSession.AttachedEntity;
+        _chatManager.ChatMessageToManyFiltered(mapFilter,
+            ChatChannel.Server,
+            message,
+            wrappedMessage,
+            uid,
+            false,
+            true,
+            Color.Red);
 
-            if (pEntity != null
-                && TryComp<TransformComponent>(pEntity, out var pTransform)
-                && pTransform.MapID == smTransform.MapID)
-                _popup.PopupEntity(Loc.GetString("supermatter-delam-player"), pEntity.Value, pEntity.Value, PopupType.MediumCaution);
-        }
-
-        _audio.PlayGlobal(sm.DistortSound, Filter.BroadcastMap(Transform(uid).MapID), true);
+        _audio.PlayGlobal(sm.DistortSound, mapFilter, true);
 
         switch (sm.PreferredDelamType)
         {
