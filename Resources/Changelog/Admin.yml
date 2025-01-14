@@ -664,5 +664,36 @@ Entries:
   id: 82
   time: '2024-12-24T02:25:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34001
+- author: DylanWhittingham
+  changes:
+  - message: Players using the notekeeper PDA program is now logged.
+    type: Add
+  id: 83
+  time: '2025-01-02T16:16:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34118
+- author: c4llv07e
+  changes:
+  - message: adminwho doesn't leak stealthmins count now!
+    type: Fix
+  id: 84
+  time: '2025-01-08T15:23:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34122
+- author: Errant
+  changes:
+  - message: The Admin Menu and Admin Overlay now shows the specific role types of
+      players and antagonists, respectively. The old admin overlay can still be used
+      with cvar ui.admin_overlay_classic true
+    type: Tweak
+  id: 85
+  time: '2025-01-11T21:17:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33420
+- author: Myra
+  changes:
+  - message: Added IPIntel's API to the connection code. If enabled, this will automate
+      VPN/Proxy detection.
+    type: Add
+  id: 86
+  time: '2025-01-12T19:41:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33339
 Name: Admin
 Order: 1
