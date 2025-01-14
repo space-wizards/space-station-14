@@ -1,105 +1,106 @@
 # Iconography
-- type: loadout
+- type: stationAiCustomization
   id: StationAiIconAi
-  dummyEntity: LoadoutDummyAiIconAi
-  attachDummyEntity: true
-  spriteLayerData:
-    Occupied: 
-      state: "ai"
+  layerData:
+    Occupied:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai
     Dead: 
-      state: "ai_dead"
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_dead
   
-- type: loadout
+- type: stationAiCustomization
   id: StationAiIconAngel
-  dummyEntity: LoadoutDummyAiIconAngel
-  spriteLayerData:
+  layerData:
     Occupied: 
-      state: "ai_angel"
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_angel
     Dead: 
-      state: "ai_dead"
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_dead
   
-- type: loadout
+- type: stationAiCustomization
   id: StationAiIconBliss
-  dummyEntity: LoadoutDummyAiIconBliss
-  spriteLayerData:
+  layerData:
     Occupied: 
-      state: "ai_bliss"
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_bliss
     Dead: 
-      state: "ai_dead"
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_dead
       
-- type: loadout
+- type: stationAiCustomization
   id: StationAiIconClown
-  dummyEntity: LoadoutDummyAiIconClown
-  spriteLayerData:
+  layerData:
     Occupied: 
-      state: "ai_clown"
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_clown
     Dead: 
-      state: "ai_dead"
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_dead
   
-- type: loadout
+- type: stationAiCustomization
   id: StationAiIconDorf
-  dummyEntity: LoadoutDummyAiIconDorf
-  spriteLayerData:
+  layerData:
     Occupied: 
-      state: "ai_dorf"
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_dorf
     Dead: 
-      state: "ai_dead"
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_dead
   
-- type: loadout
+- type: stationAiCustomization
   id: StationAiIconHeartline
-  dummyEntity: LoadoutDummyAiIconHeartline
-  spriteLayerData:
+  layerData:
     Occupied: 
+      sprite: Mobs/Silicon/station_ai.rsi
       state: "ai_heartline"
     Dead: 
+      sprite: Mobs/Silicon/station_ai.rsi
       state: "ai_dead"
   
-- type: loadout
+- type: stationAiCustomization
   id: StationAiIconSmiley
-  dummyEntity: LoadoutDummyAiIconSmiley
-  spriteLayerData:
+  layerData:
     Occupied: 
+      sprite: Mobs/Silicon/station_ai.rsi
       state: "ai_smiley"
     Dead: 
+      sprite: Mobs/Silicon/station_ai.rsi
       state: "ai_dead"
 
 # Holograms
-- type: loadout
+- type: stationAiCustomization
   id: StationAiHologramFemale
-  dummyEntity: LoadoutDummyAiFemale
-  spriteLayerData:
-    StationAiHolograms:
+  layerData:
+    Hologram:
       sprite: Mobs/Silicon/holograms.rsi
       state: ai_female
 
-- type: loadout
+- type: stationAiCustomization
   id: StationAiHologramMale
-  dummyEntity: LoadoutDummyAiMale
-  spriteLayerData:
-    StationAiHolograms:
+  layerData:
+    Hologram:
       sprite: Mobs/Silicon/holograms.rsi
       state: ai_male
 
-- type: loadout
+- type: stationAiCustomization
   id: StationAiHologramFace
-  dummyEntity: LoadoutDummyAiFace
-  spriteLayerData:
-    StationAiHolograms:
+  layerData:
+    Hologram:
       sprite: Mobs/Silicon/holograms.rsi
       state: ai_face
 
-- type: loadout
+- type: stationAiCustomization
   id: StationAiHologramCat
-  dummyEntity: LoadoutDummyAiCat
-  spriteLayerData:
-    StationAiHolograms:
+  layerData:
+    Hologram:
       sprite: Mobs/Silicon/holograms.rsi
       state: ai_cat
 
-- type: loadout
+- type: stationAiCustomization
   id: StationAiHologramDog
-  dummyEntity: LoadoutDummyAiDog
-  spriteLayerData:
-    StationAiHolograms:
+  layerData:
+    Hologram:
       sprite: Mobs/Silicon/holograms.rsi
       state: ai_dog

@@ -20,7 +20,6 @@ using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -57,6 +56,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private readonly   SharedTransformSystem _xforms = default!;
     [Dependency] private readonly   SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly   StationAiVisionSystem _vision = default!;
+    [Dependency] private readonly   IPrototypeManager _protoManager = default!;
 
     // StationAiHeld is added to anything inside of an AI core.
     // StationAiHolder indicates it can hold an AI positronic brain (e.g. holocard / core).
@@ -72,6 +72,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     private static readonly EntProtoId DefaultAi = "StationAiBrain";
 
     private const float MaxVisionMultiplier = 5f;
+
+    private ProtoId<StationAiCustomizationPrototype> _stationAiDefaultCustomizationProto = "StationAiIconAi";
 
     public override void Initialize()
     {
@@ -479,19 +481,44 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         ClearEye(ent);
     }
 
-    protected virtual void UpdateAppearance(Entity<StationAiHolderComponent?> entity)
+    private void UpdateAppearance(Entity<StationAiHolderComponent?> entity)
     {
         if (!Resolve(entity.Owner, ref entity.Comp, false))
             return;
 
+        var visualState = StationAiState.Occupied;
+
         if (!_containers.TryGetContainer(entity.Owner, StationAiHolderComponent.Container, out var container) ||
             container.Count == 0)
         {
-            _appearance.SetData(entity.Owner, StationAiVisualState.Key, StationAiState.Empty);
+            visualState = StationAiState.Empty;
+        }
+
+        // If the entity is not a station AI core, let generic visualizers handle the appearance update.
+        if (!TryComp<StationAiCoreComponent>(entity, out var stationAiCore))
+        {
+            _appearance.SetData(entity.Owner, StationAiVisualState.Key, visualState);
             return;
         }
 
-        _appearance.SetData(entity.Owner, StationAiVisualState.Key, StationAiState.Occupied);
+        // Updating the appearance of the station AI core will be handled manually in StationAiSystem.Customization.
+        var stationAi = GetInsertedAI((entity, stationAiCore));
+
+        if (stationAi == null || !TryComp<StationAiCustomizationComponent>(stationAi, out var stationAiCustomization))
+        {
+            _appearance.RemoveData(entity.Owner, StationAiVisualState.Key);
+            return;
+        }
+
+        var protoId = stationAiCustomization.StationAiCoreLayerData ?? _stationAiDefaultCustomizationProto;
+
+        if (!_protoManager.TryIndex(protoId, out var proto) || !proto.LayerData.TryGetValue(visualState.ToString(), out var layerData))
+        {
+            _appearance.RemoveData(entity.Owner, StationAiVisualState.Key);
+            return;
+        }
+
+        _appearance.SetData(entity.Owner, StationAiVisualState.Key, layerData);
     }
 
     public virtual void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null) { }
@@ -577,7 +604,7 @@ public enum StationAiVisualState : byte
 }
 
 [Serializable, NetSerializable]
-public enum StationAiIconState : byte
+public enum StationAiSpriteState : byte
 {
     Key,
 }

@@ -1,5 +1,4 @@
 using Content.Shared.Silicons.StationAi;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Player;
@@ -19,12 +18,12 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
         base.Initialize();
         InitializeAirlock();
         InitializePowerToggle();
+        InitializeCustomization();
 
         SubscribeLocalEvent<StationAiOverlayComponent, LocalPlayerAttachedEvent>(OnAiAttached);
         SubscribeLocalEvent<StationAiOverlayComponent, LocalPlayerDetachedEvent>(OnAiDetached);
         SubscribeLocalEvent<StationAiOverlayComponent, ComponentInit>(OnAiOverlayInit);
         SubscribeLocalEvent<StationAiOverlayComponent, ComponentRemove>(OnAiOverlayRemove);
-        SubscribeLocalEvent<StationAiHolderComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
     private void OnAiOverlayInit(Entity<StationAiOverlayComponent> ent, ref ComponentInit args)
@@ -73,22 +72,6 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
     private void OnAiDetached(Entity<StationAiOverlayComponent> ent, ref LocalPlayerDetachedEvent args)
     {
         RemoveOverlay();
-    }
-
-    private void OnAppearanceChange(Entity<StationAiHolderComponent> ent, ref AppearanceChangeEvent args)
-    {
-        if (args.Sprite == null)
-            return;
-
-        if (_appearance.TryGetData<string>(ent.Owner, StationAiIconState.Key, out var state, args.Component))
-        {
-            var valid = !string.IsNullOrWhiteSpace(state);
-
-            if (valid)
-                args.Sprite.LayerSetState(StationAiIconState.Key, state);
-
-            args.Sprite.LayerSetVisible(StationAiIconState.Key, valid);
-        }
     }
 
     public override void Shutdown()

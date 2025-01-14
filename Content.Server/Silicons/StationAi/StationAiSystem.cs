@@ -1,21 +1,14 @@
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
-using Content.Server.Preferences.Managers;
 using Content.Shared.Chat;
-using Content.Shared.Holopad;
 using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
-using Content.Shared.Preferences;
-using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.StationAi;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using static Content.Server.Chat.Systems.ChatSystem;
 
 namespace Content.Server.Silicons.StationAi;
@@ -27,23 +20,14 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
-    [Dependency] private readonly IServerPreferencesManager _preferences = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _ais = new();
-
-    private ProtoId<JobPrototype> _stationAiJobProto = "JobStationAi";
-    private ProtoId<LoadoutGroupPrototype> _stationAiIconography = "StationAiIconography";
-    private ProtoId<LoadoutGroupPrototype> _stationAiHolograms = "StationAiHolograms";
-    private ProtoId<LoadoutPrototype> _stationAiDefaultIconLoadoutProto = "StationAiIconAi";
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ExpandICChatRecipientsEvent>(OnExpandICChatRecipients);
-        SubscribeLocalEvent<StationAiHeldComponent, MindAddedMessage>(OnMindAdded);
     }
 
     private void OnExpandICChatRecipients(ExpandICChatRecipientsEvent ev)
@@ -75,71 +59,6 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
             ev.Recipients.TryAdd(actor.PlayerSession, new ICChatRecipientData(range, false));
         }
-    }
-
-    private void OnMindAdded(Entity<StationAiHeldComponent> entity, ref MindAddedMessage ev)
-    {
-        if (!TryGetStationAiCore((entity.Owner, entity.Comp), out var parentEntity))
-            return;
-
-        if (!TryComp<StationAiHolderComponent>(parentEntity, out var stationAiHolder))
-            return;
-
-        UpdateAppearance((parentEntity.Value, stationAiHolder));
-
-        if (!TryComp<ActorComponent>(entity, out var actor) || actor.PlayerSession.AttachedEntity == null)
-            return;
-
-        var prefs = _preferences.GetPreferences(actor.PlayerSession.UserId);
-        var profile = prefs.SelectedCharacter as HumanoidCharacterProfile;
-
-        if (profile == null || !profile.Loadouts.TryGetValue(_stationAiJobProto.Id, out var roleLoadout))
-            return;
-
-        if (TryComp<HolographicAvatarComponent>(entity, out var avatar) &&
-            roleLoadout.SelectedLoadouts.TryGetValue(_stationAiHolograms.Id, out var loadout2) &&
-            loadout2.Count > 0 &&
-            _proto.TryIndex(loadout2[0].Prototype, out var loadoutProto2) &&
-            loadoutProto2.SpriteLayerData.TryGetValue(_stationAiHolograms.Id, out var layerData2))
-        {
-            avatar.LayerData[0] = layerData2;
-        }
-    }
-
-    protected override void UpdateAppearance(Entity<StationAiHolderComponent?> entity)
-    {
-        base.UpdateAppearance(entity);
-
-        if (!TryComp<StationAiCoreComponent>(entity, out var stationAiCore) || !TryGetInsertedAI((entity, stationAiCore), out var insertedAi))
-            return;
-
-        _appearance.SetData(entity.Owner, StationAiIconState.Key, string.Empty);
-
-        if (!_appearance.TryGetData<StationAiState>(entity, StationAiVisualState.Key, out var state) || state == StationAiState.Empty)
-            return;
-
-        if (!TryComp<ActorComponent>(insertedAi, out var actor) || actor.PlayerSession.AttachedEntity == null)
-            return;
-
-        var prefs = _preferences.GetPreferences(actor.PlayerSession.UserId);
-        var profile = prefs.SelectedCharacter as HumanoidCharacterProfile;
-
-        if (profile == null || !profile.Loadouts.TryGetValue(_stationAiJobProto.Id, out var roleLoadout))
-            return;
-
-        var loadoutProtoId = _stationAiDefaultIconLoadoutProto;
-
-        if (roleLoadout.SelectedLoadouts.TryGetValue(_stationAiIconography.Id, out var loadout) && loadout.Count > 0)
-            loadoutProtoId = loadout[0].Prototype;
-
-        _proto.TryIndex(loadoutProtoId, out var loadoutProto);
-
-        string icon = string.Empty;
-
-        if (loadoutProto?.SpriteLayerData?.TryGetValue(state.ToString(), out var layerData) == true && layerData.State != null)
-            icon = layerData.State;
-
-        _appearance.SetData(entity.Owner, StationAiIconState.Key, icon);
     }
 
     public override bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)

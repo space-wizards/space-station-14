@@ -16,9 +16,11 @@ using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Linq;
+using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
 namespace Content.Server.Holopad;
 
@@ -35,6 +37,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     private float _updateTimer = 1.0f;
 
@@ -44,6 +47,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private HashSet<EntityUid> _pendingRequestsForSpriteState = new();
     private HashSet<EntityUid> _recentlyUpdatedHolograms = new();
+
+    private ProtoId<StationAiCustomizationPrototype> _stationAiDefaultCustomizationProto = "StationAiHologramFace";
 
     public override void Initialize()
     {
@@ -570,9 +575,17 @@ public sealed class HolopadSystem : SharedHolopadSystem
             entity.Comp.User = (user, holopadUser);
         }
 
-        if (TryComp<HolographicAvatarComponent>(user, out var avatar))
+        if (TryComp<StationAiCustomizationComponent>(user, out var stationAiCustomization))
         {
-            SyncHolopadUserWithLinkedHolograms((user, holopadUser), avatar.LayerData);
+            var protoId = stationAiCustomization.StationAiHologramLayerData ?? _stationAiDefaultCustomizationProto;
+
+            if (_protoManager.TryIndex(protoId, out var proto) &&
+                proto.LayerData.TryGetValue(StationAiCustomization.Hologram.ToString(), out var layerData) &&
+                layerData != null)
+            {
+                SyncHolopadUserWithLinkedHolograms((user, holopadUser), [layerData]);
+            }
+
             return;
         }
 

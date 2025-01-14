@@ -29,9 +29,6 @@
 - type: roleLoadout
   id: JobStationAi
   nameDataset: NamesAI
-  groups:
-  - StationAiIconography
-  - StationAiHolograms
 
 # Civilian
 - type: roleLoadout
