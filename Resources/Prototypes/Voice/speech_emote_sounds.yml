@@ -585,12 +585,6 @@
       collection: DionaLaugh
     Chirp:
       path: /Audio/Animals/nymph_chirp.ogg
-    Sneeze:
-      collection: UnisexSneezes #placeholder
-    Cough:
-      collection: UnisexCoughs #placeholder
-    Yawn:
-      collection: UnisexYawn #placeholder
     Honk:
       collection: BikeHorn
     Sigh:
