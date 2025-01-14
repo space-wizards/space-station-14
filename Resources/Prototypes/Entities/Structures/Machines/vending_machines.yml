@@ -509,7 +509,7 @@
   - type: PointLight
     radius: 1.5
     energy: 1.6
-    color: "#15A955"
+    color: "#A50824"
 
 - type: entity
   parent: VendingMachineCola
