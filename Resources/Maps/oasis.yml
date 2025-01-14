@@ -12629,7 +12629,7 @@ entities:
       pos: 38.5,-9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -9760.914
+      secondsUntilStateChange: -10250.044
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14550,7 +14550,7 @@ entities:
       pos: -22.5,26.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -31813.088
+      secondsUntilStateChange: -32302.217
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -15401,7 +15401,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -130641.695
+      secondsUntilStateChange: -131130.83
       state: Opening
   - uid: 6934
     components:
@@ -15413,7 +15413,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -130644.33
+      secondsUntilStateChange: -131133.45
       state: Opening
   - uid: 6935
     components:
@@ -15425,7 +15425,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -130643.18
+      secondsUntilStateChange: -131132.31
       state: Opening
   - uid: 6936
     components:
@@ -15436,7 +15436,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -130642.4
+      secondsUntilStateChange: -131131.53
       state: Opening
 - proto: AirlockTheatreLocked
   entities:
@@ -96269,7 +96269,7 @@ entities:
       pos: -13.5,-1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -121965.68
+      secondsUntilStateChange: -122454.81
     - type: DeviceNetwork
       deviceLists:
       - 18275
@@ -142217,7 +142217,7 @@ entities:
       pos: 36.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -158797.52
+      secondsUntilStateChange: -159286.64
       state: Opening
   - uid: 5211
     components:
@@ -163421,45 +163421,32 @@ entities:
     - type: Transform
       pos: -26.5,-38.5
       parent: 2
-- proto: SMESBasic
+- proto: SMESAdvanced
   entities:
-  - uid: 2494
-    components:
-    - type: MetaData
-      name: SE Solars
-    - type: Transform
-      pos: 42.5,-45.5
-      parent: 2
   - uid: 6414
     components:
-    - type: MetaData
-      name: AME
     - type: Transform
-      pos: 34.5,38.5
+      pos: 32.5,38.5
       parent: 2
   - uid: 6415
     components:
-    - type: MetaData
-      name: AME
     - type: Transform
       pos: 33.5,38.5
       parent: 2
   - uid: 6416
     components:
-    - type: MetaData
-      name: AME
     - type: Transform
-      pos: 32.5,38.5
+      pos: 34.5,38.5
       parent: 2
   - uid: 6455
     components:
     - type: Transform
-      pos: -3.5,45.5
+      pos: -5.5,45.5
       parent: 2
   - uid: 6737
     components:
     - type: Transform
-      pos: -5.5,45.5
+      pos: -3.5,45.5
       parent: 2
   - uid: 6738
     components:
@@ -163468,24 +163455,27 @@ entities:
       parent: 2
   - uid: 7341
     components:
-    - type: MetaData
-      name: Main Engine
     - type: Transform
-      pos: 12.5,42.5
+      pos: 14.5,42.5
       parent: 2
   - uid: 7342
     components:
-    - type: MetaData
-      name: Main Engine
     - type: Transform
       pos: 13.5,42.5
       parent: 2
   - uid: 7371
     components:
-    - type: MetaData
-      name: Main Engine
     - type: Transform
-      pos: 14.5,42.5
+      pos: 12.5,42.5
+      parent: 2
+- proto: SMESBasic
+  entities:
+  - uid: 2494
+    components:
+    - type: MetaData
+      name: SE Solars
+    - type: Transform
+      pos: 42.5,-45.5
       parent: 2
   - uid: 10731
     components:
@@ -193339,7 +193329,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -9763.747
+      secondsUntilStateChange: -10252.877
       state: Opening
     - type: Airlock
       autoClose: False
@@ -194773,7 +194763,7 @@ entities:
       pos: 24.5,2.5
       parent: 21002
     - type: Door
-      secondsUntilStateChange: -504002.16
+      secondsUntilStateChange: -504491.28
       state: Opening
   - uid: 28863
     components:
