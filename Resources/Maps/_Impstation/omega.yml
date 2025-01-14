@@ -61889,6 +61889,15 @@ entities:
     - type: Transform
       pos: -19.5,-15.5
       parent: 2
+- proto: HolopadMedicalParamed
+  entities:
+  - uid: 14184
+    components:
+    - type: Transform
+      pos: -10.5,-30.5
+      parent: 2
+    - type: Label
+      currentLabel: Medical - Psychologist
 - proto: HolopadMedicalSurgery
   entities:
   - uid: 9425
@@ -62009,6 +62018,13 @@ entities:
     components:
     - type: Transform
       pos: -30.5,-17.5
+      parent: 2
+- proto: HolopadServiceNewsroom
+  entities:
+  - uid: 14183
+    components:
+    - type: Transform
+      pos: 6.5,-35.5
       parent: 2
 - proto: HospitalCurtainsOpen
   entities:

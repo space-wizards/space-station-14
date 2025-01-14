@@ -101008,11 +101008,6 @@ entities:
     - type: Transform
       pos: 19.5,15.5
       parent: 2
-  - uid: 15345
-    components:
-    - type: Transform
-      pos: -31.5,40.5
-      parent: 2
 - proto: HolopadScienceRnd
   entities:
   - uid: 15346
@@ -101068,6 +101063,13 @@ entities:
     components:
     - type: Transform
       pos: -43.5,32.5
+      parent: 2
+- proto: HolopadSecurityFront
+  entities:
+  - uid: 15345
+    components:
+    - type: Transform
+      pos: -31.5,40.5
       parent: 2
 - proto: HolopadSecurityLawyer
   entities:
@@ -101159,6 +101161,13 @@ entities:
     components:
     - type: Transform
       pos: -31.5,23.5
+      parent: 2
+- proto: HolopadServiceNewsroom
+  entities:
+  - uid: 23120
+    components:
+    - type: Transform
+      pos: -56.5,-30.5
       parent: 2
 - proto: HospitalCurtainsOpen
   entities:
