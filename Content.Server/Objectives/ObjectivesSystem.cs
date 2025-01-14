@@ -12,8 +12,11 @@ using Robust.Shared.Random;
 using System.Linq;
 using System.Text;
 using Content.Server.Objectives.Commands;
+using Content.Shared.Humanoid;
 using Content.Shared.Prototypes;
+using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
+using Content.Shared.Store;
 using Robust.Server.Player;
 using Robust.Shared.Utility;
 
@@ -139,6 +142,11 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                 continue;
             }
 
+            //imp edit - track which objectives are non-trivial so that you can't cheese a Wow!
+            var completedNonTrivial = 0;
+            var totalNontrivial = 0;
+            //imp edit end
+
             var completedObjectives = 0;
             var totalObjectives = 0;
             var agentSummary = new StringBuilder();
@@ -160,6 +168,8 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                     var objectiveTitle = info.Value.Title;
                     var progress = info.Value.Progress;
                     totalObjectives++;
+                    if (!info.Value.Trivial) //imp edit
+                        totalNontrivial++;
 
                     agentSummary.Append("- ");
                     if (progress > 0.99f)
@@ -170,6 +180,8 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                             ("markupColor", "green")
                         ));
                         completedObjectives++;
+                        if (!info.Value.Trivial) //imp edit
+                            completedNonTrivial++;
                     }
                     else
                     {
@@ -182,6 +194,118 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                     }
                 }
             }
+
+            //imp edit - list the amount of currency this person spent & what they bought
+            //if they bought nothing, check if they completed their objectives
+            //so many loops........
+            //first of all, check if they qualify for the no spend text based on all of their roles
+            //if any qualify, it becomes true
+            //these todos are future maybe fixes, not super necessary
+            //todo a different no-spend per currency?
+            //todo and generally remarks per-purchase? (e.g., calling nukies original for buying an l6 saw + juggsuit)
+            //todo want to make this work for nukies? will wait for upstream to fix their objective thing first
+            //todo spent "TC but still failed" text?
+
+            var genderString = "epicene"; //default to they/them'ing people
+            if (TryComp<HumanoidAppearanceComponent>(mind.OwnedEntity!, out var appearance))
+            {
+                genderString = appearance.Gender.ToString().ToLowerInvariant();
+            }
+
+            var nonTrivialSuccessRate = totalNontrivial > 0 ? (float) completedNonTrivial / totalNontrivial : 0f;
+            var getsNoSpendText = false;
+            foreach (var mindRole in mind.MindRoles)
+            {
+                if (!TryComp<MindRoleComponent>(mindRole, out var roleComp))
+                    return;
+                if (!roleComp.GetsNoSpendtext)
+                    continue;
+                getsNoSpendText = true;
+                break;
+            }
+            if (mind.Purchases.Count > 0)
+            {
+                var costs = new Dictionary<string, int>(); //the total costs
+                var purchaseCounts = new Dictionary<string, int>(); //how many times a given thing was bought
+                foreach (var purchase in mind.Purchases)
+                {
+                    //get how much was spent
+                    foreach (var key in purchase.Item2.Keys)
+                    {
+                        var currencyName = _prototypeManager.Index(key).DisplayName;
+                        if (!costs.TryGetValue(currencyName, out var cost))
+                        {
+                            cost = 0;
+                        }
+                        costs[currencyName] = cost + purchase.Item2[key].Int();
+                    }
+
+                    //get the amount of times each entry was bought
+                    if (!purchaseCounts.TryGetValue(purchase.Item1, out var purchaseCount))
+                    {
+                        purchaseCount = 0;
+                    }
+                    purchaseCounts[purchase.Item1] = purchaseCount + 1;
+                }
+
+                var index = 0;
+                agentSummary.Append(Loc.GetString("roundend-spend-summary-spent", ("gender", genderString)) + " ");
+                //list totals spent
+                //hardcoding english grammar into this probably isn't great but I don't think fluent can do lists?
+                foreach (var costPair in costs)
+                {
+                    index++;
+                    //if this is the last entry, do a full stop.
+                    if (index == costs.Count)
+                    {
+                        agentSummary.AppendLine(costPair.Value + " " + Loc.GetString(costPair.Key) + "."); //appendLine as this is the last entry
+                        continue; //continue early for sanity
+                    }
+
+                    //if this is the second to last entry, use an & instead of a comma
+                    if (index == costs.Count)
+                    {
+                        agentSummary.Append(costPair.Value + " " + Loc.GetString(costPair.Key) + " & ");
+                        continue; // continue early for sanity
+                    }
+
+                    //finally, just do the entry with a comma
+
+                    agentSummary.Append(costPair.Value + " " + Loc.GetString(costPair.Key) + ", ");
+                }
+
+                index = 0; //reset index
+                agentSummary.Append(Loc.GetString("roundend-spend-summary-bought", ("gender", genderString)) + " ");
+                //list things bought
+                //todo better grammar in this?
+                foreach (var boughtThing in purchaseCounts)
+                {
+                    index++;
+                    //if this is the last entry, do a full stop.
+                    if (index == purchaseCounts.Count)
+                    {
+                        agentSummary.AppendLine(boughtThing.Value + "x " + Loc.GetString(boughtThing.Key) + "."); //appendLine as this is the last entry
+                        continue; //continue early for sanity
+                    }
+
+                    //if this is the second to last entry, use an & instead of a comma
+                    if (index == purchaseCounts.Count - 1)
+                    {
+                        agentSummary.Append(boughtThing.Value + "x " + Loc.GetString(boughtThing.Key) + " & ");
+                        continue; // continue early for sanity
+                    }
+
+                    //finally, just do the entry with a comma
+                    agentSummary.Append(boughtThing.Value + "x " + Loc.GetString(boughtThing.Key) + ", ");
+                }
+            }
+            else if (getsNoSpendText)
+            {
+                agentSummary.AppendLine(nonTrivialSuccessRate >= 0.5f
+                    ? Loc.GetString("roundend-spent-nothing-success")
+                    : Loc.GetString("roundend-spent-nothing-failure", ("gender", genderString)));
+            }
+            //imp edit end
 
             var successRate = totalObjectives > 0 ? (float) completedObjectives / totalObjectives : 0f;
             agentSummaries.Add((agentSummary.ToString(), successRate, completedObjectives));

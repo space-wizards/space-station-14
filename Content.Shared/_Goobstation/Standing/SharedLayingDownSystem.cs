@@ -1,3 +1,4 @@
+using Content.Shared.DoAfter;
 using Content.Shared.Gravity;
 using Content.Shared.Input;
 using Content.Shared.Mobs.Systems;
@@ -17,6 +18,7 @@ public abstract class SharedLayingDownSystem : EntitySystem
     [Dependency] private readonly StandingStateSystem _standing = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
@@ -29,6 +31,7 @@ public abstract class SharedLayingDownSystem : EntitySystem
 
         SubscribeLocalEvent<LayingDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeed);
         SubscribeLocalEvent<LayingDownComponent, EntParentChangedMessage>(OnParentChanged);
+        SubscribeLocalEvent<LayingDownComponent, StandUpDoAfterEvent>(OnDoAfter);
     }
 
     public override void Shutdown()
@@ -75,7 +78,10 @@ public abstract class SharedLayingDownSystem : EntitySystem
         var isDown = _standing.IsDown(uid, standing);
         if (_timing.CurTime < layingDown.NextLayDown && isDown)
         {
-            _popup.PopupEntity(Loc.GetString("popup-laying-down-cooldown-stand-up"), uid, uid);
+            var timeRemaining = layingDown.NextLayDown - _timing.CurTime;
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, uid, timeRemaining, new StandUpDoAfterEvent(), uid) { };
+
+            _doAfter.TryStartDoAfter(doAfterEventArgs);
             return;
         }
 
@@ -104,6 +110,20 @@ public abstract class SharedLayingDownSystem : EntitySystem
         }
 
         _standing.Stand(uid, standingState);
+    }
+
+    private void OnDoAfter(EntityUid uid, LayingDownComponent component, StandUpDoAfterEvent args)
+    {
+        if (args.Cancelled)
+        {
+            _popup.PopupEntity(Loc.GetString("popup-laying-down-stand-up-cancel"), uid, uid);
+            return;
+        }
+
+        if (!TryComp<StandingStateComponent>(uid, out StandingStateComponent? standing))
+            return;
+
+        TryStandUp(uid, component, standing);
     }
 
     public bool TryStandUp(EntityUid uid, LayingDownComponent? layingDown = null, StandingStateComponent? standingState = null)

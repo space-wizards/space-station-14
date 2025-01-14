@@ -46,7 +46,7 @@
         factions:
         - Syndicate
       mindRoles:
-      - MindRolePostOperator
+      - MindRoleRecruiter
 
 - type: entity
   parent: BaseUnknownShuttleRule

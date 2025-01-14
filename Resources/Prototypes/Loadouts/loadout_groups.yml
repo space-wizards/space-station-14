@@ -5,45 +5,49 @@
   minLimit: 0
   maxLimit: 3
   loadouts:
-  - FlowerWreath
-  - Hairflower
-  - Headphones
-  - WalkingCane #imp
-  - PlushieLizard
-  - PlushieSpaceLizard
-  - Lighter
-  - FlippoLighter #imp
-  - CigPackGreen
-  - CigPackRed
-  - CigPackBlue
-  - CigPackBlack
-  - CigPackNewport #imp
-  - CigPackSpirits #imp
+  - BarFlask
+  - CardBoxBlack
+  - CDDogtags #_CD
   - CigarCase
   - CigarGold
-  - GoldPersonalAI #imp >420 hours
-  - TutorialAI_Newcomer #imp <15 hours
+  - CigPackBlack
+  - CigPackBlue
+  - CigPackGreen
+  - CigPackNewport #imp
+  - CigPackRed
+  - CigPackSpirits #imp
+  - ClothingHeadHatKippahBlueAndGold #imp
+  - ClothingHeadHatKippahSimple #imp
+  - ClothingHeadHatKippahWhiteAndBlue #imp
+  - ClothingHeadPaperSack #imp
+  - ClothingHeadPaperSackSmile #imp
+  - ClothingNeckAromanticPin
+  - ClothingNeckAsexualPin
+  - ClothingNeckAutismPin
+  - ClothingNeckBisexualPin
+  - ClothingNeckGayPin
+  - ClothingNeckGoldAutismPin
+  - ClothingNeckIntersexPin
+  - ClothingNeckLesbianPin
+  - ClothingNeckLGBTPin
+  - ClothingNeckNonBinaryPin
+  - ClothingNeckPansexualPin
+  - ClothingNeckTransPin
+  - FlippoLighter #imp
+  - FlowerWreath
   - FolderBlack #imp
   - FolderHamster #imp
   - FolderMime #imp
   - FolderPun #imp
-  - BarFlask
+  - GoldPersonalAI #imp
+  - Hairflower
+  - HarmonicaInstrument #imp
+  - Headphones
+  - HeartLocket #imp
+  - Lighter
   - NewtonCradle
-  - ClothingNeckLGBTPin
-  - ClothingNeckAromanticPin
-  - ClothingNeckAsexualPin
-  - ClothingNeckBisexualPin
-  - ClothingNeckGayPin
-  - ClothingNeckIntersexPin
-  - ClothingNeckLesbianPin
-  - ClothingNeckNonBinaryPin
-  - ClothingNeckPansexualPin
-  - ClothingNeckTransPin
-  - ClothingNeckAutismPin
-  - ClothingNeckGoldAutismPin
-  - ClothingHeadHatKippahBlueAndGold #imp
-  - ClothingHeadHatKippahSimple #imp
-  - ClothingHeadHatKippahWhiteAndBlue #imp
+  - PlushieLizard
+  - PlushieSpaceLizard
   - TowelColorBlack
   - TowelColorDarkBlue
   - TowelColorDarkGreen
@@ -60,8 +64,8 @@
   - TowelColorSilver
   - TowelColorWhite
   - TowelColorYellow
-  - CardBoxBlack
-  - HarmonicaInstrument #imp
+  - TutorialAI_Newcomer #imp <15 hours
+  - WalkingCane #imp
 
 - type: loadoutGroup
   id: Glasses

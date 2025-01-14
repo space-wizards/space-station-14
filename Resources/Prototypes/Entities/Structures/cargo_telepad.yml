@@ -21,7 +21,7 @@
         mask:
           - MachineMask
   - type: Sprite
-    sprite: Structures/cargo_telepad.rsi
+    sprite: _Impstation/Structures/cargo_telepad.rsi #imp edit
     drawdepth: FloorObjects
     layers:
     - state: offline
