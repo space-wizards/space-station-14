@@ -363,7 +363,7 @@ public sealed partial class StationJobsSystem
                 if (!_prototypeManager.TryIndex(jobId, out var job))
                     continue;
 
-                if (!job.CanBeAntag && _antag.QueuedAntags.ContainsKey(player))
+                if (!job.CanBeAntag && _antag.QueuedAntags.ContainsKey(player)) //imp edit
                     continue;
 
                 if (weight is not null && job.Weight != weight.Value)

@@ -627,6 +627,9 @@ namespace Content.Client.Lobby.UI
                 ("humanoid-profile-editor-antag-preference-no-button", 1)
             };
 
+            AntagList.AddChild(new Label {Text = Loc.GetString("humanoid-profile-editor-antag-roll-reminder-top")}); //imp edit - doing it like this Sucks but i'm calling it good enough
+            AntagList.AddChild(new Label {Text = Loc.GetString("humanoid-profile-editor-antag-roll-reminder-bottom")});// end imp edit
+
             foreach (var antag in _prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => Loc.GetString(a.Name)))
             {
                 if (!antag.SetPreference)

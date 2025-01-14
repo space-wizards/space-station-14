@@ -44,6 +44,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IServerPreferencesManager _pref = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
@@ -89,7 +90,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     {
         var pool = args.PlayerPool;
 
-        var query = QueryAllRules();
+        var query = QueryAllRules(); //imp edit
         while (query.MoveNext(out var uid, out var comp, out _))
         {
 
@@ -108,7 +109,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 args.PlayerPool.Remove(session);
                 GameTicker.PlayerJoinGame(session);
             }
-        }
+        } // imp edit end
     }
 
     private void OnJobsAssigned(RulePlayerJobsAssignedEvent args)
@@ -119,7 +120,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (comp.SelectionTime != AntagSelectionTime.PostPlayerSpawn)
                 continue;
 
-            if (!comp.SelectionsComplete) // Should never happen I think?
+            if (!comp.SelectionsComplete) // imp edit, should never happen
                 ChooseAntags((uid, comp), args.Players);
 
             foreach ((var _, var antagData) in QueuedAntags)
@@ -128,7 +129,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                     MakeAntag(antagData.Item3, antagData.Item1, antagData.Item2);
             }
 
-        }
+        } //end imp edit
     }
 
     private void OnSpawnComplete(PlayerSpawnCompleteEvent args)
@@ -261,7 +262,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         IList<ICommonSession> pool,
         AntagSelectionDefinition def,
         bool midround = false,
-        int number = 0)
+        int number = 0) //imp edit
     {
         var playerPool = GetPlayerPool(ent, pool, def);
         var count = number;
@@ -304,7 +305,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             }
             else
                 MakeAntag(ent, session, def);
-        }
+        } //end imp edit
     }
 
     /// <summary>
@@ -330,7 +331,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         EntityUid? antagEnt = null;
         var isSpawner = false;
 
-        if (session != null)
+        if (session != null) //imp edit
         {
             ent.Comp.SelectedSessions.Remove(session);
             QueuedAntags.Remove(session.UserId);
@@ -422,7 +423,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent, def);
         RaiseLocalEvent(ent, ref afterEv, true);
-    }
+    } //end imp edit
 
     /// <summary>
     /// Gets an ordered player pool based on player preferences and the antagonist definition.
@@ -435,7 +436,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         {
             if (!IsSessionValid(ent, session, def) || !IsEntityValid(session.AttachedEntity, def))
                 continue;
-
+            if(!HasValidAntagJobs(session)) //imp edit
+                continue;
             if (HasPrimaryAntagPreference(session, def))
             {
                 preferredList.Add(session);
