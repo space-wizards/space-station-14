@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mqole
-  changes:
-  - message: Removing languages for now. They need a bit more time in the oven.
-    type: Remove
-  id: 430
-  time: '2024-10-30T03:17:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/584
 - author: TheGrimbeeper
   changes:
   - message: Artifacts can now ask for a drink. Talk to your bartender for help!
@@ -4493,3 +4486,11 @@
   id: 929
   time: '2025-01-14T23:47:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1366
+- author: EpicToast
+  changes:
+  - message: Add the StockTrading cartridge. Starts installed on QM and cargo tech
+      PDAs and can be found in the QM's locker.
+    type: Add
+  id: 930
+  time: '2025-01-14T23:49:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1314
