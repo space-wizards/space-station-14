@@ -1,0 +1,28 @@
+- type: entity
+  id: ThiefBusinessCard
+  name: calling card
+  parent: Paper
+  description: For when you really want to rub it in.
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Misc/bureaucracy.rsi
+      layers:
+      - state: thief_card
+      - state: thief_card
+        map: ["enum.PaperVisualLayers.Writing"]
+        visible: false
+      - state: paper_stamp-generic
+        map: ["enum.PaperVisualLayers.Stamp"]
+        visible: false
+    - type: Paper
+      content: thief-business-card-base
+    - type: PaperVisuals
+      headerImagePath: "/Textures/_Impstation/Interface/Paper/paper_heading_thief_logo.png"
+      headerMargin: 0.0, 0.0, 0.0, 6.0
+      backgroundImagePath: "/Textures/_Impstation/Interface/Paper/paper_background_blue.png"
+      backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+      contentMargin: 4.0, 4.0, 4.0, 4.0
+      maxWritableArea: 400.0, 256.0
+    - type: EmbeddableProjectile
+      sound: /Audio/Weapons/star_hit.ogg
+    - type: LandAtCursor

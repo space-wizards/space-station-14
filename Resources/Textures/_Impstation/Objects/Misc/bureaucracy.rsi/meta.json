@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Folder sprites by Carousel for Impstation, ticket book sprite by kipdotnet for Impstation",
+  "copyright": "Folder sprites by Carousel for Impstation, ticket book sprite by kipdotnet for Impstation, thief business card by Doop and Kazne for Impstation",
   "size": {
     "x": 32,
     "y": 32
@@ -24,6 +24,9 @@
     },
     {
       "name": "ticket-book"
+    },
+    {
+      "name": "thief_card"
     }
   ]
 }
