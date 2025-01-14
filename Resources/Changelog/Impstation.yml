@@ -1,17 +1,6 @@
 ﻿Entries:
 - author: honeyed-lemons
   changes:
-  - message: Language System with so many languages, including gray
-    type: Add
-  - message: Foreigner Trait that makes it so you don't spawn with common
-    type: Add
-  - message: Multiple levels of translator research
-    type: Add
-  id: 424
-  time: '2024-10-29T04:50:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/567
-- author: honeyed-lemons
-  changes:
   - message: Foreigner Trait
     type: Add
   - message: Language to all playable species when available
@@ -4515,3 +4504,10 @@
   id: 923
   time: '2025-01-14T10:26:11.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1354
+- author: Darkmajia
+  changes:
+  - message: Flipping while crawling no longer makes you appear to stand up.
+    type: Fix
+  id: 924
+  time: '2025-01-14T10:32:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1347
