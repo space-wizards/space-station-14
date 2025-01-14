@@ -1778,7 +1778,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 .Where(w => DateTime.UtcNow - w.Time >= range);
 
             // Ensure we are not cleaning NOTHING.
-            if (toDelete.Any())
+            if (!toDelete.Any())
                 return true;
 
             await toDelete.ExecuteDeleteAsync();
