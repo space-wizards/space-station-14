@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: qwerltaz
-  changes:
-  - message: Reduced wall closet range. It's now much easier to not close yourself
-      inside by accident.
-    type: Tweak
-  id: 7308
-  time: '2024-09-07T23:44:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31933
 - author: Ilya246
   changes:
   - message: Reagents that make you flammable no longer extinguish you.
@@ -3938,3 +3930,10 @@
   id: 7807
   time: '2025-01-13T18:49:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34412
+- author: Killerqu00
+  changes:
+  - message: Pet carriers can now be crafted.
+    type: Add
+  id: 7808
+  time: '2025-01-14T22:34:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34431
