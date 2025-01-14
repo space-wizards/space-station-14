@@ -3,6 +3,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Chat;
+using Content.Shared.Holopad;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Preferences;
@@ -34,6 +35,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
     private ProtoId<JobPrototype> _stationAiJobProto = "JobStationAi";
     private ProtoId<LoadoutGroupPrototype> _stationAiIconography = "StationAiIconography";
+    private ProtoId<LoadoutGroupPrototype> _stationAiHolograms = "StationAiHolograms";
     private ProtoId<LoadoutPrototype> _stationAiDefaultIconLoadoutProto = "StationAiIconAi";
 
     public override void Initialize()
@@ -82,8 +84,26 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
         if (!TryComp<StationAiHolderComponent>(parentEntity, out var stationAiHolder))
             return;
- 
+
         UpdateAppearance((parentEntity.Value, stationAiHolder));
+
+        if (!TryComp<ActorComponent>(entity, out var actor) || actor.PlayerSession.AttachedEntity == null)
+            return;
+
+        var prefs = _preferences.GetPreferences(actor.PlayerSession.UserId);
+        var profile = prefs.SelectedCharacter as HumanoidCharacterProfile;
+
+        if (profile == null || !profile.Loadouts.TryGetValue(_stationAiJobProto.Id, out var roleLoadout))
+            return;
+
+        if (TryComp<HolographicAvatarComponent>(entity, out var avatar) &&
+            roleLoadout.SelectedLoadouts.TryGetValue(_stationAiHolograms.Id, out var loadout2) &&
+            loadout2.Count > 0 &&
+            _proto.TryIndex(loadout2[0].Prototype, out var loadoutProto2) &&
+            loadoutProto2.SpriteLayerData.TryGetValue(_stationAiHolograms.Id, out var layerData2))
+        {
+            avatar.LayerData[0] = layerData2;
+        }
     }
 
     protected override void UpdateAppearance(Entity<StationAiHolderComponent?> entity)

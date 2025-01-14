@@ -67,11 +67,23 @@
 - type: loadout
   id: StationAiHologramFemale
   dummyEntity: LoadoutDummyAiFemale
+  spriteLayerData:
+    StationAiHolograms:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_female
 
 - type: loadout
   id: StationAiHologramMale
   dummyEntity: LoadoutDummyAiMale
+  spriteLayerData:
+    StationAiHolograms:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_male
 
 - type: loadout
   id: StationAiHologramFace
   dummyEntity: LoadoutDummyAiFace
+  spriteLayerData:
+    StationAiHolograms:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_face
