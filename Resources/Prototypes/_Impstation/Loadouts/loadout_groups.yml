@@ -271,7 +271,7 @@
     id: MedicalPDA
     belt: ClothingBeltMedicalFilled
     outerClothing: ClothingOuterWinterMed
-    #head: 
+    #head:
     pocket1: EmergencyOxygenTankFilled
     pocket2: ClothingMaskBreath
     ears: ClothingHeadsetMedical
@@ -316,7 +316,7 @@
     ears: ClothingHeadsetService
     eyes: ClothingEyesHudBeer
 
-- type: loadoutGroup 
+- type: loadoutGroup
   id: SalvageSpecialistJumpsuit
   name: loadout-group-salvage-specialist-jumpsuit
   loadouts:
