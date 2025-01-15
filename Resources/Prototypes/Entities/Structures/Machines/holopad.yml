@@ -13,9 +13,18 @@
           !type:PhysShapeCircle
           radius: 0.25
         mask:
-        - TabletopMachineMask
+        - Impassable
+        - HighImpassable
+        - MidImpassable
+      fix2:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        mask:
+        - MachineLayer
         layer:
-        - Opaque
+        - LowImpassable
+        hard: False
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: StationAiVision
