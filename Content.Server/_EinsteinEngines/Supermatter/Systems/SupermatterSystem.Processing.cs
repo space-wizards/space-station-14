@@ -92,7 +92,7 @@ public sealed partial class SupermatterSystem
 
         // Ranges from 0~1(1 - (0~1 * 1~(1.5 * (mol / 500))))
         // We take the mol count, and scale it to be our inhibitor
-        var powerlossInhibitor =
+        sm.PowerlossInhibitor =
             Math.Clamp(
                 1
                 - sm.PowerlossDynamicScaling
@@ -149,7 +149,7 @@ public sealed partial class SupermatterSystem
 
         // After this point power is lowered
         // This wraps around to the begining of the function
-        sm.Power = Math.Max(sm.Power - Math.Min(powerReduction * powerlossInhibitor, sm.Power * 0.83f * powerlossInhibitor), 0f);
+        sm.Power = Math.Max(sm.Power - Math.Min(powerReduction * sm.PowerlossInhibitor, sm.Power * 0.83f * sm.PowerlossInhibitor), 0f);
 
         // Save values to the supermatter
         sm.GasStorage = sm.GasStorage.ToDictionary(
@@ -499,9 +499,31 @@ public sealed partial class SupermatterSystem
                 message = Loc.GetString("supermatter-emergency", ("integrity", integrity));
                 global = true;
             }
-        }
 
-        SendSupermatterAnnouncement(uid, sm, message, global);
+            SendSupermatterAnnouncement(uid, sm, message, global);
+
+            global = false;
+
+            if (sm.Power >= sm.PowerPenaltyThreshold)
+            {
+                message = Loc.GetString("supermatter-threshold-power");
+                SendSupermatterAnnouncement(uid, sm, message, global);
+
+                if (sm.PowerlossInhibitor < 0.5)
+                {
+                    message = Loc.GetString("supermatter-threshold-powerloss");
+                    SendSupermatterAnnouncement(uid, sm, message, global);
+                }
+            }
+
+            var moles = sm.GasStorage.Sum(gas => sm.GasStorage[gas.Key]);
+
+            if (moles >= sm.MolePenaltyThreshold)
+            {
+                message = Loc.GetString("supermatter-threshold-mole");
+                SendSupermatterAnnouncement(uid, sm, message, global);
+            }
+        }
     }
 
     /// <param name="global">If true, sends the message to the common radio</param>

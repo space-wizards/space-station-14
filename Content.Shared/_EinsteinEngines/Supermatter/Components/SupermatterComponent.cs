@@ -134,6 +134,12 @@ public sealed partial class SupermatterComponent : Component
     public float GasEfficiency = 0.15f;
 
     /// <summary>
+    ///     Uses PowerlossDynamicScaling and GasStorage to lessen the effects of our powerloss functions
+    /// </summary>
+    [DataField]
+    public float PowerlossInhibitor = 1;
+
+    /// <summary>
     ///     Based on CO2 percentage, this slowly moves between 0 and 1.
     ///     We use it to calculate the powerloss_inhibitor.
     /// </summary>
