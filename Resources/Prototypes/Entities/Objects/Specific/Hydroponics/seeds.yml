@@ -11,6 +11,16 @@
       size: Tiny
     - type: StaticPrice
       price: 20
+    - type: PaperLabel
+      labelSlot:
+        insertVerbText: Attach Label
+        ejectVerbText: Remove Label
+        whitelist:
+          components:
+          - Paper
+        blacklist:
+          tags:
+          - Book
 
 - type: entity
   parent: SeedBase
