@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Psychpsyo
-  changes:
-  - message: The random sentience event should now actually happen again.
-    type: Fix
-  id: 7316
-  time: '2024-09-08T12:10:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31953
 - author: Beck Thompson
   changes:
   - message: Gold and silver rings now give a small amount of materials when scrapped.
@@ -3923,3 +3916,10 @@
   id: 7815
   time: '2025-01-15T21:21:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34303
+- author: themias
+  changes:
+  - message: The DNA scrambler implant no longer updates your ID card or station record
+    type: Fix
+  id: 7816
+  time: '2025-01-15T22:49:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34091
