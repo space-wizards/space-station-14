@@ -24,7 +24,7 @@
   - [color=yellow]Warning[/color]: The area is starting to deviate from the desired atmosphere, and is becoming unsafe.
   - [color=red]Danger[/color]: The area is no longer safe, internals and/or hardsuits are required.
 
-  Air alarms will automatically drop (close) linked [textlink="firelocks" link="FireAndGasControl"] when the [color=orange]Warning[/color] status is reached.
+  Air alarms will automatically drop (close) linked [textlink="firelocks" link="FireAndGasControl"] when the [color=Red]Danger[/color] status is reached.
   These [textlink="firelocks" link="FireAndGasControl"] will automatically raise (open) when the status returns to [color=green]Normal[/color].
 
   Air alarms have [textlink="signal" link="Networking"] outputs for each of the three statuses, which can be used to trigger other [textlink="signal" link="Networking"] devices when the status changes.
@@ -56,8 +56,8 @@
   - Panic: [textlink="Air Vents" link="AirVent"] will be disabled, and [textlink="Air Scrubbers" link="AirScrubber"] will be set to siphon mode.
 
   Air alarms will automatically switch between the Filtering and Filtering (Wide) modes based on the current status of the area they are monitoring.
-  - If the area reaches [color=yellow]Warning[/color] status or above, the air alarm will switch to Filtering (Wide) mode.
-  - If the area reaches [color=green]Normal[/color] status, the air alarm will switch to Filtering mode.
+  - If the area reaches [color=red]Danger[/color] status or above, the air alarm will switch to Filtering (Wide) mode.
+  - If the area reaches [color=green]Normal[/color] or [color=yellow]Warning[/color] status, the air alarm will switch to Filtering mode.
 
   This behavior can be disabled by toggling the "Auto" box in the bottom section of the air alarm menu.
 

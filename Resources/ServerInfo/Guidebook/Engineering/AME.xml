@@ -17,7 +17,10 @@
 
   Most stations have exposed [color=orange]HV wiring[/color] or designated spots to wrench an AME controller, so that it connects to the grid.
 
-  From there, start putting down a 3x3 or larger square of AME parts in preparation for construction, making sure to maximize the number of "center" pieces that are surrounded on all eight sides.
+  AME shielding is the physical structure that makes the antimatter engine. It's made by converting AME flatpacks into shielding using a multitool.
+
+  To construct an AME, start putting down a 3x3 or larger square of AME flatpacks in preparation for construction, making sure to maximize the number of "center" pieces that are surrounded on all eight sides.
+  The greater amount of center pieces, the more cores your AME will have, and the more power it will be able to output safely.
 
   <Box>
     <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
@@ -35,7 +38,7 @@
     <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
   </Box>
 
-  Once this is done, you can use a multitool to convert each AME part into shielding, which should form a finished AME configuration.
+  Once this is done, you can use a multitool to convert each AME flatpack into shielding, which should form a finished AME configuration.
 
   <GuideEntityEmbed Entity="AmeController" Caption=""/>
   <Box>
@@ -58,7 +61,11 @@
   </Box>
 
   ## Operation
-  To start the AME, insert a fuel jar, set the fuel rate to [color=#a4885c]twice the core count or less[/color], and turn on injection.
+  To start the AME, insert a fuel jar into the AME controller, and set the safe injection rate.
+
+  The safe injection rate is the point where the AME can safely run without overheating, while maximizing power output.
+
+  This rate is always twice the core count.
 
   For example, an AME with one core will have a safe injection rate of 2. With two cores, the safe injection rate would be 4, and so on.
 

@@ -129,7 +129,7 @@
 
   This is the default method for the Cold Loop you will see on a variety of stations.
   Being of moderate complexity and having no losses of any resource, this [color=#a4885c]should[/color] be the main method of cooling down the TEG.
-  However, most stations at the moment somehow have their heat exchangers hooked up wrong (or suggest incorrect piping), reducing efficiency greatly.
+  However, most stations at the moment somehow have their radiators hooked up wrong (or suggest incorrect piping), reducing efficiency greatly.
 
   To use heat-exchangers properly, they must be setup in [color=#a4885c]parallel[/color], not in series (like what you see on most stations).
   A gas pump at max pressure should be placed after, and a volumetric pump before the heat-exchangers.
@@ -187,13 +187,13 @@
   </Box>
 
   - Connector Port: Use this to input a gas with high heat capacity; most of the time, Plasma or Frezon is used to do so, as they both have very high specific heat capacities (although almost any gas will do). (Yes, Plasma =/= Hot. You can cool it down, and it acts as a excellent heat exchange medium.)
-  - Input/Output Pumps: Used to make sure gas keeps flowing through both the Circulator and the Heat-Exchanger array. As the gas cools down and heats up (and as it flows through the Exchanger), pressure must be applied for it to keep flowing.
-  - Heat-Exchanger: Basically, just a bunch of heat-exchanger pipes in space. Not much to say, besides the fact that it cools down the gas inside it. Make sure the heat-exchangers are [color=#a4885c]placed on lattice, not plating[/color]! Otherwise, the heat-exchange efficiency will be greatly reduced, as the heat-exchangers aren't directly exposed to space below them.
+  - Input/Output Pumps: Used to make sure gas keeps flowing through both the Circulator and the radiator array. As the gas cools down and heats up (and as it flows through the Exchanger), pressure must be applied for it to keep flowing.
+  - Radiator: Basically, just a bunch of radiators in space. Not much to say, besides the fact that it cools down the gas inside it. Make sure the radiators are [color=#a4885c]placed on lattice, not plating[/color]! Otherwise, the heat-exchange efficiency will be greatly reduced, as the radiators aren't directly exposed to space below them.
 
   ## The Freezer Loop
 
   Most of the time, you will see this method being used in efficient TEG setups.
-  It's basically just the Coolant array, but replacing the Heat-Exchangers with a freezer.
+  It's basically just the Coolant array, but replacing the radiators with a freezer.
   Even though the freezer does use power, it is only a small fraction of what the TEG can generate, and it's better than the default Coolant array at the moment, so go fish.
 
   Follow the steps for the Coolant array, but use a freezer in place of the Heat-Exchangers. As so:

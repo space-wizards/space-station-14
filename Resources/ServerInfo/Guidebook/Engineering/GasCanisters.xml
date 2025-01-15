@@ -18,7 +18,8 @@
   The release valve also has a adjustable pressure regulator to control the pressure of the handheld tank connected.
 
   Opening the release valve on a canister with no handheld tank connected will release gas into the atmosphere, at the specified regulator pressure.
-  Be sure to close the release valve before you eject your handheld tank!
+
+  [bold]Be sure to close the release valve before you eject your handheld tank![/bold]
 
   ## Connector Ports
   Gas canisters and [textlink="portable scrubbers" link="PortableScrubber"] can be connected to a [textlink="pipenet" link="PipeNetworks"] by anchoring (wrenching) the device on top of a connector.

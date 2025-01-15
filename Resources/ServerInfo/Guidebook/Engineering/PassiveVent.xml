@@ -6,7 +6,7 @@
     <GuideEntityEmbed Entity="GasPassiveVent"/>
   </Box>
   Gasses are free to move between the passive vent and the atmosphere it's connected to.
-  The passive vent requires no requires [textlink="power" link="Power"] to function.
+  The passive vent requires no [textlink="power" link="Power"] to function.
 
   This vent is commonly found in the station's [textlink="gas storage tanks" link="GasMiningAndStorage"] and connected to the station's wastenet.
   It is a simple and reliable way to pull gasses from a gas miner, or to space unwanted gasses safely.

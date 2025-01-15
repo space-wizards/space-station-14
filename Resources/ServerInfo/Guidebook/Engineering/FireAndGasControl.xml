@@ -29,7 +29,10 @@
 
   Firelocks in lockout mode cannot be opened by using Engineering access if they are unpowered. Only a crowbar can open an unpowered firelock in lockout mode.
 
-  If the conditions between the two sides of the firelock return to normal, the firelock will disable lockout mode, and can be opened by anyone.
+  If the conditions between the two sides of the firelock return to within acceptable differences, the firelock will disable lockout mode, and can be opened by anyone.
+  Note that this only means that the conditions are the same on both sides of the firelock, not that they are safe.
+
+  A common example of this is a firelock that has released due to both sides being exposed to space.
 
   ## Connecting to Air and Fire Alarms
   Firelocks can be connected to [textlink="air alarms" link="AirAlarms"] and fire alarms to receive instructions on when to drop.

@@ -16,6 +16,12 @@
 
   The access level required to open the door can be modified using an Access Configurator, or by using a Multitool on the door electronics for the airlock (which requires deconstruction).
 
+  <Box>
+    <GuideEntityEmbed Entity="AccessConfigurator" Caption=""/>
+    <GuideEntityEmbed Entity="Multitool" Caption=""/>
+    <GuideEntityEmbed Entity="DoorElectronics" Caption=""/>
+  </Box>
+
   Airlocks block gas flow, so they can be used to seal off areas in case of a [textlink="hull breach" link="Spacing"] or a [textlink="fire." link="Fires"]
   They also store gas on their tile, even when closed, so be careful when opening them during or after a gas leak.
 

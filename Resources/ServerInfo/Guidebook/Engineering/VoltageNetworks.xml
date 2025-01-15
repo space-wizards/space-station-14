@@ -31,6 +31,7 @@
   </Box>
 
   [color=green]Low Voltage[/color] wire doesn't have to be directly run to every machine, as it can power multiple machines as long as the wire is close enough to the machine.
+  It can power machines within 2 tiles radially, and 3 tiles in each cardinal direction.
 
   ## Medium Voltage Network
   The [color=Yellow]Medium Voltage[/color] Network is used for powering APCs and other power-hungry machinery that can only accept [color=Yellow]Medium Voltage[/color] power.
