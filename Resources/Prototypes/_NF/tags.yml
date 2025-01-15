@@ -1,2 +1,5 @@
 - type: Tag
   id: ClothingRobesGoblin
+
+- type: Tag
+  id: PlantAnalyzer
