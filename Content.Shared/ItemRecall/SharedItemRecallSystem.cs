@@ -101,9 +101,9 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
             return;
 
         if (TryComp<EmbeddableProjectileComponent>(ent, out var projectile))
-            _proj.UnEmbed(ent, ent.Comp.MarkedByEntity.Value, projectile);
+            _proj.UnEmbed(ent, projectile, ent.Comp.MarkedByEntity.Value);
 
-        _popups.PopupEntity(Loc.GetString("item-recall-item-summon", ("item", ent)), ent.Comp.MarkedByEntity.Value, ent.Comp.MarkedByEntity.Value);
+        _popups.PopupPredicted(Loc.GetString("item-recall-item-summon", ("item", ent)), ent.Comp.MarkedByEntity.Value, ent.Comp.MarkedByEntity.Value);
 
         _hands.TryForcePickupAnyHand(ent.Comp.MarkedByEntity.Value, ent);
     }

@@ -67,7 +67,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             return;
         }
 
-        UnEmbed(uid, args.User, component);
+        UnEmbed(uid, component, args.User);
 
         // try place it in the user's hand
         _hands.TryPickupAnyHand(args.User, uid);
@@ -117,7 +117,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    public void UnEmbed(EntityUid uid, EntityUid user, EmbeddableProjectileComponent? component)
+    public void UnEmbed(EntityUid uid, EmbeddableProjectileComponent? component, EntityUid? user = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -137,9 +137,13 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             projectile.DamagedEntity = false;
         }
 
-        // Land it just coz uhhh yeah
-        var landEv = new LandEvent(user, true);
-        RaiseLocalEvent(uid, ref landEv);
+        if (user != null)
+        {
+            // Land it just coz uhhh yeah
+            var landEv = new LandEvent(user, true);
+            RaiseLocalEvent(uid, ref landEv);
+        }
+
         _physics.WakeBody(uid, body: physics);
     }
 

@@ -3,7 +3,7 @@ using Content.Shared.Actions;
 namespace Content.Shared.ItemRecall;
 
 /// <summary>
-/// Raise on using the ItemRecall action.
+/// Raised when using the ItemRecall action.
 /// </summary>
 [ByRefEvent]
 public sealed partial class OnItemRecallActionEvent : InstantActionEvent;
