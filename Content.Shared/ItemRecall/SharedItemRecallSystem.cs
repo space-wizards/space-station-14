@@ -10,12 +10,11 @@ namespace Content.Shared.ItemRecall;
 /// <summary>
 /// System for handling the ItemRecall ability for wizards.
 /// </summary>
-public sealed partial class SharedItemRecallSystem : EntitySystem
+public abstract partial class SharedItemRecallSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedProjectileSystem _proj = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
 
@@ -25,7 +24,6 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
 
         SubscribeLocalEvent<ItemRecallComponent, OnItemRecallActionEvent>(OnItemRecallActionUse);
 
-        SubscribeLocalEvent<RecallMarkerComponent, RecallItemEvent>(OnItemRecall);
         SubscribeLocalEvent<RecallMarkerComponent, ComponentShutdown>(OnRecallMarkerShutdown);
     }
 
@@ -54,11 +52,6 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
     private void OnRecallMarkerShutdown(Entity<RecallMarkerComponent> ent, ref ComponentShutdown args)
     {
         TryUnmarkItem(ent);
-    }
-
-    private void OnItemRecall(Entity<RecallMarkerComponent> ent, ref RecallItemEvent args)
-    {
-        RecallItem(ent);
     }
 
     private void TryMarkItem(Entity<ItemRecallComponent> ent, EntityUid item, EntityUid markedBy)
@@ -93,19 +86,6 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
         }
 
         RemCompDeferred<RecallMarkerComponent>(item);
-    }
-
-    private void RecallItem(Entity<RecallMarkerComponent> ent)
-    {
-        if (ent.Comp.MarkedByEntity == null)
-            return;
-
-        if (TryComp<EmbeddableProjectileComponent>(ent, out var projectile))
-            _proj.UnEmbed(ent, projectile, ent.Comp.MarkedByEntity.Value);
-
-        _popups.PopupPredicted(Loc.GetString("item-recall-item-summon", ("item", ent)), ent.Comp.MarkedByEntity.Value, ent.Comp.MarkedByEntity.Value);
-
-        _hands.TryForcePickupAnyHand(ent.Comp.MarkedByEntity.Value, ent);
     }
 
     private void UpdateActionAppearance(Entity<ItemRecallComponent> action)

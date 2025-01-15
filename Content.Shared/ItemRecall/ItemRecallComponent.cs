@@ -3,7 +3,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.ItemRecall;
 
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedItemRecallSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedItemRecallSystem))]
 public sealed partial class ItemRecallComponent : Component
 {
     [DataField]
@@ -15,6 +15,6 @@ public sealed partial class ItemRecallComponent : Component
     /// <summary>
     /// The entity currently marked to be recalled by this action.
     /// </summary>
-    [ViewVariables]
+    [DataField, AutoNetworkedField]
     public EntityUid? MarkedEntity;
 }
