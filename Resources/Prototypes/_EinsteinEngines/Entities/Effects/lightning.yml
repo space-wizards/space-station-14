@@ -1,7 +1,7 @@
 - type: entity
-  name: supermatter arc
-  id: SupermatterLightning
   parent: BaseLightning
+  id: SupermatterLightning
+  name: supermatter arc
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -30,9 +30,9 @@
     lifetime: 1
 
 - type: entity
-  name: charged supermatter arc
-  id: SupermatterLightningCharged
   parent: SupermatterLightning
+  id: SupermatterLightningCharged
+  name: charged supermatter arc
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -56,9 +56,9 @@
     lightningPrototype: SupermatterLightningCharged
 
 - type: entity
-  name: supercharged supermatter arc
-  id: SupermatterLightningSupercharged
   parent: SupermatterLightningCharged
+  id: SupermatterLightningSupercharged
+  name: supercharged supermatter arc
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
