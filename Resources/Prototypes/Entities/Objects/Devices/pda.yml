@@ -440,12 +440,13 @@
     accentVColor: "#a23e3e"
   - type: Icon
     state: pda-qm
-  - type: CartridgeLoader # DeltaV - MailMetrics courier tracker
+  - type: CartridgeLoader
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
       - NewsReaderCartridge
-      - MailMetricsCartridge
+      - NanoChatCartridge # DV
+      - MailMetricsCartridge  # DV
 
 - type: entity
   parent: BasePDA

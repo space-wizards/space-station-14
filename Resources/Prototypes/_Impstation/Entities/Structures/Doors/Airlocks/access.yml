@@ -38,3 +38,14 @@
       board: [ DoorElectronicsSecurityMedical ]
   - type: Wires
     layoutId: AirlockSecurity
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintCourierLocked
+  suffix: Courier, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCourier ]
+  - type: Wires
+    layoutId: AirlockCargo

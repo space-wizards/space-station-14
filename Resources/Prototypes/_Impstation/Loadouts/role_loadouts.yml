@@ -1,0 +1,16 @@
+- type: roleLoadout
+  id: JobCourier
+  groups:
+  - CourierHead
+  - CourierNeck
+  - CourierJumpsuit
+  - CourierOuterClothing
+  - CourierShoes
+  - Glasses
+  - CourierBackpack
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+  - GroupTankHarnessWithOuterwear
+  - GroupBreathToolDecapoid
+  - GroupTankHarnessWithOuterwearAquatic

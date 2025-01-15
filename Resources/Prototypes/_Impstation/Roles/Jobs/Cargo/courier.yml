@@ -1,0 +1,11 @@
+- type: job
+  id: Courier
+  name: job-name-courier
+  description: job-description-courier
+  playTimeTracker: JobCourier
+  icon: JobIconCourier
+  overrideConsoleVisibility: true
+  access:
+  - Cargo
+  - Courier
+  - Maintenance
