@@ -44,8 +44,8 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
             _actionsSystem.AddAction(uid, ref component.ChangelingTransformActionEntity, component.ChangelingTransformAction);
         TryComp<UserInterfaceComponent>(component.ChangelingTransformActionEntity, out var comp);
 
-        var uiE = EnsureComp<UserInterfaceComponent>(uid);
-        _uiSystem.SetUi((uid, uiE), TransformUi.Key, new InterfaceData("ChangelingTransformBoundUserInterface"));
+        var userInterfaceComp = EnsureComp<UserInterfaceComponent>(uid);
+        _uiSystem.SetUi((uid, userInterfaceComp), TransformUi.Key, new InterfaceData("ChangelingTransformBoundUserInterface"));
 
         var identityStorage = EnsureComp<ChangelingIdentityComponent>(uid);
         _changelingIdentitySystem.CloneLingStart(uid, identityStorage);
@@ -189,7 +189,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     }
 
     protected virtual void TransformBodyEmotes(EntityUid uid, EntityUid target) { }
-    protected virtual void TransformGrammarSet(EntityUid uid, Gender gender) { }
+    public virtual void TransformGrammarSet(EntityUid uid, Gender gender) { }
     protected virtual void StartSound(EntityUid uid, ChangelingTransformComponent component, SoundSpecifier? sound) { }
     protected virtual void StopSound(EntityUid uid, ChangelingTransformComponent component) { }
 }

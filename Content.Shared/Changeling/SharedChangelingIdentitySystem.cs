@@ -1,6 +1,11 @@
-﻿using Content.Shared.Forensics;
+﻿using System.Linq;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
+using Content.Shared.Forensics;
 using Content.Shared.Humanoid;
+using Content.Shared.Radiation.Events;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Changeling;
@@ -10,6 +15,24 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
+
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<ChangelingIdentityComponent, MapInitEvent>(OnInit);
+    }
+
+    /// <summary>
+    /// Setup the requirements for ling (mostly their organs)
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
+    /// <param name="args"></param>
+    private void OnInit(EntityUid uid, ChangelingIdentityComponent component, MapInitEvent args)
+    {
+        ReplaceLingsLungs(uid);
+    }
 
     /// <summary>
     /// Initialize the Starting ling entity in nullspace and set the ling as a View Subscriber to the Body to load the PVS
@@ -52,6 +75,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
         HandlePvsOverride(uid, mob);
     }
 
+    protected virtual void ReplaceLingsLungs(EntityUid uid) { }
     protected virtual void HandlePvsOverride(EntityUid uid, EntityUid target) { }
 
 }

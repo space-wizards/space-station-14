@@ -40,13 +40,13 @@ public sealed partial class ChangelingDevourComponent : Component
     /// The windup time before the changeling begins to engage in devouring the identity of a target
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float DevourWindupTime = 2f;
+    public TimeSpan DevourWindupTime = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// The time it takes to FULLY consume someones identity.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float DevourConsumeTime = 10f;
+    public TimeSpan DevourConsumeTime = TimeSpan.FromSeconds(10);
 
     /// <summary>
     /// Damage cap that a target is allowed to be caused due to IdentityConsumption

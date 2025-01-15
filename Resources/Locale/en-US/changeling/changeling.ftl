@@ -10,3 +10,6 @@ changeling-devour-consume-complete = Our uncanny mouth retreats, biomass consume
 
 changeling-transform-attempt = Bones snap, muscles tear, one flesh becomes another.
 changeling-husked-corpse = [color=red]{ CAPITALIZE(POSS-ADJ($target)) } corpse looks to have had all of { POSS-ADJ($target) } organs forcibly and violently removed. [/color]
+
+changeling-defibrillator-failure = This patient is too internally mangled to be able to be revived
+changeling-unidentified-husked-corpse = Mangled Corpse

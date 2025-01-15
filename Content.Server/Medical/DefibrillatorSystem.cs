@@ -7,6 +7,7 @@ using Content.Server.Ghost;
 using Content.Server.Popups;
 using Content.Server.PowerCell;
 using Content.Server.Traits.Assorted;
+using Content.Shared.Changeling.Devour;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -195,6 +196,11 @@ public sealed class DefibrillatorSystem : EntitySystem
         else if (HasComp<UnrevivableComponent>(target))
         {
             _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-unrevivable"),
+                InGameICChatType.Speak, true);
+        }
+        else if (HasComp<ChangelingHuskedCorpseComponent>(target))
+        {
+            _chatManager.TrySendInGameICMessage(uid, Loc.GetString("changeling-defibrillator-failure"),
                 InGameICChatType.Speak, true);
         }
         else

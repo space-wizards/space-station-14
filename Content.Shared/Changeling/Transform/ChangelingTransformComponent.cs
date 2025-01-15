@@ -16,7 +16,7 @@ public sealed partial class ChangelingTransformComponent : Component
     public EntityUid? ChangelingTransformActionEntity;
 
     [DataField, AutoNetworkedField]
-    public float TransformWindup = 5f;
+    public TimeSpan TransformWindup = TimeSpan.FromSeconds(5);
 
     [DataField, AutoNetworkedField]
     public SoundSpecifier? TransformAttemptNoise = new SoundCollectionSpecifier("ChangelingTransformAttempt");

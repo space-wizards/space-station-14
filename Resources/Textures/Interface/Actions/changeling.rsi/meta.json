@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "license": "CC0-1.0",
+    "license": "CC-BY-SA3.0",
     "copyright": "",
     "size": {
       "x": 32,
@@ -9,7 +9,12 @@
     "states": [
       {
         "name": "transform"
+      },
+      {
+        "name": "devour"
+      },
+      {
+        "name": "devour_on"
       }
     ]
   }
-  

@@ -25,7 +25,7 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
     [Dependency] private readonly BodyEmotesSystem _bodyEmotesSystem = default!;
 
 
-    protected override void TransformGrammarSet(EntityUid uid, Gender gender)
+    public override void TransformGrammarSet(EntityUid uid, Gender gender)
     {
         //How to stop quantum gender, a bug where the Examine pronoun will mispredict 100% of the time. Need to SPECIFICALLY
         // also modify the Identities grammar component, before Queuing the identityUpdate

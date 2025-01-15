@@ -31,6 +31,8 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentitySystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+
 
     public override void Initialize()
     {
@@ -115,8 +117,8 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-husk"), args.Performer, args.Performer);
             return;
         }
-
-        StartSound(uid, component, component.DevourWindupNoise);
+        StartSound(uid, component, new SoundPathSpecifier(
+            _audio.GetSound(component.DevourWindupNoise!)));
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.DevourWindupTime, new ChangelingDevourWindupDoAfterEvent(), uid, target: target, used: uid)
         {
@@ -143,7 +145,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             null,
             PopupType.LargeCaution);
 
-        StartSound(uid, component, component.ConsumeNoise);
+        StartSound(uid, component, new SoundPathSpecifier(_audio.GetSound(component.ConsumeNoise!)));
 
         component.NextTick = curTime + TimeSpan.FromSeconds(1);
 
