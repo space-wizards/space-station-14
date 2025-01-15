@@ -54,10 +54,10 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
         corePrototypes = corePrototypes.OrderBy(x => x.Name).ToList();
         hologramPrototypes = hologramPrototypes.OrderBy(x => x.Name).ToList();
 
-        _coreContainer = new StationAiCustomizationGroupContainer(corePrototypes, StationAiCustomizationType.Core, StationAiState.Occupied.ToString());
+        _coreContainer = new StationAiCustomizationGroupContainer(corePrototypes, StationAiCustomizationType.Core, StationAiState.Occupied);
         CustomizationGroupsContainer.AddTab(_coreContainer, Loc.GetString("station-ai-customization-core"));
 
-        _hologramContainer = new StationAiCustomizationGroupContainer(hologramPrototypes, StationAiCustomizationType.Hologram, StationAiCustomizationType.Hologram.ToString());
+        _hologramContainer = new StationAiCustomizationGroupContainer(hologramPrototypes, StationAiCustomizationType.Hologram, StationAiState.Hologram);
         CustomizationGroupsContainer.AddTab(_hologramContainer, Loc.GetString("station-ai-customization-hologram"));
     }
 
@@ -78,20 +78,26 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
         if (!_entManager.TryGetComponent<StationAiCustomizationComponent>(insertedAi, out var stationAiCustomization))
             return;
 
-        foreach (var child in _coreContainer.Children)
+        if (stationAiCustomization.ProtoIds.TryGetValue(StationAiCustomizationType.Core, out var protoId))
         {
-            if (child is not StationAiCustomizationEntryContainer entry)
-                continue;
+            foreach (var child in _coreContainer.Children)
+            {
+                if (child is not StationAiCustomizationEntryContainer entry)
+                    continue;
 
-            entry.SelectButton.Pressed = (entry.Prototype.ID == stationAiCustomization.StationAiCoreLayerData?.Id);
+                entry.SelectButton.Pressed = (entry.Prototype.ID == protoId);
+            }
         }
 
-        foreach (var child in _hologramContainer.Children)
+        if (stationAiCustomization.ProtoIds.TryGetValue(StationAiCustomizationType.Hologram, out protoId))
         {
-            if (child is not StationAiCustomizationEntryContainer entry)
-                continue;
+            foreach (var child in _hologramContainer.Children)
+            {
+                if (child is not StationAiCustomizationEntryContainer entry)
+                    continue;
 
-            entry.SelectButton.Pressed = (entry.Prototype.ID == stationAiCustomization.StationAiHologramLayerData?.Id);
+                entry.SelectButton.Pressed = (entry.Prototype.ID == protoId);
+            }
         }
     }
 
@@ -102,7 +108,7 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
 
     private sealed class StationAiCustomizationGroupContainer : BoxContainer
     {
-        public StationAiCustomizationGroupContainer(List<StationAiCustomizationPrototype> prototypes, StationAiCustomizationType category, string key)
+        public StationAiCustomizationGroupContainer(List<StationAiCustomizationPrototype> prototypes, StationAiCustomizationType category, StationAiState key)
         {
             Orientation = LayoutOrientation.Vertical;
             HorizontalExpand = true;

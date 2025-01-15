@@ -5,30 +5,46 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Silicons.StationAi;
 
 /// <summary>
-/// Holds data for customizing the appearance of station AIs.
+/// Holds data for altering the appearance of station AIs.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class StationAiCustomizationComponent : Component
 {
     /// <summary>
-    /// The proto ID of the layer data for customizing the station AI's core.
+    /// Dictionary of the prototype data used for customizing the appearance of the entity.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<StationAiCustomizationPrototype>? StationAiCoreLayerData = null;
-
-    /// <summary>
-    /// The proto ID of the layer data for customizing the station AI's hologram.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public ProtoId<StationAiCustomizationPrototype>? StationAiHologramLayerData = null;
+    public Dictionary<StationAiCustomizationType, ProtoId<StationAiCustomizationPrototype>> ProtoIds = new();
 }
 
+/// <summary>
+/// Message sent to server that contains a station AI customization that the client has selected
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class StationAiCustomizationMessage : BoundUserInterfaceMessage
+{
+    public readonly ProtoId<StationAiCustomizationPrototype> ProtoId;
+    public readonly StationAiCustomizationType Category;
+
+    public StationAiCustomizationMessage(ProtoId<StationAiCustomizationPrototype> protoId, StationAiCustomizationType category)
+    {
+        ProtoId = protoId;
+        Category = category;
+    }
+}
+
+/// <summary>
+/// Key for opening the station AI customization UI
+/// </summary>
 [Serializable, NetSerializable]
 public enum StationAiCustomizationUiKey : byte
 {
     Key,
 }
 
+/// <summary>
+/// The different catagories of station Ai customizations available
+/// </summary>
 [Serializable, NetSerializable]
 public enum StationAiCustomizationType : byte
 {

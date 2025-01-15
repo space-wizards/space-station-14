@@ -25,6 +25,6 @@ public sealed class StationAiCustomizationBoundUserInterface : BoundUserInterfac
 
     public void SendStationAiCustomizationMessage(ProtoId<StationAiCustomizationPrototype> protoId, StationAiCustomizationType category)
     {
-        //SendMessage(new StationAiCustomizationMessage(protoId, type));
+        SendPredictedMessage(new StationAiCustomizationMessage(protoId, category));
     }
 }

@@ -577,10 +577,11 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         if (TryComp<StationAiCustomizationComponent>(user, out var stationAiCustomization))
         {
-            var protoId = stationAiCustomization.StationAiHologramLayerData ?? _stationAiDefaultCustomizationProto;
+            if (!stationAiCustomization.ProtoIds.TryGetValue(StationAiCustomizationType.Hologram, out var protoId))
+                protoId = _stationAiDefaultCustomizationProto;
 
             if (_protoManager.TryIndex(protoId, out var proto) &&
-                proto.LayerData.TryGetValue(StationAiCustomizationType.Hologram.ToString(), out var layerData) &&
+                proto.LayerData.TryGetValue(StationAiState.Hologram, out var layerData) &&
                 layerData != null)
             {
                 SyncHolopadUserWithLinkedHolograms((user, holopadUser), [layerData]);

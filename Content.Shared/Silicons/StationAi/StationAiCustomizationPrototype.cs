@@ -24,8 +24,8 @@ public sealed partial class StationAiCustomizationPrototype : IPrototype
     public StationAiCustomizationType Category = StationAiCustomizationType.Core;
 
     /// <summary>
-    /// Stores data which is used to modify the appearance of station AI.
+    /// Stores the data which is used to modify the appearance of the station AI.
     /// </summary>
     [DataField]
-    public Dictionary<string, PrototypeLayerData> LayerData = new();
+    public Dictionary<StationAiState, PrototypeLayerData> LayerData = new();
 }
