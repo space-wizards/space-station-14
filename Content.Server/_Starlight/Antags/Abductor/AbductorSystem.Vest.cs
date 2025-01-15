@@ -4,6 +4,7 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Starlight.Antags.Abductor;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Stealth.Components;
+using Content.Shared.Mobs.Components;
 using System;
 using Content.Shared.ActionBlocker;
 using System.Linq;
@@ -47,15 +48,17 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         
         component.CurrentState = args.State;
         
+        var user = Transform(uid).ParentUid;
+        
         if (args.State == "combat")
         {
             if (TryComp<ClothingComponent>(uid, out var clothingComponent))
                 _clothing.SetEquippedPrefix(uid, "combat", clothingComponent);
             
-            if (args.User != null && HasComp<StealthComponent>(args.User.Value))
+            if (HasComp<MobStateComponent>(user) && HasComp<StealthComponent>(user))
             {
-                RemComp<StealthComponent>(args.User.Value);
-                RemComp<StealthOnMoveComponent>(args.User.Value);
+                RemComp<StealthComponent>(user);
+                RemComp<StealthOnMoveComponent>(user);
             }
         }
         else
@@ -63,10 +66,10 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             if (TryComp<ClothingComponent>(uid, out var clothingComponent))
                 _clothing.SetEquippedPrefix(uid, null, clothingComponent);
             
-            if (args.User != null && !HasComp<StealthComponent>(args.User.Value))
+            if (HasComp<MobStateComponent>(user) && !HasComp<StealthComponent>(user))
             {
-                AddComp<StealthComponent>(args.User.Value);
-                AddComp<StealthOnMoveComponent>(args.User.Value);
+                AddComp<StealthComponent>(user);
+                AddComp<StealthOnMoveComponent>(user);
             }
         }
     }
