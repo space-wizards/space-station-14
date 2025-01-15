@@ -1,0 +1,107 @@
+- type: marking
+  id: ThavenEars1
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Thaven]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: ears1
+
+- type: marking
+  id: ThavenEars2
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Thaven]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: ears2
+
+- type: marking
+  id: ThavenEars3
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Thaven]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: ears3
+
+- type: marking
+  id: ThavenEars4
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Thaven]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: ears4
+
+- type: marking
+  id: ThavenPiercings
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Thaven]
+  forcedColoring: false
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: piercings
+
+- type: marking
+  id: ThavenPiercings2
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Thaven]
+  forcedColoring: false
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: piercings2
+
+- type: marking
+  id: ThavenChestTattoo1
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Thaven]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: chesttat1
+
+- type: marking
+  id: ThavenLArmTattoo1
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Thaven]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: larmtat1
+
+- type: marking
+  id: ThavenRArmTattoo1
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Thaven]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: rarmtat1

@@ -13,7 +13,7 @@
     - Vox
     - Gray
     - Snail
-    - SpElf
+    - Thaven
     - Decapoid
 
 - type: guideEntry
@@ -67,9 +67,9 @@
   text: "/ServerInfo/_Impstation/Guidebook/Mobs/Snail.xml"
 
 - type: guideEntry
-  id: SpElf
+  id: Thaven
   name: Thaven
-  text: "/ServerInfo/_Impstation/Guidebook/Mobs/SpElf.xml"
+  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Thaven.xml"
 
 - type: guideEntry
   id: Decapoid
