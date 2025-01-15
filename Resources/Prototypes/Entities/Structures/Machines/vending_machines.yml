@@ -494,7 +494,6 @@
     pack: SpaceColaAds
   - type: SpeakOnUIClosed
     pack: SpaceColaGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/cola-red.rsi
     layers:
@@ -522,7 +521,6 @@
     pack: SpaceUpAds
   - type: SpeakOnUIClosed
     pack: SpaceUpGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/spaceup.rsi
     layers:
@@ -572,7 +570,6 @@
     pack: StarkistAds
   - type: SpeakOnUIClosed
     pack: StarkistGoodbyes
-  - type: Speech
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/starkist.rsi
     layers:
