@@ -508,7 +508,7 @@ public sealed partial class SupermatterSystem
 
         foreach (var mob in mobLookup)
         {
-            // Skip over silicons
+            // Ignore silicons
             if (HasComp<SiliconLawBoundComponent>(uid))
                 continue;
 

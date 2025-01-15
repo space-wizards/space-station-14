@@ -5,75 +5,83 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: Supermatter
-    - type: AtmosDevice
-    - type: RadiationSource
-    - type: AmbientSound
-      range: 20
-      volume: -5
-      sound:
-        path: /Audio/_EinsteinEngines/Supermatter/calm.ogg
-    - type: EmitSoundOnTrigger
-      sound:
-        collection: SupermatterAccentNormal
-    - type: Physics
-    - type: Speech
-      speechSounds: null
-      speechVerb: Supermatter
-      suffixSpeechVerbs:
-        chat-speech-verb-suffix-exclamation-strong: Supermatter
-        chat-speech-verb-suffix-exclamation: Supermatter
-        chat-speech-verb-suffix-question: Supermatter
-        chat-speech-verb-suffix-stutter: Supermatter
-        chat-speech-verb-suffix-mumble: Supermatter
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.25,0.4"
-          mask:
-            - Impassable
-            - MidImpassable
-            - HighImpassable
-            - LowImpassable
-            - InteractImpassable
-            - Opaque
-          layer:
-            - MidImpassable
-            - HighImpassable
-            - BulletImpassable
-            - InteractImpassable
-    - type: Transform
-      anchored: true
-      noRot: true
-    - type: CollisionWake
-      enabled: false
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Sprite
-      sprite: _EinsteinEngines/Structures/Power/Generation/Supermatter/supermatter.rsi
-      state: supermatter
-      drawdepth: Mobs
-      snapCardinals: true
-      offset: -0.015,0.295
-    - type: Icon
-      sprite: _EinsteinEngines/Structures/Power/Generation/Supermatter/supermatter.rsi
-      state: supermatter
-    - type: PointLight
-      enabled: true
-      radius: 10
-      energy: 5
-      color: "#ffe000"
-    - type: Explosive
-      explosionType: Supermatter
-      totalIntensity: 120000
-      intensitySlope: 5
-      maxIntensity: 100
-    - type: GuideHelp
-      guides: [ Supermatter, Power ]
-    - type: WarpPoint
-      follow: true
-      location: supermatter
-    - type: SinguloFood
-      energy: 10000
+  - type: Supermatter
+  - type: AtmosDevice
+  - type: RadiationSource
+  - type: AmbientSound
+    range: 20
+    volume: -5
+    sound:
+      path: /Audio/_EinsteinEngines/Supermatter/calm.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: SupermatterAccentNormal
+  - type: Physics
+  - type: Speech
+    speechSounds: null
+    speechVerb: Supermatter
+    suffixSpeechVerbs:
+      chat-speech-verb-suffix-exclamation-strong: Supermatter
+      chat-speech-verb-suffix-exclamation: Supermatter
+      chat-speech-verb-suffix-question: Supermatter
+      chat-speech-verb-suffix-stutter: Supermatter
+      chat-speech-verb-suffix-mumble: Supermatter
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.4"
+        mask:
+          - Impassable
+          - MidImpassable
+          - HighImpassable
+          - LowImpassable
+          - InteractImpassable
+          - Opaque
+        layer:
+          - MidImpassable
+          - HighImpassable
+          - BulletImpassable
+          - InteractImpassable
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: CollisionWake
+    enabled: false
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: _EinsteinEngines/Structures/Power/Generation/Supermatter/supermatter.rsi
+    state: supermatter
+    drawdepth: Mobs
+    snapCardinals: true
+    offset: -0.015,0.295
+  - type: Icon
+    sprite: _EinsteinEngines/Structures/Power/Generation/Supermatter/supermatter.rsi
+    state: supermatter
+  - type: PointLight
+    enabled: true
+    radius: 10
+    energy: 5
+    color: "#ffe000"
+  - type: Explosive
+    explosionType: Supermatter
+    totalIntensity: 120000
+    intensitySlope: 5
+    maxIntensity: 100
+  - type: GuideHelp
+    guides: [ Supermatter, Power ]
+  - type: WarpPoint
+    follow: true
+    location: supermatter
+  - type: SinguloFood
+    energy: 10000
+  # Paracusia values match MassHallucinations gamerule
+  - type: ParacusiaProximity
+    range: 5
+    minTimeBetweenIncidents: 0.1
+    maxTimeBetweenIncidents: 300
+    maxSoundDistance: 7
+    sounds:
+      collection: Paracusia
