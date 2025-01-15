@@ -701,7 +701,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - sweet
+    - sweet
   - type: InjectableSolution
     solution: food
   - type: RefillableSolution
