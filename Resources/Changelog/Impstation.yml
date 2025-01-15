@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Artifacts can now ask for a drink. Talk to your bartender for help!
-    type: Add
-  - message: minor changes to effect probabilities
-    type: Tweak
-  id: 431
-  time: '2024-10-30T16:35:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/585
-- author: ruddygreat
-  changes:
-  - message: Restored old vending machine sound & reduced pitch variations on some
-      others
-    type: Tweak
-  id: 432
-  time: '2024-10-30T16:34:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/576
 - author: hivehum
   changes:
   - message: Removed BROS.
@@ -4494,3 +4477,18 @@
   id: 930
   time: '2025-01-14T23:49:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1314
+- author: DinnerCalzone
+  changes:
+  - message: Clown waddling now appears for other players. Consequently, clown shoes
+      now start toggled on.
+    type: Fix
+  id: 931
+  time: '2025-01-15T18:05:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1370
+- author: hivehum, crocodilecarousel
+  changes:
+  - message: Replaced the emote icons with something much more, well, emotive.
+    type: Tweak
+  id: 932
+  time: '2025-01-15T18:06:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1372
