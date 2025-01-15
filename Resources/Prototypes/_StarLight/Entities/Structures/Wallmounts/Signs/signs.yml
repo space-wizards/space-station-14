@@ -5,6 +5,7 @@
   description: A sign indicating the brig medical bay.
   components:
   - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/signs.rsi
     state: brigmed
     
 - type: entity
@@ -14,6 +15,7 @@
   description: A sign indicating a disposal area.
   components:
   - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/signs.rsi
     state: disposals_proper
     
 - type: entity
@@ -23,6 +25,7 @@
   description: A sign indicating a secure area.
   components:
   - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/signs.rsi
     state: secureareasmall
     
 - type: entity
@@ -32,6 +35,7 @@
   description: A sign indicating a biohazard.
   components:
   - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/signs.rsi
     state: wall_biohazard
     
 - type: entity
@@ -41,6 +45,7 @@
   description: A sign indicating extreme heat.
   components:
   - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/signs.rsi
     state: wall_extremeheat
     
 - type: entity
@@ -50,6 +55,7 @@
   description: A sign indicating you can not smoke here.
   components:
   - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/signs.rsi
     state: nosmoking
     
 - type: entity
@@ -59,4 +65,5 @@
   description: A sign indicating you can smoke here.
   components:
   - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/signs.rsi
     state: yessmoking
