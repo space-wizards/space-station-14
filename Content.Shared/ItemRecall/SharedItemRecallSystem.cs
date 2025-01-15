@@ -37,8 +37,11 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
             var markItem = _hands.GetActiveItem((args.Performer, hands));
 
             if (markItem == null)
+            {
+                _popups.PopupClient(Loc.GetString("item-recall-item-mark-empty"), args.Performer, args.Performer);
                 return;
-
+            }
+            
             _popups.PopupClient(Loc.GetString("item-recall-item-marked", ("item", markItem.Value)), args.Performer, args.Performer);
             TryMarkItem(ent, markItem.Value, args.Performer);
             return;
@@ -77,8 +80,10 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
 
         if (TryComp<ItemRecallComponent>(marker.MarkedByAction, out var action))
         {
-            if(_net.IsServer)
-                _popups.PopupEntity(Loc.GetString("item-recall-item-unmark", ("item", item)), marker.MarkedByEntity.Value, marker.MarkedByEntity.Value, PopupType.MediumCaution);
+            // For some reason client thinks the station grid owns the action on client and this doesn't work. It doesn't work in PopupEntity(mispredicts) and PopupPredicted either(doesnt show).
+            // I don't have the heart to move this code to server because of this small thing.
+            // This line will only do something once that is fixed.
+            _popups.PopupClient(Loc.GetString("item-recall-item-unmark", ("item", item)), marker.MarkedByEntity.Value, marker.MarkedByEntity.Value, PopupType.MediumCaution);
 
             action.MarkedEntity = null;
             UpdateActionAppearance((marker.MarkedByAction.Value, action));
