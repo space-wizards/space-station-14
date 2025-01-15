@@ -682,6 +682,16 @@
   name: Smite Vendor
   description: Popular with the administration.
   components:
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/smite.rsi
+    layers:
+    - state: "off"
+      map: [ "enum.VendingMachineVisualLayers.Base" ]
+    - state: "off"
+      map: [ "enum.VendingMachineVisualLayers.BaseUnshaded" ]
+      shader: unshaded
+    - state: panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: VendingMachine
     pack: SmiteInventory
     dispenseOnHitChance: 0.25
@@ -697,16 +707,6 @@
     pack: SmiteAds
   - type: SpeakOnUIClosed
     pack: SmiteGoodbyes
-  - type: Sprite
-    sprite: Structures/Machines/VendingMachines/smite.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
     radius: 1.5
     energy: 1.6
