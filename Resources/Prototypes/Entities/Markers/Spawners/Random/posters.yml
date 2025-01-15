@@ -92,6 +92,7 @@
       - PosterContrabandInterdyne
       - PosterContrabandWaffleCorp
       - PosterContrabandMissingSpacepen
+      - PosterContrabandYoutoolpia
     chance: 1
 
 - type: entity
@@ -157,4 +158,7 @@
       - PosterLegitSafetyMothHardhat
       - PosterLegitSafetyMothSSD
       - PosterLegitOppenhopper
+      - PosterLegitCalendar
+      - PosterLegitCleanHands
+      - PosterLegitEyeChart
     chance: 1
