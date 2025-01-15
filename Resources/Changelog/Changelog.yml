@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: LucasTheDrgn
-  changes:
-  - message: Restored functionality to the Industrial Reagent Grinder
-    type: Fix
-  id: 7310
-  time: '2024-09-07T23:47:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31903
 - author: EmoGarbage404
   changes:
   - message: Added the biogenerator! Botany can use this machine to create various
@@ -3937,3 +3930,11 @@
   id: 7809
   time: '2025-01-15T00:10:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34419
+- author: ArtisticRoomba
+  changes:
+  - message: The station anchor machine board can no longer be printed at the circuit
+      imprinter.
+    type: Remove
+  id: 7810
+  time: '2025-01-15T16:26:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34358
