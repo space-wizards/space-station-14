@@ -236,7 +236,7 @@
         canReact: false
   - type: RadiationSource
     intensity: 0.1
-    slope: 300
+    slope: 3
   - type: PointLight
     radius: 1.2
     energy: 0.8
