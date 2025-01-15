@@ -11,7 +11,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
-using Serilog;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Mapping;
@@ -26,7 +25,7 @@ public sealed partial class MappingScreen : InGameScreen
     private PaletteColorPicker? _picker;
 
     private ProtoId<DecalPrototype>? _id;
-    private FloatSpinBox RotationSpinBox;
+    private readonly FloatSpinBox _rotationSpinBox;
     public Color DecalColor { get; private set; } = Color.White;
     private bool _decalEnableColor;
     private float _decalRotation;
@@ -57,15 +56,15 @@ public sealed partial class MappingScreen : InGameScreen
         LeftContainer.OnSplitResizeFinished += () =>
             OnChatResized?.Invoke(new Vector2(LeftContainer.SplitFraction, 0));
 
-        RotationSpinBox = new FloatSpinBox(90.0f, 0)
+        _rotationSpinBox = new FloatSpinBox(90.0f, 0)
         {
             HorizontalExpand = true
         };
-        DecalSpinBoxContainer.AddChild(RotationSpinBox);
+        DecalSpinBoxContainer.AddChild(_rotationSpinBox);
 
         DecalColorPicker.OnColorChanged += OnDecalColorPicked;
         DecalPickerOpen.OnPressed += OnDecalPickerOpenPressed;
-        RotationSpinBox.OnValueChanged += args =>
+        _rotationSpinBox.OnValueChanged += args =>
         {
             _decalRotation = args.Value;
             UpdateDecal();
@@ -117,7 +116,7 @@ public sealed partial class MappingScreen : InGameScreen
         ChatButton.Texture.TexturePath = "/Textures/Interface/VerbIcons/comment-dots-regular.svg.192dpi.png";
     }
 
-    public void FlipSides()
+    private void FlipSides()
     {
         LeftContainer.Flip();
         RightContainer.Flip();
@@ -223,7 +222,7 @@ public sealed partial class MappingScreen : InGameScreen
         if (_decalRotation < 0)
             _decalRotation = 360;
 
-        RotationSpinBox.Value = _decalRotation;
+        _rotationSpinBox.Value = _decalRotation;
         UpdateDecal();
     }
 

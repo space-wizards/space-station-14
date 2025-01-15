@@ -23,10 +23,13 @@ public sealed partial class MappingPrototypeList : Control
     private MappingSpawnButton? _favoriteList;
 
     /// <summary>
-    /// if true, elements with no children will be grouped into a grid
+    ///     if true, elements with no children will be grouped into a grid
     /// </summary>
     public bool Gallery { get; set; }
 
+    /// <summary>
+    ///     A color that applies to all textures in the list
+    /// </summary>
     public Color? TexturesModulate { get; set; }
 
     public Action<IPrototype, List<Texture>>? GetPrototypeData;

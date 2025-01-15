@@ -63,6 +63,9 @@ public sealed class MappingState : GameplayStateBase
     private SpriteSystem _sprite = default!;
     private TransformSystem _transform = default!;
     private VerbSystem _verbs = default!;
+    private GridDraggingSystem _gridDrag = default!;
+    private MapSystem _map = default!;
+    private SharedDecalSystem _sharedDecal = default!;
 
     // 1 off in case something else uses these colors since we use them to compare
     private static readonly Color PickColor = new(1, 255, 0);
@@ -226,6 +229,9 @@ public sealed class MappingState : GameplayStateBase
         _sprite = _entityManager.System<SpriteSystem>();
         _transform = _entityManager.System<TransformSystem>();
         _verbs = _entityManager.System<VerbSystem>();
+        _gridDrag = _entityManager.System<GridDraggingSystem>();
+        _map = _entityManager.System<MapSystem>();
+        _sharedDecal = _entityManager.System<SharedDecalSystem>();
     }
 
     private void UpdateLocale()
@@ -256,11 +262,15 @@ public sealed class MappingState : GameplayStateBase
 
     private void ReloadPrototypes()
     {
+        var mappings = new Dictionary<string, MappingPrototype>();
         var entities = new MappingPrototype(null, Loc.GetString("mapping-entities")) { Children = new List<MappingPrototype>() };
         foreach (var entity in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
         {
             Register(entity, entity.ID, entities);
         }
+
+        Sort(mappings, entities);
+        mappings.Clear();
 
         var tiles = new MappingPrototype(null, Loc.GetString("mapping-tiles")) { Children = new List<MappingPrototype>() };
         foreach (var tile in _prototypeManager.EnumeratePrototypes<ContentTileDefinition>())
@@ -268,12 +278,18 @@ public sealed class MappingState : GameplayStateBase
             Register(tile, tile.ID, tiles);
         }
 
+        Sort(mappings, tiles);
+        mappings.Clear();
+
         var decals = new MappingPrototype(null, Loc.GetString("mapping-decals")) { Children = new List<MappingPrototype>() };
         foreach (var decal in _prototypeManager.EnumeratePrototypes<DecalPrototype>())
         {
             if (decal.ShowMenu)
                 Register(decal, decal.ID, decals);
         }
+
+        Sort(mappings, decals);
+        mappings.Clear();
 
         var entitiesTemplate = new MappingPrototype(null, Loc.GetString("mapping-template"));
         var tilesTemplate = new MappingPrototype(null, Loc.GetString("mapping-template"));
@@ -295,27 +311,19 @@ public sealed class MappingState : GameplayStateBase
             }
         }
 
-        var mappings = new Dictionary<string, MappingPrototype>();
         Sort(mappings, entitiesTemplate);
-        mappings.Clear();
-        Sort(mappings, tilesTemplate);
-        mappings.Clear();
-        Sort(mappings, decalsTemplate);
-        mappings.Clear();
-
-        Sort(mappings, entities);
         mappings.Clear();
         Screen.Entities.UpdateVisible(
             new (entitiesTemplate.Children?.Count > 0 ? [entitiesTemplate, entities] : [entities]),
             _allPrototypes.GetOrNew(typeof(EntityPrototype)));
 
-        Sort(mappings, tiles);
+        Sort(mappings, tilesTemplate);
         mappings.Clear();
         Screen.Tiles.UpdateVisible(
             new (tilesTemplate.Children?.Count > 0 ? [tilesTemplate, tiles] : [tiles]),
             _allPrototypes.GetOrNew(typeof(ContentTileDefinition)));
 
-        Sort(mappings, decals);
+        Sort(mappings, decalsTemplate);
         mappings.Clear();
         Screen.Decals.UpdateVisible(
             new (decalsTemplate.Children?.Count > 0 ? [decalsTemplate, decals] : [decals]),
@@ -636,7 +644,7 @@ public sealed class MappingState : GameplayStateBase
                     {
                         Screen.Tiles.FavoritesPrototype.Children.Add(tile);
                         tile.Parents ??= new List<MappingPrototype>();
-                        tile.Parents.Add(Screen.Decals.FavoritesPrototype);
+                        tile.Parents.Add(Screen.Tiles.FavoritesPrototype);
                         tile.Favorite = true;
                     }
                     break;
@@ -1023,11 +1031,9 @@ public sealed class MappingState : GameplayStateBase
 
     private bool HandleMappingUnselect(in PointerInputCmdArgs args)
     {
-        if (Screen.MoveGrid.Pressed)
+        if (Screen.MoveGrid.Pressed && _gridDrag.Enabled)
         {
-            var gridDrag = _entityManager.System<GridDraggingSystem>();
-            if (gridDrag.Enabled)
-                _consoleHost.ExecuteCommand("griddrag");
+            _consoleHost.ExecuteCommand("griddrag");
         }
 
         if (_placement.Eraser)
@@ -1299,12 +1305,10 @@ public sealed class MappingState : GameplayStateBase
             return null;
 
         var mapCoords = viewport.PixelToMap(coords.Position);
-        var mapSys = _entityManager.System<MapSystem>();
-
         var tileSize = grid.Comp.TileSize;
         var tileDimensions = new Vector2(tileSize, tileSize);
-        var tileRef = mapSys.GetTileRef(grid, mapCoords);
-        var worldCoord = mapSys.LocalToWorld(grid.Owner, grid.Comp, tileRef.GridIndices);
+        var tileRef = _map.GetTileRef(grid, mapCoords);
+        var worldCoord = _map.LocalToWorld(grid.Owner, grid.Comp, tileRef.GridIndices);
         var box = Box2.FromDimensions(worldCoord, tileDimensions);
 
         return new Box2Rotated(box, xform.LocalRotation, box.BottomLeft);
@@ -1321,12 +1325,10 @@ public sealed class MappingState : GameplayStateBase
         if (GetHoveredGrid() is not { } grid)
             return null;
 
-        var decalSystem = _entityManager.System<SharedDecalSystem>();
-        var mapSys = _entityManager.System<MapSystem>();
         var mapCoords = viewport.PixelToMap(coords.Position);
-        var localCoords = mapSys.WorldToLocal(grid.Owner, grid.Comp, mapCoords.Position);
+        var localCoords = _map.WorldToLocal(grid.Owner, grid.Comp, mapCoords.Position);
         var bounds = Box2.FromDimensions(localCoords, new Vector2(1.05f, 1.05f)).Translated(new Vector2(-1, -1));
-        var decals = decalSystem.GetDecalsIntersecting(grid.Owner, bounds);
+        var decals = _sharedDecal.GetDecalsIntersecting(grid.Owner, bounds);
 
         if (decals.FirstOrDefault() is not { Decal: not null })
             return null;
@@ -1348,8 +1350,7 @@ public sealed class MappingState : GameplayStateBase
             !_prototypeManager.TryIndex<DecalPrototype>(decal.Id, out var decalProto))
             return null;
 
-        var mapSys = _entityManager.System<MapSystem>();
-        var worldCoords = mapSys.LocalToWorld(grid.Owner, grid.Comp, decal.Coordinates);
+        var worldCoords = _map.LocalToWorld(grid.Owner, grid.Comp, decal.Coordinates);
         var texture = _sprite.Frame0(decalProto.Sprite);
         var box = Box2.FromDimensions(worldCoords, new Vector2(1, 1));
         return (texture, new Box2Rotated(box, decal.Angle + xform.LocalRotation, box.BottomLeft));
@@ -1392,10 +1393,13 @@ public sealed class MappingState : GameplayStateBase
 
     public sealed class CursorMeta
     {
+        /// <summary>
+        ///     Defines how the overlay will be rendered
+        /// </summary>
         public CursorState State = CursorState.None;
 
         /// <summary>
-        /// Color with which the mapping overlay will be drawn
+        ///     Color with which the mapping overlay will be drawn
         /// </summary>
         public Color Color = Color.White;
 

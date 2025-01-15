@@ -34,10 +34,7 @@ public sealed class MappingOverlay : Overlay
     {
         foreach (var (id, color) in _oldColors)
         {
-            if (!_entities.TryGetComponent(id, out SpriteComponent? sprite))
-                continue;
-
-            if (sprite.Color != color)
+            if (_entities.TryGetComponent(id, out SpriteComponent? sprite))
                 sprite.Color = color;
         }
 

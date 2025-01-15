@@ -15,6 +15,7 @@ namespace Content.Client.Mapping;
 public sealed class MappingVisibilityUIController : UIController
 {
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly ILightManager _lightManager = default!;
 
@@ -97,8 +98,7 @@ public sealed class MappingVisibilityUIController : UIController
 
     private void OnToggleEntitiesPressed(BaseButton.ButtonEventArgs args)
     {
-        var entManager = IoCManager.Resolve<IEntityManager>();
-        var query = entManager.AllEntityQueryEnumerator<SpriteComponent>();
+        var query = _entityManager.AllEntityQueryEnumerator<SpriteComponent>();
 
         if (args.Button.Pressed && _window != null)
         {
@@ -131,10 +131,9 @@ public sealed class MappingVisibilityUIController : UIController
         }
     }
 
-    private static void ToggleWithComp<TComp>(BaseButton.ButtonEventArgs args) where TComp : IComponent
+    private void ToggleWithComp<TComp>(BaseButton.ButtonEventArgs args) where TComp : IComponent
     {
-        var entManager = IoCManager.Resolve<IEntityManager>();
-        var query = entManager.AllEntityQueryEnumerator<TComp, SpriteComponent>();
+        var query = _entityManager.AllEntityQueryEnumerator<TComp, SpriteComponent>();
 
         while (query.MoveNext(out _, out _, out var sprite))
         {
@@ -142,19 +141,15 @@ public sealed class MappingVisibilityUIController : UIController
         }
     }
 
-    private static void ToggleWithTag(BaseButton.ButtonEventArgs args, ProtoId<TagPrototype> tag)
+    private void ToggleWithTag(BaseButton.ButtonEventArgs args, ProtoId<TagPrototype> tag)
     {
-        var entManager = IoCManager.Resolve<IEntityManager>();
-        var query = entManager.AllEntityQueryEnumerator<TagComponent, SpriteComponent>();
-        var tagSystem = entManager.EntitySysManager.GetEntitySystem<TagSystem>();
+        var query = _entityManager.AllEntityQueryEnumerator<TagComponent, SpriteComponent>();
+        var tagSystem = _entityManager.EntitySysManager.GetEntitySystem<TagSystem>();
 
         while (query.MoveNext(out var uid, out _, out var sprite))
         {
             if (tagSystem.HasTag(uid, tag))
-            {
                 sprite.Visible = args.Button.Pressed;
-            }
-
         }
     }
 }

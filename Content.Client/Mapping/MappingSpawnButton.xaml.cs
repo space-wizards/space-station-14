@@ -44,6 +44,7 @@ public sealed partial class MappingSpawnButton : Control
         Button.AddStyleClass("ButtonSquare");
         SetWidth = 48;
         SetHeight = 48;
+        // TODO: I don't know how to successfully add a favorite button to the gallery layout
         FavoriteButton.Visible = false;
     }
 
