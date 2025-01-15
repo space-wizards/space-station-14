@@ -2271,4 +2271,14 @@ Entries:
   id: 319
   time: '2025-01-15T13:28:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/241
+- author: Conflee
+  changes:
+  - message: 11 new Signs / Posters. 3 Legit (Calendar, Clean Hands, Eye Test), 1
+      Contraband (Youtoolpia), 2 Department Signs (Brigmed and Disposals), 3 warning
+      signs (Secure Area, Extreme Heat, Biohazard), and 2 misc signs (No Smoking and
+      Yes Smoking)
+    type: Add
+  id: 320
+  time: '2025-01-15T14:40:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/240
 
