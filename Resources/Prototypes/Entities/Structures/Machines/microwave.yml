@@ -105,6 +105,7 @@
   - type: GuideHelp
     guides:
     - Chef
+    - FoodRecipes
 
 - type: entity
   id: SyndicateMicrowave
@@ -123,3 +124,7 @@
     snapCardinals: true
   - type: Machine
     board: SyndicateMicrowaveMachineCircuitboard
+  - type: FoodRecipeProvider
+    providedRecipes:
+    - RecipeBaguetteSword
+    - RecipeThrowingCroissant

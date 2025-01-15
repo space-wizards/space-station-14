@@ -32,7 +32,7 @@
     blockSpectators: true # otherwise they can play client-side music
     inHandsOnly: false
     singleUser: true
-    requireHands: true
+    requiresComplex: true
     verbText: verb-instrument-openui
     key: enum.InstrumentUiKey.Key
   - type: InteractionOutline

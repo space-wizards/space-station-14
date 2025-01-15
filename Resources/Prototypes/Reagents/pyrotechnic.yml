@@ -84,6 +84,7 @@
         multiplier: 0.1
       - !type:AdjustTemperature
         amount: 6000
+      - !type:Ignite
   reactiveEffects:
     Flammable:
       methods: [ Touch ]

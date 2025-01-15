@@ -1,5 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.Toggleable;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -31,6 +33,12 @@ public sealed partial class ToggleClothingComponent : Component
     /// </summary>
     [DataField]
     public bool DisableOnUnequip;
+
+    /// <summary>
+    /// If true, the clothes must equip for adding action.
+    /// </summary>
+    [DataField]
+    public bool MustEquip = true;
 }
 
 /// <summary>

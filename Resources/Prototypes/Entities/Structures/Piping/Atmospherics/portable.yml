@@ -30,6 +30,7 @@
     - state: unlit
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
+      visible: false
     - state: draining
       shader: unshaded
       visible: false
@@ -67,7 +68,7 @@
   - type: Machine
     board: PortableScrubberMachineCircuitBoard
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
@@ -102,6 +103,7 @@
   description: A bluespace technology device that alters local temperature. Commonly referred to as a "Space Heater".
   suffix: Unanchored
   components:
+  - type: StationAiWhitelist
   - type: Transform
     anchored: false
   - type: Physics
@@ -154,7 +156,7 @@
     temperatureTolerance: 0.2
     atmospheric: true
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:

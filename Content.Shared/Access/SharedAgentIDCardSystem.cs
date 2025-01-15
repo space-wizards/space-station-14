@@ -25,14 +25,12 @@ namespace Content.Shared.Access.Systems
     [Serializable, NetSerializable]
     public sealed class AgentIDCardBoundUserInterfaceState : BoundUserInterfaceState
     {
-        public readonly HashSet<ProtoId<StatusIconPrototype>> Icons;
         public string CurrentName { get; }
         public string CurrentJob { get; }
         public string CurrentJobIconId { get; }
 
-        public AgentIDCardBoundUserInterfaceState(string currentName, string currentJob, string currentJobIconId, HashSet<ProtoId<StatusIconPrototype>> icons)
+        public AgentIDCardBoundUserInterfaceState(string currentName, string currentJob, string currentJobIconId)
         {
-            Icons = icons;
             CurrentName = currentName;
             CurrentJob = currentJob;
             CurrentJobIconId = currentJobIconId;
@@ -64,9 +62,9 @@ namespace Content.Shared.Access.Systems
     [Serializable, NetSerializable]
     public sealed class AgentIDCardJobIconChangedMessage : BoundUserInterfaceMessage
     {
-        public ProtoId<StatusIconPrototype> JobIconId { get; }
+        public ProtoId<JobIconPrototype> JobIconId { get; }
 
-        public AgentIDCardJobIconChangedMessage(ProtoId<StatusIconPrototype> jobIconId)
+        public AgentIDCardJobIconChangedMessage(ProtoId<JobIconPrototype> jobIconId)
         {
             JobIconId = jobIconId;
         }

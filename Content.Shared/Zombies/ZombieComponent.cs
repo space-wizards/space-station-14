@@ -89,7 +89,7 @@ public sealed partial class ZombieComponent : Component
     public TimeSpan NextTick;
 
     [DataField("zombieStatusIcon")]
-    public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "ZombieFaction";
+    public ProtoId<FactionIconPrototype> StatusIcon { get; set; } = "ZombieFaction";
 
     /// <summary>
     /// Healing each second

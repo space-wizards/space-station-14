@@ -1,10 +1,11 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Decals
 {
     [Prototype("decal")]
-    public sealed partial class DecalPrototype : IPrototype
+    public sealed partial class DecalPrototype : IPrototype, IInheritingPrototype
     {
         [IdDataField] public string ID { get; } = null!;
         [DataField("sprite")] public SpriteSpecifier Sprite { get; private set; } = SpriteSpecifier.Invalid;
@@ -33,5 +34,13 @@ namespace Content.Shared.Decals
         /// </summary>
         [DataField]
         public bool DefaultSnap = true;
+
+        [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<DecalPrototype>))]
+        public string[]? Parents { get; }
+
+        [NeverPushInheritance]
+        [AbstractDataField]
+        public bool Abstract { get; }
+
     }
 }

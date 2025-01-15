@@ -17,6 +17,7 @@ namespace Content.Client.HealthAnalyzer.UI
         protected override void Open()
         {
             base.Open();
+
             _window = this.CreateWindow<HealthAnalyzerWindow>();
 
             _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;

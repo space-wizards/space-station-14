@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseStructure, StructureWheeled]
+  parent: [BaseStructure, StructureWheeled, BaseMajorContraband]
   id: NuclearBomb
   name: nuclear fission explosive
   description: You probably shouldn't stick around to see if this is armed.
@@ -110,6 +110,7 @@
   - type: WarpPoint
     follow: true
     location: nuclear bomb
+  - type: FTLSmashImmune
 
 - type: entity
   parent: NuclearBomb
@@ -163,7 +164,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.45
-        density: 255 
+        density: 255
         mask:
         - MachineMask
         layer:

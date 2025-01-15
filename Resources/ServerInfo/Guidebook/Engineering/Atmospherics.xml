@@ -22,7 +22,7 @@
     <GuideEntityEmbed Entity="GasVentPump"/>
     <GuideEntityEmbed Entity="GasVentScrubber"/>
   </Box>
-  During standard operation, if a normal vent detects that the outside environment is space, it will automatically cease operation until a minimum pressure is reached to avoid destruction of useful gasses. This can be fixed by pressurizing the room up to that minimum pressure by refilling it with gas canister (potentially multiple, if the room is of significant size).
+  During standard operation, if a normal vent detects that the outside environment is space, it will automatically cease operation until a minimum pressure is reached to avoid destruction of useful gasses. This can be fixed by pressurizing the room up to that minimum pressure by refilling it with a gas canister (potentially multiple, if the room is of significant size).
 
   Should you encounter a situation where scrubbers aren't cleaning a room fast enough (and the "Siphon" functionality still cannot keep up), employ portable scrubbers by dragging them to the affected location and wrenching them down. They work much faster than typical scrubbers and can clean up a room quite quickly. Large spills may require you to employ multiple.
   <Box>

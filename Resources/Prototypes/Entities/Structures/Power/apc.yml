@@ -6,6 +6,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: StationAiWhitelist
   - type: AmbientOnPowered
   - type: AmbientSound
     volume: -9
@@ -90,7 +91,6 @@
         type: ApcBoundUserInterface
   - type: ActivatableUI
     inHandsOnly: false
-    singleUser: true
     key: enum.ApcUiKey.Key
   - type: Construction
     graph: APC
@@ -104,8 +104,8 @@
   - type: WiresPanel
   - type: WiresVisuals
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
     - trigger:
@@ -166,8 +166,8 @@
     node: apcFrame
   - type: WallMount
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:

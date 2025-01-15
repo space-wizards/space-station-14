@@ -8,6 +8,8 @@
     sprite: Clothing/Eyes/Misc/blindfold.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Misc/blindfold.rsi
+    equipDelay: 3
+    unequipDelay: 3
   - type: Blindfold
   - type: Construction
     graph: Blindfold

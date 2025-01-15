@@ -1,10 +1,11 @@
-﻿using Content.Server.Cuffs;
+using Content.Server.Cuffs;
 using Content.Server.Forensics;
 using Content.Server.Humanoid;
 using Content.Server.Implants.Components;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Forensics;
 using Content.Shared.Humanoid;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
@@ -73,14 +74,12 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             return;
 
         // same as store code, but message is only shown to yourself
-        args.Handled = _store.TryAddCurrency(_store.GetCurrencyValue(args.Used, currency), uid, store);
-
-        if (!args.Handled)
+        if (!_store.TryAddCurrency((args.Used, currency), (uid, store)))
             return;
 
+        args.Handled = true;
         var msg = Loc.GetString("store-currency-inserted-implant", ("used", args.Used));
         _popup.PopupEntity(msg, args.User, args.User);
-        QueueDel(args.Used);
     }
 
     private void OnFreedomImplant(EntityUid uid, SubdermalImplantComponent component, UseFreedomImplantEvent args)
@@ -109,6 +108,10 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         // This can for example happen when the user is cuffed and being pulled.
         if (TryComp<PullableComponent>(ent, out var pull) && _pullingSystem.IsPulled(ent, pull))
             _pullingSystem.TryStopPull(ent, pull);
+
+        // Check if the user is pulling anything, and drop it if so
+        if (TryComp<PullerComponent>(ent, out var puller) && TryComp<PullableComponent>(puller.Pulling, out var pullable))
+            _pullingSystem.TryStopPull(puller.Pulling.Value, pullable);
 
         var xform = Transform(ent);
         var targetCoords = SelectRandomTileInRange(xform, implant.TeleportRadius);
@@ -212,6 +215,9 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             if (TryComp<DnaComponent>(ent, out var dna))
             {
                 dna.DNA = _forensicsSystem.GenerateDNA();
+
+                var ev = new GenerateDnaEvent { Owner = ent, DNA = dna.DNA };
+                RaiseLocalEvent(ent, ref ev);
             }
             if (TryComp<FingerprintComponent>(ent, out var fingerprint))
             {

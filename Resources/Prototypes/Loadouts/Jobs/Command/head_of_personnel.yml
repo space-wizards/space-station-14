@@ -1,3 +1,13 @@
+# For mantles
+- type: loadoutEffectGroup
+  id: MasterHoP
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobHeadOfPersonnel
+      time: 72000 #20 hrs
+
 # Professional HoP Time
 - type: loadoutEffectGroup
   id: ProfessionalHoP
@@ -11,18 +21,10 @@
 # Jumpsuit
 - type: loadout
   id: HoPJumpsuit
-  equipment: HoPJumpsuit
-
-- type: startingGear
-  id: HoPJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitHoP
 
 - type: loadout
-  id: HoPJumpskirt
-  equipment: HoPJumpskirt
-
-- type: startingGear
   id: HoPJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtHoP
@@ -30,26 +32,22 @@
 # Head
 - type: loadout
   id: HoPHead
-  equipment: HoPHead
-
-- type: startingGear
-  id: HoPHead
   equipment:
     head: ClothingHeadHatHopcap
 
 # Neck
 - type: loadout
   id: HoPCloak
-  equipment: HoPCloak
-
-- type: startingGear
-  id: HoPCloak
   equipment:
     neck: ClothingNeckCloakHop
 
 - type: loadout
   id: HoPMantle
-  equipment: HoPMantle
+  equipment:
+    neck: ClothingNeckMantleHOP
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterHoP
 
 - type: startingGear
   id: HoPMantle
@@ -59,22 +57,14 @@
 # Back
 - type: loadout
   id: HoPBackpackIan
-  equipment: HoPBackpackIan
   effects:
   - !type:GroupLoadoutEffect
     proto: ProfessionalHoP
-
-- type: startingGear
-  id: HoPBackpackIan
   equipment:
     back: ClothingBackpackIan
 
 # Outerclothing
 - type: loadout
-  id: HoPWintercoat
-  equipment: HoPWintercoat
-
-- type: startingGear
   id: HoPWintercoat
   equipment:
     outerClothing: ClothingOuterWinterHoP

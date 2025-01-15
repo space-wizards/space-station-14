@@ -43,6 +43,16 @@
         Piercing: 10
 
 - type: entity
+  id: PelletShotgunSpread
+  categories: [ HideSpawnMenu ]
+  parent: PelletShotgun
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgun
+    count: 6
+    spread: 15
+
+- type: entity
   id: PelletShotgunIncendiary
   name: pellet (.50 incendiary)
   categories: [ HideSpawnMenu ]
@@ -60,6 +70,16 @@
     ignited: true
 
 - type: entity
+  id: PelletShotgunIncendiarySpread
+  categories: [ HideSpawnMenu ]
+  parent: PelletShotgunIncendiary
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgunIncendiary
+    count: 6
+    spread: 15
+
+- type: entity
   id: PelletShotgunPractice
   name: pellet (.50 practice)
   categories: [ HideSpawnMenu ]
@@ -72,6 +92,16 @@
     damage:
       types:
         Blunt: 1
+
+- type: entity
+  id: PelletShotgunPracticeSpread
+  categories: [ HideSpawnMenu ]
+  parent: PelletShotgunPractice
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgunPractice
+    count: 6
+    spread: 15
 
 - type: entity
   id: PelletShotgunImprovised
@@ -88,6 +118,15 @@
         Piercing: 3
         Slash: 3
 
+- type: entity
+  id: PelletShotgunImprovisedSpread
+  categories: [ HideSpawnMenu ]
+  parent: PelletShotgunImprovised
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgunImprovised
+    count: 10
+    spread: 45
 
 - type: entity
   id: PelletShotgunTranquilizer
@@ -179,6 +218,16 @@
         Piercing: 5
 
 - type: entity
+  id: PelletShotgunUraniumSpread
+  categories: [ HideSpawnMenu ]
+  parent: PelletShotgunUranium
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgunUranium
+    count: 5
+    spread: 6
+
+- type: entity
   id: PelletGrapeshot #tally fucking ho
   name: grapeshot pellet
   categories: [ HideSpawnMenu ]
@@ -195,6 +244,16 @@
       types:
         Piercing: 25
         Structural: 5
+
+- type: entity
+  id: PelletGrapeshotSpread
+  categories: [ HideSpawnMenu ]
+  parent: PelletGrapeshot
+  components:
+  - type: ProjectileSpread
+    proto: PelletGrapeshot
+    count: 5
+    spread: 40
 
 - type: entity
   id: PelletGlass
@@ -215,3 +274,13 @@
     damage:
       types:
         Slash: 25
+
+- type: entity
+  id: PelletGlassSpread
+  parent: PelletGlass
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: PelletGlass
+    count: 5
+    spread: 10

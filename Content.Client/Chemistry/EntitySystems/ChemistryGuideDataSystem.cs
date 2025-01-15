@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Content.Client.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos.Prototypes;
 using Content.Shared.Body.Part;
 using Content.Shared.Chemistry;
@@ -16,7 +16,7 @@ namespace Content.Client.Chemistry.EntitySystems;
 /// <inheritdoc/>
 public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
 {
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
     [ValidatePrototypeId<MixingCategoryPrototype>]
     private const string DefaultMixingCategory = "DummyMix";

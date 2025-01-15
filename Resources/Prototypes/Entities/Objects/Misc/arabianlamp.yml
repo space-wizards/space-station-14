@@ -14,9 +14,9 @@
   - type: EntityStorage
     capacity: 1 # Its smol.
     itemCanStoreMobs: false #  just leaving this here explicitly since I know at some point someone will want to use this to hold a mob. This also prevents it from becoming His Grace.
-  # - type: StorageFill 
-    # contents: 
-      # - id: PuddleSparkle # Ha! Cute. Unfortunately it despawns before the container is likely to open. 
+  # - type: StorageFill
+    # contents:
+      # - id: PuddleSparkle # Ha! Cute. Unfortunately it despawns before the container is likely to open.
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
@@ -64,7 +64,7 @@
   - type: Sprite
     sprite: Objects/Misc/arabianlamp.rsi
     layers:
-    - state: lamp 
+    - state: lamp
       map: [ "enum.StorageVisualLayers.Base" ]
     - state: lamptop
       map: ["enum.StorageVisualLayers.Door"]
@@ -130,6 +130,7 @@
     netsync: false
     radius: 5
     color: orange
+  - type: ItemTogglePointLight
   - type: StaticPrice
     price: 1500
   - type: Prayable

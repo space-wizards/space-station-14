@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Power.Components;
@@ -196,6 +197,18 @@ namespace Content.Server.Power.EntitySystems
         public void SetLoad(ApcPowerReceiverComponent comp, float load)
         {
             comp.Load = load;
+        }
+
+        public override bool ResolveApc(EntityUid entity, [NotNullWhen(true)] ref SharedApcPowerReceiverComponent? component)
+        {
+            if (component != null)
+                return true;
+
+            if (!TryComp(entity, out ApcPowerReceiverComponent? receiver))
+                return false;
+
+            component = receiver;
+            return true;
         }
     }
 }

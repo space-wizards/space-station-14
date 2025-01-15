@@ -11,6 +11,8 @@ public sealed class StorageBoundUserInterface : BoundUserInterface
 
     private readonly StorageSystem _storage;
 
+    [Obsolete] public override bool DeferredClose => false;
+
     public StorageBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
         IoCManager.InjectDependencies(this);

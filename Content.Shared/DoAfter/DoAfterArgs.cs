@@ -19,14 +19,14 @@ public sealed partial class DoAfterArgs
     /// <summary>
     ///     How long does the do_after require to complete
     /// </summary>
-    [DataField("delay", required: true)]
+    [DataField(required: true)]
     public TimeSpan Delay;
 
     /// <summary>
     ///     Applicable target (if relevant)
     /// </summary>
     [NonSerialized]
-    [DataField("target")]
+    [DataField]
     public EntityUid? Target;
 
     public NetEntity? NetTarget;
@@ -50,7 +50,7 @@ public sealed partial class DoAfterArgs
     /// <summary>
     ///     The event that will get raised when the DoAfter has finished. If null, this will simply raise a <see cref="SimpleDoAfterEvent"/>
     /// </summary>
-    [DataField("event", required: true)]
+    [DataField(required: true)]
     public DoAfterEvent Event = default!;
 
     /// <summary>
@@ -64,7 +64,7 @@ public sealed partial class DoAfterArgs
     ///     Entity which will receive the directed event. If null, no directed event will be raised.
     /// </summary>
     [NonSerialized]
-    [DataField("eventTarget")]
+    [DataField]
     public EntityUid? EventTarget;
 
     public NetEntity? NetEventTarget;
@@ -72,7 +72,7 @@ public sealed partial class DoAfterArgs
     /// <summary>
     /// Should the DoAfter event broadcast? If this is false, then <see cref="EventTarget"/> should be a valid entity.
     /// </summary>
-    [DataField("broadcast")]
+    [DataField]
     public bool Broadcast;
     #endregion
 
@@ -81,15 +81,23 @@ public sealed partial class DoAfterArgs
     /// <summary>
     ///     Whether or not this do after requires the user to have hands.
     /// </summary>
-    [DataField("needHand")]
+    [DataField]
     public bool NeedHand;
 
     /// <summary>
     ///     Whether we need to keep our active hand as is (i.e. can't change hand or change item). This also covers
     ///     requiring the hand to be free (if applicable). This does nothing if <see cref="NeedHand"/> is false.
     /// </summary>
-    [DataField("breakOnHandChange")]
+    [DataField]
     public bool BreakOnHandChange = true;
+
+    /// <summary>
+    ///     Whether the do-after should get interrupted if we drop the
+    ///     active item we started the do-after with
+    ///     This does nothing if <see cref="NeedHand"/> is false.
+    /// </summary>
+    [DataField]
+    public bool BreakOnDropItem = true;
 
     /// <summary>
     ///     If do_after stops when the user or target moves
@@ -107,31 +115,31 @@ public sealed partial class DoAfterArgs
     /// <summary>
     ///     Threshold for user and target movement
     /// </summary>
-    [DataField("movementThreshold")]
+    [DataField]
     public float MovementThreshold = 0.3f;
 
     /// <summary>
     ///     Threshold for distance user from the used OR target entities.
     /// </summary>
-    [DataField("distanceThreshold")]
+    [DataField]
     public float? DistanceThreshold;
 
     /// <summary>
     ///     Whether damage will cancel the DoAfter. See also <see cref="DamageThreshold"/>.
     /// </summary>
-    [DataField("breakOnDamage")]
+    [DataField]
     public bool BreakOnDamage;
 
     /// <summary>
     ///     Threshold for user damage. This damage has to be dealt in a single event, not over time.
     /// </summary>
-    [DataField("damageThreshold")]
+    [DataField]
     public FixedPoint2 DamageThreshold = 1;
 
     /// <summary>
     ///     If true, this DoAfter will be canceled if the user can no longer interact with the target.
     /// </summary>
-    [DataField("requireCanInteract")]
+    [DataField]
     public bool RequireCanInteract = true;
     #endregion
 
@@ -143,7 +151,7 @@ public sealed partial class DoAfterArgs
     ///     Note that this will block even if the duplicate is cancelled because either DoAfter had
     ///     <see cref="CancelDuplicate"/> enabled.
     /// </remarks>
-    [DataField("blockDuplicate")]
+    [DataField]
     public bool BlockDuplicate = true;
 
     //TODO: User pref to not cancel on second use on specific doafters
@@ -151,7 +159,7 @@ public sealed partial class DoAfterArgs
     ///     If true, this will cancel any duplicate DoAfters when attempting to add a new DoAfter. See also
     ///     <see cref="DuplicateConditions"/>.
     /// </summary>
-    [DataField("cancelDuplicate")]
+    [DataField]
     public bool CancelDuplicate = true;
 
     /// <summary>
@@ -162,7 +170,7 @@ public sealed partial class DoAfterArgs
     ///     Note that both DoAfters may have their own conditions, and they will be considered duplicated if either set
     ///     of conditions is satisfied.
     /// </remarks>
-    [DataField("duplicateCondition")]
+    [DataField]
     public DuplicateConditions DuplicateCondition = DuplicateConditions.All;
     #endregion
 
@@ -244,6 +252,7 @@ public sealed partial class DoAfterArgs
         Broadcast = other.Broadcast;
         NeedHand = other.NeedHand;
         BreakOnHandChange = other.BreakOnHandChange;
+        BreakOnDropItem = other.BreakOnDropItem;
         BreakOnMove = other.BreakOnMove;
         BreakOnWeightlessMove = other.BreakOnWeightlessMove;
         MovementThreshold = other.MovementThreshold;

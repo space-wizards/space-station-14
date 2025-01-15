@@ -2,9 +2,7 @@ using System.Numerics;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
-using Content.Shared.Cargo.Components;
 using Content.Shared.CCVar;
-using Content.Shared.Procedural;
 using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Station.Components;
@@ -72,11 +70,11 @@ public sealed partial class ShuttleSystem
         if (targetGrid == null)
             return;
 
-        var mapId = _mapManager.CreateMap();
+        _mapSystem.CreateMap(out var mapId);
 
         if (_loader.TryLoad(mapId, component.Path.ToString(), out var ent) && ent.Count > 0)
         {
-            if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
+            if (HasComp<ShuttleComponent>(ent[0]))
             {
                 TryFTLProximity(ent[0], targetGrid.Value);
             }
@@ -87,7 +85,7 @@ public sealed partial class ShuttleSystem
         _mapManager.DeleteMap(mapId);
     }
 
-    private bool TryDungeonSpawn(Entity<MapGridComponent?> targetGrid, EntityUid stationUid, MapId mapId, DungeonSpawnGroup group, out EntityUid spawned)
+    private bool TryDungeonSpawn(Entity<MapGridComponent?> targetGrid, DungeonSpawnGroup group, out EntityUid spawned)
     {
         spawned = EntityUid.Invalid;
 
@@ -112,11 +110,12 @@ public sealed partial class ShuttleSystem
             spawnCoords = spawnCoords.Offset(_random.NextVector2(distancePadding + group.MinimumDistance, distancePadding + group.MaximumDistance));
         }
 
-        var spawnMapCoords = _transform.ToMapCoordinates(spawnCoords);
+        _mapSystem.CreateMap(out var mapId);
+
         var spawnedGrid = _mapManager.CreateGridEntity(mapId);
 
-        _transform.SetMapCoordinates(spawnedGrid, spawnMapCoords);
-        _dungeon.GenerateDungeon(dungeonProto, spawnedGrid.Owner, spawnedGrid.Comp, Vector2i.Zero, _random.Next());
+        _transform.SetMapCoordinates(spawnedGrid, new MapCoordinates(Vector2.Zero, mapId));
+        _dungeon.GenerateDungeon(dungeonProto, spawnedGrid.Owner, spawnedGrid.Comp, Vector2i.Zero, _random.Next(), spawnCoords);
 
         spawned = spawnedGrid.Owner;
         return true;
@@ -146,7 +145,7 @@ public sealed partial class ShuttleSystem
 
         if (_loader.TryLoad(mapId, path.ToString(), out var ent) && ent.Count == 1)
         {
-            if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
+            if (HasComp<ShuttleComponent>(ent[0]))
             {
                 TryFTLProximity(ent[0], targetGrid);
             }
@@ -181,7 +180,7 @@ public sealed partial class ShuttleSystem
             return;
 
         // Spawn on a dummy map and try to FTL if possible, otherwise dump it.
-        var mapId = _mapManager.CreateMap();
+        _mapSystem.CreateMap(out var mapId);
 
         foreach (var group in component.Groups.Values)
         {
@@ -194,7 +193,7 @@ public sealed partial class ShuttleSystem
                 switch (group)
                 {
                     case DungeonSpawnGroup dungeon:
-                        if (!TryDungeonSpawn(targetGrid.Value, uid, mapId, dungeon, out spawned))
+                        if (!TryDungeonSpawn(targetGrid.Value, dungeon, out spawned))
                             continue;
 
                         break;
@@ -209,7 +208,7 @@ public sealed partial class ShuttleSystem
 
                 if (_protoManager.TryIndex(group.NameDataset, out var dataset))
                 {
-                    _metadata.SetEntityName(spawned, SharedSalvageSystem.GetFTLName(dataset, _random.Next()));
+                    _metadata.SetEntityName(spawned, _salvage.GetFTLName(dataset, _random.Next()));
                 }
 
                 if (group.Hide)
@@ -244,7 +243,7 @@ public sealed partial class ShuttleSystem
         }
 
         // Spawn on a dummy map and try to dock if possible, otherwise dump it.
-        var mapId = _mapManager.CreateMap();
+        _mapSystem.CreateMap(out var mapId);
         var valid = false;
 
         if (_loader.TryLoad(mapId, component.Path.ToString(), out var ent) &&

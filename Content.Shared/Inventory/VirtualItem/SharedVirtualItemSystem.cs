@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -94,10 +95,10 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     }
 
     /// <inheritdoc cref="TrySpawnVirtualItemInHand(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,bool)"/>
-    public bool TrySpawnVirtualItemInHand(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem, bool dropOthers = false)
+    public bool TrySpawnVirtualItemInHand(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem, bool dropOthers = false, Hand? empty = null)
     {
         virtualItem = null;
-        if (!_handsSystem.TryGetEmptyHand(user, out var empty))
+        if (empty == null && !_handsSystem.TryGetEmptyHand(user, out empty))
         {
             if (!dropOthers)
                 return false;
