@@ -20,6 +20,7 @@
       - VendingMachinePwrGame
       - VendingMachineDrGibb
       - VendingMachineSoda
+      - VendingMachineSmite
       - VendingMachineStarkist
       - VendingMachineSpaceUp
     chance: 1
