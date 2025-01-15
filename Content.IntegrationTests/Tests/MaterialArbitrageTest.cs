@@ -14,6 +14,7 @@ using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Stacks;
+using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -52,6 +53,7 @@ public sealed class MaterialArbitrageTest
         var compositionName = compFact.GetComponentName(typeof(PhysicalCompositionComponent));
         var materialName = compFact.GetComponentName(typeof(MaterialComponent));
         var destructibleName = compFact.GetComponentName(typeof(DestructibleComponent));
+        var refinableName = compFact.GetComponentName(typeof(ToolRefinableComponent));
 
         // get the inverted lathe recipe dictionary
         var latheRecipes = latheSys.InverseRecipes;
@@ -131,6 +133,65 @@ public sealed class MaterialArbitrageTest
 
         Dictionary<string, (Dictionary<string, int> Ents, Dictionary<string, int> Mats)> spawnedOnDestroy = new();
 
+        // cache the compositions of entities
+        // If the entity is refineable (i.e. glass shared can be turned into glass, we take the greater of the two compositions.
+        Dictionary<EntProtoId, Dictionary<string, int>> compositions = new();
+        foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
+        {
+            Dictionary<string, int>? baseComposition = null;
+
+            if (proto.Components.ContainsKey(materialName)
+                && proto.Components.TryGetValue(compositionName, out var compositionReg))
+            {
+                var compositionComp = (PhysicalCompositionComponent)compositionReg.Component;
+                baseComposition = compositionComp.MaterialComposition;
+
+            }
+
+            if (!proto.Components.TryGetValue(refinableName, out var refinableReg))
+            {
+                if (baseComposition != null)
+                    compositions[proto.ID] = new(baseComposition);
+                continue;
+            }
+
+            var composition = new Dictionary<string, int>();
+            compositions.Add(proto.ID, composition);
+
+            var refinable = (ToolRefinableComponent)refinableReg.Component;
+            foreach (var refineResult in refinable.RefineResult)
+            {
+                if (refineResult.PrototypeId == null)
+                    continue;
+
+                var refineProto = protoManager.Index(refineResult.PrototypeId.Value);
+                if (!refineProto.Components.ContainsKey(materialName))
+                    continue;
+
+                if (!refineProto.Components.TryGetValue(compositionName, out var refinedCompositionReg))
+                    continue;
+
+                var refinedCompositionComp = (PhysicalCompositionComponent)refinedCompositionReg.Component;
+
+                // This assumes refine results do not have complex spawn behaviours like exclusive groups.
+                var quantity = refineResult.MaxAmount;
+
+                foreach (var (matId, amount) in refinedCompositionComp.MaterialComposition)
+                {
+                    composition[matId] = quantity * amount + composition.GetValueOrDefault(matId);
+                }
+            }
+
+            if (baseComposition == null)
+                continue;
+
+            // If the un-refined material quantity is greater than the refined quantity, we use that instead.
+            foreach (var (matId, amount) in baseComposition)
+            {
+                composition[matId] = Math.Max(amount, composition.GetValueOrDefault(matId));
+            }
+        }
+
         // Here we get the set of entities/materials spawned when destroying an entity.
         foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
         {
@@ -160,16 +221,10 @@ public sealed class MaterialArbitrageTest
                     {
                         spawnedEnts[key] = spawnedEnts.GetValueOrDefault(key) + value.Max;
 
-                        var spawnProto = protoManager.Index<EntityPrototype>(key);
-
-                        // get the amount of each material included in the entity
-
-                        if (!spawnProto.Components.ContainsKey(materialName) ||
-                            !spawnProto.Components.TryGetValue(compositionName, out var compositionReg))
+                        if (!compositions.TryGetValue(key, out var composition))
                             continue;
 
-                        var mat = (PhysicalCompositionComponent) compositionReg.Component;
-                        foreach (var (matId, amount) in mat.MaterialComposition)
+                        foreach (var (matId, amount) in composition)
                         {
                             spawnedMats[matId] = value.Max * amount + spawnedMats.GetValueOrDefault(matId);
                         }
