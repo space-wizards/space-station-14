@@ -34,7 +34,7 @@
   copyright: "Created by Carousel for Impstation"
   source: "https://github.com/impstation/imp-station-14"
 
-- files: "wuhey.png"
+- files: ["wuhey.png"]
   license: "Custom"
   copyright: "Barry, 63"
   source: "https://en.wikipedia.org/wiki/Pub"
