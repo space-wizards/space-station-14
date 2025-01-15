@@ -4,8 +4,17 @@
   description: job-description-courier
   playTimeTracker: JobCourier
   icon: JobIconCourier
-  overrideConsoleVisibility: true
+  startingGear: CourierGear
+  supervisors: job-supervisors-qm
   access:
   - Cargo
   - Courier
   - Maintenance
+
+- type: startingGear
+  id: CourierGear
+  equipment:
+    id: CourierPDA
+    belt: MailBag
+    pocket1: HoloBellProjector
+

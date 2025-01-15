@@ -18,7 +18,7 @@
       visible: false
     - map: ["enum.MailVisualLayers.JobStamp"]
       scale: 0.8, 0.8
-      offset: 0.235, -0.08
+      offset: 0.235, -0.2
     - state: locked
       map: ["enum.MailVisualLayers.Lock"]
     - state: priority
