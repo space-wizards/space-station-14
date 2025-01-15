@@ -5,6 +5,7 @@
   description: " An outdated calendar bearing NanoTrasen's branding."
   components:
   - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/signs.rsi
     state: calendar
     
 - type: entity
@@ -14,6 +15,7 @@
   description: " Wash your hands. Or else."
   components:
   - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/signs.rsi
     state: cleanhands
     
 - type: entity
@@ -23,6 +25,7 @@
   description: " Is that third letter a P or an F?"
   components:
   - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/signs.rsi
     state: eyechart
     
 - type: entity
@@ -32,4 +35,5 @@
   description: " A dream that went up in plasma fire."
   components:
   - type: Sprite
+    sprite: _Starlight/Structures/Wallmounts/signs.rsi
     state: youtoolpia
