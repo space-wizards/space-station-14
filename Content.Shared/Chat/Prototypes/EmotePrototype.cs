@@ -40,7 +40,7 @@ public sealed partial class EmotePrototype : IPrototype
     ///     An icon used to visually represent the emote in radial UI.
     /// </summary>
     [DataField]
-    public SpriteSpecifier Icon = new SpriteSpecifier.Texture(new("/Textures/_Impstation/Interface/Actions/general.png")); // imp edit - changed the fallback emote icon
+    public SpriteSpecifier Icon = new SpriteSpecifier.Texture(new("/Textures/_Impstation/Interface/Emotes/general.png")); // imp edit - changed the fallback emote icon
 
     /// <summary>
     ///     Determines conditions to this emote be available to use
