@@ -53,6 +53,15 @@ public sealed partial class SupermatterComponent : Component
     [DataField]
     public string KudzuSpawnPrototype = "SupermatterKudzu";
 
+    [DataField]
+    public string AnomalyBluespaceSpawnPrototype = "AnomalyBluespace";
+
+    [DataField]
+    public string AnomalyGravitySpawnPrototype = "AnomalyGravity";
+
+    [DataField]
+    public string AnomalyPyroSpawnPrototype = "AnomalyPyroclastic";
+
     /// <summary>
     ///     What spawns in the place of an unfortunate entity that got removed by the SM.
     /// </summary>
@@ -181,6 +190,59 @@ public sealed partial class SupermatterComponent : Component
     /// </summary>
     [DataField]
     public float ZapHitCoordinatesChance = 0.75f;
+
+    /// <summary>
+    ///     The lifetime of a supermatter-spawned anomaly.
+    /// </summary>
+    [DataField]
+    public float AnomalyLifetime = 60f;
+
+    /// <summary>
+    ///     The minimum distance from the supermatter that anomalies will spawn at
+    /// </summary>
+    [DataField]
+    public float AnomalySpawnMinRange = 5f;
+
+    /// <summary>
+    ///     The maximum distance from the supermatter that anomalies will spawn at
+    /// </summary>
+    [DataField]
+    public float AnomalySpawnMaxRange = 10f;
+
+    /// <summary>
+    ///     The chance for a bluespace anomaly to spawn when power or damage is high
+    ///     Default is ~1/150
+    /// </summary>
+    [DataField]
+    public float AnomalyBluespaceChance = 0.006667f;
+
+    /// <summary>
+    ///     The chance for a gravity anomaly to spawn when power or damage is high, and the severe power penalty threshold is exceeded
+    ///     Default is ~1/150
+    /// </summary>
+    [DataField]
+    public float AnomalyGravityChanceSevere = 0.006667f;
+
+    /// <summary>
+    ///     The chance for a gravity anomaly to spawn when power or damage is high
+    ///     Default is ~1/750
+    /// </summary>
+    [DataField]
+    public float AnomalyGravityChance = 0.001333f;
+
+    /// <summary>
+    ///     The chance for a pyroclastic anomaly to spawn when power or damage is high, and the severe power penalty threshold is exceeded
+    ///     Default is ~1/375
+    /// </summary>
+    [DataField]
+    public float AnomalyPyroChanceSevere = 0.002667f;
+
+    /// <summary>
+    ///     The chance for a gravity anomaly to spawn when power or damage is high, and the power penalty threshold is exceeded
+    ///     Default is ~1/2500
+    /// </summary>
+    [DataField]
+    public float AnomalyPyroChance = 0.0004f;
 
     #endregion
 

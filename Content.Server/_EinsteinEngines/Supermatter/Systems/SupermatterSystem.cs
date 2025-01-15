@@ -1,3 +1,4 @@
+using Content.Server.Anomaly;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Chat.Managers;
@@ -47,6 +48,8 @@ public sealed partial class SupermatterSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly ParacusiaSystem _paracusia = default!;
+    [Dependency] private readonly AnomalySystem _anomaly = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -91,6 +94,7 @@ public sealed partial class SupermatterSystem : EntitySystem
         mix?.AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard);
         mix?.AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard);
     }
+
     public void OnSupermatterUpdated(EntityUid uid, SupermatterComponent sm, AtmosDeviceUpdateEvent args)
     {
         ProcessAtmos(uid, sm);
@@ -103,8 +107,11 @@ public sealed partial class SupermatterSystem : EntitySystem
         HandleSoundLoop(uid, sm);
         HandleAccent(uid, sm);
 
-        if (sm.Damage >= sm.DamagePenaltyPoint)
+        if (sm.Power > sm.PowerPenaltyThreshold || sm.Damage > sm.DamagePenaltyPoint)
+        {
             SupermatterZap(uid, sm);
+            GenerateAnomalies(uid, sm);
+        }
     }
 
     private void OnCollideEvent(EntityUid uid, SupermatterComponent sm, ref StartCollideEvent args)
