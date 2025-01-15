@@ -16,7 +16,6 @@
   access:
     - Research
     - Maintenance
-    - Engineering
 
 - type: startingGear
   id: RoboticistGear
