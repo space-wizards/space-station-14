@@ -1,4 +1,3 @@
-using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 
@@ -21,7 +20,6 @@ public sealed partial class CCVars : CVars
     public static readonly CVarDef<bool> DebugOptionVisualizerTest =
         CVarDef.Create("debug.option_visualizer_test", false, CVar.CLIENTONLY);
 
-    #endregion
     /// <summary>
     /// Set to true to disable parallel processing in the pow3r solver.
     /// </summary>

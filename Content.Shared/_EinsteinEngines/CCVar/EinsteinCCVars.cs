@@ -1,3 +1,4 @@
+using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 
@@ -8,7 +9,7 @@ public sealed partial class EinsteinCCVars : CVars
 {
     // TODO: Move the rest of the announcer code to _EinsteinEngines
 
-    // Announcers
+    #region Announcers
 
     /// <summary>
     ///     Weighted list of announcers to choose from
@@ -41,7 +42,9 @@ public sealed partial class EinsteinCCVars : CVars
     public static readonly CVarDef<bool> AnnouncerDisableMultipleSounds =
         CVarDef.Create("announcer.disable_multiple_sounds", false, CVar.ARCHIVE | CVar.CLIENTONLY);
 
-    // Supermatter
+    #endregion
+
+    #region Supermatter
 
     /// <summary>
     ///     With completely default supermatter values, Singuloose delamination will occur if engineers inject at least 900 moles of coolant per tile
@@ -99,4 +102,6 @@ public sealed partial class EinsteinCCVars : CVars
     /// </summary>
     public static readonly CVarDef<float> SupermatterYellTimer =
         CVarDef.Create("supermatter.yell_timer", 60f, CVar.SERVER);
+
+    #endregion
 }

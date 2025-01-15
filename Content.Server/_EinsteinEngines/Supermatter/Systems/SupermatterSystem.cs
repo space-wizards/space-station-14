@@ -1,5 +1,4 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Anomaly;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Chat.Managers;
@@ -11,14 +10,15 @@ using Content.Server.Lightning;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Traits.Assorted;
+using Content.Shared._EinsteinEngines.CCVar;
 using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Content.Shared._EinsteinEngines.Supermatter.Monitor;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
-using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Ghost;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
@@ -39,18 +39,17 @@ public sealed partial class SupermatterSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly RadioSystem _radio = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly ExplosionSystem _explosion = default!;
-    [Dependency] private readonly TransformSystem _xform = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedAmbientSoundSystem _ambient = default!;
-    [Dependency] private readonly LightningSystem _lightning = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly ExplosionSystem _explosion = default!;
+    [Dependency] private readonly LightningSystem _lightning = default!;
     [Dependency] private readonly ParacusiaSystem _paracusia = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly RadioSystem _radio = default!;
+    [Dependency] private readonly TransformSystem _xform = default!;
+    [Dependency] private readonly SharedAmbientSoundSystem _ambient = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
@@ -77,25 +76,23 @@ public sealed partial class SupermatterSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var sm in EntityManager.EntityQuery<SupermatterComponent>())
-        {
-            var uid = sm.Owner;
+        var query = EntityManager.EntityQueryEnumerator<SupermatterComponent>();
+        while (query.MoveNext(out var uid, out var sm))
             AnnounceCoreDamage(uid, sm);
-        }
     }
 
     private void OnMapInit(EntityUid uid, SupermatterComponent sm, MapInitEvent args)
     {
         // Set the yell timer
-        sm.YellTimer = TimeSpan.FromSeconds(_config.GetCVar(CCVars.SupermatterYellTimer));
+        sm.YellTimer = TimeSpan.FromSeconds(_config.GetCVar(EinsteinCCVars.SupermatterYellTimer));
 
-        // Set the Sound
+        // Set the sound
         _ambient.SetAmbience(uid, true);
 
-        // Add Air to the initialized SM in the Map so it doesn't delam on its' own
+        // Add air to the initialized SM in the map so it doesn't delam on its own
         var mix = _atmosphere.GetContainingMixture(uid, true, true);
-        mix?.AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard);
-        mix?.AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard);
+        mix?.AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard - mix.GetMoles(Gas.Oxygen));
+        mix?.AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard - mix.GetMoles(Gas.Nitrogen));
     }
 
     public void OnSupermatterUpdated(EntityUid uid, SupermatterComponent sm, AtmosDeviceUpdateEvent args)
@@ -123,9 +120,9 @@ public sealed partial class SupermatterSystem : EntitySystem
             sm.Activated = true;
 
         var target = args.OtherEntity;
-        if (args.OtherBody.BodyType == BodyType.Static
-            || HasComp<SupermatterImmuneComponent>(target)
-            || _container.IsEntityInContainer(uid))
+        if (args.OtherBody.BodyType == BodyType.Static ||
+            HasComp<SupermatterImmuneComponent>(target) ||
+            _container.IsEntityInContainer(uid))
             return;
 
         if (sm.Power == 0)
@@ -149,12 +146,14 @@ public sealed partial class SupermatterSystem : EntitySystem
                 _audio.PlayPvs(sm.DustSound, uid);
             }
 
-            sm.Power += args.OtherBody.Mass;
+            sm.MatterPower += args.OtherBody.Mass;
             _adminLog.Add(LogType.EntityDelete, LogImpact.High, $"{EntityManager.ToPrettyString(target):target} collided with {EntityManager.ToPrettyString(uid):uid} at {Transform(uid).Coordinates:coordinates}");
         }
 
+        // Prevent spam or excess power production
+        AddComp<SupermatterImmuneComponent>(target);
+
         EntityManager.QueueDeleteEntity(target);
-        AddComp<SupermatterImmuneComponent>(target); // prevent spam or excess power production
 
         if (TryComp<SupermatterFoodComponent>(target, out var food))
             sm.Power += food.Energy;
@@ -181,17 +180,19 @@ public sealed partial class SupermatterSystem : EntitySystem
 
         var power = 200f;
         if (TryComp<PhysicsComponent>(target, out var physics))
-            power = physics.Mass;
+            power += physics.Mass;
 
         sm.MatterPower += power;
 
-        EntityManager.SpawnEntity(sm.CollisionResultPrototype, Transform(target).Coordinates);
         _popup.PopupEntity(Loc.GetString("supermatter-collide-mob", ("sm", uid), ("target", target)), uid, PopupType.LargeCaution);
         _audio.PlayPvs(sm.DustSound, uid);
-        _chatManager.SendAdminAlert($"{EntityManager.ToPrettyString(uid):uid} has consumed {EntityManager.ToPrettyString(target):target}");
 
+        // Prevent spam or excess power production
+        AddComp<SupermatterImmuneComponent>(target);
+
+        _chatManager.SendAdminAlert($"{EntityManager.ToPrettyString(uid):uid} has consumed {EntityManager.ToPrettyString(target):target}");
+        EntityManager.SpawnEntity(sm.CollisionResultPrototype, Transform(target).Coordinates);
         EntityManager.QueueDeleteEntity(target);
-        AddComp<SupermatterImmuneComponent>(target); // prevent spam or excess power production
     }
 
     private void LogFirstPower(EntityUid uid, EntityUid target)
@@ -205,22 +206,20 @@ public sealed partial class SupermatterSystem : EntitySystem
         if (!sm.Activated)
             sm.Activated = true;
 
-        if (sm.SliverRemoved)
-            return;
-
+        // TODO: supermatter scalpel
         if (!HasComp<SharpComponent>(args.Used))
             return;
 
-        var dae = new DoAfterArgs(EntityManager, args.User, 30f, new SupermatterDoAfterEvent(), args.Target)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, 30f, new SupermatterDoAfterEvent(), args.Target)
         {
             BreakOnDamage = true,
             BreakOnHandChange = false,
             BreakOnWeightlessMove = false,
             NeedHand = true,
-            RequireCanInteract = true,
+            RequireCanInteract = true
         };
 
-        _doAfter.TryStartDoAfter(dae);
+        _doAfter.TryStartDoAfter(doAfterArgs);
         _popup.PopupClient(Loc.GetString("supermatter-tamper-begin"), uid, args.User);
     }
 
@@ -235,7 +234,7 @@ public sealed partial class SupermatterSystem : EntitySystem
         var integrity = GetIntegrity(sm).ToString("0.00");
         SendSupermatterAnnouncement(uid, sm, Loc.GetString("supermatter-announcement-cc-tamper", ("integrity", integrity)));
 
-        Spawn(sm.SliverPrototype, _transform.GetMapCoordinates(args.User));
+        Spawn(sm.SliverPrototype, Transform(args.User).Coordinates);
         _popup.PopupClient(Loc.GetString("supermatter-tamper-end"), uid, args.User);
 
         sm.DelamTimer /= 2;
@@ -243,7 +242,8 @@ public sealed partial class SupermatterSystem : EntitySystem
 
     private void OnExamine(EntityUid uid, SupermatterComponent sm, ref ExaminedEvent args)
     {
-        if (args.IsInDetailsRange)
+        // For ghosts: alive players can use the console
+        if (HasComp<GhostComponent>(args.Examiner) && args.IsInDetailsRange)
             args.PushMarkup(Loc.GetString("supermatter-examine-integrity", ("integrity", GetIntegrity(sm).ToString("0.00"))));
     }
 
