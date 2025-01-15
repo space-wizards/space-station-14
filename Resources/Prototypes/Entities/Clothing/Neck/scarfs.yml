@@ -87,39 +87,6 @@
       sprite: Clothing/Neck/Scarfs/purple.rsi
 
 - type: entity
-  parent: ClothingNeckBase
-  id: ClothingNeckScarfStripedLightOrange
-  name: striped light orange scarf
-  description: A stylish striped light orange scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
-  components:
-  - type: Sprite
-    sprite: Clothing/Neck/Scarfs/lightorange.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Scarfs/lightorange.rsi
-
-- type: entity
-  parent: ClothingNeckBase
-  id: ClothingNeckScarfStripedPink
-  name: striped pink scarf
-  description: A stylish striped pink scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
-  components:
-  - type: Sprite
-    sprite: Clothing/Neck/Scarfs/pink.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Scarfs/pink.rsi
-
-- type: entity
-  parent: ClothingNeckBase
-  id: ClothingNeckScarfStripedWhite
-  name: striped white scarf
-  description: A stylish striped white scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
-  components:
-  - type: Sprite
-    sprite: Clothing/Neck/Scarfs/white.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Scarfs/white.rsi
-
-- type: entity
   parent: [ ClothingScarfBase, BaseSyndicateContraband ]
   id: ClothingNeckScarfStripedSyndieGreen
   name: striped syndicate green scarf
