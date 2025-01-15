@@ -7,12 +7,6 @@ namespace Content.Shared.ItemRecall;
 public sealed partial class RecallMarkerComponent : Component
 {
     /// <summary>
-    /// The entity that marked this item.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityUid? MarkedByEntity;
-
-    /// <summary>
     /// The action that marked this item.
     /// </summary>
     [DataField, AutoNetworkedField]

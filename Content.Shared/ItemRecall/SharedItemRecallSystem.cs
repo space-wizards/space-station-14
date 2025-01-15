@@ -12,7 +12,6 @@ namespace Content.Shared.ItemRecall;
 /// </summary>
 public abstract partial class SharedItemRecallSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
@@ -41,7 +40,13 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
                 _popups.PopupClient(Loc.GetString("item-recall-item-mark-empty"), args.Performer, args.Performer);
                 return;
             }
-            
+
+            if (HasComp<RecallMarkerComponent>(markItem))
+            {
+                _popups.PopupClient(Loc.GetString("item-recall-item-already-marked", ("item", markItem)), args.Performer, args.Performer);
+                return;
+            }
+
             _popups.PopupClient(Loc.GetString("item-recall-item-marked", ("item", markItem.Value)), args.Performer, args.Performer);
             TryMarkItem(ent, markItem.Value, args.Performer);
             return;
@@ -63,7 +68,6 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
         ent.Comp.MarkedEntity = item;
         Dirty(ent);
 
-        marker.MarkedByEntity = markedBy;
         marker.MarkedByAction = ent.Owner;
 
         UpdateActionAppearance(ent);
@@ -75,7 +79,12 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
         if (!TryComp<RecallMarkerComponent>(item, out var marker))
             return;
 
-        if (marker.MarkedByEntity == null)
+        if (!TryComp<InstantActionComponent>(item, out var instantAction))
+            return;
+
+        var actionOwner = instantAction.AttachedEntity;
+
+        if (actionOwner == null)
             return;
 
         if (TryComp<ItemRecallComponent>(marker.MarkedByAction, out var action))
@@ -83,7 +92,7 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
             // For some reason client thinks the station grid owns the action on client and this doesn't work. It doesn't work in PopupEntity(mispredicts) and PopupPredicted either(doesnt show).
             // I don't have the heart to move this code to server because of this small thing.
             // This line will only do something once that is fixed.
-            _popups.PopupClient(Loc.GetString("item-recall-item-unmark", ("item", item)), marker.MarkedByEntity.Value, marker.MarkedByEntity.Value, PopupType.MediumCaution);
+            _popups.PopupClient(Loc.GetString("item-recall-item-unmark", ("item", item)), actionOwner.Value, actionOwner.Value, PopupType.MediumCaution);
 
             action.MarkedEntity = null;
             UpdateActionAppearance((marker.MarkedByAction.Value, action));

@@ -1,3 +1,4 @@
+using Content.Shared.Actions;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.ItemRecall;
 using Content.Shared.Popups;
@@ -28,14 +29,19 @@ public sealed partial class ItemRecallSystem : SharedItemRecallSystem
 
     private void RecallItem(Entity<RecallMarkerComponent> ent)
     {
-        if (ent.Comp.MarkedByEntity == null)
+        if (!TryComp<InstantActionComponent>(ent.Comp.MarkedByAction, out var instantAction))
+            return;
+
+        var actionOwner = instantAction.AttachedEntity;
+
+        if (actionOwner == null)
             return;
 
         if (TryComp<EmbeddableProjectileComponent>(ent, out var projectile))
-            _proj.UnEmbed(ent, projectile, ent.Comp.MarkedByEntity.Value);
+            _proj.UnEmbed(ent, projectile, actionOwner.Value);
 
-        _popups.PopupEntity(Loc.GetString("item-recall-item-summon", ("item", ent)), ent.Comp.MarkedByEntity.Value, ent.Comp.MarkedByEntity.Value);
+        _popups.PopupEntity(Loc.GetString("item-recall-item-summon", ("item", ent)), actionOwner.Value, actionOwner.Value);
 
-        _hands.TryForcePickupAnyHand(ent.Comp.MarkedByEntity.Value, ent);
+        _hands.TryForcePickupAnyHand(actionOwner.Value, ent);
     }
 }
