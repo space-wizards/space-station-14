@@ -301,6 +301,9 @@ public sealed class MaterialArbitrageTest
                 var edge = cur.GetEdge(node.Name);
                 cur = node;
 
+                if (edge == null)
+                    continue;
+
                 foreach (var completion in edge.Completed)
                 {
                     if (completion is not SpawnPrototype spawnCompletion)
