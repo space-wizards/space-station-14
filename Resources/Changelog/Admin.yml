@@ -706,5 +706,12 @@ Entries:
   id: 87
   time: '2025-01-14T23:46:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34048
+- author: Palladinium
+  changes:
+  - message: Added Discord relay notifications when a watchlisted player connects.
+    type: Add
+  id: 88
+  time: '2025-01-15T00:32:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33483
 Name: Admin
 Order: 1
