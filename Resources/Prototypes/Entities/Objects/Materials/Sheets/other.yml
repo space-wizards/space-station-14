@@ -237,6 +237,11 @@
   - type: RadiationSource
     intensity: 0.1
     slope: 300
+  - type: PointLight
+    radius: 1.2
+    energy: 0.8
+    castShadows: false
+    color: "#9be792"
 
 - type: entity
   parent: SheetUranium
