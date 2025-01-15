@@ -58,7 +58,7 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
 
     private void OnItemRecall(Entity<RecallMarkerComponent> ent, ref RecallItemEvent args)
     {
-        RecallItem(ent.Owner);
+        RecallItem(ent);
     }
 
     private void TryMarkItem(Entity<ItemRecallComponent> ent, EntityUid item, EntityUid markedBy)
@@ -95,20 +95,17 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
         RemCompDeferred<RecallMarkerComponent>(item);
     }
 
-    private void RecallItem(EntityUid? item)
+    private void RecallItem(Entity<RecallMarkerComponent> ent)
     {
-        if (!TryComp<RecallMarkerComponent>(item, out var marker))
+        if (ent.Comp.MarkedByEntity == null)
             return;
 
-        if (marker.MarkedByEntity == null)
-            return;
+        if (TryComp<EmbeddableProjectileComponent>(ent, out var projectile))
+            _proj.UnEmbed(ent, ent.Comp.MarkedByEntity.Value, projectile);
 
-        if (TryComp<EmbeddableProjectileComponent>(item, out var projectile))
-            _proj.UnEmbed(item.Value, marker.MarkedByEntity.Value, projectile);
+        _popups.PopupEntity(Loc.GetString("item-recall-item-summon", ("item", ent)), ent.Comp.MarkedByEntity.Value, ent.Comp.MarkedByEntity.Value);
 
-        _popups.PopupEntity(Loc.GetString("item-recall-item-summon", ("item", item.Value)), marker.MarkedByEntity.Value, marker.MarkedByEntity.Value);
-
-        _hands.TryForcePickupAnyHand(marker.MarkedByEntity.Value, item.Value);
+        _hands.TryForcePickupAnyHand(ent.Comp.MarkedByEntity.Value, ent);
     }
 
     private void UpdateActionAppearance(Entity<ItemRecallComponent> action)
@@ -116,10 +113,15 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
         if (!TryComp<InstantActionComponent>(action, out var instantAction))
             return;
 
+        var proto = Prototype(action);
+
+        if (proto == null)
+            return;
+
         if (action.Comp.MarkedEntity == null)
         {
-            _metaData.SetEntityName(action, Prototype(action)!.Name);
-            _metaData.SetEntityDescription(action, Prototype(action)!.Description);
+            _metaData.SetEntityName(action, proto.Name);
+            _metaData.SetEntityDescription(action, proto.Description);
             _actions.SetEntityIcon(action, null, instantAction);
         }
         else
@@ -134,6 +136,5 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
 
             _actions.SetEntityIcon(action, action.Comp.MarkedEntity, instantAction);
         }
-        Dirty(action);
     }
 }
