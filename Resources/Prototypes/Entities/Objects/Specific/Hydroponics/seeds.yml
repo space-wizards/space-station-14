@@ -11,6 +11,10 @@
       size: Tiny
     - type: StaticPrice
       price: 20
+    - type: ItemSlots
+    - type: ContainerContainer
+      containers:
+        paper_label: !type:ContainerSlot
     - type: PaperLabel
       labelSlot:
         insertVerbText: Attach Label
