@@ -1,0 +1,9 @@
+- type: palette
+  id: Atmos
+  name: Atmos
+  colors:
+    waste: '#990000'
+    distro: '#0055CC'
+    air: '#03FCD3'
+    mix: '#947507'
+
