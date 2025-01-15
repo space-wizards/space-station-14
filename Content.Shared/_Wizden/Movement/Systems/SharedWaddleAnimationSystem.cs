@@ -66,7 +66,6 @@ public abstract class SharedWaddleAnimationSystem : EntitySystem
         entity.Comp.IsCurrentlyWaddling = true;
 
         RaiseNetworkEvent(new StartedWaddlingEvent(GetNetEntity(entity.Owner)));
-
     }
 
     private void OnStood(Entity<WaddleAnimationComponent> entity, ref StoodEvent args)
