@@ -72,8 +72,9 @@ public sealed partial class SupermatterSystem
         heatModifier = Math.Max(heatModifier, 0.5f);
         transmissionBonus *= h2OBonus;
 
-        // Effects the damage heat does to the crystal
-        sm.DynamicHeatResistance = 1f;
+        // Affects the damage heat does to the crystal
+        var heatResistance = gases.Sum(gas => gases[gas.Key] * facts[gas.Key].HeatResistance);
+        heatResistance = Math.Max(heatResistance, 1);
 
         // More moles of gases are harder to heat than fewer, so let's scale heat damage around them
         sm.MoleHeatPenaltyThreshold = (float) Math.Max(moles * sm.MoleHeatPenalty, 0.25);
@@ -155,6 +156,7 @@ public sealed partial class SupermatterSystem
             gas => gas.Key,
             gas => absorbedGas.GetMoles(gas.Key)
         );
+        sm.DynamicHeatResistance = heatResistance;
         sm.Temperature = absorbedGas.Temperature;
         sm.WasteMultiplier = heatModifier;
     }

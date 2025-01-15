@@ -463,17 +463,17 @@ public sealed partial class SupermatterComponent : Component
     ///     Stores information about how every gas interacts with the SM
     /// </summary>
     //TODO: Replace this with serializable GasFact array something
-    public readonly Dictionary<Gas, (float TransmitModifier, float HeatPenalty, float PowerMixRatio)> GasDataFields = new()
+    public readonly Dictionary<Gas, (float TransmitModifier, float HeatPenalty, float PowerMixRatio, float HeatResistance)> GasDataFields = new()
     {
-        { Gas.Oxygen,        (1.5f, 1f,    1f)  },
-        { Gas.Nitrogen,      (0f,   -1.5f, -1f) },
-        { Gas.CarbonDioxide, (0f,   0.1f,  1f)  },
-        { Gas.Plasma,        (4f,   15f,   1f)  },
-        { Gas.Tritium,       (30f,  10f,   1f)  },
-        { Gas.WaterVapor,    (2f,   12f,   1f)  },
-        { Gas.Frezon,        (3f,   -10f,  -1f) },
-        { Gas.Ammonia,       (0f,   .5f,   1f)  },
-        { Gas.NitrousOxide,  (0f,   -5f,   -1f) },
+        { Gas.Oxygen,        (1.5f, 1f,    1f,  1f) },
+        { Gas.Nitrogen,      (0f,   -1.5f, -1f, 1f) },
+        { Gas.CarbonDioxide, (0f,   0.1f,  1f,  1f) },
+        { Gas.Plasma,        (4f,   15f,   1f,  1f) },
+        { Gas.Tritium,       (30f,  10f,   1f,  1f) },
+        { Gas.WaterVapor,    (2f,   12f,   1f,  1f) },
+        { Gas.Frezon,        (0f,   -10f,  -1f, 1f) },
+        { Gas.Ammonia,       (0f,   .5f,   1f,  1f) },
+        { Gas.NitrousOxide,  (0f,   -5f,   -1f, 6f) },
     };
 
     #endregion
