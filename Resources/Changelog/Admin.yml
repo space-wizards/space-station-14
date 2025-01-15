@@ -713,5 +713,13 @@ Entries:
   id: 88
   time: '2025-01-15T00:32:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33483
+- author: Myra
+  changes:
+  - message: Admins are by default now hidden from the reported player count on the
+      launcher.
+    type: Add
+  id: 89
+  time: '2025-01-15T21:10:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34406
 Name: Admin
 Order: 1
