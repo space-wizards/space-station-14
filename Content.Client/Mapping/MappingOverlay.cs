@@ -40,9 +40,6 @@ public sealed class MappingOverlay : Overlay
 
         _oldColors.Clear();
 
-        if (_player.LocalEntity == null)
-            return;
-
         var handle = args.WorldHandle;
         handle.UseShader(_shader);
 
