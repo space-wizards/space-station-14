@@ -141,7 +141,7 @@ namespace Content.Client.PDA
                 _pdaOwner = state.PdaOwnerInfo.ActualOwnerName;
                 PdaOwnerLabel.SetMarkup(Loc.GetString("comp-pda-ui-owner",
                     ("actualOwnerName", _pdaOwner)));
-                                PdaOwnerLabel.Visible = true;
+                PdaOwnerLabel.Visible = true;
             }
             else
             {
