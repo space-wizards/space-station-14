@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Removed BROS.
-    type: Tweak
-  id: 433
-  time: '2024-10-30T16:34:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/583
 - author: Sha-Seng
   changes:
   - message: Slime gradient hands show in profile now
@@ -4492,3 +4485,11 @@
   id: 932
   time: '2025-01-15T18:06:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1372
+- author: The Impstation Team
+  changes:
+  - message: Thaven are currently observing Fall of the Twin Trees Day, and may seem
+      irrevocably altered.
+    type: Tweak
+  id: 933
+  time: '2025-01-15T21:40:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1302
