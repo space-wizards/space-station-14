@@ -28,6 +28,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -110,25 +111,35 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnCoreVerbs(Entity<StationAiCoreComponent> ent, ref GetVerbsEvent<Verb> args)
     {
-        if (!_admin.IsAdmin(args.User) ||
-            TryGetHeld((ent.Owner, ent.Comp), out _))
-        {
-            return;
-        }
-
         var user = args.User;
 
-        args.Verbs.Add(new Verb()
+        // Admin option to take over the station AI core
+        if (_admin.IsAdmin(args.User) &&
+            !TryGetHeld((ent.Owner, ent.Comp), out _))
         {
-            Text = Loc.GetString("station-ai-takeover"),
-            Category = VerbCategory.Debug,
-            Act = () =>
+            args.Verbs.Add(new Verb()
             {
-                var brain = SpawnInContainerOrDrop(DefaultAi, ent.Owner, StationAiCoreComponent.Container);
-                _mind.ControlMob(user, brain);
-            },
-            Impact = LogImpact.High,
-        });
+                Text = Loc.GetString("station-ai-takeover"),
+                Category = VerbCategory.Debug,
+                Act = () =>
+                {
+                    var brain = SpawnInContainerOrDrop(DefaultAi, ent.Owner, StationAiCoreComponent.Container);
+                    _mind.ControlMob(user, brain);
+                },
+                Impact = LogImpact.High,
+            });
+        }
+
+        // Option to open the station AI customization menu
+        if (TryGetInsertedAI(ent, out var insertedAi) && insertedAi.Value.Owner == user)
+        {
+            args.Verbs.Add(new Verb()
+            {
+                Text = Loc.GetString("station-ai-customization-menu"),
+                Act = () => _uiSystem.TryOpenUi(ent.Owner, StationAiCustomizationUiKey.Key, insertedAi.Value.Owner),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/emotes.svg.192dpi.png")),
+            });
+        }
     }
 
     private void OnAiAccessible(Entity<StationAiOverlayComponent> ent, ref AccessibleOverrideEvent args)
@@ -501,7 +512,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             return;
         }
 
-        // Updating the appearance of the station AI core will be handled manually in StationAiSystem.Customization.
+        // Updating the appearance of the station AI core will be handled manually in Client.StationAiSystem
         var stationAi = GetInsertedAI((entity, stationAiCore));
 
         if (stationAi == null || !TryComp<StationAiCustomizationComponent>(stationAi, out var stationAiCustomization))
@@ -615,4 +626,5 @@ public enum StationAiState : byte
     Empty,
     Occupied,
     Dead,
+    Hologram,
 }

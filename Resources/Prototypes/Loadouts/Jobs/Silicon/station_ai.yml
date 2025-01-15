@@ -1,6 +1,7 @@
 # Iconography
 - type: stationAiCustomization
   id: StationAiIconAi
+  name: station-ai-icon-ai
   layerData:
     Occupied:
       sprite: Mobs/Silicon/station_ai.rsi
@@ -11,6 +12,7 @@
   
 - type: stationAiCustomization
   id: StationAiIconAngel
+  name: station-ai-icon-angel
   layerData:
     Occupied: 
       sprite: Mobs/Silicon/station_ai.rsi
@@ -21,6 +23,7 @@
   
 - type: stationAiCustomization
   id: StationAiIconBliss
+  name: station-ai-icon-bliss
   layerData:
     Occupied: 
       sprite: Mobs/Silicon/station_ai.rsi
@@ -31,6 +34,7 @@
       
 - type: stationAiCustomization
   id: StationAiIconClown
+  name: station-ai-icon-clown
   layerData:
     Occupied: 
       sprite: Mobs/Silicon/station_ai.rsi
@@ -41,6 +45,7 @@
   
 - type: stationAiCustomization
   id: StationAiIconDorf
+  name: station-ai-icon-dorf
   layerData:
     Occupied: 
       sprite: Mobs/Silicon/station_ai.rsi
@@ -51,6 +56,7 @@
   
 - type: stationAiCustomization
   id: StationAiIconHeartline
+  name: station-ai-icon-heartline
   layerData:
     Occupied: 
       sprite: Mobs/Silicon/station_ai.rsi
@@ -61,6 +67,7 @@
   
 - type: stationAiCustomization
   id: StationAiIconSmiley
+  name: station-ai-icon-smiley
   layerData:
     Occupied: 
       sprite: Mobs/Silicon/station_ai.rsi
@@ -72,6 +79,8 @@
 # Holograms
 - type: stationAiCustomization
   id: StationAiHologramFemale
+  name: station-ai-hologram-female
+  category: Hologram
   layerData:
     Hologram:
       sprite: Mobs/Silicon/holograms.rsi
@@ -79,6 +88,8 @@
 
 - type: stationAiCustomization
   id: StationAiHologramMale
+  name: station-ai-hologram-male
+  category: Hologram
   layerData:
     Hologram:
       sprite: Mobs/Silicon/holograms.rsi
@@ -86,6 +97,8 @@
 
 - type: stationAiCustomization
   id: StationAiHologramFace
+  name: station-ai-hologram-face
+  category: Hologram
   layerData:
     Hologram:
       sprite: Mobs/Silicon/holograms.rsi
@@ -93,6 +106,8 @@
 
 - type: stationAiCustomization
   id: StationAiHologramCat
+  name: station-ai-hologram-cat
+  category: Hologram
   layerData:
     Hologram:
       sprite: Mobs/Silicon/holograms.rsi
@@ -100,6 +115,8 @@
 
 - type: stationAiCustomization
   id: StationAiHologramDog
+  name: station-ai-hologram-dog
+  category: Hologram
   layerData:
     Hologram:
       sprite: Mobs/Silicon/holograms.rsi

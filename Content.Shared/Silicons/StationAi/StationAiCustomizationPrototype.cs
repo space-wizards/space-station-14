@@ -12,6 +12,18 @@ public sealed partial class StationAiCustomizationPrototype : IPrototype
     public string ID { get; } = string.Empty;
 
     /// <summary>
+    /// The (unlocalized) name of the customization.
+    /// </summary>
+    [DataField]
+    public string Name = string.Empty;
+
+    /// <summary>
+    /// The type of customization.
+    /// </summary>
+    [DataField]
+    public StationAiCustomizationType Category = StationAiCustomizationType.Core;
+
+    /// <summary>
     /// Stores data which is used to modify the appearance of station AI.
     /// </summary>
     [DataField]

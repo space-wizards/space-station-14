@@ -24,7 +24,13 @@ public sealed partial class StationAiCustomizationComponent : Component
 }
 
 [Serializable, NetSerializable]
-public enum StationAiCustomization : byte
+public enum StationAiCustomizationUiKey : byte
+{
+    Key,
+}
+
+[Serializable, NetSerializable]
+public enum StationAiCustomizationType : byte
 {
     Core,
     Hologram,
