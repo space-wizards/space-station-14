@@ -14,18 +14,12 @@ public sealed partial class StationAiCustomizationPrototype : IPrototype
     /// <summary>
     /// The (unlocalized) name of the customization.
     /// </summary>
-    [DataField]
-    public string Name = string.Empty;
-
-    /// <summary>
-    /// The type of customization.
-    /// </summary>
-    [DataField]
-    public StationAiCustomizationType Category = StationAiCustomizationType.Core;
+    [DataField(required: true)]
+    public LocId Name;
 
     /// <summary>
     /// Stores the data which is used to modify the appearance of the station AI.
     /// </summary>
-    [DataField]
-    public Dictionary<StationAiState, PrototypeLayerData> LayerData = new();
+    [DataField(required: true)]
+    public Dictionary<string, PrototypeLayerData> LayerData = new();
 }

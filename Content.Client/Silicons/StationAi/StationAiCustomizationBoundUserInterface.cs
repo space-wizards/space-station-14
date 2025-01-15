@@ -23,8 +23,8 @@ public sealed class StationAiCustomizationBoundUserInterface : BoundUserInterfac
         _menu.SendStationAiCustomizationMessageAction += SendStationAiCustomizationMessage;
     }
 
-    public void SendStationAiCustomizationMessage(ProtoId<StationAiCustomizationPrototype> protoId, StationAiCustomizationType category)
+    public void SendStationAiCustomizationMessage(ProtoId<StationAiCustomizationGroupPrototype> groupProtoId, ProtoId<StationAiCustomizationPrototype> customizationProtoId)
     {
-        SendPredictedMessage(new StationAiCustomizationMessage(protoId, category));
+        SendPredictedMessage(new StationAiCustomizationMessage(groupProtoId, customizationProtoId));
     }
 }

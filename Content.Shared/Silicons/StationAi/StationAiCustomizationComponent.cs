@@ -14,7 +14,7 @@ public sealed partial class StationAiCustomizationComponent : Component
     /// Dictionary of the prototype data used for customizing the appearance of the entity.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Dictionary<StationAiCustomizationType, ProtoId<StationAiCustomizationPrototype>> ProtoIds = new();
+    public Dictionary<ProtoId<StationAiCustomizationGroupPrototype>, ProtoId<StationAiCustomizationPrototype>> ProtoIds = new();
 }
 
 /// <summary>
@@ -23,13 +23,13 @@ public sealed partial class StationAiCustomizationComponent : Component
 [Serializable, NetSerializable]
 public sealed class StationAiCustomizationMessage : BoundUserInterfaceMessage
 {
-    public readonly ProtoId<StationAiCustomizationPrototype> ProtoId;
-    public readonly StationAiCustomizationType Category;
+    public readonly ProtoId<StationAiCustomizationGroupPrototype> GroupProtoId;
+    public readonly ProtoId<StationAiCustomizationPrototype> CustomizationProtoId;
 
-    public StationAiCustomizationMessage(ProtoId<StationAiCustomizationPrototype> protoId, StationAiCustomizationType category)
+    public StationAiCustomizationMessage(ProtoId<StationAiCustomizationGroupPrototype> groupProtoId, ProtoId<StationAiCustomizationPrototype> customizationProtoId)
     {
-        ProtoId = protoId;
-        Category = category;
+        GroupProtoId = groupProtoId;
+        CustomizationProtoId = customizationProtoId;
     }
 }
 
