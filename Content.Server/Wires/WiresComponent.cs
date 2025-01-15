@@ -31,6 +31,9 @@ public sealed partial class WiresComponent : Component
     /// </summary>
     [ViewVariables]
     public int WireSeed { get; set; }
+    
+    [ViewVariables]
+    public bool viewWires = false;
 
     /// <summary>
     ///     The list of wires currently active on this entity.
