@@ -34,6 +34,8 @@
   - type: Construction
     graph: WoodenBat
     node: bat
+  - type: UseDelay
+    delay: 1
   - type: PhysicalComposition
     materialComposition:
       Wood: 250
