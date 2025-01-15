@@ -274,3 +274,22 @@
       - !type:AdjustReagent
         reagent: Nutriment
         amount: 0.1
+
+- type: reagent
+  id: Frostoil
+  name: reagent-name-frostoil
+  group: Foods
+  desc: reagent-desc-frostoil
+  physicalDesc: reagent-physical-desc-cold
+  flavor: cold
+  color: skyblue
+  metabolisms:
+    Food:
+      effects:
+      - !type:AdjustReagent
+        reagent: Nutriment #Oils enhance nutrition
+        amount: 0.75
+    Poison:
+      effects:
+        - !type:AdjustTemperature
+          amount: -250 # thermal energy, not temp
