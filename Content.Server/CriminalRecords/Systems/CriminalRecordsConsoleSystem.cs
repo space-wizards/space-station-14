@@ -122,7 +122,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         // will probably never fail given the checks above
         name = _records.RecordName(key.Value);
         officer = Loc.GetString("criminal-records-console-unknown-officer");
-        var jobName = "unknown criim job";
+        var jobName = "Unknown";
 
         _records.TryGetRecord<GeneralStationRecord>(key.Value, out var entry);
         if (entry != null)
