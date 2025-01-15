@@ -25,7 +25,7 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
 
         SubscribeLocalEvent<ItemRecallComponent, OnItemRecallActionEvent>(OnItemRecallActionUse);
 
-        SubscribeLocalEvent<RecallMarkerComponent, RecallItemEvent>(OnItemRecallEvent);
+        SubscribeLocalEvent<RecallMarkerComponent, RecallItemEvent>(OnItemRecall);
         SubscribeLocalEvent<RecallMarkerComponent, ComponentShutdown>(OnRecallMarkerShutdown);
     }
 
@@ -42,7 +42,7 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
                 return;
 
             _popups.PopupClient(Loc.GetString("item-recall-item-marked", ("item", markItem.Value)), args.Performer, args.Performer);
-            TryMarkItem(ent, markItem, args.Performer);
+            TryMarkItem(ent, markItem.Value, args.Performer);
             return;
         }
 
@@ -56,16 +56,14 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
         TryUnmarkItem(ent);
     }
 
-    private void OnItemRecallEvent(Entity<RecallMarkerComponent> ent, ref RecallItemEvent args)
+    private void OnItemRecall(Entity<RecallMarkerComponent> ent, ref RecallItemEvent args)
     {
         RecallItem(ent.Owner);
     }
 
-    private void TryMarkItem(Entity<ItemRecallComponent> ent, EntityUid? item, EntityUid markedBy)
+    private void TryMarkItem(Entity<ItemRecallComponent> ent, EntityUid item, EntityUid markedBy)
     {
-        if (item == null)
-            return;
-        EnsureComp<RecallMarkerComponent>(item.Value, out var marker);
+        EnsureComp<RecallMarkerComponent>(item, out var marker);
         ent.Comp.MarkedEntity = item;
         Dirty(ent);
 
@@ -73,15 +71,12 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
         marker.MarkedByAction = ent.Owner;
 
         UpdateActionAppearance(ent);
-        Dirty(item.Value, marker);
+        Dirty(item, marker);
     }
 
-    private void TryUnmarkItem(EntityUid? item)
+    private void TryUnmarkItem(EntityUid item)
     {
-        if (item == null)
-            return;
-
-        if (!TryComp<RecallMarkerComponent>(item.Value, out var marker))
+        if (!TryComp<RecallMarkerComponent>(item, out var marker))
             return;
 
         if (marker.MarkedByEntity == null)
@@ -90,14 +85,14 @@ public sealed partial class SharedItemRecallSystem : EntitySystem
         if (TryComp<ItemRecallComponent>(marker.MarkedByAction, out var action))
         {
             if(_net.IsServer)
-                _popups.PopupEntity(Loc.GetString("item-recall-item-unmark", ("item", item.Value)), marker.MarkedByEntity.Value, marker.MarkedByEntity.Value, PopupType.MediumCaution);
+                _popups.PopupEntity(Loc.GetString("item-recall-item-unmark", ("item", item)), marker.MarkedByEntity.Value, marker.MarkedByEntity.Value, PopupType.MediumCaution);
 
             action.MarkedEntity = null;
             UpdateActionAppearance((marker.MarkedByAction.Value, action));
             Dirty(marker.MarkedByAction.Value, action);
         }
 
-        RemCompDeferred<RecallMarkerComponent>(item.Value);
+        RemCompDeferred<RecallMarkerComponent>(item);
     }
 
     private void RecallItem(EntityUid? item)

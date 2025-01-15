@@ -12,6 +12,9 @@ public sealed partial class ItemRecallComponent : Component
     [DataField]
     public LocId? WhileMarkedDescription = "item-recall-marked-description";
 
+    /// <summary>
+    /// The entity currently marked to be recalled by this action.
+    /// </summary>
     [ViewVariables]
     public EntityUid? MarkedEntity;
 }
