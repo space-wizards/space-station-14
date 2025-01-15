@@ -12,15 +12,15 @@
   - type: RandomSpawner
     prototypes:
       - VendingMachineCoffee
-      - VendingMachineCola
-      - VendingMachineColaRed
-      - VendingMachineColaBlack
-      - VendingMachineSovietSoda
-      - VendingMachineShamblersJuice
-      - VendingMachinePwrGame
+      - VendingMachineCola #Robust Sofdrinks
+      - VendingMachineColaBlack #Robust Sofdrinks [Black]
+      - VendingMachineColaRed #Space Cola
       - VendingMachineDrGibb
-      - VendingMachineSoda
+      - VendingMachinePwrGame
+      - VendingMachineShamblersJuice
       - VendingMachineSmite
-      - VendingMachineStarkist
+      - VendingMachineSoda #Robust Sofdrinks [Soda]
+      - VendingMachineSovietSoda #Boda
       - VendingMachineSpaceUp
+      - VendingMachineStarkist
     chance: 1
