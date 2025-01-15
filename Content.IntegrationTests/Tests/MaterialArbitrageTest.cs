@@ -4,9 +4,9 @@ using Content.Server.Construction.Completions;
 using Content.Server.Construction.Components;
 using Content.Server.Destructible;
 using Content.Server.Destructible.Thresholds.Behaviors;
+using Content.Server.Lathe;
 using Content.Server.Stack;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.FixedPoint;
@@ -17,7 +17,6 @@ using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -57,9 +56,19 @@ public sealed class MaterialArbitrageTest
         // get the inverted lathe recipe dictionary
         var latheRecipes = latheSys.InverseRecipes;
 
-        // Lets assume the possible lathe for resource multipliers:
-        // TODO: each recipe can technically have its own cost multiplier associated with it, so this test needs redone to factor that in.
-        var multiplier = MathF.Pow(0.85f, 3);
+        // Find the lowest multiplier / optimal lathe that can be used to construct a recipie.
+        var minMultiplier = new Dictionary<ProtoId<LatheRecipePrototype>, float>();
+
+        foreach (var (_, lathe) in pair.GetPrototypesWithComponent<LatheComponent>())
+        {
+            foreach (var recipe in LatheSystem.GetAllBaseRecipes(lathe))
+            {
+                if (!minMultiplier.TryGetValue(recipe, out var min))
+                    min = 1;
+
+                minMultiplier[recipe] = Math.Min(min, lathe.MaterialUseMultiplier);
+            }
+        }
 
         // create construction dictionary
         Dictionary<string, ConstructionComponent> constructionRecipes = new();
@@ -190,6 +199,11 @@ public sealed class MaterialArbitrageTest
                 {
                     foreach (var recipe in recipes)
                     {
+                        if (!minMultiplier.TryGetValue(recipe, out var multiplier))
+                        {
+                            server.Log.Info($"Unused lathe recipe? {recipe.ID}?");
+                            continue;
+                        }
                         foreach (var (matId, amount) in recipe.Materials)
                         {
                             var actualAmount = SharedLatheSystem.AdjustMaterial(amount, recipe.ApplyMaterialDiscount, multiplier);
@@ -253,7 +267,7 @@ public sealed class MaterialArbitrageTest
         }
 
         // This is functionally the same loop as before, but now testing deconstruction rather than destruction.
-        // This is pretty braindead. In principle construction graphs can have loops and whatnot.
+        // This is pretty brain-dead. In principle construction graphs can have loops and whatnot.
 
         Assert.Multiple(async () =>
         {
@@ -270,6 +284,11 @@ public sealed class MaterialArbitrageTest
                 {
                     foreach (var recipe in recipes)
                     {
+                        if (!minMultiplier.TryGetValue(recipe, out var multiplier))
+                        {
+                            server.Log.Info($"Unused lathe recipe? {recipe.ID}?");
+                            continue;
+                        }
                         foreach (var (matId, amount) in recipe.Materials)
                         {
                             var actualAmount = SharedLatheSystem.AdjustMaterial(amount, recipe.ApplyMaterialDiscount, multiplier);
@@ -291,7 +310,7 @@ public sealed class MaterialArbitrageTest
             }
         });
 
-        // create phyiscal composition dictionary
+        // create physical composition dictionary
         // this doesn't account for the chemicals in the composition
         Dictionary<string, PhysicalCompositionComponent> physicalCompositions = new();
         foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
@@ -325,6 +344,11 @@ public sealed class MaterialArbitrageTest
                 {
                     foreach (var recipe in recipes)
                     {
+                        if (!minMultiplier.TryGetValue(recipe, out var multiplier))
+                        {
+                            server.Log.Info($"Unused lathe recipe? {recipe.ID}?");
+                            continue;
+                        }
                         foreach (var (matId, amount) in recipe.Materials)
                         {
                             var actualAmount = SharedLatheSystem.AdjustMaterial(amount, recipe.ApplyMaterialDiscount, multiplier);

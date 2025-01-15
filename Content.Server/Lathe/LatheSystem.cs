@@ -154,7 +154,7 @@ namespace Content.Server.Lathe
 
         public List<ProtoId<LatheRecipePrototype>> GetAvailableRecipes(EntityUid uid, LatheComponent component, bool getUnavailable = false)
         {
-            var ev = new LatheGetRecipesEvent(uid, getUnavailable)
+            var ev = new LatheGetRecipesEvent((uid, component), getUnavailable)
             {
                 Recipes = new HashSet<ProtoId<LatheRecipePrototype>>(component.StaticRecipes)
             };
@@ -277,26 +277,30 @@ namespace Content.Server.Lathe
 
         private void OnGetRecipes(EntityUid uid, TechnologyDatabaseComponent component, LatheGetRecipesEvent args)
         {
-            if (uid != args.Lathe || !TryComp<LatheComponent>(uid, out var latheComponent))
-                return;
-
-            foreach (var recipe in latheComponent.DynamicRecipes)
+            if (args.IncludeUnavailable)
             {
-                if (!(args.getUnavailable || component.UnlockedRecipes.Contains(recipe)) || args.Recipes.Contains(recipe))
-                    continue;
-                args.Recipes.Add(recipe);
+                args.Recipes.UnionWith(args.Lathe.Comp.DynamicRecipes);
+                return;
+            }
+
+            foreach (var recipe in args.Lathe.Comp.DynamicRecipes)
+            {
+                if (component.UnlockedRecipes.Contains(recipe))
+                    args.Recipes.Add(recipe);
             }
         }
 
         private void GetEmagLatheRecipes(EntityUid uid, EmagLatheRecipesComponent component, LatheGetRecipesEvent args)
         {
-            if (uid != args.Lathe || !TryComp<TechnologyDatabaseComponent>(uid, out var technologyDatabase))
+            if (!TryComp<TechnologyDatabaseComponent>(uid, out var technologyDatabase))
                 return;
-            if (!args.getUnavailable && !HasComp<EmaggedComponent>(uid))
+
+            if (!args.IncludeUnavailable && !HasComp<EmaggedComponent>(uid))
                 return;
+
             foreach (var recipe in component.EmagDynamicRecipes)
             {
-                if (!(args.getUnavailable || technologyDatabase.UnlockedRecipes.Contains(recipe)) || args.Recipes.Contains(recipe))
+                if (!(args.IncludeUnavailable || technologyDatabase.UnlockedRecipes.Contains(recipe)) || args.Recipes.Contains(recipe))
                     continue;
                 args.Recipes.Add(recipe);
             }

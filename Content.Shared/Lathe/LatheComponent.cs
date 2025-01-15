@@ -16,10 +16,14 @@ namespace Content.Shared.Lathe
         public List<ProtoId<LatheRecipePrototype>> StaticRecipes = new();
 
         /// <summary>
-        /// All of the recipes that the lathe is capable of researching
+        /// All of the recipes that the lathe is capable of researching.
         /// </summary>
         [DataField]
         public List<ProtoId<LatheRecipePrototype>> DynamicRecipes = new();
+        // Note that this shouldn't be modified dynamically.
+        // I.e., this + the static recipies should represent all recipies that the lathe can ever make
+        // Otherwise the material arbitrage test and/or LatheSystem.GetAllBaseRecipes needs to be updated
+
 
         /// <summary>
         /// The lathe's construction queue
@@ -79,16 +83,16 @@ namespace Content.Shared.Lathe
 
     public sealed class LatheGetRecipesEvent : EntityEventArgs
     {
-        public readonly EntityUid Lathe;
+        public readonly Entity<LatheComponent> Lathe;
 
-        public bool getUnavailable;
+        public bool IncludeUnavailable;
 
         public HashSet<ProtoId<LatheRecipePrototype>> Recipes = new();
 
-        public LatheGetRecipesEvent(EntityUid lathe, bool forced)
+        public LatheGetRecipesEvent(Entity<LatheComponent> lathe, bool forced)
         {
             Lathe = lathe;
-            getUnavailable = forced;
+            IncludeUnavailable = forced;
         }
     }
 
