@@ -26,8 +26,8 @@
   - type: MovedByPressure
   - type: PaperLabel
     labelSlot:
-      insertVerbText: Attach Label
-      ejectVerbText: Remove Label
+      insertVerbText: comp-paper-label-insert
+      ejectVerbText: comp-paper-label-eject
       whitelist:
         components:
         - Paper
