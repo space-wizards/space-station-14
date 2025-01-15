@@ -112,6 +112,7 @@ public sealed class MappingState : GameplayStateBase
         context.AddFunction(ContentKeyFunctions.MappingUnselect);
         context.AddFunction(ContentKeyFunctions.SaveMap);
         context.AddFunction(ContentKeyFunctions.MappingEnablePick);
+        context.AddFunction(ContentKeyFunctions.MappingEnableDecalPick);
         context.AddFunction(ContentKeyFunctions.MappingEnableDelete);
         context.AddFunction(ContentKeyFunctions.MappingPick);
         context.AddFunction(ContentKeyFunctions.MappingRemoveDecal);
