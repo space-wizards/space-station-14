@@ -8,6 +8,10 @@ jobs:
   run:
     runs-on: ubuntu-latest
     if: ${{github.head_ref == 'master' || github.head_ref == 'main' || github.head_ref == 'develop' || github.head_ref == 'Starlight'}}
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
     
     steps:    
     - uses: superbrothers/close-pull-request@v3
