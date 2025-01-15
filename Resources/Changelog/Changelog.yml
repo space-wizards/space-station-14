@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Returned Taco microwave recipes (people were sad)
-    type: Add
-  - message: added an alternative method of crafting some burgers, through the correct
-      assembly sequence of modular food.
-    type: Add
-  - message: severely cut back on the number of items you can put on burgers, tacos,
-      or kebabs. This had poor design, and things need to be separately resprited
-      by adding them on modular food.
-    type: Tweak
-  id: 7312
-  time: '2024-09-08T06:22:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31012
 - author: metalgearsloth
   changes:
   - message: Fix the FTL bubbles sometimes persisting.
@@ -3938,3 +3924,10 @@
   id: 7811
   time: '2025-01-15T18:03:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34426
+- author: Alpaccalypse
+  changes:
+  - message: Smite soda vending machines have been added to the game.
+    type: Add
+  id: 7812
+  time: '2025-01-15T18:20:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34420
