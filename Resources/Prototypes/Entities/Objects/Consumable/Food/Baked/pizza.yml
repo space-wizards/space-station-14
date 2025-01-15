@@ -583,7 +583,7 @@
           Quantity: 16
   - type: RadiationSource
     intensity: 0.1
-    slope: 3
+    slope: 300
 
 - type: entity
   name: slice of spicy rock pizza
@@ -621,7 +621,7 @@
           Quantity: 2
   - type: RadiationSource
     intensity: 0.1
-    slope: 3
+    slope: 300
 
 # Tastes like crust, tomato, cheese, radiation.
 

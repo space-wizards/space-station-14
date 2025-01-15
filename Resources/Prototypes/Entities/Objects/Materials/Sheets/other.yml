@@ -236,7 +236,7 @@
         canReact: false
   - type: RadiationSource
     intensity: 0.1
-    slope: 3
+    slope: 300
 
 - type: entity
   parent: SheetUranium
