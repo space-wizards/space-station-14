@@ -5,10 +5,10 @@
   description: Here's the mail, it never fails...
   components:
   - type: Sprite
-    sprite: _Nyanotrasen/Clothing/Belt/mailbag.rsi
+    sprite: _Impstation/Clothing/Belt/mailbag.rsi
     state: icon
   - type: Clothing
-    sprite: _Nyanotrasen/Clothing/Belt/mailbag.rsi
+    sprite: _Impstation/Clothing/Belt/mailbag.rsi
     quickEquip: false
     slots:
     - belt
