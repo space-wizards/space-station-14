@@ -5,7 +5,7 @@
   color: "#A46106"
   roles:
   - CargoTechnician
-  #- Courier # Imp, commented FOR NOW until we get maps with courier mapped
+  - Courier # Imp
   - Quartermaster
   - SalvageSpecialist
 
