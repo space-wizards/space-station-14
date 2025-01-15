@@ -3075,6 +3075,36 @@ entities:
     - type: Transform
       pos: 1.5,-14.5
       parent: 1
+  - uid: 723
+    components:
+    - type: Transform
+      pos: -1.5,-11.5
+      parent: 1
+  - uid: 724
+    components:
+    - type: Transform
+      pos: -1.5,-10.5
+      parent: 1
+  - uid: 725
+    components:
+    - type: Transform
+      pos: -2.5,-10.5
+      parent: 1
+  - uid: 726
+    components:
+    - type: Transform
+      pos: -2.5,-9.5
+      parent: 1
+  - uid: 727
+    components:
+    - type: Transform
+      pos: -2.5,-9.5
+      parent: 1
+  - uid: 728
+    components:
+    - type: Transform
+      pos: -2.5,-8.5
+      parent: 1
 - proto: GrilleBroken
   entities:
   - uid: 3
@@ -3747,6 +3777,16 @@ entities:
     - type: Transform
       pos: -10.5,-6.5
       parent: 1
+  - uid: 721
+    components:
+    - type: Transform
+      pos: -14.5,0.5
+      parent: 1
+  - uid: 722
+    components:
+    - type: Transform
+      pos: -9.5,2.5
+      parent: 1
 - proto: SpawnMobKangaroo
   entities:
   - uid: 415
@@ -3774,6 +3814,23 @@ entities:
     components:
     - type: Transform
       pos: 11.5,3.5
+      parent: 1
+  - uid: 720
+    components:
+    - type: Transform
+      pos: -11.5,5.5
+      parent: 1
+  - uid: 729
+    components:
+    - type: Transform
+      pos: 13.5,-5.5
+      parent: 1
+- proto: SpawnMobSpaceSpider
+  entities:
+  - uid: 730
+    components:
+    - type: Transform
+      pos: 9.5,-3.5
       parent: 1
 - proto: SpawnMobSpiderSalvage
   entities:
