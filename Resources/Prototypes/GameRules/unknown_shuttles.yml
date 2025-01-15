@@ -208,7 +208,7 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #Leaving this one because theyre like primitives and its funnier
+    startAnnouncement: true
     weight: 1 # lower because antags
     earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly. (4) & antags
   - type: LoadMapRule
