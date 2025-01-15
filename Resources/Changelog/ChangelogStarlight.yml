@@ -2264,4 +2264,11 @@ Entries:
   id: 318
   time: '2025-01-14T16:57:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/236
+- author: Neccer
+  changes:
+  - message: Removed roboticists engineering access.
+    type: Tweak
+  id: 319
+  time: '2025-01-15T13:28:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/241
 
