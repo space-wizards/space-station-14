@@ -38,6 +38,7 @@ public sealed class IPIntel
         _sawmill = logManager.GetSawmill("ipintel");
 
         cfg.OnValueChanged(CCVars.GameIPIntelEmail, b => _contactEmail = b, true);
+        cfg.OnValueChanged(CCVars.GameIPIntelEnabled, b => _enabled = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelRejectUnknown, b => _rejectUnknown = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelRejectBad, b => _rejectBad = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelRejectRateLimited, b => _rejectLimited = b, true);
@@ -74,6 +75,7 @@ public sealed class IPIntel
 
     // CCVars
     private string? _contactEmail;
+    private bool _enabled;
     private bool _rejectUnknown;
     private bool _rejectBad;
     private bool _rejectLimited;
@@ -273,12 +275,12 @@ public sealed class IPIntel
         return _rejectBad ? (true, Loc.GetString("ipintel-suspicious")) : (false, string.Empty);
     }
 
-    public void Update()
+    public async Task Update()
     {
-        if (_gameTiming.RealTime >= _nextClean)
+        if (_enabled && _gameTiming.RealTime >= _nextClean)
         {
             _nextClean = _gameTiming.RealTime + TimeSpan.FromMinutes(_cleanupMins);
-            _db.CleanIPIntelCache(_cacheDays);
+            await _db.CleanIPIntelCache(_cacheDays);
         }
     }
 
