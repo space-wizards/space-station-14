@@ -22,3 +22,17 @@
   license: "CC-BY-3.0"
   copyright: "Original audio from Allen2001 on freesound.org, modified by DinnerCalzone (github)"
   source: "https://freesound.org/people/Allen2001/sounds/595107/"
+
+- files:
+  - jesterstep_on.ogg
+  - jesterstep_off.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Edit of original jesterstep sounds made and posted by GentleJester#8754 on the SS14 discord, modified by DinnerCalzone (github)"
+  source: "https://discord.com/channels/310555209753690112/311537926376783886/1097222920813674527"
+
+- files:
+  - quack_on.ogg
+  - quack_off.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Edit of original quack sound (unattributed), modified by DinnerCalzone (github)"
+  source: "https://github.com/impstation/imp-station-14/pull/1310"

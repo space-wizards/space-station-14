@@ -1,0 +1,5 @@
+- type: loadout
+  id: CDDogtags
+  storage:
+    back:
+    - CDDogtags

@@ -9,12 +9,18 @@ heretic-magicitem-examine = [color=yellow]Allows you to use advanced spells whil
 heretic-blade-examine = [color=yellow]Using it while it's in your hand will break the blade and teleport you away from danger.[/color]
 heretic-blade-use = The blade shatters, and you feel the voices pulling you away.
 
+heretic-ghoul-examine = { CAPITALIZE(POSS-ADJ($ent)) } body looks like a decaying corpse.
+
 heretic-rust-mark-itembreak = {$name} shatters into dust!
 
 heretic-manselink-fail-exists = This creature is already connected!
 heretic-manselink-fail-nomind = This creature does not have a mind!
 heretic-manselink-start = You begin to connect this creature's mind to yours.
 heretic-manselink-start-target = You feel your mind being pulled somewhere...
+
+heretic-fleshsurgery-barf = The contents of your stomach come pouring out!
+heretic-fleshsurgery-eyes = Your vision becomes dull and cloudy!
+heretic-fleshsurgery-mute = Your tongue falls limp!
 
 heretic-livingheart-notargets = No available targets, visit the rune.
 heretic-livingheart-offstation = It's {$state}, off station, {$direction}!

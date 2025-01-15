@@ -2818,7 +2818,7 @@ entities:
             0: 32527
           -13,1:
             0: 34816
-            5: 1
+            4: 1
             2: 4
           -12,2:
             0: 30591
@@ -2893,7 +2893,7 @@ entities:
             0: 34952
           -14,1:
             2: 61440
-            5: 12
+            4: 12
           -14,2:
             0: 32624
           -14,3:
@@ -2902,10 +2902,10 @@ entities:
             0: 65535
           -14,0:
             3: 12
-            4: 3072
+            5: 3072
           -13,0:
             3: 1
-            4: 256
+            5: 256
             2: 17476
           -13,-1:
             2: 17476
@@ -3069,8 +3069,8 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 6666.982
           - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -3084,8 +3084,8 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 0
           - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -54991,6 +54991,33 @@ entities:
     components:
     - type: Transform
       pos: -10.5,-9.5
+      parent: 2
+- proto: SpawnPointLocationMidRoundAntag
+  entities:
+  - uid: 9936
+    components:
+    - type: Transform
+      pos: -30.5,-14.5
+      parent: 2
+  - uid: 9937
+    components:
+    - type: Transform
+      pos: -5.5,-13.5
+      parent: 2
+  - uid: 9938
+    components:
+    - type: Transform
+      pos: 24.5,-14.5
+      parent: 2
+  - uid: 9939
+    components:
+    - type: Transform
+      pos: -8.5,20.5
+      parent: 2
+  - uid: 9940
+    components:
+    - type: Transform
+      pos: -39.5,-8.5
       parent: 2
 - proto: SpawnPointMedicalDoctor
   entities:

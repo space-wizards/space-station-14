@@ -1,4 +1,10 @@
-﻿- type: entity
+- type: entity
+  parent: Paper
+  id: TapeRecorderTranscript
+  name: record transcript
+  # TODO: could have a unique sprite in the future
+
+- type: entity
   name: station warrant
   parent: Paper
   id: PaperStationWarrant

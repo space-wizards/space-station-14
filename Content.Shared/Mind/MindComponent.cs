@@ -1,8 +1,11 @@
+using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind.Components;
+using Content.Shared.Store;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mind;
 
@@ -27,6 +30,11 @@ public sealed partial class MindComponent : Component
 {
     [DataField, AutoNetworkedField]
     public List<EntityUid> Objectives = new();
+
+    /// <summary>
+    /// imp edit - list of things that have been bought by this mind.
+    /// </summary>
+    public List<(string, IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2>)> Purchases = new();
 
     /// <summary>
     ///     List of entities assigned to this mind's target objectives, if applicable.

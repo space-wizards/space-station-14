@@ -861,9 +861,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     private void OnSolutionExaminableVerb(Entity<ExaminableSolutionComponent> entity, ref GetVerbsEvent<ExamineVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess)
-            return;
-
         var scanEvent = new SolutionScanEvent();
         RaiseLocalEvent(args.User, scanEvent);
         if (!scanEvent.CanScan)

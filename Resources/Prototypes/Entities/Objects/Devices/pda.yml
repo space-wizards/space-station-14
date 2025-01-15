@@ -447,6 +447,7 @@
       - NewsReaderCartridge
       - NanoChatCartridge # DV
       - MailMetricsCartridge  # DV
+      - StockTradingCartridge # DeltaV
 
 - type: entity
   parent: BasePDA
@@ -465,6 +466,13 @@
     borderColor: "#e39751"
   - type: Icon
     state: pda-cargo
+  - type: CartridgeLoader # DeltaV
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReaderCartridge
+      - StockTradingCartridge # DeltaV
+      - NanoChatCartridge # DeltaV
 
 - type: entity
   parent: BasePDA
@@ -913,6 +921,7 @@
     - LogProbeCartridge
     - AstroNavCartridge
     - NanoChatCartridge # DV
+    - StockTradingCartridge # DV
 
 - type: entity
   parent: CentcomPDA
@@ -938,6 +947,7 @@
     - MedTekCartridge
     - AstroNavCartridge
     - NanoChatCartridge # DV
+    - StockTradingCartridge # DV
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener

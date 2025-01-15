@@ -9,7 +9,7 @@ lobbyduration = 300
 [server]
 # TODO
 # rules_file = "ImpstationRuleset"
-uptime_restart_minutes = 720
+uptime_restart_minutes = 240
 
 [chat]
 # Message Of The Day
@@ -29,7 +29,7 @@ restricted_names = false
 rate_limit_count = 20
 
 [infolinks]
-discord = "https://discord.gg/mirakurutaimu"
+discord = "https://discord.gg/TGNz3cEkag"
 github = "https://github.com/impstation/imp-station-14"
 website = "https://impstation.gay"
 # wiki = ""

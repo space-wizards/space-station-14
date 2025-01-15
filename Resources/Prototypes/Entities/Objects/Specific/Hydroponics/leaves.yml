@@ -100,7 +100,7 @@
 
 - type: entity
   name: rainbow cannabis leaves
-  parent: LeavesCannabis
+  parent: [LeavesCannabis, BaseMinorContraband]
   id: LeavesCannabisRainbow
   description: "Is it supposed to be glowing like that...?"
   components:
@@ -137,7 +137,7 @@
 
 - type: entity
   name: dried rainbow cannabis leaves
-  parent: LeavesCannabisDried
+  parent: [LeavesCannabisDried, BaseMinorContraband]
   id: LeavesCannabisRainbowDried
   description: "Dried rainbow cannabis leaves, ready to be ground."
   components:
@@ -172,7 +172,7 @@
 
 - type: entity
   name: ground rainbow cannabis
-  parent: GroundCannabis
+  parent: [GroundCannabis, BaseMinorContraband]
   id: GroundCannabisRainbow
   description: "Ground rainbow cannabis, ready to take you on a trip."
   components:

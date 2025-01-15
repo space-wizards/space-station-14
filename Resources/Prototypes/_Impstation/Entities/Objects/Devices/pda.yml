@@ -55,6 +55,14 @@
     accentVColor: "#FF9500"
   - type: Icon
     state: pda-seniorcargo
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReaderCartridge
+      - StockTradingCartridge # DeltaV
+      - NanoChatCartridge # DeltaV
 
 - type: entity
   parent: BasePDA
