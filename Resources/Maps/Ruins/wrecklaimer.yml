@@ -1441,6 +1441,21 @@ entities:
     - type: Transform
       pos: -10.5,10.5
       parent: 1
+  - uid: 412
+    components:
+    - type: Transform
+      pos: -5.5,-9.5
+      parent: 1
+  - uid: 413
+    components:
+    - type: Transform
+      pos: -6.5,-8.5
+      parent: 1
+  - uid: 414
+    components:
+    - type: Transform
+      pos: -2.5,-10.5
+      parent: 1
   - uid: 416
     components:
     - type: Transform
@@ -1790,6 +1805,21 @@ entities:
     components:
     - type: Transform
       pos: -11.5,-3.5
+      parent: 1
+  - uid: 517
+    components:
+    - type: Transform
+      pos: -4.5,-10.5
+      parent: 1
+  - uid: 523
+    components:
+    - type: Transform
+      pos: -3.5,-9.5
+      parent: 1
+  - uid: 525
+    components:
+    - type: Transform
+      pos: -3.5,-8.5
       parent: 1
   - uid: 529
     components:
@@ -2316,6 +2346,11 @@ entities:
     - type: Transform
       pos: 9.5,-11.5
       parent: 1
+  - uid: 720
+    components:
+    - type: Transform
+      pos: -4.5,-7.5
+      parent: 1
 - proto: AsteroidRockBananium
   entities:
   - uid: 14
@@ -2682,6 +2717,13 @@ entities:
     - type: Transform
       pos: 11.5,-0.5
       parent: 1
+- proto: BananiumHorn
+  entities:
+  - uid: 723
+    components:
+    - type: Transform
+      pos: 13.489124,6.4714565
+      parent: 1
 - proto: BannerCargo
   entities:
   - uid: 90
@@ -2854,12 +2896,12 @@ entities:
     - type: Transform
       pos: 16.5,-0.5
       parent: 1
-- proto: ClothingBackpackDuffelClown
+- proto: ClothingBackpackDuffelMime
   entities:
-  - uid: 525
+  - uid: 84
     components:
     - type: Transform
-      pos: 12.499311,12.574859
+      pos: 12.491305,12.519769
       parent: 1
 - proto: ComputerBroken
   entities:
@@ -2976,12 +3018,19 @@ entities:
     - type: Transform
       pos: 13.530561,8.512359
       parent: 1
-- proto: FoodSoupChiliClown
+- proto: FoodSoupClown
   entities:
-  - uid: 523
+  - uid: 724
     components:
     - type: Transform
-      pos: 11.443393,8.594803
+      pos: 12.491305,11.511956
+      parent: 1
+- proto: FoodTartMimeSlice
+  entities:
+  - uid: 88
+    components:
+    - type: Transform
+      pos: 11.389743,8.535394
       parent: 1
 - proto: GasCanisterBrokenBase
   entities:
@@ -3074,36 +3123,6 @@ entities:
     components:
     - type: Transform
       pos: 1.5,-14.5
-      parent: 1
-  - uid: 723
-    components:
-    - type: Transform
-      pos: -1.5,-11.5
-      parent: 1
-  - uid: 724
-    components:
-    - type: Transform
-      pos: -1.5,-10.5
-      parent: 1
-  - uid: 725
-    components:
-    - type: Transform
-      pos: -2.5,-10.5
-      parent: 1
-  - uid: 726
-    components:
-    - type: Transform
-      pos: -2.5,-9.5
-      parent: 1
-  - uid: 727
-    components:
-    - type: Transform
-      pos: -2.5,-9.5
-      parent: 1
-  - uid: 728
-    components:
-    - type: Transform
-      pos: -2.5,-8.5
       parent: 1
 - proto: GrilleBroken
   entities:
@@ -3608,6 +3627,18 @@ entities:
     - type: Transform
       pos: 12.5,-14.5
       parent: 1
+- proto: SalvageSpawnerMobMiningAsteroid
+  entities:
+  - uid: 725
+    components:
+    - type: Transform
+      pos: 13.5,-7.5
+      parent: 1
+  - uid: 726
+    components:
+    - type: Transform
+      pos: -14.5,3.5
+      parent: 1
 - proto: SalvageSpawnerScrapCommon
   entities:
   - uid: 406
@@ -3726,38 +3757,6 @@ entities:
     - type: Transform
       pos: 10.5,7.5
       parent: 1
-- proto: SpaceTickSpawner
-  entities:
-  - uid: 84
-    components:
-    - type: Transform
-      pos: 1.5,-10.5
-      parent: 1
-  - uid: 88
-    components:
-    - type: Transform
-      pos: -0.5,-9.5
-      parent: 1
-  - uid: 412
-    components:
-    - type: Transform
-      pos: -3.5,11.5
-      parent: 1
-  - uid: 413
-    components:
-    - type: Transform
-      pos: -1.5,13.5
-      parent: 1
-  - uid: 414
-    components:
-    - type: Transform
-      pos: -0.5,12.5
-      parent: 1
-  - uid: 517
-    components:
-    - type: Transform
-      pos: -13.5,3.5
-      parent: 1
 - proto: SpawnMobBearSalvage
   entities:
   - uid: 667
@@ -3780,12 +3779,7 @@ entities:
   - uid: 721
     components:
     - type: Transform
-      pos: -14.5,0.5
-      parent: 1
-  - uid: 722
-    components:
-    - type: Transform
-      pos: -9.5,2.5
+      pos: 1.5,-10.5
       parent: 1
 - proto: SpawnMobKangaroo
   entities:
@@ -3793,6 +3787,11 @@ entities:
     components:
     - type: Transform
       pos: -0.5,6.5
+      parent: 1
+  - uid: 722
+    components:
+    - type: Transform
+      pos: -9.5,1.5
       parent: 1
 - proto: SpawnMobKangarooSalvage
   entities:
@@ -3814,23 +3813,6 @@ entities:
     components:
     - type: Transform
       pos: 11.5,3.5
-      parent: 1
-  - uid: 720
-    components:
-    - type: Transform
-      pos: -11.5,5.5
-      parent: 1
-  - uid: 729
-    components:
-    - type: Transform
-      pos: 13.5,-5.5
-      parent: 1
-- proto: SpawnMobSpaceSpider
-  entities:
-  - uid: 730
-    components:
-    - type: Transform
-      pos: 9.5,-3.5
       parent: 1
 - proto: SpawnMobSpiderSalvage
   entities:
