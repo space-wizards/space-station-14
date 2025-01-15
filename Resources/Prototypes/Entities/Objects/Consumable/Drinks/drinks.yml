@@ -1115,18 +1115,18 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkIrishSlammer
-  suffix: irish slammer
+  id: DrinkIrishCarBomb
+  suffix: irish car bomb
   components:
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 30
         reagents:
-        - ReagentId: IrishSlammer
+        - ReagentId: IrishCarBomb
           Quantity: 30
   - type: Icon
-    sprite: Objects/Consumable/Drinks/irishslammer.rsi
+    sprite: Objects/Consumable/Drinks/irishcarbomb.rsi
     state: icon
 
 - type: entity

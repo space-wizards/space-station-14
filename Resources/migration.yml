@@ -537,7 +537,7 @@ LightTree05: LightTree
 LightTree06: LightTree
 
 #2024-12-28
-DrinkIrishCarBomb: DrinkIrishSlammer
+# DrinkIrishCarBomb: DrinkIrishSlammer - reverted on imp
 
 # IMPSTATION SPECIFIC MIGRATIONS BELOW
 # ====================================

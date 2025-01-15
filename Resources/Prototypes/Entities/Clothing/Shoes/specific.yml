@@ -30,9 +30,9 @@
   - type: ItemToggle
     onUse: false
     onActivate: false
-    soundActivate: 
+    soundActivate:
       collection: BikeHorn
-    soundDeactivate: 
+    soundDeactivate:
       collection: BikeHorn
       params:
         pitch: .8
@@ -151,8 +151,6 @@
     # ninja are masters of sneaking around relatively quickly, won't break cloak
     walkModifier: 1.1
     sprintModifier: 1.3
-  - type: FootstepModifier
-    footstepSoundCollection: null
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -240,15 +238,15 @@
         collection: FootstepJester
         params:
           variation: 0.07 #making a note so this is in the commit if we want to change this later - ruddygreat
-    #start imp edit 
+    #start imp edit
     - type: ItemToggle
       onUse: false
       onActivate: false
-      soundActivate: 
+      soundActivate:
         path: /Audio/_Impstation/Effects/Footsteps/jesterstep_on.ogg
-      soundDeactivate: 
+      soundDeactivate:
         path: /Audio/_Impstation/Effects/Footsteps/jesterstep_off.ogg
-    #end imp edit 
+    #end imp edit
 
 - type: entity
   parent: ClothingShoesClown

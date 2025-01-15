@@ -600,9 +600,9 @@
   description: flavor-complex-vermouth
 
 - type: flavor
-  id: irishslammer
+  id: irishcarbomb
   flavorType: Complex
-  description: flavor-complex-irish-slammer
+  description: flavor-complex-irish-car-bomb
 
 - type: flavor
   id: vodkaredbool
