@@ -942,8 +942,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - bread
+    - meaty
+    - bread
   - type: SliceableFood
     slice: FoodBreadSausageSlice
   - type: SolutionContainerManager
