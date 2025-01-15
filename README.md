@@ -1,6 +1,6 @@
 <p align="center"> <img alt="Impstation" src="https://github.com/impstation/imp-station-14/blob/master/Resources/Textures/Logo/logo.png" /></p>
 
-Impstation is a fork of Space Station 14, a remake of SS13 that runs on [Robust Toolbox](https://github.com/space-wizards/RobustToolbox), its homegrown engine written in C#.
+Impstation is a fork of Space Station 14, a remake of SS13 that runs on [Robust Toolbox](https://github.com/space-wizards/RobustToolbox), a homegrown engine written in C#.
 
 While we are not a server that allows sexual content, <b>we do not allow people under the age of 20 to play on Impstation.</b>
 
@@ -10,7 +10,7 @@ While we are not a server that allows sexual content, <b>we do not allow people 
 
 ## Documentation/Wiki
 
-Our [docs site](https://docs.spacestation14.io/) has documentation on SS14s content, engine, game design and more. We also have lots of resources for new contributors to the project.
+SS14's [docs site](https://docs.spacestation14.io/) has documentation on content, engine, game design and more. We also have lots of resources for new contributors to the project.
 
 ## Contributing
 
@@ -60,4 +60,5 @@ Content under these subdirectories either originate from their respective fork, 
 | `_EstacaoPirata` | Estacao Pirata | https://github.com/Day-OS/estacao-pirata-14/ | AGPL 3.0 |
 | `_Goobstation` | Goob Station | https://github.com/Goob-Station/Goob-Station/ | AGPL 3.0 |
 | `_Harmony` | Harmony | https://github.com/ss14-harmony/ss14-harmony | AGPL 3.0 |
+| `_NF` | Frontier Station | https://github.com/new-frontiers-14/frontier-station-14 | AGPL 3.0 |
 | `_White` | White Dream | https://github.com/WWhiteDreamProject/wwdpublic/ | AGPL 3.0 |
