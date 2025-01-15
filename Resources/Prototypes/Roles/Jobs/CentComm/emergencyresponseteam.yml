@@ -27,6 +27,7 @@
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityWebbingFilled
+    # Whistle
     pocket1: WeaponPistolN1984
     pocket2: FlashlightSeclite
   storage:
@@ -50,6 +51,7 @@
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityWebbingFilled
+    # Whistle
     pocket1: WeaponPistolN1984
     pocket2: FlashlightSeclite
   storage:
@@ -61,7 +63,7 @@
     - WeaponDisabler
 
 - type: startingGear
-  id: ERTLeaderGearEVASMG
+  id: ERTMarinesGearLeader
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTLeader
     back: ClothingBackpackERTLeader
@@ -72,19 +74,25 @@
     outerClothing: ClothingOuterHardsuitERTLeader
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltSecurityWebbingFilled
+    belt: ClothingBeltSecurityWebbing
+    neck: Whistle
     pocket1: WeaponPistolN1984
-    pocket2: FlashlightSeclite
-  inhand:
-  - WeaponSubMachineGunDrozd
+    pocket2: WeaponDisabler
   storage:
     back:
     - BoxZiptie
-    - MagazineMagnum
+    - WeaponSubMachineGunDrozd
     - MedkitCombatFilled
     - CrowbarRed
-    - WeaponDisabler
+    - GrenadeFlashBang
+    - GrenadeStinger
     belt:
+    - Stunbaton
+    - HoloprojectorSecurity
+    - MagazineMagnum
+    - MagazinePistolSubMachineGun
+    - MagazinePistolSubMachineGun
+    - MagazinePistolSubMachineGun
     - MagazinePistolSubMachineGun
 
 # Chaplain
@@ -314,7 +322,7 @@
     - WeaponDisabler
 
 - type: startingGear
-  id: ERTSecurityGearEVASoldier
+  id: ERTMarinesGearRifleman
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackERTSecurity
@@ -325,29 +333,30 @@
     outerClothing: ClothingOuterHardsuitERTSecurity
     id: ERTSecurityPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltSecurityWebbingFilled
+    belt: ClothingBeltSecurityWebbing
     pocket1: WeaponPistolMk58
-    pocket2: FlashlightSeclite
+    pocket2: WeaponDisabler
   storage:
     back:
     - BoxZiptie
     - WeaponRifleLecter
-    - CrowbarRed
-    - PunctAutoInjector
-    - MagazinePistol
-    - MedkitCombatFilled
     - GrenadeFlashBang
     - GrenadeStinger
-    - MagazineRifle
-    - MagazineRifle
-    - WeaponDisabler
-    - SecurityWhistle
+    - CrowbarRed
+    - MedkitCombatFilled
+    - WeaponDisaberSMG
+    - TelescopicShield
     belt:
+    - Stunbaton
+    - HoloprojectorSecurity
+    - MagazinePistol
+    - MagazineRifle
+    - MagazineRifle
     - MagazineRifle
     - MagazineRifle
 
 - type: startingGear
-  id: ERTSecurityGearEVABreacher
+  id: ERTMarinesGearBreacher
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackERTSecurity
@@ -358,30 +367,31 @@
     outerClothing: ClothingOuterHardsuitERTSecurity
     id: ERTSecurityPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltSecurityWebbingFilled
+    belt: ClothingBeltSecurityWebbing
     pocket1: WeaponPistolMk58
-    pocket2: FlashlightSeclite
+    pocket2: WeaponDisabler
   storage:
     back:
     - BoxZiptie
-    - MagazinePistol
+    - WeaponShotgunEnforcer
+    - GrenadeFlashBang
     - MedkitCombatFilled
     - JawsOfLife
-    - GrenadeFlashBang
-    - WeaponShotgunEnforcer
-    - PunctAutoInjector
+    - C4
+    - C4
+    - C4
+    - C4
+    - C4
+    belt:
+    - Stunbaton
+    - HoloprojectorSecurity
+    - MagazinePistol
     - BoxLethalshot
-    - C4
-    - C4
-    - C4
-    - C4
-    - WeaponDisabler
-    - SecurityWhistle
-  belt:
-  - BoxLethalshot
+    - BoxLethalshot
+
 
 - type: startingGear
-  id: ERTSecurityGearEVAGrenader
+  id: ERTMarinesGearGrenadier
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackERTSecurity
@@ -392,27 +402,29 @@
     outerClothing: ClothingOuterHardsuitERTSecurity
     id: ERTSecurityPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltSecurityWebbingFilled
+    belt: ClothingBeltSecurityWebbing
     pocket1: WeaponPistolMk58
-    pocket2: FlashlightSeclite
+    pocket2: WeaponDisabler
   storage:
     back:
     - BoxZiptie
-    - MagazinePistol
+    - WeaponSubMachineGunDrozd
     - MedkitCombatFilled
     - CrowbarRed
     - GrenadeFlashBang
     - GrenadeFlashBang
-    - PunctAutoInjector
     - SmokeGrenade
     - SmokeGrenade
     - SmokeGrenade
-    - WeaponDisabler
-    - WeaponSubMachineGunDrozd
     - GrenadeShrapnel
     - GrenadeShrapnel
-    - SecurityWhistle
+    - GrenadeShrapnel
     belt:
+    - Stunbaton
+    - HoloprojectorSecurity
+    - MagazinePistol
+    - MagazinePistolSubMachineGun
+    - MagazinePistolSubMachineGun
     - MagazinePistolSubMachineGun
     - MagazinePistolSubMachineGun
 
@@ -487,33 +499,55 @@
     - Defibrillator
 
 - type: startingGear
-  id: ERTMedicalGearEVASMG
+  id: ERTMarinesGearMedic
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTMedic
     back: ClothingBackpackERTMedical
     shoes: ClothingShoesBootsMag
     mask: ClothingMaskGasERT
-    eyes: ClothingEyesHudMedical
+    eyes: ClothingEyesHudMedSec
     gloves: ClothingHandsGlovesNitrile
     outerClothing: ClothingOuterHardsuitERTMedical
     id: ERTMedicPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltMedicalFilled
+    belt: ClothingBeltMedicalEMT
     pocket1: WeaponPistolMk58
-    pocket2: FlashlightSeclite
+    pocket2: WeaponDisabler
   storage:
     back:
-    - MagazinePistol
-    - CrowbarRed
-    - Hypospray
+    - BoxBodyBag
+    - WeaponSubMachineGunDrozd
     - MedkitCombatFilled
+    - PillCanisterTricordrazine
+    - CrowbarRed
+    - MagazinePistol
     - MagazinePistolSubMachineGun
     - MagazinePistolSubMachineGun
+    - Hypospray
+    - Defibrillator
+    - PunctAutoInjector
+    - PunctAutoInjector
     - OmnizineChemistryBottle
     - EpinephrineChemistryBottle
     - EpinephrineChemistryBottle
-    - Defibrillator
-    - WeaponSubMachineGunDrozd 
+    belt:
+    - Hypospray
+    - AntiPoisonMedipen
+    - AntiPoisonMedipen
+    - BruteAutoInjector
+    - BruteAutoInjector
+    - BruteAutoInjectoree
+    - AirlossAutoInjector
+    - AirlossAutoInjector
+    - AirlossAutoInjector
+    - RadAutoInjector
+    - RadAutoInjector
+    - PunctAutoInjector
+    - PunctAutoInjector
+    - PunctAutoInjector
+    - PyraAutoInjector
+    - PyraAutoInjector
+    - PyraAutoInjector
 
 # Janitor
 - type: job
