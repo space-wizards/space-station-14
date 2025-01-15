@@ -1,24 +1,22 @@
 {
     "version": 1,
+    "copyright": "Made for Impstation by Honeyed_Lemons_",
     "license": "CC-BY-SA-4.0",
-    "copyright": "Sprites by TiniestShark (Github)",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
         {
-            "name": "icon"
-        },
-        {
-            "name": "storage"
-        },
-        {
-            "name": "inhand-left",
+            "name": "human_bodyhair_male",
             "directions": 4
         },
         {
-            "name": "inhand-right",
+            "name": "human_bodyhair_female",
+            "directions": 4
+        },
+        {
+            "name": "thaven_bodyhair",
             "directions": 4
         }
     ]

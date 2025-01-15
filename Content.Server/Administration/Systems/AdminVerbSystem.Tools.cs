@@ -6,7 +6,7 @@ using Content.Server.Administration.Components;
 using Content.Server.Cargo.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Hands.Systems;
-using Content.Server.Impstation.Spelfs;
+using Content.Server._Impstation.Thaven;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
@@ -27,8 +27,7 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Electrocution;
 using Content.Shared.Hands.Components;
-using Content.Shared.Humanoid;
-using Content.Shared.Impstation.Spelfs.Components; //Starlight Thaven
+using Content.Shared._Impstation.Thaven.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Stacks;
@@ -769,7 +768,7 @@ public sealed partial class AdminVerbSystem
             args.Verbs.Add(setCapacity);
         }
 
-        // 🌟Starlight🌟 start 
+        #region Starlight 
         // Add toggle overlays verb
         Verb toggleOverlays = new()
         {
@@ -850,9 +849,9 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(reaperArm);
         }
-        // 🌟Starlight🌟 end
 
-        if (TryComp<SpelfMoodsComponent>(args.Target, out var moods))
+
+        if (TryComp<ThavenMoodsComponent>(args.Target, out var moods))
         {
             Verb addRandomMood = new()
             {
@@ -865,10 +864,29 @@ public sealed partial class AdminVerbSystem
                 },
                 Impact = LogImpact.High,
                 Message = Loc.GetString("admin-trick-add-random-mood-description"),
-                Priority = (int) TricksVerbPriorities.AddRandomMood,
+                Priority = (int)TricksVerbPriorities.AddRandomMood,
             };
             args.Verbs.Add(addRandomMood);
         }
+        else
+        {
+            Verb giveMoods = new()
+            {
+                Text = "Give Moods",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Rsi(new ResPath("Interface/Actions/actions_borg.rsi"), "state-laws"),
+                Act = () =>
+                {
+                    if (!EntityManager.EnsureComponent<ThavenMoodsComponent>(args.Target, out moods))
+                        _moods.NotifyMoodChange((args.Target, moods));
+                },
+                Impact = LogImpact.High,
+                Message = Loc.GetString("admin-trick-give-moods-description"),
+                Priority = (int)TricksVerbPriorities.AddRandomMood,
+            };
+            args.Verbs.Add(giveMoods);
+        }
+        #endregion
     }
 
     private void RefillEquippedTanks(EntityUid target, Gas gasType)

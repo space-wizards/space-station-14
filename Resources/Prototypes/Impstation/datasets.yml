@@ -173,7 +173,7 @@
     - GreySpeak
 
 - type: dataset
-  id: SpelfWords
+  id: ThavenWords
   values:
   - accept
   - add

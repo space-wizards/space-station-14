@@ -19,7 +19,7 @@
   <GuideEntityEmbed Entity="MobVulpkanin" Caption="Vulpkanin"/>
   <GuideEntityEmbed Entity="MobResomi" Caption="Resomi"/>
   <GuideEntityEmbed Entity="MobAvali" Caption="Avali"/>
-  <GuideEntityEmbed Entity="MobSpElf" Caption="Thaven"/>
+  <GuideEntityEmbed Entity="MobThaven" Caption="Thaven"/>
   </Box>
   <Box>
 

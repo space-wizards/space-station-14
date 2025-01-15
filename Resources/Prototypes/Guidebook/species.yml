@@ -16,7 +16,6 @@
     - Resomi
     - Shadekin
     - Vox
-    - Vulpkanin
     - Thaven
 
 - type: guideEntry
@@ -90,6 +89,7 @@
   text: "/ServerInfo/Guidebook/Mobs/Shadekin.xml"
 
 - type: guideEntry
-  id: Thaven
+  id: Thavend
   name: Thaven
-  text: "/ServerInfo/Guidebook/Mobs/SpElf.xml"
+  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Thaven.xml"
+

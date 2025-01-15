@@ -38,8 +38,8 @@ using Robust.Shared.Timing;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using static Content.Shared.Configurable.ConfigurationComponent;
-using Content.Shared.Impstation.Spelfs.Components;
-using Content.Server.Impstation.Spelfs;
+using Content.Shared._Impstation.Thaven.Components;
+using Content.Server._Impstation.Thaven;
 
 namespace Content.Server.Administration.Systems
 {
@@ -72,7 +72,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly SiliconLawSystem _siliconLawSystem = default!;
         [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearance = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
-        [Dependency] private readonly SpelfMoodsSystem _moods = default!; //Starlight
+        [Dependency] private readonly ThavenMoodsSystem _moods = default!; //Starlight
 
         private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
 
@@ -420,15 +420,15 @@ namespace Content.Server.Administration.Systems
                 });
 
                 #region Starlight Thaven
-                if (TryComp<SpelfMoodsComponent>(args.Target, out var moods))
+                if (TryComp<ThavenMoodsComponent>(args.Target, out var moods))
                 {
                     args.Verbs.Add(new Verb()
                     {
-                        Text = Loc.GetString("spelf-moods-ui-verb"),
+                        Text = Loc.GetString("thaven-moods-ui-verb"),
                         Category = VerbCategory.Admin,
                         Act = () =>
                         {
-                            var ui = new SpelfMoodsEui(_moods, EntityManager, _adminManager);
+                            var ui = new ThavenMoodsEui(_moods, EntityManager, _adminManager);
                             if (!_playerManager.TryGetSessionByEntity(args.User, out var session))
                                 return;
 

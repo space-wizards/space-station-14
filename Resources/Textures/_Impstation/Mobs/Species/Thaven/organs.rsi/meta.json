@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Originally drawn by @Trosling (Discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+<<<<<<<< HEAD:Resources/Textures/Objects/Specific/Chapel/codexnanotrasimus.rsi/meta.json
+      "name": "icon"
+========
+      "name": "brain-thaven"
+>>>>>>>> 3167d35376 (Merge pull request #1302 from hivehum/spelf-to-thaven):Resources/Textures/_Impstation/Mobs/Species/Thaven/organs.rsi/meta.json
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}
+
