@@ -259,8 +259,6 @@
     - type: mappingTemplate
       id: Autolathe
     - type: mappingTemplate
-      id: DefaultStationBeaconCargoReception
-    - type: mappingTemplate
       id: IntercomSupply
     - type: mappingTemplate
       id: VendingMachineChefDrobe

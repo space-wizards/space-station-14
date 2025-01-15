@@ -1,7 +1,6 @@
 ﻿using System.Numerics;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -12,7 +11,6 @@ namespace Content.Client.Mapping;
 public sealed class MappingOverlay : Overlay
 {
     [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     private readonly Dictionary<EntityUid, Color> _oldColors = new();
