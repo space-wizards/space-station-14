@@ -31,6 +31,50 @@
   - type: Loadout
     prototypes:
       - LoneAbductorGear
+      
+- type: entity
+  name: abductor scientist
+  parent: MobAbductor
+  id: MobAbductorScientist
+  components:
+  - type: AntagObjectives
+    objectives:
+    - StealResearchObjective
+  - type: GhostRole
+    name: abductors-ghost-role-name
+    description: abductors-ghost-role-desc
+    rules: abductors-ghost-role-rules
+    raffle:
+      settings: default
+  - type: AbductorScientist
+  - type: ActionGrant
+    actions:
+    - ActionReturnToShip
+  - type: Loadout
+    prototypes:
+      - AbductorScientistGear
+      
+- type: entity
+  name: abductor agent
+  parent: MobAbductor
+  id: MobAbductorAgent
+  components:
+  - type: AntagObjectives
+    objectives:
+    - StealResearchObjective
+  - type: GhostRole
+    name: abductors-ghost-role-name
+    description: abductors-ghost-role-desc
+    rules: abductors-ghost-role-rules
+    raffle:
+      settings: default
+  - type: AbductorScientistComponent
+  - type: ActionGrant
+    actions:
+    - ActionReturnToShip
+  - type: Loadout
+    prototypes:
+      - AbductorAgentGear
 
 - type: startingGear
   id: LoneAbductorGear
@@ -45,10 +89,59 @@
     belt: ClothingAbductorBeltFilled
   inhand:
   - Wonderprod
+  
+- type: startingGear
+  id: AbductorScientistGear
+  equipment:
+    ears: ClothingHeadsetAltAbductor
+    jumpsuit: ClothingUniformJumpsuitAbductor
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsCombat
+    pocket1: AbductorGizmo
+    
+- type: startingGear
+  id: AbductorAgentGear
+  equipment:
+    head: ClothingHeadHelmetAbductor
+    ears: ClothingHeadsetAltAbductor
+    jumpsuit: ClothingUniformJumpsuitAbductor
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsCombat
+    pocket2: WeaponAlien
+    belt: ClothingAbductorBeltFilled
+    outerClothing: ClothingOuterArmorAbductor
+  inhand:
+  - Wonderprod
 
 - type: entity
   name: lone abductor spawner
   id: SpawnPointLoneAbductor
+  parent: MarkerBase
+  components:
+  - type: SpawnPoint
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Structures/Wallmounts/signs.rsi
+        state: radiation
+        
+- type: entity
+  name: abductor agent spawner
+  id: SpawnPointAbductorAgent
+  parent: MarkerBase
+  components:
+  - type: SpawnPoint
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Structures/Wallmounts/signs.rsi
+        state: radiation
+        
+- type: entity
+  name: abductor scientist spawner
+  id: SpawnPointAbductorScientist
   parent: MarkerBase
   components:
   - type: SpawnPoint
