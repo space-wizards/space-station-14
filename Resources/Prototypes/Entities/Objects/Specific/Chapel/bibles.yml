@@ -1,7 +1,7 @@
 - type: entity
   name: bible
   description: New Interstellar Version 2340.
-  parent: BaseStorageItem
+  parent: BaseItem
   id: Bible
   components:
   - type: UseDelay
@@ -43,13 +43,24 @@
   - type: Clothing
     slots:
     - Belt
-  - type: Storage
-    grid:
-    - 0,0,0,1
-  - type: UserInterface
-    interfaces:
-      enum.StorageUiKey.Key:
-        type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
+  - type: Speech
+    speechVerb: Default # for pais (In the secret stash)
+  - type: SecretStash
+    secretStashName: secret-stash-book
+    blacklist:
+      components:
+      - SecretStash 
+      - NukeDisk 
+      tags:
+      - QuantumSpinInverter 
+      - FakeNukeDisk 
+  - type: ToolOpenable
+    openToolQualityNeeded: Slicing
+    closeToolQualityNeeded: None # can't exactly un-cut a book
+    name: secret-stash-book
   - type: Tag
     tags:
     - Book
