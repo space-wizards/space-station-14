@@ -2213,4 +2213,4 @@
           amount: 0.15
         - !type:AdjustReagent # Why would you drink this?
           reagent: ZombieBlood
-          amount: 0.1
+          amount: 0.05
