@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added the biogenerator! Botany can use this machine to create various
-      materials, chemicals, and food items out of the
-    type: Add
-  id: 7311
-  time: '2024-09-08T05:34:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30694
 - author: TheShuEd
   changes:
   - message: Returned Taco microwave recipes (people were sad)
@@ -3938,3 +3930,11 @@
   id: 7810
   time: '2025-01-15T16:26:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34358
+- author: ArtisticRoomba
+  changes:
+  - message: Mime PDA item interactions (insertions/ejections of IDs, pens, etc.)
+      are now silent.
+    type: Tweak
+  id: 7811
+  time: '2025-01-15T18:03:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34426
