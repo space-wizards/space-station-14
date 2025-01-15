@@ -1,17 +1,14 @@
 - type: vendingMachineInventory
   id: WinterDrobeInventory
   startingInventory:
-    ClothingNeckScarfStripedBlack: 3
-    ClothingNeckScarfStripedBlue: 3
-    ClothingNeckScarfStripedBrown: 3
-    ClothingNeckScarfStripedGreen: 3
-    ClothingNeckScarfStripedLightBlue: 3
-    ClothingNeckScarfStripedLightOrange: 3
-    ClothingNeckScarfStripedOrange: 3
-    ClothingNeckScarfStripedPink: 3
-    ClothingNeckScarfStripedPurple: 3
     ClothingNeckScarfStripedRed: 3
-    ClothingNeckScarfStripedWhite: 3
+    ClothingNeckScarfStripedGreen: 3
+    ClothingNeckScarfStripedBlue: 3
+    ClothingNeckScarfStripedBlack: 3
+    ClothingNeckScarfStripedBrown: 3
+    ClothingNeckScarfStripedLightBlue: 3
+    ClothingNeckScarfStripedOrange: 3
+    ClothingNeckScarfStripedPurple: 3
     ClothingOuterCoatTrench: 6
     ClothingOuterWinterCoat: 6
     ClothingShoesBootsWinter: 6
@@ -21,6 +18,7 @@
     ClothingOuterCoatBomber: 3
     ClothingHeadHatSantahat: 2
     ClothingHeadHatXmasCrown: 2
+
   emaggedInventory:
     ClothingNeckScarfStripedSyndieGreen: 3
     ClothingNeckScarfStripedSyndieRed: 3
