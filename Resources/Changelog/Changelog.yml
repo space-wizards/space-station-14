@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: Reagents that make you flammable no longer extinguish you.
-    type: Fix
-  id: 7309
-  time: '2024-09-07T23:44:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31930
 - author: LucasTheDrgn
   changes:
   - message: Restored functionality to the Industrial Reagent Grinder
@@ -3937,3 +3930,10 @@
   id: 7808
   time: '2025-01-14T22:34:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34431
+- author: themias
+  changes:
+  - message: Fixed muzzles not working on some characters (e.g. dwarves)
+    type: Fix
+  id: 7809
+  time: '2025-01-15T00:10:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34419
