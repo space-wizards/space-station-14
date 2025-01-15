@@ -64,6 +64,8 @@
   parent: Multitool
   id: MultitoolAbductor
   components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/multitool.rsi
   - type: Tag
     tags:
       - Multitool
