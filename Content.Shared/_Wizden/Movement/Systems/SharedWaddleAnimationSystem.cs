@@ -44,7 +44,7 @@ public abstract class SharedWaddleAnimationSystem : EntitySystem
         // If the waddler is currently moving, make them start waddling
         if ((moverComponent.HeldMoveButtons & MoveButtons.AnyDirection) == MoveButtons.AnyDirection)
         {
-            StopWaddling(entity);
+            RaiseNetworkEvent(new StartedWaddlingEvent(GetNetEntity(entity.Owner)));
         }
     }
 
