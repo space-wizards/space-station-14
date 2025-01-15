@@ -6,7 +6,20 @@
     - type: SolutionContainerManager
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/seeds.rsi
-      state: seed
+      layers:
+      - state: seed
+      - state: paper
+        offset: "0.5,0.15"
+        visible: false
+        map: ["enum.PaperLabelVisuals.Layer"]
+        sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.PaperLabelVisuals.HasLabel:
+          enum.PaperLabelVisuals.Layer:
+            True: { visible: true }
+            False: { visible: false }
     - type: Item
       size: Tiny
     - type: StaticPrice
