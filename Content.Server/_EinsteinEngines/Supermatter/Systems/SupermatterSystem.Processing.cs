@@ -6,7 +6,6 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Sound.Components;
 using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Content.Shared._EinsteinEngines.Supermatter.Monitor;
-using Content.Shared.Anomaly.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;

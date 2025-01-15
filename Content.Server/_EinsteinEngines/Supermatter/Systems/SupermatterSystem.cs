@@ -1,3 +1,4 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Anomaly;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
@@ -15,6 +16,7 @@ using Content.Shared._EinsteinEngines.Supermatter.Monitor;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -26,6 +28,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -48,8 +51,8 @@ public sealed partial class SupermatterSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly ParacusiaSystem _paracusia = default!;
-    [Dependency] private readonly AnomalySystem _anomaly = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -125,6 +128,9 @@ public sealed partial class SupermatterSystem : EntitySystem
             || _container.IsEntityInContainer(uid))
             return;
 
+        if (sm.Power == 0)
+            LogFirstPower(uid, target);
+
         if (!HasComp<ProjectileComponent>(target))
         {
             var popup = "supermatter-collide";
@@ -133,6 +139,7 @@ public sealed partial class SupermatterSystem : EntitySystem
             {
                 popup = "supermatter-collide-mob";
                 EntityManager.SpawnEntity(sm.CollisionResultPrototype, Transform(target).Coordinates);
+                _chatManager.SendAdminAlert($"{EntityManager.ToPrettyString(uid):uid} has consumed {EntityManager.ToPrettyString(target):target}");
             }
 
             var targetProto = MetaData(target).EntityPrototype;
@@ -143,6 +150,7 @@ public sealed partial class SupermatterSystem : EntitySystem
             }
 
             sm.Power += args.OtherBody.Mass;
+            _adminLog.Add(LogType.EntityDelete, LogImpact.High, $"{EntityManager.ToPrettyString(target):target} collided with {EntityManager.ToPrettyString(uid):uid} at {Transform(uid).Coordinates:coordinates}");
         }
 
         EntityManager.QueueDeleteEntity(target);
@@ -168,12 +176,28 @@ public sealed partial class SupermatterSystem : EntitySystem
         if (HasComp<SupermatterImmuneComponent>(target))
             return;
 
-        sm.MatterPower += 200;
+        if (sm.Power == 0)
+            LogFirstPower(uid, target);
+
+        var power = 200f;
+        if (TryComp<PhysicsComponent>(target, out var physics))
+            power = physics.Mass;
+
+        sm.MatterPower += power;
 
         EntityManager.SpawnEntity(sm.CollisionResultPrototype, Transform(target).Coordinates);
         _popup.PopupEntity(Loc.GetString("supermatter-collide-mob", ("sm", uid), ("target", target)), uid, PopupType.LargeCaution);
         _audio.PlayPvs(sm.DustSound, uid);
+        _chatManager.SendAdminAlert($"{EntityManager.ToPrettyString(uid):uid} has consumed {EntityManager.ToPrettyString(target):target}");
+
         EntityManager.QueueDeleteEntity(target);
+        AddComp<SupermatterImmuneComponent>(target); // prevent spam or excess power production
+    }
+
+    private void LogFirstPower(EntityUid uid, EntityUid target)
+    {
+        _adminLog.Add(LogType.Unknown, LogImpact.Extreme, $"{EntityManager.ToPrettyString(uid):uid} was powered for the first time by {EntityManager.ToPrettyString(target):target} at {Transform(uid).Coordinates:coordinates}");
+        _chatManager.SendAdminAlert($"{EntityManager.ToPrettyString(uid):uid} was powered for the first time by {EntityManager.ToPrettyString(target):target}");
     }
 
     private void OnItemInteract(EntityUid uid, SupermatterComponent sm, ref InteractUsingEvent args)
