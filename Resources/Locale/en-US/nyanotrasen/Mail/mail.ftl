@@ -8,7 +8,7 @@ mail-desc-priority = The anti-tamper lock's [color=yellow]yellow priority tape[/
 mail-desc-priority-inactive = The anti-tamper lock's [color=#886600]yellow priority tape[/color] is inactive.
 mail-unlocked = Anti-tamper system unlocked.
 mail-unlocked-by-emag = Anti-tamper system *BZZT*.
-mail-unlocked-reward = Anti-tamper system unlocked. {$bounty} zorkmids have been added to cargo' account.
+mail-unlocked-reward = Anti-tamper system unlocked. {$bounty} spesos have been added to cargo' account.
 mail-penalty-lock = ANTI-TAMPER LOCK BROKEN. CARGO BANK ACCOUNT PENALIZED BY {$credits} SPESOS.
 mail-penalty-fragile = INTEGRITY COMPROMISED. CARGO BANK ACCOUNT PENALIZED BY {$credits} SPESOS.
 mail-penalty-expired = DELIVERY PAST DUE. CARGO BANK ACCOUNT PENALIZED BY {$credits} SPESOS.
