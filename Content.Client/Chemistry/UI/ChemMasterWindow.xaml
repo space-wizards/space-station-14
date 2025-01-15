@@ -42,13 +42,16 @@
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
                 </PanelContainer.PanelOverride>
-
-                <ScrollContainer HorizontalExpand="True" MinSize="0 200">
-                    <!-- Buffer reagent list -->
-                    <BoxContainer Name="BufferInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True">
-                        <Label Text="{Loc 'chem-master-window-buffer-empty-text'}" />
-                    </BoxContainer>
-                </ScrollContainer>
+                <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                    <!-- Search bar -->
+                    <LineEdit Name="FilterBar" PlaceHolder="{Loc 'chem-master-filter-placeholder'}" Margin="0 0 0 5" HorizontalExpand="True"/>
+                    <ScrollContainer HorizontalExpand="True" VerticalExpand="True" MinSize="0 200">
+                        <!-- Buffer reagent list -->
+                        <BoxContainer Name="BufferInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True">
+                            <Label Text="{Loc 'chem-master-window-buffer-empty-text'}" />
+                        </BoxContainer>
+                    </ScrollContainer>
+                </BoxContainer>
             </PanelContainer>
         </BoxContainer>
 
@@ -67,6 +70,7 @@
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
                     <!-- Initially empty, when server sends state data this will have container contents and fill volume.-->
+
                     <BoxContainer Name="OutputContainerInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True">
                         <Label Text="{Loc 'chem-master-window-no-container-loaded-text'}" />
                     </BoxContainer>
