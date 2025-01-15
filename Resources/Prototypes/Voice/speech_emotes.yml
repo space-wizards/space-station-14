@@ -33,7 +33,7 @@
   id: Laugh
   name: chat-emote-name-laugh
   category: Vocal
-  icon: _Impstation/Interface/Emotes/laugh.png #laugh
+  icon: _Impstation/Interface/Emotes/laugh.png #imp
   whitelist:
     components:
     - Vocal
