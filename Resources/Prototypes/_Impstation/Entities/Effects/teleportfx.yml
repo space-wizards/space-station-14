@@ -7,7 +7,7 @@
     lifetime: 0.5
   - type: Sprite
     layers:
-    - sprite: Structures\cargo_telepad.rsi
+    - sprite: _Impstation/Structures/cargo_telepad.rsi
       state: beam
       shader: unshaded
       netsync: false
