@@ -42,7 +42,7 @@
   name: Kardashev-Mosin
   parent: [BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponSniperMosin
-  description: A true relic, the Kardashev-Mosin has served in nearly every armed conflict since its creation 670 years ago. While manufacturing processes have changed, the design of the rifle remains virtually identical, whether used for hunting, sniping, or endless trench warfare.
+  description: A true relic, the Kardashev-Mosin is now 670 years old, and still sees widespread use. While its bolt-action design is best described as 'primative', its seen every war in recent memory, and is more than ready for another one.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi

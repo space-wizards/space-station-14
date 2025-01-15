@@ -138,7 +138,7 @@
   name: Enforcer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunEnforcer
-  description: The Enforcer was designed as a modern remake of the Kammerer design, featuring new polymer furniture and an extended magazine tube. It has yet to see mass production and as such is somewhat rare among security teams.
+  description: The Enforcer was designed as a modern remake of the Kammerer design, featuring new polymer furniture and an extended magazine tube.
 
   components:
   - type: Sprite
@@ -206,7 +206,6 @@
   name: sawn-off shotgun
   parent: WeaponShotgunSawn
   id: WeaponShotgunSawnEmpty
-  description: A classic break-action double-barrel shotgun with a hand-shortened barrel. Easier to conceal but far less accurate. Fits two 12 gauge shells.
   suffix: Empty
   components:
   - type: BallisticAmmoProvider
@@ -216,7 +215,7 @@
     node: shotgunsawn
     deconstructionTarget: null
 
-- type: entity # not obtainable in game
+- type: entity
   name: handmade pistol
   parent: [BaseWeaponShotgun, BaseMinorContraband]
   id: WeaponShotgunHandmade
@@ -240,7 +239,7 @@
   - type: StaticPrice
     price: 0
 
-- type: entity # part of planned pirate antag?
+- type: entity
   name: blunderbuss
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseMinorContraband]
   id: WeaponShotgunBlunderbuss

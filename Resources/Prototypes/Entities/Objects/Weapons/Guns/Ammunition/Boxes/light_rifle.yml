@@ -65,7 +65,7 @@
   parent: BaseMagazineBoxLightRifle
   id: MagazineBoxLightRiflePractice
   name: ammunition box (.308 rifle practice)
-  description: Cardboard box full of .308x1.53 rifle rounds, commonly used in aftermarket and Syndicate weapons. This one holds rubber-tipped practice rounds.
+  description: Cardboard box full of .308x1.53 rifle rounds, commonly used in aftermarket and Syndicate weapons. This one holds plastic-tipped practice rounds.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRiflePractice

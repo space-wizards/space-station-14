@@ -228,7 +228,7 @@
   name: WT550
   parent: [ BaseWeaponSubMachineGun, BaseRestrictedContraband ]
   id: WeaponSubMachineGunWt550
-  description: A truly unique firearm, the WT550 was created by NanoTrasen's Small Arms Division as an SMG fully controllable with one hand. It would likely have fully replaced the Drozd, but high manufacturing costs forced NT to scale back production. It contains an exotic internal recoil buffer and feeds from special 30-round top-mounted .38 magazines.
+  description: A truly unique firearm, the WT550 was created by NanoTrasen's Small Arms Division as an SMG fully controllable with one hand. Feeds from special 30-round top-mounted .38 magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi

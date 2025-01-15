@@ -44,7 +44,7 @@
   parent: BaseMagazineBoxPistol
   id: MagazineBoxPistolPractice
   name: ammunition box (.38 auto practice)
-  description: Cardboard box of .38x1.55 ammunition. This version contains blue rubber-tipped rounds for training.
+  description: Cardboard box of .38x1.55 ammunition. This version contains non-harmful rounds for training.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice

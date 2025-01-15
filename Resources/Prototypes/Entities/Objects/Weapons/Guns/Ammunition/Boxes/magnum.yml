@@ -28,7 +28,7 @@
   parent: BaseMagazineBoxMagnum
   id: MagazineBoxMagnum
   name: ammunition box (.44 magnum)
-  description: Cardboard box of .44x1.63 magnum rounds. This version contains standard FMJ rounds for a good mix of penetration and expansion.
+  description: Cardboard box of .44x1.63 magnum rounds. This version contains standard FMJ rounds for general use.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
@@ -43,7 +43,7 @@
   parent: BaseMagazineBoxMagnum
   id: MagazineBoxMagnumPractice
   name: ammunition box (.44 magnum practice)
-  description: Cardboard box of .44x1.63 magnum rounds. This version contains practice ammunition for practicing your quick draw.
+  description: Cardboard box of .44x1.63 magnum rounds. This version contains non-harmful ammunition for practicing your quick draw.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
