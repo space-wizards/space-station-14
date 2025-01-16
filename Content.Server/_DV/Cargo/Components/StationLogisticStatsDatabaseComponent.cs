@@ -1,5 +1,5 @@
+using Content.Shared._DV.CartridgeLoader.Cartridges;
 using Content.Shared.Cargo;
-using Content.Shared.CartridgeLoader.Cartridges;
 
 namespace Content.Server._DV.Cargo.Components;
 
@@ -10,5 +10,5 @@ namespace Content.Server._DV.Cargo.Components;
 public sealed partial class StationLogisticStatsComponent : Component
 {
     [DataField]
-    public MailStats Metrics { get; set; }
+    public MailStats Metrics;
 }

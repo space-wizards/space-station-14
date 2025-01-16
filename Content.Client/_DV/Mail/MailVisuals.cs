@@ -1,5 +1,4 @@
 using Content.Shared._DV.Mail;
-using Content.Shared.DeltaV.Mail;
 using Content.Shared.StatusIcon;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
@@ -26,9 +25,9 @@ namespace Content.Client._DV.Mail;
 /// </remarks>
 public sealed class MailJobVisualizerSystem : VisualizerSystem<MailComponent>
 {
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SpriteSystem _spriteSystem = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     protected override void OnAppearanceChange(EntityUid uid, MailComponent component, ref AppearanceChangeEvent args)
     {
@@ -40,13 +39,13 @@ public sealed class MailJobVisualizerSystem : VisualizerSystem<MailComponent>
         if (string.IsNullOrEmpty(job))
             job = "JobIconUnknown";
 
-        if (!_prototypeManager.TryIndex<JobIconPrototype>(job, out var icon))
+        if (!_proto.TryIndex<JobIconPrototype>(job, out var icon))
         {
-            args.Sprite.LayerSetTexture(MailVisualLayers.JobStamp, _spriteSystem.Frame0(_prototypeManager.Index("JobIconUnknown")));
+            args.Sprite.LayerSetTexture(MailVisualLayers.JobStamp, _sprite.Frame0(_proto.Index("JobIconUnknown")));
             return;
         }
 
-        args.Sprite.LayerSetTexture(MailVisualLayers.JobStamp, _spriteSystem.Frame0(icon.Icon));
+        args.Sprite.LayerSetTexture(MailVisualLayers.JobStamp, _sprite.Frame0(icon.Icon));
     }
 }
 

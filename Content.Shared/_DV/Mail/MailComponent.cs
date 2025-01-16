@@ -1,12 +1,11 @@
 using System.Threading;
-using Content.Shared.DeltaV.Mail;
 using Content.Shared.Storage;
 using Robust.Shared.Audio;
 
-namespace Content.Server._DV.Mail.Components
+namespace Content.Shared._DV.Mail
 {
     [RegisterComponent]
-    public sealed partial class MailComponent : SharedMailComponent
+    public sealed partial class MailComponent : Component
     {
         [DataField]
         public string Recipient = "None";
@@ -40,7 +39,7 @@ namespace Content.Server._DV.Mail.Components
         /// always be Fragile, despite its contents.
         /// </remarks>
         [DataField]
-        public bool IsFragile = false;
+        public bool IsFragile;
 
         /// <summary>
         /// Is this package considered priority mail?
@@ -56,21 +55,21 @@ namespace Content.Server._DV.Mail.Components
         /// always be Priority.
         /// </remarks>
         [DataField]
-        public bool IsPriority = false;
+        public bool IsPriority;
 
         // Frontier Mail Port: large mail
         /// <summary>
         /// Whether this parcel is large.
         /// </summary>
         [DataField]
-        public bool IsLarge = false;
+        public bool IsLarge;
         // End Frontier: large mail
 
         /// <summary>
         /// What will be packaged when the mail is spawned.
         /// </summary>
         [DataField]
-        public List<EntitySpawnEntry> Contents = new();
+        public List<EntitySpawnEntry> Contents = [];
 
         /// <summary>
         /// The amount that cargo will be awarded for delivering this mail.

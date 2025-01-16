@@ -1,13 +1,12 @@
 using System.Linq;
+using Content.Server._DV.Mail.Components;
 using Content.Server._DV.Mail.EntitySystems;
 using Content.Server.Administration;
+using Content.Shared._DV.Mail;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using MailComponent = Content.Server._DV.Mail.Components.MailComponent;
-using MailReceiverComponent = Content.Server._DV.Mail.Components.MailReceiverComponent;
-using MailTeleporterComponent = Content.Server._DV.Mail.Components.MailTeleporterComponent;
 
 namespace Content.Server._DV.Mail;
 

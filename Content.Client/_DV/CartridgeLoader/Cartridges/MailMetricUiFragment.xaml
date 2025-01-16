@@ -1,6 +1,5 @@
 <cartridges:MailMetricUiFragment
     xmlns:cartridges="clr-namespace:Content.Client._DV.CartridgeLoader.Cartridges"
-    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns="https://spacestation14.io"
     Margin="5"

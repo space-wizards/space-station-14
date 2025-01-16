@@ -1,25 +1,25 @@
+using Content.Server._DV.Cargo.Components;
 using Content.Shared.Cargo;
 using JetBrains.Annotations;
-using StationLogisticStatsComponent = Content.Server._DV.Cargo.Components.StationLogisticStatsComponent;
 
 namespace Content.Server._DV.Cargo.Systems;
 
-public sealed partial class LogisticStatsSystem : SharedCargoSystem
+public sealed class LogisticStatsSystem : SharedCargoSystem
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
 
     [PublicAPI]
-    public void AddOpenedMailEarnings(EntityUid uid, StationLogisticStatsComponent component, int earnedMoney)
+    public void AddOpenedMailEarnings(Entity<StationLogisticStatsComponent?> ent, int earnedMoney)
     {
-        component.Metrics = component.Metrics with
+        if (ent.Comp != null)
         {
-            Earnings = component.Metrics.Earnings + earnedMoney,
-            OpenedCount = component.Metrics.OpenedCount + 1
-        };
-        UpdateLogisticsStats(uid);
+            ent.Comp.Metrics = ent.Comp.Metrics with
+            {
+                Earnings = ent.Comp.Metrics.Earnings + earnedMoney,
+                OpenedCount = ent.Comp.Metrics.OpenedCount + 1
+            };
+        }
+
+        UpdateLogisticsStats(ent);
     }
 
     [PublicAPI]
@@ -55,7 +55,11 @@ public sealed partial class LogisticStatsSystem : SharedCargoSystem
         UpdateLogisticsStats(uid);
     }
 
-    private void UpdateLogisticsStats(EntityUid uid) => RaiseLocalEvent(new LogisticStatsUpdatedEvent(uid));
+    private void UpdateLogisticsStats(EntityUid uid)
+    {
+        var ev = new LogisticStatsUpdatedEvent(uid);
+        RaiseLocalEvent(ev);
+    }
 }
 
 public sealed class LogisticStatsUpdatedEvent : EntityEventArgs

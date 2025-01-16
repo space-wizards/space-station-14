@@ -1,28 +1,30 @@
+using Content.Server._DV.Cargo.Components;
 using Content.Server._DV.Cargo.Systems;
+using Content.Server._DV.Mail.Components;
 using Content.Server.CartridgeLoader;
 using Content.Server.Station.Systems;
+using Content.Shared._DV.CartridgeLoader.Cartridges;
+using Content.Shared._DV.Mail;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
-using MailComponent = Content.Server._DV.Mail.Components.MailComponent;
-using StationLogisticStatsComponent = Content.Server._DV.Cargo.Components.StationLogisticStatsComponent;
 
 namespace Content.Server._DV.CartridgeLoader.Cartridges;
 
 public sealed class MailMetricsCartridgeSystem : EntitySystem
 {
-    [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoader = default!;
+    [Dependency] private readonly CartridgeLoaderSystem _cartridge = default!;
     [Dependency] private readonly StationSystem _station = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<_DV.CartridgeLoader.Cartridges.MailMetricsCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
+        SubscribeLocalEvent<MailMetricsCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
         SubscribeLocalEvent<LogisticStatsUpdatedEvent>(OnLogisticsStatsUpdated);
         SubscribeLocalEvent<MailComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnUiReady(Entity<_DV.CartridgeLoader.Cartridges.MailMetricsCartridgeComponent> ent, ref CartridgeUiReadyEvent args)
+    private void OnUiReady(Entity<MailMetricsCartridgeComponent> ent, ref CartridgeUiReadyEvent args)
     {
         UpdateUI(ent, args.Loader);
     }
@@ -32,15 +34,15 @@ public sealed class MailMetricsCartridgeSystem : EntitySystem
         UpdateAllCartridges(args.Station);
     }
 
-    private void OnMapInit(EntityUid uid, MailComponent mail, MapInitEvent args)
+    private void OnMapInit(Entity<MailComponent> ent, ref MapInitEvent args)
     {
-        if (_station.GetOwningStation(uid) is { } station)
+        if (_station.GetOwningStation(ent) is { } station)
             UpdateAllCartridges(station);
     }
 
     private void UpdateAllCartridges(EntityUid station)
     {
-        var query = EntityQueryEnumerator<_DV.CartridgeLoader.Cartridges.MailMetricsCartridgeComponent, CartridgeComponent>();
+        var query = EntityQueryEnumerator<MailMetricsCartridgeComponent, CartridgeComponent>();
         while (query.MoveNext(out var uid, out var comp, out var cartridge))
         {
             if (cartridge.LoaderUid is not { } loader || comp.Station != station)
@@ -49,7 +51,7 @@ public sealed class MailMetricsCartridgeSystem : EntitySystem
         }
     }
 
-    private void UpdateUI(Entity<_DV.CartridgeLoader.Cartridges.MailMetricsCartridgeComponent> ent, EntityUid loader)
+    private void UpdateUI(Entity<MailMetricsCartridgeComponent> ent, EntityUid loader)
     {
         if (_station.GetOwningStation(loader) is { } station)
             ent.Comp.Station = station;
@@ -62,7 +64,7 @@ public sealed class MailMetricsCartridgeSystem : EntitySystem
 
         // Send logistic stats to cartridge client
         var state = new MailMetricUiState(logiStats.Metrics, unopenedMailCount);
-        _cartridgeLoader.UpdateCartridgeUiState(loader, state);
+        _cartridge.UpdateCartridgeUiState(loader, state);
     }
 
 

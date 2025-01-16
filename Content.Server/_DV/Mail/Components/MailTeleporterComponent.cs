@@ -33,7 +33,7 @@ namespace Content.Server._DV.Mail.Components
         /// teleporter can deliver.
         /// </summary>
         [DataField]
-        public string MailPool = "RandomDeltaVMailDeliveryPool"; // Frontier / DeltaV: Mail rework
+        public EntProtoId MailPool = "RandomDeltaVMailDeliveryPool"; // Frontier / DeltaV: Mail rework
 
         /// <summary>
         /// How many mail candidates do we need per actual delivery sent when
