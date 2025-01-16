@@ -695,5 +695,31 @@ Entries:
   id: 86
   time: '2025-01-12T19:41:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33339
+- author: PJB3005
+  changes:
+  - message: Deadmin status is now synchronized to database, making it persistent
+      across server restarts and between multiple game servers.
+    type: Tweak
+  - message: Admins can now be suspended via the permissions panel. This effectively
+      removes their admin status without completely deleting their record.
+    type: Add
+  id: 87
+  time: '2025-01-14T23:46:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34048
+- author: Palladinium
+  changes:
+  - message: Added Discord relay notifications when a watchlisted player connects.
+    type: Add
+  id: 88
+  time: '2025-01-15T00:32:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33483
+- author: Myra
+  changes:
+  - message: Admins are by default now hidden from the reported player count on the
+      launcher.
+    type: Add
+  id: 89
+  time: '2025-01-15T21:10:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34406
 Name: Admin
 Order: 1

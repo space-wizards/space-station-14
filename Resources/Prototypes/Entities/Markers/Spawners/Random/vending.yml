@@ -11,26 +11,27 @@
       state: any
   - type: RandomSpawner
     prototypes:
+    - VendingMachineChang
     - VendingMachineCigs
     - VendingMachineCoffee
-    - VendingMachineCola
-    - VendingMachineColaRed
-    - VendingMachineColaBlack
+    - VendingMachineCola #Robust Sofdrinks
+    - VendingMachineColaBlack #Robust Sofdrinks [Black]
+    - VendingMachineColaRed #Space Cola
     - VendingMachineDiscount
+    - VendingMachineDonut
+    - VendingMachineDrGibb
+    - VendingMachinePwrGame
+    - VendingMachineShamblersJuice
+    - VendingMachineSmite
     - VendingMachineSnack
     - VendingMachineSnackBlue
     - VendingMachineSnackGreen
     - VendingMachineSnackOrange
     - VendingMachineSnackTeal
-    - VendingMachineSovietSoda
-    - VendingMachineChang
-    - VendingMachineDonut
-    - VendingMachineShamblersJuice
-    - VendingMachinePwrGame
-    - VendingMachineDrGibb
-    - VendingMachineSoda
-    - VendingMachineStarkist
+    - VendingMachineSoda #Robust Sofdrinks [Soda]
+    - VendingMachineSovietSoda #Boda
     - VendingMachineSpaceUp
+    - VendingMachineStarkist
     chance: 1
 
 
