@@ -140,7 +140,7 @@
   metamorphicSprite:
     sprite: _Impstation/Objects/Consumable/Drinks/moscowmule.rsi
     state: icon_empty
-  metamorphicMaxFillLevels: 5
+  metamorphicMaxFillLevels: 1
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
   metabolisms:
