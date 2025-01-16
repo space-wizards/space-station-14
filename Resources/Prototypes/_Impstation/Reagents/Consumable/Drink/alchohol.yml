@@ -133,7 +133,7 @@
   id: MoscowMule
   name: reagent-name-moscowmule
   parent: BaseAlcohol
-  desc: reagent-desc-gatorwine
+  desc: reagent-desc-moscowmule
   physicalDesc: reagent-physical-desc-bubbly
   flavor: moscowmule
   color: "#fef9e7"
