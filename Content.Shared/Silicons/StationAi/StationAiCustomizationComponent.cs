@@ -48,6 +48,6 @@ public enum StationAiCustomizationUiKey : byte
 [Serializable, NetSerializable]
 public enum StationAiCustomizationType : byte
 {
-    Core,
+    CoreIconography,
     Hologram,
 }

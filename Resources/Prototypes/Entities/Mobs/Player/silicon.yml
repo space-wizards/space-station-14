@@ -435,8 +435,9 @@
     mindRole: "MindRoleSiliconBrain"
     silent: true
   - type: StationAiCustomization
-    stationAiCoreLayerData: StationAiIconSmiley
-    stationAiHologramLayerData: StationAiHologramDog
+    protoIds:
+      StationAiCoreIconography: StationAiIconAi
+      StationAiHolograms: StationAiHologramFemale
 
 # Hologram projection that the AI's eye tracks.
 - type: entity

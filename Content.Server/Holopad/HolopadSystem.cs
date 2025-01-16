@@ -20,7 +20,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Linq;
-using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
 namespace Content.Server.Holopad;
 
@@ -49,6 +48,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
     private HashSet<EntityUid> _recentlyUpdatedHolograms = new();
 
     private ProtoId<StationAiCustomizationPrototype> _stationAiDefaultCustomizationProto = "StationAiHologramFace";
+    private ProtoId<StationAiCustomizationGroupPrototype> _stationAiCoreCustomizationGroupProto = "StationAiHolograms";
 
     public override void Initialize()
     {
@@ -577,11 +577,11 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         if (TryComp<StationAiCustomizationComponent>(user, out var stationAiCustomization))
         {
-            if (!stationAiCustomization.ProtoIds.TryGetValue(StationAiCustomizationType.Hologram, out var protoId))
+            if (!stationAiCustomization.ProtoIds.TryGetValue(_stationAiCoreCustomizationGroupProto, out var protoId))
                 protoId = _stationAiDefaultCustomizationProto;
 
             if (_protoManager.TryIndex(protoId, out var proto) &&
-                proto.LayerData.TryGetValue(StationAiState.Hologram, out var layerData) &&
+                proto.LayerData.TryGetValue(StationAiState.Hologram.ToString(), out var layerData) &&
                 layerData != null)
             {
                 SyncHolopadUserWithLinkedHolograms((user, holopadUser), [layerData]);

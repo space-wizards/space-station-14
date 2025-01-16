@@ -38,10 +38,8 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
 
         foreach (var groupPrototype in groupPrototypes)
         {
-            var protoIds = groupPrototype.Prototypes.OrderBy(x => x.Id).ToList();
-
-            _groupContainers[groupPrototype] = new StationAiCustomizationGroupContainer(protoIds, groupPrototype.Category, groupPrototype.PreviewKey, _protoManager);
-            CustomizationGroupsContainer.AddTab(_groupContainers[groupPrototype], groupPrototype.Name);
+            _groupContainers[groupPrototype] = new StationAiCustomizationGroupContainer(groupPrototype, _protoManager);
+            CustomizationGroupsContainer.AddTab(_groupContainers[groupPrototype], Loc.GetString(groupPrototype.Name));
         }
     }
 
@@ -71,36 +69,32 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
                     if (child is not StationAiCustomizationEntryContainer entry)
                         continue;
 
-                    entry.SelectButton.Pressed = (entry.Prototype.ID == protoId);
+                    entry.SelectButton.Pressed = (entry.ProtoId == protoId);
                 }
             }
         }
     }
 
     public void OnSendStationAiCustomizationMessage
-        (ProtoId<StationAiCustomizationGroupPrototype> groupProtoId, ProtoId<StationAiCustomizationGroupPrototype> customizationProtoId)
+        (ProtoId<StationAiCustomizationGroupPrototype> groupProtoId, ProtoId<StationAiCustomizationPrototype> customizationProtoId)
     {
         SendStationAiCustomizationMessageAction?.Invoke(groupProtoId, customizationProtoId);
     }
 
     private sealed class StationAiCustomizationGroupContainer : BoxContainer
     {
-        public StationAiCustomizationGroupContainer
-            (List<ProtoId<StationAiCustomizationPrototype>> protoIds, StationAiCustomizationType category, string key, IPrototypeManager protoManager)
+        public StationAiCustomizationGroupContainer(StationAiCustomizationGroupPrototype groupPrototype, IPrototypeManager protoManager)
         {
             Orientation = LayoutOrientation.Vertical;
             HorizontalExpand = true;
             VerticalExpand = true;
 
-            foreach (var protoId in protoIds)
+            foreach (var protoId in groupPrototype.ProtoIds)
             {
                 if (!protoManager.TryIndex(protoId, out var prototype))
                     continue;
 
-                var rsiPath = prototype.LayerData[key].RsiPath;
-                var rsiState = prototype.LayerData[key].State;
-
-                var entry = new StationAiCustomizationEntryContainer(prototype, category, rsiPath, rsiState);
+                var entry = new StationAiCustomizationEntryContainer(groupPrototype, prototype);
                 AddChild(entry);
             }
         }
@@ -108,12 +102,12 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
 
     private sealed class StationAiCustomizationEntryContainer : BoxContainer
     {
-        public StationAiCustomizationPrototype Prototype;
+        public ProtoId<StationAiCustomizationPrototype> ProtoId;
         public Button SelectButton;
 
-        public StationAiCustomizationEntryContainer(StationAiCustomizationPrototype prototype, StationAiCustomizationType category, string? rsiPath, string? rsiState)
+        public StationAiCustomizationEntryContainer(StationAiCustomizationGroupPrototype groupPrototype, StationAiCustomizationPrototype prototype)
         {
-            Prototype = prototype;
+            ProtoId = prototype;
 
             Orientation = LayoutOrientation.Horizontal;
             HorizontalExpand = true;
@@ -148,7 +142,7 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
                 while (parent != null && parent is not StationAiCustomizationMenu)
                     parent = parent.Parent;
 
-                (parent as StationAiCustomizationMenu)?.OnSendStationAiCustomizationMessage(prototype, category);
+                (parent as StationAiCustomizationMenu)?.OnSendStationAiCustomizationMessage(groupPrototype, prototype);
             };
 
             AddChild(SelectButton);
@@ -161,6 +155,9 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
                 SetHeight = 56,
                 Margin = new Thickness(10f, 2f)
             };
+
+            var rsiPath = prototype.LayerData[groupPrototype.PreviewKey].RsiPath;
+            var rsiState = prototype.LayerData[groupPrototype.PreviewKey].State;
 
             if (rsiPath != null && rsiState != null)
             {

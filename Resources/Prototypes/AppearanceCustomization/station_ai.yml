@@ -1,3 +1,30 @@
+# Groups
+- type: stationAiCustomizationGroup
+  id: StationAiCoreIconography
+  name: station-ai-customization-core
+  category: CoreIconography
+  previewKey: Occupied
+  protoIds:
+  - StationAiIconAi
+  - StationAiIconAngel
+  - StationAiIconBliss
+  - StationAiIconClown
+  - StationAiIconDorf
+  - StationAiIconHeartline
+  - StationAiIconSmiley
+  
+- type: stationAiCustomizationGroup
+  id: StationAiHolograms
+  name: station-ai-customization-hologram
+  category: Hologram
+  previewKey: Hologram
+  protoIds:
+  - StationAiHologramFemale
+  - StationAiHologramMale
+  - StationAiHologramFace
+  - StationAiHologramCat
+  - StationAiHologramDog
+
 # Iconography
 - type: stationAiCustomization
   id: StationAiIconAi
@@ -80,7 +107,6 @@
 - type: stationAiCustomization
   id: StationAiHologramFemale
   name: station-ai-hologram-female
-  category: Hologram
   layerData:
     Hologram:
       sprite: Mobs/Silicon/holograms.rsi
@@ -89,7 +115,6 @@
 - type: stationAiCustomization
   id: StationAiHologramMale
   name: station-ai-hologram-male
-  category: Hologram
   layerData:
     Hologram:
       sprite: Mobs/Silicon/holograms.rsi
@@ -98,7 +123,6 @@
 - type: stationAiCustomization
   id: StationAiHologramFace
   name: station-ai-hologram-face
-  category: Hologram
   layerData:
     Hologram:
       sprite: Mobs/Silicon/holograms.rsi
@@ -107,7 +131,6 @@
 - type: stationAiCustomization
   id: StationAiHologramCat
   name: station-ai-hologram-cat
-  category: Hologram
   layerData:
     Hologram:
       sprite: Mobs/Silicon/holograms.rsi

@@ -75,6 +75,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     private const float MaxVisionMultiplier = 5f;
 
     private ProtoId<StationAiCustomizationPrototype> _stationAiDefaultCustomizationProto = "StationAiIconAi";
+    private ProtoId<StationAiCustomizationGroupPrototype> _stationAiCoreCustomizationGroupProto = "StationAiCoreIconography";
 
     public override void Initialize()
     {
@@ -145,7 +146,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnStationAiCustomization(Entity<StationAiCoreComponent> ent, ref StationAiCustomizationMessage args)
     {
-        if (!_protoManager.HasIndex(args.ProtoId))
+        if (!_protoManager.HasIndex(args.GroupProtoId) || !_protoManager.HasIndex(args.CustomizationProtoId))
             return;
 
         if (!TryGetInsertedAI(ent, out var insertedAI))
@@ -154,12 +155,12 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (!TryComp<StationAiCustomizationComponent>(insertedAI, out var stationAiCustomization))
             return;
 
-        if (!stationAiCustomization.ProtoIds.TryGetValue(args.Category, out var protoId) || protoId == args.ProtoId)
+        if (stationAiCustomization.ProtoIds.TryGetValue(args.GroupProtoId, out var protoId) && protoId == args.CustomizationProtoId)
             return;
 
-        stationAiCustomization.ProtoIds[args.Category] = args.ProtoId;
+        stationAiCustomization.ProtoIds[args.GroupProtoId] = args.CustomizationProtoId;
 
-        Dirty(ent);
+        Dirty(insertedAI.Value, stationAiCustomization);
 
         if (!TryComp<StationAiHolderComponent>(ent, out var stationAiHolder))
             return;
@@ -546,10 +547,10 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             return;
         }
 
-        if (!stationAiCustomization.ProtoIds.TryGetValue(StationAiCustomizationType.Core, out var protoId))
+        if (!stationAiCustomization.ProtoIds.TryGetValue(_stationAiCoreCustomizationGroupProto, out var protoId))
             protoId = _stationAiDefaultCustomizationProto;
 
-        if (!_protoManager.TryIndex(protoId, out var proto) || !proto.LayerData.TryGetValue(visualState, out var layerData))
+        if (!_protoManager.TryIndex(protoId, out var proto) || !proto.LayerData.TryGetValue(visualState.ToString(), out var layerData))
         {
             _appearance.RemoveData(entity.Owner, StationAiVisualState.Key);
             return;

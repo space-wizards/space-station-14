@@ -21,7 +21,7 @@ public sealed partial class StationAiCustomizationGroupPrototype : IPrototype
     /// The type of customization that is associated with this group.
     /// </summary>
     [DataField]
-    public StationAiCustomizationType Category = StationAiCustomizationType.Core;
+    public StationAiCustomizationType Category = StationAiCustomizationType.CoreIconography;
 
     /// <summary>
     /// Key used to index the prototype layer data and extract a preview of the customization (for menus, etc)
@@ -33,5 +33,5 @@ public sealed partial class StationAiCustomizationGroupPrototype : IPrototype
     /// The list of prototypes associated with the customization group
     /// </summary>
     [DataField(required: true)]
-    public List<ProtoId<StationAiCustomizationPrototype>> Prototypes = new();
+    public List<ProtoId<StationAiCustomizationPrototype>> ProtoIds = new();
 }
