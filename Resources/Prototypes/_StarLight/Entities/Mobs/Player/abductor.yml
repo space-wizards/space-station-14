@@ -68,7 +68,7 @@
     rules: abductors-ghost-role-rules
     raffle:
       settings: default
-  - type: AbductorScientistComponent
+  - type: AbductorScientist
   - type: ActionGrant
     actions:
     - ActionReturnToShip
@@ -112,10 +112,10 @@
     outerClothing: ClothingOuterArmorAbductor
   inhand:
   - Wonderprod
-
+        
 - type: entity
-  name: lone abductor spawner
-  id: SpawnPointLoneAbductor
+  name: abductor agent spawner
+  id: SpawnPointAbductorAgent
   parent: MarkerBase
   components:
   - type: SpawnPoint
@@ -127,11 +127,14 @@
         state: radiation
         
 - type: entity
-  name: abductor agent spawner
-  id: SpawnPointAbductorAgent
-  parent: MarkerBase
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: AbductorAgentSpawner
   components:
-  - type: SpawnPoint
+  - type: GhostRole
+    name: abductors-ghost-role-name
+    description: abductors-ghost-role-desc
+    rules: abductors-ghost-role-rules
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -151,11 +154,11 @@
       - state: green
       - sprite: Structures/Wallmounts/signs.rsi
         state: radiation
-
+        
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner
-  id: LoneAbductorSpawner
+  id: AbductorScientistSpawner
   components:
   - type: GhostRole
     name: abductors-ghost-role-name
