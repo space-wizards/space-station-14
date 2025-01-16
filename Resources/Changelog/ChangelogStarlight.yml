@@ -2316,3 +2316,17 @@ Entries:
   id: 325
   time: '2025-01-16T16:19:52.408625+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/238
+- author: Rinary
+  changes:
+  - message: Added abductor dispencer.
+    type: Add
+  id: 326
+  time: '2025-01-16T19:32:48.509022+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Removed trash items from abductor shuttle.
+    type: Remove
+  id: 327
+  time: '2025-01-16T19:33:08.826765+00:00'
+  url: 'null'

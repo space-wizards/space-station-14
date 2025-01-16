@@ -18,6 +18,7 @@ public sealed class AbductorConsoleBuiState : BoundUserInterfaceState
     public string? VictimName { get; init; }
     public bool AlienPadFound { get; init; }
     public bool ExperimentatorFound { get; init; }
+    public bool DispencerFound { get; init; }
     public bool ArmorFound { get; init; }
     public bool ArmorLocked { get; init; }
 }

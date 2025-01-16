@@ -1,5 +1,5 @@
 ﻿- type: entity
-  name: lone abductor
+  name: abductor
   parent: BaseMobAbductor
   id: MobAbductor
   components:
@@ -9,28 +9,6 @@
       - Abductor
       - AbductorScientist
       - CanPilot
-
-- type: entity
-  name: lone abductor
-  parent: MobAbductor
-  id: MobLoneAbductor
-  components:
-  - type: AntagObjectives
-    objectives:
-    - StealResearchObjective
-  - type: GhostRole
-    name: abductors-ghost-role-name
-    description: abductors-ghost-role-desc
-    rules: abductors-ghost-role-rules
-    raffle:
-      settings: default
-  - type: AbductorScientist
-  - type: ActionGrant
-    actions:
-    - ActionReturnToShip
-  - type: Loadout
-    prototypes:
-      - LoneAbductorGear
       
 - type: entity
   name: abductor scientist
@@ -75,20 +53,6 @@
   - type: Loadout
     prototypes:
       - AbductorAgentGear
-
-- type: startingGear
-  id: LoneAbductorGear
-  equipment:
-    head: ClothingHeadHelmetAbductor
-    ears: ClothingHeadsetAltAbductor
-    jumpsuit: ClothingUniformJumpsuitAbductor
-    gloves: ClothingHandsGlovesCombat
-    shoes: ClothingShoesBootsCombat
-    pocket1: AbductorGizmo
-    pocket2: WeaponAlien
-    belt: ClothingAbductorBeltFilled
-  inhand:
-  - Wonderprod
   
 - type: startingGear
   id: AbductorScientistGear

@@ -14,6 +14,7 @@
         <ScrollContainer VScrollEnabled="True" HorizontalExpand="True" VerticalExpand="True">
             <BoxContainer Name="TeleportTab" Access="Public" Orientation="Vertical" Visible="False">
                 <RichTextLabel Name="PadLabel" Access="Public"/>
+                <RichTextLabel Name="DispencerLabel" Access="Public"/>
                 <RichTextLabel Name="TargetLabel" Access="Public" />
                 <Button Name="TeleportButton" Access="Public" Text="{Loc 'abductors-ui-attract'}" HorizontalExpand="True" StyleClasses="OpenBoth" />
             </BoxContainer>

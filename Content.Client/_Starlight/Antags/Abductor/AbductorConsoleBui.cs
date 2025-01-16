@@ -90,6 +90,10 @@ public sealed class AbductorConsoleBui : BoundUserInterface
         var padMsg = new FormattedMessage();
         padMsg.AddMarkupOrThrow(state.AlienPadFound ? "pad: [color=green]connected[/color]" : "pad: [color=red]not found[/color]");
         _window.PadLabel.SetMessage(padMsg);
+        
+        var dispencerMsg = new FormattedMessage();
+        dispencerMsg.AddMarkupOrThrow(state.DispencerFound ? "dispencer: [color=green]connected[/color]" : "dispencer: [color=red]not found[/color]");
+        _window.DispencerLabel.SetMessage(dispencerMsg);
 
         var msg = new FormattedMessage();
         msg.AddMarkupOrThrow(state.Target == null ? "target: [color=red]NONE[/color]" : $"target: [color=green]{state.TargetName}[/color]");

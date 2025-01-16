@@ -1,16 +1,19 @@
-using Content.Shared.Starlight.Antags.Abductor;
-using Content.Shared.Starlight.ItemSwitch;
-using Content.Shared.Interaction.Components;
-using Content.Shared.UserInterface;
-using System.Linq;
-using Content.Shared.DoAfter;
-using Content.Shared.Starlight.Medical.Surgery;
-using Robust.Shared.Spawners;
-using Content.Shared.Objectives.Components;
 using Content.Server.Objectives.Systems;
+using Content.Shared.DoAfter;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mind;
 using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Objectives.Components;
+using Content.Shared.Prototypes;
+using Content.Shared.Starlight.Antags.Abductor;
+using Content.Shared.Starlight.ItemSwitch;
+using Content.Shared.Starlight.Medical.Surgery;
+using Content.Shared.UserInterface;
+using Robust.Shared.Random;
+using Robust.Shared.Spawners;
+using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Starlight.Antags.Abductor;
 
@@ -18,6 +21,8 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 {
     [Dependency] private readonly NumberObjectiveSystem _number = default!;
     [Dependency] private readonly SharedItemSwitchSystem _itemSwitch = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public void InitializeConsole()
     {
@@ -82,7 +87,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
     private void OnAttractBuiMsg(Entity<AbductorConsoleComponent> ent, ref AbductorAttractBuiMsg args)
     {
-        if (ent.Comp.Target == null || ent.Comp.AlienPod == null) return;
+        if (ent.Comp.Target == null || ent.Comp.AlienPod == null || ent.Comp.Dispencer == null) return;
         var target = GetEntity(ent.Comp.Target.Value);
         EnsureComp<TransformComponent>(target, out var xform);
         var effectEnt = SpawnAttachedTo(_teleportationEffectEntity, xform.Coordinates);
@@ -90,15 +95,16 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         EnsureComp<TimedDespawnComponent>(effectEnt, out var despawnEffectEntComp);
         despawnEffectEntComp.Lifetime = 3.0f;
         _audioSystem.PlayPvs("/Audio/_Starlight/Misc/alien_teleport.ogg", effectEnt);
-
+        
         var telepad = GetEntity(ent.Comp.AlienPod.Value);
         var telepadXform = EnsureComp<TransformComponent>(telepad);
+        var dispencerXform = EnsureComp<TransformComponent>(GetEntity(ent.Comp.Dispencer.Value));
         var effect = _entityManager.SpawnEntity(_teleportationEffect, telepadXform.Coordinates);
         EnsureComp<TimedDespawnComponent>(effect, out var despawnComp);
         despawnComp.Lifetime = 3.0f;
         _audioSystem.PlayPvs("/Audio/_Starlight/Misc/alien_teleport.ogg", effect);
 
-        var @event = new AbductorAttractDoAfterEvent(GetNetCoordinates(telepadXform.Coordinates), GetNetEntity(target));
+        var @event = new AbductorAttractDoAfterEvent(GetNetCoordinates(telepadXform.Coordinates), GetNetEntity(target), GetNetCoordinates(dispencerXform.Coordinates));
         ent.Comp.Target = null;
         var doAfter = new DoAfterArgs(EntityManager, args.Actor, TimeSpan.FromSeconds(3), @event, args.Actor)
         {
@@ -128,6 +134,14 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             if (!TryComp<PullableComponent>(victim, out var pullableComp)
                 || !_pullingSystem.TryStopPull(victim, pullableComp)) return;
         }
+        
+        var organPrototypes = _prototypeManager.EnumeratePrototypes<EntityPrototype>()
+            .Where(p => p.HasComponent<AbductorOrganComponent>()) 
+            .Select(p => p.ID.ToString())
+            .Order()
+            .ToList();
+        Spawn(_random.Pick(organPrototypes), GetCoordinates(args.Dispencer));
+        
         _xformSys.SetCoordinates(victim, GetCoordinates(args.TargetCoordinates));
     }
     private void OnBeforeActivatableUIOpen(Entity<AbductorConsoleComponent> ent, ref BeforeActivatableUIOpenEvent args) => UpdateGui(ent.Comp.Target, ent);
@@ -156,6 +170,15 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             if (experimentator != default)
                 computer.Comp.Experimentator = GetNetEntity(experimentator);
         }
+        
+        if (computer.Comp.Dispencer == null)
+        {
+            var xform = EnsureComp<TransformComponent>(computer.Owner);
+            var dispencer = _entityLookup.GetEntitiesInRange<AbductorDispencerComponent>(xform.Coordinates, 4, LookupFlags.Approximate | LookupFlags.Dynamic)
+                .FirstOrDefault().Owner;
+            if (dispencer != default)
+                computer.Comp.Dispencer = GetNetEntity(dispencer);
+        }
 
         if (computer.Comp.Experimentator != null
             && GetEntity(computer.Comp.Experimentator) is EntityUid experimentatorId
@@ -179,6 +202,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             VictimName = victimName,
             AlienPadFound = computer.Comp.AlienPod != default,
             ExperimentatorFound = computer.Comp.Experimentator != default,
+            DispencerFound = computer.Comp.Dispencer != default,
             ArmorFound = computer.Comp.Armor != default,
             ArmorLocked = armorLock
         });

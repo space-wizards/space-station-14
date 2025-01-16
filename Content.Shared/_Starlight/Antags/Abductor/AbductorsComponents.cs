@@ -29,6 +29,9 @@ public sealed partial class AbductorConsoleComponent : Component
     public NetEntity? Experimentator;
     
     [DataField, AutoNetworkedField]
+    public NetEntity? Dispencer;
+    
+    [DataField, AutoNetworkedField]
     public NetEntity? Armor;
 }
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem))]
@@ -43,6 +46,10 @@ public sealed partial class AbductorExperimentatorComponent : Component
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string ContainerId = "storage";
+}
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem))]
+public sealed partial class AbductorDispencerComponent : Component
+{
 }
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem)), AutoGenerateComponentState]
