@@ -15,23 +15,20 @@ public sealed partial class DamageOnSlipComponent : Component
     /// Chance the clothing will be damaged when slipped
     /// </summary>
     [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
     public float DamageChance = 0.01f;
 
     /// <summary>
     /// Damage per instance of unlucky slip
     /// </summary>
     [DataField(required: true)]
-    [ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier Damage;
 
     /// <summary>
     /// Damage multiplier maximum
     /// </summary>
     /// <remarks>
-    /// Will multiply the damage specifier by a random integer from 1 to maximum (non inclusive)
+    /// Will multiply the damage specifier by a random float from 1 to maximum (non inclusive)
     /// </remarks>
     [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public int? MultiplierMax;
+    public float? MultiplierMax;
 }

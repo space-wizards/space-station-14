@@ -81,7 +81,7 @@
     damageChance: 0.01
     damage:
       types:
-        Blunt: 5
+        Blunt: 4
     multiplierMax: 3
   - type: Damageable
     damageContainer: Inorganic

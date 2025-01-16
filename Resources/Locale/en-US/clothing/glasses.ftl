@@ -1,1 +1,1 @@
-﻿clothing-glasses-shatter = The glasses shatter
+﻿clothing-glasses-shatter = The glasses shatter.

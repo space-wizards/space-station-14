@@ -15,6 +15,8 @@ public sealed class BreakOnSlipSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<DamageOnSlipComponent, InventoryRelayedEvent<SlippedEvent>>(OnSlip);
     }
 
@@ -28,7 +30,7 @@ public sealed class BreakOnSlipSystem : EntitySystem
         }
         else
         {
-            var damage = ent.Comp.Damage * _random.Next(1, ent.Comp.MultiplierMax.Value);
+            var damage = ent.Comp.Damage * _random.NextFloat(1, ent.Comp.MultiplierMax.Value);
             _damageableSystem.TryChangeDamage(ent.Owner, damage);
         }
 
