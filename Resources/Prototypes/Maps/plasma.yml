@@ -2,7 +2,8 @@
   id: Plasma
   mapName: 'Plasma'
   mapPath: /Maps/plasma.yml
-  minPlayers: 30
+  minPlayers: 20
+  maxPlayers: 60
   stations:
     Plasma:
       stationProto: StandardNanotrasenStation
@@ -60,6 +61,6 @@
             CargoTechnician: [ 4, 6 ]
             #civilian
             Passenger: [ -1, -1 ]
-            Clown: [ 2, 2 ]
+            Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
