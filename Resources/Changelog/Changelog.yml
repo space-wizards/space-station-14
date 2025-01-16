@@ -1,42 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Gold and silver rings now give a small amount of materials when scrapped.
-    type: Tweak
-  id: 7317
-  time: '2024-09-08T16:10:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31847
-- author: K-Dynamic
-  changes:
-  - message: added missing missing resistance values for directional plasma and uranium
-      windows
-    type: Fix
-  id: 7318
-  time: '2024-09-08T18:08:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31975
-- author: qwerltaz
-  changes:
-  - message: Power cables on the ground are now offset and do not obscure each other
-      or pipes beneath.
-    type: Tweak
-  id: 7319
-  time: '2024-09-09T10:00:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32000
-- author: ArtisticRoomba
-  changes:
-  - message: Budget insulated gloves now leave behind yellow frayed insulative fibers
-      instead of yellow insulative fibers. Detectives, rejoice!
-    type: Tweak
-  id: 7320
-  time: '2024-09-09T10:30:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31886
-- author: slarticodefast
-  changes:
-  - message: Revenants or other mobs without hands can no longer spill jugs.
-    type: Fix
-  id: 7321
-  time: '2024-09-09T11:02:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31438
 - author: PJB3005
   changes:
   - message: The emergency shuttle will now wait at the station longer if it couldn't
@@ -3923,3 +3885,40 @@
   id: 7816
   time: '2025-01-15T22:49:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34091
+- author: jbox144
+  changes:
+  - message: Added Plasma Station
+    type: Add
+  id: 7817
+  time: '2025-01-16T07:02:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33991
+- author: jbox144
+  changes:
+  - message: Reduced Plasma's minimum population to 20, maximum population to 60
+    type: Tweak
+  - message: Reduced Plasma's clown jobs from 2 to 1
+    type: Tweak
+  id: 7818
+  time: '2025-01-16T08:51:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34462
+- author: pcaessayrs
+  changes:
+  - message: Uranium, Cak, and BreadDog are no longer space garbage.
+    type: Fix
+  id: 7819
+  time: '2025-01-16T11:40:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34192
+- author: GansuLalan
+  changes:
+  - message: Pianos will no longer push players off when climbing them
+    type: Fix
+  id: 7820
+  time: '2025-01-16T12:25:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33690
+- author: Southbridge
+  changes:
+  - message: More Ionstorm law elements have been added
+    type: Add
+  id: 7821
+  time: '2025-01-16T20:49:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34197
