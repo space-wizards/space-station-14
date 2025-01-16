@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Gold and silver rings now give a small amount of materials when scrapped.
-    type: Tweak
-  id: 7317
-  time: '2024-09-08T16:10:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31847
 - author: K-Dynamic
   changes:
   - message: added missing missing resistance values for directional plasma and uranium
@@ -3923,3 +3916,10 @@
   id: 7816
   time: '2025-01-15T22:49:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34091
+- author: jbox144
+  changes:
+  - message: Added Plasma Station
+    type: Add
+  id: 7817
+  time: '2025-01-16T07:02:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33991
