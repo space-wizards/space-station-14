@@ -25,9 +25,9 @@ abductors-ui-vest-linked = Vest linked
 
 # Ghost role, objectives, etc.
 
-abductors-ghost-role-name = Lone Abductor
+abductors-ghost-role-name = Abductor
 abductors-ghost-role-desc = Kidnap people, stuff them with organs of dubious origin
-abductors-ghost-role-rules = You are a [color=red][bold]Solo Abductor[/bold][/color].
+abductors-ghost-role-rules = You are a [color=red][bold]Abductor[/bold][/color].
                             Your intentions are to abduct people from the station and replace their organs with various experimental devices,
                             after which you return them back. You are not allowed to destroy the station or intentionally kill people.
                             It is in your interest to return the test subjects alive and healthy for the purity of the experiment.
