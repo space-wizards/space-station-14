@@ -77,8 +77,8 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkColaCan
-  name: space cola
-  description: A refreshing beverage.
+  name: Space Cola can
+  description: A sweet, carbonated soft drink.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -268,8 +268,8 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkSpaceMountainWindCan
-  name: space mountain wind can
-  description: Blows right through you like a space wind.
+  name: Space Solar Wind can
+  description: Blows right through you like a solar wind.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -286,7 +286,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkSpaceUpCan
-  name: space-up can
+  name: Space-Up can
   description: Tastes like a hull breach in your mouth.
   components:
   - type: SolutionContainerManager
@@ -304,7 +304,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkSolDryCan
-  name: sol dry
+  name: Sol Dry can
   description: Sweet ginger soda from outer space!
   components:
   - type: SolutionContainerManager
@@ -322,7 +322,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkStarkistCan
-  name: starkist can
+  name: Starkist can
   description: The taste of a star in liquid form. And, a bit of tuna...?
   components:
   - type: SolutionContainerManager
@@ -375,7 +375,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkChangelingStingCan
-  name: changeling sting can
+  name: Changeling Sting can
   description: You take a tiny sip and feel a burning sensation...
   components:
   - type: SolutionContainerManager
@@ -413,7 +413,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkNukieCan
-  name: blood-red brew can
+  name: Blood-red Brew can
   description: A home-brewed drink made from the crazed minds at the Syndicate. Not recommended by doctors.
   components:
   - type: SolutionContainerManager
@@ -439,7 +439,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkEnergyDrinkCan
-  name: red bool energy drink
+  name: Red Bool can
   description: A can of Red Bool, with enough caffeine to kill a horse.
   components:
   - type: SolutionContainerManager
@@ -511,7 +511,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkShamblersJuiceCan
-  name: shamblers juice can
+  name: Shambler's Juice can
   description: ~Shake me up some of that Shambler's Juice!~
   components:
   - type: SolutionContainerManager
@@ -530,7 +530,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkPwrGameCan
-  name: pwr game can
+  name: PWR Game can
   description: The only drink with the PWR that true gamers crave. When a gamer talks about gamerfuel, this is what they're literally referring to.
   components:
   - type: SolutionContainerManager

@@ -831,14 +831,14 @@
     - Wall
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/shuttle_diagonal.rsi
+    sprite: GreyStation/Structures/Walls/shuttle_diagonal.rsi # GreyStation - Resprite
     state: state0
   - type: IconSmooth
     mode: Diagonal
     key: walls
     base: state
   - type: Icon
-    sprite: Structures/Walls/shuttle_diagonal.rsi
+    sprite: GreyStation/Structures/Walls/shuttle_diagonal.rsi # GreyStation - Resprite
     state: state0
   - type: Damageable
     damageContainer: StructuralInorganic
@@ -928,9 +928,9 @@
   - type: RadiationBlocker
     resistance: 5
   - type: Sprite
-    sprite: Structures/Walls/shuttle.rsi
+    sprite: GreyStation/Structures/Walls/shuttle.rsi # GreyStation - Resprite
   - type: Icon
-    sprite: Structures/Walls/shuttle.rsi
+    sprite: GreyStation/Structures/Walls/shuttle.rsi # GreyStation - Resprite
     state: full
   - type: Construction
     graph: Girder
