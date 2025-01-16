@@ -316,6 +316,19 @@
     ears: ClothingHeadsetService
     eyes: ClothingEyesHudBeer
 
+- type: startingGear #beemail!
+  id: StartingGearApidCourier
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCourier
+    id: CourierPDA
+    belt: MailBag
+    outerClothing: ClothingOuterWinterCourier
+    head: ClothingHeadHatCouriersoftFlipped
+    pocket1: EmergencyOxygenTankFilled
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetCargo
+    #eyes:
+
 - type: loadoutGroup
   id: SalvageSpecialistJumpsuit
   name: loadout-group-salvage-specialist-jumpsuit
