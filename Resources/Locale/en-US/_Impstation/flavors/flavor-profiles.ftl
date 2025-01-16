@@ -3,7 +3,7 @@ flavor-base-drinkdrink = like dogshit
 flavor-base-unholy = unholy
 
 flavor-complex-raktaccino = fantastically bitter
-
+flavor-complex-moscowmule = like a kick in the teeth
 flavor-complex-cottonbool = like an angry cloud
 flavor-complex-genderfluid = transitional
 flavor-complex-thavenbad = like you need to pretend you like it
