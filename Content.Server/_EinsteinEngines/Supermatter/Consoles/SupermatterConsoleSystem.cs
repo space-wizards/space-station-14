@@ -168,7 +168,8 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
         if (focusSupermatter == null)
             return null;
 
-        var focusSupermatterXform = Transform(focusSupermatter.Value);
+        if (!TryComp(focusSupermatter.Value, out TransformComponent? focusSupermatterXform))
+            return null;
 
         if (!focusSupermatterXform.Anchored ||
             focusSupermatterXform.GridUid != gridUid ||
@@ -181,20 +182,21 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
         if (!TryComp<RadiationSourceComponent>(focusSupermatter.Value, out var radiationComp))
             return null;
 
-        var gases = sm.GasStorage;
+        var gases = GasMixture.SpaceGas;
+        if (sm.GasStorage != null)
+            gases = sm.GasStorage;
+
         var tempThreshold = Atmospherics.T0C + sm.HeatPenaltyThreshold;
 
         return new SupermatterFocusData(
             GetNetEntity(focusSupermatter.Value),
+            gases,
             GetIntegrity(sm),
             sm.Power,
             radiationComp.Intensity,
-            gases.Sum(gas => gases[gas.Key]),
-            sm.Temperature,
             tempThreshold * sm.DynamicHeatResistance,
-            sm.WasteMultiplier,
-            sm.GasEfficiency * 100,
-            sm.GasStorage);
+            sm.HeatModifier,
+            sm.GasEfficiency * 100);
     }
 
     public float GetIntegrity(SupermatterComponent sm)

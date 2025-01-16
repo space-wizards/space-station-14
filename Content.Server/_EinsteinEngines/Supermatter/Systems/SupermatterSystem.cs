@@ -116,9 +116,6 @@ public sealed partial class SupermatterSystem : EntitySystem
 
     private void OnCollideEvent(EntityUid uid, SupermatterComponent sm, ref StartCollideEvent args)
     {
-        if (!sm.Activated)
-            sm.Activated = true;
-
         var target = args.OtherEntity;
         if (args.OtherBody.BodyType == BodyType.Static ||
             HasComp<SupermatterImmuneComponent>(target) ||
@@ -167,9 +164,6 @@ public sealed partial class SupermatterSystem : EntitySystem
 
     private void OnHandInteract(EntityUid uid, SupermatterComponent sm, ref InteractHandEvent args)
     {
-        if (!sm.Activated)
-            sm.Activated = true;
-
         var target = args.User;
 
         if (HasComp<SupermatterImmuneComponent>(target))
@@ -203,9 +197,6 @@ public sealed partial class SupermatterSystem : EntitySystem
 
     private void OnItemInteract(EntityUid uid, SupermatterComponent sm, ref InteractUsingEvent args)
     {
-        if (!sm.Activated)
-            sm.Activated = true;
-
         // TODO: supermatter scalpel
         if (!HasComp<SharpComponent>(args.Used))
             return;

@@ -100,12 +100,12 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
                 // TODO: please don't define this dictionary every update you animal
                 var engineDictionary = new Dictionary<string, (Label label, ProgressBar bar, PanelContainer border, float value, float leftSize, float rightSize, Color leftColor, Color middleColor, Color rightColor)>()
                 {
-                    { "integrity",   (IntegrityBarLabel,   IntegrityBar,   IntegrityBarBorder,   focusData.Value.Integrity,       0.9f, 0.1f, red,      orange, green) },
-                    { "power",       (PowerBarLabel,       PowerBar,       PowerBarBorder,       focusData.Value.Power,           0.9f, 0.1f, green,    orange, red  ) },
-                    { "radiation",   (RadiationBarLabel,   RadiationBar,   RadiationBarBorder,   focusData.Value.Radiation,       0.1f, 0.9f, green,    orange, red  ) },
-                    { "moles",       (MolesBarLabel,       MolesBar,       MolesBarBorder,       focusData.Value.AbsorbedMoles,   0.5f, 0.5f, green,    orange, red  ) },
-                    { "temperature", (TemperatureBarLabel, TemperatureBar, TemperatureBarBorder, focusData.Value.Temperature,     0.5f, 0.5f, turqoise, green,  red  ) },
-                    { "waste",       (WasteBarLabel,       WasteBar,       WasteBarBorder,       focusData.Value.WasteMultiplier, 0.5f, 0.5f, green,    orange, red  ) }
+                    { "integrity",   (IntegrityBarLabel,   IntegrityBar,   IntegrityBarBorder,   focusData.Value.Integrity,              0.9f, 0.1f, red,      orange, green) },
+                    { "power",       (PowerBarLabel,       PowerBar,       PowerBarBorder,       focusData.Value.Power,                  0.9f, 0.1f, green,    orange, red  ) },
+                    { "radiation",   (RadiationBarLabel,   RadiationBar,   RadiationBarBorder,   focusData.Value.Radiation,              0.1f, 0.9f, green,    orange, red  ) },
+                    { "moles",       (MolesBarLabel,       MolesBar,       MolesBarBorder,       focusData.Value.GasStorage.TotalMoles,  0.5f, 0.5f, green,    orange, red  ) },
+                    { "temperature", (TemperatureBarLabel, TemperatureBar, TemperatureBarBorder, focusData.Value.GasStorage.Temperature, 0.9f, 0.1f, turqoise, orange, red  ) },
+                    { "waste",       (WasteBarLabel,       WasteBar,       WasteBarBorder,       focusData.Value.HeatModifier,           0.5f, 0.5f, green,    orange, red  ) }
                 };
 
                 // Special cases
@@ -142,7 +142,7 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
                 {
                     var name = gas.Name;
                     var color = Color.FromHex("#" + gas.Color);
-                    var value = GetStoredGas(gas, focusData) / focusData.Value.AbsorbedMoles * 100;
+                    var value = GetStoredGas(gas, focusData) / focusData.Value.GasStorage.TotalMoles * 100;
 
                     UpdateGasBar(index, GasTable, name, color, value);
                     index++;
@@ -151,7 +151,7 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
         }
     }
 
-    private string GetStatusLabel(SupermatterStatusType status)
+    private static string GetStatusLabel(SupermatterStatusType status)
     {
         switch (status)
         {
@@ -180,7 +180,7 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
         return "supermatter-console-window-error-status";
     }
 
-    private Color GetStatusColor(SupermatterStatusType status)
+    private static Color GetStatusColor(SupermatterStatusType status)
     {
         switch (status)
         {
@@ -203,17 +203,17 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
         return StyleNano.DisabledFore;
     }
 
-    private float GetStoredGas(GasPrototype gas, SupermatterFocusData? focusData)
+    private static float GetStoredGas(GasPrototype gas, SupermatterFocusData? focusData)
     {
         var id = int.Parse(gas.ID);
 
         if (focusData == null)
-            return 0;
+            return 0f;
 
-        return focusData.Value.GasStorage[(Gas)id];
+        return focusData.Value.GasStorage.GetMoles((Gas)id);
     }
 
-    private void UpdateEngineBar(ProgressBar bar, PanelContainer border, float value, float leftSize, float rightSize, Color leftColor, Color middleColor, Color rightColor)
+    private static void UpdateEngineBar(ProgressBar bar, PanelContainer border, float value, float leftSize, float rightSize, Color leftColor, Color middleColor, Color rightColor)
     {
         var clamped = Math.Clamp(value, bar.MinValue, bar.MaxValue);
 
@@ -256,7 +256,7 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
         bar.Value = clamped;
     }
 
-    private void UpdateGasBar(int index, Control table, string name, Color color, float value)
+    private static void UpdateGasBar(int index, Control table, string name, Color color, float value)
     {
         // Make new UI entry if required
         if (index >= table.ChildCount)

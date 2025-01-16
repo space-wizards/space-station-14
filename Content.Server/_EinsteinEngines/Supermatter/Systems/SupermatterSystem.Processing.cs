@@ -22,7 +22,6 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Spawners;
 
@@ -40,37 +39,37 @@ public sealed partial class SupermatterSystem
         if (mix is not { })
             return;
 
-        var absorbedGas = mix.Remove(sm.GasEfficiency * mix.TotalMoles);
-        var moles = absorbedGas.TotalMoles;
+        sm.GasStorage = mix.Remove(sm.GasEfficiency * mix.TotalMoles);
+        var moles = sm.GasStorage.TotalMoles;
 
         if (!(moles > 0f))
             return;
 
-        var gases = sm.GasStorage;
-        var facts = sm.GasDataFields;
+        var gasComposition = sm.GasStorage.Clone();
 
         // Let's get the proportions of the gases in the mix for scaling stuff later
         // They range between 0 and 1
-        gases = gases.ToDictionary(
-            gas => gas.Key,
-            gas => Math.Clamp(absorbedGas.GetMoles(gas.Key) / moles, 0, 1)
-        );
+        foreach (var gasId in Enum.GetValues<Gas>())
+        {
+            var proportion = sm.GasStorage.GetMoles(gasId) / moles;
+            gasComposition.SetMoles(gasId, Math.Clamp(proportion, 0, 1));
+        }
 
         // No less then zero, and no greater then one, we use this to do explosions and heat to power transfer.
-        var powerRatio = gases.Sum(gas => gases[gas.Key] * facts[gas.Key].PowerMixRatio);
+        var powerRatio = SupermatterGasData.GetPowerMixRatios(gasComposition);
 
         // Affects plasma, o2 and heat output.
-        var heatModifier = gases.Sum(gas => gases[gas.Key] * facts[gas.Key].HeatPenalty);
-        var transmissionBonus = gases.Sum(gas => gases[gas.Key] * facts[gas.Key].TransmitModifier);
+        sm.HeatModifier = SupermatterGasData.GetHeatPenalties(gasComposition);
+        var transmissionBonus = SupermatterGasData.GetTransmitModifiers(gasComposition);
 
-        var h2OBonus = 1 - gases[Gas.WaterVapor] * 0.25f;
+        var h2OBonus = 1 - gasComposition.GetMoles(Gas.WaterVapor) * 0.25f;
 
         powerRatio = Math.Clamp(powerRatio, 0, 1);
-        heatModifier = Math.Max(heatModifier, 0.5f);
+        sm.HeatModifier = Math.Max(sm.HeatModifier, 0.5f);
         transmissionBonus *= h2OBonus;
 
         // Affects the damage heat does to the crystal
-        var heatResistance = gases.Sum(gas => gases[gas.Key] * facts[gas.Key].HeatResistance);
+        var heatResistance = SupermatterGasData.GetHeatResistances(gasComposition);
         sm.DynamicHeatResistance = Math.Max(heatResistance, 1);
 
         // More moles of gases are harder to heat than fewer, so let's scale heat damage around them
@@ -79,9 +78,9 @@ public sealed partial class SupermatterSystem
         // Ramps up or down in increments of 0.02 up to the proportion of CO2
         // Given infinite time, powerloss_dynamic_scaling = co2comp
         // Some value from 0-1
-        if (moles > sm.PowerlossInhibitionMoleThreshold && gases[Gas.CarbonDioxide] > sm.PowerlossInhibitionGasThreshold)
+        if (moles > sm.PowerlossInhibitionMoleThreshold && gasComposition.GetMoles(Gas.CarbonDioxide) > sm.PowerlossInhibitionGasThreshold)
         {
-            var co2powerloss = Math.Clamp(gases[Gas.CarbonDioxide] - sm.PowerlossDynamicScaling, -0.02f, 0.02f);
+            var co2powerloss = Math.Clamp(gasComposition.GetMoles(Gas.CarbonDioxide) - sm.PowerlossDynamicScaling, -0.02f, 0.02f);
             sm.PowerlossDynamicScaling = Math.Clamp(sm.PowerlossDynamicScaling + co2powerloss, 0f, 1f);
         }
         else
@@ -105,7 +104,7 @@ public sealed partial class SupermatterSystem
         var tempFactor = powerRatio > 0.8 ? 50f : 30f;
 
         // If there is more frezon and N2 then anything else, we receive no power increase from heat
-        sm.Power = Math.Max((absorbedGas.Temperature * tempFactor / Atmospherics.T0C) * powerRatio + sm.Power, 0);
+        sm.Power = Math.Max((sm.GasStorage.Temperature * tempFactor / Atmospherics.T0C) * powerRatio + sm.Power, 0);
 
         // Irradiate stuff
         if (TryComp<RadiationSourceComponent>(uid, out var rad))
@@ -126,29 +125,21 @@ public sealed partial class SupermatterSystem
         // Keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock is on.
         // An increase of 4°C at 25% efficiency here results in an increase of 1°C / (#tilesincore) overall.
         // Power * 0.55 * 1.5~23 / 5
-        absorbedGas.Temperature += (energy * heatModifier) / sm.ThermalReleaseModifier;
-        absorbedGas.Temperature = Math.Max(0,
-            Math.Min(absorbedGas.Temperature, 2500f * heatModifier));
+        sm.GasStorage.Temperature += (energy * sm.HeatModifier) / sm.ThermalReleaseModifier;
+        sm.GasStorage.Temperature = Math.Max(0,
+            Math.Min(sm.GasStorage.Temperature, 2500f * sm.HeatModifier));
 
         // Release the waste
-        absorbedGas.AdjustMoles(Gas.Plasma, Math.Max(energy * heatModifier * sm.PlasmaReleaseModifier, 0f));
-        absorbedGas.AdjustMoles(Gas.Oxygen, Math.Max((energy + absorbedGas.Temperature * heatModifier - Atmospherics.T0C) * sm.OxygenReleaseEfficiencyModifier, 0f));
+        sm.GasStorage.AdjustMoles(Gas.Plasma, Math.Max(energy * sm.HeatModifier / sm.PlasmaReleaseModifier, 0f));
+        sm.GasStorage.AdjustMoles(Gas.Oxygen, Math.Max((energy + sm.GasStorage.Temperature * sm.HeatModifier - Atmospherics.T0C) / sm.OxygenReleaseEfficiencyModifier, 0f));
 
-        _atmosphere.Merge(mix, absorbedGas);
+        _atmosphere.Merge(mix, sm.GasStorage);
 
         var powerReduction = (float) Math.Pow(sm.Power / 500, 3);
 
         // After this point power is lowered
         // This wraps around to the begining of the function
         sm.Power = Math.Max(sm.Power - Math.Min(powerReduction * sm.PowerlossInhibitor, sm.Power * 0.83f * sm.PowerlossInhibitor), 0f);
-
-        // Save values to the supermatter
-        sm.GasStorage = sm.GasStorage.ToDictionary(
-            gas => gas.Key,
-            gas => absorbedGas.GetMoles(gas.Key)
-        );
-        sm.Temperature = absorbedGas.Temperature;
-        sm.WasteMultiplier = heatModifier;
     }
 
     /// <summary>
@@ -194,17 +185,17 @@ public sealed partial class SupermatterSystem
             return;
 
         // Bluespace anomaly: ~1/150 chance
-        if (_random.Prob(sm.AnomalyBluespaceChance))
+        if (_random.Prob(1 / sm.AnomalyBluespaceChance))
             anomalies.Add(sm.AnomalyBluespaceSpawnPrototype);
 
         // Gravity anomaly: ~1/150 chance above SeverePowerPenaltyThreshold, or ~1/750 chance otherwise
-        if (sm.Power > sm.SeverePowerPenaltyThreshold && _random.Prob(sm.AnomalyGravityChanceSevere) ||
-            _random.Prob(sm.AnomalyGravityChance))
+        if (sm.Power > sm.SeverePowerPenaltyThreshold && _random.Prob(1 / sm.AnomalyGravityChanceSevere) ||
+            _random.Prob(1 / sm.AnomalyGravityChance))
             anomalies.Add(sm.AnomalyGravitySpawnPrototype);
 
         // Pyroclastic anomaly: ~1/375 chance above SeverePowerPenaltyThreshold, or ~1/2500 chance above PowerPenaltyThreshold
-        if (sm.Power > sm.SeverePowerPenaltyThreshold && _random.Prob(sm.AnomalyPyroChanceSevere) ||
-            sm.Power > sm.PowerPenaltyThreshold && _random.Prob(sm.AnomalyPyroChance))
+        if (sm.Power > sm.SeverePowerPenaltyThreshold && _random.Prob(1 / sm.AnomalyPyroChanceSevere) ||
+            sm.Power > sm.PowerPenaltyThreshold && _random.Prob(1 / sm.AnomalyPyroChance))
             anomalies.Add(sm.AnomalyPyroSpawnPrototype);
 
         var count = anomalies.Count;
@@ -445,6 +436,10 @@ public sealed partial class SupermatterSystem
                 _ => TimeSpan.FromSeconds(_config.GetCVar(EinsteinCCVars.SupermatterYellTimer))
             };
 
+            if (seconds <= 5 && TryComp<SpeechComponent>(uid, out var speech))
+                // Prevent repeat sounds during the 5.. 4.. 3.. 2.. 1.. countdown
+                speech.SoundCooldownTime = 5.0f;
+
             message = Loc.GetString(loc, ("seconds", seconds));
             global = true;
 
@@ -459,6 +454,10 @@ public sealed partial class SupermatterSystem
 
             if (sm.Status >= SupermatterStatusType.Emergency)
                 global = true;
+
+            if (TryComp<SpeechComponent>(uid, out var speech))
+                // Reset speech cooldown after healing is started
+                speech.SoundCooldownTime = 0.0f;
 
             SendSupermatterAnnouncement(uid, sm, message, global);
             return;
@@ -498,9 +497,7 @@ public sealed partial class SupermatterSystem
                 }
             }
 
-            var moles = sm.GasStorage.Sum(gas => sm.GasStorage[gas.Key]);
-
-            if (moles >= sm.MolePenaltyThreshold)
+            if (sm.GasStorage != null && sm.GasStorage.TotalMoles >= sm.MolePenaltyThreshold)
             {
                 message = Loc.GetString("supermatter-threshold-mole");
                 SendSupermatterAnnouncement(uid, sm, message, global);
@@ -678,22 +675,15 @@ public sealed partial class SupermatterSystem
                 SupermatterStatusType.Danger => sm.StatusDangerSound,
                 SupermatterStatusType.Emergency => sm.StatusEmergencySound,
                 SupermatterStatusType.Delaminating => sm.StatusDelamSound,
-                _ => null
+                _ => default
             };
-
-            ProtoId<SpeechSoundsPrototype>? speechSound = sm.StatusCurrentSound;
 
             if (currentStatus == SupermatterStatusType.Warning)
                 speech.AudioParams = AudioParams.Default.AddVolume(7.5f);
             else
                 speech.AudioParams = AudioParams.Default.AddVolume(10f);
 
-            if (currentStatus == SupermatterStatusType.Delaminating)
-                speech.SoundCooldownTime = 5.0f; // to prevent repeat sounds during the 5.. 4.. 3.. 2.. 1.. countdown
-            else
-                speech.SoundCooldownTime = 0.0f;
-
-            speech.SpeechSounds = speechSound;
+            speech.SpeechSounds = sm.StatusCurrentSound;
         }
 
         // Supermatter is healing, don't play any speech sounds

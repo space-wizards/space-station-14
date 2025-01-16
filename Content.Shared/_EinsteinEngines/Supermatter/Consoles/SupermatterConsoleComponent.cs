@@ -50,6 +50,11 @@ public struct SupermatterFocusData
     public NetEntity NetEntity;
 
     /// <summary>
+    /// The supermatter's gas storage
+    /// </summary>
+    public GasMixture GasStorage;
+
+    /// <summary>
     /// The supermatter's integrity, from 0 to 100
     /// </summary>
     public float Integrity;
@@ -65,16 +70,6 @@ public struct SupermatterFocusData
     public float Radiation;
 
     /// <summary>
-    /// The supermatter's total absorbed moles
-    /// </summary>
-    public float AbsorbedMoles;
-
-    /// <summary>
-    /// The supermatter's temperature
-    /// </summary>
-    public float Temperature;
-
-    /// <summary>
     /// The supermatter's temperature limit
     /// </summary>
     public float TemperatureLimit;
@@ -82,7 +77,7 @@ public struct SupermatterFocusData
     /// <summary>
     /// The supermatter's waste multiplier
     /// </summary>
-    public float WasteMultiplier;
+    public float HeatModifier;
 
     /// <summary>
     /// The supermatter's absorption ratio
@@ -90,36 +85,26 @@ public struct SupermatterFocusData
     public float AbsorptionRatio;
 
     /// <summary>
-    /// The supermatter's gas storage
-    /// </summary>
-    [DataField]
-    public Dictionary<Gas, float> GasStorage;
-
-    /// <summary>
     /// Populates the supermatter console focus entry with supermatter data
     /// </summary>
     public SupermatterFocusData
         (NetEntity netEntity,
+        GasMixture gasStorage,
         float integrity,
         float power,
         float radiation,
-        float absorbedMoles,
-        float temperature,
         float temperatureLimit,
-        float wasteMultiplier,
-        float absorptionRatio,
-        Dictionary<Gas, float> gasStorage)
+        float heatModifier,
+        float absorptionRatio)
     {
         NetEntity = netEntity;
+        GasStorage = gasStorage;
         Integrity = integrity;
         Power = power;
         Radiation = radiation;
-        AbsorbedMoles = absorbedMoles;
-        Temperature = temperature;
         TemperatureLimit = temperatureLimit;
-        WasteMultiplier = wasteMultiplier;
+        HeatModifier = heatModifier;
         AbsorptionRatio = absorptionRatio;
-        GasStorage = gasStorage;
     }
 }
 

@@ -2,6 +2,7 @@ using Content.Shared._EinsteinEngines.Supermatter.Monitor;
 using Content.Shared.Atmos;
 using Content.Shared.DoAfter;
 using Content.Shared.Radio;
+using Content.Shared.Speech;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -14,20 +15,23 @@ public sealed partial class SupermatterComponent : Component
 {
     #region Base
 
-    [DataField]
-    public bool Activated = true;
-
     /// <summary>
     /// The current status of the singularity, used for alert sounds and the monitoring console
     /// </summary>
     [DataField]
     public SupermatterStatusType Status = SupermatterStatusType.Inactive;
 
+    /// <summary>
+    /// The supermatter's internal gas storage
+    /// </summary>
     [DataField]
-    public string SliverPrototype = "SupermatterSliver";
+    public GasMixture? GasStorage;
 
     [DataField]
-    public string[] LightningPrototypes =
+    public EntProtoId SliverPrototype = "SupermatterSliver";
+
+    [DataField]
+    public EntProtoId[] LightningPrototypes =
     {
         "SupermatterLightning",
         "SupermatterLightningCharged",
@@ -35,28 +39,28 @@ public sealed partial class SupermatterComponent : Component
     };
 
     [DataField]
-    public string SingularitySpawnPrototype = "Singularity";
+    public EntProtoId SingularitySpawnPrototype = "Singularity";
 
     [DataField]
-    public string TeslaSpawnPrototype = "TeslaEnergyBall";
+    public EntProtoId TeslaSpawnPrototype = "TeslaEnergyBall";
 
     [DataField]
-    public string KudzuSpawnPrototype = "SupermatterKudzu";
+    public EntProtoId KudzuSpawnPrototype = "SupermatterKudzu";
 
     [DataField]
-    public string AnomalyBluespaceSpawnPrototype = "AnomalyBluespace";
+    public EntProtoId AnomalyBluespaceSpawnPrototype = "AnomalyBluespace";
 
     [DataField]
-    public string AnomalyGravitySpawnPrototype = "AnomalyGravity";
+    public EntProtoId AnomalyGravitySpawnPrototype = "AnomalyGravity";
 
     [DataField]
-    public string AnomalyPyroSpawnPrototype = "AnomalyPyroclastic";
+    public EntProtoId AnomalyPyroSpawnPrototype = "AnomalyPyroclastic";
 
     /// <summary>
     /// What spawns in the place of an unfortunate entity that got removed by the SM.
     /// </summary>
     [DataField]
-    public string CollisionResultPrototype = "Ash";
+    public EntProtoId CollisionResultPrototype = "Ash";
 
     #endregion
 
@@ -84,38 +88,47 @@ public sealed partial class SupermatterComponent : Component
     public SoundSpecifier DelamAccent = new SoundCollectionSpecifier("SupermatterAccentDelam");
 
     [DataField]
-    public string StatusWarningSound = "SupermatterWarning";
+    public ProtoId<SpeechSoundsPrototype> StatusWarningSound = "SupermatterWarning";
 
     [DataField]
-    public string StatusDangerSound = "SupermatterDanger";
+    public ProtoId<SpeechSoundsPrototype> StatusDangerSound = "SupermatterDanger";
 
     [DataField]
-    public string StatusEmergencySound = "SupermatterEmergency";
+    public ProtoId<SpeechSoundsPrototype> StatusEmergencySound = "SupermatterEmergency";
 
     [DataField]
-    public string StatusDelamSound = "SupermatterDelaminating";
+    public ProtoId<SpeechSoundsPrototype> StatusDelamSound = "SupermatterDelaminating";
 
     [DataField]
-    public string? StatusCurrentSound = null;
+    public ProtoId<SpeechSoundsPrototype>? StatusCurrentSound;
 
     #endregion
 
     #region Processing
 
+    /// <summary>
+    /// The internal energy of the supermatter
+    /// </summary>
     [DataField]
     public float Power;
 
-    [DataField]
-    public float Temperature;
-
-    [DataField]
-    public float WasteMultiplier;
-
+    /// <summary>
+    /// Takes the energy that supermatter collision generates and slowly turns it into actual power
+    /// </summary>
     [DataField]
     public float MatterPower;
 
+    /// <summary>
+    /// The fraction of <see cref="MatterPower"/> that is converted into power
+    /// </summary>
     [DataField]
     public float MatterPowerConversion = 10f;
+
+    /// <summary>
+    /// Affects the amount of oxygen and plasma that is released during supermatter reactions, as well as the heat generated
+    /// </summary>
+    [DataField]
+    public float HeatModifier;
 
     /// <summary>
     /// The portion of the gasmix we're on
@@ -124,14 +137,14 @@ public sealed partial class SupermatterComponent : Component
     public float GasEfficiency = 0.15f;
 
     /// <summary>
-    /// Uses PowerlossDynamicScaling and GasStorage to lessen the effects of our powerloss functions
+    /// Uses <see cref="PowerlossDynamicScaling"/> and <see cref="GasStorage"/> to lessen the effects of our powerloss functions
     /// </summary>
     [DataField]
     public float PowerlossInhibitor = 1;
 
     /// <summary>
     /// Based on CO2 percentage, this slowly moves between 0 and 1.
-    /// We use it to calculate PowerlossInhibitor.
+    /// We use it to calculate <see cref="PowerlossInhibitor"/>.
     /// </summary>
     [DataField]
     public float PowerlossDynamicScaling;
@@ -149,36 +162,29 @@ public sealed partial class SupermatterComponent : Component
     public float MoleHeatPenalty = 350f;
 
     /// <summary>
-    /// Inverse of <see cref="MoleHeatPenalty" />
-    /// </summary>
-    [DataField]
-    public float MoleHeatThreshold = 350f;
-
-    /// <summary>
-    /// 
+    /// Multiplier on overall power production during supermatter reactions
     /// </summary>
     [DataField]
     public float ReactionPowerModifier = 0.55f;
 
     /// <summary>
-    /// Acts as a multiplier on the amount that reactions increase the supermatter core temperature
+    /// Divisor on the amount that reactions increase the supermatter core temperature
     /// </summary>
     [DataField]
     public float ThermalReleaseModifier = 5f;
 
     /// <summary>
-    /// Multiplier on how much plasma is released during supermatter reactions
-    /// Default is ~1/750
+    /// Divisor on how much plasma is released during supermatter reactions
     /// </summary>
     [DataField]
-    public float PlasmaReleaseModifier = 0.001333f;
+    public float PlasmaReleaseModifier = 750f;
 
     /// <summary>
     /// Multiplier on how much oxygen is released during supermatter reactions.
     /// Default is ~1/325
     /// </summary>
     [DataField]
-    public float OxygenReleaseEfficiencyModifier = 0.0031f;
+    public float OxygenReleaseEfficiencyModifier = 325f;
 
     /// <summary>
     /// The chance for supermatter lightning to strike random coordinates instead of an entity
@@ -206,38 +212,33 @@ public sealed partial class SupermatterComponent : Component
 
     /// <summary>
     /// The chance for a bluespace anomaly to spawn when power or damage is high
-    /// Default is ~1/150
     /// </summary>
     [DataField]
-    public float AnomalyBluespaceChance = 0.006667f;
+    public float AnomalyBluespaceChance = 150f;
 
     /// <summary>
     /// The chance for a gravity anomaly to spawn when power or damage is high, and the severe power penalty threshold is exceeded
-    /// Default is ~1/150
     /// </summary>
     [DataField]
-    public float AnomalyGravityChanceSevere = 0.006667f;
+    public float AnomalyGravityChanceSevere = 150f;
 
     /// <summary>
     /// The chance for a gravity anomaly to spawn when power or damage is high
-    /// Default is ~1/750
     /// </summary>
     [DataField]
-    public float AnomalyGravityChance = 0.001333f;
+    public float AnomalyGravityChance = 750f;
 
     /// <summary>
     /// The chance for a pyroclastic anomaly to spawn when power or damage is high, and the severe power penalty threshold is exceeded
-    /// Default is ~1/375
     /// </summary>
     [DataField]
-    public float AnomalyPyroChanceSevere = 0.002667f;
+    public float AnomalyPyroChanceSevere = 375f;
 
     /// <summary>
-    /// The chance for a gravity anomaly to spawn when power or damage is high, and the power penalty threshold is exceeded
-    /// Default is ~1/2500
+    /// The chance for a pyroclastic anomaly to spawn when power or damage is high, and the power penalty threshold is exceeded
     /// </summary>
     [DataField]
-    public float AnomalyPyroChance = 0.0004f;
+    public float AnomalyPyroChance = 2500f;
 
     #endregion
 
@@ -280,7 +281,7 @@ public sealed partial class SupermatterComponent : Component
     public float AccentMinCooldown = 2f;
 
     [DataField]
-    public TimeSpan ZapLast = TimeSpan.Zero;
+    public TimeSpan ZapLast;
 
     #endregion
 
@@ -290,7 +291,7 @@ public sealed partial class SupermatterComponent : Component
     /// Percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
     /// </summary>
     [DataField]
-    public float PowerlossInhibitionGasThreshold = 0.20f;
+    public float PowerlossInhibitionGasThreshold = 0.2f;
 
     /// <summary>
     /// Moles of the gas needed before the charge inertia chain reaction effect starts.
@@ -409,7 +410,7 @@ public sealed partial class SupermatterComponent : Component
     public int DamageDelamAlertPoint = 300;
 
     [DataField]
-    public bool Delamming = false;
+    public bool Delamming;
 
     [DataField]
     public DelamType PreferredDelamType = DelamType.Explosion;
@@ -419,7 +420,7 @@ public sealed partial class SupermatterComponent : Component
     #region Announcements
 
     [DataField]
-    public bool DelamAnnounced = false;
+    public bool DelamAnnounced;
 
     /// <summary>
     /// The radio channel for supermatter alerts
@@ -435,45 +436,7 @@ public sealed partial class SupermatterComponent : Component
 
     #endregion
 
-    #region Gases
-
-    /// <summary>
-    ///     How much gas is in the SM
-    /// </summary>
-    [DataField]
-    public Dictionary<Gas, float> GasStorage = new Dictionary<Gas, float>()
-    {
-        { Gas.Oxygen,        0f },
-        { Gas.Nitrogen,      0f },
-        { Gas.CarbonDioxide, 0f },
-        { Gas.Plasma,        0f },
-        { Gas.Tritium,       0f },
-        { Gas.WaterVapor,    0f },
-        { Gas.Frezon,        0f },
-        { Gas.Ammonia,       0f },
-        { Gas.NitrousOxide,  0f },
-    };
-
-    /// <summary>
-    ///     Stores information about how every gas interacts with the SM
-    /// </summary>
-    //TODO: Replace this with serializable GasFact array something
-    public readonly Dictionary<Gas, (float TransmitModifier, float HeatPenalty, float PowerMixRatio, float HeatResistance)> GasDataFields = new()
-    {
-        { Gas.Oxygen,        (1.5f, 1f,    1f,  1f) },
-        { Gas.Nitrogen,      (0f,   -1.5f, -1f, 1f) },
-        { Gas.CarbonDioxide, (0f,   0.1f,  1f,  1f) },
-        { Gas.Plasma,        (4f,   15f,   1f,  1f) },
-        { Gas.Tritium,       (30f,  10f,   1f,  1f) },
-        { Gas.WaterVapor,    (2f,   12f,   1f,  1f) },
-        { Gas.Frezon,        (0f,   -10f,  -1f, 1f) },
-        { Gas.Ammonia,       (0f,   .5f,   1f,  1f) },
-        { Gas.NitrousOxide,  (0f,   -5f,   -1f, 6f) },
-    };
-
-    #endregion
 }
-
 
 public enum DelamType : int
 {
@@ -483,23 +446,82 @@ public enum DelamType : int
     Cascade = 3
 }
 
-[Serializable, DataDefinition]
-public sealed partial class GasFact
+[Serializable, NetSerializable]
+public struct SupermatterGasFact
 {
-    [DataField]
+    /// <summary>
+    /// Multiplied with the supermatter's power to determine rads
+    /// </summary>
     public float TransmitModifier;
 
-    [DataField]
+    /// <summary>
+    /// Affects the amount of oxygen and plasma that is released during supermatter reactions, as well as the heat generated
+    /// </summary>
     public float HeatPenalty;
 
-    [DataField]
+    /// <summary>
+    /// Affects the amount of power generated by the supermatter
+    /// </summary>
     public float PowerMixRatio;
 
-    public GasFact(float transmitModifier, float heatPenalty, float powerMixRatio)
+    /// <summary>
+    /// Affects the supermatter's resistance to temperature
+    /// </summary>
+    public float HeatResistance;
+
+    public SupermatterGasFact(float transmitModifier, float heatPenalty, float powerMixRatio, float heatResistance)
     {
         TransmitModifier = transmitModifier;
         HeatPenalty = heatPenalty;
         PowerMixRatio = powerMixRatio;
+        HeatResistance = heatResistance;
+    }
+}
+
+[Serializable, NetSerializable]
+public static class SupermatterGasData
+{
+    private static Dictionary<Gas, SupermatterGasFact> _gasData = new()
+    {
+        { Gas.Oxygen,        new(1.5f, 1f,    1f,  1f) },
+        { Gas.Nitrogen,      new(0f,   -1.5f, -1f, 1f) },
+        { Gas.CarbonDioxide, new(0f,   0.1f,  1f,  1f) },
+        { Gas.Plasma,        new(4f,   15f,   1f,  1f) },
+        { Gas.Tritium,       new(30f,  10f,   1f,  1f) },
+        { Gas.WaterVapor,    new(2f,   12f,   1f,  1f) },
+        { Gas.Ammonia,       new(0f,   0.5f,  1f , 1f) },
+        { Gas.NitrousOxide,  new(0f,   -5f,   -1f, 6f) },
+        { Gas.Frezon,        new(3f,   -10f,  -1f, 1f) }
+    };
+
+    public static float CalculateGasMixModifier(GasMixture mix, Func<SupermatterGasFact, float> getModifier)
+    {
+        var modifier = 0f;
+
+        foreach (var gasId in Enum.GetValues<Gas>())
+            modifier += mix.GetMoles(gasId) * getModifier(_gasData.GetValueOrDefault(gasId));
+
+        return modifier;
+    }
+
+    public static float GetTransmitModifiers(GasMixture mix)
+    {
+        return CalculateGasMixModifier(mix, data => data.TransmitModifier);
+    }
+
+    public static float GetHeatPenalties(GasMixture mix)
+    {
+        return CalculateGasMixModifier(mix, data => data.HeatPenalty);
+    }
+
+    public static float GetPowerMixRatios(GasMixture mix)
+    {
+        return CalculateGasMixModifier(mix, data => data.PowerMixRatio);
+    }
+
+    public static float GetHeatResistances(GasMixture mix)
+    {
+        return CalculateGasMixModifier(mix, data => data.HeatResistance);
     }
 }
 
