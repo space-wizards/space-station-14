@@ -34,7 +34,7 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
-  - type: Tag # goob edit
+  - type: Tag #imp addition since frontier doesnt have it tagged for some reason
     tags:
       - PlantAnalyzer
 
