@@ -18,6 +18,20 @@
   products:
     UAP: 6
 
+- type: reaction
+  id: MoscowMule
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    Vodka:
+      amount: 2
+    JuiceLime:
+      Amount: 1
+    SolDry:
+      Amount: 3
+  products:
+    MoscowMule: 6
+
        # Razz whatever the fuck you did here has caused horrible things
 - type: reaction
   id: TheeHorsepussy
