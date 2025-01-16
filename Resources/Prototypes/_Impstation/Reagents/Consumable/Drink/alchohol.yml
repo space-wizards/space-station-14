@@ -146,9 +146,9 @@
   metabolisms:
     Drink:
       effects:
-        -!type:SatiateThirst
+        - !type:SatiateThirst
         factor: 2
-        -!type:AdjustReagent
+        - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.125
    fizziness: 0.65
