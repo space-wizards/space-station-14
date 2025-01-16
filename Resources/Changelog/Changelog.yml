@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: qwerltaz
-  changes:
-  - message: Power cables on the ground are now offset and do not obscure each other
-      or pipes beneath.
-    type: Tweak
-  id: 7319
-  time: '2024-09-09T10:00:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32000
 - author: ArtisticRoomba
   changes:
   - message: Budget insulated gloves now leave behind yellow frayed insulative fibers
@@ -3924,3 +3916,10 @@
   id: 7818
   time: '2025-01-16T08:51:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34462
+- author: pcaessayrs
+  changes:
+  - message: Uranium, Cak, and BreadDog are no longer space garbage.
+    type: Fix
+  id: 7819
+  time: '2025-01-16T11:40:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34192
