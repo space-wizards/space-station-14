@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Revenants or other mobs without hands can no longer spill jugs.
-    type: Fix
-  id: 7321
-  time: '2024-09-09T11:02:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31438
 - author: PJB3005
   changes:
   - message: The emergency shuttle will now wait at the station longer if it couldn't
@@ -3922,3 +3915,10 @@
   id: 7820
   time: '2025-01-16T12:25:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33690
+- author: Southbridge
+  changes:
+  - message: More Ionstorm law elements have been added
+    type: Add
+  id: 7821
+  time: '2025-01-16T20:49:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34197
