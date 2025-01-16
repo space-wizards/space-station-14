@@ -78,7 +78,7 @@
   parent: [ClothingUniformBase]
   id: ClothingUniformCreamSuitSkirt
   name: cream suitskirt
-  description: A suit fit for a humble, small town gentleman with something to say. 
+  description: A suit fit for a humble, small town gentleman with something to say.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpskirt/creamsuit.rsi
@@ -117,7 +117,7 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpskirt/senior_bartender.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpskirt/senior_bartender.rsi
-    
+
 - type: entity
   parent: [ClothingUniformBase]
   id: ClothingUniformBrosBlazerSkirt
@@ -139,4 +139,14 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpskirt/salvage.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpskirt/salvage.rsi
-    
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformJumpskirtCourier
+  name: courier jumpskirt
+  description: A courier uniform, with blue accents and a skirt.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/courier.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/courier.rsi

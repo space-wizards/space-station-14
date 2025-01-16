@@ -1,0 +1,11 @@
+# Impstation Mail
+
+- type: entity
+  parent: BaseMailLarge
+  id: MailGoblin
+  suffix: pumpkinpie
+  components:
+  - type: Mail
+    contents:
+    - id: FoodPiePumpkin
+
