@@ -42,6 +42,7 @@
     - ClothMade
     - WhitelistChameleon
 
+#Harmony Change: Updated Pathing for security resprite update
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretSecurity
@@ -49,9 +50,9 @@
   description: A stylish clothing option for security officers.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/beret_security.rsi
+    sprite: _Harmony/Clothing/Head/Hats/beret_security.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/beret_security.rsi
+    sprite: _Harmony/Clothing/Head/Hats/beret_security.rsi
   - type: Tag
     tags:
     - ClothMade
@@ -118,6 +119,7 @@
     - HamsterWearable
     - WhitelistChameleon
 
+# Harmony Change: Updated Sprite Pathing for Head of Staff Beret Update
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretQM
@@ -125,9 +127,9 @@
   description: A beret with the cargo's insignia emblazoned on it. For quartermasters that are more inclined towards style.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/beret_qm.rsi
+    sprite: _Harmony/Clothing/Head/Hats/beret_qm.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/beret_qm.rsi
+    sprite: _Harmony/Clothing/Head/Hats/beret_qm.rsi
   - type: Tag
     tags:
     - ClothMade
@@ -540,6 +542,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/violetwizard.rsi
 
+#Harmony Change: Updated Pathing for security resprite update
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatWarden
@@ -547,9 +550,9 @@
   description: A police officer's Hat. This hat emphasizes that you are THE LAW
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/warden.rsi
+    sprite: _Harmony/Clothing/Head/Hats/warden.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/warden.rsi
+    sprite: _Harmony/Clothing/Head/Hats/warden.rsi
   - type: StealTarget
     stealGroup: ClothingHeadHatWarden
 

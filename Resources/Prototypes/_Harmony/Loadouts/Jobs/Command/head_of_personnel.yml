@@ -24,3 +24,9 @@
   id: HoPLeatherShoesHarmony
   equipment:
     shoes: ClothingShoesLeather
+
+# Head
+- type: loadout
+  id: HoPBeretHarmony
+  equipment:
+    head: ClothingHeadHatBeretHeadofPersonnelHarmony

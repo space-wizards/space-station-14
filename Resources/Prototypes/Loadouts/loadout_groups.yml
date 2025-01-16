@@ -58,6 +58,8 @@
   - TowelColorWhite
   - TowelColorYellow
   - PlushieVox
+#deltav specific trinkets
+  - TapeRecorder
 
 - type: loadoutGroup
   id: Glasses
@@ -155,6 +157,7 @@
   minLimit: 0
   loadouts:
   - HoPHead
+  - HoPBeretHarmony # Harmony
 
 - type: loadoutGroup
   id: HoPJumpsuit
@@ -705,7 +708,8 @@
   minLimit: 0
   loadouts:
   - ChiefEngineerHead
-  - ChiefEngineerBeret
+#  - ChiefEngineerBeret
+  - CEBeretHarmony # Harmony Change
 
 - type: loadoutGroup
   id: ChiefEngineerJumpsuit
@@ -840,7 +844,8 @@
   name: loadout-group-research-director-head
   minLimit: 0
   loadouts:
-  - ResearchDirectorBeret
+#  - ResearchDirectorBeret
+  - RDBeretHarmony # Harmony Change
 
 - type: loadoutGroup
   id: ResearchDirectorNeck
@@ -959,6 +964,7 @@
   - HeadofSecurityHead
   - HeadofSecurityBeret
   - HoSWidebrimHarmony # Harmony
+  - HoSSoftHarmony # Harmony
 
 - type: loadoutGroup
   id: HeadofSecurityJumpsuit
@@ -966,11 +972,16 @@
   loadouts:
   - HeadofSecurityJumpsuit
   - HeadofSecurityJumpskirt
-  - HeadofSecurityTurtleneck
-  - HeadofSecurityTurtleneckSkirt
+  - JumpsuitHoSBlueHarmony # Harmony
+  - JumpsuitHoSGrey # Harmony
+  - JumpsuitHoSTurtleNeckHarmony # Harmony
+  - JumpskirtHoSTurtleNeckHarmony # Harmony
+# - HeadofSecurityTurtleneck
+# - HeadofSecurityTurtleneckSkirt
+  - HeadofSecurityAssaultSuit # Harmony
+  - HeadofSecurityAssaultSkirt # Harmony
   - HeadofSecurityFormalSuit
   - HeadofSecurityFormalSkirt
-  - JumpsuitHoSBlue # Harmony
 
 - type: loadoutGroup
   id: HeadofSecurityNeck
@@ -1021,6 +1032,7 @@
   - TrooperHat
   - SecurityBandanaHarmony # Harmony
   - SecurityBlueCapHarmony # Harmony
+  - SeniorOfficerBeretHarmony # Harmony
   - SecurityBlueBeretHarmony # Harmony
 
 - type: loadoutGroup

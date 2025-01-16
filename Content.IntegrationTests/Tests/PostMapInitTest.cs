@@ -66,9 +66,13 @@ namespace Content.IntegrationTests.Tests
             "Barratry", // Update of old map
             "dm01-entryway", // deathmatch PROMOD map
             "Aspid", // Pseudo playtest, not merged to upstream yet.
+			"Atlas", // Update of Atlas. Back from the grave!
             "Gate",
             "Amber",
-            "Loop"
+            "Loop",
+            "Elkridge"
+
+           
         };
 
         /// <summary>

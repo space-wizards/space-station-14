@@ -604,3 +604,8 @@
   parent: BaseCircuitboardRecipe
   id: CutterMachineCircuitboard
   result: CutterMachineCircuitboard
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: HolopadMachineCircuitboard
+  result: HolopadMachineCircuitboard

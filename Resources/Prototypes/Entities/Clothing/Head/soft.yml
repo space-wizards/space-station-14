@@ -237,7 +237,8 @@
   parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatRedsoft]
   id: ClothingHeadHatRedsoftFlipped
   name: red cap
-
+  
+#Harmony Change: Updated Pathing for security resprite update
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatSecsoft
@@ -245,9 +246,9 @@
   description: It's a robust baseball hat in tasteful red colour.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Soft/secsoft.rsi
+    sprite: _Harmony/Clothing/Head/Soft/secsoft.rsi
   - type: Clothing
-    sprite: Clothing/Head/Soft/secsoft.rsi
+    sprite: _Harmony/Clothing/Head/Soft/secsoft.rsi
 
 - type: entity
   parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatSecsoft]
