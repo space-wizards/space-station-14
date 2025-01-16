@@ -3,26 +3,26 @@
   id: CrateEmptySpawner
   parent: MarkerBase
   components:
-  - type: Sprite
-    layers:
-    - state: red
-    - sprite: Structures/Storage/Crates/generic.rsi
-      state: icon
-  - type: RandomSpawner
-    prototypes:
-    - CrateGenericSteel
-    - CratePlastic
-    - CrateFreezer
-    - CrateHydroponics
-    - CrateMedical
-    - CrateRadiation
-    - CrateInternals
-    - CrateElectrical
-    - CrateEngineering
-    - CrateScience
-    - CrateSurgery
-    chance: 0.7
-    offset: 0.0
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Structures/Storage/Crates/generic.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+        - CrateGenericSteel
+        - CratePlastic
+        - CrateFreezer
+        - CrateHydroponics
+        - CrateMedical
+        - CrateRadiation
+        - CrateInternals
+        - CrateElectrical
+        - CrateEngineering
+        - CrateScience
+        - CrateSurgery
+      chance: 0.7
+      offset: 0.0
 
 - type: entity
   name: Filled Crate Spawner
@@ -30,112 +30,109 @@
   suffix: Low Value
   parent: MarkerBase
   components:
-  - type: Sprite
-    layers:
-    - state: red
-    - sprite: Structures/Storage/Crates/o2.rsi
-      state: icon
-  - type: RandomSpawner
-    prototypes:
-    - CrateServiceReplacementLights
-    - CrateServiceBureaucracy
-    - CrateChemistrySupplies
-    - CrateMaterialGlass
-    - CrateMaterialSteel
-    - CrateMaterialPlastic
-    - CrateMaterialWood
-    - CrateMaterialPlasteel
-    - CrateMaterialRandom
-    - CrateFunArtSupplies
-    - CrateEngineeringCableLV
-    - CrateEngineeringCableMV
-    - CrateEngineeringCableHV
-    - CrateEngineeringCableBulk
-    - CrateTechBoardRandom
-    - CrateEmergencyFire
-    - CrateEmergencyInternals
-    - CrateEmergencyInflatablewall
-    - CrateHydroponicsTools
-    - CrateHydroponicsSeeds
-    - PetCarrier
-    chance: 0.7
-    rarePrototypes:
-    - CrateMaterialPlasma
-    - CrateHydroponicsSeedsExotic
-    rareChance: 0.1
-    offset: 0.0
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Structures/Storage/Crates/o2.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+        - CrateServiceReplacementLights
+        - CrateServiceBureaucracy
+        - CrateChemistrySupplies
+        - CrateMaterialGlass
+        - CrateMaterialSteel
+        - CrateMaterialPlastic
+        - CrateMaterialWood
+        - CrateMaterialPlasteel
+        - CrateFunArtSupplies
+        - CrateEngineeringCableLV
+        - CrateEngineeringCableMV
+        - CrateEngineeringCableHV
+        - CrateEngineeringCableBulk
+        - CrateEmergencyFire
+        - CrateEmergencyInternals
+        - CrateEmergencyInflatablewall
+        - CrateHydroponicsTools
+        - CrateHydroponicsSeeds
+      chance: 0.7
+      rarePrototypes:
+        - CrateMaterialPlasma
+        - CrateHydroponicsSeedsExotic
+      rareChance: 0.1
+      offset: 0.0
 
 - type: entity
   name: random engineering crate spawner
   id: LootSpawnerRandomCrateEngineering
   parent: MarkerBase
   components:
-  - type: Sprite
-    layers:
-    - state: red
-    - sprite: Structures/Storage/Crates/engineering.rsi
-      state: icon
-  - type: RandomSpawner
-    rarePrototypes:
-    - CrateEngineeringSingularityGenerator
-    - CrateEngineeringTeslaGenerator
-    - CrateEngineeringTeslaGroundingRod
-    - CrateEngineeringParticleAccelerator
-    - CrateRCD
-    - CrateEngineeringGear
-    rareChance: 0.2
-    prototypes:
-    - CrateEngineering
-    - CrateElectrical
-    - CrateEngineeringElectricalSupplies
-    - CrateRCDAmmo
-    - CrateEngineeringCableLV
-    - CrateEngineeringCableMV
-    - CrateEngineeringCableHV
-    - CrateEngineeringCableBulk
-    - CrateEngineeringSingularityContainment
-    - CrateEngineeringSingularityCollector
-    - CrateEngineeringTeslaCoil
-    - CrateEngineeringSingularityEmitter
-    - CrateEngineeringGyroscope
-    - CrateEngineeringThruster
-    - CrateEngineeringToolbox
-    - CrateEngineeringShuttle
-    - CrateEngineeringSolar
-    - CrateEngineeringJetpack
-    - CrateEmergencyRadiation
-    - CrateRadiation
-    chance: 0.9
-    offset: 0.0
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Structures/Storage/Crates/engineering.rsi
+          state: icon
+    - type: RandomSpawner
+      rarePrototypes:
+        - CrateEngineeringSingularityGenerator
+        - CrateEngineeringTeslaGenerator
+        - CrateEngineeringTeslaGroundingRod
+        - CrateEngineeringParticleAccelerator
+        - CrateRCD
+        - CrateEngineeringGear
+      rareChance: 0.2
+      prototypes:
+        - CrateEngineering
+        - CrateElectrical
+        - CrateEngineeringElectricalSupplies
+        - CrateRCDAmmo
+        - CrateEngineeringCableLV
+        - CrateEngineeringCableMV
+        - CrateEngineeringCableHV
+        - CrateEngineeringCableBulk
+        - CrateEngineeringSingularityContainment
+        - CrateEngineeringSingularityCollector
+        - CrateEngineeringTeslaCoil
+        - CrateEngineeringSingularityEmitter
+        - CrateEngineeringGyroscope
+        - CrateEngineeringThruster
+        - CrateEngineeringToolbox
+        - CrateEngineeringShuttle
+        - CrateEngineeringSolar
+        - CrateEngineeringJetpack
+        - CrateEmergencyRadiation
+        - CrateRadiation
+      chance: 0.9
+      offset: 0.0
 
 - type: entity
   name: random security crate spawner
   id: LootSpawnerRandomCrateSecurity
   parent: MarkerBase
   components:
-  - type: Sprite
-    layers:
-    - state: red
-    - sprite: Structures/Storage/Crates/sec_gear.rsi
-      state: icon
-  - type: RandomSpawner
-    rarePrototypes: #Very useful stuff we probably don't want random people getting on space ruins often, even if there are hurdles to open it
-    - CrateArmoryShotgun
-    - CrateArmorySMG
-    - CrateSecurityRiot
-    - CrateSecurityNonlethal
-    rareChance: 0.1
-    prototypes:
-    - CrateWeaponSecure
-    - CrateArmoryLaser
-    - CrateArmoryPistols
-    - CrateTrainingBombs
-    - CrateTrackingImplants
-    - CrateSecurityTrackingMindshieldImplants
-    - CrateSecurityHelmet
-    - CrateSecurityArmor
-    - CrateRestraints
-    - CrateEmergencyExplosive
-    - CrateSecurityBiosuit
-    chance: 0.9
-    offset: 0.0
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Structures/Storage/Crates/sec_gear.rsi
+          state: icon
+    - type: RandomSpawner
+      rarePrototypes: #Very useful stuff we probably don't want random people getting on space ruins often, even if there are hurdles to open it
+        - CrateArmoryShotgun
+        - CrateArmorySMG
+        - CrateSecurityRiot
+        - CrateSecurityNonlethal
+      rareChance: 0.1
+      prototypes:
+        - CrateWeaponSecure
+        - CrateArmoryLaser
+        - CrateArmoryPistols
+        - CrateTrainingBombs
+        - CrateTrackingImplants
+        - CrateSecurityTrackingMindshieldImplants
+        - CrateSecurityHelmet
+        - CrateSecurityArmor
+        - CrateRestraints
+        - CrateEmergencyExplosive
+        - CrateSecurityBiosuit
+      chance: 0.9
+      offset: 0.0

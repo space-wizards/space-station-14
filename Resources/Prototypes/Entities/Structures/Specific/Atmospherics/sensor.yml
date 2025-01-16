@@ -17,7 +17,7 @@
       pressureThresholdId: stationPressure
       gasThresholdPrototypes:
         Oxygen: stationOxygen
-        Nitrogen: stationNitrogen
+        Nitrogen: ignore
         CarbonDioxide: stationCO2
         Plasma: stationPlasma
         Tritium: stationTritium

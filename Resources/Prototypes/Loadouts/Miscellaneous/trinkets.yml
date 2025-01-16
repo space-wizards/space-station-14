@@ -155,12 +155,6 @@
     - ClothingNeckPansexualPin
 
 - type: loadout
-  id: ClothingNeckOmnisexualPin
-  storage:
-    back:
-    - ClothingNeckOmnisexualPin
-
-- type: loadout
   id: ClothingNeckTransPin
   storage:
     back:

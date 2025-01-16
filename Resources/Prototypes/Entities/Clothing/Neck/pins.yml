@@ -113,17 +113,6 @@
 
 - type: entity
   parent: ClothingNeckPinBase
-  id: ClothingNeckOmnisexualPin
-  name: omnisexual pin
-  description: Be omni do crime.
-  components:
-  - type: Sprite
-    state: omni
-  - type: Clothing
-    equippedPrefix: omni
-
-- type: entity
-  parent: ClothingNeckPinBase
   id: ClothingNeckTransPin
   name: transgender pin
   description: Be trans do crime.
@@ -132,7 +121,7 @@
     state: trans
   - type: Clothing
     equippedPrefix: trans
-
+ 
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckAutismPin

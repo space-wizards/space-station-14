@@ -64,8 +64,3 @@
   - type: Item
     size: Ginormous
     sprite: Objects/Storage/petcarrier.rsi
-  - type: Construction
-    graph: PetCarrier
-    node: petCarrier
-    containers:
-    - entity_storage

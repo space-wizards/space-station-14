@@ -235,7 +235,7 @@ public sealed class NukeSystem : EntitySystem
 
     private void OnClearButtonPressed(EntityUid uid, NukeComponent component, NukeKeypadClearMessage args)
     {
-        _audio.PlayPvs(component.KeypadPressSound, uid);
+        _audio.PlayEntity(component.KeypadPressSound, Filter.Pvs(uid), uid, true);
 
         if (component.Status != NukeStatus.AWAIT_CODE)
             return;
@@ -351,12 +351,12 @@ public sealed class NukeSystem : EntitySystem
                 {
                     component.Status = NukeStatus.AWAIT_ARM;
                     component.RemainingTime = component.Timer;
-                    _audio.PlayPvs(component.AccessGrantedSound, uid);
+                    _audio.PlayEntity(component.AccessGrantedSound, Filter.Pvs(uid), uid, true);
                 }
                 else
                 {
                     component.EnteredCode = "";
-                    _audio.PlayPvs(component.AccessDeniedSound, uid);
+                    _audio.PlayEntity(component.AccessDeniedSound, Filter.Pvs(uid), uid, true);
                 }
 
                 break;
@@ -425,9 +425,7 @@ public sealed class NukeSystem : EntitySystem
         // Don't double-dip on the octave shifting
         component.LastPlayedKeypadSemitones = number == 0 ? component.LastPlayedKeypadSemitones : semitoneShift;
 
-        var opts = component.KeypadPressSound.Params;
-        opts = AudioHelpers.ShiftSemitone(opts, semitoneShift).AddVolume(-5f);
-        _audio.PlayPvs(component.KeypadPressSound, uid, opts);
+        _audio.PlayEntity(component.KeypadPressSound, Filter.Pvs(uid), uid, true, AudioHelpers.ShiftSemitone(semitoneShift).WithVolume(-5f));
     }
 
     public string GenerateRandomNumberString(int length)

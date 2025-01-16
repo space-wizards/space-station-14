@@ -6,7 +6,6 @@
         "x": 550,
         "y": 410
     },
-    "metaAtlas": false,
     "states": [
         {
             "name": "backgammonBoard"

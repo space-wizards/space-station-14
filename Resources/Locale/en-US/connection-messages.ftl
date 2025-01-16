@@ -35,6 +35,7 @@ whitelist-manual = You are not whitelisted on this server.
 whitelist-blacklisted = You are blacklisted from this server.
 whitelist-always-deny = You are not allowed to join this server.
 whitelist-fail-prefix = Not whitelisted: {$msg}
+whitelist-misconfigured = The server is misconfigured and is not accepting players. Please contact the server owner and try again later.
 
 cmd-blacklistadd-desc = Adds the player with the given username to the server blacklist.
 cmd-blacklistadd-help = Usage: blacklistadd <username>
@@ -54,9 +55,3 @@ baby-jail-account-denied = This server is a newbie server, intended for new play
 baby-jail-account-denied-reason = This server is a newbie server, intended for new players and those who want to help them. New connections by accounts that are too old or are not on a whitelist are not accepted. Check out some other servers and see everything Space Station 14 has to offer. Have fun! Reason: "{$reason}"
 baby-jail-account-reason-account = Your Space Station 14 account is too old. It must be younger than {$minutes} minutes
 baby-jail-account-reason-overall = Your overall playtime on the server must be younger than {$minutes} $minutes
-
-generic-misconfigured = The server is misconfigured and is not accepting players. Please contact the server owner and try again later.
-
-ipintel-server-ratelimited = This server uses a security system with external verification, which has reached its maximum verification limit. Please contact the administration team of the server for assistance and try again later.
-ipintel-unknown = This server uses a security system with external verification, but it encountered an error. Please contact the administration team of the server for assistance and try again later.
-ipintel-suspicious = You seem to be connecting through a datacenter or VPN. For administrative reasons we do not allow VPN connections to play. Please contact the administration team of the server for assistance if you believe this is false.

@@ -101,25 +101,22 @@ public sealed class PaperSystem : EntitySystem
     {
         // only allow editing if there are no stamps or when using a cyberpen
         var editable = entity.Comp.StampedBy.Count == 0 || _tagSystem.HasTag(args.Used, "WriteIgnoreStamps");
-        if (_tagSystem.HasTag(args.Used, "Write"))
+        if (_tagSystem.HasTag(args.Used, "Write") && editable)
         {
-            if (editable)
+            if (entity.Comp.EditingDisabled)
             {
-                if (entity.Comp.EditingDisabled)
-                {
-                    var paperEditingDisabledMessage = Loc.GetString("paper-tamper-proof-modified-message");
-                    _popupSystem.PopupEntity(paperEditingDisabledMessage, entity, args.User);
+                var paperEditingDisabledMessage = Loc.GetString("paper-tamper-proof-modified-message");
+                _popupSystem.PopupEntity(paperEditingDisabledMessage, entity, args.User);
 
-                    args.Handled = true;
-                    return;
-                }
-                var writeEvent = new PaperWriteEvent(entity, args.User);
-                RaiseLocalEvent(args.Used, ref writeEvent);
-
-                entity.Comp.Mode = PaperAction.Write;
-                _uiSystem.OpenUi(entity.Owner, PaperUiKey.Key, args.User);
-                UpdateUserInterface(entity);
+                args.Handled = true;
+                return;
             }
+            var writeEvent = new PaperWriteEvent(entity, args.User);
+            RaiseLocalEvent(args.Used, ref writeEvent);
+
+            entity.Comp.Mode = PaperAction.Write;
+            _uiSystem.OpenUi(entity.Owner, PaperUiKey.Key, args.User);
+            UpdateUserInterface(entity);
             args.Handled = true;
             return;
         }

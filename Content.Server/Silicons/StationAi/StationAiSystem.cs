@@ -43,10 +43,10 @@ public sealed class StationAiSystem : SharedStationAiSystem
             var stationAiCore = new Entity<StationAiCoreComponent>(ent, entStationAiCore);
 
             if (!TryGetInsertedAI(stationAiCore, out var insertedAi) || !TryComp(insertedAi, out ActorComponent? actor))
-                continue;
+                return;
 
             if (stationAiCore.Comp.RemoteEntity == null || stationAiCore.Comp.Remote)
-                continue;
+                return;
 
             var xform = Transform(stationAiCore.Comp.RemoteEntity.Value);
 

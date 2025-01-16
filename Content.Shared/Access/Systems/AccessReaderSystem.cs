@@ -113,25 +113,25 @@ public sealed class AccessReaderSystem : EntitySystem
         return false;
     }
 
-    public bool GetMainAccessReader(EntityUid uid, [NotNullWhen(true)] out Entity<AccessReaderComponent>? ent)
+    public bool GetMainAccessReader(EntityUid uid, [NotNullWhen(true)] out AccessReaderComponent? component)
     {
-        ent = null;
-        if (!TryComp<AccessReaderComponent>(uid, out var accessReader))
+        component = null;
+        if (!TryComp(uid, out AccessReaderComponent? accessReader))
             return false;
 
-        ent = (uid, accessReader);
+        component = accessReader;
 
-        if (ent.Value.Comp.ContainerAccessProvider == null)
+        if (component.ContainerAccessProvider == null)
             return true;
 
-        if (!_containerSystem.TryGetContainer(uid, ent.Value.Comp.ContainerAccessProvider, out var container))
+        if (!_containerSystem.TryGetContainer(uid, component.ContainerAccessProvider, out var container))
             return true;
 
         foreach (var entity in container.ContainedEntities)
         {
-            if (TryComp<AccessReaderComponent>(entity, out var containedReader))
+            if (TryComp(entity, out AccessReaderComponent? containedReader))
             {
-                ent = (entity, containedReader);
+                component = containedReader;
                 return true;
             }
         }

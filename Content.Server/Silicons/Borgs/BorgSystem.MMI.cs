@@ -1,7 +1,5 @@
-﻿using Content.Server.Roles;
-using Content.Shared.Containers.ItemSlots;
+﻿using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mind.Components;
-using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Containers;
 
@@ -10,9 +8,6 @@ namespace Content.Server.Silicons.Borgs;
 /// <inheritdoc/>
 public sealed partial class BorgSystem
 {
-
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
-
     public void InitializeMMI()
     {
         SubscribeLocalEvent<MMIComponent, ComponentInit>(OnMMIInit);
@@ -46,12 +41,7 @@ public sealed partial class BorgSystem
         Dirty(uid, component);
 
         if (_mind.TryGetMind(ent, out var mindId, out var mind))
-        {
             _mind.TransferTo(mindId, uid, true, mind: mind);
-
-            if (!_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
-                _roles.MindAddRole(mindId, "MindRoleSiliconBrain", silent: true);
-        }
 
         _appearance.SetData(uid, MMIVisuals.BrainPresent, true);
     }
@@ -85,12 +75,7 @@ public sealed partial class BorgSystem
         RemComp(uid, component);
 
         if (_mind.TryGetMind(linked, out var mindId, out var mind))
-        {
-            if (_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
-                _roles.MindRemoveRole<SiliconBrainRoleComponent>(mindId);
-
             _mind.TransferTo(mindId, uid, true, mind: mind);
-        }
 
         _appearance.SetData(linked, MMIVisuals.BrainPresent, false);
     }

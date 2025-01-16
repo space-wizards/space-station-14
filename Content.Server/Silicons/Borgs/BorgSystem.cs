@@ -5,6 +5,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Hands.Systems;
 using Content.Server.PowerCell;
+using Content.Shared.Access.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
@@ -292,11 +293,8 @@ public sealed partial class BorgSystem : SharedBorgSystem
     public void BorgActivate(EntityUid uid, BorgChassisComponent component)
     {
         Popup.PopupEntity(Loc.GetString("borg-mind-added", ("name", Identity.Name(uid, EntityManager))), uid);
-        if (_powerCell.HasDrawCharge(uid))
-        {
-            Toggle.TryActivate(uid);
-            _powerCell.SetDrawEnabled(uid, _mobState.IsAlive(uid));
-        }
+        Toggle.TryActivate(uid);
+        _powerCell.SetDrawEnabled(uid, _mobState.IsAlive(uid));
         _appearance.SetData(uid, BorgVisuals.HasPlayer, true);
     }
 

@@ -22,7 +22,7 @@
     - AnomalyFlora
     - AnomalyShadow
     - AnomalyTech
-    #- AnomalySanta 
+    - AnomalySanta #Remove in 2025
     rareChance: 0.3
     rarePrototypes:
     - RandomAnomalyInjectorSpawner
@@ -67,6 +67,6 @@
     - AnomalyTrapGravity
     - AnomalyTrapTech
     - AnomalyTrapRock
-    #- AnomalyTrapSanta
+    - AnomalyTrapSanta # Remove in 2025
     chance: 1
   

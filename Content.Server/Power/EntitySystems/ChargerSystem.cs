@@ -223,10 +223,10 @@ internal sealed class ChargerSystem : EntitySystem
         if (container.ContainedEntities.Count == 0)
             return CellChargerStatus.Empty;
 
-        if (!SearchForBattery(container.ContainedEntities[0], out var heldEnt, out var heldBattery))
+        if (!SearchForBattery(container.ContainedEntities[0], out _, out var heldBattery))
             return CellChargerStatus.Off;
 
-        if (_battery.IsFull(heldEnt.Value, heldBattery))
+        if (Math.Abs(heldBattery.MaxCharge - heldBattery.CurrentCharge) < 0.01)
             return CellChargerStatus.Charged;
 
         return CellChargerStatus.Charging;
@@ -247,6 +247,12 @@ internal sealed class ChargerSystem : EntitySystem
             return;
 
         _battery.SetCharge(batteryUid.Value, heldBattery.CurrentCharge + component.ChargeRate * frameTime, heldBattery);
+        // Just so the sprite won't be set to 99.99999% visibility
+        if (heldBattery.MaxCharge - heldBattery.CurrentCharge < 0.01)
+        {
+            _battery.SetCharge(batteryUid.Value, heldBattery.MaxCharge, heldBattery);
+        }
+
         UpdateStatus(uid, component);
     }
 

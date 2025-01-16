@@ -88,9 +88,8 @@ namespace Content.Client.Access.UI
                 button.Disabled = !interfaceEnabled;
                 if (interfaceEnabled)
                 {
-                    // Explicit cast because Rider gives a false error otherwise.
-                    button.Pressed = state.TargetAccessReaderIdAccessList?.Contains((ProtoId<AccessLevelPrototype>) accessName) ?? false;
-                    button.Disabled = (!state.AllowedModifyAccessList?.Contains((ProtoId<AccessLevelPrototype>) accessName)) ?? true;
+                    button.Pressed = state.TargetAccessReaderIdAccessList?.Contains(accessName) ?? false;
+                    button.Disabled = (!state.AllowedModifyAccessList?.Contains(accessName)) ?? true;
                 }
             }
         }

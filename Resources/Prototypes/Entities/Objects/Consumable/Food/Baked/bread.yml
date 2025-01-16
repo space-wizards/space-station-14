@@ -937,26 +937,9 @@
 - type: entity
   name: bread dog
   id: MobBreadDog
-  parent: EdibleBase
+  parent: FoodBreadSausage
   description: It's a bread. It's a dog. It's a... breaddog?
   components:
-  - type: FlavorProfile
-    flavors:
-    - meaty
-    - bread
-  - type: SliceableFood
-    slice: FoodBreadSausageSlice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 45
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 5
-        - ReagentId: Protein
-          Quantity: 5
   - type: Sprite
     noRot: true
     drawdepth: Mobs
@@ -1001,7 +984,6 @@
     - VimPilot
     - DoorBumpOpener
     - Bread
-    - Meat
   - type: CanEscapeInventory
     baseResistTime: 2
   - type: Puller

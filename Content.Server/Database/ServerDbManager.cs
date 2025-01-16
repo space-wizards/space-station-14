@@ -217,16 +217,6 @@ namespace Content.Server.Database
         Task AddAdminAsync(Admin admin, CancellationToken cancel = default);
         Task UpdateAdminAsync(Admin admin, CancellationToken cancel = default);
 
-        /// <summary>
-        /// Update whether an admin has voluntarily deadminned.
-        /// </summary>
-        /// <remarks>
-        /// This does nothing if the player is not an admin.
-        /// </remarks>
-        /// <param name="userId">The user ID of the admin.</param>
-        /// <param name="deadminned">Whether the admin is deadminned or not.</param>
-        Task UpdateAdminDeadminnedAsync(NetUserId userId, bool deadminned, CancellationToken cancel = default);
-
         Task RemoveAdminRankAsync(int rankId, CancellationToken cancel = default);
         Task AddAdminRankAsync(AdminRank rank, CancellationToken cancel = default);
         Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default);
@@ -329,14 +319,6 @@ namespace Content.Server.Database
         Task<bool> IsJobWhitelisted(Guid player, ProtoId<JobPrototype> job);
 
         Task<bool> RemoveJobWhitelist(Guid player, ProtoId<JobPrototype> job);
-
-        #endregion
-
-        #region IPintel
-
-        Task<bool> UpsertIPIntelCache(DateTime time, IPAddress ip, float score);
-        Task<IPIntelCache?> GetIPIntelCache(IPAddress ip);
-        Task<bool> CleanIPIntelCache(TimeSpan range);
 
         #endregion
 
@@ -684,12 +666,6 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.UpdateAdminAsync(admin, cancel));
         }
 
-        public Task UpdateAdminDeadminnedAsync(NetUserId userId, bool deadminned, CancellationToken cancel = default)
-        {
-            DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.UpdateAdminDeadminnedAsync(userId, deadminned, cancel));
-        }
-
         public Task RemoveAdminRankAsync(int rankId, CancellationToken cancel = default)
         {
             DbWriteOpsMetric.Inc();
@@ -1013,23 +989,6 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.RemoveJobWhitelist(player, job));
-        }
-
-        public Task<bool> UpsertIPIntelCache(DateTime time, IPAddress ip, float score)
-        {
-            DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.UpsertIPIntelCache(time, ip, score));
-        }
-
-        public Task<IPIntelCache?> GetIPIntelCache(IPAddress ip)
-        {
-            return RunDbCommand(() => _db.GetIPIntelCache(ip));
-        }
-
-        public Task<bool> CleanIPIntelCache(TimeSpan range)
-        {
-            DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.CleanIPIntelCache(range));
         }
 
         public void SubscribeToNotifications(Action<DatabaseNotification> handler)

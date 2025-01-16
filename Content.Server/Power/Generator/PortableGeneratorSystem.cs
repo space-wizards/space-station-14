@@ -117,7 +117,7 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         var clogged = _generator.GetIsClogged(uid);
 
         var sound = empty ? component.StartSoundEmpty : component.StartSound;
-        _audio.PlayPvs(sound, uid);
+        _audio.PlayEntity(sound, Filter.Pvs(uid), uid, true);
 
         if (!clogged && !empty && _random.Prob(component.StartChance))
         {

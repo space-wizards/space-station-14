@@ -201,7 +201,7 @@
     definitions:
     - prefRoles: [ Traitor ]
       mindRoles:
-      - MindRoleTraitorReinforcement
+      - MindRoleTraitor
 
 - type: entity
   id: Revolutionary

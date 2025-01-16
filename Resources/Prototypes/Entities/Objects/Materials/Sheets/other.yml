@@ -196,7 +196,7 @@
     count: 1
 
 - type: entity
-  parent: [SheetOtherBase, EdibleBase]
+  parent: [SheetOtherBase, FoodBase]
   id: SheetUranium
   name: uranium
   suffix: Full

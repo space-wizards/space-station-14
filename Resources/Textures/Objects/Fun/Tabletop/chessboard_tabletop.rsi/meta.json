@@ -6,7 +6,6 @@
         "x": 274,
         "y": 274
     },
-    "metaAtlas": false,
     "states": [
         {
             "name": "chessboard_tabletop"

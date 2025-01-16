@@ -696,25 +696,9 @@
 - type: entity
   name: cak
   id: MobCatCake
-  parent: EdibleBase
+  parent: FoodCakeBase
   description: It's a cake. It's a cat. It's a cak.
   components:
-  - type: FlavorProfile
-    flavors:
-    - sweet
-  - type: InjectableSolution
-    solution: food
-  - type: RefillableSolution
-    solution: food
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 20
-        - ReagentId: Vitamin
-          Quantity: 5
   - type: Sprite
     noRot: true
     drawdepth: Mobs

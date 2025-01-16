@@ -1,13 +1,11 @@
-﻿using Content.Shared.Roles;
-
-namespace Content.Server.Roles;
+﻿namespace Content.Server.Roles;
 
 /// <summary>
 /// Adds a briefing to the character info menu, does nothing else.
 /// </summary>
 [RegisterComponent]
-public sealed partial class RoleBriefingComponent : BaseMindRoleComponent
+public sealed partial class RoleBriefingComponent : Component
 {
-    [DataField]
+    [DataField("briefing"), ViewVariables(VVAccess.ReadWrite)]
     public string Briefing;
 }

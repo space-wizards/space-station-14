@@ -18,7 +18,6 @@ namespace Content.Shared.Administration
             public NetUserId UserId;
             public string? UserName;
             public string? Title;
-            public bool Suspended;
             public AdminFlags PosFlags;
             public AdminFlags NegFlags;
             public int? RankId;
@@ -42,7 +41,6 @@ namespace Content.Shared.Administration
             public AdminFlags PosFlags;
             public AdminFlags NegFlags;
             public int? RankId;
-            public bool Suspended;
         }
 
         [Serializable, NetSerializable]
@@ -59,7 +57,6 @@ namespace Content.Shared.Administration
             public AdminFlags PosFlags;
             public AdminFlags NegFlags;
             public int? RankId;
-            public bool Suspended;
         }
 
 

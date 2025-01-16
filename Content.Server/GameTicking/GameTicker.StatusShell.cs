@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Text.Json.Nodes;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
@@ -44,11 +43,15 @@ namespace Content.Server.GameTicking
                 jObject["name"] = _baseServer.ServerName;
                 jObject["map"] = _gameMapManager.GetSelectedMap()?.MapName;
                 jObject["round_id"] = _gameTicker.RoundId;
-                jObject["players"] = _cfg.GetCVar(CCVars.AdminsCountInReportedPlayerCount)
-                    ? _playerManager.PlayerCount
-                    : _playerManager.PlayerCount - _adminManager.ActiveAdmins.Count();
+                jObject["players"] = _playerManager.PlayerCount;
                 jObject["soft_max_players"] = _cfg.GetCVar(CCVars.SoftMaxPlayers);
                 jObject["panic_bunker"] = _cfg.GetCVar(CCVars.PanicBunkerEnabled);
+
+                /*
+                 * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
+                 */
+
+                jObject["baby_jail"] = _cfg.GetCVar(CCVars.BabyJailEnabled);
                 jObject["run_level"] = (int) _runLevel;
                 if (preset != null)
                     jObject["preset"] = Loc.GetString(preset.ModeTitle);

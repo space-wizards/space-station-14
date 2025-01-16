@@ -19,25 +19,10 @@ public sealed class JobSystem : SharedJobSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RoleAddedEvent>(OnRoleAddedEvent);
-        SubscribeLocalEvent<RoleRemovedEvent>(OnRoleRemovedEvent);
+        SubscribeLocalEvent<MindComponent, MindRoleAddedEvent>(MindOnDoGreeting);
     }
 
-    private void OnRoleAddedEvent(RoleAddedEvent args)
-    {
-        MindOnDoGreeting(args.MindId, args.Mind, args);
-
-        if (args.RoleTypeUpdate)
-            _roles.RoleUpdateMessage(args.Mind);
-    }
-
-    private void OnRoleRemovedEvent(RoleRemovedEvent args)
-    {
-        if (args.RoleTypeUpdate)
-            _roles.RoleUpdateMessage(args.Mind);
-    }
-
-    private void MindOnDoGreeting(EntityUid mindId, MindComponent component, RoleAddedEvent args)
+    private void MindOnDoGreeting(EntityUid mindId, MindComponent component, ref MindRoleAddedEvent args)
     {
         if (args.Silent)
             return;

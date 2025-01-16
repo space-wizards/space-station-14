@@ -586,6 +586,12 @@
 
 - type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
+  id: StationAnchorCircuitboard
+  result: StationAnchorCircuitboard
+  completetime: 8
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
   id: ReagentGrinderIndustrialMachineCircuitboard
   result: ReagentGrinderIndustrialMachineCircuitboard
 

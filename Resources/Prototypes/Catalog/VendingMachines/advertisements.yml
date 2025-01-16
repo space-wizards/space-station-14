@@ -83,21 +83,15 @@
     count: 8
 
 - type: localizedDataset
-  id: DrGibbAds
-  values:
-    prefix: advertisement-gibb-
-    count: 8
-
-- type: localizedDataset
-  id: SmiteAds
-  values:
-    prefix: advertisement-smite-
-    count: 8
-
-- type: localizedDataset
   id: BodaAds
   values:
     prefix: advertisement-sovietsoda-
+    count: 8
+
+- type: localizedDataset
+  id: DrGibbAds
+  values:
+    prefix: advertisement-gibb-
     count: 8
 
 - type: localizedDataset
@@ -134,6 +128,12 @@
   id: StarkistAds
   values:
     prefix: advertisement-starkist-
+    count: 8
+
+- type: localizedDataset
+  id: SmiteAds
+  values:
+    prefix: advertisement-smite-
     count: 8
 
 - type: localizedDataset
@@ -291,6 +291,12 @@
   values:
     prefix: advertisement-snack-
     count: 15
+
+- type: localizedDataset
+  id: BodaAds
+  values:
+    prefix: advertisement-sovietsoda-
+    count: 6
 
 - type: localizedDataset
   id: SyndieDrobeAds

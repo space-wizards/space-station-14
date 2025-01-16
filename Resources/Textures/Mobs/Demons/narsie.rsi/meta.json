@@ -6,7 +6,6 @@
   },
   "license": "CC-BY-SA-3.0",
   "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/b44fcdedfb7c7d8425bd75b9caf71644a86375d1/icons/obj/antags/cult/narsie.dmi",
-  "metaAtlas": false,
   "states": [
     {
       "name": "narsie",
