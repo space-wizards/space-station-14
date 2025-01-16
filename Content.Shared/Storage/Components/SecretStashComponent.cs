@@ -34,14 +34,6 @@ namespace Content.Shared.Storage.Components
         public EntityWhitelist? Blacklist;
 
         /// <summary>
-        /// imp edit
-        /// there's no way to make a secret stash non-closeable
-        /// so i will simply shitcode
-        /// </summary>
-        [DataField, ViewVariables(VVAccess.ReadWrite)]
-        public ProtoId<ToolQualityPrototype> NoneQuality = "None";
-
-        /// <summary>
         ///     This sound will be played when you try to insert an item in the stash.
         ///     The sound will be played whether or not the item is actually inserted.
         /// </summary>
