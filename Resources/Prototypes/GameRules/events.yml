@@ -39,7 +39,7 @@
     - id: LoneOpsSpawn
     - id: DerelictCyborgSpawn
 
-    - id: LoneAbductorSpawn # Starlight
+    - id: AbductorsSpawn # Starlight
     
 - type: entity
   id: BaseStationEvent
