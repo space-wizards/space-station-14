@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Derotated Atlas from the map pool for the time being.
-    type: Remove
-  id: 440
-  time: '2024-11-03T22:38:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/605
 - author: Sha-Seng
   changes:
   - message: Spationaut Hardsuit helmet now displays properly on vox
@@ -4498,3 +4491,12 @@
   id: 939
   time: '2025-01-16T09:40:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1384
+- author: kipdotnet
+  changes:
+  - message: Fixed the Courier hardsuit locker having no access reader.
+    type: Tweak
+  - message: Added a mailroom and bathroom to Banana.
+    type: Tweak
+  id: 940
+  time: '2025-01-16T10:08:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1385
