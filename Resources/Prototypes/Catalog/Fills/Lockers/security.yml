@@ -149,7 +149,7 @@
   - type: StorageFill
     contents:
     - id: WeaponDisabler
-      amount: 6
+      amount: 5
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseRestrictedContraband]
