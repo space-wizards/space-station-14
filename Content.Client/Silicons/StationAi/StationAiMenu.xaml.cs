@@ -44,6 +44,11 @@ public sealed partial class StationAiMenu : RadialMenu
     {
         var ev = new GetStationAiRadialEvent();
         _entManager.EventBus.RaiseLocalEvent(_tracked, ref ev);
+        if (ev.Actions.Count == 0)
+        {
+            Close(); // todo: move accumulation of buttons to BUI and put popup with feedback there
+            return;
+        }
 
         var main = FindControl<RadialContainer>("Main");
         main.DisposeAllChildren();
