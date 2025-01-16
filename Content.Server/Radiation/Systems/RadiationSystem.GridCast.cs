@@ -145,7 +145,7 @@ public partial class RadiationSystem
 
         // will it even reach destination considering distance penalty
         var rads = source.Intensity - source.Slope * dist;
-        if (rads <= MinIntensity)
+        if (rads < MinIntensity)
             return null;
 
         // create a new radiation ray from source to destination
