@@ -43,7 +43,7 @@
       weight: 45
     - id: VendingMachineWinter
       weight: 40
-#    - id: VendingMachinePride
+#    - id: VendingMachinePride # GreyStation - Removed
 #      weight: 10
     - id: VendingMachineTheater
       weight: 15
