@@ -7,6 +7,6 @@ advertisement-cola-6 = Spessy the Space Cadet says "Drink up!"
 advertisement-cola-7 = 42% more sugar than competing brands!
 advertisement-cola-8 = Way better than Dr. Gibb!
 thankyou-cola-1 = Enjoy the sugar rush!
-thankyou-cola-2 = Welcome to the club Space Cadet!
+thankyou-cola-2 = Welcome to the club, Space Cadet!
 thankyou-cola-3 = I hope you like sugar!
 thankyou-cola-4 = Thirst spaced!
