@@ -1045,9 +1045,6 @@
   id: Pizza
 
 - type: Tag
-  id: PlantAnalyzer
-
-- type: Tag
   id: PlantBGone
 
 - type: Tag

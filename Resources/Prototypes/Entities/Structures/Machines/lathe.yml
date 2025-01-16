@@ -365,6 +365,7 @@
       - OreBagOfHolding
       - DeviceQuantumSpinInverter
       - CleanerGrenade #imp addition
+      - PlantAnalyzer #NF addition
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - BoxBeanbag

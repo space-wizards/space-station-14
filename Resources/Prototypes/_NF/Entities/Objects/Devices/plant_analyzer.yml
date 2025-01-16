@@ -1,0 +1,65 @@
+- type: entity
+  name: plant analyzer
+  parent: BaseItem
+  id: BasePlantAnalyzer
+  description: A handheld device that allows you to scan seeds and plants to get detailed information about their genes.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Devices/plant_analyzer.rsi
+    layers:
+    - state: plantanalyzer
+    - state: unlit
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+      shader: unshaded
+  - type: Item
+    storedRotation: -90
+  - type: ActivatableUI
+    key: enum.PlantAnalyzerUiKey.Key
+    inHandsOnly: true
+  - type: UserInterface
+    interfaces:
+      enum.PlantAnalyzerUiKey.Key:
+        type: PlantAnalyzerBoundUserInterface
+  - type: PlantAnalyzer
+    settings:
+      scanDelay: 10
+      advScanDelay: 20
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerCellSlotVisuals.Enabled:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+
+- type: entity
+  id: PlantAnalyzer
+  parent: [BasePlantAnalyzer, PowerCellSlotSmallItem]
+  components:
+  - type: PowerCellDraw
+    drawRate: 0
+    useRate: 40
+  - type: ActivatableUIRequiresPowerCell
+
+- type: entity
+  id: PlantAnalyzerEmpty
+  parent: PlantAnalyzer
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+
+- type: entity
+  id: PlantAnalyzerDebug
+  parent: BasePlantAnalyzer
+  suffix: Debug
+  components:
+  - type: PlantAnalyzer
+    settings:
+      scanDelay: 0.1
+      advScanDelay: 0.5
