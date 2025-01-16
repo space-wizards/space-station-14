@@ -37,8 +37,7 @@ namespace Content.Server.PDA
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
-        [Dependency] private readonly IdCardSystem _idCardSystem = default!;
-
+        [Dependency] private readonly IdCardSystem _idCard = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -66,7 +65,7 @@ namespace Content.Server.PDA
             if (HasComp<IdCardComponent>(ev.Uid))
                 return;
 
-            if (_idCardSystem.TryFindIdCard(ev.Uid, out var idCard))
+            if (_idCard.TryFindIdCard(ev.Uid, out var idCard))
             {
                 var query = EntityQueryEnumerator<PdaComponent>();
 

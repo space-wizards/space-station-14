@@ -1,0 +1,156 @@
+- type: species
+  id: Thaven
+  name: species-name-thaven
+  roundStart: true
+  prototype: MobThaven
+  sprites: MobThavenSprites
+  defaultSkinTone: "#ffffff"
+  markingLimits: MobThavenMarkingLimits
+  dollPrototype: MobThavenDummy
+  skinColoration: Hues
+  maleFirstNames: names_thaven
+  femaleFirstNames: names_thaven
+  naming: First
+  sexes:
+  - Male
+  - Female
+  - Unsexed
+
+- type: speciesBaseSprites
+  id: MobThavenSprites
+  sprites:
+    Hair: MobHumanoidAnyMarking
+    Eyes: MobThavenEyes
+    Head: MobThavenHead
+    HeadTop: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidAnyMarking
+    Chest: MobThavenTorso
+    LArm: MobThavenLArm
+    RArm: MobThavenRArm
+    LHand: MobThavenLHand
+    RHand: MobThavenRHand
+    LLeg: MobThavenLLeg
+    RLeg: MobThavenRLeg
+    LFoot: MobThavenLFoot
+    RFoot: MobThavenRFoot
+
+- type: markingPoints
+  id: MobThavenMarkingLimits
+  onlyWhitelisted: true
+  points:
+    Hair:
+      points: 1
+      required: false
+    HeadTop:
+      points: 2
+      required: false
+    HeadSide:
+      points: 1
+      required: true
+      defaultMarkings: [ ThavenEars1 ]
+    Head:
+      points: 4
+      required: false
+    Chest:
+      points: 4
+      required: false
+    Arms:
+      points: 4
+      required: false
+    Overlay:
+      points: 6
+      required: false
+    Snout:
+      points: 1
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobThavenEyes
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: eyes
+
+- type: humanoidBaseSprite
+  id: MobThavenHead
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobThavenHeadMale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobThavenHeadFemale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobThavenTorso
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobThavenTorsoMale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobThavenTorsoFemale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: torso
+
+
+- type: humanoidBaseSprite
+  id: MobThavenLLeg
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobThavenLHand
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobThavenLArm
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobThavenLFoot
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobThavenRLeg
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobThavenRHand
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobThavenRArm
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobThavenRFoot
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: r_foot

@@ -38,8 +38,8 @@
         type: StoreBoundUserInterface
       enum.HereticLivingHeartKey.Key: # goob edit - heretics
         type: LivingHeartMenuBoundUserInterface
-      enum.SpelfMoodsUiKey.Key: # impstation edit
-        type: SpelfMoodsBoundUserInterface
+      enum.ThavenMoodsUiKey.Key: # impstation edit
+        type: ThavenMoodsBoundUserInterface
         requireInputValidation: false
   # to prevent bag open/honk spam
   - type: UseDelay

@@ -7,7 +7,7 @@
 - type: emote
   id: Cough
   name: chat-emote-name-cough
-  icon: Interface/Emotes/cough.png
+  icon: _Impstation/Interface/Emotes/cough.png #imp
   category: Vocal
   whitelist:
     components:
@@ -19,7 +19,7 @@
   chatTriggers:
     - cough
     - coughs
-    - coughed 
+    - coughed
     - cough.
     - coughs.
     - coughed.
@@ -48,13 +48,14 @@
 - type: emote
   id: RobotBeep
   name: chat-emote-name-robotbeep
+  icon: _Impstation/Interface/Emotes/beep.png #imp
   category: Vocal
   chatMessages: ["chat-emote-msg-beep"]
 
 - type: emote
   id: Yawn
   name: chat-emote-name-yawn
-  icon: Interface/Emotes/yawn.png
+  icon: _Impstation/Interface/Emotes/yawn.png #imp
   category: Vocal
   whitelist:
     components:

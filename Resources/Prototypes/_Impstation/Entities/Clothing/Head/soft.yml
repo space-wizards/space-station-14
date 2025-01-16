@@ -13,7 +13,7 @@
   parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatBrigmedicsoft]
   id: ClothingHeadHatBrigmedicsoftFlipped
   name: brigmedic cap
-  
+
 - type: entity
   parent: [ClothingHeadHeadHatBaseFlippable, BaseCommandContraband]
   id: ClothingHeadHatHOSsoft
@@ -29,3 +29,19 @@
   parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatHOSsoft]
   id: ClothingHeadHatHOSsoftFlipped
   name: security cap
+
+- type: entity
+  parent: [ClothingHeadHeadHatBaseFlippable, BaseCommandContraband]
+  id: ClothingHeadHatCouriersoft
+  name: courier's cap
+  description: A soft, durable cap for couriers.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Soft/couriersoft.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Soft/couriersoft.rsi
+
+- type: entity
+  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatCouriersoft]
+  id: ClothingHeadHatCouriersoftFlipped
+  name: courier's cap
