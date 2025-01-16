@@ -8,9 +8,6 @@
 # WallSolid: Window
 # Table: null
 
-# 2025-01-06
-WallShuttleInterior: WallShuttle
-
 # 2023-07-03
 ClothingHeadHelmetHelmet: ClothingHeadHelmetBasic
 ClothingHeadHelmetHelmetOld: ClothingHeadHelmetBasic
@@ -543,3 +540,6 @@ LightTree06: LightTree
 
 #2024-12-28
 DrinkIrishCarBomb: DrinkIrishSlammer
+
+# 2025-01-06
+WallShuttleInterior: WallShuttle
