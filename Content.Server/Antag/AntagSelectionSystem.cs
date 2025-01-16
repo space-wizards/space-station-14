@@ -42,9 +42,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly LoadoutSystem _loadout = default!;
     [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IServerPreferencesManager _pref = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
@@ -123,7 +123,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (!comp.SelectionsComplete) // imp edit, should never happen
                 ChooseAntags((uid, comp), args.Players);
 
-            foreach ((var _, var antagData) in QueuedAntags)
+            foreach (var (_, antagData) in QueuedAntags)
             {
                 if (antagData.Item3.Comp == comp)
                     MakeAntag(antagData.Item3, antagData.Item1, antagData.Item2);
@@ -200,7 +200,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         {
             if (QueuedAntags.Count != 0)
             {
-                foreach ((var _, var antagData) in QueuedAntags)
+                foreach (var (_, antagData) in QueuedAntags)
                 {
                     if (antagData.Item3.Comp == component)
                         MakeAntag(antagData.Item3, antagData.Item1, antagData.Item2);
@@ -208,10 +208,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 }
                 // Checking if antag counts meet expectations and choosing additional antags if not
                 var existingAntags = GetAntagMinds((uid, component)).Count;
-                var targetCount = GetTargetAntagCount((uid, component), null);
+                var targetCount = GetTargetAntagCount((uid, component));
                 if (existingAntags < targetCount)
                 {
-                    var playerPool = _playerManager.Sessions
+                    var playerPool = _player.Sessions
                                 .Where(x => GameTicker.PlayerGameStatuses.TryGetValue(x.UserId, out var status) && status == PlayerGameStatus.JoinedGame)
                                 .ToList();
                     if (TryGetNextAvailableDefinition((uid, component), out var def)) // Given how we're getting here this should never be false but I'm wrapping it like this anyway Because
@@ -224,7 +224,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 return;
         } // Imp edit end
 
-        var players = _playerManager.Sessions
+        var players = _player.Sessions
             .Where(x => GameTicker.PlayerGameStatuses.TryGetValue(x.UserId, out var status) && status == PlayerGameStatus.JoinedGame)
             .ToList();
 
@@ -436,7 +436,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         {
             if (!IsSessionValid(ent, session, def) || !IsEntityValid(session.AttachedEntity, def))
                 continue;
-            if(!HasValidAntagJobs(session)) //imp edit
+            if (!HasValidAntagJobs(session)) //imp edit
                 continue;
             if (HasPrimaryAntagPreference(session, def))
             {

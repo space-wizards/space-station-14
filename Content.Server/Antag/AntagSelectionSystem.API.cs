@@ -104,7 +104,7 @@ public sealed partial class AntagSelectionSystem
         // make pool non-nullable
         // Review uses and ensure that people are INTENTIONALLY including players in the lobby if this is a mid-round
         // antag selection.
-        var poolSize = playerCount ?? GetTotalPlayerCount(_playerManager.Sessions);
+        var poolSize = playerCount ?? GetTotalPlayerCount(_player.Sessions);
 
         // factor in other definitions' affect on the count.
         var countOffset = 0;
@@ -135,7 +135,7 @@ public sealed partial class AntagSelectionSystem
             if (!TryComp<MindComponent>(mind, out var mindComp) || mindComp.OriginalOwnerUserId == null)
                 continue;
 
-            if (!_playerManager.TryGetPlayerData(mindComp.OriginalOwnerUserId.Value, out var data))
+            if (!_player.TryGetPlayerData(mindComp.OriginalOwnerUserId.Value, out var data))
                 continue;
 
             output.Add((mind, data, name));
@@ -218,7 +218,7 @@ public sealed partial class AntagSelectionSystem
         var profileJobs = pref.JobPriorities.Keys.Select(k => new ProtoId<JobPrototype>(k)).ToList();
         foreach (var jobId in profileJobs)
         {
-            if (!_prototypeManager.TryIndex(jobId, out var job))
+            if (!_prototype.TryIndex(jobId, out var job))
                 continue;
             if (job.CanBeAntag)
                 return true;
