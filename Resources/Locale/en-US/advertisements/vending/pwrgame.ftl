@@ -1,5 +1,5 @@
-﻿advertisement-pwr-1 = PWR Game, what true gamers crave!
-advertisement-pwr-2 = PWR l33ts absolutely!
+﻿advertisement-pwr-1 = PWR Game: What true gamers crave!
+advertisement-pwr-2 = Absolute PWR l33ts absolutely!
 advertisement-pwr-3 = In partnership with Vlad's Salads.
 advertisement-pwr-4 = Thirsty? PWR through with PWR Game!
 advertisement-pwr-5 = PWR Game: It pwns the competition!
