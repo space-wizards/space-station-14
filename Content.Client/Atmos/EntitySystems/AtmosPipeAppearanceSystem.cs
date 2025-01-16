@@ -4,8 +4,6 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.ResourceManagement;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Client.Atmos.EntitySystems;
 
@@ -19,7 +17,7 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<PipeAppearanceComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<PipeAppearanceComponent, AppearanceChangeEvent>(OnAppearanceChanged, after: new[] { typeof(SubFloorHideSystem) });
+        SubscribeLocalEvent<PipeAppearanceComponent, AppearanceChangeEvent>(OnAppearanceChanged, after: [typeof(SubFloorHideSystem)]);
     }
 
     private void OnInit(EntityUid uid, PipeAppearanceComponent component, ComponentInit args)
@@ -84,7 +82,8 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
 
             layer.Visible &= visible;
 
-            if (!visible) continue;
+            if (!visible)
+                continue;
 
             layer.Color = color;
         }
