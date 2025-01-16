@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "cart-chat made by kushbreth (discord)",
+    "copyright": "cart-chat made by kushbreth (discord), cart-mail by Monotheonist (github)",
     "size": {
         "x": 32,
         "y": 32
@@ -12,6 +12,9 @@
         },
 		{
             "name": "cart-chat"
+        },
+        {
+            "name": "cart-mail"
         }
     ]
 }

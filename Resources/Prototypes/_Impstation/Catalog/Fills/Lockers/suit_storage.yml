@@ -8,3 +8,5 @@
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitCourier
         - id: ClothingMaskBreath
+  - type: AccessReader
+    access: [["Courier"]]

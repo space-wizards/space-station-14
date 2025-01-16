@@ -17,6 +17,8 @@
   - Salvage
   - Maintenance
   - External
+  extendedAccess:
+  - Courier # Imp
 
 - type: startingGear
   id: SalvageSpecialistGear

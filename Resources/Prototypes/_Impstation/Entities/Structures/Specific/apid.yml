@@ -9,7 +9,7 @@
     noRot: true
     sprite: _Impstation/Structures/apidcryopod.rsi
     state: icon
-  - type: Fixtures #this is copied from crates so they should hopefully handle the same
+  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -81,7 +81,7 @@
   id: ApidCryopodChef
   parent: ApidCryopodBotanist
   name: apid chef cryopod
-  suffix: Ghost role, BeeRT
+  suffix: Ghost role
   description: A small, hexagonal cryopod containing a Beefolk chef. They might take a little bit to wake up.
   components:
   - type: GhostRole
@@ -92,3 +92,19 @@
       settings: default
   - type: GhostRoleMobSpawner
     prototype: MobApidChef
+
+- type: entity
+  id: ApidCryopodCourier
+  parent: ApidCryopodBotanist
+  name: apid courier cryopod
+  suffix: Ghost role
+  description: A small, hexagonal cryopod containing a Beefolk courier. They might take a little bit to wake up.
+  components:
+  - type: GhostRole
+    name: ghost-role-information-apid-courier-name
+    description: ghost-role-information-apid-courier-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobApidCourier

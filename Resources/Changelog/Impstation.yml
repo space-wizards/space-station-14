@@ -1,61 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Slime gradient hands show in profile now
-    type: Tweak
-  id: 434
-  time: '2024-10-30T18:01:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/587
-- author: formlessnameless
-  changes:
-  - message: Crayons now start with 100 charges instead of 25. Go forth and deface
-      the station! Make the janitor hate you!
-    type: Tweak
-  id: 435
-  time: '2024-10-30T18:15:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/589
-- author: AftrLite
-  changes:
-  - message: New sprite for atmos scrubbers! Woo!
-    type: Add
-  id: 436
-  time: '2024-11-02T00:50:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/602
-- author: KingMudkipIII
-  changes:
-  - message: Added a ticket book to security lockers. Watch out!
-    type: Add
-  id: 437
-  time: '2024-11-03T22:37:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/609
-- author: hivehum
-  changes:
-  - message: Thavens can now have prosthetic left arms.
-    type: Add
-  id: 438
-  time: '2024-11-03T22:39:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/603
-- author: DinnerCalzone
-  changes:
-  - message: Hummingbird Station updated to version 1.0, added to map rotation.
-    type: Add
-  id: 439
-  time: '2024-11-03T22:38:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/601
-- author: Darkmajia
-  changes:
-  - message: Derotated Atlas from the map pool for the time being.
-    type: Remove
-  id: 440
-  time: '2024-11-03T22:38:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/605
-- author: Sha-Seng
-  changes:
-  - message: Spationaut Hardsuit helmet now displays properly on vox
-    type: Fix
-  id: 441
-  time: '2024-11-03T22:36:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/613
 - author: Darkmajia
   changes:
   - message: Crusher dagger damage reduced from 15 to 10. (30 DPS -> 20 DPS)
@@ -4493,3 +4436,67 @@
   id: 933
   time: '2025-01-15T21:40:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1302
+- author: DinnerCalzone
+  changes:
+  - message: The vending machine random event has been removed.
+    type: Remove
+  id: 934
+  time: '2025-01-16T02:10:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1379
+- author: Sha-Seng
+  changes:
+  - message: +1 trinket slot for u :)
+    type: Add
+  id: 935
+  time: '2025-01-16T05:41:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1375
+- author: Honeyed_Lemons_, AftrLite
+  changes:
+  - message: Added the Courier Job, a new role that delivers packages and letters
+      to people!
+    type: Add
+  - message: Mapped Courier to Xeno and Box
+    type: Add
+  id: 936
+  time: '2025-01-16T06:21:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1333
+- author: Kandiyaki
+  changes:
+  - message: books can now be cut open to hide small items inside!
+    type: Add
+  - message: the bible no longer has a storage container, since all books can be cut
+      open now.
+    type: Tweak
+  id: 937
+  time: '2025-01-16T07:04:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1376
+- author: Saeko-44
+  changes:
+  - message: Plant Analyzer, part of hydroponics research
+    type: Add
+  id: 938
+  time: '2025-01-16T07:17:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1377
+- author: Pinkbat5
+  changes:
+  - message: Doubled the pill count in the HoS pill canister.
+    type: Tweak
+  id: 939
+  time: '2025-01-16T09:40:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1384
+- author: kipdotnet
+  changes:
+  - message: Fixed the Courier hardsuit locker having no access reader.
+    type: Tweak
+  - message: Added a mailroom and bathroom to Banana.
+    type: Tweak
+  id: 940
+  time: '2025-01-16T10:08:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1385
+- author: kipdotnet
+  changes:
+  - message: Added an Apid Courier to the cargo catalog, for when mail is piling up.
+    type: Add
+  id: 941
+  time: '2025-01-16T10:49:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1387

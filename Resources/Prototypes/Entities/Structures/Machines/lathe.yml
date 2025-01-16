@@ -1089,6 +1089,9 @@
       - ClothingUniformJumpsuitWarden
       - ClothingUniformJumpskirtWarden
       - ClothingHeadHatParamedicsoft
+      - ClothingUniformJumpsuitCourier #Imp
+      - ClothingUniformJumpskirtCourier #Imp
+      - ClothingHeadHatCouriersoft #Imp
       # Winter outfits
       - ClothingOuterWinterCap
       - ClothingOuterWinterCE
@@ -1119,6 +1122,7 @@
       - ClothingOuterWinterRobo
       - ClothingOuterWinterSec
       - ClothingOuterWinterBrigmedic
+      - ClothingOuterWinterCourier #Imp
       # Ties
       - ClothingNeckTieRed
       - ClothingNeckTieDet

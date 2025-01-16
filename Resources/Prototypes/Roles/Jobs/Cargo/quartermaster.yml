@@ -22,6 +22,7 @@
   canBeAntag: false
   access:
   - Cargo
+  - Courier #Imp
   - Salvage
   - Quartermaster
   - Maintenance
