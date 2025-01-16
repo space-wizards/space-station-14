@@ -62,6 +62,9 @@ public sealed partial class GunComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan LastFire = TimeSpan.Zero;
+    
+    [DataField]
+    public bool pump = false;
 
     /// <summary>
     /// What the current spread is for shooting. This gets changed every time the gun fires.
