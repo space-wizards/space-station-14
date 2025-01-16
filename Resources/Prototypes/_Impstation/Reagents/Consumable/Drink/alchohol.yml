@@ -147,11 +147,11 @@
     Drink:
       effects:
         - !type:SatiateThirst
-          factor: 2
+		  factor: 2
         - !type:AdjustReagent
           reagent: Ethanol
           amount: 0.125
-     fizziness: 0.65
+    fizziness: 0.65
 
 - type: reagent
   id: Rotgut
