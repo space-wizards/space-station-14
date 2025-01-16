@@ -5,3 +5,12 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-smengine
+
+# Courier
+- type: entity
+  parent: DefaultStationBeaconSupply
+  id: DefaultStationBeaconMailroomCourier
+  suffix: Cargo Reception
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-mailroom

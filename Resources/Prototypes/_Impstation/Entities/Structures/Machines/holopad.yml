@@ -4,4 +4,4 @@
   suffix: Cargo Mailroom
   components:
   - type: Label
-    currentLabel: "Cargo - Mailroom"
+    currentLabel: holopad-cargo-mailroom
