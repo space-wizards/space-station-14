@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Crayons now start with 100 charges instead of 25. Go forth and deface
-      the station! Make the janitor hate you!
-    type: Tweak
-  id: 435
-  time: '2024-10-30T18:15:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/589
 - author: AftrLite
   changes:
   - message: New sprite for atmos scrubbers! Woo!
@@ -4493,3 +4485,10 @@
   id: 934
   time: '2025-01-16T02:10:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1379
+- author: Sha-Seng
+  changes:
+  - message: +1 trinket slot for u :)
+    type: Add
+  id: 935
+  time: '2025-01-16T05:41:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1375
