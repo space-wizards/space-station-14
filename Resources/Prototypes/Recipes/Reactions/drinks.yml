@@ -519,7 +519,7 @@
   reactants:
     Beer:
       amount: 10
-    Frostoil:
+    FrostOil:
       amount: 1
   products:
     IcedBeer: 10
