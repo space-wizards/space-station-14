@@ -1,0 +1,23 @@
+- type: entity
+  parent: Airlock
+  id: AirlockCourier
+  suffix: Courier
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/cargo.rsi
+  - type: PaintableAirlock
+    department: Cargo
+  - type: Wires
+    layoutId: AirlockCargo
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockCourierGlass
+  suffix: Courier
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/cargo.rsi
+  - type: PaintableAirlock
+    department: Cargo
+  - type: Wires
+    layoutId: AirlockCargo

@@ -440,13 +440,14 @@
     accentVColor: "#a23e3e"
   - type: Icon
     state: pda-qm
-  - type: CartridgeLoader # DeltaV
+  - type: CartridgeLoader
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
       - NewsReaderCartridge
+      - NanoChatCartridge # DV
+      - MailMetricsCartridge  # DV
       - StockTradingCartridge # DeltaV
-      - NanoChatCartridge # DeltaV
 
 - type: entity
   parent: BasePDA

@@ -1,0 +1,7 @@
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconCourier
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
+    state: Courier
+  jobName: job-name-courier

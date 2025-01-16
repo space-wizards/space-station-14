@@ -1,0 +1,21 @@
+- type: entity
+  parent: Windoor
+  id: WindoorCourierLocked
+  suffix: Courier, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCourier ]
+  - type: Wires
+    layoutId: AirlockCargo
+
+- type: entity
+  parent: WindoorSecure
+  id: WindoorSecureCourierLocked
+  suffix: Courier, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCourier ]
+  - type: Wires
+    layoutId: AirlockCargo

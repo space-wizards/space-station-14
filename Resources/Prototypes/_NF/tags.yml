@@ -3,3 +3,12 @@
 
 - type: Tag
   id: PlantAnalyzer
+
+- type: Tag
+  id: PrizeTicket
+
+- type: Tag
+  id: Mail
+
+- type: Tag
+  id: MailCapsule
