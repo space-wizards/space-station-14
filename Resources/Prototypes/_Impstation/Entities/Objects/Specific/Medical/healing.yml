@@ -33,7 +33,7 @@
   - type: StorageFill
     contents:
     - id: PillLacedPsicodine
-      amount: 5
+      amount: 10
   - type: Sprite
     sprite: _Impstation/Objects/Specific/Chemistry/pills_canister.rsi
     state: pill_canister-hos
