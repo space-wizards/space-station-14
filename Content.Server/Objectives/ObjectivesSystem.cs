@@ -54,7 +54,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
         // go through each gamerule getting data for the roundend summary.
-        var summaries = new Dictionary<string, Dictionary<string, List<(EntityUid, string)>>>(); //todo look at this again and add a note of what each element is
+        var summaries = new Dictionary<string, Dictionary<string, List<(EntityUid, string)>>>();
         var query = EntityQueryEnumerator<GameRuleComponent>();
         while (query.MoveNext(out var uid, out var gameRule))
         {
@@ -165,8 +165,6 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                 //TO DO:
                 //check for the right group here. Getting the target issuer is easy: objectiveGroup.Key
                 //It should be compared to the type of the group's issuer.
-                //todo specifically, this adds every objective for every gamerule summary; need to put something from the gamerule into the gamerule summary that this can check?
-                //or put the gamerule that added this objective into the objective itself?
                 agentSummary.AppendLine(objectiveGroup.Key);
 
                 foreach (var objective in objectiveGroup)
@@ -211,7 +209,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
             //these todos are future maybe fixes, not super necessary
             //todo will want to figure out how to get the starting currency count for an antag
-            //todo will want to fix objectives / spends repeating for a player with multiple antag types from admemery
+                //this will need me to either set it in the mindRole (probably doable on antag creation?)
             //todo will want to do nukie / loneop spend readouts
 
             var genderString = "epicene"; //default to they/them'ing people
