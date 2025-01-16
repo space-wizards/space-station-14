@@ -59,7 +59,8 @@
       - FakeNukeDisk 
   - type: ToolOpenable
     openToolQualityNeeded: Slicing
-    closeToolQualityNeeded: None # can't exactly un-cut a book
+    closeToolQualityNeeded: null # can't exactly un-cut a book
+    hasVerbs: false
     name: secret-stash-book
   - type: Tag
     tags:
