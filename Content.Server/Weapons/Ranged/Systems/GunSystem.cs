@@ -183,7 +183,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
 
                     // Something like ballistic might want to leave it in the container still
-                    if (!cartridge.DeleteOnSpawn && !Containers.IsEntityInContainer(ent!.Value))
+                    if (!cartridge.DeleteOnSpawn && !Containers.IsEntityInContainer(ent!.Value) && !gun.pump)
                         EjectCartridge(ent.Value, angle);
 
                     Dirty(ent!.Value, cartridge);
@@ -212,7 +212,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
 
                     // Something like ballistic might want to leave it in the container still
-                    if (!cartridge.DeleteOnSpawn && !Containers.IsEntityInContainer(ent!.Value))
+                    if (!cartridge.DeleteOnSpawn && !Containers.IsEntityInContainer(ent!.Value) && !gun.pump)
                         EjectCartridge(ent.Value, angle);
 
                     Dirty(ent!.Value, cartridge);

@@ -247,9 +247,12 @@ public abstract partial class SharedGunSystem
                 entity = component.Entities[^1];
 
                 args.Ammo.Add((entity, EnsureShootable(entity)));
-                component.Entities.RemoveAt(component.Entities.Count - 1);
+                if (TryComp<GunComponent>(uid, out var gun) && !gun.pump)
+                {
+                    component.Entities.RemoveAt(component.Entities.Count - 1);
+                    Containers.Remove(entity, component.Container);
+                }
                 DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.Entities));
-                Containers.Remove(entity, component.Container);
             }
             else if (component.UnspawnedCount > 0)
             {
