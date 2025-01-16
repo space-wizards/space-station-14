@@ -435,7 +435,6 @@
       head:
       - state: spacelizard-equipped-HELMET
         offset: "0, 0.03"
-    sprite: Objects/Fun/toys.rsi
 
 - type: entity
   parent: PlushieLizard
