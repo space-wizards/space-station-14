@@ -182,7 +182,6 @@
   abstract: true
   components:
   - type: Contraband
-    allowedDepartments: [ ]
     allowedJobs: [ Janitor ]
 
 # for ~objective items

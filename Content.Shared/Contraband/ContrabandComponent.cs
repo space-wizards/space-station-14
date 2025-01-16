@@ -24,7 +24,7 @@ public sealed partial class ContrabandComponent : Component
     /// </summary>
     [DataField]
     [AutoNetworkedField]
-    public HashSet<ProtoId<DepartmentPrototype>>? AllowedDepartments = ["Security"];
+    public HashSet<ProtoId<DepartmentPrototype>> AllowedDepartments = new();
 
     /// <summary>
     ///     Which jobs is this item restricted to?
@@ -32,5 +32,5 @@ public sealed partial class ContrabandComponent : Component
     /// </summary>
     [DataField]
     [AutoNetworkedField]
-    public HashSet<ProtoId<JobPrototype>>? AllowedJobs = [];
+    public HashSet<ProtoId<JobPrototype>> AllowedJobs = new();
 }
