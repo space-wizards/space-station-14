@@ -32,11 +32,6 @@ public sealed partial class MindComponent : Component
     public List<EntityUid> Objectives = new();
 
     /// <summary>
-    /// imp edit - list of things that have been bought by this mind.
-    /// </summary>
-    public List<(string, IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2>)> Purchases = new();
-
-    /// <summary>
     ///     List of entities assigned to this mind's target objectives, if applicable.
     /// </summary>
     public List<EntityUid> ObjectiveTargets = new();
