@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Slime gradient hands show in profile now
-    type: Tweak
-  id: 434
-  time: '2024-10-30T18:01:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/587
-- author: formlessnameless
-  changes:
-  - message: Crayons now start with 100 charges instead of 25. Go forth and deface
-      the station! Make the janitor hate you!
-    type: Tweak
-  id: 435
-  time: '2024-10-30T18:15:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/589
 - author: AftrLite
   changes:
   - message: New sprite for atmos scrubbers! Woo!
@@ -4493,3 +4478,17 @@
   id: 933
   time: '2025-01-15T21:40:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1302
+- author: DinnerCalzone
+  changes:
+  - message: The vending machine random event has been removed.
+    type: Remove
+  id: 934
+  time: '2025-01-16T02:10:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1379
+- author: Sha-Seng
+  changes:
+  - message: +1 trinket slot for u :)
+    type: Add
+  id: 935
+  time: '2025-01-16T05:41:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1375
