@@ -217,6 +217,16 @@ namespace Content.Server.Database
         Task AddAdminAsync(Admin admin, CancellationToken cancel = default);
         Task UpdateAdminAsync(Admin admin, CancellationToken cancel = default);
 
+        /// <summary>
+        /// Update whether an admin has voluntarily deadminned.
+        /// </summary>
+        /// <remarks>
+        /// This does nothing if the player is not an admin.
+        /// </remarks>
+        /// <param name="userId">The user ID of the admin.</param>
+        /// <param name="deadminned">Whether the admin is deadminned or not.</param>
+        Task UpdateAdminDeadminnedAsync(NetUserId userId, bool deadminned, CancellationToken cancel = default);
+
         Task RemoveAdminRankAsync(int rankId, CancellationToken cancel = default);
         Task AddAdminRankAsync(AdminRank rank, CancellationToken cancel = default);
         Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default);
@@ -672,6 +682,12 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.UpdateAdminAsync(admin, cancel));
+        }
+
+        public Task UpdateAdminDeadminnedAsync(NetUserId userId, bool deadminned, CancellationToken cancel = default)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.UpdateAdminDeadminnedAsync(userId, deadminned, cancel));
         }
 
         public Task RemoveAdminRankAsync(int rankId, CancellationToken cancel = default)
