@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.RichText;
 using Robust.Shared.Utility;
 using static Content.Shared.Pinpointer.SharedNavMapSystem;
+using static Robust.Client.UserInterface.Control;
 
 namespace Content.Client._Starlight.Antags.Abductor;
 
@@ -14,6 +15,10 @@ public sealed class AbductorConsoleBui : BoundUserInterface
 
     [ViewVariables]
     private AbductorConsoleWindow? _window;
+    [ViewVariables]
+    private bool armorDisabled = false;
+    [ViewVariables]
+    private bool armorLocked = false;
     public AbductorConsoleBui(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
 
@@ -43,10 +48,35 @@ public sealed class AbductorConsoleBui : BoundUserInterface
         _window = new AbductorConsoleWindow();
         _window.OnClose += Close;
         _window.Title = "console";
+        _window.StealthModeButton.Disabled = true;
 
         _window.TeleportTabButton.OnPressed += _ => View(ViewType.Teleport);
 
         _window.ExperimentTabButton.OnPressed += _ => View(ViewType.Experiment);
+        
+        _window.ArmorControlTabButton.OnPressed += _ => View(ViewType.ArmorControl);
+        
+        _window.CombatModeButton.OnPressed += _ => {
+            _window.StealthModeButton.Disabled = false;
+            _window.CombatModeButton.Disabled = true;
+        };
+        
+        _window.StealthModeButton.OnPressed += _ => {
+            _window.StealthModeButton.Disabled = true;
+            _window.CombatModeButton.Disabled = false;
+        };
+        
+        _window.LockArmorButton.OnPressed += _ =>
+        {
+            SendMessage(new AbductorLockBuiMsg());
+            
+            armorLocked = !armorLocked;
+            
+            if (!armorLocked)
+                _window.LockArmorButton.Text = Loc.GetString("abductors-ui-lock-armor");
+            else
+                _window.LockArmorButton.Text = Loc.GetString("abductors-ui-unlock-armor");
+        };
     }
 
     private void RefreshUI()
@@ -87,6 +117,57 @@ public sealed class AbductorConsoleBui : BoundUserInterface
             SendMessage(new AbductorCompleteExperimentBuiMsg());
             Close();
         };
+        
+        // armor tab     
+        armorLocked = state.ArmorLocked;
+        
+        if (!armorLocked)
+            _window.LockArmorButton.Text = Loc.GetString("abductors-ui-lock-armor");
+        else
+            _window.LockArmorButton.Text = Loc.GetString("abductors-ui-unlock-armor");
+        
+        _window.CombatModeButton.OnPressed += _ =>
+        {
+            SendMessage(new AbductorVestModeChangeBuiMsg()
+            {
+                Mode = "combat",
+            });
+        };
+        
+        _window.StealthModeButton.OnPressed += _ =>
+        {
+            SendMessage(new AbductorVestModeChangeBuiMsg()
+            {
+                Mode = "stealth",
+            });
+        };
+        
+        armorDisabled = state.ArmorFound;
+        
+        UpdateDisabledPanel(armorDisabled);
+    }
+    
+    private void UpdateDisabledPanel(bool disable)
+    {
+        if (_window == null)
+            return;
+
+        if (disable || !_window.ArmorControlTab.Visible)
+        {
+            _window.DisabledPanel.Visible = false;
+            _window.DisabledPanel.MouseFilter = MouseFilterMode.Ignore;
+            return;
+        }
+
+        _window.DisabledPanel.Visible = true;
+        if (_window.DisabledLabel.GetMessage() is null)
+        {
+            var text = new FormattedMessage();
+            text.AddMarkupOrThrow("[color=red][font size=16]You need to plug in abductor armor![/font][/color]");
+            _window.DisabledLabel.SetMessage(text);
+        }
+
+        _window.DisabledPanel.MouseFilter = MouseFilterMode.Stop;
     }
 
     private void View(ViewType type)
@@ -98,14 +179,19 @@ public sealed class AbductorConsoleBui : BoundUserInterface
 
         _window.TeleportTabButton.Disabled = type == ViewType.Teleport;
         _window.ExperimentTabButton.Disabled = type == ViewType.Experiment;
+        _window.ArmorControlTabButton.Disabled = type == ViewType.ArmorControl;
         _window.TeleportTab.Visible = type == ViewType.Teleport;
         _window.ExperimentTab.Visible = type == ViewType.Experiment;
+        _window.ArmorControlTab.Visible = type == ViewType.ArmorControl;
+        
+        UpdateDisabledPanel(armorDisabled);
     }
 
     private enum ViewType
     {
         Teleport,
-        Experiment
+        Experiment,
+        ArmorControl
     }
 
     protected override void Dispose(bool disposing)

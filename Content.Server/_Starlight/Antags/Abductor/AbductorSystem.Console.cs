@@ -1,4 +1,6 @@
 using Content.Shared.Starlight.Antags.Abductor;
+using Content.Shared.Starlight.ItemSwitch;
+using Content.Shared.Interaction.Components;
 using Content.Shared.UserInterface;
 using System.Linq;
 using Content.Shared.DoAfter;
@@ -15,6 +17,7 @@ namespace Content.Server.Starlight.Antags.Abductor;
 public sealed partial class AbductorSystem : SharedAbductorSystem
 {
     [Dependency] private readonly NumberObjectiveSystem _number = default!;
+    [Dependency] private readonly SharedItemSwitchSystem _itemSwitch = default!;
 
     public void InitializeConsole()
     {
@@ -23,6 +26,8 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
         Subs.BuiEvents<AbductorConsoleComponent>(AbductorConsoleUIKey.Key, subs => subs.Event<AbductorAttractBuiMsg>(OnAttractBuiMsg));
         Subs.BuiEvents<AbductorConsoleComponent>(AbductorConsoleUIKey.Key, subs => subs.Event<AbductorCompleteExperimentBuiMsg>(OnCompleteExperimentBuiMsg));
+        Subs.BuiEvents<AbductorConsoleComponent>(AbductorConsoleUIKey.Key, subs => subs.Event<AbductorVestModeChangeBuiMsg>(OnVestModeChangeBuiMsg));
+        Subs.BuiEvents<AbductorConsoleComponent>(AbductorConsoleUIKey.Key, subs => subs.Event<AbductorLockBuiMsg>(OnVestLockBuiMsg));
         SubscribeLocalEvent<AbductorComponent, AbductorAttractDoAfterEvent>(OnDoAfterAttract);
     }
     private void OnAbductGetProgress(Entity<AbductConditionComponent> ent, ref ObjectiveGetProgressEvent args)
@@ -30,6 +35,21 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
     private float DoorjackProgress(AbductConditionComponent comp, int target)
         => target == 0 ? 1f : MathF.Min(comp.Abducted / (float)target, 1f);
+        
+    private void OnVestModeChangeBuiMsg(EntityUid uid, AbductorConsoleComponent component, AbductorVestModeChangeBuiMsg args)
+    {
+        if (component.Armor != null)
+            _itemSwitch.Switch(GetEntity(component.Armor.Value), args.Mode);
+    }
+    
+    private void OnVestLockBuiMsg(Entity<AbductorConsoleComponent> ent, ref AbductorLockBuiMsg args)
+    {
+        if (ent.Comp.Armor != null && GetEntity(ent.Comp.Armor.Value) is EntityUid armor)
+            if (TryComp<UnremoveableComponent>(armor, out var unremoveable))
+                RemComp(armor, unremoveable);
+            else
+                AddComp<UnremoveableComponent>(armor);
+    }
 
     private void OnCompleteExperimentBuiMsg(EntityUid uid, AbductorConsoleComponent component, AbductorCompleteExperimentBuiMsg args)
     {
@@ -146,6 +166,11 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             if (victim != default && TryComp(victim, out MetaDataComponent? victimMetadata))
                 victimName = victimMetadata?.EntityName;
         }
+        
+        var armorLock = false;
+        
+        if (computer.Comp.Armor != null && HasComp<UnremoveableComponent>(GetEntity(computer.Comp.Armor.Value)))
+            armorLock = true;
 
         _uiSystem.SetUiState(computer.Owner, AbductorConsoleUIKey.Key, new AbductorConsoleBuiState()
         {
@@ -153,7 +178,9 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             TargetName = targetName,
             VictimName = victimName,
             AlienPadFound = computer.Comp.AlienPod != default,
-            ExperimentatorFound = computer.Comp.Experimentator != default
+            ExperimentatorFound = computer.Comp.Experimentator != default,
+            ArmorFound = computer.Comp.Armor != default,
+            ArmorLocked = armorLock
         });
     }
 }

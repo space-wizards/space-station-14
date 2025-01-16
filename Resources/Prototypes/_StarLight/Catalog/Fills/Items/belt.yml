@@ -10,6 +10,7 @@
       - id: ScrewdriverAbductor
       - id: WirecutterAbductor
       - id: WelderAbductor
+      - id: MultitoolAbductor
 
 - type: entity
   id: ClothingBeltBrigmedicFilled
