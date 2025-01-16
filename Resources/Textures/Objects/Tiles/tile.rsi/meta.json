@@ -549,6 +549,17 @@
     },
     {
       "name": "wood-large"
+    },
+    {
+      "name": "asteroid"
+    },
+    {
+      "name": "asteroid-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "asteroid-inhand-left",
+      "directions": 4
     }
   ]
 }

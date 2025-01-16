@@ -177,6 +177,11 @@
   result: FloorTileItemAstroSnow
 
 - type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileAstroAsteroidSand
+  result: FloorTileItemAstroAsteroidSand
+
+- type: latheRecipe
   id: FloorGreenCircuit
   result: FloorTileItemGCircuit4
   completetime: 2
