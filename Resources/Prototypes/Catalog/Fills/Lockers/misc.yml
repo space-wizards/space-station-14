@@ -159,6 +159,9 @@
     - !type:NestedSelector
       tableId: SyndieMaintLoot
       prob: 0.05
+    # Recursive
+    - id: ClosetMaintenanceFilledRandom
+      prob: 0.01
 
 - type: entity
   id: ClosetMaintenanceFilledRandom

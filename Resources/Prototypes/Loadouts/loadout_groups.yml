@@ -11,13 +11,13 @@
   #- FlowerWreath
   #- Hairflower
   - Headphones
-  - ToyFigurineGreytider #GreyStation
-  - HarmonicaInstrument #GreyStation
-  - CoinQuarter #GreyStation
-  - BalloonNT #GreyStation
+  - ToyFigurineGreytider # GreyStation - Addition
+  - HarmonicaInstrument # GreyStation - Addition
+  - CoinQuarter # GreyStation - Addition
+  - BalloonNT # GreyStation - Addition
   - Lighter
-  - FlippoLighter #GreyStation
-  - Matchbox #GreyStation
+  - FlippoLighter # GreyStation - Addition
+  - Matchbox # GreyStation - Addition
   - CigPackGreen
   - CigPackRed
   - CigPackBlue
@@ -33,6 +33,7 @@
   #- ClothingNeckLesbianPin
   #- ClothingNeckNonBinaryPin
   #- ClothingNeckPansexualPin
+  #- ClothingNeckOmnisexualPin
   #- ClothingNeckTransPin
   #- ClothingNeckAutismPin
   #- ClothingNeckGoldAutismPin
