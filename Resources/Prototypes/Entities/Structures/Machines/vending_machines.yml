@@ -490,6 +490,10 @@
   name: Space Cola Vendor
   description: It vends cola, in space.
   components:
+  - type: Advertise
+    pack: SpaceColaAds
+  - type: SpeakOnUIClosed
+    pack: SpaceColaGoodbyes
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/cola-red.rsi
     layers:
@@ -513,6 +517,10 @@
   components:
   - type: VendingMachine
     pack: SpaceUpInventory
+  - type: Advertise
+    pack: SpaceUpAds
+  - type: SpeakOnUIClosed
+    pack: SpaceUpGoodbyes
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/spaceup.rsi
     layers:
@@ -553,11 +561,15 @@
 - type: entity
   parent: VendingMachineCola
   id: VendingMachineStarkist
-  name: Star-kist Vendor
+  name: Starkist Vendor
   description: The taste of a star in liquid form.
   components:
   - type: VendingMachine
     pack: StarkistInventory
+  - type: Advertise
+    pack: StarkistAds
+  - type: SpeakOnUIClosed
+    pack: StarkistGoodbyes
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/starkist.rsi
     layers:
@@ -591,7 +603,9 @@
     ejectDelay: 1.9
     initialStockQuality: 0.33
   - type: Advertise
-    pack: RobustSoftdrinksAds
+    pack: ShamblerAds
+  - type: SpeakOnUIClosed
+    pack: ShamblerGoodbyes
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/shamblersjuice.rsi
     layers:
@@ -610,12 +624,12 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachinePwrGame
-  name: Pwr Game Vendor
+  name: PWR Game Vendor
   description: You want it, we got it. Brought to you in partnership with Vlad's Salads.
   components:
   - type: VendingMachine
     pack: PwrGameInventory
-    dispenseOnHitChance: 0.25
+    dispenseOnHitChance: 0.35 # Power through with PWR Game!
     dispenseOnHitThreshold: 2
     offState: off
     brokenState: broken
@@ -625,9 +639,9 @@
     ejectDelay: 1.9
     initialStockQuality: 0.33
   - type: Advertise
-    pack: RobustSoftdrinksAds
+    pack: PwrGameAds
   - type: SpeakOnUIClosed
-    pack: GenericVendGoodbyes
+    pack: PwrGameGoodbyes
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/pwrgame.rsi
     layers:
