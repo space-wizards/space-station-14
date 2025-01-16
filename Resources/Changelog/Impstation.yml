@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Hummingbird Station updated to version 1.0, added to map rotation.
-    type: Add
-  id: 439
-  time: '2024-11-03T22:38:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/601
 - author: Darkmajia
   changes:
   - message: Derotated Atlas from the map pool for the time being.
@@ -4498,3 +4491,10 @@
   id: 938
   time: '2025-01-16T07:17:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1377
+- author: Pinkbat5
+  changes:
+  - message: Doubled the pill count in the HoS pill canister.
+    type: Tweak
+  id: 939
+  time: '2025-01-16T09:40:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1384
