@@ -1,0 +1,10 @@
+#Blast door
+
+- type: entity
+  parent: BlastDoor
+  id: BlastDoorCentralCommand
+  suffix: Central Command, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCentralCommand ]
