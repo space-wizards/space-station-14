@@ -8,7 +8,7 @@
     tags:
     - Stunbaton
   - type: Sprite
-    sprite: Objects/Weapons/Melee/stunbaton.rsi
+    sprite: _Impstation/Objects/Weapons/Melee/stunbaton.rsi #imp
     layers:
     - state: stunbaton_off
       map: [ "enum.ToggleVisuals.Layer" ]
@@ -52,7 +52,7 @@
     heldPrefix: off
     size: Normal
   - type: Clothing
-    sprite: Objects/Weapons/Melee/stunbaton.rsi
+    sprite: _Impstation/Objects/Weapons/Melee/stunbaton.rsi
     quickEquip: false
     slots:
     - Belt
