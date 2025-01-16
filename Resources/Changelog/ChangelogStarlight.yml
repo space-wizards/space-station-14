@@ -2288,4 +2288,31 @@ Entries:
   id: 321
   time: '2025-01-16T15:03:23.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/243
-
+- author: STARLIGHT TEAM
+  changes:
+  - message: Abductor now command antagonist.
+    type: Tweak
+  id: 322
+  time: '2025-01-16T16:19:06.403416+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/238
+- author: STARLIGHT TEAM
+  changes:
+  - message: Changed lone abductor gamerule to abductors gamerule.
+    type: Tweak
+  id: 323
+  time: '2025-01-16T16:19:24.845022+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/238
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added abductor agent as second abductor.
+    type: Add
+  id: 324
+  time: '2025-01-16T16:19:39.126973+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/238
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed abductor tools sprite.
+    type: Fix
+  id: 325
+  time: '2025-01-16T16:19:52.408625+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/238
