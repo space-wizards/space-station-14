@@ -276,11 +276,11 @@
         amount: 0.1
 
 - type: reagent
-  id: Frostoil
+  id: FrostOil
   name: reagent-name-frostoil
   group: Foods
   desc: reagent-desc-frostoil
-  physicalDesc: reagent-physical-desc-cold
+  physicalDesc: reagent-physical-desc-oily
   flavor: cold
   color: skyblue
   metabolisms:
@@ -293,3 +293,14 @@
       effects:
         - !type:AdjustTemperature
           amount: -250 # thermal energy, not temp
+          - !type:HealthChange
+          conditions:
+            - !type:ReagentThreshold
+              min: 5
+          damage:
+            types:
+              Cold: 1
+        - !type:PopupMessage
+          type: Local
+          messages: [ "capsaicin-effect-light-burn" ]
+          probability: 0.2
