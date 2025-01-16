@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Thavens can now have prosthetic left arms.
-    type: Add
-  id: 438
-  time: '2024-11-03T22:39:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/603
 - author: DinnerCalzone
   changes:
   - message: Hummingbird Station updated to version 1.0, added to map rotation.
@@ -4498,3 +4491,10 @@
   id: 937
   time: '2025-01-16T07:04:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1376
+- author: Saeko-44
+  changes:
+  - message: Plant Analyzer, part of hydroponics research
+    type: Add
+  id: 938
+  time: '2025-01-16T07:17:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1377
