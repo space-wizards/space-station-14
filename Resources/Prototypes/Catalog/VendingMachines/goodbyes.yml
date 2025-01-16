@@ -89,6 +89,12 @@
     count: 4
 
 - type: localizedDataset
+  id: SmiteGoodbyes
+  values:
+    prefix: thankyou-smite-
+    count: 4
+
+- type: localizedDataset
   id: DiscountDansGoodbyes
   values:
     prefix: thankyou-discount-
@@ -143,7 +149,19 @@
     count: 6
 
 - type: localizedDataset
+  id: BodaGoodbyes
+  values:
+    prefix: thankyou-sovietsoda-
+    count: 3
+
+- type: localizedDataset
   id: SyndieDrobeGoodbyes
   values:
     prefix: thankyou-syndiedrobe-
     count: 5
+
+- type: localizedDataset
+  id: PrideDrobeGoodbyes
+  values:
+    prefix: thankyou-pride-
+    count: 3
