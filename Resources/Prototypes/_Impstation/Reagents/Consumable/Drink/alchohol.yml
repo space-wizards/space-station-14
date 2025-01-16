@@ -117,7 +117,7 @@
   id: GatorWine
   name: reagent-name-gatorwine
   parent: BaseAlcohol
-  desc: reagent-desc-moscowmule
+  desc: reagent-desc-gatorwine
   physicalDesc: reagent-physical-desc-bubbly
   flavor: sweet
   color: "#ffee3e"
@@ -129,7 +129,7 @@
   metamorphicChangeColor: true
   fizziness: 0.8
 
-  - type: reagent
+- type: reagent
   id: MoscowMule
   name: reagent-name-moscowmule
   parent: BaseAlcohol
