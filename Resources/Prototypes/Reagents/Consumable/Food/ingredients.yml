@@ -293,7 +293,7 @@
       effects:
         - !type:AdjustTemperature
           amount: -250 # thermal energy, not temp
-          - !type:HealthChange
+        - !type:HealthChange
           conditions:
             - !type:ReagentThreshold
               min: 5
