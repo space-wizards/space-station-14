@@ -2281,4 +2281,11 @@ Entries:
   id: 320
   time: '2025-01-15T14:40:26.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/240
+- author: Conflee
+  changes:
+  - message: Incorrect exemption in rules about 'Die A Glorious Death' objectives
+    type: Fix
+  id: 321
+  time: '2025-01-16T15:03:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/243
 
