@@ -51,6 +51,8 @@ public partial class RadiationSystem
             var intensity = source.Intensity * _stack.GetCount(uid);
 
             // Apply rad modifier if the source is enclosed within a radiation blocking container
+            // Note that this also applies to receivers, and it doesn't bother to check if the container sits between them.
+            // I.e., a source & receiver in the same blocking container will get double-blocked, when no blocking should be applied.
             intensity = GetAdjustedRadiationIntensity(uid, intensity);
 
             _sources.Add(new(intensity, (uid, source, xform), worldPos));
