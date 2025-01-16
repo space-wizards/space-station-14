@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: New sprite for atmos scrubbers! Woo!
-    type: Add
-  id: 436
-  time: '2024-11-02T00:50:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/602
 - author: KingMudkipIII
   changes:
   - message: Added a ticket book to security lockers. Watch out!
@@ -4492,3 +4485,13 @@
   id: 935
   time: '2025-01-16T05:41:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1375
+- author: Honeyed_Lemons_, AftrLite
+  changes:
+  - message: Added the Courier Job, a new role that delivers packages and letters
+      to people!
+    type: Add
+  - message: Mapped Courier to Xeno and Box
+    type: Add
+  id: 936
+  time: '2025-01-16T06:21:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1333
