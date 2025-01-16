@@ -117,7 +117,7 @@
   id: GatorWine
   name: reagent-name-gatorwine
   parent: BaseAlcohol
-  desc: reagent-desc-gatorwine
+  desc: reagent-desc-moscowmule
   physicalDesc: reagent-physical-desc-bubbly
   flavor: sweet
   color: "#ffee3e"
@@ -128,6 +128,30 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
   fizziness: 0.8
+
+  - type: reagent
+  id: MoscowMule
+  name: reagent-name-moscowmule
+  parent: BaseAlcohol
+  desc: reagent-desc-gatorwine
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: moscowmule
+  color: "#fef9e7"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/moscowmule.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+        -!type:SatiateThirst
+        factor: 2
+        -!type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.125
+   fizziness: 0.65
 
 - type: reagent
   id: Rotgut
