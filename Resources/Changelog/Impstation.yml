@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Spationaut Hardsuit helmet now displays properly on vox
-    type: Fix
-  id: 441
-  time: '2024-11-03T22:36:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/613
 - author: Darkmajia
   changes:
   - message: Crusher dagger damage reduced from 15 to 10. (30 DPS -> 20 DPS)
@@ -4500,3 +4493,10 @@
   id: 940
   time: '2025-01-16T10:08:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1385
+- author: kipdotnet
+  changes:
+  - message: Added an Apid Courier to the cargo catalog, for when mail is piling up.
+    type: Add
+  id: 941
+  time: '2025-01-16T10:49:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1387
