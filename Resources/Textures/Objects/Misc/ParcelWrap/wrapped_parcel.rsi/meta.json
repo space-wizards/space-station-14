@@ -1,0 +1,175 @@
+{
+  "version": 1,
+  "license": "AGPL-3.0",
+  "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/blob/bd704770f7146d820e1e93b04ae1dcf3723b299a/icons/obj/storage/wrapping.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "amorphous-giftwrap-base",
+      "directions": 1
+    },
+    {
+      "name": "amorphous-giftwrap-ribbon",
+      "directions": 1
+    },
+    {
+      "name": "amorphous-red-with-green",
+      "directions": 1
+    },
+    {
+      "name": "amorphous",
+      "directions": 1
+    },
+    {
+      "name": "barcode-amorphous",
+      "directions": 1
+    },
+    {
+      "name": "barcode-crate",
+      "directions": 1
+    },
+    {
+      "name": "barcode-locker",
+      "directions": 1
+    },
+    {
+      "name": "barcode-parcel-large",
+      "directions": 1
+    },
+    {
+      "name": "barcode-parcel-medium",
+      "directions": 1
+    },
+    {
+      "name": "barcode-parcel-small",
+      "directions": 1
+    },
+    {
+      "name": "barcode-parcel-tiny",
+      "directions": 1
+    },
+    {
+      "name": "barcode-tall-crate",
+      "directions": 1
+    },
+    {
+      "name": "crate-giftwrap-base",
+      "directions": 1
+    },
+    {
+      "name": "crate-giftwrap-ribbon",
+      "directions": 1
+    },
+    {
+      "name": "crate-red-with-green",
+      "directions": 1
+    },
+    {
+      "name": "crate",
+      "directions": 1
+    },
+    {
+      "name": "humanoid-green-with-red",
+      "directions": 1
+    },
+    {
+      "name": "locker-giftwrap-base",
+      "directions": 1
+    },
+    {
+      "name": "locker-giftwrap-ribbon",
+      "directions": 1
+    },
+    {
+      "name": "locker-red-with-green",
+      "directions": 1
+    },
+    {
+      "name": "locker",
+      "directions": 1
+    },
+    {
+      "name": "parcel-small-red-with-green",
+      "directions": 1
+    },
+    {
+      "name": "parcel-large-giftwrap-base",
+      "directions": 1
+    },
+    {
+      "name": "parcel-large-giftwrap-ribbon",
+      "directions": 1
+    },
+    {
+      "name": "parcel-large-red-with-green",
+      "directions": 1
+    },
+    {
+      "name": "parcel-large",
+      "directions": 1
+    },
+    {
+      "name": "parcel-medium-giftwrap-base",
+      "directions": 1
+    },
+    {
+      "name": "parcel-medium-giftwrap-ribbon",
+      "directions": 1
+    },
+    {
+      "name": "parcel-medium-red-with-green",
+      "directions": 1
+    },
+    {
+      "name": "parcel-medium",
+      "directions": 1
+    },
+    {
+      "name": "parcel-small-giftwrap-base",
+      "directions": 1
+    },
+    {
+      "name": "parcel-small-giftwrap-ribbon",
+      "directions": 1
+    },
+    {
+      "name": "parcel-small",
+      "directions": 1
+    },
+    {
+      "name": "parcel-tiny-giftwrap-base",
+      "directions": 1
+    },
+    {
+      "name": "parcel-tiny-giftwrap-ribbon",
+      "directions": 1
+    },
+    {
+      "name": "parcel-tiny-red-with-green",
+      "directions": 1
+    },
+    {
+      "name": "parcel-tiny",
+      "directions": 1
+    },
+    {
+      "name": "tall-crate-giftwrap-base",
+      "directions": 1
+    },
+    {
+      "name": "tall-crate-giftwrap-ribbon",
+      "directions": 1
+    },
+    {
+      "name": "tall-crate-red-with-green",
+      "directions": 1
+    },
+    {
+      "name": "tall-crate",
+      "directions": 1
+    }
+  ]
+}
