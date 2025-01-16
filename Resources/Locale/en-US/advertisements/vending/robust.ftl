@@ -1,0 +1,12 @@
+﻿advertisement-robust-1 = Refreshing!
+advertisement-robust-2 = Hope you're thirsty!
+advertisement-robust-3 = Over 10 million drinks sold!
+advertisement-robust-4 = Thirsty? Try a Robust soda!
+advertisement-robust-5 = Please, have a drink!
+advertisement-robust-6 = Quench that thirst!
+advertisement-robust-7 = The best drinks in the galaxy!
+advertisement-robust-8 = Stay robust, buy a soda today!
+thankyou-robust-1 = Pop open that can and enjoy!
+thankyou-robust-2 = Show that thirst who's boss!
+thankyou-robust-3 = I hope you like flavor!
+thankyou-robust-4 = Enjoy your sugar-filled drink!
