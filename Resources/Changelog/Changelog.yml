@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Budget insulated gloves now leave behind yellow frayed insulative fibers
-      instead of yellow insulative fibers. Detectives, rejoice!
-    type: Tweak
-  id: 7320
-  time: '2024-09-09T10:30:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31886
 - author: slarticodefast
   changes:
   - message: Revenants or other mobs without hands can no longer spill jugs.
@@ -3923,3 +3915,10 @@
   id: 7819
   time: '2025-01-16T11:40:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34192
+- author: GansuLalan
+  changes:
+  - message: Pianos will no longer push players off when climbing them
+    type: Fix
+  id: 7820
+  time: '2025-01-16T12:25:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33690
