@@ -1,40 +1,25 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Administration.Logs;
+using Content.Shared._CD.Engraving;
 using Content.Server.Popups;
 using Content.Shared.Database;
 using Content.Shared.Popups;
-using Content.Shared.Examine;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Server._CD.Engraving;
 
-public sealed class EngraveableSystem : EntitySystem
+public sealed class EngraveableSystem : SharedEngraveableSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly QuickDialogSystem _dialog = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EngraveableComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<EngraveableComponent, GetVerbsEvent<ActivationVerb>>(AddEngraveVerb);
-    }
-
-    private void OnExamined(Entity<EngraveableComponent> ent, ref ExaminedEvent args)
-    {
-        var msg = new FormattedMessage();
-        msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.EngravedMessage == string.Empty
-            ? ent.Comp.NoEngravingText
-            : ent.Comp.HasEngravingText));
-
-        if (ent.Comp.EngravedMessage != string.Empty)
-            msg.AddMarkupPermissive(Loc.GetString(ent.Comp.EngravedMessage));
-
-        args.PushMessage(msg, 1);
     }
 
     private void AddEngraveVerb(Entity<EngraveableComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
@@ -44,7 +29,7 @@ public sealed class EngraveableSystem : EntitySystem
             return;
 
         // We need an actor to give the verb.
-        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+        if (!TryComp<ActorComponent>(args.User, out var actor))
             return;
 
         // Make sure ghosts can't engrave stuff.
@@ -66,6 +51,7 @@ public sealed class EngraveableSystem : EntitySystem
                             return;
 
                         ent.Comp.EngravedMessage = message;
+                        Dirty(ent);
                         _popup.PopupEntity(Loc.GetString(ent.Comp.EngraveSuccessMessage),
                             actor.PlayerSession.AttachedEntity.Value,
                             actor.PlayerSession,
