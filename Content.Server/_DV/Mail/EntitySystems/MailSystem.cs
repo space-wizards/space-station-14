@@ -657,7 +657,7 @@ public sealed class MailSystem : EntitySystem
         for (var i = 0; i < deliveryCount; i++)
         {
             var candidate = _random.Pick(candidateList);
-            var possibleParcels = new Dictionary<EntProtoId, float>(pool.Everyone);
+            var possibleParcels = new Dictionary<String, float>(pool.Everyone);
 
             if (TryMatchJobTitleToPrototype(candidate.Job, out var jobPrototype)
                 && pool.Jobs.TryGetValue(jobPrototype.ID, out var jobParcels))

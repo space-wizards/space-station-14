@@ -33,8 +33,7 @@
     MailNFPlushie: 1
     MailPumpkinPie: 0.3
     MailNFPen: 0.7
-    MailRestraints: 0.8
-    MailSake: 0.4
+    MailRestraints: 1.2
     MailNFSnacks: 1
     #Soda - Adds up to 1 in weight
     MailNFSodaPwrGame: 0.2
@@ -71,7 +70,6 @@
       MailMedicalStabilizers: 2
       MailNFMedkit: 2
     Engineering:
-      MailAMEGuide: 1
       MailEngineeringCables: 2
       MailEngineeringKudzuDeterrent: 2
       MailEngineeringSheetGlass: 2
@@ -120,8 +118,6 @@
       MailMimeArtsCrafts: 3
       MailMimeBlankBook: 2
       MailMimeBottleOfNothing: 1
-    Musician:
-      MailMusicianInstrumentSmall: 1
     Passenger:
       MailPassengerMoney: 3
     Warden:

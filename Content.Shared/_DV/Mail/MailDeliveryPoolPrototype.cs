@@ -15,17 +15,17 @@ public sealed class MailDeliveryPoolPrototype : IPrototype
     /// Mail that can be sent to everyone.
     /// </summary>
     [DataField("everyone")]
-    public Dictionary<EntProtoId, float> Everyone = new();
+    public Dictionary<string, float> Everyone = new();
 
     /// <summary>
     /// Mail that can be sent only to specific jobs.
     /// </summary>
     [DataField("jobs")]
-    public Dictionary<EntProtoId, Dictionary<EntProtoId, float>> Jobs = new();
+    public Dictionary<string, Dictionary<string, float>> Jobs = new();
 
     /// <summary>
     /// Mail that can be sent only to specific departments.
     /// </summary>
     [DataField("departments")]
-    public Dictionary<EntProtoId, Dictionary<EntProtoId, float>> Departments = new();
+    public Dictionary<string, Dictionary<string, float>> Departments = new();
 }
