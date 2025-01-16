@@ -1,9 +1,7 @@
-﻿using Robust.Shared.Containers;
-using Content.Shared.FixedPoint;
+﻿using Content.Server.Radio.Components;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
-using Content.Shared.Tag;
-using Content.Server.Radio.Components;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Implants;
 
@@ -12,14 +10,14 @@ public sealed class RadioImplantSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RadioImplantComponent, ImplantImplantedEvent>(OnImplantImplantedEvent);
+        SubscribeLocalEvent<RadioImplantComponent, ImplantImplantedEvent>(OnImplantImplanted);
         SubscribeLocalEvent<RadioImplantComponent, EntGotRemovedFromContainerMessage>(OnRemove);
     }
 
     /// <summary>
     /// If implanted with a radio implant, installs the necessary intrinsic radio components
     /// </summary>
-    private void OnImplantImplantedEvent(Entity<RadioImplantComponent> ent, ref ImplantImplantedEvent args)
+    private void OnImplantImplanted(Entity<RadioImplantComponent> ent, ref ImplantImplantedEvent args)
     {
         if (args.Implanted == null)
             return;
@@ -54,7 +52,7 @@ public sealed class RadioImplantSystem : EntitySystem
             }
             ent.Comp.ActiveAddedChannels.Clear();
 
-            if (activeRadioComponent.Channels.Count == FixedPoint2.Zero)
+            if (activeRadioComponent.Channels.Count == 0)
             {
                 RemCompDeferred<ActiveRadioComponent>(args.Container.Owner);
             }
@@ -69,7 +67,7 @@ public sealed class RadioImplantSystem : EntitySystem
         }
         ent.Comp.TransmitterAddedChannels.Clear();
 
-        if (radioTransmitterComponent is { Channels.Count: 0 } || activeRadioComponent is { Channels.Count: 0 })
+        if (radioTransmitterComponent.Channels.Count == 0 || activeRadioComponent?.Channels.Count == 0 )
         {
             RemCompDeferred<IntrinsicRadioTransmitterComponent>(args.Container.Owner);
         }
