@@ -2147,7 +2147,6 @@
     pack: PrideDrobeAds
   - type: SpeakOnUIClosed
     pack: PrideDrobeGoodbyes
-  - type: Speech
   - type: PointLight
     radius: 1.5
     energy: 1.3 # reduced energy since the color is pure white
