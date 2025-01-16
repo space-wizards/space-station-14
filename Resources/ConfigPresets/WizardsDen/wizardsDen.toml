@@ -12,6 +12,10 @@ panic_bunker.enable_without_admins = true
 panic_bunker.show_reason = true
 panic_bunker.custom_reason = "You have not played on a Wizard's Den server long enough to connect to this server. Please play on Wizard's Den Lizard until you have more playtime."
 
+# IPIntel stuff
+ipintel_enabled = true
+ipintel_contact_email = "telecommunications@spacestation14.com"
+
 [infolinks]
 bug_report = "https://github.com/space-wizards/space-station-14/issues/new/choose"
 discord    = "https://discord.spacestation14.io"
@@ -44,6 +48,6 @@ alert.min_players_sharing_connection = 2
 max_explosion_range = 5
 
 [status]
-privacy_policy_link = "https://account.spacestation14.com/Home/Privacy"
+privacy_policy_link = "https://spacestation14.com/about/privacy/#game-server-privacy-policy"
 privacy_policy_identifier = "wizden"
-privacy_policy_version = "2024-12-22"
+privacy_policy_version = "2025-01-19"
