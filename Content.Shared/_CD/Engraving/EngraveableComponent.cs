@@ -1,15 +1,18 @@
-﻿namespace Content.Server._CD.Engraving;
+﻿using Robust.Shared.GameStates;
+
+namespace Content.Shared._CD.Engraving;
 
 /// <summary>
 ///     Allows an items' description to be modified with an engraving
 /// </summary>
-[RegisterComponent, Access(typeof(EngraveableSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedEngraveableSystem))]
 public sealed partial class EngraveableComponent : Component
 {
     /// <summary>
     ///     Message given to user to notify them a message was sent
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string EngravedMessage = string.Empty;
 
     /// <summary>
