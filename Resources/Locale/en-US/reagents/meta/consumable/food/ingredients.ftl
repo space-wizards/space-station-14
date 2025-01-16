@@ -37,5 +37,5 @@ reagent-desc-oil = Used by chefs to cook.
 reagent-name-capsaicin-oil = Capsaicin Oil
 reagent-desc-capsaicin-oil = Capsaicin Oil is the ingredient found in different types of hot peppers.
 
-reagent-name-frostoil = Frost Oil
-reagent-desc-frostoil = Frost Oil is the ingredient found in chilly peppers, a rare pepper mutation.
+reagent-name-frost-oil = Frost Oil
+reagent-desc-frost-oil = Frost Oil is the ingredient found in chilly peppers, a rare pepper mutation.

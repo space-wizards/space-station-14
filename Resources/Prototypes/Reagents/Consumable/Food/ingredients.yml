@@ -277,9 +277,9 @@
 
 - type: reagent
   id: FrostOil
-  name: reagent-name-frostoil
+  name: reagent-name-frost-oil
   group: Foods
-  desc: reagent-desc-frostoil
+  desc: reagent-desc-frost-oil
   physicalDesc: reagent-physical-desc-oily
   flavor: cold
   color: skyblue
