@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KingMudkipIII
-  changes:
-  - message: Added a ticket book to security lockers. Watch out!
-    type: Add
-  id: 437
-  time: '2024-11-03T22:37:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/609
 - author: hivehum
   changes:
   - message: Thavens can now have prosthetic left arms.
@@ -4495,3 +4488,13 @@
   id: 936
   time: '2025-01-16T06:21:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1333
+- author: Kandiyaki
+  changes:
+  - message: books can now be cut open to hide small items inside!
+    type: Add
+  - message: the bible no longer has a storage container, since all books can be cut
+      open now.
+    type: Tweak
+  id: 937
+  time: '2025-01-16T07:04:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1376
