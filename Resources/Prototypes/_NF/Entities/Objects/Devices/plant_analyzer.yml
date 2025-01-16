@@ -23,8 +23,8 @@
         type: PlantAnalyzerBoundUserInterface
   - type: PlantAnalyzer
     settings:
-      scanDelay: 10
-      advScanDelay: 20
+      scanDelay: 1
+      advScanDelay: 5
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
   - type: Appearance
@@ -34,6 +34,9 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+  - type: Tag # goob edit
+    tags:
+      - PlantAnalyzer
 
 - type: entity
   id: PlantAnalyzer
