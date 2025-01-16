@@ -6,8 +6,7 @@
   - type: Sprite
     sprite: Objects/Tools/wirecutters.rsi
     layers:
-      - state: abductor
-        map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: abductor
   - type: Tool
     speedModifier: 2
     qualities:
@@ -24,8 +23,7 @@
   - type: Sprite
     sprite: Objects/Tools/screwdriver.rsi
     layers:
-      - state: abductor
-        map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: abductor
   - type: Tool
     speedModifier: 2
     qualities:
