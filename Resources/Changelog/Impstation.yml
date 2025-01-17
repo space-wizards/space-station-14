@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Added metamorphic glasses of custom Impstation drinks to the entity spawner
-      menu for use in mapping and admin spawning.
-    type: Add
-  id: 443
-  time: '2024-11-03T22:42:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/598
 - author: TheGrimbeeper
   changes:
   - message: fixed too many things spawning from artifacts at one time
@@ -4500,3 +4492,11 @@
   id: 942
   time: '2025-01-17T01:58:07.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1388
+- author: Lemureslayer
+  changes:
+  - message: Added Moscow Mule as a drink Bartenders can make, including a dimpled
+      copper mug for the metamorphic glass.
+    type: Add
+  id: 943
+  time: '2025-01-17T02:24:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1380
