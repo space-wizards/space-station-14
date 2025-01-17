@@ -126,6 +126,7 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_door.ogg
+    clumsyProof: true #imp edit
   - type: BasicEntityAmmoProvider
     proto: ProjectilePolyboltDoor
     capacity: 10
