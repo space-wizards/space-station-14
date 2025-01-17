@@ -1,0 +1,56 @@
+#shrimps
+
+- type: entity
+  name: shrimps pack
+  parent: FoodSnackBase
+  id: FoodSnackShrimpspack
+  description: A pack of large shrimps. The greatest delicacy in the universe.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/snacks.rsi
+    state: shrimps
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 10
+  - type: FlavorProfile
+    flavors:
+      - salty
+  - type: Item
+    size: Tiny
+  - type: Food
+    trash:
+    - FoodPacketShrimpsTrash
+  - type: Tag
+    tags:
+    - FoodSnack
+
+- type: entity
+  parent: FoodPacketTrash
+  id: FoodPacketShrimpsTrash
+  name: desolate shrimps pack
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/snacks.rsi
+    state: shrimps-trash
+  - type: Tag
+    tags:
+    - Trash
+
+- type: cargoProduct
+  name: shrimps pack
+  id: ShrimpsPack
+  icon:
+    sprite: _Impstation/Objects/Consumable/Food/snacks.rsi
+    state: shrimps
+  product: FoodSnackShrimpspack
+  cost: 35 #votv cost
+  category: cargoproduct-category-name-food
+  group: market
+
+#end shrimps
