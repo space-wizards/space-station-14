@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: KingMudkipIII
-  changes:
-  - message: Drastically reduced the cost of cargo ordering shuttle parts.
-    type: Tweak
-  - message: The Shittle builders crate now contains a PACMAN-JR machine board and
-      a jug of welding fuel.
-    type: Tweak
-  id: 452
-  time: '2024-11-03T22:54:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/608
 - author: formlessnameless
   changes:
   - message: Legends tell of an infinite rainbow crayon, forged by the gods for the
@@ -4509,3 +4499,11 @@
   id: 951
   time: '2025-01-17T06:01:33.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1401
+- author: crocodilecarousel
+  changes:
+  - message: Adds one new food available through the cargo request console. The perfect
+      treat for invisible bitches and maint dwellers.
+    type: Add
+  id: 952
+  time: '2025-01-17T06:34:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1402
