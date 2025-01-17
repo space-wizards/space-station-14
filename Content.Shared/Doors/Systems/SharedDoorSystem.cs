@@ -23,17 +23,13 @@ using Robust.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
-using Content.Shared.Containers.ItemSlots;
+//imp edit start
 using Content.Shared.Fluids;
-using Robust.Shared.GameObjects;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Payload.Components;
 using Robust.Shared.Containers;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Fluids.Components;
 using Robust.Shared.Random;
+//imp edit end
 
 namespace Content.Shared.Doors.Systems;
 
@@ -55,10 +51,12 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
+    //imp edit start
     [Dependency] private readonly SharedPuddleSystem _puddle = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    //imp edit end
 
     [ValidatePrototypeId<TagPrototype>]
     public const string DoorBumpTag = "DoorBumpOpener";
@@ -232,6 +230,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!TryToggleDoor(uid, door, args.User, predicted: true))
             _pryingSystem.TryPry(uid, args.User, out _);
 
+        //imp edit start
         //If the door is opened manually by a player
         if (args.User != null && door.ClickOpen && door.State == DoorState.Opening)
         {
@@ -240,24 +239,27 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 container.ContainedEntities.Count > 0 &&
                 TryComp(container.ContainedEntities[0], out SolutionContainerManagerComponent? solutionContainer))
             {
-                EntityUid bucket = container.ContainedEntities[0];
+                //Foreach in case we ever implement multiple buckets I guess
+                foreach(var bucket in container.ContainedEntities)
+                {
+                    //Get the solution inside the bucket's container as solution
+                    if (!_solutionContainerSystem.TryGetDrainableSolution(bucket, out var soln, out var solution))
+                        return;
 
-                //Get the solution inside the bucket's container as solution
-                if (!_solutionContainerSystem.TryGetDrainableSolution(bucket, out var soln, out var solution))
-                    return;
+                    //Splash the solution onto the player
+                    _puddle.TrySplashSpillAt(uid, Transform(uid).Coordinates, solution, out _);
 
-                //Splash the solution onto the player
-                _puddle.TrySplashSpillAt(uid, Transform(uid).Coordinates, solution, out _);
+                    //Remove the solution from the bucket
+                    _solutionContainerSystem.RemoveAllSolution(soln.Value);
 
-                //Remove the solution from the bucket
-                _solutionContainerSystem.RemoveAllSolution(soln.Value);
-
-                //Drop the bucket on the floor
-                _container.RemoveEntity(uid, bucket, null, null, null, true, false, null, _random.NextAngle());
+                    //Drop the bucket on the floor
+                    _container.RemoveEntity(uid, bucket, null, null, null, true, false, null, _random.NextAngle());
+                }
             }
-
-            args.Handled = true;
         }
+        //imp edit end
+
+        args.Handled = true;
     }
 
     private void OnPryTimeModifier(EntityUid uid, DoorComponent door, ref GetPryTimeModifierEvent args)

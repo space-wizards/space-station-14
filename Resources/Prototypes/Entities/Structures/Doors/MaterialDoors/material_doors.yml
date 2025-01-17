@@ -60,13 +60,6 @@
     mode: NoSprite
   - type: Occluder
   - type: BlockWeather
-
-- type: entity
-  parent: BaseMaterialDoor
-  id: BaseMaterialDoorNavMap
-  abstract: true
-  components:
-  - type: NavMapDoor
   - type: ItemSlots # Imp special : prop a bucket on top of doors lol
     slots:
       bucket:
@@ -74,6 +67,13 @@
         whitelist:
           tags:
           - Bucket
+
+- type: entity
+  parent: BaseMaterialDoor
+  id: BaseMaterialDoorNavMap
+  abstract: true
+  components:
+  - type: NavMapDoor
 
 - type: entity
   id: MetalDoor
