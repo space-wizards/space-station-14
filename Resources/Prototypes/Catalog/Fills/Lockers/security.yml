@@ -118,9 +118,9 @@
       - id: ClothingHeadsetSecurity
       - id: ForensicScanner
       - id: LogProbeCartridge
+      - id: HoloprojectorSecurity
       - id: BoxForensicPad
       - id: DrinkDetFlask
-      - id: ClothingHandsGlovesForensic
       - id: RubberStampDetective
       - id: BoxEvidenceMarkers
       - id: HandLabeler

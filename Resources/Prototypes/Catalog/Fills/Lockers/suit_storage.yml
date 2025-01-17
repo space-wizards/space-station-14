@@ -57,6 +57,7 @@
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitSyndicate
         - id: ClothingHeadHelmetSyndicate
+        - id: ClothingMaskGasSyndicate
 
 #Pirate EVA
 - type: entity
