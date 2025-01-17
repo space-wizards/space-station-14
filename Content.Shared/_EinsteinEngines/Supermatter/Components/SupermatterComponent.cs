@@ -73,6 +73,9 @@ public sealed partial class SupermatterComponent : Component
     public SoundSpecifier DistortSound = new SoundPathSpecifier("/Audio/_EinsteinEngines/Supermatter/charge.ogg");
 
     [DataField]
+    public SoundSpecifier PullSound = new SoundPathSpecifier("/Audio/_EinsteinEngines/Supermatter/marauder.ogg");
+
+    [DataField]
     public SoundSpecifier CalmLoopSound = new SoundPathSpecifier("/Audio/_EinsteinEngines/Supermatter/calm.ogg");
 
     [DataField]

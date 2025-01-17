@@ -3,6 +3,7 @@ using System.Numerics;
 using System.Text;
 using Content.Server.Chat.Systems;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Singularity.Components;
 using Content.Server.Sound.Components;
 using Content.Shared._EinsteinEngines.CCVar;
 using Content.Shared._EinsteinEngines.Supermatter.Components;
@@ -140,6 +141,10 @@ public sealed partial class SupermatterSystem
         // After this point power is lowered
         // This wraps around to the begining of the function
         sm.Power = Math.Max(sm.Power - Math.Min(powerReduction * sm.PowerlossInhibitor, sm.Power * 0.83f * sm.PowerlossInhibitor), 0f);
+
+        // Adjust the gravity pull range
+        if (TryComp<GravityWellComponent>(uid, out var gravityWell))
+            gravityWell.MaxRange = Math.Clamp(sm.Power / 850f, 0.5f, 3f);
     }
 
     /// <summary>

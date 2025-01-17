@@ -78,6 +78,10 @@
     location: supermatter
   - type: SinguloFood
     energy: 10000
+  - type: GravityWell
+    baseRadialAcceleration: 1
+    maxRange: 0.5
+    gravPulsePeriod: 15
   # Paracusia values match MassHallucinations gamerule
   - type: ParacusiaProximity
     range: 5
