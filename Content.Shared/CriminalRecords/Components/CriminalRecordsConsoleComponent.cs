@@ -6,7 +6,7 @@ using Content.Shared.StationRecords;
 using Robust.Shared.Prototypes;
 using Content.Shared.Security;
 
-namespace Content.Shared.CriminalRecords;
+namespace Content.Shared.CriminalRecords.Components;
 
 /// <summary>
 /// A component for Criminal Record Console storing an active station record key and a currently applied filter
