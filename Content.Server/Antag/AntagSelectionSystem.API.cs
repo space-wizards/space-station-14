@@ -179,7 +179,7 @@ public sealed partial class AntagSelectionSystem
     public bool HasPrimaryAntagPreference(ICommonSession? session, AntagSelectionDefinition def)
     {
         if (session == null)
-            return true;
+            return false;
 
         if (def.PrefRoles.Count == 0)
             return false;
@@ -194,7 +194,7 @@ public sealed partial class AntagSelectionSystem
     public bool HasFallbackAntagPreference(ICommonSession? session, AntagSelectionDefinition def)
     {
         if (session == null)
-            return true;
+            return false;
 
         if (def.FallbackRoles.Count == 0)
             return false;
