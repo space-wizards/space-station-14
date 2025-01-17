@@ -2,7 +2,7 @@
   name: fun baton
   parent: [Stunbaton, BaseRestrictedContraband]
   id: Funbaton
-  description: A fun baton for entertaining people with. Actively boring with this is considered bad tone.
+  description: A powered implement capable of safely entertaining any criminal, just be mindful of the 'on' switch.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Melee/funbaton.rsi
@@ -22,7 +22,7 @@
   name: stun bat
   parent: [Stunbaton, BaseRestrictedContraband]
   id: Stunbat
-  description: A stun bat for incapacitating people and hitting home runs with. Actively harming with this will force the umpire to call a penalty.
+  description: A Stun Baton designed with the athletic security officer in mind. Using this unpowered is sure to have a foul called.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Melee/stunbat.rsi
@@ -39,7 +39,7 @@
   name: stun sabre
   parent: [Stunbaton, BaseRestrictedContraband]
   id: Stunsabre
-  description: A stun sabre for incapacitating people during your part-time job. Actively harming with this will get you fired.
+  description: A state-of-the-art Stun Baton derived from the signature weapons of underground assassins. Unpowered, it's no better than hitting someone with a stick.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Melee/stunsabre.rsi

@@ -2,7 +2,7 @@
   name: stun baton
   parent: [BaseItem, BaseRestrictedContraband]
   id: Stunbaton
-  description: A stun baton for incapacitating people with. Actively harming with this is considered bad tone.
+  description: A powered implement capable of safely incapacitating any criminal, just be mindful of the 'on' switch. #imp
   components:
   - type: Tag # goob edit
     tags:
