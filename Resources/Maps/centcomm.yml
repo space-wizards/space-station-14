@@ -35566,11 +35566,6 @@ entities:
       parent: 1668
 - proto: ToyFigurineDetective
   entities:
-  - uid: 2145
-    components:
-    - type: Transform
-      pos: 8.249651,23.679073
-      parent: 1668
   - uid: 6508
     components:
     - type: Transform
