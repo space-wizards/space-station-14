@@ -1,137 +1,4 @@
 ﻿Entries:
-- author: qwerltaz
-  changes:
-  - message: Reduced wall closet range. It's now much easier to not close yourself
-      inside by accident.
-    type: Tweak
-  id: 7308
-  time: '2024-09-07T23:44:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31933
-- author: Ilya246
-  changes:
-  - message: Reagents that make you flammable no longer extinguish you.
-    type: Fix
-  id: 7309
-  time: '2024-09-07T23:44:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31930
-- author: LucasTheDrgn
-  changes:
-  - message: Restored functionality to the Industrial Reagent Grinder
-    type: Fix
-  id: 7310
-  time: '2024-09-07T23:47:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31903
-- author: EmoGarbage404
-  changes:
-  - message: Added the biogenerator! Botany can use this machine to create various
-      materials, chemicals, and food items out of the
-    type: Add
-  id: 7311
-  time: '2024-09-08T05:34:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30694
-- author: TheShuEd
-  changes:
-  - message: Returned Taco microwave recipes (people were sad)
-    type: Add
-  - message: added an alternative method of crafting some burgers, through the correct
-      assembly sequence of modular food.
-    type: Add
-  - message: severely cut back on the number of items you can put on burgers, tacos,
-      or kebabs. This had poor design, and things need to be separately resprited
-      by adding them on modular food.
-    type: Tweak
-  id: 7312
-  time: '2024-09-08T06:22:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31012
-- author: metalgearsloth
-  changes:
-  - message: Fix the FTL bubbles sometimes persisting.
-    type: Fix
-  - message: Fix AI eye being able to FTL.
-    type: Fix
-  - message: Fix the AI eye being able to be FTL smashed.
-    type: Fix
-  id: 7313
-  time: '2024-09-08T08:12:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31952
-- author: PopGamer46
-  changes:
-  - message: Fixed being able to craft the justice helmet with a justice helmet
-    type: Fix
-  id: 7314
-  time: '2024-09-08T10:21:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31957
-- author: Killerqu00
-  changes:
-  - message: Seclite is now restricted to security.
-    type: Tweak
-  - message: Handcuffs are now restricted to security and command.
-    type: Tweak
-  - message: Trench whistle is now minor contraband.
-    type: Tweak
-  id: 7315
-  time: '2024-09-08T12:06:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31956
-- author: Psychpsyo
-  changes:
-  - message: The random sentience event should now actually happen again.
-    type: Fix
-  id: 7316
-  time: '2024-09-08T12:10:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31953
-- author: Beck Thompson
-  changes:
-  - message: Gold and silver rings now give a small amount of materials when scrapped.
-    type: Tweak
-  id: 7317
-  time: '2024-09-08T16:10:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31847
-- author: K-Dynamic
-  changes:
-  - message: added missing missing resistance values for directional plasma and uranium
-      windows
-    type: Fix
-  id: 7318
-  time: '2024-09-08T18:08:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31975
-- author: qwerltaz
-  changes:
-  - message: Power cables on the ground are now offset and do not obscure each other
-      or pipes beneath.
-    type: Tweak
-  id: 7319
-  time: '2024-09-09T10:00:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32000
-- author: ArtisticRoomba
-  changes:
-  - message: Budget insulated gloves now leave behind yellow frayed insulative fibers
-      instead of yellow insulative fibers. Detectives, rejoice!
-    type: Tweak
-  id: 7320
-  time: '2024-09-09T10:30:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31886
-- author: slarticodefast
-  changes:
-  - message: Revenants or other mobs without hands can no longer spill jugs.
-    type: Fix
-  id: 7321
-  time: '2024-09-09T11:02:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31438
-- author: PJB3005
-  changes:
-  - message: The emergency shuttle will now wait at the station longer if it couldn't
-      dock at evac.
-    type: Tweak
-  id: 7322
-  time: '2024-09-09T18:10:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31496
-- author: Boaz1111
-  changes:
-  - message: Pacifists can now use grapple guns.
-    type: Tweak
-  id: 7323
-  time: '2024-09-09T19:15:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32014
 - author: lzk228
   changes:
   - message: All bots are available for disguise with the Chameleon Ppotlight
@@ -3938,3 +3805,119 @@
   id: 7807
   time: '2025-01-13T18:49:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34412
+- author: Killerqu00
+  changes:
+  - message: Pet carriers can now be crafted.
+    type: Add
+  id: 7808
+  time: '2025-01-14T22:34:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34431
+- author: themias
+  changes:
+  - message: Fixed muzzles not working on some characters (e.g. dwarves)
+    type: Fix
+  id: 7809
+  time: '2025-01-15T00:10:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34419
+- author: ArtisticRoomba
+  changes:
+  - message: The station anchor machine board can no longer be printed at the circuit
+      imprinter.
+    type: Remove
+  id: 7810
+  time: '2025-01-15T16:26:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34358
+- author: ArtisticRoomba
+  changes:
+  - message: Mime PDA item interactions (insertions/ejections of IDs, pens, etc.)
+      are now silent.
+    type: Tweak
+  id: 7811
+  time: '2025-01-15T18:03:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34426
+- author: Alpaccalypse
+  changes:
+  - message: Smite soda vending machines have been added to the game.
+    type: Add
+  id: 7812
+  time: '2025-01-15T18:20:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34420
+- author: kosticia
+  changes:
+  - message: Bedsheets now can be printed on uniform printer
+    type: Add
+  id: 7813
+  time: '2025-01-15T19:35:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34034
+- author: TheShuEd
+  changes:
+  - message: Christmas anomaly removed
+    type: Remove
+  id: 7814
+  time: '2025-01-15T20:22:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34053
+- author: Kickguy223
+  changes:
+  - message: Puddles will now correctly evaporate
+    type: Fix
+  id: 7815
+  time: '2025-01-15T21:21:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34303
+- author: themias
+  changes:
+  - message: The DNA scrambler implant no longer updates your ID card or station record
+    type: Fix
+  id: 7816
+  time: '2025-01-15T22:49:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34091
+- author: jbox144
+  changes:
+  - message: Added Plasma Station
+    type: Add
+  id: 7817
+  time: '2025-01-16T07:02:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33991
+- author: jbox144
+  changes:
+  - message: Reduced Plasma's minimum population to 20, maximum population to 60
+    type: Tweak
+  - message: Reduced Plasma's clown jobs from 2 to 1
+    type: Tweak
+  id: 7818
+  time: '2025-01-16T08:51:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34462
+- author: pcaessayrs
+  changes:
+  - message: Uranium, Cak, and BreadDog are no longer space garbage.
+    type: Fix
+  id: 7819
+  time: '2025-01-16T11:40:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34192
+- author: GansuLalan
+  changes:
+  - message: Pianos will no longer push players off when climbing them
+    type: Fix
+  id: 7820
+  time: '2025-01-16T12:25:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33690
+- author: Southbridge
+  changes:
+  - message: More Ionstorm law elements have been added
+    type: Add
+  id: 7821
+  time: '2025-01-16T20:49:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34197
+- author: southbridge-fur
+  changes:
+  - message: Pride-O-Mats now have scarves instead of cloaks
+    type: Tweak
+  id: 7822
+  time: '2025-01-17T11:35:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34448
+- author: Toby222
+  changes:
+  - message: Update nix flake to use current nixpkgs release
+    type: Fix
+  id: 7823
+  time: '2025-01-17T17:26:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34480
