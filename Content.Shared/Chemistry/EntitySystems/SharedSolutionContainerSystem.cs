@@ -19,6 +19,7 @@ using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Dependency = Robust.Shared.IoC.DependencyAttribute;
+using Content.Shared.Ghost;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -861,6 +862,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     private void OnSolutionExaminableVerb(Entity<ExaminableSolutionComponent> entity, ref GetVerbsEvent<ExamineVerb> args)
     {
+        if (!args.CanInteract || !args.CanAccess)
+        {
+            if (!HasComp<GhostComponent>(args.User))
+                return;
+        }
+
         var scanEvent = new SolutionScanEvent();
         RaiseLocalEvent(args.User, scanEvent);
         if (!scanEvent.CanScan)
