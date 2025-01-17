@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: fixed too many things spawning from artifacts at one time
-    type: Fix
-  id: 444
-  time: '2024-11-03T22:40:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/595
 - author: hivehum, crocodilecarousel
   changes:
   - message: 30 new markings for our space station's moth infestation.
@@ -4500,3 +4493,10 @@
   id: 943
   time: '2025-01-17T02:24:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1380
+- author: crocodilecarousel
+  changes:
+  - message: Lillies have received a visual refresh!
+    type: Tweak
+  id: 944
+  time: '2025-01-17T04:34:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1390
