@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: honeyed-lemons
   changes:
-  - message: Ships bought from the shipyard can now be randomized
-    type: Tweak
-  id: 448
-  time: '2024-11-03T22:41:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/610
-- author: honeyed-lemons
-  changes:
   - message: Rat Kings can now pull things, cannot be pulled under doors.
     type: Tweak
   id: 449
@@ -4502,3 +4495,14 @@
   id: 947
   time: '2025-01-17T04:47:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1394
+- author: Sha-Seng
+  changes:
+  - message: Compact Armor Vest (identical stats as other ones) in sec loadouts and
+      one in the SecTech
+    type: Add
+  - message: Wardens can now spawn with armor vests instead of coats like HoS can
+      (warden armor is stronger though!)
+    type: Add
+  id: 948
+  time: '2025-01-17T05:20:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1396
