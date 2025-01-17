@@ -101,22 +101,6 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         WeedTolerance.Text = Loc.GetString("plant-analyzer-tolerance-weed-tolerance", ("weedTolerance", adv is null ? "-" : $"{adv.Value.WeedTolerance:F1}"));
         // Misc
 
-        StringBuilder speciation = new();
-        if (msg.Speciation is null)
-        {
-            speciation.Append("-");
-        }
-        else
-        {
-            foreach (var species in msg.Speciation)
-            {
-                speciation.Append(IndentedNewline);
-                speciation.Append(Loc.GetString(species));
-            }
-        }
-
-        PlantSpeciation.Text = Loc.GetString("plant-analyzer-plant-speciation-text", ("speciation", speciation.ToString()));
-
         if (adv != null)
         {
             var advInst = adv.Value;
@@ -131,7 +115,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
                 mutations.Append(IndentedNewline);
                 mutations.Append(Loc.GetString("plant-analyzer-mutation-seedless"));
             }
-            if (advInst.Mutations.HasFlag(MutationFlags.Ligneous)) 
+            if (advInst.Mutations.HasFlag(MutationFlags.Ligneous))
             {
                 mutations.Append(IndentedNewline);
                 mutations.Append(Loc.GetString("plant-analyzer-mutation-ligneous"));
@@ -148,6 +132,22 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         {
             Traits.Text = Loc.GetString("plant-analyzer-plant-mutations-text", ("traits", "-"));
         }
+
+        StringBuilder speciation = new();
+        if (msg.Speciation is null)
+        {
+            speciation.Append("-");
+        }
+        else
+        {
+            foreach (var species in msg.Speciation)
+            {
+                speciation.Append(IndentedNewline);
+                speciation.Append(Loc.GetString(species));
+            }
+        }
+
+        PlantSpeciation.Text = Loc.GetString("plant-analyzer-plant-speciation-text", ("speciation", speciation.ToString()));
     }
 
     private StringBuilder GetStringFromGasFlags(GasFlags flags)
