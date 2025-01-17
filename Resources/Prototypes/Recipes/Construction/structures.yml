@@ -105,11 +105,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-# here
+
 - type: construction
   name: wood wall
   id: WoodWall
-  graph: Girder
+  graph: Barricade
   startNode: start
   targetNode: woodWall
   category: construction-category-structures
@@ -1481,7 +1481,7 @@
   startNode: start
   targetNode: groundLight
   category: construction-category-structures
-  description: A ground light fixture. Use light bulbs.
+  description: A ground light fixture. Use light tubes.
   icon:
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
     state: base

@@ -59,7 +59,7 @@ tilemap:
   122: FloorWoodTile
   123: Lattice
   124: Plating
-  126: PlatingBurnt
+  126: PlatingDamaged
   129: TrainLattice
 entities:
 - proto: ""
@@ -32250,11 +32250,6 @@ entities:
     - type: Transform
       pos: -4.5,-312.5
       parent: 2
-  - uid: 4726
-    components:
-    - type: Transform
-      pos: 4.5,-355.5
-      parent: 2
   - uid: 13772
     components:
     - type: Transform
@@ -35082,6 +35077,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -6.5,-146.5
       parent: 2
+  - uid: 7565
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 5.5,-356.5
+      parent: 2
 - proto: ChairFolding
   entities:
   - uid: 5222
@@ -36452,6 +36453,13 @@ entities:
     - type: Transform
       pos: -5.086961,-272.51526
       parent: 2
+- proto: ClothingEyesBlindfold
+  entities:
+  - uid: 7570
+    components:
+    - type: Transform
+      pos: 4.544596,-355.42102
+      parent: 2
 - proto: ClothingEyesEyepatchHudBeer
   entities:
   - uid: 5427
@@ -37279,13 +37287,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,-279.5
-      parent: 2
-- proto: ComputerShuttleSalvage
-  entities:
-  - uid: 5560
-    components:
-    - type: Transform
-      pos: -5.5,-270.5
       parent: 2
 - proto: ComputerSolarControl
   entities:
@@ -49489,7 +49490,7 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
-- proto: FloraTree01
+- proto: FloraTree
   entities:
   - uid: 7528
     components:
@@ -49497,21 +49498,17 @@ entities:
       rot: 3.141592653589793 rad
       pos: 2.7296805,-40.53731
       parent: 2
-- proto: FloraTree05
-  entities:
   - uid: 7529
     components:
     - type: Transform
       pos: 11.2466135,-200.43379
       parent: 2
-- proto: FloraTree06
-  entities:
   - uid: 7530
     components:
     - type: Transform
       pos: 9.820292,-197.55566
       parent: 2
-- proto: FloraTreeLarge01
+- proto: FloraTreeLarge
   entities:
   - uid: 7531
     components:
@@ -49802,13 +49799,6 @@ entities:
       parent: 2
 - proto: GasMixer
   entities:
-  - uid: 7565
-    components:
-    - type: Transform
-      pos: 5.5,-356.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#FFD800FF'
   - uid: 13428
     components:
     - type: Transform
@@ -49898,14 +49888,6 @@ entities:
     - type: Transform
       pos: -25.5,-253.5
       parent: 2
-  - uid: 7570
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 7.5,-357.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#FFD800FF'
   - uid: 7571
     components:
     - type: Transform
@@ -50494,14 +50476,6 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#990000FF'
-  - uid: 7659
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 4.5,-356.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#FFD800FF'
   - uid: 7660
     components:
     - type: Transform
@@ -50596,14 +50570,6 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#990000FF'
-  - uid: 7672
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,-357.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#FFD800FF'
   - uid: 7673
     components:
     - type: Transform
@@ -58329,14 +58295,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -17.5,-252.5
       parent: 2
-  - uid: 8644
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 6.5,-357.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#FFD800FF'
   - uid: 8645
     components:
     - type: Transform
@@ -64747,20 +64705,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -21.5,-245.5
       parent: 2
-  - uid: 9446
-    components:
-    - type: Transform
-      pos: 5.5,-355.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#FFD800FF'
-  - uid: 9447
-    components:
-    - type: Transform
-      pos: 4.5,-355.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#FFD800FF'
   - uid: 9450
     components:
     - type: Transform
@@ -76306,7 +76250,7 @@ entities:
       pos: 8.5,-176.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -147491.25
+      secondsUntilStateChange: -148220.45
       state: Closing
   - uid: 11227
     components:
@@ -78491,6 +78435,10 @@ entities:
           showEnts: False
           occludes: True
           ent: 11564
+        item_slot: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: MopItem
   entities:
   - uid: 627
@@ -78656,13 +78604,6 @@ entities:
     components:
     - type: Transform
       pos: -13.5,-257.5
-      parent: 2
-- proto: NitrousOxideCanister
-  entities:
-  - uid: 11591
-    components:
-    - type: Transform
-      pos: 5.5,-355.5
       parent: 2
 - proto: NoticeBoard
   entities:
@@ -91037,6 +90978,16 @@ entities:
       parent: 2
 - proto: TableReinforced
   entities:
+  - uid: 4726
+    components:
+    - type: Transform
+      pos: 5.5,-355.5
+      parent: 2
+  - uid: 5560
+    components:
+    - type: Transform
+      pos: 4.5,-355.5
+      parent: 2
   - uid: 11786
     components:
     - type: Transform
@@ -92595,6 +92546,13 @@ entities:
     components:
     - type: Transform
       pos: 4.883979,-282.15594
+      parent: 2
+- proto: ToyFigurineChaplain
+  entities:
+  - uid: 7659
+    components:
+    - type: Transform
+      pos: 5.399611,-355.25436
       parent: 2
 - proto: ToyFigurineChemist
   entities:

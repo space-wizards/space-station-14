@@ -22,6 +22,7 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Speech.Muting;
 using Content.Shared.Storage;
+using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -62,6 +63,7 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
 
     public override void Initialize()
     {
@@ -77,6 +79,7 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
         SubscribeLocalEvent<ChargeSpellEvent>(OnChargeSpell);
         SubscribeLocalEvent<RandomGlobalSpawnSpellEvent>(OnRandomGlobalSpawnSpell);
+        SubscribeLocalEvent<MindSwapSpellEvent>(OnMindSwapSpell);
 
         // Spell wishlist
         //  A wishlish of spells that I'd like to implement or planning on implementing in a future PR
@@ -540,6 +543,37 @@ public abstract class SharedMagicSystem : EntitySystem
         }
 
         _audio.PlayGlobal(ev.Sound, ev.Performer);
+    }
+
+    #endregion
+    #region Mindswap Spells
+
+    private void OnMindSwapSpell(MindSwapSpellEvent ev)
+    {
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
+            return;
+
+        ev.Handled = true;
+        Speak(ev);
+
+        // Need performer mind, but target mind is unnecessary, such as taking over a NPC
+        // Need to get target mind before putting performer mind into their body if they have one
+        // Thus, assign bool before first transfer, then check afterwards
+
+        if (!_mind.TryGetMind(ev.Performer, out var perMind, out var perMindComp))
+            return;
+
+        var tarHasMind = _mind.TryGetMind(ev.Target, out var tarMind, out var tarMindComp);
+
+        _mind.TransferTo(perMind, ev.Target);
+
+        if (tarHasMind)
+        {
+            _mind.TransferTo(tarMind, ev.Performer);
+        }
+
+        _stun.TryParalyze(ev.Target, ev.TargetStunDuration, true);
+        _stun.TryParalyze(ev.Performer, ev.PerformerStunDuration, true);
     }
 
     #endregion
