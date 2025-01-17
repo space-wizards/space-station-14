@@ -15,8 +15,9 @@
   background: /Textures/_Impstation/LobbyScreens/Akachi_Imp_Station_Big.webp
 
 - type: lobbyBackground
-  id: KaasiDoshi
-  background: /Textures/_Impstation/LobbyScreens/KAASIDOSHI.webp
+  id: No-Ro
+  background: /Textures/_Impstation/LobbyScreens/NO-RO.webp
+
 
 - type: lobbyBackground
   id: SamGreetingCard

@@ -31,17 +31,15 @@
   - type: StationEvent
     earliestStart: 15
     weight: 6
-    duration: 30 # DeltaV: was 50, used as a delay now
+    duration: 50
   - type: VentCrittersRule
-    min: 10 # DeltaV
-    max: 15 # DeltaV
-    playerRatio: 55 # DeltaV: Higher base values, less player scaling
-    table: !type:GroupSelector # DeltaV: EntityTable instead of spawn entries
-      children:
-      - id: MobMouse
-      - id: MobMouse1
-      - id: MobMouse2
-    specialEntries:
+    entries:
+    - id: MobMouse
+      prob: 0.02
+    - id: MobMouse1
+      prob: 0.02
+    - id: MobMouse2
+      prob: 0.02
     - id: MobMouseCancer
       prob: 0.001
 # Events always spawn a critter regardless of Probability https://github.com/space-wizards/space-station-14/issues/28480 I added the Rat King to their own event with a player cap.
@@ -53,17 +51,18 @@
   - type: StationEvent
     earliestStart: 15
     weight: 6
-    duration: 30 # DeltaV: was 50, used as a delay now
+    duration: 50
     minimumPlayers: 30 # Hopefully this is enough for the Rat King's potential Army (it was not, raised from 15 -> 30)
   - type: VentCrittersRule
-    min: 10 # DeltaV
-    max: 20 # DeltaV
-    playerRatio: 70 # DeltaV: Mostly ignore player scaling
-    table: !type:GroupSelector # DeltaV: EntityTable instead of spawn entries
-      children:
-      - id: MobMouse
-      - id: MobMouse1
-      - id: MobMouse2
+    entries:
+    - id: MobMouse
+      prob: 0.02
+    - id: MobMouse1
+      prob: 0.02
+    - id: MobMouse2
+      prob: 0.02
+    - id: MobMouseCancer
+      prob: 0.001
     specialEntries:
     - id: SpawnPointGhostRatKing
       prob: 0.001
@@ -74,17 +73,13 @@
   components:
   - type: StationEvent
     weight: 6
-    duration: 30 # DeltaV: was 50, used as a delay now
+    duration: 50
   - type: VentCrittersRule
-    min: 8 # DeltaV
-    max: 20 # DeltaV
-    playerRatio: 80 # DeltaV: Mostly ignore player scaling
-    table: !type:GroupSelector # DeltaV: EntityTable instead of spawn entries
-      children:
-      - id: MobCockroach
-        weight: 0.79
-      - id: MobMothroach
-        weight: 0.21
+    entries:
+    - id: MobCockroach
+      prob: 0.03
+    - id: MobMothroach
+      prob: 0.008
 
 - type: entity
   id: SnailMigrationLowPop
@@ -92,16 +87,15 @@
   components:
   - type: StationEvent
     weight: 6
-    duration: 30 # DeltaV: was 50, used as a delay now
+    duration: 50
   - type: VentCrittersRule
-    min: 4 # DeltaV
-    max: 8 # DeltaV
-    playerRatio: 60 # DeltaV: Somewhat ignore player scaling
-    table: !type:GroupSelector # DeltaV: EntityTable instead of spawn entries
-      children:
-      - id: MobSnail
-      - id: MobSnailSpeed
-      - id: MobSnailMoth
+    entries:
+    - id: MobSnail
+      prob: 0.02
+    - id: MobSnailSpeed
+      prob: 0.002
+    - id: MobSnailMoth
+      prob: 0.002
 
 - type: entity
   id: SnailMigration
@@ -110,20 +104,18 @@
   - type: StationEvent
     earliestStart: 15
     weight: 6
-    duration: 30 # DeltaV: was 50, used as a delay now
+    duration: 50
     minimumPlayers: 30
   - type: VentCrittersRule
-    playerRatio: 20 # DeltaV: Snails aren't dangerous, but they should be more special
-    table: !type:GroupSelector # DeltaV: EntityTable instead of spawn entries
-      children:
-      - id: MobSnail
-        weight: 0.84
-      - id: MobSnailSpeed
-        weight: 0.08
-      - id: MobSnailMoth
-        weight: 0.08
-      - id: MobSnailInstantDeath
-        weight: 0.00001
+    entries:
+    - id: MobSnail
+      prob: 0.02
+    - id: MobSnailSpeed
+      prob: 0.002
+    - id: MobSnailMoth
+      prob: 0.002
+    - id: MobSnailInstantDeath
+      prob: 0.00001 #  ~ 1:2000 snails
 
 - type: entity
   id: TrashAnimalMigration
@@ -132,17 +124,15 @@
   - type: StationEvent
     earliestStart: 15
     weight: 6
-    duration: 30 # DeltaV: was 50, used as a delay now
+    duration: 50
   - type: VentCrittersRule
-    playerRatio: 20
-    table: !type:GroupSelector # DeltaV: EntityTable instead of spawn entries
-      children:
-      - id: MobRaccoonGhost
-        weight: 0.02
-      - id: MobPossumGhost
-        weight: 0.02
-      - id: MobMouse
-        weight: 0.02
+    entries:
+    - id: MobRaccoonGhost
+      prob: 0.02
+    - id: MobPossumGhost
+      prob: 0.02
+    - id: MobMouse
+      prob: 0.02
 
 - type: entity
   id: SlimesSpawn
@@ -152,13 +142,15 @@
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
-    duration: 30 # DeltaV: was 60, used as a delay now
+    duration: 60
   - type: VentCrittersRule
-    table: !type:GroupSelector # DeltaV: EntityTable instead of spawn entries
-      children:
-      - id: MobAdultSlimesBlueAngry
-      - id: MobAdultSlimesGreenAngry
-      - id: MobAdultSlimesYellowAngry
+    entries:
+    - id: MobAdultSlimesBlueAngry
+      prob: 0.02
+    - id: MobAdultSlimesGreenAngry
+      prob: 0.02
+    - id: MobAdultSlimesYellowAngry
+      prob: 0.02
 
 - type: entity
   id: SnakeSpawn
@@ -168,13 +160,15 @@
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
-    duration: 30 # DeltaV: was 60, used as a delay now
+    duration: 60
   - type: VentCrittersRule
-    table: !type:GroupSelector # DeltaV: EntityTable instead of spawn entries
-      children:
-      - id: MobPurpleSnake
-      - id: MobSmallPurpleSnake
-      - id: MobCobraSpace
+    entries:
+    - id: MobPurpleSnake
+      prob: 0.02
+    - id: MobSmallPurpleSnake
+      prob: 0.02
+    - id: MobCobraSpace
+      prob: 0.02
 
 - type: entity
   id: SpiderSpawn
@@ -184,10 +178,11 @@
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
-    duration: 30 # DeltaV: was 60, used as a delay now
+    duration: 60
   - type: VentCrittersRule
-    table: # DeltaV: EntityTable instead of spawn entries
-      id: MobGiantSpiderAngry
+    entries:
+    - id: MobGiantSpiderAngry
+      prob: 0.05
 
 - type: entity
   id: BrosSpawn
@@ -197,10 +192,11 @@
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
-    duration: 30 # DeltaV: was 60, used as a delay now
+    duration: 60
   - type: VentCrittersRule
-    table: # DeltaV: EntityTable instead of spawn entries
-      id: BrosVentSpawner
+    entries:
+    - id: BrosVentSpawner
+      prob: 0.05
 
 - type: entity
   id: SpiderClownSpawn
@@ -210,8 +206,8 @@
     earliestStart: 20
     minimumPlayers: 20
     weight: 1.5
-    duration: 30 # DeltaV: was 60, used as a delay now
+    duration: 60
   - type: VentCrittersRule
-    playerRatio: 35 # DeltaV: Clown spiders are very robust
-    table: # DeltaV: EntityTable instead of spawn entries
-      id: MobClownSpider
+    entries:
+    - id: MobClownSpider
+      prob: 0.05

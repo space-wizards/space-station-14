@@ -1,12 +1,7 @@
 - type: entity
   categories: [ HideSpawnMenu ]
   id: BaseFXEntity
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: Transform
-    noRot: true
-    anchored: true
   - type: Tag
     tags:
     - HideContextMenu
