@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lazy Riverfolk, AirFryerBuyOneGetOneFree
-  changes:
-  - message: Added the Cargorilla!
-    type: Add
-  id: 446
-  time: '2024-11-03T22:44:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/571
 - author: hivehum
   changes:
   - message: You need 5 hours borg playtime to unlock Station AI again.
@@ -4502,3 +4495,10 @@
   id: 945
   time: '2025-01-17T04:36:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1392
+- author: TheGrimbeeper
+  changes:
+  - message: Multitools should work as defibs for small critters once more.
+    type: Fix
+  id: 946
+  time: '2025-01-17T04:40:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1395
