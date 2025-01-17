@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -37,6 +38,10 @@ public sealed class FillLevelSpriteTest
             {
                 Assert.That(proto.TryGetComponent<SolutionContainerVisualsComponent>(out var visuals, componentFactory));
                 Assert.That(proto.TryGetComponent<SpriteComponent>(out var sprite, componentFactory));
+                if (!proto.HasComponent<AppearanceComponent>(componentFactory))
+                {
+                    Assert.Fail(@$"{proto.ID} has SolutionContainerVisualsComponent but no AppearanceComponent.");
+                }
 
                 // Test base sprite fills
                 if (!string.IsNullOrEmpty(visuals.FillBaseName) && visuals.MaxFillLevels > 0)
