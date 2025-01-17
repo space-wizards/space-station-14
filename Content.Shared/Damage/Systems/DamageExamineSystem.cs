@@ -6,6 +6,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Shared.Ghost;
 
 namespace Content.Shared.Damage.Systems;
 
@@ -23,6 +24,11 @@ public sealed class DamageExamineSystem : EntitySystem
 
     private void OnGetExamineVerbs(EntityUid uid, DamageExaminableComponent component, GetVerbsEvent<ExamineVerb> args)
     {
+        if (!args.CanInteract || !args.CanAccess)
+        {
+            if (!HasComp<GhostComponent>(args.User))
+                return;
+        }
 
         var ev = new DamageExamineEvent(new FormattedMessage(), args.User);
         RaiseLocalEvent(uid, ref ev);
