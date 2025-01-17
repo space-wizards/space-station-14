@@ -253,8 +253,7 @@ public sealed partial class SupermatterSystem
 
             var valid = true;
 
-            // TODO: obsolete function
-            foreach (var ent in grid.GetAnchoredEntities(tileref.GridIndices))
+            foreach (var ent in _map.GetAnchoredEntities(xform.GridUid.Value, grid, tileref.GridIndices))
             {
                 if (!physQuery.TryGetComponent(ent, out var body))
                     continue;
@@ -286,7 +285,7 @@ public sealed partial class SupermatterSystem
     private void HandleDamage(EntityUid uid, SupermatterComponent sm)
     {
         var xform = Transform(uid);
-        var indices = _xform.GetGridOrMapTilePosition(uid, xform);
+        var gridId = xform.GridUid;
 
         sm.DamageArchived = sm.Damage;
 
@@ -328,27 +327,29 @@ public sealed partial class SupermatterSystem
         }
 
         // Check for space tiles next to SM
-        //TODO: Change moles out for checking if adjacent tiles exist
-        var enumerator = _atmosphere.GetAdjacentTileMixtures(xform.GridUid.Value, indices, false, false);
-        while (enumerator.MoveNext(out var ind))
+        if (TryComp<MapGridComponent>(gridId, out var grid))
         {
-            if (ind.TotalMoles != 0)
-                continue;
+            var localpos = xform.Coordinates.Position;
+            var tilerefs = _map.GetLocalTilesIntersecting(
+                gridId.Value,
+                grid,
+                new Box2(localpos + new Vector2(-1, -1), localpos + new Vector2(1, 1)),
+                true);
 
-            var integrity = GetIntegrity(sm);
-
-            var factor = integrity switch
+            // We should have 9 tiles in total, any less means there's a space tile nearby
+            if (tilerefs.Count() < 9)
             {
-                < 10 => 0.0005f,
-                < 25 => 0.0009f,
-                < 45 => 0.005f,
-                < 75 => 0.002f,
-                _ => 0f
-            };
+                var factor = GetIntegrity(sm) switch
+                {
+                    < 10 => 0.0005f,
+                    < 25 => 0.0009f,
+                    < 45 => 0.005f,
+                    < 75 => 0.002f,
+                    _ => 0f
+                };
 
-            totalDamage += Math.Clamp(sm.Power * factor * sm.DamageIncreaseMultiplier, 0f, sm.MaxSpaceExposureDamage);
-
-            break;
+                totalDamage += Math.Clamp(sm.Power * factor * sm.DamageIncreaseMultiplier, 0, sm.MaxSpaceExposureDamage);
+            }
         }
 
         var damage = Math.Min(sm.DamageArchived + sm.DamageHardcap * sm.DamageDelaminationPoint, sm.Damage + totalDamage);
