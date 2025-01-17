@@ -57,6 +57,11 @@
 
 - type: latheRecipe
   parent: BaseLightRecipe
+  id: WarmLightBulb
+  result: WarmLightBulb
+
+- type: latheRecipe
+  parent: BaseLightRecipe
   id: GlowstickRed
   result: GlowstickRed
   materials:
