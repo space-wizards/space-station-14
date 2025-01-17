@@ -21423,7 +21423,6 @@ entities:
       inletTwoConcentration: 0.22000003
       inletOneConcentration: 0.78
       targetPressure: 4500
-      enabled: True
 - proto: GasPassiveVent
   entities:
   - uid: 3430
@@ -24862,7 +24861,6 @@ entities:
       parent: 1668
     - type: GasPressurePump
       targetPressure: 385
-      enabled: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 5400
@@ -24873,7 +24871,6 @@ entities:
       parent: 1668
     - type: GasPressurePump
       targetPressure: 4500
-      enabled: True
     - type: AtmosPipeColor
       color: '#990000FF'
 - proto: GasThermoMachineFreezer
@@ -27420,13 +27417,6 @@ entities:
     components:
     - type: Transform
       pos: -11.5,-9.5
-      parent: 1668
-- proto: LockerParamedicFilled
-  entities:
-  - uid: 3989
-    components:
-    - type: Transform
-      pos: 11.5,-11.5
       parent: 1668
 - proto: LockerQuarterMasterFilled
   entities:
