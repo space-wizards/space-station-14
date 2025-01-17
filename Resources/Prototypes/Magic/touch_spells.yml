@@ -18,3 +18,30 @@
       state: gib
     event: !type:SmiteSpellEvent
       speech: action-speech-spell-smite
+  - type: Magic
+    requiresClothes: true
+
+- type: entity
+  id: ActionCluwne
+  name: Cluwne
+  description: Turns someone into a Cluwne!
+  components:
+  - type: EntityTargetAction
+    useDelay: 60
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Items/brokenbikehorn.ogg
+    icon:
+      sprite: Clothing/Mask/cluwne.rsi
+      state: icon
+    event: !type:EnsureCompOnTouchSpellEvent
+      speech: action-speech-spell-cluwne
+      components:
+      - type: Cluwne
+  - type: Magic
+    requiresClothes: true
