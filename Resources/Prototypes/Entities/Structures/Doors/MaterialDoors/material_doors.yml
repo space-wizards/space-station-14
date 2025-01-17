@@ -113,6 +113,13 @@
   - type: Construction
     graph: DoorGraph
     node: woodDoor
+  - type: ItemSlots # Imp special : prop a bucket on top of doors lol
+    slots:
+      bucket:
+        disableEject: true
+        whitelist:
+          tags:
+          - Bucket
 
 - type: entity
   id: PaperDoor
