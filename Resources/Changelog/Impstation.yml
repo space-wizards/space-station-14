@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: hivehum, crocodilecarousel
-  changes:
-  - message: 30 new markings for our space station's moth infestation.
-    type: Add
-  - message: Fixed clipping issue with leg/foot prosthetics.
-    type: Fix
-  id: 445
-  time: '2024-11-03T22:43:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/591
 - author: Lazy Riverfolk, AirFryerBuyOneGetOneFree
   changes:
   - message: Added the Cargorilla!
@@ -4500,3 +4491,14 @@
   id: 944
   time: '2025-01-17T04:34:06.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1390
+- author: honeyed-lemons
+  changes:
+  - message: Courier job has been added to Fland and Oasis
+    type: Add
+  - message: Fugitive spawners have been added to Box, Xeno, Fland, and Oasis
+    type: Add
+  - message: Tweaked Xeno Mailroom
+    type: Tweak
+  id: 945
+  time: '2025-01-17T04:36:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1392
