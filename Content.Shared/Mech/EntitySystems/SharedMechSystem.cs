@@ -368,10 +368,12 @@ public abstract class SharedMechSystem : EntitySystem
         if (!CanInsert(uid, toInsert.Value, component))
             return false;
 
-        if (!_entity.TryGetComponent<ClimbingComponent>(toInsert, out var climbing))
-            return false;
-
-        if (climbing.IsClimbing)
+        // TODO: This is currently a band-aid fix for a bug/exploit.
+        // There seems to be a deeper underlying issue in the physics system, that
+        // - causes a crash in debug builds.
+        // - deletes the collision of an entity in release builds.
+        // This seems to happens when you and the entity you are standing on are clipping into another entity.
+        if (_entity.TryGetComponent<ClimbingComponent>(toInsert, out var climbing) && climbing.IsClimbing)
             return false;
 
         SetupUser(uid, toInsert.Value);
