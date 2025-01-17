@@ -42,5 +42,5 @@ station-ai-icon-smiley = All smiles
 station-ai-hologram-female = Female appearance
 station-ai-hologram-male = Male appearance
 station-ai-hologram-face = Disembodied head
-station-ai-hologram-cat = Curious form
+station-ai-hologram-cat = Cat form
 station-ai-hologram-dog = Corgi form
