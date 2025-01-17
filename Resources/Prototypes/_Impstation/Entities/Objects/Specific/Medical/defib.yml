@@ -1,0 +1,20 @@
+- type: entity
+  id: DefibrillatorInterdyne
+  parent: [DefibrillatorCompact, BaseSyndicateContraband]
+  name: interdyne defibrillator
+  description: An advanced defibrillator built by Interdyne.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Medical/defibinterdyne.rsi
+    layers:
+    - state: icon
+    - state: screen
+      map: [ "enum.ToggleVisuals.Layer" ]
+      visible: false
+      shader: unshaded
+    - state: ready
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+  - type: Clothing # Imp, belt slot
+    slots:
+    - Belt

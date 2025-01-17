@@ -79,7 +79,7 @@
   description: Now in fun size!
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/defibsmall.rsi
+    sprite: _Impstation/Objects/Specific/Medical/defibcompact.rsi # Imp
     layers:
       - state: icon
       - state: screen
@@ -94,6 +94,9 @@
   - type: ToggleCellDraw
   - type: PowerCellDraw
     useRate: 100
+  - type: Clothing # Imp, belt slot
+    slots:
+    - Belt
   - type: Defibrillator
     zapHeal:
       types:
@@ -104,12 +107,12 @@
 
 - type: entity
   id: DefibrillatorSyndicate
-  parent: DefibrillatorCompact
-  name: interdyne defibrillator
+  parent: [DefibrillatorCompact, BaseSyndicateContraband] # Imp, make syndicate contraband
+  name: syndicate defibrillator # Imp rename
   description: Doubles as a self-defense weapon against war-crime inclined tiders.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/defibsyndi.rsi
+    sprite: _Impstation/Objects/Specific/Medical/defibsyndi.rsi # Imp
     layers:
       - state: icon
       - state: screen
