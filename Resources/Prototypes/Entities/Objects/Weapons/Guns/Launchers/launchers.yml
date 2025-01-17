@@ -54,29 +54,43 @@
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
 
 - type: entity
-  name: cleanade launcher # todo: rename
-  parent: [WeaponLauncherChinaLake, BaseMajorContraband]
-  id: WeaponLauncherCleanade
+  name: hydra launcher
+  parent: [BaseWeaponLauncher, BaseGunWieldable, BaseMajorContraband]
+  id: WeaponLauncherHydra
   description: PLOOP... FSSSSSS
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Launchers/cleanade_launcher.rsi
+    sprite: Objects/Weapons/Guns/Launchers/hydra_launcher.rsi
     layers:
       - state: icon
         map: ["enum.GunVisualLayers.Base"]
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Launchers/cleanade_launcher.rsi
+    sprite: Objects/Weapons/Guns/Launchers/hydra_launcher.rsi
     slots:
     - Back
     - suitStorage
-  - type: BallisticAmmoProvider
+  - type: AmmoCounter
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - type: RevolverAmmoProvider
     whitelist:
       tags:
         - Grenade
-    capacity: 3
     proto: GrenadeCleanade
+    capacity: 6
+    chambers: [ True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null ]
+    soundEject:
+      path: /Audio/Weapons/Guns/MagOut/sfrifle_magout.ogg
     soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      path: /Audio/Weapons/Guns/MagIn/sfrifle_magin.ogg
+    soundSpin:
+      path: /Audio/Weapons/Guns/Cock/shotgun_close.ogg
 
 - type: entity
   name: RPG-7
