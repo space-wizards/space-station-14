@@ -24,11 +24,16 @@
     sprite: _Impstation/Structures/cargo_telepad.rsi #imp edit
     drawdepth: FloorObjects
     layers:
-    - state: offline
-      map: [ "enum.CargoTelepadLayers.Base" ]
-    - state: idle
-      map: [ "enum.CargoTelepadLayers.Beam" ]
-      shader: unshaded
+      - state: offline
+      - state: idle
+        shader: unshaded
+        map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
