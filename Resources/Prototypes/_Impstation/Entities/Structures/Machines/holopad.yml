@@ -5,3 +5,19 @@
   components:
   - type: Label
     currentLabel: "Cargo - Mailroom"
+
+- type: entity
+  parent: Holopad
+  id: HolopadScienceXenoarchaeology
+  suffix: Sci Xenoarchaeology
+  components:
+  - type: Label
+    currentLabel: holopad-science-xenoarchaeology
+
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralDocking
+  suffix: Docking Arm
+  components:
+  - type: Label
+    currentLabel: holopad-general-docking
