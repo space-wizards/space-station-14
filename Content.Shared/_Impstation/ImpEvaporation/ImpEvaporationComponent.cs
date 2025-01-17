@@ -7,7 +7,7 @@ namespace Content.Shared._Impstation.ImpEvaporation;
 /// A (hacky) way of applying (a type of) evaporation to reagents in YML.
 /// Must be given to the reagent by EnsureTileReaction, and must have `impEvaporates: true` in its reagentPrototype.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(ImpEvaporationSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedImpEvaporationSystem))]
 public sealed partial class ImpEvaporationComponent : Component
 {
     /// <summary>
