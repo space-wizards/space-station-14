@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: You need 5 hours borg playtime to unlock Station AI again.
-    type: Tweak
-  id: 447
-  time: '2024-11-03T22:41:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/593
 - author: honeyed-lemons
   changes:
   - message: Ships bought from the shipyard can now be randomized
@@ -4502,3 +4495,10 @@
   id: 946
   time: '2025-01-17T04:40:19.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1395
+- author: honeyed-lemons
+  changes:
+  - message: Courier is now in the ID Computer
+    type: Fix
+  id: 947
+  time: '2025-01-17T04:47:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1394
