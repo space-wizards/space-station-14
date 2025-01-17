@@ -26,9 +26,9 @@
     Vodka:
       amount: 2
     JuiceLime:
-      Amount: 1
+      amount: 1
     SolDry:
-      Amount: 3
+      amount: 3
   products:
     MoscowMule: 6
 
