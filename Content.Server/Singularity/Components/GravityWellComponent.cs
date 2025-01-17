@@ -23,7 +23,7 @@ public sealed partial class GravityWellComponent : Component
     /// </summary>
     [DataField("minRange")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public float MinRange = 0f;
+    public float MinRange = 0.1f;
 
     /// <summary>
     /// The acceleration entities will experience towards the gravity well at a distance of 1m.
@@ -41,7 +41,7 @@ public sealed partial class GravityWellComponent : Component
     /// </summary>
     [DataField("baseTangentialAcceleration")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public float BaseTangentialAcceleration = 0.0f;
+    public float BaseTangentialAcceleration = 3f;
 
     #region Update Timing
 

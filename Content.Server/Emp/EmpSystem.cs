@@ -77,7 +77,7 @@ public sealed class EmpSystem : SharedEmpSystem
         if (ev.Disabled)
         {
             var disabled = EnsureComp<EmpDisabledComponent>(uid);
-            disabled.DisabledUntil = Timing.CurTime + TimeSpan.FromSeconds(duration);
+            disabled.DisabledUntil = Timing.CurTime + TimeSpan.FromSeconds(duration + 3);
         }
     }
 
@@ -134,6 +134,7 @@ public sealed class EmpSystem : SharedEmpSystem
 /// </summary>
 public sealed partial class EmpAttemptEvent : CancellableEntityEventArgs
 {
+    args.PushMarkup(Loc.GetString("huzzah"));
 }
 
 [ByRefEvent]
