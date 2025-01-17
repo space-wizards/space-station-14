@@ -21,7 +21,7 @@
         mask:
           - MachineMask
   - type: Sprite
-    sprite: _Impstation/Structures/cargo_telepad.rsi #imp edit
+    sprite: _Impstation/Structures/cargo_telepad.rsi #imp edits begin
     drawdepth: FloorObjects
     layers:
       - state: offline
@@ -33,7 +33,7 @@
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
-          False: { visible: false }
+          False: { visible: false }                 #imp edits end
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
