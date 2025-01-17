@@ -9,10 +9,9 @@
       layers:
       - state: seed
       - state: paper
-        offset: "0.5,0.15"
         visible: false
         map: ["enum.PaperLabelVisuals.Layer"]
-        sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
+        sprite: Objects/Specific/Hydroponics/seeds.rsi
     - type: Appearance
     - type: GenericVisualizer
       visuals:
