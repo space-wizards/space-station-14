@@ -90,7 +90,7 @@
         startingItem: PowerCellMedium
   - type: HandheldLight
     addPrefix: false
-    wattage: 0.53
+    wattage: 0.5
   - type: ToggleableLightVisuals
     inhandVisuals:
       left:
