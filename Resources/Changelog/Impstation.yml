@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KingMudkipIII
-  changes:
-  - message: Added Thumper, a new drink thats fun for reptilians to drink!
-    type: Add
-  id: 450
-  time: '2024-11-03T22:45:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/611
 - author: AftrLite
   changes:
   - message: Unique sound effect for the AME's fuel injection!
@@ -4507,3 +4500,12 @@
   id: 949
   time: '2025-01-17T05:50:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1399
+- author: Sha-Seng
+  changes:
+  - message: No-Ro lobby art
+    type: Add
+  - message: Kaasi lobby art (there's only one chair)
+    type: Remove
+  id: 950
+  time: '2025-01-17T06:00:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1400
