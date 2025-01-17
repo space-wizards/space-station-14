@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Unique sound effect for the AME's fuel injection!
-    type: Add
-  id: 451
-  time: '2024-11-03T22:43:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/600
 - author: KingMudkipIII
   changes:
   - message: Drastically reduced the cost of cargo ordering shuttle parts.
@@ -4509,3 +4502,10 @@
   id: 950
   time: '2025-01-17T06:00:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1400
+- author: EpicToast
+  changes:
+  - message: Vent critters will spawn across the station like usual again.
+    type: Remove
+  id: 951
+  time: '2025-01-17T06:01:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1401
