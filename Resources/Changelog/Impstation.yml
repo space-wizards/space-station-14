@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Added Crawling! The default keybind is R! Fall flat on your face TODAY!!!!!!
-    type: Add
-  id: 454
-  time: '2024-11-06T01:17:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/612
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Changed Cargorilla to now have a Cargo ID and headset.
-    type: Tweak
-  id: 455
-  time: '2024-11-06T01:17:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/626
 - author: Drags-His-Tail
   changes:
   - message: Lizards can eat rats and drink blood again. Yay.
@@ -4504,3 +4490,20 @@
   id: 953
   time: '2025-01-17T07:19:31.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1403
+- author: DinnerCalzone
+  changes:
+  - message: Mail support has been added to Amber, Bagel, and Train.
+    type: Add
+  - message: Fixed problematic atmos setup in the kitchen car on Train.
+    type: Fix
+  id: 954
+  time: '2025-01-17T18:01:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1404
+- author: TheGrimbeeper
+  changes:
+  - message: fixed bug where people could see chemical composition or weapon damage
+      from behind windows.
+    type: Fix
+  id: 955
+  time: '2025-01-17T18:00:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1405
