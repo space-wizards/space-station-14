@@ -22,7 +22,7 @@
     - VendingMachineDrGibb
     - VendingMachinePwrGame
     - VendingMachineShamblersJuice
-    - VendingMachineSmite
+#    - VendingMachineSmite # GreyStation - Removed
     - VendingMachineSnack
     - VendingMachineSnackBlue
     - VendingMachineSnackGreen
@@ -40,13 +40,13 @@
   table: !type:GroupSelector
     children:
     - id: VendingMachineClothing
-      weight: 40
+      weight: 45
     - id: VendingMachineWinter
       weight: 40
-    - id: VendingMachinePride
-      weight: 10
+#    - id: VendingMachinePride # GreyStation - Removed
+#      weight: 10
     - id: VendingMachineTheater
-      weight: 10
+      weight: 15
 
 - type: entity
   id: RandomVendingClothing
