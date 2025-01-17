@@ -586,7 +586,7 @@
     color: "#D3A44D"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineCola
   id: VendingMachineShamblersJuice
   name: Shambler's Juice Vendor
   description: ~Shake me up some of that Shambler's Juice!~
@@ -613,7 +613,7 @@
     color: "#66538F"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineCola
   id: VendingMachinePwrGame
   name: PWR Game Vendor
   description: You want it, we got it. Brought to you in partnership with Vlad's Salads.
@@ -642,7 +642,7 @@
     color: "#6927C5"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineCola
   id: VendingMachineDrGibb
   name: Dr. Gibb Vendor
   description: Canned explosion of different flavors in this very vendor!
@@ -669,7 +669,7 @@
     color: "#D82929"
 
 - type: entity
-  parent: VendingMachine
+  parent: VendingMachineCola
   id: VendingMachineSmite
   name: Smite Vendor
   description: Popular with the administration.
