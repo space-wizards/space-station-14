@@ -435,7 +435,7 @@ public abstract class SharedMagicSystem : EntitySystem
     }
     // End Spell Helpers
     #endregion
-    #region Smite Spells
+    #region Touch Spells
     private void OnSmiteSpell(SmiteSpellEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
