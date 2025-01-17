@@ -83,11 +83,18 @@ public sealed partial class GhostComponent : Component
     }
 
     /// <summary>
+    /// Whether or not the ghost should be visible by default.
+    /// The ghost will still always be visible if global ghost visibility is enabled in the ghost system.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Visible;
+
+    /// <summary>
     /// Ghost color
     /// </summary>
     /// <remarks>Used to allow admins to change ghost colors. Should be removed if the capability to edit existing sprite colors is ever added back.</remarks>
-    [DataField("color"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public Color color = Color.White;
+    [DataField, AutoNetworkedField]
+    public Color Color = Color.White;
 
     [DataField("canReturnToBody"), AutoNetworkedField]
     private bool _canReturnToBody;

@@ -28,11 +28,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var ghostSys = _entities.EntitySysManager.GetEntitySystem<GhostSystem>();
-            var revSys = _entities.EntitySysManager.GetEntitySystem<RevenantSystem>();
-
-            ghostSys.MakeVisible(visible);
-            revSys.MakeVisible(visible);
+            _entities.System<GhostSystem>().MakeVisible(visible);
         }
     }
 }

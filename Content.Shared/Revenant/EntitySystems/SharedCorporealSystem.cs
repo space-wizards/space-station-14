@@ -1,6 +1,8 @@
 using Content.Shared.Physics;
 using Robust.Shared.Physics;
 using System.Linq;
+using Content.Shared.Eye;
+using Content.Shared.Ghost;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Revenant.Components;
 using Robust.Shared.Physics.Systems;
@@ -17,6 +19,7 @@ public abstract class SharedCorporealSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedGhostSystem _ghost = default!;
 
     public override void Initialize()
     {
@@ -44,6 +47,12 @@ public abstract class SharedCorporealSystem : EntitySystem
             _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, (int) CollisionGroup.SmallMobLayer, fixtures);
         }
         _movement.RefreshMovementSpeedModifiers(uid);
+
+        if (!TryComp(uid, out GhostComponent? ghost) || ghost.Visible)
+            return;
+
+        component.MadeVisible = true;
+        _ghost.SetVisible((uid, ghost), true);
     }
 
     public virtual void OnShutdown(EntityUid uid, CorporealComponent component, ComponentShutdown args)
@@ -59,5 +68,8 @@ public abstract class SharedCorporealSystem : EntitySystem
         }
         component.MovementSpeedDebuff = 1; //just so we can avoid annoying code elsewhere
         _movement.RefreshMovementSpeedModifiers(uid);
+
+        if (component.MadeVisible && TryComp(uid, out GhostComponent? ghost))
+            _ghost.SetVisible((uid, ghost), false);
     }
 }
