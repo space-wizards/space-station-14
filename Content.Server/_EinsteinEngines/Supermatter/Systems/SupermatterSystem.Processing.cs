@@ -69,6 +69,26 @@ public sealed partial class SupermatterSystem
         sm.HeatModifier = Math.Max(sm.HeatModifier, 0.5f);
         transmissionBonus *= h2OBonus;
 
+        // Miasma is really just microscopic particulate. It gets consumed like anything else that touches the crystal.
+        var ammoniaProportion = gasComposition.GetMoles(Gas.Ammonia);
+
+        if (ammoniaProportion > 0)
+        {
+            var ammoniaPartialPressure = mix.Pressure * ammoniaProportion;
+            var consumedMiasma = Math.Clamp((ammoniaPartialPressure - sm.AmmoniaConsumptionPressure) /
+                (ammoniaPartialPressure + sm.AmmoniaPressureScaling) *
+                (1 + powerRatio * sm.AmmoniaGasMixScaling),
+                0f, 1f);
+
+            consumedMiasma *= ammoniaProportion * moles;
+
+            if (consumedMiasma > 0)
+            {
+                sm.GasStorage.AdjustMoles(Gas.Ammonia, -consumedMiasma);
+                sm.MatterPower += consumedMiasma * sm.AmmoniaPowerGain;
+            }
+        }
+
         // Affects the damage heat does to the crystal
         var heatResistance = SupermatterGasData.GetHeatResistances(gasComposition);
         sm.DynamicHeatResistance = Math.Max(heatResistance, 1);

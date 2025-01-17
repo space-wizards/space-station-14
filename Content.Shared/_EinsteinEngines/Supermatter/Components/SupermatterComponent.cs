@@ -439,6 +439,33 @@ public sealed partial class SupermatterComponent : Component
 
     #endregion
 
+    #region Ammonia
+
+    /// <summary>
+    /// The minimum pressure for a pure ammonia atmosphere to begin being consumed.
+    /// </summary>
+    [DataField]
+    public float AmmoniaConsumptionPressure = Atmospherics.OneAtmosphere * 0.01f;
+
+    /// <summary>
+    /// How the amount of ammonia consumed per tick scaled with partial pressure.
+    /// </summary>
+    [DataField]
+    public float AmmoniaPressureScaling = Atmospherics.OneAtmosphere * 0.5f;
+
+    /// <summary>
+    /// How much the amount of ammonia consumed per tick scales with gasmix power ratio.
+    /// </summary>
+    [DataField]
+    public float AmmoniaGasMixScaling = 0.3f;
+
+    /// <summary>
+    /// The amount of matter power generated for every mole of ammonia consumed.
+    /// </summary>
+    [DataField]
+    public float AmmoniaPowerGain = 10f;
+
+    #endregion
 }
 
 public enum DelamType : int
@@ -484,7 +511,7 @@ public struct SupermatterGasFact
 [Serializable, NetSerializable]
 public static class SupermatterGasData
 {
-    private static Dictionary<Gas, SupermatterGasFact> _gasData = new()
+    private readonly static Dictionary<Gas, SupermatterGasFact> GasData = new()
     {
         { Gas.Oxygen,        new(1.5f, 1f,    1f,  1f) },
         { Gas.Nitrogen,      new(0f,   -1.5f, -1f, 1f) },
@@ -492,7 +519,7 @@ public static class SupermatterGasData
         { Gas.Plasma,        new(4f,   15f,   1f,  1f) },
         { Gas.Tritium,       new(30f,  10f,   1f,  1f) },
         { Gas.WaterVapor,    new(2f,   12f,   1f,  1f) },
-        { Gas.Ammonia,       new(0f,   0.5f,  1f , 1f) },
+        { Gas.Ammonia,       new(0f,   1f,    1f , 1f) },
         { Gas.NitrousOxide,  new(0f,   -5f,   -1f, 6f) },
         { Gas.Frezon,        new(3f,   -10f,  -1f, 1f) }
     };
@@ -502,7 +529,7 @@ public static class SupermatterGasData
         var modifier = 0f;
 
         foreach (var gasId in Enum.GetValues<Gas>())
-            modifier += mix.GetMoles(gasId) * getModifier(_gasData.GetValueOrDefault(gasId));
+            modifier += mix.GetMoles(gasId) * getModifier(GasData.GetValueOrDefault(gasId));
 
         return modifier;
     }
