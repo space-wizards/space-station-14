@@ -136,6 +136,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
             return;
         }
 
+        // imp edit
         var traitors = _traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind).Select(t => t.Id).ToHashSet();
 
         // Can't have multiple objectives to help/save/kill the same person
@@ -149,7 +150,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
                 }
             }
         }
-
+        // end imp edit
         // You are the first/only traitor.
         if (traitors.Count == 0)
         {
