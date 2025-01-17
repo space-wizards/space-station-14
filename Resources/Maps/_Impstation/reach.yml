@@ -7371,11 +7371,6 @@ entities:
     - type: Transform
       pos: -6.5,3.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 8
   - uid: 1079
     components:
     - type: Transform
@@ -7386,31 +7381,16 @@ entities:
     - type: Transform
       pos: -10.5,2.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 8
   - uid: 1081
     components:
     - type: Transform
       pos: -9.5,2.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 8
   - uid: 1082
     components:
     - type: Transform
       pos: -8.5,2.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 8
   - uid: 1083
     components:
     - type: Transform
@@ -7538,11 +7518,6 @@ entities:
     - type: Transform
       pos: -6.5,5.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 8
 - proto: Fireplace
   entities:
   - uid: 1103
