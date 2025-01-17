@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Crayon;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
@@ -25,6 +25,7 @@ namespace Content.Client.Crayon.UI
             _menu.OnColorSelected += SelectColor;
             _menu.OnSelected += Select;
             _menu.OnRotationSelected += SelectRotation;
+            _menu.OnPreviewModeToggled += TogglePreviewMode;
             PopulateCrayons();
             _menu.OpenCenteredLeft();
         }
@@ -64,16 +65,22 @@ namespace Content.Client.Crayon.UI
 
         public void Select(string state)
         {
-            SendMessage(new CrayonSelectMessage(state));
+            SendPredictedMessage(new CrayonSelectMessage(state));
         }
 
         public void SelectColor(Color color)
         {
-            SendMessage(new CrayonColorMessage(color));
+            SendPredictedMessage(new CrayonColorMessage(color));
         }
+
         public void SelectRotation(float rotation)
         {
-            SendMessage(new CrayonRotationMessage(rotation));
+            SendPredictedMessage(new CrayonRotationMessage(rotation));
+        }
+
+        public void TogglePreviewMode(bool previewMode)
+        {
+            SendPredictedMessage(new CrayonPreviewModeMessage(previewMode));
         }
     }
 }

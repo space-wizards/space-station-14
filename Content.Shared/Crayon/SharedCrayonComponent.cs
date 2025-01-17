@@ -81,6 +81,16 @@ namespace Content.Shared.Crayon
     }
 
     [Serializable, NetSerializable]
+    public sealed class CrayonPreviewModeMessage : BoundUserInterfaceMessage
+    {
+        public readonly bool PreviewMode;
+        public CrayonPreviewModeMessage(bool previewMode)
+        {
+            PreviewMode = previewMode;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public enum CrayonVisuals
     {
         State,
@@ -97,15 +107,19 @@ namespace Content.Shared.Crayon
         public readonly string State;
         public readonly int Charges;
         public readonly int Capacity;
+        public readonly bool SelectableColor;
         public readonly float Rotation;
+        public readonly bool PreviewMode;
 
-        public CrayonComponentState(Color color, string state, int charges, int capacity, float rotation)
+        public CrayonComponentState(Color color, string state, int charges, int capacity, bool selectableColor, float rotation, bool previewMode)
         {
             Color = color;
             State = state;
             Charges = charges;
             Capacity = capacity;
+            SelectableColor = selectableColor;
             Rotation = rotation;
+            PreviewMode = previewMode;
         }
     }
 
@@ -122,13 +136,15 @@ namespace Content.Shared.Crayon
         public bool SelectableColor;
         public Color Color;
         public float Rotation;
+        public bool PreviewMode;
 
-        public CrayonBoundUserInterfaceState(string selected, bool selectableColor, Color color, float rotation)
+        public CrayonBoundUserInterfaceState(string selected, bool selectableColor, Color color, float rotation, bool previewMode)
         {
             Selected = selected;
             SelectableColor = selectableColor;
             Color = color;
             Rotation = rotation;
+            PreviewMode = previewMode;
         }
     }
 }

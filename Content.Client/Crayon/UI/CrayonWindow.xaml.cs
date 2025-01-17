@@ -1,6 +1,5 @@
-using System.Collections.Generic;
+using System;
 using System.Linq;
-using Content.Client.Decals;
 using Content.Client.Stylesheets;
 using Content.Shared.Crayon;
 using Content.Shared.Decals;
@@ -10,9 +9,6 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
-using Robust.Client.Utility;
-using Robust.Shared.Graphics;
-using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
@@ -40,6 +36,7 @@ namespace Content.Client.Crayon.UI
         public event Action<Color>? OnColorSelected;
         public event Action<string>? OnSelected;
         public event Action<float>? OnRotationSelected;
+        public event Action<bool>? OnPreviewModeToggled;
 
         public CrayonWindow()
         {
@@ -62,7 +59,11 @@ namespace Content.Client.Crayon.UI
             {
                 _rotation = args.Value;
                 OnRotationSelected?.Invoke(_rotation);
-                UpdateCrayonDecalPlacementInfo();
+            };
+
+            CrayonPreviewButton.OnToggled += args =>
+            {
+                OnPreviewModeToggled?.Invoke(args.Pressed);
             };
         }
 
@@ -72,7 +73,6 @@ namespace Content.Client.Crayon.UI
 
             OnColorSelected?.Invoke(color);
             RefreshList();
-            UpdateCrayonDecalPlacementInfo();
         }
 
         private void RefreshList()
@@ -168,7 +168,6 @@ namespace Content.Client.Crayon.UI
             _autoSelected = null;
             OnSelected?.Invoke(_selected);
             RefreshList();
-            UpdateCrayonDecalPlacementInfo();
         }
 
         public void UpdateState(CrayonBoundUserInterfaceState state)
@@ -184,9 +183,9 @@ namespace Content.Client.Crayon.UI
             }
 
             RotationSpinBox.Value = state.Rotation;
+            CrayonPreviewButton.Pressed = state.PreviewMode;
 
             RefreshList();
-            UpdateCrayonDecalPlacementInfo();
         }
 
         public void AdvanceState(string drawnDecal)
@@ -224,26 +223,6 @@ namespace Content.Client.Crayon.UI
             }
 
             RefreshList();
-        }
-
-        private void UpdateCrayonDecalPlacementInfo()
-        {
-            if (_selected is null)
-                return;
-
-            _crayonSystem.UpdateCrayonDecalInfo(_selected, _color, _rotation);
-        }
-
-        protected override void Opened()
-        {
-            base.Opened();
-            _crayonSystem.SetActive(true);
-        }
-
-        public override void Close()
-        {
-            base.Close();
-            _crayonSystem.SetActive(false);
         }
     }
 }

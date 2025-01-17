@@ -27,5 +27,8 @@ namespace Content.Server.Crayon
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float Rotation { get; set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool PreviewMode { get; set; }
     }
 }

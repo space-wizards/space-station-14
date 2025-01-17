@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Decals;
 using Content.Shared.Interaction;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -18,17 +19,22 @@ public sealed class CrayonDecalPlacementOverlay : Overlay
     private readonly SharedInteractionSystem _interaction;
     private readonly SharedTransformSystem _transform;
     private readonly SpriteSystem _sprite;
-    private readonly CrayonSystem _crayon;
+
+    private readonly DecalPrototype? _decal;
+    private readonly Angle _rotation;
+    private readonly Color _color;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-    public CrayonDecalPlacementOverlay(CrayonSystem crayon, SharedTransformSystem transform, SpriteSystem sprite, SharedInteractionSystem interaction)
+    public CrayonDecalPlacementOverlay(SharedTransformSystem transform, SpriteSystem sprite, SharedInteractionSystem interaction, DecalPrototype? decal, Angle rotation, Color color)
     {
         IoCManager.InjectDependencies(this);
         _transform = transform;
         _sprite = sprite;
-        _crayon = crayon;
         _interaction = interaction;
+        _decal = decal;
+        _rotation = rotation;
+        _color = color;
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -40,16 +46,12 @@ public sealed class CrayonDecalPlacementOverlay : Overlay
         if (playerEnt == null)
             return false;
 
-        var playerPos = _transform.GetMapCoordinates(playerEnt.Value);
-
-        return _interaction.InRangeUnobstructed(playerPos, mousePos);
+        return _interaction.InRangeUnobstructed(mousePos, playerEnt.Value, collisionMask: Shared.Physics.CollisionGroup.None);
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        var (decal, rotation, color) = _crayon.GetActiveDecal();
-
-        if (decal == null)
+        if (_decal == null)
             return;
 
         var mouseScreenPos = _inputManager.MouseScreenPosition;
@@ -74,9 +76,9 @@ public sealed class CrayonDecalPlacementOverlay : Overlay
 
         // Nothing uses snap cardinals so probably don't need preview?
         var aabb = Box2.UnitCentered.Translated(localPos);
-        var box = new Box2Rotated(aabb, rotation, localPos);
+        var box = new Box2Rotated(aabb, _rotation, localPos);
 
-        handle.DrawTextureRect(_sprite.Frame0(decal.Sprite), box, color);
+        handle.DrawTextureRect(_sprite.Frame0(_decal.Sprite), box, _color);
         handle.SetTransform(Matrix3x2.Identity);
     }
 }
