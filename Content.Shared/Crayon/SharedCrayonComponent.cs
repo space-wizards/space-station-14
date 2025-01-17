@@ -107,17 +107,15 @@ namespace Content.Shared.Crayon
         public readonly string State;
         public readonly int Charges;
         public readonly int Capacity;
-        public readonly bool SelectableColor;
         public readonly float Rotation;
         public readonly bool PreviewMode;
 
-        public CrayonComponentState(Color color, string state, int charges, int capacity, bool selectableColor, float rotation, bool previewMode)
+        public CrayonComponentState(Color color, string state, int charges, int capacity, float rotation, bool previewMode)
         {
             Color = color;
             State = state;
             Charges = charges;
             Capacity = capacity;
-            SelectableColor = selectableColor;
             Rotation = rotation;
             PreviewMode = previewMode;
         }

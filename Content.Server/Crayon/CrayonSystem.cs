@@ -7,8 +7,11 @@ using Content.Server.Popups;
 using Content.Shared.Crayon;
 using Content.Shared.Database;
 using Content.Shared.Decals;
+using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -34,6 +37,9 @@ public sealed class CrayonSystem : SharedCrayonSystem
         SubscribeLocalEvent<CrayonComponent, CrayonColorMessage>(OnCrayonBoundUIColor);
         SubscribeLocalEvent<CrayonComponent, CrayonRotationMessage>(OnCrayonBoundUIRotation);
         SubscribeLocalEvent<CrayonComponent, CrayonPreviewModeMessage>(OnCrayonBoundUIPreviewMode);
+        SubscribeLocalEvent<CrayonComponent, BoundUIClosedEvent>(OnBuiClosed);
+        SubscribeLocalEvent<CrayonComponent, HandDeselectedEvent>(OnHandDeselected);
+        SubscribeLocalEvent<CrayonComponent, GotUnequippedEvent>(OnGotUnequipped);
         SubscribeLocalEvent<CrayonComponent, UseInHandEvent>(OnCrayonUse, before: new[] { typeof(FoodSystem) });
         SubscribeLocalEvent<CrayonComponent, AfterInteractEvent>(OnCrayonAfterInteract, after: new[] { typeof(FoodSystem) });
         SubscribeLocalEvent<CrayonComponent, DroppedEvent>(OnCrayonDropped);
@@ -42,7 +48,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
     private static void OnCrayonGetState(EntityUid uid, CrayonComponent component, ref ComponentGetState args)
     {
-        args.State = new CrayonComponentState(component.Color, component.SelectedState, component.Charges, component.Capacity, component.SelectableColor, component.Rotation, component.PreviewMode);
+        args.State = new CrayonComponentState(component.Color, component.SelectedState, component.Charges, component.Capacity, component.Rotation, component.PreviewMode);
     }
 
     private void OnCrayonAfterInteract(EntityUid uid, CrayonComponent component, AfterInteractEvent args)
@@ -134,8 +140,45 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
     private void OnCrayonBoundUIPreviewMode(EntityUid uid, CrayonComponent component, CrayonPreviewModeMessage args)
     {
-        component.PreviewMode = args.PreviewMode;
+        if (TryComp<HandsComponent>(args.Actor, out var hands) &&
+            TryComp<CrayonComponent>(hands.ActiveHandEntity, out var crayon) &&
+            hands.ActiveHandEntity == uid)
+        {
+            // Only toggle the overlay if the user is holding a crayon in their active hand
+            // and check if it is the same crayon that sent the request
+            component.PreviewMode = args.PreviewMode;
+            Dirty(uid, component);
+            RaiseNetworkEvent(new CrayonOverlayUpdateEvent(component.SelectedState, component.Rotation, component.Color, component.PreviewMode));
+        }
+        else
+        {
+            // failed to enable, reset button toggle
+            _uiSystem.SetUiState(uid, SharedCrayonComponent.CrayonUiKey.Key, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color, component.Rotation, component.PreviewMode));
+        }
+    }
+
+    private void OnBuiClosed(EntityUid uid, CrayonComponent component, BoundUIClosedEvent args)
+    {
+        component.PreviewMode = false;
         Dirty(uid, component);
+        _uiSystem.SetUiState(uid, SharedCrayonComponent.CrayonUiKey.Key, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color, component.Rotation, component.PreviewMode));
+        RaiseNetworkEvent(new CrayonOverlayUpdateEvent(component.SelectedState, component.Rotation, component.Color, component.PreviewMode));
+    }
+
+    private void OnHandDeselected(EntityUid uid, CrayonComponent component, ref HandDeselectedEvent args)
+    {
+        component.PreviewMode = false;
+        Dirty(uid, component);
+        _uiSystem.SetUiState(uid, SharedCrayonComponent.CrayonUiKey.Key, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color, component.Rotation, component.PreviewMode));
+        RaiseNetworkEvent(new CrayonOverlayUpdateEvent(component.SelectedState, component.Rotation, component.Color, component.PreviewMode));
+    }
+
+    private void OnGotUnequipped(EntityUid uid, CrayonComponent component, ref GotUnequippedEvent args)
+    {
+        component.PreviewMode = false;
+        Dirty(uid, component);
+        _uiSystem.SetUiState(uid, SharedCrayonComponent.CrayonUiKey.Key, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color, component.Rotation, component.PreviewMode));
+        RaiseNetworkEvent(new CrayonOverlayUpdateEvent(component.SelectedState, component.Rotation, component.Color, component.PreviewMode));
     }
 
     private void OnCrayonInit(EntityUid uid, CrayonComponent component, ComponentInit args)

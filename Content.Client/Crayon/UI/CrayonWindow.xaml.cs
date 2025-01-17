@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Content.Client.Stylesheets;
 using Content.Shared.Crayon;
@@ -23,8 +22,6 @@ namespace Content.Client.Crayon.UI
         private Dictionary<string, List<(string Name, Texture Texture)>>? _decals;
         [Dependency] private readonly IEntityManager _e = default!;
 
-        private readonly CrayonSystem _crayonSystem;
-
         private List<string>? _allDecals;
         private string? _autoSelected;
         private string? _selected;
@@ -43,7 +40,6 @@ namespace Content.Client.Crayon.UI
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
             _spriteSystem = _entitySystem.GetEntitySystem<SpriteSystem>();
-            _crayonSystem = _e.System<CrayonSystem>();
 
             Search.OnTextChanged += SearchChanged;
             ColorSelector.OnColorChanged += SelectColor;
