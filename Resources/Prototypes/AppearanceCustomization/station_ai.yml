@@ -46,7 +46,7 @@
       state: ai_angel
     Dead: 
       sprite: Mobs/Silicon/station_ai.rsi
-      state: ai_dead
+      state: ai_angel_dead
   
 - type: stationAiCustomization
   id: StationAiIconBliss
@@ -68,7 +68,7 @@
       state: ai_clown
     Dead: 
       sprite: Mobs/Silicon/station_ai.rsi
-      state: ai_dead
+      state: ai_clown_dead
   
 - type: stationAiCustomization
   id: StationAiIconDorf
@@ -90,7 +90,7 @@
       state: "ai_heartline"
     Dead: 
       sprite: Mobs/Silicon/station_ai.rsi
-      state: "ai_dead"
+      state: "ai_heartline_dead"
   
 - type: stationAiCustomization
   id: StationAiIconSmiley
