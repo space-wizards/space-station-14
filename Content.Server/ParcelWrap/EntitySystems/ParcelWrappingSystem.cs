@@ -31,7 +31,7 @@ public sealed class ParcelWrappingSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-    private const string WrappedParcelContainerId = "wrapped_parcel";
+    private const string WrappedParcelContainerId = "contents";
 
     /// <inheritdoc/>
     public override void Initialize()
