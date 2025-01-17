@@ -10844,7 +10844,6 @@ entities:
       - 14951
       - 583
       - 582
-      - 11012
 - proto: AirCanister
   entities:
   - uid: 89
@@ -17471,18 +17470,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 22.5,-8.5
-      parent: 2
-  - uid: 1112
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 14.5,-10.5
-      parent: 2
-  - uid: 1113
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 12.5,-14.5
       parent: 2
   - uid: 1114
     components:
@@ -71911,15 +71898,6 @@ entities:
       - 84
 - proto: FirelockEdge
   entities:
-  - uid: 11012
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 14.5,-11.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 88
   - uid: 11013
     components:
     - type: Transform
@@ -75238,6 +75216,14 @@ entities:
       color: '#0335FCFF'
 - proto: GasPassiveVent
   entities:
+  - uid: 1113
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 15.5,-14.5
+      parent: 2
+    - type: AtmosPipeColor
+      color: '#FF1212FF'
   - uid: 11529
     components:
     - type: Transform
@@ -77649,6 +77635,14 @@ entities:
       color: '#FF1212FF'
 - proto: GasPipeStraight
   entities:
+  - uid: 11012
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 17.5,-14.5
+      parent: 2
+    - type: AtmosPipeColor
+      color: '#FF1212FF'
   - uid: 11851
     components:
     - type: Transform
@@ -77679,14 +77673,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -42.5,45.5
       parent: 2
-  - uid: 11856
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 16.5,-14.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#FF1212FF'
   - uid: 11857
     components:
     - type: Transform
@@ -94584,14 +94570,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -41.5,46.5
       parent: 2
-  - uid: 14076
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 15.5,-14.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#FF1212FF'
   - uid: 14077
     components:
     - type: Transform
@@ -95142,14 +95120,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -0.5,-5.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#FF1212FF'
-  - uid: 14103
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 17.5,-14.5
       parent: 2
     - type: AtmosPipeColor
       color: '#FF1212FF'
@@ -128956,19 +128926,6 @@ entities:
         - Pressed: Toggle
         975:
         - Pressed: Toggle
-  - uid: 19595
-    components:
-    - type: MetaData
-      desc: Press in case the outer windoor is stuck open.
-      name: outer windoor closer
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 12.5,-14.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        24447:
-        - Pressed: Close
   - uid: 19596
     components:
     - type: MetaData
@@ -129622,19 +129579,6 @@ entities:
       linkedPorts:
         447:
         - Pressed: Toggle
-  - uid: 19643
-    components:
-    - type: MetaData
-      desc: Press this in case the inner windoor is stuck open.
-      name: inner windoor closer
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 14.5,-10.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        24445:
-        - Pressed: Close
   - uid: 19644
     components:
     - type: MetaData
@@ -129767,6 +129711,29 @@ entities:
         25632:
         - On: Forward
         - Off: Reverse
+- proto: SignalTimer
+  entities:
+  - uid: 1112
+    components:
+    - type: MetaData
+      desc: Automatically closes each windoor after a delay to avoid either of them getting stuck open.
+      name: signal timer (windoor closer)
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 12.5,-14.5
+      parent: 2
+    - type: SignalTimer
+      delay: 4
+    - type: DeviceLinkSource
+      linkedPorts:
+        24447:
+        - Timer: Close
+        24445:
+        - Timer: Close
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: ActiveSignalTimer
+      triggerTime: 0
 - proto: SignAnomaly
   entities:
   - uid: 19652
@@ -157790,6 +157757,8 @@ entities:
       linkedPorts:
         24447:
         - DoorStatus: DoorBolt
+        1112:
+        - DoorStatus: Trigger
   - uid: 24446
     components:
     - type: Transform
@@ -157808,6 +157777,8 @@ entities:
       linkedPorts:
         24445:
         - DoorStatus: DoorBolt
+        1112:
+        - DoorStatus: Trigger
   - uid: 24448
     components:
     - type: Transform
