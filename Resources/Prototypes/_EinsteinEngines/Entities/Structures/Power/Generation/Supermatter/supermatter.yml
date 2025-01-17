@@ -20,6 +20,7 @@
   - type: Speech
     speechSounds: null
     speechVerb: Supermatter
+    soundCooldownTime: 0
     suffixSpeechVerbs:
       chat-speech-verb-suffix-exclamation-strong: Supermatter
       chat-speech-verb-suffix-exclamation: Supermatter

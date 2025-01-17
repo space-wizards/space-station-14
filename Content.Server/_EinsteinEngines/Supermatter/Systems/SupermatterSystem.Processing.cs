@@ -438,7 +438,7 @@ public sealed partial class SupermatterSystem
 
             if (seconds <= 5 && TryComp<SpeechComponent>(uid, out var speech))
                 // Prevent repeat sounds during the 5.. 4.. 3.. 2.. 1.. countdown
-                speech.SoundCooldownTime = 5.0f;
+                speech.SoundCooldownTime = 4.5f;
 
             message = Loc.GetString(loc, ("seconds", seconds));
             global = true;
