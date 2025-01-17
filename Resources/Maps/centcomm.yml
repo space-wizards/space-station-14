@@ -27404,9 +27404,9 @@ entities:
           showEnts: False
           occludes: True
           ent: null
-- proto: LockerHeadOfPersonnel
+- proto: LockerHeadOfPersonnelFilled
   entities:
-  - uid: 5133
+  - uid: 327
     components:
     - type: Transform
       pos: -10.5,-5.5
