@@ -81,5 +81,7 @@ public sealed class MagazineVisualsSpriteTest
                 }
             }
         });
+
+        await pair.CleanReturnAsync();
     }
 }
