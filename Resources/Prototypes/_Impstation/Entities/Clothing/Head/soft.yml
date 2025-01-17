@@ -31,7 +31,7 @@
   name: security cap
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlippable, BaseCommandContraband]
+  parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatCouriersoft
   name: courier's cap
   description: A soft, durable cap for couriers.

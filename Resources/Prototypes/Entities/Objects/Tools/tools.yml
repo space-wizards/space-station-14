@@ -213,6 +213,7 @@
     playFailureSound: false
     playSuccessSound: false
     playReadySound: false
+  - type: UseDelay
 
 - type: entity
   name: network configurator
