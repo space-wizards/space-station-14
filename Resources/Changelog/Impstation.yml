@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: BROS now play their death sound when they die.
-    type: Add
-  - message: BROS now audibly gasp when suffocating.
-    type: Add
-  - message: Player-controlled BROS will now audibly UNGH when performing a vocal
-      emote.
-    type: Add
-  - message: Edited BROS sound files to remove harsh popping at the end of their audio
-      tracks. Don't worry, they still sound like shit.
-    type: Tweak
-  id: 457
-  time: '2024-11-06T02:05:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/627
 - author: Sha-Seng
   changes:
   - message: ticketpad is now folder-sized in inventory
@@ -4507,3 +4492,10 @@
   id: 956
   time: '2025-01-17T22:24:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1409
+- author: formlessnameless
+  changes:
+  - message: Antagonist selection now happens before job selection.
+    type: Tweak
+  id: 957
+  time: '2025-01-17T23:07:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1059
