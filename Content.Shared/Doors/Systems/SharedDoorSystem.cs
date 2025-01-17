@@ -33,6 +33,7 @@ using Content.Shared.Payload.Components;
 using Robust.Shared.Containers;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Fluids.Components;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Doors.Systems;
 
@@ -57,6 +58,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] private readonly SharedPuddleSystem _puddle = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     [ValidatePrototypeId<TagPrototype>]
     public const string DoorBumpTag = "DoorBumpOpener";
@@ -247,8 +249,11 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 //Splash the solution onto the player
                 _puddle.TrySplashSpillAt(uid, Transform(uid).Coordinates, solution, out _);
 
+                //Remove the solution from the bucket
+                _solutionContainerSystem.RemoveAllSolution(soln.Value);
+
                 //Drop the bucket on the floor
-                _container.RemoveEntity(uid, bucket);
+                _container.RemoveEntity(uid, bucket, null, null, null, true, false, null, _random.NextAngle());
             }
 
             args.Handled = true;
