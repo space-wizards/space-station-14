@@ -1,65 +1,108 @@
 <Document>
+  # Supermatter Engine
 
-  <GuideEntityEmbed Entity="Supermatter" Caption="" Margin="0"/>
+  The supermatter engine is an incredibly dangerous, volatile, and radioactive source of power. Without proper management, the supermatter chamber will fill with fire, arcs of lightning will spark, and eventually, an explosion will destroy the entire engineering department.
 
-  # The Supermatter Engine
+  But with proper care and handling, the supermatter can be an incredibly potent power source for the station. A basic setup will take care of most of the power load, but the supermatter crystal is affected strongly by gases in many different ways.
 
-  So you've decided to take on the challenge and set up the Supermatter Engine? First, let's give you a short overview of the main Supermatter crystal beforehand.
+  ## Precautions
 
-  Its primary features are emitting radiation that is harnessed to power the station through radiation collectors.
+  [bold][color=red]DO NOT INTENTIONALLY WALK INTO THE CRYSTAL BEFORE COOLING HAS BEEN SET UP OR YOU WILL BE BANNED.[/color][/bold]
 
-  Side effects include releasing hot oxygen and plasma, heating the air around, and exploding, transforming into a black hole or an energy ball and eating the entire station if you screw up hard enough.
+  Before stepping into the supermatter chamber, there are a few things to keep in mind to avert disaster and personal harm.
 
-  It begins inert, though still radioactive, but being hit by an object or a projectile will activate it. This includes bodies: do not run into the supermatter!
+  • Do not power the crystal before the cooling loop has been set up. Do not touch the crystal. Do not walk into the crystal.
 
-  ## Words of Warning
+  • Wear radiation protection around the crystal at all times.
 
-  1. The Supermatter crystal is [color=red]VERY DANGEROUS[/color]. Activating the crystal should be the last step in setting up any form of Supermatter based power!
+  • Do not stare directly into the crystal. Engineering goggles will prevent hallucinations.
 
-  2. [color=red]PUT YOUR RADIATION SUIT ON[/color].
+  • If you have to get close to the crystal, equip and enable magboots.
 
-  3. Most of the Supermatter setup involves a gas loop that is designed to cool down the Supermatter chamber.
+  ## Supermatter Crystal
 
-  4. Anything that bumps into the Supermatter is [color=red]fundamentally annihilated[/color]. [color=red]Do not touch it[/color].
+  <GuideEntityEmbed Entity="Supermatter" Caption=""/>
 
-  ## Gas Interactions
+  The supermatter crystal is the main focus of the supermatter engine. It slowly siphons and reacts with gases around it, while emitting incredibly harmful levels of radiation.
 
-  Here's a list of all gases from least dangerous to most dangerous.
+  When powered, usually by emitters, the intensity of its radiation will grow, as hot oxygen and plasma are released as waste product. To top it all off, anything that touches the crystal is instantly vaporized.
 
-  1. [color=#bffffe]Frezon[/color]. Aside from cooling down the Supermatter, it basically stops power and waste production, which may come handy if the Supermatter is close to delaminating and you need to shut it down fast.
+  ## Radiation Collectors
 
-  2. [color=#c20000]Nitrogen[/color]. N2 is the basic gas most Supermatter setups will run exclusively, being very simple to set up for. It dampens the power generation from heat, and reduces the amount of plasma the SM belches out, making it good for when you aren't trying to do something silly.
+  <Box>
+    <GuideEntityEmbed Entity="RadiationCollectorNoTank"/>
+    <GuideEntityEmbed Entity="PlasmaTank"/>
+  </Box>
 
-  3. [color=#b16d6d]Nitrous oxide[/color]. Reinforces the heat resistance of the crystal, allowing for much hotter setups than usual. However, at high temperatures it will decompose into Nitrogen and Oxygen. While N2 is good, O2 certainly is not. This O2 will also react with the Plasma to create Tritium and then a Tritium fire.
+  To harness the radioactive potential of the crystal, radiations collectors are placed nearby. These connect to HV cables, generating power for the station.
 
-  4. [color=#62d5ca]Oxygen[/color]. Provides a boost to power transmission without actively increasing the waste gas amount or temperature. Pretty risky to use, as any disruption of the cooling loop will soon cause a plasma fire in the crystal chamber. Even just a high concentration of O2 will activate and continuously power the crystal.
+  Radiations collectors require a tank full of plasma gas to operate, which will need to be replaced every so often to maintain power output.
 
-  5. [color=#19b348]Ammonia[/color]. Increases the power generation slightly at a minor cost to the heat penalty.
+  ## Cooling Loop
 
-  6. [color=#979797]Carbon Dioxide[/color]. In low concentrations, it will increase the crystal's power generation. In high concentrations it will raise the crystal's energy to extremely high levels. With poor management and insufficient or downright bad preparation, it will eventually exceed safe energy levels and begin a charge delamination, producing electric arcs and anomalies until it eventually explodes into a Tesla ball.
+  At the most fundamental level, the supermatter crystal is kept stable with a loop of atmospheric pipes. The chamber is filled with safe, cold gas, whilst any harmful or unwanted byproducts are filtered out of the system.
 
-  [color=red]7[/color]. [color=#ff9d00]Plasma[/color]. Very similar to Oxygen but provides a higher power boost as well as a much higher waste and heat penalty. The extreme pressures and volumes of gas produced by this gas are very likely to clog pipes and overheat the chamber.
+  <GuideEntityEmbed Entity="NitrogenCanister"/>
 
-  [color=red]8[/color]. [color=#08a800]Tritium[/color]. Increases the power production of the Supermatter by up to 3 times, there is one slight issue with it. It is dangerous. It is very dangerous. Tritium is a horrifyingly irritable and jumpy gas. While it isn't as harmful to the heat level as Plasma is (just barely), it also has the second worst heat capacity of all gasses while Plasma has the second highest. This means that Plasma can be kept happy with enough cooling, whereas Tritium eagerly goes from a safe space loop into a burning hellfire. Add to this the byproduct of large amounts of Oxygen production (not exclusive to Tritium, an issue in a Plasma engine too), and you have a tritium fire and a very hot crystal. Do not use this gas unless you have a very strong understanding of atmospherics and the Supermatter, and are willing to get creative.
+  Most stations will come with pre-supplied nitrogen canisters: the supermatter reacts very safely with nitrogen, which makes it an ideal gas for a basic setup.
 
-  ## Practical guide to the Supermatter
+  <Box>
+    <GuideEntityEmbed Entity="GasPort"/>
+    <GuideEntityEmbed Entity="GasPressurePump"/>
+    <GuideEntityEmbed Entity="GasFilter"/>
+  </Box>
 
-  Now, forget about everything you've just read and get to setting up the most basic loop there is: the Nitrogen loop.
+  To set up the cooling loop, anchor the nitrogen canisters to the input connector ports and enable the respective gas pumps. Follow the pipes, enabling gas pumps and filters as you go.
 
-  The atmospheric setup in its most basic form should look like this:
+  Be careful not to activate the gas pumps inside the interior chamber's airlocks before the full cooling loop is set up. A bypass gas pump is located outside the external airlock: use this to keep gas flowing as you work.
 
-  (We did not have enough budget for images, here is a text representation)
+  At least one of the filters that feeds back into the loop should be set to filter nitrogen. This will keep the cooled nitrogen in the loop, ensuring the crystal is kept at safe parameters.
 
-  1. Nitrogen gets pumped into the chamber by vents from one side
+  <GuideEntityEmbed Entity="GasAnalyzer"/>
 
-  2. Every gas gets pumped out of the chamber by using scrubbers set on Siphon on the other side.
+  Once the full cooling loop has been set up, double check with a gas analyzer to make sure the gas is not trapped at any point in the system. Disable the bypass gas pump by the airlocks, enable the interior gas pumps, and configure the air alarm.
 
-  3. The output gets filtered, cooled down, and excess nitrogen gets either routed into space or rerouted into the input.
+  ## Air Alarm Configuration
 
-  That's basically it. I hope you understand at least something in this example. Now get to it!
+  <GuideEntityEmbed Entity="AirAlarm" Caption=""/>
 
-  ## Experiment
+  Most air alarms are access-restricted to atmospheric technicians. The supermatter's air alarm is unique, and can be configured by station engineers.
 
-  You're not a real engineer if you haven't figured out the most efficient way to produce power using the Supermatter crystal, are you?
+  <Box>
+    <GuideEntityEmbed Entity="GasVentPump"/>
+    <GuideEntityEmbed Entity="GasVentScrubber"/>
+  </Box>
 
+  By default, the air vents in the supermatter's chamber will only output up to 101.3 kPa of gas, and adhere to pressure lockout parameters.
+
+  Using the air alarm, increase the output threshold of each vent, or switch them to internal pressure bounds. The pressure lockout features of each vent should also be disabled.
+
+  The air scrubbers also need adjustment from their default configuration. Ensure each scrubber is set to filter all gases, and that the WideNet feature is enabled for maximum efficiency.
+
+  ## Emitters
+
+  <GuideEntityEmbed Entity="Emitter"/>
+
+  Once the cooling loop is fully set up and the radiation collectors are filled, the supermatter engine is ready to be started up.
+
+  Emitters are the most common way of kickstarting the supermatter and keeping its internal energy high. Interact with an emitter to toggle it on, and it will begin firing lasers at the crystal.
+
+  ## Experimentation
+
+  <GuideEntityEmbed Entity="ComputerSupermatter"/>
+
+  Although nitrogen is good at keeping the supermatter safe and stable, it also hinders the supermatter crystal's power generation.
+
+  The supermatter monitoring console allows close observation of the crystal and the effects that gases have on it. This is a key piece of equipment for safely experimenting with the supermatter.
+
+  <Box>
+    <GuideEntityEmbed Entity="CarbonDioxideCanister" Caption=""/>
+    <GuideEntityEmbed Entity="PlasmaCanister" Caption=""/>
+    <GuideEntityEmbed Entity="TritiumCanister" Caption=""/>
+    <GuideEntityEmbed Entity="WaterVaporCanister" Caption=""/>
+    <GuideEntityEmbed Entity="AmmoniaCanister" Caption=""/>
+    <GuideEntityEmbed Entity="NitrousOxideCanister" Caption=""/>
+  </Box>
+
+  Try out different gas mixes and see what happens!
 </Document>
