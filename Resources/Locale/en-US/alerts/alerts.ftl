@@ -27,6 +27,9 @@ alerts-weightless-desc =
     Gravity has ceased affecting you, and you're floating around aimlessly. Find something sturdy to hold onto, or throw or shoot something in a direction opposite of you.
     Mag-boots or jetpacks would help you move with more control.
 
+alerts-walking-name = Walking
+alerts-walking-desc = You are walking, moving at a slow pace.
+
 alerts-stunned-name = [color=yellow]Stunned[/color]
 alerts-stunned-desc = You're [color=yellow]stunned[/color]! Something is impairing your ability to move or interact with objects.
 

@@ -102,14 +102,16 @@ public struct PowerMonitoringConsoleEntry
     public NetEntity NetEntity;
     public PowerMonitoringConsoleGroup Group;
     public double PowerValue;
+    public float? BatteryLevel;
 
     [NonSerialized] public PowerMonitoringDeviceMetaData? MetaData = null;
 
-    public PowerMonitoringConsoleEntry(NetEntity netEntity, PowerMonitoringConsoleGroup group, double powerValue = 0d)
+    public PowerMonitoringConsoleEntry(NetEntity netEntity, PowerMonitoringConsoleGroup group, double powerValue = 0d, float? batteryLevel = null)
     {
         NetEntity = netEntity;
         Group = group;
         PowerValue = powerValue;
+        BatteryLevel = batteryLevel;
     }
 }
 

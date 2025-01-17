@@ -13,6 +13,11 @@
         true
       NavSmash: !type:Bool
         true
+  - type: NPCImprintingOnSpawnBehaviour
+    spawnFriendsSearchRadius: 10
+    whitelist:
+      components:
+      - Anomaly # Friendly to inner anomaly host
   - type: NpcFactionMember
     factions:
     - SimpleHostile

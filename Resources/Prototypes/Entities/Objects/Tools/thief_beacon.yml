@@ -6,6 +6,7 @@
   components:
     - type: ThiefBeacon
     - type: StealArea
+      range: 2 # Slightly larger than fulton beacon's random offset
     - type: Item
       size: Normal
     - type: Physics
