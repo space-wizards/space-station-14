@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
+using Content.Shared.Climbing.Components;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
@@ -18,6 +19,7 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -39,6 +41,7 @@ public abstract class SharedMechSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly IEntityManager _entity = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -363,6 +366,12 @@ public abstract class SharedMechSystem : EntitySystem
             return false;
 
         if (!CanInsert(uid, toInsert.Value, component))
+            return false;
+
+        if (!_entity.TryGetComponent<ClimbingComponent>(toInsert, out var climbing))
+            return false;
+
+        if (climbing.IsClimbing)
             return false;
 
         SetupUser(uid, toInsert.Value);
