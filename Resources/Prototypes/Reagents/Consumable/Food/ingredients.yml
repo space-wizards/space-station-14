@@ -302,5 +302,5 @@
               Cold: 1
         - !type:PopupMessage
           type: Local
-          messages: [ "capsaicin-effect-light-burn" ]
+          messages: [ "frost-oil-effect-light-cold" ]
           probability: 0.2
