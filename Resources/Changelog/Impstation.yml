@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Drags-His-Tail
-  changes:
-  - message: Lizards can eat rats and drink blood again. Yay.
-    type: Fix
-  id: 456
-  time: '2024-11-06T02:03:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/630
 - author: DinnerCalzone
   changes:
   - message: BROS now play their death sound when they die.
@@ -4507,3 +4500,10 @@
   id: 955
   time: '2025-01-17T18:00:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1405
+- author: formlessnameless
+  changes:
+  - message: Traitors no longer have to kill and save the same people sometimes.
+    type: Fix
+  id: 956
+  time: '2025-01-17T22:24:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1409
