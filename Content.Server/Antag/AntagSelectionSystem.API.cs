@@ -209,7 +209,7 @@ public sealed partial class AntagSelectionSystem
     public bool HasValidAntagJobs(ICommonSession? session)
     {
         if (session == null)
-            return true;
+            return false;
 
         var pref = (HumanoidCharacterProfile)_pref.GetPreferences(session.UserId).SelectedCharacter;
         if (pref.PreferenceUnavailable == PreferenceUnavailableMode.SpawnAsOverflow)
