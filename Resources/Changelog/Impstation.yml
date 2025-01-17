@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Crusher dagger damage reduced from 15 to 10. (30 DPS -> 20 DPS)
-    type: Tweak
-  id: 442
-  time: '2024-11-03T22:40:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/592
 - author: DinnerCalzone
   changes:
   - message: Added metamorphic glasses of custom Impstation drinks to the entity spawner
@@ -4500,3 +4493,10 @@
   id: 941
   time: '2025-01-16T10:49:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1387
+- author: EpicToast
+  changes:
+  - message: Adds mail to Barratry, Core and Meta.
+    type: Add
+  id: 942
+  time: '2025-01-17T01:58:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1388
