@@ -1,7 +1,0 @@
-- type: entity
-  parent: Holopad
-  id: HolopadCargoMailroomCourier
-  suffix: Cargo Mailroom
-  components:
-  - type: Label
-    currentLabel: holopad-cargo-mailroom
