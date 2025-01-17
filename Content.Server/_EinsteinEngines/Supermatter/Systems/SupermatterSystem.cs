@@ -128,8 +128,8 @@ public sealed partial class SupermatterSystem : EntitySystem
             _container.IsEntityInContainer(uid))
             return;
 
-        if (sm.Power == 0)
-            LogFirstPower(uid, target);
+        if (!sm.HasBeenPowered)
+            LogFirstPower(uid, sm, target);
 
         if (!HasComp<ProjectileComponent>(target))
         {
@@ -175,8 +175,8 @@ public sealed partial class SupermatterSystem : EntitySystem
         if (HasComp<SupermatterImmuneComponent>(target))
             return;
 
-        if (sm.Power == 0)
-            LogFirstPower(uid, target);
+        if (!sm.HasBeenPowered)
+            LogFirstPower(uid, sm, target);
 
         var power = 200f;
         if (TryComp<PhysicsComponent>(target, out var physics))
@@ -193,12 +193,22 @@ public sealed partial class SupermatterSystem : EntitySystem
         _chatManager.SendAdminAlert($"{EntityManager.ToPrettyString(uid):uid} has consumed {EntityManager.ToPrettyString(target):target}");
         EntityManager.SpawnEntity(sm.CollisionResultPrototype, Transform(target).Coordinates);
         EntityManager.QueueDeleteEntity(target);
+
+        args.Handled = true;
     }
 
-    private void LogFirstPower(EntityUid uid, EntityUid target)
+    private void LogFirstPower(EntityUid uid, SupermatterComponent sm, EntityUid target)
     {
         _adminLog.Add(LogType.Unknown, LogImpact.Extreme, $"{EntityManager.ToPrettyString(uid):uid} was powered for the first time by {EntityManager.ToPrettyString(target):target} at {Transform(uid).Coordinates:coordinates}");
         _chatManager.SendAdminAlert($"{EntityManager.ToPrettyString(uid):uid} was powered for the first time by {EntityManager.ToPrettyString(target):target}");
+        sm.HasBeenPowered = true;
+    }
+
+    private void LogFirstPower(EntityUid uid, SupermatterComponent sm, GasMixture gas)
+    {
+        _adminLog.Add(LogType.Unknown, LogImpact.Extreme, $"{EntityManager.ToPrettyString(uid):uid} was powered for the first time by gas mixture at {Transform(uid).Coordinates:coordinates}");
+        _chatManager.SendAdminAlert($"{EntityManager.ToPrettyString(uid):uid} was powered for the first time by gas mixture");
+        sm.HasBeenPowered = true;
     }
 
     private void OnItemInteract(EntityUid uid, SupermatterComponent sm, ref InteractUsingEvent args)

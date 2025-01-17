@@ -165,6 +165,10 @@ public sealed partial class SupermatterSystem
         // Adjust the gravity pull range
         if (TryComp<GravityWellComponent>(uid, out var gravityWell))
             gravityWell.MaxRange = Math.Clamp(sm.Power / 850f, 0.5f, 3f);
+
+        // Log the first powering of the supermatter
+        if (sm.Power > 0 && !sm.HasBeenPowered)
+            LogFirstPower(uid, sm, mix);
     }
 
     /// <summary>

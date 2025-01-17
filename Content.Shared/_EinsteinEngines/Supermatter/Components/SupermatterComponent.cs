@@ -437,6 +437,12 @@ public sealed partial class SupermatterComponent : Component
     [DataField]
     public ProtoId<RadioChannelPrototype> ChannelGlobal = "Common";
 
+    /// <summary>
+    /// Used for logging if the supermatter has been powered
+    /// </summary>
+    [DataField]
+    public bool HasBeenPowered;
+
     #endregion
 
     #region Ammonia
@@ -511,7 +517,7 @@ public struct SupermatterGasFact
 [Serializable, NetSerializable]
 public static class SupermatterGasData
 {
-    private readonly static Dictionary<Gas, SupermatterGasFact> GasData = new()
+    private static readonly Dictionary<Gas, SupermatterGasFact> GasData = new()
     {
         { Gas.Oxygen,        new(1.5f, 1f,    1f,  1f) },
         { Gas.Nitrogen,      new(0f,   -1.5f, -1f, 1f) },
