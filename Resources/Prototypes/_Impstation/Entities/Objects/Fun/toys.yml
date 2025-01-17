@@ -232,3 +232,12 @@
       path: /Audio/_Impstation/Voice/Misc/wuhey.ogg
   - type: Food
     requiresSpecialDigestion: true
+
+- type: entity
+  id: HomeDepotCockHero
+  name: Homer
+  description: SEE YOU NEXT WEEK
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/homer.rsi
+    state: icon
