@@ -18,7 +18,6 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Linq;
@@ -35,16 +34,13 @@ public sealed class HolopadSystem : SharedHolopadSystem
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
     [Dependency] private readonly SharedStationAiSystem _stationAiSystem = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly PvsOverrideSystem _pvs = default!;
 
     private float _updateTimer = 1.0f;
     private const float UpdateTime = 1.0f;
-
-    // Data does not need to be saved
-    private Dictionary<Entity<HolopadUserComponent>, List<EntityUid>> _trackedHolopadUsers = new();
 
     public override void Initialize()
     {
@@ -67,17 +63,12 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         // Networked events
         SubscribeNetworkEvent<HolopadUserTypingChangedEvent>(OnTypingChanged);
-        SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvs);
 
         // Component start/shutdown events
         SubscribeLocalEvent<HolopadComponent, ComponentInit>(OnHolopadInit);
         SubscribeLocalEvent<HolopadComponent, ComponentShutdown>(OnHolopadShutdown);
         SubscribeLocalEvent<HolopadUserComponent, ComponentInit>(OnHolopadUserInit);
         SubscribeLocalEvent<HolopadUserComponent, ComponentShutdown>(OnHolopadUserShutdown);
-
-        // Equipment change events
-        SubscribeLocalEvent<HolopadUserComponent, EntInsertedIntoContainerMessage>(OnHolopadUserEquipped);
-        SubscribeLocalEvent<HolopadUserComponent, EntRemovedFromContainerMessage>(OnHolopadUserUnequipped);
 
         // Misc events
         SubscribeLocalEvent<HolopadUserComponent, EmoteEvent>(OnEmote);
@@ -321,24 +312,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
         }
     }
 
-    private void OnExpandPvs(ref ExpandPvsEvent args)
-    {
-        if (_trackedHolopadUsers.Count == 0)
-            return;
-
-        if (args.Entities == null)
-            args.Entities = new();
-
-        // Add holopad users and their held/equipped items to PVS so that they can be rendered by remote holopads
-        foreach (var (holopadUser, inventoryItems) in _trackedHolopadUsers)
-        {
-            args.Entities.Add(holopadUser);
-
-            foreach (var item in inventoryItems)
-                args.Entities.Add(item);
-        }
-    }
-
     #endregion
 
     #region: Component start/shutdown events
@@ -368,20 +341,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
     {
         foreach (var linkedHolopad in entity.Comp.LinkedHolopads)
             UnlinkHolopadFromUser(linkedHolopad, entity);
-    }
-
-    #endregion
-
-    #region: Equipment change events
-
-    private void OnHolopadUserEquipped(Entity<HolopadUserComponent> entity, ref EntInsertedIntoContainerMessage args)
-    {
-        TrackHolopadUserAndSyncAppearance(entity);
-    }
-
-    private void OnHolopadUserUnequipped(Entity<HolopadUserComponent> entity, ref EntRemovedFromContainerMessage args)
-    {
-        TrackHolopadUserAndSyncAppearance(entity);
     }
 
     #endregion
@@ -588,31 +547,16 @@ public sealed class HolopadSystem : SharedHolopadSystem
             entity.Comp.User = (user.Value, holopadUser);
         }
 
-        // Track the new user and their inventory items for PVS expansion
-        TrackHolopadUserAndSyncAppearance(entity.Comp.User);
-    }
-
-    private void SyncHolopadHologramAppearanceWithTarget(Entity<HolopadComponent> entity, Entity<HolopadUserComponent>? user)
-    {
-        if (entity.Comp.Hologram == null)
-            return;
-
-        entity.Comp.Hologram.Value.Comp.LinkedEntity = user;
-        Dirty(entity.Comp.Hologram.Value);
+        // Add the new user to PVS and sync their appearance with any 
+        // holopads connected to the one they are using
+        _pvs.AddGlobalOverride(user.Value);
+        SyncHolopadHologramAppearanceWithTarget(entity, entity.Comp.User);
     }
 
     private void UnlinkHolopadFromUser(Entity<HolopadComponent> entity, Entity<HolopadUserComponent>? user)
     {
         entity.Comp.User = null;
-
-        foreach (var linkedHolopad in GetLinkedHolopads(entity))
-        {
-            if (linkedHolopad.Comp.Hologram != null)
-            {
-                _appearanceSystem.SetData(linkedHolopad.Comp.Hologram.Value.Owner, TypingIndicatorVisuals.IsTyping, false);
-                SyncHolopadHologramAppearanceWithTarget(linkedHolopad, null);
-            }
-        }
+        SyncHolopadHologramAppearanceWithTarget(entity, null);
 
         if (user == null)
             return;
@@ -622,8 +566,22 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (!user.Value.Comp.LinkedHolopads.Any() &&
             user.Value.Comp.LifeStage < ComponentLifeStage.Stopping)
         {
-            _trackedHolopadUsers.Remove(user.Value);
+            _pvs.RemoveGlobalOverride(user.Value);
             RemComp<HolopadUserComponent>(user.Value);
+        }
+    }
+    private void SyncHolopadHologramAppearanceWithTarget(Entity<HolopadComponent> entity, Entity<HolopadUserComponent>? user)
+    {
+        foreach (var linkedHolopad in GetLinkedHolopads(entity))
+        {
+            if (linkedHolopad.Comp.Hologram == null)
+                continue;
+
+            if (user == null)
+                _appearanceSystem.SetData(linkedHolopad.Comp.Hologram.Value.Owner, TypingIndicatorVisuals.IsTyping, false);
+
+            linkedHolopad.Comp.Hologram.Value.Comp.LinkedEntity = user;
+            Dirty(linkedHolopad.Comp.Hologram.Value);
         }
     }
 
@@ -795,25 +753,5 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         if (TryComp<AmbientSoundComponent>(entity, out var ambientSound))
             _ambientSoundSystem.SetAmbience(entity, isEnabled, ambientSound);
-    }
-
-    private void TrackHolopadUserAndSyncAppearance(Entity<HolopadUserComponent>? entity)
-    {
-        if (entity == null)
-            return;
-
-        var inventoryItems = new List<EntityUid>();
-
-        foreach (var item in _inventorySystem.GetHandOrInventoryEntities(entity.Value.Owner))
-            inventoryItems.Add(item);
-
-        _trackedHolopadUsers[entity.Value] = inventoryItems;
-
-        // Sync linked holopad hologram appearance with the user
-        foreach (var linkedHolopad in entity.Value.Comp.LinkedHolopads)
-        {
-            foreach (var receiver in GetLinkedHolopads(linkedHolopad))
-                SyncHolopadHologramAppearanceWithTarget(receiver, entity);
-        }
     }
 }
