@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Rat Kings can now pull things, cannot be pulled under doors.
-    type: Tweak
-  id: 449
-  time: '2024-11-03T22:44:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/607
 - author: KingMudkipIII
   changes:
   - message: Added Thumper, a new drink thats fun for reptilians to drink!
@@ -4506,3 +4499,11 @@
   id: 948
   time: '2025-01-17T05:20:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1396
+- author: AftrLite
+  changes:
+  - message: The Cargoporter and Mailporter pads now have unique and improved VFX
+      for activation.
+    type: Add
+  id: 949
+  time: '2025-01-17T05:50:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1399
