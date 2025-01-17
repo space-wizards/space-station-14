@@ -8,7 +8,6 @@ using Content.Shared.Audio;
 using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Inventory;
 using Content.Shared.Labels.Components;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Speech;
