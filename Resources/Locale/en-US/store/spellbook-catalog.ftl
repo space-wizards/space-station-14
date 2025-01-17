@@ -23,6 +23,12 @@ spellbook-ethereal-jaunt-description = Slip into the ethereal plane to slip away
 spellbook-mind-swap-name = Mind Swap
 spellbook-mind-swap-description = Exchange bodies with another person!
 
+spellbook-smite-name = Smite
+spellbook-smite-desc = Don't like them? EXPLODE them into giblets!
+
+spellbook-cluwne-name = Cluwne's Curse
+spellbook-cluwne-desc = For when you really hate someone and Smite isn't enough.
+
 # Equipment
 
 spellbook-wand-polymorph-door-name = Wand of Entrance

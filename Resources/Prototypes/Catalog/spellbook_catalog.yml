@@ -26,6 +26,32 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookSmite
+  name: spellbook-smite-name
+  description: spellbook-smite-desc
+  productAction: ActionSmite
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookOffensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookCluwne
+  name: spellbook-cluwne-name
+  description: spellbook-cluwne-desc
+  productAction: ActionCluwne
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookOffensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Defensive
 - type: listing
   id: SpellbookForceWall
