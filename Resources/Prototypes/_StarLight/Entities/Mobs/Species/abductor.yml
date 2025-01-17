@@ -45,6 +45,8 @@
         Heat: -0.14
       groups:
         Brute: -0.14
+  - type: Bloodstream
+    bloodReagent: AlienBlood
 
 - type: entity
   parent: BaseSpeciesDummy

@@ -2330,3 +2330,24 @@ Entries:
   id: 327
   time: '2025-01-16T19:33:08.826765+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: Added abductor extractor for fust extracting hearts.
+    type: Add
+  id: 328
+  time: '2025-01-17T21:33:27.338312+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added silencer for silence humans.
+    type: Add
+  id: 329
+  time: '2025-01-17T21:33:39.368367+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Now abductor has their own blood.
+    type: Tweak
+  id: 330
+  time: '2025-01-17T21:33:54.644411+00:00'
+  url: 'null'

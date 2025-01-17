@@ -2,7 +2,7 @@
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Starlight.Medical.Surgery;
+namespace Content.Shared.Starlight.Antags.Abductor;
 
 [Serializable, NetSerializable]
 public sealed partial class AbductorReturnDoAfterEvent : SimpleDoAfterEvent
@@ -11,6 +11,11 @@ public sealed partial class AbductorReturnDoAfterEvent : SimpleDoAfterEvent
 
 [Serializable, NetSerializable]
 public sealed partial class AbductorGizmoMarkDoAfterEvent : SimpleDoAfterEvent
+{
+}
+
+[Serializable, NetSerializable]
+public sealed partial class AbductorExtractDoAfterEvent : SimpleDoAfterEvent
 {
 }
 

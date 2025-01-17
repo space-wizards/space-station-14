@@ -23,3 +23,21 @@
     angle: 60
     animation: WeaponArcThrust
   - type: AbductorGizmo
+  
+- type: entity
+  id: AbductorExtractor
+  parent: BaseItem
+  name: extractor
+  description: A device that extracts a heart for easier implantation of new heart.
+  components: 
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/extractor.rsi
+    state: icon
+  - type: Item
+    sprite: _Starlight/Objects/Misc/extractor.rsi
+  - type: RestrictByUserTag
+    contains:
+    - AbductorScientist
+    messages:
+    - abductors-gizmo-restricted
+  - type: AbductorExtractor

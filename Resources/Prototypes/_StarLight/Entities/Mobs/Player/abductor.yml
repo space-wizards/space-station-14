@@ -62,6 +62,7 @@
     gloves: ClothingHandsGlovesCombat
     shoes: ClothingShoesBootsCombat
     pocket1: AbductorGizmo
+    pocket2: AbductorExtractor
     
 - type: startingGear
   id: AbductorAgentGear
@@ -71,6 +72,7 @@
     jumpsuit: ClothingUniformJumpsuitAbductor
     gloves: ClothingHandsGlovesCombat
     shoes: ClothingShoesBootsCombat
+    pocket1: Silencer
     pocket2: WeaponAlien
     belt: ClothingAbductorBeltFilled
     outerClothing: ClothingOuterArmorAbductor

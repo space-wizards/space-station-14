@@ -1,0 +1,33 @@
+- type: entity
+  name: silencer
+  parent: BaseItem
+  id: Silencer
+  description: Tool for silencing humans.
+  components:
+  - type: Item
+    sprite: _Starlight/Objects/Weapons/Melee/silencer.rsi
+    size: Small
+    storedRotation: -90
+  - type: Sprite 
+    sprite: _Starlight/Objects/Weapons/Melee/silencer.rsi
+    state: icon
+  - type: RestrictByUserTag
+    contains:
+    - Abductor
+    messages:
+    - abductors-weapon-restricted-1
+    - abductors-weapon-restricted-2
+    - abductors-weapon-restricted-3
+    - abductors-weapon-restricted-4
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1
+    damage:
+      types:
+        Shock: 0
+    angle: 60
+    animation: WeaponArcThrust
+  - type: InjectOnHit
+    reagents:
+    - ReagentId: MuteToxin
+      Quantity: 5

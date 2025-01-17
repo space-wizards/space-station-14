@@ -1,0 +1,4 @@
+- type: flavor
+  id: abductorBlood
+  flavorType: Base
+  description: flavor-base-abductor-blood

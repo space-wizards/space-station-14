@@ -52,46 +52,9 @@ public sealed partial class AbductorDispencerComponent : Component
 {
 }
 
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem)), AutoGenerateComponentState]
-public sealed partial class AbductorGizmoComponent : Component
-{
-    [DataField, AutoNetworkedField]
-    public NetEntity? Target;
-}
-
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem))]
 public sealed partial class AbductorComponent : Component
 {
-}
-
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class AbductorVictimComponent : Component
-{
-    [DataField("position"), AutoNetworkedField]
-    public EntityCoordinates? Position;
-
-    [DataField("organ"), AutoNetworkedField]
-    public AbductorOrganType Organ = AbductorOrganType.None;
-
-    [DataField]
-    public TimeSpan? LastActivation;
-}
-
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem)), AutoGenerateComponentState]
-public sealed partial class AbductorOrganComponent : Component
-{
-    [DataField("organ"), AutoNetworkedField]
-    public AbductorOrganType Organ;
-}
-
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem)), AutoGenerateComponentState]
-public sealed partial class AbductorScientistComponent : Component
-{
-    [DataField("position"), AutoNetworkedField]
-    public EntityCoordinates? SpawnPosition;
-    
-    [DataField, AutoNetworkedField]
-    public EntityUid? Console;
 }
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem)), AutoGenerateComponentState]
@@ -114,13 +77,6 @@ public sealed partial class AbductorsAbilitiesComponent : Component
     public EntityUid[] HiddenActions = [];
 }
 
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem)), AutoGenerateComponentState]
-public sealed partial class AbductorVestComponent : Component
-{
-    [DataField, AutoNetworkedField]
-    public string CurrentState = "stealth";
-}
-
 [RegisterComponent, Access(typeof(SharedAbductorSystem))]
 public sealed partial class AbductConditionComponent : Component
 {
@@ -129,6 +85,8 @@ public sealed partial class AbductConditionComponent : Component
     [DataField("hashset"), ViewVariables(VVAccess.ReadWrite)]
     public HashSet<NetEntity> AbductedHashs = [];
 }
+
+#region Events
 
 public sealed partial class ExitConsoleEvent : InstantActionEvent
 {
@@ -142,3 +100,5 @@ public sealed partial class AbductorReturnToShipEvent : InstantActionEvent
 {
 
 }
+
+#endregion
