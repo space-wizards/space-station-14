@@ -22,7 +22,7 @@
     ClothingOuterWinterSec: 2
     ClothingNeckScarfStripedRed: 3
     ClothingOuterArmorBasic: 2
-    ClothingOuterArmorBasicSlim: 1
+    ClothingOuterArmorBasicSlim: 1 #imp
     ClothingOuterArmorBasicCompact: 1 #imp
     ClothingEyesBlindfold: 1
     ClothingShoesBootsCombat: 1

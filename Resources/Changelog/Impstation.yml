@@ -1,56 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Crusher dagger damage reduced from 15 to 10. (30 DPS -> 20 DPS)
-    type: Tweak
-  id: 442
-  time: '2024-11-03T22:40:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/592
-- author: DinnerCalzone
-  changes:
-  - message: Added metamorphic glasses of custom Impstation drinks to the entity spawner
-      menu for use in mapping and admin spawning.
-    type: Add
-  id: 443
-  time: '2024-11-03T22:42:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/598
-- author: TheGrimbeeper
-  changes:
-  - message: fixed too many things spawning from artifacts at one time
-    type: Fix
-  id: 444
-  time: '2024-11-03T22:40:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/595
-- author: hivehum, crocodilecarousel
-  changes:
-  - message: 30 new markings for our space station's moth infestation.
-    type: Add
-  - message: Fixed clipping issue with leg/foot prosthetics.
-    type: Fix
-  id: 445
-  time: '2024-11-03T22:43:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/591
-- author: Lazy Riverfolk, AirFryerBuyOneGetOneFree
-  changes:
-  - message: Added the Cargorilla!
-    type: Add
-  id: 446
-  time: '2024-11-03T22:44:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/571
-- author: hivehum
-  changes:
-  - message: You need 5 hours borg playtime to unlock Station AI again.
-    type: Tweak
-  id: 447
-  time: '2024-11-03T22:41:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/593
-- author: honeyed-lemons
-  changes:
-  - message: Ships bought from the shipyard can now be randomized
-    type: Tweak
-  id: 448
-  time: '2024-11-03T22:41:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/610
 - author: honeyed-lemons
   changes:
   - message: Rat Kings can now pull things, cannot be pulled under doors.
@@ -4500,3 +4448,61 @@
   id: 941
   time: '2025-01-16T10:49:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1387
+- author: EpicToast
+  changes:
+  - message: Adds mail to Barratry, Core and Meta.
+    type: Add
+  id: 942
+  time: '2025-01-17T01:58:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1388
+- author: Lemureslayer
+  changes:
+  - message: Added Moscow Mule as a drink Bartenders can make, including a dimpled
+      copper mug for the metamorphic glass.
+    type: Add
+  id: 943
+  time: '2025-01-17T02:24:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1380
+- author: crocodilecarousel
+  changes:
+  - message: Lillies have received a visual refresh!
+    type: Tweak
+  id: 944
+  time: '2025-01-17T04:34:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1390
+- author: honeyed-lemons
+  changes:
+  - message: Courier job has been added to Fland and Oasis
+    type: Add
+  - message: Fugitive spawners have been added to Box, Xeno, Fland, and Oasis
+    type: Add
+  - message: Tweaked Xeno Mailroom
+    type: Tweak
+  id: 945
+  time: '2025-01-17T04:36:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1392
+- author: TheGrimbeeper
+  changes:
+  - message: Multitools should work as defibs for small critters once more.
+    type: Fix
+  id: 946
+  time: '2025-01-17T04:40:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1395
+- author: honeyed-lemons
+  changes:
+  - message: Courier is now in the ID Computer
+    type: Fix
+  id: 947
+  time: '2025-01-17T04:47:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1394
+- author: Sha-Seng
+  changes:
+  - message: Compact Armor Vest (identical stats as other ones) in sec loadouts and
+      one in the SecTech
+    type: Add
+  - message: Wardens can now spawn with armor vests instead of coats like HoS can
+      (warden armor is stronger though!)
+    type: Add
+  id: 948
+  time: '2025-01-17T05:20:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1396
