@@ -65,7 +65,7 @@
   parent: BaseMagazineBoxRifle
   id: MagazineBoxRiflePractice
   name: ammunition box (.223 rifle practice)
-  description: A box of .223x1.78 in standard NT packaging. This box contains rubber-tipped practice rounds for firing exercises and trials.
+  description: A box of .223x1.78 in standard NT packaging. This box contains practice rounds for firing exercises and trials.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRiflePractice
