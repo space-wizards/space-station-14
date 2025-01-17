@@ -116,7 +116,7 @@
   id: BurqaSolidThaven
   bodyPart: Hair
   markingCategory: Hair
-  speciesRestriction: [SpElf]
+  speciesRestriction: [Thaven]
   sprites:
   - sprite: _Impstation/Mobs/Customization/headcovers.rsi
     state: burqathaven
@@ -125,7 +125,7 @@
   id: HijabFashionableThaven
   bodyPart: Hair
   markingCategory: Hair
-  speciesRestriction: [SpElf]
+  speciesRestriction: [Thaven]
   sprites:
   - sprite: _Impstation/Mobs/Customization/headcovers.rsi
     state: hijabchicthaven
@@ -134,7 +134,7 @@
   id: HijabSimpleThaven
   bodyPart: Hair
   markingCategory: Hair
-  speciesRestriction: [SpElf]
+  speciesRestriction: [Thaven]
   sprites:
   - sprite: _Impstation/Mobs/Customization/headcovers.rsi
     state: hijabsimplethaven
@@ -143,7 +143,7 @@
   id: NiqabThaven
   bodyPart: Hair
   markingCategory: Hair
-  speciesRestriction: [SpElf]
+  speciesRestriction: [Thaven]
   sprites:
   - sprite: _Impstation/Mobs/Customization/headcovers.rsi
     state: niqabthaven
@@ -152,7 +152,7 @@
   id: TichelFashionableThaven
   bodyPart: Hair
   markingCategory: Hair
-  speciesRestriction: [SpElf]
+  speciesRestriction: [Thaven]
   sprites:
   - sprite: _Impstation/Mobs/Customization/headcovers.rsi
     state: tichelfashionablethaven
@@ -161,7 +161,7 @@
   id: TichelSimpleThaven
   bodyPart: Hair
   markingCategory: Hair
-  speciesRestriction: [SpElf]
+  speciesRestriction: [Thaven]
   sprites:
   - sprite: _Impstation/Mobs/Customization/headcovers.rsi
     state: tichelsimplethaven
@@ -170,7 +170,7 @@
   id: ThavenNoEars
   bodyPart: HeadSide
   markingCategory: HeadSide
-  speciesRestriction: [SpElf]
+  speciesRestriction: [Thaven]
   forcedColoring: false
   followSkinColor: false
   sprites:

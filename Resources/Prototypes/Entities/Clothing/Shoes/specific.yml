@@ -28,6 +28,7 @@
           - Sharp
   #begin imp edit
   - type: ItemToggle
+    activated: true
     onUse: false
     onActivate: false
     soundActivate:

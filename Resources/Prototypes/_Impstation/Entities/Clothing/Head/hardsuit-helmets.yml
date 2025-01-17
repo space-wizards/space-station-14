@@ -24,3 +24,18 @@
     sprite: _Impstation/Clothing/Head/Hardsuits/mimeblack.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Head/Hardsuits/mimeblack.rsi
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitCourier
+  name: courier hardsuit helmet
+  description: A hermetically sealed hood, for keeping the void out and the air in.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hardsuits/courier.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hardsuits/courier.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Cold: 0.9

@@ -21,14 +21,19 @@
         mask:
           - MachineMask
   - type: Sprite
-    sprite: _Impstation/Structures/cargo_telepad.rsi #imp edit
+    sprite: _Impstation/Structures/cargo_telepad.rsi #imp edits begin
     drawdepth: FloorObjects
     layers:
-    - state: offline
-      map: [ "enum.CargoTelepadLayers.Base" ]
-    - state: idle
-      map: [ "enum.CargoTelepadLayers.Beam" ]
-      shader: unshaded
+      - state: offline
+      - state: idle
+        shader: unshaded
+        map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }                 #imp edits end
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong

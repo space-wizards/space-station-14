@@ -33,7 +33,13 @@
   id: apid_chef
   values:
   - Baker
-  - Provider
+  - Butcher
+
+- type: dataset
+  id: apid_courier
+  values:
+  - Messenger
+  - Carrier
 
 - type: dataset #ANGRY BEE NOISES
   id: names_apid

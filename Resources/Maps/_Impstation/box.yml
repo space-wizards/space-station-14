@@ -10773,21 +10773,6 @@ entities:
     - type: Transform
       pos: -9.5,1.5
       parent: 8364
-  - uid: 14231
-    components:
-    - type: MetaData
-      name: Delivery Office Maint
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -26.5,-18.5
-      parent: 8364
-  - uid: 14987
-    components:
-    - type: MetaData
-      name: Delivery Office
-    - type: Transform
-      pos: -21.5,-20.5
-      parent: 8364
   - uid: 14988
     components:
     - type: MetaData
@@ -10822,13 +10807,6 @@ entities:
       name: Cargo Bay
     - type: Transform
       pos: -29.5,-20.5
-      parent: 8364
-  - uid: 14995
-    components:
-    - type: MetaData
-      name: Cargo Office
-    - type: Transform
-      pos: -25.5,-19.5
       parent: 8364
 - proto: AirlockChapelGlassLocked
   entities:
@@ -10964,6 +10942,26 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 31.5,-85.5
+      parent: 8364
+- proto: AirlockCourierGlassLocked
+  entities:
+  - uid: 14183
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -26.5,-18.5
+      parent: 8364
+- proto: AirlockCourierLocked
+  entities:
+  - uid: 14231
+    components:
+    - type: Transform
+      pos: -21.5,-20.5
+      parent: 8364
+  - uid: 14983
+    components:
+    - type: Transform
+      pos: -25.5,-19.5
       parent: 8364
 - proto: AirlockDetectiveGlassLocked
   entities:
@@ -11894,7 +11892,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -60525.797
+      secondsUntilStateChange: -60862.273
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12415,13 +12413,6 @@ entities:
       parent: 8364
 - proto: AirlockMaintCargoLocked
   entities:
-  - uid: 14183
-    components:
-    - type: MetaData
-      name: 'Delivery Office Maintenance '
-    - type: Transform
-      pos: -26.5,-14.5
-      parent: 8364
   - uid: 14419
     components:
     - type: MetaData
@@ -12472,6 +12463,14 @@ entities:
     components:
     - type: Transform
       pos: -13.5,-18.5
+      parent: 8364
+- proto: AirlockMaintCourierLocked
+  entities:
+  - uid: 14987
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -26.5,-14.5
       parent: 8364
 - proto: AirlockMaintDetectiveLocked
   entities:
@@ -16534,11 +16533,6 @@ entities:
     components:
     - type: Transform
       pos: 46.455715,-47.446358
-      parent: 8364
-  - uid: 25967
-    components:
-    - type: Transform
-      pos: -25.023743,-15.516048
       parent: 8364
 - proto: BikeHorn
   entities:
@@ -85351,7 +85345,7 @@ entities:
       pos: -8.5,-70.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -12250.843
+      secondsUntilStateChange: -12587.317
       state: Closing
   - uid: 5277
     components:
@@ -86097,7 +86091,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -54714.332
+      secondsUntilStateChange: -55050.81
       state: Closing
   - uid: 15010
     components:
@@ -125187,6 +125181,13 @@ entities:
     - type: Transform
       pos: -26.5,-25.5
       parent: 8364
+- proto: HolopadCargoMailroomCourier
+  entities:
+  - uid: 25967
+    components:
+    - type: Transform
+      pos: -22.5,-19.5
+      parent: 8364
 - proto: HolopadCargoSalvageBay
   entities:
   - uid: 28093
@@ -125453,7 +125454,7 @@ entities:
       pos: 28.5,-34.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -34484.703
+      secondsUntilStateChange: -34821.18
       state: Closing
 - proto: hydroponicsSoil
   entities:
@@ -127872,6 +127873,13 @@ entities:
     - type: Configuration
       config:
         tag: bridge
+- proto: MailTeleporter
+  entities:
+  - uid: 28518
+    components:
+    - type: Transform
+      pos: -23.5,-16.5
+      parent: 8364
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 1280
@@ -129706,10 +129714,14 @@ entities:
     - type: Paper
       stampState: paper_stamp-rd
       stampedBy:
-      - stampLargeIcon: large_stamp-rd
+      - hasIcon: True
+        stampFont: null
+        stampLargeIcon: large_stamp-rd
         stampedColor: '#1F66A0FF'
         stampedName: stamp-component-stamped-name-rd
-      - stampLargeIcon: large_stamp-deny
+      - hasIcon: True
+        stampFont: null
+        stampLargeIcon: large_stamp-deny
         stampedColor: '#A23E3EFF'
         stampedName: stamp-component-stamped-name-denied
       content: >2-
@@ -148095,6 +148107,18 @@ entities:
     - type: Transform
       pos: 21.5,3.5
       parent: 8364
+- proto: SpawnPointCourier
+  entities:
+  - uid: 28519
+    components:
+    - type: Transform
+      pos: -22.5,-17.5
+      parent: 8364
+  - uid: 28520
+    components:
+    - type: Transform
+      pos: -21.5,-17.5
+      parent: 8364
 - proto: SpawnPointDetective
   entities:
   - uid: 5344
@@ -148188,6 +148212,23 @@ entities:
     components:
     - type: Transform
       pos: 62.5,-6.5
+      parent: 8364
+- proto: SpawnPointLocationMidRoundAntag
+  entities:
+  - uid: 28521
+    components:
+    - type: Transform
+      pos: -48.5,-10.5
+      parent: 8364
+  - uid: 28522
+    components:
+    - type: Transform
+      pos: 59.5,-45.5
+      parent: 8364
+  - uid: 28528
+    components:
+    - type: Transform
+      pos: 69.5,-57.5
       parent: 8364
 - proto: SpawnPointMedicalDoctor
   entities:
@@ -149910,7 +149951,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -3.5,-91.5
       parent: 8364
-    - type: DeviceNetwork
     - type: SurveillanceCamera
       id: Supermatter Engine Observatory
   - uid: 14221
@@ -149919,7 +149959,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -11.5,-73.5
       parent: 8364
-    - type: DeviceNetwork
     - type: SurveillanceCamera
       id: AME
   - uid: 14631
@@ -150211,7 +150250,6 @@ entities:
     - type: Transform
       pos: -3.5,-70.5
       parent: 8364
-    - type: DeviceNetwork
     - type: SurveillanceCamera
       id: Hallway
   - uid: 26030
@@ -150220,7 +150258,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 6.5,-75.5
       parent: 8364
-    - type: DeviceNetwork
     - type: SurveillanceCamera
       id: Supermatter Engine Room
   - uid: 26613
@@ -151130,7 +151167,6 @@ entities:
     - type: Transform
       pos: -11.5,-49.5
       parent: 8364
-    - type: DeviceNetwork
 - proto: SurveillanceCameraRouterGeneral
   entities:
   - uid: 27335
@@ -151166,7 +151202,6 @@ entities:
     - type: Transform
       pos: -11.5,-57.5
       parent: 8364
-    - type: DeviceNetwork
 - proto: SurveillanceCameraRouterSupply
   entities:
   - uid: 27332
@@ -151759,13 +151794,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 27.5,-1.5
       parent: 8364
-    - type: DeviceNetwork
   - uid: 27237
     components:
     - type: Transform
       pos: 33.5,-0.5
       parent: 8364
-    - type: DeviceNetwork
     - type: SurveillanceCamera
       id: Bartender Backroom
   - uid: 27238
@@ -151773,7 +151806,6 @@ entities:
     - type: Transform
       pos: 39.5,-1.5
       parent: 8364
-    - type: DeviceNetwork
     - type: SurveillanceCamera
       id: Freezer
   - uid: 27582
@@ -156377,6 +156409,13 @@ entities:
     components:
     - type: Transform
       pos: -18.5,-10.5
+      parent: 8364
+- proto: VendingMachineCourierDrobe
+  entities:
+  - uid: 28516
+    components:
+    - type: Transform
+      pos: -27.5,-15.5
       parent: 8364
 - proto: VendingMachineCuraDrobe
   entities:
@@ -176929,14 +176968,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -25.5,-15.5
       parent: 8364
-  - uid: 14983
-    components:
-    - type: MetaData
-      name: Delivery Desk
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -18.5,-18.5
-      parent: 8364
   - uid: 14984
     components:
     - type: MetaData
@@ -177119,6 +177150,14 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,-14.5
+      parent: 8364
+- proto: WindoorSecureCourierLocked
+  entities:
+  - uid: 14995
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -18.5,-18.5
       parent: 8364
 - proto: WindoorSecureEngineeringLocked
   entities:

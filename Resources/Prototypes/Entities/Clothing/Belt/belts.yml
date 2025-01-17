@@ -337,7 +337,7 @@
   - type: Storage
     whitelist:
       tags:
-        # - PlantAnalyzer
+        - PlantAnalyzer # Oh hey it was already there I just had to uncomment it. NF addition.
         - PlantSampleTaker
         - BotanyShovel
         - BotanyHoe
