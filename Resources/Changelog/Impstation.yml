@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: ticketpad is now folder-sized in inventory
-    type: Fix
-  id: 458
-  time: '2024-11-06T02:06:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/618
 - author: KingMudkipIII
   changes:
   - message: Added the emergency laser rifle crate, for when getting timely clearance
@@ -4499,3 +4492,11 @@
   id: 957
   time: '2025-01-17T23:07:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1059
+- author: TheGrimbeeper
+  changes:
+  - message: Minimum luminosity for solution text when examining it. Should stop vent
+      crud/zombie blood/etc from blending in.
+    type: Tweak
+  id: 958
+  time: '2025-01-18T01:30:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1412
