@@ -1,1 +1,1 @@
-attach-to-grid-verb-get-data-text = Attach to grid
+attach-to-grid-verb-get-data-text = Прикрепить к сетке

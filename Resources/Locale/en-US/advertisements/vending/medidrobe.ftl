@@ -1,4 +1,4 @@
-advertisement-medidrobe-1 = Make those blood stains look fashionable!!
-advertisement-medidrobe-2 = Clean and hygienic! Don't get too many bloodstains on yourself!
-advertisement-medidrobe-3 = With these outfits, you'll look like a professional doctor now!
-advertisement-medidrobe-4 = Jumpsuit, check. Coat, check. Someone who will wear this? Check!
+advertisement-medidrobe-1 = Заставьте эти кровавые пятна выглядеть модно!!
+advertisement-medidrobe-2 = Чистота и гигиена! Не оставляйте на себе слишком много кровавых пятен!
+advertisement-medidrobe-3 = В таком наряде вы будете выглядеть как профессиональный врач!
+advertisement-medidrobe-4 = Комбинезон, есть. Халат, есть. Кто-то, кто будет это носить? Есть!

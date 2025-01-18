@@ -1,8 +1,7 @@
-cmd-weather-desc = Sets the weather for the current map.
+cmd-weather-desc = Устанавливает погоду для текущей карты.
 cmd-weather-help = weather <mapId> <prototype / null>
-cmd-weather-hint = Weather prototype
-cmd-weather-null = Clears the weather
-
-cmd-weather-error-no-arguments = Not enough arguments!
-cmd-weather-error-unknown-proto = Unknown Weather prototype!
-cmd-weather-error-wrong-time = Time is in the wrong format!
+cmd-weather-hint = Прототип погоды
+cmd-weather-null = Очищает погоду
+cmd-weather-error-no-arguments = Недостаточно аргументов!
+cmd-weather-error-unknown-proto = Неизвестный прототип погоды!
+cmd-weather-error-wrong-time = Неверный формат времени!

@@ -1,1 +1,1 @@
-access-reader-unknown-id = Unknown
+access-reader-unknown-id = Неизвестный

@@ -1,3 +1,2 @@
-toggle-clothing-verb-text = Toggle {CAPITALIZE($entity)}
-
-toggleable-clothing-remove-first = You have to unequip {$entity} first.
+toggle-clothing-verb-text = Переключить { CAPITALIZE($entity) }
+toggleable-clothing-remove-first = Сперва снимите { $entity }.

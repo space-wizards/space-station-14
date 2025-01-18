@@ -1,12 +1,11 @@
-lathe-category-ammo = Ammo
-lathe-category-circuitry = Circuitry
-lathe-category-lights = Lights
-lathe-category-mechs = Mechs
-lathe-category-parts = Parts
-lathe-category-robotics = Robotics
-lathe-category-tools = Tools
-lathe-category-weapons = Weapons
-
-lathe-category-food = Food
-lathe-category-chemicals = Chemicals
-lathe-category-materials = Materials
+lathe-category-ammo = Боеприпасы
+lathe-category-circuitry = Электроника
+lathe-category-lights = Лампы
+lathe-category-mechs = Мехи
+lathe-category-parts = Компоненты
+lathe-category-robotics = Робототехника
+lathe-category-tools = Инструменты
+lathe-category-weapons = Вооружение
+lathe-category-food = Пища
+lathe-category-chemicals = Химикаты
+lathe-category-materials = Материалы

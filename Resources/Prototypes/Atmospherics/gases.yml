@@ -30,14 +30,14 @@
 
 - type: gas
   id: 3
-  name: gases-plasma
+  name: Тёмная материя
   specificHeat: 200
   heatCapacityRatio: 1.7
   molarMass: 120
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
   gasOverlayState: plasma
-  color: FF3300
-  reagent: Plasma
+  color: 000000
+  reagents: Plasma
   pricePerMole: 0
 
 - type: gas

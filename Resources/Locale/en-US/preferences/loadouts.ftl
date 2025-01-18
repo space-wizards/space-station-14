@@ -1,11 +1,9 @@
 # Name
-loadout-name-edit-label = Custom name
-loadout-name-edit-tooltip = 32 characters max. If no name is specified a random one may be chosen for you.
-
+loadout-name-edit-label = Настраиваемое имя
+loadout-name-edit-tooltip = Не более 32 символов. Если имя не указано, оно будет выбрано случайным образом.
 # Restrictions
-loadout-restrictions = Restrictions
-loadouts-min-limit = Min count: {$count}
-loadouts-max-limit = Max count: {$count}
-loadouts-points-limit = Points: {$count} / {$max}
-
-loadouts-points-restriction = Insufficient points
+loadout-restrictions = Ограничения
+loadouts-min-limit = Мин. кол-во: { $count }
+loadouts-max-limit = Макс. кол-во: { $count }
+loadouts-points-limit = Очки: { $count } / { $max }
+loadouts-points-restriction = Не хватает очков

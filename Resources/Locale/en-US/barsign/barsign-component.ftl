@@ -1,103 +1,128 @@
-barsign-component-name = bar sign
-barsign-ui-menu = Bar Sign Configuration
-barsign-ui-set-label = Set Sign:
+barsign-component-name = вывеска бара
+barsign-ui-menu = Настройка вывески бара
+barsign-ui-set-label = Выбрать вывеску:
 
 # Bar signs prototypes
 
 ## The Harmbaton
-barsign-prototype-name-harmbaton = The Harmbaton
-barsign-prototype-description-harmbaton = A great dining experience for both security members and passengers.
+
+barsign-prototype-name-harmbaton = Хармбатон
+barsign-prototype-description-harmbaton = Отличные обеды как для сотрудников службы безопасности, так и для пассажиров.
 
 ## The Singulo
-barsign-prototype-name-singulo = The Singulo
-barsign-prototype-description-singulo = Where people go that'd rather not be called by their name.
+
+barsign-prototype-name-singulo = Сингуло
+barsign-prototype-description-singulo = Куда приходят люди, которые не любят, чтобы их звали по имени.
 
 ## The Drunk Carp
-barsign-prototype-name-drunk-carp = The Drunk Carp
-barsign-prototype-description-drunk-carp = Don't drink and swim.
+
+barsign-prototype-name-drunk-carp = Бухой карп
+barsign-prototype-description-drunk-carp = Не пейте плавая.
 
 ## Officer Beersky
-barsign-prototype-name-officer-beersky = Officer Beersky's
-barsign-prototype-description-officer-beersky = Man eat a dong, these drinks are great.
+
+barsign-prototype-name-officer-beersky = Офицер Пивски
+barsign-prototype-description-officer-beersky = Мужик, эти напитки великолепны.
 
 ## The Outer Spess
-barsign-prototype-name-outer-spess = The Outer Spess
-barsign-prototype-description-outer-spess = This bar isn't actually located in outer space.
+
+barsign-prototype-name-outer-spess = Открытый космос
+barsign-prototype-description-outer-spess = На самом деле этот бар расположен не в открытом космосе.
 
 ## The Coderbus
-barsign-prototype-name-coderbus = The Coderbus
-barsign-prototype-description-coderbus = A very controversial bar known for its wide variety of constantly-changing drinks.
+
+barsign-prototype-name-coderbus = Кодербас
+barsign-prototype-description-coderbus = Очень противоречивый бар, известный широким ассортиментом постоянно меняющихся напитков.
 
 ## Robusta Cafe
-barsign-prototype-name-robusta-cafe = The Robusta Cafe
-barsign-prototype-description-robusta-cafe = Holder of the 'Most Lethal Barfights' record 5 years uncontested.
+
+barsign-prototype-name-robusta-cafe = Кафе Робуста
+barsign-prototype-description-robusta-cafe = Неоспоримый обладатель рекорда "Самые смертоносные бои" уже 5 лет.
 
 ## Emergency Rum Party
-barsign-prototype-name-emergency-rum-party = The Emergency Rum Party
-barsign-prototype-description-emergency-rum-party = Recently relicensed after a long closure.
+
+barsign-prototype-name-emergency-rum-party = Чрезвычайная вечеринка с ромом
+barsign-prototype-description-emergency-rum-party = Недавно продлили лицензию после длительного перерыва.
 
 ## The Combo Cafe
-barsign-prototype-name-combo-cafe = The Combo Cafe
-barsign-prototype-description-combo-cafe = Renowned system-wide for their utterly uncreative drink combinations.
+
+barsign-prototype-name-combo-cafe = Комбо Кафе
+barsign-prototype-description-combo-cafe = Известны по всей системе своими совершенно некреативными комбинациями напитков.
 
 ## The Ale Nath
-barsign-prototype-name-ale-nath = The Ale' Nath
-barsign-prototype-description-ale-nath = All right, buddy. I think you've had EI NATH. Time to get a cab.
+
+barsign-prototype-name-ale-nath = Эль'натх
+barsign-prototype-description-ale-nath = По какой-то причине притягивает таинственных незнакомцев в робах, шепчущих EI NATH.
 
 ## The Net
-barsign-prototype-name-the-net = The Net
-barsign-prototype-description-the-net = You just seem to get caught up in it for hours.
+
+barsign-prototype-name-the-net = Сеть
+barsign-prototype-description-the-net = Незаметишь как затянет на пару часов.
 
 ## Maid Cafe
-barsign-prototype-name-maid-cafe = Maid Cafe
-barsign-prototype-description-maid-cafe = Welcome back, master!
+
+barsign-prototype-name-maid-cafe = Мэйдо-кафе
+barsign-prototype-description-maid-cafe = С возвращением, хозяин!
 
 ## Maltese Falcon
-barsign-prototype-name-maltese-falcon = Maltese Falcon
-barsign-prototype-description-maltese-falcon = Play it again, sam.
+
+barsign-prototype-name-maltese-falcon = Мальтийский сокол
+barsign-prototype-description-maltese-falcon = Сыграй ещё раз, Сэм.
 
 ## The Sun
-barsign-prototype-name-the-sun = The Sun
-barsign-prototype-description-the-sun = Ironically bright for such a shady bar.
+
+barsign-prototype-name-the-sun = Солнце
+barsign-prototype-description-the-sun = Иронично яркая для такого тёмного бара.
 
 ## The Birdcage
-barsign-prototype-name-the-birdcage = The Birdcage
-barsign-prototype-description-the-birdcage = Caw caw!
+
+barsign-prototype-name-the-birdcage = Вольер
+barsign-prototype-description-the-birdcage = Ку-ку!
 
 ## Zocalo
-barsign-prototype-name-zocalo = Zocalo
-barsign-prototype-description-zocalo = Anteriormente ubicado en Spessmerica.
+
+barsign-prototype-name-zocalo = Сокало
+barsign-prototype-description-zocalo = Ранее находилось в Космоамерике.
 
 ## LV426
+
 barsign-prototype-name-lv426 = LV-426
-barsign-prototype-description-lv426 = Drinking with fancy facemasks is clearly more important than going to medbay.
+barsign-prototype-description-lv426 = Выпить с модной маской на лице явно важнее, чем сходить в медотсек.
 
 ## The Wiggle Roomm
-barsign-prototype-name-wiggle-room = The Wiggle Roomm
-barsign-prototype-description-wiggle-room = MoMMIs got moves.
+
+barsign-prototype-name-wiggle-room = Комната Виггль
+barsign-prototype-description-wiggle-room = MoMMI маневрируют в танце.
 
 ## The Lightbulb
-barsign-prototype-name-the-lightbulb = The Lightbulb
-barsign-prototype-description-the-lightbulb = A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms.
+
+barsign-prototype-name-the-lightbulb = Лампочка
+barsign-prototype-description-the-lightbulb = Кафе, популярное среди ниан и молей. Однажды его закрыли на неделю после того, как барменша использовала нафталин для обработки своей запасной униформы.
 
 ## The Loose Goose
-barsign-prototype-name-goose = The Loose Goose
-barsign-prototype-description-goose = Drink till you puke and/or break the laws of reality!
+
+barsign-prototype-name-goose = Весёлый гусь
+barsign-prototype-description-goose = Пей до рвоты и/или нарушай законы реальности!
 
 ## The Engine Change
-barsign-prototype-name-enginechange = The Engine Change
-barsign-prototype-description-enginechange = Still waiting.
+
+barsign-prototype-name-enginechange = Замена двигателя
+barsign-prototype-description-enginechange = Всё ещё ожидаем.
 
 ## 4 The Emprah
-barsign-prototype-name-emprah = 4 The Emprah
-barsign-prototype-description-emprah = Enjoyed by fanatics, heretics, and brain-damaged patrons alike.
+
+barsign-prototype-name-emprah = За Империю
+barsign-prototype-description-emprah = Нравится и фанатикам, и еретикам, и завсегдатаям с дефектами мозга.
 
 ## Spacebucks
-barsign-prototype-name-spacebucks = Spacebucks
-barsign-prototype-description-spacebucks = You can't get away from them, even in space, and even after we started calling them 'spesos' instead.
+
+barsign-prototype-name-spacebucks = Спейсбакс
+barsign-prototype-description-spacebucks = От них нельзя скрыться, даже в космосе, и даже после того, как некоторые стали называть их "срубли".
 
 ## EmpBarSign
-barsign-prototype-description-empbarsign = Something has gone very wrong.
+
+barsign-prototype-description-empbarsign = Что-то пошло совсем не так.
 
 ## SignOff
-barsign-prototype-description-sign-off = This sign doesn't seem to be on.
+
+barsign-prototype-description-sign-off = Эта вывеска, похоже, не включёна.

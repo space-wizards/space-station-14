@@ -12,7 +12,6 @@ spooky-speaker-generic-11 = Weh
 spooky-speaker-generic-12 = TREMBLE, MORTALS!
 spooky-speaker-generic-13 = 4444444444
 spooky-speaker-generic-14 = ...I found you...
-
 spooky-speaker-recycler-1 = I HUNGER
 spooky-speaker-recycler-2 = MORE! GIVE ME MORE!
 spooky-speaker-recycler-3 = FEED ME

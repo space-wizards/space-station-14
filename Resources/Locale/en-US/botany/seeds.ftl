@@ -1,2 +1,2 @@
-botany-plant-seedsrestored = You can hear the faint sound of shuffling leaves.
-botany-plant-seedsdestroyed = The seeds on the plant start cracking and fall off!
+botany-plant-seedsrestored = Вы можете услышать слабый звук шуршащих листьев.
+botany-plant-seedsdestroyed = Семена на растении начинают трескаться и опадать!

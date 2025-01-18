@@ -1,2 +1,2 @@
-follow-command-description = Makes you begin following an entity
-follow-command-help = Usage: follow [netEntity]
+follow-command-description = Заставляет вас следовать за сущностью
+follow-command-help = Использование: follow [netEntity]

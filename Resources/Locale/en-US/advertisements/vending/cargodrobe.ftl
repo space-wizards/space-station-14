@@ -1,3 +1,3 @@
-advertisement-cargodrobe-1 = Upgraded Passenger Style! Pick yours today!
-advertisement-cargodrobe-2 = These shorts are comfy and easy to wear, get yours now!
-advertisement-cargodrobe-3 = Made for comfort, and cheap too!
+advertisement-cargodrobe-1 = Улучшенный стиль ассистента! Выбери свой сегодня!
+advertisement-cargodrobe-2 = Эти шорты удобны и комфортны, получите свои прямо сейчас!
+advertisement-cargodrobe-3 = Сделано для комфорта, а стоит недорого!

@@ -1,1 +1,1 @@
-admin-shuttle-title = (Re)call shuttle
+admin-shuttle-title = Вызвать/Отозвать шаттл

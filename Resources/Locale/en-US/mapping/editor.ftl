@@ -1,7 +1,6 @@
-mapping-entities = Entities
-mapping-tiles = Tiles
-mapping-decals = Decals
-
-mapping-replace = Replace
-mapping-erase-entity = Erase Entity
-mapping-erase-decal = Erase Decal
+mapping-entities = Сущности
+mapping-tiles = Плитки
+mapping-decals = Декали
+mapping-replace = Заменить
+mapping-erase-entity = Стереть сущность
+mapping-erase-decal = Стереть декаль

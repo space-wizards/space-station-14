@@ -1,0 +1,10 @@
+ent-RandomWoodenSupport = спавнер деревянная балка
+    .desc = { ent-MarkerBase.desc }
+ent-RandomWoodenWall = спавнер деревянная стена
+    .desc = { ent-MarkerBase.desc }
+ent-RandomStalagmiteOrCrystal = спавнер сталагмит или кристалл
+    .desc = { ent-MarkerBase.desc }
+ent-RandomBrownStalagmite = спавнер коричневый сталагмит
+    .desc = { ent-MarkerBase.desc }
+ent-RandomGreyStalagmite = спавнер серый сталагмит
+    .desc = { ent-MarkerBase.desc }

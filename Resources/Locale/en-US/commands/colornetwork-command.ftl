@@ -1,3 +1,3 @@
-cmd-colornetwork-desc = Paints the atmos devices in the specified color
+cmd-colornetwork-desc = Окрашивает атмос-устройства в заданный цвет
 cmd-colornetwork-help = colornetwork <uid> Pipe <HexColor>
-cmd-colornetwork-no-access = You are not currently able to use mapping commands.
+cmd-colornetwork-no-access = В настоящее время вы не можете использовать команды маппинга.
