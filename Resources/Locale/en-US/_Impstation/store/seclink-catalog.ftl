@@ -6,7 +6,7 @@ seclink-fun-baton-desc = Projects a heretofore unseen energy capable of entertai
 seclink-stun-bat-name = Stun Bat
 seclink-stun-bat-desc = Weight balanced, expertly machined, with a rubberized grip and a beautiful matte finish. Truly a mastercraft in stunning technology, no one would second guess your decision to display this over your mantle at home.
 seclink-stun-sabre-name = Stun Sabre
-seclink-stun-sabre-desc = This is the result of several months and several iterations of a new stun baton design. When presented to the lead of R&D they said "A katana? This is getting interesting...", Which is strange, because it's definitely a sabre and not a katana. 
+seclink-stun-sabre-desc = This is the result of several months and several iterations of a new stun baton design. When presented to the lead of R&D they said "A katana? This is getting interesting..." which is strange, because it's definitely a sabre and not a katana. 
 
 # Disablers
 seclink-disabler-name = Disabler Pistol
