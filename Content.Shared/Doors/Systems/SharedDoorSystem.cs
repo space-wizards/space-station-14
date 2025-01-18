@@ -231,30 +231,31 @@ public abstract partial class SharedDoorSystem : EntitySystem
             _pryingSystem.TryPry(uid, args.User, out _);
 
         //imp edit start
-        //If the door is opened manually by a player
-        if (args.User != null && door.ClickOpen && door.State == DoorState.Opening)
+        //If the door has a bucket propped onto it and is being opened, get the bucket as container
+        if (_container.TryGetContainer(uid, "bucket", out BaseContainer? container) && door.State == DoorState.Opening)
         {
-            //If the door has a bucket propped onto it get the bucket as container
-            if (_container.TryGetContainer(uid, "bucket", out BaseContainer? container) &&
-                container.ContainedEntities.Count > 0 &&
-                TryComp(container.ContainedEntities[0], out SolutionContainerManagerComponent? solutionContainer))
+            //Foreach in case we ever implement multiple buckets I guess
+            //Also saves me from checking if the bucket exists
+            foreach (var bucket in container.ContainedEntities)
             {
-                //Foreach in case we ever implement multiple buckets I guess
-                foreach(var bucket in container.ContainedEntities)
+                //Get the chems inside the bucket's container as solution
+                if (!_solutionContainerSystem.TryGetDrainableSolution(bucket, out var soln, out var solution))
                 {
-                    //Get the solution inside the bucket's container as solution
-                    if (!_solutionContainerSystem.TryGetDrainableSolution(bucket, out var soln, out var solution))
-                        return;
-
-                    //Splash the solution onto the player
-                    _puddle.TrySplashSpillAt(uid, Transform(uid).Coordinates, solution, out _);
-
-                    //Remove the solution from the bucket
-                    _solutionContainerSystem.RemoveAllSolution(soln.Value);
-
-                    //Drop the bucket on the floor
+                    //Special case : if the bucket is here but its solution container compnent was removed by an admin or something
+                    //Just drop the bucket and return
                     _container.RemoveEntity(uid, bucket, null, null, null, true, false, null, _random.NextAngle());
+                    args.Handled = true;
+                    return;
                 }
+
+                //Splash the solution onto the player
+                _puddle.TrySplashSpillAt(bucket, Transform(uid).Coordinates, solution, out _);
+
+                //Remove the solution from the bucket
+                _solutionContainerSystem.RemoveAllSolution(soln.Value);
+
+                //Drop the bucket on the floor
+                _container.RemoveEntity(uid, bucket, null, null, null, true, false, null, _random.NextAngle());
             }
         }
         //imp edit end
