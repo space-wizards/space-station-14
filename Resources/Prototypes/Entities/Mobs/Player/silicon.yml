@@ -438,6 +438,7 @@
     protoIds:
       StationAiCoreIconography: StationAiIconAi
       StationAiHolograms: StationAiHologramFemale
+  - type: HolographicAvatar
 
 # Hologram projection that the AI's eye tracks.
 - type: entity

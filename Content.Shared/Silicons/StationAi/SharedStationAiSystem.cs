@@ -74,9 +74,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private const float MaxVisionMultiplier = 5f;
 
-    private ProtoId<StationAiCustomizationPrototype> _stationAiDefaultCustomizationProto = "StationAiIconAi";
-    private ProtoId<StationAiCustomizationGroupPrototype> _stationAiCoreCustomizationGroupProto = "StationAiCoreIconography";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -87,6 +84,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         InitializeAirlock();
         InitializeHeld();
         InitializeLight();
+        InitializeCustomization();
 
         SubscribeLocalEvent<StationAiWhitelistComponent, BoundUserInterfaceCheckRangeEvent>(OnAiBuiCheck);
 
@@ -108,7 +106,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiCoreComponent, ComponentShutdown>(OnAiShutdown);
         SubscribeLocalEvent<StationAiCoreComponent, PowerChangedEvent>(OnCorePower);
         SubscribeLocalEvent<StationAiCoreComponent, GetVerbsEvent<Verb>>(OnCoreVerbs);
-        SubscribeLocalEvent<StationAiCoreComponent, StationAiCustomizationMessage>(OnStationAiCustomization);
     }
 
     private void OnCoreVerbs(Entity<StationAiCoreComponent> ent, ref GetVerbsEvent<Verb> args)
@@ -142,30 +139,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/emotes.svg.192dpi.png")),
             });
         }
-    }
-
-    private void OnStationAiCustomization(Entity<StationAiCoreComponent> ent, ref StationAiCustomizationMessage args)
-    {
-        if (!_protoManager.HasIndex(args.GroupProtoId) || !_protoManager.HasIndex(args.CustomizationProtoId))
-            return;
-
-        if (!TryGetInsertedAI(ent, out var insertedAI))
-            return;
-
-        if (!TryComp<StationAiCustomizationComponent>(insertedAI, out var stationAiCustomization))
-            return;
-
-        if (stationAiCustomization.ProtoIds.TryGetValue(args.GroupProtoId, out var protoId) && protoId == args.CustomizationProtoId)
-            return;
-
-        stationAiCustomization.ProtoIds[args.GroupProtoId] = args.CustomizationProtoId;
-
-        Dirty(insertedAI.Value, stationAiCustomization);
-
-        if (!TryComp<StationAiHolderComponent>(ent, out var stationAiHolder))
-            return;
-
-        UpdateAppearance((ent, stationAiHolder));
     }
 
     private void OnAiAccessible(Entity<StationAiOverlayComponent> ent, ref AccessibleOverrideEvent args)
@@ -523,40 +496,21 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (!Resolve(entity.Owner, ref entity.Comp, false))
             return;
 
-        var visualState = StationAiState.Occupied;
+        // Todo: when AIs can die, add a check to see if the AI is in the 'dead' state
+        var state = StationAiState.Empty;
 
-        if (!_containers.TryGetContainer(entity.Owner, StationAiHolderComponent.Container, out var container) ||
-            container.Count == 0)
-        {
-            visualState = StationAiState.Empty;
-        }
+        if (_containers.TryGetContainer(entity.Owner, StationAiHolderComponent.Container, out var container) && container.Count > 0)
+            state = StationAiState.Occupied;
 
-        // If the entity is not a station AI core, let generic visualizers handle the appearance update.
-        if (!TryComp<StationAiCoreComponent>(entity, out var stationAiCore))
+        // If the entity is a station AI core, attempt to customize its appearance
+        if (TryComp<StationAiCoreComponent>(entity, out var stationAiCore))
         {
-            _appearance.SetData(entity.Owner, StationAiVisualState.Key, visualState);
+            CustomizeAppearance((entity, stationAiCore), state);
             return;
         }
 
-        // Updating the appearance of the station AI core will be handled manually in Client.StationAiSystem
-        var stationAi = GetInsertedAI((entity, stationAiCore));
-
-        if (stationAi == null || !TryComp<StationAiCustomizationComponent>(stationAi, out var stationAiCustomization))
-        {
-            _appearance.RemoveData(entity.Owner, StationAiVisualState.Key);
-            return;
-        }
-
-        if (!stationAiCustomization.ProtoIds.TryGetValue(_stationAiCoreCustomizationGroupProto, out var protoId))
-            protoId = _stationAiDefaultCustomizationProto;
-
-        if (!_protoManager.TryIndex(protoId, out var proto) || !proto.LayerData.TryGetValue(visualState.ToString(), out var layerData))
-        {
-            _appearance.RemoveData(entity.Owner, StationAiVisualState.Key);
-            return;
-        }
-
-        _appearance.SetData(entity.Owner, StationAiVisualState.Key, layerData);
+        // Otherwise let generic visualizers handle the appearance update
+        _appearance.SetData(entity.Owner, StationAiVisualState.Key, state);
     }
 
     public virtual void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null) { }
