@@ -31,6 +31,7 @@
       - ChiefEngineer
       - ChiefMedicalOfficer
       - Command
+      - Courier #Imp
       - Engineering
       - External
       - HeadOfPersonnel
@@ -98,6 +99,7 @@
     - Chemistry
     - ChiefEngineer
     - ChiefMedicalOfficer
+    - Courier #Imp
     - Command
     - Engineering
     - External

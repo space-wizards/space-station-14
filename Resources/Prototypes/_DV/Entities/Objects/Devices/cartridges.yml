@@ -41,3 +41,24 @@
     access: [["Cargo"]]
   - type: StealTarget
     stealGroup: StockTradingCartridge
+    
+- type: entity
+  parent: BaseItem
+  id: MailMetricsCartridge
+  name: mail metrics cartridge
+  description: A cartridge that tracks statistics related to mail deliveries.
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Devices/cartridge.rsi
+    state: cart-mail
+  - type: Icon
+    sprite: _DV/Objects/Devices/cartridge.rsi
+    state: cart-mail
+  - type: UIFragment
+    ui: !type:MailMetricUi
+  - type: MailMetricsCartridge
+  - type: Cartridge
+    programName: mail-metrics-program-name
+    icon:
+      sprite: _Nyanotrasen/Objects/Specific/Mail/mail.rsi
+      state: icon

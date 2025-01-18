@@ -1,0 +1,50 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+   xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+   Title="{Loc 'plant-analyzer-interface-title'}">
+    <!-- Margin="left,top,right,bottom" -->
+    <GridContainer Rows="3" Name ="GridCont" Margin="10 5 10 5" VerticalAlignment="Stretch" HorizontalExpand="True">
+        <BoxContainer Name="Toggle">
+            <Label Name="AdvMode" Text="{Loc 'plant-analyzer-window-scanmode'}" Margin="5 0 5 0"/>
+            <Button Name="OnButton" Text="{Loc 'plant-analyzer-window-mode-on'}" StyleClasses="OpenRight"/>
+            <Button Name="OffButton" Text="{Loc 'plant-analyzer-window-mode-off'}" StyleClasses="OpenLeft"/>
+        </BoxContainer>
+        <BoxContainer Name="Top">
+            <Label Name="NoData" Text="{Loc 'plant-analyzer-window-no-seed-information-text'}" Margin="10 0 0 0"/>
+        </BoxContainer>
+        <TabContainer Name="Tabs" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalExpand="True">
+            <BoxContainer Name ="{Loc 'plant-analyzer-window-tab-basics'}" Orientation="Vertical" VerticalAlignment="Stretch" Margin="10 0 5 0">
+                <Label Name="PlantName" Margin="0 5 0 5"/>
+                <Label Name="PlantYield" Margin="0 5 0 5"/>
+                <Label Name="Potency" Margin="0 5 0 5"/>
+                <Label Name="Repeat" Margin="0 5 0 5"/>
+                <Label Name="Chemicals" Margin="0 5 0 5"/>
+                <Label Name="ConsumeGases" Margin="0 5 0 5" />
+                <Label Name="ExudeGases" Margin="0 5 0 5" />
+                <Label Name="Lifespan" Margin="0 5 0 5"/>
+                <Label Name="Maturation" Margin="0 5 0 5"/>
+                <Label Name="Production" Margin="0 5 0 5"/>
+                <Label Name="GrowthStages" Margin="0 5 0 5"/>
+                <Label Name="Endurance" Margin="0 5 0 5"/>
+            </BoxContainer>
+            <BoxContainer Name="{Loc 'plant-analyzer-window-tab-tolerances'}" Orientation="Vertical"  VerticalAlignment="Stretch" Margin="10 0 5 0">
+                <Label Name="NutrientUsage" Margin="0 5 0 5"/>
+                <Label Name="WaterUsage" Margin="0 5 0 5"/>
+                <Label Name="IdealHeat" Margin="0 5 0 5"/>
+                <Label Name="HeatTolerance" Margin="0 5 0 5"/>
+                <Label Name="IdealLight" Margin="0 5 0 5"/>
+                <Label Name="LightTolerance" Margin="0 5 0 5"/>
+                <Label Name="ToxinsTolerance" Margin="0 5 0 5"/>
+                <Label Name="LowPressureTolerance" Margin="0 5 0 5"/>
+                <Label Name="HighPressureTolerance" Margin="0 5 0 5"/>
+                <Label Name="PestTolerance" Margin="0 5 0 5"/>
+                <Label Name="WeedTolerance" Margin="0 5 0 5"/>
+            </BoxContainer>
+            <BoxContainer Name="{Loc 'plant-analyzer-window-tab-mutations'}" Orientation="Vertical"  VerticalAlignment="Stretch" Margin="10 0 5 0">
+                <Label Name="PlantSpeciation" Margin="0 5 0 5"/>
+                <Label Name="Traits" Margin="0 5 0 5"/>
+                <Label Name="ExtraInfo" Margin="0 5 0 5"/>
+            </BoxContainer>
+        </TabContainer>
+    </GridContainer>
+</controls:FancyWindow>

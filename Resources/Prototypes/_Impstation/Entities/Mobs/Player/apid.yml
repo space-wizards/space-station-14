@@ -1,6 +1,5 @@
 - type: entity
   name: apid
-  suffix: Ghostrole
   id: MobApidBaseGhostrole
   parent: BaseMobApid
   description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
@@ -80,4 +79,18 @@
   - type: RandomMetadata
     nameSegments:
     - apid_chef
+    - names_apid
+
+- type: entity
+  name: apid courier
+  id: MobApidCourier
+  parent: MobApidBaseGhostrole
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: Loadout
+    prototypes:
+      - StartingGearApidCourier
+  - type: RandomMetadata
+    nameSegments:
+    - apid_courier
     - names_apid

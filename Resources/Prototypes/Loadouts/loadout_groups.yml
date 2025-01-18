@@ -3,7 +3,7 @@
   id: Trinkets
   name: loadout-group-trinkets
   minLimit: 0
-  maxLimit: 3
+  maxLimit: 4 #imp
   loadouts:
   - BarFlask
   - CardBoxBlack
@@ -1354,6 +1354,7 @@
   - HeadofSecurityWinterCoatUnarmored
   - ArmorVest #imp
   - ArmorVestSlim #imp
+  - ArmorVestCompact #imp
   - HeadofSecurityEliteArmor #imp
 
 - type: loadoutGroup
@@ -1394,6 +1395,9 @@
   loadouts:
   - WardenCoat
   - WardenArmoredWinterCoat
+  - ArmorVest #imp
+  - ArmorVestSlim #imp
+  - ArmorVestCompact #imp
   - WardenWinterCoatUnarmored
 
 - type: loadoutGroup
@@ -1461,6 +1465,7 @@
   loadouts:
   - ArmorVest
   - ArmorVestSlim
+  - ArmorVestCompact #imp
   - SecurityOfficerWintercoat
 
 - type: loadoutGroup

@@ -57,3 +57,6 @@ reagent-desc-thegrease = A dubious liquid with a film on top, it looks homemade 
 
 reagent-name-clevergirl = clever girl
 reagent-desc-clevergirl = A sly and cunning cocktail, as brilliant as it is dangerous. Approach with caution, for it's smarter than you think.
+
+reagent-name-moscowmule = moscow mule
+reagent-desc-moscowmule = A fresh and sparkly cocktail, with just the right kick of ginger to wake you from your stupor. If it's not in copper, why even bother?

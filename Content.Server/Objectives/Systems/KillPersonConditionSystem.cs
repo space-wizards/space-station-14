@@ -136,9 +136,21 @@ public sealed class KillPersonConditionSystem : EntitySystem
             return;
         }
 
+        // imp edit
         var traitors = _traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind).Select(t => t.Id).ToHashSet();
-        args.Mind.ObjectiveTargets.ForEach(p => traitors.Remove(p));
 
+        // Can't have multiple objectives to help/save/kill the same person
+        foreach (var objective in args.Mind.Objectives)
+        {
+            if (HasComp<RandomTraitorAliveComponent>(objective) || HasComp<RandomTraitorProgressComponent>(objective) || HasComp<KillPersonConditionComponent>(objective))
+            {
+                if (TryComp<TargetObjectiveComponent>(objective, out var help))
+                {
+                    traitors.RemoveWhere(x => x == help.Target);
+                }
+            }
+        }
+        // end imp edit
         // You are the first/only traitor.
         if (traitors.Count == 0)
         {

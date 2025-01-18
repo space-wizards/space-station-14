@@ -5,6 +5,7 @@
   color: "#A46106"
   roles:
   - CargoTechnician
+  - Courier # Imp
   - Quartermaster
   - SalvageSpecialist
 
@@ -112,7 +113,7 @@
   - SecurityOfficer
   - Detective
   - Warden
-  - Brigmedic
+  - Brigmedic # Imp
 
 - type: department
   id: Science
