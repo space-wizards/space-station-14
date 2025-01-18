@@ -5,7 +5,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.Kitchen.Components;
 using Content.Server.Lightning;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
@@ -16,8 +15,8 @@ using Content.Shared._EinsteinEngines.CCVar;
 using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
+using Content.Shared.Damage.Components;
 using Content.Shared.Database;
-using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
 using Content.Shared.Interaction;
@@ -72,11 +71,11 @@ public sealed partial class SupermatterSystem : EntitySystem
         SubscribeLocalEvent<SupermatterComponent, AtmosDeviceUpdateEvent>(OnSupermatterUpdated);
 
         SubscribeLocalEvent<SupermatterComponent, StartCollideEvent>(OnCollideEvent);
+        SubscribeLocalEvent<SupermatterComponent, EmbeddedEvent>(OnEmbedded);
         SubscribeLocalEvent<SupermatterComponent, InteractHandEvent>(OnHandInteract);
         SubscribeLocalEvent<SupermatterComponent, InteractUsingEvent>(OnItemInteract);
         SubscribeLocalEvent<SupermatterComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<SupermatterComponent, SupermatterDoAfterEvent>(OnGetSliver);
-
         SubscribeLocalEvent<SupermatterComponent, GravPulseEvent>(OnGravPulse);
     }
 
@@ -125,57 +124,19 @@ public sealed partial class SupermatterSystem : EntitySystem
 
     private void OnCollideEvent(EntityUid uid, SupermatterComponent sm, ref StartCollideEvent args)
     {
-        var target = args.OtherEntity;
-        if (args.OtherBody.BodyType == BodyType.Static ||
-            HasComp<SupermatterImmuneComponent>(target) ||
-            _container.IsEntityInContainer(uid))
-            return;
+        TryCollision(uid, sm, args.OtherEntity, args.OtherBody);
+    }
 
-        if (!sm.HasBeenPowered)
-            LogFirstPower(uid, sm, target);
-
-        if (!HasComp<ProjectileComponent>(target))
-        {
-            var popup = "supermatter-collide";
-
-            if (HasComp<MobStateComponent>(target))
-            {
-                popup = "supermatter-collide-mob";
-                EntityManager.SpawnEntity(sm.CollisionResultPrototype, Transform(target).Coordinates);
-                _chatManager.SendAdminAlert($"{EntityManager.ToPrettyString(uid):uid} has consumed {EntityManager.ToPrettyString(target):target}");
-            }
-
-            var targetProto = MetaData(target).EntityPrototype;
-            if (targetProto != null && targetProto.ID != sm.CollisionResultPrototype)
-            {
-                _popup.PopupEntity(Loc.GetString(popup, ("sm", uid), ("target", target)), uid, PopupType.LargeCaution);
-                _audio.PlayPvs(sm.DustSound, uid);
-            }
-
-            sm.MatterPower += args.OtherBody.Mass;
-            _adminLog.Add(LogType.EntityDelete, LogImpact.High, $"{EntityManager.ToPrettyString(target):target} collided with {EntityManager.ToPrettyString(uid):uid} at {Transform(uid).Coordinates:coordinates}");
-        }
-
-        // Prevent spam or excess power production
-        AddComp<SupermatterImmuneComponent>(target);
-
-        EntityManager.QueueDeleteEntity(target);
-
-        if (TryComp<SupermatterFoodComponent>(target, out var food))
-            sm.Power += food.Energy;
-        else if (TryComp<ProjectileComponent>(target, out var projectile))
-            sm.Power += (float) projectile.Damage.GetTotal();
-        else
-            sm.Power++;
-
-        sm.MatterPower += HasComp<MobStateComponent>(target) ? 200 : 0;
+    private void OnEmbedded(EntityUid uid, SupermatterComponent sm, ref EmbeddedEvent args)
+    {
+        TryCollision(uid, sm, args.Embedded, checkStatic: false);
     }
 
     private void OnHandInteract(EntityUid uid, SupermatterComponent sm, ref InteractHandEvent args)
     {
         var target = args.User;
 
-        if (HasComp<SupermatterImmuneComponent>(target))
+        if (HasComp<SupermatterImmuneComponent>(target) || HasComp<GodmodeComponent>(target))
             return;
 
         if (!sm.HasBeenPowered)
@@ -210,7 +171,7 @@ public sealed partial class SupermatterSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (HasComp<SupermatterImmuneComponent>(item))
+        if (HasComp<SupermatterImmuneComponent>(item) || HasComp<GodmodeComponent>(item))
             return;
 
         // TODO: supermatter scalpel
@@ -306,7 +267,6 @@ public sealed partial class SupermatterSystem : EntitySystem
 
         var audioParams = AudioParams.Default.WithMaxDistance(gravityWell.MaxRange);
         _audio.PlayPvs(ent.Comp.PullSound, ent, audioParams);
-
     }
 
     private void OnExamine(EntityUid uid, SupermatterComponent sm, ref ExaminedEvent args)
@@ -314,6 +274,57 @@ public sealed partial class SupermatterSystem : EntitySystem
         // For ghosts: alive players can use the console
         if (HasComp<GhostComponent>(args.Examiner) && args.IsInDetailsRange)
             args.PushMarkup(Loc.GetString("supermatter-examine-integrity", ("integrity", GetIntegrity(sm).ToString("0.00"))));
+    }
+
+    private void TryCollision(EntityUid uid, SupermatterComponent sm, EntityUid target, PhysicsComponent? targetPhysics = null, bool checkStatic = true)
+    {
+        if (!Resolve(target, ref targetPhysics))
+            return;
+
+        if (targetPhysics.BodyType == BodyType.Static && checkStatic ||
+            HasComp<SupermatterImmuneComponent>(target) ||
+            HasComp<GodmodeComponent>(target) ||
+            _container.IsEntityInContainer(uid))
+            return;
+
+        if (!sm.HasBeenPowered)
+            LogFirstPower(uid, sm, target);
+
+        if (!HasComp<ProjectileComponent>(target))
+        {
+            var popup = "supermatter-collide";
+
+            if (HasComp<MobStateComponent>(target))
+            {
+                popup = "supermatter-collide-mob";
+                EntityManager.SpawnEntity(sm.CollisionResultPrototype, Transform(target).Coordinates);
+                _chatManager.SendAdminAlert($"{EntityManager.ToPrettyString(uid):uid} has consumed {EntityManager.ToPrettyString(target):target}");
+            }
+
+            var targetProto = MetaData(target).EntityPrototype;
+            if (targetProto != null && targetProto.ID != sm.CollisionResultPrototype)
+            {
+                _popup.PopupEntity(Loc.GetString(popup, ("sm", uid), ("target", target)), uid, PopupType.LargeCaution);
+                _audio.PlayPvs(sm.DustSound, uid);
+            }
+
+            sm.MatterPower += targetPhysics.Mass;
+            _adminLog.Add(LogType.EntityDelete, LogImpact.High, $"{EntityManager.ToPrettyString(target):target} collided with {EntityManager.ToPrettyString(uid):uid} at {Transform(uid).Coordinates:coordinates}");
+        }
+
+        // Prevent spam or excess power production
+        AddComp<SupermatterImmuneComponent>(target);
+
+        EntityManager.QueueDeleteEntity(target);
+
+        if (TryComp<SupermatterFoodComponent>(target, out var food))
+            sm.Power += food.Energy;
+        else if (TryComp<ProjectileComponent>(target, out var projectile))
+            sm.Power += (float)projectile.Damage.GetTotal();
+        else
+            sm.Power++;
+
+        sm.MatterPower += HasComp<MobStateComponent>(target) ? 200 : 0;
     }
 
     private void LogFirstPower(EntityUid uid, SupermatterComponent sm, EntityUid target)
