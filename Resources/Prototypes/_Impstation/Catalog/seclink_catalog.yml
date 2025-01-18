@@ -9,6 +9,36 @@
   categories:
   - SeclinkBaton
 
+- type: listing
+  id: SeclinkFunBaton
+  name: seclink-fun-baton-name
+  description: seclink-fun-baton-desc
+  productEntity: Funbaton
+  cost:
+    BatonToken: 1
+  categories:
+  - SeclinkBaton
+
+- type: listing
+  id: SeclinkBat
+  name: seclink-stun-bat-name
+  description: seclink-stun-bat-desc
+  productEntity: Stunbat
+  cost:
+    BatonToken: 1
+  categories:
+  - SeclinkBaton
+
+- type: listing
+  id: SeclinkSabre
+  name: seclink-stun-sabre-name
+  description: seclink-stun-sabre-desc
+  productEntity: Stunsabre
+  cost:
+    BatonToken: 1
+  categories:
+  - SeclinkBaton
+
 #Disabler Options
 - type: listing
   id: SeclinkDisabler
