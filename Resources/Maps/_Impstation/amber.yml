@@ -8199,6 +8199,8 @@ entities:
             19571: 18,17
             19572: 21,16
             19573: 18,10
+            19575: 22,19
+            19576: 23,19
         - node:
             zIndex: 1
             color: '#334E6DC8'
@@ -59876,18 +59878,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -32.534172,-20.28666
       parent: 2
-  - uid: 22312
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 21.512619,19.602446
-      parent: 2
-  - uid: 22313
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 23.47563,19.5841
-      parent: 2
   - uid: 22613
     components:
     - type: Transform
@@ -106386,6 +106376,18 @@ entities:
     - type: Transform
       pos: 7.5,-27.5
       parent: 2
+- proto: LockerCourierFilled
+  entities:
+  - uid: 5913
+    components:
+    - type: Transform
+      pos: 22.5,19.5
+      parent: 2
+  - uid: 22309
+    components:
+    - type: Transform
+      pos: 23.5,19.5
+      parent: 2
 - proto: LockerDetectiveFilled
   entities:
   - uid: 8665
@@ -108067,7 +108069,7 @@ entities:
   - uid: 22315
     components:
     - type: Transform
-      pos: 22.57422,19.63889
+      pos: 20.322268,18.452442
       parent: 2
 - proto: MaterialCloth
   entities:
@@ -120556,29 +120558,13 @@ entities:
       parent: 2
 - proto: SheetPaper1
   entities:
-  - uid: 5913
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 20.547642,18.769604
-      parent: 2
   - uid: 12485
     components:
     - type: Transform
-      pos: 20.500767,18.425854
+      pos: 20.712893,18.718067
       parent: 2
-  - uid: 22382
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 22.701982,19.633614
-      parent: 2
-  - uid: 22383
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 22.31672,19.486847
-      parent: 2
+    - type: Stack
+      count: 4
 - proto: SheetPlasma
   entities:
   - uid: 11897
@@ -129276,12 +129262,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 20.5,18.5
-      parent: 2
-  - uid: 22309
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 22.5,19.5
       parent: 2
 - proto: TargetClown
   entities:
