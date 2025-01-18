@@ -1174,7 +1174,7 @@
   productEntity: ReinforcementRadioSyndicateCyborgSaboteur
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-borg-saboteur }
   cost:
-    Telecrystal: 65
+    Telecrystal: 50
   categories:
   - UplinkAllies
   conditions:
