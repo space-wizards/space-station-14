@@ -1,13 +1,9 @@
 using Content.Server.Pinpointer;
 using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Content.Shared._EinsteinEngines.Supermatter.Consoles;
-using Content.Shared._EinsteinEngines.Supermatter.Monitor;
 using Content.Shared.Atmos;
-using Content.Shared.Pinpointer;
 using Content.Shared.Radiation.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.Map.Components;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Content.Server._EinsteinEngines.Supermatter.Console.Systems;

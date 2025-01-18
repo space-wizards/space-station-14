@@ -1,5 +1,4 @@
 using Content.Shared._EinsteinEngines.Supermatter.Consoles;
-using Content.Shared._EinsteinEngines.Supermatter.Monitor;
 using Content.Shared.Atmos;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;

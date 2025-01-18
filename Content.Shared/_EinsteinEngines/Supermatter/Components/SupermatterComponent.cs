@@ -1,4 +1,3 @@
-using Content.Shared._EinsteinEngines.Supermatter.Monitor;
 using Content.Shared.Atmos;
 using Content.Shared.DoAfter;
 using Content.Shared.Radio;
@@ -7,7 +6,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 
 namespace Content.Shared._EinsteinEngines.Supermatter.Components;
 
@@ -29,26 +27,10 @@ public sealed partial class SupermatterComponent : Component
     public GasMixture? GasStorage;
 
     [DataField]
-    public string SpriteNormal = "supermatter";
+    public Color LightColorNormal = Color.FromHex("#ffe000");
 
     [DataField]
-    public string SpriteGlow = "supermatter-glow";
-
-    [DataField]
-    public string SpriteGlowEmergency = "supermatter-glow-emergency";
-
-    [DataField]
-    public string SpriteGlowDelam = "supermatter-glow-delam";
-
-    [DataField]
-    public string? SpriteCurrent;
-
-    [DataField]
-    public Dictionary<string, Color> LightColors = new()
-    {
-        { "normal", Color.FromHex("#ffe000") },
-        { "delam", Color.FromHex("#ff0000") }
-    };
+    public Color LightColorDelam = Color.FromHex("#ffe000");
 
     [DataField]
     public EntProtoId SliverPrototype = "SupermatterSliver";
@@ -105,7 +87,7 @@ public sealed partial class SupermatterComponent : Component
     public SoundSpecifier DelamLoopSound = new SoundPathSpecifier("/Audio/_EinsteinEngines/Supermatter/delamming.ogg");
 
     [DataField]
-    public SoundSpecifier CurrentSoundLoop = new SoundPathSpecifier("/Audio/_EinsteinEngines/Supermatter/calm.ogg");
+    public SoundSpecifier? CurrentSoundLoop;
 
     [DataField]
     public SoundSpecifier CalmAccent = new SoundCollectionSpecifier("SupermatterAccentNormal");
@@ -582,6 +564,34 @@ public static class SupermatterGasData
     {
         return CalculateGasMixModifier(mix, data => data.HeatResistance);
     }
+}
+
+[Serializable, NetSerializable]
+public enum SupermatterStatusType : sbyte
+{
+    Error = -1,
+    Inactive = 0,
+    Normal = 1,
+    Caution = 2,
+    Warning = 3,
+    Danger = 4,
+    Emergency = 5,
+    Delaminating = 6
+}
+
+[Serializable, NetSerializable]
+public enum SupermatterCrystalState : byte
+{
+    Normal,
+    Glow,
+    GlowEmergency,
+    GlowDelam
+}
+
+[Serializable, NetSerializable]
+public enum SupermatterVisualLayers : byte
+{
+    Crystal
 }
 
 [Serializable, NetSerializable]

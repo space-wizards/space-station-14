@@ -5,6 +5,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Appearance
   - type: Supermatter
   - type: AtmosDevice
   - type: RadiationSource
@@ -54,10 +55,20 @@
   - type: InteractionOutline
   - type: Sprite
     sprite: _EinsteinEngines/Structures/Power/Generation/Supermatter/supermatter.rsi
-    state: supermatter
     drawdepth: Mobs
     snapCardinals: true
     offset: -0.015,0.295
+    layers:
+      - state: supermatter
+        map: ["enum.SupermatterVisualLayers.Crystal"]
+  - type: GenericVisualizer
+    visuals:
+      enum.SupermatterVisualLayers.Crystal:
+        enum.SupermatterVisualLayers.Crystal:
+          Normal: { state: supermatter }
+          Glow: { state: supermatter-glow }
+          GlowEmergency: { state: supermatter-glow-emergency }
+          GlowDelam: { state: supermatter-glow-delam }
   - type: Icon
     sprite: _EinsteinEngines/Structures/Power/Generation/Supermatter/supermatter.rsi
     state: supermatter

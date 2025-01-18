@@ -7,7 +7,6 @@ using Content.Server.Singularity.Components;
 using Content.Server.Sound.Components;
 using Content.Shared._EinsteinEngines.CCVar;
 using Content.Shared._EinsteinEngines.Supermatter.Components;
-using Content.Shared._EinsteinEngines.Supermatter.Monitor;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Chat;
@@ -17,7 +16,6 @@ using Content.Shared.Radiation.Components;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Speech;
 using Content.Shared.Traits.Assorted;
-using FastAccessors;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -384,38 +382,27 @@ public sealed partial class SupermatterSystem
             }
         }
 
-        if (totalDamage > 0)
-        {
-            var sprite = sm.SpriteGlow;
-
-            if (sm.Status == SupermatterStatusType.Delaminating)
-                sprite = sm.SpriteGlowDelam;
-            else if (sm.Status >= SupermatterStatusType.Emergency)
-                sprite = sm.SpriteGlowEmergency;
-
-            if (sm.SpriteCurrent != sprite)
-            {
-                sm.SpriteCurrent = sprite;
-                var ev = new SupermatterSpriteUpdateEvent(EntityManager.GetNetEntity(uid), sprite);
-                RaiseNetworkEvent(ev);
-            }
-        }
-        else
-        {
-            var sprite = sm.SpriteNormal;
-
-            if (sm.SpriteCurrent != sprite)
-            {
-                sm.SpriteCurrent = sprite;
-                var ev = new SupermatterSpriteUpdateEvent(EntityManager.GetNetEntity(uid), sprite);
-                RaiseNetworkEvent(ev);
-            }
-        }
-
         var damage = Math.Min(sm.DamageArchived + sm.DamageHardcap * sm.DamageDelaminationPoint, sm.Damage + totalDamage);
 
         // Prevent it from going negative
         sm.Damage = Math.Clamp(damage, 0, float.PositiveInfinity);
+
+        // Adjust the supermatter's sprite
+        if (TryComp<AppearanceComponent>(uid, out var appearance))
+        {
+            var visual = SupermatterCrystalState.Normal;
+            if (totalDamage > 0)
+            {
+                visual = sm.Status switch
+                {
+                    SupermatterStatusType.Delaminating => SupermatterCrystalState.GlowDelam,
+                    >= SupermatterStatusType.Emergency => SupermatterCrystalState.GlowEmergency,
+                    _ => SupermatterCrystalState.Glow
+                };
+            }
+
+            _appearance.SetData(uid, SupermatterVisualLayers.Crystal, visual, appearance);
+        }
     }
 
     /// <summary>
@@ -730,8 +717,8 @@ public sealed partial class SupermatterSystem
 
         // Blend colors between hsvNormal at 100% integrity, and hsvDelam at 0% integrity
         var integrity = GetIntegrity(sm);
-        var hsvNormal = Color.ToHsv(sm.LightColors.GetValueOrDefault("normal"));
-        var hsvDelam = Color.ToHsv(sm.LightColors.GetValueOrDefault("delam"));
+        var hsvNormal = Color.ToHsv(sm.LightColorNormal);
+        var hsvDelam = Color.ToHsv(sm.LightColorDelam);
         var hsvFinal = Vector4.Lerp(hsvDelam, hsvNormal, integrity / 100f);
 
         _light.SetEnergy(uid, 2f * scalar, light);
@@ -753,6 +740,14 @@ public sealed partial class SupermatterSystem
             if (!TryComp<SpeechComponent>(uid, out var speech))
                 return;
 
+            // Supermatter is healing, so don't play speech sounds
+            if (sm.Damage < sm.DamageArchived && currentStatus != SupermatterStatusType.Delaminating)
+            {
+                sm.StatusCurrentSound = null;
+                speech.SpeechSounds = null;
+                return;
+            }
+
             sm.StatusCurrentSound = currentStatus switch
             {
                 SupermatterStatusType.Warning => sm.StatusWarningSound,
@@ -768,16 +763,6 @@ public sealed partial class SupermatterSystem
                 speech.AudioParams = AudioParams.Default.AddVolume(10f);
 
             speech.SpeechSounds = sm.StatusCurrentSound;
-        }
-
-        // Supermatter is healing, don't play any speech sounds
-        if (sm.Damage < sm.DamageArchived)
-        {
-            if (!TryComp<SpeechComponent>(uid, out var speech))
-                return;
-
-            sm.StatusCurrentSound = null;
-            speech.SpeechSounds = null;
         }
     }
 
@@ -801,7 +786,7 @@ public sealed partial class SupermatterSystem
             sm.CurrentSoundLoop = sm.CalmLoopSound;
 
         if (ambient.Sound != sm.CurrentSoundLoop)
-            _ambient.SetSound(uid, sm.CurrentSoundLoop, ambient);
+            _ambient.SetSound(uid, sm.CurrentSoundLoop!, ambient);
     }
 
     /// <summary>

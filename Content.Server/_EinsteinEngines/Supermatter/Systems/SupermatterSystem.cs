@@ -14,8 +14,6 @@ using Content.Server.Singularity.EntitySystems;
 using Content.Server.Traits.Assorted;
 using Content.Shared._EinsteinEngines.CCVar;
 using Content.Shared._EinsteinEngines.Supermatter.Components;
-using Content.Shared._EinsteinEngines.Supermatter.Monitor;
-using Content.Shared._EinsteinEngines.Supermatter.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Database;
@@ -39,8 +37,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._EinsteinEngines.Supermatter.Systems;
 
-public sealed partial class SupermatterSystem : SharedSupermatterSystem
+public sealed partial class SupermatterSystem : EntitySystem
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -52,7 +51,6 @@ public sealed partial class SupermatterSystem : SharedSupermatterSystem
     [Dependency] private readonly PointLightSystem _light = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
-    [Dependency] private readonly TransformSystem _xform = default!;
     [Dependency] private readonly SharedAmbientSoundSystem _ambient = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
