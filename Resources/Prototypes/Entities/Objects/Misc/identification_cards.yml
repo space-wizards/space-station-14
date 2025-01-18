@@ -169,7 +169,7 @@
     - state: idmedicaldoctor
   - type: PresetIdCard
     job: MedicalDoctor
-
+ 
 - type: entity
   parent: IDCardStandard
   id: ParamedicIDCard
@@ -462,6 +462,8 @@
     layers:
     - state: default
     - state: idbrigmedic
+  - type: PresetIdCard
+    job: Brigmedic
 
 - type: entity
   parent: IDCardStandard
