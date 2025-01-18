@@ -335,7 +335,7 @@
     - id: WantedListCartridge
     - id: ClothingNeckBronzeheart #imp
     - id: TicketPad #imp special
-    - id: Stunbaton #imp temporary till seclink gets more toys
+    - id: BaseSeclinkRadio #imp
     - id: PillCanisterHOS #imp
 
 # Hardsuit table, used for suit storage as well
