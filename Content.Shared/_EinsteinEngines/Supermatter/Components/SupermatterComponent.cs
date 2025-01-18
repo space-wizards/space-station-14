@@ -32,8 +32,9 @@ public sealed partial class SupermatterComponent : Component
     [DataField]
     public Color LightColorDelam = Color.FromHex("#ffe000");
 
-    [DataField]
-    public EntProtoId SliverPrototype = "SupermatterSliver";
+    #endregion
+
+    #region Prototypes
 
     [DataField]
     public EntProtoId[] LightningPrototypes =
@@ -42,6 +43,9 @@ public sealed partial class SupermatterComponent : Component
         "SupermatterLightningCharged",
         "SupermatterLightningSupercharged"
     };
+
+    [DataField]
+    public EntProtoId SliverPrototype = "SupermatterSliver";
 
     [DataField]
     public EntProtoId SingularitySpawnPrototype = "Singularity";
@@ -61,9 +65,6 @@ public sealed partial class SupermatterComponent : Component
     [DataField]
     public EntProtoId AnomalyPyroSpawnPrototype = "AnomalyPyroclastic";
 
-    /// <summary>
-    /// What spawns in the place of an unfortunate entity that got removed by the SM.
-    /// </summary>
     [DataField]
     public EntProtoId CollisionResultPrototype = "Ash";
 
