@@ -7,6 +7,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._EinsteinEngines.Supermatter.Components;
 
@@ -26,6 +27,21 @@ public sealed partial class SupermatterComponent : Component
     /// </summary>
     [DataField]
     public GasMixture? GasStorage;
+
+    [DataField]
+    public string SpriteNormal = "supermatter";
+
+    [DataField]
+    public string SpriteGlow = "supermatter-glow";
+
+    [DataField]
+    public string SpriteGlowEmergency = "supermatter-glow-emergency";
+
+    [DataField]
+    public string SpriteGlowDelam = "supermatter-glow-delam";
+
+    [DataField]
+    public string? SpriteCurrent;
 
     [DataField]
     public EntProtoId SliverPrototype = "SupermatterSliver";
@@ -564,4 +580,11 @@ public static class SupermatterGasData
 [Serializable, NetSerializable]
 public sealed partial class SupermatterDoAfterEvent : SimpleDoAfterEvent
 {
+}
+
+[Serializable, NetSerializable]
+public sealed partial class SupermatterSpriteUpdateEvent(NetEntity uid, string state) : EntityEventArgs
+{
+    public NetEntity Entity = uid;
+    public string State = state;
 }

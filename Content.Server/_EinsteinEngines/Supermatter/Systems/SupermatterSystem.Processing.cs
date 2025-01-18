@@ -381,6 +381,34 @@ public sealed partial class SupermatterSystem
             }
         }
 
+        if (totalDamage > 0)
+        {
+            var sprite = sm.SpriteGlow;
+
+            if (sm.Status == SupermatterStatusType.Delaminating)
+                sprite = sm.SpriteGlowDelam;
+            else if (sm.Status >= SupermatterStatusType.Emergency)
+                sprite = sm.SpriteGlowEmergency;
+
+            if (sm.SpriteCurrent != sprite)
+            {
+                sm.SpriteCurrent = sprite;
+                var ev = new SupermatterSpriteUpdateEvent(EntityManager.GetNetEntity(uid), sprite);
+                RaiseNetworkEvent(ev);
+            }
+        }
+        else
+        {
+            var sprite = sm.SpriteNormal;
+
+            if (sm.SpriteCurrent != sprite)
+            {
+                sm.SpriteCurrent = sprite;
+                var ev = new SupermatterSpriteUpdateEvent(EntityManager.GetNetEntity(uid), sprite);
+                RaiseNetworkEvent(ev);
+            }
+        }
+
         var damage = Math.Min(sm.DamageArchived + sm.DamageHardcap * sm.DamageDelaminationPoint, sm.Damage + totalDamage);
 
         // Prevent it from going negative
