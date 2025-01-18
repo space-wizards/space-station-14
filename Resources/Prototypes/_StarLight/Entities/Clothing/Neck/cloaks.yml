@@ -136,3 +136,20 @@
     color: "#A46106"
   - type: StaticPrice
     price: 2000
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckCloakBsoElite
+  name: Elite Blueshield Officer's cloak
+  description: An elite Blueshield Officer's cloak crafted from the latest composite glowing fabric. Any true BlueShield is not afraid of shining in the dark!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/bso_elite.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: PointLight
+    radius: 2
+    energy: 4
+    color: "#84BEF4"
+  - type: StaticPrice
+    price: 2000    

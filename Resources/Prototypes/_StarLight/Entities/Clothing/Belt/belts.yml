@@ -192,3 +192,16 @@
         - Pill
         - HandLabeler
   - type: Appearance
+
+- type: entity
+  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseCommandContraband]
+  id: ClothingBeltBlueShield
+  name: Blueshield Webbing
+  description: A tactical rig that can hold many items to save the lives of command.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Belt/blueshieldwebbing.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Belt/blueshieldwebbing.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.5

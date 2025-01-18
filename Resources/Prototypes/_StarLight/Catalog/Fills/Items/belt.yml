@@ -27,7 +27,7 @@
 
 - type: entity
   id: ClothingBeltBlueShieldWebbingFilled
-  parent: ClothingBeltMilitaryWebbing
+  parent: ClothingBeltBlueShield
   suffix: Filled
   components:
   - type: StorageFill

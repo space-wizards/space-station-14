@@ -59,11 +59,23 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrepformal.rsi
     
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitBlueShield
   name: blueshield officer's suit
+  description: Suit of a glorified bodyguard
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/blueshield.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/blueshield.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitEliteBlueShield
+  name: Elite Blueshield Officer's Suit
+  description: Suit of an Elite Blueshield. To reach such a level, you must have protected command from a [REDACTED] threat.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/eliteblueshield.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/eliteblueshield.rsi    
