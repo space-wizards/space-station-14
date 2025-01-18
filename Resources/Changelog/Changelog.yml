@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: qwerltaz
-  changes:
-  - message: Dragon ghost role now spawns outside the station.
-    type: Tweak
-  - message: Dragon ghost role now spawns where advertised!
-    type: Fix
-  id: 7326
-  time: '2024-09-09T19:22:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31890
 - author: yuitop
   changes:
   - message: Fixed some cases when surveillance camera's red light not turning off
@@ -3921,3 +3912,10 @@
   id: 7825
   time: '2025-01-18T13:41:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34500
+- author: Winkarst-cpu
+  changes:
+  - message: Some masks can now be seen when pulled down.
+    type: Add
+  id: 7826
+  time: '2025-01-18T16:58:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33451
