@@ -52,7 +52,7 @@ public sealed partial class DungeonJob
                 }
             }
 
-            if (tile is not null && biomeSystem.TryGetEntity(node, indexedBiome.Layers, tile.Value, seed, _grid, out var entityProto))
+            if (biomeSystem.TryGetEntity(node, indexedBiome.Layers, tile ?? tileRef.Value.Tile, seed, _grid, out var entityProto))
             {
                 var ent = _entManager.SpawnEntity(entityProto, new EntityCoordinates(_gridUid, node + _grid.TileSizeHalfVector));
                 var xform = xformQuery.Get(ent);
