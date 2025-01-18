@@ -1,50 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: The emergency shuttle will now wait at the station longer if it couldn't
-      dock at evac.
-    type: Tweak
-  id: 7322
-  time: '2024-09-09T18:10:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31496
-- author: Boaz1111
-  changes:
-  - message: Pacifists can now use grapple guns.
-    type: Tweak
-  id: 7323
-  time: '2024-09-09T19:15:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32014
-- author: lzk228
-  changes:
-  - message: All bots are available for disguise with the Chameleon Ppotlight
-    type: Tweak
-  id: 7324
-  time: '2024-09-09T19:18:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32006
-- author: DieselMohawk
-  changes:
-  - message: Added Security Trooper Uniform
-    type: Add
-  id: 7325
-  time: '2024-09-09T19:19:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31997
-- author: qwerltaz
-  changes:
-  - message: Dragon ghost role now spawns outside the station.
-    type: Tweak
-  - message: Dragon ghost role now spawns where advertised!
-    type: Fix
-  id: 7326
-  time: '2024-09-09T19:22:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31890
-- author: yuitop
-  changes:
-  - message: Fixed some cases when surveillance camera's red light not turning off
-      when needed
-    type: Fix
-  id: 7327
-  time: '2024-09-09T19:23:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31831
 - author: Blackern5000
   changes:
   - message: Normal and reinforced windows have been made directly upgradable using
@@ -3922,3 +3876,45 @@
   id: 7821
   time: '2025-01-16T20:49:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34197
+- author: southbridge-fur
+  changes:
+  - message: Pride-O-Mats now have scarves instead of cloaks
+    type: Tweak
+  id: 7822
+  time: '2025-01-17T11:35:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34448
+- author: Toby222
+  changes:
+  - message: Update nix flake to use current nixpkgs release
+    type: Fix
+  id: 7823
+  time: '2025-01-17T17:26:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34480
+- author: ArtisticRoomba, miamioni
+  changes:
+  - message: The Space Lizard plushie can now be worn on top of your head.
+    type: Add
+  id: 7824
+  time: '2025-01-18T09:02:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33809
+- author: Spacemann
+  changes:
+  - message: Station cameras can now be destroyed by bullets.
+    type: Add
+  id: 7825
+  time: '2025-01-18T13:41:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34500
+- author: Winkarst-cpu
+  changes:
+  - message: Some masks can now be seen when pulled down.
+    type: Add
+  id: 7826
+  time: '2025-01-18T16:58:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33451
+- author: Minemoder
+  changes:
+  - message: The chemical locker now has a 10u vial of plasma.
+    type: Add
+  id: 7827
+  time: '2025-01-18T18:27:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33871
