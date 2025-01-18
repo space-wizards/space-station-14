@@ -288,39 +288,47 @@ public partial class SharedGunSystem
 
         for (var i = 0; i < component.Capacity; i++)
         {
-            var chamber = component.Chambers[i];
-            var slot = component.AmmoSlots[i];
+            Boolean? chamber = component.Chambers[i];
+            EntityUid? slot = component.AmmoSlots[i];
 
+            // clear the slot and clear the chamber
+            component.AmmoSlots[i] = null;
+            component.Chambers[i] = null;
+
+            // Check if there is nothing in the slot
             if (slot == null)
             {
+                // if so, check if the chamber is supposed to have nothing in it
                 if (chamber == null)
-                    continue;
+                    continue; // if so, continue
 
-                // Too lazy to make a new method don't sue me.
                 if (!_netManager.IsClient)
                 {
-                    var uid = Spawn(component.FillPrototype, mapCoordinates);
+                    // Since this slot has nothing in it, but it should have something, spawn it.
+                    slot = Spawn(component.FillPrototype, mapCoordinates);
+                    EnsureShootable(slot.Value);
 
-                    if (TryComp<CartridgeAmmoComponent>(uid, out var cartridge))
-                        SetCartridgeSpent(uid, cartridge, !(bool) chamber);
-
-                    EjectCartridge(uid);
+                    // Add it to the slot
+                    Containers.Insert(slot.Value, component.AmmoContainer);
                 }
-
-                component.Chambers[i] = null;
-                anyEmpty = true;
             }
-            else
+
+            if (slot != null) // this is to get the compiler to chill
             {
-                component.AmmoSlots[i] = null;
-                Containers.Remove(slot.Value, component.AmmoContainer);
-                component.Chambers[i] = null;
-
+                // Eject the cartridge
                 if (!_netManager.IsClient)
+                {
+                    Containers.Remove(slot.Value, component.AmmoContainer);
                     EjectCartridge(slot.Value);
-
-                anyEmpty = true;
+                }
+                else if (IsClientSide(slot.Value)) // if we're on the client, delete it. Server has the authority.
+                {
+                    QueueDel(slot);
+                }
             }
+
+            // Set the flag that plays the sound, updates ammo count, and changes the appearance.
+            anyEmpty = true;
         }
 
         if (anyEmpty)
