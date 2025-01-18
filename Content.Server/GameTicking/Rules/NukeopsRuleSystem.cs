@@ -196,6 +196,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 index = 0; //reset index
 
                 //list things bought
+                //todo figure out how to embed images in these? might need to wait for this UI being turned into an actual UI and not whatever the fuck it currently is
                 var purchasesString = Loc.GetString("roundend-spend-summary-bought", ("gender", genderString)) + " ";
                 foreach (var boughtThing in purchaseCounts)
                 {
