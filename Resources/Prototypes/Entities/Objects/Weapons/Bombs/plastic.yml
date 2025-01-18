@@ -74,73 +74,8 @@
       festive: Objects/Weapons/Bombs/c4gift.rsi
 
 - type: entity
-  name: composition C-5
+  name: composition C-4
+  suffix: NT
   description: Used to put holes in specific areas without too much extra hole. NanoTrasen brand.
-  parent: [BasePlasticExplosive, BaseCentcommContraband]
+  parent: [BaseCentcommContraband, C4]
   id: C4NT
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Bombs/c4.rsi
-    state: icon
-    layers:
-    - state: icon
-      map: ["base"]
-  - type: OnUseTimerTrigger
-    delay: 10
-    delayOptions: [10, 30, 60, 120, 300]
-    initialBeepDelay: 0
-    beepSound: /Audio/Machines/Nuke/general_beep.ogg
-    startOnStick: true
-    canToggleStartOnStick: true
-  - type: TimerStartOnSignal
-  - type: DeviceLinkSink
-    ports:
-      - Timer
-  - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
-    explosionType: DemolitionCharge
-    totalIntensity: 60
-    intensitySlope: 5
-    maxIntensity: 30
-    canCreateVacuum: false
-  - type: ExplodeOnTrigger
-  - type: HolidayVisuals
-    holidays:
-      festive:
-      - FestiveSeason
-  - type: HolidayRsiSwap
-    sprite:
-      festive: Objects/Weapons/Bombs/c4gift.rsi
-
-- type: entity
-  name: seismic charge
-  description: Concussion based explosive designed to destroy large amounts of rock.
-  parent: BasePlasticExplosive
-  id: SeismicCharge
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Bombs/seismic.rsi
-    state: icon
-    layers:
-    - state: icon
-      map: ["base"]
-  - type: OnUseTimerTrigger
-    delay: 5
-    delayOptions: [5, 10, 15, 20]
-    initialBeepDelay: 0
-    beepSound:
-      path: /Audio/Effects/Cargo/buzz_two.ogg
-      params:
-        volume: -6
-    startOnStick: false
-    canToggleStartOnStick: true
-  - type: TriggerOnSignal
-  - type: DeviceLinkSink
-    ports:
-    - Trigger
-  - type: Explosive
-    explosionType: Cryo
-    totalIntensity: 120
-    intensitySlope: 2
-    maxIntensity: 30
-    canCreateVacuum: false
-  - type: ExplodeOnTrigger
