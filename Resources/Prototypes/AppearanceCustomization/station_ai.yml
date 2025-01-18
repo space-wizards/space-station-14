@@ -139,7 +139,6 @@
 - type: stationAiCustomization
   id: StationAiHologramDog
   name: station-ai-hologram-dog
-  category: Hologram
   layerData:
     Hologram:
       sprite: Mobs/Silicon/holograms.rsi
