@@ -77,7 +77,7 @@
     state: Deathsquadron
   jobName: job-name-deathsquad
 
-  - type: jobIcon
+- type: jobIcon
   parent: JobIcon
   id: JobIconCBURN
   icon:
@@ -85,7 +85,7 @@
     state: CBURN
   jobName: job-name-cburn
 
-  - type: jobIcon
+- type: jobIcon
   parent: JobIcon
   id: JobIconERTLeader
   icon:
@@ -93,7 +93,7 @@
     state: ERTLeader
   jobName: job-name-ertleader
 
-  - type: jobIcon
+- type: jobIcon
   parent: JobIcon
   id: JobIconERTSecurity
   icon:
@@ -101,7 +101,7 @@
     state: ERTSecurity
   jobName: job-name-ertsecurity
 
-  - type: jobIcon
+- type: jobIcon
   parent: JobIcon
   id: JobIconERTMedic
   icon:
@@ -109,7 +109,7 @@
     state: ERTMedic
   jobName: job-name-ertmedic
 
-  - type: jobIcon
+- type: jobIcon
   parent: JobIcon
   id: JobIconERTEngineer
   icon:
@@ -117,7 +117,7 @@
     state: ERTEngineer
   jobName: job-name-ertengineer
 
-  - type: jobIcon
+- type: jobIcon
   parent: JobIcon
   id: JobIconERTJanitor
   icon:
@@ -125,7 +125,7 @@
     state: ERTJanitor
   jobName: job-name-ertjanitor
 
-  - type: jobIcon
+- type: jobIcon
   parent: JobIcon
   id: JobIconERTChaplain
   icon:
