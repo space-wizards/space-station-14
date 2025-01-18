@@ -165,7 +165,7 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
                 icon.SetFromSpriteSpecifier(specifier);
             }
 
-            icon.DisplayRect.TextureScale = new Vector2(2f, 2f);
+            icon.DisplayRect.TextureScale = new Vector2(1.75f, 1.75f);
 
             AddChild(icon);
         }
