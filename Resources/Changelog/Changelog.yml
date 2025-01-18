@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Normal and reinforced windows have been made directly upgradable using
-      rods, plasma, uranium, or plasteel.
-    type: Add
-  - message: Reinforced plasma and uranium windows have been made tougher.
-    type: Tweak
-  - message: Windows have been made to correctly display their damage visuals.
-    type: Fix
-  - message: Reinforced plasma windows have been given the correct amount of hp and
-      no longer have 12x the amount they should.
-    type: Fix
-  id: 7328
-  time: '2024-09-09T19:26:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31978
 - author: Cojoke-dot
   changes:
   - message: Nuclear bombs now require the Nuclear Authentification Disk to toggle
@@ -3918,3 +3903,12 @@
   id: 7827
   time: '2025-01-18T18:27:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33871
+- author: Nox38
+  changes:
+  - message: Seclites now start with a medium-capacity power cell.
+    type: Tweak
+  - message: Seclite power draw (wattage) has been reduced to 0.5.
+    type: Tweak
+  id: 7828
+  time: '2025-01-18T22:56:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34469
