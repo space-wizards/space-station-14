@@ -27,7 +27,7 @@
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityWebbingFilled
-    # Whistle
+    neck: Whistle
     pocket1: WeaponPistolN1984
     pocket2: FlashlightSeclite
   storage:
@@ -51,7 +51,7 @@
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityWebbingFilled
-    # Whistle
+    neck: Whistle
     pocket1: WeaponPistolN1984
     pocket2: FlashlightSeclite
   storage:
@@ -203,7 +203,7 @@
     outerClothing: ClothingOuterArmorBasicSlim
     id: ERTEngineerPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltChiefEngineerFilled
+    belt: ClothingBeltUtility
     pocket1: WeaponPistolMk58
     pocket2: FlashlightSeclite
   storage:
@@ -220,6 +220,14 @@
     - SheetPlasteel
     - SheetSteel
     - SheetGlass
+    belt:
+    - JawsOfLife
+    - PowerDrill
+    - WelderExperimental
+    - Multitool
+    - HolofanProjector
+    - GasAnalyzer
+    - trayScanner
 
 - type: startingGear
   id: ERTEngineerGearEVA
@@ -319,7 +327,7 @@
     - MagazineRifle
     - MagazineRifle
     - CrowbarRed
-    - WeaponDisabler
+    - WeaponDisablerSMG
 
 - type: startingGear
   id: ERTMarinesGearRifleman
@@ -335,17 +343,17 @@
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityWebbing
     pocket1: WeaponPistolMk58
-    pocket2: WeaponDisabler
+    pocket2: FlashlightSeclite
   storage:
     back:
     - BoxZiptie
+    - MedkitCombatFilled
     - WeaponRifleLecter
+    - WeaponDisablerSMG
+    - CrowbarRed
+    - TelescopicShield
     - GrenadeFlashBang
     - GrenadeStinger
-    - CrowbarRed
-    - MedkitCombatFilled
-    - WeaponDisaberSMG
-    - TelescopicShield
     belt:
     - Stunbaton
     - HoloprojectorSecurity
@@ -458,19 +466,38 @@
     outerClothing: ClothingOuterArmorBasicSlim
     id: ERTMedicPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltMedicalFilled
+    belt: ClothingBeltMedicalEMT
     pocket1: WeaponPistolMk58
     pocket2: FlashlightSeclite
   storage:
     back:
+    - BoxBodyBag
+    - Defibrillator
+    - MedkitCombatFilled
     - MagazinePistol
     - CrowbarRed
+    - MagazinePistol
     - Hypospray
-    - MedkitCombatFilled
     - OmnizineChemistryBottle
     - EpinephrineChemistryBottle
     - EpinephrineChemistryBottle
-    - Defibrillator
+    belt:
+    - AntiPoisonMedipen
+    - AntiPoisonMedipen
+    - BruteAutoInjector
+    - BruteAutoInjector
+    - BruteAutoInjector
+    - AirlossAutoInjector
+    - AirlossAutoInjector
+    - AirlossAutoInjector
+    - RadAutoInjector
+    - RadAutoInjector
+    - PunctAutoInjector
+    - PunctAutoInjector
+    - PunctAutoInjector
+    - PyraAutoInjector
+    - PyraAutoInjector
+    - PyraAutoInjector
 
 - type: startingGear
   id: ERTMedicalGearEVA
@@ -484,19 +511,38 @@
     outerClothing: ClothingOuterHardsuitERTMedical
     id: ERTMedicPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltMedicalFilled
+    belt: ClothingBeltMedicalEMT
     pocket1: WeaponPistolMk58
     pocket2: FlashlightSeclite
   storage:
     back:
+    - BoxBodyBag
+    - Defibrillator
+    - MedkitCombatFilled
     - MagazinePistol
     - CrowbarRed
+    - MagazinePistol
     - Hypospray
-    - MedkitCombatFilled
     - OmnizineChemistryBottle
     - EpinephrineChemistryBottle
     - EpinephrineChemistryBottle
-    - Defibrillator
+    belt:
+    - AntiPoisonMedipen
+    - AntiPoisonMedipen
+    - BruteAutoInjector
+    - BruteAutoInjector
+    - BruteAutoInjector
+    - AirlossAutoInjector
+    - AirlossAutoInjector
+    - AirlossAutoInjector
+    - RadAutoInjector
+    - RadAutoInjector
+    - PunctAutoInjector
+    - PunctAutoInjector
+    - PunctAutoInjector
+    - PyraAutoInjector
+    - PyraAutoInjector
+    - PyraAutoInjector
 
 - type: startingGear
   id: ERTMarinesGearMedic
@@ -518,25 +564,23 @@
     - BoxBodyBag
     - WeaponSubMachineGunDrozd
     - MedkitCombatFilled
-    - PillCanisterTricordrazine
+    - Defibrillator
     - CrowbarRed
+    - Hypospray
     - MagazinePistol
     - MagazinePistolSubMachineGun
     - MagazinePistolSubMachineGun
-    - Hypospray
-    - Defibrillator
     - PunctAutoInjector
     - PunctAutoInjector
     - OmnizineChemistryBottle
     - EpinephrineChemistryBottle
-    - EpinephrineChemistryBottle
+    - Gauze
     belt:
-    - Hypospray
     - AntiPoisonMedipen
     - AntiPoisonMedipen
     - BruteAutoInjector
     - BruteAutoInjector
-    - BruteAutoInjectoree
+    - BruteAutoInjector
     - AirlossAutoInjector
     - AirlossAutoInjector
     - AirlossAutoInjector
@@ -576,20 +620,29 @@
     outerClothing: ClothingOuterArmorBasicSlim
     id: ERTJanitorPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltJanitorFilled
+    belt: ClothingBeltJanitor
     pocket1: WeaponPistolMk58
     pocket2: FlashlightSeclite
-  inhand:
-    - AdvMopItem
   storage:
     back:
+    - BoxLightMixed
+    - BoxLightMixed
     - MagazinePistol
     - CrowbarRed
+    - AdvMopItem
+    - CleanerGrenade
+    - CleanerGrenade
+    - CleanerGrenade
+    - CleanerGrenade
+    - CleanerGrenade
+    belt:
+    - SoapNT
+    - MegaSprayBottleSpaceCleaner
+    - LightReplacer
+    - CleanerGrenade
+    - CleanerGrenade
+    - CleanerGrenade
     - TrashBag
-    - CleanerGrenade
-    - CleanerGrenade
-    - BoxLightMixed
-    - BoxLightMixed
 
 - type: startingGear
   id: ERTJanitorGearEVA
@@ -602,17 +655,26 @@
     outerClothing: ClothingOuterHardsuitERTJanitor
     id: ERTJanitorPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltJanitorFilled
+    belt: ClothingBeltJanitor
     pocket1: WeaponPistolMk58
     pocket2: FlashlightSeclite
-    inhand:
-    - AdvMopItem
   storage:
     back:
+    - BoxLightMixed
+    - BoxLightMixed
     - MagazinePistol
     - CrowbarRed
+    - AdvMopItem
+    - CleanerGrenade
+    - CleanerGrenade
+    - CleanerGrenade
+    - CleanerGrenade
+    - CleanerGrenade
+    belt:
+    - SoapNT
+    - MegaSprayBottleSpaceCleaner
+    - LightReplacer
+    - CleanerGrenade
+    - CleanerGrenade
+    - CleanerGrenade
     - TrashBag
-    - CleanerGrenade
-    - CleanerGrenade
-    - BoxLightMixed
-    - BoxLightMixed

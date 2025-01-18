@@ -66,6 +66,20 @@
       path: /Audio/Effects/spray2.ogg
 
 - type: entity
+  name: mega spray bottle
+  id: MegaSprayBottleSpaceCleaner
+  parent: MegaSprayBottle
+  description: A huge spray bottle, capable of unrivaled janitorial power.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 250
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 250
+
+- type: entity
   name: spray bottle
   id: SprayBottleWater
   suffix: Filled
