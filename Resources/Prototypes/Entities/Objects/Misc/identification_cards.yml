@@ -515,8 +515,11 @@
   components:
   - type: Sprite
     layers:
-    - state: gold
+    - state: silver #imp
     - state: ert_commander
+  - type: IdCard
+    jobTitle: job-name-ertleader
+    jobIcon: JobIconERTLeader
   - type: PresetIdCard
     job: ERTLeader
   - type: Item
@@ -529,8 +532,10 @@
   components:
   - type: Sprite
     layers:
-    - state: gold
     - state: ert_chaplain # we have the sprite for the id but dont have chaplain ERT equipment for now.
+  - type: IdCard
+    jobTitle: job-name-ertchaplain
+    jobIcon: JobIconERTChaplain
   - type: PresetIdCard
     job: ERTChaplain
   - type: Item
@@ -543,8 +548,10 @@
   components:
   - type: Sprite
     layers:
-    - state: gold
     - state: ert_engineer
+  - type: IdCard
+    jobTitle: job-name-ertengineer
+    jobIcon: JobIconERTEngineer
   - type: PresetIdCard
     job: ERTEngineer
 
@@ -555,8 +562,10 @@
   components:
   - type: Sprite
     layers:
-    - state: gold
     - state: ert_janitor
+  - type: IdCard
+    jobTitle: job-name-ertjanitor
+    jobIcon: JobIconERTJanitor
   - type: PresetIdCard
     job: ERTJanitor
 
@@ -567,8 +576,10 @@
   components:
   - type: Sprite
     layers:
-    - state: gold
     - state: ert_medic
+  - type: IdCard
+    jobTitle: job-name-ertmedic
+    jobIcon: JobIconERTMedic
   - type: PresetIdCard
     job: ERTMedical
 
@@ -579,8 +590,10 @@
   components:
   - type: Sprite
     layers:
-    - state: gold
     - state: ert_security
+  - type: IdCard
+    jobTitle: job-name-ertsecurity
+    jobIcon: JobIconERTSecurity
   - type: PresetIdCard
     job: ERTSecurity
 
@@ -603,9 +616,12 @@
   components:
   - type: Sprite
     layers:
-    - state: centcom
+    - state: deathsquad
   - type: Item
-    heldPrefix: blue
+    heldPrefix: red
+  - type: IdCard
+    jobTitle: job-name-deathsquad
+    jobIcon: JobIconDeathsquadron
   - type: PresetIdCard
     job: DeathSquad
 
