@@ -2,6 +2,7 @@ using Content.Server.Charges.Components;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Charges.Systems;
@@ -37,7 +38,7 @@ public sealed class ChargesSystem : SharedChargesSystem
         args.PushMarkup(Loc.GetString("limited-charges-recharging", ("seconds", timeRemaining)));
     }
 
-    public override void AddCharges(EntityUid uid, int change, LimitedChargesComponent? comp = null)
+    public override void AddCharges(EntityUid uid, FixedPoint2 change, LimitedChargesComponent? comp = null)
     {
         if (!Query.Resolve(uid, ref comp, false))
             return;
