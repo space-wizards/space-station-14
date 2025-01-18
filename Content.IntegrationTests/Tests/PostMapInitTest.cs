@@ -38,10 +38,7 @@ namespace Content.IntegrationTests.Tests
 
         private static readonly string[] Grids =
         {
-            "/Maps/centcomm.yml",
-            "/Maps/Shuttles/cargo.yml",
-            "/Maps/Shuttles/emergency.yml",
-            "/Maps/Shuttles/infiltrator.yml",
+            "/Maps/centcomm.yml"
         };
 
         private static readonly string[] GameMaps =
@@ -99,6 +96,55 @@ namespace Content.IntegrationTests.Tests
                 }
 
                 mapSystem.DeleteMap(mapId);
+            });
+            await server.WaitRunTicks(1);
+
+            await pair.CleanReturnAsync();
+        }
+
+        /// <summary>
+        /// Asserts that shuttles are loadable and have been saved as grids and not maps.
+        /// </summary>
+        [Test]
+        public async Task ShuttlesLoadableTest()
+        {
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+
+            var entManager = server.ResolveDependency<IEntityManager>();
+            var resMan = server.ResolveDependency<IResourceManager>();
+            var mapLoader = entManager.System<MapLoaderSystem>();
+            var mapSystem = entManager.System<SharedMapSystem>();
+            var cfg = server.ResolveDependency<IConfigurationManager>();
+            Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
+
+            var shuttleFolder = new ResPath("/Maps/Shuttles");
+            var shuttles = resMan
+                .ContentFindFiles(shuttleFolder)
+                .Where(filePath =>
+                    filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
+                .ToArray();
+
+            await server.WaitPost(() =>
+            {
+                Assert.Multiple(() =>
+                {
+                    foreach (var path in shuttles)
+                    {
+                        mapSystem.CreateMap(out var mapId);
+                        try
+                        {
+                            Assert.That(mapLoader.TryLoadGrid(mapId, path, out _),
+                                $"Failed to load shuttle {path}, was it saved as a map instead of a grid?");
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception($"Failed to load shuttle {path}, was it saved as a map instead of a grid?",
+                                ex);
+                        }
+                        mapSystem.DeleteMap(mapId);
+                    }
+                });
             });
             await server.WaitRunTicks(1);
 
