@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: hivehum
   changes:
-  - message: ALL ABOARD!!!!
-    type: Add
-  id: 465
-  time: '2024-11-06T04:23:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/625
-- author: hivehum
-  changes:
   - message: Ore bags can hold salt again.
     type: Fix
   id: 466
@@ -4465,3 +4458,13 @@
   id: 964
   time: '2025-01-18T17:55:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1419
+- author: Darkmajia
+  changes:
+  - message: Air tanks set to low output pressure will no longer create a throwing
+      damage blender.
+    type: Fix
+  - message: Air tanks now pop out of tethers when they release gas.
+    type: Tweak
+  id: 965
+  time: '2025-01-18T19:31:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1417
