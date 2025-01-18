@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: sususuyo
-  changes:
-  - message: Added one new track to the jukebox and lobby
-    type: Add
-  - message: Audio balanced the remaining audio files of the purge. If it's too quiet
-      you can adjust the volume in the options!
-    type: Tweak
-  - message: Fixed attributions for a track
-    type: Fix
-  id: 464
-  time: '2024-11-06T04:00:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/615
 - author: hivehum
   changes:
   - message: ALL ABOARD!!!!
@@ -4469,3 +4457,11 @@
   id: 963
   time: '2025-01-18T10:25:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1414
+- author: hivehum
+  changes:
+  - message: The nuke song "Clearly Nuclear" has been replaced with its remastered
+      version, "Blatantly Nuclear."
+    type: Tweak
+  id: 964
+  time: '2025-01-18T17:55:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1419
