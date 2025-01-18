@@ -17,6 +17,8 @@ using Content.Shared.Radiation.Components;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Speech;
 using Content.Shared.Traits.Assorted;
+using FastAccessors;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -25,6 +27,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Spawners;
+using Vector4 = Robust.Shared.Maths.Vector4;
 
 namespace Content.Server._EinsteinEngines.Supermatter.Systems;
 
@@ -711,6 +714,29 @@ public sealed partial class SupermatterSystem
                 _explosion.TriggerExplosive(uid);
                 break;
         }
+    }
+
+    /// <summary>
+    /// Scales the energy and radius of the supermatter's light based on its power,
+    /// and gradients the color based on its integrity
+    /// </summary>
+    private void HandleLight(EntityUid uid, SupermatterComponent sm)
+    {
+        if (!TryComp<PointLightComponent>(uid, out var light))
+            return;
+
+        // Max light scaling reached at 2500 power
+        var scalar = Math.Clamp(sm.Power / 2500f + 1f, 1f, 2f);
+
+        // Blend colors between hsvNormal at 100% integrity, and hsvDelam at 0% integrity
+        var integrity = GetIntegrity(sm);
+        var hsvNormal = Color.ToHsv(sm.LightColors.GetValueOrDefault("normal"));
+        var hsvDelam = Color.ToHsv(sm.LightColors.GetValueOrDefault("delam"));
+        var hsvFinal = Vector4.Lerp(hsvDelam, hsvNormal, integrity / 100f);
+
+        _light.SetEnergy(uid, 2f * scalar, light);
+        _light.SetRadius(uid, 10f * scalar, light);
+        _light.SetColor(uid, Color.FromHsv(hsvFinal), light);
     }
 
     /// <summary>

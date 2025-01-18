@@ -64,7 +64,7 @@
   - type: PointLight
     enabled: true
     radius: 10
-    energy: 5
+    energy: 2
     color: "#ffe000"
   - type: Explosive
     explosionType: Supermatter

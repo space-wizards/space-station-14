@@ -44,6 +44,13 @@ public sealed partial class SupermatterComponent : Component
     public string? SpriteCurrent;
 
     [DataField]
+    public Dictionary<string, Color> LightColors = new()
+    {
+        { "normal", Color.FromHex("#ffe000") },
+        { "delam", Color.FromHex("#ff0000") }
+    };
+
+    [DataField]
     public EntProtoId SliverPrototype = "SupermatterSliver";
 
     [DataField]
