@@ -23,7 +23,13 @@ using Robust.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
+//imp edit start
+using Content.Shared.Fluids;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Robust.Shared.Containers;
+using Robust.Shared.Random;
+//imp edit end
 
 namespace Content.Shared.Doors.Systems;
 
@@ -45,7 +51,12 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
-
+    //imp edit start
+    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    //imp edit end
 
     [ValidatePrototypeId<TagPrototype>]
     public const string DoorBumpTag = "DoorBumpOpener";
@@ -218,6 +229,36 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         if (!TryToggleDoor(uid, door, args.User, predicted: true))
             _pryingSystem.TryPry(uid, args.User, out _);
+
+        //imp edit start
+        //If the door has a bucket propped onto it and is being opened, get the bucket as container
+        if (_container.TryGetContainer(uid, "bucket", out BaseContainer? container) && door.State == DoorState.Opening)
+        {
+            //Foreach in case we ever implement multiple buckets I guess
+            //Also saves me from checking if the bucket exists
+            foreach (var bucket in container.ContainedEntities)
+            {
+                //Get the chems inside the bucket's container as solution
+                if (!_solutionContainerSystem.TryGetDrainableSolution(bucket, out var soln, out var solution))
+                {
+                    //Special case : if the bucket is here but its solution container compnent was removed by an admin or something
+                    //Just drop the bucket and return
+                    _container.RemoveEntity(uid, bucket, null, null, null, true, false, null, _random.NextAngle());
+                    args.Handled = true;
+                    return;
+                }
+
+                //Splash the solution onto the player
+                _puddle.TrySplashSpillAt(bucket, Transform(uid).Coordinates, solution, out _);
+
+                //Remove the solution from the bucket
+                _solutionContainerSystem.RemoveAllSolution(soln.Value);
+
+                //Drop the bucket on the floor
+                _container.RemoveEntity(uid, bucket, null, null, null, true, false, null, _random.NextAngle());
+            }
+        }
+        //imp edit end
 
         args.Handled = true;
     }
