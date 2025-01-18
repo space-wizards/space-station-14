@@ -63,6 +63,7 @@
       whitelist:
         components:
         - FitsInDispenser
+      priority: 9
   - type: ItemSlots
   - type: ContainerContainer
     containers:

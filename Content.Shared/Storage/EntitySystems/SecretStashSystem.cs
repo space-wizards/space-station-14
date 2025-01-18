@@ -1,20 +1,19 @@
-using Content.Shared.Popups;
-using Content.Shared.Storage.Components;
+using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Item;
-using Robust.Shared.Containers;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.Tools.Systems;
-using Content.Shared.Examine;
+using Content.Shared.Item;
+using Content.Shared.Materials;
+using Content.Shared.Popups;
+using Content.Shared.Storage.Components;
+using Content.Shared.Tools.EntitySystems;
+using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Content.Shared.Verbs;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Tools.EntitySystems;
-using Content.Shared.Whitelist;
-using Content.Shared.Materials;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Storage.EntitySystems;
@@ -38,7 +37,7 @@ public sealed class SecretStashSystem : EntitySystem
         SubscribeLocalEvent<SecretStashComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SecretStashComponent, DestructionEventArgs>(OnDestroyed);
         SubscribeLocalEvent<SecretStashComponent, GotReclaimedEvent>(OnReclaimed);
-        SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ToolOpenableSystem) });
+        SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ToolOpenableSystem), typeof(AnchorableSystem) });
         SubscribeLocalEvent<SecretStashComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<SecretStashComponent, GetVerbsEvent<InteractionVerb>>(OnGetVerb);
     }

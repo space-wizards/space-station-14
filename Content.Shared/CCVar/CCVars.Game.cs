@@ -154,6 +154,7 @@ public sealed partial class CCVars
 
         /// <summary>
         ///     Whether or not the panic bunker will enable when no admins are online.
+        ///     This counts everyone with the 'Admin' AdminFlag.
         /// </summary>
         public static readonly CVarDef<bool> PanicBunkerEnableWithoutAdmins =
             CVarDef.Create("game.panic_bunker.enable_without_admins", false, CVar.SERVERONLY);
@@ -197,47 +198,105 @@ public sealed partial class CCVars
         public static readonly CVarDef<bool> BypassBunkerWhitelist =
             CVarDef.Create("game.panic_bunker.whitelisted_can_bypass", true, CVar.SERVERONLY);
 
-        /*
-         * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
-         */
+        /// <summary>
+        /// Enable IPIntel for blocking VPN connections from new players.
+        /// </summary>
+        public static readonly CVarDef<bool> GameIPIntelEnabled =
+            CVarDef.Create("game.ipintel_enabled", false, CVar.SERVERONLY);
 
         /// <summary>
-        ///     Whether the baby jail is currently enabled.
+        /// Whether clients which are flagged as a VPN will be denied
         /// </summary>
-        public static readonly CVarDef<bool> BabyJailEnabled  =
-            CVarDef.Create("game.baby_jail.enabled", false, CVar.NOTIFY | CVar.REPLICATED | CVar.SERVER);
+        public static readonly CVarDef<bool> GameIPIntelRejectBad =
+            CVarDef.Create("game.ipintel_reject_bad", true, CVar.SERVERONLY);
 
         /// <summary>
-        ///     Show reason of disconnect for user or not.
+        /// Whether clients which cannot be checked due to a rate limit will be denied
         /// </summary>
-        public static readonly CVarDef<bool> BabyJailShowReason =
-            CVarDef.Create("game.baby_jail.show_reason", false, CVar.SERVERONLY);
+        public static readonly CVarDef<bool> GameIPIntelRejectRateLimited =
+            CVarDef.Create("game.ipintel_reject_ratelimited", false, CVar.SERVERONLY);
 
         /// <summary>
-        ///     Maximum age of the account (from server's PoV, so from first-seen date) in minutes that can access baby
-        ///     jailed servers.
+        /// Whether clients which cannot be checked due to an error of some form will be denied
         /// </summary>
-        public static readonly CVarDef<int> BabyJailMaxAccountAge =
-            CVarDef.Create("game.baby_jail.max_account_age", 1440, CVar.SERVERONLY);
+        public static readonly CVarDef<bool> GameIPIntelRejectUnknown =
+            CVarDef.Create("game.ipintel_reject_unknown", false, CVar.SERVERONLY);
 
         /// <summary>
-        ///     Maximum overall played time allowed to access baby jailed servers.
+        /// Should an admin message be made if the connection got rejected cause of ipintel?
         /// </summary>
-        public static readonly CVarDef<int> BabyJailMaxOverallMinutes =
-            CVarDef.Create("game.baby_jail.max_overall_minutes", 120, CVar.SERVERONLY);
+        public static readonly CVarDef<bool> GameIPIntelAlertAdminReject =
+            CVarDef.Create("game.ipintel_alert_admin_rejected", false, CVar.SERVERONLY);
 
         /// <summary>
-        ///     A custom message that will be used for connections denied due to the baby jail.
-        ///     If not empty, then will overwrite <see cref="BabyJailShowReason"/>
+        /// A contact email to be sent along with the request. Required by IPIntel
         /// </summary>
-        public static readonly CVarDef<string> BabyJailCustomReason =
-            CVarDef.Create("game.baby_jail.custom_reason", string.Empty, CVar.SERVERONLY);
+        public static readonly CVarDef<string> GameIPIntelEmail =
+            CVarDef.Create("game.ipintel_contact_email", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
         /// <summary>
-        ///     Allow bypassing the baby jail if the user is whitelisted.
+        /// The URL to IPIntel to make requests to. If you pay for more queries this is what you want to change.
         /// </summary>
-        public static readonly CVarDef<bool> BypassBabyJailWhitelist =
-            CVarDef.Create("game.baby_jail.whitelisted_can_bypass", true, CVar.SERVERONLY);
+        public static readonly CVarDef<string> GameIPIntelBase =
+            CVarDef.Create("game.ipintel_baseurl", "https://check.getipintel.net", CVar.SERVERONLY);
+
+        /// <summary>
+        /// The flags to use in the request to IPIntel, please look here for more info. https://getipintel.net/free-proxy-vpn-tor-detection-api/#optional_settings
+        /// Note: Some flags may increase the chances of false positives and request time. The default should be fine for most servers.
+        /// </summary>
+        public static readonly CVarDef<string> GameIPIntelFlags =
+            CVarDef.Create("game.ipintel_flags", "b", CVar.SERVERONLY);
+
+        /// <summary>
+        /// Maximum amount of requests per Minute. For free you get 15.
+        /// </summary>
+        public static readonly CVarDef<int> GameIPIntelMaxMinute =
+            CVarDef.Create("game.ipintel_request_limit_minute", 15, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Maximum amount of requests per Day. For free you get 500.
+        /// </summary>
+        public static readonly CVarDef<int> GameIPIntelMaxDay =
+            CVarDef.Create("game.ipintel_request_limit_daily", 500, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Amount of seconds to add to the exponential backoff with every failed request.
+        /// </summary>
+        public static readonly CVarDef<int> GameIPIntelBackOffSeconds =
+            CVarDef.Create("game.ipintel_request_backoff_seconds", 30, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How much time should pass before we attempt to cleanup the IPIntel table for old ip addresses?
+        /// </summary>
+        public static readonly CVarDef<int> GameIPIntelCleanupMins =
+            CVarDef.Create("game.ipintel_database_cleanup_mins", 15, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How long to store results in the cache before they must be retrieved again in days.
+        /// </summary>
+        public static readonly CVarDef<TimeSpan> GameIPIntelCacheLength =
+            CVarDef.Create("game.ipintel_cache_length", TimeSpan.FromDays(7), CVar.SERVERONLY);
+
+        /// <summary>
+        /// Amount of playtime in minutes to be exempt from an IP check. 0 to search everyone. 5 hours by default.
+        /// <remarks>
+        /// Trust me you want one.
+        /// </remarks>>
+        /// </summary>
+        public static readonly CVarDef<TimeSpan> GameIPIntelExemptPlaytime =
+            CVarDef.Create("game.ipintel_exempt_playtime", TimeSpan.FromMinutes(300), CVar.SERVERONLY);
+
+        /// <summary>
+        /// Rating to reject at. Anything equal to or higher than this will reject the connection.
+        /// </summary>
+        public static readonly CVarDef<float> GameIPIntelBadRating =
+            CVarDef.Create("game.ipintel_bad_rating", 0.95f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Rating to send an admin warning over, but not reject the connection. Set to 0 to disable
+        /// </summary>
+        public static readonly CVarDef<float> GameIPIntelAlertAdminWarnRating =
+            CVarDef.Create("game.ipintel_alert_admin_warn_rating", 0f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Make people bonk when trying to climb certain objects like tables.
