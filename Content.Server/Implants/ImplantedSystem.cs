@@ -25,9 +25,9 @@ public sealed partial class ImplanterSystem
         _container.CleanContainer(component.ImplantContainer);
     }
 
-    private void OnGibbed(EntityUid uid, ImplantedComponent component, BeingGibbedEvent args)
+    private void OnGibbed(Entity<ImplantedComponent> ent, ref BeingGibbedEvent args)
     {
         //If the entity is gibbed, get rid of the implants
-        _container.CleanContainer(component.ImplantContainer);
+        _container.CleanContainer(ent.Comp.ImplantContainer);
     }
 }
