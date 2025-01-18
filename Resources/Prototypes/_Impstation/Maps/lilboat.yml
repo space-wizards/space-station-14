@@ -4,7 +4,7 @@
   mapPath: /Maps/_Impstation/lilboat.yml
   minPlayers: 10
   maxPlayers: 45
-  randomRotation: false
+  randomRotation: true
   stations:
     Lilboat:
       stationProto: StandardNanotrasenStation
