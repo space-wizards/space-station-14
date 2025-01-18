@@ -4,7 +4,7 @@
   parent: [BaseItem, BaseRestrictedContraband]
   id: BatonToken
   suffix: 3 BT
-  description: This is a Baton Token, used in the SecLink radio to purchase a stun baton. Despite the pleasing color, this is not lemon flavored.
+  description: This is a Baton Token, used in the SecLink radio to purchase a stun baton. It is not lemon flavored.
   components:
    - type: Sprite
      sprite: _Impstation/Objects/Specific/Security/seclink.rsi
@@ -68,7 +68,7 @@
   parent: [ BaseItem, BaseRestrictedContraband ]
   id: UtilityToken
   suffix: 3 UT
-  description: This is a Utility Token, used in the SecLink radio to purchase a utility option. Due to the many reports of these tokens being eaten, CentComm has given this token an artificial grape taste to dissuade people from eating it.
+  description: This is a Utility Token, used in the SecLink radio to purchase a utility option. Due to several hospitalization from "accidental" consumption, CentComm has given this token an artificial grape flavor to dissuade officers from eating it.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Specific/Security/seclink.rsi
@@ -100,7 +100,7 @@
   parent: [BaseItem, StorePresetSeclink, BaseRestrictedContraband]
   id: BaseSeclinkRadio
   name: SecLink radio
-  description: Order your security equipment with this
+  description: Housing a miniature teleporter, you can use this to trade your SecLink Tokens for useful equipment! It's a little suspiciously familiar, but it's probably nothing to worry about.
   suffix: Empty
   components:
   - type: Sprite
