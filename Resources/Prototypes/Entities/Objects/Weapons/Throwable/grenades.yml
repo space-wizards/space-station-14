@@ -170,7 +170,7 @@
       - !type:TimerStartBehavior
     - trigger:
         !type:DamageTrigger
-        damage: 30
+        damage: 45
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -237,19 +237,6 @@
   parent: SupermatterGrenade
   id: WhiteholeGrenade
   components:
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
-      - !type:TimerStartBehavior
-    - trigger:
-        !type:DamageTrigger
-        damage: 30
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Sprite
     sprite: Objects/Weapons/Grenades/whiteholegrenade.rsi
   - type: OnUseTimerTrigger
@@ -381,7 +368,7 @@
       - !type:TimerStartBehavior
     - trigger:
         !type:DamageTrigger
-        damage: 30
+        damage: 45
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]

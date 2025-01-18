@@ -16,7 +16,7 @@
       - !type:TimerStartBehavior
     - trigger:
         !type:DamageTrigger
-        damage: 30
+        damage: 60
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
