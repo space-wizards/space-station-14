@@ -1,9 +1,9 @@
 <Document>
   # Supermatter Engine
 
-  The supermatter engine is an incredibly dangerous, volatile, and radioactive source of power. Without proper management, the supermatter chamber will fill with fire, arcs of lightning will spark, and eventually, an explosion will destroy the entire engineering department.
+  The supermatter engine is an incredibly dangerous, volatile, and radioactive source of power. Without careful management, the supermatter chamber will fill with fire, lightning will arc out, and, eventually, an explosion will obliterate Engineering.
 
-  But with proper care and handling, the supermatter can be an incredibly potent power source for the station. A basic setup will take care of most of the power load, but the supermatter crystal is affected strongly by gases in many different ways.
+  But with proper care and handling, the supermatter can be an incredibly potent power source for the station. While a basic setup will take care of the station's typical power load, the supermatter crystal is affected strongly by gases in many different ways — both beneficial and harmful.
 
   ## Precautions
 
@@ -11,21 +11,21 @@
 
   Before stepping into the supermatter chamber, there are a few things to keep in mind to avert disaster and personal harm.
 
-  • Do not power the crystal before the cooling loop has been set up. Do not touch the crystal. Do not walk into the crystal.
+  • Do not power the crystal before the cooling loop has been set up. [color=red]Do not touch the crystal. Do not walk into the crystal.[/color]
 
   • Wear radiation protection around the crystal at all times.
 
   • Do not stare directly into the crystal. Engineering goggles will prevent hallucinations.
 
-  • If you have to get close to the crystal, equip and enable magboots.
+  • If you must approach the crystal, equip and enable magboots.
 
   ## Supermatter Crystal
 
   <GuideEntityEmbed Entity="Supermatter" Caption=""/>
 
-  The supermatter crystal is the main focus of the supermatter engine. It slowly siphons and reacts with gases around it, while emitting incredibly harmful levels of radiation.
+  The supermatter crystal is the main focus of the supermatter engine. It slowly siphons and reacts with gases around it, while emitting incredibly harmful — but lucrative — levels of radiation.
 
-  When powered, usually by emitters, the intensity of its radiation will grow, as hot oxygen and plasma are released as waste product. To top it all off, anything that touches the crystal is instantly vaporized.
+  When powered — usually by emitters — the intensity of its radiation will grow, as hot oxygen and plasma are released as waste. To top it all off, [color=red]anything that touches the crystal is instantly vaporized[/color].
 
   ## Radiation Collectors
 
@@ -34,13 +34,13 @@
     <GuideEntityEmbed Entity="PlasmaTank"/>
   </Box>
 
-  To harness the radioactive potential of the crystal, radiations collectors are placed nearby. These connect to HV cables, generating power for the station.
+  To harness the radioactive potential of the crystal, radiation collectors are placed nearby. These connect to HV cables, generating power for the station.
 
-  Radiations collectors require a tank full of plasma gas to operate, which will need to be replaced every so often to maintain power output.
+  Radiation collectors require a filled tank of plasma gas to operate, which will need to be replaced periodically to maintain power generation.
 
   ## Cooling Loop
 
-  At the most fundamental level, the supermatter crystal is kept stable with a loop of atmospheric pipes. The chamber is filled with safe, cold gas, whilst any harmful or unwanted byproducts are filtered out of the system.
+  At the most fundamental level, the supermatter crystal is kept stable with a "loop" of atmospheric pipes. The chamber is filled with safe, cold gas, whilst any harmful or unwanted byproducts are filtered out of the system.
 
   <GuideEntityEmbed Entity="NitrogenCanister"/>
 
@@ -54,13 +54,13 @@
 
   To set up the cooling loop, anchor the nitrogen canisters to the input connector ports and enable the respective gas pumps. Follow the pipes, enabling gas pumps and filters as you go.
 
-  Be careful not to activate the gas pumps inside the interior chamber's airlocks before the full cooling loop is set up. A bypass gas pump is located outside the external airlock: use this to keep gas flowing as you work.
+  Be careful not to activate the gas pumps inside the interior chamber's airlocks before the full cooling loop is set up. A bypass gas pump is located outside the external airlock; use this to keep gas flowing as you work.
 
   At least one of the filters that feeds back into the loop should be set to filter nitrogen. This will keep the cooled nitrogen in the loop, ensuring the crystal is kept at safe parameters.
 
   <GuideEntityEmbed Entity="GasAnalyzer"/>
 
-  Once the full cooling loop has been set up, double check with a gas analyzer to make sure the gas is not trapped at any point in the system. Disable the bypass gas pump by the airlocks, enable the interior gas pumps, and configure the air alarm.
+  Once the full cooling loop has been set up, check with a gas analyzer to make sure the gas is not trapped at any point in the system. Disable the bypass gas pump by the airlocks, enable the interior gas pumps, and configure the air alarm.
 
   ## Air Alarm Configuration
 
@@ -83,7 +83,7 @@
 
   <GuideEntityEmbed Entity="Emitter"/>
 
-  Once the cooling loop is fully set up and the radiation collectors are filled, the supermatter engine is ready to be started up.
+  Once the cooling loop is fully set up and the radiation collectors are filled, the supermatter engine is ready to start up.
 
   Emitters are the most common way of kickstarting the supermatter and keeping its internal energy high. Interact with an emitter to toggle it on, and it will begin firing lasers at the crystal.
 
