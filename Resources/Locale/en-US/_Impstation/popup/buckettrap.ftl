@@ -1,1 +1,1 @@
-bucket-propped = You carefully prop the bucket atop of the door.
+bucket-propped = You carefully prop the bucket atop the door.
