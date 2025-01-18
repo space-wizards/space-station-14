@@ -1,7 +1,6 @@
 using Content.Server.ParcelWrap.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.ParcelWrap.Components;
@@ -12,7 +11,7 @@ namespace Content.Server.ParcelWrap.Components;
 /// </summary>
 /// <seealso cref="ParcelWrapComponent"/>
 [RegisterComponent, Access(typeof(ParcelWrappingSystem))]
-public sealed partial class WrappedParcelComponent : Component
+public sealed class WrappedParcelComponent : Component
 {
     /// <summary>
     /// The contents of this parcel.
@@ -20,6 +19,9 @@ public sealed partial class WrappedParcelComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public ContainerSlot Contents = default!;
 
+    /// <summary>
+    /// Specifies the entity to spawn when this parcel is unwrapped.
+    /// </summary>
     [DataField, ViewVariables]
     public ProtoId<EntityPrototype>? UnwrapTrash;
 
@@ -28,4 +30,9 @@ public sealed partial class WrappedParcelComponent : Component
     /// </summary>
     [DataField, ViewVariables]
     public SoundSpecifier? UnwrapSound;
+
+    /// <summary>
+    /// The ID of <see cref="Contents"/>.
+    /// </summary>
+    public const string ContainerId = "contents";
 }

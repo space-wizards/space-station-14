@@ -1,12 +1,10 @@
 using Content.Server.ParcelWrap.Components;
 using Content.Shared.Destructible;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Materials;
 using Content.Shared.ParcelWrap.Components;
-using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
@@ -21,17 +19,14 @@ namespace Content.Server.ParcelWrap.EntitySystems;
 /// </summary>
 /// <seealso cref="ParcelWrapComponent"/>
 /// <seealso cref="WrappedParcelComponent"/>
-public sealed class ParcelWrappingSystem : EntitySystem
+public sealed partial class ParcelWrappingSystem : EntitySystem
 {
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-
-    private const string WrappedParcelContainerId = "contents";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -48,94 +43,18 @@ public sealed class ParcelWrappingSystem : EntitySystem
         SubscribeLocalEvent<WrappedParcelComponent, GotReclaimedEvent>(OnDestroyed);
     }
 
-    private void OnAfterInteract(Entity<ParcelWrapComponent> entity, ref AfterInteractEvent args)
-    {
-        if (args.Handled ||
-            args.Target is not { } target ||
-            !args.CanReach ||
-            !IsWrappable(entity, target))
-            return;
-
-        WrapInternal(args.User, entity, target);
-
-        args.Handled = true;
-    }
-
-    private void OnGetVerbsForParcelWrap(Entity<ParcelWrapComponent> entity,
-        ref GetVerbsEvent<UtilityVerb> args)
-    {
-        if (!args.CanAccess || !IsWrappable(entity, args.Target))
-            return;
-
-        // "Capture" the values from `args` because C# doesn't like doing the capturing for `ref` values.
-        var user = args.User;
-        var target = args.Target;
-
-        // "Wrap" verb for when just left-clicking doesn't work.
-        args.Verbs.Add(new UtilityVerb
-        {
-            Text = Loc.GetString("parcel-wrap-verb-wrap"),
-            Act = () => WrapInternal(user, entity, target),
-        });
-    }
-
-    private void OnComponentInit(Entity<WrappedParcelComponent> entity, ref ComponentInit args)
-    {
-        entity.Comp.Contents = _container.EnsureContainer<ContainerSlot>(entity, WrappedParcelContainerId);
-    }
-
-    private void OnUseInHand(Entity<WrappedParcelComponent> entity, ref UseInHandEvent args)
-    {
-        if (args.Handled)
-        {
-            return;
-        }
-
-        UnwrapInternal(entity);
-        args.Handled = true;
-    }
-
-    private void OnGetVerbsForWrappedParcel(Entity<WrappedParcelComponent> entity,
-        ref GetVerbsEvent<InteractionVerb> args)
-    {
-        if (!args.CanAccess)
-            return;
-
-        args.Verbs.Add(new InteractionVerb
-        {
-            Text = Loc.GetString("parcel-wrap-verb-unwrap"),
-            Act = () => UnwrapInternal(entity),
-        });
-    }
-
-    private void OnDestroyed<T>(Entity<WrappedParcelComponent> parcel, ref T args)
-    {
-        // Unwrap the package and if something was in it, show a popup describing "wow something came out!"
-        if (UnwrapInternal(parcel) is { } contents)
-        {
-            var parcelId = Identity.Name(contents, EntityManager);
-            _popup.PopupPredicted(Loc.GetString("parcel-wrap-popup-parcel-destroyed", ("contents", contents)),
-                contents,
-                null,
-                PopupType.MediumCaution);
-        }
-    }
-
-    #region accessors
 
     /// <summary>
     /// Returns whether or not <paramref name="wrapper"/> can be used to wrap <paramref name="target"/>.
     /// </summary>
-    public bool IsWrappable(Entity<ParcelWrapComponent> wrapper, EntityUid target) =>
-        // Wrapping cannot wrap itself
-        wrapper.Owner != target &&
-        // Only wrap items
-        HasComp<ItemComponent>(target) &&
-        _whitelist.IsBlacklistFail(wrapper.Comp.Blacklist, target);
-
-    #endregion
-
-    #region internalImplementation
+    public bool IsWrappable(Entity<ParcelWrapComponent> wrapper, EntityUid target)
+    {
+        return
+            // Wrapping cannot wrap itself
+            wrapper.Owner != target &&
+            _whitelist.IsWhitelistPass(wrapper.Comp.Whitelist, target) &&
+            _whitelist.IsBlacklistFail(wrapper.Comp.Blacklist, target);
+    }
 
     /// <summary>
     /// Spawns a WrappedParcel containing <paramref name="target"/>.
@@ -146,13 +65,13 @@ public sealed class ParcelWrappingSystem : EntitySystem
     /// <returns>The newly created parcel. Returns null only in exceptional failure cases.</returns>
     private Entity<WrappedParcelComponent>? WrapInternal(EntityUid user, ParcelWrapComponent wrapper, EntityUid target)
     {
-        var spawned = Spawn("WrappedParcel", Transform(target).Coordinates);
+        var spawned = Spawn(wrapper.ParcelPrototype, Transform(target).Coordinates);
 
         // If this wrap maintains the size when wrapping, set the parcel's size to the target's size. Otherwise use the
         // wrap's fallback size.
         ItemComponent? targetItemComp = null;
         var size = wrapper.FallbackItemSize;
-        if (wrapper.WrappedItemsMaintainSize && Resolve(target, ref targetItemComp, logMissing: false))
+        if (wrapper.WrappedItemsMaintainSize && TryComp(target, out targetItemComp))
         {
             size = targetItemComp.Size;
         }
@@ -202,7 +121,7 @@ public sealed class ParcelWrappingSystem : EntitySystem
     /// </returns>
     private EntityUid? UnwrapInternal(Entity<WrappedParcelComponent> parcel)
     {
-        var parcelCoords = Comp<TransformComponent>(parcel).Coordinates;
+        var parcelCoords = Transform(parcel).Coordinates;
 
         var containedEntity = parcel.Comp.Contents.ContainedEntity;
         if (containedEntity is { } parcelContents)
@@ -231,6 +150,4 @@ public sealed class ParcelWrappingSystem : EntitySystem
 
         return containedEntity;
     }
-
-    #endregion
 }

@@ -1,8 +1,8 @@
 using Content.Shared.Item;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Containers;
 
 namespace Content.Server.ParcelWrap.Components;
 
@@ -14,6 +14,12 @@ namespace Content.Server.ParcelWrap.Components;
 [Access] // Readonly, except for VV editing
 public sealed partial class ParcelWrapComponent : Component
 {
+    /// <summary>
+    /// The <see cref="EntityPrototype"/> of the parcel created by using this component.
+    /// </summary>
+    [DataField(required: true), ViewVariables]
+    public ProtoId<EntityPrototype> ParcelPrototype = default!;
+
     /// <summary>
     /// If true, parcels created by this will have the same <see cref="ItemSizePrototype">size</see> as the item they
     /// contain. If false, parcels created by this will always have the size specified by <see cref="FallbackItemSize"/>.
@@ -42,7 +48,13 @@ public sealed partial class ParcelWrapComponent : Component
     public SoundSpecifier? WrapSound;
 
     /// <summary>
-    /// Defines the set of things which cannot be wrapped.
+    /// Defines the set of things which can be wrapped (unless it fails the <see cref="Blacklist"/>).
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// Defines the set of things which cannot be wrapped (even if it passes the <see cref="Whitelist"/>).
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public EntityWhitelist? Blacklist;
