@@ -10,13 +10,7 @@ public abstract partial class SharedStationAiSystem
 
     private void InitializeCustomization()
     {
-        SubscribeLocalEvent<StationAiCustomizationComponent, ComponentStartup>(OnHolographicAvatarStartup);
         SubscribeLocalEvent<StationAiCoreComponent, StationAiCustomizationMessage>(OnStationAiCustomization);
-    }
-
-    private void OnHolographicAvatarStartup(Entity<StationAiCustomizationComponent> entity, ref ComponentStartup args)
-    {
-        UpdateHolographicAvatar(entity);
     }
 
     private void OnStationAiCustomization(Entity<StationAiCoreComponent> entity, ref StationAiCustomizationMessage args)

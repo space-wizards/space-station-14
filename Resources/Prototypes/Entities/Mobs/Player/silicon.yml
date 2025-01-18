@@ -439,6 +439,9 @@
       StationAiCoreIconography: StationAiIconAi
       StationAiHolograms: StationAiHologramFemale
   - type: HolographicAvatar
+    layerData:
+    - sprite: Mobs/Silicon/holograms.rsi
+      state: ai_female
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
