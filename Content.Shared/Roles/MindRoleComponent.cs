@@ -65,6 +65,7 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     /// imp edit - the priority for this role to be assigned to "making" a purchase. mostly so we can distinguish between purchases as a traitor and purchases as a nukie
     /// </summary>
     [ViewVariables]
+    [DataField]
     public int PurchasePriority = 0;
 }
 
