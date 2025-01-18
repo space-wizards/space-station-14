@@ -1249,13 +1249,7 @@
     accentVColor: "#d7d7d0"
   - type: Icon
     state: pda-brigmedic
-  - type: CartridgeLoader
-    preinstalled:
-    - CrewManifestCartridge
-    - NotekeeperCartridge
-    - NewsReaderCartridge
-    - WantedListCartridge
-    - MedTekCartridge
+  # Do not add wanted list cartridge without consulting maintainers.
 
 - type: entity
   parent: ClownPDA

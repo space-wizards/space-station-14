@@ -1282,6 +1282,16 @@
   - EmergencyOxygenMedical
   - LoadoutSpeciesVoxNitrogen
 
+- type: loadoutGroup
+  id: SurvivalMedicalSecurity
+  name: loadout-group-survival-medical-security
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenMedicalSecurity
+  - EmergencyOxygenMedicalSecurity
+  - LoadoutSpeciesVoxNitrogen
+
 # Wildcards
 - type: loadoutGroup
   id: ReporterJumpsuit
@@ -1312,6 +1322,35 @@
   - BlueBoxingGloves
   - GreenBoxingGloves
   - YellowBoxingGloves
+
+- type: loadoutGroup
+  id: BrigmedicJumpsuit
+  name: loadout-group-brigmedic-jumpsuit
+  loadouts:
+    - BrigmedicJumpsuit
+    - BrigmedicJumpskirt
+
+- type: loadoutGroup
+  id: BrigmedicBackpack
+  name: loadout-group-brigmedic-backpack
+  loadouts:
+    - BrigmedicBackpack
+    - BrigmedicSatchel
+    - BrigmedicDuffel
+
+- type: loadoutGroup
+  id: BrigmedicOuterClothing
+  name: loadout-group-brigmedic-outerclothing
+  minLimit: 0
+  loadouts:
+    - BrigmedicOuterCoatAMG
+
+- type: loadoutGroup
+  id: BrigmedicHead
+  name: loadout-group-brigmedic-head
+  minLimit: 0
+  loadouts:
+  - BrigmedicBeret
 
 # Other
 - type: loadoutGroup
@@ -1350,3 +1389,12 @@
   hidden: true
   loadouts:
   - LoadoutSpeciesBreathToolSecurity
+
+- type: loadoutGroup
+  id: GroupSpeciesBreathToolMedicalSecurity
+  name: loadout-group-breath-tool
+  minLimit: 1
+  maxLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutSpeciesBreathToolMedicalSecurity

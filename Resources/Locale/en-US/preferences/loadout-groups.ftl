@@ -203,3 +203,8 @@ loadout-group-psychologist-jumpsuit = Psychologist jumpsuit
 
 loadout-group-boxer-jumpsuit = Boxer jumpsuit
 loadout-group-boxer-gloves = Boxer gloves
+
+loadout-group-brigmedic-jumpsuit = Brigmedic jumpsuit
+loadout-group-brigmedic-backpack = Brigmedic backpack
+loadout-group-brigmedic-outerclothing = Brigmedic outer clothing
+loadout-group-brigmedic-head = Brigmedic head

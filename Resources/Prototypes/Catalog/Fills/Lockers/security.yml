@@ -84,11 +84,11 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingEyesGlassesSecurity
-      - id: WeaponDisabler
+      - id: ClothingEyesHudMedical
+      # - id: WeaponDisabler # Powergaming issues
       - id: TrackingImplanter
         amount: 2
-      - id: ClothingOuterHardsuitBrigmedic
+      # Do not add the hardsuit to this locker! It causes powergaming issues.
       - id: BoxSterileMask
       - id: ClothingHeadHatBeretBrigmedic
       - id: ClothingOuterCoatAMG
@@ -98,13 +98,11 @@
         prob: 0.1
       - id: MedkitFilled
       - id: MedkitCombatFilled
-        prob: 0.6
       - id: MedkitAdvancedFilled
         prob: 0.4
       - id: MedkitOxygenFilled
         prob: 0.3
       - id: MedkitBruteFilled
-        prob: 0.3
       - id: MedkitToxinFilled
         prob: 0.3
       - id: MedkitBurnFilled

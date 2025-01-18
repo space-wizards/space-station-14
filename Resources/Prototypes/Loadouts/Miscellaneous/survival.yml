@@ -141,6 +141,25 @@
     back:
     - BoxSurvivalSecurityNitrogen
 
+# Medical Security
+- type: loadout
+  id: EmergencyOxygenMedicalSecurity
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  storage:
+    back:
+    - BoxSurvivalMedicalSecurity
+
+- type: loadout
+  id: EmergencyNitrogenMedicalSecurity
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  storage:
+    back:
+    - BoxSurvivalMedicalSecurityNitrogen
+
 # Syndicate
 - type: loadout
   id: EmergencyOxygenSyndicate
@@ -238,3 +257,11 @@
     proto: EffectSpeciesVox
   equipment:
     mask: ClothingMaskGasSecurity
+
+- type: loadout
+  id: LoadoutSpeciesBreathToolMedicalSecurity
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesVox
+  equipment:
+    mask: ClothingMaskBreathMedicalSecurity

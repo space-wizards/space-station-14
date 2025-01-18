@@ -220,7 +220,7 @@
 
 #Brigmedic Hardsuit
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseRestrictedContraband]
+  parent: [ClothingOuterHardsuitBase, BaseMedicalContraband]
   id: ClothingOuterHardsuitBrigmedic
   name: brigmedic hardsuit
   description: Special hardsuit of the guardian angel of the brig. It is the medical version of the security hardsuit.
@@ -235,9 +235,10 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.7
+        Blunt: 0.99
+        Slash: 0.99
+        Piercing: 0.99
+        Caustic: 0.7
   - type: ClothingSpeedModifier
     walkModifier: 0.65
     sprintModifier: 0.65

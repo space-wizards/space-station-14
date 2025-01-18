@@ -518,6 +518,19 @@
   - Trinkets
   - GroupSpeciesBreathTool
 
+- type: roleLoadout
+  id: JobBrigmedic
+  groups:
+  - GroupTankHarness
+  - BrigmedicJumpsuit
+  - BrigmedicBackpack
+  - BrigmedicOuterClothing
+  - BrigmedicHead
+  - MedicalGloves
+  - SurvivalMedicalSecurity
+  - Trinkets
+  - GroupSpeciesBreathToolMedicalSecurity
+
 # These loadouts are used for non-crew spawns, like off-station antags and event mobs
 # They will be used without player configuration, thus they will only ever apply what is forced by MinLimit
 

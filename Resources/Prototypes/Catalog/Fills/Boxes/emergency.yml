@@ -162,6 +162,46 @@
 
 - type: entity
   parent: BoxCardboard
+  id: BoxSurvivalMedicalSecurity
+  name: survival box
+  description: It's a box with basic internals inside.
+  suffix: Medical Security
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathMedicalSecurity
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: emergencytank
+
+- type: entity
+  parent: BoxSurvivalMedicalSecurity
+  id: BoxSurvivalMedicalSecurityNitrogen
+  suffix: Medical Security N2
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathMedicalSecurity
+    - id: EmergencyNitrogenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: nitrogentank
+  - type: Label
+    currentLabel: reagent-name-nitrogen
+
+- type: entity
+  parent: BoxCardboard
   id: BoxHug
   name: box of hugs
   description: A special box for sensitive people.
