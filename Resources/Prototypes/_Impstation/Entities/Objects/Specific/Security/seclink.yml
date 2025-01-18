@@ -68,7 +68,7 @@
   parent: [ BaseItem, BaseRestrictedContraband ]
   id: UtilityToken
   suffix: 3 UT
-  description: This is a Utility Token, used in the SecLink radio to purchase a utility option. Due to several hospitalization from "accidental" consumption, CentComm has given this token an artificial grape flavor to dissuade officers from eating it.
+  description: This is a Utility Token, used in the SecLink radio to purchase a utility option. Due to several hospitalization from "accidental" consumption, R&D has given this token an artificial grape flavor to dissuade officers from eating it.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Specific/Security/seclink.rsi
