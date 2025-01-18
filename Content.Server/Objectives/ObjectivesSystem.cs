@@ -203,15 +203,14 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                 }
             }
 
-            //imp edit - list the amount of currency this person spent & what they bought
+            //imp edit start - list the amount of currency this person spent & what they bought
             //if they bought nothing, check if they completed their objectives
             //so many loops........
 
             //these todos are future maybe fixes, not super necessary
-            //todo will want to figure out how to get the starting currency count for an antag
-                //this will need me to either set it in the mindRole (probably doable on antag creation?)
             //todo will want to do nukie / loneop spend readouts
 
+            //get the character's gender
             var genderString = "epicene"; //default to they/them'ing people
             if (TryComp<HumanoidAppearanceComponent>(mind.OwnedEntity!, out var appearance))
             {
@@ -255,7 +254,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                     agentSummary.Append(Loc.GetString("roundend-spend-summary-spent", ("gender", genderString)) + " ");
                     //list totals spent
                     //hardcoding english grammar into this probably isn't great but I don't think fluent can do lists?
-                    foreach (var costPair in costs)
+                    foreach (var costPair in costs) //technically can just get index 0 of the list because it should always have only 1 entry, but let's be safe
                     {
                         index++;
                         //if this is the last entry, do a full stop.
