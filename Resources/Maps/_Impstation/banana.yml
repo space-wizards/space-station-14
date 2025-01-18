@@ -1069,7 +1069,7 @@ entities:
             1: 32944
           -1,2:
             1: 59528
-            2: 273
+            4: 273
             0: 1092
           0,3:
             1: 15
@@ -1081,10 +1081,9 @@ entities:
             0: 257
             1: 12534
           1,-1:
-            0: 65528
+            0: 65532
           1,1:
             0: 3816
-            1: 24576
           2,0:
             0: 63351
           2,1:
@@ -1092,7 +1091,7 @@ entities:
           2,2:
             1: 53
           2,-1:
-            0: 30591
+            0: 30590
           0,-3:
             0: 20480
           0,-2:
@@ -1121,8 +1120,7 @@ entities:
           -5,-3:
             0: 28670
           -4,-2:
-            0: 48057
-            4: 2
+            0: 48059
           -4,-1:
             0: 62711
           -4,0:
@@ -1141,7 +1139,7 @@ entities:
             0: 45038
           -2,-1:
             0: 61440
-            5: 1632
+            2: 1632
           -2,0:
             0: 3839
           -2,-3:
@@ -1179,7 +1177,7 @@ entities:
             0: 36863
           -2,2:
             0: 823
-            2: 2184
+            4: 2184
           -2,3:
             1: 994
           -8,0:
@@ -1193,13 +1191,13 @@ entities:
             0: 52224
           -8,1:
             0: 7677
-            6: 16384
+            5: 16384
           -9,1:
             0: 56829
           -8,2:
             0: 49153
             1: 12544
-            6: 68
+            5: 68
           -9,2:
             0: 29
             1: 61184
@@ -1212,9 +1210,9 @@ entities:
             0: 30719
           -7,1:
             0: 18431
-            7: 4096
+            6: 4096
           -7,2:
-            7: 17
+            6: 17
             0: 5120
             1: 57344
           -7,3:
@@ -1313,8 +1311,7 @@ entities:
             0: 63232
             1: 143
           -7,-5:
-            0: 1008
-            4: 1024
+            0: 2032
           -6,-7:
             1: 44800
           -6,-6:
@@ -1361,55 +1358,40 @@ entities:
           - 0
           - 0
         - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 103.92799
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 103.92799
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
           temperature: 235
           moles:
           - 21.824879
           - 82.10312
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 103.92799
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.14975
-          moles:
-          - 20.078888
-          - 75.53487
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 103.92799
           - 0
           - 0
           - 0
@@ -7692,13 +7674,6 @@ entities:
           showEnts: False
           occludes: True
           ent: null
-- proto: CrateNPCHamlet
-  entities:
-  - uid: 2968
-    components:
-    - type: Transform
-      pos: -18.5,-18.5
-      parent: 2
 - proto: CratePirate
   entities:
   - uid: 1081
@@ -7841,6 +7816,18 @@ entities:
       parent: 2
     - type: NavMapBeacon
       text: Shuttle Bay
+  - uid: 2971
+    components:
+    - type: Transform
+      pos: 6.5,5.5
+      parent: 2
+- proto: DefaultStationBeaconArrivals
+  entities:
+  - uid: 2970
+    components:
+    - type: Transform
+      pos: 9.5,0.5
+      parent: 2
 - proto: DefaultStationBeaconBar
   entities:
   - uid: 1095
@@ -7940,6 +7927,13 @@ entities:
     components:
     - type: Transform
       pos: -4.5,5.5
+      parent: 2
+- proto: DefaultStationBeaconMailroomCourier
+  entities:
+  - uid: 2968
+    components:
+    - type: Transform
+      pos: 7.5,-6.5
       parent: 2
 - proto: DefaultStationBeaconMedbay
   entities:
