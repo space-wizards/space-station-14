@@ -140,7 +140,7 @@
   name: cobra
   parent: [ BaseWeaponPistol, Tier3Contraband ]
   id: WeaponPistolCobra
-  description: A rugged, integrally-suppressed handgun. Perfect for the robust operator who wants to leave no trace. Uses .25 caseless ammo.
+  description: A rugged, integrally-suppressed handgun. Perfect for the robust operator who wants to leave no trace. Uses .25 caseless ammo. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
@@ -189,7 +189,7 @@
   name: mk 58
   parent: [BaseWeaponPistol, BaseRestrictedContraband]
   id: WeaponPistolMk58
-  description: A cheap, ubiquitous sidearm produced by a NanoTrasen subsidiary. It does its job without any hassle. Uses .35 auto ammo.
+  description: A cheap, ubiquitous sidearm produced by a NanoTrasen subsidiary. It does its job without any hassle. Uses .35 auto ammo. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
