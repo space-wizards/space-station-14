@@ -26,8 +26,8 @@
         amount: 2
       - id: ClothingHeadsetWarden
       - id: ClothingOuterHardsuitBrigmedic
-      - id: BoxToken
-      - id: Stunbaton
+      - id: BoxToken #imp
+      - id: BaseSeclinkRadio #imp
 
 - type: entity
   id: LockerWardenFilled
@@ -58,7 +58,7 @@
       - id: ClothingHeadsetWarden
       - id: TicketPad #imp special
       - id: BoxToken #imp
-      - id: Stunbaton #imp temporary until seclink gets more toys
+      - id: BaseSeclinkRadio #imp
 
 - type: entity
   id: LockerSecurityFilled
@@ -88,7 +88,7 @@
       - id: BookSpaceLaw
         prob: 0.5
       - id: TicketPad #imp special
-      - id: BaseSeclinkRadio
+      - id: BaseSeclinkRadio #imp
 
 - type: entity
   id: LockerBrigmedicFilled
@@ -125,7 +125,7 @@
       - id: ClothingNeckCloakMoth #bzzz Moth-pocalypse
         prob: 0.15
       - id: TicketPad #imp special
-      - id: BaseSeclinkRadio
+      - id: BaseSeclinkRadio #imp
 
 - type: entity
   id: LockerDetectiveFilled
