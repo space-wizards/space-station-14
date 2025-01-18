@@ -10471,6 +10471,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: -12.5,-258.5
       parent: 2
+  - uid: 2320
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -5.5,-289.5
+      parent: 2
   - uid: 2513
     components:
     - type: Transform
@@ -20218,7 +20224,7 @@ entities:
   - uid: 2316
     components:
     - type: Transform
-      pos: -5.5,-277.5
+      pos: 1.5,-272.5
       parent: 2
   - uid: 2317
     components:
@@ -20234,11 +20240,6 @@ entities:
     components:
     - type: Transform
       pos: -5.5,-280.5
-      parent: 2
-  - uid: 2320
-    components:
-    - type: Transform
-      pos: -5.5,-281.5
       parent: 2
   - uid: 2321
     components:
@@ -25054,6 +25055,16 @@ entities:
     components:
     - type: Transform
       pos: -3.5,-7.5
+      parent: 2
+  - uid: 18986
+    components:
+    - type: Transform
+      pos: -5.5,-288.5
+      parent: 2
+  - uid: 18987
+    components:
+    - type: Transform
+      pos: -5.5,-289.5
       parent: 2
 - proto: CableApcStack
   entities:
@@ -33298,6 +33309,56 @@ entities:
     components:
     - type: Transform
       pos: -3.5,-7.5
+      parent: 2
+  - uid: 18969
+    components:
+    - type: Transform
+      pos: -5.5,-280.5
+      parent: 2
+  - uid: 18977
+    components:
+    - type: Transform
+      pos: -5.5,-281.5
+      parent: 2
+  - uid: 18978
+    components:
+    - type: Transform
+      pos: -5.5,-282.5
+      parent: 2
+  - uid: 18979
+    components:
+    - type: Transform
+      pos: -5.5,-283.5
+      parent: 2
+  - uid: 18980
+    components:
+    - type: Transform
+      pos: -5.5,-285.5
+      parent: 2
+  - uid: 18981
+    components:
+    - type: Transform
+      pos: -5.5,-286.5
+      parent: 2
+  - uid: 18982
+    components:
+    - type: Transform
+      pos: -5.5,-287.5
+      parent: 2
+  - uid: 18983
+    components:
+    - type: Transform
+      pos: -5.5,-288.5
+      parent: 2
+  - uid: 18984
+    components:
+    - type: Transform
+      pos: -5.5,-289.5
+      parent: 2
+  - uid: 18985
+    components:
+    - type: Transform
+      pos: -5.5,-284.5
       parent: 2
 - proto: CableMVStack
   entities:

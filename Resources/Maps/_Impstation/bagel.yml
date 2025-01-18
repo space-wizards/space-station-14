@@ -33457,6 +33457,51 @@ entities:
     - type: Transform
       pos: 59.5,12.5
       parent: 2
+  - uid: 25695
+    components:
+    - type: Transform
+      pos: 52.5,17.5
+      parent: 2
+  - uid: 25696
+    components:
+    - type: Transform
+      pos: 53.5,17.5
+      parent: 2
+  - uid: 25706
+    components:
+    - type: Transform
+      pos: 54.5,17.5
+      parent: 2
+  - uid: 25708
+    components:
+    - type: Transform
+      pos: 55.5,17.5
+      parent: 2
+  - uid: 25709
+    components:
+    - type: Transform
+      pos: 48.5,18.5
+      parent: 2
+  - uid: 25710
+    components:
+    - type: Transform
+      pos: 47.5,18.5
+      parent: 2
+  - uid: 25711
+    components:
+    - type: Transform
+      pos: 49.5,18.5
+      parent: 2
+  - uid: 25712
+    components:
+    - type: Transform
+      pos: 50.5,18.5
+      parent: 2
+  - uid: 25713
+    components:
+    - type: Transform
+      pos: 48.5,16.5
+      parent: 2
 - proto: CableApcStack
   entities:
   - uid: 4261
@@ -137886,6 +137931,17 @@ entities:
       - SurveillanceCameraSupply
       nameSet: True
       id: Cargo Bay
+  - uid: 25686
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 56.5,18.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSupply
+      nameSet: True
+      id: Courier Locker Room
 - proto: SurveillanceCameraWirelessRouterConstructed
   entities:
   - uid: 20866

@@ -126859,6 +126859,28 @@ entities:
       parent: 2
     - type: SurveillanceCamera
       id: Docking Airlocks
+  - uid: 22312
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 18.5,15.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSupply
+      nameSet: True
+      id: Mail Room
+  - uid: 22313
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 21.5,19.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSupply
+      nameSet: True
+      id: Mail Locker Room
   - uid: 22472
     components:
     - type: Transform

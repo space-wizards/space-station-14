@@ -6452,18 +6452,18 @@ entities:
             2: 34952
           6,-6:
             2: 61440
-            6: 224
+            4: 224
           6,-5:
             0: 112
             2: 2184
           6,-8:
             3: 224
-            4: 57344
-          6,-7:
-            4: 224
             5: 57344
+          6,-7:
+            5: 224
+            6: 57344
           6,-9:
-            4: 57568
+            5: 57568
           7,-5:
             2: 4080
           7,-8:
@@ -6895,7 +6895,7 @@ entities:
           3,16:
             2: 242
           12,11:
-            4: 2
+            5: 2
           14,9:
             2: 39304
             0: 17476
@@ -7569,6 +7569,21 @@ entities:
           temperature: 293.15
           moles:
           - 0
+          - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
           - 0
           - 0
           - 0
@@ -7585,21 +7600,6 @@ entities:
           moles:
           - 6666.982
           - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 6666.982
           - 0
           - 0
           - 0
@@ -8084,6 +8084,8 @@ entities:
       - 10236
       - 13736
       - 13539
+      - 998
+      - 8203
   - uid: 37
     components:
     - type: Transform
@@ -12372,6 +12374,9 @@ entities:
     - type: Transform
       pos: 16.5,-4.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 22238
   - uid: 603
     components:
     - type: Transform
@@ -64417,6 +64422,19 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 10.5,-2.5
       parent: 2
+    - type: DeviceList
+      devices:
+      - 10237
+      - 10238
+      - 10275
+      - 601
+      - 10212
+      - 10235
+      - 10236
+      - 13736
+      - 13539
+      - 998
+      - 8203
 - proto: FireAxeCabinetFilled
   entities:
   - uid: 10070
@@ -64883,6 +64901,8 @@ entities:
       deviceLists:
       - 19261
       - 16380
+      - 35
+      - 22238
   - uid: 8203
     components:
     - type: Transform
@@ -64892,6 +64912,8 @@ entities:
       deviceLists:
       - 19261
       - 16380
+      - 35
+      - 22238
   - uid: 10136
     components:
     - type: Transform
@@ -65336,6 +65358,9 @@ entities:
     - type: Transform
       pos: 13.5,-8.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 22238
   - uid: 10213
     components:
     - type: Transform
@@ -65481,21 +65506,33 @@ entities:
     - type: Transform
       pos: 12.5,-8.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 22238
   - uid: 10236
     components:
     - type: Transform
       pos: 11.5,-8.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 22238
   - uid: 10237
     components:
     - type: Transform
       pos: 16.5,-0.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 22238
   - uid: 10238
     components:
     - type: Transform
       pos: 17.5,-0.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 22238
   - uid: 10239
     components:
     - type: Transform
@@ -65785,6 +65822,9 @@ entities:
     - type: Transform
       pos: 18.5,-1.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 22238
   - uid: 10277
     components:
     - type: Transform
@@ -90632,6 +90672,9 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 14.5,-4.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 22238
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 13540
@@ -92475,6 +92518,9 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 12.5,-4.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 22238
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 13737
@@ -124788,6 +124834,17 @@ entities:
       - SurveillanceCameraGeneral
       nameSet: True
       id: Main Hall Botany
+  - uid: 23179
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 11.5,-13.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Hallway to Engineering
 - proto: SurveillanceCameraMedical
   entities:
   - uid: 19040
@@ -125566,6 +125623,16 @@ entities:
       - SurveillanceCameraSupply
       nameSet: True
       id: Cargo Dock 1
+  - uid: 23178
+    components:
+    - type: Transform
+      pos: 18.5,-11.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSupply
+      nameSet: True
+      id: Mail
 - proto: SurveillanceCameraWirelessRouterEntertainment
   entities:
   - uid: 19117

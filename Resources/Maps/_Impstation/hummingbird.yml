@@ -134923,6 +134923,17 @@ entities:
       - SurveillanceCameraSupply
       nameSet: True
       id: Cargo Bay
+  - uid: 24442
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 85.5,-46.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSupply
+      nameSet: True
+      id: Mail
 - proto: SurveillanceCameraWirelessRouterEntertainment
   entities:
   - uid: 20324
@@ -156137,7 +156148,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -165370.47
+      secondsUntilStateChange: -165422.47
       state: Opening
     - type: Airlock
       autoClose: False
