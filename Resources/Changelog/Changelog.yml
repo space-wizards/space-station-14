@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: yuitop
-  changes:
-  - message: Fixed some cases when surveillance camera's red light not turning off
-      when needed
-    type: Fix
-  id: 7327
-  time: '2024-09-09T19:23:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31831
 - author: Blackern5000
   changes:
   - message: Normal and reinforced windows have been made directly upgradable using
@@ -3919,3 +3911,10 @@
   id: 7826
   time: '2025-01-18T16:58:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33451
+- author: Minemoder
+  changes:
+  - message: The chemical locker now has a 10u vial of plasma.
+    type: Add
+  id: 7827
+  time: '2025-01-18T18:27:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33871
