@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: All bots are available for disguise with the Chameleon Ppotlight
-    type: Tweak
-  id: 7324
-  time: '2024-09-09T19:18:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32006
 - author: DieselMohawk
   changes:
   - message: Added Security Trooper Uniform
@@ -3921,3 +3914,10 @@
   id: 7823
   time: '2025-01-17T17:26:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34480
+- author: ArtisticRoomba, miamioni
+  changes:
+  - message: The Space Lizard plushie can now be worn on top of your head.
+    type: Add
+  id: 7824
+  time: '2025-01-18T09:02:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33809
