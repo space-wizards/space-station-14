@@ -210,7 +210,7 @@
     Gold:
       amount: 10
     Frostoil:
-      amount: 10
+      amount: 5
   effects:
     - !type:CreateEntityReactionEffect
       entity: IngotGold1
@@ -223,7 +223,7 @@
     Silver:
       amount: 10
     Frostoil:
-      amount: 10
+      amount: 5
   effects:
     - !type:CreateEntityReactionEffect
       entity: IngotSilver1
