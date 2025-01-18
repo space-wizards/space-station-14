@@ -625,7 +625,7 @@
 
 - type: stack
   id: FloorTileAstroAsteroidSand
-  name: asteroid sand floor tile
+  name: asteroid astro-sand floor
   spawn: FloorTileItemAstroAsteroidSand
   maxCount: 30
 
