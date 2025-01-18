@@ -16747,7 +16747,7 @@ entities:
   - uid: 17566
     components:
     - type: Transform
-      pos: 83.5631,-46.211452
+      pos: 83.138054,-43.418385
       parent: 2
 - proto: BoxFlashbang
   entities:
@@ -68675,6 +68675,13 @@ entities:
       parent: 2
     - type: FaxMachine
       name: QM's Office
+  - uid: 24440
+    components:
+    - type: Transform
+      pos: 83.5,-46.5
+      parent: 2
+    - type: FaxMachine
+      name: Mail Room
 - proto: FaxMachineCaptain
   entities:
   - uid: 11142
@@ -114747,12 +114754,12 @@ entities:
   - uid: 24426
     components:
     - type: Transform
-      pos: 83.35143,-46.430202
+      pos: 82.74743,-46.27776
       parent: 2
   - uid: 24427
     components:
     - type: Transform
-      pos: 83.55456,-46.508327
+      pos: 82.84118,-46.324635
       parent: 2
 - proto: PaperBin20
   entities:
@@ -115092,7 +115099,7 @@ entities:
   - uid: 24425
     components:
     - type: Transform
-      pos: 83.08581,-46.383327
+      pos: 82.450554,-46.49651
       parent: 2
 - proto: PenCap
   entities:
@@ -116057,6 +116064,13 @@ entities:
     components:
     - type: Transform
       pos: 51.5,-16.5
+      parent: 2
+- proto: PosterLegitWalk
+  entities:
+  - uid: 24441
+    components:
+    - type: Transform
+      pos: 81.5,-47.5
       parent: 2
 - proto: PottedPlant10
   entities:
@@ -156123,7 +156137,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -165222.22
+      secondsUntilStateChange: -165370.47
       state: Opening
     - type: Airlock
       autoClose: False
