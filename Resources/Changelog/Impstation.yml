@@ -1,51 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: A completely unremarkable new plushie. Feel free to ignore it.
-    type: Add
-  id: 461
-  time: '2024-11-06T03:56:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/621
-- author: DinnerCalzone
-  changes:
-  - message: Updated Atlas to make it less bad, added back into rotation.
-    type: Add
-  id: 462
-  time: '2024-11-06T03:58:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/619
-- author: DinnerCalzone
-  changes:
-  - message: (Hummingbird Station) The button in robotics is now properly linked to
-      the shutters.
-    type: Fix
-  - message: (Hummingbird Station) The air vent and scrubber in the newsroom are now
-      connected to distro and waste.
-    type: Fix
-  - message: (Hummingbird Station) Added a number of Impstation drinks around the
-      station.
-    type: Add
-  - message: (Hummingbird Station) Toilets are now hooked up to disposals pipes (this
-      does not include the one in perma.)
-    type: Add
-  - message: (Hummingbird Station) Added a sink the the paramedic's office and virology
-    type: Add
-  - message: (Hummingbird Station) Added maints access to tools, cryosleep, dorms
-      common area, the ring, and xenoarchaeology,
-    type: Add
-  - message: (Hummingbird Station) Shrunk HoP's office by one tile and adjusted nearby
-      maints and eva storage.
-    type: Tweak
-  - message: (Hummingbird Station) Shrunk psychologist's office by one tile, shrunk
-      service break room, and adjusted nearby maints.
-    type: Tweak
-  - message: (Hummingbird Station) Shrunk paramedic's office by one tile.
-    type: Tweak
-  - message: (Hummingbird Station) The security break room is now limited to security
-      access instead of brig access. Lawyers can no longer take your donuts.
-    type: Tweak
-  id: 463
-  time: '2024-11-06T03:58:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/620
 - author: sususuyo
   changes:
   - message: Added one new track to the jukebox and lobby
@@ -4494,3 +4447,25 @@
   id: 960
   time: '2025-01-18T04:23:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1413
+- author: Saeko-44
+  changes:
+  - message: The ability to prop a bucket on top of doors to drop and spill its content
+      on unsuspecting dooropeners
+    type: Add
+  id: 961
+  time: '2025-01-18T10:24:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1406
+- author: kipdotnet
+  changes:
+  - message: Fixed Couriers spawning without a headset.
+    type: Fix
+  id: 962
+  time: '2025-01-18T10:25:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1415
+- author: kipdotnet
+  changes:
+  - message: Banana has been updated!
+    type: Tweak
+  id: 963
+  time: '2025-01-18T10:25:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1414
