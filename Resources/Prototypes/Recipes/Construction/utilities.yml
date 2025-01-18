@@ -612,12 +612,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump.rsi
+    sprite: GreyStation/Structures/Piping/Atmospherics/pump.rsi # GreyStation - Resprite
     state: pumpManualValve
   layers:
   - sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump.rsi
+  - sprite: GreyStation/Structures/Piping/Atmospherics/pump.rsi # GreyStation - Resprite
     state: pumpManualValve
   conditions:
     - !type:NoUnstackableInTile
