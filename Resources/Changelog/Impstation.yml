@@ -1,43 +1,4 @@
 ﻿Entries:
-- author: Drags-His-Tail
-  changes:
-  - message: Lizards can eat rats and drink blood again. Yay.
-    type: Fix
-  id: 456
-  time: '2024-11-06T02:03:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/630
-- author: DinnerCalzone
-  changes:
-  - message: BROS now play their death sound when they die.
-    type: Add
-  - message: BROS now audibly gasp when suffocating.
-    type: Add
-  - message: Player-controlled BROS will now audibly UNGH when performing a vocal
-      emote.
-    type: Add
-  - message: Edited BROS sound files to remove harsh popping at the end of their audio
-      tracks. Don't worry, they still sound like shit.
-    type: Tweak
-  id: 457
-  time: '2024-11-06T02:05:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/627
-- author: Sha-Seng
-  changes:
-  - message: ticketpad is now folder-sized in inventory
-    type: Fix
-  id: 458
-  time: '2024-11-06T02:06:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/618
-- author: KingMudkipIII
-  changes:
-  - message: Added the emergency laser rifle crate, for when getting timely clearance
-      isn't an option.
-    type: Add
-  - message: The laser rifle now has an energy cost of 50 per shot, down from 62.5.
-    type: Tweak
-  id: 459
-  time: '2024-11-06T02:18:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/628
 - author: DinnerCalzone
   changes:
   - message: Added human vocal sounds as placeholders to species that are missing
@@ -4507,3 +4468,32 @@
   id: 955
   time: '2025-01-17T18:00:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1405
+- author: formlessnameless
+  changes:
+  - message: Traitors no longer have to kill and save the same people sometimes.
+    type: Fix
+  id: 956
+  time: '2025-01-17T22:24:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1409
+- author: formlessnameless
+  changes:
+  - message: Antagonist selection now happens before job selection.
+    type: Tweak
+  id: 957
+  time: '2025-01-17T23:07:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1059
+- author: TheGrimbeeper
+  changes:
+  - message: Minimum luminosity for solution text when examining it. Should stop vent
+      crud/zombie blood/etc from blending in.
+    type: Tweak
+  id: 958
+  time: '2025-01-18T01:30:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1412
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: New sprites for the Stun Baton
+    type: Tweak
+  id: 959
+  time: '2025-01-18T01:33:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1391

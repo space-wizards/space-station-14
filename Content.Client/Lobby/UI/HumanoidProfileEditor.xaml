@@ -119,6 +119,11 @@
                     </ScrollContainer>
                 </BoxContainer>
                 <BoxContainer Orientation="Vertical" Margin="10">
+                    <!-- Antag roll reminder, imp edit -->
+                    <BoxContainer Orientation="Vertical">
+                        <RichTextLabel Text="{Loc 'humanoid-profile-editor-antag-roll-reminder-top'}" />
+                        <RichTextLabel Text="{Loc 'humanoid-profile-editor-antag-roll-reminder-bottom'}" />
+                    </BoxContainer>
                     <!-- Antags -->
                     <ScrollContainer VerticalExpand="True">
                         <BoxContainer Name="AntagList" Orientation="Vertical" />
