@@ -100,3 +100,15 @@
   color: 3a758c
   reagent: Frezon
   pricePerMole: 0.3
+
+- type: gas
+  id: 9
+  name: dark-matter-gas
+  specificHeat: 150
+  heatCapacityRatio: 1.5
+  molarMass: 0
+  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
+  gasOverlayState: darkmatter
+  color: 000000
+  reagent: DarkMatter
+  pricePerMole: 0
