@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: KingMudkipIII
-  changes:
-  - message: Added the emergency laser rifle crate, for when getting timely clearance
-      isn't an option.
-    type: Add
-  - message: The laser rifle now has an energy cost of 50 per shot, down from 62.5.
-    type: Tweak
-  id: 459
-  time: '2024-11-06T02:18:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/628
 - author: DinnerCalzone
   changes:
   - message: Added human vocal sounds as placeholders to species that are missing
@@ -4500,3 +4490,10 @@
   id: 958
   time: '2025-01-18T01:30:02.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1412
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: New sprites for the Stun Baton
+    type: Tweak
+  id: 959
+  time: '2025-01-18T01:33:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1391
