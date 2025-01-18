@@ -176,7 +176,7 @@
   components:
     # TODO ATMOS: Give unique sprite.
     - type: Sprite
-      sprite: Structures/Piping/Atmospherics/pump.rsi
+      sprite: GreyStation/Structures/Piping/Atmospherics/pump.rsi # GreyStation - Resprite
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeStraight
