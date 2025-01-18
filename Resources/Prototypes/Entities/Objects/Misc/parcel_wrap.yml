@@ -8,7 +8,7 @@
     sprite: Objects/Misc/ParcelWrap/parcel_wrap.rsi
     state: brown
   - type: ParcelWrap
-    ParcelPrototype: WrappedParcel
+    parcelPrototype: WrappedParcel
     wrapSound: /Audio/Items/Handcuffs/rope_start.ogg
     whitelist:
       components:

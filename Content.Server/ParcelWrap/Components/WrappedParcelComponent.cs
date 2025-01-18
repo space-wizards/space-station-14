@@ -11,7 +11,7 @@ namespace Content.Server.ParcelWrap.Components;
 /// </summary>
 /// <seealso cref="ParcelWrapComponent"/>
 [RegisterComponent, Access(typeof(ParcelWrappingSystem))]
-public sealed class WrappedParcelComponent : Component
+public sealed partial class WrappedParcelComponent : Component
 {
     /// <summary>
     /// The contents of this parcel.

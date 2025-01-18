@@ -18,7 +18,7 @@ public sealed partial class ParcelWrapComponent : Component
     /// The <see cref="EntityPrototype"/> of the parcel created by using this component.
     /// </summary>
     [DataField(required: true), ViewVariables]
-    public ProtoId<EntityPrototype> ParcelPrototype = default!;
+    public EntProtoId ParcelPrototype = default!;
 
     /// <summary>
     /// If true, parcels created by this will have the same <see cref="ItemSizePrototype">size</see> as the item they
