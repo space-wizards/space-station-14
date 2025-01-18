@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: The emergency shuttle will now wait at the station longer if it couldn't
-      dock at evac.
-    type: Tweak
-  id: 7322
-  time: '2024-09-09T18:10:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31496
-- author: Boaz1111
-  changes:
-  - message: Pacifists can now use grapple guns.
-    type: Tweak
-  id: 7323
-  time: '2024-09-09T19:15:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32014
-- author: lzk228
-  changes:
-  - message: All bots are available for disguise with the Chameleon Ppotlight
-    type: Tweak
-  id: 7324
-  time: '2024-09-09T19:18:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32006
 - author: DieselMohawk
   changes:
   - message: Added Security Trooper Uniform
@@ -3922,3 +3900,24 @@
   id: 7821
   time: '2025-01-16T20:49:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34197
+- author: southbridge-fur
+  changes:
+  - message: Pride-O-Mats now have scarves instead of cloaks
+    type: Tweak
+  id: 7822
+  time: '2025-01-17T11:35:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34448
+- author: Toby222
+  changes:
+  - message: Update nix flake to use current nixpkgs release
+    type: Fix
+  id: 7823
+  time: '2025-01-17T17:26:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34480
+- author: ArtisticRoomba, miamioni
+  changes:
+  - message: The Space Lizard plushie can now be worn on top of your head.
+    type: Add
+  id: 7824
+  time: '2025-01-18T09:02:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33809
