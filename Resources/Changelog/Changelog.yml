@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DieselMohawk
-  changes:
-  - message: Added Security Trooper Uniform
-    type: Add
-  id: 7325
-  time: '2024-09-09T19:19:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31997
 - author: qwerltaz
   changes:
   - message: Dragon ghost role now spawns outside the station.
@@ -3921,3 +3914,10 @@
   id: 7824
   time: '2025-01-18T09:02:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33809
+- author: Spacemann
+  changes:
+  - message: Station cameras can now be destroyed by bullets.
+    type: Add
+  id: 7825
+  time: '2025-01-18T13:41:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34500
