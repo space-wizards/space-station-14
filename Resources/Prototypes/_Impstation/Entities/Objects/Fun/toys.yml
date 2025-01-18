@@ -235,9 +235,13 @@
 
 - type: entity
   id: HomeDepotCockHero
+  categories: [HideSpawnMenu]
   name: Homer
   description: SEE YOU NEXT WEEK
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Fun/homer.rsi
     state: icon
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepExplosion
