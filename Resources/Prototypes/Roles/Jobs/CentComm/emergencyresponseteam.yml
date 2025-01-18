@@ -240,7 +240,7 @@
     - RCDAmmo
     - RCDAmmo
     - SheetSteel
-    - CableApcStackaw
+    - CableApcStack
     - CableMVStack
     - MagazinePistol
     - SheetGlass
@@ -426,11 +426,11 @@
     - GrenadeFlashBang
     - MedkitCombatFilled
     - JawsOfLife
-    - C4
-    - C4
-    - C4
-    - C4
-    - C4
+    - C4NT
+    - C4NT
+    - C4NT
+    - C4NT
+    - C4NT
     - CombatKnife
     belt:
     - Stunbaton
