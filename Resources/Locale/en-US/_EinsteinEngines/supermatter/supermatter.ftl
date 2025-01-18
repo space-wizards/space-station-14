@@ -41,6 +41,14 @@ supermatter-announcement-cc-tamper =
     Engineering department, report to the supermatter engine immediately.
 
 supermatter-collide =
-    {CAPITALIZE(THE($target))} slams into the {$sm}!
+    {CAPITALIZE(THE($target))} slams into {THE($sm)}!
 supermatter-collide-mob =
     {CAPITALIZE(THE($target))}'s body flashes into dust!
+supermatter-collide-insert =
+    {CAPITALIZE(THE($target))} touches {THE($sm)} with {THE($item)} and it flashes into dust!
+supermatter-collide-insert-user =
+    You touch {THE($sm)} with {THE($item)} and it flashes into dust!
+supermatter-collide-insert-unremoveable =
+    {CAPITALIZE(THE($target))} touches {THE($sm)} with {THE($item)} and flashes into dust!
+supermatter-collide-insert-unremoveable-user =
+    You touch {THE($sm)} with {THE($item)} and flash into dust!

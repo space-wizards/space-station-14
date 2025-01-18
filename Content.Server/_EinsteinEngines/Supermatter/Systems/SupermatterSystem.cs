@@ -21,6 +21,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
@@ -32,6 +33,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -192,30 +194,76 @@ public sealed partial class SupermatterSystem : EntitySystem
         AddComp<SupermatterImmuneComponent>(target);
 
         _chatManager.SendAdminAlert($"{EntityManager.ToPrettyString(uid):uid} has consumed {EntityManager.ToPrettyString(target):target}");
+        _adminLog.Add(LogType.EntityDelete, LogImpact.High, $"{EntityManager.ToPrettyString(target):target} touched {EntityManager.ToPrettyString(uid):uid} and was destroyed at {Transform(uid).Coordinates:coordinates}");
         EntityManager.SpawnEntity(sm.CollisionResultPrototype, Transform(target).Coordinates);
         EntityManager.QueueDeleteEntity(target);
 
         args.Handled = true;
     }
 
-    private void LogFirstPower(EntityUid uid, SupermatterComponent sm, EntityUid target)
-    {
-        _adminLog.Add(LogType.Unknown, LogImpact.Extreme, $"{EntityManager.ToPrettyString(uid):uid} was powered for the first time by {EntityManager.ToPrettyString(target):target} at {Transform(uid).Coordinates:coordinates}");
-        _chatManager.SendAdminAlert($"{EntityManager.ToPrettyString(uid):uid} was powered for the first time by {EntityManager.ToPrettyString(target):target}");
-        sm.HasBeenPowered = true;
-    }
-
-    private void LogFirstPower(EntityUid uid, SupermatterComponent sm, GasMixture gas)
-    {
-        _adminLog.Add(LogType.Unknown, LogImpact.Extreme, $"{EntityManager.ToPrettyString(uid):uid} was powered for the first time by gas mixture at {Transform(uid).Coordinates:coordinates}");
-        _chatManager.SendAdminAlert($"{EntityManager.ToPrettyString(uid):uid} was powered for the first time by gas mixture");
-        sm.HasBeenPowered = true;
-    }
-
     private void OnItemInteract(EntityUid uid, SupermatterComponent sm, ref InteractUsingEvent args)
     {
+        var target = args.User;
+        var item = args.Used;
+        var othersFilter = Filter.Pvs(uid).RemovePlayerByAttachedEntity(target);
+
+        if (args.Handled)
+            return;
+
+        if (HasComp<SupermatterImmuneComponent>(item))
+            return;
+
         // TODO: supermatter scalpel
-        if (!HasComp<SharpComponent>(args.Used))
+        if (HasComp<UnremoveableComponent>(item))
+        {
+            if (!sm.HasBeenPowered)
+                LogFirstPower(uid, sm, target);
+
+            var power = 200f;
+
+            if (TryComp<PhysicsComponent>(target, out var targetPhysics))
+                power += targetPhysics.Mass;
+
+            if (TryComp<PhysicsComponent>(item, out var itemPhysics))
+                power += itemPhysics.Mass;
+
+            sm.MatterPower += power;
+
+            _popup.PopupEntity(Loc.GetString("supermatter-collide-insert-unremoveable", ("target", target), ("sm", uid), ("item", item)), uid, othersFilter, true, PopupType.LargeCaution);
+            _popup.PopupEntity(Loc.GetString("supermatter-collide-insert-unremoveable-user", ("sm", uid), ("item", item)), uid, target, PopupType.LargeCaution);
+            _audio.PlayPvs(sm.DustSound, uid);
+
+            // Prevent spam or excess power production
+            AddComp<SupermatterImmuneComponent>(target);
+            AddComp<SupermatterImmuneComponent>(item);
+
+            _adminLog.Add(LogType.EntityDelete, LogImpact.High, $"{EntityManager.ToPrettyString(target):target} touched {EntityManager.ToPrettyString(uid):uid} with {EntityManager.ToPrettyString(item):item} and was destroyed at {Transform(uid).Coordinates:coordinates}");
+            EntityManager.SpawnEntity(sm.CollisionResultPrototype, Transform(target).Coordinates);
+            EntityManager.QueueDeleteEntity(target);
+            EntityManager.QueueDeleteEntity(item);
+        }
+        else
+        {
+            if (!sm.HasBeenPowered)
+                LogFirstPower(uid, sm, item);
+
+            if (TryComp<PhysicsComponent>(item, out var physics))
+                sm.MatterPower += physics.Mass;
+
+            _popup.PopupEntity(Loc.GetString("supermatter-collide-insert", ("target", target), ("sm", uid), ("item", item)), uid, othersFilter, true, PopupType.LargeCaution);
+            _popup.PopupEntity(Loc.GetString("supermatter-collide-insert-user", ("sm", uid), ("item", item)), uid, target, PopupType.LargeCaution);
+            _audio.PlayPvs(sm.DustSound, uid);
+
+            // Prevent spam or excess power production
+            AddComp<SupermatterImmuneComponent>(item);
+
+            _adminLog.Add(LogType.EntityDelete, LogImpact.High, $"{EntityManager.ToPrettyString(target):target} touched {EntityManager.ToPrettyString(uid):uid} with {EntityManager.ToPrettyString(item):item} and destroyed it at {Transform(uid).Coordinates:coordinates}");
+            EntityManager.QueueDeleteEntity(item);
+        }
+
+        args.Handled = true;
+
+        /*if (!HasComp<SharpComponent>(args.Used))
             return;
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, 30f, new SupermatterDoAfterEvent(), args.Target)
@@ -228,7 +276,7 @@ public sealed partial class SupermatterSystem : EntitySystem
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
-        _popup.PopupClient(Loc.GetString("supermatter-tamper-begin"), uid, args.User);
+        _popup.PopupClient(Loc.GetString("supermatter-tamper-begin"), uid, args.User);*/
     }
 
     private void OnGetSliver(EntityUid uid, SupermatterComponent sm, ref SupermatterDoAfterEvent args)
@@ -266,6 +314,20 @@ public sealed partial class SupermatterSystem : EntitySystem
         // For ghosts: alive players can use the console
         if (HasComp<GhostComponent>(args.Examiner) && args.IsInDetailsRange)
             args.PushMarkup(Loc.GetString("supermatter-examine-integrity", ("integrity", GetIntegrity(sm).ToString("0.00"))));
+    }
+
+    private void LogFirstPower(EntityUid uid, SupermatterComponent sm, EntityUid target)
+    {
+        _adminLog.Add(LogType.Unknown, LogImpact.Extreme, $"{EntityManager.ToPrettyString(uid):uid} was powered for the first time by {EntityManager.ToPrettyString(target):target} at {Transform(uid).Coordinates:coordinates}");
+        _chatManager.SendAdminAlert($"{EntityManager.ToPrettyString(uid):uid} was powered for the first time by {EntityManager.ToPrettyString(target):target}");
+        sm.HasBeenPowered = true;
+    }
+
+    private void LogFirstPower(EntityUid uid, SupermatterComponent sm, GasMixture gas)
+    {
+        _adminLog.Add(LogType.Unknown, LogImpact.Extreme, $"{EntityManager.ToPrettyString(uid):uid} was powered for the first time by gas mixture at {Transform(uid).Coordinates:coordinates}");
+        _chatManager.SendAdminAlert($"{EntityManager.ToPrettyString(uid):uid} was powered for the first time by gas mixture");
+        sm.HasBeenPowered = true;
     }
 
     private SupermatterStatusType GetStatus(EntityUid uid, SupermatterComponent sm)
