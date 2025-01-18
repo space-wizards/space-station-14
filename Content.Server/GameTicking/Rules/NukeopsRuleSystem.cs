@@ -123,7 +123,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
             //get the operative's gender
             var genderString = "epicene"; //default to they/them'ing people
-            if (TryComp<HumanoidAppearanceComponent>(mindComp.OwnedEntity!, out var appearance))
+            if (TryComp<HumanoidAppearanceComponent>(GetEntity(mindComp.OriginalOwnedEntity!), out var appearance))
             {
                 genderString = appearance.Gender.ToString().ToLowerInvariant();
             }
@@ -142,7 +142,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 //get the total costs & how many times each individual thing was bought
                 var costs = new Dictionary<string, int>(); //the total costs
                 var purchaseCounts = new Dictionary<string, int>(); //how many times a given thing was bought
-                //no no-spend text for nukies despite the mindRole saying it gets it because it's annoying :(
+                //no no-spend text for nukies despite the mindRole saying it gets it because it's annoying to implement :(
                 foreach (var purchase in mindRoleComp.Purchases)
                 {
                     //get how much was spent

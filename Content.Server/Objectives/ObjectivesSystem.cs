@@ -208,11 +208,12 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             //so many loops........
 
             //these todos are future maybe fixes, not super necessary
-            //todo will want to do nukie / loneop spend readouts
+            //todo figure out a way to get the starting balance of a given antag
+            //todo figure out a way to fix the double-objective-summary thingimajig
 
             //get the character's gender
             var genderString = "epicene"; //default to they/them'ing people
-            if (TryComp<HumanoidAppearanceComponent>(mind.OwnedEntity!, out var appearance))
+            if (TryComp<HumanoidAppearanceComponent>(GetEntity(mind.OriginalOwnedEntity!), out var appearance))
             {
                 genderString = appearance.Gender.ToString().ToLowerInvariant();
             }
