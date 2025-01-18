@@ -55,6 +55,7 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 4, 4 ]
+            Courier: [ 3, 3 ] #Imp
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]

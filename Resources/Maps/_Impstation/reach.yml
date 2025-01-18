@@ -7371,11 +7371,6 @@ entities:
     - type: Transform
       pos: -6.5,3.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 8
   - uid: 1079
     components:
     - type: Transform
@@ -7386,31 +7381,16 @@ entities:
     - type: Transform
       pos: -10.5,2.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 8
   - uid: 1081
     components:
     - type: Transform
       pos: -9.5,2.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 8
   - uid: 1082
     components:
     - type: Transform
       pos: -8.5,2.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 8
   - uid: 1083
     components:
     - type: Transform
@@ -7538,11 +7518,6 @@ entities:
     - type: Transform
       pos: -6.5,5.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 8
 - proto: Fireplace
   entities:
   - uid: 1103
@@ -11770,6 +11745,13 @@ entities:
     - type: Transform
       pos: 8.5,1.5
       parent: 2
+- proto: MailTeleporter
+  entities:
+  - uid: 1857
+    components:
+    - type: Transform
+      pos: 1.5,8.5
+      parent: 2
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 1661
@@ -13708,11 +13690,6 @@ entities:
       parent: 2
 - proto: SpawnPointCargoTechnician
   entities:
-  - uid: 1982
-    components:
-    - type: Transform
-      pos: 1.5,12.5
-      parent: 2
   - uid: 1983
     components:
     - type: Transform
@@ -13731,6 +13708,13 @@ entities:
     components:
     - type: Transform
       pos: 8.5,0.5
+      parent: 2
+- proto: SpawnPointCourier
+  entities:
+  - uid: 1852
+    components:
+    - type: Transform
+      pos: 0.5,11.5
       parent: 2
 - proto: SpawnPointHeadOfSecurity
   entities:

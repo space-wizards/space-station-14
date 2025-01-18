@@ -554,3 +554,7 @@ LeftLegBorgCargo: LeftLegBorg
 RightLegBorgCargo: RightLegBorg
 HeadBorgCargo: LightHeadBorg
 TorsoBorgCargo: TorsoBorg
+
+# 2025-01-16
+# impstation: Removal of duplicate holopad Entity, oopsies
+HolopadCargoMailroomCourier: HolopadCargoMailroom

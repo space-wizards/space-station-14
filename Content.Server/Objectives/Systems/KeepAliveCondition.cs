@@ -47,10 +47,10 @@ public sealed class KeepAliveConditionSystem : EntitySystem
 
         var traitors = _traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind).Select(t => t.Id).ToHashSet();
 
-        // Can't have multiple objectives to help/save the same person
+        // Can't have multiple objectives to help/save/kill the same person
         foreach (var objective in args.Mind.Objectives)
         {
-            if (HasComp<RandomTraitorAliveComponent>(objective) || HasComp<RandomTraitorProgressComponent>(objective))
+            if (HasComp<RandomTraitorAliveComponent>(objective) || HasComp<RandomTraitorProgressComponent>(objective) || HasComp<KillPersonConditionComponent>(objective)) // imp edit
             {
                 if (TryComp<TargetObjectiveComponent>(objective, out var help))
                 {
