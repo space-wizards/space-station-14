@@ -6,7 +6,7 @@
     state: Courier
   jobName: job-name-courier
 
-  - type: jobIcon
+ type: jobIcon
   parent: JobIcon
   id: JobIconNanotrasen
   icon:
