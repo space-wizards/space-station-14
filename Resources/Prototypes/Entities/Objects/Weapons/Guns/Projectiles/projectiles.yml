@@ -755,7 +755,7 @@
 
 - type: entity
   id: BulletGrenadeCleanade
-  name: cleanade grenade
+  name: cleanade grenade round
   parent: BaseBulletTrigger
   categories: [ HideSpawnMenu ]
   components:

@@ -54,7 +54,7 @@
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
 
 - type: entity
-  name: hydra launcher
+  name: hydra
   parent: [BaseWeaponLauncher, BaseGunWieldable, BaseMajorContraband]
   id: WeaponLauncherHydra
   description: PLOOP... FSSSSSS
@@ -62,8 +62,8 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/hydra_launcher.rsi
     layers:
-      - state: icon
-        map: ["enum.GunVisualLayers.Base"]
+    - state: icon
+      map: ["enum.GunVisualLayers.Base"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/hydra_launcher.rsi
     slots:
@@ -74,13 +74,13 @@
     fireRate: 1
     selectedMode: SemiAuto
     availableModes:
-      - SemiAuto
+    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
   - type: RevolverAmmoProvider
     whitelist:
       tags:
-        - Grenade
+      - Grenade
     proto: GrenadeCleanade
     capacity: 6
     chambers: [ True, True, True, True, True, True ]
@@ -89,8 +89,6 @@
       path: /Audio/Weapons/Guns/MagOut/sfrifle_magout.ogg
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/sfrifle_magin.ogg
-    soundSpin:
-      path: /Audio/Weapons/Guns/Cock/shotgun_close.ogg
 
 - type: entity
   name: RPG-7

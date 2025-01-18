@@ -125,7 +125,7 @@
 
 - type: entity
   id: GrenadeCleanade
-  name: cleanade grenade
+  name: cleanade grenade round
   parent: BaseGrenade
   components:
   - type: CartridgeAmmo
