@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: (Hummingbird Station) The station now features its own unique parallax
-      background!
-    type: Add
-  - message: (Hummingbird Station) Added an extra evidence locker to Security.
-    type: Add
-  - message: (Hummingbird Station) Adjusted disposals so trash should now properly
-      dispense out into space after going through the recycler.
-    type: Fix
-  - message: (Hummingbird Station) Fixed a missing disposals pipe in the food service
-      area.
-    type: Fix
-  - message: (Hummingbird Station) Made a number of miscellaneous visual changes.
-    type: Tweak
-  id: 471
-  time: '2024-11-08T16:22:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/645
 - author: Pinkbat5
   changes:
   - message: Traitors can now purchase straight pride pins and cloaks in the uplink.
@@ -4441,3 +4423,11 @@
   id: 970
   time: '2025-01-19T04:59:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1422
+- author: formlessnameless
+  changes:
+  - message: Headslugs can now open morgue trays and bodybags to help themselves to
+      a little snack.
+    type: Add
+  id: 971
+  time: '2025-01-19T06:48:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1420
