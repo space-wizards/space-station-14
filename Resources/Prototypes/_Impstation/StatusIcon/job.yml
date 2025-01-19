@@ -10,7 +10,7 @@
   parent: JobIcon
   id: JobIconNanotrasen
   icon:
-    sprite: Textures/_Impstation/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
     state: Nanotrasen
   jobName: job-name-centcomoff
 
@@ -18,7 +18,7 @@
   parent: JobIcon
   id: JobIconDeathsquad
   icon:
-    sprite: Textures/_Impstation/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
     state: Deathsquadron
   jobName: job-name-deathsquad
 
@@ -26,7 +26,7 @@
   parent: JobIcon
   id: JobIconCBURN
   icon:
-    sprite: Textures/_Impstation/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
     state: CBURN
   jobName: job-name-cburn
 
@@ -34,7 +34,7 @@
   parent: JobIcon
   id: JobIconERTLeader
   icon:
-    sprite: Textures/_Impstation/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
     state: ERTLeader
   jobName: job-name-ertleader
 
@@ -42,7 +42,7 @@
   parent: JobIcon
   id: JobIconERTSecurity
   icon:
-    sprite: Textures/_Impstation/Interface/Misc/job_icons.rsi
+    sprite: /extures/_Impstation/Interface/Misc/job_icons.rsi
     state: ERTSecurity
   jobName: job-name-ertsecurity
 
@@ -50,7 +50,7 @@
   parent: JobIcon
   id: JobIconERTMedic
   icon:
-    sprite: Textures/_Impstation/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
     state: ERTMedic
   jobName: job-name-ertmedic
 
@@ -58,7 +58,7 @@
   parent: JobIcon
   id: JobIconERTEngineer
   icon:
-    sprite: Textures/_ImpstationInterface/Misc/job_icons.rsi
+    sprite: /Textures/_ImpstationInterface/Misc/job_icons.rsi
     state: ERTEngineer
   jobName: job-name-ertengineer
 
@@ -66,7 +66,7 @@
   parent: JobIcon
   id: JobIconERTJanitor
   icon:
-    sprite: Textures/_Impstation/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
     state: ERTJanitor
   jobName: job-name-ertjanitor
 
@@ -74,6 +74,6 @@
   parent: JobIcon
   id: JobIconERTChaplain
   icon:
-    sprite: Textures/_Impstation/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
     state: ERTChaplain
   jobName: job-name-ertchaplain
