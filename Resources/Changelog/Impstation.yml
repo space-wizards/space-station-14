@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Rewrote (almost) all species guidebook entries to 1) be more consistent,
-      2) provide more information, and 3) be more flavorful.
-    type: Tweak
-  id: 470
-  time: '2024-11-08T16:21:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/646
 - author: DinnerCalzone
   changes:
   - message: (Hummingbird Station) The station now features its own unique parallax
@@ -4442,3 +4434,10 @@
   id: 969
   time: '2025-01-19T04:50:45.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1407
+- author: starlighthowls
+  changes:
+  - message: New map NTAS test 1!
+    type: Add
+  id: 970
+  time: '2025-01-19T04:59:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1422
