@@ -10,6 +10,8 @@ using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Chat;
+using Content.Shared.Eye.Blinding.Components;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Physics;
 using Content.Shared.Radiation.Components;
@@ -141,8 +143,8 @@ public sealed partial class SupermatterSystem
             rad.Slope = Math.Clamp(rad.Intensity / 15, 0.2f, 1f);
         }
 
-        // Power * 0.55
-        var energy = sm.Power * sm.ReactionPowerModifier;
+        // Power * 0.55 * a value between 1 and 0.8
+        var energy = sm.Power * sm.ReactionPowerModifier * (1f - sm.PsyCoefficient * 0.2f);
 
         // Keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock is on.
         // An increase of 4°C at 25% efficiency here results in an increase of 1°C / (#tilesincore) overall.
@@ -352,7 +354,8 @@ public sealed partial class SupermatterSystem
         // Healing damage
         if (moles < sm.MolePenaltyThreshold)
         {
-            var healHeatDamage = Math.Min(absorbedGas.Temperature - tempThreshold, 0f) / 150;
+            // Only has a net positive effect when the temp is below 313.15, heals up to 2 damage. Psychologists increase this temp min by up to 45
+            var healHeatDamage = Math.Min(absorbedGas.Temperature - (tempThreshold + 45f * sm.PsyCoefficient), 0f) / 150f;
             totalDamage += healHeatDamage;
         }
 
@@ -401,7 +404,7 @@ public sealed partial class SupermatterSystem
                 };
             }
 
-            _appearance.SetData(uid, SupermatterVisualLayers.Crystal, visual, appearance);
+            _appearance.SetData(uid, SupermatterVisuals.Crystal, visual, appearance);
         }
     }
 
@@ -724,6 +727,54 @@ public sealed partial class SupermatterSystem
         _light.SetEnergy(uid, 2f * scalar, light);
         _light.SetRadius(uid, 10f * scalar, light);
         _light.SetColor(uid, Color.FromHsv(hsvFinal), light);
+    }
+
+    /// <summary>
+    /// Checks for 
+    /// </summary>
+    private void HandleVision(EntityUid uid, SupermatterComponent sm)
+    {
+        var psyDiff = -0.007f;
+        var lookup = _entityLookup.GetEntitiesInRange<MobStateComponent>(Transform(uid).Coordinates, 20f);
+
+        foreach (var mob in lookup)
+        {
+            // Not in line of sight, or is dead
+            if (!_examine.InRangeUnOccluded(uid, mob, 20f) ||
+                mob.Comp.CurrentState == MobState.Dead)
+                continue;
+
+            // Someone (generally a psychologist), when looking at the supermatter within hallucination range, makes it easier to manage.
+            if (HasComp<SupermatterSootherComponent>(mob))
+                psyDiff = 0.007f;
+
+            if (HasComp<SupermatterHallucinationImmuneComponent>(mob) || // Immune to supermatter hallucinations
+                HasComp<SiliconLawBoundComponent>(mob) ||                // Silicons don't get supermatter hallucinations
+                HasComp<PermanentBlindnessComponent>(mob) ||             // Blind people don't get supermatter hallucinations
+                HasComp<TemporaryBlindnessComponent>(mob))               // Neither do blinded people
+                continue;
+
+            // Everyone else gets hallucinations
+            // These values match the paracusia disability, since we can't double up on paracusia
+            // TODO: change this from paracusia to actual hallucinations whenever those are real
+            var paracusiaSounds = new SoundCollectionSpecifier("Paracusia");
+            var paracusiaMinTime = 0.1f;
+            var paracusiaMaxTime = 300f;
+            var paracusiaDistance = 7f;
+
+            if (!EnsureComp<ParacusiaComponent>(mob, out var paracusia))
+            {
+                _paracusia.SetSounds(mob, paracusiaSounds, paracusia);
+                _paracusia.SetTime(mob, paracusiaMinTime, paracusiaMaxTime, paracusia);
+                _paracusia.SetDistance(mob, paracusiaDistance, paracusia);
+            }
+        }
+
+        sm.PsyCoefficient = Math.Clamp(sm.PsyCoefficient + psyDiff, 0f, 1f);
+
+        // Adjust the opacity of the supermatter's psychologist overlay based on the coefficient
+        if (TryComp<AppearanceComponent>(uid, out var appearance))
+            _appearance.SetData(uid, SupermatterVisuals.Psy, sm.PsyCoefficient, appearance);
     }
 
     /// <summary>

@@ -1,33 +1,18 @@
 - type: entity
-  id: Supermatter
-  name: supermatter crystal
-  description: A strangely translucent and iridescent crystal.
+  abstract: true
+  id: BaseSupermatter
   placement:
     mode: SnapgridCenter
   components:
-  - type: Appearance
-  - type: Supermatter
-  - type: AtmosDevice
-  - type: RadiationSource
-  - type: AmbientSound
-    range: 20
-    volume: -5
-    sound:
-      path: /Audio/_EinsteinEngines/Supermatter/calm.ogg
-  - type: EmitSoundOnTrigger
-    sound:
-      collection: SupermatterAccentNormal
-  - type: Physics
-  - type: Speech
-    speechSounds: null
-    speechVerb: Supermatter
-    soundCooldownTime: 0
-    suffixSpeechVerbs:
-      chat-speech-verb-suffix-exclamation-strong: Supermatter
-      chat-speech-verb-suffix-exclamation: Supermatter
-      chat-speech-verb-suffix-question: Supermatter
-      chat-speech-verb-suffix-stutter: Supermatter
-      chat-speech-verb-suffix-mumble: Supermatter
+  - type: Sprite
+    sprite: _EinsteinEngines/Structures/Power/Generation/Supermatter/supermatter.rsi
+    state: supermatter
+    drawdepth: Mobs
+    snapCardinals: true
+    offset: -0.015,0.295
+  - type: Icon
+    sprite: _EinsteinEngines/Structures/Power/Generation/Supermatter/supermatter.rsi
+    state: supermatter
   - type: Fixtures
     fixtures:
       fix1:
@@ -49,10 +34,44 @@
   - type: Transform
     anchored: true
     noRot: true
-  - type: CollisionWake
-    enabled: false
+  - type: PointLight
+    enabled: true
+    radius: 10
+    energy: 2
+    color: "#ffe000"
+  - type: AmbientSound
+    range: 20
+    volume: -5
+    sound:
+      path: /Audio/_EinsteinEngines/Supermatter/calm.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: SupermatterAccentNormal
+  - type: Speech
+    speechSounds: null
+    speechVerb: Supermatter
+    soundCooldownTime: 0
+    suffixSpeechVerbs:
+      chat-speech-verb-suffix-exclamation-strong: Supermatter
+      chat-speech-verb-suffix-exclamation: Supermatter
+      chat-speech-verb-suffix-question: Supermatter
+      chat-speech-verb-suffix-stutter: Supermatter
+      chat-speech-verb-suffix-mumble: Supermatter
+  - type: GuideHelp
+    guides: [ Supermatter, Power ]
+  - type: WarpPoint
+    follow: true
+    location: supermatter
   - type: Clickable
   - type: InteractionOutline
+  - type: Physics
+
+- type: entity
+  parent: BaseSupermatter
+  id: Supermatter
+  name: supermatter crystal
+  description: A strangely translucent and iridescent crystal.
+  components:
   - type: Sprite
     sprite: _EinsteinEngines/Structures/Power/Generation/Supermatter/supermatter.rsi
     drawdepth: Mobs
@@ -60,44 +79,35 @@
     offset: -0.015,0.295
     layers:
       - state: supermatter
-        map: ["enum.SupermatterVisualLayers.Crystal"]
-  - type: GenericVisualizer
-    visuals:
-      enum.SupermatterVisualLayers.Crystal:
-        enum.SupermatterVisualLayers.Crystal:
-          Normal: { state: supermatter }
-          Glow: { state: supermatter-glow }
-          GlowEmergency: { state: supermatter-glow-emergency }
-          GlowDelam: { state: supermatter-glow-delam }
-  - type: Icon
-    sprite: _EinsteinEngines/Structures/Power/Generation/Supermatter/supermatter.rsi
-    state: supermatter
-  - type: PointLight
-    enabled: true
-    radius: 10
-    energy: 2
-    color: "#ffe000"
+        map: ["enum.SupermatterVisuals.Crystal"]
+      - state: supermatter-psy
+        map: ["enum.SupermatterVisuals.Psy"]
+        color: "#ffffff00"
+  - type: SupermatterVisuals
+    crystal:
+      Normal: { state: supermatter }
+      Glow: { state: supermatter-glow }
+      GlowEmergency: { state: supermatter-glow-emergency }
+      GlowDelam: { state: supermatter-glow-delam }
   - type: Explosive
     explosionType: Supermatter
     totalIntensity: 120000
     intensitySlope: 5
     maxIntensity: 100
-  - type: GuideHelp
-    guides: [ Supermatter, Power ]
-  - type: WarpPoint
-    follow: true
-    location: supermatter
-  - type: SinguloFood
-    energy: 10000
   - type: GravityWell
     baseRadialAcceleration: 1
     maxRange: 0.5
     gravPulsePeriod: 15
-  # Paracusia values match MassHallucinations gamerule
-  - type: ParacusiaProximity
-    range: 5
-    minTimeBetweenIncidents: 0.1
-    maxTimeBetweenIncidents: 300
-    maxSoundDistance: 7
-    sounds:
-      collection: Paracusia
+  - type: SinguloFood
+    energy: 10000
+  - type: Appearance
+  - type: Supermatter
+  - type: AtmosDevice
+  - type: RadiationSource
+
+- type: entity
+  parent: BaseSupermatter
+  id: SupermatterDecorative
+  name: supermatter crystal
+  description: A strangely translucent and iridescent crystal. On closer inspection, it's made of sugar.
+  suffix: decorative

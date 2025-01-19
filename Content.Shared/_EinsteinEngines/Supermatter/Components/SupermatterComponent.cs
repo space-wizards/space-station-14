@@ -196,6 +196,12 @@ public sealed partial class SupermatterComponent : Component
     public float OxygenReleaseEfficiencyModifier = 325f;
 
     /// <summary>
+    /// Modifier to damage taken during supermatter reactions, soothing the supermatter when a psychologist is nearby
+    /// </summary>
+    [DataField]
+    public float PsyCoefficient;
+
+    /// <summary>
     /// The chance for supermatter lightning to strike random coordinates instead of an entity
     /// </summary>
     [DataField]
@@ -590,9 +596,10 @@ public enum SupermatterCrystalState : byte
 }
 
 [Serializable, NetSerializable]
-public enum SupermatterVisualLayers : byte
+public enum SupermatterVisuals : byte
 {
-    Crystal
+    Crystal,
+    Psy
 }
 
 [Serializable, NetSerializable]

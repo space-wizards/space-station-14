@@ -86,7 +86,7 @@
     coverage: EYES
   - type: ClothingGrantComponent # imp
     component:
-    - type: ParacusiaProximityImmune
+    - type: SupermatterHallucinationImmune
 
 - type: entity
   parent: [ClothingEyesBase, BaseLensSlot] # BaseLensSlot from imp
