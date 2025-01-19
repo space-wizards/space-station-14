@@ -502,7 +502,7 @@
   - type: Sprite
     layers:
     - state: centcom
-    - state: idcentcom
+    - state: idcentcom 
   - type: Item
     heldPrefix: blue
   - type: PresetIdCard
