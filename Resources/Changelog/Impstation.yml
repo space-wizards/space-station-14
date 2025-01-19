@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Added the Airlock Access Override, an emag that can hack doors.
-    type: Add
-  - message: Emags can no longer hack doors.
-    type: Remove
-  id: 467
-  time: '2024-11-08T02:19:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/638
-- author: DinnerCalzone
-  changes:
-  - message: Juice that makes you UNGH added to liquid anomalies and reagent slimes.
-    type: Add
-  - message: Juice that makes you UNGH will now properly transform all species.
-    type: Fix
-  id: 468
-  time: '2024-11-08T16:09:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/651
 - author: Sha-Seng
   changes:
   - message: Beanbag Kammerer and Beanbag Enforcer added, they only accept beanbag
@@ -4468,3 +4450,17 @@
   id: 966
   time: '2025-01-19T00:34:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1411
+- author: DinnerCalzone
+  changes:
+  - message: Added mail support to Cog, Omega, Marathon, and Hummingbird.
+    type: Add
+  id: 967
+  time: '2025-01-19T04:48:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1416
+- author: kipdotnet
+  changes:
+  - message: Fixed the Courier locker not having a Holobell projector.
+    type: Fix
+  id: 968
+  time: '2025-01-19T04:48:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1424
