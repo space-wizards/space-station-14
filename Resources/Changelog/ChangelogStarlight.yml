@@ -2506,3 +2506,10 @@ Entries:
   id: 350
   time: '2025-01-19T09:34:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/248
+- author: Rinary
+  changes:
+  - message: Added abductor objectives synchronization.
+    type: Add
+  id: 351
+  time: '2025-01-19T17:23:29.225523+00:00'
+  url: 'null'
