@@ -12,7 +12,6 @@ public sealed class MuzzleFlashEvent : EntityEventArgs
     public string Prototype;
 
     public Angle Angle;
-    public NetEntity? User;
 
     public MuzzleFlashEvent(NetEntity uid, string prototype, Angle angle, NetEntity? user)
     {
