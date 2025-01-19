@@ -415,26 +415,30 @@ public sealed partial class GunSystem : SharedGunSystem
             angle -= _transform.GetWorldRotation(fromXform);
         }
 
-        var fromNetCoords = GetNetCoordinates(fromCoordinates);
-        var dir = angle.ToVec();
         if (distance >= 1f)
         {
             if (hitscan.MuzzleFlash != null)
             {
-                var netCoords = new NetCoordinates(fromNetCoords.NetEntity, fromNetCoords.Position + dir / 2);
+                var coords = fromCoordinates.Offset(angle.ToVec().Normalized() / 2);
+                var netCoords = GetNetCoordinates(coords);
+
                 sprites.Add((netCoords, angle, hitscan.MuzzleFlash, 1f));
             }
 
             if (hitscan.TravelFlash != null)
             {
-                var netCoords = new NetCoordinates(fromNetCoords.NetEntity, fromNetCoords.Position + dir * (distance + 0.5f) / 2);
+                var coords = fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2);
+                var netCoords = GetNetCoordinates(coords);
+
                 sprites.Add((netCoords, angle, hitscan.TravelFlash, distance - 1.5f));
             }
         }
 
         if (hitscan.ImpactFlash != null)
         {
-            var netCoords = new NetCoordinates(fromNetCoords.NetEntity,fromNetCoords.Position + dir * distance);
+            var coords = fromCoordinates.Offset(angle.ToVec() * distance);
+            var netCoords = GetNetCoordinates(coords);
+
             sprites.Add((netCoords, angle.FlipPositive(), hitscan.ImpactFlash, 1f));
         }
 
