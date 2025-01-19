@@ -436,11 +436,3 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Visitor
   jobName: job-name-visitor
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconAdmin
-  icon:
-    sprite: _Impstation/Textures/Interface/Misc/job_icons.rsi
-    state: Admin
-  allowSelection: false

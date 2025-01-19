@@ -21,8 +21,9 @@ job-name-hop = Head of Personnel
 job-name-captain = Captain
 job-name-serviceworker = Service Worker
 job-name-centcomoff = CentComm Official
-job-name-cburn = CBURN Quarantine Officer #imp
-job-name-deathsquad = Asset Protection Agent #imp
+# imp (2)
+job-name-cburn = CBURN Quarantine Officer
+job-name-deathsquad = Asset Protection Agent
 job-name-reporter = Reporter
 job-name-musician = Musician
 job-name-librarian = Librarian
