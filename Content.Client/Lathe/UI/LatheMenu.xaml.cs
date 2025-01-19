@@ -194,12 +194,13 @@ public sealed partial class LatheMenu : DefaultWindow
 
     public void UpdateCategories()
     {
+        // Get categories from recipes
         var currentCategories = new List<ProtoId<LatheCategoryPrototype>>();
         foreach (var recipeId in Recipes)
         {
             var recipe = _prototypeManager.Index(recipeId);
 
-            if (recipe.Categories == null)
+            if (recipe.Categories.Count <= 0)
                 continue;
 
             foreach (var category in recipe.Categories)
