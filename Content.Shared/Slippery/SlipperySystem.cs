@@ -19,7 +19,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Slippery;
 
-[UsedImplicitly] 
+[UsedImplicitly]
 public sealed class SlipperySystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -43,6 +43,7 @@ public sealed class SlipperySystem : EntitySystem
         SubscribeLocalEvent<NoSlipComponent, InventoryRelayedEvent<SlipAttemptEvent>>((e, c, ev) => OnNoSlipAttempt(e, c, ev.Args));
         SubscribeLocalEvent<SlowedOverSlipperyComponent, InventoryRelayedEvent<SlipAttemptEvent>>((e, c, ev) => OnSlowedOverSlipAttempt(e, c, ev.Args));
         SubscribeLocalEvent<SlowedOverSlipperyComponent, InventoryRelayedEvent<GetSlowedOverSlipperyModifierEvent>>(OnGetSlowedOverSlipperyModifier);
+        SubscribeLocalEvent<SlipOnCollideComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<SlipperyComponent, EndCollideEvent>(OnEntityExit);
     }
 
@@ -79,11 +80,21 @@ public sealed class SlipperySystem : EntitySystem
         args.Args.SlowdownModifier *= comp.SlowdownModifier;
     }
 
+    private void OnCollide(Entity<SlipOnCollideComponent> ent, ref StartCollideEvent args)
+    {
+        if (args.OtherEntity == args.OurEntity)
+            return;
+
+        var slipComp = EnsureComp<SlipperyComponent>(ent.Owner);
+
+        TrySlip(ent.Owner, slipComp, args.OtherEntity);
+    }
+
     private void OnEntityExit(EntityUid uid, SlipperyComponent component, ref EndCollideEvent args)
     {
         if (HasComp<SpeedModifiedByContactComponent>(args.OtherEntity))
             _speedModifier.AddModifiedEntity(args.OtherEntity);
-    } 
+    }
 
     private bool CanSlip(EntityUid uid, EntityUid toSlip)
     {

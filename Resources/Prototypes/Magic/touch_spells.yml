@@ -4,7 +4,7 @@
   description: Instantly gibs a target.
   components:
   - type: EntityTargetAction
-    useDelay: 60
+    useDelay: 90
     itemIconStyle: BigAction
     whitelist:
       components:
@@ -23,11 +23,11 @@
 
 - type: entity
   id: ActionCluwne
-  name: Cluwne
+  name: Cluwne's Curse
   description: Turns someone into a Cluwne!
   components:
   - type: EntityTargetAction
-    useDelay: 60
+    useDelay: 120
     itemIconStyle: BigAction
     whitelist:
       components:
@@ -43,5 +43,33 @@
       speech: action-speech-spell-cluwne
       components:
       - type: Cluwne
+  - type: Magic
+    requiresClothes: true
+
+- type: entity
+  id: ActionSlippery
+  name: Slippery Slope
+  description: Make someone slippery.
+  components:
+  - type: EntityTargetAction
+    useDelay: 60
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/slip.ogg
+    icon:
+      sprite: Objects/Specific/Janitorial/soap.rsi
+      state: omega-4
+    event: !type:EnsureCompOnTouchSpellEvent
+      speech: action-speech-spell-slip
+      components:
+      - type: Slippery
+        superSlippery: true
+      - type: StepTrigger
+      - type: SlipOnCollide
   - type: Magic
     requiresClothes: true
