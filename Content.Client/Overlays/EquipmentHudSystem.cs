@@ -74,9 +74,7 @@ public abstract class EquipmentHudSystem<T> : EntitySystem where T : IComponent
     private void OnPlayerDetached(LocalPlayerDetachedEvent args)
     {
         if (_player.LocalSession?.AttachedEntity is null)
-        {
             Deactivate();
-        }
     }
 
     private void OnCompEquip(Entity<T> ent, ref GotEquippedEvent args)
