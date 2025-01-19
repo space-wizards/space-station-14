@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: hivehum
   changes:
-  - message: Ore bags can hold salt again.
-    type: Fix
-  id: 466
-  time: '2024-11-08T01:42:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/647
-- author: hivehum
-  changes:
   - message: Added the Airlock Access Override, an emag that can hack doors.
     type: Add
   - message: Emags can no longer hack doors.
@@ -4468,3 +4461,10 @@
   id: 965
   time: '2025-01-18T19:31:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1417
+- author: kipdotnet
+  changes:
+  - message: Removed Loop station from the map pool.
+    type: Remove
+  id: 966
+  time: '2025-01-19T00:34:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1411
