@@ -302,16 +302,15 @@ public partial class SharedGunSystem
                 {
                     // Since this slot has nothing in it, but it should have something, spawn it.
                     slot = Spawn(component.FillPrototype, mapCoordinates);
-                    EnsureShootable(slot);
+                    EnsureShootable(slot.Value);
 
                     // Set it to a spent cartridge if it's supposed to be
                     if (TryComp<CartridgeAmmoComponent>(slot, out var cartridge))
-                        SetCartridgeSpent(slot, cartridge, !(bool) chamber);
+                        SetCartridgeSpent(slot.Value, cartridge, !(bool) chamber);
+
+                    // Insert it into the container
+                    Containers.Insert(slot.Value, component.AmmoContainer);
                 }
-            }
-            else // if there is something in the slot, remove it from the container
-            {
-                Containers.Remove(slot.Value, component.AmmoContainer);
             }
 
             if (slot != null) // Makes the compiler chill
@@ -319,6 +318,7 @@ public partial class SharedGunSystem
                 // Eject the cartridge if server-side
                 if (!_netManager.IsClient)
                 {
+                    Containers.Remove(slot.Value, component.AmmoContainer);
                     EjectCartridge(slot.Value);
                 }
                 // If execution is client-side, and the object is client-side, just delete it
