@@ -159,6 +159,13 @@ public sealed partial class CCVars
         CVarDef.Create("admin.admins_count_for_max_players", false, CVar.SERVERONLY);
 
     /// <summary>
+    /// Should admins be hidden from the player count reported to the launcher/via api?
+    /// This is hub advert safe, in case that's a worry.
+    /// </summary>
+    public static readonly CVarDef<bool> AdminsCountInReportedPlayerCount =
+        CVarDef.Create("admin.admins_count_in_playercount", false, CVar.SERVERONLY);
+
+    /// <summary>
     ///     Determine if custom rank names are used.
     ///     If it is false, it'd use the actual rank name regardless of the individual's title.
     /// </summary>
