@@ -1,3 +1,18 @@
+# Senior Time
+- type: loadoutEffectGroup
+  id: SeniorTechnician
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobQuarterMaster
+      time: 3600 # 1 hr
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 10800 # 3 hrs
+
 # Head
 - type: loadout
   id: CargoTechnicianBandanaHarmony
