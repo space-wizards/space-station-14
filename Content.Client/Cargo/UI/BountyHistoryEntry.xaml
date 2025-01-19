@@ -1,8 +1,7 @@
 <BoxContainer xmlns="https://spacestation14.io"
                 xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                 Margin="10 10 10 0"
-                HorizontalExpand="True"
-                Visible="True">
+                HorizontalExpand="True">
     <PanelContainer StyleClasses="AngleRect" HorizontalExpand="True">
         <BoxContainer Orientation="Vertical"
                       HorizontalExpand="True">
