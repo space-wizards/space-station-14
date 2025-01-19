@@ -36,10 +36,22 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         SubscribeLocalEvent<AbductorComponent, AbductorAttractDoAfterEvent>(OnDoAfterAttract);
     }
     private void OnAbductGetProgress(Entity<AbductConditionComponent> ent, ref ObjectiveGetProgressEvent args)
-        => args.Progress = DoorjackProgress(ent.Comp, _number.GetTarget(ent.Owner));
+    {
+        args.Progress = AbductProgress(ent, _number.GetTarget(ent.Owner));
+    }
 
-    private float DoorjackProgress(AbductConditionComponent comp, int target)
-        => target == 0 ? 1f : MathF.Min(comp.Abducted / (float)target, 1f);
+    private float AbductProgress(Entity<AbductConditionComponent> ent, int target)
+    {
+        if (!TryComp<AbductorScientistComponent>(ent, out var scientistComp) && !TryComp<AbductorAgentComponent>(ent, out var agentComp))
+            if (scientistComp != null && TryComp<AbductConditionComponent>(scientistComp.Agent, out var agentAbducted))
+                if (agentAbducted.Abducted > ent.Comp.Abducted)
+                    ent.Comp.Abducted = agentAbducted.Abducted;
+            else if (agentComp != null && TryComp<AbductConditionComponent>(agentComp.Scientist, out var scientistAbducted))
+                if (scientistAbducted.Abducted > ent.Comp.Abducted)
+                    ent.Comp.Abducted = scientistAbducted.Abducted;
+                
+        return target == 0 ? 1f : MathF.Min(ent.Comp.Abducted / (float)target, 1f);
+    }
         
     private void OnVestModeChangeBuiMsg(EntityUid uid, AbductorConsoleComponent component, AbductorVestModeChangeBuiMsg args)
     {
@@ -145,6 +157,16 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         _xformSys.SetCoordinates(victim, GetCoordinates(args.TargetCoordinates));
     }
     private void OnBeforeActivatableUIOpen(Entity<AbductorConsoleComponent> ent, ref BeforeActivatableUIOpenEvent args) => UpdateGui(ent.Comp.Target, ent);
+    
+    public void SyncAbductors(Entity<AbductorConsoleComponent> ent)
+    {
+        if (ent.Comp.Agent != null && ent.Comp.Scientist != null)
+            if (TryComp<AbductorScientistComponent>(ent.Comp.Scientist, out var scientistComp) && TryComp<AbductorAgentComponent>(ent.Comp.Agent, out var agentComp))
+            {
+                agentComp.Scientist = ent.Comp.Scientist;
+                scientistComp.Agent = ent.Comp.Agent;
+            }
+    }
 
     protected override void UpdateGui(NetEntity? target, Entity<AbductorConsoleComponent> computer)
     {

@@ -55,7 +55,7 @@
       components:
       - type: Abductor
       - type: Muted
-      - type: AbductorScientist
+      - type: AbductorAgent
       - type: ActionGrant
         actions:
         - ActionReturnToShip

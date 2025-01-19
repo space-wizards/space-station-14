@@ -33,6 +33,12 @@ public sealed partial class AbductorConsoleComponent : Component
     
     [DataField, AutoNetworkedField]
     public NetEntity? Armor;
+    
+    [DataField, AutoNetworkedField]
+    public EntityUid? Agent;
+    
+    [DataField, AutoNetworkedField]
+    public EntityUid? Scientist;
 }
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem))]
 public sealed partial class AbductorAlienPadComponent : Component

@@ -46,7 +46,7 @@
     rules: abductors-ghost-role-rules
     raffle:
       settings: default
-  - type: AbductorScientist
+  - type: AbductorAgent
   - type: ActionGrant
     actions:
     - ActionReturnToShip

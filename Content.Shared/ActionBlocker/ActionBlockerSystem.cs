@@ -86,7 +86,7 @@ namespace Content.Shared.ActionBlocker
             if (!CanConsciouslyPerformAction(user))
                 return false;
             
-            if (HasComp<StationAiOverlayComponent>(user) && HasComp<AbductorScientistComponent>(user))
+            if (HasComp<StationAiOverlayComponent>(user) && HasComp<AbductorScientistComponent>(user) || HasComp<AbductorAgentComponent>(user))
                 return false;
 
             var ev = new InteractionAttemptEvent(user, target);

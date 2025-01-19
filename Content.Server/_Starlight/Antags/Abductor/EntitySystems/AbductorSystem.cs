@@ -113,13 +113,25 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
     private void OnCameraExit(EntityUid actor)
     {
-        if (TryComp<RelayInputMoverComponent>(actor, out var comp) && TryComp<AbductorScientistComponent>(actor, out var abductorComp))
+        AbductorScientistComponent? scientistComp = null;
+        AbductorAgentComponent? agentComp = null;
+        
+        if (TryComp<RelayInputMoverComponent>(actor, out var comp) && TryComp<AbductorScientistComponent>(actor, out scientistComp) || TryComp<AbductorAgentComponent>(actor, out agentComp))
         {
+            EntityUid? console = null;
+            
+            if (scientistComp != null && scientistComp.Console.HasValue)
+                console = scientistComp.Console.Value;
+            else if (agentComp != null && agentComp.Console.HasValue)
+                console = agentComp.Console.Value;
+            
+            if (console == null || comp == null)
+                return;
+
             var relay = comp.RelayEntity;
             RemComp(actor, comp);
 
-            if (abductorComp.Console != null)
-                _virtualItem.DeleteInHandsMatching(actor, abductorComp.Console.Value);
+            _virtualItem.DeleteInHandsMatching(actor, console.Value);
 
             if (TryComp(actor, out EyeComponent? eyeComp))
             {
@@ -136,17 +148,22 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
     private void OnActivatableUIOpenAttemptEvent(Entity<AbductorHumanObservationConsoleComponent> ent, ref ActivatableUIOpenAttemptEvent args)
     {
-        if (!HasComp<AbductorScientistComponent>(args.User))
+        if (!HasComp<AbductorScientistComponent>(args.User) && !HasComp<AbductorAgentComponent>(args.User))
             args.Cancel();
     }
 
     private void OnBeforeActivatableUIOpen(Entity<AbductorHumanObservationConsoleComponent> ent, ref BeforeActivatableUIOpenEvent args)
     {
-        if (!TryComp<AbductorScientistComponent>(args.User, out var abductorComp))
-            return;
+        AbductorAgentComponent? agentComp = null;
         
-    
-        abductorComp.Console = ent.Owner;
+        if (!TryComp<AbductorScientistComponent>(args.User, out var scientistComp) && !TryComp<AbductorAgentComponent>(args.User, out agentComp))
+            return;
+            
+        if (scientistComp != null)
+            scientistComp.Console = ent.Owner;
+        else if (agentComp != null)
+            agentComp.Console = ent.Owner;
+        
         var stations = _stationSystem.GetStations();
         var result = new Dictionary<int, StationBeacons>();
 

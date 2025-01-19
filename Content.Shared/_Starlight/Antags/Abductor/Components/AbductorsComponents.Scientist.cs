@@ -42,6 +42,9 @@ public sealed partial class AbductorScientistComponent : Component
     
     [DataField, AutoNetworkedField]
     public EntityUid? Console;
+    
+    [DataField, AutoNetworkedField]
+    public EntityUid? Agent;
 }
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem))]

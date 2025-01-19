@@ -239,7 +239,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
                 return true;
         }
 
-        var hasNoSpecificComponents = !HasComp<StationAiOverlayComponent>(args.User) && !HasComp<AbductorScientistComponent>(args.User);
+        var hasNoSpecificComponents = !HasComp<StationAiOverlayComponent>(args.User) && !HasComp<AbductorScientistComponent>(args.User) && !HasComp<AbductorAgentComponent>(args.User);
         if (args.RequireCanInteract && !_actionBlocker.CanInteract(args.User, args.Target) && hasNoSpecificComponents)
             return true;
 
