@@ -2358,3 +2358,86 @@ Entries:
   id: 331
   time: '2025-01-17T21:41:09.727323+00:00'
   url: 'null'
+- author: Miracula
+  changes:
+  - message: Added plushie mime lizard
+    type: Add
+  id: 332
+  time: '2025-01-19T09:32:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/249
+- author: Miracula
+  changes:
+  - message: Added new lobby art "Positivity"
+    type: Add
+  id: 333
+  time: '2025-01-19T09:32:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/249
+- author: Conflee
+  changes:
+  - message: Blue Shield Officer's room and Nanotrasen Representative's room
+    type: Add
+  id: 334
+  time: '2025-01-19T09:34:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/246
+- author: Conflee
+  changes:
+  - message: Redesigned the entire former Chapel area. Moved Library to the far east
+      side of Chapel, and Detective's Office to the west side of Chapel across the
+      hall from where it formerly was
+    type: Tweak
+  id: 335
+  time: '2025-01-19T09:34:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/246
+- author: Conflee
+  changes:
+  - message: Replaced former Detective's Office with a shop. Ran a maints tunnel to
+      connect Slums Hall with the Viewing Deck below Bar, as well as the Viewing Deck
+      to the Tree Room. This allows for alternative maints navigation from the west
+      side of the station to the east without having to go down 'proper' hallways
+    type: Tweak
+  id: 336
+  time: '2025-01-19T09:34:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/246
+- author: Conflee
+  changes:
+  - message: Turned the old Library into an extension of dorms, built more like an
+      apartment with 2 rooms, a kitchen, and a living room. Good spot to RP now I
+      hope
+    type: Tweak
+  id: 337
+  time: '2025-01-19T09:34:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/246
+- author: Conflee
+  changes:
+  - message: Redesigned Brigmed room to be more to standards. Empty Chem Dispenser,
+      Chem Master, Hot Plate, Blender, Morgue, and a bedroom
+    type: Tweak
+  id: 338
+  time: '2025-01-19T09:34:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/246
+- author: Conflee
+  changes:
+  - message: In Medical. Replaced old Reception with Chemistry, old Chemistry with
+      CMO, and old CMO with Reception. This gives CMO proper space so they don't live
+      in a closet, and gives Chemistry a public front desk
+    type: Tweak
+  id: 339
+  time: '2025-01-19T09:34:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/246
+- author: Conflee
+  changes:
+  - message: More Meteor Shielding around Tesla. Comes round-start with Meteors embedded
+      into it, to reflect the average Cog round
+    type: Tweak
+  id: 340
+  time: '2025-01-19T09:34:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/246
+- author: Conflee
+  changes:
+  - message: Added all Starlight Venders and ATMs, so Starlight's economy now works
+      on Cog
+    type: Tweak
+  id: 341
+  time: '2025-01-19T09:34:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/246
+

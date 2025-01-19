@@ -9,6 +9,11 @@
     back: ClothingBackpackDuffelBlueShield
 
 - type: loadout
+  id: BlueShieldSatchel
+  equipment:
+    back: ClothingBackpackSatchelBlueShield
+
+- type: loadout
   id: BlueShieldJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtBlueShield
@@ -17,3 +22,13 @@
   id: BlueShieldJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitBlueShield
+
+- type: loadout
+  id: EliteBlueShieldJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtEliteBlueShield
+
+- type: loadout
+  id: EliteBlueShieldJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitEliteBlueShield

@@ -6,3 +6,12 @@
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Back/Satchels/roboticist.rsi
+
+- type: entity
+  parent: [ClothingBackpackSatchel, BaseCommandContraband]
+  id: ClothingBackpackSatchelBlueShield
+  name: Blueshield Officer Satchel
+  description: Useful for holding everything a speedy Blueshield Officer needs!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Back/Satchels/blueshield.rsi

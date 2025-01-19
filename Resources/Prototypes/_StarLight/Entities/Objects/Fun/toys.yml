@@ -33,6 +33,18 @@
 
 - type: entity
   parent: BasePlushie
+  id: PlushieMimeLizard 
+  name: lizard mime plushie
+  description: Wait, where is the sou-- oh.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: mime_lizard
+  - type: Item
+    heldPrefix: plushielizard
+
+- type: entity
+  parent: BasePlushie
   id: OddDeerPlushie
   name: odd deer plushie
   description: Shika noko noko noko koshi tan tan~
