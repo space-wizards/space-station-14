@@ -229,11 +229,15 @@
   components:
   - type: SolutionContainerManager
   - type: InjectableSolution
-    solution: chemicals
+    solution: bloodstream
   - type: Bloodstream
     bloodlossDamage:
       types:
-        Bloodloss: 0.5
+        Asphyxiation: 2
+    hypervolemiaDamage:
+      types:
+        Slash: 0.1
+        Asphyxiation: 1.90
     bloodlossHealDamage:
       types:
         Bloodloss: -1
