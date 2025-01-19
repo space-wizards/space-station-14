@@ -208,7 +208,7 @@
   name: X-01 multiphase energy gun
   parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
   id: WeaponMultiphaseGun
-  description: This is an expensive, modern version of the antique laser pistol. This weapon has several unique fire modes, but no ability to reload on its own over time.
+  description: This is an expensive, modern version of the antique laser pistol. This weapon has several unique fire modes, with the ability to slowly reload over time.
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/multiphase_gun.rsi

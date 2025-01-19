@@ -1,7 +1,8 @@
 - type: entity
-  parent: ClothingOuterArmorBasic
+  parent: [ClothingOuterArmorBasic, BaseCommandContraband]
   id: ClothingOuterArmorBlueShield
   name: blueshield officer's bulletproof vest
+  description: Much better than a standard type-1 security vest. Don't lose it, you will NOT get a replacement.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/OuterClothing/Armor/blueshield.rsi

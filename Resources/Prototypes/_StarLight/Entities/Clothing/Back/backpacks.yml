@@ -8,9 +8,10 @@
     sprite: _Starlight/Clothing/Back/Backpacks/roboticist.rsi
     
 - type: entity
-  parent: ClothingBackpack
+  parent: [ClothingBackpack, BaseCommandContraband]
   id: ClothingBackpackBlueShield
   name: blueshield's backpack
+  description: A lightweight but reliable backpack. Can't go wrong with the classics!
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Back/Backpacks/blueshield.rsi
