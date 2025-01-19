@@ -291,10 +291,6 @@ public partial class SharedGunSystem
             Boolean? chamber = component.Chambers[i];
             EntityUid? slot = component.AmmoSlots[i];
 
-            // clear the slot and clear the chamber
-            component.AmmoSlots[i] = null;
-            component.Chambers[i] = null;
-
             // Check if there is nothing in the slot
             if (slot == null)
             {
@@ -306,26 +302,35 @@ public partial class SharedGunSystem
                 {
                     // Since this slot has nothing in it, but it should have something, spawn it.
                     slot = Spawn(component.FillPrototype, mapCoordinates);
-                    EnsureShootable(slot.Value);
+                    EnsureShootable(slot);
 
-                    // Add it to the slot
-                    Containers.Insert(slot.Value, component.AmmoContainer);
+                    // Set it to a spent cartridge if it's supposed to be
+                    if (TryComp<CartridgeAmmoComponent>(slot, out var cartridge))
+                        SetCartridgeSpent(slot, cartridge, !(bool) chamber);
                 }
             }
-
-            if (slot != null) // this is to get the compiler to chill
+            else // if there is something in the slot, remove it from the container
             {
-                // Eject the cartridge
+                Containers.Remove(slot.Value, component.AmmoContainer);
+            }
+
+            if (slot != null) // Makes the compiler chill
+            {
+                // Eject the cartridge if server-side
                 if (!_netManager.IsClient)
                 {
-                    Containers.Remove(slot.Value, component.AmmoContainer);
                     EjectCartridge(slot.Value);
                 }
-                else if (IsClientSide(slot.Value)) // if we're on the client, delete it. Server has the authority.
+                // If execution is client-side, and the object is client-side, just delete it
+                else if (IsClientSide(slot.Value))
                 {
-                    QueueDel(slot);
+                    QueueDel(slot.Value);
                 }
             }
+
+            // Remove the round from the slot and clear the chamber
+            component.AmmoSlots[i] = null;
+            component.Chambers[i] = null;
 
             // Set the flag that plays the sound, updates ammo count, and changes the appearance.
             anyEmpty = true;
@@ -421,7 +426,7 @@ public partial class SharedGunSystem
             }
 
             // Delete the cartridge entity on client
-            if (_netManager.IsClient)
+            if (_netManager.IsClient && IsClientSide(ent.Value))
             {
                 QueueDel(ent);
             }

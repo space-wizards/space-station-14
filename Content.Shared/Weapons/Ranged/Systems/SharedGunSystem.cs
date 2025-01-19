@@ -447,7 +447,8 @@ public abstract partial class SharedGunSystem : EntitySystem
             DirtyField(uid, cartridge, nameof(CartridgeAmmoComponent.Spent));
 
         cartridge.Spent = spent;
-        Appearance.SetData(uid, AmmoVisuals.Spent, spent);
+        if (spent) // Setting Appearance AmmoVisuals.Spent to false causes issues
+            Appearance.SetData(uid, AmmoVisuals.Spent, spent);
     }
 
     /// <summary>
