@@ -621,7 +621,7 @@
     heldPrefix: red
   - type: IdCard
     jobTitle: job-name-deathsquad
-    jobIcon: JobIconDeathsquadron
+    jobIcon: JobIconDeathsquad
   - type: PresetIdCard
     job: DeathSquad
 
