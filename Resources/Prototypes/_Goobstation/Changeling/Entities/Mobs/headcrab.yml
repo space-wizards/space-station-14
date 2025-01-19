@@ -19,7 +19,7 @@
     - VimPilot
     - MultitoolDefibrillatorTarget
   - type: Physics
-  - type: ComplexInteraction
+  - type: ComplexInteraction # imp edit
   - type: Fixtures
     fixtures:
       fix1:
