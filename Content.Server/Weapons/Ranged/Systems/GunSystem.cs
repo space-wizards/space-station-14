@@ -396,48 +396,45 @@ public sealed partial class GunSystem : SharedGunSystem
         // Forgive me for the shitcode I am about to do
         // Effects tempt me not
         var sprites = new List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
-        var gridUid = fromCoordinates.GetGridUid(EntityManager);
+        var fromXform = Transform(fromCoordinates.EntityId);
         var angle = mapDirection;
 
         // We'll get the effects relative to the grid / map of the firer
         // Look you could probably optimise this a bit with redundant transforms at this point.
-        var xformQuery = GetEntityQuery<TransformComponent>();
 
-        if (xformQuery.TryGetComponent(gridUid, out var gridXform))
+        var gridUid = fromXform.GridUid;
+        if (gridUid != fromCoordinates.EntityId && TryComp(gridUid, out TransformComponent? gridXform))
         {
-            var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform, xformQuery);
-
-            fromCoordinates = new EntityCoordinates(gridUid.Value,
-                Vector2.Transform(fromCoordinates.ToMapPos(EntityManager, TransformSystem), gridInvMatrix));
-
-            // Use the fallback angle I guess?
+            var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform);
+            var map = _transform.ToMapCoordinates(fromCoordinates);
+            fromCoordinates = new EntityCoordinates(gridUid.Value, Vector2.Transform(map.Position, gridInvMatrix));
             angle -= gridRot;
         }
+        else
+        {
+            angle -= _transform.GetWorldRotation(fromXform);
+        }
 
+        var fromNetCoords = GetNetCoordinates(fromCoordinates);
+        var dir = angle.ToVec();
         if (distance >= 1f)
         {
             if (hitscan.MuzzleFlash != null)
             {
-                var coords = fromCoordinates.Offset(angle.ToVec().Normalized() / 2);
-                var netCoords = GetNetCoordinates(coords);
-
+                var netCoords = new NetCoordinates(fromNetCoords.NetEntity, fromNetCoords.Position + dir / 2);
                 sprites.Add((netCoords, angle, hitscan.MuzzleFlash, 1f));
             }
 
             if (hitscan.TravelFlash != null)
             {
-                var coords = fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2);
-                var netCoords = GetNetCoordinates(coords);
-
+                var netCoords = new NetCoordinates(fromNetCoords.NetEntity, fromNetCoords.Position + dir * (distance + 0.5f) / 2);
                 sprites.Add((netCoords, angle, hitscan.TravelFlash, distance - 1.5f));
             }
         }
 
         if (hitscan.ImpactFlash != null)
         {
-            var coords = fromCoordinates.Offset(angle.ToVec() * distance);
-            var netCoords = GetNetCoordinates(coords);
-
+            var netCoords = new NetCoordinates(fromNetCoords.NetEntity,fromNetCoords.Position + dir * distance);
             sprites.Add((netCoords, angle.FlipPositive(), hitscan.ImpactFlash, 1f));
         }
 
