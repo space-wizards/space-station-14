@@ -2906,6 +2906,7 @@ entities:
             3064: 74,22
         - node:
             cleanable: True
+            zIndex: 1
             color: '#FFFFFFFF'
             id: Dirt
           decals:
@@ -3059,6 +3060,8 @@ entities:
             5207: 22,-37
             5208: 20,-37
         - node:
+            cleanable: True
+            zIndex: 1
             color: '#FFFFFFFF'
             id: DirtHeavy
           decals:
@@ -3066,11 +3069,6 @@ entities:
             2901: 39,34
             2906: 46,27
             2922: 49,33
-        - node:
-            cleanable: True
-            color: '#FFFFFFFF'
-            id: DirtHeavy
-          decals:
             426: 40,-41
             427: 40,-40
             484: 31,-36
@@ -3164,29 +3162,13 @@ entities:
             5182: 5,-21
             5253: 30,-26
             5256: 30,-25
-        - node:
-            cleanable: True
-            angle: 1.5707963267948966 rad
-            color: '#FFFFFFFF'
-            id: DirtHeavy
-          decals:
             3010: 59,32
             3011: 59,40
-        - node:
-            cleanable: True
-            angle: 3.141592653589793 rad
-            color: '#FFFFFFFF'
-            id: DirtHeavy
-          decals:
             3007: 59,34
-        - node:
-            cleanable: True
-            angle: 4.71238898038469 rad
-            color: '#FFFFFFFF'
-            id: DirtHeavy
-          decals:
             3008: 59,38
         - node:
+            cleanable: True
+            zIndex: 1
             color: '#FFFFFFFF'
             id: DirtHeavyMonotile
           decals:
@@ -3194,11 +3176,6 @@ entities:
             2904: 40,35
             2932: 37,19
             2933: 38,17
-        - node:
-            cleanable: True
-            color: '#FFFFFFFF'
-            id: DirtHeavyMonotile
-          decals:
             3000: 55,34
             3024: 37,31
             3025: 40,30
@@ -3304,17 +3281,13 @@ entities:
             5184: 7,-19
             5238: 31,-24
             5254: 31,-26
-        - node:
-            cleanable: True
-            angle: 1.5707963267948966 rad
-            color: '#FFFFFFFF'
-            id: DirtHeavyMonotile
-          decals:
             3001: 54,35
             3002: 56,38
             3003: 54,39
             3592: 4,40
         - node:
+            cleanable: True
+            zIndex: 1
             color: '#FFFFFFFF'
             id: DirtLight
           decals:
@@ -3324,11 +3297,6 @@ entities:
             2902: 39,36
             2903: 40,34
             2908: 49,35
-        - node:
-            cleanable: True
-            color: '#FFFFFFFF'
-            id: DirtLight
-          decals:
             429: 42,-41
             430: 42,-40
             431: 46,-41
@@ -3521,15 +3489,11 @@ entities:
             5210: 19,-37
             5212: 19,-29
             5236: 31,-25
-        - node:
-            cleanable: True
-            angle: 3.141592653589793 rad
-            color: '#FFFFFFFF'
-            id: DirtLight
-          decals:
             3004: 57,39
             3006: 55,32
         - node:
+            cleanable: True
+            zIndex: 1
             color: '#FFFFFFFF'
             id: DirtMedium
           decals:
@@ -3537,11 +3501,6 @@ entities:
             2898: 40,33
             2899: 39,35
             2918: 58,40
-        - node:
-            cleanable: True
-            color: '#FFFFFFFF'
-            id: DirtMedium
-          decals:
             421: 38,-41
             422: 39,-40
             423: 45,-41
@@ -3630,26 +3589,8 @@ entities:
             5211: 22,-36
             5237: 31,-25
             5257: 30,-24
-        - node:
-            cleanable: True
-            angle: 1.5707963267948966 rad
-            color: '#FFFFFFFF'
-            id: DirtMedium
-          decals:
             3020: 39,30
-        - node:
-            cleanable: True
-            angle: 3.141592653589793 rad
-            color: '#FFFFFFFF'
-            id: DirtMedium
-          decals:
             3021: 43,30
-        - node:
-            cleanable: True
-            angle: 4.71238898038469 rad
-            color: '#FFFFFFFF'
-            id: DirtMedium
-          decals:
             3022: 38,31
         - node:
             color: '#FFFFFFFF'
