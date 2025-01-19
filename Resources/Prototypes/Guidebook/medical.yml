@@ -4,6 +4,7 @@
   text: "/ServerInfo/Guidebook/Medical/Medical.xml"
   children:
   - Medical Doctor
+  - Blood Pressure
   - Chemist
   - Cloning
   - Cryogenics
@@ -12,6 +13,11 @@
   id: Medical Doctor
   name: guide-entry-medicaldoctor
   text: "/ServerInfo/Guidebook/Medical/MedicalDoctor.xml"
+
+- type: guideEntry
+  id: Blood Pressure
+  name: guide-entry-bloodpressure
+  text: "/ServerInfo/Guidebook/Medical/BloodPressure.xml"
 
 - type: guideEntry
   id: Cloning

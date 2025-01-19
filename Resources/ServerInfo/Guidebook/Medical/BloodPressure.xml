@@ -1,0 +1,51 @@
+<Document>
+# Blood pressure
+It is important to maintain optimal blood pressure at all times. A [color=#59FF59]normal[/color] healthy humanoid has around [color=#59FF59]300[/color] units of blood
+and scanners will read it as [color=#59FF59]100%[/color] of blood level.
+
+Blood level below [color=#5959FF]90%[/color] ([color=#5959FF]270[/color] units) is considered [color=#5959FF]hypovolemia[/color].
+
+Blood level above [color=#FF5959]110%[/color] ([color=#FF5959]330[/color] units) is considered [color=#FF5959]hypervolemia[/color].
+
+
+## Hypovolemia
+[color=#5959FF]Low[/color] fluid volume presence in blood. Or simply just [color=#5959FF]blood loss[/color].
+
+Causes:
+- Bleeding
+- Blood transfusion
+- Toxins
+
+Symptoms:
+- Pale skin
+- Dizziness
+- Stuttering
+- Shortness of breath
+
+Treatment:
+- Applying correct blood packs via IV methods until patient is no longer pale or blood level reading above [color=#5959FF]90%[/color]
+- Applying saline via IV
+- Syringe injections instead IVs are possible, but not recommended
+- Drinking big amount of water could also work as temporary solution
+
+## Hypervolemia
+[color=#FF5959]High[/color] fluid volume presence in blood. Or simply just fluid [color=#FF5959]overload[/color].
+
+Causes:
+- Unhealthy consumption of food and drinks
+- Chemical medication
+- Blood transfusion
+
+Symptoms:
+- Constant minor nose bleeds
+- Dizziness
+- Slurred speech
+- Shortness of breath
+
+Treatment:
+- Extract excess blood via IV and blood packs until patien feels no discomfort or blood level reading bellow [color=#FF5959]110%[/color]
+- Extract excess blood via syringe
+- Apply charcoal medication if the known cause is chemicals
+- Inflicting bleeding wounds is NOT a valid treatment for hypervolemia
+
+</Document>
