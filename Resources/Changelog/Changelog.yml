@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Adjusted the costs and production times of all electronics so they're
-      more consistent with eachother.
-    type: Tweak
-  id: 7331
-  time: '2024-09-09T19:34:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31524
 - author: Winkarst-cpu
   changes:
   - message: Now fire axe (the flaming one), and an advanced circular saw are Syndicate
@@ -3913,3 +3905,11 @@
   id: 7830
   time: '2025-01-19T05:32:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34475
+- author: Winkarst-cpu
+  changes:
+  - message: Now items from the storage implant drop on the floor upon gibbing of
+      the owner.
+    type: Tweak
+  id: 7831
+  time: '2025-01-19T19:48:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33493
