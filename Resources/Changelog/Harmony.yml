@@ -966,3 +966,10 @@ Entries:
     changes:
     - type: Add
       message: Syndicate traitors can now purchase deathrattle implants.
+  - id: 310
+    author: spanky-spanky
+    time: '2025-01-19T03:55:37.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/310
+    changes:
+    - type: Tweak
+      message: Central Command has been replaced with a custom map.
