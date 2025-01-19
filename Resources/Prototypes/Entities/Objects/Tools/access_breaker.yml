@@ -7,11 +7,10 @@
   components:
   - type: AccessBreaker
   - type: Sprite
-    sprite: Objects/Tools/access_configurator.rsi
+    sprite: Objects/Tools/access_breaker.rsi
     state: icon
   - type: Item
-    sprite: Objects/Tools/access_configurator.rsi
-    storedRotation: -90
+    sprite: Objects/Tools/access_breaker.rsi
 
 - type: entity
   parent: AccessBreakerUnlimited
