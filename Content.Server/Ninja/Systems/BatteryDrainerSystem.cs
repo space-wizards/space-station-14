@@ -106,6 +106,6 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
         _popup.PopupEntity(Loc.GetString("battery-drainer-success", ("battery", target)), uid, uid);
 
         // repeat the doafter until battery is full
-        return !battery.IsFullyCharged;
+        return !_battery.IsFull(ent, battery);
     }
 }
