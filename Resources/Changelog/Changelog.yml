@@ -1,125 +1,4 @@
 ﻿Entries:
-- author: Psychpsyo
-  changes:
-  - message: The random sentience event should now actually happen again.
-    type: Fix
-  id: 7316
-  time: '2024-09-08T12:10:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31953
-- author: Beck Thompson
-  changes:
-  - message: Gold and silver rings now give a small amount of materials when scrapped.
-    type: Tweak
-  id: 7317
-  time: '2024-09-08T16:10:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31847
-- author: K-Dynamic
-  changes:
-  - message: added missing missing resistance values for directional plasma and uranium
-      windows
-    type: Fix
-  id: 7318
-  time: '2024-09-08T18:08:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31975
-- author: qwerltaz
-  changes:
-  - message: Power cables on the ground are now offset and do not obscure each other
-      or pipes beneath.
-    type: Tweak
-  id: 7319
-  time: '2024-09-09T10:00:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32000
-- author: ArtisticRoomba
-  changes:
-  - message: Budget insulated gloves now leave behind yellow frayed insulative fibers
-      instead of yellow insulative fibers. Detectives, rejoice!
-    type: Tweak
-  id: 7320
-  time: '2024-09-09T10:30:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31886
-- author: slarticodefast
-  changes:
-  - message: Revenants or other mobs without hands can no longer spill jugs.
-    type: Fix
-  id: 7321
-  time: '2024-09-09T11:02:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31438
-- author: PJB3005
-  changes:
-  - message: The emergency shuttle will now wait at the station longer if it couldn't
-      dock at evac.
-    type: Tweak
-  id: 7322
-  time: '2024-09-09T18:10:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31496
-- author: Boaz1111
-  changes:
-  - message: Pacifists can now use grapple guns.
-    type: Tweak
-  id: 7323
-  time: '2024-09-09T19:15:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32014
-- author: lzk228
-  changes:
-  - message: All bots are available for disguise with the Chameleon Ppotlight
-    type: Tweak
-  id: 7324
-  time: '2024-09-09T19:18:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32006
-- author: DieselMohawk
-  changes:
-  - message: Added Security Trooper Uniform
-    type: Add
-  id: 7325
-  time: '2024-09-09T19:19:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31997
-- author: qwerltaz
-  changes:
-  - message: Dragon ghost role now spawns outside the station.
-    type: Tweak
-  - message: Dragon ghost role now spawns where advertised!
-    type: Fix
-  id: 7326
-  time: '2024-09-09T19:22:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31890
-- author: yuitop
-  changes:
-  - message: Fixed some cases when surveillance camera's red light not turning off
-      when needed
-    type: Fix
-  id: 7327
-  time: '2024-09-09T19:23:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31831
-- author: Blackern5000
-  changes:
-  - message: Normal and reinforced windows have been made directly upgradable using
-      rods, plasma, uranium, or plasteel.
-    type: Add
-  - message: Reinforced plasma and uranium windows have been made tougher.
-    type: Tweak
-  - message: Windows have been made to correctly display their damage visuals.
-    type: Fix
-  - message: Reinforced plasma windows have been given the correct amount of hp and
-      no longer have 12x the amount they should.
-    type: Fix
-  id: 7328
-  time: '2024-09-09T19:26:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31978
-- author: Cojoke-dot
-  changes:
-  - message: Nuclear bombs now require the Nuclear Authentification Disk to toggle
-      anchor.
-    type: Tweak
-  id: 7329
-  time: '2024-09-09T19:30:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29565
-- author: Hreno
-  changes:
-  - message: Display agents' jobs in the Round End Summary window.
-    type: Add
-  id: 7330
-  time: '2024-09-09T19:31:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31652
 - author: deltanedas
   changes:
   - message: Adjusted the costs and production times of all electronics so they're
@@ -3923,3 +3802,114 @@
   id: 7815
   time: '2025-01-15T21:21:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34303
+- author: themias
+  changes:
+  - message: The DNA scrambler implant no longer updates your ID card or station record
+    type: Fix
+  id: 7816
+  time: '2025-01-15T22:49:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34091
+- author: jbox144
+  changes:
+  - message: Added Plasma Station
+    type: Add
+  id: 7817
+  time: '2025-01-16T07:02:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33991
+- author: jbox144
+  changes:
+  - message: Reduced Plasma's minimum population to 20, maximum population to 60
+    type: Tweak
+  - message: Reduced Plasma's clown jobs from 2 to 1
+    type: Tweak
+  id: 7818
+  time: '2025-01-16T08:51:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34462
+- author: pcaessayrs
+  changes:
+  - message: Uranium, Cak, and BreadDog are no longer space garbage.
+    type: Fix
+  id: 7819
+  time: '2025-01-16T11:40:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34192
+- author: GansuLalan
+  changes:
+  - message: Pianos will no longer push players off when climbing them
+    type: Fix
+  id: 7820
+  time: '2025-01-16T12:25:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33690
+- author: Southbridge
+  changes:
+  - message: More Ionstorm law elements have been added
+    type: Add
+  id: 7821
+  time: '2025-01-16T20:49:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34197
+- author: southbridge-fur
+  changes:
+  - message: Pride-O-Mats now have scarves instead of cloaks
+    type: Tweak
+  id: 7822
+  time: '2025-01-17T11:35:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34448
+- author: Toby222
+  changes:
+  - message: Update nix flake to use current nixpkgs release
+    type: Fix
+  id: 7823
+  time: '2025-01-17T17:26:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34480
+- author: ArtisticRoomba, miamioni
+  changes:
+  - message: The Space Lizard plushie can now be worn on top of your head.
+    type: Add
+  id: 7824
+  time: '2025-01-18T09:02:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33809
+- author: Spacemann
+  changes:
+  - message: Station cameras can now be destroyed by bullets.
+    type: Add
+  id: 7825
+  time: '2025-01-18T13:41:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34500
+- author: Winkarst-cpu
+  changes:
+  - message: Some masks can now be seen when pulled down.
+    type: Add
+  id: 7826
+  time: '2025-01-18T16:58:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33451
+- author: Minemoder
+  changes:
+  - message: The chemical locker now has a 10u vial of plasma.
+    type: Add
+  id: 7827
+  time: '2025-01-18T18:27:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33871
+- author: Nox38
+  changes:
+  - message: Seclites now start with a medium-capacity power cell.
+    type: Tweak
+  - message: Seclite power draw (wattage) has been reduced to 0.5.
+    type: Tweak
+  id: 7828
+  time: '2025-01-18T22:56:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34469
+- author: K-Dynamic
+  changes:
+  - message: Empty guns have a louder dry fire sound (i.e. when the chamber or power
+      cell is empty).
+    type: Tweak
+  id: 7829
+  time: '2025-01-19T01:46:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34447
+- author: WarPigeon
+  changes:
+  - message: The debriefing room in CentComm is now open to heads of staff for end
+      of round roleplay.
+    type: Tweak
+  id: 7830
+  time: '2025-01-19T05:32:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34475
