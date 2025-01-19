@@ -8,22 +8,15 @@ namespace Content.Shared.Clothing.Components;
 [Access(typeof(MaskSystem))]
 public sealed partial class MaskComponent : Component
 {
-    /// <summary>
-    /// Action for toggling a mask (e.g., pulling the mask down or putting it back up)
-    /// </summary>
     [DataField, AutoNetworkedField]
     public EntProtoId ToggleAction = "ActionToggleMask";
 
     /// <summary>
-    /// Action for toggling a mask (e.g., pulling the mask down or putting it back up)
+    /// This mask can be toggled (pulled up/down)
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? ToggleActionEntity;
 
-    /// <summary>
-    /// Whether the mask is currently toggled (e.g., pulled down).
-    /// This generally disables some of the mask's functionality.
-    /// </summary>
     [DataField, AutoNetworkedField]
     public bool IsToggled;
 
@@ -34,13 +27,13 @@ public sealed partial class MaskComponent : Component
     public string EquippedPrefix = "up";
 
     /// <summary>
-    /// When <see langword="false"/>, the mask will not be toggleable.
+    /// When <see langword="true"/> will function normally, otherwise will not react to events
     /// </summary>
     [DataField("enabled"), AutoNetworkedField]
-    public bool IsToggleable = true;
+    public bool IsEnabled = true;
 
     /// <summary>
-    /// When <see langword="true"/> will disable <see cref="IsToggleable"/> when folded
+    /// When <see langword="true"/> will disable <see cref="IsEnabled"/> when folded
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool DisableOnFolded;
