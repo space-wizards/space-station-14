@@ -85,34 +85,36 @@
     - type: Clothing
       sprite: Clothing/Head/Hats/casa.rsi
 
-# Harmony change: Updates Sprite Pathing and Name for Inter-Departmental Berets Update
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretRND
-  name: senior researcher's beret
+  name: senior researcher's beret # Harmony Change: Renamed the Scientific Beret to better fit the jumpsuit name
   description: A beret for real scientists.
   components:
   - type: Sprite
+# Start of Harmony Change: Updated Sprite pathing
     sprite: _Harmony/Clothing/Head/Hats/beret_rnd.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/Head/Hats/beret_rnd.rsi
+# End of Change
   - type: Tag
     tags:
     - ClothMade
     - HamsterWearable
     - WhitelistChameleon
 
-# Harmony change: Updates Sprite Pathing and Name for Inter-Departmental Berets Update
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretEngineering
-  name: senior engineer's beret
+  name: senior engineer's beret # Harmony Change: Renamed the Engineering Beret to better fit the jumpsuit name
   description: A beret with the engineering insignia emblazoned on it. For engineers that are more inclined towards style than safety.
   components:
   - type: Sprite
+# Start of Harmony Change: Updated Sprite pathing
     sprite: _Harmony/Clothing/Head/Hats/beret_engineering.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/Head/Hats/beret_engineering.rsi
+# End of Change
   - type: Tag
     tags:
     - ClothMade
@@ -163,17 +165,18 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_warden.rsi
 
-# Harmony change: Updates Sprite Pathing and Name for Inter-Departmental Berets Update
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretSeniorPhysician
-  name: senior physician's beret
+  name: senior physician's beret # Harmony Change: Renamed the Physician Beret to better fit the jumpsuit name
   description: Donning the colours of medical and chemistry, physicians are the pride of this department!
   components:
   - type: Sprite
+# Start of Harmony Change: Updated Sprite pathing
     sprite: _Harmony/Clothing/Head/Hats/beret_physician.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/Head/Hats/beret_physician.rsi
+# End of Change
 
 - type: entity
   parent: ClothingHeadBase
