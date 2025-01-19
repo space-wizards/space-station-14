@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: Nuclear bombs now require the Nuclear Authentification Disk to toggle
-      anchor.
-    type: Tweak
-  id: 7329
-  time: '2024-09-09T19:30:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29565
 - author: Hreno
   changes:
   - message: Display agents' jobs in the Round End Summary window.
@@ -3912,3 +3904,11 @@
   id: 7828
   time: '2025-01-18T22:56:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34469
+- author: K-Dynamic
+  changes:
+  - message: Empty guns have a louder dry fire sound (i.e. when the chamber or power
+      cell is empty).
+    type: Tweak
+  id: 7829
+  time: '2025-01-19T01:46:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34447
