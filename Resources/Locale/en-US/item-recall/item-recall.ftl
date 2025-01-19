@@ -1,6 +1,3 @@
-item-recall-grimoire-name = Item Recall
-item-recall-grimoire-desc = Mark a held item and summon it back at any time with just a snap of your fingers!
-
 item-recall-marked-name = Recall {CAPITALIZE($item)}
 item-recall-marked-description = Recall {THE($item)} back into your hand.
 

@@ -228,8 +228,8 @@
 
 - type: listing
   id: SpellbookItemRecallSwap
-  name: item-recall-grimoire-name
-  description: item-recall-grimoire-desc
+  name: spellbook-item-recall-name
+  description: spellbook-item-recall-description
   productAction: ActionItemRecall
   cost:
     WizCoin: 1

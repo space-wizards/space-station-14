@@ -23,6 +23,9 @@ spellbook-ethereal-jaunt-description = Slip into the ethereal plane to slip away
 spellbook-mind-swap-name = Mind Swap
 spellbook-mind-swap-description = Exchange bodies with another person!
 
+spellbook-item-recall-name = Item Recall
+spellbook-item-recall-description = Mark a held item and summon it back at any time with just a snap of your fingers!
+
 # Equipment
 
 spellbook-wand-polymorph-door-name = Wand of Entrance
