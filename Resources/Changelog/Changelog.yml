@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Hreno
-  changes:
-  - message: Display agents' jobs in the Round End Summary window.
-    type: Add
-  id: 7330
-  time: '2024-09-09T19:31:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31652
 - author: deltanedas
   changes:
   - message: Adjusted the costs and production times of all electronics so they're
@@ -3912,3 +3905,11 @@
   id: 7829
   time: '2025-01-19T01:46:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34447
+- author: WarPigeon
+  changes:
+  - message: The debriefing room in CentComm is now open to heads of staff for end
+      of round roleplay.
+    type: Tweak
+  id: 7830
+  time: '2025-01-19T05:32:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34475
