@@ -95,9 +95,8 @@ public sealed partial class GunSystem : SharedGunSystem
     private void OnMuzzleFlash(MuzzleFlashEvent args)
     {
         var gunUid = GetEntity(args.Uid);
-        var userUid = args.User != null ? GetEntity(args.User) : gunUid;
 
-        CreateEffect(gunUid, args, userUid);
+        CreateEffect(gunUid, args, gunUid);
     }
 
     private void OnHitscan(HitscanEvent ev)
