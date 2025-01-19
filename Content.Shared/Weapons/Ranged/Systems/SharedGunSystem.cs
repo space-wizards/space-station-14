@@ -507,10 +507,8 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (sprite == null)
             return;
 
-        var gunNetEntity = GetNetEntity(gun);
-        var userNetEntity = user != null ? GetNetEntity(user) : gunNetEntity;
-        var ev = new MuzzleFlashEvent(gunNetEntity, sprite, worldAngle, userNetEntity);
-        var sending = _netManager.IsClient ? gun : user;
+        var ev = new MuzzleFlashEvent(gunNetEntity, sprite, worldAngle);
+        var sending = _netManager.IsServer && user != null ? user : gun;
         CreateEffect(gun, ev, sending);
     }
 
