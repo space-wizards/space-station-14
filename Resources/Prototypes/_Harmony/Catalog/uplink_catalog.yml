@@ -38,6 +38,21 @@
 # Disruption
 # Allies
 # Implants
+- type: listing
+  id: UplinkDeathRattleTraitor
+  name: uplink-traitor-deathrattle-implant-name
+  description: uplink-traitor-deathrattle-implant-desc
+  productEntity: BoxDeathRattleImplantsTraitor
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkImplants
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+
 # Wearables
 # Pointless
 # Job Specific
