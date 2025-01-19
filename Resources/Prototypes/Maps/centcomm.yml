@@ -1,7 +1,7 @@
 - type: gameMap
   id: CentComm
   mapName: 'Central Command'
-  mapPath: /Maps/centcomm.yml
+  mapPath: /Maps/_Harmony/centcomm.yml # Harmony file path.
   minPlayers: 10
   stations:
     centcomm:
