@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Beanbag Kammerer and Beanbag Enforcer added, they only accept beanbag
-      shells and are yellow/orange respectively
-    type: Add
-  - message: Nonlethal Shotgun Crate (contains two BB Kammerers) to cargo order menu
-      for sec and bartenders
-    type: Add
-  - message: SWAT Crate now contains two BB Enforcers instead of the real ones, and
-      its price has been reduced by $1500 (to $6000)
-    type: Tweak
-  - message: BB Kammerers and BB Enforcers to secfab (require nonlethal/riot research
-      respectively)
-    type: Add
-  - message: Armory shotgun safes now contain two BB Kammerers and ammo boxes in addition
-      to the real ones
-    type: Add
-  - message: Silenced gunfire SFX so beanbag shotguns are audibly different from the
-      lethal ones
-    type: Add
-  - message: The bandolier is now only minor contraband (like the double barrel) since
-      the barvend dispenses it
-    type: Tweak
-  - message: Polished the equipped-on-back sprites for the four basic shotguns (new
-      slings, more detail, etc)
-    type: Tweak
-  id: 469
-  time: '2024-11-08T16:11:52.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/648
 - author: widgetbeck
   changes:
   - message: Rewrote (almost) all species guidebook entries to 1) be more consistent,
@@ -4464,3 +4435,10 @@
   id: 968
   time: '2025-01-19T04:48:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1424
+- author: Honeyed_Lemons_, AftrLite
+  changes:
+  - message: Tweaked the texture of the Syndicate Defib, and renamed it and its bundle.
+    type: Tweak
+  id: 969
+  time: '2025-01-19T04:50:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1407
