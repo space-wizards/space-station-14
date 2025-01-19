@@ -41,7 +41,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, TargetBeforeHyposprayInjectsEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SelfBeforeGunShotEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SelfBeforeClimbEvent>(RelayInventoryEvent);
-        SubscribeLocalEvent<InventoryComponent, ExaminedEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, ExaminedEvent>(RelayInventoryEvent); // Harmony - added for lanyards.
 
         // by-ref events
         SubscribeLocalEvent<InventoryComponent, GetExplosionResistanceEvent>(RefRelayInventoryEvent);

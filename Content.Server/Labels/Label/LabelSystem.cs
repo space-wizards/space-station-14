@@ -6,8 +6,15 @@ using Content.Shared.Labels;
 using Content.Shared.Labels.Components;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Paper;
+using FastAccessors;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Toolshed.TypeParsers;
+using Robust.Shared.Utility;
+using System.Linq;
+using Content.Shared.IdentityManagement;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Labels
 {
@@ -30,8 +37,13 @@ namespace Content.Server.Labels
             SubscribeLocalEvent<PaperLabelComponent, ComponentRemove>(OnComponentRemove);
             SubscribeLocalEvent<PaperLabelComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<PaperLabelComponent, EntRemovedFromContainerMessage>(OnContainerModified);
-            SubscribeLocalEvent<PaperLabelComponent, ExaminedEvent>(OnExamined);
-            SubscribeLocalEvent<PaperLabelComponent, InventoryRelayedEvent<ExaminedEvent>>((e, c, ev) => OnExamined(e, c, ev.Args));
+            // Harmony - OnExamined can now be inventory relayed from the neck slot for lanyard implementation.
+            // OnExamined is called with a true bool when the event is from an inventory relayed event,
+            // and a false bool when it is not. This changes the label inspection text to reflect it being from a lanyard.
+            // This would cause any other neck slot item with the label component to be described as a lanyard on inspection,
+            // but currently no others exist. 
+            SubscribeLocalEvent<PaperLabelComponent, ExaminedEvent>((e, c, ev) => OnExamined(e, c, ev, false));
+            SubscribeLocalEvent<PaperLabelComponent, InventoryRelayedEvent<ExaminedEvent>>((e, c, ev) => OnExamined(e, c, ev.Args, true));
         }
 
         /// <summary>
@@ -64,7 +76,7 @@ namespace Content.Server.Labels
             _itemSlotsSystem.RemoveItemSlot(uid, component.LabelSlot);
         }
 
-        private void OnExamined(EntityUid uid, PaperLabelComponent comp, ExaminedEvent args)
+        private void OnExamined(EntityUid uid, PaperLabelComponent comp, ExaminedEvent args, bool lanyard)
         {
             if (comp.LabelSlot.Item is not { Valid: true } item)
             {
@@ -72,9 +84,16 @@ namespace Content.Server.Labels
             }
             using (args.PushGroup(nameof(PaperLabelComponent)))
             {
+                // Harmony - uid's parent is saved to be used for localisation grammar if the label is from a lanyard.
+                // If it is not from a lanyard, then this does nothing.
+                var user = EntityManager.GetComponent<TransformComponent>(uid).ParentUid;
                 if (!args.IsInDetailsRange)
                 {
-                    args.PushMarkup(Loc.GetString("comp-paper-label-has-label-cant-read"));
+                    // Harmony - if this label component was relayed from the inventory, text is changed to"[They are] wearing a lanyard".
+                    if (lanyard == true)
+                        args.PushMarkup(Loc.GetString("comp-lanyard-has-lanyard-cant-read", ("user", Identity.Entity(user, EntityManager))));
+                    else
+                        args.PushMarkup(Loc.GetString("comp-paper-label-has-label-cant-read"));
                     return;
                 }
 
@@ -84,13 +103,31 @@ namespace Content.Server.Labels
 
                 if (string.IsNullOrWhiteSpace(paper.Content))
                 {
-                    args.PushMarkup(Loc.GetString("comp-paper-label-has-label-blank"));
+                    // Harmony - same as above.
+                    if (lanyard == true)
+                        args.PushMarkup(Loc.GetString("comp-lanyard-has-lanyard-blank", ("user", Identity.Entity(user, EntityManager))));
+                    else
+                        args.PushMarkup(Loc.GetString("comp-paper-label-has-label-blank"));
                     return;
                 }
-
-                args.PushMarkup(Loc.GetString("comp-paper-label-has-label"));
+                // Harmony - same as above.
+                if (lanyard == true)
+                    args.PushMarkup(Loc.GetString("comp-lanyard-has-lanyard", ("user", Identity.Entity(user, EntityManager))));
+                else
+                    args.PushMarkup(Loc.GetString("comp-paper-label-has-label"));
                 var text = paper.Content;
                 args.PushMarkup(text.TrimEnd());
+                // Harmony - shows which stamps have been applied to a label when inspected. Copied from PaperSystem.
+                if (paper.StampedBy.Count > 0)
+                {
+                    var commaSeparated =
+                        string.Join(", ", paper.StampedBy.Select(s => Loc.GetString(s.StampedName)));
+                    args.PushMarkup(
+                        Loc.GetString(
+                            "comp-label-examine-detail-stamped-by",
+                            ("stamps", commaSeparated))
+                    );
+                }
             }
         }
 

@@ -297,7 +297,7 @@ namespace Content.Shared.Examine
     ///     If you're pushing multiple messages that should be grouped together (or ordered in some way),
     ///     call <see cref="PushGroup"/> before pushing and <see cref="PopGroup"/> when finished.
     /// </summary>
-    public sealed class ExaminedEvent : EntityEventArgs, IInventoryRelayEvent
+    public sealed class ExaminedEvent : EntityEventArgs, IInventoryRelayEvent // Harmony - added inventory relay for lanyards.
     {
         /// <summary>
         ///     The message that will be displayed as the examine text.
@@ -531,7 +531,7 @@ namespace Content.Shared.Examine
         }
 
         private record ExamineMessagePart(FormattedMessage Message, int Priority, bool DoNewLine, string? Group);
-        public SlotFlags TargetSlots { get; } = SlotFlags.NECK;
+        public SlotFlags TargetSlots { get; } = SlotFlags.NECK; // Harmony - For targeting lanyards.
     }
 
 
