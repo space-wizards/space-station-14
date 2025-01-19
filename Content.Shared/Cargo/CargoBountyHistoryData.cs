@@ -51,12 +51,17 @@ public readonly partial record struct CargoBountyHistoryData
 
     /// <summary>
     /// Covers how a bounty was actually finished.
-    ///     Completed - Bounty was actually fulfilled and the goods sold
-    ///     Skipped - Bounty was explicitly skipped by some actor
     /// </summary>
     public enum BountyResult
     {
+        /// <summary>
+        /// Bounty was actually fulfilled and the goods sold
+        /// </summary>
         Completed = 0,
+
+        /// <summary>
+        /// Bounty was explicitly skipped by some actor
+        /// </summary>
         Skipped = 1,
     }
 }
