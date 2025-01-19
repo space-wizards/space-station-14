@@ -98,13 +98,13 @@ public sealed partial class NukeopsRuleComponent : Component
     /// <summary>
     ///     Delay between the nuke exploding and the round ending, to give time for the nuke to potentionally kill the nukies and downgrade their win.
     /// </summary>
-    [DataField]
+    [ViewVariables]
     public TimeSpan NukeExplodedRoundEndDelay = TimeSpan.FromSeconds(10);
 
     /// <summary>
     ///     Time when the nuke exploded, or null while it has not. Used to delay round end.
     /// </summary>
-    [DataField]
+    [ViewVariables]
     public TimeSpan? NukeExplodedTime;
 }
 
