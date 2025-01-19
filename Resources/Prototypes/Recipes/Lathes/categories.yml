@@ -50,20 +50,24 @@
 
 # Uniform printer
 - type: latheCategory
-  id: Coat
-  name: lathe-category-coat
+  id: Beadsheets
+  name: lathe-category-beadsheets
+
+- type: latheCategory
+  id: Coats
+  name: lathe-category-coats
 
 - type: latheCategory
   id: Command
   name: lathe-category-command
 
 - type: latheCategory
-  id: Hat
-  name: lathe-category-hat
+  id: Hats
+  name: lathe-category-hats
 
 - type: latheCategory
-  id: Jumpsuit
-  name: lathe-category-jumpsuit
+  id: Jumpsuits
+  name: lathe-category-jumpsuits
 
 - type: latheCategory
   id: Neck

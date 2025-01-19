@@ -15,8 +15,9 @@ lathe-category-chemicals = Chemicals
 lathe-category-materials = Materials
 
 # Uniform
-lathe-category-coat = Coat
+lathe-category-beadsheets = Beadsheets
+lathe-category-coats = Coats
 lathe-category-command = Command
-lathe-category-hat = Hat
-lathe-category-jumpsuit = Jumpsuit
+lathe-category-hats = Hats
+lathe-category-jumpsuits = Jumpsuits
 lathe-category-neck = Neck
