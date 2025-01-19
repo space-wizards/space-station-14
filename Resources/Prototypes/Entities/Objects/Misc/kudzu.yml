@@ -99,7 +99,7 @@
           reagents:
           - ReagentId: Nutriment
             Quantity: 2
-          
+
 - type: entity
   id: WeakKudzu
   parent: Kudzu
@@ -258,6 +258,9 @@
       damageRecovery:
         types:
           Asphyxiation: -0.25
+    - type: Tag
+      tags:
+      - Meat
 
 - type: entity
   name: dark haze
