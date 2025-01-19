@@ -1,0 +1,31 @@
+- type: entity
+  id: LockerCourierFilled
+  parent: LockerCourier
+  name: courier's locker
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+        - id: BoxEnvelope
+          amount: 2
+        - id: MaterialCardboard10
+        - id: BoxMailCapsulePrimed
+        - id: HandLabeler
+        - id: ClothingHeadsetCargo
+
+- type: entity
+  id: LockerCourierFilledHardsuit
+  parent: LockerCourier
+  name: courier's locker
+  suffix: Filled, Hardsuit
+  components:
+  - type: StorageFill
+    contents:
+        - id: BoxEnvelope
+          amount: 2
+        - id: MaterialCardboard10
+        - id: BoxMailCapsulePrimed
+        - id: HandLabeler
+        - id: ClothingHeadsetCargo
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitCourier

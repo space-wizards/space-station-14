@@ -44,6 +44,12 @@ public sealed partial class AntagSelectionComponent : Component
     public HashSet<ICommonSession> SelectedSessions = new();
 
     /// <summary>
+    /// Cached sessions of players who are chosen. Used so we don't have to rebuild the pool multiple times in a tick.
+    /// Is not serialized.
+    /// </summary>
+    public HashSet<ICommonSession> ProcessedSessions = new();
+
+    /// <summary>
     /// Locale id for the name of the antag.
     /// If this is set then the antag is listed in the round-end summary.
     /// </summary>

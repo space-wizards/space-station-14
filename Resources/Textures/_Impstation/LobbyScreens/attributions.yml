@@ -42,3 +42,8 @@
   license: "CC-BY-SA-4.0"
   copyright: "widgetbeck"
   source: "https://github.com/impstation/imp-station-14/"
+
+- files: ["NO-RO.webp"]
+  license: "CC-BY-SA-4.0"
+  copyright: "GooseyTeeth"
+  source: "https://x.com/GooseyTeeth/status/1879890513652036062/photo/1" # 18+ content is posted on this account
