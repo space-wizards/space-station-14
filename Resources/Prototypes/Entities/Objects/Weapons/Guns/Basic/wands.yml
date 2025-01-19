@@ -58,6 +58,42 @@
     count: 5
 
 - type: entity
+  name: wand of the locker
+  description: Stuff nerds at a distance!
+  parent: WeaponWandBase
+  id: WeaponWandLocker
+  components:
+  - type: Sprite
+    layers:
+    - state: locker
+      map: ["base"]
+    - state: locker-effect
+      map: ["effect"]
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
+  - type: BasicEntityAmmoProvider
+    proto: ProjectileLocker
+    capacity: 5
+    count: 5
+  - type: Item
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: locker-inhand-left
+      right:
+      - state: locker-inhand-right
+  - type: GenericVisualizer
+    visuals:
+      enum.AmmoVisuals.HasAmmo:
+        effect:
+          True: { visible: False }
+          False: { visible: True }
+        base:
+          True: { visible: True }
+          False: { visible: False }
+
+- type: entity
   name: magical wand of instant death
   parent: WeaponWandBase
   id: WeaponWandDeath

@@ -366,6 +366,21 @@
   objectType: Structure
   canRotate: true
 
+- type: construction
+  name: gas pipe sensor
+  id: GasPipeSensor
+  graph: GasPipeSensor
+  startNode: start
+  targetNode: sensor
+  category: construction-category-structures
+  description: Reports on the status of the gas within the attached pipe network. 
+  icon:
+    sprite: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
+    state: icon
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canRotate: true
+
 # ATMOS PIPES
 - type: construction
   name: gas pipe half
@@ -681,6 +696,20 @@
   icon:
     sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
     state: heStraight
+
+- type: construction
+  id: HeatExchangerBend
+  name: radiator bend
+  description: Transfers heat between the pipe and its surroundings.
+  graph: GasBinary
+  startNode: start
+  targetNode: bendradiator
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
+    state: heBend
 
 # ATMOS TRINARY
 - type: construction
