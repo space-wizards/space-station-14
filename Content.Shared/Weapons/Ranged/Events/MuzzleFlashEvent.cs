@@ -18,6 +18,5 @@ public sealed class MuzzleFlashEvent : EntityEventArgs
         Uid = uid;
         Prototype = prototype;
         Angle = angle;
-        User = user;
     }
 }
