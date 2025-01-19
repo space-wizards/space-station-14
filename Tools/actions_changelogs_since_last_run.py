@@ -81,6 +81,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
         }
 
         changes_by_type = {}
+        urls = set()
 
         for entry in group:
             sent_ids.append(entry["id"])
@@ -95,15 +96,17 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
                 max_field_length = 1024
                 for i in range(0, len(message), max_field_length):
                     changes_by_type[emoji].append(message[i:i + max_field_length])
+                    
+            url = entry.get("url")
+            if url and "https://" in url:
+                urls.add(url)
 
         for emoji, messages in changes_by_type.items():
             for message in messages:
                 embed["description"] += f"\n {emoji} {message}"
                 
-        urls = [entry.get("url") for entry in group if entry.get("url") and "https://" in entry.get("url")]
-        
         if urls:
-            embed["description"] += f"\n\n[GitHub Pull Request]({urls[0]})"
+            embed["description"] += "\n\nRelated Pull Requests:\n" + "\n".join(f"- [GitHub Pull Request]({url})" for url in urls)
 
         send_discord(embed)
 

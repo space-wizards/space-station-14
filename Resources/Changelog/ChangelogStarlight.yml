@@ -2440,4 +2440,69 @@ Entries:
   id: 341
   time: '2025-01-19T09:34:48.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/246
-
+- author: Killer Tamashi
+  changes:
+  - message: Added Elite BSO Jumpsuit/Skirt
+    type: Add
+  id: 342
+  time: '2025-01-19T09:34:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/248
+- author: Killer Tamashi
+  changes:
+  - message: Added BSO Satchel
+    type: Add
+  id: 343
+  time: '2025-01-19T09:34:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/248
+- author: Killer Tamashi
+  changes:
+  - message: Added BSO Elite Cape. Spawns in BSO Hardsuit locker due to missing BSO
+      locker definitions.
+    type: Add
+  id: 344
+  time: '2025-01-19T09:34:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/248
+- author: Killer Tamashi
+  changes:
+  - message: Added BSO Webbing
+    type: Add
+  id: 345
+  time: '2025-01-19T09:34:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/248
+- author: Killer Tamashi
+  changes:
+  - message: Added BSO Gasmask
+    type: Add
+  id: 346
+  time: '2025-01-19T09:34:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/248
+- author: Killer Tamashi
+  changes:
+  - message: Changed BSO hardsuit locker, it now gets the new security magboots.
+    type: Tweak
+  id: 347
+  time: '2025-01-19T09:34:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/248
+- author: Killer Tamashi
+  changes:
+  - message: Changed BSO's hardsuit helmet, it now looks less flat.
+    type: Tweak
+  id: 348
+  time: '2025-01-19T09:34:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/248
+- author: Killer Tamashi
+  changes:
+  - message: Fixed missing BSO clothing definitions, everything should now be classified
+      as command contraband.
+    type: Fix
+  id: 349
+  time: '2025-01-19T09:34:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/248
+- author: Killer Tamashi
+  changes:
+  - message: Fixed missing BSO clothing descriptions, everything should now have at
+      least SOME description when examined.
+    type: Fix
+  id: 350
+  time: '2025-01-19T09:34:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/248
