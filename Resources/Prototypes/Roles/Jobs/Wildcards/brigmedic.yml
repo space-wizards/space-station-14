@@ -27,7 +27,6 @@
   - Medical
   - Brig
   - Maintenance
-  - External
   # Do not add security access.
   special:
   - !type:AddImplantSpecial
