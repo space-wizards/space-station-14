@@ -46,7 +46,7 @@
       groups:
         Brute: -0.14
   - type: Bloodstream
-    bloodReagent: AlienBlood
+    bloodReagent: AbductorBlood
 
 - type: entity
   parent: BaseSpeciesDummy
