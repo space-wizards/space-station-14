@@ -273,7 +273,7 @@ entities:
           version: 6
         -1,-18:
           ind: -1,-18
-          tiles: BAAAAAAABAAAAAAABAAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAABwAAAAAAJwAAAAADJwAAAAAAJwAAAAAAJwAAAAAAJwAAAAADBwAAAAAACQAAAAABBAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABAAAAAAABwAAAAAAJwAAAAAAJwAAAAAAJwAAAAADBwAAAAAABwAAAAAABwAAAAAACQAAAAADBAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABAAAAAAABwAAAAAAJwAAAAABJwAAAAAABwAAAAAABwAAAAAACQAAAAACCQAAAAABCQAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABAAAAAAABwAAAAAAJwAAAAABJwAAAAAAJwAAAAAACQAAAAABCQAAAAADCQAAAAAACQAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABgAAAAAABwAAAAAAJwAAAAAAJwAAAAAAJwAAAAAACQAAAAADCQAAAAACBwAAAAAABwAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABAAAAAAABwAAAAAABwAAAAAAKAAAAAADBwAAAAAACQAAAAACCQAAAAABBwAAAAAAVgAAAAACBAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABAAAAAAABgAAAAAABwAAAAAACQAAAAAACQAAAAACCQAAAAABCQAAAAACBwAAAAAAVgAAAAADBAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABAAAAAAABAAAAAAABwAAAAAACQAAAAADRwAAAAABRwAAAAAACQAAAAAACQAAAAADVgAAAAADBAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABAAAAAAABAAAAAAABwAAAAAACQAAAAABRwAAAAAARwAAAAADCQAAAAABCQAAAAABAgAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAABwAAAAAACQAAAAACRwAAAAADRwAAAAADCQAAAAACCQAAAAADVgAAAAACBAAAAAAABAAAAAAABAAAAAAABwAAAAAAKAAAAAAAKAAAAAADKAAAAAAAJwAAAAACJwAAAAACBwAAAAAACQAAAAABCQAAAAADCQAAAAADCQAAAAABBwAAAAAAVgAAAAAABAAAAAAABAAAAAAABAAAAAAABwAAAAAAKAAAAAABKAAAAAADKAAAAAAAKAAAAAADKAAAAAABBwAAAAAACQAAAAABBwAAAAAACQAAAAADCQAAAAABBwAAAAAAVgAAAAAABAAAAAAABAAAAAAABAAAAAAAJwAAAAACJwAAAAACJwAAAAABKAAAAAAAKAAAAAACKAAAAAACKAAAAAABKAAAAAAABwAAAAAACQAAAAABCQAAAAACBwAAAAAABwAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAAJwAAAAABJwAAAAABKAAAAAADKAAAAAABKAAAAAACKAAAAAABJwAAAAADBwAAAAAACQAAAAACCQAAAAADCQAAAAAACQAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABgAAAAAAJwAAAAABJwAAAAADKAAAAAACKAAAAAABKAAAAAADJwAAAAACBwAAAAAABwAAAAAACQAAAAABCQAAAAABBwAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAAJwAAAAACJwAAAAABJwAAAAAAKAAAAAACJwAAAAADJwAAAAADBwAAAAAABwAAAAAABwAAAAAABwAAAAAA
+          tiles: BAAAAAAABAAAAAAABAAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAABwAAAAAAJwAAAAADJwAAAAAAJwAAAAAAJwAAAAAAJwAAAAADBwAAAAAACQAAAAABBAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABAAAAAAABwAAAAAAJwAAAAAAJwAAAAAAJwAAAAADBwAAAAAABwAAAAAABwAAAAAACQAAAAADBAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABAAAAAAABwAAAAAAJwAAAAABJwAAAAAABwAAAAAABwAAAAAACQAAAAACCQAAAAABCQAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABAAAAAAABwAAAAAAJwAAAAABJwAAAAAACQAAAAAACQAAAAABCQAAAAADCQAAAAAACQAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABgAAAAAABwAAAAAAJwAAAAAAJwAAAAAACQAAAAAACQAAAAADCQAAAAACBwAAAAAABwAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABAAAAAAABwAAAAAABwAAAAAAKAAAAAADBwAAAAAACQAAAAACCQAAAAABBwAAAAAAVgAAAAACBAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABAAAAAAABgAAAAAABwAAAAAACQAAAAAACQAAAAACCQAAAAABCQAAAAACBwAAAAAAVgAAAAADBAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABAAAAAAABAAAAAAABwAAAAAACQAAAAADRwAAAAABRwAAAAAACQAAAAAACQAAAAADVgAAAAADBAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABAAAAAAABAAAAAAABwAAAAAACQAAAAABRwAAAAAARwAAAAADCQAAAAABCQAAAAABAgAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAABwAAAAAACQAAAAACRwAAAAADRwAAAAADCQAAAAACCQAAAAADVgAAAAACBAAAAAAABAAAAAAABAAAAAAABwAAAAAAKAAAAAAAKAAAAAADKAAAAAAAJwAAAAACJwAAAAACBwAAAAAACQAAAAABCQAAAAADCQAAAAADCQAAAAABBwAAAAAAVgAAAAAABAAAAAAABAAAAAAABAAAAAAABwAAAAAAKAAAAAABKAAAAAADKAAAAAAAKAAAAAADKAAAAAABBwAAAAAACQAAAAABBwAAAAAACQAAAAADCQAAAAABBwAAAAAAVgAAAAAABAAAAAAABAAAAAAABAAAAAAAJwAAAAACJwAAAAACJwAAAAABKAAAAAAAKAAAAAACKAAAAAACKAAAAAABKAAAAAAABwAAAAAACQAAAAABCQAAAAACBwAAAAAABwAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAAJwAAAAABJwAAAAABKAAAAAADKAAAAAABKAAAAAACKAAAAAABJwAAAAADBwAAAAAACQAAAAACCQAAAAADCQAAAAAACQAAAAAABAAAAAAABAAAAAAABAAAAAAABgAAAAAABgAAAAAAJwAAAAABJwAAAAADKAAAAAACKAAAAAABKAAAAAADJwAAAAACBwAAAAAABwAAAAAACQAAAAABCQAAAAABBwAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAAJwAAAAACJwAAAAABJwAAAAAAKAAAAAACJwAAAAADJwAAAAADBwAAAAAABwAAAAAABwAAAAAABwAAAAAA
           version: 6
         0,-19:
           ind: 0,-19
@@ -1182,6 +1182,12 @@ entities:
           decals:
             113: 4.197618,-40.474594
         - node:
+            color: '#3C44AA93'
+            id: FullTileOverlayGreyscale
+          decals:
+            1689: -5,-285
+            1690: -5,-284
+        - node:
             color: '#9FED58CF'
             id: FullTileOverlayGreyscale
           decals:
@@ -1984,13 +1990,6 @@ entities:
             1271: -8,-272
             1299: -8,-271
         - node:
-            color: '#334D6BFF'
-            id: MiniTileWhiteCornerNe
-          decals:
-            1654: -6,-284
-            1655: -5,-287
-            1656: -3,-288
-        - node:
             color: '#334E6DC8'
             id: MiniTileWhiteCornerNe
           decals:
@@ -1999,6 +1998,13 @@ entities:
             70: -1,-10
             615: 30,-307
             1099: 2,-15
+        - node:
+            color: '#3C44AA93'
+            id: MiniTileWhiteCornerNe
+          decals:
+            1675: -6,-284
+            1676: -5,-287
+            1677: -3,-288
         - node:
             color: '#52B4E996'
             id: MiniTileWhiteCornerNe
@@ -2048,17 +2054,17 @@ entities:
             887: 1,-363
             1534: 2,-336
         - node:
-            color: '#334D6BFF'
-            id: MiniTileWhiteCornerNw
-          decals:
-            1653: -7,-284
-        - node:
             color: '#334E6DC8'
             id: MiniTileWhiteCornerNw
           decals:
             33: 1,-2
             69: -4,-10
             614: 28,-307
+        - node:
+            color: '#3C44AA93'
+            id: MiniTileWhiteCornerNw
+          decals:
+            1674: -7,-284
         - node:
             color: '#52B4E996'
             id: MiniTileWhiteCornerNw
@@ -2106,11 +2112,6 @@ entities:
             885: -1,-363
             1535: 1,-336
         - node:
-            color: '#334D6BFF'
-            id: MiniTileWhiteCornerSe
-          decals:
-            1664: -3,-289
-        - node:
             color: '#334E6DC8'
             id: MiniTileWhiteCornerSe
           decals:
@@ -2118,6 +2119,11 @@ entities:
             49: 6,-13
             72: -1,-12
             613: 30,-309
+        - node:
+            color: '#3C44AA93'
+            id: MiniTileWhiteCornerSe
+          decals:
+            1673: -3,-289
         - node:
             color: '#52B4E996'
             id: MiniTileWhiteCornerSe
@@ -2165,12 +2171,6 @@ entities:
             891: 1,-367
             1537: 2,-338
         - node:
-            color: '#334D6BFF'
-            id: MiniTileWhiteCornerSw
-          decals:
-            1657: -7,-288
-            1658: -6,-289
-        - node:
             color: '#334E6DC8'
             id: MiniTileWhiteCornerSw
           decals:
@@ -2178,6 +2178,12 @@ entities:
             54: 1,-13
             67: -4,-12
             612: 28,-309
+        - node:
+            color: '#3C44AA93'
+            id: MiniTileWhiteCornerSw
+          decals:
+            1671: -7,-288
+            1672: -6,-289
         - node:
             color: '#52B4E996'
             id: MiniTileWhiteCornerSw
@@ -2243,16 +2249,16 @@ entities:
           decals:
             1494: -22,-309
         - node:
-            color: '#334D6BFF'
-            id: MiniTileWhiteInnerNe
-          decals:
-            1668: -6,-287
-            1669: -5,-288
-        - node:
             color: '#334E6DC8'
             id: MiniTileWhiteInnerNe
           decals:
             40: 2,-5
+        - node:
+            color: '#3C44AA93'
+            id: MiniTileWhiteInnerNe
+          decals:
+            1686: -5,-288
+            1687: -6,-287
         - node:
             color: '#79150096'
             id: MiniTileWhiteInnerNe
@@ -2318,10 +2324,10 @@ entities:
             880: -2.7401419,-362.00235
             1621: -9,-135
         - node:
-            color: '#334D6BFF'
+            color: '#3C44AA93'
             id: MiniTileWhiteInnerSw
           decals:
-            1667: -6,-288
+            1688: -6,-288
         - node:
             color: '#52B4E996'
             id: MiniTileWhiteInnerSw
@@ -2359,12 +2365,6 @@ entities:
             876: 2.2476032,-361.486
             877: 2.0089047,-361.2591
         - node:
-            color: '#334D6BFF'
-            id: MiniTileWhiteLineE
-          decals:
-            1662: -6,-285
-            1663: -6,-286
-        - node:
             color: '#334E6DC8'
             id: MiniTileWhiteLineE
           decals:
@@ -2392,6 +2392,12 @@ entities:
             1100: 2,-16
             1101: 2,-17
             1102: 2,-18
+        - node:
+            color: '#3C44AA93'
+            id: MiniTileWhiteLineE
+          decals:
+            1681: -6,-285
+            1682: -6,-286
         - node:
             color: '#52B4E996'
             id: MiniTileWhiteLineE
@@ -2501,11 +2507,6 @@ entities:
             1538: 2,-337
             1622: -9,-136
         - node:
-            color: '#334D6BFF'
-            id: MiniTileWhiteLineN
-          decals:
-            1670: -4,-288
-        - node:
             color: '#334E6DC8'
             id: MiniTileWhiteLineN
           decals:
@@ -2516,6 +2517,11 @@ entities:
             76: -2,-10
             80: 1,-15
             618: 29,-307
+        - node:
+            color: '#3C44AA93'
+            id: MiniTileWhiteLineN
+          decals:
+            1685: -4,-288
         - node:
             color: '#52B4E996'
             id: MiniTileWhiteLineN
@@ -2604,12 +2610,6 @@ entities:
             886: 0,-363
             1624: -8,-137
         - node:
-            color: '#334D6BFF'
-            id: MiniTileWhiteLineS
-          decals:
-            1665: -4,-289
-            1666: -5,-289
-        - node:
             color: '#334E6DC8'
             id: MiniTileWhiteLineS
           decals:
@@ -2620,6 +2620,12 @@ entities:
             73: -2,-12
             74: -3,-12
             617: 29,-309
+        - node:
+            color: '#3C44AA93'
+            id: MiniTileWhiteLineS
+          decals:
+            1683: -5,-289
+            1684: -4,-289
         - node:
             color: '#52B4E996'
             id: MiniTileWhiteLineS
@@ -2703,13 +2709,6 @@ entities:
             893: 0,-367
             1623: -8,-135
         - node:
-            color: '#334D6BFF'
-            id: MiniTileWhiteLineW
-          decals:
-            1659: -7,-287
-            1660: -7,-286
-            1661: -7,-285
-        - node:
             color: '#334E6DC8'
             id: MiniTileWhiteLineW
           decals:
@@ -2723,6 +2722,13 @@ entities:
             66: 1,-12
             68: -4,-11
             616: 28,-308
+        - node:
+            color: '#3C44AA93'
+            id: MiniTileWhiteLineW
+          decals:
+            1678: -7,-287
+            1679: -7,-286
+            1680: -7,-285
         - node:
             color: '#52B4E996'
             id: MiniTileWhiteLineW
@@ -5662,7 +5668,7 @@ entities:
             1: 44714
           -7,-63:
             1: 61184
-            7: 12
+            5: 12
           -7,-62:
             1: 64443
           -7,-61:
@@ -5670,14 +5676,14 @@ entities:
           -7,-60:
             1: 48063
           -7,-64:
-            5: 12
-            6: 3072
+            6: 12
+            7: 3072
           -6,-64:
-            5: 1
-            6: 256
+            6: 1
+            7: 256
             1: 17476
           -6,-63:
-            7: 1
+            5: 1
             1: 5956
           -6,-62:
             1: 4096
@@ -5687,8 +5693,8 @@ entities:
             0: 52428
           -6,-65:
             1: 17476
-            9: 1
-            8: 256
+            8: 1
+            9: 256
           -7,-59:
             1: 251
           -6,-60:
@@ -5720,10 +5726,10 @@ entities:
           -7,-69:
             1: 61440
           -7,-66:
-            8: 3084
+            9: 3084
           -7,-65:
-            9: 12
-            8: 3072
+            8: 12
+            9: 3072
           -6,-68:
             1: 8751
             0: 38912
@@ -5731,7 +5737,7 @@ entities:
             1: 18210
             0: 8
           -6,-66:
-            8: 257
+            9: 257
             1: 17476
           -6,-69:
             1: 61440
@@ -5873,6 +5879,21 @@ entities:
           temperature: 293.15
           moles:
           - 0
+          - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
           - 0
           - 0
           - 0
@@ -5903,9 +5924,9 @@ entities:
           temperature: 293.15
           moles:
           - 0
+          - 0
+          - 0
           - 6666.982
-          - 0
-          - 0
           - 0
           - 0
           - 0
@@ -5921,21 +5942,6 @@ entities:
           - 0
           - 0
           - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 0
-          - 0
-          - 6666.982
           - 0
           - 0
           - 0
@@ -10465,6 +10471,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: -12.5,-258.5
       parent: 2
+  - uid: 2320
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -5.5,-289.5
+      parent: 2
   - uid: 2513
     components:
     - type: Transform
@@ -12951,7 +12963,7 @@ entities:
   - uid: 14296
     components:
     - type: Transform
-      pos: -4.4720306,-286.2501
+      pos: -4.501067,-286.30304
       parent: 2
 - proto: BoxFolderBase
   entities:
@@ -20212,7 +20224,7 @@ entities:
   - uid: 2316
     components:
     - type: Transform
-      pos: -5.5,-277.5
+      pos: 1.5,-272.5
       parent: 2
   - uid: 2317
     components:
@@ -20228,11 +20240,6 @@ entities:
     components:
     - type: Transform
       pos: -5.5,-280.5
-      parent: 2
-  - uid: 2320
-    components:
-    - type: Transform
-      pos: -5.5,-281.5
       parent: 2
   - uid: 2321
     components:
@@ -25048,6 +25055,16 @@ entities:
     components:
     - type: Transform
       pos: -3.5,-7.5
+      parent: 2
+  - uid: 18986
+    components:
+    - type: Transform
+      pos: -5.5,-288.5
+      parent: 2
+  - uid: 18987
+    components:
+    - type: Transform
+      pos: -5.5,-289.5
       parent: 2
 - proto: CableApcStack
   entities:
@@ -33292,6 +33309,56 @@ entities:
     components:
     - type: Transform
       pos: -3.5,-7.5
+      parent: 2
+  - uid: 18969
+    components:
+    - type: Transform
+      pos: -5.5,-280.5
+      parent: 2
+  - uid: 18977
+    components:
+    - type: Transform
+      pos: -5.5,-281.5
+      parent: 2
+  - uid: 18978
+    components:
+    - type: Transform
+      pos: -5.5,-282.5
+      parent: 2
+  - uid: 18979
+    components:
+    - type: Transform
+      pos: -5.5,-283.5
+      parent: 2
+  - uid: 18980
+    components:
+    - type: Transform
+      pos: -5.5,-285.5
+      parent: 2
+  - uid: 18981
+    components:
+    - type: Transform
+      pos: -5.5,-286.5
+      parent: 2
+  - uid: 18982
+    components:
+    - type: Transform
+      pos: -5.5,-287.5
+      parent: 2
+  - uid: 18983
+    components:
+    - type: Transform
+      pos: -5.5,-288.5
+      parent: 2
+  - uid: 18984
+    components:
+    - type: Transform
+      pos: -5.5,-289.5
+      parent: 2
+  - uid: 18985
+    components:
+    - type: Transform
+      pos: -5.5,-284.5
       parent: 2
 - proto: CableMVStack
   entities:
@@ -50319,7 +50386,7 @@ entities:
   - uid: 18960
     components:
     - type: Transform
-      pos: -5.5,-285.5
+      pos: -6.5,-283.5
       parent: 2
 - proto: filingCabinetRandom
   entities:
@@ -82359,12 +82426,7 @@ entities:
   - uid: 14224
     components:
     - type: Transform
-      pos: -4.6282806,-286.39072
-      parent: 2
-  - uid: 14488
-    components:
-    - type: Transform
-      pos: -4.4564056,-286.48447
+      pos: -4.438567,-286.4593
       parent: 2
 - proto: HappyHonk
   entities:
@@ -83676,6 +83738,18 @@ entities:
           showEnts: False
           occludes: True
           ent: null
+- proto: LockerCourierFilled
+  entities:
+  - uid: 3780
+    components:
+    - type: Transform
+      pos: -6.5,-285.5
+      parent: 2
+  - uid: 14488
+    components:
+    - type: Transform
+      pos: -6.5,-286.5
+      parent: 2
 - proto: LockerDetectiveFilled
   entities:
   - uid: 11708
@@ -84645,13 +84719,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.721866,-180.67075
-      parent: 2
-- proto: MaterialCardboard10
-  entities:
-  - uid: 18969
-    components:
-    - type: Transform
-      pos: -4.3470306,-286.32822
       parent: 2
 - proto: MaterialCloth
   entities:
@@ -94347,7 +94414,6 @@ entities:
     - type: DeviceLinkSink
       invokeCounter: 2
     - type: ActiveSignalTimer
-      triggerTime: 0
 - proto: SignAnomaly
   entities:
   - uid: 10916
@@ -103259,12 +103325,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 17.5,-262.5
-      parent: 2
-  - uid: 3780
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 18.5,-262.5
       parent: 2
   - uid: 5620
     components:
