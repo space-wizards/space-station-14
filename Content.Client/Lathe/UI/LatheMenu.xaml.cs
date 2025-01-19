@@ -97,7 +97,7 @@ public sealed partial class LatheMenu : DefaultWindow
             // Category filtering
             if (CurrentCategory != null)
             {
-                if (proto.Categories == null)
+                if (proto.Categories.Count <= 0)
                     continue;
 
                 bool validRecipe = false;
@@ -105,7 +105,7 @@ public sealed partial class LatheMenu : DefaultWindow
                     if (category == CurrentCategory)
                     {
                         validRecipe = true;
-                        continue;
+                        break;
                     }
 
                 if (!validRecipe)
