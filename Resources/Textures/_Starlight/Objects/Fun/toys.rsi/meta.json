@@ -1,7 +1,7 @@
 {
     "version": 2,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Wit Studio - My friend Nokotan, SS13 Sprites, Conflee",
+    "copyright": "Wit Studio - My friend Nokotan, SS13 Sprites, Conflee, ReamNox, Miracula",
     "size": {
       "x": 32,
       "y": 32
@@ -28,7 +28,7 @@
       {
         "name": "creature_plushie"
       },      
-	  {
+      {
         "name": "gnome_plushie"
       },
       {
@@ -60,6 +60,9 @@
       },
       {
         "name": "sus_plushie"
+      },
+      {
+        "name": "mime_lizard"
       },
       {
         "name": "vika_plush"
