@@ -980,3 +980,10 @@ Entries:
     changes:
     - type: Add
       message: Added four new big snake tail markings for reptilians.
+  - id: 311
+    author: DieselMohawk
+    time: '2025-01-19T05:56:59.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/311
+    changes:
+    - type: Add
+      message: Added Curator clothing as a Senior Librarian option.
