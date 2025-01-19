@@ -12,9 +12,9 @@ using Robust.Shared.Random;
 using System.Linq;
 using System.Text;
 using Content.Server.Objectives.Commands;
-using Content.Shared.Humanoid;
+using Content.Shared.Humanoid; //imp addition
 using Content.Shared.Prototypes;
-using Content.Shared.Roles;
+using Content.Shared.Roles; //imp addition
 using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
 using Robust.Shared.Utility;

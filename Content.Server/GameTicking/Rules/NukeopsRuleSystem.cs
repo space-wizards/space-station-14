@@ -24,9 +24,9 @@ using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Shared.Humanoid;
-using Content.Shared.Mind;
-using Content.Shared.Roles;
+using Content.Shared.Humanoid; //imp addition
+using Content.Shared.Mind; //imp addition
+using Content.Shared.Roles; //imp addition
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
 
@@ -41,7 +41,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!; //imp addition
 
     [ValidatePrototypeId<CurrencyPrototype>]
     private const string TelecrystalCurrencyPrototype = "Telecrystal";
@@ -111,7 +111,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         var antags =_antag.GetAntagIdentifiers(uid);
 
-        foreach (var (mind, sessionData, name) in antags)
+        foreach (var (mind, sessionData, name) in antags) //imp edit - replaced an unnamed variable with "mind"
         {
             args.AddLine(Loc.GetString("nukeops-list-name-user", ("name", name), ("user", sessionData.UserName)));
 
