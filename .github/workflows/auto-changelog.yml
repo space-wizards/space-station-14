@@ -71,6 +71,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
+            git pull origin HEAD:Starlight
             git commit -m "Update changelog for PR #${{ steps.get_pr.outputs.PR_NUMBER }} [skip ci]"
             git push origin HEAD:Starlight
           fi
