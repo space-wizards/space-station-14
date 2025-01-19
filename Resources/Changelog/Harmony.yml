@@ -973,3 +973,10 @@ Entries:
     changes:
     - type: Tweak
       message: Central Command has been replaced with a custom map.
+  - id: 315
+    author: Blackern5000
+    time: '2025-01-19T05:47:08.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/315
+    changes:
+    - type: Add
+      message: Added four new big snake tail markings for reptilians.
