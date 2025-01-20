@@ -8,6 +8,7 @@ using Content.Server.Fluids.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Server.Audio;
 using Content.Shared.Coordinates;
+using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.Silicons.Borgs;
 
@@ -17,6 +18,7 @@ public sealed partial class BorgSystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
 
     public void InitializeMMI()
     {
@@ -98,9 +100,14 @@ public sealed partial class BorgSystem
         {
             _popup.PopupEntity("The brain suddenly dissolves on contact with the interface!", uid, Shared.Popups.PopupType.MediumCaution);
             _audio.PlayPvs("/Audio/Effects/Fluids/splat.ogg", uid);
-            var solution = new Solution();
-            solution.AddReagent("Blood", 30f);
-            _puddle.TrySpillAt(Transform(uid).Coordinates, solution, out _);
+            if (_solution.TryGetSolution(ent, "food", out var solution))
+            {
+                if (solution != null)
+                {
+                    Entity<SolutionComponent> solutions = (Entity<SolutionComponent>)solution;
+                    _puddle.TrySpillAt(Transform(uid).Coordinates, solutions.Comp.Solution, out _);
+                }
+            }
             EntityManager.DeleteEntity(ent);
         }
     }
