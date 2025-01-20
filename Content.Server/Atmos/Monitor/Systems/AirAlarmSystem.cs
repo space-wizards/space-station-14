@@ -131,6 +131,19 @@ public sealed class AirAlarmSystem : EntitySystem
         SyncDevice(uid, address);
     }
 
+    private void SetAllThresholds(EntityUid uid, string address, AtmosSensorData data)
+    {
+        var payload = new NetworkPayload
+        {
+            [DeviceNetworkConstants.Command] = AtmosMonitorSystem.AtmosMonitorSetAllThresholdsCmd,
+            [AtmosMonitorSystem.AtmosMonitorAllThresholdData] = data
+        };
+
+        _deviceNet.QueuePacket(uid, address, payload);
+
+        SyncDevice(uid, address);
+    }
+
     /// <summary>
     ///     Sync this air alarm's mode with the rest of the network.
     /// </summary>
@@ -339,6 +352,13 @@ public sealed class AirAlarmSystem : EntitySystem
                 foreach (string addr in component.ScrubberData.Keys)
                 {
                     SetData(uid, addr, args.Data);
+                }
+                break;
+
+            case AtmosSensorData sensorData:
+                foreach (string addr in component.SensorData.Keys)
+                {
+                    SetAllThresholds(uid, addr, sensorData);
                 }
                 break;
         }
