@@ -47,26 +47,6 @@
 
 - type: entity
   parent: BaseMagazineBoxCaselessRifle
-  id: MagazineBoxCaselessRifleBig
-  name: ammunition box (.25 caseless)
-  components:
-  - type: BallisticAmmoProvider
-    capacity: 200
-    proto: CartridgeCaselessRifle
-  - type: Sprite
-    layers:
-    - state: base-b
-      map: ["enum.GunVisualLayers.Base"]
-    - state: magb-1
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: magb
-    steps: 4
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
-  parent: BaseMagazineBoxCaselessRifle
   id: MagazineBoxCaselessRifle
   name: ammunition box (.25 caseless)
   components:

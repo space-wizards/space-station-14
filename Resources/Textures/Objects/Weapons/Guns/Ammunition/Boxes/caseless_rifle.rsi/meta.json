@@ -11,9 +11,6 @@
       "name": "base"
     },
     {
-      "name": "base-b"
-    },
-    {
       "name": "base-10x24"
     },
     {
@@ -26,15 +23,6 @@
       "name": "mag-3"
     },
     {
-      "name": "magb-1"
-    },
-    {
-      "name": "magb-2"
-    },
-    {
-      "name": "magb-3"
-    },
-    {
       "name": "mag10-1"
     },
     {
@@ -45,12 +33,6 @@
     },
     {
       "name": "practice"
-    },
-    {
-      "name": "rubber"
-    },
-    {
-      "name": "rubber-b"
     }
   ]
 }
