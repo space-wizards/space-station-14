@@ -721,5 +721,12 @@ Entries:
   id: 89
   time: '2025-01-15T21:10:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34406
+- author: c4llv07e
+  changes:
+  - message: Added an option to disable the bwoink sound!
+    type: Add
+  id: 90
+  time: '2025-01-17T07:24:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33782
 Name: Admin
 Order: 1
