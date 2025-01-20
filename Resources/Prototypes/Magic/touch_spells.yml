@@ -68,7 +68,6 @@
       speech: action-speech-spell-slip
       components:
       - type: Slippery
-        superSlippery: true
       - type: StepTrigger
       - type: SlipOnCollide
   - type: Magic
