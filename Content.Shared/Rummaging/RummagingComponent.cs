@@ -23,7 +23,7 @@ public sealed partial class RummagingComponent : Component
     public string RummageLoot = "RatKingLoot";
 
     [DataField("rummageVerb"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public LocId RummageVerb = "rat-king-rummage-text";
+    public LocId RummageVerb = "verb-rummage-text";
 
     /// <summary>
     /// Rummage speed multiplier.
