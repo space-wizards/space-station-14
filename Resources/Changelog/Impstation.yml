@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Latejoining AI now has a special message broadcast.
-    type: Tweak
-  id: 478
-  time: '2024-11-08T16:56:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/641
 - author: honeyed-lemons
   changes:
   - message: Quick Construction menu from Einstein Engine,
@@ -4411,3 +4404,10 @@
   id: 977
   time: '2025-01-20T22:24:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1438
+- author: mqole
+  changes:
+  - message: Minor rules edits
+    type: Tweak
+  id: 978
+  time: '2025-01-20T23:07:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1440
