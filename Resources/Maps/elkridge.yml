@@ -13223,7 +13223,7 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -256594.28
+      secondsUntilStateChange: -257073.05
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -44077,7 +44077,7 @@ entities:
   - uid: 5138
     components:
     - type: Transform
-      pos: -27.38747,14.612673
+      pos: -26.503574,16.524607
       parent: 2
   - uid: 6641
     components:
@@ -45713,6 +45713,13 @@ entities:
     components:
     - type: Transform
       pos: -3.5,21.5
+      parent: 2
+- proto: CyborgEndoskeleton
+  entities:
+  - uid: 14513
+    components:
+    - type: Transform
+      pos: -27.066074,16.227732
       parent: 2
 - proto: d6Dice
   entities:
@@ -78018,6 +78025,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: LeftArmBorg
+  entities:
+  - uid: 14514
+    components:
+    - type: Transform
+      pos: -27.534824,16.087107
+      parent: 2
 - proto: LightReplacer
   entities:
   - uid: 808
@@ -86327,7 +86341,7 @@ entities:
   - uid: 6737
     components:
     - type: Transform
-      pos: -27.7082,14.599499
+      pos: -26.98795,15.337107
       parent: 2
 - proto: ScrapCamera
   entities:
@@ -86453,6 +86467,11 @@ entities:
     - type: Transform
       pos: 35.523155,-18.499912
       parent: 2
+  - uid: 14515
+    components:
+    - type: Transform
+      pos: -26.507914,15.899607
+      parent: 2
   - uid: 15841
     components:
     - type: Transform
@@ -86563,7 +86582,7 @@ entities:
   - uid: 6741
     components:
     - type: Transform
-      pos: -21.485023,14.577084
+      pos: -15.388418,25.607353
       parent: 2
 - proto: SheetPlastic10
   entities:
@@ -93551,12 +93570,6 @@ entities:
     - type: Transform
       pos: -1.5,22.5
       parent: 2
-  - uid: 6735
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -21.5,14.5
-      parent: 2
   - uid: 6736
     components:
     - type: Transform
@@ -94390,11 +94403,6 @@ entities:
     components:
     - type: Transform
       pos: -13.5,10.5
-      parent: 2
-  - uid: 5128
-    components:
-    - type: Transform
-      pos: -27.5,14.5
       parent: 2
   - uid: 5129
     components:
@@ -95527,6 +95535,13 @@ entities:
     - type: Transform
       pos: -9.5,-46.5
       parent: 2
+- proto: VendingMachineRoboDrobe
+  entities:
+  - uid: 6735
+    components:
+    - type: Transform
+      pos: -27.5,14.5
+      parent: 2
 - proto: VendingMachineRobotics
   entities:
   - uid: 5124
@@ -95540,6 +95555,13 @@ entities:
     components:
     - type: Transform
       pos: 21.5,34.5
+      parent: 2
+- proto: VendingMachineSciDrobe
+  entities:
+  - uid: 5128
+    components:
+    - type: Transform
+      pos: -21.5,14.5
       parent: 2
 - proto: VendingMachineSec
   entities:
