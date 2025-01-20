@@ -502,13 +502,13 @@
   - type: Sprite
     layers:
     - state: centcom
-    - state: idcentcom 
+#    - state: idcentcom (imp, new id)
   - type: Item
     heldPrefix: blue
   - type: PresetIdCard
     job: CentralCommandOfficial
 
-- type: entity
+- type: entity # id state imp
   parent: IDCardStandard
   id: ERTLeaderIDCard
   name: ERT leader ID card
@@ -595,7 +595,7 @@
     jobTitle: job-name-ertsecurity
     jobIcon: JobIconERTSecurity
   - type: PresetIdCard
-    job: ERTSecurity
+    job: ERTSecurity #/imp
 
 - type: entity
   parent: IDCardStandard
@@ -795,7 +795,7 @@
   components:
   - type: Sprite
     layers:
-    - state: centcom
+    - state: cburn #imp
   - type: Item
     heldPrefix: blue
   - type: PresetIdCard
@@ -866,7 +866,7 @@
     sprite: Objects/Misc/id_cards.rsi
     layers:
     - state: admin
-    - state: idadmin
+    # - state: idadmin (imp, new icon)
   - type: Clothing
     sprite: Objects/Misc/id_cards.rsi
   - type: Item

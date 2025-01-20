@@ -19,7 +19,7 @@
   id: JobIconDeathsquad
   icon:
     sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
-    state: Deathsquadron
+    state: Deathsquad
   jobName: job-name-deathsquad
 
 - type: jobIcon
