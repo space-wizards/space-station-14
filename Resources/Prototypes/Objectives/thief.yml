@@ -362,17 +362,6 @@
 
 - type: entity
   parent: BaseThiefStealStructureObjective
-  id: TegStealObjective
-  components:
-  - type: NotJobRequirement
-    job: AtmosphericTechnician
-  - type: StealCondition
-    stealGroup: Teg
-  - type: Objective
-    difficulty: 1
-
-- type: entity
-  parent: BaseThiefStealStructureObjective
   id: BoozeDispenserStealObjective
   components:
   - type: NotJobRequirement
