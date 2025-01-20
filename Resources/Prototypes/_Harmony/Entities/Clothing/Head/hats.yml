@@ -126,7 +126,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretSeniorTechnicianHarmony
   name: senior technician beret
-  description: To make sure people know how much of an overstepper you are.
+  description: A beret made for only the bestest of box movers.
   components:
   - type: Sprite
     sprite: _Harmony/Clothing/Head/Hats/beret_technician_senior.rsi

@@ -93,8 +93,10 @@
   components:
   - type: Sprite
 # Start of Harmony Change: Updated Sprite pathing
+#   sprite: Clothing/Head/Hats/beret_rnd.rsi
     sprite: _Harmony/Clothing/Head/Hats/beret_rnd.rsi
   - type: Clothing
+#   sprite: Clothing/Head/Hats/beret_rnd.rsi
     sprite: _Harmony/Clothing/Head/Hats/beret_rnd.rsi
 # End of Change
   - type: Tag
@@ -111,8 +113,10 @@
   components:
   - type: Sprite
 # Start of Harmony Change: Updated Sprite pathing
+#   sprite: Clothing/Head/Hats/beret_engineering.rsi
     sprite: _Harmony/Clothing/Head/Hats/beret_engineering.rsi
   - type: Clothing
+#   sprite: Clothing/Head/Hats/beret_engineering.rsi
     sprite: _Harmony/Clothing/Head/Hats/beret_engineering.rsi
 # End of Change
   - type: Tag
@@ -173,8 +177,10 @@
   components:
   - type: Sprite
 # Start of Harmony Change: Updated Sprite pathing
+#  sprite: Clothing/Head/Hats/beret_physician.rsi
     sprite: _Harmony/Clothing/Head/Hats/beret_physician.rsi
   - type: Clothing
+#  sprite: Clothing/Head/Hats/beret_physician.rsi
     sprite: _Harmony/Clothing/Head/Hats/beret_physician.rsi
 # End of Change
 
@@ -1142,6 +1148,10 @@
   description: White beret that encourages you to be clean.
   components:
   - type: Sprite
+# Start of Harmony Change: Updated Sprite pathing
+#   sprite: Clothing/Head/Hats/beret_medic.rsi
     sprite: _Harmony/Clothing/Head/Hats/beret_medic.rsi
   - type: Clothing
+#   sprite: Clothing/Head/Hats/beret_medic.rsi
     sprite: _Harmony/Clothing/Head/Hats/beret_medic.rsi
+# End of Change
