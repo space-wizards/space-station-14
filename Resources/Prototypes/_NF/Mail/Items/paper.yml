@@ -273,7 +273,7 @@
   components:
   - type: Paper
     content: |2
-      [head=2]GREETINGS DELTA SECTOR CITIZEN[/head]
+      [head=2]GREETINGS IMP SECTOR CITIZEN[/head]
 
       OUR REPORTS INDICATE THAT:
       1. YOU HAVE FAILED YOUR QUARTERLY HYGIENE INSPECTION.
@@ -453,19 +453,19 @@
 - type: entity
   id: PaperMailNFSpaceLaw
   categories: [ HideSpawnMenu ]
-  suffix: "space-law" # DeltaV- edited contents to be from the Delta Sector instead of the Frontier
+  suffix: "space-law" # DeltaV- edited contents to be from the Delta Sector instead of the Frontier # Imp- edited contents to be from the IMP Sector instead of the Delta Sector
   parent: Paper
   components:
   - type: Paper
     stampState: paper_stamp-centcom
     stampedBy:
     - stampedColor: '#006600FF'
-      stampedName: Central Admiralty of the Delta Sector
+      stampedName: Central Admiralty of the IMP Sector
     content: |2
 
             [head=1]Space Law is your shield.[/head]
 
-                  [head=2]With it, you guard the Delta Sector.[/head][head=3]
+                  [head=2]With it, you guard the IMP Sector.[/head][head=3]
       [/head]
         [head=1]Memorize it. Grasp it firmly.[/head]
 
