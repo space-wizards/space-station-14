@@ -14,3 +14,8 @@
   - /Audio/_Impstation/Effects/Footsteps/highheels3.ogg
   - /Audio/_Impstation/Effects/Footsteps/highheels4.ogg
   - /Audio/_Impstation/Effects/Footsteps/highheels5.ogg
+
+- type: soundCollection
+  id: FootstepGondal
+  files:
+  - /Audio/_Impstation/Effects/gon.ogg
