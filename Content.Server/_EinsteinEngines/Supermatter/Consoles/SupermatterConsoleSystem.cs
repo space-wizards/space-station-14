@@ -1,4 +1,3 @@
-using Content.Server.Pinpointer;
 using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Content.Shared._EinsteinEngines.Supermatter.Consoles;
 using Content.Shared.Atmos;
@@ -12,12 +11,6 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
 {
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly NavMapSystem _navMapSystem = default!;
-
-    private const float UpdateTime = 1.0f;
-
-    // Note: this data does not need to be saved
-    private float _updateTimer = 1.0f;
 
     public override void Initialize()
     {
@@ -32,7 +25,7 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
         SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
     }
 
-    #region Event handling 
+    #region Event Handling
 
     private void OnConsoleInit(EntityUid uid, SupermatterConsoleComponent component, ComponentInit args)
     {
@@ -86,7 +79,7 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
             if (entXform?.GridUid == null)
                 continue;
 
-            // Make a list of alarm state data for all the supermatters on the grid
+            // Make a list of supermatter state data for all the supermatters on the grid
             if (!supermatterEntriesForEachGrid.TryGetValue(entXform.GridUid.Value, out var supermatterEntries))
             {
                 supermatterEntries = GetSupermatterStateData(entXform.GridUid.Value).ToArray();
@@ -113,11 +106,7 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
         }
     }
 
-    public void UpdateUIState
-        (EntityUid uid,
-        SupermatterConsoleEntry[] supermatterStateData,
-        SupermatterConsoleComponent component,
-        TransformComponent xform)
+    private void UpdateUIState(EntityUid uid, SupermatterConsoleEntry[] supermatterStateData, SupermatterConsoleComponent component, TransformComponent xform)
     {
         if (!_userInterfaceSystem.IsUiOpen(uid, SupermatterConsoleUiKey.Key))
             return;
@@ -148,10 +137,7 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
             // Create entry
             var netEnt = GetNetEntity(ent);
 
-            var entry = new SupermatterConsoleEntry
-                (netEnt,
-                MetaData(ent).EntityName,
-                entSupermatter.Status);
+            var entry = new SupermatterConsoleEntry(netEnt, MetaData(ent).EntityName, entSupermatter.Status);
 
             supermatterStateData.Add(entry);
         }
@@ -168,8 +154,7 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
             return null;
 
         if (!focusSupermatterXform.Anchored ||
-            focusSupermatterXform.GridUid != gridUid ||
-            !TryComp<SupermatterComponent>(focusSupermatter.Value, out var focusComp))
+            focusSupermatterXform.GridUid != gridUid)
             return null;
 
         if (!TryComp<SupermatterComponent>(focusSupermatter.Value, out var sm))
@@ -195,7 +180,7 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
             sm.GasEfficiency * 100);
     }
 
-    public float GetIntegrity(SupermatterComponent sm)
+    private static float GetIntegrity(SupermatterComponent sm)
     {
         var integrity = sm.Damage / sm.DamageDelaminationPoint;
         integrity = (float)Math.Round(100 - integrity * 100, 2);

@@ -4,7 +4,7 @@
          xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
          Orientation="Vertical" HorizontalExpand ="True">
 
-    <BoxContainer HorizontalExpand="True" Orientation="Horizontal" Margin="0 1">
+    <BoxContainer Name="GasContainer" HorizontalExpand="True" Orientation="Horizontal" Margin="0 1">
         <Label Name="GasLabel" Text="{Loc 'supermatter-console-window-label-gas'}" HorizontalExpand="True" HorizontalAlignment="Left" />
         <PanelContainer Name="GasBarBorder" SetWidth="150" SetHeight="24">
             <ProgressBar Name="GasBar" MinValue="0" MaxValue="100" HorizontalExpand="True" VerticalExpand="True" Margin="1">

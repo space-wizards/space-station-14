@@ -6,14 +6,14 @@ supermatter-console-window-no-supermatters = [font size=16][color=white]No super
 supermatter-console-window-label-sm = {CAPITALIZE($name)}
 
 supermatter-console-window-label-alert-types = Supermatter status:
-supermatter-console-window-error-status = Error
-supermatter-console-window-inactive-status = Inactive
-supermatter-console-window-normal-status = Normal
-supermatter-console-window-caution-status = Caution
-supermatter-console-window-warning-status = Warning
-supermatter-console-window-danger-status = Danger
-supermatter-console-window-emergency-status = Emergency
-supermatter-console-window-delaminating-status = Delaminating
+supermatter-console-window-status-error = Error
+supermatter-console-window-status-inactive = Inactive
+supermatter-console-window-status-normal = Normal
+supermatter-console-window-status-caution = Caution
+supermatter-console-window-status-warning = Warning
+supermatter-console-window-status-danger = Danger
+supermatter-console-window-status-emergency = Emergency
+supermatter-console-window-status-delaminating = Delaminating
 
 supermatter-console-window-label-integrity = Integrity:
 supermatter-console-window-label-integrity-bar = {$integrity}%

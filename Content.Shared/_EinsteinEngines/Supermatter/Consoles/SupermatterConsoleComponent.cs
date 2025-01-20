@@ -1,7 +1,6 @@
 using Content.Shared._EinsteinEngines.Supermatter.Consoles;
 using Content.Shared.Atmos;
 using Robust.Shared.GameStates;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._EinsteinEngines.Supermatter.Components;
@@ -18,168 +17,71 @@ public sealed partial class SupermatterConsoleComponent : Component
 }
 
 [Serializable, NetSerializable]
-public struct SupermatterNavMapData
-{
-    /// <summary>
-    /// The entity in question
-    /// </summary>
-    public NetEntity NetEntity;
-
-    /// <summary>
-    /// Location of the entity
-    /// </summary>
-    public NetCoordinates NetCoordinates;
-
-    /// <summary>
-    /// Populate the supermatter console nav map with a single entity
-    /// </summary>
-    public SupermatterNavMapData(NetEntity netEntity, NetCoordinates netCoordinates)
-    {
-        NetEntity = netEntity;
-        NetCoordinates = netCoordinates;
-    }
-}
-
-[Serializable, NetSerializable]
-public struct SupermatterFocusData
+public struct SupermatterFocusData(NetEntity netEntity, GasMixture gasStorage, float integrity, float power, float radiation, float temperatureLimit, float heatModifier, float absorptionRatio)
 {
     /// <summary>
     /// Focus entity
     /// </summary>
-    public NetEntity NetEntity;
+    public NetEntity NetEntity = netEntity;
 
-    /// <summary>
-    /// The supermatter's gas storage
-    /// </summary>
-    public GasMixture GasStorage;
+    public GasMixture GasStorage = gasStorage;
 
-    /// <summary>
-    /// The supermatter's integrity, from 0 to 100
-    /// </summary>
-    public float Integrity;
+    public float Integrity = integrity;
 
-    /// <summary>
-    /// The supermatter's power
-    /// </summary>
-    public float Power;
+    public float Power = power;
 
-    /// <summary>
-    /// The supermatter's emitted radiation
-    /// </summary>
-    public float Radiation;
+    public float Radiation = radiation;
 
-    /// <summary>
-    /// The supermatter's temperature limit
-    /// </summary>
-    public float TemperatureLimit;
+    public float TemperatureLimit = temperatureLimit;
 
-    /// <summary>
-    /// The supermatter's waste multiplier
-    /// </summary>
-    public float HeatModifier;
+    public float HeatModifier = heatModifier;
 
-    /// <summary>
-    /// The supermatter's absorption ratio
-    /// </summary>
-    public float AbsorptionRatio;
-
-    /// <summary>
-    /// Populates the supermatter console focus entry with supermatter data
-    /// </summary>
-    public SupermatterFocusData
-        (NetEntity netEntity,
-        GasMixture gasStorage,
-        float integrity,
-        float power,
-        float radiation,
-        float temperatureLimit,
-        float heatModifier,
-        float absorptionRatio)
-    {
-        NetEntity = netEntity;
-        GasStorage = gasStorage;
-        Integrity = integrity;
-        Power = power;
-        Radiation = radiation;
-        TemperatureLimit = temperatureLimit;
-        HeatModifier = heatModifier;
-        AbsorptionRatio = absorptionRatio;
-    }
+    public float AbsorptionRatio = absorptionRatio;
 }
 
 [Serializable, NetSerializable]
-public sealed class SupermatterConsoleBoundInterfaceState : BoundUserInterfaceState
+public sealed class SupermatterConsoleBoundInterfaceState(SupermatterConsoleEntry[] supermatters, SupermatterFocusData? focusData) : BoundUserInterfaceState
 {
     /// <summary>
     /// A list of all supermatters
     /// </summary>
-    public SupermatterConsoleEntry[] Supermatters;
+    public SupermatterConsoleEntry[] Supermatters = supermatters;
 
     /// <summary>
     /// Data for the UI focus (if applicable)
     /// </summary>
-    public SupermatterFocusData? FocusData;
-
-    /// <summary>
-    /// Sends data from the server to the client to populate the atmos monitoring console UI
-    /// </summary>
-    public SupermatterConsoleBoundInterfaceState(SupermatterConsoleEntry[] supermatters, SupermatterFocusData? focusData)
-    {
-        Supermatters = supermatters;
-        FocusData = focusData;
-    }
+    public SupermatterFocusData? FocusData = focusData;
 }
 
 [Serializable, NetSerializable]
-public struct SupermatterConsoleEntry
+public struct SupermatterConsoleEntry(NetEntity entity, string entityName, SupermatterStatusType status)
 {
     /// <summary>
     /// The entity in question
     /// </summary>
-    public NetEntity NetEntity;
+    public NetEntity NetEntity = entity;
 
     /// <summary>
     /// Name of the entity
     /// </summary>
-    public string EntityName;
+    public string EntityName = entityName;
 
     /// <summary>
-    /// Current alert level
+    /// Current warning level
     /// </summary>
-    public SupermatterStatusType EntityStatus;
-
-    /// <summary>
-    /// Used to populate the supermatter console UI with data from a single supermatter
-    /// </summary>
-    public SupermatterConsoleEntry
-        (NetEntity entity,
-        string entityName,
-        SupermatterStatusType status)
-    {
-        NetEntity = entity;
-        EntityName = entityName;
-        EntityStatus = status;
-    }
+    public SupermatterStatusType EntityStatus = status;
 }
 
 [Serializable, NetSerializable]
-public sealed class SupermatterConsoleFocusChangeMessage : BoundUserInterfaceMessage
+public sealed class SupermatterConsoleFocusChangeMessage(NetEntity? focusSupermatter) : BoundUserInterfaceMessage
 {
-    public NetEntity? FocusSupermatter;
-
-    /// <summary>
-    /// Used to inform the server that the specified focus for the atmos monitoring console has been changed by the client
-    /// </summary>
-    public SupermatterConsoleFocusChangeMessage(NetEntity? focusSupermatter)
-    {
-        FocusSupermatter = focusSupermatter;
-    }
+    public NetEntity? FocusSupermatter = focusSupermatter;
 }
 
 [NetSerializable, Serializable]
 public enum SupermatterConsoleVisuals
 {
-    ComputerLayerScreen,
+    ComputerLayerScreen
 }
 
 /// <summary>
