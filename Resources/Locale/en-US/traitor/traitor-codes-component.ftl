@@ -1,3 +1,3 @@
-traitor-codes-message-singular = кодовое слово Синдиката:
-traitor-codes-message-plural = кодовые слова Синдиката:
-traitor-codes-none = нет известных кодовых слов
+traitor-codes-message-singular = syndicate codeword:
+traitor-codes-message-plural = syndicate codewords:
+traitor-codes-none = no known codewords

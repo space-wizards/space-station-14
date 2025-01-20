@@ -1,1 +1,1 @@
-log-wire-pulse-access-log = ОШИБКА: Обнаружен электромагнитный всплеск
+log-wire-pulse-access-log = ERROR: Electromagnetic spike detected

@@ -1,1 +1,1 @@
-pointing-verb-get-data-text = Указать на
+pointing-verb-get-data-text = Point at

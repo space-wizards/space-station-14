@@ -1,1 +1,1 @@
-defusable-verb-begin = Начать обратный отсчёт
+defusable-verb-begin = Begin countdown

@@ -1,5 +1,5 @@
 # AirlockBolted
-construction-examine-condition-airlock-bolt = Сперва заболтируйте { $entityName }.
-construction-examine-condition-airlock-unbolt = Сперва разболтируйте { $entityName }.
-construction-step-condition-airlock-bolt = Это должно быть заболтировано.
-construction-step-condition-airlock-unbolt = Это должно быть разболтировано.
+construction-examine-condition-airlock-bolt = First, bolt the {$entityName}.
+construction-examine-condition-airlock-unbolt = First, unbolt the {$entityName}.
+construction-step-condition-airlock-bolt = It must be bolted.
+construction-step-condition-airlock-unbolt = It must be unbolted.

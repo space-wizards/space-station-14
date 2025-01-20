@@ -1,2 +1,2 @@
-item-toggle-activate = Включить
-item-toggle-deactivate = Выключить
+item-toggle-activate = Activate
+item-toggle-deactivate = Deactivate

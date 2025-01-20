@@ -1,5 +1,5 @@
-cmd-rename-desc = Переименовывает сущность и её клонированные записи, ID-карты и КПК.
-cmd-rename-help = rename <username|EntityUid> <Новое имя персонажа>
-cmd-rename-too-long = Слишком длинное имя.
-cmd-rename-not-found = Не удаётся найти username/uid: { $target }
-cmd-rename-no-entity = { $target } не имеет сущности.
+cmd-rename-desc = Renames an entity and its cloner entries, ID cards, and PDAs.
+cmd-rename-help = rename <Username|EntityUid> <New character name>
+cmd-rename-too-long = Name is too long.
+cmd-rename-not-found = Can't find username/uid: {$target}
+cmd-rename-no-entity = {$target} does not have an entity.

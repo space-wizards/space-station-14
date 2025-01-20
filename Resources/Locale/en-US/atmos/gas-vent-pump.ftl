@@ -1,1 +1,1 @@
-gas-vent-pump-uvlo = В состоянии [color=red]отключения из-за низкого давления[/color].
+gas-vent-pump-uvlo = It is in [color=red]under-pressure lock out[/color].

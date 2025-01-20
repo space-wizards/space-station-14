@@ -1,10 +1,11 @@
-custom-vote-webhook-name = Состоялось кастомное голосование
-custom-vote-webhook-footer = сервер: { $serverName }, раунд: { $roundId } { $runLevel }
-custom-vote-webhook-cancelled = **Голосование было отменено**
-custom-vote-webhook-option-pending = будет объявлено
-custom-vote-webhook-option-cancelled = Н/Д
-votekick-webhook-name = Голосование состоялось
-votekick-webhook-description = Инициатор: { $initiator }; Цель голосования: { $target }
-votekick-webhook-cancelled-admin-online = **Голосование было отменено из-за админов в сети**
-votekick-webhook-cancelled-admin-target = **Голосование было отменено, так как было направлено на администратора**
-votekick-webhook-cancelled-antag-target = **Голосование было отменено, так как было направлено на антагониста**
+custom-vote-webhook-name = Custom Vote Held
+custom-vote-webhook-footer = server: { $serverName }, round: { $roundId } { $runLevel }
+custom-vote-webhook-cancelled = **Vote cancelled**
+custom-vote-webhook-option-pending = TBD
+custom-vote-webhook-option-cancelled = N/A
+
+votekick-webhook-name = Votekick Held
+votekick-webhook-description = Initiator: { $initiator }; Target: { $target }
+votekick-webhook-cancelled-admin-online = **Vote cancelled due to admins online**
+votekick-webhook-cancelled-admin-target = **Vote cancelled due to target being admin**
+votekick-webhook-cancelled-antag-target = **Vote cancelled due to target being antag**

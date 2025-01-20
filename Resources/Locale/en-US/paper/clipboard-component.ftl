@@ -1,1 +1,1 @@
-clipboard-slot-component-slot-name-pen = Ручка
+clipboard-slot-component-slot-name-pen = Pen

@@ -1,24 +1,28 @@
-fax-machine-popup-source-unknown = Неизвестно
-fax-machine-popup-received = Получена передача от { $from }.
-fax-machine-popup-name-long = Слишком длинное имя факса
-fax-machine-popup-name-exist = Факс с таким же именем уже существует в сети
-fax-machine-popup-name-set = Имя факса было обновлено
-fax-machine-popup-error = ОШИБКА - неисправность подачи бумаги
-fax-machine-popup-copy-error = ОШИБКА - не удалось скопировать!
-fax-machine-dialog-rename = Переименовать
-fax-machine-dialog-field-name = Имя
-fax-machine-ui-window = Факс
-fax-machine-ui-file-button = Печать из файла
-fax-machine-ui-paper-button-normal = Обычная бумага
-fax-machine-ui-paper-button-office = Офисная бумага
-fax-machine-ui-copy-button = Копировать
-fax-machine-ui-send-button = Отправить
-fax-machine-ui-refresh-button = Обновить
-fax-machine-ui-no-peers = Нет получателей
-fax-machine-ui-to = Получатель:
-fax-machine-ui-from = Отправитель:
-fax-machine-ui-paper = Бумага:
-fax-machine-ui-paper-inserted = Бумага в лотке
-fax-machine-ui-paper-not-inserted = Нет бумаги
-fax-machine-chat-notify = Получено новое сообщение с "{ $fax }" факса
-fax-machine-printed-paper-name = распечатанная бумага
+fax-machine-popup-source-unknown = unknown
+fax-machine-popup-received = Received correspondence from { $from }.
+fax-machine-popup-name-long = Fax name is too long
+fax-machine-popup-name-exist = Fax with same name already exist in network
+fax-machine-popup-name-set = Fax name has been updated
+fax-machine-popup-error = ERROR - jam in paper feed
+fax-machine-popup-copy-error = ERROR - unable to copy!
+
+fax-machine-dialog-rename = Rename
+fax-machine-dialog-field-name = Name
+
+fax-machine-ui-window = Fax Machine
+fax-machine-ui-file-button = Print File
+fax-machine-ui-paper-button-normal = Normal Paper
+fax-machine-ui-paper-button-office = Office Paper
+fax-machine-ui-copy-button = Copy
+fax-machine-ui-send-button = Send
+fax-machine-ui-refresh-button = Refresh
+fax-machine-ui-no-peers = No Peers
+fax-machine-ui-to = To:
+fax-machine-ui-from = From:
+fax-machine-ui-paper = Paper:
+fax-machine-ui-paper-inserted = Paper in tray
+fax-machine-ui-paper-not-inserted = No paper
+
+fax-machine-chat-notify = Received new fax message from "{$fax}" fax
+
+fax-machine-printed-paper-name = printed paper

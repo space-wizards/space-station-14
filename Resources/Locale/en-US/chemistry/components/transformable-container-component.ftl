@@ -1,1 +1,1 @@
-transformable-container-component-glass = стакан { $reagent }
+transformable-container-component-glass = {$reagent} glass

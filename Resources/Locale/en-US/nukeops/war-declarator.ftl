@@ -1,20 +1,15 @@
-war-declarator-not-working = Устройство пищит, но ничего не происходит...
-war-declarator-ui-header = Объявление войны
-war-declarator-ui-try-war-button = Попробовать объявить войну
-war-declarator-ui-war-button = ОБЪЯВИТЬ ВОЙНУ!
-war-declarator-conditions-small-crew = Недостаточно ядерных оперативников, чтобы объявить войну!
-war-declarator-conditions-left-outpost = Шаттл покинул аванпост Синдиката
-war-declarator-conditions-time-out = Время на объявление войны прошло
-war-declarator-conditions-ready = Шаттл может покинуть аванпост!
-war-declarator-conditions-unknown = Неизвестно
-war-declarator-boost-possible = Возможно объявить войну
-war-declarator-boost-impossible = Невозможно объявить войну
-war-declarator-boost-declared = Война объявлена! Шаттл может быть отключён на...
-war-declarator-boost-timer =
-    Оставшееся время: { $time } { $time ->
-        [one] минута
-        [few] минуты
-       *[other] минут
-    }.
-war-declarator-default-message = Пограничный отряд Синдиката объявляет о своём намерении уничтожить станцию при помощи ядерного устройства и призывает экипаж предпринять ничтожную попытку остановить их.
-war-declarator-message-placeholder = Введите текст объявления...
+war-declarator-not-working = The device makes beeping noises, but nothing happens...
+war-declarator-ui-header = Declaration of War
+war-declarator-ui-war-button = DECLARE WAR!
+war-declarator-ui-try-war-button = Try to declare war
+war-declarator-conditions-small-crew = There are not enough nuclear operatives to declare war!
+war-declarator-conditions-left-outpost = Shuttle left the syndicate outpost
+war-declarator-conditions-time-out = War declaration time passed
+war-declarator-conditions-ready = Shuttle can leave the outpost!
+war-declarator-conditions-unknown = Unknown
+war-declarator-boost-possible = Able to declare war
+war-declarator-boost-impossible = Unable to declare war
+war-declarator-boost-declared = War declared! Shuttle may be disabled for...
+war-declarator-boost-timer = Time left: {$time} minutes.
+war-declarator-default-message = A syndicate fringe group has declared their intent to utterly destroy station with a nuclear device, and dares the crew to try and stop them.
+war-declarator-message-placeholder = Write a custom declaration of war here...

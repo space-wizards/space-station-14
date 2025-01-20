@@ -1,8 +1,11 @@
-gas-miner-mines-text = Он добывает [color=lightgray]{ $gas }[/color] когда активен.
-gas-miner-amount-text = Он добывает { $moles } молей газа в секунду когда активен.
-gas-miner-temperature-text = Темп. добываемого газа: { $tempK }K ({ $tempC }°C).
-gas-miner-moles-cutoff-text = Ограничение окружающих молей: { $moles } молей.
-gas-miner-pressure-cutoff-text = Ограничение окружающего давления: { $pressure } кПа.
-gas-miner-state-working-text = Газодобытчик [color=green]активен[/color] и добывает газ.
-gas-miner-state-idle-text = Газодобытчик [color=yellow]простаивает[/color] и не добывает газ.
-gas-miner-state-disabled-text = Газодобытчик [color=red]отключён[/color] и не добывает газ.
+gas-miner-mines-text = It mines [color=lightgray]{$gas}[/color] when active.
+
+gas-miner-amount-text = It mines {$moles} moles of gas a second when active.
+gas-miner-temperature-text = Mined gas temp: {$tempK}K ({$tempC}°C).
+
+gas-miner-moles-cutoff-text = Surrounding moles cutoff: {$moles} moles.
+gas-miner-pressure-cutoff-text = Surrounding pressure cutoff: {$pressure} kPA.
+
+gas-miner-state-working-text = The miner is [color=green]active[/color] and mining gas.
+gas-miner-state-idle-text = The miner is [color=yellow]idle[/color] and not mining gas.
+gas-miner-state-disabled-text = The miner is [color=red]disabled[/color] and not mining gas.

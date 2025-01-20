@@ -1,1 +1,1 @@
-storage-component-transfer-verb = Переместить содержимое
+storage-component-transfer-verb = Transfer contents

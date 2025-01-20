@@ -1,15 +1,13 @@
-main-menu-invalid-username-with-reason =
-    Неверное имя пользователя:
-    { $invalidReason }
-main-menu-invalid-username = Неверное имя пользователя
-main-menu-failed-to-connect =
-    Не удалось подключиться:
-    { $reason }
-main-menu-username-label = Имя пользователя:
-main-menu-username-text = Имя пользователя
-main-menu-address-label = Адрес сервера:
-main-menu-join-public-server-button = Публичный сервер
-main-menu-join-public-server-button-tooltip = Нельзя подключаться к публичным серверам с отладочной сборкой.
-main-menu-direct-connect-button = Прямое подключение
-main-menu-options-button = Настройки
-main-menu-quit-button = Выйти
+main-menu-invalid-username-with-reason = Invalid username:
+                                         {$invalidReason}
+main-menu-invalid-username = Invalid username
+main-menu-failed-to-connect = Failed to connect:
+                              {$reason}
+main-menu-username-label = Username:
+main-menu-username-text = Username
+main-menu-address-label = Server Address:
+main-menu-join-public-server-button = Join Public Server
+main-menu-join-public-server-button-tooltip = Cannot connect to public server with a debug build.
+main-menu-direct-connect-button = Direct Connect
+main-menu-options-button = Options
+main-menu-quit-button = Quit

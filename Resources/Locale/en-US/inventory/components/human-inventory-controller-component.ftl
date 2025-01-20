@@ -1,1 +1,1 @@
-set-outfit-verb-get-data-text = Установить экипировку
+set-outfit-verb-get-data-text = Set Outfit

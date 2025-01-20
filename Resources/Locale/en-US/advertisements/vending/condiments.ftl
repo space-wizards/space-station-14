@@ -1,6 +1,7 @@
-advertisement-condiment-1 = Устали от сухого мяса? Приправьте его ароматными соусами!
-advertisement-condiment-2 = Безопасная для детей посуда. Вилки, ложки, и ножи, которые никого и ничего не порежут.
-advertisement-condiment-3 = Кукурузное масло!
-advertisement-condiment-4 = Подсластите свой день при помощи Астротем! Восемь из десяти врачей считают, что он скорее всего не вызовет у вас рак.
-advertisement-condiment-5 = Острый соус! Соус барбекю! Холодный соус! Кетчуп! Соевый соус! Хрен! Соусы на любой вкус!
-advertisement-condiment-6 = Не забудьте добавить кетчуп и горчицу в свой бургер! Повара часто забывают об этом...
+﻿advertisement-condiment-1 = Tired of dry meat? Squirt some flavor-packed condiments on it!
+advertisement-condiment-2 = Child-safe utensils. Forks, spoons, and knives that won't cut a thing.
+advertisement-condiment-3 = Corn oil!
+advertisement-condiment-4 = Sweeten up your day with Astrotame! Eight out of ten doctors agree, it probably won't cause cancer.
+advertisement-condiment-5 = Hot Sauce! Barbecue Sauce! Cold Sauce! Ketchup! Soy Sauce! Horseradish Sauce! We got all the sauce!
+advertisement-condiment-6 = Make sure to put ketchup and mustard on your burgers! The chefs often forget.
+

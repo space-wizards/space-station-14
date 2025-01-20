@@ -1,1 +1,1 @@
-marking-HumanLongEars = Длинные уши
+marking-HumanLongEars = Long Ears

@@ -1,2 +1,2 @@
-stunnable-component-disarm-success-others = { CAPITALIZE($source) } толкает { $target }!
-stunnable-component-disarm-success = Вы толкаете { $target }!
+stunnable-component-disarm-success-others = {CAPITALIZE(THE($source))} pushes {THE($target)}!
+stunnable-component-disarm-success = You push {THE($target)}!

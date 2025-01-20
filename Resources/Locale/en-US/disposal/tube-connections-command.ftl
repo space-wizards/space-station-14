@@ -1,2 +1,2 @@
-tube-connections-command-description = Показывает все направления, в которых может соединяться труба.
-tube-connections-command-help-text = Использование: { $command } <entityUid>
+tube-connections-command-description = Shows all the directions that a tube can connect in.
+tube-connections-command-help-text = Usage: {$command} <entityUid>

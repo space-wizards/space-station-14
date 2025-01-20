@@ -1,24 +1,35 @@
-tool-quality-anchoring-name = Закрепление
-tool-quality-anchoring-tool-name = Гаечный ключ
-tool-quality-prying-name = Монтирование
-tool-quality-prying-tool-name = Монтировка
-tool-quality-screwing-name = Свинчивание
-tool-quality-screwing-tool-name = Отвёртка
-tool-quality-cutting-name = Резка
-tool-quality-cutting-tool-name = Кусачки
-tool-quality-welding-name = Варка
-tool-quality-welding-tool-name = Сварка
-tool-quality-pulsing-name = Пульсирование
-tool-quality-pulsing-tool-name = Мультитул
-tool-quality-slicing-name = Нарезка
-tool-quality-slicing-tool-name = Нож
-tool-quality-sawing-name = Отпиливание
-tool-quality-sawing-tool-name = Пила
-tool-quality-honking-name = Хонканье
-tool-quality-honking-tool-name = Велосипедный клаксон
-tool-quality-woodcutting-name = Рубка дерева
-tool-quality-woodcutting-tool-name = Топор
-tool-quality-rolling-name = Раскатывание
-tool-quality-rolling-tool-name = Скалка
-tool-quality-digging-name = Копание
-tool-quality-digging-tool-name = Лопата
+tool-quality-anchoring-name = Anchoring
+tool-quality-anchoring-tool-name = Wrench
+
+tool-quality-prying-name = Prying
+tool-quality-prying-tool-name = Crowbar
+
+tool-quality-screwing-name = Screwing
+tool-quality-screwing-tool-name = Screwdriver
+
+tool-quality-cutting-name = Cutting
+tool-quality-cutting-tool-name = Wirecutter
+
+tool-quality-welding-name = Welding
+tool-quality-welding-tool-name = Welder
+
+tool-quality-pulsing-name = Pulsing
+tool-quality-pulsing-tool-name = Multitool
+
+tool-quality-slicing-name = Slicing
+tool-quality-slicing-tool-name = Knife
+
+tool-quality-sawing-name = Sawing
+tool-quality-sawing-tool-name = Saw
+
+tool-quality-honking-name = Honking
+tool-quality-honking-tool-name = Bike Horn
+
+tool-quality-woodcutting-name = Woodcutting
+tool-quality-woodcutting-tool-name = Hatchet
+
+tool-quality-rolling-name = Rolling
+tool-quality-rolling-tool-name = Rolling Pin
+
+tool-quality-digging-name = Digging
+tool-quality-digging-tool-name = Shovel

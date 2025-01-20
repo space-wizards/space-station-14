@@ -1,1 +1,1 @@
-clothing-boots-sidearm = Личное оружие
+clothing-boots-sidearm = Sidearm

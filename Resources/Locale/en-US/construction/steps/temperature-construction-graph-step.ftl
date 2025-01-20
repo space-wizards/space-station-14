@@ -1,1 +1,1 @@
-construction-temperature-default = Далее, нагрейте до [color=red]{ $temperature }[/color].
+construction-temperature-default = Next, heat to [color=red]{$temperature}[/color].

@@ -1,14 +1,17 @@
-apc-menu-title = ЛКП
-apc-menu-breaker-label = Главный рубильник
-apc-menu-breaker-button = Переключить
-apc-menu-power-label = Нагрузка
-apc-menu-external-label = Внешнее питание
-apc-menu-charge-label = Заряд { $percent }
+apc-menu-title = APC
+apc-menu-breaker-label = Main Breaker
+apc-menu-breaker-button = Toggle
+apc-menu-power-label = Load
+apc-menu-external-label = External Power
+apc-menu-charge-label = {$percent} Charged
 
 # For the power state label
 
-apc-menu-power-state-good = Хорошее
-apc-menu-power-state-low = Слабое
-apc-menu-power-state-none = Отсутствует
-apc-menu-flavor-left = Обратитесь к инженеру за помощью.
+apc-menu-power-state-good = Good
+apc-menu-power-state-low = Low
+apc-menu-power-state-none = None
+
+# For the flavor text on the footer
+
+apc-menu-flavor-left = Contact an engineer for assistance.
 apc-menu-flavor-right = v1.2

@@ -1,7 +1,7 @@
-accent-scrambled-words-1 = Кто?..
-accent-scrambled-words-2 = Что?..
-accent-scrambled-words-3 = Когда?..
-accent-scrambled-words-4 = Где?..
-accent-scrambled-words-5 = Почему!..
-accent-scrambled-words-6 = Как?..
-accent-scrambled-words-7 = Я!..
+﻿accent-scrambled-words-1 = Who?
+accent-scrambled-words-2 = What?
+accent-scrambled-words-3 = When?
+accent-scrambled-words-4 = Where?
+accent-scrambled-words-5 = Why?
+accent-scrambled-words-6 = How?
+accent-scrambled-words-7 = Me!

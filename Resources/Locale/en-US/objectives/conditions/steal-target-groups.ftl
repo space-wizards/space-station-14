@@ -1,61 +1,67 @@
 # Traitor single items
-steal-target-groups-hypospray = гипоспрей
-steal-target-groups-handheld-crew-monitor = ручной монитор экипажа
-steal-target-groups-clothing-outer-hardsuit-rd = экспериментальный исследовательский скафандр
-steal-target-groups-hand-teleporter = ручной телепортер
-steal-target-groups-clothing-shoes-boots-mag-adv = продвинутые магнитные сапоги
-steal-target-groups-box-folder-qm-clipboard = цифровой планшет заявок
-steal-target-groups-food-meat-corgi = первосортное мясо корги
-steal-target-groups-captain-id-card = ID-карта капитана
-steal-target-groups-jetpack-captain-filled = джетпак капитана
-steal-target-groups-weapon-antique-laser = антикварный лазерный пистолет
-steal-target-groups-nuke-disk = диск ядерной аутентификации
-steal-target-groups-weapon-energy-shot-gun = энергетический дробовик
+steal-target-groups-hypospray = hypospray
+steal-target-groups-handheld-crew-monitor = handheld crew monitor
+steal-target-groups-clothing-outer-hardsuit-rd = experimental research hardsuit
+steal-target-groups-hand-teleporter = hand teleporter
+steal-target-groups-clothing-shoes-boots-mag-adv = advanced magboots
+steal-target-groups-box-folder-qm-clipboard = requisition digi-board
+steal-target-groups-food-meat-corgi = prime-cut corgi meat
+steal-target-groups-captain-id-card = captain ID card
+steal-target-groups-jetpack-captain-filled = captain's jetpack
+steal-target-groups-weapon-antique-laser = antique laser pistol
+steal-target-groups-nuke-disk = nuclear authentication disk
+steal-target-groups-weapon-energy-shot-gun = energy shotgun
+
 # Thief Collection
-steal-target-groups-figurines = фигурки
-steal-target-groups-heads-cloaks = плащи глав
-steal-target-groups-heads-bedsheets = одеяла глав
-steal-target-groups-stamps = печати
-steal-target-groups-door-remotes = пульты от шлюзов
-steal-target-groups-encryption-keys = ключи шифрования
-steal-target-groups-technology-disks = технологические диски
-steal-target-groups-id-cards = ID-карты
-steal-target-groups-lamps = ЛАМПЫ
+steal-target-groups-figurines = figurine
+steal-target-groups-heads-cloaks = head's cloak
+steal-target-groups-heads-bedsheets = head's bedsheet
+steal-target-groups-stamps = stamp
+steal-target-groups-door-remotes = door remote
+steal-target-groups-encryption-keys = encryption key
+steal-target-groups-technology-disks = technology disk
+steal-target-groups-id-cards = ID Card
+steal-target-groups-lamps = LAMP
+
 # Thief single item
-steal-target-groups-forensic-scanner = криминалистический сканер
-steal-target-groups-flippo-engraved-lighter = гравированная зажигалка флиппо детектива
-steal-target-groups-ammo-tech-fab-circuitboard = машинная плата ТехФаба патронов
-steal-target-groups-clothing-head-hat-warden = фуражка смотрителя
-steal-target-groups-clothing-outer-hardsuit-void-paramed = пустотный скафандр парамедика
-steal-target-groups-medical-tech-fab-circuitboard = машинная плата медицинского ТехФаба
-steal-target-groups-clothing-headset-alt-medical = полноразмерная гарнитура главного врача
-steal-target-groups-research-and-development-server-machine-circuitboard = машинная плата сервера РнД
-steal-target-groups-fire-axe = пожарный топор
-steal-target-groups-ame-part-flatpack = упаковка ДАМ
-steal-target-groups-salvage-expeditions-computer-circuitboard = плата консоли утилизаторских экспедиций
-steal-target-groups-cargo-shuttle-console-circuitboard = плата консоли управления грузовым шаттлом
-steal-target-groups-clothing-eyes-hud-beer = пивные очки
-steal-target-groups-bible = библия
-steal-target-groups-clothing-neck-goldmedal = золотая медаль мастерства экипажа
-steal-target-groups-clothing-neck-clownmedal = медаль клоуна
-steal-target-groups-wanted-list-cartridge = картридж Список разыскиваемых
+steal-target-groups-forensic-scanner = forensic scanner
+steal-target-groups-flippo-engraved-lighter = detective's Flippo engraved lighter
+steal-target-groups-ammo-tech-fab-circuitboard = ammo techfab circuit board
+steal-target-groups-clothing-head-hat-warden = warden's cap
+steal-target-groups-clothing-outer-hardsuit-void-paramed = paramedic void suit
+steal-target-groups-medical-tech-fab-circuitboard = medical techfab machine board
+steal-target-groups-clothing-headset-alt-medical = chief medical officer's over-ear headset
+steal-target-groups-research-and-development-server-machine-circuitboard = R&D server machine board
+steal-target-groups-fire-axe = fireaxe
+steal-target-groups-ame-part-flatpack =  AME flatpack
+steal-target-groups-salvage-expeditions-computer-circuitboard = salvage expeditions computer board
+steal-target-groups-cargo-shuttle-console-circuitboard = cargo shuttle console board
+steal-target-groups-clothing-eyes-hud-beer = beer goggles
+steal-target-groups-bible = bible
+steal-target-groups-clothing-neck-goldmedal = gold medal of crewmanship
+steal-target-groups-clothing-neck-clownmedal = clown medal
+steal-target-groups-wanted-list-cartridge = wanted list cartridge
+
 # Thief structures
-steal-target-groups-teg = часть термоэлектрического генератора
-steal-target-groups-freezer-heater = нагреватель или охладитель
-steal-target-groups-altar-nanotrasen = алтарь Nanotrasen (любой)
-steal-target-groups-nuclear-bomb = ядерная боеголовка
-steal-target-groups-fax-machine-captain = факс дальнего действия капитана
-steal-target-groups-chem-dispenser = химический раздатчик
-steal-target-groups-xeno-artifact = инопланетный артефакт
-steal-target-groups-booze-dispenser = раздатчик алкоголя
-steal-target-groups-plant-rd = "комнатное растение научрука"
-steal-target-groups-toilet-golden-dirty-water = золотой унитаз
+steal-target-groups-teg = teg generator part
+steal-target-groups-freezer-heater = freezer or heater
+steal-target-groups-altar-nanotrasen = nanotrasen altar (any)
+
+steal-target-groups-nuclear-bomb = nuclear fission explosive
+steal-target-groups-fax-machine-captain = captain long range fax machine
+steal-target-groups-chem-dispenser = chemical dispenser
+steal-target-groups-xeno-artifact = alien artifact
+steal-target-groups-booze-dispenser = booze dispenser
+steal-target-groups-plant-rd = "RD's potted plant"
+steal-target-groups-toilet-golden-dirty-water = golden toilet
+
 # Thief Animal
-steal-target-groups-animal-named-cat = кот главного врача
-steal-target-groups-animal-ian = Иан
-steal-target-groups-animal-mc-griff = МакГрифф
-steal-target-groups-animal-walter = Уолтер
-steal-target-groups-animal-morty = Морти
-steal-target-groups-animal-renault = Алиса
-steal-target-groups-animal-shiva = Шива
-steal-target-groups-animal-tropico = Тропико
+steal-target-groups-animal-named-cat = CMO's Cat
+
+steal-target-groups-animal-ian = Ian
+steal-target-groups-animal-mc-griff = McGriff
+steal-target-groups-animal-walter = Walter
+steal-target-groups-animal-morty = Morty
+steal-target-groups-animal-renault = Renault
+steal-target-groups-animal-shiva = Shiva
+steal-target-groups-animal-tropico = Tropico

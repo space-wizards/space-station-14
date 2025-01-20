@@ -1,3 +1,3 @@
-spike-solution-generic = Вы толчёте { $spiked-entity } в { $spike-entity }.
-spike-solution-empty-generic = Вам не удаётся разбить { $spike-entity } в { $spiked-entity }.
-spike-solution-egg = Вы разбиваете { $spike-entity } в { $spiked-entity }.
+spike-solution-generic = You spike {THE($spiked-entity)} with {THE($spike-entity)}.
+spike-solution-empty-generic = {THE($spike-entity)} fails to dissolve in {THE($spiked-entity)}.
+spike-solution-egg = You crack {THE($spike-entity)} into {THE($spiked-entity)}.

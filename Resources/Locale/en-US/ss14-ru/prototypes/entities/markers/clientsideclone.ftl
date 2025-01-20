@@ -1,2 +1,0 @@
-ent-clientsideclone = clientsideclone
-    .desc = { "" }

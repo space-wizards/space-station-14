@@ -1,12 +1,7 @@
+﻿
 ### Announcement
 
-earlyleave-cryo-job-unknown = Должность неизвестна
+earlyleave-cryo-job-unknown = Unknown
 # {$entity} available for GENDER function purposes
-earlyleave-cryo-announcement =
-    { $character } ({ $job }) { GENDER($entity) ->
-        [male] был перемещён
-        [female] была перемещена
-        [epicene] были перемещены
-       *[neuter] было перемещено
-    } в криогенное хранилище!
-earlyleave-cryo-sender = Станция
+earlyleave-cryo-announcement = {$character} ({$job}) has entered cryogenic storage!
+earlyleave-cryo-sender = Station

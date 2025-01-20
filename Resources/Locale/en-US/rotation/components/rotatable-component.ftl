@@ -1,3 +1,8 @@
-rotatable-component-try-rotate-stuck = Оно застряло.
-rotate-verb-get-data-text = Вращать по часовой
-rotate-counter-verb-get-data-text = Вращать против часовой
+# RotatableComponent
+rotatable-component-try-rotate-stuck = It's stuck.
+
+# RotateVerb
+rotate-verb-get-data-text = Rotate clockwise
+
+# RotateCounterVerb
+rotate-counter-verb-get-data-text = Rotate counter-clockwise

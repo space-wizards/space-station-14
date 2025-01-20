@@ -1,3 +1,3 @@
 # ToiletLidClosed
-construction-examine-condition-toilet-lid-closed = Используйте [color=yellow]монтировку[/color] чтобы закрыть крышку.
-construction-step-condition-toilet-lid-closed = Убедитесь, что крышка унитаза закрыта.
+construction-examine-condition-toilet-lid-closed = Use a [color=yellow]crowbar[/color] to close the lid.
+construction-step-condition-toilet-lid-closed = Make sure the toilet lid is closed.

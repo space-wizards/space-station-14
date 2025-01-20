@@ -11,19 +11,6 @@
     - !type:PlasmaFireReaction {}
 
 - type: gasReaction
-  id: DarkMatterAnnihilation
-  priority: -1
-  minimumTemperature: 400.0 # Минимальная температура для реакции
-  minimumRequirements: # Минимальные требования для реакции
-    - 0.01  # oxygen
-    - 0.01  # nitrogen
-    - 0.01  # carbon dioxide
-    - 0.01  # plasma
-    - 0.01  # tritium
-  effects:
-    - !type:FrezonProductionReaction {}
-
-- type: gasReaction
   id: TritiumFire
   priority: -1
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist

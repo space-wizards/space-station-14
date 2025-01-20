@@ -1,5 +1,5 @@
-admin-add-reagent-window-title = Добавить к { $solution }
-admin-add-reagent-window-amount-label = Количество:
-admin-add-reagent-window-search-placeholder = Фильтр...
-admin-add-reagent-window-add = Добавить { $quantity } ед. { $reagent }
-admin-add-reagent-window-add-invalid-reagent = Выберите реагент
+admin-add-reagent-window-title = Add to {$solution}
+admin-add-reagent-window-amount-label = Quantity:
+admin-add-reagent-window-search-placeholder = Filter...
+admin-add-reagent-window-add = Add {$quantity}u {$reagent}
+admin-add-reagent-window-add-invalid-reagent = Select a Reagent

@@ -1,2 +1,2 @@
-sheath-insert-verb = Поместить в ножны
-sheath-eject-verb = Извлечь из ножен
+sheath-insert-verb = Sheathe
+sheath-eject-verb = Unsheathe

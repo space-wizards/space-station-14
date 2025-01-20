@@ -1,2 +1,2 @@
-suspicion-title = Подозрения
-suspicion-description = Подозрения разгораются на станции. На борту есть предатели... Сможете ли вы убить их до того, как они убьют вас?
+suspicion-title = Suspicion
+suspicion-description = Suspicion on the Space Station. There are traitors on board... Can you kill them before they kill you?

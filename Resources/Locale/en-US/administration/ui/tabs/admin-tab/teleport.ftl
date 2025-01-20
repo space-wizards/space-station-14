@@ -1,1 +1,1 @@
-admin-ui-teleport = Телепорт
+admin-ui-teleport = Teleport

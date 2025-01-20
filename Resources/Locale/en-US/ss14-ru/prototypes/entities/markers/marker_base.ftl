@@ -1,2 +1,0 @@
-ent-MarkerBase = { "" }
-    .desc = { "" }

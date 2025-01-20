@@ -1,4 +1,4 @@
-price-gun-pricing-result = Прибор показывает, что { $object } имеет ценность в { $price } кредитов.
-price-gun-verb-text = Оценить
-price-gun-verb-message = { CAPITALIZE($object) } оценивается.
-price-gun-bounty-complete = Прибор подтверждает, что товары по запросу были собраны.
+﻿price-gun-pricing-result = The device deems {THE($object)} to be worth {$price} spesos.
+price-gun-verb-text = Appraisal
+price-gun-verb-message = Appraise {THE($object)}.
+price-gun-bounty-complete = The device confirms that the bounty contained within is completed.

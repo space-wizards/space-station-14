@@ -1,24 +1,24 @@
 # InstrumentComponent
-instrument-component-finger-cramps-light-message = Ваши пальцы начинает немного сводить судорогой!
-instrument-component-finger-cramps-serious-message = Ваши пальцы свело судорогой!
-instrument-component-finger-cramps-max-message = Ваши пальцы сводит судорогой от игры!
-instruments-component-menu-no-midi-support =
-    Поддержка MIDI в настоящее время
-    не доступна в вашей системе.
-    Если вы на Linux, вам может потребоваться установить
-    FluidSynth или пакет разработки
-    для FluidSynth.
-instruments-component-menu-input-button = MIDI-ввод
-instruments-component-menu-band-button = Присоединиться к группе
-instruments-component-menu-play-button = Воспроизвести MIDI-файл
-instruments-component-menu-loop-button = Повтор
-instruments-component-menu-channels-button = Каналы
-instruments-component-menu-stop-button = Стоп
-instruments-component-band-menu = Выбрать лидера группы
-instrument-component-band-refresh = Обновить
-instruments-component-channels-menu = Выбор MIDI-канала
-instrument-component-channel-name = MIDI-канал { $number }
-instruments-component-channels-all-button = Все
-instruments-component-channels-clear-button = Очистить
+instrument-component-finger-cramps-light-message = Your fingers are beginning to a cramp a little!
+instrument-component-finger-cramps-serious-message = Your fingers are seriously cramping up!
+instrument-component-finger-cramps-max-message = Your fingers cramp up from playing!
+instruments-component-menu-no-midi-support = MIDI support is currently not
+                                             available on your system.
+                                             If on Linux, you may need to install
+                                             FluidSynth or a development package
+                                             for FluidSynth.
+instruments-component-menu-input-button = MIDI Input
+instruments-component-menu-band-button = Join Band
+instruments-component-menu-play-button = Play MIDI
+instruments-component-menu-loop-button = Loop
+instruments-component-menu-channels-button = Channels
+instruments-component-menu-stop-button = Stop
+instruments-component-band-menu = Choose band leader
+instrument-component-band-refresh = Refresh
+instruments-component-channels-menu = MIDI Channel Selection
+instrument-component-channel-name = MIDI Channel {$number}
+instruments-component-channels-all-button = All
+instruments-component-channels-clear-button = Clear
+
 # SwappableInstrumentComponent
-swappable-instrument-component-style-set = Установить стиль "{ $style }"
+swappable-instrument-component-style-set = Style set to "{$style}"

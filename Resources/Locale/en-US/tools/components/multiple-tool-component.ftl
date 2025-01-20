@@ -1,1 +1,1 @@
-multiple-tool-component-no-behavior = Нет
+multiple-tool-component-no-behavior = None

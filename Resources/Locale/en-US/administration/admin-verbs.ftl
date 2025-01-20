@@ -1,18 +1,18 @@
-delete-verb-get-data-text = Удалить
-edit-solutions-verb-get-data-text = Редактировать растворы
-explode-verb-get-data-text = Взорвать
-ahelp-verb-get-data-text = Написать
-admin-verbs-admin-logs-entity = Логи сущности
-admin-verbs-teleport-to = Телепортироваться к
-admin-verbs-teleport-here = Телепортировать сюда
-admin-verbs-freeze = Заморозить
-admin-verbs-freeze-and-mute = Заморозить и заглушить
-admin-verbs-unfreeze = Разморозить
-admin-verbs-erase = Стереть
-admin-verbs-erase-description =
-    Удаляет игрока из раунда и манифеста членов экипажа, а также удаляет все его сообщения в чате.
-    Их вещи упадут на землю.
-    Игроки увидят всплывающее окно, указывающее им играть как будто исчезнувшего никогда не существовало.
-toolshed-verb-mark = Отметить
-toolshed-verb-mark-description = Помещает данную сущность в переменную $marked, заменяя её предыдущее значение.
-export-entity-verb-get-data-text = Экспорт спрайта
+delete-verb-get-data-text = Delete
+edit-solutions-verb-get-data-text = Edit Solutions
+explode-verb-get-data-text = Explode
+ahelp-verb-get-data-text = Message
+admin-verbs-admin-logs-entity = Entity Logs
+admin-verbs-teleport-to = Teleport To
+admin-verbs-teleport-here = Teleport Here
+admin-verbs-freeze = Freeze
+admin-verbs-freeze-and-mute = Freeze And Mute
+admin-verbs-unfreeze = Unfreeze
+admin-verbs-erase = Erase
+admin-verbs-erase-description = Removes the player from the round and crew manifest and deletes their chat messages.
+    Their items are dropped on the ground.
+    Players are shown a popup indicating them to play as if they never existed.
+toolshed-verb-mark = Mark
+toolshed-verb-mark-description = Places this entity into the $marked variable, a list of entities, replacing its prior value.
+
+export-entity-verb-get-data-text = Export sprite

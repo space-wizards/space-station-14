@@ -1,2 +1,2 @@
-carpetium-effect-blood-fibrous = Ваша кровь кажется странно волокнистой сегодня.
-carpetium-effect-jumpsuit-insides = По какой-то причине вы чувствуете, что внутри вас находится комбинезон.
+﻿carpetium-effect-blood-fibrous = Your blood feels oddly fibrous today.
+carpetium-effect-jumpsuit-insides = You feel like there's a jumpsuit inside you, for some reason.

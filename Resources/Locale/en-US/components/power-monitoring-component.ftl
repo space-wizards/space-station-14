@@ -1,23 +1,28 @@
-power-monitoring-window-title = Консоль контроля питания
-power-monitoring-window-label-sources = Источники
-power-monitoring-window-label-smes = СМЭС
-power-monitoring-window-label-substation = Подстанции
-power-monitoring-window-label-apc = ЛКП
-power-monitoring-window-label-misc = Разное
-power-monitoring-window-object-array = { $name } массив [{ $count }]
-power-monitoring-window-station-name = [color=white][font size=14]{ $stationName }[/font][/color]
-power-monitoring-window-unknown-location = Неизвестное местоположение
-power-monitoring-window-total-battery-usage = Общее использование батареи
-power-monitoring-window-total-sources = Общая выработка генератора
-power-monitoring-window-total-loads = Общая нагрузка сети
+power-monitoring-window-title = Power Monitoring Console
+
+power-monitoring-window-label-sources = Sources
+power-monitoring-window-label-smes = SMES
+power-monitoring-window-label-substation = Substation
+power-monitoring-window-label-apc = APC
+power-monitoring-window-label-misc = Misc
+
+power-monitoring-window-object-array = {$name} array [{$count}]
+
+power-monitoring-window-station-name = [color=white][font size=14]{$stationName}[/font][/color]
+power-monitoring-window-unknown-location = Unknown location
+power-monitoring-window-total-sources = Total generator output
+power-monitoring-window-total-battery-usage = Total battery usage
+power-monitoring-window-total-loads = Total network loads
 power-monitoring-window-value = { POWERWATTS($value) }
-power-monitoring-window-button-value = { $value } Вт
-power-monitoring-window-show-inactive-consumers = Показать неактивные потребители тока
-power-monitoring-window-show-cable-networks = Отображения электросетей различного вольтажа
-power-monitoring-window-show-hv-cable = Высокого
-power-monitoring-window-show-mv-cable = Среднего
-power-monitoring-window-show-lv-cable = Низкового
+power-monitoring-window-button-value = {$value} W
+power-monitoring-window-show-inactive-consumers = Show Inactive Consumers
+
+power-monitoring-window-show-cable-networks = Toggle cable networks
+power-monitoring-window-show-hv-cable = High voltage
+power-monitoring-window-show-mv-cable = Medium voltage
+power-monitoring-window-show-lv-cable = Low voltage
+
 power-monitoring-window-flavor-left = [user@nanotrasen] $run power_net_query
-power-monitoring-window-flavor-right = v1.3ru
-power-monitoring-window-rogue-power-consumer = [color=white][font size=14][bold]! ВНИМАНИЕ - ОБНАРУЖЕН НЕСАНКЦИОНИРОВАННЫЙ ЭНЕРГОПОТРЕБИТЕЛЬ ![/bold][/font][/color]
-power-monitoring-window-power-net-abnormalities = [color=white][font size=14][bold]ОСТОРОЖНО - АНОМАЛЬНАЯ АКТИВНОСТЬ В ЭЛЕКТРОСЕТИ[/bold][/font][/color]
+power-monitoring-window-flavor-right = v1.3
+power-monitoring-window-rogue-power-consumer = [color=white][font size=14][bold]! WARNING - ROGUE POWER CONSUMING DEVICE DETECTED ![/bold][/font][/color]
+power-monitoring-window-power-net-abnormalities = [color=white][font size=14][bold]CAUTION - ABNORMAL ACTIVITY IN POWER NET[/bold][/font][/color]

@@ -1,4 +1,5 @@
-devour-action-popup-message-structure = Ваши челюсти впиваются в твёрдый материал...
-devour-action-popup-message-fail-target-not-valid = Это выглядит не особо съедобно.
-devour-action-popup-message-fail-target-alive = Вы не можете поглощать ещё живых существ!
-dragon-spawn-action-popup-message-fail-no-eggs = Вам не хватит выносливости для создания карпа!
+devour-action-popup-message-structure = Your jaws dig into thick material..
+devour-action-popup-message-fail-target-not-valid = That doesn't look particularly edible.
+devour-action-popup-message-fail-target-alive = You can't consume creatures that are alive!
+
+dragon-spawn-action-popup-message-fail-no-eggs = You don't have the stamina to do that!

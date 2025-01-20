@@ -1,1 +1,1 @@
-guide-help-verb = Помощь
+guide-help-verb = Help

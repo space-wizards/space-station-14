@@ -1,6 +1,6 @@
 ## UI
 
-disposal-router-window-title = Маршрутизатор утилизации
-disposal-router-window-tags-label = Метки:
-disposal-router-window-tag-input-tooltip = Список меток, разделённых запятыми
-disposal-router-window-tag-input-confirm-button = Подтвердить
+disposal-router-window-title = Disposal Router
+disposal-router-window-tags-label = Tags:
+disposal-router-window-tag-input-tooltip = A comma separated list of tags
+disposal-router-window-tag-input-confirm-button = Confirm

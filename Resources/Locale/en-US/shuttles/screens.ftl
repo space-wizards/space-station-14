@@ -1,2 +1,2 @@
-screens-text = текст
-screens-color = цвет
+screens-text = text
+screens-color = color

@@ -1,8 +1,9 @@
-zombie-transform = { CAPITALIZE($target) } теперь зомби!
-zombie-infection-greeting = Вы стали зомби. Ваша задача - искать и заражать живых. Работайте сообща со своими воскресшими коллегами, чтобы одолеть оставшихся членов экипажа.
-zombie-generic = зомби
-# Corvax-Zombies
-zombie-name-prefix = { $baseName }
-zombie-role-desc = Зловещий мертвец.
-zombie-role-rules = Вы - антагонист. Ищите и кусайте живых людей, чтобы заразить их и превратить в зомби. Работайте сообща с другими зомби, чтобы захватить станцию.
-zombie-permadeath = В этот раз вы мертвы по-настоящему.
+zombie-transform = {CAPITALIZE(THE($target))} turned into a zombie!
+zombie-infection-greeting = You have become a zombie. Your goal is to seek out the living and to try to infect them.  Work together with the other zombies and remaining initial infected to overtake the station.
+
+zombie-generic = zombie
+zombie-name-prefix = zombified {$baseName}
+zombie-role-desc =  A malevolent creature of the dead.
+zombie-role-rules = You are an antagonist. Search out the living and bite them in order to infect them and turn them into zombies. Work together with the other zombies and remaining initial infected to overtake the station.
+
+zombie-permadeath = This time, you're dead for real.

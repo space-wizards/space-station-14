@@ -1,1 +1,1 @@
-rejuvenate-verb-get-data-text = Вылечить
+rejuvenate-verb-get-data-text = Rejuvenate

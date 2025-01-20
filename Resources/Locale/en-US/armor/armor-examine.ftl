@@ -1,20 +1,20 @@
 # Armor examines
-armor-examinable-verb-text = Броня
-armor-examinable-verb-message = Изучить показатели брони.
-armor-examine = Обеспечивает следующую защиту:
-armor-coefficient-value = - [color=yellow]{ $type }[/color] урон снижается на [color=lightblue]{ $value }%[/color].
-armor-reduction-value = - [color=yellow]{ $type }[/color] урон снижается на [color=lightblue]{ $value }[/color].
-armor-damage-type-blunt = Ударный
-armor-damage-type-slash = Режущий
-armor-damage-type-piercing = Колющий
-armor-damage-type-heat = Высокотемпературный
-armor-damage-type-radiation = Радиационный
-armor-damage-type-caustic = Кислотный
-armor-damage-type-bloodloss = От кровопотери
-armor-damage-type-asphyxiation = От удушения
-armor-damage-type-cellular = Клеточный
-armor-damage-type-cold = Низкотемпературный
-armor-damage-type-poison = Ядовитый
-armor-damage-type-shock = Электрический
-armor-damage-type-structural = Структурный
-armor-damage-type-holy = Святой
+armor-examinable-verb-text = Armor
+armor-examinable-verb-message = Examine the armor values.
+armor-examine = It provides the following protection:
+armor-coefficient-value = - [color=yellow]{$type}[/color] damage reduced by [color=lightblue]{$value}%[/color].
+armor-reduction-value = - [color=yellow]{$type}[/color] damage reduced by [color=lightblue]{$value}[/color].
+armor-damage-type-blunt = Blunt
+armor-damage-type-slash = Slash
+armor-damage-type-piercing = Piercing
+armor-damage-type-heat = Heat
+armor-damage-type-radiation = Radiation
+armor-damage-type-caustic = Caustic
+armor-damage-type-bloodloss = Bloodloss
+armor-damage-type-asphyxiation = Asphyxiation
+armor-damage-type-cellular = Cellular
+armor-damage-type-cold = Cold
+armor-damage-type-poison = Poison
+armor-damage-type-shock = Shock
+armor-damage-type-structural = Structural
+armor-damage-type-holy = Holy

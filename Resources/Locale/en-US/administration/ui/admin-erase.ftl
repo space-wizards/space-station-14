@@ -1,1 +1,1 @@
-admin-erase-popup = { $user } бесследно исчезает. Продолжайте играть как будто его никогда не было.
+﻿admin-erase-popup = {$user} disappears without a trace. You should keep playing as if they never existed.

@@ -1,6 +1,1 @@
-bin-component-on-examine-text =
-    Похоже, осталось { $count } { $count ->
-        [one] штука
-        [few] штуки
-       *[other] штук
-    }.
+﻿bin-component-on-examine-text = Looks like there's {$count} items left.

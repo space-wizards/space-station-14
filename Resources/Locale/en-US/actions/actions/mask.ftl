@@ -1,2 +1,2 @@
-action-mask-pull-up-popup-message = Вы натягиваете { $mask } на лицо.
-action-mask-pull-down-popup-message = Вы приспускаете { $mask } с лица.
+action-mask-pull-up-popup-message = You pull up your {$mask}.
+action-mask-pull-down-popup-message = You pull down your {$mask}.

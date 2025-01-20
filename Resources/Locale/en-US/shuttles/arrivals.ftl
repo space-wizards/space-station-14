@@ -1,7 +1,10 @@
-cmd-arrivals-enable-hint = Включает прибытие
-cmd-arrivals-disable-hint = Отключает прибытие
-cmd-arrivals-returns = Устанавливает возвращение прибытием на { $value }.
-cmd-arrivals-returns-hint = Переключает возможность возвращения игроков с помощью прибытия.
-cmd-arrivals-invalid = Предоставлен неверный аргумент.
-cmd-arrivals-force-hint = Вынуждает игроков прибывать.
-cmd-arrivals-forced = Вынуждает { $uid } прибыть на станцию.
+cmd-arrivals-enable-hint = Enables arrivals
+cmd-arrivals-disable-hint = Disables arrivals
+
+cmd-arrivals-returns = Set arrivals returns to {$value}.
+cmd-arrivals-returns-hint = Toggles allowing players to return via arrivals.
+
+cmd-arrivals-invalid = Invalid arg supplied.
+
+cmd-arrivals-force-hint = Forces players to arrive.
+cmd-arrivals-forced = Forced {$uid} to arrive to the station.

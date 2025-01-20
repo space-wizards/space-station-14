@@ -1,2 +1,0 @@
-ent-BaseShadow = { "" }
-    .desc = { "" }

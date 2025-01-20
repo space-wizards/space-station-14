@@ -1,13 +1,23 @@
+
 ### Interaction Messages
 
-# Shown when player tries to replace light, but there is no lighs left
-comp-light-replacer-missing-light = В { $light-replacer } не осталось лампочек.
+# Shown when player tries to replace light, but there is no lights left
+comp-light-replacer-missing-light = No lights left in {THE($light-replacer)}.
+
 # Shown when player inserts light bulb inside light replacer
-comp-light-replacer-insert-light = Вы вставили { $bulb } в { $light-replacer }.
+comp-light-replacer-insert-light = You insert {$bulb} into {THE($light-replacer)}.
+
 # Shown when player tries to insert in light replacer brolen light bulb
-comp-light-replacer-insert-broken-light = Вы не можете вставлять разбитые лампочки!
+comp-light-replacer-insert-broken-light = You can't insert broken lights!
+
 # Shown when player refill light from light box
-comp-light-replacer-refill-from-storage = Вы пополнили { $light-replacer }.
-comp-light-replacer-no-lights = Здесь пусто.
-comp-light-replacer-has-lights = Здесь находится следующее:
-comp-light-replacer-light-listing = [color=yellow]{ $amount }[/color] ед. [color=gray]{ $name }[/color]
+comp-light-replacer-refill-from-storage = You refill {THE($light-replacer)}.
+
+### Examine 
+
+comp-light-replacer-no-lights = It's empty.
+comp-light-replacer-has-lights = It contains the following:
+comp-light-replacer-light-listing = {$amount ->
+    [one] [color=yellow]{$amount}[/color] [color=gray]{$name}[/color]
+    *[other] [color=yellow]{$amount}[/color] [color=gray]{$name}s[/color]
+}

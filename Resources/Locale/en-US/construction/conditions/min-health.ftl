@@ -1,2 +1,2 @@
-construction-examine-condition-low-health = Для начала, почините это.
-construction-step-condition-low-health = Это должно быть починено.
+construction-examine-condition-low-health = First, repair it.
+construction-step-condition-low-health = It must be repaired.

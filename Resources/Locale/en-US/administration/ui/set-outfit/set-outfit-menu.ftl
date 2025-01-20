@@ -1,4 +1,4 @@
 ### SetOutfitMEnu.xaml.cs
 
-set-outfit-menu-title = Установить наряд
-set-outfit-menu-confirm-button = Подтвердить
+set-outfit-menu-title = Set Outfit
+set-outfit-menu-confirm-button = Confirm

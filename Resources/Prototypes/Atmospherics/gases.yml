@@ -30,14 +30,14 @@
 
 - type: gas
   id: 3
-  name: Тёмная материя
+  name: gases-plasma
   specificHeat: 200
   heatCapacityRatio: 1.7
   molarMass: 120
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
   gasOverlayState: plasma
-  color: 000000
-  reagents: Plasma
+  color: FF3300
+  reagent: Plasma
   pricePerMole: 0
 
 - type: gas
@@ -100,15 +100,3 @@
   color: 3a758c
   reagent: Frezon
   pricePerMole: 0.3
-
-- type: gas
-  id: 9
-  name: dark-matter-gas
-  specificHeat: 150
-  heatCapacityRatio: 1.5
-  molarMass: 0
-  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
-  gasOverlayState: darkmatter
-  color: 000000
-  reagent: DarkMatter
-  pricePerMole: 0

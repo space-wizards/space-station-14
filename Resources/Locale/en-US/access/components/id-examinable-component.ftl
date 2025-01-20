@@ -1,3 +1,3 @@
-id-examinable-component-verb-text = ID карта
-id-examinable-component-verb-disabled = Приблизьтесь, чтобы рассмотреть ID карту.
-id-examinable-component-verb-no-id = ID карты не видно.
+id-examinable-component-verb-text = ID Card
+id-examinable-component-verb-disabled = Read an ID card in close range.
+id-examinable-component-verb-no-id = No ID card visible.

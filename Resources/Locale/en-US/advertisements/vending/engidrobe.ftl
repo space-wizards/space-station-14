@@ -1,5 +1,5 @@
-advertisement-engidrobe-1 = Гарантированная защита ваших ног от несчастных случаев на производстве!
-advertisement-engidrobe-2 = Боитесь радиации? Носите жёлтое!
-advertisement-engidrobe-3 = У нас есть шапки, которые защитят вашу башку!
-advertisement-engidrobe-4 = В наше время мало кто пользуется средствами защиты!
-advertisement-engidrobe-5 = Получите свою защитную экипировку сегодня!
+advertisement-engidrobe-1 = Guaranteed to protect your feet from industrial accidents!
+advertisement-engidrobe-2 = Afraid of radiation? Then wear yellow!
+advertisement-engidrobe-3 = We got hats that protect your noggin!
+advertisement-engidrobe-4 = Not enough people wear safety equipment nowadays!
+advertisement-engidrobe-5 = Get your safety equipment today!

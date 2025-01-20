@@ -1,38 +1,57 @@
-reagent-name-cola = кола
-reagent-desc-cola = Сладкий газированный безалкогольный напиток. Не содержит кофеина.
-reagent-name-shirley-temple = Ширли Темпл
-reagent-desc-shirley-temple = Фаворит среди более юных членов экипажа.
-reagent-name-changeling-sting = жало генокрада
-reagent-desc-changeling-sting = Вы делаете маленький глоток и чувствуете жжение...
-reagent-name-dr-gibb = доктор Гибб
-reagent-desc-dr-gibb = Восхитительная смесь из 42 различных вкусов.
-reagent-name-energy-drink = энергетический напиток
-reagent-desc-energy-drink = Доза энергии! Nanotrasen не несёт ответственности, если у вас вырастут птичьи придатки.
-reagent-name-grape-soda = виноградная газировка
-reagent-desc-grape-soda = Это винограааааад!
-reagent-name-ice-cream = мороженое
-reagent-desc-ice-cream = Ешьте скорее, пока не превратилось в суп-мороженое!
-reagent-name-lemon-lime = лимон-лайм
-reagent-desc-lemon-lime = Терпкая газировка из лимона и лайма
-reagent-name-lemon-lime-cranberry = клюквенный лимон-лайм
-reagent-desc-lemon-lime-cranberry = Терпкая клюква, Рождество, нотки лимона и лайма.
-reagent-name-pwr-game = Pwr Game
-reagent-desc-pwr-game = Единственный напиток, обладающий СИЛОЙ, которую жаждут настоящие геймеры. Когда геймеры говорят о геймерском топливе, они имеют в виду именно это.
-reagent-name-root-beer = рутбир
-reagent-desc-root-beer = Очень сладкий, газированный напиток, напоминающий сарспариллу. Хорошо сочетается с мороженым.
-reagent-name-root-beer-float = рутбир с мороженым
-reagent-desc-root-beer-float = Рутбир, но теперь с мороженым сверху! Это действительно магнум опус канадских летних напитков.
-reagent-name-sol-dry = sol dry
-reagent-desc-sol-dry = Сладкая имбирная газировка из космоса!
-reagent-name-roy-rogers = Рой Роджерс
-reagent-desc-roy-rogers = Убедительное доказательство того, что существует нечто известное, как "слишком сладко".
-reagent-name-space-mountain-wind = космический маунтин винд
-reagent-desc-space-mountain-wind = Проходит сквозь, словно космический ветер.
-reagent-name-space-up = спейс-ап
-reagent-desc-space-up = На вкус как пробоина в корпусе у вас во рту.
-reagent-name-starkist = старкист
-reagent-desc-starkist = Сладкий безалкогольный напиток со вкусом апельсина.
-reagent-name-fourteen-loko = фоуртин локо
-reagent-desc-fourteen-loko = Сильно переработанная жидкая субстанция, едва ли соответствующая межгалактическим стандартам безопасности для безалкогольного напитка.
-reagent-name-shamblers-juice = сок Shambler
-reagent-desc-shamblers-juice = ~Встряхните мне немного этого сока Shambler!~
+reagent-name-cola = Space Cola
+reagent-desc-cola = A sweet, carbonated soft drink.
+
+reagent-name-shirley-temple = Shirley Temple
+reagent-desc-shirley-temple = A favorite amongst younger members of the crew.
+
+reagent-name-changeling-sting = Changeling Sting
+reagent-desc-changeling-sting = You take a tiny sip and feel a burning sensation...
+
+reagent-name-dr-gibb = Dr. Gibb
+reagent-desc-dr-gibb = A delicious blend of 42 different flavours.
+
+reagent-name-energy-drink = Red Bool
+reagent-desc-energy-drink = A dose of energy! Nanotrasen is not responsible if you grow avian appendages.
+
+reagent-name-grape-soda = grape soda
+reagent-desc-grape-soda = It's Graaaaaape!
+
+reagent-name-ice-cream = ice cream
+reagent-desc-ice-cream = It was either this or the microwave, and nobody wants ice cream soup!
+
+reagent-name-lemon-lime = Smite
+reagent-desc-lemon-lime = Tangy lime and lemon soda.
+
+reagent-name-lemon-lime-cranberry = Smite Cranberry
+reagent-desc-lemon-lime-cranberry = Tart cranberry, Christmas, and a hint of lemon and lime.
+
+reagent-name-pwr-game = PWR Game
+reagent-desc-pwr-game = The only drink with the PWR that true gamers crave. When a gamer talks about gamerfuel, this is what they're literally referring to.
+
+reagent-name-root-beer = root beer
+reagent-desc-root-beer = A very sweet, carbonated drink reminiscent of sarsaparilla. Goes well with ice cream.
+
+reagent-name-root-beer-float = root beer float
+reagent-desc-root-beer-float = Root beer, but now with ice cream on top. It truly is the magnum opus of Canadian summertime drinks.
+
+reagent-name-sol-dry = Sol Dry
+reagent-desc-sol-dry = Sweet ginger soda from outer space!
+
+reagent-name-roy-rogers = Roy Rogers
+reagent-desc-roy-rogers = Solid proof that there IS something known as too sweet.
+
+reagent-name-space-mountain-wind = Space Solar Wind
+reagent-desc-space-mountain-wind = Blows right through you like a solar wind.
+
+reagent-name-space-up = Space-Up
+reagent-desc-space-up = Tastes like a hull breach in your mouth.
+
+reagent-name-starkist = Starkist
+reagent-desc-starkist = A sweet, orange flavored soft drink.
+
+reagent-name-fourteen-loko = Fourteen Loko
+reagent-desc-fourteen-loko = A highly processed liquid substance barely-passing intergalatic health standards for a soft drink.
+
+reagent-name-shamblers-juice = Shambler's Juice
+reagent-desc-shamblers-juice = ~Shake me up some of that Shambler's Juice!~
+

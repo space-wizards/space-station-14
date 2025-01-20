@@ -1,1 +1,1 @@
-control-mob-verb-get-data-text = Контролировать существо
+control-mob-verb-get-data-text = Control Mob

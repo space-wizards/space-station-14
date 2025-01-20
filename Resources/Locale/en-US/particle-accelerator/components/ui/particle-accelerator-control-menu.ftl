@@ -1,21 +1,22 @@
-particle-accelerator-control-menu-on-button = ВКЛ
-particle-accelerator-control-menu-off-button = ВЫКЛ
-particle-accelerator-control-menu-service-manual-reference = См. стр. 132 руководства по обслуживанию
-particle-accelerator-control-menu-device-version-label = Ускоритель частиц Mark 2
-particle-accelerator-control-menu-power-label = [bold]Питание:[/bold]
-particle-accelerator-control-menu-strength-label = [bold]Сила:[/bold]
-particle-accelerator-control-menu-alarm-control-1 = [bold][color=red]МОЩНОСТЬ ЧАСТИЦ[/bold][/color]
-particle-accelerator-control-menu-alarm-control-2 = [bold][color=red]СБОЙ ОГРАНИЧИТЕЛЯ[/bold][/color]
-particle-accelerator-control-menu-scan-parts-button = Сканировать части
-particle-accelerator-control-menu-check-containment-field-warning = Убедитесь, что сдерживающее поле активно!
+particle-accelerator-control-menu-on-button = On
+particle-accelerator-control-menu-off-button = Off
+particle-accelerator-control-menu-service-manual-reference = Refer to p.132 of service manual
+particle-accelerator-control-menu-device-version-label = Mark 2 Particle Accelerator
+particle-accelerator-control-menu-power-label = [bold]Power:[/bold]
+particle-accelerator-control-menu-strength-label = [bold]Strength:[/bold]
+particle-accelerator-control-menu-alarm-control-1 = [bold][color=red]PARTICLE STRENGTH[/bold][/color]
+particle-accelerator-control-menu-alarm-control-2 = [bold][color=red]LIMITER FAILURE[/bold][/color]
+particle-accelerator-control-menu-scan-parts-button = Scan Parts
+particle-accelerator-control-menu-check-containment-field-warning = Ensure containment field is active before operation
 particle-accelerator-control-menu-foo-bar-baz = FOO-BAR-BAZ
-particle-accelerator-control-menu-status-label = [bold]Статус:[/bold]
-particle-accelerator-control-menu-status-unknown = [font="Monospace"][color=red]Нет данных[/color][/bold]
-particle-accelerator-control-menu-status-operational = [font="Monospace"][color=green]Работоспособно[/color][/bold]
-particle-accelerator-control-menu-status-incomplete = [font="Monospace"][color=red]Не завершено[/color][/bold]
-particle-accelerator-control-menu-draw = [bold]Мощность:[/bold]
-particle-accelerator-control-menu-draw-value = [font="Monospace"]{ $watts }/{ $lastReceive }[/font]
-particle-accelerator-control-menu-draw-not-available = [font="Monospace"][color=gray]Н/Д[/color][/font]
-particle-accelerator-radio-message-on = Питание УЧ было включено.
-particle-accelerator-radio-message-off = Питание УЧ было выключено.
-particle-accelerator-radio-message-num = Мощность УЧ установлена на уровень { $level }.
+particle-accelerator-control-menu-status-label = [bold]Status:[/bold]
+particle-accelerator-control-menu-status-unknown = [font="Monospace"][color=red]Unknown[/color][/bold]
+particle-accelerator-control-menu-status-operational = [font="Monospace"][color=green]Operational[/color][/bold]
+particle-accelerator-control-menu-status-incomplete = [font="Monospace"][color=red]Incomplete[/color][/bold]
+particle-accelerator-control-menu-draw = [bold]Draw:[/bold]
+particle-accelerator-control-menu-draw-value = [font="Monospace"]{$watts}/{$lastReceive}[/font]
+particle-accelerator-control-menu-draw-not-available = [font="Monospace"][color=gray]N/A[/color][/font]
+
+particle-accelerator-radio-message-on = PA power has been switched on.
+particle-accelerator-radio-message-off = PA power has been switched off.
+particle-accelerator-radio-message-num = PA strength has been set to level {$level}.

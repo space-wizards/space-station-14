@@ -1,32 +1,47 @@
-reagent-name-juice-apple = яблочный сок
-reagent-desc-juice-apple = Это маленький кусочек Эдема.
-reagent-name-juice-banana = банановый сок
-reagent-desc-juice-banana = Жидкая суть банана. ХОНК.
-reagent-name-juice-berry = ягодный сок
-reagent-desc-juice-berry = Вкусная смесь нескольких видов ягод.
-reagent-name-juice-blue-pumpkin = синетыквенный сок
-reagent-desc-juice-blue-pumpkin = Сок синей тыквы. Пахнет водой из бассейна.
-reagent-name-juice-bungo = сок бунго
-reagent-desc-juice-bungo = Сок фрукта бунго. Экзотика!
-reagent-name-juice-berry-poison = ядовитый ягодный сок
-reagent-desc-juice-berry-poison = Удивительно вкусный сок, приготовленный из различных видов очень смертоносных и ядовитых ягод.
-reagent-name-juice-carrot = морковный сок
-reagent-desc-juice-carrot = Как морковь, но не хрустит.
-reagent-name-juice-grape = виноградный сок
-reagent-desc-juice-grape = Свежевыжатый сок из красного винограда. Довольно сладкий.
-reagent-name-juice-lemon = лимонный сок
-reagent-desc-juice-lemon = Этот сок ОЧЕНЬ кислый.
-reagent-name-juice-lime = лаймовый сок
-reagent-desc-juice-lime = Кисло-сладкий сок лайма.
-reagent-name-juice-orange = апельсиновый сок
-reagent-desc-juice-orange = И вкусно, и богато витамином С. Чего ещё желать?
-reagent-name-juice-pineapple = ананасовый сок
-reagent-desc-juice-pineapple = Вкусный сок ананаса.
-reagent-name-juice-potato = картофельный сок
-reagent-desc-juice-potato = Сок картофеля. Фу.
-reagent-name-juice-tomato = томатный сок
-reagent-desc-juice-tomato = Томаты превращённые в сок. Какая трата хороших помидоров, а?
-reagent-name-juice-watermelon = арбузный сок
-reagent-desc-juice-watermelon = Вкусный сок арбуза.
-reagent-name-juice-cherry = вишнёвый сок
-reagent-desc-juice-cherry = Вкусный вишнёвый сок, сладкий и терпкий.
+reagent-name-juice-apple = apple juice
+reagent-desc-juice-apple = It's a little piece of Eden.
+
+reagent-name-juice-banana = banana juice
+reagent-desc-juice-banana = The raw essence of a banana. HONK.
+
+reagent-name-juice-berry = berry juice
+reagent-desc-juice-berry = A delicious blend of several different kinds of berries.
+
+reagent-name-juice-blue-pumpkin = blue pumpkin juice
+reagent-desc-juice-blue-pumpkin = The juice of a blue pumpkin. Smells like pool water.
+
+reagent-name-juice-bungo = bungo juice
+reagent-desc-juice-bungo = The juice of a bungo fruit. Exotic!
+
+reagent-name-juice-berry-poison = poison berry juice
+reagent-desc-juice-berry-poison = A surprisingly tasty juice blended from various kinds of very deadly and toxic berries.
+
+reagent-name-juice-carrot = carrot juice
+reagent-desc-juice-carrot = It's like a carrot, but less crunchy.
+
+reagent-name-juice-grape = grape juice
+reagent-desc-juice-grape = Freshly squeezed juice from red grapes. Quite sweet.
+
+reagent-name-juice-lemon = lemon juice
+reagent-desc-juice-lemon = This juice is VERY sour.
+
+reagent-name-juice-lime = lime juice
+reagent-desc-juice-lime = The sweet-sour juice of limes.
+
+reagent-name-juice-orange = orange juice
+reagent-desc-juice-orange = Both delicious AND rich in Vitamin C. What more do you need?
+
+reagent-name-juice-pineapple = pineapple juice
+reagent-desc-juice-pineapple = The delicious juice of a pineapple.
+
+reagent-name-juice-potato = potato juice
+reagent-desc-juice-potato = Juice of the potato. Bleh.
+
+reagent-name-juice-tomato = tomato juice
+reagent-desc-juice-tomato = Tomatoes made into juice. What a waste of good tomatoes, huh?
+
+reagent-name-juice-watermelon = watermelon juice
+reagent-desc-juice-watermelon = The delicious juice of a watermelon.
+
+reagent-name-juice-cherry = cherry juice
+reagent-desc-juice-cherry = Tasty cherry juice, sweet and tangy.

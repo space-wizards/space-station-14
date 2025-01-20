@@ -1,4 +1,4 @@
 story-template-generic =
-    Это { $bookGenre }, где главными героями являются { $char1Adj } { $char1Type } и { $char2Adj } { $char2Type }. Вследствие { $event }, они { $actionTrait } { $action } { $char3Type }, { $location }.
-    
-    { CAPITALIZE($element) } { $elementTrait }.
+ This is { INDEFINITE($bookGenre) } {$bookGenre} about { INDEFINITE($char1Adj) } {$char1Adj} {$char1Type} and { INDEFINITE($char2Adj) } {$char2Adj} {$char2Type}. Due to {$event}, they {$actionTrait} {$action} { INDEFINITE($char3Type) } {$char3Type} {$location}.
+
+ The {$element} is {$elementTrait}.

@@ -1,1 +1,1 @@
-spray-component-is-empty-message = Пусто!
+spray-component-is-empty-message = It's empty!

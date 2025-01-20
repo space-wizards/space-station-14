@@ -1,1 +1,1 @@
-particle-accelerator-admin-power-strength-warning = изменена мощность УЧ в устройстве { $machine } на уровень { $powerState } по координатам { $coordinates }
+particle-accelerator-admin-power-strength-warning = changed PA power of {$machine} to {$powerState} at coordinates: {$coordinates}

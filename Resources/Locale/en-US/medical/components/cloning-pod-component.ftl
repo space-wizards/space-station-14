@@ -1,2 +1,3 @@
-cloning-pod-biomass = Содержит [color=red]{ $number }[/color] единиц биомассы.
-cloning-pod-component-upgrade-emag-requirement = Карточка замыкает что-то внутри капсулы клонирования.
+cloning-pod-biomass = It currently has [color=red]{$number}[/color] units of biomass.
+
+cloning-pod-component-upgrade-emag-requirement = The card zaps something inside the cloning pod.

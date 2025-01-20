@@ -1,2 +1,2 @@
-melee-stamina = Не хватает выносливости
-slow-on-damage-modifier-examine = Замедление от полученных повреждений уменьшено на [color=yellow]{ $mod }%[/color]
+melee-stamina = Not enough stamina
+slow-on-damage-modifier-examine = Slowness from injuries is reduced by [color=yellow]{$mod}%[/color]

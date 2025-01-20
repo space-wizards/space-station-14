@@ -1,1 +1,1 @@
-effect-sleepy = Вы чувствуете сонливость.
+effect-sleepy = You feel a bit sleepy.

@@ -1,8 +1,8 @@
 # Examination for different levels of wiring protection
-wires-panel-component-on-examine-security-level1 = Стальная пластина препятствует доступу к проводам. Используйте [color=cyan]монтировку[/color], чтобы убрать её.
-wires-panel-component-on-examine-security-level2 = Стальная пластина была приварена изнутри к [color=lightgray]технической панели[/color]. Используйте [color=cyan]сварочный аппарат[/color], чтобы убрать её.
-wires-panel-component-on-examine-security-level3 = Пласталевая пластина препятствует доступу к проводам. Используйте [color=cyan]монтировку[/color], чтобы убрать её.
-wires-panel-component-on-examine-security-level4 = Пласталевая пластина была приварена изнутри к [color=lightgray]технической панели[/color]. Используйте [color=cyan]сварочный аппарат[/color], чтобы убрать её.
-wires-panel-component-on-examine-security-level5 = Внутренности [color=lightgray]технической панели [/color] защищены охранной решёткой. Используйте [color=cyan]кусачки[/color], чтобы убрать её.
-wires-panel-component-on-examine-security-level6 = Внутренности [color=lightgray]технической панели [/color] закрывает пласталевая пластина. Используйте [color=cyan]монтировку[/color], чтобы убрать её.
-wires-panel-component-on-examine-security-level7 = Внутренности [color=lightgray]технической панели [/color] защищены приваренной пласталевой пластиной. Используйте [color=cyan]сварочный аппарат[/color], чтобы убрать её.
+wires-panel-component-on-examine-security-level1 = There is a steel plate preventing access to the internal wiring. Use a [color=cyan]Crowbar[/color] to remove it.
+wires-panel-component-on-examine-security-level2 = A steel plate has been welded to the inside of the [color=lightgray]maintenance panel[/color]. Use a [color=cyan]Welder[/color] to free it.
+wires-panel-component-on-examine-security-level3 = There is a plasteel plate preventing access to the internal wiring. Use a [color=cyan]Crowbar[/color] to remove it.
+wires-panel-component-on-examine-security-level4 = A plasteel plate has been welded to the inside of the [color=lightgray]maintenance panel[/color]. Use a [color=cyan]Welder[/color] to free it.
+wires-panel-component-on-examine-security-level5 = The inside of the [color=lightgray]maintenance panel[/color] is protected by a security grille. Use [color=cyan]Wirecutters[/color] to remove  it.
+wires-panel-component-on-examine-security-level6 = A plasteel plate sits within the interior of the [color=lightgray]maintenance panel[/color]. Use a [color=cyan]Crowbar[/color] to remove it.
+wires-panel-component-on-examine-security-level7 = A welded plasteel plate protects the interior of the [color=lightgray]maintenance panel[/color]. Use a [color=cyan]Welder[/color] to free it.

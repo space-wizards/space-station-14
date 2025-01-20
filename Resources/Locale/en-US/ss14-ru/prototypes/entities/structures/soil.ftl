@@ -1,2 +1,0 @@
-ent-hydroponicsSoil = почва
-    .desc = { "" }

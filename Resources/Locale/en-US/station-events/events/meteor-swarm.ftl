@@ -1,4 +1,5 @@
-station-event-meteor-swarm-start-announcement = Обнаружен рой метеоритов прямо по курсу станции.
-station-event-meteor-swarm-end-announcement = Метеорный рой миновал. Пожалуйста, вернитесь на свои рабочие места.
-station-event-space-dust-start-announcement = Станция проходит через облако обломков, ожидается незначительный ущерб элементам конструкции и внешнему оборудованию.
-station-event-meteor-urist-start-announcement = Станция столкнулась с неидентифицированным облаком обломков. Пожалуйста, сохраняйте спокойствие и не слушайте их.
+﻿station-event-meteor-swarm-start-announcement = Meteors have been detected on collision course with the station.
+station-event-meteor-swarm-end-announcement = The meteor swarm has passed. Please return to your stations.
+
+station-event-space-dust-start-announcement = The station is passing through a debris cloud, expect minor damage to external fittings and fixtures.
+station-event-meteor-urist-start-announcement = The station is colliding with an unidentified swarm of debris. Please stay calm and do not listen to them.
