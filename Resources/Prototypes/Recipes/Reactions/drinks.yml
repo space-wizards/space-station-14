@@ -85,7 +85,7 @@
   reactants:
     Cognac:
       amount: 1
-    IrishCarBomb:
+    IrishSlammer:
       amount: 1
     CoffeeLiqueur:
       amount: 1
@@ -559,20 +559,20 @@
   reactants:
     EnergyDrink:
       amount: 1
-    IrishCarBomb:
+    IrishSlammer:
       amount: 1
   products:
     IrishBool: 2
 
 - type: reaction
-  id: IrishCarBomb
+  id: IrishSlammer
   reactants:
     Ale:
       amount: 1
     IrishCream:
       amount: 1
   products:
-    IrishCarBomb: 2
+    IrishSlammer: 2
 
 - type: reaction
   id: IrishCoffee

@@ -768,4 +768,4 @@
     autoRecharge: true
     autoRechargeRate: 24
     autoRechargePause: true
-    autoRechargePauseTime: 10
+    autoRechargePauseTime: 30
