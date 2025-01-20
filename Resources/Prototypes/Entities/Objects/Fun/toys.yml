@@ -1706,12 +1706,6 @@
       collection: RubberChicken
       params:
         variation: 0.125
-  - type: Food
-    requiresSpecialDigestion: true
-    useSound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
   - type: MeleeWeapon
     wideAnimationRotation: 110
     soundHit:
@@ -1721,3 +1715,6 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 25
+  - type: Tag
+    tags:
+      - Payload
