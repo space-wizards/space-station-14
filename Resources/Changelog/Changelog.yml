@@ -1,34 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: Now fire axe (the flaming one), and an advanced circular saw are Syndicate
-      contraband.
-    type: Fix
-  - message: Now encryption keys are restricted according to their department.
-    type: Fix
-  - message: Now ERT, Deathsquad and Central Command Official items are restricted
-      to the Central Command.
-    type: Fix
-  - message: Now acolyte armor, a thieving beacon and the thief's undetermined toolbox
-      are minor contraband.
-    type: Fix
-  - message: Now bladed flatcaps are not a contraband (stealth item).
-    type: Fix
-  - message: Now mercenary clothes, magazines, speedloaders and cartridges are contraband.
-    type: Fix
-  - message: Now cleanades are restricted to the Service.
-    type: Fix
-  - message: Now metal foam grenades are restricted to the Engineering.
-    type: Fix
-  - message: Now flash, smoke, and tear gas grenades are restricted to the Security.
-    type: Fix
-  - message: Now combat gloves are restricted to Security and Cargo.
-    type: Fix
-  - message: The Central Command restricted contraband group and department were added.
-    type: Add
-  id: 7332
-  time: '2024-09-09T19:36:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31606
 - author: themias
   changes:
   - message: Unpublished news article progress is automatically saved
@@ -3913,3 +3883,12 @@
   id: 7831
   time: '2025-01-19T19:48:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33493
+- author: ArtisticRoomba
+  changes:
+  - message: Voxes can now honk, weh, and hew if forced to by a reagent.
+    type: Fix
+  - message: Arachnids and Moths can now honk if forced to by a reagent.
+    type: Fix
+  id: 7832
+  time: '2025-01-20T00:21:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33777
