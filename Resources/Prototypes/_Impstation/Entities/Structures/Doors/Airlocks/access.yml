@@ -17,6 +17,15 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsCourier ]
+  
+- type: entity
+  parent: AirlockChemistryGlass # For Synth Specailist, unique textures in the future, but this matches the colors of interdyne
+  id: AirlockChemistrySyndicateGlassLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSyndicateAgent ]
 
 # Maintenance Hatches
 - type: entity
@@ -69,3 +78,12 @@
       board: [ DoorElectronicsCourier ]
   - type: Wires
     layoutId: AirlockCargo
+
+- type: entity
+  parent: AirlockChemistry # For Synth Specailist, unique textures in the future, but this matches the colors of interdyne
+  id: AirlockChemistrySyndicateLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSyndicateAgent ]

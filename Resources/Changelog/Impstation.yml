@@ -1,52 +1,4 @@
 ﻿Entries:
-- author: Pinkbat5
-  changes:
-  - message: Traitors can now purchase straight pride pins and cloaks in the uplink.
-    type: Add
-  id: 472
-  time: '2024-11-08T16:23:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/643
-- author: Darkmajia
-  changes:
-  - message: Chefs can find a random box of ingredients in their lockers.
-    type: Add
-  id: 473
-  time: '2024-11-08T16:24:38.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/637
-- author: hivehum
-  changes:
-  - message: Tranquilizer shells have nocturine in them, making them actually usable
-      again
-    type: Tweak
-  id: 474
-  time: '2024-11-08T16:27:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/640
-- author: Sha-Seng
-  changes:
-  - message: Head of Security's Grey Jumpsuit and Jumpskirt are now selectable on
-      spawn to expand the existing options of "Ronald McDonald", "pitch black", and
-      "red captain"
-    type: Add
-  - message: HoS can now select both armor vests on spawn (10% less heat resist, 25%
-      less caustic resist, good luck idiot)
-    type: Add
-  - message: Adjusted HoS Grey Jumpsuit sprite to be more unique than the secoff version
-      and gave it a jacket-off sprite
-    type: Tweak
-  - message: Polished Energy Shotgun sprite and gave it a real sling on its equipped
-      sprite
-    type: Tweak
-  - message: Polished WT550's equipped sprite sling
-    type: Tweak
-  - message: Removed a couple of pixels from the HoS coat and security hanger (the
-      belt) that were incorrectly covering the hand
-    type: Tweak
-  - message: Adjusted Hos hat colors slightly so that it matches the job's uniforms
-      overall instead of just the Ronald jumpsuit
-    type: Tweak
-  id: 475
-  time: '2024-11-08T16:30:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/632
 - author: starlighthowls
   changes:
   - message: chef and bartender loadout aprons that unlock with the senior PDA
@@ -4431,3 +4383,31 @@
   id: 971
   time: '2025-01-19T06:48:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1420
+- author: formlessnameless
+  changes:
+  - message: The AI can no longer be a traitor. Or a changeling. Or a heretic.
+    type: Fix
+  id: 972
+  time: '2025-01-20T04:39:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1431
+- author: mqole
+  changes:
+  - message: 1 new word in grayspeak.
+    type: Add
+  id: 973
+  time: '2025-01-20T21:24:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1428
+- author: DinnerCalzone
+  changes:
+  - message: Mail has been added to Atlas, Origin, and Train for real this time.
+    type: Add
+  id: 974
+  time: '2025-01-20T21:24:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1426
+- author: honeyed-lemons
+  changes:
+  - message: Replaced the Synth Specialist ship with a newer, shiner one
+    type: Tweak
+  id: 975
+  time: '2025-01-20T21:25:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1430

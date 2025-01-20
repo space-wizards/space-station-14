@@ -106071,6 +106071,12 @@ entities:
     - type: Transform
       pos: -38.5,-31.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        2273:
+        - Pressed: Toggle
+        2287:
+        - Pressed: Toggle
   - uid: 2322
     components:
     - type: MetaData
@@ -106092,18 +106098,36 @@ entities:
     - type: Transform
       pos: -38.5,-25.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        506:
+        - Pressed: Toggle
+        2244:
+        - Pressed: Toggle
   - uid: 5465
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -32.5,-33.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        1095:
+        - Pressed: Toggle
+        967:
+        - Pressed: Toggle
   - uid: 6574
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -32.5,-26.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        1781:
+        - Pressed: Toggle
+        2509:
+        - Pressed: Toggle
   - uid: 21239
     components:
     - type: Transform
@@ -109192,6 +109216,9 @@ entities:
     - type: Transform
       pos: 15.5,-52.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
 - proto: PaperOffice
   entities:
   - uid: 7554
@@ -147713,36 +147740,57 @@ entities:
     - type: Transform
       pos: 20.5,-43.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 5206
     components:
     - type: Transform
       pos: 41.5,11.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 6103
     components:
     - type: Transform
       pos: 39.5,-15.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 7276
     components:
     - type: Transform
       pos: 38.5,0.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 15254
     components:
     - type: Transform
       pos: -39.5,-54.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 16197
     components:
     - type: Transform
       pos: -19.5,28.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 18168
     components:
     - type: Transform
       pos: 39.5,-13.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
 - proto: WoodenBench
   entities:
   - uid: 1319
