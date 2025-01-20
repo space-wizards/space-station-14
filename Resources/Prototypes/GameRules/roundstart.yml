@@ -279,8 +279,8 @@
     agentName: thief-round-end-agent-name
     definitions:
     - prefRoles: [ Thief ]
-      max: 15
-      playerRatio: 7
+      max: 10
+      playerRatio: 10
       lateJoinAdditional: true
       allowNonHumans: true
       multiAntagSetting: NotExclusive
