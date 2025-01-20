@@ -15,17 +15,17 @@
   - !type:ConditionNotesPlaytimeRange # Deny for >=2 medium severity notes in the last 14 days
     includeExpired: false
     minimumSeverity: 2 # Medium
-    minimumNotes: 2
-    range: 14 # 14 Days
-    action: Deny
-    includeSecret: false
-  - !type:ConditionNotesPlaytimeRange # Deny for >=3 low severity notes in the last 14 days
-    includeExpired: false
-    minimumSeverity: 1 # Low
     minimumNotes: 3
-    range: 14 # 14 Days
+    range: 90 # 90 Days
     action: Deny
     includeSecret: false
+#  - !type:ConditionNotesPlaytimeRange # Deny for >=3 low severity notes in the last 14 days
+#    includeExpired: false
+#    minimumSeverity: 1 # Low
+#    minimumNotes: 3
+#    range: 14 # 14 Days
+#    action: Deny
+#    includeSecret: false
   - !type:ConditionManualWhitelistMembership # Allow whitelisted players
     action: Allow
   - !type:ConditionPlayerCount # Allow when <= 15 players are online
