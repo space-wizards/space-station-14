@@ -3,9 +3,7 @@
   files:
     - /Audio/StationEvents/running_out.ogg
     - /Audio/StationEvents/countdown.ogg
-    - /Audio/StationEvents/clearly_nuclear.ogg
     - /Audio/StationEvents/sound_station_14.ogg
-    - /Audio/StationEvents/nukemass.ogg
     - /Audio/_Impstation/StationEvents/hurry_up.ogg
     - /Audio/_Impstation/StationEvents/cyber_grind.ogg
     - /Audio/_Impstation/StationEvents/roadkilla.ogg
@@ -27,4 +25,4 @@
     - /Audio/_Impstation/StationEvents/armageddon.ogg
     - /Audio/_Impstation/StationEvents/forget_about_freeman.ogg
     - /Audio/_Impstation/StationEvents/shootem.ogg
-
+    - /Audio/_Impstation/StationEvents/blatantly_nuclear.ogg

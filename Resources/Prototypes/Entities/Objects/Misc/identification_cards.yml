@@ -117,6 +117,7 @@
     tags:
     - DoorBumpOpener
     - WhitelistChameleon
+    - WhitelistChameleonIdCard
     - HighRiskItem
     - WhitelistChameleonIdCard
   - type: StealTarget

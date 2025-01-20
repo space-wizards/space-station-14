@@ -65,7 +65,7 @@
   id: JobBartender
   groups:
   - BartenderHead
-  - BartenderMask
+  - BartenderMask # imp
   - BartenderNeck
   - BartenderJumpsuit
   - BartenderOuterClothing
@@ -83,7 +83,9 @@
 - type: roleLoadout
   id: JobServiceWorker
   groups:
+  - BartenderMask # imp
   - BartenderJumpsuit
+  - BartenderShoes # imp
   - Glasses
   - CommonBackpack
   - Survival
@@ -292,6 +294,7 @@
 - type: roleLoadout
   id: JobSalvageSpecialist
   groups:
+  - CargoTechnicianMask # imp
   - SalvageSpecialistNeck
   - SalvageSpecialistJumpsuit # imp unspecial
   - SalvageSpecialistOuterClothing
@@ -340,7 +343,7 @@
   id: JobStationEngineer
   groups:
   - StationEngineerHead
-  - StationEngineerMask
+  - StationEngineerMask # imp
   - StationEngineerNeck
   - StationEngineerJumpsuit
   - StationEngineerOuterClothing
@@ -357,6 +360,7 @@
 - type: roleLoadout
   id: JobAtmosphericTechnician
   groups:
+  - StationEngineerMask # imp
   - AtmosphericTechnicianNeck
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianOuterClothing
@@ -447,6 +451,7 @@
   id: JobWarden
   groups:
   - WardenHead
+  - SecurityMask # imp
   - WardenNeck
   - WardenJumpsuit
   - WardenOuterClothing
@@ -466,7 +471,7 @@
   id: JobSecurityOfficer
   groups:
   - SecurityHead
-  - SecurityMask
+  - SecurityMask # imp
   - SecurityNeck
   - SecurityJumpsuit
   - SecurityOuterClothing
@@ -557,7 +562,7 @@
   id: JobMedicalDoctor
   groups:
   - MedicalDoctorHead
-  - MedicalDoctorMask
+  - MedicalMask
   - MedicalDoctorNeck
   - MedicalDoctorJumpsuit
   - MedicalDoctorOuterClothing
@@ -657,6 +662,7 @@
 - type: roleLoadout
   id: JobPsychologist
   groups:
+  - MedicalMask
   - PsychologistNeck
   - PsychologistJumpsuit
   - PsychologistShoes

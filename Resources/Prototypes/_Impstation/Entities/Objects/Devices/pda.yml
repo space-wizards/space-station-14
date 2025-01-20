@@ -55,6 +55,14 @@
     accentVColor: "#FF9500"
   - type: Icon
     state: pda-seniorcargo
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReaderCartridge
+      - StockTradingCartridge # DeltaV
+      - NanoChatCartridge # DeltaV
 
 - type: entity
   parent: BasePDA
@@ -277,3 +285,28 @@
   - type: Icon
     state: pda-seniorofficer
 
+#Courier
+- type: entity
+  parent: BasePDA
+  id: CourierPDA
+  name: courier PDA
+  description: PDA for the guys deliver the pizzas.
+  components:
+  - type: Pda
+    id: CourierIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-cargo
+  - type: PdaBorderColor
+    borderColor: "#e39751"
+  - type: Icon
+    state: pda-cargo
+  - type: CartridgeLoader # DeltaV - MailMetrics courier tracker
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - NanoChatCartridge
+    - MailMetricsCartridge

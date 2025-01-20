@@ -12,7 +12,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Random;
 using System.Linq;
 
-
 namespace Content.Server.Objectives.Systems;
 
 /// <summary>
@@ -61,8 +60,18 @@ public sealed class KillPersonConditionSystem : EntitySystem
         if (target.Target != null)
             return;
 
-        // no other humans to kill
         var allHumans = _mind.GetAliveHumans(args.MindId);
+
+        // Can't have multiple objectives to kill the same person
+        foreach (var objective in args.Mind.Objectives)
+        {
+            if (HasComp<KillPersonConditionComponent>(objective) && TryComp<TargetObjectiveComponent>(objective, out var kill))
+            {
+                allHumans.RemoveWhere(x => x.Owner == kill.Target);
+            }
+        }
+
+        // no other humans to kill
         if (allHumans.Count == 0)
         {
             args.Cancelled = true;
@@ -127,9 +136,21 @@ public sealed class KillPersonConditionSystem : EntitySystem
             return;
         }
 
+        // imp edit
         var traitors = _traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind).Select(t => t.Id).ToHashSet();
-        args.Mind.ObjectiveTargets.ForEach(p => traitors.Remove(p));
 
+        // Can't have multiple objectives to help/save/kill the same person
+        foreach (var objective in args.Mind.Objectives)
+        {
+            if (HasComp<RandomTraitorAliveComponent>(objective) || HasComp<RandomTraitorProgressComponent>(objective) || HasComp<KillPersonConditionComponent>(objective))
+            {
+                if (TryComp<TargetObjectiveComponent>(objective, out var help))
+                {
+                    traitors.RemoveWhere(x => x == help.Target);
+                }
+            }
+        }
+        // end imp edit
         // You are the first/only traitor.
         if (traitors.Count == 0)
         {

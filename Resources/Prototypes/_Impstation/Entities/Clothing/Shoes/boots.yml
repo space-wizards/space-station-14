@@ -11,3 +11,13 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepBoots
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterCourier
+  name: courier winter boots
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscourier.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootscourier.rsi

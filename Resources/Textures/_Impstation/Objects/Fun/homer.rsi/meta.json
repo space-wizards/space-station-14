@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-4.0",
+  "copyright": "nobody owns him. he is his own person.",
+  "size": {
+    "x": 200,
+    "y": 450
+  },
+  "states": [
+    {
+      "name": "icon"
+    }
+  ]
+}

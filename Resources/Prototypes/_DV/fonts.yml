@@ -1,0 +1,51 @@
+- type: font
+  id: AndTheDoorCreeeaked
+  path: /Fonts/_DV/AndTheDoorCreeeaked/AndTheDoorCreeeaked-Regular.otf
+
+- type: font
+  id: ComicNeue
+  path: /Fonts/_DV/ComicNeue/ComicNeue-Regular.ttf
+
+- type: font
+  id: ComicNeueBold
+  path: /Fonts/_DV/ComicNeue/ComicNeue-Bold.ttf
+
+- type: font
+  id: HachiMaruPop
+  path: /Fonts/_DV/HachiMaruPop/HachiMaruPop-Regular.ttf
+
+- type: font
+  id: KodeMono
+  path: /Fonts/_DV/KodeMono/KodeMono-Regular.ttf
+
+- type: font
+  id: KodeMonoBold
+  path: /Fonts/_DV/KodeMono/KodeMono-Bold.ttf
+
+- type: font
+  id: ReenieBeanie
+  path: /Fonts/_DV/ReenieBeanie/ReenieBeanie-Regular.ttf
+
+- type: font
+  id: Sixtyfour
+  path: /Fonts/_DV/Sixtyfour/Sixtyfour-Regular.ttf
+
+- type: font
+  id: SwampWitch
+  path: /Fonts/_DV/SwampWitch/SwampWitch.ttf
+
+- type: font
+  id: Tangerine
+  path: /Fonts/_DV/Tangerine/Tangerine_Regular.ttf
+
+- type: font
+  id: TangerineBold
+  path: /Fonts/_DV/Tangerine/Tangerine_Bold.ttf
+
+- type: font
+  id: UnifrakturMaguntia
+  path: /Fonts/_DV/UnifrakturMaguntia/UnifrakturMaguntia-Regular.ttf
+
+- type: font
+  id: Wahroonga
+  path: /Fonts/_DV/Wahroonga/Wahroonga-Regular.ttf

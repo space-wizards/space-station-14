@@ -19,13 +19,13 @@
     state: human_bodyhair_female
 
 - type: marking
-  id: BodyhairSpelf
+  id: BodyhairThaven
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [ SpElf ]
+  speciesRestriction: [ Thaven ]
   sprites:
   - sprite: _Impstation/Mobs/Customization/bodyhair.rsi
-    state: spelf_bodyhair
+    state: thaven_bodyhair
 
 - type: marking
   id: BodyhairHumanUnsexed

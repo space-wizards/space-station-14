@@ -213,6 +213,7 @@
     playFailureSound: false
     playSuccessSound: false
     playReadySound: false
+  - type: UseDelay
 
 - type: entity
   name: network configurator
@@ -359,7 +360,6 @@
   - type: LimitedCharges
     maxCharges: 30
     charges: 30
-  - type: UseDelay
   - type: Sprite
     sprite: Objects/Tools/rcd.rsi
     state: icon

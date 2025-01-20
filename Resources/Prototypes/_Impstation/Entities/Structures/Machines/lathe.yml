@@ -106,6 +106,8 @@
       - WeaponSprayNozzle
       - ClothingBackpackWaterTank
       - CleanerGrenade #imp recipe
+      #service
+      - PlantAnalyzer #NF recipe
       #misc.
       - FauxTileAstroGrass
       - FauxTileMowedAstroGrass

@@ -271,7 +271,7 @@
     id: MedicalPDA
     belt: ClothingBeltMedicalFilled
     outerClothing: ClothingOuterWinterMed
-    #head: 
+    #head:
     pocket1: EmergencyOxygenTankFilled
     pocket2: ClothingMaskBreath
     ears: ClothingHeadsetMedical
@@ -316,9 +316,66 @@
     ears: ClothingHeadsetService
     eyes: ClothingEyesHudBeer
 
-- type: loadoutGroup 
+- type: startingGear #beemail!
+  id: StartingGearApidCourier
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCourier
+    id: CourierPDA
+    belt: MailBag
+    outerClothing: ClothingOuterWinterCourier
+    head: ClothingHeadHatCouriersoftFlipped
+    pocket1: EmergencyOxygenTankFilled
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetCargo
+    #eyes:
+
+- type: loadoutGroup
   id: SalvageSpecialistJumpsuit
   name: loadout-group-salvage-specialist-jumpsuit
   loadouts:
   - SalvageSpecialistJumpsuit
   - SalvageSpecialistJumpskirt
+
+- type: loadoutGroup
+  id: CourierHead
+  name: loadout-group-courier-head
+  minLimit: 0
+  loadouts:
+  - CourierHat
+
+- type: loadoutGroup
+  id: CourierJumpsuit
+  name: loadout-group-courier-jumpsuit
+  loadouts:
+  - CourierJumpsuit
+  - CourierJumpskirt
+
+- type: loadoutGroup
+  id: CourierBackpack
+  name: loadout-group-courier-backpack
+  loadouts:
+  - CargoTechnicianBackpack
+  - CargoTechnicianSatchel
+  - CargoTechnicianDuffel
+
+- type: loadoutGroup
+  id: CourierNeck
+  name: loadout-group-courier-neck
+  minLimit: 0
+  loadouts:
+  - ScarfBrown
+  - ScarfBlue
+
+- type: loadoutGroup
+  id: CourierOuterClothing
+  name: loadout-group-courier-outerclothing
+  minLimit: 0
+  loadouts:
+  - CourierWintercoat
+
+- type: loadoutGroup
+  id: CourierShoes
+  name: loadout-group-courier-shoes
+  loadouts:
+  - LeatherShoes
+  - CourierWinterBoots

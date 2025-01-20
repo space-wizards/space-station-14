@@ -3552,10 +3552,6 @@ entities:
           showEnts: False
           occludes: False
           ent: null
-    - type: UserInterface
-      actors:
-        enum.StrippingUiKey.Key:
-        - invalid
     - type: ActiveUserInterface
     - type: Actions
       actions:

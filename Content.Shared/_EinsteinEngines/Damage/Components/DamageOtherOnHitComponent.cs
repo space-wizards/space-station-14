@@ -47,6 +47,12 @@ public sealed partial class DamageOtherOnHitComponent : Component
     public float MeleeDamageMultiplier = 1f;
 
     /// <summary>
+    ///   The minimum velocity required to deal damage.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float MinVelocity = 1f;
+
+    /// <summary>
     ///   The sound to play when this entity hits on a throw.
     ///   If null, attempts to retrieve the HitSound from MeleeWeaponComponent.
     /// </summary>

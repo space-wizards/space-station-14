@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Made for Frontier by erhardsteinhauer (discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon-empty"
+        },
+        {
+            "name": "icon-mail"
+        },
+        {
+            "name": "icon-food"
+        },
+        {
+            "name": "icon-cash"
+        },
+        {
+            "name": "spent"
+        }
+    ]
+}
