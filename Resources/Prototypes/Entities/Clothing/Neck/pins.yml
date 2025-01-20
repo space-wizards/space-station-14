@@ -121,6 +121,17 @@
     state: omni
   - type: Clothing
     equippedPrefix: omni
+    
+  type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckGenderqueerPin
+  name: genderqueer pin
+  description: Be crime, do gender
+  components:
+    type: Sprite
+    state: gender
+    type: Clothing
+    equippedPrefix: gender
 
 - type: entity
   parent: ClothingNeckPinBase
