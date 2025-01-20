@@ -56,7 +56,6 @@
   id: Wood
   name: lathe-category-wood
 
-
 # Biogen
 - type: latheCategory
   id: Food
