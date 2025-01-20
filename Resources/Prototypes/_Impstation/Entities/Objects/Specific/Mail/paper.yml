@@ -1,0 +1,44 @@
+- type: entity
+  id: PaperMailNTBedsheetsAd
+  categories: [ HideSpawnMenu ]
+  suffix: "bedsheet ad"
+  parent: Paper
+  components:
+  - type: Paper
+    stampedBy:
+    - stampedColor: '#333333FF'
+      stampedName: Salas Naana
+#      stampType: Signature # DeltaV - Not compatible with our signatures code stuff apparently
+    content: |2
+      [head=3]Hello Valued Customer,[/head]
+      You have been selected to receive a complimentary sampler of the high-quality linen that Nanotrasen has to offer.
+
+      Whether for sleeping or snacking, Nanotrasen's patented HyperWeave fabric is sure to deliver the highest standard of well-rested productivity.
+      Remember, there's no substitute for good rest, and whether you prefer a mattress or a cryopod, comfort is a top priority.
+
+      We hope you enjoy.
+
+      Sincerely,
+            Salas Naana, Assistant-in-chief, NT Habs - Hospitality Dept.
+
+- type: entity
+  id: PaperMailTckTck
+  categories: [ HideSpawnMenu ]
+  suffix: "tck'tck note"
+  parent: Paper
+  components:
+  - type: Paper
+    stampedBy:
+    - stampedColor: '#333333FF'
+      stampedName: T'ckr'tk, Fourth
+#      stampType: Signature # DeltaV - Not compatible with our signatures code stuff apparently
+    content: |2
+      [head=3]U'uat kck,[/head]
+      R'chtr k'ck t'ckr ut't uuo,
+
+      Tr' ck't'rck U'uta ut'ck, "Nanotrasen" tk'rt u'out'ck ta.
+      Uot'a "Tck'tck", ot'rk t'u'ta "Salvage Department".
+
+      U'tu'uo, tck'tck r'tua.
+
+            T'ckr'tk, Fourth, O'ckt'rt "Outriggers".
