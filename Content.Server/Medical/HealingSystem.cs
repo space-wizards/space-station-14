@@ -115,15 +115,15 @@ public sealed class HealingSystem : EntitySystem
         _audio.PlayPvs(healing.HealingEndSound, entity.Owner, AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
 
         // Logic to determine the whether or not to repeat the healing action
-        args.Repeat = (HasDamage(entity.Owner, entity.Comp, healing) && !dontRepeat);
+        args.Repeat = (HasDamage(entity, healing) && !dontRepeat);
         if (!args.Repeat && !dontRepeat)
             _popupSystem.PopupEntity(Loc.GetString("medical-item-finished-using", ("item", args.Used)), entity.Owner, args.User);
         args.Handled = true;
     }
 
-    private bool HasDamage(EntityUid target, DamageableComponent component, HealingComponent healing)
+    private bool HasDamage(Entity<DamageableComponent> ent, HealingComponent healing)
     {
-        var damageableDict = component.Damage.DamageDict;
+        var damageableDict = ent.Comp.Damage.DamageDict;
         var healingDict = healing.Damage.DamageDict;
         foreach (var type in healingDict)
         {
@@ -133,17 +133,17 @@ public sealed class HealingSystem : EntitySystem
             }
         }
 
-        if(TryComp<BloodstreamComponent>(target, out var bloodstream))
+        if (TryComp<BloodstreamComponent>(ent, out var bloodstream))
         {
             if (healing.ModifyBloodLevel > 0
-                && _solutionContainerSystem.ResolveSolution(target, bloodstream!.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution)
+                && _solutionContainerSystem.ResolveSolution(ent.Owner, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution)
                 && bloodSolution.Volume < bloodSolution.MaxVolume)
             {
                 return true;
             }
 
             if (healing.BloodlossModifier < 0
-                && bloodstream!.BleedAmount > 0)
+                && bloodstream.BleedAmount > 0)
             {
                 return true;
             }
@@ -188,7 +188,7 @@ public sealed class HealingSystem : EntitySystem
         if (TryComp<StackComponent>(uid, out var stack) && stack.Count < 1)
             return false;
 
-        if (!HasDamage(target, targetDamage, component))
+        if (!HasDamage((target, targetDamage), component))
         {
             _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use", ("item", uid)), uid, user);
             return false;
