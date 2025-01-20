@@ -19,3 +19,8 @@
   id: FootstepGondal
   files:
   - /Audio/_Impstation/Effects/gon.ogg
+  
+- type: soundCollection
+  id: FootstepExplosion
+  files:
+  - /Audio/Effects/explosionfar.ogg

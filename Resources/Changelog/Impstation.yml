@@ -1,110 +1,4 @@
 ﻿Entries:
-- author: sususuyo
-  changes:
-  - message: Added one new track to the jukebox and lobby
-    type: Add
-  - message: Audio balanced the remaining audio files of the purge. If it's too quiet
-      you can adjust the volume in the options!
-    type: Tweak
-  - message: Fixed attributions for a track
-    type: Fix
-  id: 464
-  time: '2024-11-06T04:00:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/615
-- author: hivehum
-  changes:
-  - message: ALL ABOARD!!!!
-    type: Add
-  id: 465
-  time: '2024-11-06T04:23:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/625
-- author: hivehum
-  changes:
-  - message: Ore bags can hold salt again.
-    type: Fix
-  id: 466
-  time: '2024-11-08T01:42:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/647
-- author: hivehum
-  changes:
-  - message: Added the Airlock Access Override, an emag that can hack doors.
-    type: Add
-  - message: Emags can no longer hack doors.
-    type: Remove
-  id: 467
-  time: '2024-11-08T02:19:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/638
-- author: DinnerCalzone
-  changes:
-  - message: Juice that makes you UNGH added to liquid anomalies and reagent slimes.
-    type: Add
-  - message: Juice that makes you UNGH will now properly transform all species.
-    type: Fix
-  id: 468
-  time: '2024-11-08T16:09:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/651
-- author: Sha-Seng
-  changes:
-  - message: Beanbag Kammerer and Beanbag Enforcer added, they only accept beanbag
-      shells and are yellow/orange respectively
-    type: Add
-  - message: Nonlethal Shotgun Crate (contains two BB Kammerers) to cargo order menu
-      for sec and bartenders
-    type: Add
-  - message: SWAT Crate now contains two BB Enforcers instead of the real ones, and
-      its price has been reduced by $1500 (to $6000)
-    type: Tweak
-  - message: BB Kammerers and BB Enforcers to secfab (require nonlethal/riot research
-      respectively)
-    type: Add
-  - message: Armory shotgun safes now contain two BB Kammerers and ammo boxes in addition
-      to the real ones
-    type: Add
-  - message: Silenced gunfire SFX so beanbag shotguns are audibly different from the
-      lethal ones
-    type: Add
-  - message: The bandolier is now only minor contraband (like the double barrel) since
-      the barvend dispenses it
-    type: Tweak
-  - message: Polished the equipped-on-back sprites for the four basic shotguns (new
-      slings, more detail, etc)
-    type: Tweak
-  id: 469
-  time: '2024-11-08T16:11:52.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/648
-- author: widgetbeck
-  changes:
-  - message: Rewrote (almost) all species guidebook entries to 1) be more consistent,
-      2) provide more information, and 3) be more flavorful.
-    type: Tweak
-  id: 470
-  time: '2024-11-08T16:21:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/646
-- author: DinnerCalzone
-  changes:
-  - message: (Hummingbird Station) The station now features its own unique parallax
-      background!
-    type: Add
-  - message: (Hummingbird Station) Added an extra evidence locker to Security.
-    type: Add
-  - message: (Hummingbird Station) Adjusted disposals so trash should now properly
-      dispense out into space after going through the recycler.
-    type: Fix
-  - message: (Hummingbird Station) Fixed a missing disposals pipe in the food service
-      area.
-    type: Fix
-  - message: (Hummingbird Station) Made a number of miscellaneous visual changes.
-    type: Tweak
-  id: 471
-  time: '2024-11-08T16:22:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/645
-- author: Pinkbat5
-  changes:
-  - message: Traitors can now purchase straight pride pins and cloaks in the uplink.
-    type: Add
-  id: 472
-  time: '2024-11-08T16:23:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/643
 - author: Darkmajia
   changes:
   - message: Chefs can find a random box of ingredients in their lockers.
@@ -4469,3 +4363,71 @@
   id: 963
   time: '2025-01-18T10:25:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1414
+- author: hivehum
+  changes:
+  - message: The nuke song "Clearly Nuclear" has been replaced with its remastered
+      version, "Blatantly Nuclear."
+    type: Tweak
+  id: 964
+  time: '2025-01-18T17:55:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1419
+- author: Darkmajia
+  changes:
+  - message: Air tanks set to low output pressure will no longer create a throwing
+      damage blender.
+    type: Fix
+  - message: Air tanks now pop out of tethers when they release gas.
+    type: Tweak
+  id: 965
+  time: '2025-01-18T19:31:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1417
+- author: kipdotnet
+  changes:
+  - message: Removed Loop station from the map pool.
+    type: Remove
+  id: 966
+  time: '2025-01-19T00:34:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1411
+- author: DinnerCalzone
+  changes:
+  - message: Added mail support to Cog, Omega, Marathon, and Hummingbird.
+    type: Add
+  id: 967
+  time: '2025-01-19T04:48:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1416
+- author: kipdotnet
+  changes:
+  - message: Fixed the Courier locker not having a Holobell projector.
+    type: Fix
+  id: 968
+  time: '2025-01-19T04:48:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1424
+- author: Honeyed_Lemons_, AftrLite
+  changes:
+  - message: Tweaked the texture of the Syndicate Defib, and renamed it and its bundle.
+    type: Tweak
+  id: 969
+  time: '2025-01-19T04:50:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1407
+- author: starlighthowls
+  changes:
+  - message: New map NTAS test 1!
+    type: Add
+  id: 970
+  time: '2025-01-19T04:59:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1422
+- author: formlessnameless
+  changes:
+  - message: Headslugs can now open morgue trays and bodybags to help themselves to
+      a little snack.
+    type: Add
+  id: 971
+  time: '2025-01-19T06:48:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1420
+- author: formlessnameless
+  changes:
+  - message: The AI can no longer be a traitor. Or a changeling. Or a heretic.
+    type: Fix
+  id: 972
+  time: '2025-01-20T04:39:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1431
