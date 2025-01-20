@@ -38,7 +38,7 @@ public sealed partial class RummageableComponent : Component
     /// </summary>
     [DataField("rummageLoot", customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomEntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public string RummageLoot = string.Empty;
+    public string? RummageLoot = null;
 
     /// <summary>
     /// How long it takes to rummage through a rummageable container.

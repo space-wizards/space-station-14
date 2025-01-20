@@ -85,7 +85,7 @@ public sealed class RummagingSystem : EntitySystem
         _audio.PlayPredicted(rummageable.Sound, uid, args.User);
 
         // allows you to override the user's rummageLoot setting on an entity if you so desire.
-        if (rummageable.RummageLoot != string.Empty)
+        if (rummageable.RummageLoot != null)
         {
             var spawn = _prototypeManager.Index<WeightedRandomEntityPrototype>(rummageable.RummageLoot).Pick(_random);
             if (_net.IsServer)
