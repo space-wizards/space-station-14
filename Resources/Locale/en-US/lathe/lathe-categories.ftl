@@ -14,7 +14,7 @@ lathe-category-chemicals = Chemicals
 lathe-category-materials = Materials
 
 # Uniform
-lathe-category-beadsheets = Beadsheets
+lathe-category-bedsheets = Bedsheets
 lathe-category-carpets = Carpets
 lathe-category-coats = Coats
 lathe-category-command = Command

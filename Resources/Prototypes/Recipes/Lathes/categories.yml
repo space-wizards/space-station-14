@@ -46,8 +46,8 @@
 
 # Uniform printer
 - type: latheCategory
-  id: Beadsheets
-  name: lathe-category-beadsheets
+  id: Bedsheets
+  name: lathe-category-bedsheets
 
 - type: latheCategory
   id: Carpets
