@@ -389,6 +389,7 @@ public abstract class SharedMagicSystem : EntitySystem
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
 
+        ev.Handled = true;
         Speak(ev);
 
         foreach (var (_, compReg) in ev.Components)
