@@ -1,8 +1,15 @@
 - type: entity
   name: abductor's wirecutter
-  parent: Wirecutter
+  parent: BaseItem
   id: WirecutterAbductor
   components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/wirecutter_drop.ogg
+  - type: Tag
+    tags:
+    - PlantSampleTaker
+    - Wirecutter
   - type: Sprite
     sprite: Objects/Tools/wirecutters.rsi
     layers:
@@ -13,13 +20,35 @@
       - Cutting
     useSound:
       path: /Audio/Items/wirecutter.ogg
-  - type: RandomSprite
+  - type: MeleeWeapon
+    wideAnimationRotation: -90
+    damage:
+      types:
+        Piercing: 2
+    attackRate: 2 #open and close that shit on their arm like hell! because you sure aren't doing any damage with this
+    soundHit:
+      path: "/Audio/Items/wirecutter.ogg"
+  - type: Item
+    sprite: Objects/Tools/wirecutters.rsi
+    storedRotation: -90
+  - type: ToolTileCompatible
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+  - type: StaticPrice
+    price: 30
   
 - type: entity
   name: abductor's screwdriver
-  parent: Screwdriver
+  parent: BaseItem
   id: ScrewdriverAbductor
   components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/screwdriver_drop.ogg
+  - type: Tag
+    tags:
+    - Screwdriver
   - type: Sprite
     sprite: Objects/Tools/screwdriver.rsi
     layers:
@@ -30,11 +59,23 @@
       - Screwing
     useSound:
       collection: Screwdriver
-  - type: RandomSprite
   - type: Item
     sprite: Objects/Tools/screwdriver.rsi
     storedOffset: 2, 0
     storedRotation: 90
+  - type: MeleeWeapon
+    wideAnimationRotation: -90
+    attackRate: 1
+    damage:
+      types:
+        Piercing: 6
+    soundHit:
+      path: "/Audio/Weapons/bladeslice.ogg"
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+  - type: StaticPrice
+    price: 30
     
 - type: entity
   name: abductor's wrench
