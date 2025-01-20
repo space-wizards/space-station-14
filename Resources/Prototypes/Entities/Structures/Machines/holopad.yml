@@ -155,12 +155,7 @@
   components:
   - type: Transform
     anchored: true
-  - type: Sprite
-    noRot: true
-    drawdepth: Mobs
-    offset: -0.02, 0.45
-    overrideDir: South
-    enableOverrideDir: true
+  - type: Sprite # Sprite data is dynamically set in Client.HolopadSystem
   - type: Appearance
   - type: TypingIndicator
     proto: robot
@@ -177,6 +172,7 @@
     alpha: 0.9
     intensity: 2
     scrollRate: 0.125
+    offset: -0.02, 0.45
   - type: Tag
     tags:
     - HideContextMenu
