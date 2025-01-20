@@ -687,3 +687,6 @@ accent-gray-words-replace-230 = dum jut
 
 accent-gray-words-231 = hello
 accent-gray-words-replace-231 = oum
+
+accent-gray-words-232 = tesloose
+accent-gray-words-replace-232 = tellzoos
