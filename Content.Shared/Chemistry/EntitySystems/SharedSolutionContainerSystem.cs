@@ -795,8 +795,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
         }
 
-        var colorHex = solution.GetColor(PrototypeManager)
-            .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
+        // IMP, luminosity must be at least 0.3
+        var colorHSL = Color.ToHsl(solution.GetColor(PrototypeManager));
+        colorHSL.Z = (float) Math.Max(colorHSL.Z, 0.4);
+
+        var colorHex = Color.FromHsl(colorHSL)
+            .ToHexNoAlpha();
         var messageString = "shared-solution-container-component-on-examine-main-text";
 
         using (args.PushGroup(nameof(ExaminableSolutionComponent)))
@@ -922,10 +926,14 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         foreach (var (proto, quantity) in sortedReagentPrototypes)
         {
+            // IMP, luminosity must be at least 0.4
+            var colorHSL = Color.ToHsl(proto.SubstanceColor);
+            colorHSL.Z = (float) Math.Max(colorHSL.Z, 0.4);
+
             msg.PushNewline();
             msg.AddMarkupOrThrow(Loc.GetString("scannable-solution-chemical"
                 , ("type", proto.LocalizedName)
-                , ("color", proto.SubstanceColor.ToHexNoAlpha())
+                , ("color", Color.FromHsl(colorHSL).ToHexNoAlpha())
                 , ("amount", quantity)));
         }
 

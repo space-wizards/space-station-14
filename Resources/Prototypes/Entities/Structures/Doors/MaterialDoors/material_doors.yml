@@ -60,6 +60,17 @@
     mode: NoSprite
   - type: Occluder
   - type: BlockWeather
+  - type: ItemSlots # Imp special : prop a bucket on top of doors lol
+    slots:
+      bucket:
+        insertSuccessPopup: bucket-propped
+        insertSound: /Audio/Effects/Fluids/splash.ogg
+        disableEject: true
+        ejectOnBreak: true
+        swap: false
+        whitelist:
+          tags:
+          - Bucket
 
 - type: entity
   parent: BaseMaterialDoor
