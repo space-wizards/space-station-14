@@ -11,19 +11,16 @@ namespace Content.Shared.Nutrition.Components;
 public sealed partial class ThirstComponent : Component
 {
     // Base stuff
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("baseDecayRate")]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float BaseDecayRate = 0.1f;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float ActualDecayRate;
 
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public ThirstThreshold CurrentThirstThreshold;
 
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public ThirstThreshold LastThirstThreshold;
 
     /// <summary>
@@ -31,34 +28,29 @@ public sealed partial class ThirstComponent : Component
     /// This value should be updated relatively infrequently. To get the current thirst, which changes with each update,
     /// use <see cref="ThirstSystem.GetThirst"/>.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    [AutoNetworkedField]
+    [DataField, ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public float LastAuthoritativeThirstValue = -1.0f;
 
     /// <summary>
     /// The time at which <see cref="LastAuthoritativeThirstValue"/> was last updated.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan LastAuthoritativeThirstChangeTime;
 
     /// <summary>
     /// The time when the thirst threshold will update next.
     /// </summary>
-    [DataField("nextUpdateTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
-    [AutoPausedField]
+    [DataField("nextUpdateTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField, AutoPausedField]
     public TimeSpan NextThresholdUpdateTime;
 
     /// <summary>
     /// The time between each thirst threshold update.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public TimeSpan ThresholdUpdateRate = TimeSpan.FromSeconds(1);
 
-    [DataField("thresholds")]
-    [AutoNetworkedField]
+    [DataField("thresholds"), AutoNetworkedField]
     public Dictionary<ThirstThreshold, float> ThirstThresholds = new()
     {
         { ThirstThreshold.OverHydrated, 600.0f },
