@@ -9,6 +9,6 @@ public sealed partial class MumbleAccentComponent : Component
     /// This modifies the audio parameters of emote sounds, screaming, laughing, etc.
     /// By default, it reduces the volume and distance of emote sounds.
     /// </summary>
-    [DataField, ViewVariables]
+    [DataField]
     public AudioParams EmoteAudioParams = AudioParams.Default.WithVolume(-8f).WithMaxDistance(5);
 }
