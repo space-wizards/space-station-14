@@ -230,6 +230,8 @@
       collection: BikeHorn
     Weh:
       collection: Weh
+    Hew:
+      collection: Hew
   params:
     variation: 0.125
     # We need vox sounds for the other emotes
