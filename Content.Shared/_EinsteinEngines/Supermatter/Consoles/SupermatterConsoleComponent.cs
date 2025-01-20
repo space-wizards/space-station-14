@@ -5,14 +5,14 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared._EinsteinEngines.Supermatter.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedSupermatterConsoleSystem))]
 public sealed partial class SupermatterConsoleComponent : Component
 {
     /// <summary>
     /// The current entity of interest (selected via the console UI)
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public NetEntity? FocusSupermatter;
 }
 

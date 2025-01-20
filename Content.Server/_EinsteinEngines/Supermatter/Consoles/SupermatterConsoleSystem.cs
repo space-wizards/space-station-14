@@ -40,6 +40,7 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
     private void OnFocusChangedMessage(EntityUid uid, SupermatterConsoleComponent component, SupermatterConsoleFocusChangeMessage args)
     {
         component.FocusSupermatter = args.FocusSupermatter;
+        Dirty(uid, component);
     }
 
     private void OnGridSplit(ref GridSplitEvent args)
@@ -50,7 +51,7 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
         if (!allGrids.Contains(args.Grid))
             allGrids.Add(args.Grid);
 
-        // Update supermatter monitoring consoles that stand upon an updated grid
+        // Update supermatter monitoring consoles that stand on an updated grid
         var query = AllEntityQuery<SupermatterConsoleComponent, TransformComponent>();
         while (query.MoveNext(out var ent, out var entConsole, out var entXform))
         {
@@ -86,7 +87,7 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
                 supermatterEntriesForEachGrid[entXform.GridUid.Value] = supermatterEntries;
             }
 
-            // Determine the highest level of status for the console
+            // Determine the highest level of supermatter status for the console
             var highestStatus = SupermatterStatusType.Inactive;
 
             foreach (var entry in supermatterEntries)
@@ -97,7 +98,7 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
                     highestStatus = status;
             }
 
-            // Update the appearance of the console based on the highest recorded level of alert
+            // Update the appearance of the console based on the highest recorded level of supermatter status
             if (TryComp<AppearanceComponent>(ent, out var entAppearance))
                 _appearance.SetData(ent, SupermatterConsoleVisuals.ComputerLayerScreen, (int)highestStatus, entAppearance);
 
@@ -114,7 +115,7 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
         var gridUid = xform.GridUid!.Value;
 
         // Gathering remaining data to be send to the client
-        var focusSupermatterData = GetFocusSupermatterData(uid, GetEntity(component.FocusSupermatter), gridUid);
+        var focusSupermatterData = GetFocusSupermatterData(GetEntity(component.FocusSupermatter), gridUid);
 
         // Set the UI state
         _userInterfaceSystem.SetUiState(uid, SupermatterConsoleUiKey.Key,
@@ -145,7 +146,7 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
         return supermatterStateData;
     }
 
-    private SupermatterFocusData? GetFocusSupermatterData(EntityUid uid, EntityUid? focusSupermatter, EntityUid gridUid)
+    private SupermatterFocusData? GetFocusSupermatterData(EntityUid? focusSupermatter, EntityUid gridUid)
     {
         if (focusSupermatter == null)
             return null;

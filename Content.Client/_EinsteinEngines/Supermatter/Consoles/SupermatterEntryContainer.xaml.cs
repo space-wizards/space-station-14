@@ -59,7 +59,7 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
         AbsorptionBarLabel.FontOverride = monoFont;
     }
 
-    public Dictionary<string, (Label label, ProgressBar bar, PanelContainer border, float leftSize, float rightSize, Color leftColor, Color middleColor, Color rightColor)>? EngineDictionary;
+    private Dictionary<string, (Label label, ProgressBar bar, PanelContainer border, float leftSize, float rightSize, Color leftColor, Color middleColor, Color rightColor)>? _engineDictionary;
 
     public void UpdateEntry(SupermatterConsoleEntry entry, bool isFocus, SupermatterFocusData? focusData = null)
     {
@@ -94,7 +94,7 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
                 var turqoise = Color.FromHex("#00fff7");
 
                 // Set the engine dictionary once
-                EngineDictionary ??= new()
+                _engineDictionary ??= new()
                 {
                     { "integrity",   ( IntegrityBarLabel,   IntegrityBar,   IntegrityBarBorder,   0.9f, 0.1f, red,      orange, green ) },
                     { "power",       ( PowerBarLabel,       PowerBar,       PowerBarBorder,       0.9f, 0.1f, green,    orange, red   ) },
@@ -119,7 +119,7 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
                 var powerValue = barData["power"];
                 var powerPrefix = powerValue switch { >= 1000 => "G", >= 1 => "M", _ => "" };
                 var powerMultiplier = powerValue switch { >= 1000 => 0.001, >= 1 => 1, _ => 1000 };
-                EngineDictionary["power"].label.Text = Loc.GetString(
+                _engineDictionary["power"].label.Text = Loc.GetString(
                     "supermatter-console-window-label-power-bar",
                     ("power", (powerValue * powerMultiplier).ToString("0.000")),
                     ("prefix", powerPrefix));
@@ -132,7 +132,7 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
                 AbsorptionBarLabel.Text = Loc.GetString("supermatter-console-window-label-absorption-bar", ("absorption", absorptionRatio.ToString("0")));
 
                 // Update engine bars
-                foreach (var bar in EngineDictionary)
+                foreach (var bar in _engineDictionary)
                 {
                     var current = bar.Value;
                     var value = barData[bar.Key];

@@ -6,7 +6,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -31,6 +30,10 @@ public sealed partial class SupermatterConsoleWindow : FancyWindow
         RobustXamlLoader.Load(this);
         _entManager = IoCManager.Resolve<IEntityManager>();
         _owner = owner;
+
+        // Set the tracked supermatter for persistence
+        if (_entManager.TryGetComponent<SupermatterConsoleComponent>(_owner, out var console))
+            _trackedEntity = console.FocusSupermatter;
 
         // Set supermatter monitoring message action
         SendFocusChangeMessageAction += userInterface.SendFocusChangeMessage;
