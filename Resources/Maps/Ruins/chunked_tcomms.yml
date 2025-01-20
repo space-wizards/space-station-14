@@ -85,6 +85,7 @@ entities:
     - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
+    - type: LoadedMap
 - proto: AirlockEngineering
   entities:
   - uid: 33
@@ -108,13 +109,6 @@ entities:
     components:
     - type: Transform
       pos: 8.5,-8.5
-      parent: 1
-- proto: ClothingHandsGlovesColorYellow
-  entities:
-  - uid: 48
-    components:
-    - type: Transform
-      pos: 0.47039866,-2.4856918
       parent: 1
 - proto: ClothingHeadsetEngineering
   entities:
@@ -179,6 +173,13 @@ entities:
     components:
     - type: Transform
       pos: 6.5,-3.5
+      parent: 1
+- proto: MaintenanceInsulsSpawner
+  entities:
+  - uid: 48
+    components:
+    - type: Transform
+      pos: 1.5,-4.5
       parent: 1
 - proto: PosterLegitHereForYourSafety
   entities:
