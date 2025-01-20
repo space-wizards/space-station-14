@@ -342,7 +342,7 @@
   playTimeTracker: JobERTMedical
   setPreference: false
   startingGear: ERTMedicalGearEVA
-  icon: "JobIconERTMedical" #imp
+  icon: "JobIconERTMedic" #imp
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
