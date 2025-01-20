@@ -12963,7 +12963,7 @@ entities:
   - uid: 14296
     components:
     - type: Transform
-      pos: -4.501067,-286.30304
+      pos: -6.600724,-284.34647
       parent: 2
 - proto: BoxFolderBase
   entities:
@@ -50383,7 +50383,7 @@ entities:
       parent: 2
 - proto: filingCabinetDrawerRandom
   entities:
-  - uid: 18960
+  - uid: 15567
     components:
     - type: Transform
       pos: -6.5,-283.5
@@ -82426,7 +82426,7 @@ entities:
   - uid: 14224
     components:
     - type: Transform
-      pos: -4.438567,-286.4593
+      pos: -6.335099,-284.44022
       parent: 2
 - proto: HappyHonk
   entities:
@@ -84356,6 +84356,13 @@ entities:
     - type: Configuration
       config:
         tag: Salvage
+- proto: MailTeleporter
+  entities:
+  - uid: 18960
+    components:
+    - type: Transform
+      pos: -4.5,-286.5
+      parent: 2
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 11790
@@ -89492,11 +89499,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 17.5,-239.5
       parent: 2
-  - uid: 15567
-    components:
-    - type: Transform
-      pos: -4.5,-286.5
-      parent: 2
   - uid: 18244
     components:
     - type: Transform
@@ -89508,6 +89510,11 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,-269.5
+      parent: 2
+  - uid: 18988
+    components:
+    - type: Transform
+      pos: -6.5,-284.5
       parent: 2
 - proto: RadiationCollectorNoTank
   entities:
