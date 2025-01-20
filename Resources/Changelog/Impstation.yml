@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pinkbat5
-  changes:
-  - message: Traitors can now purchase straight pride pins and cloaks in the uplink.
-    type: Add
-  id: 472
-  time: '2024-11-08T16:23:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/643
 - author: Darkmajia
   changes:
   - message: Chefs can find a random box of ingredients in their lockers.
@@ -4431,3 +4424,10 @@
   id: 971
   time: '2025-01-19T06:48:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1420
+- author: formlessnameless
+  changes:
+  - message: The AI can no longer be a traitor. Or a changeling. Or a heretic.
+    type: Fix
+  id: 972
+  time: '2025-01-20T04:39:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1431
