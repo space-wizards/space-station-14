@@ -1,3 +1,23 @@
+# Airlocks
+- type: entity
+  parent: AirlockCourier
+  id: AirlockCourierLocked
+  suffix: Courier, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCourier ]
+
+# Glass Airlocks
+- type: entity
+  parent: AirlockCourierGlass
+  id: AirlockCourierGlassLocked
+  suffix: Courier, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCourier ]
+
 # Maintenance Hatches
 - type: entity
   parent: AirlockMaint
@@ -49,25 +69,3 @@
       board: [ DoorElectronicsCourier ]
   - type: Wires
     layoutId: AirlockCargo
-
-# Airlocks
-
-- type: entity
-  parent: AirlockCourier
-  id: AirlockCourierLocked
-  suffix: Courier, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsCourier ]
-
-# Glass Airlocks
-
-- type: entity
-  parent: AirlockCargoGlass
-  id: AirlockCourierGlassLocked
-  suffix: Courier, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsCourier ]
