@@ -795,9 +795,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
         }
 
-        // IMP, luminosity must be at least 0.3
+        // IMP, luminosity must be at least 0.4, rescale luminosity to 0.6x + 0.4
         var colorHSL = Color.ToHsl(solution.GetColor(PrototypeManager));
-        colorHSL.Z = (float) Math.Max(colorHSL.Z, 0.4);
+        colorHSL.Z = (float) ((colorHSL.Z * 0.6) + 0.4);
 
         var colorHex = Color.FromHsl(colorHSL)
             .ToHexNoAlpha();
@@ -855,7 +855,11 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                     part = "examinable-solution-recognized-next";
                 }
 
-                msg.Append(Loc.GetString(part, ("color", reagent.SubstanceColor.ToHexNoAlpha()),
+                // IMP, luminosity must be at least 0.4, rescale luminosity to 0.6x + 0.4
+                var recognisedColorHSL = Color.ToHsl(reagent.SubstanceColor);
+                recognisedColorHSL.Z = (float) ((recognisedColorHSL.Z * 0.6) + 0.4);
+
+                msg.Append(Loc.GetString(part, ("color", Color.FromHsl(recognisedColorHSL).ToHexNoAlpha()),
                     ("chemical", reagent.LocalizedName)));
             }
 
@@ -928,7 +932,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         {
             // IMP, luminosity must be at least 0.4
             var colorHSL = Color.ToHsl(proto.SubstanceColor);
-            colorHSL.Z = (float) Math.Max(colorHSL.Z, 0.4);
+            colorHSL.Z = (float) ((colorHSL.Z * 0.6) + 0.4);
 
             msg.PushNewline();
             msg.AddMarkupOrThrow(Loc.GetString("scannable-solution-chemical"
