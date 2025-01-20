@@ -1,4 +1,5 @@
 using Content.Shared.Medical.CrewMonitoring;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Medical.CrewMonitoring;
 
@@ -14,7 +15,7 @@ public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         EntityUid? gridUid = null;
-        string stationName = string.Empty;
+        var stationName = string.Empty;
 
         if (EntMan.TryGetComponent<TransformComponent>(Owner, out var xform))
         {
@@ -26,10 +27,8 @@ public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
             }
         }
 
-        _menu = new CrewMonitoringWindow(stationName, gridUid);
-
-        _menu.OpenCentered();
-        _menu.OnClose += Close;
+        _menu = this.CreateWindow<CrewMonitoringWindow>();
+        _menu.Set(stationName, gridUid);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -43,14 +42,5 @@ public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
                 _menu?.ShowSensors(st.Sensors, Owner, xform?.Coordinates);
                 break;
         }
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-
-        _menu?.Dispose();
     }
 }

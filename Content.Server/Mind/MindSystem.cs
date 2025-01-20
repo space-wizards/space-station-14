@@ -1,4 +1,3 @@
-﻿using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
@@ -13,6 +12,7 @@ using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Mind;
 
@@ -194,7 +194,7 @@ public sealed class MindSystem : SharedMindSystem
             component = EnsureComp<MindContainerComponent>(entity.Value);
 
             if (component.HasMind)
-                _gameTicker.OnGhostAttempt(component.Mind.Value, false);
+                _ghosts.OnGhostAttempt(component.Mind.Value, false);
 
             if (TryComp<ActorComponent>(entity.Value, out var actor))
             {
@@ -341,13 +341,13 @@ public sealed class MindSystem : SharedMindSystem
         }
     }
 
-    public void ControlMob(EntityUid user, EntityUid target)
+    public override void ControlMob(EntityUid user, EntityUid target)
     {
         if (TryComp(user, out ActorComponent? actor))
             ControlMob(actor.PlayerSession.UserId, target);
     }
 
-    public void ControlMob(NetUserId user, EntityUid target)
+    public override void ControlMob(NetUserId user, EntityUid target)
     {
         var (mindId, mind) = GetOrCreateMind(user);
 

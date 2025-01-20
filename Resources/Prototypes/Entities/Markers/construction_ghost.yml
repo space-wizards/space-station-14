@@ -1,7 +1,7 @@
 - type: entity
   name: construction ghost
   id: constructionghost
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     color: '#3F38'

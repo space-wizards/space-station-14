@@ -31,6 +31,13 @@ public sealed partial class GhostRolePrototype : IPrototype
     public EntProtoId EntityPrototype;
 
     /// <summary>
+    /// The entity prototype's sprite to use to represent the ghost role
+    /// Use this if you don't want to use the entity itself
+    /// </summary>
+    [DataField]
+    public EntProtoId? IconPrototype = null;
+
+    /// <summary>
     ///     Rules of the ghostrole
     /// </summary>
     [DataField(required: true)]

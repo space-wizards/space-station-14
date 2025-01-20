@@ -26,11 +26,6 @@ public sealed class ThrowingSystem : EntitySystem
 
     public const float PushbackDefault = 2f;
 
-    /// <summary>
-    /// The minimum amount of time an entity needs to be thrown before the timer can be run.
-    /// Anything below this threshold never enters the air.
-    /// </summary>
-    public const float MinFlyTime = 0.15f;
     public const float FlyTimePercentage = 0.8f;
 
     private float _frictionModifier;
@@ -168,9 +163,6 @@ public sealed class ThrowingSystem : EntitySystem
         var flyTime = direction.Length() / baseThrowSpeed;
         if (compensateFriction)
             flyTime *= FlyTimePercentage;
-
-        if (flyTime < MinFlyTime)
-            flyTime = 0f;
         comp.ThrownTime = _gameTiming.CurTime;
         comp.LandTime = comp.ThrownTime + TimeSpan.FromSeconds(flyTime);
         comp.PlayLandSound = playSound;

@@ -3,15 +3,15 @@ using Content.Client.Light.Components;
 using Content.Shared.Light;
 using Content.Shared.Light.Components;
 using Content.Shared.Toggleable;
-using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Shared.Animations;
+using Content.Client.Light.EntitySystems;
 
 namespace Content.Client.Light;
 
 public sealed class HandheldLightSystem : SharedHandheldLightSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly LightBehaviorSystem _lightBehavior = default!;
 
     public override void Initialize()
     {
@@ -19,6 +19,22 @@ public sealed class HandheldLightSystem : SharedHandheldLightSystem
 
         Subs.ItemStatus<HandheldLightComponent>(ent => new HandheldLightStatus(ent));
         SubscribeLocalEvent<HandheldLightComponent, AppearanceChangeEvent>(OnAppearanceChange);
+    }
+
+    /// <remarks>
+    ///     TODO: Not properly predicted yet. Don't call this function if you want a the actual return value!
+    /// </remarks>
+    public override bool TurnOff(Entity<HandheldLightComponent> ent, bool makeNoise = true)
+    {
+        return true;
+    }
+
+    /// <remarks>
+    ///     TODO: Not properly predicted yet. Don't call this function if you want a the actual return value!
+    /// </remarks>
+    public override bool TurnOn(EntityUid user, Entity<HandheldLightComponent> uid)
+    {
+        return true;
     }
 
     private void OnAppearanceChange(EntityUid uid, HandheldLightComponent? component, ref AppearanceChangeEvent args)
@@ -41,9 +57,9 @@ public sealed class HandheldLightSystem : SharedHandheldLightSystem
         if (TryComp<LightBehaviourComponent>(uid, out var lightBehaviour))
         {
             // Reset any running behaviour to reset the animated properties back to the original value, to avoid conflicts between resets
-            if (lightBehaviour.HasRunningBehaviours())
+            if (_lightBehavior.HasRunningBehaviours((uid, lightBehaviour)))
             {
-                lightBehaviour.StopLightBehaviour(resetToOriginalSettings: true);
+                _lightBehavior.StopLightBehaviour((uid, lightBehaviour), resetToOriginalSettings: true);
             }
 
             if (!enabled)
@@ -56,10 +72,10 @@ public sealed class HandheldLightSystem : SharedHandheldLightSystem
                 case HandheldLightPowerStates.FullPower:
                     break; // We just needed to reset all behaviours
                 case HandheldLightPowerStates.LowPower:
-                    lightBehaviour.StartLightBehaviour(component.RadiatingBehaviourId);
+                    _lightBehavior.StartLightBehaviour((uid, lightBehaviour), component.RadiatingBehaviourId);
                     break;
                 case HandheldLightPowerStates.Dying:
-                    lightBehaviour.StartLightBehaviour(component.BlinkingBehaviourId);
+                    _lightBehavior.StartLightBehaviour((uid, lightBehaviour), component.BlinkingBehaviourId);
                     break;
             }
         }

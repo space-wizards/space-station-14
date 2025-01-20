@@ -1,6 +1,7 @@
 using Content.Shared.Xenoarchaeology.Equipment;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Xenoarchaeology.Ui;
 
@@ -18,10 +19,7 @@ public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _consoleMenu = new AnalysisConsoleMenu();
-
-        _consoleMenu.OnClose += Close;
-        _consoleMenu.OpenCentered();
+        _consoleMenu = this.CreateWindow<AnalysisConsoleMenu>();
 
         _consoleMenu.OnServerSelectionButtonPressed += () =>
         {

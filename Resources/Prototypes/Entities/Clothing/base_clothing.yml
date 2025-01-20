@@ -11,6 +11,9 @@
       - WhitelistChameleon
   - type: StaticPrice
     price: 10
+  - type: FlavorProfile #yes not every peice of clothing is edible, but this way every edible piece of clothing should have the flavor without me having to track down what specific clothing can and cannot be eaten.
+    flavors:
+    - fiber
 
 - type: entity
   abstract: true
@@ -57,3 +60,12 @@
   - type: GroupExamine
   - type: Armor
     modifiers: {}
+
+# for clothing that can be toggled, like magboots
+- type: entity
+  abstract: true
+  id: BaseToggleClothing
+  components:
+  - type: ItemToggle
+    onUse: false # can't really wear it like that
+  - type: ToggleClothing

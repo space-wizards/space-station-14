@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: GlassBox
   start: start
   graph:
@@ -42,7 +42,7 @@
             - !type:EntityAnchored
           steps:
             - tag: SignalTrigger
-              name: a Signal Trigger
+              name: a signal trigger
               icon:
                 sprite: Objects/Devices/signaltrigger.rsi
                 state: signaltrigger

@@ -52,7 +52,7 @@
       steps:
       - tag: Payload
         store: payload
-        name: Payload
+        name: payload
         doAfter: 0.5
 
   - node: mine

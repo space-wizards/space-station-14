@@ -114,7 +114,7 @@ public abstract partial class InteractionTest
             return await SpawnEntity((stack.StackTypeId, spec.Quantity), coords);
 
         Assert.That(spec.Quantity, Is.EqualTo(1), "SpawnEntity only supports returning a singular entity");
-        await Server.WaitPost(() => uid = SEntMan.SpawnEntity(spec.Prototype, coords));
+        await Server.WaitPost(() => uid = SEntMan.SpawnAtPosition(spec.Prototype, coords));
         return uid;
     }
 

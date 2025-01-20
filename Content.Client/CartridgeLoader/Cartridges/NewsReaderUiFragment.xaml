@@ -26,7 +26,7 @@
             Text="{Loc 'news-read-ui-next-text'}"
             ToolTip="{Loc 'news-read-ui-next-tooltip'}"/>
     </BoxContainer>
-    <controls:StripeBack Name="АrticleNameContainer">
+    <controls:StripeBack Name="ArticleNameContainer">
         <PanelContainer>
             <Label Name="PageNum" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0"/>
             <Label Name="PageName" Align="Center"/>

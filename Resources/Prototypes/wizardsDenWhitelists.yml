@@ -1,0 +1,39 @@
+﻿# This is the whitelist used for Wizard's Den Salamander
+
+- type: playerConnectionWhitelist
+  id: salamanderMrpWhitelist
+  conditions:
+  - !type:ConditionManualBlacklistMembership # Deny blacklisted (MRP ban)
+    action: Deny
+  - !type:ConditionNotesPlaytimeRange # Deny for high severity notes in the last 30 days
+    includeExpired: false
+    minimumSeverity: 3 # High
+    minimumNotes: 1
+    range: 30 # 30 days
+    action: Deny
+    includeSecret: false
+  - !type:ConditionNotesPlaytimeRange # Deny for >=2 medium severity notes in the last 14 days
+    includeExpired: false
+    minimumSeverity: 2 # Medium
+    minimumNotes: 1
+    range: 14 # 14 Days
+    action: Deny
+    includeSecret: false
+  - !type:ConditionNotesPlaytimeRange # Deny for >=3 low severity notes in the last 14 days
+    includeExpired: false
+    minimumSeverity: 1 # Low
+    minimumNotes: 3
+    range: 14 # 14 Days
+    action: Deny
+    includeSecret: false
+  - !type:ConditionManualWhitelistMembership # Allow whitelisted players
+    action: Allow
+  - !type:ConditionPlayerCount # Allow when <= 15 players are online
+    minimumPlayers: 0
+    maximumPlayers: 15
+    action: Allow
+  #- !type:ConditionPlaytime
+  #  minimumPlaytime: 1200 # 20 hours to be whitelisted
+  #  action: Deny
+  - !type:ConditionAlwaysMatch
+    action: Deny

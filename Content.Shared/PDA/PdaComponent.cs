@@ -13,12 +13,6 @@ namespace Content.Shared.PDA
         public const string PdaPenSlotId = "PDA-pen";
         public const string PdaPaiSlotId = "PDA-pai";
 
-        /// <summary>
-        /// The base PDA sprite state, eg. "pda", "pda-clown"
-        /// </summary>
-        [DataField("state")]
-        public string? State;
-
         [DataField("idSlot")]
         public ItemSlot IdSlot = new();
 
@@ -37,6 +31,10 @@ namespace Content.Shared.PDA
         [ViewVariables] public bool FlashlightOn;
 
         [ViewVariables(VVAccess.ReadWrite)] public string? OwnerName;
+        // The Entity that "owns" the PDA, usually a player's character.
+        // This is useful when we are doing stuff like renaming a player and want to find their PDA to change the name
+        // as well.
+        [ViewVariables(VVAccess.ReadWrite)] public EntityUid? PdaOwner;
         [ViewVariables] public string? StationName;
         [ViewVariables] public string? StationAlertLevel;
         [ViewVariables] public Color StationAlertColor = Color.White;

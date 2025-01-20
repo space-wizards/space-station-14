@@ -3,7 +3,7 @@
   stackEntity: SheetSteel1
   name: materials-steel
   icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: steel }
-  price: 0.05
+  price: 0.15 # $15 for 1 unit
 
 - type: material
   id: Gold
@@ -12,7 +12,7 @@
   unit: materials-unit-bar
   icon: { sprite: Objects/Materials/ingots.rsi, state: gold }
   color: "#FFD700"
-  price: 0.2
+  price: 0.75 # $75 for 1 unit
 
 - type: material
   id: Silver
@@ -21,7 +21,7 @@
   unit: materials-unit-bar
   icon: { sprite: Objects/Materials/ingots.rsi, state: silver }
   color: "#C0C0C0"
-  price: 0.15
+  price: 0.60 # $60 for 1 unit
 
 - type: material
   id: Brass
@@ -29,7 +29,7 @@
   name: materials-brass
   icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: brass }
   color: "#b18b25"
-  price: 0.1
+  price: 0.30 # $30 for 1 unit
 
 - type: material
   id: Plasteel
@@ -37,4 +37,4 @@
   name: materials-plasteel
   icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: plasteel }
   color: "#696969" #Okay, this is epic
-  price: 0.28 # 1-1 mix of plasma and steel.
+  price: 0.5 # 1-1 mix of plasma and steel.

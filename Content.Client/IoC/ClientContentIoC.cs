@@ -4,22 +4,26 @@ using Content.Client.Chat.Managers;
 using Content.Client.Clickable;
 using Content.Client.DebugMon;
 using Content.Client.Eui;
+using Content.Client.Fullscreen;
+using Content.Client.GameTicking.Managers;
 using Content.Client.GhostKick;
+using Content.Client.Guidebook;
 using Content.Client.Launcher;
+using Content.Client.Mapping;
 using Content.Client.Parallax.Managers;
 using Content.Client.Players.PlayTimeTracking;
+using Content.Client.Replay;
 using Content.Client.Screenshot;
-using Content.Client.Fullscreen;
 using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Administration.Logs;
-using Content.Client.Guidebook;
 using Content.Client.Lobby;
-using Content.Client.Replay;
+using Content.Client.Players.RateLimiting;
 using Content.Shared.Administration.Managers;
+using Content.Shared.Chat;
 using Content.Shared.Players.PlayTimeTracking;
-
+using Content.Shared.Players.RateLimiting;
 
 namespace Content.Client.IoC
 {
@@ -31,6 +35,7 @@ namespace Content.Client.IoC
 
             collection.Register<IParallaxManager, ParallaxManager>();
             collection.Register<IChatManager, ChatManager>();
+            collection.Register<ISharedChatManager, ChatManager>();
             collection.Register<IClientPreferencesManager, ClientPreferencesManager>();
             collection.Register<IStylesheetManager, StylesheetManager>();
             collection.Register<IScreenshotHook, ScreenshotHook>();
@@ -47,9 +52,13 @@ namespace Content.Client.IoC
             collection.Register<ExtendedDisconnectInformationManager>();
             collection.Register<JobRequirementsManager>();
             collection.Register<DocumentParsingManager>();
-            collection.Register<ContentReplayPlaybackManager, ContentReplayPlaybackManager>();
+            collection.Register<ContentReplayPlaybackManager>();
             collection.Register<ISharedPlaytimeManager, JobRequirementsManager>();
+            collection.Register<MappingManager>();
             collection.Register<DebugMonitorManager>();
+            collection.Register<PlayerRateLimitManager>();
+            collection.Register<SharedPlayerRateLimitManager, PlayerRateLimitManager>();
+            collection.Register<TitleWindowManager>();
         }
     }
 }

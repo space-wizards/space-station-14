@@ -4,7 +4,19 @@
   id: Pancake
   name: pancake
   spawn: FoodBakedPancake
-  maxCount: 3
+  maxCount: 9
+
+- type: stack
+  id: PancakeBb
+  name: blueberry pancake
+  spawn: FoodBakedPancakeBb
+  maxCount: 9
+
+- type: stack
+  id: PancakeCc
+  name: chocolate chip pancake
+  spawn: FoodBakedPancakeCc
+  maxCount: 9
 
 # Food Containers
 

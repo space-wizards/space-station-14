@@ -76,6 +76,20 @@
   maxCount: 50
 
 - type: stack
+  id: SpaceCarpTooth
+  name: space carp tooth
+  icon: { sprite: /Textures/Objects/Materials/Mob/carptooth.rsi, state: tooth}
+  spawn: MaterialToothSpaceCarp1
+  maxCount: 30
+
+- type: stack
+  id: SharkMinnowTooth
+  name: sharkminnow tooth
+  icon: { sprite: /Textures/Objects/Materials/Mob/sharktooth.rsi, state: tooth}
+  spawn: MaterialToothSharkminnow1
+  maxCount: 30
+
+- type: stack
   id: Bones
   name: bones
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: bones}
@@ -88,3 +102,10 @@
   icon: { sprite: /Textures/Objects/Misc/reagent_fillings.rsi, state: powderpile }
   spawn: MaterialGunpowder
   maxCount: 60
+
+- type: stack
+  id: GoliathHide
+  name: goliath hide
+  icon: { sprite: /Textures/Objects/Materials/hide.rsi, state: goliath_hide }
+  spawn: MaterialGoliathHide1
+  maxCount: 30

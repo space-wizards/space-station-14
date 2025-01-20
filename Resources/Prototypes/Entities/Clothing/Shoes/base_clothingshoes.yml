@@ -23,7 +23,7 @@
     tags:
     - ClothMade
     - WhitelistChameleon
-  - type: ClothingRequiredStepTriggerImmune
+  - type: ProtectedFromStepTriggers
 
 - type: entity
   abstract: true
@@ -69,4 +69,5 @@
   description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: TemperatureProtection
-    coefficient: 0.2
+    heatingCoefficient: 1.025
+    coolingCoefficient: 0.5

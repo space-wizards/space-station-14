@@ -4,6 +4,33 @@
   name: camera
   description: A surveillance camera. It's watching you. Kinda.
   components:
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      light:
+        shape:
+          !type:PhysShapeCircle
+          radius: 5
+        hard: false
+        mask:
+        - GhostImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,-0.2,-0.15"
+        density: 190
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+  - type: LightOnCollide
+  - type: PointLight
+    enabled: false
+    radius: 5
+  - type: SlimPoweredLight
+    enabled: false
+  - type: StationAiVision
   - type: Clickable
   - type: InteractionOutline
   - type: Construction
@@ -25,7 +52,7 @@
     alwaysRandomize: true
     layoutId: SurveillanceCamera
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Sprite
     drawdepth: WallMountedItems
@@ -210,7 +237,7 @@
     - type: Transform
       anchored: true
     - type: Damageable
-      damageContainer: Inorganic
+      damageContainer: StructuralInorganic
       damageModifierSet: Metallic
     - type: Sprite
       drawdepth: WallMountedItems

@@ -52,7 +52,7 @@
     graph: ConveyorGraph
     node: entity
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:

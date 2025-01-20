@@ -41,7 +41,7 @@
   - type: Appearance
   - type: Airtight
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: RCDDeconstructable
     cost: 6
@@ -100,7 +100,7 @@
     closeSound:
       path: /Audio/Effects/door_close.ogg
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
@@ -149,8 +149,8 @@
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
     - trigger:

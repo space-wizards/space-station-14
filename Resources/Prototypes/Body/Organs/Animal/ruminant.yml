@@ -1,8 +1,8 @@
-﻿- type: entity
+- type: entity
   id: OrganAnimalRuminantStomach
   parent: OrganAnimalStomach
   name: ruminant stomach
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: SolutionContainerManager
     solutions:

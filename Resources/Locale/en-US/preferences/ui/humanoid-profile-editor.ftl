@@ -15,9 +15,11 @@ humanoid-profile-editor-pronouns-label = Pronouns:
 humanoid-profile-editor-pronouns-male-text = He / Him
 humanoid-profile-editor-pronouns-female-text = She / Her
 humanoid-profile-editor-pronouns-epicene-text = They / Them
-humanoid-profile-editor-pronouns-neuter-text = It / It
+humanoid-profile-editor-pronouns-neuter-text = It / Its
 humanoid-profile-editor-import-button = Import
 humanoid-profile-editor-export-button = Export
+humanoid-profile-editor-export-image-button = Export image
+humanoid-profile-editor-open-image-button = Open images
 humanoid-profile-editor-save-button = Save
 humanoid-profile-editor-reset-button = Reset
 humanoid-profile-editor-spawn-priority-label = Spawn priority:
@@ -59,3 +61,4 @@ humanoid-profile-editor-trait-count-hint = Points available: [{$current}/{$max}]
 
 trait-category-disabilities = Disabilities
 trait-category-speech = Speech traits
+trait-category-quirks = Quirks

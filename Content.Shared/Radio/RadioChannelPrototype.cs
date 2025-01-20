@@ -9,7 +9,7 @@ public sealed partial class RadioChannelPrototype : IPrototype
     /// Human-readable name for the channel.
     /// </summary>
     [DataField("name")]
-    public string Name { get; private set; } = string.Empty;
+    public LocId Name { get; private set; } = string.Empty;
 
     [ViewVariables(VVAccess.ReadOnly)]
     public string LocalizedName => Loc.GetString(Name);

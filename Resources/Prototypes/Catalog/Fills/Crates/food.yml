@@ -7,8 +7,8 @@
   - type: StorageFill
     contents:
     - id: FoodBoxPizzaFilled
-      amount: 4
-    - id: KnifePlastic
+      amount: 3
+    - id: FoodBoxPizzaCotton
     - id: LidSalami
       prob: 0.01
 
@@ -21,9 +21,8 @@
   - type: StorageFill
     contents:
     - id: FoodBoxPizzaFilled
-      amount: 16
-    - id: KnifePlastic
-      amount: 4
+      amount: 15
+    - id: FoodBoxPizzaCotton
     - id: LidSalami
       prob: 0.04
 
@@ -135,6 +134,8 @@
       amount: 2
     - id: DrinkLemonLimeCan
       amount: 2
+    - id: DrinkLemonLimeCranberryCan
+      amount: 2
     - id: DrinkFourteenLokoCan
       amount: 2
 
@@ -142,8 +143,10 @@
   id: CrateFoodSoftdrinksLarge
   parent: CratePlastic
   name: softdrinks bulk crate
-  description: Lots of sodas taken straight out of Centcomm's own vending machines, because you just can't leave your department. Includes 28 sodas.
+  description: Lots of sodas taken straight out of Centcomm's own vending machines, because you just can't leave your department. Includes 32 sodas.
   components:
+  - type: EntityStorage
+    capacity: 32 # Slightly over-sized CratePlastic to accomodate over 30 drink cans at once.
   - type: StorageFill
     contents:
       - id: DrinkColaCan
@@ -155,6 +158,8 @@
       - id: DrinkIcedTeaCan
         amount: 4
       - id: DrinkLemonLimeCan
+        amount: 4
+      - id: DrinkLemonLimeCranberryCan
         amount: 4
       - id: DrinkFourteenLokoCan
         amount: 4

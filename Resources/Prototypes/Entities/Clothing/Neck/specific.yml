@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ClothingNeckBase
   id: ClothingNeckChameleon
   name: striped red scarf
@@ -12,7 +12,7 @@
     - type: Clothing
       sprite: Clothing/Neck/Scarfs/red.rsi
     - type: ChameleonClothing
-      slot: [neck]
+      slot: [NECK]
       default: ClothingNeckScarfStripedRed
     - type: UserInterface
       interfaces:

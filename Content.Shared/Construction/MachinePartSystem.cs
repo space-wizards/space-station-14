@@ -81,9 +81,9 @@ namespace Content.Shared.Construction
                 {
                     var partRecipe = recipes[0];
                     if (recipes.Count > 1)
-                        partRecipe = recipes.MinBy(p => p.RequiredMaterials.Values.Sum());
+                        partRecipe = recipes.MinBy(p => p.Materials.Values.Sum());
 
-                    foreach (var (mat, matAmount) in partRecipe!.RequiredMaterials)
+                    foreach (var (mat, matAmount) in partRecipe!.Materials)
                     {
                         materials.TryAdd(mat, 0);
                         materials[mat] += matAmount * amount * coefficient;
@@ -101,9 +101,9 @@ namespace Content.Shared.Construction
                 {
                     var partRecipe = recipes[0];
                     if (recipes.Count > 1)
-                        partRecipe = recipes.MinBy(p => p.RequiredMaterials.Values.Sum());
+                        partRecipe = recipes.MinBy(p => p.Materials.Values.Sum());
 
-                    foreach (var (mat, matAmount) in partRecipe!.RequiredMaterials)
+                    foreach (var (mat, matAmount) in partRecipe!.Materials)
                     {
                         materials.TryAdd(mat, 0);
                         materials[mat] += matAmount * amount * coefficient;

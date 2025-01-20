@@ -1,6 +1,6 @@
 - type: entity
   id: JetpackEffect
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
     lifetime: 2
@@ -22,8 +22,8 @@
   parent: GasTankBase
   abstract: true
   id: BaseJetpack
-  name: Jetpack
-  description: It's a jetpack.
+  name: jetpack
+  description: It's a jetpack. It can hold 5 L of gas.
   components:
     - type: InputMover
       toParent: true
@@ -107,7 +107,7 @@
 #Empty black
 - type: entity
   id: JetpackBlack
-  parent: BaseJetpack
+  parent: [BaseJetpack, BaseSyndicateContraband]
   name: jetpack
   suffix: Empty
   components:
@@ -140,7 +140,7 @@
 #Empty captain
 - type: entity
   id: JetpackCaptain
-  parent: BaseJetpack
+  parent: [BaseJetpack, BaseGrandTheftContraband]
   name: captain's jetpack
   suffix: Empty
   components:
@@ -182,6 +182,7 @@
   id: JetpackMini
   parent: BaseJetpack
   name: mini jetpack
+  description: It's a jetpack. It can hold 1.5 L of gas.
   suffix: Empty
   components:
     - type: Item
@@ -219,7 +220,7 @@
 #Empty security
 - type: entity
   id: JetpackSecurity
-  parent: BaseJetpack
+  parent: [BaseJetpack, BaseRestrictedContraband]
   name: security jetpack
   suffix: Empty
   components:

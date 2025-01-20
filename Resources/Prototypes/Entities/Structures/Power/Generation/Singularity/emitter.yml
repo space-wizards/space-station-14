@@ -53,8 +53,8 @@
         !type:CableDeviceNode
         nodeGroupID: MVPower
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
       - trigger:

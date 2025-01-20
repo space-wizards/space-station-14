@@ -1,3 +1,4 @@
+using Content.Shared.Item.ItemToggle.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -6,6 +7,9 @@ namespace Content.Shared.PowerCell;
 /// <summary>
 /// Indicates that the entity's ActivatableUI requires power or else it closes.
 /// </summary>
+/// <remarks>
+/// With ActivatableUI it will activate and deactivate when the ui is opened and closed, drawing power inbetween.
+/// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class PowerCellDrawComponent : Component
 {
@@ -26,10 +30,11 @@ public sealed partial class PowerCellDrawComponent : Component
     #endregion
 
     /// <summary>
-    /// Is this power cell currently drawing power every tick.
+    /// Whether drawing is enabled.
+    /// Having no cell will still disable it.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("enabled")]
-    public bool Drawing;
+    [DataField, AutoNetworkedField]
+    public bool Enabled = true;
 
     /// <summary>
     /// How much the entity draws while the UI is open.
@@ -51,4 +56,10 @@ public sealed partial class PowerCellDrawComponent : Component
     [DataField("nextUpdate", customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan NextUpdateTime;
+
+    /// <summary>
+    /// How long to wait between power drawing.
+    /// </summary>
+    [DataField]
+    public TimeSpan Delay = TimeSpan.FromSeconds(1);
 }

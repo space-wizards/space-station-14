@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Explosion.Components;
 using Content.Server.Explosion.EntitySystems;
 using Robust.Shared.Physics.Dynamics;
@@ -42,14 +42,15 @@ public sealed partial class TriggerSystem
 
     private void UpdateTimedCollide(float frameTime)
     {
-        foreach (var (activeTrigger, triggerOnTimedCollide) in EntityQuery<ActiveTriggerOnTimedCollideComponent, TriggerOnTimedCollideComponent>())
+        var query = EntityQueryEnumerator<ActiveTriggerOnTimedCollideComponent, TriggerOnTimedCollideComponent>();
+        while (query.MoveNext(out var uid, out _, out var triggerOnTimedCollide))
         {
             foreach (var (collidingEntity, collidingTimer) in triggerOnTimedCollide.Colliding)
             {
                 triggerOnTimedCollide.Colliding[collidingEntity] += frameTime;
                 if (collidingTimer > triggerOnTimedCollide.Threshold)
                 {
-                    RaiseLocalEvent(activeTrigger.Owner, new TriggerEvent(activeTrigger.Owner, collidingEntity), true);
+                    RaiseLocalEvent(uid, new TriggerEvent(uid, collidingEntity), true);
                     triggerOnTimedCollide.Colliding[collidingEntity] -= triggerOnTimedCollide.Threshold;
                 }
             }

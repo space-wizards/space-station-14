@@ -33,7 +33,7 @@ public partial class SharedGunSystem
     {
         slotEntity = null;
 
-        if (!Containers.TryGetContainingContainer(uid, out var container))
+        if (!Containers.TryGetContainingContainer((uid, null, null), out var container))
             return false;
         var user = container.Owner;
 

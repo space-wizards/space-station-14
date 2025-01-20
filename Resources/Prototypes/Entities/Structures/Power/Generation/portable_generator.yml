@@ -182,6 +182,9 @@
         - output_mv
       sprite: Structures/Power/Generation/portable_generator.rsi
       state: portgen0
+    - type: PowerSupplier
+      supplyRampRate: 5000
+      supplyRampTolerance: 1500
 
 - type: entity
   name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator
@@ -235,6 +238,9 @@
         - output_mv
       sprite: Structures/Power/Generation/portable_generator.rsi
       state: portgen1
+    - type: PowerSupplier
+      supplyRampRate: 7500
+      supplyRampTolerance: 2500
 
 - type: entity
   name: J.R.P.A.C.M.A.N.-type portable generator

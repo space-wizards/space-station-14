@@ -7,19 +7,19 @@
         - to: jumpsuit
           steps:
             - tag: BananaPeel
-              name: A Banana Peel
+              name: a banana peel
               icon:
                 sprite: Objects/Specific/Hydroponics/banana.rsi
                 state: peel
               doAfter: 1
             - tag: BananaPeel
-              name: A Banana Peel
+              name: a banana peel
               icon:
                 sprite: Objects/Specific/Hydroponics/banana.rsi
                 state: peel
               doAfter: 1
             - tag: BananaPeel
-              name: A Banana Peel
+              name: a banana peel
               icon:
                 sprite: Objects/Specific/Hydroponics/banana.rsi
                 state: peel
@@ -28,7 +28,7 @@
               amount: 1
               doAfter: 1
             - tag: ClownSuit
-              name: A Clown Suit
+              name: a clown suit
               icon:
                 sprite: Clothing/Uniforms/Jumpsuit/clown.rsi
                 state: icon
@@ -45,19 +45,19 @@
         - to: shoes
           steps:
             - tag: BananaPeel
-              name: A Banana Peel
+              name: a banana peel
               icon:
                 sprite: Objects/Specific/Hydroponics/banana.rsi
                 state: peel
               doAfter: 1
             - tag: BananaPeel
-              name: A Banana Peel
+              name: a banana peel
               icon:
                 sprite: Objects/Specific/Hydroponics/banana.rsi
                 state: peel
               doAfter: 1
             - tag: BananaPeel
-              name: A Banana Peel
+              name: a banana peel
               icon:
                 sprite: Objects/Specific/Hydroponics/banana.rsi
                 state: peel
@@ -66,7 +66,7 @@
               amount: 1
               doAfter: 1
             - tag: ClownShoes
-              name: Clown Shoes
+              name: clown shoes
               icon:
                 sprite: Clothing/Shoes/Specific/clown.rsi
                 state: icon
@@ -83,19 +83,19 @@
         - to: mask
           steps:
             - tag: BananaPeel
-              name: A Banana Peel
+              name: a banana peel
               icon:
                 sprite: Objects/Specific/Hydroponics/banana.rsi
                 state: peel
               doAfter: 1
             - tag: BananaPeel
-              name: A Banana Peel
+              name: a banana peel
               icon:
                 sprite: Objects/Specific/Hydroponics/banana.rsi
                 state: peel
               doAfter: 1
             - tag: BananaPeel
-              name: A Banana Peel
+              name: a banana peel
               icon:
                 sprite: Objects/Specific/Hydroponics/banana.rsi
                 state: peel
@@ -104,7 +104,7 @@
               amount: 1
               doAfter: 1
             - tag: ClownMask
-              name: A Clown Mask
+              name: a clown mask
               icon:
                 sprite: Clothing/Mask/clown.rsi
                 state: icon
