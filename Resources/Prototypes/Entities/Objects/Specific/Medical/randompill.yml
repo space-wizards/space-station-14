@@ -1,51 +1,6 @@
 - type: weightedRandomFillSolution
   id: RandomFillStrangePill
   fills:
-  - quantity: 20
-    weight: 1
-    reagents:
-    - Aluminium
-    - Carbon
-    - Chlorine
-    - Copper
-    - Fluorine
-    - Hydrogen
-    - Iodine
-    - Lithium
-    - Mercury
-    - Potassium
-    - Phosphorus
-    - Radium
-    - Silicon
-    - Sulfur
-    - Sodium
-  - quantity: 20
-    weight: 2
-    reagents:
-    - Omnizine
-  - quantity: 20
-    weight: 3
-    reagents:
-    - ChloralHydrate
-    - Desoxyephedrine
-    - Ephedrine
-    - Ipecac
-    - Mold
-    - MuteToxin
-    - Nocturine
-    - NorepinephricAcid
-    - Pax
-    - Tricordrazine
-    - SodiumPolyacrylate
-    - Fresium
-  - quantity: 20
-    weight: 5
-    reagents:
-    - SpaceMirage
-  - quantity: 10
-    weight: 5
-    reagents:
-    - Amatoxin
   # 5 groups for a total weight of 100
   # Very Good - weight: 15
     - quantity: 15
@@ -75,7 +30,7 @@
       reagents:
       - Ipecac 
       - SodiumPolyacrylate
-      - SpaceDrugs
+      - SpaceMirage
       - SpaceGlue
       - Laughter
       - JuiceThatMakesYouWeh
