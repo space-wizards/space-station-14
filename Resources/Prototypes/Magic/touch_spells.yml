@@ -39,9 +39,9 @@
     icon:
       sprite: Clothing/Mask/cluwne.rsi
       state: icon
-    event: !type:EnsureCompOnTouchSpellEvent
+    event: !type:ChangeComponentsSpellEvent
       speech: action-speech-spell-cluwne
-      components:
+      toAdd:
       - type: Cluwne
   - type: Magic
     requiresClothes: true
@@ -64,9 +64,9 @@
     icon:
       sprite: Objects/Specific/Janitorial/soap.rsi
       state: omega-4
-    event: !type:EnsureCompOnTouchSpellEvent
+    event: !type:ChangeComponentsSpellEvent
       speech: action-speech-spell-slip
-      components:
+      toAdd:
       - type: Slippery
       - type: StepTrigger
       - type: SlipOnCollide

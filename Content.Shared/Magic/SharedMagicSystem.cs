@@ -14,7 +14,6 @@ using Content.Shared.Magic.Components;
 using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
 using Content.Shared.Mind;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Speech.Muting;
@@ -61,7 +60,6 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly LockSystem _lock = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
@@ -81,7 +79,6 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<ChargeSpellEvent>(OnChargeSpell);
         SubscribeLocalEvent<RandomGlobalSpawnSpellEvent>(OnRandomGlobalSpawnSpell);
         SubscribeLocalEvent<MindSwapSpellEvent>(OnMindSwapSpell);
-        SubscribeLocalEvent<EnsureCompOnTouchSpellEvent>(OnEnsureCompOnTouchSpell);
     }
 
     private void OnBeforeCastSpell(Entity<MagicComponent> ent, ref BeforeCastSpellEvent args)
@@ -382,29 +379,6 @@ public abstract class SharedMagicSystem : EntitySystem
             return;
 
         _body.GibBody(ev.Target, true, body);
-    }
-
-    private void OnEnsureCompOnTouchSpell(EnsureCompOnTouchSpellEvent ev)
-    {
-        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
-            return;
-
-        ev.Handled = true;
-        Speak(ev);
-
-        foreach (var (_, compReg) in ev.Components)
-        {
-            var comp = compReg.Component;
-
-            if (HasComp(ev.Target, comp.GetType()))
-                continue;
-
-            // TODO: Need a helper for this somewhere.
-            var component = (Component)_compFact.GetComponent(compReg);
-            var temp = (object)component;
-            _seriMan.CopyTo(comp, ref temp);
-            EntityManager.AddComponent(ev.Target, (Component)temp!);
-        }
     }
 
     // End Touch Spells
