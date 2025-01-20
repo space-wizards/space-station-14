@@ -55,7 +55,7 @@ public sealed class LandMineSystem : EntitySystem
     {
         args.Continue = true;
 
-        if (TryComp<ArmableComponent>(uid, out _) && TryComp<ItemToggleComponent>(uid, out var itemToggle))
+        if (HasComp<ArmableComponent>(uid) && TryComp<ItemToggleComponent>(uid, out var itemToggle))
             args.Continue = itemToggle.Activated;
     }
 }
