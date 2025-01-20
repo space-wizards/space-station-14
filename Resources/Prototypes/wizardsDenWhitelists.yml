@@ -15,7 +15,7 @@
   - !type:ConditionNotesPlaytimeRange # Deny for >=2 medium severity notes in the last 14 days
     includeExpired: false
     minimumSeverity: 2 # Medium
-    minimumNotes: 1
+    minimumNotes: 2
     range: 14 # 14 Days
     action: Deny
     includeSecret: false
