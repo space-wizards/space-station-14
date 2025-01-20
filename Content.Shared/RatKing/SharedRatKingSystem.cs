@@ -29,9 +29,6 @@ public abstract class SharedRatKingSystem : EntitySystem
         SubscribeLocalEvent<RatKingComponent, RatKingOrderActionEvent>(OnOrderAction);
 
         SubscribeLocalEvent<RatKingServantComponent, ComponentShutdown>(OnServantShutdown);
-
-        SubscribeLocalEvent<RatKingRummageableComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerb);
-        SubscribeLocalEvent<RatKingRummageableComponent, RatKingRummageDoAfterEvent>(OnDoAfterComplete);
     }
 
     private void OnStartup(EntityUid uid, RatKingComponent component, ComponentStartup args)
@@ -103,43 +100,6 @@ public abstract class SharedRatKingSystem : EntitySystem
         _action.StartUseDelay(component.ActionOrderLooseEntity);
     }
 
-    private void OnGetVerb(EntityUid uid, RatKingRummageableComponent component, GetVerbsEvent<AlternativeVerb> args)
-    {
-        if (!HasComp<RatKingComponent>(args.User) || component.Looted)
-            return;
-
-        args.Verbs.Add(new AlternativeVerb
-        {
-            Text = Loc.GetString("rat-king-rummage-text"),
-            Priority = 0,
-            Act = () =>
-            {
-                _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.RummageDuration,
-                    new RatKingRummageDoAfterEvent(), uid, uid)
-                {
-                    BlockDuplicate = true,
-                    BreakOnDamage = true,
-                    BreakOnMove = true,
-                    DistanceThreshold = 2f
-                });
-            }
-        });
-    }
-
-    private void OnDoAfterComplete(EntityUid uid, RatKingRummageableComponent component, RatKingRummageDoAfterEvent args)
-    {
-        if (args.Cancelled || component.Looted)
-            return;
-
-        component.Looted = true;
-        Dirty(uid, component);
-        _audio.PlayPredicted(component.Sound, uid, args.User);
-
-        var spawn = PrototypeManager.Index<WeightedRandomEntityPrototype>(component.RummageLoot).Pick(Random);
-        if (_net.IsServer)
-            Spawn(spawn, Transform(uid).Coordinates);
-    }
-
     public void UpdateAllServants(EntityUid uid, RatKingComponent component)
     {
         foreach (var servant in component.Servants)
@@ -157,10 +117,4 @@ public abstract class SharedRatKingSystem : EntitySystem
     {
 
     }
-}
-
-[Serializable, NetSerializable]
-public sealed partial class RatKingRummageDoAfterEvent : SimpleDoAfterEvent
-{
-
 }
