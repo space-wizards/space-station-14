@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Chefs can find a random box of ingredients in their lockers.
-    type: Add
-  id: 473
-  time: '2024-11-08T16:24:38.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/637
-- author: hivehum
-  changes:
-  - message: Tranquilizer shells have nocturine in them, making them actually usable
-      again
-    type: Tweak
-  id: 474
-  time: '2024-11-08T16:27:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/640
 - author: Sha-Seng
   changes:
   - message: Head of Security's Grey Jumpsuit and Jumpskirt are now selectable on
@@ -4431,3 +4416,17 @@
   id: 972
   time: '2025-01-20T04:39:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1431
+- author: mqole
+  changes:
+  - message: 1 new word in grayspeak.
+    type: Add
+  id: 973
+  time: '2025-01-20T21:24:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1428
+- author: DinnerCalzone
+  changes:
+  - message: Mail has been added to Atlas, Origin, and Train for real this time.
+    type: Add
+  id: 974
+  time: '2025-01-20T21:24:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1426
