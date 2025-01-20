@@ -30,7 +30,7 @@ public sealed partial class WebPlacerComponent : Component
     /// <summary>
     /// Action given to the player.
     /// </summary>
-    [ViewVariables]
+    [DataField]
     public EntityUid? ActionEntity;
 
     /// <summary>
