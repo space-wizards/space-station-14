@@ -12,7 +12,7 @@
     range: 30 # 30 days
     action: Deny
     includeSecret: false
-  - !type:ConditionNotesPlaytimeRange # Deny for >=2 medium severity notes in the last 14 days
+  - !type:ConditionNotesPlaytimeRange # Deny for >=3 medium severity notes in the last 90 days
     includeExpired: false
     minimumSeverity: 2 # Medium
     minimumNotes: 3
