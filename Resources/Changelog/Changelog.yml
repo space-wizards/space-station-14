@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix spawn prefs.
-    type: Fix
-  id: 7334
-  time: '2024-09-09T19:39:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31892
 - author: lzk228
   changes:
   - message: The captain now have special late join message.
@@ -3892,3 +3885,10 @@
   id: 7833
   time: '2025-01-20T00:32:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32691
+- author: ElectroJr
+  changes:
+  - message: Fixed some visual overlays not being removed when the effect should stop.
+    type: Fix
+  id: 7834
+  time: '2025-01-20T01:24:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34527
