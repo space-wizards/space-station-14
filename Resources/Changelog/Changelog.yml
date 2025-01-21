@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Thinbug0
-  changes:
-  - message: Teal gloves can now be found at the ClothesMate!
-    type: Add
-  id: 7336
-  time: '2024-09-09T21:47:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31865
 - author: chillyconmor
   changes:
   - message: Space Ninjas now have a new intro song.
@@ -3892,3 +3885,19 @@
   id: 7835
   time: '2025-01-21T04:56:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34549
+- author: sporkyz
+  changes:
+  - message: Galoshes are now restricted to janitor.
+    type: Tweak
+  - message: Double barrel shotguns, basic armor vests, beanbag/flare shotgun shells,
+      and bandoliers are now allowed for Bartenders, not just Security.
+    type: Tweak
+  - message: Lawyers now have access to the Security headset they spawn with, as well
+      as the encryption key inside.
+    type: Fix
+  - message: Sawn-off shotguns are now properly considered contraband instead of being
+      unrestricted.
+    type: Fix
+  id: 7836
+  time: '2025-01-21T09:51:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33385
