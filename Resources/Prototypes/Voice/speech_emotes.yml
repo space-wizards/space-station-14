@@ -170,7 +170,7 @@
   name: chat-emote-name-coo
   category: Vocal
   available: false
-  icon: _Impstation/Interface/Emotes/chitter.png #placeholder
+  icon: _Impstation/Interface/Emotes/chirp.png #placeholder
   whitelist:
     components:
     - Vocal
@@ -179,7 +179,9 @@
     - BorgChassis
   chatMessages: ["chat-emote-msg-coo"]
   chatTriggers:
+   - coo
    - coos
+   - cooed
 
 - type: emote
   id: Squeak
