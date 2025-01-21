@@ -32,6 +32,6 @@ public sealed partial class EmotionallyUnstableAccentComponent : Component
     /// <summary> 
     /// A set of emotes that will be randomly picked from.
     /// </summary> 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public List<ProtoId<EmotePrototype>> Emotes = new();
 }

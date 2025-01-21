@@ -16,7 +16,6 @@ public sealed class EmotionallyUnstableAccentSystem : EntitySystem
     {
         base.Initialize();
 
-
         SubscribeLocalEvent<EmotionallyUnstableAccentComponent, AccentGetEvent>(OnAccent);
     }
 
