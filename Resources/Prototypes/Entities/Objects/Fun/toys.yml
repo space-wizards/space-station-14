@@ -968,7 +968,7 @@
     name: secret-stash-plushie
 
 - type: entity
-  parent: BasePlushie
+  parent: BaseRubberToy
   id: ToyRubberDuck
   name: rubber ducky
   description: Not carried here by ocean currents.
@@ -994,7 +994,7 @@
     - ToyRubberDuck
 
 - type: entity
-  parent: BasePlushie
+  parent: BaseRubberToy
   id: RubberChicken
   name: rubber chicken
   description: A stress inducing parody of nature's most delectable avian.
