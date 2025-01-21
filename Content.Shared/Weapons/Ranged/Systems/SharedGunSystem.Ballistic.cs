@@ -210,41 +210,7 @@ public abstract partial class SharedGunSystem
         UpdateAmmoCount(uid);
     }
 
-    private void Cycle(EntityUid uid, BallisticAmmoProviderComponent component, MapCoordinates coordinates)
-    {
-        if (!Timing.IsFirstTimePredicted)
-            return;
-
-        EntityUid? ent = null;
-
-        // TODO: Combine with TakeAmmo
-        if (component.Entities.Count > 0)
-        {
-            ent = component.Entities[^1];
-            component.Entities.RemoveAt(component.Entities.Count - 1);
-            DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.Entities));
-            Containers.Remove(ent.Value, component.Container);
-            EnsureShootable(ent.Value);
-        }
-        else if (component.UnspawnedCount > 0)
-        {
-            component.UnspawnedCount--;
-            DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.UnspawnedCount));
-            ent = Spawn(component.Proto, coordinates);
-            EnsureShootable(ent.Value);
-        }
-
-        // There is a bug that occurs on client where it spawns multiple cartridges.
-        // I've spent a lot of time trying to figure out why with no answer.
-        // So instead I've given up and am deleting the cartridges when they get spawned.
-        if (_netManager.IsClient)
-            QueueDel(ent);
-        else if (ent != null)
-            EjectCartridge(ent.Value);
-
-        var cycledEvent = new GunCycledEvent();
-        RaiseLocalEvent(uid, ref cycledEvent);
-    }
+    protected abstract void Cycle(EntityUid uid, BallisticAmmoProviderComponent component, MapCoordinates coordinates);
 
     private void OnBallisticInit(EntityUid uid, BallisticAmmoProviderComponent component, ComponentInit args)
     {
