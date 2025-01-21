@@ -36,7 +36,7 @@
                             </ProgressBar>
                         </PanelContainer>
                         <Button Name="IntegrityButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1">
-                            <TextureRect TexturePath="/Textures/Interface/Default/left_arrow.svg.192dpi.png" TextureScale="0.5 0.5" VerticalAlignment="Center" Margin="-2 0 0 0" />
+                            <TextureRect TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
                         </Button>
                     </BoxContainer>
                 </BoxContainer>
@@ -51,7 +51,7 @@
                             </ProgressBar>
                         </PanelContainer>
                         <Button Name="PowerButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1">
-                            <TextureRect TexturePath="/Textures/Interface/Default/left_arrow.svg.192dpi.png" TextureScale="0.5 0.5" VerticalAlignment="Center" Margin="-2 0 0 0" />
+                            <TextureRect TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
                         </Button>
                     </BoxContainer>
                 </BoxContainer>
@@ -66,7 +66,7 @@
                             </ProgressBar>
                         </PanelContainer>
                         <Button Name="RadiationButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1">
-                            <TextureRect TexturePath="/Textures/Interface/Default/left_arrow.svg.192dpi.png" TextureScale="0.5 0.5" VerticalAlignment="Center" Margin="-2 0 0 0" />
+                            <TextureRect TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
                         </Button>
                     </BoxContainer>
                 </BoxContainer>
@@ -97,7 +97,7 @@
                     <BoxContainer SetWidth="180" SetHeight="24" Orientation="Horizontal">
                         <Label Name="TemperatureLimitBarLabel" HorizontalAlignment="Left" HorizontalExpand="True" Margin="0 0 4 0" />
                         <Button Name="TemperatureLimitButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1">
-                            <TextureRect TexturePath="/Textures/Interface/Default/left_arrow.svg.192dpi.png" TextureScale="0.5 0.5" VerticalAlignment="Center" Margin="-2 0 0 0" />
+                            <TextureRect TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
                         </Button>
                     </BoxContainer>
                 </BoxContainer>
@@ -112,7 +112,7 @@
                             </ProgressBar>
                         </PanelContainer>
                         <Button Name="WasteButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1">
-                            <TextureRect TexturePath="/Textures/Interface/Default/left_arrow.svg.192dpi.png" TextureScale="0.5 0.5" VerticalAlignment="Center" Margin="-2 0 0 0" />
+                            <TextureRect TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
                         </Button>
                     </BoxContainer>
                 </BoxContainer>

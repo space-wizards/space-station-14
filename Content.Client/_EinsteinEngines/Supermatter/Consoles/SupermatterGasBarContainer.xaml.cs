@@ -12,6 +12,9 @@ public sealed partial class SupermatterGasBarContainer : BoxContainer
     private readonly IEntityManager _entManager;
     private readonly IResourceCache _cache;
 
+    // Colors
+    private readonly Color _colorGray = Color.Gray;
+
     public SupermatterGasBarContainer()
     {
         RobustXamlLoader.Load(this);
@@ -26,6 +29,9 @@ public sealed partial class SupermatterGasBarContainer : BoxContainer
         // Set fonts
         GasLabel.FontOverride = normalFont;
         GasBarLabel.FontOverride = monoFont;
+
+        // Set colors
+        GasLabel.FontColorOverride = _colorGray;
     }
 
     public void UpdateEntry(string name, Color color, float value)
