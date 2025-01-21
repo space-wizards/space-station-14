@@ -1238,7 +1238,7 @@
     contents:
     - id: LuxuryPen
       orGroup: Pen
-      prob: 0.50
+      prob: 0.8
     # DeltaV: Commenting these two out because I dunno if crew should have nice things
     # - id: PenHop
     #   orGroup: Pen
@@ -1248,12 +1248,12 @@
     #   prob: 0.25
     # TODO: come up with a slightly less powerful version of these
     # Ultra-rare
-    # - id: CyberPen
-    #   orGroup: Pen
-    #   prob: 0.005
-    # - id: PenCentcom
-    #   orGroup: Pen
-    #   prob: 0.005
+    - id: CyberPen
+      orGroup: Pen
+      prob: 0.1
+    - id: PenCentcom
+      orGroup: Pen
+      prob: 0.1
     - id: PaperMailNFPaperPusherAd
 
 - type: entity
