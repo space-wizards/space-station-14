@@ -9,7 +9,7 @@
     sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
     size: Huge
     shape:
-    - 0,0,3,1
+    - 0,0,2,1
   - type: GunWieldBonus
     minAngle: -43
     maxAngle: -43
