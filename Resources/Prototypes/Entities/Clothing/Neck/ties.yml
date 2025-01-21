@@ -61,4 +61,4 @@
     proto: alien
   - type: Speech
     speechVerb: Robotic
-    speechSounds: human
+    speechSounds: Bass
