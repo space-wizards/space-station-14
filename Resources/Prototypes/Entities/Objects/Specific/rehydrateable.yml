@@ -48,10 +48,11 @@
   id: AnimalRehydratableItem
   abstract: true
   name: "rehydratable animal"
+  components:
   - type: SolutionContainerManager
     solutions:
       cube:
-        maxVol: 19 # needs room for water
+        maxVol: 19 # needs 1u room for water
         reagents: # equals one piece of raw meat, ideally should vary depending on the animal type, but idk how to link this to biomass costs
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
@@ -67,13 +68,13 @@
   - type: Tag
     tags:
     - Meat
+    - MonkeyCube
 
 
 - type: entity
   parent: AnimalRehydratableItem
   id: MonkeyCube
   name: monkey cube
-  description: Just add water!
   components:
   - type: Rehydratable
     possibleSpawns:
@@ -140,6 +141,17 @@
   name: carp cube
   description: Just add water! At your own risk.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      cube:
+        maxVol: 24 # needs 1u room for water
+        reagents: # equals one piece of raw meat - plus a deadly toxin!
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
+        - ReagentId: CarpoToxin
+          Quantity: 5
   - type: Rehydratable
     possibleSpawns:
     - MobCarp
@@ -172,19 +184,18 @@
     possibleSpawns:
     - MobAbomination
 
+# It inherits FoodComponent from PlushieCarp, but is de-facto inedible
+# PlushieCarp has requiresSpecialDigestion:true, and this one is not whitelisted anywhere, so it behaves like it's not edible
 - type: entity
-  parent: [PlushieCarp, AnimalRehydratableItem, BaseSyndicateContraband]
+  parent: [PlushieCarp, RehydratableItem, BaseSyndicateContraband]
   id: DehydratedSpaceCarp
   name: dehydrated space carp
   description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
   components:
-    - type: SolutionContainerManager
+  - type: SolutionContainerManager # overwriting PlushieCarp fibers
     solutions:
       cube:
-        maxVol: 24 # needs room for water
-        reagents:
-        - ReagentId: CarpoToxin
-          Quantity: 5
+        maxVol: 1
   - type: Rehydratable
     possibleSpawns:
     - MobCarp
@@ -194,9 +205,12 @@
     successString: petting-success-dehydrated-carp
     failureString: petting-failure-dehydrated-carp
   - type: EmitSoundOnUse
-    handle: false
+    handle: false # have to make it inedible because this causes petting and chewing trigger together
     sound:
       path: /Audio/Effects/bite.ogg
+  - type: Tag # overwriting PlushieCarp tags to remove ClothMade and Payload
+    tags:
+    - PlushieCarp
 
 - type: entity
   parent: MonkeyCube
