@@ -164,6 +164,22 @@
    - chitter
    - chitters
    - chittered
+   
+- type: emote
+  id: Coo
+  name: chat-emote-name-coo
+  category: Vocal
+  available: false
+  icon: _Impstation/Interface/Emotes/chitter.png #placeholder
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-coo"]
+  chatTriggers:
+   - coos
 
 - type: emote
   id: Squeak
