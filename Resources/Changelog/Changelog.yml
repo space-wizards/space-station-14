@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: The captain now have special late join message.
-    type: Tweak
-  id: 7335
-  time: '2024-09-09T19:57:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31991
 - author: Thinbug0
   changes:
   - message: Teal gloves can now be found at the ClothesMate!
@@ -3892,3 +3885,10 @@
   id: 7834
   time: '2025-01-20T01:24:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34527
+- author: Compilatron144
+  changes:
+  - message: Raised Plasma Station's population limit
+    type: Tweak
+  id: 7835
+  time: '2025-01-21T04:56:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34549
