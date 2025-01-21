@@ -25,12 +25,6 @@ namespace Content.Server.Power.Components
         public float CurrentCharge;
 
         /// <summary>
-        /// True if the battery is fully charged.
-        /// </summary>
-        [ViewVariables]
-        public bool IsFullyCharged => MathHelper.CloseToPercent(CurrentCharge, MaxCharge);
-
-        /// <summary>
         /// The price per one joule. Default is 1 credit for 10kJ.
         /// </summary>
         [DataField]

@@ -1,13 +1,13 @@
 using Content.Server.Administration.Logs;
-using Content.Shared.Interaction;
-using Content.Shared.Doors.Components;
-using Content.Shared.Access.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Access.Components;
 using Content.Shared.Database;
+using Content.Shared.Doors.Components;
 using Content.Shared.Examine;
-using Content.Shared.Remotes.EntitySystems;
+using Content.Shared.Interaction;
 using Content.Shared.Remotes.Components;
+using Content.Shared.Remotes.EntitySystems;
 
 namespace Content.Shared.Remotes
 {
@@ -16,6 +16,7 @@ namespace Content.Shared.Remotes
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly DoorSystem _door = default!;
         [Dependency] private readonly ExamineSystemShared _examine = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -31,9 +32,12 @@ namespace Content.Shared.Remotes
             if (args.Handled
                 || args.Target == null
                 || !TryComp<DoorComponent>(args.Target, out var doorComp) // If it isn't a door we don't use it
-                                                                          // Only able to control doors if they are within your vision and within your max range.
-                                                                          // Not affected by mobs or machines anymore.
-                || !_examine.InRangeUnOccluded(args.User, args.Target.Value, SharedInteractionSystem.MaxRaycastRange, null))
+                // Only able to control doors if they are within your vision and within your max range.
+                // Not affected by mobs or machines anymore.
+                || !_examine.InRangeUnOccluded(args.User,
+                    args.Target.Value,
+                    SharedInteractionSystem.MaxRaycastRange,
+                    null))
 
             {
                 return;
@@ -52,6 +56,7 @@ namespace Content.Shared.Remotes
             {
                 _door.Deny((args.Target.Value, doorComp), args.User);
                 Popup.PopupEntity(Loc.GetString("door-remote-denied"), args.User, args.User);
+
                 return;
             }
 
@@ -60,6 +65,7 @@ namespace Content.Shared.Remotes
                 case OperatingMode.OpenClose:
                     if (_door.TryToggleDoor((args.Target.Value, doorComp), args.Used))
                         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)}: {doorComp.State}");
+
                     break;
                 case OperatingMode.ToggleBolts:
                     if (TryComp<DoorBoltComponent>(args.Target, out var boltsComp))
@@ -70,6 +76,7 @@ namespace Content.Shared.Remotes
                             _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(boltsComp.BoltsDown ? "" : "un")}bolt it");
                         }
                     }
+
                     break;
                 case OperatingMode.ToggleEmergencyAccess:
                     if (airlockComp != null)
@@ -78,6 +85,7 @@ namespace Content.Shared.Remotes
                         _adminLogger.Add(LogType.Action, LogImpact.Medium,
                             $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to set emergency access {(airlockComp.EmergencyAccess ? "on" : "off")}");
                     }
+
                     break;
                 default:
                     throw new InvalidOperationException(
