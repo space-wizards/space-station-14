@@ -15,7 +15,7 @@ import requests
 import yaml
 
 DEBUG = False
-DEBUG_CHANGELOG_FILE_OLD = Path("../Changelog-Impstation-old.yml")
+DEBUG_CHANGELOG_FILE_OLD = Path("../changelogs-test/Impstation.yml")
 GITHUB_API_URL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
 
 # https://discord.com/developers/docs/resources/webhook
