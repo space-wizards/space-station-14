@@ -15,17 +15,11 @@ public sealed class PainNumbnessSystem : EntitySystem
 
     private void OnComponentRemove(EntityUid uid, PainNumbnessComponent component, ComponentRemove args)
     {
-        var ev = new DamageOverlayUpdateEvent(uid);
-        RaiseLocalEvent(uid, ev, true);
         _mobThresholdSystem.VerifyThresholds(uid);
     }
 
     private void OnComponentInit(EntityUid uid, PainNumbnessComponent component, ComponentInit args)
     {
-        var ev = new DamageOverlayUpdateEvent(uid);
-        RaiseLocalEvent(uid, ev, true);
         _mobThresholdSystem.VerifyThresholds(uid);
     }
 }
-
-public record struct DamageOverlayUpdateEvent(EntityUid Target);
