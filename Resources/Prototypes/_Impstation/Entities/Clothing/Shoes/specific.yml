@@ -29,3 +29,26 @@
         path: /Audio/_Impstation/Effects/Footsteps/jesterstep_on.ogg
       soundDeactivate: 
         path: /Audio/_Impstation/Effects/Footsteps/jesterstep_off.ogg
+
+- type: entity
+  parent: ClothingShoesClown
+  id: ClothingShoesJokester
+  name: clown's jokester shoes
+  description: For the sophisticated waddler.
+  components:
+    - type: Sprite
+      sprite: _Impstation/Clothing/Shoes/Specific/clown_jokestershoes.rsi
+    - type: Clothing
+      sprite: _Impstation/Clothing/Shoes/Specific/clown_jokestershoes.rsi
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepJester
+        params:
+          variation: 0.07 #copied from the existing jester shoes
+    - type: ItemToggle
+      onUse: false
+      onActivate: false
+      soundActivate: 
+        path: /Audio/_Impstation/Effects/Footsteps/jesterstep_on.ogg
+      soundDeactivate: 
+        path: /Audio/_Impstation/Effects/Footsteps/jesterstep_off.ogg
