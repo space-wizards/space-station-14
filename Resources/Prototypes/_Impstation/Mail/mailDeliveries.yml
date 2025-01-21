@@ -1,15 +1,15 @@
 - type: mailDeliveryPool
   id: RandomDeltaVMailDeliveryPool
   everyone:
-    #Imp: table weight adds to 42
-    #Clothing - 10
-    MailNFCosplayMaid: 2.5
+    #Imp: table weight adds to 40
+    #Clothing - 8
     MailWinterCoat: 1.5
     MailNFCosplayWizard: 1
     MailSunglasses: 1
     MailImpSCargo: 1
     MailImpShoes: 1
     MailFishingCap: 0.5
+    MailNFCosplayMaid: 0.5
     MailImpChameleonScarf: 0.5
     MailNoir: 0.5
     MailNFTacticalMaid: 0.5
