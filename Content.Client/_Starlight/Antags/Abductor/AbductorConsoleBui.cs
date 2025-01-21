@@ -112,24 +112,15 @@ public sealed class AbductorConsoleBui : BoundUserInterface
     {
         if (_window == null)
             return;
-        
-        var itemContainer = new BoxContainer
-        {
-            Orientation = BoxContainer.LayoutOrientation.Horizontal,
-            HorizontalExpand = true,
-            Margin = new Thickness(0, 0, 0, 10),
-        };
 
         var nameLabel = new Label
         {
             Text = Loc.GetString(itemName),
-            HorizontalExpand = true,
         };
 
         var priceLabel = new Label
         {
             Text = $" Price: {price}",
-            HorizontalExpand = true,
         };
 
         var buyButton = new Button
@@ -152,11 +143,9 @@ public sealed class AbductorConsoleBui : BoundUserInterface
             });
         };
 
-        itemContainer.AddChild(nameLabel);
-        itemContainer.AddChild(priceLabel);
-        itemContainer.AddChild(buyButton);
-
-        _window.ShopItems.AddChild(itemContainer);
+        _window.ShopItems.AddChild(nameLabel);
+        _window.ShopItems.AddChild(priceLabel);
+        _window.ShopItems.AddChild(buyButton);
     }
 
     private void RefreshUI()

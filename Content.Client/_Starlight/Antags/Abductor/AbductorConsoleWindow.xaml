@@ -34,8 +34,8 @@
             </BoxContainer>
             <BoxContainer Name="ShopTab" Access="Public" Orientation="Vertical" Visible="False">
                 <RichTextLabel Name="BalanceLabel" Access="Public" Margin="0 5 0 5"/>
-                <BoxContainer Name="ShopItems" Access="Public" Orientation="Vertical" HorizontalExpand="True">
-                </BoxContainer>
+                <GridContainer Name="ShopItems" Access="Public" Columns="3" HorizontalExpand="True">
+                </GridContainer>
             </BoxContainer>
             <PanelContainer Name="DisabledPanel" Access="Public" HorizontalExpand="True"
                             VerticalExpand="True" Visible="False">
