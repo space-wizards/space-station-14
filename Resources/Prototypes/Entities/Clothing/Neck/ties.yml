@@ -40,3 +40,25 @@
     - ClothMade
     - HamsterWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingNeckBase]
+  id: horribletie
+  name: Horrible neck-tie
+  description: A horrible neck tie
+  components:
+  - type: GhostRole
+    name: Horrible neck-tie
+    description: You are a being of pure insanity, cause as much chaos as you would like.
+    rules: ghost-role-information-freeagent-rules
+  - type: Sprite
+    sprite: Clothing/Neck/Ties/horribletie.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Ties/horribletie.rsi
+  - type: BlockMovement
+  - type: GhostTakeoverAvailable
+  - type: TypingIndicator
+    proto: alien
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: human
