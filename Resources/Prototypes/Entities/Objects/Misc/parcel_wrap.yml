@@ -9,6 +9,8 @@
     state: brown
   - type: ParcelWrap
     parcelPrototype: WrappedParcel
+    uses: 30
+    wrapDelay: 1.0
     wrapSound: /Audio/Items/Handcuffs/rope_start.ogg
     whitelist:
       components:
@@ -48,6 +50,7 @@
     - state: parcel-medium
       map: [ "enum.WrappedParcelVisuals.Layer" ]
   - type: WrappedParcel
+    unwrapDelay: 0.5
     unwrapSound: /Audio/Effects/poster_broken.ogg
     unwrapTrash: ParcelWrapTrash
   - type: Tag

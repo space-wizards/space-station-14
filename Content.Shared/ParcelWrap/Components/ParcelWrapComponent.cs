@@ -1,50 +1,63 @@
 using Content.Shared.Item;
+using Content.Shared.ParcelWrap.EntitySystems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Containers;
 
-namespace Content.Server.ParcelWrap.Components;
+namespace Content.Shared.ParcelWrap.Components;
 
 /// <summary>
 /// This component gives its owning entity the ability to wrap items into parcels.
 /// </summary>
 /// <seealso cref="Components.WrappedParcelComponent"/>
-[RegisterComponent]
-[Access] // Readonly, except for VV editing
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access] // Default readonly, except for VV editing
 public sealed partial class ParcelWrapComponent : Component
 {
     /// <summary>
     /// The <see cref="EntityPrototype"/> of the parcel created by using this component.
     /// </summary>
-    [DataField(required: true), ViewVariables]
+    [DataField(required: true)]
     public EntProtoId ParcelPrototype = default!;
+
+    /// <summary>
+    /// How many times this wrap can be used to create parcels.
+    /// </summary>
+    [DataField(required: true), AutoNetworkedField, Access(typeof(SharedParcelWrappingSystem))]
+    public int Uses = 30;
 
     /// <summary>
     /// If true, parcels created by this will have the same <see cref="ItemSizePrototype">size</see> as the item they
     /// contain. If false, parcels created by this will always have the size specified by <see cref="FallbackItemSize"/>.
     /// </summary>
-    [DataField, ViewVariables]
+    [DataField]
     public bool WrappedItemsMaintainSize = true;
 
     /// <summary>
     /// The <see cref="ItemSizePrototype">size</see> of parcels created by this component's entity. This is used if
     /// <see cref="WrappedItemsMaintainSize"/> is false, or if the item being wrapped somehow doesn't have a size.
     /// </summary>
-    [DataField, ViewVariables]
+    [DataField]
     public ProtoId<ItemSizePrototype> FallbackItemSize = "Ginormous";
 
     /// <summary>
     /// If true, parcels created by this will have the same shape as the item they contain. If false, parcels created by
     /// this will have the default shape for their size.
     /// </summary>
-    [DataField, ViewVariables]
+    [DataField]
     public bool WrappedItemsMaintainShape = false;
+
+    /// <summary>
+    /// How long it takes to use this to wrap something.
+    /// </summary>
+    [DataField(required: true)]
+    public float WrapDelay = 1.0f;
 
     /// <summary>
     /// Sound played when this is used to wrap something.
     /// </summary>
-    [DataField, ViewVariables]
+    [DataField]
     public SoundSpecifier? WrapSound;
 
     /// <summary>

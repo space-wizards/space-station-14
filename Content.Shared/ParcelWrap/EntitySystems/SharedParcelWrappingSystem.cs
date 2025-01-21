@@ -1,9 +1,8 @@
-using Content.Server.ParcelWrap.Components;
-using Content.Shared.Destructible;
+using Content.Shared.DoAfter;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Content.Shared.Materials;
 using Content.Shared.ParcelWrap.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
@@ -11,7 +10,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 
-namespace Content.Server.ParcelWrap.EntitySystems;
+namespace Content.Shared.ParcelWrap.EntitySystems;
 
 /// <summary>
 /// This system handles things related to package wrap, both wrapping items to create parcels, and unwrapping existing
@@ -19,11 +18,12 @@ namespace Content.Server.ParcelWrap.EntitySystems;
 /// </summary>
 /// <seealso cref="ParcelWrapComponent"/>
 /// <seealso cref="WrappedParcelComponent"/>
-public sealed partial class ParcelWrappingSystem : EntitySystem
+public abstract partial class SharedParcelWrappingSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
@@ -33,14 +33,13 @@ public sealed partial class ParcelWrappingSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ParcelWrapComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<ParcelWrapComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<ParcelWrapComponent, GetVerbsEvent<UtilityVerb>>(OnGetVerbsForParcelWrap);
 
         SubscribeLocalEvent<WrappedParcelComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<WrappedParcelComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<WrappedParcelComponent, GetVerbsEvent<InteractionVerb>>(OnGetVerbsForWrappedParcel);
-        SubscribeLocalEvent<WrappedParcelComponent, DestructionEventArgs>(OnDestroyed);
-        SubscribeLocalEvent<WrappedParcelComponent, GotReclaimedEvent>(OnDestroyed);
     }
 
 
@@ -63,15 +62,17 @@ public sealed partial class ParcelWrappingSystem : EntitySystem
     /// <param name="wrapper">The wrapping being used. Determines appearance of the spawned parcel.</param>
     /// <param name="target">The entity being wrapped.</param>
     /// <returns>The newly created parcel. Returns null only in exceptional failure cases.</returns>
-    private Entity<WrappedParcelComponent>? WrapInternal(EntityUid user, ParcelWrapComponent wrapper, EntityUid target)
+    protected Entity<WrappedParcelComponent>? WrapInternal(EntityUid user,
+        Entity<ParcelWrapComponent> wrapper,
+        EntityUid target)
     {
-        var spawned = Spawn(wrapper.ParcelPrototype, Transform(target).Coordinates);
+        var spawned = Spawn(wrapper.Comp.ParcelPrototype, Transform(target).Coordinates);
 
         // If this wrap maintains the size when wrapping, set the parcel's size to the target's size. Otherwise use the
         // wrap's fallback size.
         ItemComponent? targetItemComp = null;
-        var size = wrapper.FallbackItemSize;
-        if (wrapper.WrappedItemsMaintainSize && TryComp(target, out targetItemComp))
+        var size = wrapper.Comp.FallbackItemSize;
+        if (wrapper.Comp.WrappedItemsMaintainSize && TryComp(target, out targetItemComp))
         {
             size = targetItemComp.Size;
         }
@@ -82,7 +83,7 @@ public sealed partial class ParcelWrappingSystem : EntitySystem
 
         // If this wrap maintains the shape when wrapping and the item has a shape override, copy the shape override to
         // the parcel.
-        if (wrapper.WrappedItemsMaintainShape && Resolve(target, ref targetItemComp, logMissing: false) &&
+        if (wrapper.Comp.WrappedItemsMaintainShape && Resolve(target, ref targetItemComp, logMissing: false) &&
             targetItemComp.Shape is { } shape)
         {
             _item.SetShape(spawned, shape, item);
@@ -105,8 +106,19 @@ public sealed partial class ParcelWrappingSystem : EntitySystem
             return null;
         }
 
+        // Consume a `use` on the wrapper.
+        wrapper.Comp.Uses -= 1;
+        if (wrapper.Comp.Uses <= 0)
+        {
+            QueueDel(wrapper);
+        }
+        else
+        {
+            Dirty(wrapper);
+        }
+
         // Play a wrapping sound.
-        _audio.PlayPvs(wrapper.WrapSound, spawned);
+        _audio.PlayPvs(wrapper.Comp.WrapSound, spawned);
 
         return (spawned, parcel);
     }
@@ -119,7 +131,7 @@ public sealed partial class ParcelWrappingSystem : EntitySystem
     /// The newly unwrapped, contained entity. Returns null only in the exceptional case that the parcel contained
     /// nothing, which should be prevented by not creating such parcels.
     /// </returns>
-    private EntityUid? UnwrapInternal(Entity<WrappedParcelComponent> parcel)
+    protected EntityUid? UnwrapInternal(Entity<WrappedParcelComponent> parcel)
     {
         var parcelCoords = Transform(parcel).Coordinates;
 

@@ -1,16 +1,16 @@
-using Content.Server.ParcelWrap.EntitySystems;
+using Content.Shared.ParcelWrap.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.ParcelWrap.Components;
+namespace Content.Shared.ParcelWrap.Components;
 
 /// <summary>
 /// This component marks its owner as being a parcel created by wrapping another item up. It can be unwrapped,
 /// destroying this entity and releasing <see cref="Contents"/>.
 /// </summary>
 /// <seealso cref="ParcelWrapComponent"/>
-[RegisterComponent, Access(typeof(ParcelWrappingSystem))]
+[RegisterComponent, Access(typeof(SharedParcelWrappingSystem))]
 public sealed partial class WrappedParcelComponent : Component
 {
     /// <summary>
@@ -22,13 +22,19 @@ public sealed partial class WrappedParcelComponent : Component
     /// <summary>
     /// Specifies the entity to spawn when this parcel is unwrapped.
     /// </summary>
-    [DataField, ViewVariables]
+    [DataField]
     public ProtoId<EntityPrototype>? UnwrapTrash;
+
+    /// <summary>
+    /// How long it takes to unwrap this parcel.
+    /// </summary>
+    [DataField(required: true)]
+    public float UnwrapDelay = 1.0f;
 
     /// <summary>
     /// Sound played when unwrapping this parcel.
     /// </summary>
-    [DataField, ViewVariables]
+    [DataField]
     public SoundSpecifier? UnwrapSound;
 
     /// <summary>
