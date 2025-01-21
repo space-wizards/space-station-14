@@ -182,8 +182,9 @@ def changelog_entries_to_message_lines(entries: Iterable[ChangelogEntry]) -> lis
                 message_lines.append(line)
 
     # add ping
-    ping_line = f"<@&{DISCORD_ROLE_ID}>\n"
-    message_lines.insert(0, ping_line)
+    if DISCORD_ROLE_ID:
+        ping_line = f"<@&{DISCORD_ROLE_ID}>\n"
+        message_lines.insert(0, ping_line)
 
     return message_lines
 
