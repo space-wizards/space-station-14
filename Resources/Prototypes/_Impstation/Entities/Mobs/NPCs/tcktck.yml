@@ -147,7 +147,7 @@
     accent: silicon
   - type: FootstepModifier
     footstepSoundCollection:
-      collection: FootstepBorg
+      collection: FootstepFloor
   - type: Lock
     locked: true
     breakOnEmag: false

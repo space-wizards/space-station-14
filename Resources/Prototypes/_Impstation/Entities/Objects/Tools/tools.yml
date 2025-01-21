@@ -48,11 +48,12 @@
   name: micro drill
   parent: BaseItem
   id: MicroDrill
-  description: A bite-sized power drill for anchoring structures and prying tiles.
+  description: A bite-sized power drill for anchoring structures, prying tiles, and cutting wires.
   components:
   - type: Tag
     tags:
     - Powerdrill
+  - type: Sharp #using my awesome cutting wheel to butcher a shirt
   - type: Sprite
     sprite: _Impstation/Objects/Tools/tckdrill.rsi
     state: icon_bolt
@@ -86,6 +87,14 @@
           state: icon_pry
         useSound:
           path: /Audio/Items/crowbar.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Cutting
+        sprite:
+          sprite: _Impstation/Objects/Tools/tckdrill.rsi
+          state: icon_cut
+        useSound:
+          path: /Audio/Effects/saw.ogg
         changeSound:
           path: /Audio/Items/change_drill.ogg
   - type: PhysicalComposition
