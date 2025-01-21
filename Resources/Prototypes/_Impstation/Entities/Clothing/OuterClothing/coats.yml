@@ -17,9 +17,9 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
-  id: ClothingJokesterCoat
-  name: clown's jokester coat
-  description: A snazzy, striking red overcoat for professional comedians. Now with shoulder pads for 'high'-brow humor. 
+  id: ClothingOuterCoatJokester
+  name: jokester's coat
+  description: A snazzy, striking red overcoat for professional comedians. The shoulder pads enable higher-brow humor. 
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/OuterClothing/Coats/clown_jokestercoat.rsi

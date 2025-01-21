@@ -33,7 +33,7 @@
 - type: entity
   parent: ClothingShoesClown
   id: ClothingShoesJokester
-  name: clown's jokester shoes
+  name: jokester's shoes
   description: For the sophisticated waddler.
   components:
     - type: Sprite
