@@ -37,27 +37,3 @@
     proto: ProjectilePolyboltDoor
     capacity: 10
     count: 10
-
-- type: entity
-  name: staff of animation
-  description: Bring inanimate objects to life!
-  parent: WeaponStaffBase
-  id: WeaponStaffAnimation
-  components:
-  - type: Sprite
-    layers:
-    - state: animation
-  - type: Gun
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
-  - type: BasicEntityAmmoProvider
-    proto: ProjectileLocker
-    capacity: 5
-    count: 5
-  - type: Item
-    size: Normal
-    inhandVisuals:
-      left:
-      - state: animation-inhand-left
-      right:
-      - state: animation-inhand-right

@@ -5,7 +5,6 @@
   description: Just add capitalism!
   abstract: true
   components:
-  - type: Animateable
   - type: ActionGrant
     actions:
     - ActionVendingThrow

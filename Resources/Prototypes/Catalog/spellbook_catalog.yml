@@ -104,19 +104,6 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
-- type: listing
-  id: SpellbookAnimate
-  name: spellbook-animate-name
-  description: spellbook-animate-description
-  productAction: ActionAnimateSpell
-  cost:
-    WizCoin: 2
-  categories:
-  - SpellbookUtility
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
-
 # Equipment
 - type: listing
   id: SpellbookWandDoor
@@ -161,7 +148,7 @@
   id: SpellbookStaffAnimation
   name: spellbook-staff-animation-name
   description: spellbook-staff-animation-description
-  productEntity: WeaponStaffAnimation
+  productEntity: AnimationStaff
   cost:
     WizCoin: 3
   categories:
