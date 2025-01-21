@@ -57,7 +57,7 @@ public sealed class ContrabandSystem : EntitySystem
         {
             // TODO shouldn't department prototypes have a localized name instead of just using the ID for this?
             var localizedDepartments = ent.Comp.AllowedDepartments.Select(p => Loc.GetString($"department-{p.Id}"));
-            var localizedJobs = ent.Comp.AllowedJobs.Select(p => _proto.Index(p).LocalizedName);
+            var localizedJobs = ent.Comp.AllowedJobs.Select(p => Loc.GetString("generic-plural", ("thing", _proto.Index(p).LocalizedName)));
 
             var severity = _proto.Index(ent.Comp.Severity);
             if (severity.ShowDepartmentsAndJobs)
