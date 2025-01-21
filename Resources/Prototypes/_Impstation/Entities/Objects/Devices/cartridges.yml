@@ -10,3 +10,4 @@
         sprite: Objects/Devices/sos.rsi
         state: icon
     - type: SOSCartridge
+      

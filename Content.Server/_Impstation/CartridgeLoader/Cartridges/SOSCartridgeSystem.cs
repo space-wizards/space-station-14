@@ -19,11 +19,6 @@ public sealed class SOSCartridgeSystem : EntitySystem
     [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
 
-    public const string PDAIdContainer = "PDA-id";
-    public const string DefaultName = "Unknown";
-    public const string HelpMessage = " is requesting help!!";
-    public const string HelpChannel = "Security";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -38,12 +33,12 @@ public sealed class SOSCartridgeSystem : EntitySystem
             return;
 
         //Get the id container
-        if (_container.TryGetContainer(args.Loader, PDAIdContainer, out var idContainer))
+        if (_container.TryGetContainer(args.Loader, SOSCartridgeComponent.PDAIdContainer, out var idContainer))
         {
             //If theres nothing in id slot, send message anonymously
             if (idContainer.ContainedEntities.Count == 0)
             {
-                _radio.SendRadioMessage(uid, DefaultName + HelpMessage, HelpChannel, uid);
+                _radio.SendRadioMessage(uid, component.LocalizedDefaultName + " " + component.LocalizedHelpMessage, component.HelpChannel, uid);
             }
             else
             {
@@ -53,7 +48,7 @@ public sealed class SOSCartridgeSystem : EntitySystem
                     if (!TryComp<IdCardComponent>(idCard, out var idCardComp))
                         return;
 
-                    _radio.SendRadioMessage(uid, idCardComp.FullName + HelpMessage, HelpChannel, uid);
+                    _radio.SendRadioMessage(uid, idCardComp.FullName + " " + component.LocalizedHelpMessage, component.HelpChannel, uid);
                 }
             }
         }
