@@ -248,8 +248,9 @@ public sealed partial class MappingPrototypeList : Control
         var matches = new List<MappingPrototype>();
         foreach (var prototype in _allPrototypes)
         {
-            if (prototype.Name.Contains(args.Text, StringComparison.OrdinalIgnoreCase) ||
-                (prototype.Prototype != null && prototype.Prototype.ID.Contains(args.Text, StringComparison.OrdinalIgnoreCase)))
+            if (prototype.Prototype != null &&
+                (prototype.Name.Contains(args.Text, StringComparison.OrdinalIgnoreCase) ||
+                prototype.Prototype.ID.Contains(args.Text, StringComparison.OrdinalIgnoreCase)))
                 matches.Add(prototype);
         }
 
