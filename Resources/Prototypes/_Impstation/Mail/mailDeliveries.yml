@@ -1,13 +1,16 @@
 - type: mailDeliveryPool
   id: RandomDeltaVMailDeliveryPool
   everyone:
-    #Imp: table weight adds to 38
-    #Clothing - 7.5
-    MailNFCosplayMaid: 2.5
+    #Imp: table weight adds to 40
+    #Clothing - 8
     MailWinterCoat: 1.5
     MailNFCosplayWizard: 1
     MailSunglasses: 1
+    MailImpSCargo: 1
+    MailImpShoes: 1
     MailFishingCap: 0.5
+    MailNFCosplayMaid: 0.5
+    MailImpChameleonScarf: 0.5
     MailNoir: 0.5
     MailNFTacticalMaid: 0.5
     #Food - 9.69
@@ -28,34 +31,38 @@
     MailNFSodaSpaceCola: 0.2
     MailNFSodaSpaceMountainWind: 0.2
     MailNFSodaSpaceUp: 0.2
-    #Tools - 4.2
-    MailRestraints: 1.2
+    #Tools - 4.6
+    MailRestraints: 0.6
     MailFlashlight: 1
     MailNFKnife: 1
+    MailImpToolbox: 1
     MailSignallerKit: 0.5
     MailNFSword: 0.5
-    #Trinkets - 6.9
-    MailNFPAI: 1.2
+    #Trinkets - 6.4
+    MailNFPAI: 1
     MailBooksAll: 1
     MailFlowers: 1
     MailNFSoaps: 1
     MailNFPen: 0.7
     MailNFCigarettes: 0.5
-    MailNFSoapsOmega: 0.5
-    MailNFVagueThreat: 0.5
+    MailNFSoapsOmega: 0.4
+    MailNFVagueThreat: 0.3
     MailCigars: 0.2
     MailNFJoints: 0.2
     MailNFGoldCigars: 0.1
     #Unique items - 1
     MailNFBible: 1
-    #Fun - 6.71 including MailNFEMP
+    #Fun - 8.31 including MailNFEMP
+    MailImpCarpetiumBottle: 1
+    MailImpBedsheets: 1
     MailCrayon: 1
     MailNFCritter: 1
     MailNFFigurineBulk: 1
     MailNFPlushie: 1
-    MailNFBuildABuddy: 0.6
+    MailNFBuildABuddy: 0.2
     MailNFBikeHorn: 0.5
-    MailBlockGameDIY: 0.5
+    MailImpBee: 0.4
+    MailBlockGameDIY: 0.4
     MailSpaceVillainDIY: 0.4 # Lowered to accommodate the foam sabre
     MailNFSmoke: 0.4
     #MailNFEMP: 0.3 # Imp commented cuz error log :(
@@ -95,7 +102,7 @@
       MailStationRepNFNukeDisk: 0.3
       MailCommandNFPipebombIntern: 0.1
 
-  jobs: # add to 39
+  jobs: # add to 43
     Botanist: # adds to 4.5
       MailBotanistChemicalBottles: 2
       MailBotanistMutagen: 1.5
@@ -124,5 +131,8 @@
       MailMimeBottleOfNothing: 1
     Passenger:
       MailPassengerMoney: 3
+      MailImpGoblin: 2
     Warden:
       MailWardenCrowdControl: 2
+    SalvageSpecialist:
+      MailTckTck: 2
