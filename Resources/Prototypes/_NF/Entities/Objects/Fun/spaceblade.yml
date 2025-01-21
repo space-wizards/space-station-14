@@ -34,13 +34,20 @@
     sprite: _NF/Objects/Fun/spaceblade.rsi
     state: redorange
     scale: 0.5, 0.5
-  - type: EmitSoundOnCollide
-    sound:
-      path: /Audio/Effects/metal_thud1.ogg # imp edit - i am not making it the desk bell ring.
+  - type: DamageOtherOnHit # imp
+    soundHit:
+      collection: MetalThud
       params:
         variation: 0.65
         volume: -5
-
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 5
+  - type: SpaceBlade # imp edit - for chasingwalk purposes
+  - type: ChasingWalk # imp edit - like stand users beyblades are attracted to each other across time and space
+    chasingComponent:
+    - type: SpaceBlade
 - type: entity
   id: SpaceBladeRedOrange
   parent: SpaceBlade
@@ -114,8 +121,8 @@
       path: /Audio/_Nyanotrasen/Machines/deepfryer_basket_add_item.ogg # okay!
   - type: UseDelay
     delay: 2.0
-  - type: EmitSoundOnCollide
-    sound:
+  - type: DamageOtherOnHit # imp
+    soundHit:
       path: /Audio/_Nyanotrasen/Machines/deepfryer_basket_add_item.ogg
       params:
         variation: 0.65
@@ -150,6 +157,10 @@
   - type: Contraband
   - type: StaticPrice
     price: 100
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 10 # imp edit. its sharp
 
 - type: entity
   id: SpaceBladeMoff
@@ -162,8 +173,8 @@
       path: /Audio/Voice/Moth/moth_scream.ogg
   - type: UseDelay
     delay: 2.0
-  - type: EmitSoundOnCollide
-    sound:
+  - type: DamageOtherOnHit # imp
+    soundHit:
       path: /Audio/Voice/Moth/moth_scream.ogg
       params:
         variation: 0.65
@@ -181,8 +192,8 @@
       path: /Audio/Items/Toys/weh.ogg
   - type: UseDelay
     delay: 1.0
-  - type: EmitSoundOnCollide
-    sound:
+  - type: DamageOtherOnHit # imp
+    soundHit:
       path: /Audio/Items/Toys/weh.ogg
       params:
         variation: 0.65
@@ -202,8 +213,8 @@
     shockDamage: 0
     shockTime: 0.8
     requirePower: false
-  - type: EmitSoundOnCollide
-    sound:
+  - type: DamageOtherOnHit # imp
+    soundHit:
       path: /Audio/Effects/Lightning/lightningshock.ogg
       params:
         variation: 0.65
@@ -265,3 +276,9 @@
          - 0 # miasma
          - 0.4101137219 # N2O
       temperature: 293.15
+  - type: DamageOtherOnHit # imp
+    soundHit:
+      path: /Audio/Items/bikehorn.ogg
+      params:
+        variation: 0.65
+        volume: -5
