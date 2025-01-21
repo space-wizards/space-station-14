@@ -21,6 +21,15 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
     private readonly IEntityManager _entManager;
     private readonly IResourceCache _cache;
 
+    private readonly Dictionary<string, (Label label, ProgressBar bar, PanelContainer border, float leftSize, float rightSize, Color leftColor, Color middleColor, Color rightColor)>? _engineDictionary;
+
+    // Colors
+    private readonly Color _colorGray = Color.Gray;
+    private readonly Color _colorRed = StyleNano.DangerousRedFore;
+    private readonly Color _colorOrange = StyleNano.ConcerningOrangeFore;
+    private readonly Color _colorGreen = StyleNano.GoodGreenFore;
+    private readonly Color _colorTurqoise = Color.FromHex("#00fff7");
+
     public SupermatterEntryContainer(NetEntity uid)
     {
         RobustXamlLoader.Load(this);
@@ -30,36 +39,62 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
 
         NetEntity = uid;
 
+        // Set the engine dictionary
+        _engineDictionary = new()
+        {
+            { "integrity",   ( IntegrityBarLabel,   IntegrityBar,   IntegrityBarBorder,   0.9f, 0.1f, _colorRed,      _colorOrange, _colorGreen ) },
+            { "power",       ( PowerBarLabel,       PowerBar,       PowerBarBorder,       0.9f, 0.1f, _colorGreen,    _colorOrange, _colorRed   ) },
+            { "radiation",   ( RadiationBarLabel,   RadiationBar,   RadiationBarBorder,   0.1f, 0.9f, _colorGreen,    _colorOrange, _colorRed   ) },
+            { "moles",       ( MolesBarLabel,       MolesBar,       MolesBarBorder,       0.5f, 0.5f, _colorGreen,    _colorOrange, _colorRed   ) },
+            { "temperature", ( TemperatureBarLabel, TemperatureBar, TemperatureBarBorder, 0.9f, 0.1f, _colorTurqoise, _colorGreen,  _colorRed   ) },
+            { "waste",       ( WasteBarLabel,       WasteBar,       WasteBarBorder,       0.5f, 0.5f, _colorGreen,    _colorOrange, _colorRed   ) }
+        };
+
+        // Set lists so we can iterate through them
+        var mainLabels = new List<Label>()
+        {
+            IntegrityLabel,
+            PowerLabel,
+            RadiationLabel,
+            MolesLabel,
+            TemperatureLabel,
+            TemperatureLimitLabel,
+            WasteLabel,
+            AbsorptionLabel
+        };
+
+        var barLabels = new List<Label>()
+        {
+            IntegrityBarLabel,
+            PowerBarLabel,
+            RadiationBarLabel,
+            MolesBarLabel,
+            TemperatureBarLabel,
+            TemperatureLimitBarLabel,
+            WasteBarLabel,
+            AbsorptionBarLabel
+        };
+
         // Load fonts
         var headerFont = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), 11);
         var normalFont = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSansDisplay/NotoSansDisplay-Regular.ttf"), 11);
         var monoFont = new VectorFont(_cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf"), 10);
 
-        // Set fonts
+        // Set fonts and colors
         SupermatterNameLabel.FontOverride = headerFont;
-
         SupermatterStatusLabel.FontOverride = normalFont;
 
-        IntegrityLabel.FontOverride = normalFont;
-        PowerLabel.FontOverride = normalFont;
-        RadiationLabel.FontOverride = normalFont;
-        MolesLabel.FontOverride = normalFont;
-        TemperatureLabel.FontOverride = normalFont;
-        TemperatureLimitLabel.FontOverride = normalFont;
-        WasteLabel.FontOverride = normalFont;
-        AbsorptionLabel.FontOverride = normalFont;
+        foreach (var label in mainLabels)
+        {
+            label.FontOverride = normalFont;
+            label.FontColorOverride = _colorGray;
+        }
 
-        IntegrityBarLabel.FontOverride = monoFont;
-        PowerBarLabel.FontOverride = monoFont;
-        RadiationBarLabel.FontOverride = monoFont;
-        MolesBarLabel.FontOverride = monoFont;
-        TemperatureBarLabel.FontOverride = monoFont;
-        TemperatureLimitBarLabel.FontOverride = monoFont;
-        WasteBarLabel.FontOverride = monoFont;
-        AbsorptionBarLabel.FontOverride = monoFont;
+        foreach (var label in barLabels)
+        {
+            label.FontOverride = monoFont;
+        }
     }
-
-    private Dictionary<string, (Label label, ProgressBar bar, PanelContainer border, float leftSize, float rightSize, Color leftColor, Color middleColor, Color rightColor)>? _engineDictionary;
 
     public void UpdateEntry(SupermatterConsoleEntry entry, bool isFocus, SupermatterFocusData? focusData = null)
     {
@@ -82,27 +117,13 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
         };
 
         // Focus updates
-        FocusContainer.Visible = isFocus;
+        FocusContainer.Visible = false;
 
         if (isFocus)
         {
-            if (focusData != null)
+            if (focusData != null && _engineDictionary != null)
             {
-                var red = StyleNano.DangerousRedFore;
-                var orange = StyleNano.ConcerningOrangeFore;
-                var green = StyleNano.GoodGreenFore;
-                var turqoise = Color.FromHex("#00fff7");
-
-                // Set the engine dictionary once
-                _engineDictionary ??= new()
-                {
-                    { "integrity",   ( IntegrityBarLabel,   IntegrityBar,   IntegrityBarBorder,   0.9f, 0.1f, red,      orange, green ) },
-                    { "power",       ( PowerBarLabel,       PowerBar,       PowerBarBorder,       0.9f, 0.1f, green,    orange, red   ) },
-                    { "radiation",   ( RadiationBarLabel,   RadiationBar,   RadiationBarBorder,   0.1f, 0.9f, green,    orange, red   ) },
-                    { "moles",       ( MolesBarLabel,       MolesBar,       MolesBarBorder,       0.5f, 0.5f, green,    orange, red   ) },
-                    { "temperature", ( TemperatureBarLabel, TemperatureBar, TemperatureBarBorder, 0.9f, 0.1f, turqoise, green,  red   ) },
-                    { "waste",       ( WasteBarLabel,       WasteBar,       WasteBarBorder,       0.5f, 0.5f, green,    orange, red   ) }
-                };
+                FocusContainer.Visible = true;
 
                 // Update the bar values every time
                 Dictionary<string, float> barData = new()
