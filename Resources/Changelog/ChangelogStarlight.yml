@@ -2549,3 +2549,12 @@ Entries:
   id: 356
   time: '2025-01-21T14:13:27.648990+00:00'
   url: 'null'
+- author: Conflee
+  changes:
+  - message: Added a new Pirate Shuttle for Admemes, "The Lance", based on the Evac
+      Shuttle 'Lance' from SS13
+    type: Add
+  id: 357
+  time: '2025-01-21T14:17:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/256
+
