@@ -451,8 +451,8 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/metalfoam.rsi
   - type: SmokeOnTrigger
-    duration: 10
-    spreadAmount: 13
+    duration: 2
+    spreadAmount: 5
     smokePrototype: AluminiumMetalFoam
   - type: StaticPrice
     price: 350
