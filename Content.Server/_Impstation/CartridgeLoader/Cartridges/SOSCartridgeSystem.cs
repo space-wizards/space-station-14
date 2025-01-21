@@ -1,6 +1,7 @@
 using System.Threading.Channels;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared._DV.NanoChat;
+using Content.Shared._Impstation.Ghost;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.CartridgeLoader;
@@ -26,30 +27,49 @@ public sealed class SOSCartridgeSystem : EntitySystem
         SubscribeLocalEvent<SOSCartridgeComponent, CartridgeActivatedEvent>(OnActivated);
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<SOSCartridgeComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.Timer > 0)
+            {
+                comp.Timer -= frameTime;
+            }
+        }
+    }
+
     private void OnActivated(EntityUid uid, SOSCartridgeComponent component, CartridgeActivatedEvent args)
     {
-        //Get the PDA
-        if (!TryComp<PdaComponent>(args.Loader, out var pda))
-            return;
-
-        //Get the id container
-        if (_container.TryGetContainer(args.Loader, SOSCartridgeComponent.PDAIdContainer, out var idContainer))
+        if (component.CanCall)
         {
-            //If theres nothing in id slot, send message anonymously
-            if (idContainer.ContainedEntities.Count == 0)
-            {
-                _radio.SendRadioMessage(uid, component.LocalizedDefaultName + " " + component.LocalizedHelpMessage, component.HelpChannel, uid);
-            }
-            else
-            {
-                //Otherwise, send a message with the full name of every id in there
-                foreach (var idCard in idContainer.ContainedEntities)
-                {
-                    if (!TryComp<IdCardComponent>(idCard, out var idCardComp))
-                        return;
+            //Get the PDA
+            if (!TryComp<PdaComponent>(args.Loader, out var pda))
+                return;
 
-                    _radio.SendRadioMessage(uid, idCardComp.FullName + " " + component.LocalizedHelpMessage, component.HelpChannel, uid);
+            //Get the id container
+            if (_container.TryGetContainer(args.Loader, SOSCartridgeComponent.PDAIdContainer, out var idContainer))
+            {
+                //If theres nothing in id slot, send message anonymously
+                if (idContainer.ContainedEntities.Count == 0)
+                {
+                    _radio.SendRadioMessage(uid, component.LocalizedDefaultName + " " + component.LocalizedHelpMessage, component.HelpChannel, uid);
                 }
+                else
+                {
+                    //Otherwise, send a message with the full name of every id in there
+                    foreach (var idCard in idContainer.ContainedEntities)
+                    {
+                        if (!TryComp<IdCardComponent>(idCard, out var idCardComp))
+                            return;
+
+                        _radio.SendRadioMessage(uid, idCardComp.FullName + " " + component.LocalizedHelpMessage, component.HelpChannel, uid);
+                    }
+                }
+
+                component.Timer = SOSCartridgeComponent.TimeOut;
             }
         }
     }
