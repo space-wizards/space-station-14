@@ -1,0 +1,35 @@
+- type: abductorListing
+  id: Wonderprod
+  name: abductors-ui-shop-Wonderprod
+  cost: 1
+  productEntity: Wonderprod
+  
+- type: abductorListing
+  id: ClothingHeadHelmetAbductor
+  name: abductors-ui-shop-ClothingHeadHelmetAbductor
+  cost: 1
+  productEntity: ClothingHeadHelmetAbductor
+  
+- type: abductorListing
+  id: AbductorGizmo
+  name: abductors-ui-shop-AbductorGizmo
+  cost: 1
+  productEntity: AbductorGizmo
+  
+- type: abductorListing
+  id: MedkitCombat
+  name: abductors-ui-shop-MedkitCombat
+  cost: 1
+  productEntity: MedkitCombat
+  
+- type: abductorListing
+  id: WeaponAlien
+  name: abductors-ui-shop-WeaponAlien
+  cost: 2
+  productEntity: WeaponAlien
+    
+- type: abductorListing
+  id: AbductorExtractor
+  name: abductors-ui-shop-AbductorExtractor
+  cost: 2
+  productEntity: AbductorExtractor

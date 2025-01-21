@@ -27,6 +27,22 @@
       sprite: _Starlight/Interface/Actions/actions_abductor.rsi
       state: send-yourself
     event: !type:SendYourselfEvent
+    
+- type: entity
+  id: ActionGizmoMark
+  name: Mark
+  description: using gizmo from your pockets to mark agent.
+  components:
+  - type: EntityTargetAction
+    useDelay: 10
+    priority: -18
+    range: -1
+    checkCanAccess: false
+    itemIconStyle: BigAction
+    icon:
+      sprite: _Starlight/Interface/Actions/actions_abductor.rsi
+      state: gizmo
+    event: !type:GizmoMarkEvent
 
 - type: entity
   id: ActionReturnToShip

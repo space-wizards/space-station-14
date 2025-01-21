@@ -1,6 +1,7 @@
 using Content.Server.Objectives.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Components;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mind;
 using Content.Shared.Movement.Pulling.Components;
@@ -33,6 +34,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         Subs.BuiEvents<AbductorConsoleComponent>(AbductorConsoleUIKey.Key, subs => subs.Event<AbductorCompleteExperimentBuiMsg>(OnCompleteExperimentBuiMsg));
         Subs.BuiEvents<AbductorConsoleComponent>(AbductorConsoleUIKey.Key, subs => subs.Event<AbductorVestModeChangeBuiMsg>(OnVestModeChangeBuiMsg));
         Subs.BuiEvents<AbductorConsoleComponent>(AbductorConsoleUIKey.Key, subs => subs.Event<AbductorLockBuiMsg>(OnVestLockBuiMsg));
+        Subs.BuiEvents<AbductorConsoleComponent>(AbductorConsoleUIKey.Key, subs => subs.Event<AbductorItemBuyedBuiMsg>(OnItemBuyedBuiMsg));
         SubscribeLocalEvent<AbductorComponent, AbductorAttractDoAfterEvent>(OnDoAfterAttract);
     }
     private void OnAbductGetProgress(Entity<AbductConditionComponent> ent, ref ObjectiveGetProgressEvent args)
@@ -43,10 +45,20 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     private float AbductProgress(Entity<AbductConditionComponent> ent, int target)
     {
         if (!TryComp<AbductorScientistComponent>(ent, out var scientistComp) && !TryComp<AbductorAgentComponent>(ent, out var agentComp))
-            if (scientistComp != null && TryComp<AbductConditionComponent>(scientistComp.Agent, out var agentAbducted))
+            if (scientistComp != null
+                    && TryComp<MindContainerComponent>(scientistComp.Agent, out var agentMindContainer)
+                    && agentMindContainer.Mind.HasValue
+                    && TryComp<MindComponent>(agentMindContainer.Mind.Value, out var agentMind)
+                    && agentMind.Objectives.FirstOrDefault(HasComp<AbductConditionComponent>) is EntityUid agentObjId
+                    && TryComp<AbductConditionComponent>(agentObjId, out var agentAbducted))
                 if (agentAbducted.Abducted > ent.Comp.Abducted)
                     ent.Comp.Abducted = agentAbducted.Abducted;
-            else if (agentComp != null && TryComp<AbductConditionComponent>(agentComp.Scientist, out var scientistAbducted))
+            else if (agentComp != null                     
+                    && TryComp<MindContainerComponent>(agentComp.Scientist, out var scientistMindContainer)
+                    && scientistMindContainer.Mind.HasValue
+                    && TryComp<MindComponent>(scientistMindContainer.Mind.Value, out var scientistMind)
+                    && scientistMind.Objectives.FirstOrDefault(HasComp<AbductConditionComponent>) is EntityUid scientistObjId
+                    && TryComp<AbductConditionComponent>(scientistObjId, out var scientistAbducted))
                 if (scientistAbducted.Abducted > ent.Comp.Abducted)
                     ent.Comp.Abducted = scientistAbducted.Abducted;
                 
@@ -57,6 +69,16 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     {
         if (component.Armor != null)
             _itemSwitch.Switch(GetEntity(component.Armor.Value), args.Mode);
+    }
+    
+    private void OnItemBuyedBuiMsg(Entity<AbductorConsoleComponent> ent, ref AbductorItemBuyedBuiMsg args)
+    {
+        var xform = EnsureComp<TransformComponent>(ent);
+        if (ent.Comp.Balance >= args.Price)
+        {
+            ent.Comp.Balance -= args.Price;
+            Spawn(args.Item, xform.Coordinates);
+        }
     }
     
     private void OnVestLockBuiMsg(Entity<AbductorConsoleComponent> ent, ref AbductorLockBuiMsg args)
@@ -88,6 +110,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
                 {
                     condition.AbductedHashs.Add(GetNetEntity(victim));
                     condition.Abducted++;
+                    component.Balance++;
                 }
                 _audioSystem.PlayPvs("/Audio/Voice/Human/wilhelm_scream.ogg", experimentatorId);
 
@@ -147,12 +170,15 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
                 || !_pullingSystem.TryStopPull(victim, pullableComp)) return;
         }
         
-        var organPrototypes = _prototypeManager.EnumeratePrototypes<EntityPrototype>()
-            .Where(p => p.HasComponent<AbductorOrganComponent>()) 
-            .Select(p => p.ID.ToString())
-            .Order()
-            .ToList();
-        Spawn(_random.Pick(organPrototypes), GetCoordinates(args.Dispencer));
+        if (!HasComp<AbductorComponent>(victim))
+        {
+            var organPrototypes = _prototypeManager.EnumeratePrototypes<EntityPrototype>()
+                .Where(p => p.HasComponent<AbductorOrganComponent>()) 
+                .Select(p => p.ID.ToString())
+                .Order()
+                .ToList();
+            Spawn(_random.Pick(organPrototypes), GetCoordinates(args.Dispencer));
+        }
         
         _xformSys.SetCoordinates(victim, GetCoordinates(args.TargetCoordinates));
     }
@@ -213,9 +239,15 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         }
         
         var armorLock = false;
+        var armorMode = "stealth";
         
-        if (computer.Comp.Armor != null && HasComp<UnremoveableComponent>(GetEntity(computer.Comp.Armor.Value)))
-            armorLock = true;
+        if (computer.Comp.Armor != null)
+        {
+            if (HasComp<UnremoveableComponent>(GetEntity(computer.Comp.Armor.Value)))
+                armorLock = true;
+            if (TryComp<ItemSwitchComponent>(GetEntity(computer.Comp.Armor.Value), out var switchVest))
+                armorMode = switchVest.State;
+        }
 
         _uiSystem.SetUiState(computer.Owner, AbductorConsoleUIKey.Key, new AbductorConsoleBuiState()
         {
@@ -226,7 +258,9 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             ExperimentatorFound = computer.Comp.Experimentator != default,
             DispencerFound = computer.Comp.Dispencer != default,
             ArmorFound = computer.Comp.Armor != default,
-            ArmorLocked = armorLock
+            ArmorLocked = armorLock,
+            CurrentArmorMode = armorMode,
+            CurrentBalance = computer.Comp.Balance
         });
     }
 }
