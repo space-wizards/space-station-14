@@ -494,29 +494,27 @@
   - type: PresetIdCard
     job: Roboticist
 
-- type: entity
+- type: entity 
   parent: IDCardStandard
   id: CentcomIDCard
   name: command officer ID card
   components:
   - type: Sprite
     layers:
-    - state: centcom
-#    - state: idcentcom (imp, new id)
+    - state: centcom #removed one of the layers: state (imp)
   - type: Item
     heldPrefix: blue
   - type: PresetIdCard
     job: CentralCommandOfficial
 
-- type: entity # id state imp
+- type: entity
   parent: IDCardStandard
   id: ERTLeaderIDCard
   name: ERT leader ID card
   components:
   - type: Sprite
     layers:
-    - state: silver #imp
-    - state: ert_commander
+    - state: ert_commander #imp
   - type: IdCard
     jobTitle: job-name-ertleader
     jobIcon: JobIconERTLeader
@@ -532,7 +530,7 @@
   components:
   - type: Sprite
     layers:
-    - state: ert_chaplain # we have the sprite for the id but dont have chaplain ERT equipment for now.
+    - state: ert_chaplain # imp
   - type: IdCard
     jobTitle: job-name-ertchaplain
     jobIcon: JobIconERTChaplain
@@ -548,7 +546,7 @@
   components:
   - type: Sprite
     layers:
-    - state: ert_engineer
+    - state: ert_engineer #imp
   - type: IdCard
     jobTitle: job-name-ertengineer
     jobIcon: JobIconERTEngineer
@@ -562,7 +560,7 @@
   components:
   - type: Sprite
     layers:
-    - state: ert_janitor
+    - state: ert_janitor #imp
   - type: IdCard
     jobTitle: job-name-ertjanitor
     jobIcon: JobIconERTJanitor
@@ -576,7 +574,7 @@
   components:
   - type: Sprite
     layers:
-    - state: ert_medic
+    - state: ert_medic #imp
   - type: IdCard
     jobTitle: job-name-ertmedic
     jobIcon: JobIconERTMedic
@@ -590,12 +588,12 @@
   components:
   - type: Sprite
     layers:
-    - state: ert_security
+    - state: ert_security #imp
   - type: IdCard
     jobTitle: job-name-ertsecurity
     jobIcon: JobIconERTSecurity
   - type: PresetIdCard
-    job: ERTSecurity #/imp
+    job: ERTSecurity 
 
 - type: entity
   parent: IDCardStandard
@@ -616,7 +614,7 @@
   components:
   - type: Sprite
     layers:
-    - state: deathsquad
+    - state: deathsquad # imp
   - type: Item
     heldPrefix: red
   - type: IdCard
@@ -865,8 +863,7 @@
   - type: Sprite
     sprite: Objects/Misc/id_cards.rsi
     layers:
-    - state: admin
-    # - state: idadmin (imp, new icon)
+    - state: admin #removed layer: state (imp)
   - type: Clothing
     sprite: Objects/Misc/id_cards.rsi
   - type: Item
