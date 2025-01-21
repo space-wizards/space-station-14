@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 
@@ -11,7 +12,7 @@ public sealed class PainNumbnessSystem : EntitySystem
     {
         SubscribeLocalEvent<PainNumbnessComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<PainNumbnessComponent, ComponentRemove>(OnComponentRemove);
-
+        SubscribeLocalEvent<PainNumbnessComponent, BeforeForceSayEvent>(OnChangeForceSay);
     }
 
     private void OnComponentRemove(EntityUid uid, PainNumbnessComponent component, ComponentRemove args)
@@ -28,5 +29,10 @@ public sealed class PainNumbnessSystem : EntitySystem
             return;
 
         _mobThresholdSystem.VerifyThresholds(uid);
+    }
+
+    private void OnChangeForceSay(Entity<PainNumbnessComponent> ent, ref BeforeForceSayEvent args)
+    {
+        args.Prefix = ent.Comp.ForceSayNumbDataset;
     }
 }
