@@ -302,7 +302,6 @@
         type: IntercomBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
-    node: intercom
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic
@@ -383,8 +382,6 @@
   - type: WiresPanelSecurity
     examine: wires-panel-component-on-examine-security-level2
     wiresAccessible: false
-  - type: Construction
-    node: intercomReinforced
 
 - type: entity
   id: IntercomCommon
