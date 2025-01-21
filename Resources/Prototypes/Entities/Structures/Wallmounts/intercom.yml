@@ -158,14 +158,6 @@
     snap:
     - Wallmount
 
-- type: entity
-  id: IntercomAssemblyWired
-  parent: IntercomAssembly
-  components:
-  - type: Construction
-    graph: Intercom
-    node: wired
-
 # this weird inheritance BS exists for construction shitcode
 - type: entity
   id: IntercomConstructed
