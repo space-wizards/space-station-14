@@ -66,10 +66,10 @@
       path: /Audio/Effects/spray2.ogg
 
 - type: entity
-  name: mega spray bottle
+  name: mega space cleaner
   id: MegaSprayBottleSpaceCleaner
   parent: MegaSprayBottle
-  description: A huge spray bottle, capable of unrivaled janitorial power.
+  description: BLAM!-brand non-foaming space cleaner, now in a bigger package for those huge blood puddles.
   components:
   - type: SolutionContainerManager
     solutions:

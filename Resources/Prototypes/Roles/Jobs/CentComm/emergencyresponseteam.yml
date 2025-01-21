@@ -133,6 +133,7 @@
     jumpsuit: ClothingUniformJumpsuitERTChaplain
     back: ClothingBackpackERTChaplain
     shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHatFez
     mask: ClothingMaskGasERT
     eyes: ClothingEyesHudMedical
     neck: ClothingNeckStoleChaplain
@@ -516,7 +517,7 @@
   storage:
     back:
     - BoxBodyBag
-    - Defibrillator
+    - DefibrillatorCompact
     - MedkitCombatFilled
     - MagazinePistol
     - CrowbarRed
@@ -560,7 +561,7 @@
   storage:
     back:
     - BoxBodyBag
-    - Defibrillator
+    - DefibrillatorCompact
     - MedkitCombatFilled
     - MagazinePistol
     - CrowbarRed
@@ -607,7 +608,7 @@
     - BoxBodyBag
     - WeaponSubMachineGunDrozd
     - MedkitCombatFilled
-    - Defibrillator
+    - DefibrillatorCompact
     - CrowbarRed
     - Hypospray
     - MagazinePistol
@@ -618,6 +619,7 @@
     - OmnizineChemistryBottle
     - EpinephrineChemistryBottle
     - Gauze
+    - 
     belt:
     - AntiPoisonMedipen
     - AntiPoisonMedipen
@@ -686,8 +688,7 @@
     - MegaSprayBottleSpaceCleaner
     - LightReplacer
     - CleanerGrenade
-    - CleanerGrenade
-    - CleanerGrenade
+    - TrashBag
     - TrashBag
 
 - type: startingGear
