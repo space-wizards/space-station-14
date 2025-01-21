@@ -73,6 +73,9 @@
     radius: 3
     color: white
     energy: 2.0
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepGondal
 
 - type: entity
   parent: ImmovableRodKeepTilesStill

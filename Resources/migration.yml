@@ -558,3 +558,7 @@ TorsoBorgCargo: TorsoBorg
 # 2025-01-16
 # impstation: Removal of duplicate holopad Entity, oopsies
 HolopadCargoMailroomCourier: HolopadCargoMailroom
+
+# 2025-01-20
+# impstation: Make sure the templar helmet doesn't slink back in and break new maps
+ClothingHeadHelmetTemplar: null

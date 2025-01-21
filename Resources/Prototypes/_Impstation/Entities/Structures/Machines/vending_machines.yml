@@ -30,3 +30,29 @@
     color: "#b89e2a"
   - type: AccessReader
     access: [["Courier"]]
+
+- type: entity
+  parent: VendingMachineChemicals
+  id: VendingMachineChemicalsInterdyne
+  name: Interdyne ChemVend
+  description: A high tech ChemVend built by InterDyne. Backwards compatible with standard ChemVend restocks. # DeltaV: Add chemvend part
+  components:
+  - type: VendingMachine
+    pack: ChemVendInventoryInterdyne
+    offState: off
+    brokenState: broken
+    normalState: normal
+    denyState: deny
+    ejectDelay: 2
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
+  - type: Sprite # imp
+    sprite: _Impstation/Structures/Machines/VendingMachines/interdynechemdispenser.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
