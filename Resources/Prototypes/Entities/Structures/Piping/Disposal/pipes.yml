@@ -56,9 +56,6 @@
   - type: ContainerContainer
     containers:
       DisposalTube: !type:Container
-  - type: Tag
-    tags:
-      - Disposal
   - type: StaticPrice
     price: 30
 
@@ -498,4 +495,3 @@
           Anchored: { state: signal-router-flipped }
   - type: Construction
     node: signal_router_flipped
-

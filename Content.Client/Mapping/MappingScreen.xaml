@@ -58,27 +58,11 @@
                         <mapping:MappingActionsButton Name="Move" Access="Public"
                                                       ToolTip="" Visible="False" />
                         <mapping:MappingActionsButton Name="Pick" Access="Public" />
-                        <mapping:MappingActionsButton Name="PickDecal" Access="Public" />
                         <mapping:MappingActionsButton Name="Flip" Access="Public" ToggleMode="False"
                                                       ToolTip="{Loc 'mapping-flip-tooltip'}" />
-                        <mapping:MappingActionsButton Name="Visibility" Access="Public" ToggleMode="False"
-                                                      ToolTip="{Loc 'mapping-visibility-tooltip'}" />
-                        <mapping:MappingActionsButton Name="FixGridAtmos" Access="Public"
-                                                      ToolTip="{Loc 'mapping-fixgridatmos-tooltip'}" />
-                        <mapping:MappingActionsButton Name="RemoveGrid" Access="Public"
-                                                      ToolTip="{Loc 'mapping-remove-grid-tooltip'}" />
-                        <mapping:MappingActionsButton Name="MoveGrid" Access="Public"
-                                                      ToolTip="{Loc 'mapping-move-grid-tooltip'}" />
-                        <mapping:MappingActionsButton Name="GridVV" Access="Public"
-                                                      ToolTip="{Loc 'mapping-grid-vv-tooltip'}" />
-                        <mapping:MappingActionsButton Name="PipesColor" Access="Public"
-                                                      ToolTip="{Loc 'mapping-pipes-color-tooltip'}" />
-                        <BoxContainer HorizontalExpand="True"/>
-                        <mapping:MappingActionsButton Name="ChatButton" Access="Public"
-                                                      ToolTip="{Loc 'mapping-chat-button-tooltip'}" />
                     </BoxContainer>
                 </PanelContainer>
-                <widgets:ChatBox Name="Chat" Access="Public" Visible="False" ReservesSpace="False" Margin="3 51 0 0" />
+                <widgets:ChatBox Visible="False" ReservesSpace="False" />
             </LayoutContainer>
             <BoxContainer Orientation="Vertical" VerticalExpand="True" MinWidth="200" SetWidth="500">
                 <PanelContainer VerticalExpand="True" HorizontalExpand="True">

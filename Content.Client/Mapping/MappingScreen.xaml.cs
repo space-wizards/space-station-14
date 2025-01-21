@@ -42,8 +42,6 @@ public sealed partial class MappingScreen : InGameScreen
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        var visibilityUIController = UserInterfaceManager.GetUIController<MappingVisibilityUIController>();
-
         AutoscaleMaxResolution = new Vector2i(1080, 770);
 
         SetAnchorPreset(LeftContainer, LayoutPreset.Wide);
@@ -103,17 +101,8 @@ public sealed partial class MappingScreen : InGameScreen
         }
 
         Pick.Texture.TexturePath = "/Textures/Interface/eyedropper.svg.png";
-        PickDecal.Texture.TexturePath = "/Textures/Interface/VerbIcons/wand-magic-sparkles-solid.svg.192dpi.png";
         Flip.Texture.TexturePath = "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
         Flip.OnPressed += _ => FlipSides();
-        Visibility.Texture.TexturePath = "/Textures/Interface/VerbIcons/layer-group-solid.svg.192dpi.png";
-        Visibility.OnPressed += _ => visibilityUIController.ToggleWindow();
-        FixGridAtmos.Texture.TexturePath = "/Textures/Interface/VerbIcons/oxygen.svg.192dpi.png";
-        RemoveGrid.Texture.TexturePath = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
-        MoveGrid.Texture.TexturePath = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
-        GridVV.Texture.TexturePath = "/Textures/Interface/VerbIcons/vv.svg.192dpi.png";
-        PipesColor.Texture.TexturePath = "/Textures/Interface/VerbIcons/paint-roller-solid.svg.192dpi.png";
-        ChatButton.Texture.TexturePath = "/Textures/Interface/VerbIcons/comment-dots-regular.svg.192dpi.png";
     }
 
     private void FlipSides()
@@ -268,12 +257,6 @@ public sealed partial class MappingScreen : InGameScreen
         Grab.Pressed = Grab == except;
         Move.Pressed = Move == except;
         Pick.Pressed = Pick == except;
-        PickDecal.Pressed = PickDecal == except;
-        FixGridAtmos.Pressed = FixGridAtmos == except;
-        RemoveGrid.Pressed = RemoveGrid == except;
-        MoveGrid.Pressed = MoveGrid == except;
-        GridVV.Pressed = GridVV == except;
-        PipesColor.Pressed = PipesColor == except;
 
         EraseEntityButton.Pressed = EraseEntityButton == except;
         EraseDecalButton.Pressed = EraseDecalButton == except;
