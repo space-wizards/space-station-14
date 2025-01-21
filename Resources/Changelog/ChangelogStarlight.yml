@@ -2513,3 +2513,18 @@ Entries:
   id: 351
   time: '2025-01-19T17:23:29.225523+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: fixed abductor objectives synchronization.
+    type: Fix
+  id: 352
+  time: '2025-01-21T10:49:04.907461+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Now abductors can mark abductors in observation console(needs to be gizmo
+      in pockets).
+    type: Tweak
+  id: 353
+  time: '2025-01-21T10:49:56.483048+00:00'
+  url: 'null'
