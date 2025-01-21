@@ -10,6 +10,7 @@ using Robust.Shared.Audio.Systems;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Movement.Pulling.Components;
 using Robust.Shared.Map;
+using Content.Shared.Inventory;
 using System.Linq;
 
 namespace Content.Server.Starlight.Antags.Abductor;
@@ -19,7 +20,9 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly PullingSystem _pullingSystem = default!;
+    [Dependency] private readonly InventorySystem _inv = default!;
 
+    private static readonly EntProtoId<InstantActionComponent> _gizmoMark = "ActionGizmoMark";
     private static readonly EntProtoId<InstantActionComponent> _sendYourself = "ActionSendYourself";
     private static readonly EntProtoId<InstantActionComponent> _exitAction = "ActionExitConsole";
 
@@ -39,6 +42,8 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         SubscribeLocalEvent<SendYourselfEvent>(OnSendYourself);
         SubscribeLocalEvent<AbductorScientistComponent, AbductorSendYourselfDoAfterEvent>(OnDoAfterAbductorScientistSendYourself);
         SubscribeLocalEvent<AbductorAgentComponent, AbductorSendYourselfDoAfterEvent>(OnDoAfterAbductorAgentSendYourself);
+        
+        SubscribeLocalEvent<GizmoMarkEvent>(OnGizmoMark);
     }
 
     private void AbductorScientistComponentStartup(Entity<AbductorScientistComponent> ent, ref ComponentStartup args)
@@ -198,6 +203,24 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         _xformSys.SetCoordinates(ent, GetCoordinates(args.TargetCoordinates));
         OnCameraExit(ent);
     }
+    
+    private void OnGizmoMark(GizmoMarkEvent ev)
+    {
+        if (!HasComp<AbductorComponent>(ev.Target))
+            return;
+        
+        if (!_inv.TryGetSlotContainer(ev.Performer, "pocket1", out var pocket1, out _) || !_inv.TryGetSlotContainer(ev.Performer, "pocket2", out var pocket2, out _))
+            return;
+        
+        var pocket1PossibleGizmo = pocket1.ContainedEntity;
+        var pocket2PossibleGizmo = pocket2.ContainedEntity;
+        
+        if (TryComp<AbductorGizmoComponent>(pocket1PossibleGizmo, out var pocket1Gizmo))
+            pocket1Gizmo.Target = GetNetEntity(ev.Target);
+        else if (TryComp<AbductorGizmoComponent>(pocket2PossibleGizmo, out var pocket2Gizmo))
+            pocket2Gizmo.Target = GetNetEntity(ev.Target);
+
+    }
 
     private void OnExit(ExitConsoleEvent ev) => OnCameraExit(ev.Performer);
 
@@ -207,6 +230,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         comp.HiddenActions = _actions.HideActions(args.Actor);
         _actions.AddAction(args.Actor, ref comp.ExitConsole, _exitAction);
         _actions.AddAction(args.Actor, ref comp.SendYourself, _sendYourself);
+        _actions.AddAction(args.Actor, ref comp.GizmoMark, _gizmoMark);
     }
     private void RemoveActions(EntityUid actor)
     {
@@ -215,6 +239,8 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             _actions.RemoveAction(actor, comp.ExitConsole);
         if (comp.SendYourself is not null)
             _actions.RemoveAction(actor, comp.SendYourself);
+        if (comp.GizmoMark is not null)
+            _actions.RemoveAction(actor, comp.GizmoMark);
 
         _actions.UnHideActions(actor, comp.HiddenActions);
     }

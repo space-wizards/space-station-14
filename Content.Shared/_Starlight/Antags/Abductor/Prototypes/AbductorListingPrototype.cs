@@ -13,8 +13,11 @@ public sealed partial class AbductorListingPrototype : IPrototype
     public string ID { get; private set; } = default!;
     
     [DataField(required: true)]
-    string Name;
+    public string Name;
     
     [DataField(required: true)]
-    int Cost;
+    public EntProtoId ProductEntity;
+    
+    [DataField(required: true)]
+    public int Cost;
 }

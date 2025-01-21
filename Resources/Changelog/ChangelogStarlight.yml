@@ -2513,3 +2513,48 @@ Entries:
   id: 351
   time: '2025-01-19T17:23:29.225523+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: fixed abductor objectives synchronization.
+    type: Fix
+  id: 352
+  time: '2025-01-21T10:49:04.907461+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Now abductors can mark abductors in observation console(needs to be gizmo
+      in pockets).
+    type: Tweak
+  id: 353
+  time: '2025-01-21T10:49:56.483048+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added store to abductor console.
+    type: Add
+  id: 354
+  time: '2025-01-21T14:12:45.588776+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Removed alien pistol from roundstart abductor agent gear.
+    type: Tweak
+  id: 355
+  time: '2025-01-21T14:13:05.949929+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Removed extractor from roundstart abductor scientist gear.
+    type: Tweak
+  id: 356
+  time: '2025-01-21T14:13:27.648990+00:00'
+  url: 'null'
+- author: Conflee
+  changes:
+  - message: Added a new Pirate Shuttle for Admemes, "The Lance", based on the Evac
+      Shuttle 'Lance' from SS13
+    type: Add
+  id: 357
+  time: '2025-01-21T14:17:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/256
+
