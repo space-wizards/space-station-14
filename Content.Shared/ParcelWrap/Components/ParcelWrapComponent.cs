@@ -1,5 +1,5 @@
 using Content.Shared.Item;
-using Content.Shared.ParcelWrap.EntitySystems;
+using Content.Shared.ParcelWrap.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -19,12 +19,12 @@ public sealed partial class ParcelWrapComponent : Component
     /// The <see cref="EntityPrototype"/> of the parcel created by using this component.
     /// </summary>
     [DataField(required: true)]
-    public EntProtoId ParcelPrototype = default!;
+    public EntProtoId ParcelPrototype;
 
     /// <summary>
     /// How many times this wrap can be used to create parcels.
     /// </summary>
-    [DataField(required: true), AutoNetworkedField, Access(typeof(SharedParcelWrappingSystem))]
+    [DataField, AutoNetworkedField, Access(typeof(SharedParcelWrappingSystem))]
     public int Uses = 30;
 
     /// <summary>
@@ -46,13 +46,13 @@ public sealed partial class ParcelWrapComponent : Component
     /// this will have the default shape for their size.
     /// </summary>
     [DataField]
-    public bool WrappedItemsMaintainShape = false;
+    public bool WrappedItemsMaintainShape;
 
     /// <summary>
     /// How long it takes to use this to wrap something.
     /// </summary>
     [DataField(required: true)]
-    public float WrapDelay = 1.0f;
+    public TimeSpan WrapDelay = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// Sound played when this is used to wrap something.

@@ -1,4 +1,4 @@
-using Content.Shared.ParcelWrap.EntitySystems;
+using Content.Shared.ParcelWrap.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -23,13 +23,13 @@ public sealed partial class WrappedParcelComponent : Component
     /// Specifies the entity to spawn when this parcel is unwrapped.
     /// </summary>
     [DataField]
-    public ProtoId<EntityPrototype>? UnwrapTrash;
+    public EntProtoId? UnwrapTrash;
 
     /// <summary>
     /// How long it takes to unwrap this parcel.
     /// </summary>
     [DataField(required: true)]
-    public float UnwrapDelay = 1.0f;
+    public TimeSpan UnwrapDelay = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// Sound played when unwrapping this parcel.
@@ -40,5 +40,6 @@ public sealed partial class WrappedParcelComponent : Component
     /// <summary>
     /// The ID of <see cref="Contents"/>.
     /// </summary>
-    public const string ContainerId = "contents";
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public string ContainerId = "contents";
 }
