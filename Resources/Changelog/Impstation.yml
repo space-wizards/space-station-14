@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: hivehum
   changes:
-  - message: The beanbag Kammerer and bandolier are once again clear for bartenders
-      to openly carry.
-    type: Tweak
-  id: 481
-  time: '2024-11-09T02:07:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/654
-- author: hivehum
-  changes:
   - message: New lobby arts by Wendy & Snip!
     type: Add
   id: 482
@@ -4411,3 +4403,15 @@
   id: 980
   time: '2025-01-21T02:39:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1427
+- author: AftrLite
+  changes:
+  - message: Buffs to the Null Rod's [Divine Grasp] transform.
+    type: Tweak
+  - message: The Null Rod & its forms now also deal Holy Damage to entities vulnerable
+      to Holy.
+    type: Tweak
+  - message: The Bible now deals significantly less Holy Damage.
+    type: Tweak
+  id: 981
+  time: '2025-01-21T07:27:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1446
