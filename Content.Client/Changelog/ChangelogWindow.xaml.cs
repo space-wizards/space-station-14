@@ -74,11 +74,15 @@ namespace Content.Client.Changelog
             var version = _cfg.GetCVar(CVars.BuildVersion);
             var forkId = _cfg.GetCVar(CVars.BuildForkId);
 
-            var versionText = Loc.GetString("changelog-version-tag", ("fork", forkId), ("version", version));
+            var versionText = Loc.GetString("changelog-version-unknown");
 
-            // If any of these are empty (like in a dev env setup), say it's an unknown version
-            if (string.IsNullOrEmpty(version) || string.IsNullOrEmpty(forkId))
-                versionText = Loc.GetString("changelog-version-unknown");
+            // Make sure these aren't empty, like in a dev env
+            if (!string.IsNullOrEmpty(version) || !string.IsNullOrEmpty(forkId))
+            {
+                versionText = Loc.GetString("changelog-version-tag",
+                    ("fork", forkId),
+                    ("version", version[..7])); // Only show the first 7 characters
+            }
 
             // if else statements are ugly, shut up
             VersionLabel.Text = versionText;
