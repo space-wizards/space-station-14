@@ -13,13 +13,17 @@ namespace Content.Client.Stylesheets
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IReflectionManager _reflection = default!;
-        [Dependency] private readonly IResourceCache _resCache = default!; // TODO: REMOVE (obsolete; used to construct StyleNano/StyleSpace)
+
+        [Dependency]
+        private readonly IResourceCache
+            _resCache = default!; // TODO: REMOVE (obsolete; used to construct StyleNano/StyleSpace)
 
         public Stylesheet SheetNanotrasen { get; private set; } = default!;
         public Stylesheet SheetSystem { get; private set; } = default!;
 
         [Obsolete("Update to use SheetNanotrasen instead")]
         public Stylesheet SheetNano { get; private set; } = default!;
+
         [Obsolete("Update to use SheetSystem instead")]
         public Stylesheet SheetSpace { get; private set; } = default!;
 
@@ -29,6 +33,8 @@ namespace Content.Client.Stylesheets
         {
             return Stylesheets.TryGetValue(name, out stylesheet);
         }
+
+        public HashSet<Type> UnusedSheetlets { get; private set; } = [];
 
         public void Initialize()
         {
@@ -61,11 +67,9 @@ namespace Content.Client.Stylesheets
             sawmill.Debug($"Initialized {_styleRuleCount} style rules in {sw.Elapsed}");
         }
 
-        public HashSet<Type> UnusedSheetlets { get; private set; } = [];
-
         private int _styleRuleCount;
 
-        public Stylesheet Init(BaseStylesheet baseSheet)
+        private Stylesheet Init(BaseStylesheet baseSheet)
         {
             Stylesheets.Add(baseSheet.StylesheetName, baseSheet.Stylesheet);
             _styleRuleCount += baseSheet.Stylesheet.Rules.Count;
