@@ -110,6 +110,7 @@ public sealed partial class StoreMenu : FancyWindow
 
         // open a new one
         _withdrawWindow = new StoreWithdrawWindow();
+        _withdrawWindow.Stylesheet = Stylesheet;
         _withdrawWindow.OpenCentered();
 
         _withdrawWindow.CreateCurrencyButtons(Balance);
