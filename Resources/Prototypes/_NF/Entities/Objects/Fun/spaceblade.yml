@@ -1,0 +1,267 @@
+- type: entity
+  id: SpaceBlade
+  parent: AirTank
+  name: space blade
+  description: Let it drip
+  abstract: true
+  components:
+  - type: GasTank
+    outputPressure: 0.1
+    maxOutputPressure: 0.1
+    valveOutputRate: 50
+    air:
+      volume: 1
+      moles:
+         - 0.4101137219 # oxygen
+      temperature: 293.15
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 0.1
+        mask:
+        - InteractImpassable
+        layer:
+        - InteractImpassable
+  - type: Item
+    size: Small
+    sprite: _NF/Objects/Fun/spaceblade.rsi
+  - type: Sprite
+    sprite: _NF/Objects/Fun/spaceblade.rsi
+    state: redorange
+    scale: 0.5, 0.5
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/metal_thud1.ogg # imp edit - i am not making it the desk bell ring.
+      params:
+        variation: 0.65
+        volume: -5
+
+- type: entity
+  id: SpaceBladeRedOrange
+  parent: SpaceBlade
+
+- type: entity
+  id: SpaceBladeBlue
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: blue
+
+- type: entity
+  id: SpaceBladeFrontier
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: frontier
+
+- type: entity
+  id: SpaceBladeGoldBlue
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: goldblue
+
+- type: entity
+  id: SpaceBladeMail
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: mail
+
+- type: entity
+  id: SpaceBladeEyeball
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: eyeball
+
+- type: entity
+  id: SpaceBladeBlade
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: blade
+
+- type: entity
+  id: SpaceBladeCheck
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: check
+
+- type: entity
+  id: SpaceBladeRune # imp edit wtf is the joke on this. why is it gnome child. this has to be some kind of nf admin injoke
+  parent: SpaceBlade
+  description: Birthday parties are yearly reminders that as soon as you're born you start dying, unless you let it rip
+  components:
+  - type: Sprite
+    state: rune
+
+- type: entity
+  id: SpaceBladeMc
+  parent: SpaceBlade
+  description: Let it McDrip
+  components:
+  - type: Sprite
+    state: mcblade
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Nyanotrasen/Machines/deepfryer_basket_add_item.ogg # okay!
+  - type: UseDelay
+    delay: 2.0
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_Nyanotrasen/Machines/deepfryer_basket_add_item.ogg
+      params:
+        variation: 0.65
+        volume: -5
+
+- type: entity
+  id: SpaceBladeSec # todo add this to seclink
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: secblade
+  - type: StaminaDamageOnCollide
+    damage: 8
+  - type: DisarmMalus
+    malus: 0.225
+
+- type: entity
+  id: SpaceBladeContra
+  parent: [ SpaceBlade, Tier3Contraband ] # imp edit mq says a beyblade with knives on it is the highest severity of contraband
+  description: Let it reap
+  components:
+  - type: Sprite
+    state: contraband
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 0.5
+  - type: PointLight
+    enabled: true
+    radius: 5
+    color: "#3db83b"
+  - type: Contraband
+  - type: StaticPrice
+    price: 100
+
+- type: entity
+  id: SpaceBladeMoff
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: moff
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Moth/moth_scream.ogg
+  - type: UseDelay
+    delay: 2.0
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Moth/moth_scream.ogg
+      params:
+        variation: 0.65
+        volume: -5
+
+- type: entity
+  id: SpaceBladeWeh
+  parent: SpaceBlade
+  description: Let it weh!
+  components:
+  - type: Sprite
+    state: weh
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: UseDelay
+    delay: 1.0
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+      params:
+        variation: 0.65
+        volume: -5
+
+- type: entity
+  id: SpaceBladeTesla
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: tesla
+  - type: PointLight
+    enabled: true
+    radius: 5
+    color: "#4080FF"
+  - type: Electrified
+    shockDamage: 0
+    shockTime: 0.8
+    requirePower: false
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Lightning/lightningshock.ogg
+      params:
+        variation: 0.65
+        volume: -10
+
+- type: entity
+  id: SpaceBladePizza
+  parent: [SpaceBlade, PlasticBanana]
+  name: space blade
+  description: Let it mama mia, not safe for ages under 3
+  components:
+  - type: Sprite
+    state: pizza
+
+- type: entity
+  id: SpaceBladeSingularity
+  parent: SpaceBlade
+  name: space blade
+  description: Let it consume
+  components:
+  - type: Sprite
+    state: singularity
+  - type: SingularityDistortion
+    intensity: 500
+    falloffPower: 5
+  - type: GravityAnomaly
+  - type: GravityWell
+    baseRadialAcceleration: 1
+    maxRange: 1
+
+- type: entity
+  id: SpaceBladeClown
+  parent: SpaceBlade
+  name: space blade
+  description: Let it honk
+  components:
+  - type: Sprite
+    state: clown
+  - type: Slippery
+    paralyzeTime: 0.5
+    launchForwardsMultiplier: 0.5
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: CollisionWake
+    enabled: false
+  - type: GasTank
+    outputPressure: 0.1
+    maxOutputPressure: 0.1
+    valveOutputRate: 50
+    air:
+      volume: 1
+      moles:
+         - 0 # oxygen
+         - 0 # nitrogen
+         - 0 # CO2
+         - 0 # plasma
+         - 0 # tritium
+         - 0 # water vapor
+         - 0 # miasma
+         - 0.4101137219 # N2O
+      temperature: 293.15

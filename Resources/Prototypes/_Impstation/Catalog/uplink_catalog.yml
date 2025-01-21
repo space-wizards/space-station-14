@@ -74,3 +74,14 @@
     - Clown
   categories:
   - UplinkJob
+
+- type: listing
+  id: UplinkSpaceBlade
+  name: uplink-spaceblade-name
+  description: uplink-spaceblade-desc
+  icon: { sprite: /Textures/_NF/Objects/Fun/spaceblade.rsi, state: contraband }
+  productEntity: MysterySpaceBladeBoxSyndicate
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkPointless

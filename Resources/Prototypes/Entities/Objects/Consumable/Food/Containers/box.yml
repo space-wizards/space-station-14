@@ -274,7 +274,7 @@
       prob: 0.10
       orGroup: Pizza
     - id: KnifePlastic
-  
+
 - type: entity
   name: pizza box
   parent: FoodBoxPizzaFilled
@@ -583,6 +583,8 @@
         orGroup: GiftPool
       - id: GoldenBikeHorn
         prob: 0.1
+        orGroup: GiftPool
+      - id: SpaceBladeMc #imp
         orGroup: GiftPool
 
 - type: entity
