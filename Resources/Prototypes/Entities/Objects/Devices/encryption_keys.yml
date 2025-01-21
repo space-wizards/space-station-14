@@ -170,7 +170,7 @@
     - state: robotics_label
 
 - type: entity
-  parent: [ EncryptionKey, BaseSecurityContraband ]
+  parent: [ EncryptionKey, BaseSecurityLawyerContraband ]
   id: EncryptionKeySecurity
   name: security encryption key
   description: An encryption key used by security.
