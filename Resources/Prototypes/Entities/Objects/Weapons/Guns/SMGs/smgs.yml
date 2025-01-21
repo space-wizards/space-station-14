@@ -227,8 +227,8 @@
 - type: entity
   name: WT550
   parent: [ BaseWeaponSubMachineGun, BaseRestrictedContraband ]
-  id: WeaponSubMachineGunWt550 #imp, but not for the ID... for the description!! Notepad++ is mad and won't let me comment after the description.
-  description: An excellent top-loaded, compact Personal Defense Weapon, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo.
+  id: WeaponSubMachineGunWt550
+  description: An excellent top-loaded, compact Personal Defense Weapon, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi

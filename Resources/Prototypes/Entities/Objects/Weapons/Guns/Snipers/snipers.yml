@@ -41,8 +41,8 @@
 - type: entity
   name: Kardashev-Mosin
   parent: [BaseWeaponSniper, BaseGunWieldable, Tier3Contraband]
-  id: WeaponSniperMosin #imp for the description. Something about long descriptions I guess.
-  description: A weapon for hunting, or endless trench warfare. There's a bayonet at the end, and the heft of the rifle could do some damage. Uses .20 rifle ammo.
+  id: WeaponSniperMosin
+  description: A weapon for hunting, or endless trench warfare. There's a bayonet at the end, and the heft of the rifle could do some damage. Uses .20 rifle ammo. #imp
 # Melee and gun components don't play nice; description will change when fixed. Melee components also disabled for the time being
   components:
   - type: Gun
