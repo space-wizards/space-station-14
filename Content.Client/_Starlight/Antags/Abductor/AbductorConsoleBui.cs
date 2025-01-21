@@ -19,6 +19,8 @@ public sealed class AbductorConsoleBui : BoundUserInterface
     private bool armorDisabled = false;
     [ViewVariables]
     private bool armorLocked = false;
+    [ViewVariables]
+    private string? armorMode;
     public AbductorConsoleBui(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
 
@@ -48,7 +50,6 @@ public sealed class AbductorConsoleBui : BoundUserInterface
         _window = new AbductorConsoleWindow();
         _window.OnClose += Close;
         _window.Title = "console";
-        _window.StealthModeButton.Disabled = true;
 
         _window.TeleportTabButton.OnPressed += _ => View(ViewType.Teleport);
 
@@ -59,12 +60,31 @@ public sealed class AbductorConsoleBui : BoundUserInterface
         _window.CombatModeButton.OnPressed += _ => {
             _window.StealthModeButton.Disabled = false;
             _window.CombatModeButton.Disabled = true;
+            SendMessage(new AbductorVestModeChangeBuiMsg()
+            {
+                Mode = "combat",
+            });
         };
         
         _window.StealthModeButton.OnPressed += _ => {
             _window.StealthModeButton.Disabled = true;
             _window.CombatModeButton.Disabled = false;
+            SendMessage(new AbductorVestModeChangeBuiMsg()
+            {
+                Mode = "stealth",
+            });
         };
+        
+        if (armorMode == "combat")
+        {
+            _window.CombatModeButton.Disabled = true;
+            _window.StealthModeButton.Disabled = false;
+        }
+        else
+        {
+            _window.CombatModeButton.Disabled = false;
+            _window.StealthModeButton.Disabled = true;
+        }
         
         _window.LockArmorButton.OnPressed += _ =>
         {
@@ -130,23 +150,20 @@ public sealed class AbductorConsoleBui : BoundUserInterface
         else
             _window.LockArmorButton.Text = Loc.GetString("abductors-ui-unlock-armor");
         
-        _window.CombatModeButton.OnPressed += _ =>
-        {
-            SendMessage(new AbductorVestModeChangeBuiMsg()
-            {
-                Mode = "combat",
-            });
-        };
-        
-        _window.StealthModeButton.OnPressed += _ =>
-        {
-            SendMessage(new AbductorVestModeChangeBuiMsg()
-            {
-                Mode = "stealth",
-            });
-        };
-        
         armorDisabled = state.ArmorFound;
+        
+        armorMode = state.CurrentArmorMode;
+        
+        if (armorMode == "combat")
+        {
+            _window.CombatModeButton.Disabled = true;
+            _window.StealthModeButton.Disabled = false;
+        }
+        else
+        {
+            _window.CombatModeButton.Disabled = false;
+            _window.StealthModeButton.Disabled = true;
+        }
         
         UpdateDisabledPanel(armorDisabled);
     }

@@ -1,6 +1,7 @@
 using Content.Server.Objectives.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Components;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mind;
 using Content.Shared.Movement.Pulling.Components;
@@ -226,9 +227,15 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         }
         
         var armorLock = false;
+        var armorMode = "stealth";
         
-        if (computer.Comp.Armor != null && HasComp<UnremoveableComponent>(GetEntity(computer.Comp.Armor.Value)))
-            armorLock = true;
+        if (computer.Comp.Armor != null)
+        {
+            if (HasComp<UnremoveableComponent>(GetEntity(computer.Comp.Armor.Value)))
+                armorLock = true;
+            if (TryComp<ItemSwitchComponent>(GetEntity(computer.Comp.Armor.Value), out var switchVest))
+                armorMode = switchVest.State;
+        }
 
         _uiSystem.SetUiState(computer.Owner, AbductorConsoleUIKey.Key, new AbductorConsoleBuiState()
         {
@@ -239,7 +246,8 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             ExperimentatorFound = computer.Comp.Experimentator != default,
             DispencerFound = computer.Comp.Dispencer != default,
             ArmorFound = computer.Comp.Armor != default,
-            ArmorLocked = armorLock
+            ArmorLocked = armorLock,
+            CurrentArmorMode = armorMode
         });
     }
 }

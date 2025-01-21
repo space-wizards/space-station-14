@@ -21,6 +21,7 @@ public sealed class AbductorConsoleBuiState : BoundUserInterfaceState
     public bool DispencerFound { get; init; }
     public bool ArmorFound { get; init; }
     public bool ArmorLocked { get; init; }
+    public string? CurrentArmorMode { get; init; }
 }
 
 [Serializable, NetSerializable]
