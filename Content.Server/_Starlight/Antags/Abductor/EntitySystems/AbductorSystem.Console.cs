@@ -43,10 +43,20 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     private float AbductProgress(Entity<AbductConditionComponent> ent, int target)
     {
         if (!TryComp<AbductorScientistComponent>(ent, out var scientistComp) && !TryComp<AbductorAgentComponent>(ent, out var agentComp))
-            if (scientistComp != null && TryComp<AbductConditionComponent>(scientistComp.Agent, out var agentAbducted))
+            if (scientistComp != null
+                    && TryComp<MindContainerComponent>(scientistComp.Agent, out var mindContainer)
+                    && mindContainer.Mind.HasValue
+                    && TryComp<MindComponent>(mindContainer.Mind.Value, out var mind)
+                    && mind.Objectives.FirstOrDefault(HasComp<AbductConditionComponent>) is EntityUid objId
+                    && TryComp<AbductConditionComponent>(objId, out var agentAbducted))
                 if (agentAbducted.Abducted > ent.Comp.Abducted)
                     ent.Comp.Abducted = agentAbducted.Abducted;
-            else if (agentComp != null && TryComp<AbductConditionComponent>(agentComp.Scientist, out var scientistAbducted))
+            else if (agentComp != null                     
+                    && TryComp<MindContainerComponent>(agentComp.Scientist, out var mindContainer)
+                    && mindContainer.Mind.HasValue
+                    && TryComp<MindComponent>(mindContainer.Mind.Value, out var mind)
+                    && mind.Objectives.FirstOrDefault(HasComp<AbductConditionComponent>) is EntityUid objId
+                    && TryComp<AbductConditionComponent>(objId, out var scientistAbducted))
                 if (scientistAbducted.Abducted > ent.Comp.Abducted)
                     ent.Comp.Abducted = scientistAbducted.Abducted;
                 
@@ -147,12 +157,15 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
                 || !_pullingSystem.TryStopPull(victim, pullableComp)) return;
         }
         
-        var organPrototypes = _prototypeManager.EnumeratePrototypes<EntityPrototype>()
-            .Where(p => p.HasComponent<AbductorOrganComponent>()) 
-            .Select(p => p.ID.ToString())
-            .Order()
-            .ToList();
-        Spawn(_random.Pick(organPrototypes), GetCoordinates(args.Dispencer));
+        if (!HasComp<AbductorComponent>(args.Victim))
+        {
+            var organPrototypes = _prototypeManager.EnumeratePrototypes<EntityPrototype>()
+                .Where(p => p.HasComponent<AbductorOrganComponent>()) 
+                .Select(p => p.ID.ToString())
+                .Order()
+                .ToList();
+            Spawn(_random.Pick(organPrototypes), GetCoordinates(args.Dispencer));
+        }
         
         _xformSys.SetCoordinates(victim, GetCoordinates(args.TargetCoordinates));
     }

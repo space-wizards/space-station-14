@@ -78,6 +78,9 @@ public sealed partial class AbductorsAbilitiesComponent : Component
 
     [DataField, AutoNetworkedField]
     public EntityUid? SendYourself;
+    
+    [DataField, AutoNetworkedField]
+    public EntityUid? GizmoMark;
 
     [DataField]
     public EntityUid[] HiddenActions = [];
@@ -99,6 +102,10 @@ public sealed partial class ExitConsoleEvent : InstantActionEvent
 
 }
 public sealed partial class SendYourselfEvent : WorldTargetActionEvent
+{
+
+}
+public sealed partial class GizmoMarkEvent : EntityTargetActionEvent
 {
 
 }
