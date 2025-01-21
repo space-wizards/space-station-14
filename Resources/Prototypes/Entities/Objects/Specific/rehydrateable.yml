@@ -228,3 +228,16 @@
     - MobPurpleSnake
     - MobKangarooSpace
     - MobTick
+
+- type: entity
+  parent: RehydratableItem
+  id: MopBucketCube
+  name: mop bucket cube
+  description: Just add water! And then more water!
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: mopbucket_cube
+  - type: Rehydratable
+    possibleSpawns:
+    - MopBucket
