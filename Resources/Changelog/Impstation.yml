@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: A number of Impstation sounds have been mixed to mono and had their volume
-      adjusted to work with the positional audio system.
-    type: Tweak
-  id: 480
-  time: '2024-11-08T17:08:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/644
 - author: hivehum
   changes:
   - message: The beanbag Kammerer and bandolier are once again clear for bartenders
@@ -4412,3 +4404,10 @@
   id: 979
   time: '2025-01-21T02:37:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1439
+- author: ruddygreat
+  changes:
+  - message: All cyborgs can now use the L6C ROW module!
+    type: Tweak
+  id: 980
+  time: '2025-01-21T02:39:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1427
