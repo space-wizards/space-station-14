@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: The captain now have special late join message.
-    type: Tweak
-  id: 7335
-  time: '2024-09-09T19:57:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31991
-- author: Thinbug0
-  changes:
-  - message: Teal gloves can now be found at the ClothesMate!
-    type: Add
-  id: 7336
-  time: '2024-09-09T21:47:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31865
-- author: chillyconmor
-  changes:
-  - message: Space Ninjas now have a new intro song.
-    type: Add
-  id: 7337
-  time: '2024-09-09T22:12:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31055
 - author: DieselMohawk
   changes:
   - message: Made Trooper Uniform accessible for Security Officers in loadouts
@@ -3892,3 +3871,36 @@
   id: 7834
   time: '2025-01-20T01:24:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34527
+- author: Compilatron144
+  changes:
+  - message: Raised Plasma Station's population limit
+    type: Tweak
+  id: 7835
+  time: '2025-01-21T04:56:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34549
+- author: sporkyz
+  changes:
+  - message: Galoshes are now restricted to janitor.
+    type: Tweak
+  - message: Double barrel shotguns, basic armor vests, beanbag/flare shotgun shells,
+      and bandoliers are now allowed for Bartenders, not just Security.
+    type: Tweak
+  - message: Lawyers now have access to the Security headset they spawn with, as well
+      as the encryption key inside.
+    type: Fix
+  - message: Sawn-off shotguns are now properly considered contraband instead of being
+      unrestricted.
+    type: Fix
+  id: 7836
+  time: '2025-01-21T09:51:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33385
+- author: K-Dynamic
+  changes:
+  - message: Electrified doors and windoors now visibly spark when touched.
+    type: Tweak
+  - message: New tips have been added about opening electrified doors by throwing
+      your PDA or ID, and resetting doors that are electrified by AI.
+    type: Add
+  id: 7837
+  time: '2025-01-21T10:39:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34502
