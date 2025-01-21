@@ -77,7 +77,7 @@ namespace Content.Client.Changelog
             var versionText = Loc.GetString("changelog-version-unknown");
 
             // Make sure these aren't empty, like in a dev env
-            if (!string.IsNullOrEmpty(version) || !string.IsNullOrEmpty(forkId))
+            if (!string.IsNullOrEmpty(version) && !string.IsNullOrEmpty(forkId))
             {
                 versionText = Loc.GetString("changelog-version-tag",
                     ("fork", forkId),
