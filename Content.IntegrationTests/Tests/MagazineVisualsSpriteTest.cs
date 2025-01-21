@@ -26,9 +26,7 @@ public sealed class MagazineVisualsSpriteTest
             var protos = protoMan.EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => p.TryGetComponent<MagazineVisualsComponent>(out _, componentFactory))
-                .OrderBy(p => p.ID)
-                .ToList();
+                .Where(p => p.HasComponent<MagazineVisualsComponent>(componentFactory));
 
             foreach (var proto in protos)
             {
