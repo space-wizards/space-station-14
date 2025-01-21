@@ -945,7 +945,7 @@
     hidden: true
   - type: PhysicalComposition
     materialComposition:
-      Plastic: 100 # One sheet of plastic
+      Plastic: 0.25 # One sheet of plastic
   - type: StaticPrice
     price: 5
   - type: ContainerContainer
