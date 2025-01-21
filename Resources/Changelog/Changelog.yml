@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DieselMohawk
-  changes:
-  - message: Made Trooper Uniform accessible for Security Officers in loadouts
-    type: Fix
-  id: 7338
-  time: '2024-09-09T23:59:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32019
 - author: IProduceWidgets
   changes:
   - message: Visitors now can have the correct Id cards and PDA!
@@ -3904,3 +3897,10 @@
   id: 7837
   time: '2025-01-21T10:39:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34502
+- author: Nimfar11
+  changes:
+  - message: Adds Blueprint double emergency tank.
+    type: Add
+  id: 7838
+  time: '2025-01-21T16:08:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34232
