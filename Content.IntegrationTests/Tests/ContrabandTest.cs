@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Contraband;
+using Content.Shared.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -21,9 +22,7 @@ public sealed class ContrabandTest
             var protos = protoMan.EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => p.TryGetComponent<ContrabandComponent>(out _, componentFactory))
-                .OrderBy(p => p.ID)
-                .ToList();
+                .Where(p => p.HasComponent<ContrabandComponent>(componentFactory));
 
             foreach (var proto in protos)
             {
