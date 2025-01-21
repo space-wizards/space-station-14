@@ -288,47 +288,36 @@ public partial class SharedGunSystem
 
         for (var i = 0; i < component.Capacity; i++)
         {
-            Boolean? chamber = component.Chambers[i];
-            EntityUid? slot = component.AmmoSlots[i];
+            var chamber = component.Chambers[i];
+            var slot = component.AmmoSlots[i];
 
-            // Check if there is nothing in the slot
+            // If the slot is null that means there is nothing contained in this slot
             if (slot == null)
             {
-                // if so, check if the chamber is supposed to have nothing in it
+                // It may be intentional that there's nothing in the slot, so lets check for that.
                 if (chamber == null)
-                    continue; // if so, continue
+                    continue; // If so, continue
 
-                if (!_netManager.IsClient)
-                {
-                    // Since this slot has nothing in it, but it should have something, spawn it.
-                    slot = Spawn(component.FillPrototype, mapCoordinates);
-                    EnsureShootable(slot.Value);
+                // Since this slot has nothing in it, but it should have something, lets spawn the default FillPrototype
+                slot = Spawn(component.FillPrototype, mapCoordinates);
+                EnsureShootable(slot.Value);
 
-                    // Set it to a spent cartridge if it's supposed to be
-                    if (TryComp<CartridgeAmmoComponent>(slot, out var cartridge))
-                        SetCartridgeSpent(slot.Value, cartridge, !(bool) chamber);
+                // We may be spawning a spent cartridge in this weapon, so lets check for that and set it appropriately.
+                if (TryComp<CartridgeAmmoComponent>(slot, out var cartridge))
+                    SetCartridgeSpent(slot.Value, cartridge, chamber.Value);
 
-                    // Insert it into the container
-                    Containers.Insert(slot.Value, component.AmmoContainer);
-                }
+                // Insert it into the container to ensure container behaviour is consistent
+                Containers.Insert(slot.Value, component.AmmoContainer);
             }
 
             if (slot != null) // Makes the compiler chill
             {
-                // Eject the cartridge if server-side
-                if (!_netManager.IsClient)
-                {
-                    Containers.Remove(slot.Value, component.AmmoContainer);
-                    EjectCartridge(slot.Value);
-                }
-                // If execution is client-side, and the object is client-side, just delete it
-                else if (IsClientSide(slot.Value))
-                {
-                    QueueDel(slot.Value);
-                }
+                // Any rounds that have been inserted into the revolver will need to be removed from the internal container
+                Containers.Remove(slot.Value, component.AmmoContainer);
+                EjectCartridge(slot.Value);
             }
 
-            // Remove the round from the slot and clear the chamber
+            // Clear the ammo slot and the chamber since the round is now out of the gun.
             component.AmmoSlots[i] = null;
             component.Chambers[i] = null;
 

@@ -447,7 +447,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             DirtyField(uid, cartridge, nameof(CartridgeAmmoComponent.Spent));
 
         cartridge.Spent = spent;
-        if (spent) // Setting Appearance AmmoVisuals.Spent to false causes issues
+        if (spent) // Setting Appearance AmmoVisuals.Spent to false causes issue #34510
             Appearance.SetData(uid, AmmoVisuals.Spent, spent);
     }
 
@@ -460,6 +460,10 @@ public abstract partial class SharedGunSystem : EntitySystem
         bool playSound = true)
     {
         // TODO: Sound limit version.
+
+        // This method gets called in shared, so lets ensure random values are consistent for prediction.
+        Random.SetSeed((int) Timing.CurTick.Value);
+
         var offsetPos = Random.NextVector2(EjectOffset);
         var xform = Transform(entity);
 
