@@ -4,6 +4,7 @@
   components:
   - type: Store
     name: store-preset-name-uplink
+    stylesheet: Syndicate
     categories:
     - UplinkWeaponry
     - UplinkAmmo

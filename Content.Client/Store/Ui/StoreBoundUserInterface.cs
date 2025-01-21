@@ -1,6 +1,7 @@
 using Content.Shared.Store;
 using JetBrains.Annotations;
 using System.Linq;
+using Content.Client.Stylesheets;
 using Content.Shared.Store.Components;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
@@ -27,11 +28,11 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
     protected override void Open()
     {
-        base.Open();
-
         _menu = this.CreateWindow<StoreMenu>();
-        if (EntMan.TryGetComponent<StoreComponent>(Owner, out var store))
+        if (EntMan.TryGetComponent<StoreComponent>(Owner, out var store)) {
             _menu.Title = Loc.GetString(store.Name);
+            _menu.Stylesheet = store.Stylesheet;
+        }
 
         _menu.OnListingButtonPressed += (_, listing) =>
         {
@@ -60,6 +61,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
             SendMessage(new StoreRequestRefundMessage());
         };
     }
+
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
@@ -86,9 +88,17 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         var filteredListings = new HashSet<ListingDataWithCostModifiers>(_listings);
         if (!string.IsNullOrEmpty(_search))
         {
-            filteredListings.RemoveWhere(listingData => !ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listingData, _prototypeManager).Trim().ToLowerInvariant().Contains(_search) &&
-                                                        !ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(listingData, _prototypeManager).Trim().ToLowerInvariant().Contains(_search));
+            filteredListings.RemoveWhere(listingData =>
+                !ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listingData, _prototypeManager)
+                    .Trim()
+                    .ToLowerInvariant()
+                    .Contains(_search) &&
+                !ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(listingData, _prototypeManager)
+                    .Trim()
+                    .ToLowerInvariant()
+                    .Contains(_search));
         }
+
         _menu.PopulateStoreCategoryButtons(filteredListings);
         _menu.UpdateListing(filteredListings.ToList());
     }
