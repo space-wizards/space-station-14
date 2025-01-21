@@ -254,6 +254,7 @@
       soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
       fireRate: 0.5
       clumsyProof: true
+      resetOnHandSelected: false
     - type: BasicEntityAmmoProvider
       proto: GrapplingHook
       capacity: 1
