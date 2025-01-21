@@ -23,6 +23,17 @@ abductors-ui-unlock-armor = Unlock Armor
 
 abductors-ui-vest-linked = Vest linked
 
+# Shop tab
+
+abductors-ui-shop = Shop
+
+abductors-ui-shop-Wonderprod = Wonderprod
+abductors-ui-shop-WeaponAlien = Alien pistol
+abductors-ui-shop-ClothingHeadHelmetAbductor = Helmet
+abductors-ui-shop-AbductorGizmo = Gizmo
+abductors-ui-shop-AbductorExtractor = Extractor
+abductors-ui-shop-MedkitCombat = Combat medical kit
+
 # Ghost role, objectives, etc.
 
 abductors-ghost-role-name = Abductor

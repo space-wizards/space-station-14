@@ -19,6 +19,9 @@ public sealed partial class AbductorHumanObservationConsoleComponent : Component
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem)), AutoGenerateComponentState]
 public sealed partial class AbductorConsoleComponent : Component
 {
+    [DataField, ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+    public int Balance = 0;
+    
     [DataField, AutoNetworkedField]
     public NetEntity? Target;
 

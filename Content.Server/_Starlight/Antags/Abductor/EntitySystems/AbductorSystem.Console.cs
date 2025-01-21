@@ -34,6 +34,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         Subs.BuiEvents<AbductorConsoleComponent>(AbductorConsoleUIKey.Key, subs => subs.Event<AbductorCompleteExperimentBuiMsg>(OnCompleteExperimentBuiMsg));
         Subs.BuiEvents<AbductorConsoleComponent>(AbductorConsoleUIKey.Key, subs => subs.Event<AbductorVestModeChangeBuiMsg>(OnVestModeChangeBuiMsg));
         Subs.BuiEvents<AbductorConsoleComponent>(AbductorConsoleUIKey.Key, subs => subs.Event<AbductorLockBuiMsg>(OnVestLockBuiMsg));
+        Subs.BuiEvents<AbductorConsoleComponent>(AbductorConsoleUIKey.Key, subs => subs.Event<AbductorItemBuyedBuiMsg>(OnItemBuyedBuiMsg));
         SubscribeLocalEvent<AbductorComponent, AbductorAttractDoAfterEvent>(OnDoAfterAttract);
     }
     private void OnAbductGetProgress(Entity<AbductConditionComponent> ent, ref ObjectiveGetProgressEvent args)
@@ -70,6 +71,16 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             _itemSwitch.Switch(GetEntity(component.Armor.Value), args.Mode);
     }
     
+    private void OnItemBuyedBuiMsg(Entity<AbductorConsoleComponent> ent, ref AbductorItemBuyedBuiMsg args)
+    {
+        var xform = EnsureComp<TransformComponent>(ent);
+        if (ent.Comp.Balance >= args.Price)
+        {
+            ent.Comp.Balance -= args.Price;
+            Spawn(args.Item, xform.Coordinates);
+        }
+    }
+    
     private void OnVestLockBuiMsg(Entity<AbductorConsoleComponent> ent, ref AbductorLockBuiMsg args)
     {
         if (ent.Comp.Armor != null && GetEntity(ent.Comp.Armor.Value) is EntityUid armor)
@@ -99,6 +110,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
                 {
                     condition.AbductedHashs.Add(GetNetEntity(victim));
                     condition.Abducted++;
+                    component.Balance++;
                 }
                 _audioSystem.PlayPvs("/Audio/Voice/Human/wilhelm_scream.ogg", experimentatorId);
 
@@ -247,7 +259,8 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             DispencerFound = computer.Comp.Dispencer != default,
             ArmorFound = computer.Comp.Armor != default,
             ArmorLocked = armorLock,
-            CurrentArmorMode = armorMode
+            CurrentArmorMode = armorMode,
+            CurrentBalance = computer.Comp.Balance
         });
     }
 }

@@ -2528,3 +2528,24 @@ Entries:
   id: 353
   time: '2025-01-21T10:49:56.483048+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: Added store to abductor console.
+    type: Add
+  id: 354
+  time: '2025-01-21T14:12:45.588776+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Removed alien pistol from roundstart abductor agent gear.
+    type: Tweak
+  id: 355
+  time: '2025-01-21T14:13:05.949929+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Removed extractor from roundstart abductor scientist gear.
+    type: Tweak
+  id: 356
+  time: '2025-01-21T14:13:27.648990+00:00'
+  url: 'null'

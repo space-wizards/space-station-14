@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.RichText;
 using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
 using static Content.Shared.Pinpointer.SharedNavMapSystem;
 using static Robust.Client.UserInterface.Control;
 
@@ -12,6 +13,7 @@ namespace Content.Client._Starlight.Antags.Abductor;
 public sealed class AbductorConsoleBui : BoundUserInterface
 {
     [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     [ViewVariables]
     private AbductorConsoleWindow? _window;
@@ -21,6 +23,8 @@ public sealed class AbductorConsoleBui : BoundUserInterface
     private bool armorLocked = false;
     [ViewVariables]
     private string? armorMode;
+    [ViewVariables]
+    private int balance = 0;
     public AbductorConsoleBui(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
 
@@ -56,6 +60,8 @@ public sealed class AbductorConsoleBui : BoundUserInterface
         _window.ExperimentTabButton.OnPressed += _ => View(ViewType.Experiment);
         
         _window.ArmorControlTabButton.OnPressed += _ => View(ViewType.ArmorControl);
+        
+        _window.ShopTabButton.OnPressed += _ => View(ViewType.Shop);
         
         _window.CombatModeButton.OnPressed += _ => {
             _window.StealthModeButton.Disabled = false;
@@ -97,6 +103,60 @@ public sealed class AbductorConsoleBui : BoundUserInterface
             else
                 _window.LockArmorButton.Text = Loc.GetString("abductors-ui-unlock-armor");
         };
+        
+        foreach (var itemPrototype in _protoManager.EnumeratePrototypes<AbductorListingPrototype>())
+            AddShopItem(itemPrototype.Name, itemPrototype.Cost, itemPrototype.ProductEntity);
+    }
+    
+    private void AddShopItem(string itemName, int price, EntProtoId productEntity)
+    {
+        if (_window == null)
+            return;
+        
+        var itemContainer = new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+            HorizontalExpand = true,
+            Margin = new Thickness(0, 0, 0, 10),
+        };
+
+        var nameLabel = new Label
+        {
+            Text = Loc.GetString(itemName),
+            HorizontalExpand = true,
+        };
+
+        var priceLabel = new Label
+        {
+            Text = $" Price: {price}",
+            HorizontalExpand = true,
+        };
+
+        var buyButton = new Button
+        {
+            Text = "Buy",
+            HorizontalExpand = true,
+        };
+
+        buyButton.OnPressed += _ =>
+        {
+            if (balance >= price)
+                balance -= price;
+            
+            _window.BalanceLabel.SetMessage($"Balance: {balance}");
+            
+            SendMessage(new AbductorItemBuyedBuiMsg()
+            {
+                Item = productEntity,
+                Price = price,
+            });
+        };
+
+        itemContainer.AddChild(nameLabel);
+        itemContainer.AddChild(priceLabel);
+        itemContainer.AddChild(buyButton);
+
+        _window.ShopItems.AddChild(itemContainer);
     }
 
     private void RefreshUI()
@@ -166,6 +226,13 @@ public sealed class AbductorConsoleBui : BoundUserInterface
         }
         
         UpdateDisabledPanel(armorDisabled);
+        
+        // shop tab
+        
+        if (state.CurrentBalance != null)
+            balance = state.CurrentBalance.Value;
+        
+        _window.BalanceLabel.SetMessage($"Balance: {balance}");
     }
     
     private void UpdateDisabledPanel(bool disable)
@@ -201,9 +268,11 @@ public sealed class AbductorConsoleBui : BoundUserInterface
         _window.TeleportTabButton.Disabled = type == ViewType.Teleport;
         _window.ExperimentTabButton.Disabled = type == ViewType.Experiment;
         _window.ArmorControlTabButton.Disabled = type == ViewType.ArmorControl;
+        _window.ShopTabButton.Disabled = type == ViewType.Shop;
         _window.TeleportTab.Visible = type == ViewType.Teleport;
         _window.ExperimentTab.Visible = type == ViewType.Experiment;
         _window.ArmorControlTab.Visible = type == ViewType.ArmorControl;
+        _window.ShopTab.Visible = type == ViewType.Shop;
         
         UpdateDisabledPanel(armorDisabled);
     }
@@ -212,7 +281,8 @@ public sealed class AbductorConsoleBui : BoundUserInterface
     {
         Teleport,
         Experiment,
-        ArmorControl
+        ArmorControl,
+        Shop
     }
 
     protected override void Dispose(bool disposing)
