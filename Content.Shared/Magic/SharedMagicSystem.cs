@@ -4,6 +4,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.CombatMode;
+using Content.Shared.Construction.Components;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Damage;
 using Content.Shared.Doors.Components;
@@ -79,6 +80,7 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly NpcFactionSystem _faction = default!;
+    [Dependency] private readonly FixtureSystem _fixture = default!;
 
     public override void Initialize()
     {
@@ -603,26 +605,19 @@ public abstract class SharedMagicSystem : EntitySystem
         ev.Handled = true;
         Speak(ev);
 
-        AnimateSpellHelper(ev);
+        foreach (var (name, data) in ev.Components)
+        {
+            if (HasComp(ev.Target, data.Component.GetType()))
+                continue;
 
-        EnsureComp<CombatModeComponent>(ev.Target);
+            var component = (Component)_compFact.GetComponent(name);
+            var temp = (object)component;
+            _seriMan.CopyTo(data.Component, ref temp);
+            EntityManager.AddComponent(ev.Target, (Component)temp!);
+        }
 
-        var melee = EnsureComp<MeleeWeaponComponent>(ev.Target);
-        melee.Animation = ev.AttackAnimation;
-        melee.WideAnimation = ev.AttackAnimation;
-        melee.AltDisarm = false;
-        melee.Range = 1.2f;
-        melee.Angle = 0.0f;
-        melee.HitSound = ev.AttackSound;
-        melee.Damage = ev.Damage;
-
-        EnsureComp<NpcFactionMemberComponent>(ev.Target);
-        _faction.AddFaction(ev.Target, ev.Faction);
-
-        var physics = EnsureComp<PhysicsComponent>(ev.Target);
-        _physics.SetCanCollide(ev.Target, false, force: true, body: physics);
+        _transform.Unanchor(ev.Target);
     }
-    public virtual void AnimateSpellHelper(AnimateSpellEvent ev) { }
 
     #endregion
     // End Spells

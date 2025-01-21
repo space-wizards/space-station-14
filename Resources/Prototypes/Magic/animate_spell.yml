@@ -6,6 +6,9 @@
   - type: EntityTargetAction
     useDelay: 1
     itemIconStyle: BigAction
+    whitelist:
+      components:
+      - Animateable
     blacklist:
       components:
       - MindContainer
@@ -17,10 +20,29 @@
       sprite: Objects/Magic/magicactions.rsi
       state: spell_default
     event: !type:AnimateSpellEvent
-      task: SimpleHostileCompound
-      faction: SimpleHostile
-      attackAnimation: WeaponArcPunch
-      damage:
-        types:
-          Blunt: 10
+      components:
+      - type: MindContainer
+      - type: InputMover
+      - type: MobMover
+      - type: MovementSpeedModifier
+      - type: Speech
+      - type: Emoting
+      - type: Examiner
+      - type: HTN
+        rootTask:
+          task: SimpleHostileCompound
+      - type: CombatMode
+      - type: MeleeWeapon
+        animation: WeaponArcPunch
+        wideAnimation: WeaponArcPunch
+        altDisarm: false
+        soundHit: /Audio/Weapons/smash.ogg
+        range: 1.2
+        angle: 0.0
+        damage:
+          types:
+            Blunt: 10
+      - type: NpcFactionMember
+        factions:
+        - Wizard
       speech: action-speech-spell-animate

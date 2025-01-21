@@ -22,16 +22,4 @@ public sealed class MagicSystem : SharedMagicSystem
     {
         _chat.TrySendInGameICMessage(args.Performer, Loc.GetString(args.Speech), InGameICChatType.Speak, false);
     }
-
-    public override void AnimateSpellHelper(AnimateSpellEvent ev)
-    {
-        MakeSentientCommand.MakeSentient(ev.Target, EntityManager, true, true);
-
-        var npc = EnsureComp<HTNComponent>(ev.Target);
-        npc.RootTask = new HTNCompoundTask()
-        {
-            Task = ev.Task
-        };
-        
-    }
 }
