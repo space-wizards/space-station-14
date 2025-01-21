@@ -22,8 +22,8 @@
 - type: entity
   id: ShellShotgunBeanbag
   name: shell (12G beanbag)
-  parent: BaseShellShotgun
   description: Also known as ‘baton rounds’, these non-lethal shotgun shells contain several pellets within a padded bag. Stuns and bruises the victim. 
+  parent: [ BaseShellShotgun, BaseSecurityBartenderContraband ]
   components:
   - type: Tag
     tags:
@@ -57,8 +57,8 @@
 - type: entity
   id: ShellShotgunFlare
   name: shell (12G flare)
-  parent: BaseShellShotgun
   description: A single, slow-burning projectile for illumination. It doesn’t produce much heat and can be used by both shotguns and dedicated flare guns.
+  parent: [ BaseShellShotgun, BaseSecurityBartenderContraband ]
   components:
   - type: Tag
     tags:

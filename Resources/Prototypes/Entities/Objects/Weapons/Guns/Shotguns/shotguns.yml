@@ -103,7 +103,7 @@
 
 - type: entity
   name: double-barreled shotgun
-  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseMinorContraband]
+  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityBartenderContraband]
   id: WeaponShotgunDoubleBarreled
   description: A classic break-action double-barrel shotgun. This particular gun is worn and stained, with the distinct smell of alcohol. Fits two 12 gauge shells. 
   components:
@@ -182,7 +182,7 @@
 
 - type: entity
   name: sawn-off shotgun
-  parent: BaseWeaponShotgun
+  parent: [ BaseWeaponShotgun, BaseSecurityBartenderContraband ]
   id: WeaponShotgunSawn
   description: A classic break-action double-barrel shotgun with a hand-shortened barrel. Easier to conceal but far less accurate. Fits two 12 gauge shells.
   components:
