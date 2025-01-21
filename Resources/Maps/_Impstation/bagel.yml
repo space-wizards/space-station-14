@@ -100710,11 +100710,15 @@ entities:
     - type: Transform
       pos: -2.5,44.5
       parent: 2
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 5493
     components:
     - type: Transform
       pos: -3.5,44.5
       parent: 2
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 5505
     components:
     - type: Transform
@@ -100939,35 +100943,11 @@ entities:
       parent: 25288
 - proto: GasPressurePump
   entities:
-  - uid: 5507
-    components:
-    - type: Transform
-      pos: -3.5,43.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
   - uid: 5512
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,47.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
-  - uid: 5579
-    components:
-    - type: MetaData
-      name: Input from Atmos
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -7.5,42.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#FF6600FF'
-  - uid: 6898
-    components:
-    - type: Transform
-      pos: -2.5,43.5
       parent: 2
     - type: AtmosPipeColor
       color: '#03FCD3FF'
@@ -104873,6 +104853,28 @@ entities:
       color: '#FF1212FF'
 - proto: GasVolumePump
   entities:
+  - uid: 5507
+    components:
+    - type: Transform
+      pos: -2.5,43.5
+      parent: 2
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
+  - uid: 5579
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -7.5,42.5
+      parent: 2
+    - type: AtmosPipeColor
+      color: '#FF6600FF'
+  - uid: 6898
+    components:
+    - type: Transform
+      pos: -3.5,43.5
+      parent: 2
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 14952
     components:
     - type: Transform
