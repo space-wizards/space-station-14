@@ -145,9 +145,6 @@
   - type: UnblockableSpeech
   - type: ReplacementAccent
     accent: silicon
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepFloor
   - type: Lock
     locked: true
     breakOnEmag: false
