@@ -229,7 +229,7 @@
   - type: Construction
     node: intercomReinforced
 
-# Duplicate of BaseIntercom, but with a different construction graph and inability to remove keys
+# Duplicate of BaseIntercom, but with a no construction graph and inability to remove keys
 - type: entity
   id: BaseIntercomLocked
   name: hardened intercom
@@ -246,6 +246,7 @@
   - type: EncryptionKeyHolder
     keySlots: 3
     keysUnlocked: false
+    keysExtractionMethod: Prying
   - type: RadioMicrophone
     powerRequired: true
     unobstructedRequired: true
@@ -309,8 +310,6 @@
         type: IntercomBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
-  - type: Construction
-    graph: IntercomLocked
     node: intercom
   - type: Damageable
     damageContainer: StructuralInorganic
@@ -358,15 +357,6 @@
     - Wallmount
 
 - type: entity
-  id: IntercomLockedAssembly
-  name: hardened intercom assembly
-  parent: IntercomAssembly
-  components:
-  - type: Construction
-    graph: IntercomLocked
-    node: assembly
-
-- type: entity
   id: IntercomLockedConstructed
   parent: BaseIntercomLocked
   suffix: Empty, Panel Open
@@ -392,32 +382,8 @@
     open: true
 
 - type: entity
-  id: IntercomLocked
-  parent: IntercomLockedConstructed
-  suffix: ""
-  components:
-  - type: Sprite
-    layers:
-    - state: base
-    - state: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-      shader: unshaded
-    - state: broadcasting
-      map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
-      shader: unshaded
-      visible: false
-    - state: speaker
-      map: ["enum.RadioDeviceVisualLayers.Speaker"]
-      shader: unshaded
-      visible: false
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: WiresPanel
-    open: false
-
-- type: entity
   id: BaseIntercomLockedSecure
-  parent: IntercomLocked
+  parent: BaseIntercomLocked
   abstract: true
   components:
   - type: WiresPanel
@@ -561,7 +527,7 @@
 
 - type: entity
   id: IntercomLockedAll
-  parent: IntercomLocked
+  parent: BaseIntercomLocked
   suffix: All
   components:
   - type: ContainerFill
