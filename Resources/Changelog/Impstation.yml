@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Quick Construction menu from Einstein Engine,
-    type: Add
-  id: 479
-  time: '2024-11-08T17:09:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/649
 - author: DinnerCalzone
   changes:
   - message: A number of Impstation sounds have been mixed to mono and had their volume
@@ -4411,3 +4404,11 @@
   id: 978
   time: '2025-01-20T23:07:33.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1440
+- author: TheGrimbeeper
+  changes:
+  - message: Reagent examine text should be more differentiable for solutions with
+      same color but different brightness.
+    type: Tweak
+  id: 979
+  time: '2025-01-21T02:37:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1439
