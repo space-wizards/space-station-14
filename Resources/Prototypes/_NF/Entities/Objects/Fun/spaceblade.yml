@@ -48,6 +48,7 @@
   - type: ChasingWalk # imp edit - like stand users beyblades are attracted to each other across time and space
     chasingComponent:
     - type: SpaceBlade
+
 - type: entity
   id: SpaceBladeRedOrange
   parent: SpaceBlade
