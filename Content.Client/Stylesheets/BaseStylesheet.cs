@@ -11,6 +11,11 @@ public abstract partial class BaseStylesheet
     /// </remarks>
     public virtual Type StylesheetConfigType => typeof(NoConfig);
 
+    /// <remarks>
+    ///     ex. "Nanotrasen", "System", "Syndicate"
+    /// </remarks>
+    public abstract string StylesheetName { get; }
+
     public record NoConfig();
 
     private object _config;
@@ -25,4 +30,3 @@ public abstract partial class BaseStylesheet
         Stylesheet = default!;
     }
 }
-

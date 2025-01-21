@@ -11,6 +11,8 @@ namespace Content.Client.Stylesheets.Stylesheets;
 [Virtual]
 public partial class NanotrasenStylesheet : CommonStylesheet
 {
+    public override string StylesheetName => "Nanotrasen";
+
     public override NotoFontFamilyStack BaseFont { get; } // TODO: NotoFontFamilyStack is temporary
 
 

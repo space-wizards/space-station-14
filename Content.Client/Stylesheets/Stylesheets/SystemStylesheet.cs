@@ -12,6 +12,8 @@ namespace Content.Client.Stylesheets.Stylesheets;
 [Virtual]
 public partial class SystemStylesheet : CommonStylesheet
 {
+    public override string StylesheetName => "System";
+
     public override NotoFontFamilyStack BaseFont { get; } // TODO: NotoFontFamilyStack is temporary
 
     public override Dictionary<Type, ResPath[]> Roots => new()
