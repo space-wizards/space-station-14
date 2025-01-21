@@ -759,11 +759,11 @@ entities:
             5236: -5,38
             5237: -4,38
             5241: -7,38
-            5242: -5,35
             5297: -1,44
             5298: 1,44
             5299: 8,34
             5300: 9,34
+            5311: -8,38
         - node:
             cleanable: True
             color: '#FFFFFFFF'
@@ -50381,11 +50381,6 @@ entities:
     - type: Transform
       pos: -45.5,38.5
       parent: 2
-  - uid: 25860
-    components:
-    - type: Transform
-      pos: -5.5,38.5
-      parent: 2
 - proto: Carpet
   entities:
   - uid: 7469
@@ -75987,6 +75982,11 @@ entities:
       parent: 2
 - proto: GasAnalyzer
   entities:
+  - uid: 25858
+    components:
+    - type: Transform
+      pos: -4.704353,35.579525
+      parent: 2
   - uid: 26037
     components:
     - type: Transform
@@ -114145,7 +114145,7 @@ entities:
   - uid: 26243
     components:
     - type: Transform
-      pos: 5.3964443,40.610252
+      pos: 5.1731195,40.543896
       parent: 2
 - proto: HandheldStationMap
   entities:
@@ -117259,6 +117259,11 @@ entities:
     - type: Transform
       pos: 32.483738,14.359157
       parent: 2
+  - uid: 26064
+    components:
+    - type: Transform
+      pos: -4.38081,35.72015
+      parent: 2
 - proto: MedkitCombatFilled
   entities:
   - uid: 17079
@@ -117911,7 +117916,7 @@ entities:
   - uid: 25854
     components:
     - type: Transform
-      pos: -2.5,44.5
+      pos: -4.5,38.5
       parent: 2
   - uid: 25857
     components:
@@ -117975,6 +117980,13 @@ entities:
     components:
     - type: Transform
       pos: -110.44448,8.510696
+      parent: 2
+- proto: Ointment
+  entities:
+  - uid: 26128
+    components:
+    - type: Transform
+      pos: 5.4856195,40.71577
       parent: 2
 - proto: OperatingTable
   entities:
@@ -118907,10 +118919,10 @@ entities:
     - type: Transform
       pos: -6.5,33.5
       parent: 2
-  - uid: 25858
+  - uid: 18204
     components:
     - type: Transform
-      pos: -4.5,38.5
+      pos: -5.5,38.5
       parent: 2
 - proto: PlasmaOre1
   entities:
@@ -138990,6 +139002,11 @@ entities:
       parent: 2
 - proto: StorageCanister
   entities:
+  - uid: 19793
+    components:
+    - type: Transform
+      pos: -7.5,38.5
+      parent: 2
   - uid: 20595
     components:
     - type: Transform
@@ -139063,12 +139080,7 @@ entities:
   - uid: 26057
     components:
     - type: Transform
-      pos: 3.5,44.5
-      parent: 2
-  - uid: 26202
-    components:
-    - type: Transform
-      pos: -4.5,35.5
+      pos: -6.5,38.5
       parent: 2
 - proto: Stunbaton
   entities:
@@ -142946,6 +142958,11 @@ entities:
     - type: Transform
       pos: 53.5,18.5
       parent: 2
+  - uid: 25860
+    components:
+    - type: Transform
+      pos: -4.5,35.5
+      parent: 2
   - uid: 26029
     components:
     - type: Transform
@@ -144523,16 +144540,6 @@ entities:
       parent: 2
 - proto: TeslaGroundingRod
   entities:
-  - uid: 18204
-    components:
-    - type: Transform
-      pos: 3.5,50.5
-      parent: 2
-  - uid: 19793
-    components:
-    - type: Transform
-      pos: -2.5,50.5
-      parent: 2
   - uid: 26205
     components:
     - type: Transform
@@ -161344,11 +161351,6 @@ entities:
     components:
     - type: Transform
       pos: -26.5,35.5
-      parent: 2
-  - uid: 26064
-    components:
-    - type: Transform
-      pos: -6.5,38.5
       parent: 2
 - proto: WeaponCapacitorRecharger
   entities:
