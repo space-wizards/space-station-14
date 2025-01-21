@@ -83,10 +83,7 @@
 - type: soundCollection
   id: SlimeWhistles
   files:
-    - /Audio/_Impstation/Voice/Slime/s_whistle_1.ogg
-    - /Audio/_Impstation/Voice/Slime/s_whistle_2.ogg
-    - /Audio/_Impstation/Voice/Slime/s_whistle_3.ogg
-    - /Audio/_Impstation/Voice/Slime/s_whistle_4.ogg
+    - /Audio/_Impstation/Voice/Slime/slimewhistle.ogg
 
 - type: soundCollection
   id: Bubbles

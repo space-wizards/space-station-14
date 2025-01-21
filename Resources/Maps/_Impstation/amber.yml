@@ -1798,7 +1798,6 @@ entities:
             12899: -15,-51
             12900: -14,-51
             12901: -14,-52
-            19534: 14,15
         - node:
             zIndex: 1
             color: '#334E6DC8'
@@ -2130,8 +2129,6 @@ entities:
             11503: 26,-40
             11775: -27,-22
             11777: -29,-22
-            11824: 18,12
-            11825: 16,15
             11866: -32,14
             11867: -30,19
             11950: 26,-18
@@ -2199,7 +2196,6 @@ entities:
             14814: -28,19
             14815: -14,21
             14816: -7,21
-            14817: 21,12
             14898: -34,19
             14942: 40,11
             14966: 39,5
@@ -2712,9 +2708,6 @@ entities:
             7581: 25,10
             7582: 25,10
             7583: 25,13
-            7585: 21,12
-            7586: 20,12
-            7597: 20,12
             7599: 16,12
             7601: 29,18
             7602: 28,18
@@ -3319,9 +3312,6 @@ entities:
             11706: -9,-11
             11707: -10,-11
             11708: -9,-13
-            11830: 17,15
-            11831: 17,14
-            11834: 18,12
             11836: 17,13
             11837: 17,12
             11838: 16,12
@@ -3329,11 +3319,6 @@ entities:
             11840: 15,11
             11841: 15,12
             11842: 15,13
-            11843: 15,14
-            11844: 16,15
-            11845: 17,14
-            11846: 17,15
-            11847: 18,15
             11868: -31,17
             11869: -31,18
             11871: -30,18
@@ -5049,20 +5034,8 @@ entities:
             19059: 16,32
             19060: 16,32
             19061: 16,34
-            19070: 18,17
-            19071: 19,17
-            19072: 20,17
-            19073: 21,17
-            19074: 21,18
             19075: 20,18
-            19076: 20,19
-            19077: 19,19
             19078: 21,19
-            19079: 22,19
-            19080: 23,19
-            19081: 23,18
-            19082: 22,18
-            19083: 21,18
             19084: 27,21
             19085: 26,21
             19086: 25,19
@@ -5083,9 +5056,6 @@ entities:
             19102: 24,10
             19106: 23,14
             19107: 23,12
-            19108: 22,12
-            19109: 21,12
-            19110: 20,12
             19112: 28,21
             19113: 27,21
             19114: 27,22
@@ -5137,7 +5107,15 @@ entities:
             id: DirtHeavy
           decals:
             19528: 19,18
-            19529: 15,15
+            19624: 14,15
+            19625: 17,14
+            19626: 20,12
+            19652: 19,19
+            19653: 18,12
+            19654: 20,10
+            19655: 22,10
+            19656: 19,14
+            19657: 15,15
         - node:
             cleanable: True
             zIndex: 5
@@ -5295,8 +5273,6 @@ entities:
             11717: -12,-13
             11718: -13,-13
             11719: -14,-20
-            11826: 19,12
-            11829: 17,14
             12646: -7,-50
             12649: 2,-48
             12650: 5,-50
@@ -5452,6 +5428,16 @@ entities:
             19160: 33,25
             19161: 35,24
             19332: 19,0
+        - node:
+            cleanable: True
+            color: '#FFFFFFFF'
+            id: DirtHeavyMonotile
+          decals:
+            19627: 15,14
+            19628: 16,15
+            19629: 20,13
+            19646: 21,18
+            19647: 21,19
         - node:
             cleanable: True
             zIndex: 5
@@ -6842,14 +6828,7 @@ entities:
             19165: 27,22
             19166: 27,23
             19167: 24,21
-            19170: 22,18
-            19171: 21,17
-            19172: 19,17
-            19173: 18,17
-            19174: 19,19
             19175: 21,19
-            19176: 23,18
-            19177: 22,18
             19180: 17,22
             19181: 16,22
             19182: 17,24
@@ -6916,11 +6895,6 @@ entities:
             19414: 22,23
             19415: 21,23
             19416: 31,20
-            19417: 23,18
-            19418: 20,19
-            19419: 19,19
-            19420: 20,17
-            19421: 21,17
             19422: 23,17
             19423: 23,16
             19424: 23,15
@@ -6934,9 +6908,19 @@ entities:
             id: DirtLight
           decals:
             19530: 21,11
-            19531: 19,13
-            19532: 14,15
-            19533: 21,15
+            19630: 19,14
+            19631: 21,15
+            19632: 21,17
+            19633: 21,18
+            19634: 23,18
+            19635: 21,11
+            19644: 19,17
+            19645: 19,18
+            19648: 20,19
+            19649: 22,18
+            19650: 22,19
+            19651: 23,19
+            19658: 19,13
         - node:
             cleanable: True
             zIndex: 5
@@ -7362,7 +7346,6 @@ entities:
             11699: -9,-9
             11700: -10,-9
             11701: -9,-7
-            11852: 19,12
             11853: 29,-5
             11887: -34,4
             11888: -34,6
@@ -8031,6 +8014,18 @@ entities:
             19476: -44,-37
             19477: -46,-35
         - node:
+            cleanable: True
+            color: '#FFFFFFFF'
+            id: DirtMedium
+          decals:
+            19636: 19,10
+            19638: 19,12
+            19639: 22,12
+            19640: 16,14
+            19641: 21,15
+            19642: 19,15
+            19643: 20,14
+        - node:
             zIndex: 2
             color: '#FFFFFFFF'
             id: FlowersBROne
@@ -8196,7 +8191,6 @@ entities:
             11348: -19,-58
             11349: -18,-58
             11350: -17,-58
-            19571: 18,17
             19572: 21,16
             19573: 18,10
         - node:
@@ -8214,6 +8208,14 @@ entities:
             19433: -26,-48
             19434: -25,-44
             19435: -24,-44
+        - node:
+            color: '#3C44AA93'
+            id: FullTileOverlayGreyscale
+          decals:
+            19580: 19,19
+            19581: 22,19
+            19582: 23,19
+            19583: 18,17
         - node:
             color: '#3EB38896'
             id: FullTileOverlayGreyscale
@@ -8577,9 +8579,13 @@ entities:
           decals:
             10905: -10,-27
             10906: -9,-27
-            19535: 15,15
-            19546: 21,15
-            19569: 19,19
+        - node:
+            color: '#3C44AA93'
+            id: HalfTileOverlayGreyscale
+          decals:
+            19578: 20,19
+            19579: 21,19
+            19599: 21,15
         - node:
             color: '#52B4E996'
             id: HalfTileOverlayGreyscale
@@ -8662,8 +8668,6 @@ entities:
             10901: -8,-23
             10902: -10,-25
             10903: -9,-25
-            19547: 21,17
-            19574: 23,18
         - node:
             zIndex: 1
             color: '#334E6DC8'
@@ -8671,6 +8675,14 @@ entities:
           decals:
             18508: -24,-43
             18509: -25,-43
+        - node:
+            color: '#3C44AA93'
+            id: HalfTileOverlayGreyscale180
+          decals:
+            19590: 20,17
+            19595: 22,18
+            19596: 23,18
+            19597: 21,17
         - node:
             color: '#52B4E996'
             id: HalfTileOverlayGreyscale180
@@ -8747,8 +8759,13 @@ entities:
             id: HalfTileOverlayGreyscale270
           decals:
             10904: -8,-26
-            19568: 19,10
-            19570: 19,17
+        - node:
+            color: '#3C44AA93'
+            id: HalfTileOverlayGreyscale270
+          decals:
+            19577: 14,15
+            19589: 19,18
+            19598: 19,10
         - node:
             color: '#43990996'
             id: HalfTileOverlayGreyscale270
@@ -8840,11 +8857,6 @@ entities:
             16085: -32,-37
             16086: -32,-36
             16087: -32,-35
-        - node:
-            color: '#334E6DC8'
-            id: HalfTileOverlayGreyscale90
-          decals:
-            19549: 22,11
         - node:
             color: '#43990996'
             id: HalfTileOverlayGreyscale90
@@ -8968,11 +8980,16 @@ entities:
             id: QuarterTileOverlayGreyscale
           decals:
             10908: -8,-27
-            19541: 16,15
-            19542: 17,15
-            19543: 18,15
-            19544: 19,15
-            19545: 20,15
+        - node:
+            color: '#3C44AA93'
+            id: QuarterTileOverlayGreyscale
+          decals:
+            19600: 15,15
+            19601: 16,15
+            19602: 17,15
+            19603: 18,15
+            19604: 19,15
+            19605: 20,15
         - node:
             color: '#52B4E996'
             id: QuarterTileOverlayGreyscale
@@ -9118,16 +9135,6 @@ entities:
             9593: -17,-3
             15742: -28,-8
         - node:
-            color: '#334E6DC8'
-            id: QuarterTileOverlayGreyscale180
-          decals:
-            19554: 22,10
-            19555: 21,10
-            19556: 20,10
-            19565: 21,14
-            19566: 20,14
-            19567: 20,13
-        - node:
             zIndex: 1
             color: '#334E6DC8'
             id: QuarterTileOverlayGreyscale180
@@ -9145,6 +9152,14 @@ entities:
             18520: -33,-48
             18521: -33,-49
             18522: -33,-50
+        - node:
+            color: '#3C44AA93'
+            id: QuarterTileOverlayGreyscale180
+          decals:
+            19615: 20,10
+            19616: 21,10
+            19617: 22,10
+            19623: 21,14
         - node:
             color: '#52B4E996'
             id: QuarterTileOverlayGreyscale180
@@ -9293,15 +9308,6 @@ entities:
             11421: -21,-43
             11422: -22,-43
             11423: -23,-43
-            19536: 15,14
-            19537: 16,14
-            19538: 17,14
-            19540: 18,12
-            19551: 19,12
-            19559: 18,13
-            19562: 18,14
-            19563: 20,12
-            19564: 20,11
         - node:
             zIndex: 1
             color: '#334E6DC8'
@@ -9312,6 +9318,19 @@ entities:
             13809: -10,-45
             14386: -10,-46
             14387: -10,-47
+        - node:
+            color: '#3C44AA93'
+            id: QuarterTileOverlayGreyscale270
+          decals:
+            19606: 15,14
+            19607: 16,14
+            19608: 17,14
+            19609: 18,14
+            19610: 18,13
+            19611: 18,12
+            19612: 19,12
+            19613: 20,12
+            19614: 20,11
         - node:
             color: '#52B4E996'
             id: QuarterTileOverlayGreyscale270
@@ -9478,11 +9497,14 @@ entities:
             16117: -39,-34
             16118: -40,-34
         - node:
-            color: '#334E6DC8'
+            color: '#3C44AA93'
             id: QuarterTileOverlayGreyscale90
           decals:
-            19552: 21,12
-            19553: 22,12
+            19618: 22,11
+            19619: 22,12
+            19620: 21,12
+            19621: 20,12
+            19622: 20,13
         - node:
             color: '#52B4E996'
             id: QuarterTileOverlayGreyscale90
@@ -9782,6 +9804,11 @@ entities:
             id: ThreeQuarterTileOverlayGreyscale180
           decals:
             14451: 33,-32
+        - node:
+            color: '#3C44AA93'
+            id: ThreeQuarterTileOverlayGreyscale270
+          decals:
+            19591: 19,17
         - node:
             color: '#52B4E996'
             id: ThreeQuarterTileOverlayGreyscale270
@@ -59876,18 +59903,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -32.534172,-20.28666
       parent: 2
-  - uid: 22312
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 21.512619,19.602446
-      parent: 2
-  - uid: 22313
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 23.47563,19.5841
-      parent: 2
   - uid: 22613
     components:
     - type: Transform
@@ -106056,6 +106071,12 @@ entities:
     - type: Transform
       pos: -38.5,-31.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        2273:
+        - Pressed: Toggle
+        2287:
+        - Pressed: Toggle
   - uid: 2322
     components:
     - type: MetaData
@@ -106077,18 +106098,36 @@ entities:
     - type: Transform
       pos: -38.5,-25.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        506:
+        - Pressed: Toggle
+        2244:
+        - Pressed: Toggle
   - uid: 5465
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -32.5,-33.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        1095:
+        - Pressed: Toggle
+        967:
+        - Pressed: Toggle
   - uid: 6574
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -32.5,-26.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        1781:
+        - Pressed: Toggle
+        2509:
+        - Pressed: Toggle
   - uid: 21239
     components:
     - type: Transform
@@ -106385,6 +106424,18 @@ entities:
     components:
     - type: Transform
       pos: 7.5,-27.5
+      parent: 2
+- proto: LockerCourierFilled
+  entities:
+  - uid: 5913
+    components:
+    - type: Transform
+      pos: 22.5,19.5
+      parent: 2
+  - uid: 22309
+    components:
+    - type: Transform
+      pos: 23.5,19.5
       parent: 2
 - proto: LockerDetectiveFilled
   entities:
@@ -108067,7 +108118,7 @@ entities:
   - uid: 22315
     components:
     - type: Transform
-      pos: 22.57422,19.63889
+      pos: 20.322268,18.452442
       parent: 2
 - proto: MaterialCloth
   entities:
@@ -109165,6 +109216,9 @@ entities:
     - type: Transform
       pos: 15.5,-52.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
 - proto: PaperOffice
   entities:
   - uid: 7554
@@ -120556,29 +120610,13 @@ entities:
       parent: 2
 - proto: SheetPaper1
   entities:
-  - uid: 5913
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 20.547642,18.769604
-      parent: 2
   - uid: 12485
     components:
     - type: Transform
-      pos: 20.500767,18.425854
+      pos: 20.712893,18.718067
       parent: 2
-  - uid: 22382
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 22.701982,19.633614
-      parent: 2
-  - uid: 22383
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 22.31672,19.486847
-      parent: 2
+    - type: Stack
+      count: 4
 - proto: SheetPlasma
   entities:
   - uid: 11897
@@ -126848,6 +126886,28 @@ entities:
       parent: 2
     - type: SurveillanceCamera
       id: Docking Airlocks
+  - uid: 22312
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 18.5,15.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSupply
+      nameSet: True
+      id: Mail Room
+  - uid: 22313
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 21.5,19.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSupply
+      nameSet: True
+      id: Mail Locker Room
   - uid: 22472
     components:
     - type: Transform
@@ -129276,12 +129336,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 20.5,18.5
-      parent: 2
-  - uid: 22309
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 22.5,19.5
       parent: 2
 - proto: TargetClown
   entities:
@@ -147686,36 +147740,57 @@ entities:
     - type: Transform
       pos: 20.5,-43.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 5206
     components:
     - type: Transform
       pos: 41.5,11.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 6103
     components:
     - type: Transform
       pos: 39.5,-15.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 7276
     components:
     - type: Transform
       pos: 38.5,0.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 15254
     components:
     - type: Transform
       pos: -39.5,-54.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 16197
     components:
     - type: Transform
       pos: -19.5,28.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 18168
     components:
     - type: Transform
       pos: 39.5,-13.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
 - proto: WoodenBench
   entities:
   - uid: 1319

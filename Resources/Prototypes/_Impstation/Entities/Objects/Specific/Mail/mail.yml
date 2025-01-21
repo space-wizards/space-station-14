@@ -2,10 +2,127 @@
 
 - type: entity
   parent: BaseMailLarge
-  id: MailGoblin
-  suffix: pumpkinpie
+  id: MailImpGoblin
+  suffix: a whole goblin
   components:
   - type: Mail
     contents:
-    - id: FoodPiePumpkin
+    - id: MobGoblinStowaway
 
+- type: entity
+  parent: BaseMailLarge
+  id: MailImpToolbox
+  suffix: toolbox
+  components:
+  - type: Mail
+    contents:
+    - id: ToolboxElectricalFilled
+      orGroup: Toolbox
+      prob: 0.3
+    - id: ToolboxArtisticFilled
+      orGroup: Toolbox
+      prob: 0.3
+    - id: ToolboxMechanicalFilled
+      orGroup: Toolbox
+      prob: 0.3
+    - id: ToolboxSyndicateFilled
+      orGroup: Toolbox
+      prob: 0.1
+    - id: PaperMailNFPowerTool
+
+- type: entity
+  parent: BaseMailLarge
+  id: MailImpSCargo
+  suffix: S-cargo
+  components:
+  - type: Mail
+    contents:
+    - id: ClothingBackpackSCargoDuffelPurple
+      orGroup: Backpack
+      prob: 0.5
+    - id: ClothingBackpackSCargoDuffelCyan
+      orGroup: Backpack
+      prob: 0.5
+
+- type: entity
+  parent: BaseMail
+  id: MailImpBee
+  suffix: angry bee
+  components:
+  - type: Mail
+    contents:
+    - id: MobAngryBee
+
+- type: entity
+  parent: BaseMailLarge
+  id: MailImpChameleonScarf
+  suffix: Chameleon scarf
+  components:
+  - type: Mail
+    contents:
+    - id: ClothingNeckChameleon
+
+- type: entity
+  parent: BaseMailLarge
+  id: MailImpShoes
+  suffix: toolbox
+  components:
+  - type: Mail
+    contents:
+    - id: ClothingShoesBootsWork #I wish I got mailed free workboots
+      orGroup: Shoes
+      prob: 0.3
+    - id: ClothingShoesBootsMag
+      orGroup: Shoes
+      prob: 0.3
+    - id: ClothingShoesSkates
+      orGroup: Shoes
+      prob: 0.3
+    - id: ClothingShoesChameleon
+      orGroup: Shoes
+      prob: 0.1
+
+- type: entity
+  parent: BaseMail
+  id: MailImpCarpetiumBottle
+  suffix: carpetium
+  components:
+  - type: Mail
+    contents:
+    - id: SprayBottleCarpetium
+
+- type: entity
+  parent: BaseMailLarge
+  id: MailImpBedsheets
+  suffix: bedsheets
+  components:
+  - type: Mail
+    contents:
+    - id: BedsheetRainbow
+      orGroup: Bedsheet
+      prob: 0.2
+    - id: BedsheetWiz
+      orGroup: Bedsheet
+      prob: 0.2
+    - id: BedsheetNT
+      orGroup: Bedsheet
+      prob: 0.2
+    - id: BedsheetCosmos
+      orGroup: Bedsheet
+      prob: 0.2
+    - id: BedsheetCentcom
+      orGroup: Bedsheet
+      prob: 0.2
+    - id: PaperMailNTBedsheetsAd
+
+- type: entity
+  parent: BaseMailLarge
+  id: MailTckTck #for salvagers. also because I want to
+  suffix: Tck'tck
+  components:
+  - type: Mail
+    contents:
+    - id: MobTckTck
+    - id: BorgModuleTckTckGun
+      prob: 0.09
+    - id: PaperMailTckTck

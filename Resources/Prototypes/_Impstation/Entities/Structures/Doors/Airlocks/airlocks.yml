@@ -1,23 +1,147 @@
+# Airlocks
 - type: entity
   parent: Airlock
+  id: AirlockService
+  suffix: Service
+  components:
+  - type: Wires
+    layoutId: AirlockService
+
+- type: entity
+  parent: AirlockService
+  id: AirlockLawyer
+  suffix: Lawyer
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/lawyer.rsi
+
+- type: entity
+  parent: AirlockService
+  id: AirlockTheatre
+  suffix: Theatre
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/theatre.rsi
+
+- type: entity
+  parent: AirlockService
+  id: AirlockChapel
+  suffix: Chapel
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/chapel.rsi
+ 
+- type: entity
+  parent: AirlockService
+  id: AirlockJanitor
+  suffix: Janitor
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/janitor.rsi
+
+- type: entity
+  parent: AirlockService
+  id: AirlockKitchen
+  suffix: Kitchen
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/kitchen.rsi
+
+- type: entity
+  parent: AirlockService
+  id: AirlockBar
+  suffix: Bar
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/bar.rsi
+
+- type: entity
+  parent: AirlockCargo
+  id: AirlockSalvage
+  suffix: Salvage
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/salvage.rsi
+
+- type: entity
+  parent: AirlockCargo
   id: AirlockCourier
   suffix: Courier
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/cargo.rsi
-  - type: PaintableAirlock
-    department: Cargo
-  - type: Wires
-    layoutId: AirlockCargo
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/courier.rsi
 
+# Glass Airlocks
 - type: entity
   parent: AirlockGlass
+  id: AirlockServiceGlass
+  suffix: Service
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/basic.rsi
+  - type: Wires
+    layoutId: AirlockService
+    
+- type: entity
+  parent: AirlockServiceGlass
+  id: AirlockLawyerGlass
+  suffix: Lawyer
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/lawyer.rsi
+
+- type: entity
+  parent: AirlockServiceGlass
+  id: AirlockTheatreGlass
+  suffix: Theatre
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/theatre.rsi
+    
+- type: entity
+  parent: AirlockServiceGlass
+  id: AirlockBarGlass
+  suffix: Bar
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/bar.rsi
+
+- type: entity
+  parent: AirlockServiceGlass
+  id: AirlockKitchenGlass
+  suffix: Kitchen
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/kitchen.rsi
+
+- type: entity
+  parent: AirlockServiceGlass
+  id: AirlockJanitorGlass
+  suffix: Janitor
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/janitor.rsi
+
+- type: entity
+  parent: AirlockServiceGlass
+  id: AirlockChapelGlass
+  suffix: Chapel
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/chapel.rsi
+
+- type: entity
+  parent: AirlockCargoGlass
+  id: AirlockSalvageGlass
+  suffix: Salvage
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/salvage.rsi
+
+- type: entity
+  parent: AirlockCargoGlass
   id: AirlockCourierGlass
   suffix: Courier
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/cargo.rsi
-  - type: PaintableAirlock
-    department: Cargo
-  - type: Wires
-    layoutId: AirlockCargo
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/courier.rsi
