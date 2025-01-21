@@ -175,7 +175,7 @@ def changelog_entries_to_message_lines(entries: Iterable[ChangelogEntry]) -> lis
                     message = message[: DISCORD_SPLIT_LIMIT - 100].rstrip() + " [...]"
 
                 if url is not None:
-                    line = f"{emoji} - {message} [PR]({url}) \n"
+                    line = f"{emoji} - {message} [PR]({url})\n"
                 else:
                     line = f"{emoji} - {message}\n"
 
