@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: New lobby arts by Wendy & Snip!
-    type: Add
-  id: 482
-  time: '2024-11-10T02:09:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/659
 - author: TGRCDev
   changes:
   - message: Anti-tamper crates can now be disarmed with a screwdriver if the crate
@@ -4415,3 +4408,10 @@
   id: 981
   time: '2025-01-21T07:27:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1446
+- author: kipdotnet
+  changes:
+  - message: Added a selection of Imp specific packages to receive from cargo.
+    type: Add
+  id: 982
+  time: '2025-01-21T12:33:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1434
