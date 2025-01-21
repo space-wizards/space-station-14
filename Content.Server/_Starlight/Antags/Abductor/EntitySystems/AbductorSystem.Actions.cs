@@ -239,6 +239,8 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             _actions.RemoveAction(actor, comp.ExitConsole);
         if (comp.SendYourself is not null)
             _actions.RemoveAction(actor, comp.SendYourself);
+        if (comp.GizmoMark is not null)
+            _actions.RemoveAction(actor, comp.GizmoMark);
 
         _actions.UnHideActions(actor, comp.HiddenActions);
     }

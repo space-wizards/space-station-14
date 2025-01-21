@@ -44,19 +44,19 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     {
         if (!TryComp<AbductorScientistComponent>(ent, out var scientistComp) && !TryComp<AbductorAgentComponent>(ent, out var agentComp))
             if (scientistComp != null
-                    && TryComp<MindContainerComponent>(scientistComp.Agent, out var mindContainer)
-                    && mindContainer.Mind.HasValue
-                    && TryComp<MindComponent>(mindContainer.Mind.Value, out var mind)
-                    && mind.Objectives.FirstOrDefault(HasComp<AbductConditionComponent>) is EntityUid objId
-                    && TryComp<AbductConditionComponent>(objId, out var agentAbducted))
+                    && TryComp<MindContainerComponent>(scientistComp.Agent, out var agentMindContainer)
+                    && agentMindContainer.Mind.HasValue
+                    && TryComp<MindComponent>(agentMindContainer.Mind.Value, out var agentMind)
+                    && agentMind.Objectives.FirstOrDefault(HasComp<AbductConditionComponent>) is EntityUid agentObjId
+                    && TryComp<AbductConditionComponent>(agentObjId, out var agentAbducted))
                 if (agentAbducted.Abducted > ent.Comp.Abducted)
                     ent.Comp.Abducted = agentAbducted.Abducted;
             else if (agentComp != null                     
-                    && TryComp<MindContainerComponent>(agentComp.Scientist, out var mindContainer)
-                    && mindContainer.Mind.HasValue
-                    && TryComp<MindComponent>(mindContainer.Mind.Value, out var mind)
-                    && mind.Objectives.FirstOrDefault(HasComp<AbductConditionComponent>) is EntityUid objId
-                    && TryComp<AbductConditionComponent>(objId, out var scientistAbducted))
+                    && TryComp<MindContainerComponent>(agentComp.Scientist, out var scientistMindContainer)
+                    && scientistMindContainer.Mind.HasValue
+                    && TryComp<MindComponent>(scientistMindContainer.Mind.Value, out var scientistMind)
+                    && scientistMind.Objectives.FirstOrDefault(HasComp<AbductConditionComponent>) is EntityUid scientistObjId
+                    && TryComp<AbductConditionComponent>(scientistObjId, out var scientistAbducted))
                 if (scientistAbducted.Abducted > ent.Comp.Abducted)
                     ent.Comp.Abducted = scientistAbducted.Abducted;
                 
@@ -157,7 +157,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
                 || !_pullingSystem.TryStopPull(victim, pullableComp)) return;
         }
         
-        if (!HasComp<AbductorComponent>(args.Victim))
+        if (!HasComp<AbductorComponent>(victim))
         {
             var organPrototypes = _prototypeManager.EnumeratePrototypes<EntityPrototype>()
                 .Where(p => p.HasComponent<AbductorOrganComponent>()) 
