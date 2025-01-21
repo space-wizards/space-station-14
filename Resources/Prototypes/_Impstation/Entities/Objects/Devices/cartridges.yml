@@ -1,0 +1,12 @@
+- type: entity
+  parent: BaseItem
+  id: SOSCartridge
+  name: SOS cartridge
+  description: A program to call for help.
+  components:
+    - type: Cartridge
+      programName: sos-program-name
+      icon:
+        sprite: Objects/Devices/sos.rsi
+        state: icon
+    - type: SOSCartridge
