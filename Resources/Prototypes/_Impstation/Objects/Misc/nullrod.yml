@@ -86,10 +86,6 @@
     size: Small
     shape:
     - 0,0,1,1
-  - type: MeleeWeapon
-    wideAnimationRotation: -135
-    soundHit:
-      collection: MetalThud
   - type: FitsInDispenser
     solution: grail
   - type: SolutionContainerManager
