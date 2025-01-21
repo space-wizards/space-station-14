@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: chillyconmor
-  changes:
-  - message: Space Ninjas now have a new intro song.
-    type: Add
-  id: 7337
-  time: '2024-09-09T22:12:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31055
 - author: DieselMohawk
   changes:
   - message: Made Trooper Uniform accessible for Security Officers in loadouts
@@ -3901,3 +3894,13 @@
   id: 7836
   time: '2025-01-21T09:51:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33385
+- author: K-Dynamic
+  changes:
+  - message: Electrified doors and windoors now visibly spark when touched.
+    type: Tweak
+  - message: New tips have been added about opening electrified doors by throwing
+      your PDA or ID, and resetting doors that are electrified by AI.
+    type: Add
+  id: 7837
+  time: '2025-01-21T10:39:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34502
