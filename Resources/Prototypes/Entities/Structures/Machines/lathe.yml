@@ -739,6 +739,7 @@
       - BoxShotgunUranium
       - BoxShellTranquilizer
       - ClothingBackpackElectropack
+      - ClothingShoesBootsMagSci
       - ExplosivePayload
       - FlashPayload
       - GrenadeBlast
@@ -783,6 +784,7 @@
       - WeaponDisablerSMG
       - WeaponLaserCannon
       - WeaponLaserCarbine
+      - WeaponProtoKineticAccelerator
       - WeaponXrayCannon
   - type: MaterialStorage
     whitelist:
