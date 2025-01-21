@@ -94,10 +94,13 @@ public sealed class DamageOverlayUiController : UIController
         {
             case MobState.Alive:
             {
-                if (damageable.DamagePerGroup.TryGetValue("Brute", out var bruteDamage) && damageable.DamagePerGroup.TryGetValue("Burn", out var burnDamage))
+                FixedPoint2 painLevel = 0;
+                foreach (var painDamageType in damageable.PainDamageGroupIDs)
                 {
-                    _overlay.PainLevel = FixedPoint2.Min(1f, (bruteDamage + burnDamage) / critThreshold).Float();
+                    damageable.DamagePerGroup.TryGetValue(painDamageType, out var painDamage);
+                    painLevel += painDamage;
                 }
+                _overlay.PainLevel = FixedPoint2.Min(1f, painLevel / critThreshold).Float();
 
                 if (damageable.DamagePerGroup.TryGetValue("Airloss", out var oxyDamage))
                 {
