@@ -199,7 +199,7 @@
   - type: Appearance
 
 - type: entity
-  name: practice laser rifle
+  name: practice laser carbine
   parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponLaserCarbinePractice
   description: This modified laser rifle fires nearly harmless beams in the 40-watt range, for target practice.
@@ -225,7 +225,7 @@
     price: 300
 
 - type: entity
-  name: laser rifle
+  name: laser carbine
   parent: [WeaponLaserCarbinePractice, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponLaserCarbine
   description: Favoured by Nanotrasen Security for being cheap and easy to use.

@@ -81,7 +81,7 @@
 - type: entity
   parent: [ProjectileGrenadeBase, BaseSyndicateContraband]
   id: GrenadeShrapnel
-  name: shrapnel grenade
+  name: fragmentation grenade
   description: Releases a deadly spray of shrapnel that causes severe bleeding.
   components:
   - type: Sprite

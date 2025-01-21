@@ -37,8 +37,8 @@
           Unprimed: { state: icon }
 
 - type: entity
-  name: explosive grenade
-  description: Grenade that creates a small but devastating explosion.
+  name: HE grenade
+  description: High explosive grenade that creates a small but devastating explosion.
   parent: [GrenadeBase, BaseSyndicateContraband]
   id: ExGrenade
   components:
