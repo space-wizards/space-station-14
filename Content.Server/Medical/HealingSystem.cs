@@ -135,6 +135,7 @@ public sealed class HealingSystem : EntitySystem
 
         if (TryComp<BloodstreamComponent>(ent, out var bloodstream))
         {
+            // Is ent missing blood that we can restore?
             if (healing.ModifyBloodLevel > 0
                 && _solutionContainerSystem.ResolveSolution(ent.Owner, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution)
                 && bloodSolution.Volume < bloodSolution.MaxVolume)
@@ -142,8 +143,8 @@ public sealed class HealingSystem : EntitySystem
                 return true;
             }
 
-            if (healing.BloodlossModifier < 0
-                && bloodstream.BleedAmount > 0)
+            // Is ent bleeding and can we stop it?
+            if (healing.BloodlossModifier < 0 && bloodstream.BleedAmount > 0)
             {
                 return true;
             }
