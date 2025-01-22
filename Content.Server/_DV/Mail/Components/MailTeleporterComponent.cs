@@ -24,10 +24,10 @@ namespace Content.Server._DV.Mail.Components
         [DataField]
         public SoundSpecifier TeleportSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
         /// <summary>
-        /// Imp : The SFX spawned when mail teleports in.
+        /// Imp : The VFX spawned when mail teleports in.
         /// </summary>
         [DataField]
-        public EntProtoId BeamInFx = "TelepadBeamInFX";
+        public EntProtoId BeamInFx = "MailTelepadVFX";
         /// <summary>
         /// The MailDeliveryPoolPrototype that's used to select what mail this
         /// teleporter can deliver.

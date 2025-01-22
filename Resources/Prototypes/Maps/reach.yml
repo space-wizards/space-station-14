@@ -22,6 +22,7 @@
             SecurityOfficer: [ 1, 3 ]
             SecurityCadet: [ 1, 1 ]
             CargoTechnician: [ 1, 1 ]
+            Courier: [ 1, 1 ]
             SalvageSpecialist: [ 1, 1 ]
             Bartender: [ 1, 1 ]
             Botanist: [ 1, 1 ]

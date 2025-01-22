@@ -93,7 +93,7 @@ namespace Content.Shared.Damage.Systems
 
         private void OnDoHit(EntityUid uid, DamageOtherOnHitComponent component, ThrowDoHitEvent args)
         {
-            if (HasComp<DamageOtherOnHitImmuneComponent>(args.Target))
+            if (HasComp<DamageOtherOnHitImmuneComponent>(args.Target) || !TryComp<PhysicsComponent>(uid, out var physics))
                 return;
 
             if (HasComp<PacifiedComponent>(args.Component.Thrower)
@@ -102,6 +102,10 @@ namespace Content.Shared.Damage.Systems
                 return;
 
             if (component.HitQuantity >= component.MaxHitQuantity)
+                return;
+
+            // Ignore thrown items that are too slow
+            if (physics.LinearVelocity.LengthSquared() < component.MinVelocity)
                 return;
 
             var modifiedDamage = _damageable.TryChangeDamage(args.Target, GetDamage(uid, component, args.Component.Thrower),
@@ -123,24 +127,21 @@ namespace Content.Shared.Damage.Systems
             if (HasComp<StaminaComponent>(args.Target) && TryComp<StaminaDamageOnHitComponent>(uid, out var stamina))
                 _stamina.TakeStaminaDamage(args.Target, stamina.Damage, source: uid, sound: stamina.Sound);
 
-            if (TryComp<PhysicsComponent>(uid, out var body) && body.LinearVelocity.LengthSquared() > 0f)
+            if (physics.LinearVelocity.LengthSquared() > 0f)
             {
-                var direction = body.LinearVelocity.Normalized();
+                var direction = physics.LinearVelocity.Normalized();
                 _sharedCameraRecoil.KickCamera(args.Target, direction);
             }
 
             // TODO: If more stuff touches this then handle it after.
-            if (TryComp<PhysicsComponent>(uid, out var physics))
-            {
-                _thrownItem.LandComponent(args.Thrown, args.Component, physics, false);
+            _thrownItem.LandComponent(args.Thrown, args.Component, physics, false);
 
-                if (!HasComp<EmbeddableProjectileComponent>(args.Thrown))
-                {
-                    var newVelocity = physics.LinearVelocity;
-                    newVelocity.X = -newVelocity.X / 4;
-                    newVelocity.Y = -newVelocity.Y / 4;
-                    _physics.SetLinearVelocity(uid, newVelocity, body: physics);
-                }
+            if (!HasComp<EmbeddableProjectileComponent>(args.Thrown))
+            {
+                var newVelocity = physics.LinearVelocity;
+                newVelocity.X = -newVelocity.X / 4;
+                newVelocity.Y = -newVelocity.Y / 4;
+                _physics.SetLinearVelocity(uid, newVelocity, body: physics);
             }
 
             component.HitQuantity += 1;

@@ -1,23 +1,7 @@
 - type: entity
   parent: Holopad
-  id: HolopadCargoMailroomCourier
-  suffix: Cargo Mailroom
+  id: HolopadEngineeringSupermatter
+  suffix: Supermatter
   components:
   - type: Label
-    currentLabel: "Cargo - Mailroom"
-
-- type: entity
-  parent: Holopad
-  id: HolopadScienceXenoarchaeology
-  suffix: Sci Xenoarchaeology
-  components:
-  - type: Label
-    currentLabel: holopad-science-xenoarchaeology
-
-- type: entity
-  parent: Holopad
-  id: HolopadGeneralDocking
-  suffix: Docking Arm
-  components:
-  - type: Label
-    currentLabel: holopad-general-docking
+    currentLabel: holopad-engineering-supermatter

@@ -653,7 +653,8 @@
   - ClownSkirt
   - JesterSuit
   - JesterAltSuit
-  - CirclusClownSuit #imp
+  - CircusClownSuit #imp
+  - JokesterSuit #imp
 
 #imp
 - type: loadoutGroup
@@ -686,6 +687,7 @@
   loadouts:
   - ClownRobes
   - ClownWintercoat
+  - JokesterOuterCoat
 
 - type: loadoutGroup
   id: ClownShoes
@@ -694,6 +696,7 @@
   - ClownShoes
   - JesterShoes
   - CircusClownShoes
+  - JokesterShoes
 
 - type: loadoutGroup
   id: SurvivalClown
@@ -1354,6 +1357,7 @@
   - HeadofSecurityWinterCoatUnarmored
   - ArmorVest #imp
   - ArmorVestSlim #imp
+  - ArmorVestCompact #imp
   - HeadofSecurityEliteArmor #imp
 
 - type: loadoutGroup
@@ -1394,6 +1398,9 @@
   loadouts:
   - WardenCoat
   - WardenArmoredWinterCoat
+  - ArmorVest #imp
+  - ArmorVestSlim #imp
+  - ArmorVestCompact #imp
   - WardenWinterCoatUnarmored
 
 - type: loadoutGroup
@@ -1461,6 +1468,7 @@
   loadouts:
   - ArmorVest
   - ArmorVestSlim
+  - ArmorVestCompact #imp
   - SecurityOfficerWintercoat
 
 - type: loadoutGroup

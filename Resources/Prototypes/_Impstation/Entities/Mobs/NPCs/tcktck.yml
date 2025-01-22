@@ -13,6 +13,9 @@
         Blunt: 5
     soundHit:
       collection: MetalThud
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/_Impstation/Effects/Footsteps/tcktckstep.ogg
   - type: CombatMode
   - type: StaticPrice
     price: 1250
@@ -145,9 +148,6 @@
   - type: UnblockableSpeech
   - type: ReplacementAccent
     accent: silicon
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepBorg
   - type: Lock
     locked: true
     breakOnEmag: false

@@ -65,7 +65,7 @@
   parent: JobIcon
   id: JobIconNanotrasen
   icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi #imp
     state: Nanotrasen
   jobName: job-name-centcomoff
 
@@ -449,6 +449,6 @@
   parent: JobIcon
   id: JobIconAdmin
   icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi #imp
     state: Admin
   allowSelection: false
