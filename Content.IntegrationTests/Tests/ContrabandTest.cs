@@ -25,16 +25,14 @@ public sealed class ContrabandTest
                 if (!proto.TryGetComponent<ContrabandComponent>(out var contraband, componentFactory))
                     continue;
 
-                if (!protoMan.TryIndex(contraband.Severity, out var severity))
-                    Assert.Fail(@$"{proto.ID} has a ContrabandComponent with a unknown severity.");
+                Assert.That(protoMan.TryIndex(contraband.Severity, out var severity, false),
+                    @$"{proto.ID} has a ContrabandComponent with a unknown severity.");
 
-                if (severity.ShowDepartmentsAndJobs)
-                {
-                    if (contraband.AllowedDepartments.Count + contraband.AllowedJobs.Count == 0)
-                    {
-                        Assert.Fail(@$"{proto.ID} has a ContrabandComponent with ShowDepartmentsAndJobs but no allowed departments or jobs.");
-                    }
-                }
+                if (!severity.ShowDepartmentsAndJobs)
+                    continue;
+
+                Assert.That(contraband.AllowedDepartments.Count + contraband.AllowedJobs.Count, Is.Not.EqualTo(0),
+                    @$"{proto.ID} has a ContrabandComponent with ShowDepartmentsAndJobs but no allowed departments or jobs.");
             }
         });
 
