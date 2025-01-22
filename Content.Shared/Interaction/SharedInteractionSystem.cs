@@ -1409,7 +1409,7 @@ namespace Content.Shared.Interaction
         /// <returns>If there is an entity being used.</returns>
         public bool TryGetUsedEntity(EntityUid user, [NotNullWhen(true)] out EntityUid? used, bool checkCanUse = true)
         {
-            var ev = new GetUsedEntityEvent();
+            var ev = new GetUsedEntityEvent(user);
             RaiseLocalEvent(user, ref ev);
 
             used = ev.Used;
@@ -1460,8 +1460,9 @@ namespace Content.Shared.Interaction
     ///     Raised directed by-ref on an entity to determine what item will be used in interactions.
     /// </summary>
     [ByRefEvent]
-    public record struct GetUsedEntityEvent()
+    public record struct GetUsedEntityEvent(EntityUid User)
     {
+        public EntityUid User = User;
         public EntityUid? Used = null;
 
         public bool Handled => Used != null;
