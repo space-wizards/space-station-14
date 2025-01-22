@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: TGRCDev
-  changes:
-  - message: Anti-tamper crates can now be disarmed with a screwdriver if the crate
-      is unlocked and opened, or if the user is inside of the crate.
-    type: Add
-  - message: Anti-tamper crates no longer delete mobs inside of them. They now deal
-      85 Caustic damage instead.
-    type: Tweak
-  id: 483
-  time: '2024-11-10T02:10:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/656
 - author: hivehum
   changes:
   - message: The Energy Shotgun is as big and beautiful and powerful as you remembered
@@ -4415,3 +4404,10 @@
   id: 982
   time: '2025-01-21T12:33:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1434
+- author: honeyed-lemons
+  changes:
+  - message: Tweaks all the mailrooms on Box, Fland, Oasis, and Xeno
+    type: Tweak
+  id: 983
+  time: '2025-01-22T03:53:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1445
