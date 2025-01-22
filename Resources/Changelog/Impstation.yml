@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Formlessnameless, Kipdotnet
-  changes:
-  - message: Plastic Slag has a custom sprite now
-    type: Tweak
-  id: 492
-  time: '2024-11-11T12:14:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/672
 - author: formlessnameless
   changes:
   - message: Moved department head spawns on Atlas, Omega, and Cluster to the bridge
@@ -4401,3 +4394,10 @@
   id: 991
   time: '2025-01-22T14:55:09.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1456
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: The mosin's speedloader now uses the correct ammunition.
+    type: Fix
+  id: 992
+  time: '2025-01-22T15:33:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1421
