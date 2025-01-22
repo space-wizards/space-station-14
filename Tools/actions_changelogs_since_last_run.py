@@ -15,12 +15,13 @@ import requests
 import yaml
 
 DEBUG = False
-DEBUG_CHANGELOG_FILE_OLD = Path("../Changelog-Impstation-old.yml")
+DEBUG_CHANGELOG_FILE_OLD = Path("../changelogs-test/Impstation.yml")
 GITHUB_API_URL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
 
 # https://discord.com/developers/docs/resources/webhook
 DISCORD_SPLIT_LIMIT = 2000
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
+DISCORD_ROLE_ID = os.environ.get("DISCORD_ROLE_ID")
 
 CHANGELOG_FILE = "Resources/Changelog/Impstation.yml"
 
@@ -174,11 +175,16 @@ def changelog_entries_to_message_lines(entries: Iterable[ChangelogEntry]) -> lis
                     message = message[: DISCORD_SPLIT_LIMIT - 100].rstrip() + " [...]"
 
                 if url is not None:
-                    line = f"{emoji} - {message} [PR]({url}) \n"
+                    line = f"{emoji} - {message} [PR]({url})\n"
                 else:
                     line = f"{emoji} - {message}\n"
 
                 message_lines.append(line)
+
+    # add ping
+    if DISCORD_ROLE_ID:
+        ping_line = f"<@&{DISCORD_ROLE_ID}>\n"
+        message_lines.insert(0, ping_line)
 
     return message_lines
 
