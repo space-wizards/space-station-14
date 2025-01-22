@@ -209,7 +209,7 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/brosblazer.rsi
 
 - type: entity
-  parent: [ClothingUniformBase]
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
   id: ClothingUniformJumpsuitCourier
   name: courier jumpsuit
   description: A courier uniform, with blue accents.
