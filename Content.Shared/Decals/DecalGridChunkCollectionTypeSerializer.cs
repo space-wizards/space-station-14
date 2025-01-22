@@ -33,6 +33,7 @@ namespace Content.Shared.Decals
             var version = ((ValueDataNode?) versionNode)?.AsInt() ?? 1;
             Dictionary<Vector2i, DecalChunk> dictionary;
             uint nextIndex = 0;
+            var ids = new HashSet<uint>();
 
             // TODO: Dump this when we don't need support anymore.
             if (version > 1)
@@ -59,10 +60,13 @@ namespace Content.Shared.Decals
 
                         // Re-used ID somehow
                         // This will bump all IDs by up to 1 but will ensure the map is still readable.
-                        if (!chunk.Decals.TryAdd(dUid, decal))
+                        if (!ids.Add(dUid))
                         {
-                            chunk.Decals[nextIndex + 1] = decal;
+                            dUid = nextIndex++;
+                            ids.Add(dUid);
                         }
+
+                        chunk.Decals[dUid] = decal;
                     }
                 }
             }
