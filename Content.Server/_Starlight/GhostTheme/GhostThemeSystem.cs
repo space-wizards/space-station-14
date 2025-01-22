@@ -61,7 +61,7 @@ public sealed class GhostThemeSystem : EntitySystem
         if (_openUis.ContainsKey(session))
             CloseEui(session);
 
-        var eui = _openUis[session] = new GhostThemeEui(usedSlots);
+        var eui = _openUis[session] = new GhostThemeEui();
 
         _euiManager.OpenEui(eui, session);
         eui.StateDirty();
@@ -100,7 +100,7 @@ public sealed class GhostTheme : IConsoleCommand
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player != null)
-            _e.System<GhostTheme>().OpenEui(shell.Player);
+            _e.System<GhostThemeSystem>().OpenEui(shell.Player);
         else
             shell.WriteLine("You can only open ghost theme UI on a client.");
     }

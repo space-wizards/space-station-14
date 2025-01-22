@@ -1,14 +1,13 @@
 using Content.Server.EUI;
-using Content.Shared.Starlight.NewLife;
+using Content.Shared.Starlight.GhostTheme;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
 
-namespace Content.Shared.Starlight.GhostTheme;
+namespace Content.Server.Ghost.Roles.UI;
 
 public sealed class GhostThemeEui : BaseEui
 {
     private readonly GhostThemeSystem _ghostThemeSystem;
-    private readonly HashSet<int> _usedSlots;
     public GhostThemeEui()
     {
         _ghostThemeSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GhostThemeSystem>();
