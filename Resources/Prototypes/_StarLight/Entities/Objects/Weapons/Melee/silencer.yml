@@ -28,6 +28,7 @@
     angle: 60
     animation: WeaponArcThrust
   - type: InjectOnHit
+    limit: 20
     reagents:
     - ReagentId: MuteToxin
       Quantity: 5

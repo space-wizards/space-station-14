@@ -367,10 +367,23 @@ public sealed partial class GunSystem : SharedGunSystem
             {
                 //🌟Starlight🌟
                 case HitScanCartridgeAmmoComponent cartridge:
-                    SetCartridgeSpent(ent!.Value, cartridge, true);
-                    MuzzleFlash(gunUid, cartridge, worldAngle, user);
-                    Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
-                    Recoil(user, direction, gun.CameraRecoilScalarModified);
+                    if (!cartridge.Spent)
+                    {
+                        SetCartridgeSpent(ent!.Value, cartridge, true);
+                        MuzzleFlash(gunUid, cartridge, worldAngle, user);
+                        Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+                        Recoil(user, direction, gun.CameraRecoilScalarModified);
+                    }
+                    else
+                    {
+                        userImpulse = false;
+                        Audio.PlayPredicted(gun.SoundEmpty, gunUid, user);
+                    }
+
+
+                    if (IsClientSide(ent!.Value))
+                        Del(ent.Value);
+
                     break;
 
                 case CartridgeAmmoComponent cartridge:

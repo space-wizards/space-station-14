@@ -166,10 +166,10 @@ public sealed partial class GunSystem : SharedGunSystem
                         else
                             Hitscan(gunUid, gun, fromCoordinates, user, fromMap, pointerLength, mapDirection, hitscanPrototype);
 
-                        //RaiseLocalEvent(ent!.Value, new AmmoShotEvent()
-                        //{
-                        //    FiredProjectiles = shotProjectiles,
-                        //});
+                        RaiseLocalEvent(ent!.Value, new AmmoShotEvent()
+                        {
+                            FiredProjectiles = shotProjectiles,
+                        });
 
                         SetCartridgeSpent(ent!.Value, cartridge, true);
 
