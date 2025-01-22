@@ -6,7 +6,7 @@
                 VerticalExpand="True"
                 HorizontalExpand="True"
                 MinSize="450 450">
-    
+
     <!-- Note: The min size of the window just determine how close to the edge of the screen the center of the radial menu can be placed -->
     <!-- The radial menu will try to open so that its center is located where the player's cursor is currently -->
 
@@ -27,6 +27,18 @@
         <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-lighting'}" TargetLayer="Lighting" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RCD/lighting.png"/>
         </ui:RadialMenuTextureButton>
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-piping'}" TargetLayer="Piping" Visible="False">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RPD/fourway.png"/>
+        </ui:RadialMenuTextureButton>
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-atmosphericutility'}" TargetLayer="AtmosphericUtility" Visible="False">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RPD/port.png"/>
+        </ui:RadialMenuTextureButton>
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-pumpsvalves'}" TargetLayer="PumpsValves" Visible="False">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RPD/pump_volume.png"/>
+        </ui:RadialMenuTextureButton>
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-vents'}" TargetLayer="Vents" Visible="False">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RPD/vent_passive.png"/>
+        </ui:RadialMenuTextureButton>
     </ui:RadialContainer>
 
     <!-- Walls and flooring -->
@@ -40,8 +52,20 @@
 
     <!-- Computer and machine frames -->
     <ui:RadialContainer Name="Electrical"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
-       
+
     <!-- Lighting -->
     <ui:RadialContainer Name="Lighting"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+
+    <!-- Piping -->
+    <ui:RadialContainer Name="Piping"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+
+    <!-- Pumps & Valves -->
+    <ui:RadialContainer Name="PumpsValves"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+
+    <!-- Atmospheric Utility -->
+    <ui:RadialContainer Name="AtmosphericUtility"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+
+    <!-- Vents -->
+    <ui:RadialContainer Name="Vents"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
 
 </ui:RadialMenu>
