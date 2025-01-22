@@ -1,24 +1,20 @@
 - type: entity
   id: CondiMaster
   parent: [ BaseMachinePowered, ConstructibleMachine ]
-  name: CondiMaster 40k
-  description: An industrial grade chemical manipulator for cooking-related mixtures.
-  placement:
-    mode: SnapgridCenter
+  name: CondiMaster Neo
+  description: A civilian grade chemical manipulator for filtering and mixing kitchen-based mixtures.
   components:
   - type: Sprite
-    sprite: Structures/Machines/mixer.rsi
+    sprite: Structures/Machines/mixerchef.rsi
     snapCardinals: true
     layers:
-    - state: mixer_empty
-    - state: mixer_screens
+    - state: mixerchef_active
+    - state: mixerchef_screen
+      map: [ "enum.PowerDeviceVisualLayers.Powered"]
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-  - type: Icon
-    sprite: Structures/Machines/mixer.rsi
-    state: mixer_loaded
   - type: ChemMaster
-    canMakeBottles: false
+    pillDosageLimit: 0 # required for prototype to function
+    canMakePills: false # removes pill button ui from 2nd screen
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -53,7 +49,7 @@
       enum.ChemMasterUiKey.Key:
         type: ChemMasterBoundUserInterface
   - type: ApcPowerReceiver
-    powerLoad: 250
+    powerLoad: 200
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -84,11 +80,8 @@
           - Bottle
   - type: SolutionContainerManager
     solutions:
-      buffer: {}
+      buffer:
+        maxVol: 300
   - type: DumpableSolution
     solution: buffer
-    unlimited: true
-  - type: GuideHelp
-    guides:
-    - Chemicals
-    - Chemist
+    unlimited: false

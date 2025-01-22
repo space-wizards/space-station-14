@@ -144,7 +144,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
             else // Container to buffer
             {
-                amount = FixedPoint2.Min(amount, containerSolution.GetReagentQuantity(id));
+                amount = FixedPoint2.Min(FixedPoint2.Min(amount, containerSolution.GetReagentQuantity(id)), bufferSolution.AvailableVolume);
                 _solutionContainerSystem.RemoveReagent(containerSoln.Value, id, amount);
                 bufferSolution.AddReagent(id, amount);
             }
