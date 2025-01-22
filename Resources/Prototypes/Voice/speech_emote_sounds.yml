@@ -437,15 +437,15 @@
     DefaultDeathgasp:
       collection: MaleDeathGasp #placeholder
     Chitter:
-      collection: VoxChitter
+      collection: VoxChitter #Imp
       params:
         volume: -5
     Coo:
-      collection: VoxCoo
+      collection: VoxCoo #Imp
       params:
         volume: -7
     Hiss:
-      collection: VoxHiss
+      collection: VoxHiss #Imp
       params:
         volume: -5
   params:
@@ -487,15 +487,15 @@
     DefaultDeathgasp:
       collection: FemaleDeathGasp #placeholder
     Chitter:
-      collection: VoxChitter
+      collection: VoxChitter #Imp
       params:
         volume: -5
     Coo:
-      collection: VoxCoo
+      collection: VoxCoo #Imp
       params:
         volume: -7
     Hiss:
-      collection: VoxHiss
+      collection: VoxHiss #Imp
       params:
         volume: -5
   params:
@@ -537,15 +537,15 @@
     DefaultDeathgasp:
       collection: UnisexDeathGasp #placeholder
     Chitter:
-      collection: VoxChitter
+      collection: VoxChitter #Imp
       params:
         volume: -5
     Coo:
-      collection: VoxCoo
+      collection: VoxCoo #Imp
       params:
         volume: -7
     Hiss:
-      collection: VoxHiss
+      collection: VoxHiss #Imp
       params:
         volume: -5
   params:
