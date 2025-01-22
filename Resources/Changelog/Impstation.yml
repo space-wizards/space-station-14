@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: AirFryerBuyOneGetOneFree
   changes:
-  - message: Added new map Barratry, also known as Detroit.
-    type: Add
-  id: 487
-  time: '2024-11-10T20:55:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/655
-- author: AirFryerBuyOneGetOneFree
-  changes:
   - message: Added Xeno, a new map from SlamBamActionman!!!!!!!!!!!!!
     type: Add
   id: 488
@@ -4416,3 +4409,10 @@
   id: 986
   time: '2025-01-22T05:01:06.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1423
+- author: Saeko-44
+  changes:
+  - message: SOS app for the PDA
+    type: Add
+  id: 987
+  time: '2025-01-22T05:46:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1450
