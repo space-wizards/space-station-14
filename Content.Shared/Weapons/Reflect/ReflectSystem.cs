@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
@@ -62,7 +62,7 @@ public sealed class ReflectSystem : EntitySystem
 
         foreach (var ent in _inventorySystem.GetHandOrInventoryEntities(uid, SlotFlags.All & ~SlotFlags.POCKET))
         {
-            if (!TryReflectHitscan(uid, ent, args.Shooter, args.SourceItem, args.Direction, out var dir))
+            if (!TryReflectHitscan(uid, ent, args.Shooter, args.SourceItem, args.Direction, args.Reflective, out var dir)) //🌟Starlight🌟
                 continue;
 
             args.Direction = dir.Value;
@@ -159,13 +159,10 @@ public sealed class ReflectSystem : EntitySystem
 
     private void OnReflectHitscan(EntityUid uid, ReflectComponent component, ref HitScanReflectAttemptEvent args)
     {
-        if (args.Reflected ||
-            (component.Reflects & args.Reflective) == 0x0)
-        {
-            return;
-        }
+        if (args.Reflected) //🌟Starlight🌟
+            return;     //🌟Starlight🌟
 
-        if (TryReflectHitscan(uid, uid, args.Shooter, args.SourceItem, args.Direction, out var dir))
+        if (TryReflectHitscan(uid, uid, args.Shooter, args.SourceItem, args.Direction, args.Reflective, out var dir)) //🌟Starlight🌟
         {
             args.Direction = dir.Value;
             args.Reflected = true;
@@ -178,10 +175,12 @@ public sealed class ReflectSystem : EntitySystem
         EntityUid? shooter,
         EntityUid shotSource,
         Vector2 direction,
+        ReflectType reflectType,//🌟Starlight🌟
         [NotNullWhen(true)] out Vector2? newDirection)
     {
         if (!TryComp<ReflectComponent>(reflector, out var reflect) ||
             !_toggle.IsActivated(reflector) ||
+            (reflect.Reflects & reflectType) == 0x0 ||  //🌟Starlight🌟
             !_random.Prob(reflect.ReflectProb))
         {
             newDirection = null;
@@ -195,7 +194,7 @@ public sealed class ReflectSystem : EntitySystem
         }
         if (reflect.OverrideAngle is not null)
         {
-            var overrideAngle = _transform.GetWorldRotation(reflector)  + reflect.OverrideAngle.Value;
+            var overrideAngle = _transform.GetWorldRotation(reflector) + reflect.OverrideAngle.Value;
             newDirection = new Vector2((float)Math.Cos(overrideAngle), (float)Math.Sin(overrideAngle));
             newDirection = newDirection.Value.Normalized();
         }
