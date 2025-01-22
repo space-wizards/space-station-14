@@ -174,7 +174,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
-    fireRate: 1.5
+    fireRate: 1
   - type: Tag
     tags:
     - WeaponShotgunKammerer
