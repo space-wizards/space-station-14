@@ -7,7 +7,7 @@
     - type: Cartridge
       programName: sos-program-name
       icon:
-        sprite: Objects/Devices/sos.rsi
+        sprite: _Impstation/Objects/Devices/sos.rsi
         state: icon
     - type: SOSCartridge
       
