@@ -987,3 +987,39 @@ Entries:
     changes:
     - type: Add
       message: Added Curator clothing as a Senior Librarian option.
+  - id: 287
+    author: DieselMohawk
+    time: '2025-01-22T04:26:15.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/287
+    changes:
+    - type: Add
+      message: Riot Shields, Makeshift Shields, and Bucklers can now be put into your
+        Suit Storage Slot.
+  - id: 284
+    author: DieselMohawk
+    time: '2025-01-22T04:36:15.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/284
+    changes:
+    - type: Add
+      message: Security Bolas added.
+  - id: 322
+    author: Sadie-silly
+    time: '2025-01-22T13:42:00.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/322
+    changes:
+    - type: Add
+      message: New song as the nuke approaches detonation.
+  - id: 314
+    author: ilovehans10
+    time: '2025-01-22T13:43:52.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/314
+    changes:
+    - type: Add
+      message: Rapid Piping Device
+  - id: 303
+    author: Anno-Midi
+    time: '2025-01-22T13:44:41.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/303
+    changes:
+    - type: Tweak
+      message: Gave service worker hydroponics access
