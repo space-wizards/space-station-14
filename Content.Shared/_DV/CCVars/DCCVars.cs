@@ -50,6 +50,18 @@ public sealed class DCCVars
         CVarDef.Create("mail.maximumundeliveredparcels", 5, CVar.SERVERONLY);
 
     /// <summary>
+    /// What's the base bonus for delivering a package intact?
+    /// </summary>
+    public static readonly CVarDef<int> MailDefaultBounty =
+        CVarDef.Create("mail.defaultbounty", 250, CVar.SERVERONLY);
+
+    /// <summary>
+    /// What's the base malus for delivering a package intact?
+    /// </summary>
+    public static readonly CVarDef<int> MailDefaultPenelty =
+        CVarDef.Create("mail.defaultpenelty", -100, CVar.SERVERONLY);
+
+    /// <summary>
     /// Any item that breaks or is destroyed in less than this amount of
     /// damage is one of the types of items considered fragile.
     /// </summary>
@@ -104,4 +116,5 @@ public sealed class DCCVars
     /// </summary>
     public static readonly CVarDef<int> MailLargeMalus =
         CVarDef.Create("mail.largemalus", -500, CVar.SERVERONLY);
+
 }

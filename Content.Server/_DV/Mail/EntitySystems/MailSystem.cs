@@ -479,6 +479,10 @@ public sealed class MailSystem : EntitySystem
         mailComp.RecipientJob = recipient.Job;
         mailComp.Recipient = recipient.Name;
 
+        // Imp: Set base bounty and penalty
+        mailComp.Bounty += _config.GetCVar(DCCVars.MailDefaultBounty);
+        mailComp.Penalty += _config.GetCVar(DCCVars.MailDefaultPenelty);
+
         // Frontier: Large mail bonus
         var mailEntityStrings = mailComp.IsLarge ? MailConstants.MailLarge : MailConstants.Mail;
         if (mailComp.IsLarge)
