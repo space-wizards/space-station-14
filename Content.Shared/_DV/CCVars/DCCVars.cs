@@ -72,13 +72,13 @@ public sealed class DCCVars
     /// What's the bonus for delivering a fragile package intact?
     /// </summary>
     public static readonly CVarDef<int> MailFragileBonus =
-        CVarDef.Create("mail.fragilebonus", 100, CVar.SERVERONLY);
+        CVarDef.Create("mail.fragilebonus", 250, CVar.SERVERONLY);
 
     /// <summary>
     /// What's the malus for delivering a fragile package intact?
     /// </summary>
     public static readonly CVarDef<int> MailFragileMalus =
-        CVarDef.Create("mail.fragilemalus", -100, CVar.SERVERONLY);
+        CVarDef.Create("mail.fragilemalus", -500, CVar.SERVERONLY);
 
     /// <summary>
     /// What's the chance for any one delivery to be marked as priority mail?
