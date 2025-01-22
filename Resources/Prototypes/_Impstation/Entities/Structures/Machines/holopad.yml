@@ -1,0 +1,7 @@
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringSupermatter
+  suffix: Supermatter
+  components:
+  - type: Label
+    currentLabel: holopad-engineering-supermatter
