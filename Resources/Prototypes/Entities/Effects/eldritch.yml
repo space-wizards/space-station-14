@@ -4,11 +4,12 @@
   categories: [ HideSpawnMenu ]
   save: false
   components:
+  # TODO: PointLight is temp until I can make a shader & overlay for negative light or until this can support it
   - type: PointLight
-    radius: 10.5
-    energy: 15
-    softness: 1
-    color: "#000000"
+    radius: 3
+    energy: 1
+    softness: 10
+    color: "#301934"
   - type: Transform
     noRot: true
   - type: Sprite

@@ -431,9 +431,6 @@ public abstract class SharedMagicSystem : EntitySystem
 
         _transform.SetCoordinates(ev.Target, originalPerfCoords);
         _transform.AttachToGridOrMap(ev.Target, targetXForm);
-
-        // Spawn(ev.Effect, perfXForm.Coordinates);
-        // Spawn(ev.Effect, targetXForm.Coordinates);
     }
     // End Teleport Spells
     #endregion
