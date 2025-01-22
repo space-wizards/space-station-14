@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Added Xeno, a new map from SlamBamActionman!!!!!!!!!!!!!
-    type: Add
-  id: 488
-  time: '2024-11-10T20:55:02.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/657
-- author: EpicToast
-  changes:
-  - message: Add Union Station to files for playtesting! Get friendly with your fellow
-      departments (but not too friendly).
-    type: Add
-  - message: Add some cross-department maintenance airlocks for mapping/spawning in.
-    type: Add
-  id: 489
-  time: '2024-11-10T20:54:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/662
 - author: formlessnameless
   changes:
   - message: Added new plasteel slag chunk to fill in the plastic gap for rare salvage
@@ -4416,3 +4399,19 @@
   id: 987
   time: '2025-01-22T05:46:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1450
+- author: AvianMaiden
+  changes:
+  - message: Sounds for vox! Chitter, coo, cry, gasp, and hiss your heart away!
+    type: Add
+  id: 988
+  time: '2025-01-22T06:18:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1448
+- author: kipdotnet
+  changes:
+  - message: The Tck'tck now has access to a wirecutter and a fire extinguisher.
+    type: Tweak
+  - message: The Tck'tck's laws have been rewritten to allow more player freedom.
+    type: Tweak
+  id: 989
+  time: '2025-01-22T06:18:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1447
