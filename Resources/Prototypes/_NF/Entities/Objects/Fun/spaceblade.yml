@@ -105,7 +105,7 @@
 - type: entity
   id: SpaceBladeRune # imp edit wtf is the joke on this. why is it gnome child. this has to be some kind of nf admin injoke
   parent: SpaceBlade
-  description: Birthday parties are yearly reminders that as soon as you're born you start dying, unless you let it rip
+  description: Birthday parties are yearly reminders that as soon as you're born you start dying, unless you let it rip!
   components:
   - type: Sprite
     state: rune
@@ -113,7 +113,7 @@
 - type: entity
   id: SpaceBladeMc
   parent: SpaceBlade
-  description: Let it McDrip
+  description: Let it McDrip!
   components:
   - type: Sprite
     state: mcblade
@@ -225,7 +225,7 @@
   id: SpaceBladePizza
   parent: [SpaceBlade, PlasticBanana]
   name: space blade
-  description: Let it mama mia, not safe for ages under 3
+  description: Let it mama mia, not safe for ages under 3!
   components:
   - type: Sprite
     state: pizza
@@ -234,7 +234,7 @@
   id: SpaceBladeSingularity
   parent: SpaceBlade
   name: space blade
-  description: Let it consume
+  description: Let it consume!
   components:
   - type: Sprite
     state: singularity
@@ -250,7 +250,7 @@
   id: SpaceBladeClown
   parent: SpaceBlade
   name: space blade
-  description: Let it honk
+  description: Let it honk!
   components:
   - type: Sprite
     state: clown
