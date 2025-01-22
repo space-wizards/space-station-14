@@ -17,7 +17,6 @@ public abstract partial class SharedParcelWrappingSystem
         SubscribeLocalEvent<ParcelWrapComponent, ParcelWrapItemDoAfterEvent>(OnWrapItemDoAfter);
     }
 
-
     private void OnExamined(Entity<ParcelWrapComponent> entity, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
@@ -70,7 +69,6 @@ public abstract partial class SharedParcelWrappingSystem
             args.Handled = true;
         }
     }
-
 
     private bool TryStartWrapDoAfter(EntityUid user, Entity<ParcelWrapComponent> wrapper, EntityUid target)
     {

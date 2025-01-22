@@ -22,7 +22,6 @@ public abstract partial class SharedParcelWrappingSystem
         SubscribeLocalEvent<WrappedParcelComponent, GotReclaimedEvent>(OnDestroyed);
     }
 
-
     private void OnComponentInit(Entity<WrappedParcelComponent> entity, ref ComponentInit args)
     {
         entity.Comp.Contents = Container.EnsureContainer<ContainerSlot>(entity, entity.Comp.ContainerId);
@@ -76,7 +75,6 @@ public abstract partial class SharedParcelWrappingSystem
                 PopupType.MediumCaution);
         }
     }
-
 
     private bool TryStartUnwrapDoAfter(EntityUid user, Entity<WrappedParcelComponent> parcel) =>
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager,
