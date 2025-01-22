@@ -100,20 +100,24 @@ namespace Content.Server.Body.Commands
 
             var slotId = $"AttachBodyPartVerb-{partUid}";
 
-            // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-            if (body.RootContainer.ContainedEntity != null)
+            if (body.RootContainer.ContainedEntity is null && !bodySystem.AttachPartToRoot(bodyId, partUid.Value, body, part))
             {
-                bodySystem.AttachPartToRoot(bodyId, partUid.Value, body, part);
+                shell.WriteError("Whoopsie!");
+                return;
             }
-            else
+
+            var (rootPartId, rootPart) = bodySystem.GetRootPartOrNull(bodyId, body)!.Value;
+            if (!bodySystem.TryCreatePartSlotAndAttach(rootPartId,
+                    slotId,
+                    partUid.Value,
+                    part.PartType,
+                    rootPart,
+                    part))
             {
-                var (rootPartId, rootPart) = bodySystem.GetRootPartOrNull(bodyId, body)!.Value;
-                if (!bodySystem.TryCreatePartSlotAndAttach(rootPartId, slotId, partUid.Value, part.PartType, rootPart, part))
-                {
-                    shell.WriteError($"Could not create slot {slotId} on entity {_entManager.ToPrettyString(bodyId)}");
-                    return;
-                }
+                shell.WriteError($"Could not create slot {slotId} on entity {_entManager.ToPrettyString(bodyId)}");
+                return;
             }
+
 
             shell.WriteLine($"Attached part {_entManager.ToPrettyString(partUid.Value)} to {_entManager.ToPrettyString(bodyId)}");
         }
