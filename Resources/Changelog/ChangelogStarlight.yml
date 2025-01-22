@@ -2585,3 +2585,11 @@ Entries:
   id: 361
   time: '2025-01-22T15:43:26.542954+00:00'
   url: 'null'
+- author: Sadie
+  changes:
+  - message: New song for when the nuclear bomb is armed.
+    type: Add
+  id: 362
+  time: '2025-01-22T22:42:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/258
+
