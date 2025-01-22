@@ -1,0 +1,25 @@
+﻿using Content.Shared.Actions;
+using Content.Shared.Chat.Prototypes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+
+namespace Content.Shared.Magic.Events;
+
+public sealed partial class VoidApplauseSpellEvent : EntityTargetActionEvent, ISpeakSpell
+{
+    [DataField]
+    public string? Speech { get; private set; }
+
+    // TODO: Make SingleClap emote and add sound from 13
+    /// <summary>
+    ///     Emote to use.
+    /// </summary>
+    [DataField]
+    public ProtoId<EmotePrototype> Emote = "ClapSingle";
+
+    /// <summary>
+    ///     Effect to play
+    /// </summary>
+    [DataField]
+    public EntProtoId Effect = "EffectVoidBlink";
+}
