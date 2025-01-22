@@ -774,7 +774,7 @@
   parent: BoxCardboard
   id: FoodBoxCloth
   name: box of FlutterSoft-brand cloth
-  description: "Fiber is the most important moth meal of the day! Don't skip it or use bottom-of-the-locker junk, buy high-quality FlutterSoft-brand cloth instead."
+  description: Fiber is the most important moth meal of the day! Don't skip it or use bottom-of-the-locker junk, buy high-quality FlutterSoft-brand cloth instead.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/ingredients.rsi
