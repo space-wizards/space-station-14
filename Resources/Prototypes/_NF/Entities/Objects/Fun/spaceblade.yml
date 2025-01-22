@@ -2,7 +2,7 @@
   id: SpaceBlade
   parent: AirTank
   name: space blade
-  description: Let it drip
+  description: Let it drip!
   abstract: true
   components:
   - type: GasTank
