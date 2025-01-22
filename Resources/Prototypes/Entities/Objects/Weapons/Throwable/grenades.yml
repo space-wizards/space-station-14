@@ -446,7 +446,7 @@
   parent: [ BaseEngineeringContraband, SmokeGrenade ]
   id: MetalFoamGrenade
   name: metal foam grenade
-  description: An emergency tool used for patching up holes. Almost as good as real walls.
+  description: An emergency tool used for patching breaches with special quick-set metal foam. Almost as good as real walls.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/metalfoam.rsi
