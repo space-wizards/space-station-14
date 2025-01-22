@@ -75,7 +75,8 @@ public sealed class DCCVars
         CVarDef.Create("mail.prioritychance", 0.1f, CVar.SERVERONLY);
 
     /// <summary>
-    /// What's the chance for any one delivery to be marked as priority mail?
+    /// How long until a priority delivery is considered as having failed
+    /// if not delivered?
     /// </summary>
     public static readonly CVarDef<double> MailPriorityDuration =
         CVarDef.Create("mail.priorityduration", 5.0d, CVar.SERVERONLY);
