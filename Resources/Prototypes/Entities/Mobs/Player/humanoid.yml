@@ -467,6 +467,30 @@
       prototypes: [ ERTMarinesGearGrenadier ]
       roleLoadout: [ RoleSurvivalEVA ]
 
+- type: entity
+  id: RandomHumanoidSpawnerERTMarinesLaserRifleman
+  parent: RandomHumanoidSpawnerERTSecurityEVA
+  name: ERT marines laser rifleman
+  suffix: ERTRole, Marines, laser
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTMarinesLaserRifleman
+
+- type: randomHumanoidSettings
+  id: ERTMarinesLaserRifleman
+  parent: ERTSecurityEVA
+  components:
+    - type: GhostRole
+      name: ghost-role-information-ert-security-name
+      description: ghost-role-information-ert-security-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+      job: ERTSecurity
+    - type: Loadout
+      prototypes: [ ERTMarinesGearLaserRifleman ]
+      roleLoadout: [ RoleSurvivalEVA ]
+
 ## ERT Medic
 
 - type: entity

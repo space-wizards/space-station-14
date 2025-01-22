@@ -406,6 +406,40 @@
     - MagazineRifle
 
 - type: startingGear
+  id: ERTMarinesGearLaserRifleman
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTSecurity
+    back: ClothingBackpackERTSecurity
+    shoes: ClothingShoesBootsMagSci
+    mask: ClothingMaskGasERT
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitERTSecurity
+    id: ERTSecurityPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltSecurityWebbing
+    pocket1: WeaponPistolMk58
+    pocket2: WeaponDisabler
+  inhand: 
+    - WeaponLaserCannon
+  storage:
+    back:
+    - PortableRecharger
+    - WeaponSubMachineGunDrozd
+    - CrowbarRed
+    - CombatKnife
+    - GrenadeFlashBang
+    belt:
+    - Stunbaton
+    - HoloprojectorSecurity
+    - MagazinePistol
+    - MagazinePistolSubMachineGun
+    - MagazinePistolSubMachineGun
+    - MagazinePistolSubMachineGun
+    - MagazinePistolSubMachineGun
+
+
+- type: startingGear
   id: ERTMarinesGearBreacher
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTSecurity
