@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KingMudkipIII
-  changes:
-  - message: No-one can defeat the quad lazer.
-    type: Add
-  id: 485
-  time: '2024-11-10T07:34:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/663
 - author: honeyed-lemons
   changes:
   - message: Random Unrevivable is checked after each defib, instead of roundstart.
@@ -4411,3 +4404,11 @@
   id: 984
   time: '2025-01-22T04:09:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1449
+- author: hivehum
+  changes:
+  - message: 'Fresh shipment from Frontier Sector: Space Blades, the hot new toy that
+      both kids and adults love!'
+    type: Add
+  id: 985
+  time: '2025-01-22T04:21:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1451
