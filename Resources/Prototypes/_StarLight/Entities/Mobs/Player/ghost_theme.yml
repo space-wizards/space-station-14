@@ -1,0 +1,11 @@
+- type: ghostTheme
+  id: Abomination
+  name: Abomination
+  description: Cute man.
+  spriteSpecifier:
+    sprite:
+      sprite: Mobs/Demons/abomination.rsi
+      state: abomination
+    color: "#fff8"
+  requiredFlags:
+    - None

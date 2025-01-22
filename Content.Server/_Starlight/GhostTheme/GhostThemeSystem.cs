@@ -45,6 +45,12 @@ public sealed class GhostThemeSystem : EntitySystem
 {
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<GhostComponent, PlayerAttachedEvent>(OnPlayerAttached);
+    }
 
     private readonly Dictionary<ICommonSession, GhostThemeEui> _openUis = [];
     public override void Shutdown()
@@ -75,6 +81,16 @@ public sealed class GhostThemeSystem : EntitySystem
 
         eui?.Close();
     }
+    public void ChangeTheme(ICommonSession session, string Theme)
+    {
+        if (session.AttachedEntity is not { Valid: true } attached ||
+            !EntityManager.TryGetComponent<GhostThemeComponent>(attached, out var themes))
+            return;
+            
+        themes.SelectedGhostTheme = Theme;
+        
+        Dirty(attached, themes);
+    }
     public void UpdateAllEui()
     {
         foreach (var eui in _openUis.Values)
@@ -86,6 +102,11 @@ public sealed class GhostThemeSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+    }
+    
+    private void OnPlayerAttached(EntityUid uid, GhostComponent component, PlayerAttachedEvent args)
+    {
+        EnsureComp<GhostThemeComponent>(uid);
     }
 }
 

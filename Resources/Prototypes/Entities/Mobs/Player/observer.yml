@@ -45,6 +45,7 @@
     layers:
     - state: animated
       shader: unshaded
+      map: ["enum.GhostThemeVisualLayers.Base"]
   - type: ContentEye
     maxZoom: 1.44,1.44
   - type: Eye

@@ -2,6 +2,7 @@ using Content.Server.EUI;
 using Content.Shared.Starlight.GhostTheme;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
+using Content.Shared.Starlight;
 
 namespace Content.Server.Ghost.Roles.UI;
 
@@ -18,6 +19,14 @@ public sealed class GhostThemeEui : BaseEui
     public override void HandleMessage(EuiMessageBase msg)
     {
         base.HandleMessage(msg);
+        
+        if (msg is not GhostThemeSelectedMessage selectedTheme)
+        {
+            Close();
+            return;
+        }
+        
+        _ghostThemeSystem.ChangeTheme(Player, selectedTheme.ID);
     }
 
     public override void Closed()

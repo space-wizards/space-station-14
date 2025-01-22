@@ -181,7 +181,7 @@ namespace Content.Client.Ghost
         }
         public void OpenGhostTheme() //🌟Starlight🌟
         {
-            _console.RemoteExecuteCommand(null, "newlife");
+            _console.RemoteExecuteCommand(null, "ghostTheme");
         }
 
         public void ToggleGhostVisibility(bool? visibility = null)

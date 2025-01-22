@@ -1,20 +1,16 @@
-<DefaultWindow xmlns="https://spacestation14.io"
-            Title="{Loc 'ghost-gui-ghost-theme-window-title'}"
-            MinSize="800 560"
-            SetSize="800 560">
+<DefaultWindow 
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Title="{Loc 'ghost-gui-ghost-theme-window-title'}"
+    MinSize="600 560"
+    SetSize="600 560">
     <SplitContainer State="Auto" HorizontalExpand="True">
-        <ScrollContainer VerticalExpand="True"
-                         HScrollEnabled="False">
-            <BoxContainer Orientation="Vertical"
-                          Name="GhostThemesContainer"
-                          VerticalExpand="True">
+        <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+            <BoxContainer Orientation="Vertical" Name="GhostThemesContainer" VerticalExpand="True">
             </BoxContainer>
         </ScrollContainer>
-        <ScrollContainer VerticalExpand="True"
-                 HScrollEnabled="False">
-            <BoxContainer Orientation="Vertical"
-                          Name="DescriptionContainer"
-                          VerticalExpand="True">
+        <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+            <BoxContainer Orientation="Vertical" Name="GhostThemeDescriptionContainer" VerticalExpand="True">
             </BoxContainer>
         </ScrollContainer>      
     </SplitContainer>

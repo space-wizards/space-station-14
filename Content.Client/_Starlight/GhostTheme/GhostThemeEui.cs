@@ -6,6 +6,7 @@ using Content.Shared.Starlight.GhostTheme;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
 using Content.Shared.Humanoid.Markings;
+using Robust.Shared.Player;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
@@ -27,6 +28,11 @@ public sealed class GhostThemeEui : BaseEui
     public GhostThemeEui()
     {
         _window = new GhostThemeWindow(_preferencesManager);
+        
+        _window.SelectTheme += slot =>
+        {
+            base.SendMessage(new GhostThemeSelectedMessage(slot));
+        };
     }
 
     public override void Opened()
