@@ -167,10 +167,12 @@ namespace Content.Shared.Chemistry
 
         public readonly bool UpdateLabel;
 
+        public readonly bool CanMakePills;
+
         public ChemMasterBoundUserInterfaceState(
             ChemMasterMode mode, ContainerInfo? inputContainerInfo, ContainerInfo? outputContainerInfo,
             IReadOnlyList<ReagentQuantity> bufferReagents, FixedPoint2 bufferCurrentVolume,
-            uint selectedPillType, uint pillDosageLimit, bool updateLabel)
+            uint selectedPillType, uint pillDosageLimit, bool updateLabel, bool canMakePills)
         {
             InputContainerInfo = inputContainerInfo;
             OutputContainerInfo = outputContainerInfo;
@@ -180,6 +182,7 @@ namespace Content.Shared.Chemistry
             SelectedPillType = selectedPillType;
             PillDosageLimit = pillDosageLimit;
             UpdateLabel = updateLabel;
+            CanMakePills = canMakePills;
         }
     }
 

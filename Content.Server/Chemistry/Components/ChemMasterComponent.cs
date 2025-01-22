@@ -23,5 +23,8 @@ namespace Content.Server.Chemistry.Components
 
         [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+
+        [DataField("canMakePills"), ViewVariables(VVAccess.ReadWrite)]
+        public bool CanMakePills = true;
     }
 }

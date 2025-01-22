@@ -77,7 +77,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             var state = new ChemMasterBoundUserInterfaceState(
                 chemMaster.Mode, BuildInputContainerInfo(inputContainer), BuildOutputContainerInfo(outputContainer),
-                bufferReagents, bufferCurrentVolume, chemMaster.PillType, chemMaster.PillDosageLimit, updateLabel);
+                bufferReagents, bufferCurrentVolume, chemMaster.PillType, chemMaster.PillDosageLimit, updateLabel, chemMaster.CanMakePills);
 
             _userInterfaceSystem.SetUiState(owner, ChemMasterUiKey.Key, state);
         }
