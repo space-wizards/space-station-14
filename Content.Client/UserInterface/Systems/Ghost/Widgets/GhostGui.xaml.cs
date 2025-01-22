@@ -15,6 +15,7 @@ public sealed partial class GhostGui : UIWidget
     public event Action? ReturnToBodyPressed;
     public event Action? GhostRolesPressed;
     public event Action? NewLifePressed;   //🌟Starlight🌟
+    public event Action? GhostThemePressed;   //🌟Starlight🌟
 
     public GhostGui()
     {
@@ -28,6 +29,7 @@ public sealed partial class GhostGui : UIWidget
         ReturnToBodyButton.OnPressed += _ => ReturnToBodyPressed?.Invoke();
         GhostRolesButton.OnPressed += _ => GhostRolesPressed?.Invoke();
         NewLifeButton.OnPressed += _ => NewLifePressed?.Invoke(); //🌟Starlight🌟
+        GhostThemeButton.OnPressed += _ => GhostThemePressed?.Invoke(); //🌟Starlight🌟
         NewLifeButton.StyleClasses.Add(StyleBase.ButtonCaution);  //🌟Starlight🌟
     }
 

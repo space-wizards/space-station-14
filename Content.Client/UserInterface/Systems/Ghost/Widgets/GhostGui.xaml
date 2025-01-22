@@ -3,6 +3,7 @@
                   HorizontalAlignment="Center">
     <BoxContainer Orientation="Horizontal">
         <Button Name="NewLifeButton" Text="{Loc ghost-gui-new-life-button}" />
+        <Button Name="GhostThemeButton" Text="{Loc ghost-gui-ghost-theme-button}" />
         <Button Name="ReturnToBodyButton" Text="{Loc ghost-gui-return-to-body-button}" />
         <Button Name="GhostWarpButton" Text="{Loc ghost-gui-ghost-warp-button}" />
         <Button Name="GhostRolesButton" />

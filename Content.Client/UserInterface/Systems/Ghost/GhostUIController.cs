@@ -126,6 +126,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         Gui.ReturnToBodyPressed += ReturnToBody;
         Gui.GhostRolesPressed += GhostRolesPressed;
         Gui.NewLifePressed += NewLifePressed; //🌟Starlight🌟
+        Gui.GhostThemePressed += GhostThemePressed; //🌟Starlight🌟
         Gui.TargetWindow.WarpClicked += OnWarpClicked;
         Gui.TargetWindow.OnGhostnadoClicked += OnGhostnadoClicked;
 
@@ -141,6 +142,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         Gui.ReturnToBodyPressed -= ReturnToBody;
         Gui.GhostRolesPressed -= GhostRolesPressed;
         Gui.NewLifePressed -= NewLifePressed; //🌟Starlight🌟
+        Gui.GhostThemePressed -= GhostThemePressed; //🌟Starlight🌟
         Gui.TargetWindow.WarpClicked -= OnWarpClicked;
 
         Gui.Hide();
@@ -166,5 +168,10 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
     private void NewLifePressed() //🌟Starlight🌟
     {
         _system?.OpenNewLife();
+    }
+    
+    private void GhostThemePressed() //🌟Starlight🌟
+    {
+        _system?.OpenGhostTheme();
     }
 }
