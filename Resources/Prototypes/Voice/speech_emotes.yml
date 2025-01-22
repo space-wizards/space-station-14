@@ -164,6 +164,24 @@
    - chitter
    - chitters
    - chittered
+   
+- type: emote #imp
+  id: Coo
+  name: chat-emote-name-coo
+  category: Vocal
+  available: false
+  icon: _Impstation/Interface/Emotes/chirp.png #placeholder
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-coo"]
+  chatTriggers:
+   - coo
+   - coos
+   - cooed
 
 - type: emote
   id: Squeak
