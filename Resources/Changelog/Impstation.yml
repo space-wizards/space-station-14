@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Added the Space Cadet Jumpsuit in all jumpsuit colors
-    type: Add
-  id: 491
-  time: '2024-11-11T09:40:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/667
 - author: Formlessnameless, Kipdotnet
   changes:
   - message: Plastic Slag has a custom sprite now
@@ -4399,3 +4392,12 @@
   id: 990
   time: '2025-01-22T06:21:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1442
+- author: AftrLite
+  changes:
+  - message: Fixed Courier jumpsuit/skirt sprite hiding your arms.
+    type: Fix
+  - message: You can now take off your top on the courier jumpsuit! Have fun.
+    type: Add
+  id: 991
+  time: '2025-01-22T14:55:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1456
