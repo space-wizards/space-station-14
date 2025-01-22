@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: The Energy Shotgun is as big and beautiful and powerful as you remembered
-      her.
-    type: Tweak
-  id: 484
-  time: '2024-11-10T02:11:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/658
 - author: KingMudkipIII
   changes:
   - message: No-one can defeat the quad lazer.
@@ -4411,3 +4403,11 @@
   id: 983
   time: '2025-01-22T03:53:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1445
+- author: DinnerCalzone
+  changes:
+  - message: The supermatter engine has been added to Bagel. Be sure to tune into
+      your local broadcast station to see it in action!
+    type: Add
+  id: 984
+  time: '2025-01-22T04:09:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1449
