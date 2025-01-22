@@ -120,7 +120,7 @@
     event: !type:ToggleActionEvent
 
 - type: entity
-  parent: [ClothingShoesBase, ClothingShoesBootsMagBase]
+  parent: [ClothingShoesBootsMagBase, BaseSecurityContraband]
   id: ClothingShoesBootsMagSec
   name: Security Magboots
   description: A decades old prototype version of current engineering magboots, the most nt was willing to provide for a department other than thier primary breadwinner.
