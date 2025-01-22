@@ -1,6 +1,4 @@
-using System.Linq;
 using Content.Shared.Contraband;
-using Content.Shared.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -19,19 +17,24 @@ public sealed class ContrabandTest
 
         await client.WaitAssertion(() =>
         {
-            var protos = protoMan.EnumeratePrototypes<EntityPrototype>()
-                .Where(p => !p.Abstract)
-                .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => p.HasComponent<ContrabandComponent>(componentFactory));
-
-            foreach (var proto in protos)
+            foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
             {
-                Assert.That(proto.TryGetComponent<ContrabandComponent>(out var contraband, componentFactory));
-                Assert.That(protoMan.TryIndex(contraband.Severity, out var severity));
+                if (proto.Abstract || pair.IsTestPrototype(proto))
+                    continue;
 
-                var list = contraband.AllowedDepartments.Select(p => p.Id).Concat(contraband.AllowedJobs.Select(p => p.Id)).ToList();
+                if (!proto.TryGetComponent<ContrabandComponent>(out var contraband, componentFactory))
+                    continue;
+
+                if (!protoMan.TryIndex(contraband.Severity, out var severity))
+                    Assert.Fail(@$"{proto.ID} has a ContrabandComponent with a unknown severity.");
+
                 if (severity.ShowDepartmentsAndJobs)
-                    Assert.That(list, Is.Not.Empty, @$"{proto.ID} has a ContrabandComponent with ShowDepartmentsAndJobs but no allowed departments or jobs.");
+                {
+                    if (contraband.AllowedDepartments.Count + contraband.AllowedJobs.Count == 0)
+                    {
+                        Assert.Fail(@$"{proto.ID} has a ContrabandComponent with ShowDepartmentsAndJobs but no allowed departments or jobs.");
+                    }
+                }
             }
         });
 
