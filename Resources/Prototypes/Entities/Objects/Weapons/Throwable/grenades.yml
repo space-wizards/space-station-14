@@ -15,7 +15,7 @@
     slots:
     - Belt
   - type: OnUseTimerTrigger
-    delay: 3
+    delay: 3.5
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -173,6 +173,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/supermattergrenade.rsi
   - type: OnUseTimerTrigger
+    delay: 3
     beepInterval: 0.46
     beepSound:
       path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
@@ -235,6 +236,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/whiteholegrenade.rsi
   - type: OnUseTimerTrigger
+    delay: 3
     beepInterval: 0.69
   - type: SoundOnTrigger
     removeOnTrigger: true
@@ -398,8 +400,8 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/smoke.rsi
   - type: SmokeOnTrigger
-    duration: 15
-    spreadAmount: 15
+    duration: 30
+    spreadAmount: 50
   - type: SoundOnTrigger
     sound: /Audio/Items/smoke_grenade_smoke.ogg
   - type: DeleteOnTrigger
@@ -428,13 +430,13 @@
   parent: SmokeGrenade
   id: TearGasGrenade
   name: tear gas grenade
-  description: A tear gas grenade for riot control. Causes irritation, pain, and makes you cry your eyes out.
+  description: A riot control tear gas grenade. Causes irritation, pain and makes you cry your eyes out.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/tear_gas.rsi
   - type: SmokeOnTrigger
-    duration: 15
-    spreadAmount: 20
+    duration: 10
+    spreadAmount: 30
     solution:
       reagents:
       - ReagentId: TearGas
@@ -484,8 +486,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
-  - type: OnUseTimerTrigger
-    delay: 5
   - type: SoundOnTrigger
     sound:
       path: /Audio/Effects/Emotes/parp1.ogg
