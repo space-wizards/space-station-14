@@ -13941,7 +13941,7 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -279235.06
+      secondsUntilStateChange: -281470.2
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -17755,7 +17755,7 @@ entities:
   - uid: 16013
     components:
     - type: Transform
-      pos: 10.5347595,-19.391357
+      pos: 13.292512,-18.000015
       parent: 2
   - uid: 16014
     components:
@@ -28232,6 +28232,16 @@ entities:
     components:
     - type: Transform
       pos: -13.5,32.5
+      parent: 2
+  - uid: 16416
+    components:
+    - type: Transform
+      pos: 35.5,-31.5
+      parent: 2
+  - uid: 16417
+    components:
+    - type: Transform
+      pos: 35.5,-32.5
       parent: 2
 - proto: CableApcStack
   entities:
@@ -39211,6 +39221,11 @@ entities:
       parent: 2
     - type: Stack
       count: 2
+  - uid: 16415
+    components:
+    - type: Transform
+      pos: 27.703878,37.44894
+      parent: 2
 - proto: CaptainIDCard
   entities:
   - uid: 11350
@@ -42967,7 +42982,7 @@ entities:
   - uid: 13785
     components:
     - type: Transform
-      pos: 27.671509,37.939373
+      pos: 27.240135,37.852577
       parent: 2
 - proto: Chair
   entities:
@@ -43907,13 +43922,6 @@ entities:
     components:
     - type: Transform
       pos: 27.5,10.5
-      parent: 2
-- proto: ChemDispenserEmpty
-  entities:
-  - uid: 677
-    components:
-    - type: Transform
-      pos: 26.5,38.5
       parent: 2
 - proto: ChemistryEmptyBottle01
   entities:
@@ -44894,7 +44902,7 @@ entities:
   - uid: 13753
     components:
     - type: Transform
-      pos: 40.554234,33.41338
+      pos: 46.43723,33.34558
       parent: 2
 - proto: ClothingHeadBandBotany
   entities:
@@ -46473,13 +46481,6 @@ entities:
     - type: Transform
       pos: -4.5,5.5
       parent: 2
-- proto: CrateVendingMachineRestockChemVendFilled
-  entities:
-  - uid: 13724
-    components:
-    - type: Transform
-      pos: 27.5,34.5
-      parent: 2
 - proto: CrayonBox
   entities:
   - uid: 12927
@@ -47299,6 +47300,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: 14.5,9.5
       parent: 2
+  - uid: 1792
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 12.5,-16.5
+      parent: 2
   - uid: 2368
     components:
     - type: Transform
@@ -47811,6 +47818,12 @@ entities:
     - type: Transform
       pos: 7.5,24.5
       parent: 2
+  - uid: 16423
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 12.5,-13.5
+      parent: 2
 - proto: DisposalPipe
   entities:
   - uid: 141
@@ -48263,12 +48276,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 13.5,-13.5
-      parent: 2
-  - uid: 12981
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 12.5,-13.5
       parent: 2
   - uid: 12982
     components:
@@ -50476,6 +50483,16 @@ entities:
       rot: 3.141592653589793 rad
       pos: -42.5,-35.5
       parent: 2
+  - uid: 16421
+    components:
+    - type: Transform
+      pos: 12.5,-14.5
+      parent: 2
+  - uid: 16422
+    components:
+    - type: Transform
+      pos: 12.5,-15.5
+      parent: 2
 - proto: DisposalTrunk
   entities:
   - uid: 457
@@ -50701,6 +50718,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -41.5,-36.5
       parent: 2
+  - uid: 16420
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 11.5,-16.5
+      parent: 2
 - proto: DisposalUnit
   entities:
   - uid: 453
@@ -50747,6 +50770,11 @@ entities:
     components:
     - type: Transform
       pos: -5.5,-4.5
+      parent: 2
+  - uid: 3990
+    components:
+    - type: Transform
+      pos: 11.5,-16.5
       parent: 2
   - uid: 4029
     components:
@@ -51305,7 +51333,7 @@ entities:
   - uid: 13784
     components:
     - type: Transform
-      pos: 27.642355,37.74729
+      pos: 27.72451,34.243202
       parent: 2
 - proto: EmergencyFunnyOxygenTankFilled
   entities:
@@ -52332,11 +52360,6 @@ entities:
       destinationAddress: Captain's Office
 - proto: filingCabinetDrawerRandom
   entities:
-  - uid: 1792
-    components:
-    - type: Transform
-      pos: 11.5,-16.5
-      parent: 2
   - uid: 2032
     components:
     - type: Transform
@@ -52391,6 +52414,11 @@ entities:
     components:
     - type: Transform
       pos: 11.5,30.5
+      parent: 2
+  - uid: 12981
+    components:
+    - type: Transform
+      pos: 10.5,-19.5
       parent: 2
 - proto: filingCabinetRandom
   entities:
@@ -80226,7 +80254,7 @@ entities:
   - uid: 16204
     components:
     - type: Transform
-      pos: 10.9722595,-19.469482
+      pos: 11.323762,-19.48439
       parent: 2
 - proto: MachineAnomalyGenerator
   entities:
@@ -80349,6 +80377,11 @@ entities:
       parent: 2
 - proto: MachineFrameDestroyed
   entities:
+  - uid: 677
+    components:
+    - type: Transform
+      pos: 26.5,38.5
+      parent: 2
   - uid: 5167
     components:
     - type: Transform
@@ -80729,11 +80762,6 @@ entities:
     - type: Transform
       pos: -23.5,46.5
       parent: 2
-  - uid: 16124
-    components:
-    - type: Transform
-      pos: -23.5,47.5
-      parent: 2
 - proto: MaintenanceWeaponSpawner
   entities:
   - uid: 725
@@ -80750,11 +80778,6 @@ entities:
     components:
     - type: Transform
       pos: -22.5,5.5
-      parent: 2
-  - uid: 13706
-    components:
-    - type: Transform
-      pos: -16.5,30.5
       parent: 2
   - uid: 13733
     components:
@@ -81315,12 +81338,12 @@ entities:
   - uid: 16200
     components:
     - type: Transform
-      pos: 11.2066345,-19.266357
+      pos: 11.417512,-19.312515
       parent: 2
   - uid: 16201
     components:
     - type: Transform
-      pos: 11.4566345,-19.516357
+      pos: 11.605012,-19.468765
       parent: 2
   - uid: 16202
     components:
@@ -81623,6 +81646,16 @@ entities:
     components:
     - type: Transform
       pos: 26.557302,37.30886
+      parent: 2
+  - uid: 16418
+    components:
+    - type: Transform
+      pos: 32.716835,13.709434
+      parent: 2
+  - uid: 16419
+    components:
+    - type: Transform
+      pos: 32.484386,13.476587
       parent: 2
 - proto: PlaqueAtmos
   entities:
@@ -84977,6 +85010,46 @@ entities:
     components:
     - type: Transform
       pos: -3.5,-38.5
+      parent: 2
+  - uid: 9390
+    components:
+    - type: Transform
+      pos: -23.5,47.5
+      parent: 2
+  - uid: 13706
+    components:
+    - type: Transform
+      pos: -16.5,30.5
+      parent: 2
+  - uid: 15236
+    components:
+    - type: Transform
+      pos: 3.5,10.5
+      parent: 2
+  - uid: 16124
+    components:
+    - type: Transform
+      pos: 57.5,-1.5
+      parent: 2
+  - uid: 16410
+    components:
+    - type: Transform
+      pos: 36.5,27.5
+      parent: 2
+  - uid: 16412
+    components:
+    - type: Transform
+      pos: -39.5,-32.5
+      parent: 2
+  - uid: 16413
+    components:
+    - type: Transform
+      pos: 18.5,11.5
+      parent: 2
+  - uid: 16414
+    components:
+    - type: Transform
+      pos: 4.5,-11.5
       parent: 2
 - proto: RandomPainting
   entities:
@@ -90706,6 +90779,11 @@ entities:
     - type: Transform
       pos: 37.323593,25.80974
       parent: 2
+  - uid: 13724
+    components:
+    - type: Transform
+      pos: 37.55199,26.713161
+      parent: 2
   - uid: 13861
     components:
     - type: Transform
@@ -90720,13 +90798,6 @@ entities:
     components:
     - type: Transform
       pos: 1.5077801,39.89814
-      parent: 2
-- proto: SpaceCash1000
-  entities:
-  - uid: 9390
-    components:
-    - type: Transform
-      pos: 37.667343,26.62224
       parent: 2
 - proto: SpaceHeaterAnchored
   entities:
@@ -90802,11 +90873,6 @@ entities:
     - type: Transform
       pos: 13.5,-18.5
       parent: 2
-  - uid: 15236
-    components:
-    - type: Transform
-      pos: 3.5,10.5
-      parent: 2
   - uid: 15237
     components:
     - type: Transform
@@ -90851,6 +90917,11 @@ entities:
     components:
     - type: Transform
       pos: 24.5,4.5
+      parent: 2
+  - uid: 16411
+    components:
+    - type: Transform
+      pos: 1.5,10.5
       parent: 2
 - proto: SpaceVillainArcadeFilled
   entities:
@@ -95576,12 +95647,6 @@ entities:
     components:
     - type: Transform
       pos: 28.5,14.5
-      parent: 2
-  - uid: 3990
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 10.5,-19.5
       parent: 2
   - uid: 4054
     components:
