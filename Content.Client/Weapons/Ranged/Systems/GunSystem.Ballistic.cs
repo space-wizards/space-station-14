@@ -30,11 +30,11 @@ public sealed partial class GunSystem
         // TODO: Combine with TakeAmmo
         if (component.Entities.Count > 0)
         {
-            var existing = component.Entities[^1];
+            ent = component.Entities[^1];
             component.Entities.RemoveAt(component.Entities.Count - 1);
 
-            Containers.Remove(existing, component.Container);
-            EnsureShootable(existing);
+            Containers.Remove(ent.Value, component.Container);
+            EnsureShootable(ent.Value);
         }
         else if (component.UnspawnedCount > 0)
         {
@@ -44,7 +44,7 @@ public sealed partial class GunSystem
         }
 
         if (ent != null && IsClientSide(ent.Value))
-            Del(ent.Value);
+            QueueDel(ent.Value);
 
         var cycledEvent = new GunCycledEvent();
         RaiseLocalEvent(uid, ref cycledEvent);
