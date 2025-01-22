@@ -485,7 +485,6 @@ entities:
             color: '#FFFFFFFF'
             id: Arrows
           decals:
-            355: -43,2
             358: -35,9
             359: -34,9
             646: -3,36
@@ -543,7 +542,6 @@ entities:
             346: -37,23
             357: -29,4
             403: -22,12
-            507: -44,5
             635: -3,38
             636: -7,38
             640: -4,40
@@ -647,11 +645,8 @@ entities:
             3260: 49,7
             3261: 49,9
             3515: 62,-1
-            3521: -38,3
-            3522: -37,3
-            3523: -37,2
-            3524: -38,2
             3643: -40,4
+            3662: -44,5
         - node:
             color: '#FFFFFFFF'
             id: BotGreyscale
@@ -1839,8 +1834,6 @@ entities:
             3451: 54,-4
             3452: 55,-4
             3453: 53,-4
-            3525: -38,6
-            3526: -37,6
         - node:
             color: '#52B4E996'
             id: DeliveryGreyscale
@@ -2140,7 +2133,6 @@ entities:
             432: -36,10
             433: -31,3
             434: -32,2
-            435: -37,4
             436: -35,4
             437: -36,4
             438: -34,5
@@ -2765,6 +2757,15 @@ entities:
             66: -4,1
             67: -5,1
         - node:
+            color: '#3C44AA96'
+            id: HalfTileOverlayGreyscale180
+          decals:
+            3652: -42,2
+            3653: -41,2
+            3654: -40,2
+            3655: -39,2
+            3656: -38,2
+        - node:
             color: '#52B4E92E'
             id: HalfTileOverlayGreyscale180
           decals:
@@ -2829,11 +2830,6 @@ entities:
             250: -42,23
             251: -41,23
             297: -35,9
-            348: -38,2
-            350: -40,2
-            351: -41,2
-            352: -42,2
-            353: -43,2
             372: -19,12
             373: -20,12
             374: -21,12
@@ -2842,7 +2838,6 @@ entities:
             377: -24,12
             398: -23,20
             399: -24,20
-            3644: -39,2
         - node:
             color: '#D381C996'
             id: HalfTileOverlayGreyscale180
@@ -2947,6 +2942,13 @@ entities:
             44: -10,1
             91: -18,-14
         - node:
+            color: '#3C44AA96'
+            id: HalfTileOverlayGreyscale270
+          decals:
+            3647: -43,3
+            3648: -43,4
+            3651: -44,6
+        - node:
             color: '#52B4E92E'
             id: HalfTileOverlayGreyscale270
           decals:
@@ -3015,8 +3017,6 @@ entities:
             299: -44,8
             300: -44,9
             301: -44,10
-            302: -44,5
-            303: -44,6
             378: -25,13
             379: -25,14
             380: -25,15
@@ -3098,6 +3098,14 @@ entities:
             46: 4,1
             92: -16,-14
         - node:
+            color: '#3C44AA96'
+            id: HalfTileOverlayGreyscale90
+          decals:
+            3658: -37,3
+            3659: -37,4
+            3660: -37,5
+            3661: -37,6
+        - node:
             color: '#52B4E92E'
             id: HalfTileOverlayGreyscale90
           decals:
@@ -3156,11 +3164,6 @@ entities:
             220: -31,5
             221: -31,6
             222: -31,7
-            234: -37,3
-            235: -37,4
-            236: -37,5
-            237: -37,2
-            238: -37,6
             247: -40,24
             248: -40,25
             265: -34,20
@@ -3962,6 +3965,11 @@ entities:
             1965: 102,-1
             1966: 103,-1
         - node:
+            color: '#3C44AA96'
+            id: QuarterTileOverlayGreyscale270
+          decals:
+            3649: -43,5
+        - node:
             color: '#52B4E92E'
             id: QuarterTileOverlayGreyscale270
           decals:
@@ -4028,7 +4036,6 @@ entities:
             188: -23,6
             199: -28,2
             287: -31,14
-            347: -37,2
             362: -31,22
             363: -31,23
             578: -29,21
@@ -4819,6 +4826,11 @@ entities:
             47: -8,-1
             60: -6,0
         - node:
+            color: '#3C44AA96'
+            id: ThreeQuarterTileOverlayGreyscale180
+          decals:
+            3657: -37,2
+        - node:
             color: '#52B4E996'
             id: ThreeQuarterTileOverlayGreyscale180
           decals:
@@ -4888,6 +4900,12 @@ entities:
             40: -10,-1
             48: 2,-1
             59: 0,0
+        - node:
+            color: '#3C44AA96'
+            id: ThreeQuarterTileOverlayGreyscale270
+          decals:
+            3646: -43,2
+            3650: -44,5
         - node:
             color: '#52B4E996'
             id: ThreeQuarterTileOverlayGreyscale270
@@ -11176,7 +11194,7 @@ entities:
       pos: -42.5,29.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -30378.055
+      secondsUntilStateChange: -30750.814
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -15989,13 +16007,6 @@ entities:
     components:
     - type: Transform
       pos: -39.5,-14.5
-      parent: 5350
-- proto: BoxEnvelope
-  entities:
-  - uid: 27650
-    components:
-    - type: Transform
-      pos: -40.61467,6.750036
       parent: 5350
 - proto: BoxFlashbang
   entities:
@@ -62632,6 +62643,18 @@ entities:
     - type: Transform
       pos: -21.437214,36.348232
       parent: 5350
+- proto: ClothingShoesSkates
+  entities:
+  - uid: 3740
+    components:
+    - type: Transform
+      pos: -40.382317,6.597493
+      parent: 5350
+  - uid: 3925
+    components:
+    - type: Transform
+      pos: -40.663567,6.425618
+      parent: 5350
 - proto: ClothingShoesSlippers
   entities:
   - uid: 7410
@@ -64036,16 +64059,6 @@ entities:
     - type: Transform
       pos: -24.5,15.5
       parent: 5350
-  - uid: 3740
-    components:
-    - type: Transform
-      pos: -36.5,2.5
-      parent: 5350
-  - uid: 3873
-    components:
-    - type: Transform
-      pos: -36.5,3.5
-      parent: 5350
   - uid: 17301
     components:
     - type: Transform
@@ -64880,6 +64893,13 @@ entities:
     components:
     - type: Transform
       pos: -30.5,-10.5
+      parent: 5350
+- proto: DefaultStationBeaconMailroomCourier
+  entities:
+  - uid: 27648
+    components:
+    - type: Transform
+      pos: -39.5,5.5
       parent: 5350
 - proto: DefaultStationBeaconMedbay
   entities:
@@ -118547,18 +118567,6 @@ entities:
     - type: Transform
       pos: 104.5,3.5
       parent: 5350
-- proto: HoloBellProjector
-  entities:
-  - uid: 3923
-    components:
-    - type: Transform
-      pos: -40.36467,6.437536
-      parent: 5350
-  - uid: 3925
-    components:
-    - type: Transform
-      pos: -40.67717,6.250036
-      parent: 5350
 - proto: HolofanProjector
   entities:
   - uid: 10668
@@ -120381,6 +120389,18 @@ entities:
         - 0
         - 0
         - 0
+- proto: LockerCourierFilled
+  entities:
+  - uid: 3873
+    components:
+    - type: Transform
+      pos: -36.5,3.5
+      parent: 5350
+  - uid: 3923
+    components:
+    - type: Transform
+      pos: -36.5,2.5
+      parent: 5350
 - proto: LockerDetectiveFilled
   entities:
   - uid: 9979
@@ -142283,15 +142303,15 @@ entities:
       parent: 5350
 - proto: SuitStorageCourier
   entities:
+  - uid: 26974
+    components:
+    - type: Transform
+      pos: -36.5,6.5
+      parent: 5350
   - uid: 27640
     components:
     - type: Transform
       pos: -37.5,6.5
-      parent: 5350
-  - uid: 27648
-    components:
-    - type: Transform
-      pos: -36.5,6.5
       parent: 5350
 - proto: SuitStorageEngi
   entities:
