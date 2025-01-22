@@ -633,7 +633,7 @@
     defaultText: station-beacon-eva-storage
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: DefaultStationBeaconService #imp edit
   id: DefaultStationBeaconChapel
   suffix: Chapel
   components:
@@ -641,7 +641,7 @@
     defaultText: station-beacon-chapel
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: DefaultStationBeaconService #imp edit
   id: DefaultStationBeaconLibrary
   suffix: Library
   components:
@@ -649,7 +649,7 @@
     defaultText: station-beacon-library
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: DefaultStationBeaconService #imp edit
   id: DefaultStationBeaconReporter
   suffix: Reporter
   components:
@@ -657,7 +657,7 @@
     defaultText: station-beacon-reporter
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: DefaultStationBeaconService #imp edit
   id: DefaultStationBeaconTheater
   suffix: Theater
   components:
