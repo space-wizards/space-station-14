@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: The Energy Shotgun is as big and beautiful and powerful as you remembered
-      her.
-    type: Tweak
-  id: 484
-  time: '2024-11-10T02:11:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/658
-- author: KingMudkipIII
-  changes:
-  - message: No-one can defeat the quad lazer.
-    type: Add
-  id: 485
-  time: '2024-11-10T07:34:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/663
-- author: honeyed-lemons
-  changes:
-  - message: Random Unrevivable is checked after each defib, instead of roundstart.
-    type: Tweak
-  id: 486
-  time: '2024-11-10T18:30:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/642
 - author: AirFryerBuyOneGetOneFree
   changes:
   - message: Added new map Barratry, also known as Detroit.
@@ -4411,3 +4389,30 @@
   id: 983
   time: '2025-01-22T03:53:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1445
+- author: DinnerCalzone
+  changes:
+  - message: The supermatter engine has been added to Bagel. Be sure to tune into
+      your local broadcast station to see it in action!
+    type: Add
+  id: 984
+  time: '2025-01-22T04:09:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1449
+- author: hivehum
+  changes:
+  - message: 'Fresh shipment from Frontier Sector: Space Blades, the hot new toy that
+      both kids and adults love!'
+    type: Add
+  id: 985
+  time: '2025-01-22T04:21:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1451
+- author: RosySaturniidae
+  changes:
+  - message: role icons for centcomm jobs
+    type: Add
+  - message: new ids/pdas for deathsquad and cburn
+    type: Add
+  - message: new job descriptions for deathsquad and cburn
+    type: Tweak
+  id: 986
+  time: '2025-01-22T05:01:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1423

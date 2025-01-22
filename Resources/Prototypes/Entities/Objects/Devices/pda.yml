@@ -961,16 +961,29 @@
     tags:
     - DoorBumpOpener
 
-- type: entity
+- type: entity # imp
   parent: CentcomPDA
   id: DeathsquadPDA
   suffix: Death Squad
+  name: death squad PDA
+  description: The red helps to mask the blood. 
   components:
   - type: Pda
-    id: CentcomIDCardDeathsquad
+    id:   CentcomIDCardDeathsquad
+  - type: Appearance 
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-deathsquadron
+  - type: Icon
+    state: pda-deathsquadron
+  - type: PdaBorderColor 
+    borderColor: "#640202"
+    accentHColor: "#06064B"
+    accentVColor: "#06064B"
   - type: Tag #  Ignore Chameleon tags
     tags:
-    - DoorBumpOpener
+    - DoorBumpOpener # /imp
 
 - type: entity
   parent: BasePDA
@@ -1167,10 +1180,17 @@
   components:
   - type: Pda
     id: CBURNIDcard
-  - type: PdaBorderColor
+  - type: Appearance #imp
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-cburn
+  - type: Icon
+    state: pda-cburn
+  - type: PdaBorderColor #imp
     borderColor: "#A32D26"
-    accentHColor: "#447987"
-    accentVColor: "#447987"
+    accentHColor: "#D0B01A"
+    accentVColor: "#D0B01A"
 
 - type: entity
   parent: BasePDA
