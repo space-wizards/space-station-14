@@ -9,7 +9,6 @@
     state: brown
   - type: ParcelWrap
     parcelPrototype: WrappedParcel
-    uses: 30
     wrapDelay: 1.0
     wrapSound: /Audio/Items/Handcuffs/rope_start.ogg
     whitelist:
@@ -22,6 +21,9 @@
       tags:
       - ParcelWrapBlacklist
       - FakeNukeDisk # So you can't tell if the nuke disk is real or fake depending on if it can be wrapped or not.
+  - type: LimitedCharges
+    charges: 30
+    maxCharges: 30
 
 - type: entity
   parent: BaseItem

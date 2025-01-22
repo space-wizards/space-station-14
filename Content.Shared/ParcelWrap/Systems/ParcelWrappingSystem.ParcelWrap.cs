@@ -1,33 +1,20 @@
 using Content.Shared.DoAfter;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.ParcelWrap.Components;
 using Content.Shared.Verbs;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.ParcelWrap.Systems;
 
 // This part handles Parcel Wrap.
-public abstract partial class SharedParcelWrappingSystem
+public sealed partial class SharedParcelWrappingSystem
 {
     private void InitializeParcelWrap()
     {
-        SubscribeLocalEvent<ParcelWrapComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<ParcelWrapComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<ParcelWrapComponent, GetVerbsEvent<UtilityVerb>>(OnGetVerbsForParcelWrap);
         SubscribeLocalEvent<ParcelWrapComponent, ParcelWrapItemDoAfterEvent>(OnWrapItemDoAfter);
-    }
-
-    private void OnExamined(Entity<ParcelWrapComponent> entity, ref ExaminedEvent args)
-    {
-        if (!args.IsInDetailsRange)
-            return;
-
-        args.PushMarkup(
-            Loc.GetString("parcel-wrap-examine-detail-uses",
-                ("uses", entity.Comp.Uses),
-                ("markupUsesColor", "lightgray")
-            )
-        );
     }
 
     private void OnAfterInteract(Entity<ParcelWrapComponent> entity, ref AfterInteractEvent args)
@@ -92,5 +79,57 @@ public abstract partial class SharedParcelWrappingSystem
     /// <param name="user">The entity using <paramref name="wrapper"/> to wrap <paramref name="target"/>.</param>
     /// <param name="wrapper">The wrapping being used. Determines appearance of the spawned parcel.</param>
     /// <param name="target">The entity being wrapped.</param>
-    protected abstract void WrapInternal(EntityUid user, Entity<ParcelWrapComponent> wrapper, EntityUid target);
+    private void WrapInternal(EntityUid user, Entity<ParcelWrapComponent> wrapper, EntityUid target)
+    {
+        if (_net.IsServer)
+        {
+            var spawned = Spawn(wrapper.Comp.ParcelPrototype, Transform(target).Coordinates);
+
+            // If this wrap maintains the size when wrapping, set the parcel's size to the target's size. Otherwise use the
+            // wrap's fallback size.
+            TryComp(target, out ItemComponent? targetItemComp);
+            var size = wrapper.Comp.FallbackItemSize;
+            if (wrapper.Comp.WrappedItemsMaintainSize && targetItemComp is not null)
+            {
+                size = targetItemComp.Size;
+            }
+
+            // ParcelWrap's spawned entity should always have an `ItemComp`. As of writing, the only use has it hardcoded on
+            // its prototype.
+            var item = Comp<ItemComponent>(spawned);
+            _item.SetSize(spawned, size, item);
+            _appearance.SetData(spawned, WrappedParcelVisuals.Size, size.Id);
+
+            // If this wrap maintains the shape when wrapping and the item has a shape override, copy the shape override to
+            // the parcel.
+            if (wrapper.Comp.WrappedItemsMaintainShape && targetItemComp is { Shape: { } shape })
+            {
+                _item.SetShape(spawned, shape, item);
+            }
+
+            // If the target's in a container, try to put the parcel in its place in the container.
+            if (_container.TryGetContainingContainer((target, null, null), out var containerOfTarget))
+            {
+                _container.Remove(target, containerOfTarget);
+                _container.InsertOrDrop((spawned, null, null), containerOfTarget);
+            }
+
+            // Insert the target into the parcel.
+            var parcel = EnsureComp<WrappedParcelComponent>(spawned);
+            if (!_container.Insert(target, parcel.Contents))
+            {
+                DebugTools.Assert(
+                    $"Failed to insert target entity into newly spawned parcel. target={PrettyPrint.PrintUserFacing(target)}");
+                QueueDel(spawned);
+            }
+        }
+
+        // Consume a `use` on the wrapper, and delete the wrapper if it's empty.
+        _charges.UseCharge(wrapper);
+        if (_net.IsServer && _charges.IsEmpty(wrapper))
+            QueueDel(wrapper);
+
+        // Play a wrapping sound.
+        _audio.PlayPredicted(wrapper.Comp.WrapSound, target, user);
+    }
 }

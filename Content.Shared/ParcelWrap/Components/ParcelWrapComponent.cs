@@ -11,8 +11,8 @@ namespace Content.Shared.ParcelWrap.Components;
 /// This component gives its owning entity the ability to wrap items into parcels.
 /// </summary>
 /// <seealso cref="Components.WrappedParcelComponent"/>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access] // Default readonly, except for VV editing
+[RegisterComponent, NetworkedComponent]
+[Access] // Readonly, except for VV editing
 public sealed partial class ParcelWrapComponent : Component
 {
     /// <summary>
@@ -20,12 +20,6 @@ public sealed partial class ParcelWrapComponent : Component
     /// </summary>
     [DataField(required: true)]
     public EntProtoId ParcelPrototype;
-
-    /// <summary>
-    /// How many times this wrap can be used to create parcels.
-    /// </summary>
-    [DataField, AutoNetworkedField, Access(typeof(SharedParcelWrappingSystem))]
-    public int Uses = 30;
 
     /// <summary>
     /// If true, parcels created by this will have the same <see cref="ItemSizePrototype">size</see> as the item they

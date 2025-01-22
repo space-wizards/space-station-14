@@ -1,9 +1,12 @@
+using Content.Shared.Charges.Systems;
 using Content.Shared.DoAfter;
+using Content.Shared.Item;
 using Content.Shared.ParcelWrap.Components;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 
 namespace Content.Shared.ParcelWrap.Systems;
 
@@ -13,12 +16,17 @@ namespace Content.Shared.ParcelWrap.Systems;
 /// </summary>
 /// <seealso cref="ParcelWrapComponent"/>
 /// <seealso cref="WrappedParcelComponent"/>
-public abstract partial class SharedParcelWrappingSystem : EntitySystem
+public sealed partial class SharedParcelWrappingSystem : EntitySystem
 {
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] protected readonly SharedContainerSystem Container = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedChargesSystem _charges = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     /// <inheritdoc/>
@@ -41,8 +49,8 @@ public abstract partial class SharedParcelWrappingSystem : EntitySystem
         return
             // Wrapping cannot wrap itself
             wrapper.Owner != target &&
-            // Wrapper should never have non-positive uses, but may as well make sure.
-            wrapper.Comp.Uses > 0 &&
+            // Wrapper should never be empty, but may as well make sure.
+            !_charges.IsEmpty(wrapper) &&
             _whitelist.IsWhitelistPass(wrapper.Comp.Whitelist, target) &&
             _whitelist.IsBlacklistFail(wrapper.Comp.Blacklist, target);
     }

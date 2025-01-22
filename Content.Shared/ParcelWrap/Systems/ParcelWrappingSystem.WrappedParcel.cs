@@ -10,7 +10,7 @@ using Robust.Shared.Containers;
 namespace Content.Shared.ParcelWrap.Systems;
 
 // This part handles Wrapped Parcels
-public abstract partial class SharedParcelWrappingSystem
+public sealed partial class SharedParcelWrappingSystem
 {
     private void InitializeWrappedParcel()
     {
@@ -24,7 +24,7 @@ public abstract partial class SharedParcelWrappingSystem
 
     private void OnComponentInit(Entity<WrappedParcelComponent> entity, ref ComponentInit args)
     {
-        entity.Comp.Contents = Container.EnsureContainer<ContainerSlot>(entity, entity.Comp.ContainerId);
+        entity.Comp.Contents = _container.EnsureContainer<ContainerSlot>(entity, entity.Comp.ContainerId);
     }
 
     private void OnUseInHand(Entity<WrappedParcelComponent> entity, ref UseInHandEvent args)
@@ -76,8 +76,9 @@ public abstract partial class SharedParcelWrappingSystem
         }
     }
 
-    private bool TryStartUnwrapDoAfter(EntityUid user, Entity<WrappedParcelComponent> parcel) =>
-        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager,
+    private bool TryStartUnwrapDoAfter(EntityUid user, Entity<WrappedParcelComponent> parcel)
+    {
+        return _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager,
             user,
             parcel.Comp.UnwrapDelay,
             new UnwrapWrappedParcelDoAfterEvent(),
@@ -86,6 +87,7 @@ public abstract partial class SharedParcelWrappingSystem
         {
             NeedHand = true,
         });
+    }
 
     /// <summary>
     /// Despawns <paramref name="parcel"/>, leaving the contained entity where the parcel was.
@@ -96,5 +98,43 @@ public abstract partial class SharedParcelWrappingSystem
     /// The newly unwrapped, contained entity. Returns null only in the exceptional case that the parcel contained
     /// nothing, which should be prevented by not creating such parcels.
     /// </returns>
-    protected abstract EntityUid? UnwrapInternal(EntityUid? user, Entity<WrappedParcelComponent> parcel);
+    private EntityUid? UnwrapInternal(EntityUid? user, Entity<WrappedParcelComponent> parcel)
+    {
+        var containedEntity = parcel.Comp.Contents.ContainedEntity;
+        _audio.PlayPredicted(parcel.Comp.UnwrapSound, parcel, user);
+
+        // If we're on the client, just return the contained entity and don't try to despawn the parcel.
+        if (!_net.IsServer)
+            return containedEntity;
+
+        var parcelTransform = Transform(parcel);
+
+        if (containedEntity is { } parcelContents)
+        {
+            _container.Remove(parcelContents,
+                parcel.Comp.Contents,
+                true,
+                true,
+                parcelTransform.Coordinates);
+
+            // If the parcel is in a container, try to put the unwrapped contents in that container.
+            if (_container.TryGetContainingContainer((parcel, null, null), out var outerContainer))
+            {
+                // Make space in the container for the parcel contents.
+                _container.Remove((parcel, null, null), outerContainer, force: true);
+                _container.InsertOrDrop((parcelContents, null, null), outerContainer);
+            }
+        }
+
+        // Spawn unwrap trash.
+        if (parcel.Comp.UnwrapTrash is { } trashProto)
+        {
+            var trash = Spawn(trashProto, parcelTransform.Coordinates);
+            _transform.DropNextTo((trash, null), (parcel, parcelTransform));
+        }
+
+        QueueDel(parcel);
+
+        return containedEntity;
+    }
 }
