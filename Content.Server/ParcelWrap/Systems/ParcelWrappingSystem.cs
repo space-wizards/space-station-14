@@ -12,9 +12,7 @@ public sealed class ParcelWrappingSystem : SharedParcelWrappingSystem
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    protected override Entity<WrappedParcelComponent>? SpawnParcelAndInsertTarget(EntityUid user,
-        Entity<ParcelWrapComponent> wrapper,
-        EntityUid target)
+    protected override void WrapInternal(EntityUid user, Entity<ParcelWrapComponent> wrapper, EntityUid target)
     {
         var spawned = Spawn(wrapper.Comp.ParcelPrototype, Transform(target).Coordinates);
 
@@ -54,18 +52,55 @@ public sealed class ParcelWrappingSystem : SharedParcelWrappingSystem
             DebugTools.Assert(
                 $"Failed to insert target entity into newly spawned parcel. target={PrettyPrint.PrintUserFacing(target)}");
             QueueDel(spawned);
-            return null;
         }
 
-        return (spawned, parcel);
+        // Consume a `use` on the wrapper.
+        wrapper.Comp.Uses -= 1;
+        if (wrapper.Comp.Uses <= 0)
+        {
+            QueueDel(wrapper);
+        }
+        else
+        {
+            Dirty(wrapper);
+        }
+
+        // Play a wrapping sound.
+        Audio.PlayPredicted(wrapper.Comp.WrapSound, target, user);
     }
 
-    protected override void SpawnUnwrapTrash(Entity<WrappedParcelComponent, TransformComponent> parcel)
+    protected override EntityUid? UnwrapInternal(EntityUid? user, Entity<WrappedParcelComponent> parcel)
     {
-        if (parcel.Comp1.UnwrapTrash is { } trashProto)
+        var parcelTransform = Transform(parcel);
+
+        var containedEntity = parcel.Comp.Contents.ContainedEntity;
+        if (containedEntity is { } parcelContents)
         {
-            var trash = Spawn(trashProto, parcel.Comp2.Coordinates);
-            _transform.DropNextTo((trash, null), (parcel, parcel.Comp2));
+            Container.Remove(parcelContents,
+                parcel.Comp.Contents,
+                true,
+                true,
+                parcelTransform.Coordinates);
+
+            // If the parcel is in a container, try to put the unwrapped contents in that container.
+            if (Container.TryGetContainingContainer((parcel, null, null), out var outerContainer))
+            {
+                // Make space in the container for the parcel contents.
+                Container.Remove((parcel, null, null), outerContainer, force: true);
+                Container.InsertOrDrop((parcelContents, null, null), outerContainer);
+            }
         }
+
+        // Make some trash and play an unwrapping sound.
+        Audio.PlayPredicted(parcel.Comp.UnwrapSound, parcel, user);
+        if (parcel.Comp.UnwrapTrash is { } trashProto)
+        {
+            var trash = Spawn(trashProto, parcelTransform.Coordinates);
+            _transform.DropNextTo((trash, null), (parcel, parcelTransform));
+        }
+
+        QueueDel(parcel);
+
+        return containedEntity;
     }
 }

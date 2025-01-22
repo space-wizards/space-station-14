@@ -94,31 +94,5 @@ public abstract partial class SharedParcelWrappingSystem
     /// <param name="user">The entity using <paramref name="wrapper"/> to wrap <paramref name="target"/>.</param>
     /// <param name="wrapper">The wrapping being used. Determines appearance of the spawned parcel.</param>
     /// <param name="target">The entity being wrapped.</param>
-    private void WrapInternal(EntityUid user,
-        Entity<ParcelWrapComponent> wrapper,
-        EntityUid target)
-    {
-        var parcel = SpawnParcelAndInsertTarget(user, wrapper, target);
-
-        // Consume a `use` on the wrapper.
-        wrapper.Comp.Uses -= 1;
-        if (wrapper.Comp.Uses <= 0)
-        {
-            QueueDel(wrapper);
-        }
-        else
-        {
-            Dirty(wrapper);
-        }
-
-        // Play a wrapping sound.
-        _audio.PlayPredicted(wrapper.Comp.WrapSound, parcel?.Owner ?? user, user);
-    }
-
-    /// <remarks>
-    /// Split off from <see cref="WrapInternal"/> so that entity spawning is only performed on the server.
-    /// </remarks>
-    protected abstract Entity<WrappedParcelComponent>? SpawnParcelAndInsertTarget(EntityUid user,
-        Entity<ParcelWrapComponent> wrapper,
-        EntityUid target);
+    protected abstract void WrapInternal(EntityUid user, Entity<ParcelWrapComponent> wrapper, EntityUid target);
 }

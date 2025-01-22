@@ -6,7 +6,6 @@ using Content.Shared.ParcelWrap.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
 
 namespace Content.Shared.ParcelWrap.Systems;
 
@@ -99,39 +98,5 @@ public abstract partial class SharedParcelWrappingSystem
     /// The newly unwrapped, contained entity. Returns null only in the exceptional case that the parcel contained
     /// nothing, which should be prevented by not creating such parcels.
     /// </returns>
-    private EntityUid? UnwrapInternal(EntityUid? user, Entity<WrappedParcelComponent> parcel)
-    {
-        var parcelTransform = Transform(parcel);
-
-        var containedEntity = parcel.Comp.Contents.ContainedEntity;
-        if (containedEntity is { } parcelContents)
-        {
-            Container.Remove(parcelContents,
-                parcel.Comp.Contents,
-                true,
-                true,
-                parcelTransform.Coordinates);
-
-            // If the parcel is in a container, try to put the unwrapped contents in that container.
-            if (Container.TryGetContainingContainer((parcel, null, null), out var outerContainer))
-            {
-                // Make space in the container for the parcel contents.
-                Container.Remove((parcel, null, null), outerContainer, force: true);
-                Container.InsertOrDrop((parcelContents, null, null), outerContainer);
-            }
-        }
-
-        // Make some trash and play an unwrapping sound.
-        SpawnUnwrapTrash((parcel, parcel.Comp, parcelTransform));
-        _audio.PlayPredicted(parcel.Comp.UnwrapSound, parcel, user);
-
-        Del(parcel);
-
-        return containedEntity;
-    }
-
-    /// <remarks>
-    /// Split off from <see cref="UnwrapInternal"/> so that entity spawning is only performed on the server.
-    /// </remarks>
-    protected abstract void SpawnUnwrapTrash(Entity<WrappedParcelComponent, TransformComponent> parcel);
+    protected abstract EntityUid? UnwrapInternal(EntityUid? user, Entity<WrappedParcelComponent> parcel);
 }

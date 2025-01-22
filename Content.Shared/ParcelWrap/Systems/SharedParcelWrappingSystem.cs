@@ -15,7 +15,7 @@ namespace Content.Shared.ParcelWrap.Systems;
 /// <seealso cref="WrappedParcelComponent"/>
 public abstract partial class SharedParcelWrappingSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
