@@ -2,8 +2,10 @@ using System.Linq;
 using Content.Server._DV.Mail.Components;
 using Content.Server._DV.Mail.EntitySystems;
 using Content.Server.Administration;
+using Content.Shared._DV.CCVars;
 using Content.Shared._DV.Mail;
 using Content.Shared.Administration;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -20,12 +22,12 @@ public sealed class MailToCommand : IConsoleCommand
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
 
     private const string BlankMailPrototype = "MailAdminFun";
     private const string BlankLargeMailPrototype = "MailLargeAdminFun"; // Frontier: large mail
     private const string Container = "storagebase";
     private const string MailContainer = "contents";
-
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -125,7 +127,7 @@ public sealed class MailToCommand : IConsoleCommand
 
         var teleporterQueue = containerSystem.EnsureContainer<Container>((EntityUid)teleporterUid, "queued");
         containerSystem.Insert(mailUid, teleporterQueue);
-        shell.WriteLine(Loc.GetString("command-mailto-success", ("timeToTeleport", teleporterComponent.TeleportInterval.TotalSeconds - teleporterComponent.Accumulator)));
+        shell.WriteLine(Loc.GetString("command-mailto-success", ("timeToTeleport", TimeSpan.FromMinutes(_config.GetCVar(DCCVars.MailTeleportIntervalInMinutes)).TotalSeconds - teleporterComponent.Accumulator)));
     }
 }
 
@@ -137,12 +139,13 @@ public sealed class MailNowCommand : IConsoleCommand
     public string Help => Loc.GetString("command-mailnow-help", ("command", Command));
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         foreach (var mailTeleporter in _entityManager.EntityQuery<MailTeleporterComponent>())
         {
-            mailTeleporter.Accumulator += (float) mailTeleporter.TeleportInterval.TotalSeconds - mailTeleporter.Accumulator;
+            mailTeleporter.Accumulator += (float) TimeSpan.FromMinutes(_config.GetCVar(DCCVars.MailTeleportIntervalInMinutes)).TotalSeconds - mailTeleporter.Accumulator;
         }
 
         shell.WriteLine(Loc.GetString("command-mailnow-success"));
