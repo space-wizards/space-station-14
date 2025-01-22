@@ -2564,4 +2564,24 @@ Entries:
   id: 358
   time: '2025-01-22T10:00:33.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/257
-
+- author: Darkrell
+  changes:
+  - message: Fixed guns shooting.
+    type: Fix
+  id: 359
+  time: '2025-01-22T15:42:13.009131+00:00'
+  url: 'null'
+- author: Darkrell
+  changes:
+  - message: Fixed reflective vest and shield, now they reflects only lasers.
+    type: Fix
+  id: 360
+  time: '2025-01-22T15:42:50.720791+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed abductor abuse, now wonderprod and silencer has limit(20u).
+    type: Fix
+  id: 361
+  time: '2025-01-22T15:43:26.542954+00:00'
+  url: 'null'
