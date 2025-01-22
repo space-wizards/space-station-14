@@ -1,5 +1,5 @@
 - type: entity
-  name: daito
+  name: Daito
   parent: [BaseWeaponRifle, BaseRestrictedContraband]
   id: WeaponRifleDaito
   description: A military precision rifle for the efficient combatant. Uses .30 rifle ammo.
@@ -60,7 +60,7 @@
   - type: Appearance
 
 - type: entity
-  name: nemesis-11
+  name: Nemesis-11
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
   id: WeaponRifleNemesis
   description: An ambitious step into the future of firearms, and no less fearful. Uses .25 caseless ammo.

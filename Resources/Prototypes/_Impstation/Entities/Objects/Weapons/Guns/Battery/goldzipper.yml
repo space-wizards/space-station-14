@@ -1,5 +1,5 @@
 - type: entity
-  name: golden zipper
+  name: Golden Zipper
   parent: WeaponDisablerPractice
   id: WeaponGoldZipper
   description: Legends tell of a gun that can kill anything with a single shot.
