@@ -18,10 +18,10 @@ public sealed class ListeningSystem : EntitySystem
 
     private void OnSpeak(EntitySpokeEvent ev)
     {
-        PingListeners(ev.Source, ev.Message, ev.ObfuscatedMessage);
+        PingListeners(ev.Source, ev.Message, ev.ObfuscatedMessage, ev.isLOOC);
     }
 
-    public void PingListeners(EntityUid source, string message, string? obfuscatedMessage)
+    public void PingListeners(EntityUid source, string message, string? obfuscatedMessage, bool isLOOC)
     {
         // TODO whispering / audio volume? Microphone sensitivity?
         // for now, whispering just arbitrarily reduces the listener's max range.
@@ -31,11 +31,11 @@ public sealed class ListeningSystem : EntitySystem
         var sourcePos = _xforms.GetWorldPosition(sourceXform, xformQuery);
 
         var attemptEv = new ListenAttemptEvent(source);
-        var ev = new ListenEvent(message, source);
+        var ev = new ListenEvent(message, source, isLOOC);
         var obfuscatedEv = obfuscatedMessage == null ? null : new ListenEvent(obfuscatedMessage, source);
         var query = EntityQueryEnumerator<ActiveListenerComponent, TransformComponent>();
 
-        while(query.MoveNext(out var listenerUid, out var listener, out var xform))
+        while (query.MoveNext(out var listenerUid, out var listener, out var xform))
         {
             if (xform.MapID != sourceXform.MapID)
                 continue;

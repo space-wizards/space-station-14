@@ -88,8 +88,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         // Simple check to make sure that we haven't sent this message already this frame
         if (!_recentChatMessages.Add((args.Source, args.Message, entity)))
             return;
-
-        SendTelephoneMessage(args.Source, args.Message, entity);
+        SendTelephoneMessage(args.Source, args.Message, entity, isLOOC: args.isLOOC);
     }
 
     private void OnTelephoneMessageReceived(Entity<TelephoneComponent> entity, ref TelephoneMessageReceivedEvent args)
@@ -114,8 +113,14 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
         var range = args.TelephoneSource.Comp.LinkedTelephones.Count > 1 ? ChatTransmitRange.HideChat : ChatTransmitRange.GhostRangeLimit;
         var volume = entity.Comp.SpeakerVolume == TelephoneVolume.Speak ? InGameICChatType.Speak : InGameICChatType.Whisper;
-
-        _chat.TrySendInGameICMessage(speaker, args.Message, volume, range, nameOverride: name, checkRadioPrefix: false);
+        if (args.isLOOC)
+        {
+            _chat.TrySendInGameOOCMessage(entity, args.Message, InGameOOCChatType.Looc, false);
+        }
+        else
+        {
+            _chat.TrySendInGameICMessage(speaker, args.Message, volume, range, nameOverride: name, checkRadioPrefix: false);
+        }
     }
 
     #endregion
@@ -328,7 +333,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         SetTelephoneMicrophoneState(entity, false);
     }
 
-    private void SendTelephoneMessage(EntityUid messageSource, string message, Entity<TelephoneComponent> source, bool escapeMarkup = true)
+    private void SendTelephoneMessage(EntityUid messageSource, string message, Entity<TelephoneComponent> source, bool escapeMarkup = true, bool isLOOC = false)
     {
         // This method assumes that you've already checked that this
         // telephone is able to transmit messages and that it can
@@ -359,7 +364,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             ("message", content));
 
         var chat = new ChatMessage(
-            ChatChannel.Local,
+            isLOOC ? ChatChannel.LOOC : ChatChannel.Local,
             message,
             wrappedMessage,
             NetEntity.Invalid,
@@ -371,7 +376,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         RaiseLocalEvent(source, ref evSentMessage);
         source.Comp.StateStartTime = _timing.CurTime;
 
-        var evReceivedMessage = new TelephoneMessageReceivedEvent(message, chatMsg, messageSource, source);
+        var evReceivedMessage = new TelephoneMessageReceivedEvent(message, chatMsg, messageSource, source, isLOOC);
 
         foreach (var receiver in source.Comp.LinkedTelephones)
         {

@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
@@ -17,11 +18,13 @@ using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
+using Content.Shared.Holopad;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Players;
 using Content.Shared.Players.RateLimiting;
 using Content.Shared.Radio;
+using Content.Shared.Telephone;
 using Content.Shared.Whitelist;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -275,34 +278,45 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         // It doesn't make any sense for a non-player to send in-game OOC messages, whereas non-players may be sending
         // in-game IC messages.
-        if (player?.AttachedEntity is not { Valid: true } entity || source != entity)
-            return;
-
-        message = SanitizeInGameOOCMessage(message);
-
         var sendType = type;
-        // If dead player LOOC is disabled, unless you are an admin with Moderator perms, send dead messages to dead chat
-        if ((_adminManager.IsAdmin(player) && _adminManager.HasAdminFlag(player, AdminFlags.Moderator)) // Override if admin
-            || _deadLoocEnabled
-            || (!HasComp<GhostComponent>(source) && !_mobStateSystem.IsDead(source))) // Check that player is not dead
+        if (!HasComp<TelephoneComponent>(source))
         {
+            if (player?.AttachedEntity is not { Valid: true } entity || source != entity)
+                return;
+            // If dead player LOOC is disabled, unless you are an admin with Moderator perms, send dead messages to dead chat
+            if ((_adminManager.IsAdmin(player) && _adminManager.HasAdminFlag(player, AdminFlags.Moderator)) // Override if admin
+                || _deadLoocEnabled
+                || (!HasComp<GhostComponent>(source) && !_mobStateSystem.IsDead(source))) // Check that player is not dead
+            {
+            }
+            else
+                sendType = InGameOOCChatType.Dead;
+
+            // If crit player LOOC is disabled, don't send the message at all.
+            if (!_critLoocEnabled && _mobStateSystem.IsCritical(source))
+                return;
+
+            switch (sendType)
+            {
+                case InGameOOCChatType.Dead:
+                    SendDeadChat(source, player, message, hideChat);
+                    break;
+                case InGameOOCChatType.Looc:
+                    var ev = new EntitySpokeEvent(source, message, null, null, true);
+                    RaiseLocalEvent(source, ev, true);
+                    SendLOOC(source, message, hideChat, player);
+                    break;
+            }
         }
         else
-            sendType = InGameOOCChatType.Dead;
-
-        // If crit player LOOC is disabled, don't send the message at all.
-        if (!_critLoocEnabled && _mobStateSystem.IsCritical(source))
-            return;
-
-        switch (sendType)
         {
-            case InGameOOCChatType.Dead:
-                SendDeadChat(source, player, message, hideChat);
-                break;
-            case InGameOOCChatType.Looc:
-                SendLOOC(source, player, message, hideChat);
-                break;
+            var ev = new EntitySpokeEvent(source, message, null, null, true);
+            RaiseLocalEvent(source, ev, true);
+            SendLOOC(source, message, hideChat, player);
         }
+
+
+
     }
 
     #region Announcements
@@ -604,11 +618,11 @@ public sealed partial class ChatSystem : SharedChatSystem
     }
 
     // ReSharper disable once InconsistentNaming
-    private void SendLOOC(EntityUid source, ICommonSession player, string message, bool hideChat)
+    private void SendLOOC(EntityUid source, string message, bool hideChat, ICommonSession? player = null)
     {
         var name = FormattedMessage.EscapeText(Identity.Name(source, EntityManager));
 
-        if (_adminManager.IsAdmin(player))
+        if (player != null && _adminManager.IsAdmin(player))
         {
             if (!_adminLoocEnabled) return;
         }
@@ -622,7 +636,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             ("entityName", name),
             ("message", FormattedMessage.EscapeText(message)));
 
-        SendInVoiceRange(ChatChannel.LOOC, message, wrappedMessage, source, hideChat ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal, player.UserId);
+        SendInVoiceRange(ChatChannel.LOOC, message, wrappedMessage, source, hideChat ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
     }
 
@@ -945,19 +959,20 @@ public sealed class EntitySpokeEvent : EntityEventArgs
     public readonly EntityUid Source;
     public readonly string Message;
     public readonly string? ObfuscatedMessage; // not null if this was a whisper
-
+    public readonly bool isLOOC;
     /// <summary>
     ///     If the entity was trying to speak into a radio, this was the channel they were trying to access. If a radio
     ///     message gets sent on this channel, this should be set to null to prevent duplicate messages.
     /// </summary>
     public RadioChannelPrototype? Channel;
 
-    public EntitySpokeEvent(EntityUid source, string message, RadioChannelPrototype? channel, string? obfuscatedMessage)
+    public EntitySpokeEvent(EntityUid source, string message, RadioChannelPrototype? channel, string? obfuscatedMessage, bool isLOOC = false)
     {
         Source = source;
         Message = message;
         Channel = channel;
         ObfuscatedMessage = obfuscatedMessage;
+        this.isLOOC = isLOOC;
     }
 }
 
