@@ -1,5 +1,6 @@
 using Content.Shared.Damage.Events;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Events;
 using Content.Shared.Mobs.Systems;
 
 namespace Content.Shared.Traits.Assorted;
@@ -13,6 +14,7 @@ public sealed class PainNumbnessSystem : EntitySystem
         SubscribeLocalEvent<PainNumbnessComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<PainNumbnessComponent, ComponentRemove>(OnComponentRemove);
         SubscribeLocalEvent<PainNumbnessComponent, BeforeForceSayEvent>(OnChangeForceSay);
+        SubscribeLocalEvent<PainNumbnessComponent, BeforeAlertSeverityCheckEvent>(OnAlertSeverityCheck);
     }
 
     private void OnComponentRemove(EntityUid uid, PainNumbnessComponent component, ComponentRemove args)
@@ -34,5 +36,11 @@ public sealed class PainNumbnessSystem : EntitySystem
     private void OnChangeForceSay(Entity<PainNumbnessComponent> ent, ref BeforeForceSayEvent args)
     {
         args.Prefix = ent.Comp.ForceSayNumbDataset;
+    }
+
+    private void OnAlertSeverityCheck(Entity<PainNumbnessComponent> ent, ref BeforeAlertSeverityCheckEvent args)
+    {
+        if (args.CurrentAlert == "HumanHealth")
+            args.Cancelled = true;
     }
 }
