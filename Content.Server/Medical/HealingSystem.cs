@@ -69,7 +69,7 @@ public sealed class HealingSystem : EntitySystem
             if (!TryComp<BloodstreamComponent>(entity, out var bloodstream))
                 return;
             var isBleeding = bloodstream.BleedAmount > 0;
-            _bloodstreamSystem.TryModifyBleedAmount(entity.Owner, healing.BloodlossModifier);
+            _bloodstreamSystem.TryModifyBleedAmount(entity, healing.BloodlossModifier);
             if (isBleeding != bloodstream.BleedAmount > 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("medical-item-stop-bleeding"), entity, args.User);
@@ -78,9 +78,9 @@ public sealed class HealingSystem : EntitySystem
 
         // Restores missing blood
         if (healing.ModifyBloodLevel != 0)
-            _bloodstreamSystem.TryModifyBloodLevel(entity.Owner, healing.ModifyBloodLevel);
+            _bloodstreamSystem.TryModifyBloodLevel(entity, healing.ModifyBloodLevel);
 
-        var healed = _damageable.TryChangeDamage(entity.Owner, healing.Damage, true, origin: args.Args.User);
+        var healed = _damageable.TryChangeDamage(entity, healing.Damage, true, origin: args.Args.User);
 
         if (healed == null && healing.BloodlossModifier != 0)
             return;
@@ -104,7 +104,7 @@ public sealed class HealingSystem : EntitySystem
         if (entity.Owner != args.User)
         {
             _adminLogger.Add(LogType.Healed,
-                $"{EntityManager.ToPrettyString(args.User):user} healed {EntityManager.ToPrettyString(entity.Owner):target} for {total:damage} damage");
+                $"{EntityManager.ToPrettyString(args.User):user} healed {EntityManager.ToPrettyString(entity):target} for {total:damage} damage");
         }
         else
         {
@@ -112,12 +112,12 @@ public sealed class HealingSystem : EntitySystem
                 $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {total:damage} damage");
         }
 
-        _audio.PlayPvs(healing.HealingEndSound, entity.Owner, AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
+        _audio.PlayPvs(healing.HealingEndSound, entity, AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
 
         // Logic to determine the whether or not to repeat the healing action
-        args.Repeat = (CanHealingCompomentBeUsed(entity.Owner, healing) && !dontRepeat);
+        args.Repeat = (CanHealingCompomentBeUsed(entity, healing) && !dontRepeat);
         if (!args.Repeat && !dontRepeat)
-            _popupSystem.PopupEntity(Loc.GetString("medical-item-finished-using", ("item", args.Used)), entity.Owner, args.User);
+            _popupSystem.PopupEntity(Loc.GetString("medical-item-finished-using", ("item", args.Used)), entity, args.User);
         args.Handled = true;
     }
 
@@ -126,7 +126,7 @@ public sealed class HealingSystem : EntitySystem
         if (!TryComp<DamageableComponent>(targetEntityUid, out var damageableComponent))
             return false;
 
-        bool thereIsDamageThatCanBeHealed = false;
+        var thereIsDamageThatCanBeHealed = false;
 
         var damageableDict = damageableComponent.Damage.DamageDict;
         var healingDict = healingComponent.Damage.DamageDict;
@@ -140,18 +140,16 @@ public sealed class HealingSystem : EntitySystem
 
         if (healingComponent.ModifyBloodLevel > 0) // blood replenishing HealingComponent
         {
-            if (!TryComp<BloodstreamComponent>(targetEntityUid, out var bloodstream)
-                || bloodstream is null)
+            if (!TryComp<BloodstreamComponent>(targetEntityUid, out var bloodstream))
                 return false;
 
-            if (!_solutionContainerSystem.ResolveSolution(targetEntityUid, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution)
-                || bloodSolution is null)
+            if (!_solutionContainerSystem.ResolveSolution(targetEntityUid, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
                 return false;
 
-            bool validBloodType = healingComponent.BloodReagentWhitelist.Contains(bloodstream.BloodReagent) // blood type is whitelisted
+            var validBloodType = healingComponent.BloodReagentWhitelist.Contains(bloodstream.BloodReagent) // blood type is whitelisted
                                || healingComponent.BloodReagentWhitelist.Count == 0; // there is no whitelist defined
 
-            bool isThereSpaceForMoreBlood = bloodSolution.Volume < bloodSolution.MaxVolume;
+            var isThereSpaceForMoreBlood = bloodSolution.Volume < bloodSolution.MaxVolume;
 
             return validBloodType && (thereIsDamageThatCanBeHealed || isThereSpaceForMoreBlood);
         }
