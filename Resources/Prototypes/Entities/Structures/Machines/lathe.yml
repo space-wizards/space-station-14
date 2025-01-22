@@ -352,6 +352,8 @@
       - FauxTileAstroSnow
       - OreBagOfHolding
       - DeviceQuantumSpinInverter
+      - Fulton
+      - FultonBeacon
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - BoxBeanbag
