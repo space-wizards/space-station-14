@@ -10,6 +10,7 @@ namespace Content.Shared.Starlight.GhostTheme;
 [NetSerializable, Serializable]
 public sealed class GhostThemeEuiState : EuiStateBase
 {
+    public HashSet<string> AvailableThemes { get; set; } = [];
 }
 [NetSerializable, Serializable]
 public sealed class GhostThemeOpenedEvent : EntityEventArgs

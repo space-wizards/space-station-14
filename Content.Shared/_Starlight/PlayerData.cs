@@ -13,7 +13,9 @@ public sealed class PlayerData
     ///     The player's title.
     /// </summary>
     public string? Title;
-
+    
+    public string? GhostTheme;
+    
     public int Balance;
 
     /// <summary>

@@ -9,3 +9,27 @@
     color: "#fff8"
   requiredFlags:
     - None
+    
+- type: ghostTheme
+  id: Narsie
+  name: Narsie
+  description: Cute man.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-narsie
+    color: "#fff8"
+  requiredFlags:
+    - None
+    
+- type: ghostTheme
+  id: Sheet
+  name: Sheet
+  description: Cute sheet.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-sheet
+    color: "#fff8"
+  requiredFlags:
+    - None

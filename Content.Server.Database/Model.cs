@@ -620,6 +620,7 @@ namespace Content.Server.Database
     {
         [Key] public Guid UserId { get; set; }
         public string? Title { get; set; }
+        public string? GhostTheme { get; set; }
         public string? DiscordId { get; set; } = default!;
         public int Balance { get; set; }
         public int Flags { get; set; }

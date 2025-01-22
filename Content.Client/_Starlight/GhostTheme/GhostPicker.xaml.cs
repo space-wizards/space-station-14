@@ -23,14 +23,11 @@ public sealed partial class GhostPicker : ContainerButton
         SpriteSystem spriteSystem,
         SpriteSpecifier icon,
         string name,
-        bool isSelected,
         bool isDisabled)
     {
         RobustXamlLoader.Load(this);
         AddStyleClass(StyleClassButton);
-        ToggleMode = true;
-
-        Pressed = isSelected;
+        
         Disabled = isDisabled;
         View.Texture = spriteSystem.Frame0(icon);
         DescriptionLabel.Text = name;

@@ -33,7 +33,9 @@ using Content.Server.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Collections;
 using Content.Shared.Ghost.Roles.Components;
+using Robust.Shared.Prototypes;
 using Content.Shared.Starlight.GhostTheme;
+using Content.Shared.Starlight;
 using Robust.Shared.Network;
 using Content.Server.RoundEnd;
 using Content.Server.GameTicking;
@@ -45,6 +47,8 @@ public sealed class GhostThemeSystem : EntitySystem
 {
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ISharedPlayersRoleManager _playerRoles = default!;
     
     public override void Initialize()
     {
@@ -66,8 +70,16 @@ public sealed class GhostThemeSystem : EntitySystem
 
         if (_openUis.ContainsKey(session))
             CloseEui(session);
+        
+        HashSet<string> AvailableThemes = new HashSet<string>();
+        
+        foreach (var ghostTheme in _prototypeManager.EnumeratePrototypes<GhostThemePrototype>())
+        {
+            if (_playerRoles.HasAnyPlayerFlags(session, ghostTheme.Flags))
+                AvailableThemes.Add(ghostTheme.ID);
+        }
 
-        var eui = _openUis[session] = new GhostThemeEui();
+        var eui = _openUis[session] = new GhostThemeEui(AvailableThemes);
 
         _euiManager.OpenEui(eui, session);
         eui.StateDirty();
@@ -106,7 +118,10 @@ public sealed class GhostThemeSystem : EntitySystem
     
     private void OnPlayerAttached(EntityUid uid, GhostComponent component, PlayerAttachedEvent args)
     {
-        EnsureComp<GhostThemeComponent>(uid);
+        var theme = EnsureComp<GhostThemeComponent>(uid);
+        var playerData = _playerRoles.GetPlayerData(uid);
+        if (playerData != null && playerData.GhostTheme != null)
+            theme.SelectedGhostTheme = playerData.GhostTheme;
     }
 }
 

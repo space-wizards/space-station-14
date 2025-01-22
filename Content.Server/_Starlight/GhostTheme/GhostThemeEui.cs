@@ -9,12 +9,16 @@ namespace Content.Server.Ghost.Roles.UI;
 public sealed class GhostThemeEui : BaseEui
 {
     private readonly GhostThemeSystem _ghostThemeSystem;
-    public GhostThemeEui()
+    private readonly HashSet<string> _availableThemes;
+    public GhostThemeEui(HashSet<string> availableThemes)
     {
         _ghostThemeSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GhostThemeSystem>();
+        _availableThemes = availableThemes;
     }
 
-    public override GhostThemeEuiState GetNewState() => new();
+    public override GhostThemeEuiState GetNewState() => new(){
+        AvailableThemes = _availableThemes
+    };
 
     public override void HandleMessage(EuiMessageBase msg)
     {

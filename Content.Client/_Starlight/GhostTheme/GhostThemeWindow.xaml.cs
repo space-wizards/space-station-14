@@ -47,7 +47,7 @@ public sealed partial class GhostThemeWindow : DefaultWindow
     
     public event Action<string>? SelectTheme;
     
-
+    public HashSet<string> _availableThemes = [];
 
     public GhostThemeWindow(IClientPreferencesManager preferencesManager)
     {
@@ -74,8 +74,7 @@ public sealed partial class GhostThemeWindow : DefaultWindow
             var ghostPicker = new GhostPicker(_sprites,
                 ghostTheme.SpriteSpecifier.Sprite,
                 ghostTheme.Name,
-                ghostTheme.ID == SelectedTheme,
-                false);
+                !_availableThemes.Contains(ghostTheme.ID));
             GhostThemesContainer.AddChild(ghostPicker);
 
             ghostPicker.OnPressed += args =>
@@ -84,6 +83,14 @@ public sealed partial class GhostThemeWindow : DefaultWindow
                 RefreshUI();
             };
         }
+    }
+    
+    public void UpdateThemes(HashSet<string> AvailableThemes)
+    {
+        _availableThemes = AvailableThemes;
+        
+        ReloadGhostThemes();
+        RefreshUI();
     }
     
     public void RefreshUI()

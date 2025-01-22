@@ -50,5 +50,9 @@ public sealed class GhostThemeEui : BaseEui
     public override void HandleState(EuiStateBase state)
     {
         base.HandleState(state);
+        
+        if (state is not GhostThemeEuiState ghostThemeState)
+            return;
+        _window.UpdateThemes(ghostThemeState.AvailableThemes);
     }
 }
