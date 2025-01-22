@@ -13941,7 +13941,7 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -281470.2
+      secondsUntilStateChange: -282233.8
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -44099,6 +44099,13 @@ entities:
     - type: Transform
       pos: -13.533066,-6.2796874
       parent: 2
+- proto: CigCartonBlack
+  entities:
+  - uid: 14721
+    components:
+    - type: Transform
+      pos: 48.574272,6.341091
+      parent: 2
 - proto: CircuitImprinter
   entities:
   - uid: 16381
@@ -45061,6 +45068,13 @@ entities:
     - type: Transform
       pos: -26.26548,11.413899
       parent: 2
+- proto: ClothingMaskGas
+  entities:
+  - uid: 16429
+    components:
+    - type: Transform
+      pos: -8.569451,33.71903
+      parent: 2
 - proto: ClothingMaskGasMerc
   entities:
   - uid: 13758
@@ -45126,6 +45140,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: ClothingOuterApron
+  entities:
+  - uid: 16428
+    components:
+    - type: Transform
+      pos: -8.397576,33.56278
+      parent: 2
 - proto: ClothingOuterApronBar
   entities:
   - uid: 5915
@@ -51012,11 +51033,6 @@ entities:
     components:
     - type: Transform
       pos: -4.5,-38.5
-      parent: 2
-  - uid: 4693
-    components:
-    - type: Transform
-      pos: -30.5,-41.5
       parent: 2
   - uid: 6037
     components:
@@ -78356,13 +78372,6 @@ entities:
     - type: Transform
       pos: -19.5,15.5
       parent: 2
-- proto: HolopadScienceFront
-  entities:
-  - uid: 14721
-    components:
-    - type: Transform
-      pos: -11.5,21.5
-      parent: 2
 - proto: HolopadScienceRnd
   entities:
   - uid: 16391
@@ -94562,6 +94571,11 @@ entities:
     - type: Transform
       pos: 33.5,61.5
       parent: 2
+  - uid: 16427
+    components:
+    - type: Transform
+      pos: -8.5,33.5
+      parent: 2
 - proto: TableCarpet
   entities:
   - uid: 8613
@@ -96740,6 +96754,11 @@ entities:
     - type: Transform
       pos: 14.5,20.5
       parent: 2
+  - uid: 16424
+    components:
+    - type: Transform
+      pos: -8.5,34.5
+      parent: 2
 - proto: VendingMachineCoffee
   entities:
   - uid: 5904
@@ -97002,6 +97021,11 @@ entities:
     components:
     - type: Transform
       pos: 14.5,19.5
+      parent: 2
+  - uid: 16426
+    components:
+    - type: Transform
+      pos: -8.5,35.5
       parent: 2
 - proto: VendingMachineYouTool
   entities:
@@ -109468,6 +109492,18 @@ entities:
           showEnts: False
           occludes: True
           ent: null
+- proto: WardrobeMixedFilled
+  entities:
+  - uid: 4693
+    components:
+    - type: Transform
+      pos: -30.5,-41.5
+      parent: 2
+  - uid: 16425
+    components:
+    - type: Transform
+      pos: -8.5,36.5
+      parent: 2
 - proto: WardrobePrisonFilled
   entities:
   - uid: 2144
