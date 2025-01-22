@@ -1,8 +1,8 @@
 - type: entity
-  id: ChemMaster
+  id: CondiMaster
   parent: [ BaseMachinePowered, ConstructibleMachine ]
-  name: ChemMaster 4000
-  description: An industrial grade chemical manipulator with pill and bottle production included.
+  name: CondiMaster 40k
+  description: An industrial grade chemical manipulator for cooking-related mixtures.
   placement:
     mode: SnapgridCenter
   components:
@@ -18,7 +18,7 @@
     sprite: Structures/Machines/mixer.rsi
     state: mixer_loaded
   - type: ChemMaster
-    pillDosageLimit: 20
+    canMakeBottles: false
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -82,7 +82,6 @@
         whitelist:
           tags:
           - Bottle
-          - PillCanister
   - type: SolutionContainerManager
     solutions:
       buffer: {}

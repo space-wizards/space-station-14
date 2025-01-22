@@ -26,5 +26,8 @@ namespace Content.Server.Chemistry.Components
 
         [DataField("canMakePills"), ViewVariables(VVAccess.ReadWrite)]
         public bool CanMakePills = true;
+
+        [DataField("canMakeBottles"), ViewVariables(VVAccess.ReadWrite)]
+        public bool CanMakeBottles = true;
     }
 }

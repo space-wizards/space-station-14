@@ -140,12 +140,13 @@ namespace Content.Client.Chemistry.UI
 
             if (!castState.CanMakePills)
             {
-                //iterate through each pill button, set it to invisible and disabled
-                foreach(var pillButton in PillTypeButtons)
-                {
-                    pillButton.Visible = false;
-                    pillButton.Disabled = true;
-                }
+                PillTypeButtonGroup.Visible = false;
+                PillLabelGroup.Visible = false;
+            }
+
+            if (!castState.CanMakeBottles)
+            {
+                BottleLabelGroup.Visible = false;
             }
 
             // Ensure the Panel Info is updated, including UI elements for Buffer Volume, Output Container and so on
