@@ -34,12 +34,5 @@
   description: A large ore bag built into the frame of mining cyborgs.
   components:
     - type: Storage
-      maxItemSize: Normal
       grid:
       - 0,0,9,5
-      quickInsert: true
-      areaInsert: true
-      whitelist:
-        tags:
-          - ArtifactFragment
-          - Ore 
