@@ -1,0 +1,24 @@
+﻿- type: entity
+  id: EffectVoidBlink
+  name: void blink
+  categories: [ HideSpawnMenu ]
+  save: false
+  components:
+  - type: PointLight
+    radius: 10.5
+    energy: 15
+    softness: 1
+    color: "#000000"
+  - type: Transform
+    noRot: true
+  - type: Sprite
+    sprite: Objects/Magic/Eldritch/eldritch_actions.rsi
+    drawdepth: Effects
+    noRot: true
+    layers:
+    - state: "voidblink"
+  - type: TimedDespawn
+    lifetime: 1
+  - type: Tag
+    tags:
+    - HideContextMenu
