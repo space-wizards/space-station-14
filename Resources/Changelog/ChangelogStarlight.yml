@@ -2557,4 +2557,11 @@ Entries:
   id: 357
   time: '2025-01-21T14:17:44.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/256
+- author: Conflee
+  changes:
+  - message: Added event to spawn the new Pirate Shuttle for Admins
+    type: Add
+  id: 358
+  time: '2025-01-22T10:00:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/257
 
