@@ -1,6 +1,6 @@
 #Token Currency
 - type: entity
-  name: batontoken
+  name: baton token
   parent: [BaseItem, BaseRestrictedContraband]
   id: BatonToken
   suffix: 3 BT
@@ -32,7 +32,7 @@
     count: 1
 
 - type: entity
-  name: disablertoken
+  name: disabler token
   parent: [BaseItem, BaseRestrictedContraband]
   id: DisablerToken
   suffix: 3 DT
@@ -64,7 +64,7 @@
     count: 1
 
 - type: entity
-  name: utilitytoken
+  name: utility token
   parent: [ BaseItem, BaseRestrictedContraband ]
   id: UtilityToken
   suffix: 3 UT
