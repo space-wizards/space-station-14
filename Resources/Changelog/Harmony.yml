@@ -1023,3 +1023,10 @@ Entries:
     changes:
     - type: Tweak
       message: Gave service worker hydroponics access
+  - id: 243
+    author: Unisol
+    time: '2025-01-22T13:48:18.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/243
+    changes:
+    - type: Tweak
+      message: tarantulas had their sinuses cleaned
