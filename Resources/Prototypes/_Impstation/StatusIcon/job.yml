@@ -5,3 +5,67 @@
     sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
     state: Courier
   jobName: job-name-courier
+
+  - type: jobIcon
+  parent: JobIcon
+  id: JobIconDeathsquad
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
+    state: Deathsquad
+  jobName: job-name-deathsquad
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconCBURN
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
+    state: CBURN
+  jobName: job-name-cburn
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTLeader
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
+    state: ERTLeader
+  jobName: job-name-ertleader
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTSecurity
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
+    state: ERTSecurity
+  jobName: job-name-ertsecurity
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTMedic
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
+    state: ERTMedical
+  jobName: job-name-ertmedic
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTEngineer
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
+    state: ERTEngineer
+  jobName: job-name-ertengineer
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTJanitor
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
+    state: ERTJanitor
+  jobName: job-name-ertjanitor
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTChaplain
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi
+    state: ERTChaplain
+  jobName: job-name-ertchaplain
