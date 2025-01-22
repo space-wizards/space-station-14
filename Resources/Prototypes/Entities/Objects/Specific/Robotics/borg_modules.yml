@@ -128,7 +128,7 @@
   id: BorgModuleFireExtinguisher
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
   name: thruster cyborg module
-  description: NT assigned a team to design a jetpack for cyborg units, but they ran out of time and just rebranded a fire extingusher.
+  description: NT assigned a team to design a jetpack for cyborg units, but they ran out of funding and just rebranded a normal fire extingusher.
   components:
   - type: Sprite
     layers:
@@ -171,11 +171,11 @@
   - type: ItemBorgModule
     items:
     - Crowbar
-    - Wrench
-    - Screwdriver
+    - PowerDrill
     - Wirecutter
     - WelderIndustrial
     - Multitool
+    - RemoteSignaller
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: tool-module }
 
@@ -421,6 +421,7 @@
     - DefibrillatorOneHandedUnpowered
     - BorgFireExtinguisher
     - HandheldGPSBasic
+    - HandLabeler
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: defib-module }
 
@@ -498,11 +499,11 @@
   - type: ItemBorgModule
     items:
     - AnomalyScanner
-    - RemoteSignaller
     - AnomalyLocatorUnpowered
     - AnomalyLocatorWideUnpowered
+    - HandLabeler
     - SheetRGlassLingering0
-    - Multitool
+    - SheetPlasma0Lingering
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: anomaly-module }
 
