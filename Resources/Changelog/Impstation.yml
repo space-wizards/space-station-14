@@ -1,27 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Added new plasteel slag chunk to fill in the plastic gap for rare salvage
-      resources
-    type: Add
-  - message: Increased plastic yield from certain salvage items that already gave
-      plastic
-    type: Tweak
-  - message: Modified a bunch of trash items to give plastic and steel when recycled
-    type: Tweak
-  - message: Added secure windoors to cargo plastic flaps on Train and Saltern
-    type: Tweak
-  - message: Removed full stack of diamonds from Saltern vault
-    type: Remove
-  - message: Added implanter crate to Saltern armory
-    type: Add
-  - message: Heads now all spawn in one place on Train and Saltern. COMMUNICATE!
-    type: Tweak
-  - message: Added two more grounding rods to Train
-    type: Tweak
-  id: 490
-  time: '2024-11-11T09:39:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/669
 - author: honeyed-lemons
   changes:
   - message: Added the Space Cadet Jumpsuit in all jumpsuit colors
@@ -4415,3 +4392,10 @@
   id: 989
   time: '2025-01-22T06:18:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1447
+- author: normalgirl2171, mqole
+  changes:
+  - message: A new clown outfit for professional jokesters.
+    type: Add
+  id: 990
+  time: '2025-01-22T06:21:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1442
