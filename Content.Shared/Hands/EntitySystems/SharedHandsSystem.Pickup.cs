@@ -197,12 +197,14 @@ public abstract partial class SharedHandsSystem : EntitySystem
     /// <summary>
     ///     Puts an item into any hand, preferring the active hand, or puts it on the floor.
     /// </summary>
+    /// <param name="dropNear">If true, the item will be dropped near the owner of the hand if possible.</param>
     public void PickupOrDrop(
         EntityUid? uid,
         EntityUid entity,
         bool checkActionBlocker = true,
         bool animateUser = false,
         bool animate = true,
+        bool dropNear = false,
         HandsComponent? handsComp = null,
         ItemComponent? item = null)
     {
@@ -214,6 +216,11 @@ public abstract partial class SharedHandsSystem : EntitySystem
             // TODO make this check upwards for any container, and parent to that.
             // Currently this just checks the direct parent, so items can still teleport through containers.
             ContainerSystem.AttachParentToContainerOrGrid((entity, Transform(entity)));
+
+            if (dropNear && TryComp<TransformComponent>(uid, out var transformComponent))
+            {
+                TransformSystem.PlaceNextTo((entity, Transform(entity)), ((EntityUid)uid, transformComponent));
+            }
         }
     }
 

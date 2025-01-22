@@ -55,7 +55,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
         _container.EmptyContainer(component.KeyContainer, reparent: false);
         foreach (var ent in contained)
         {
-            _hands.PickupOrDrop(args.User, ent);
+            _hands.PickupOrDrop(args.User, ent, dropNear: true);
         }
 
         if (!_timing.IsFirstTimePredicted)
