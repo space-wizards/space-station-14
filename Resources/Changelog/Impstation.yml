@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Random Unrevivable is checked after each defib, instead of roundstart.
-    type: Tweak
-  id: 486
-  time: '2024-11-10T18:30:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/642
 - author: AirFryerBuyOneGetOneFree
   changes:
   - message: Added new map Barratry, also known as Detroit.
@@ -4412,3 +4405,14 @@
   id: 985
   time: '2025-01-22T04:21:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1451
+- author: RosySaturniidae
+  changes:
+  - message: role icons for centcomm jobs
+    type: Add
+  - message: new ids/pdas for deathsquad and cburn
+    type: Add
+  - message: new job descriptions for deathsquad and cburn
+    type: Tweak
+  id: 986
+  time: '2025-01-22T05:01:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1423
