@@ -130,8 +130,7 @@
 - type: soundCollection
   id: VoxCry
   files:
-    - /Audio/_Impstation/Voice/Vox/voxcry1.ogg
-    - /Audio/_Impstation/Voice/Vox/voxcry2.ogg
+    - /Audio/_Impstation/Voice/Vox/voxcry.ogg
 
 - type: soundCollection
   id: Wuhey
