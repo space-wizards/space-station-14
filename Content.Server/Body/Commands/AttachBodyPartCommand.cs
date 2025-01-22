@@ -102,7 +102,7 @@ namespace Content.Server.Body.Commands
 
             if (body.RootContainer.ContainedEntity is null && !bodySystem.AttachPartToRoot(bodyId, partUid.Value, body, part))
             {
-                shell.WriteError("Whoopsie!");
+                shell.WriteError("Body container does not have a root entity to attach to the body part!");
                 return;
             }
 
@@ -117,8 +117,6 @@ namespace Content.Server.Body.Commands
                 shell.WriteError($"Could not create slot {slotId} on entity {_entManager.ToPrettyString(bodyId)}");
                 return;
             }
-
-
             shell.WriteLine($"Attached part {_entManager.ToPrettyString(partUid.Value)} to {_entManager.ToPrettyString(bodyId)}");
         }
     }
