@@ -15,7 +15,7 @@
     slots:
     - Belt
   - type: OnUseTimerTrigger
-    delay: 3.5
+    delay: 3
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
