@@ -5,17 +5,12 @@
   name: "rehydratable item"
   description: Just add water!
   components:
-  - type: Item
-    size: Tiny
   - type: SolutionContainerManager
     solutions:
       cube:
         maxVol: 1 # needs room for water
   - type: RefillableSolution
     solution: cube
-  - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
-    state: cube
   - type: Reactive
     reactions:
     - reagents: [Water]
@@ -45,9 +40,9 @@
 
 - type: entity
   parent: RehydratableItem
-  id: AnimalRehydratableItem
+  id: RehydratableAnimalCube
   abstract: true
-  name: "rehydratable animal"
+  name: "rehydratable animal cube"
   components:
   - type: SolutionContainerManager
     solutions:
@@ -65,23 +60,31 @@
     - chewy
     - horrible
     - compressed-meat
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: cube
   - type: Tag
     tags:
     - Meat
-    - MonkeyCube
 
 
 - type: entity
-  parent: AnimalRehydratableItem
+  parent: RehydratableAnimalCube
   id: MonkeyCube
   name: monkey cube
   components:
   - type: Rehydratable
     possibleSpawns:
     - MobMonkey
+  - type: Tag
+    tags:
+    - Meat
+    - MonkeyCube
 
 - type: entity
-  parent: AnimalRehydratableItem
+  parent: MonkeyCube # Kobolds are monkeys
   id: KoboldCube
   name: kobold cube
   components:
@@ -90,7 +93,7 @@
     - MobKobold
 
 - type: entity
-  parent: AnimalRehydratableItem
+  parent: RehydratableAnimalCube
   id: CowCube
   name: cow cube
   components:
@@ -99,7 +102,7 @@
     - MobCow
 
 - type: entity
-  parent: AnimalRehydratableItem
+  parent: RehydratableAnimalCube
   id: GoatCube
   name: goat cube
   components:
@@ -108,7 +111,7 @@
     - MobGoat
 
 - type: entity
-  parent: AnimalRehydratableItem
+  parent: RehydratableAnimalCube
   id: MothroachCube
   name: mothroach cube
   components:
@@ -117,7 +120,7 @@
     - MobMothroach
 
 - type: entity
-  parent: AnimalRehydratableItem
+  parent: RehydratableAnimalCube
   id: MouseCube
   name: mouse cube
   components:
@@ -126,7 +129,7 @@
     - MobMouse
 
 - type: entity
-  parent: AnimalRehydratableItem
+  parent: RehydratableAnimalCube
   id: CockroachCube
   name: cockroach cube
   description: Just add wa- OH GOD!
@@ -136,7 +139,7 @@
     - MobCockroach
 
 - type: entity
-  parent: AnimalRehydratableItem
+  parent: RehydratableAnimalCube
   id: SpaceCarpCube
   name: carp cube
   description: Just add water! At your own risk.
@@ -157,7 +160,7 @@
     - MobCarp
 
 - type: entity
-  parent: AnimalRehydratableItem
+  parent: RehydratableAnimalCube
   id: SpaceTickCube
   name: tick cube
   description: Just add water! At your own risk.
@@ -167,7 +170,7 @@
     - MobTick
 
 - type: entity
-  parent: AnimalRehydratableItem
+  parent: RehydratableAnimalCube
   id: AbominationCube
   name: abomination cube
   description: Just add blood!
@@ -187,15 +190,11 @@
 # It inherits FoodComponent from PlushieCarp, but is de-facto inedible
 # PlushieCarp has requiresSpecialDigestion:true, and this one is not whitelisted anywhere, so it behaves like it's not edible
 - type: entity
-  parent: [PlushieCarp, RehydratableItem, BaseSyndicateContraband]
+  parent: [RehydratableItem, PlushieCarp, BaseSyndicateContraband]
   id: DehydratedSpaceCarp
   name: dehydrated space carp
   description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
   components:
-  - type: SolutionContainerManager # overwriting PlushieCarp fibers
-    solutions:
-      cube:
-        maxVol: 1
   - type: Rehydratable
     possibleSpawns:
     - MobCarp
@@ -235,6 +234,8 @@
   name: mop bucket cube
   description: Just add water! And then more water!
   components:
+  - type: Item
+    size: Tiny
   - type: Sprite
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     state: mopbucket_cube
