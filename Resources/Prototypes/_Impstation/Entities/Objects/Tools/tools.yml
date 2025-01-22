@@ -94,7 +94,7 @@
           sprite: _Impstation/Objects/Tools/tckdrill.rsi
           state: icon_cut
         useSound:
-          path: /Audio/Effects/saw.ogg
+          path: /Audio/Machines/cutter.ogg
         changeSound:
           path: /Audio/Items/change_drill.ogg
   - type: PhysicalComposition
