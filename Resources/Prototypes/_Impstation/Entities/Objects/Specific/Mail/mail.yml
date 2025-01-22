@@ -126,3 +126,12 @@
     - id: BorgModuleTckTckGun
       prob: 0.09
     - id: PaperMailTckTck
+
+- type: entity
+  parent: BaseMail
+  id: MailSpaceBlade
+  suffix: SpaceBlade
+  components:
+  - type: Mail
+    contents:
+    - id: MysterySpaceBladeBox
