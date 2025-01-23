@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: sageu111
-  changes:
-  - message: 'GRAY NAMES HAVE NEW NAMES TO REPRESENT THEIR CULTURE VULTURE LIFESTYLE
-      #SUBURBANGRAYS'
-    type: Tweak
-  id: 494
-  time: '2024-11-12T02:09:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/678
 - author: Darkmajia
   changes:
   - message: Tickets and ticket pads now fit in the security belt.
@@ -4399,3 +4391,10 @@
   id: 993
   time: '2025-01-23T09:06:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1464
+- author: Pivotbash
+  changes:
+  - message: Added the SecLink to the Security Department.
+    type: Add
+  id: 994
+  time: '2025-01-23T14:42:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1238
