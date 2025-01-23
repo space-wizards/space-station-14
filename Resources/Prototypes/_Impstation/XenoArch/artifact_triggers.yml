@@ -1,0 +1,434 @@
+- type: artifactTrigger
+  id: TriggerResurrection
+  targetDepth: 4
+  triggerHint: artifact-trigger-hint-resurrection
+  components:
+  - type: ArtifactResurrectionTrigger
+
+- type: artifactTrigger
+  id: TriggerVape
+  targetDepth: 4
+  triggerHint: artifact-trigger-hint-vape
+  components:
+  - type: ArtifactGasTrigger
+    possibleGas:
+    - WaterVapor
+
+- type: artifactTrigger
+  id: TriggerFunnySlipStun
+  targetDepth: 4
+  triggerProb: 1
+  triggerHint: artifact-trigger-hint-funny
+  components:
+  - type: ArtifactStunTrigger
+
+# Separate drinks into twenty chunks. one chunk has a total probability of 1/20, so all drinks together have same prob as normal trigger
+# Some Chunks have multiple drinks (such as the tricky drink chunk)
+
+# easiest: any drink that would have caffine
+- type: artifactTrigger
+  id: TriggerDrinkCaffine
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-caffine
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Coffee, CafeLatte, Tea, EnergyDrink, VodkaRedBool, PwrGame, FourteenLoko, XenoBasher, IrishBool, BudgetInsulsDrink, WatermelonWakeup, KingSoda, CottonBool, Rubberneck, IcedTea, ArnoldPalmer, Raktaccino ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkClassicMartini
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-classic-martini
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Martini ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkBudgetInsuls
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-budget-insuls
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ BudgetInsulsDrink ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkManlyDorf
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-manly-dorf
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ ManlyDorf ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkScrewdriver
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-screwdriver
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ ScrewdriverCocktail ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkIceCream
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-ice-cream
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ IceCream ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkLemonade
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-lemonade
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Lemonade ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkThavenBad
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-thaven-bad
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ ThavenBad ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkStarkist
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-starkist
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Starkist ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkZombieSlushie
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-zombie-slushie
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ ZombieSlushie ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkVoxRocks
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-vox-rocks
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ VoxRocks ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkDoctorsDelight
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-doctors-delight
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ DoctorsDelight ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkSyndicateBomb
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-syndicate-bomb
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ SyndicateBomb ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkArnoldPalmer
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-arnold-palmer
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ ArnoldPalmer ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkPilk
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-pilk
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Pilk ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkLongIslandIcedTea
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-long-island-iced-tea
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ LongIslandIcedTea ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkCogChamp
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-cogchamp
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ CogChamp ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkSuiDream
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-sui-dream
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ SuiDream ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkDrink
+  targetDepth: 4
+  triggerProb: 0.05
+  triggerHint: artifact-trigger-hint-drink-drink
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ TheDrink ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+# tricky drink chunk: 5 drinks add up to same probability as one of the previous drinks triggers
+- type: artifactTrigger
+  id: TriggerDrinkTheeHorsepussy
+  targetDepth: 4
+  triggerProb: 0.01
+  triggerHint: artifact-trigger-hint-drink-thee-horsepussy
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ TheeHorsepussy ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkThreeMileIsland
+  targetDepth: 4
+  triggerProb: 0.01
+  triggerHint: artifact-trigger-hint-drink-three-mile-island
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ ThreeMileIsland ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkHippiesDelight
+  targetDepth: 4
+  triggerProb: 0.01
+  triggerHint: artifact-trigger-hint-drink-hippies-delight
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ HippiesDelight ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkSalvagersSoothe
+  targetDepth: 4
+  triggerProb: 0.01
+  triggerHint: artifact-trigger-hint-drink-salvagers-soothe
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ SalvagersSoothe ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerDrinkUAP
+  targetDepth: 4
+  triggerProb: 0.01
+  triggerHint: artifact-trigger-hint-drink-uap
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ UAP ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+# Below exist to pad out the depth 4 triggers. Can remove some of those when we get more triggers implemented
+- type: artifactTrigger
+  id: TriggerMusicDeep
+  targetDepth: 4
+  triggerHint: artifact-trigger-hint-music
+  components:
+  - type: ArtifactMusicTrigger
+
+- type: artifactTrigger
+  id: TriggerExamineDeep
+  targetDepth: 4
+  triggerHint: artifact-trigger-hint-examine
+  components:
+  - type: ArtifactExamineTrigger
+
+- type: artifactTrigger
+  id: TriggerMedicalDeep
+  targetDepth: 4
+  triggerHint: artifact-trigger-hint-medical
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Dylovene, Diphenhydramine, Arithrazine, Bicaridine, Dermaline, Dexalin, DexalinPlus, Tricordrazine, Leporazine, Bruizine, Lacerinol, Puncturase, Pyrazine, Insuzine, Kelotane, Hyronalin, Inaprovaline, Epinephrine ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerBloodDeep
+  targetDepth: 4
+  triggerHint: artifact-trigger-hint-blood
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Blood, CopperBlood, InsectBlood, Slime, AmmoniaBlood, ZombieBlood ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+#don't add in new targetdepth values until you have a few
+#or else it will skew heavily towards a few options.

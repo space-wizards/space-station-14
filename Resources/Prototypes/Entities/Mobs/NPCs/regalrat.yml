@@ -54,7 +54,7 @@
         path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     angle: 0
     animation: WeaponArcClaw
-    damage:
+    damage: # IMP: Significant nerf to this damage. Formerly 12 slash 8 pierce
       types:
         Slash: 4
         Piercing: 2
