@@ -17,7 +17,7 @@ namespace Content.Shared.Lathe
         public List<ProtoId<LatheRecipePackPrototype>> StaticPacks = new();
 
         /// <summary>
-        /// All of the recipes that the lathe is capable of researching
+        /// All of the recipe packs that the lathe is capable of researching
         /// </summary>
         [DataField]
         public List<ProtoId<LatheRecipePackPrototype>> DynamicPacks = new();
