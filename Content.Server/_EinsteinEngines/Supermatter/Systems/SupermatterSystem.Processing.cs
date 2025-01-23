@@ -836,7 +836,7 @@ public sealed partial class SupermatterSystem
         if (!TryComp<AmbientSoundComponent>(uid, out var ambient))
             return;
 
-        var volume = (float)Math.Round(Math.Clamp((sm.Power / 50) - 5, -5, 5));
+        var volume = (float)Math.Round(Math.Clamp(sm.Power / 50 - 5, -5, 5));
 
         _ambient.SetVolume(uid, volume);
 
@@ -855,29 +855,20 @@ public sealed partial class SupermatterSystem
     /// </summary>
     private void HandleAccent(EntityUid uid, SupermatterComponent sm)
     {
-        var emit = Comp<EmitSoundOnTriggerComponent>(uid);
-
-        if (emit == null)
-            return;
-
         if (sm.AccentLastTime >= _timing.CurTime || !_random.Prob(0.05f))
             return;
 
         var aggression = Math.Min((sm.Damage / 800) * (sm.Power / 2500), 1) * 100;
         var nextSound = Math.Max(Math.Round((100 - aggression) * 5), sm.AccentMinCooldown);
+        var sound = sm.CalmAccent;
 
         if (sm.AccentLastTime + TimeSpan.FromSeconds(nextSound) > _timing.CurTime)
             return;
 
-        if (sm.Status >= SupermatterStatusType.Danger && emit.Sound != sm.DelamAccent)
-            emit.Sound = sm.DelamAccent;
-
-        else if (sm.Status < SupermatterStatusType.Danger && emit.Sound != sm.CalmAccent)
-            emit.Sound = sm.CalmAccent;
+        if (sm.Status >= SupermatterStatusType.Danger)
+            sound = sm.DelamAccent;
 
         sm.AccentLastTime = _timing.CurTime;
-
-        var ev = new TriggerEvent(uid);
-        RaiseLocalEvent(uid, ev);
+        _audio.PlayPvs(sound, Transform(uid).Coordinates);
     }
 }

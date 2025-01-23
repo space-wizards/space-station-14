@@ -44,9 +44,6 @@
     volume: -5
     sound:
       path: /Audio/_EinsteinEngines/Supermatter/calm.ogg
-  - type: EmitSoundOnTrigger
-    sound:
-      collection: SupermatterAccentNormal
   - type: Speech
     speechSounds: null
     speechVerb: Supermatter
