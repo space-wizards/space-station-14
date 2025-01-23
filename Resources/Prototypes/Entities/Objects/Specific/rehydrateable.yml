@@ -2,9 +2,27 @@
   parent: BaseItem
   id: RehydratableItem
   abstract: true
-  name: "rehydratable item"
-  description: Just add water!
   components:
+  - type: CollisionWake
+    enabled: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        density: 5
+        mask:
+        - ItemMask
+      rehydrate: # needed to react to fire extinguishers
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        hard: false
+        layer:
+        - LowImpassable
+  - type: Item
+    size: Tiny
   - type: SolutionContainerManager
     solutions:
       cube:
@@ -19,31 +37,15 @@
       - !type:AddToSolutionReaction
         solution: cube
   - type: Rehydratable
-  - type: CollisionWake
-    enabled: false
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
-        density: 5
-        mask:
-        - ItemMask
-      rehydrate:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
-        hard: false
-        layer:
-        - LowImpassable
 
 - type: entity
   parent: RehydratableItem
   id: RehydratableAnimalCube
   abstract: true
-  name: "rehydratable animal cube"
   components:
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: cube
   - type: SolutionContainerManager
     solutions:
       cube:
@@ -60,11 +62,6 @@
     - chewy
     - horrible
     - compressed-meat
-  - type: Item
-    size: Tiny
-  - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
-    state: cube
   - type: Tag
     tags:
     - Meat
@@ -234,8 +231,6 @@
   name: mop bucket cube
   description: Just add water! And then more water!
   components:
-  - type: Item
-    size: Tiny
   - type: Sprite
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     state: mopbucket_cube
