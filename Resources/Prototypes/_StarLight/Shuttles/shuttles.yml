@@ -1,0 +1,9 @@
+- type: preloadedGrid
+  id: LancePirates
+  path: /Maps/_Starlight/Shuttles/LancePirates.yml
+  copies: 1
+  
+- type: preloadedGrid
+  id: VoxATS
+  path: /Maps/_Starlight/Shuttles/VoxATS.yml
+  copies: 1
