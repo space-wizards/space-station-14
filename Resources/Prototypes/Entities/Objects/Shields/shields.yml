@@ -642,6 +642,10 @@
                   max: 1
     - type: StaticPrice
       price: 350
+    - type: ClothingSpeedModifier
+      walkModifier: 0.9
+      sprintModifier: 0.9
+    - type: HeldSpeedModifier
 
 - type: entity
   name: broken ceramonial shield 
