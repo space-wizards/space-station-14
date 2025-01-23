@@ -551,7 +551,7 @@
 
 - type: entity
   name: ceramonial shield
-  parent: [BaseItem, BaseSecurityContraband, BaseGrandTheftContraband]
+  parent: [BaseItem, BaseGrandTheftContraband]
   id: WardenShield
   description: A prototype shield given to the wardens of Nanotrasen's fleet of space stations as a symbol of their rank. It's repairable with a welder, and can be polished to a shine during all those long, dull shifts.
   components:
