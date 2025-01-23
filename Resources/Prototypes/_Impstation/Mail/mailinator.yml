@@ -1,0 +1,7 @@
+- type: entity
+  parent: BoxCardboard
+  id: MailTeleportBox
+  name: mailinator
+  description: A cardboard box which is capable of autonomously teleporting to the nearest Mail Telepad.
+  components:
+    - type: Mailinator
