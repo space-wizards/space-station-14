@@ -14,7 +14,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 {
     [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly RayCastSystem _rayCast = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     protected EntityQuery<MobCollisionComponent> MobQuery;
@@ -88,7 +88,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
         entity.Comp.Colliding = value;
         Dirty(entity);
-        _moveSpeed.RefreshMovementSpeedModifiers(entity.Owner);
+        //_moveSpeed.RefreshMovementSpeedModifiers(entity.Owner);
 
         if (!update)
             return;
@@ -111,17 +111,11 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
     protected void MoveMob(Entity<MobCollisionComponent> entity, Vector2 direction)
     {
-        var xform = Transform(uid);
-
-        if (PhysicsQuery.TryComp(uid, out var physics))
-        {
-            //_physics.ApplyLinearImpulse(uid, direction, body: physics);
-            _physics.WakeBody(uid, body: physics);
-        }
+        var xform = Transform(entity.Owner);
 
         // TODO: Raycast to the specified spot so we don't clip into a wall.
 
-        _xformSystem.SetLocalPosition(uid, xform.LocalPosition + direction);
+        _xformSystem.SetLocalPositionNoLerp(entity.Owner, xform.LocalPosition + direction);
     }
 
     protected bool HandleCollisions(Entity<MobCollisionComponent, PhysicsComponent> entity, float frameTime)
@@ -175,6 +169,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         var parentAngle = worldRot - xform.LocalRotation;
         var localDir = (-parentAngle).RotateVec(direction);
         RaiseCollisionEvent(entity.Owner, localDir);
+        return true;
     }
 
     protected abstract void RaiseCollisionEvent(EntityUid uid, Vector2 direction);

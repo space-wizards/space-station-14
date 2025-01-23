@@ -19,6 +19,7 @@ public sealed class MobCollisionSystem : SharedMobCollisionSystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
+        // TODO: Try running these in updatebeforesolve and storing for later
         var player = _player.LocalEntity;
 
         if (!MobQuery.TryComp(player, out var comp) || !TryComp(player, out PhysicsComponent? physics))
