@@ -1,36 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: Visitors now can have the correct Id cards and PDA!
-    type: Fix
-  - message: ghost roles should now attempt to tell you what your antag status is
-      in a popup when you join the raffle.
-    type: Tweak
-  - message: ERT chaplains should now be able to use bibles.
-    type: Fix
-  - message: Many new unknown shuttle events to make them more unique.
-    type: Add
-  - message: Syndicate escape pods will once again appear.
-    type: Fix
-  - message: Unknown Shuttle events will be much rarer.
-    type: Tweak
-  id: 7339
-  time: '2024-09-10T06:40:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28098
-- author: ScarKy0
-  changes:
-  - message: Renamed Circuit Boards to be Law Boards instead.
-    type: Tweak
-  id: 7340
-  time: '2024-09-10T10:27:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31914
-- author: ScarKy0
-  changes:
-  - message: Arrival Screens now show time again.
-    type: Fix
-  id: 7341
-  time: '2024-09-10T19:08:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32037
 - author: themias
   changes:
   - message: The Justice Helm can now only be crafted using a security helmet.
@@ -3904,3 +3872,25 @@
   id: 7838
   time: '2025-01-21T16:08:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34232
+- author: sowelipililimute
+  changes:
+  - message: Chefs now have access to cloth boxes in their locker, kitchen supplies
+      crate, etc. for moths
+    type: Add
+  id: 7839
+  time: '2025-01-22T23:54:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34403
+- author: Emisse
+  changes:
+  - message: Lecter sprites have been updated.
+    type: Tweak
+  id: 7840
+  time: '2025-01-23T06:02:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34589
+- author: Ian321
+  changes:
+  - message: Job specific contraband descriptions are now grammatically sound.
+    type: Fix
+  id: 7841
+  time: '2025-01-23T10:08:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34559
