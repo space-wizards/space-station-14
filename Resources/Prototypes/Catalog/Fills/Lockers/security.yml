@@ -9,6 +9,7 @@
       - id: WeaponDisabler
       - id: ClothingBeltSecurityFilled
       - id: Flash
+      - id: WardenShield
       - id: ClothingEyesGlassesSecurity
       - id: ClothingHandsGlovesCombat
       - id: ClothingShoesBootsJack
@@ -35,6 +36,7 @@
       - id: WeaponDisabler
       - id: ClothingBeltSecurityFilled
       - id: Flash
+      - id: WardenShield
       - id: ClothingEyesGlassesSecurity
       - id: ClothingHandsGlovesCombat
       - id: ClothingShoesBootsJack
