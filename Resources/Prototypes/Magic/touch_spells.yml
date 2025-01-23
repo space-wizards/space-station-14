@@ -21,6 +21,15 @@
   - type: Magic
     requiresClothes: true
 
+# For the Snail
+- type: entity
+  id: ActionSmiteNoReq
+  parent: ActionSmite
+  name: Smite
+  description: Instantly gibs a target.
+  components:
+  - type: Magic
+
 - type: entity
   id: ActionCluwne
   name: Cluwne's Curse
