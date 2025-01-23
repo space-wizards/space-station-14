@@ -9,7 +9,7 @@
   physicalDesc: reagent-physical-desc-viscous
   slippery: true
   impEvaporates: true
-  impEvaporationAmount: 1.0
+  impEvaporationAmount: 15.0
   metabolisms:
     Food:
       effects:

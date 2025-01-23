@@ -11,7 +11,7 @@ using Robust.Shared.Network;
 
 namespace Content.Shared._Impstation.ImpEvaporation;
 
-public sealed partial class SharedImpEvaporationSystem : EntitySystem
+public abstract partial class SharedImpEvaporationSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -80,44 +80,45 @@ public sealed partial class SharedImpEvaporationSystem : EntitySystem
 
     public void TickEvaporation()
     {
-        if (!_netManager.IsClient)
+        var enumerator = EntityQueryEnumerator<ImpEvaporationComponent, PuddleComponent>();
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var curTime = _timing.CurTime;
+        while (enumerator.MoveNext(out var uid, out var evap, out var puddle))
         {
-            var enumerator = EntityQueryEnumerator<ImpEvaporationComponent, PuddleComponent>();
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var curTime = _timing.CurTime;
-            while (enumerator.MoveNext(out var uid, out var evap, out var puddle))
+            List<(float, string)> removalQuantities = [];
+
+            if (evap.NextTick > curTime)
+                continue;
+
+            evap.NextTick += evap.EvaporationCooldown;
+
+            if (!_solution.ResolveSolution(uid, puddle.SolutionName, ref puddle.Solution, out var puddleSolution))
+                continue;
+
+            foreach (var reagent in puddleSolution)
             {
-                if (evap.NextTick > curTime)
-                    continue;
+                var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Reagent.Prototype);
 
-                evap.NextTick += evap.EvaporationCooldown;
+                var reagentName = reagentProto.ID.ToString();
 
-                if (!_solution.ResolveSolution(uid, puddle.SolutionName, ref puddle.Solution, out var puddleSolution))
-                    continue;
+                if (reagentName != null && reagentProto.ImpEvaporates)
+                    removalQuantities.Add((reagentProto.ImpEvaporationAmount, reagentName));
+            }
 
-                foreach (var reagent in puddleSolution)
-                {
-                    var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Reagent.Prototype);
+            foreach (var (amount, reagent) in removalQuantities)
+            {
+                puddleSolution.SplitSolutionWithOnly(amount, reagent);
+            }
 
-                    var reagentName = reagentProto.ID.ToString();
-
-                    if (reagentName != null && reagentProto.ImpEvaporates)
-                        puddleSolution.SplitSolutionWithOnly(reagentProto.ImpEvaporationAmount, reagentName);
-                }
-
-                if (puddleSolution.Volume == FixedPoint2.Zero)
-                {
-                    Spawn("PuddleSparkle", xformQuery.GetComponent(uid).Coordinates);
-                    QueueDel(uid);
-                }
+            if (puddleSolution.Volume == FixedPoint2.Zero)
+            {
+                Spawn("PuddleSparkle", xformQuery.GetComponent(uid).Coordinates);
+                QueueDel(uid);
             }
         }
     }
 
-    public override void Update(float frameTime)
-    {
-        TickEvaporation();
-    }
+
     /*
         /// <summary>
         /// Runs every frame. Looks over every ent with this component and does evaporation logic to them.

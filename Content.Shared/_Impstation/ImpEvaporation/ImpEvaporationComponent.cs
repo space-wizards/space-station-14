@@ -20,7 +20,7 @@ public sealed partial class ImpEvaporationComponent : Component
     /// The cooldown between removing reagents.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("evaporationCooldown")]
-    public TimeSpan EvaporationCooldown = TimeSpan.FromSeconds(10);
+    public TimeSpan EvaporationCooldown = TimeSpan.FromSeconds(1);
 
 
     [DataField(required: true)]
