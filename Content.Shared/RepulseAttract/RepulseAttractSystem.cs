@@ -65,6 +65,7 @@ public sealed class RepulseAttractSystem : EntitySystem
             caster = comp.User.Value;
 
         var xForm = Transform(caster);
+        var userWorldPos = _xForm.GetWorldPosition(xForm);
 
         var entsInRange = _lookup.GetEntitiesInRange(caster, comp.Range);
 
@@ -78,7 +79,6 @@ public sealed class RepulseAttractSystem : EntitySystem
             if (targetXForm.Anchored || HasComp<GhostComponent>(target))
                 continue;
 
-            var userWorldPos = _xForm.GetWorldPosition(xForm);
             var targetWorldPos = _xForm.GetWorldPosition(target);
 
             var direction = targetWorldPos - userWorldPos;
