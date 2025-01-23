@@ -4,13 +4,9 @@ using Content.Shared.Silicons.StationAi;
 
 namespace Content.Client.Silicons.StationAi;
 
-public sealed class StationAiBoundUserInterface : BoundUserInterface
+public sealed class StationAiBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private RadialMenu? _menu;
-
-    public StationAiBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {
@@ -18,14 +14,22 @@ public sealed class StationAiBoundUserInterface : BoundUserInterface
 
         var ev = new GetStationAiRadialEvent();
         EntMan.EventBus.RaiseLocalEvent(Owner, ref ev);
-        var buttonModels = ev.Actions.Select(x
-            => new RadialMenuButtonModel(() => SendPredictedMessage(new StationAiRadialMessage { Event = x, }))
+        var buttonModels = ConvertToButtons(ev.Actions);
+
+        _menu = new SimpleRadialMenu(buttonModels, Owner);
+        _menu.Open();
+    }
+
+    private IEnumerable<RadialMenuActionOption> ConvertToButtons(IEnumerable<StationAiRadial> actions)
+    {
+        return actions.Select(
+            x => new RadialMenuActionOption(
+                () => SendPredictedMessage(new StationAiRadialMessage { Event = x })
+            )
             {
                 Sprite = x.Sprite,
                 ToolTip = x.Tooltip
-            });
-
-        _menu = new SimpleRadialMenu( buttonModels, Owner);
-        _menu.Open();
+            }
+        );
     }
 }

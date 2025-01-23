@@ -5,7 +5,4 @@
                      VerticalExpand="True"
                      HorizontalExpand="True"
                      MinSize="450 450">
-
-
-
 </ui:SimpleRadialMenu>

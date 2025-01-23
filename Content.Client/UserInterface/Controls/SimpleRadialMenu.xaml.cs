@@ -17,12 +17,15 @@ public partial class SimpleRadialMenu : RadialMenu
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
 
+    /// <summary>
+    /// c-tor for codegen to work properly, is not used in runtime and should not be called in code.
+    /// </summary>
     public SimpleRadialMenu()
     {
-
+        // no-op
     }
 
-    public SimpleRadialMenu(IEnumerable<RadialMenuButtonModel> models, EntityUid? attachMenuToEntity = null)
+    public SimpleRadialMenu(IEnumerable<RadialMenuOption> models, EntityUid? attachMenuToEntity = null, int initialContainerRadius = 100)
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
@@ -30,16 +33,21 @@ public partial class SimpleRadialMenu : RadialMenu
         _attachMenuToEntity = attachMenuToEntity;
         var sprites = _entManager.System<SpriteSystem>();
 
-        Fill(models, sprites, Children);
+        Fill(models, sprites, Children, initialContainerRadius);
     }
 
-    private static void Fill(IEnumerable<RadialMenuButtonModel> models, SpriteSystem sprites, ICollection<Control> rootControlChildren)
+    private void Fill(
+        IEnumerable<RadialMenuOption> models,
+        SpriteSystem sprites,
+        ICollection<Control> rootControlChildren,
+        int initialContainerRadius
+    )
     {
         var rootContainer = new RadialContainer
         {
             HorizontalExpand = true,
             VerticalExpand = true,
-            InitialRadius = 100,
+            InitialRadius = initialContainerRadius,
             ReserveSpaceForHiddenChildren = false,
             Visible = true
         };
@@ -47,57 +55,58 @@ public partial class SimpleRadialMenu : RadialMenu
 
         foreach (var model in models)
         {
-            if (model.IsContainer)
+            if (model is RadialMenuNestedLayerOption nestedMenuModel)
             {
-                var linkButton = RecursiveContainerExtraction(sprites, rootControlChildren, model);
+                var linkButton = RecursiveContainerExtraction(sprites, rootControlChildren, nestedMenuModel);
                 linkButton.Visible = true;
                 rootContainer.AddChild(linkButton);
             }
             else
             {
-                var rootButtons = ConvertToButton(model, sprites);
+                var rootButtons = ConvertToButton(model, sprites, false);
                 rootContainer.AddChild(rootButtons);
             }
         }
     }
 
-    private static RadialMenuTextureButtonWithSector RecursiveContainerExtraction(
+    private RadialMenuTextureButtonWithSector RecursiveContainerExtraction(
         SpriteSystem sprites,
         ICollection<Control> rootControlChildren,
-        RadialMenuButtonModel model
+        RadialMenuNestedLayerOption model
     )
     {
         var container = new RadialContainer
         {
             HorizontalExpand = true,
             VerticalExpand = true,
-            InitialRadius = 100,
+            InitialRadius = model.ContainerRadius!.Value,
             ReserveSpaceForHiddenChildren = false,
             Visible = false
         };
         foreach (var nested in model.Nested)
         {
-            if (nested.IsContainer)
+            if (nested is RadialMenuNestedLayerOption nestedMenuModel)
             {
-                var linkButton = RecursiveContainerExtraction(sprites, rootControlChildren, nested);
+                var linkButton = RecursiveContainerExtraction(sprites, rootControlChildren, nestedMenuModel);
                 container.AddChild(linkButton);
             }
             else
             {
-                var button = ConvertToButton(nested, sprites);
+                var button = ConvertToButton(nested, sprites, false);
                 container.AddChild(button);
             }
         }
         rootControlChildren.Add(container);
 
-        var thisLayerLinkButton = ConvertToButton(model, sprites);
+        var thisLayerLinkButton = ConvertToButton(model, sprites, true);
         thisLayerLinkButton.TargetLayer = container;
         return thisLayerLinkButton;
     }
 
-    private static RadialMenuTextureButtonWithSector ConvertToButton(
-        RadialMenuButtonModel model,
-        SpriteSystem sprites
+    private RadialMenuTextureButtonWithSector ConvertToButton(
+        RadialMenuOption model,
+        SpriteSystem sprites,
+        bool haveNested
     )
     {
         var button = new RadialMenuTextureButtonWithSector
@@ -112,6 +121,8 @@ public partial class SimpleRadialMenu : RadialMenu
         button.OnPressed += _ =>
         {
             model.OnPressed?.Invoke();
+            if(!haveNested)
+                Close();
         };
         return button;
     }
@@ -156,25 +167,33 @@ public partial class SimpleRadialMenu : RadialMenu
 }
 
 
-public class RadialMenuButtonModel // maybe not model but option? eh
+public abstract class RadialMenuOption
 {
     public string? ToolTip;
     
-    public RadialMenuButtonModel(Action onPressed)
+    public SpriteSpecifier? Sprite { get; init; }
+
+    public Action? OnPressed { get; protected set; }
+}
+
+public class RadialMenuActionOption : RadialMenuOption
+{
+    public RadialMenuActionOption(Action onPressed)
     {
         OnPressed = onPressed;
     }
+}
 
-    public RadialMenuButtonModel(IReadOnlyCollection<RadialMenuButtonModel> nested)
+public class RadialMenuNestedLayerOption : RadialMenuOption
+{
+    public RadialMenuNestedLayerOption(IReadOnlyCollection<RadialMenuOption> nested, float containerRadius = 100)
     {
         Nested = nested;
+        ContainerRadius = 100;
     }
 
-    public IReadOnlyCollection<RadialMenuButtonModel> Nested { get; } = Array.Empty<RadialMenuButtonModel>();
+    public float? ContainerRadius { get; }
 
-    public Action? OnPressed { get; }
+    public IReadOnlyCollection<RadialMenuOption> Nested { get; }
 
-    public SpriteSpecifier? Sprite { get; init; }
-
-    public bool IsContainer => Nested.Count > 0;
 }

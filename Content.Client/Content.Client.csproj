@@ -23,11 +23,6 @@
     <ProjectReference Include="..\RobustToolbox\Robust.Client\Robust.Client.csproj" />
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Update="UserInterface\Controls\SimpleRadialMenu.xaml.cs">
-      <DependentUpon>SimpleRadialMenu.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
 </Project>

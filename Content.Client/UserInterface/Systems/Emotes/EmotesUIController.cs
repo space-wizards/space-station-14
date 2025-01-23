@@ -1,13 +1,15 @@
 using System.Linq;
-using Content.Client.Chat.UI;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Input;
+using Content.Shared.Speech;
+using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Client.Player;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
@@ -23,11 +25,13 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
     [Dependency] private readonly IClyde _displayManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    
     private MenuButton? EmotesButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EmotesButton;
     private RadialMenu? _menu;
 
-    private readonly Dictionary<EmoteCategory, (string Tooltip, SpriteSpecifier Sprite)> _dict = new Dictionary<EmoteCategory, (string Tooltip, SpriteSpecifier Sprite)>
+    private static readonly Dictionary<EmoteCategory, (string Tooltip, SpriteSpecifier Sprite)> EmoteGroupingInfo
+        = new Dictionary<EmoteCategory, (string Tooltip, SpriteSpecifier Sprite)>
     {
         [EmoteCategory.General] = ("emote-menu-category-general", new SpriteSpecifier.Texture(new ResPath("/Textures/Clothing/Head/Soft/mimesoft.rsi/icon.png"))),
         [EmoteCategory.Hands] = ("emote-menu-category-hands", new SpriteSpecifier.Texture(new ResPath("/Textures/Clothing/Hands/Gloves/latex.rsi/icon.png"))),
@@ -52,24 +56,8 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
         if (_menu == null)
         {
             // setup window
-            var models = _prototypeManager.EnumeratePrototypes<EmotePrototype>()
-                                          .GroupBy(x => x.Category)
-                                          .Select(categoryGroup =>
-                                          {
-                                              var nestedEmotes = categoryGroup.Select(
-                                                  emote => new RadialMenuButtonModel(() => _entityManager.RaisePredictiveEvent(new PlayEmoteMessage(emote.ID)))
-                                                  {
-                                                      Sprite = emote.Icon,
-                                                      ToolTip = Loc.GetString(emote.Name)
-                                                  }
-                                              ).ToArray();
-                                              var tuple = _dict[categoryGroup.Key];
-                                              return new RadialMenuButtonModel(nestedEmotes)
-                                              {
-                                                  Sprite = tuple.Sprite,
-                                                  ToolTip = Loc.GetString(tuple.Tooltip)
-                                              };
-                                          });
+            var prototypes = _prototypeManager.EnumeratePrototypes<EmotePrototype>();
+            var models = ConvertToButtons(prototypes);
 
 
             _menu = new SimpleRadialMenu(models);
@@ -145,5 +133,43 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
 
         _menu.Dispose();
         _menu = null;
+    }
+
+    private IEnumerable<RadialMenuOption> ConvertToButtons(IEnumerable<EmotePrototype> emotePrototypes)
+    {
+        var whitelistSystem = EntitySystemManager.GetEntitySystem<EntityWhitelistSystem>();
+        var player = _playerManager.LocalSession?.AttachedEntity;
+        var models = emotePrototypes.GroupBy(x => x.Category)
+                                    .Where(x => x.Key != EmoteCategory.Invalid)
+                                    .Select(categoryGroup =>
+                                    {
+                                        var nestedEmotes = categoryGroup.Where(emote =>
+                                        {
+                                            // only valid emotes that have ways to be triggered by chat and player have access / no restriction on
+                                            if (emote.Category == EmoteCategory.Invalid
+                                                || emote.ChatTriggers.Count == 0
+                                                || !(player.HasValue && whitelistSystem.IsWhitelistPassOrNull(emote.Whitelist, player.Value))
+                                                || whitelistSystem.IsBlacklistPass(emote.Blacklist, player.Value))
+                                                return false;
+
+                                            // emotes that are available by default, and requires speech and player can speak, or it doesn't require speech
+                                            return emote.Available
+                                                   || !EntityManager.TryGetComponent<SpeechComponent>(player.Value, out var speech)
+                                                   || speech.AllowedEmotes.Contains(emote.ID);
+                                        }).Select(
+                                            emote => new RadialMenuActionOption(() => _entityManager.RaisePredictiveEvent(new PlayEmoteMessage(emote.ID)))
+                                            {
+                                                Sprite = emote.Icon,
+                                                ToolTip = Loc.GetString(emote.Name)
+                                            }
+                                        ).ToArray();
+                                        var tuple = EmoteGroupingInfo[categoryGroup.Key];
+                                        return new RadialMenuNestedLayerOption(nestedEmotes)
+                                        {
+                                            Sprite = tuple.Sprite,
+                                            ToolTip = Loc.GetString(tuple.Tooltip)
+                                        };
+                                    });
+        return models;
     }
 }
