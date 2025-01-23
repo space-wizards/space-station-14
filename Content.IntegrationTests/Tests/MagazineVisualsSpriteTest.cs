@@ -1,4 +1,4 @@
-using System.Linq;
+using System.Collections.Generic;
 using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Prototypes;
 using Robust.Client.GameObjects;
@@ -23,59 +23,44 @@ public sealed class MagazineVisualsSpriteTest
 
         await client.WaitAssertion(() =>
         {
-            var protos = protoMan.EnumeratePrototypes<EntityPrototype>()
-                .Where(p => !p.Abstract)
-                .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => p.HasComponent<MagazineVisualsComponent>(componentFactory));
-
-            foreach (var proto in protos)
+            foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
             {
-                Assert.That(proto.TryGetComponent<MagazineVisualsComponent>(out var visuals, componentFactory));
-                Assert.That(proto.TryGetComponent<SpriteComponent>(out var sprite, componentFactory));
-                if (!proto.HasComponent<AppearanceComponent>(componentFactory))
-                {
-                    Assert.Fail(@$"{proto.ID} has MagazineVisualsComponent but no AppearanceComponent.");
-                }
+                if (proto.Abstract || pair.IsTestPrototype(proto))
+                    continue;
 
-                var hasMag = sprite.LayerMapTryGet(GunVisualLayers.Mag, out var magLayerId);
-                var hasUnshadedMag = sprite.LayerMapTryGet(GunVisualLayers.MagUnshaded, out var magUnshadedLayerId);
+                if (!proto.TryGetComponent<MagazineVisualsComponent>(out var visuals, componentFactory))
+                    continue;
 
-                if (!hasMag && !hasUnshadedMag)
-                {
-                    Assert.Fail(@$"{proto.ID} has MagazineVisualsComponent but no Mag or MagUnshaded layer map.");
-                }
+                Assert.That(proto.TryGetComponent<SpriteComponent>(out var sprite, componentFactory),
+                    @$"{proto.ID} has MagazineVisualsComponent but no SpriteComponent.");
+                Assert.That(proto.HasComponent<AppearanceComponent>(componentFactory),
+                    @$"{proto.ID} has MagazineVisualsComponent but no AppearanceComponent.");
+
+                var toTest = new List<(int, string)>();
+                if (sprite.LayerMapTryGet(GunVisualLayers.Mag, out var magLayerId))
+                    toTest.Add((magLayerId, ""));
+                if (sprite.LayerMapTryGet(GunVisualLayers.MagUnshaded, out var magUnshadedLayerId))
+                    toTest.Add((magUnshadedLayerId, "-unshaded"));
+
+                Assert.That(toTest, Is.Not.Empty,
+                    @$"{proto.ID} has MagazineVisualsComponent but no Mag or MagUnshaded layer map.");
 
                 var start = visuals.ZeroVisible ? 0 : 1;
-                for (var i = start; i < visuals.MagSteps; i++)
+                foreach (var (id, midfix) in toTest)
                 {
-                    if (hasMag)
+                    Assert.That(sprite.TryGetLayer(id, out var layer));
+                    var rsi = layer.ActualRsi;
+                    for (var i = start; i < visuals.MagSteps; i++)
                     {
-                        Assert.That(sprite.TryGetLayer(magLayerId, out var layer));
-                        var rsi = layer.ActualRsi;
-                        var state = $"{visuals.MagState}-{i}";
-
-                        Assert.That(rsi.TryGetState(state, out _), @$"{proto.ID} has MagazineVisualsComponent with
-                                    MagSteps = {visuals.MagSteps}, but {rsi.Path} doesn't have state {state}!");
-
-                        // MagSteps includes the 0th step, so sometimes people are off by one.
-                        var extraState = $"{visuals.MagState}-{visuals.MagSteps}";
-                        Assert.That(!rsi.TryGetState(extraState, out _), @$"{proto.ID} has MagazineVisualsComponent with
-                                        MagSteps = {visuals.MagSteps}, but more states exist!");
+                        var state = $"{visuals.MagState}{midfix}-{i}";
+                        Assert.That(rsi.TryGetState(state, out _),
+                            @$"{proto.ID} has MagazineVisualsComponent with MagSteps = {visuals.MagSteps}, but {rsi.Path} doesn't have state {state}!");
                     }
-                    if (hasUnshadedMag)
-                    {
-                        Assert.That(sprite.TryGetLayer(magUnshadedLayerId, out var layer));
-                        var rsi = layer.ActualRsi;
-                        var state = $"{visuals.MagState}-unshaded-{i}";
 
-                        Assert.That(rsi.TryGetState(state, out _), @$"{proto.ID} has MagazineVisualsComponent with
-                                    MagSteps = {visuals.MagSteps}, but {rsi.Path} doesn't have state {state}!");
-
-                        // MagSteps includes the 0th step, so sometimes people are off by one.
-                        var extraState = $"{visuals.MagState}-unshaded-{visuals.MagSteps}";
-                        Assert.That(!rsi.TryGetState(extraState, out _), @$"{proto.ID} has MagazineVisualsComponent with
-                                        MagSteps = {visuals.MagSteps}, but more states exist!");
-                    }
+                    // MagSteps includes the 0th step, so sometimes people are off by one.
+                    var extraState = $"{visuals.MagState}{midfix}-{visuals.MagSteps}";
+                    Assert.That(rsi.TryGetState(extraState, out _), Is.False,
+                        @$"{proto.ID} has MagazineVisualsComponent with MagSteps = {visuals.MagSteps}, but more states exist!");
                 }
             }
         });
