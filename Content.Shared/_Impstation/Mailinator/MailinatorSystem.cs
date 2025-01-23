@@ -1,21 +1,21 @@
 
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Coordinates;
-using Content.Shared.Climbing.Events;
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 using Content.Shared.Popups;
 using Robust.Shared.Timing;
-using System.Security.Cryptography.X509Certificates;
+using Robust.Shared.Network;
+
 
 namespace Content.Shared._Impstation.Mailinator;
 
 public sealed class MailinatorSystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -63,6 +63,9 @@ public sealed class MailinatorSystem : EntitySystem
     private void OnMailinatorDoAfter(Entity<MailinatorComponent> entity, ref MailinatorDoAfterEvent args)
     {
         var mailinatorCoords = _transformSystem.GetMapCoordinates(entity.Owner);
+
+        if (!_net.IsServer)
+            return;
 
         if (!_timing.IsFirstTimePredicted)
             return;
