@@ -81,7 +81,7 @@
     - MonkeyCube
 
 - type: entity
-  parent: MonkeyCube # Kobolds are monkeys
+  parent: RehydratableAnimalCube
   id: KoboldCube
   name: kobold cube
   components:

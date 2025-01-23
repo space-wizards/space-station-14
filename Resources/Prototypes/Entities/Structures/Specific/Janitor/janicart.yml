@@ -126,21 +126,15 @@
               Quantity: 600
 
 - type: entity
-  parent: BaseItem # Parenting from MonkeyCubeWrapped gets you MonkeyCube tag
+  parent: BaseWrappedCube # Parenting from MonkeyCubeWrapped gets you MonkeyCube tag
   name: mop bucket cube
-  suffix: Wrapped
   id: MopBucketCubeWrapped
   description: Unwrap this to get a mop bucket cube.
   components:
-  - type: Item
-    size: Tiny
   - type: SpawnItemsOnUse
     items:
       - id: MopBucketCube
-    sound:
-      path: /Audio/Effects/unwrap.ogg
   - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
     state: wrapper
 
 # Janicart
