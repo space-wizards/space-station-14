@@ -126,7 +126,7 @@
               Quantity: 600
 
 - type: entity
-  parent: BaseWrappedCube # Parenting from MonkeyCubeWrapped gets you MonkeyCube tag
+  parent: BaseWrappedCube
   name: mop bucket cube
   id: MopBucketCubeWrapped
   description: Unwrap this to get a mop bucket cube.
