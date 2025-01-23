@@ -217,9 +217,9 @@ public abstract partial class SharedHandsSystem : EntitySystem
             // Currently this just checks the direct parent, so items can still teleport through containers.
             ContainerSystem.AttachParentToContainerOrGrid((entity, Transform(entity)));
 
-            if (dropNear && TryComp<TransformComponent>(uid, out var transformComponent))
+            if (dropNear && uid.HasValue)
             {
-                TransformSystem.PlaceNextTo((entity, Transform(entity)), ((EntityUid)uid, transformComponent));
+                TransformSystem.PlaceNextTo(entity, uid.Value);
             }
         }
     }
