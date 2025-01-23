@@ -553,7 +553,7 @@
   name: composite shield
   parent: [BaseItem, BaseSecurityContraband]
   id: WardenShield
-  description: A prototype shield, dirived from an unkown pattern found within a derelict spacestation. Whilst not strong against any specfic damage, it provides general resistance across the board.
+  description: A prototype shield,  derived from an unknown pattern found within a derelict spacestation. Whilst not strong against any specfic damage, it provides general resistance across the board.
   components:
     - type: ItemToggle
       soundActivate:
