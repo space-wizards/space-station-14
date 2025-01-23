@@ -48,7 +48,7 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
             }
 
             _popups.PopupClient(Loc.GetString("item-recall-item-marked", ("item", markItem.Value)), args.Performer, args.Performer);
-            TryMarkItem(ent, markItem.Value, args.Performer);
+            TryMarkItem(ent, markItem.Value);
             return;
         }
 
@@ -62,7 +62,7 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
         TryUnmarkItem(ent);
     }
 
-    private void TryMarkItem(Entity<ItemRecallComponent> ent, EntityUid item, EntityUid markedBy)
+    private void TryMarkItem(Entity<ItemRecallComponent> ent, EntityUid item)
     {
         EnsureComp<RecallMarkerComponent>(item, out var marker);
         ent.Comp.MarkedEntity = item;
@@ -79,12 +79,7 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
         if (!TryComp<RecallMarkerComponent>(item, out var marker))
             return;
 
-        if (!TryComp<InstantActionComponent>(item, out var instantAction))
-            return;
-
-        var actionOwner = instantAction.AttachedEntity;
-
-        if (actionOwner == null)
+        if (!TryComp<InstantActionComponent>(marker.MarkedByAction, out var instantAction))
             return;
 
         if (TryComp<ItemRecallComponent>(marker.MarkedByAction, out var action))
@@ -92,7 +87,8 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
             // For some reason client thinks the station grid owns the action on client and this doesn't work. It doesn't work in PopupEntity(mispredicts) and PopupPredicted either(doesnt show).
             // I don't have the heart to move this code to server because of this small thing.
             // This line will only do something once that is fixed.
-            _popups.PopupClient(Loc.GetString("item-recall-item-unmark", ("item", item)), actionOwner.Value, actionOwner.Value, PopupType.MediumCaution);
+            if (instantAction.AttachedEntity != null)
+                _popups.PopupClient(Loc.GetString("item-recall-item-unmark", ("item", item)), instantAction.AttachedEntity.Value, instantAction.AttachedEntity.Value, PopupType.MediumCaution);
 
             action.MarkedEntity = null;
             UpdateActionAppearance((marker.MarkedByAction.Value, action));
