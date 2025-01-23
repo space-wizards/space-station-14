@@ -7,10 +7,8 @@ namespace Content.Server.Medical.Components;
 [Access(typeof(HealthAnalyzerSystem), typeof(CryoPodSystem))]
 public sealed partial class HealthAnalyzerComponent : AbstractAnalyzerComponent
 {
-    /// <summary>
-    /// When should the next update be sent for the patient
-    /// </summary>
+    /// <inheritdoc/>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
-    public TimeSpan NextUpdate = TimeSpan.Zero;
+    public override TimeSpan NextUpdate { get; set; } = TimeSpan.Zero;
 }

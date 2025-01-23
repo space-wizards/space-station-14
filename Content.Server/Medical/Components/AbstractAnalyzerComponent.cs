@@ -11,6 +11,20 @@ namespace Content.Server.Medical.Components;
 public abstract partial class AbstractAnalyzerComponent : Component
 {
     /// <summary>
+    /// When should the next update be sent for the patient
+    /// </summary>
+    /// <remarks>
+    /// Override this in your implementation with:
+    ///
+    /// ```cs
+    /// [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    /// [AutoPausedField]
+    /// public override TimeSpan NextUpdate { get; set; } = TimeSpan.Zero;
+    /// ```
+    /// </remarks>
+    public abstract TimeSpan NextUpdate { get; set; }
+
+    /// <summary>
     /// The delay between patient health updates
     /// </summary>
     [DataField]
