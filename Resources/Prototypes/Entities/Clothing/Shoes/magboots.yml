@@ -123,7 +123,7 @@
   parent: [ClothingShoesBootsMagBase, BaseSecurityContraband]
   id: ClothingShoesBootsMagSec
   name: security magboots
-  description: A decades old prototype version of current engineering magboots, the most NT was willing to provide for a department other than thier primary breadwinner.
+  description: A decades old prototype version of current engineering magboots, the most NT was willing to provide for a department other than their primary breadwinner.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/magboots-sec.rsi
