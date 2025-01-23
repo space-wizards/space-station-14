@@ -4,6 +4,7 @@ using Content.Shared.Ghost;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.Starlight.GhostTheme;
 
@@ -11,36 +12,25 @@ public sealed class GhostThemeSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ISharedPlayersRoleManager _playerManager = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GhostThemeComponent, AfterAutoHandleStateEvent>(OnChanged);
-        SubscribeNetworkEvent<GhostThemeSyncEvent>(OnSync);
-    }
-
-    private void OnChanged(EntityUid uid, GhostThemeComponent component, ref AfterAutoHandleStateEvent args)
-    {
-        SyncTheme(uid, component);
+        SubscribeLocalEvent<GhostThemeComponent, AppearanceChangeEvent>(OnAppearance);
     }
     
-    private void OnSync(GhostThemeSyncEvent args)
+    private void OnAppearance(Entity<GhostThemeComponent> ent, ref AppearanceChangeEvent args)
     {
-        var uid = GetEntity(args.Player);
-        
-        if (EntityManager.HasComponent<GhostComponent>(uid))
-        {
-            var component = EntityManager.EnsureComponent<GhostThemeComponent>(uid);
-            SyncTheme(uid, component);
-        }
+        SyncTheme(ent.Owner, ent.Comp);
     }
     
     private void SyncTheme(EntityUid uid, GhostThemeComponent component)
     {
-        if (!_prototypeManager.TryIndex<GhostThemePrototype>(component.SelectedGhostTheme, out var ghostThemePrototype) 
+        if (!_appearance.TryGetData<string>(uid, GhostThemeVisualLayers.Base, out var Theme)
+            || !_prototypeManager.TryIndex<GhostThemePrototype>(Theme, out var ghostThemePrototype) 
             || !EntityManager.TryGetComponent<SpriteComponent>(uid, out var sprite)
-            || sprite.LayerMapTryGet(EffectLayers.Unshaded, out var layer) 
-            || !_playerManager.HasAnyPlayerFlags(uid, ghostThemePrototype.Flags))
+            || sprite.LayerMapTryGet(EffectLayers.Unshaded, out var layer))
             return;
 
         sprite.LayerSetSprite(layer, ghostThemePrototype.SpriteSpecifier.Sprite);

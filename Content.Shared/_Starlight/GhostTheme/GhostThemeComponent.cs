@@ -4,11 +4,11 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Starlight.GhostTheme;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class GhostThemeComponent : Component
 {
     [ViewVariables(VVAccess.ReadOnly)] // No admeme
-    [DataField, AutoNetworkedField]
+    [DataField]
     public string SelectedGhostTheme = "None";
 }
 

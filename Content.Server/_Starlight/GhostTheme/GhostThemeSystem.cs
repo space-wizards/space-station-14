@@ -15,6 +15,7 @@ using Content.Shared.Ghost;
 using Content.Shared.Ghost.Roles;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Mobs;
 using Content.Shared.Players;
 using Content.Shared.Roles;
@@ -37,6 +38,7 @@ using Robust.Shared.Prototypes;
 using Content.Shared.Starlight.GhostTheme;
 using Content.Shared.Starlight;
 using Robust.Shared.Network;
+using Robust.Shared.GameObjects;
 using Content.Server.RoundEnd;
 using Content.Server.GameTicking;
 
@@ -49,6 +51,7 @@ public sealed class GhostThemeSystem : EntitySystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ISharedPlayersRoleManager _playerRoles = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     
     public override void Initialize()
     {
@@ -109,6 +112,8 @@ public sealed class GhostThemeSystem : EntitySystem
             Logger.Warning($"current ghost theme: {playerData.GhostTheme}, new ghost theme {Theme}");
             playerData.GhostTheme = Theme;
         }
+        
+        _appearance.SetData(attached, GhostThemeVisualLayers.Base, Theme);
     }
     public void UpdateAllEui()
     {
@@ -132,10 +137,9 @@ public sealed class GhostThemeSystem : EntitySystem
             Logger.Warning($"current ghost theme: {theme.SelectedGhostTheme}, new ghost theme {playerData.GhostTheme}");
             theme.SelectedGhostTheme = playerData.GhostTheme;
             Dirty(uid, theme);
+            
+            _appearance.SetData(uid, GhostThemeVisualLayers.Base, playerData.GhostTheme);
         }
-        
-        if (TryComp(uid, out ActorComponent? actor))
-            RaiseNetworkEvent(new GhostThemeSyncEvent(GetNetEntity(uid)), actor.PlayerSession);
     }
 }
 
