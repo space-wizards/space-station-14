@@ -49,6 +49,16 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
             : Loc.GetString("generic-unknown");
 
         // Section 2: Information regarding the tray.
+        if (msg.TrayData is not null)
+        {
+            WaterLevelLabel.Text = msg.TrayData.WaterLevel.ToString("0.00");
+            NutritionLevelLabel.Text = msg.TrayData.NutritionLevel.ToString("0.00");
+            ToxinsLabel.Text = msg.TrayData.Toxins.ToString("0.00");
+            PestLevelLabel.Text = msg.TrayData.PestLevel.ToString("0.00");
+            WeedLevelLabel.Text = msg.TrayData.WeedLevel.ToString("0.00");
+            ContainerGrid.Visible = true;
+        }
+
         // Section 3: Information regarding the plant.
         // Label printer at the bottom (like the forensic scanner)
         // TODO: PA
