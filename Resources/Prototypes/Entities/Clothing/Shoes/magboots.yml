@@ -123,15 +123,15 @@
   parent: [ClothingShoesBootsMagBase, BaseSecurityContraband]
   id: ClothingShoesBootsMagSec
   name: security magboots
-  description: A decades old prototype version of current engineering magboots, the most nt was willing to provide for a department other than thier primary breadwinner.
+  description: A decades old prototype version of current engineering magboots, the most NT was willing to provide for a department other than thier primary breadwinner.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/magboots-sec.rsi
     state: icon
   - type: Clothing
     sprite: Clothing/Shoes/Boots/magboots-sec.rsi
-    equipDelay: 7
-    unequipDelay: 7
+    equipDelay: 3
+    unequipDelay: 3
   - type: ClothingSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.70
+    walkModifier: 0.80
+    sprintModifier: 0.75
