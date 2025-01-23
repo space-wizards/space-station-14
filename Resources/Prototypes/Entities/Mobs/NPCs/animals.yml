@@ -2240,7 +2240,7 @@
   - type: MobMover
   - type: HTN
     rootTask:
-      task: SimpleHostileCompound
+      task: GrenadePenguinCompound # imp
   - type: NpcFactionMember
     factions:
     - Syndicate
