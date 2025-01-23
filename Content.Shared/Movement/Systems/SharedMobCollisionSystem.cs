@@ -20,6 +20,11 @@ public abstract class SharedMobCollisionSystem : EntitySystem
     protected EntityQuery<MobCollisionComponent> MobQuery;
     protected EntityQuery<PhysicsComponent> PhysicsQuery;
 
+    /*
+     * Looks like movespeed not panning out?
+     * Also try hard contact but ignore it on server and have client handle it, but that's just clientside movement KEKW
+     */
+
     public override void Initialize()
     {
         base.Initialize();
@@ -41,7 +46,6 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             return;
 
         SetColliding((player.Value, comp), value: msg.Enabled, update: false);
-        _moveSpeed.RefreshMovementSpeedModifiers(player.Value);
     }
 
     private void OnCollision(MobCollisionMessage msg, EntitySessionEventArgs args)
@@ -75,12 +79,13 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
     protected void SetColliding(Entity<MobCollisionComponent> entity, bool value, bool update = false)
     {
+        return;
         if (entity.Comp.Colliding == value)
             return;
 
-        _moveSpeed.RefreshMovementSpeedModifiers(entity.Owner);
         entity.Comp.Colliding = value;
         Dirty(entity);
+        _moveSpeed.RefreshMovementSpeedModifiers(entity.Owner);
 
         if (!update)
             return;
@@ -113,7 +118,10 @@ public abstract class SharedMobCollisionSystem : EntitySystem
     {
         var physics = entity.Comp2;
 
-        if (physics.LinearVelocity == Vector2.Zero || physics.ContactCount == 0)
+        if (physics.LinearVelocity == Vector2.Zero)
+            return false;
+
+        if (physics.ContactCount == 0)
             return false;
 
         var xform = Transform(entity.Owner);
@@ -121,6 +129,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         var ourTransform = new Transform(worldPos, worldRot);
         var contacts = Physics.GetContacts(entity.Owner);
         var direction = Vector2.Zero;
+        var contactCount = 0;
 
         while (contacts.MoveNext(out var contact))
         {
@@ -135,17 +144,18 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             // TODO: Get overlap amount
             var otherTransform = Physics.GetPhysicsTransform(other);
             var diff = ourTransform.Position - otherTransform.Position;
-            var penDepth = MathF.Max(0f, 0.6f - diff.Length());
-
+            var penDepth = MathF.Max(0f, 0.7f - diff.Length());
+            
             var mobMovement = penDepth * diff.Normalized() * (entity.Comp1.Strength + otherComp.Strength) * frameTime;
 
             // Need the push strength proportional to penetration depth.
             direction += mobMovement;
+            contactCount++;
         }
 
         if (direction == Vector2.Zero)
         {
-            return false;
+            return contactCount > 0;
         }
 
         entity.Comp1.EndAccumulator = MobCollisionComponent.BufferTime;
