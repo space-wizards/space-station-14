@@ -1,0 +1,12 @@
+<BoxContainer Orientation="Vertical" xmlns:ghostTheme="clr-namespace:Content.Client._Starlight.GhostTheme" 
+							 xmlns="https://spacestation14.io" 
+							 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                             xmlns:maths="clr-namespace:Robust.Shared.Maths;assembly=Robust.Shared.Maths"
+							 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+	<TextureRect Name="PreviewImage" Access="Public" HorizontalAlignment="Center" VerticalAlignment="Top" TextureScale="2 2" />
+    <controls:StripeBack>
+	 <Label Name="ThemeNameLabel" Access="Public" HorizontalAlignment="Center" FontColorOverride="{x:Static maths:Color.White}" Margin="0 8 0 4" />
+	</controls:StripeBack>
+	<Label Name="ThemeDescriptionLabel" Access="Public" ClipText="True" FontColorOverride="{x:Static maths:Color.LightGray}" VerticalAlignment="Top" Margin="0 8 0 16" />
+	<Button Name="SelectButton" Text="{Loc 'ghost-gui-choose-theme'}" HorizontalAlignment="Center" VerticalAlignment="Bottom" StyleClasses="OpenBoth" />
+</BoxContainer>

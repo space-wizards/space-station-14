@@ -715,7 +715,10 @@ namespace Content.Server.Database
             var obj = await db.DbContext.PlayerData
                 .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
             if (obj != null)
+            {
                 obj.Balance = data.Balance;
+                obj.GhostTheme = data.GhostTheme;
+            }
             else
                 db.DbContext.PlayerData.Add(data);
 

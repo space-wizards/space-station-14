@@ -19,11 +19,13 @@ public sealed class MsgUpdatePlayerStatus : NetMessage
             var flags = (PlayerFlags)buffer.ReadUInt32();
             var balance = buffer.ReadInt32();
             var title = buffer.ReadString();
+            var ghostTheme = buffer.ReadString();
 
             DiscordLink = buffer.ReadString();
             Player = new PlayerData
             {
                 Title = title,
+                GhostTheme = ghostTheme,
                 Balance = balance,
                 Flags = flags,
             };
@@ -40,6 +42,7 @@ public sealed class MsgUpdatePlayerStatus : NetMessage
         buffer.Write((uint)Player.Flags);
         buffer.Write(Player.Balance);
         buffer.Write(Player.Title);
+        buffer.Write(Player.GhostTheme);
         buffer.Write(DiscordLink);
     }
 

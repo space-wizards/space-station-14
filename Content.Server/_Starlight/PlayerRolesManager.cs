@@ -67,6 +67,7 @@ public sealed partial class PlayerRolesManager : IPlayerRolesManager, IPostInjec
             if(_players.Remove(e.Session, out var data))
             _ = _dbManager.SetPlayerDataForAsync(e.Session.UserId, new PlayerDataDTO
             {
+                GhostTheme = data!.Data.GhostTheme,
                 Balance = data!.Data.Balance
             });
         }
@@ -119,6 +120,7 @@ public sealed partial class PlayerRolesManager : IPlayerRolesManager, IPostInjec
                 UserId = session.UserId,
                 Balance = 500,
                 Flags = 0,
+                GhostTheme = "None",
             };
             await _dbManager.SetPlayerDataForAsync(session.UserId, dbData);
         }
@@ -127,7 +129,8 @@ public sealed partial class PlayerRolesManager : IPlayerRolesManager, IPostInjec
         {
             Flags = (PlayerFlags)dbData.Flags,
             Title = dbData.Title,
-            Balance = dbData.Balance
+            Balance = dbData.Balance,
+            GhostTheme = dbData.GhostTheme
         };
     }
     public PlayerData? GetPlayerData(EntityUid uid)
