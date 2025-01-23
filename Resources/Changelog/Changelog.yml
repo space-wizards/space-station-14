@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: ScarKy0
   changes:
-  - message: Renamed Circuit Boards to be Law Boards instead.
-    type: Tweak
-  id: 7340
-  time: '2024-09-10T10:27:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31914
-- author: ScarKy0
-  changes:
   - message: Arrival Screens now show time again.
     type: Fix
   id: 7341
@@ -3894,3 +3887,10 @@
   id: 7839
   time: '2025-01-22T23:54:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34403
+- author: Emisse
+  changes:
+  - message: Lecter sprites have been updated.
+    type: Tweak
+  id: 7840
+  time: '2025-01-23T06:02:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34589
