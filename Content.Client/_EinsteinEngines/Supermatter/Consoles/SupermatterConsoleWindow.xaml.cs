@@ -104,14 +104,9 @@ public sealed partial class SupermatterConsoleWindow : FancyWindow
             newEntryContainer.FocusButton.OnButtonUp += args =>
             {
                 if (_trackedEntity == newEntryContainer.NetEntity)
-                {
                     _trackedEntity = null;
-                }
-
                 else
-                {
                     _trackedEntity = newEntryContainer.NetEntity;
-                }
 
                 // Send message to console that the focus has changed
                 SendFocusChangeMessageAction?.Invoke(_trackedEntity);

@@ -26,6 +26,7 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
 
     private readonly Dictionary<string, (Label label, ProgressBar bar, PanelContainer border, float leftSize, float rightSize, Color leftColor, Color middleColor, Color rightColor)>? _engineDictionary;
     private readonly List<(SupermatterGasBarContainer Bar, Gas Gas)> _gasBarData;
+    private readonly List<(BoxContainer Container, Button Button, TextureRect Arrow)> _expandDetails;
 
     // Colors
     private readonly Color _colorGray = Color.Gray;
@@ -34,6 +35,10 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
     private readonly Color _colorOrange = StyleNano.ConcerningOrangeFore;
     private readonly Color _colorGreen = StyleNano.GoodGreenFore;
     private readonly Color _colorTurqoise = Color.FromHex("#00fff7");
+
+    // Arrow icons
+    private readonly string _arrowUp = "/Textures/_EinsteinEngines/Interface/Supermatter/arrow_up.png";
+    private readonly string _arrowDown = "/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png";
 
     // Supermatter base values
     private readonly float _radiationBase;
@@ -52,6 +57,8 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
         _cache = IoCManager.Resolve<IResourceCache>();
 
         NetEntity = uid;
+
+        #region List/Dictionary Definitions
 
         // Set the engine dictionary
         _engineDictionary = new()
@@ -74,7 +81,15 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
             _gasBarData.Add(data);
         }
 
-        #region List Definitions
+        // Set the container, button, and arrow texture for details expansion
+        _expandDetails = new()
+        {
+            ( IntegrityDetailsContainer, IntegrityButton, IntegrityButtonArrow ),
+            ( PowerDetailsContainer, PowerButton, PowerButtonArrow ),
+            ( RadiationDetailsContainer, RadiationButton, RadiationButtonArrow ),
+            ( TemperatureLimitDetailsContainer, TemperatureLimitButton, TemperatureLimitButtonArrow ),
+            ( WasteDetailsContainer, WasteButton, WasteButtonArrow )
+        };
 
         var mainLabels = new List<Label>()
         {
@@ -160,6 +175,16 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
         {
             label.FontOverride = normalFont;
             label.FontColorOverride = _colorSlate;
+        }
+
+        // On click
+        foreach (var detail in _expandDetails)
+        {
+            detail.Button.OnButtonUp += args =>
+            {
+                detail.Container.Visible = !detail.Container.Visible;
+                detail.Arrow.TexturePath = detail.Container.Visible ? _arrowUp : _arrowDown;
+            };
         }
     }
 

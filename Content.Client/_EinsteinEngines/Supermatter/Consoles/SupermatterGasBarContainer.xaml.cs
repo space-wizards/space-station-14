@@ -27,6 +27,10 @@ public sealed partial class SupermatterGasBarContainer : BoxContainer
     private readonly Color _colorRed = StyleNano.DangerousRedFore;
     private readonly Color _colorGreen = StyleNano.GoodGreenFore;
 
+    // Arrow icons
+    private readonly string _arrowUp = "/Textures/_EinsteinEngines/Interface/Supermatter/arrow_up.png";
+    private readonly string _arrowDown = "/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png";
+
     public SupermatterGasBarContainer(Gas gas)
     {
         RobustXamlLoader.Load(this);
@@ -117,6 +121,13 @@ public sealed partial class SupermatterGasBarContainer : BoxContainer
         WasteContainer.Visible = heatPenalty != 0;
         PowerContainer.Visible = powerMix != 0;
         HeatContainer.Visible = heatResistance != 0;
+
+        // On click
+        GasButton.OnButtonUp += args =>
+        {
+            DetailsContainer.Visible = !DetailsContainer.Visible;
+            GasButtonArrow.TexturePath = DetailsContainer.Visible ? _arrowUp : _arrowDown;
+        };
     }
 
     public void UpdateEntry(Gas gas, SupermatterFocusData focusData)

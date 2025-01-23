@@ -14,12 +14,12 @@
                     </ProgressBar>
                 </PanelContainer>
                 <Button Name="GasButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1">
-                    <TextureRect TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
+                    <TextureRect Name="GasButtonArrow" TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
                 </Button>
             </BoxContainer>
         </BoxContainer>
         
-        <BoxContainer Orientation="Vertical" Margin="16 2 0 0">
+        <BoxContainer Name="DetailsContainer" Orientation="Vertical" Margin="16 2 0 0" Visible="False">
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                 <Label Name="HeaderLabel" Text="{Loc 'supermatter-console-window-label-details'}" />
             </BoxContainer>

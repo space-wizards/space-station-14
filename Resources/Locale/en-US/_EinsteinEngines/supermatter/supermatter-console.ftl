@@ -63,4 +63,4 @@ supermatter-console-window-label-gas-heat = Heat Resistance:
 supermatter-console-window-label-gas-heat-bar = {$heat} K
 
 supermatter-console-window-flavor-left = ⚠ Do not approach the crystal
-supermatter-console-window-flavor-right = v1.1
+supermatter-console-window-flavor-right = v1.34

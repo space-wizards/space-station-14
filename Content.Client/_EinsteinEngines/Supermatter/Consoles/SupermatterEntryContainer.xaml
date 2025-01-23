@@ -37,11 +37,11 @@
                                 </ProgressBar>
                             </PanelContainer>
                             <Button Name="IntegrityButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1">
-                                <TextureRect TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
+                                <TextureRect Name="IntegrityButtonArrow" TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
                             </Button>
                         </BoxContainer>
                     </BoxContainer>
-                    <BoxContainer Orientation="Vertical" Margin="16 2 0 0">
+                    <BoxContainer Name="IntegrityDetailsContainer" Orientation="Vertical" Margin="16 2 0 0" Visible="False">
                         <BoxContainer Orientation="Horizontal">
                             <Label Name="IntegrityHealingLabel" Text="{Loc 'supermatter-console-window-label-integrity-healing'}" HorizontalExpand="True" />
                             <Label Name="IntegrityHealingInfoLabel" HorizontalAlignment="Right" />
@@ -60,11 +60,11 @@
                                 </ProgressBar>
                             </PanelContainer>
                             <Button Name="PowerButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1">
-                                <TextureRect TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
+                                <TextureRect Name="PowerButtonArrow" TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
                             </Button>
                         </BoxContainer>
                     </BoxContainer>
-                    <BoxContainer Orientation="Vertical" Margin="16 2 0 0">
+                    <BoxContainer Name="PowerDetailsContainer" Orientation="Vertical" Margin="16 2 0 0" Visible="False">
                         <BoxContainer Orientation="Horizontal">
                             <Label Name="PowerDecayLabel" Text="{Loc 'supermatter-console-window-label-power-decay'}" HorizontalExpand="True" />
                             <Label Name="PowerDecayInfoLabel" HorizontalAlignment="Right" />
@@ -83,11 +83,11 @@
                                 </ProgressBar>
                             </PanelContainer>
                             <Button Name="RadiationButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1">
-                                <TextureRect TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
+                                <TextureRect Name="RadiationButtonArrow" TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
                             </Button>
                         </BoxContainer>
                     </BoxContainer>
-                    <BoxContainer Orientation="Vertical" Margin="16 2 0 0">
+                    <BoxContainer Name="RadiationDetailsContainer" Orientation="Vertical" Margin="16 2 0 0" Visible="False">
                         <BoxContainer Orientation="Horizontal">
                             <Label Name="RadiationBaseLabel" Text="{Loc 'supermatter-console-window-label-radiation-base'}" HorizontalExpand="True" />
                             <Label Name="RadiationBaseInfoLabel" HorizontalAlignment="Right" />
@@ -130,11 +130,11 @@
                         <BoxContainer SetWidth="180" SetHeight="24" Orientation="Horizontal">
                             <Label Name="TemperatureLimitBarLabel" HorizontalExpand="True" HorizontalAlignment="Left" Margin="0 0 4 0" />
                             <Button Name="TemperatureLimitButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1">
-                                <TextureRect TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
+                                <TextureRect Name="TemperatureLimitButtonArrow" TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
                             </Button>
                         </BoxContainer>
                     </BoxContainer>
-                    <BoxContainer Orientation="Vertical" Margin="16 2 0 0">
+                    <BoxContainer Name="TemperatureLimitDetailsContainer" Orientation="Vertical" Margin="16 2 0 0" Visible="False">
                         <BoxContainer Orientation="Horizontal">
                             <Label Name="TemperatureLimitBaseLabel" Text="{Loc 'supermatter-console-window-label-temperature-limit-base'}" HorizontalExpand="True" />
                             <Label Name="TemperatureLimitBaseInfoLabel" HorizontalAlignment="Right" />
@@ -157,11 +157,11 @@
                                 </ProgressBar>
                             </PanelContainer>
                             <Button Name="WasteButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1">
-                                <TextureRect TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
+                                <TextureRect Name="WasteButtonArrow" TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
                             </Button>
                         </BoxContainer>
                     </BoxContainer>
-                    <BoxContainer Orientation="Vertical" Margin="16 2 0 0">
+                    <BoxContainer Name="WasteDetailsContainer" Orientation="Vertical" Margin="16 2 0 0" Visible="False">
                         <BoxContainer Orientation="Horizontal">
                             <Label Name="WasteBaseLabel" Text="{Loc 'supermatter-console-window-label-waste-base'}" HorizontalExpand="True" />
                             <Label Name="WasteBaseInfoLabel" HorizontalAlignment="Right" />
