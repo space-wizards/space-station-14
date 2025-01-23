@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: The Justice Helm can now only be crafted using a security helmet.
-    type: Fix
-  id: 7342
-  time: '2024-09-10T19:08:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32042
 - author: TurboTrackerss14
   changes:
   - message: Gas tank explosions ("max caps") have a reduced range on WizDen servers
@@ -3894,3 +3887,10 @@
   id: 7841
   time: '2025-01-23T10:08:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34559
+- author: Fildrance, SaphireLattice, eoineoineoin
+  changes:
+  - message: Radial menu UIs have been updated for readability.
+    type: Tweak
+  id: 7842
+  time: '2025-01-23T12:16:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32653
