@@ -192,7 +192,7 @@
     unlitRunningState: unlit-building
     staticPacks:
     - ChemistryStatic
-    #- SurgeryStatic # Disabled until surgery matters
+    - SurgeryStatic
     dynamicPacks:
     - AdvancedTools
     - ScienceEquipment
