@@ -18,7 +18,7 @@ public sealed class MobCollisionSystem : SharedMobCollisionSystem
 
     private void OnServerMobCollision(Entity<MobCollisionComponent> ent, ref MobCollisionMessage args)
     {
-        MoveMob(ent.Owner, args.Direction);
+        MoveMob(ent, args.Direction);
     }
 
     public override void Update(float frameTime)
@@ -29,10 +29,19 @@ public sealed class MobCollisionSystem : SharedMobCollisionSystem
 
         while (query.MoveNext(out var uid, out var comp))
         {
+            SetColliding((uid, comp), false);
+
             if (_actorQuery.HasComp(uid) || !PhysicsQuery.TryComp(uid, out var physics))
                 continue;
 
-            HandleCollisions((uid, comp, physics), frameTime);
+            if (!HandleCollisions((uid, comp, physics), frameTime))
+            {
+                SetColliding((uid, comp), false, update: true);
+            }
+            else
+            {
+                SetColliding((uid, comp), true, update: true);
+            }
         }
     }
 
