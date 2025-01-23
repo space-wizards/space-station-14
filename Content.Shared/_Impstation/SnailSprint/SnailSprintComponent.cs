@@ -81,5 +81,4 @@ public sealed partial class SnailSprintComponent : Component
     /// The last tile the entity has stepped on.
     /// </summary>
     public TileRef LastTile = TileRef.Zero;
-
 }
