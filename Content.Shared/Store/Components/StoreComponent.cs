@@ -41,7 +41,7 @@ public sealed partial class StoreComponent : Component
     /// The person who "owns" the store/account. Used if you want the listings to be fixed
     /// regardless of who activated it. I.E. role specific items for uplinks.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField]
     public EntityUid? AccountOwner = null;
 
     /// <summary>

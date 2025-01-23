@@ -63,7 +63,7 @@ public sealed class UplinkSystem : EntitySystem
     /// </summary>
     private void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2 balance, bool giveDiscounts)
     {
-        if (!_mind.TryGetMind(user, out var mind, out var _))
+        if (!_mind.TryGetMind(user, out var mind, out _))
             mind = user; // Nothing without a mind should be setting up an uplink but discount integration test does so ¯\_(ツ)_/¯
 
         var store = EnsureComp<StoreComponent>(uplink);

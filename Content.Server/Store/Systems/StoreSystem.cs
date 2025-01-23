@@ -70,7 +70,7 @@ public sealed partial class StoreSystem : EntitySystem
         if (!component.OwnerOnly)
             return;
 
-        if (!_mind.TryGetMind(args.User, out var mind, out var _))
+        if (!_mind.TryGetMind(args.User, out var mind, out _))
             return;
 
         component.AccountOwner ??= mind;
