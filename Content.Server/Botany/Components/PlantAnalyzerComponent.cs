@@ -9,10 +9,8 @@ namespace Content.Server.Botany.Components;
 [Access(typeof(PlantAnalyzerSystem))]
 public sealed partial class PlantAnalyzerComponent : AbstractAnalyzerComponent
 {
-    /// <summary>
-    /// When should the next update be sent
-    /// </summary>
+    /// <inheritdoc/>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
-    public TimeSpan NextUpdate = TimeSpan.Zero;
+    public override TimeSpan NextUpdate { get; set; } = TimeSpan.Zero;
 }
