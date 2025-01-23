@@ -10,13 +10,13 @@ public sealed partial class StarlightCCVars
         CVarDef.Create("vote.min_player_to_vote", 2);
     
     public static readonly CVarDef<bool> ShowRestartVotes = 
-        CVarDef.Create("vote.show_restart_votes", true);
+        CVarDef.Create("vote.show_restart_votes", false);
 
     public static readonly CVarDef<bool> ShowPresetVotes = 
-        CVarDef.Create("vote.show_preset_votes", true);
+        CVarDef.Create("vote.show_preset_votes", false);
 
     public static readonly CVarDef<bool> ShowMapVotes = 
-        CVarDef.Create("vote.show_map_votes", true);
+        CVarDef.Create("vote.show_map_votes", false);
 
     public static readonly CVarDef<bool> RunMapVoteAfterRestart = 
         CVarDef.Create("vote.run_map_vote_after_restart", false);
