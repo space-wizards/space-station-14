@@ -658,7 +658,7 @@
     - type: Item
       sprite: Objects/Weapons/Melee/wardenshield.rsi
       size: Huge 
-      heldPrefix: eshield
+      heldPrefix: wardenshield
     - type: ToolRefinable
       refineTime: 20
       refineFuel: 50
