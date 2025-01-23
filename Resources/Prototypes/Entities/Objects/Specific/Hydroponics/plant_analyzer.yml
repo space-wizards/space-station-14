@@ -1,0 +1,27 @@
+- type: entity
+  id: PlantAnalyzer
+  parent: BaseItem
+  name: plant analyzer
+  description: A scanner used to evaluate a plant's various areas of growth, genetic traits and chemicals.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/plant_analyzer.rsi
+    layers:
+    - state: icon
+    - state: analyzer
+      shader: unshaded
+  - type: Item
+    storedRotation: -90
+  - type: ActivatableUI
+    key: enum.PlantAnalyzerUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.PlantAnalyzerUiKey.Key:
+        type: PlantAnalyzerBoundUserInterface
+  - type: ItemToggle
+    onUse: false
+  - type: PlantAnalyzer
+  - type: GuideHelp
+    guides:
+    - Botany
+    - Chemicals
