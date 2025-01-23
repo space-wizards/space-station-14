@@ -103,6 +103,8 @@
   - type: Appearance
   - type: Supermatter
   - type: AtmosDevice
+    requireAnchored: false
+    joinSystem: true
   - type: RadiationSource
 
 - type: entity
