@@ -39,13 +39,10 @@ namespace Content.Client.Labels.UI
             // LabelLineEdit.GrabKeyboardFocus();
         }
 
-        protected override void EnteredTree()
+        protected override void Opened()
         {
-            base.EnteredTree();
-            
-            // Give the editor keybard focus, since that's the only
-            // thing the user will want to be doing with this UI
-            Root?.Window?.TextInputStart();
+            base.Opened();
+            LabelLineEdit.GrabKeyboardFocus();
         }
 
         public void SetCurrentLabel(string label)
