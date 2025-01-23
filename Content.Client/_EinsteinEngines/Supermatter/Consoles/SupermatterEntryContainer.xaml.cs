@@ -232,7 +232,7 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
                     data.Bar.UpdateEntry(gas, _focusData);
 
                     // Hide 0% gases
-                    if (moles < 0.01f)
+                    if (moles == 0f)
                         data.Bar.Visible = false;
                     else
                         data.Bar.Visible = true;

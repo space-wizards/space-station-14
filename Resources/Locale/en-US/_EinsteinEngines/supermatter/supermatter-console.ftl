@@ -48,7 +48,7 @@ supermatter-console-window-label-absorption-bar = {$absorption}%
 
 supermatter-console-window-label-gas = Unknown gas
 supermatter-console-window-label-gas-bar = {$gas}%
-supermatter-console-window-label-details = At 100% composition gives:
+supermatter-console-window-label-details = At 100% composition:
 
 supermatter-console-window-label-gas-transmit = Radiation Emission Bonus:
 supermatter-console-window-label-gas-transmit-bar = {$transmit} rads/GeV

@@ -149,15 +149,17 @@ public sealed partial class SupermatterSystem
         // Keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock is on.
         // An increase of 4°C at 25% efficiency here results in an increase of 1°C / (#tilesincore) overall.
         // Power * 0.55 * 1.5~23 / 5
-        sm.GasStorage.Temperature += (energy * sm.HeatModifier) / sm.ThermalReleaseModifier;
-        sm.GasStorage.Temperature = Math.Max(0,
-            Math.Min(sm.GasStorage.Temperature, 2500f * sm.HeatModifier));
+        var gasReleased = sm.GasStorage.Clone();
+
+        gasReleased.Temperature += (energy * sm.HeatModifier) / sm.ThermalReleaseModifier;
+        gasReleased.Temperature = Math.Max(0,
+            Math.Min(gasReleased.Temperature, 2500f * sm.HeatModifier));
 
         // Release the waste
-        sm.GasStorage.AdjustMoles(Gas.Plasma, Math.Max(energy * sm.HeatModifier / sm.PlasmaReleaseModifier, 0f));
-        sm.GasStorage.AdjustMoles(Gas.Oxygen, Math.Max((energy + sm.GasStorage.Temperature * sm.HeatModifier - Atmospherics.T0C) / sm.OxygenReleaseEfficiencyModifier, 0f));
+        gasReleased.AdjustMoles(Gas.Plasma, Math.Max(energy * sm.HeatModifier / sm.PlasmaReleaseModifier, 0f));
+        gasReleased.AdjustMoles(Gas.Oxygen, Math.Max((energy + gasReleased.Temperature * sm.HeatModifier - Atmospherics.T0C) / sm.OxygenReleaseEfficiencyModifier, 0f));
 
-        _atmosphere.Merge(mix, sm.GasStorage);
+        _atmosphere.Merge(mix, gasReleased);
 
         var powerReduction = (float) Math.Pow(sm.Power / 500, 3);
 
