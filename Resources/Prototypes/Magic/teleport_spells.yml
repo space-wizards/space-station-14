@@ -17,6 +17,7 @@
       state: blink
     event: !type:TeleportSpellEvent
 
+# TODO: Second level upgrade sometime that allows swapping with all objects
 - type: entity
   id: ActionVoidApplause
   name: Void Applause
@@ -28,6 +29,11 @@
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/Eldritch/voidblink.ogg
     itemIconStyle: BigAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
     checkCanAccess: false
     repeat: false
     icon:
