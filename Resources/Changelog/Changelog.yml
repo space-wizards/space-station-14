@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DiposableCrewmember42
-  changes:
-  - message: Fixed Revenant ability cost checks. Revenants can no longer spam abilities
-      without Essence.
-    type: Fix
-  id: 7345
-  time: '2024-09-10T23:07:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32050
 - author: ArtisticRoomba
   changes:
   - message: The salvage magnet circuitboard has been added to QM's locker. It can
@@ -3893,3 +3885,10 @@
   id: 7844
   time: '2025-01-23T14:01:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34558
+- author: TheShuEd, LeveFUN
+  changes:
+  - message: You can now put c4 on your head
+    type: Add
+  id: 7845
+  time: '2025-01-23T21:11:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34076
