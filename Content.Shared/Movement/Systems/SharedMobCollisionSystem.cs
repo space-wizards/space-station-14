@@ -12,10 +12,10 @@ namespace Content.Shared.Movement.Systems;
 
 public abstract class SharedMobCollisionSystem : EntitySystem
 {
-    [Dependency] private   readonly FixtureSystem _fixtures = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _moveSpeed = default!;
-    [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
-    [Dependency] private   readonly SharedTransformSystem _xformSystem = default!;
+    [Dependency] private readonly FixtureSystem _fixtures = default!;
+    [Dependency] private readonly RayCastSystem _rayCast = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
     protected EntityQuery<MobCollisionComponent> MobQuery;
     protected EntityQuery<PhysicsComponent> PhysicsQuery;
@@ -108,18 +108,25 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
     protected void MoveMob(Entity<MobCollisionComponent> entity, Vector2 direction)
     {
-        // TODO: If we do the localpos method then shapecast it.
-        // TODO: Also try updatebeforesolve + using linearimpulse = mass or w/e
-        var xform = Transform(entity.Owner);
-        _xformSystem.SetLocalPosition(entity.Owner, xform.LocalPosition + direction);
+        var xform = Transform(uid);
+
+        if (PhysicsQuery.TryComp(uid, out var physics))
+        {
+            //_physics.ApplyLinearImpulse(uid, direction, body: physics);
+            _physics.WakeBody(uid, body: physics);
+        }
+
+        // TODO: Raycast to the specified spot so we don't clip into a wall.
+
+        _xformSystem.SetLocalPosition(uid, xform.LocalPosition + direction);
     }
 
     protected bool HandleCollisions(Entity<MobCollisionComponent, PhysicsComponent> entity, float frameTime)
     {
         var physics = entity.Comp2;
 
-        if (physics.LinearVelocity == Vector2.Zero)
-            return false;
+        //if (physics.LinearVelocity == Vector2.Zero)
+        //    return;
 
         if (physics.ContactCount == 0)
             return false;
@@ -144,8 +151,11 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             // TODO: Get overlap amount
             var otherTransform = Physics.GetPhysicsTransform(other);
             var diff = ourTransform.Position - otherTransform.Position;
-            var penDepth = MathF.Max(0f, 0.7f - diff.Length());
-            
+            var penDepth = MathF.Max(0f, 0.6f - diff.Length());
+
+            //penDepth = MathF.Pow(penDepth, 1.2f);
+
+            // Sum the strengths so we get pushes back the same amount (impulse-wise, ignoring prediction).
             var mobMovement = penDepth * diff.Normalized() * (entity.Comp1.Strength + otherComp.Strength) * frameTime;
 
             // Need the push strength proportional to penetration depth.
@@ -162,8 +172,6 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         var parentAngle = worldRot - xform.LocalRotation;
         var localDir = (-parentAngle).RotateVec(direction);
         RaiseCollisionEvent(entity.Owner, localDir);
-
-        return true;
     }
 
     protected abstract void RaiseCollisionEvent(EntityUid uid, Vector2 direction);
