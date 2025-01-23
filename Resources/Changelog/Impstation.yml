@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Moved department head spawns on Atlas, Omega, and Cluster to the bridge
-    type: Tweak
-  - message: General pipe cleanup on Train, added scrubbers to Atmos
-    type: Tweak
-  id: 493
-  time: '2024-11-12T00:53:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/675
 - author: sageu111
   changes:
   - message: 'GRAY NAMES HAVE NEW NAMES TO REPRESENT THEIR CULTURE VULTURE LIFESTYLE
@@ -4401,3 +4392,10 @@
   id: 992
   time: '2025-01-22T15:33:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1421
+- author: AftrLite
+  changes:
+  - message: New sprites for all syndicate hardsuits, with Vox versions to match.
+    type: Add
+  id: 993
+  time: '2025-01-23T09:06:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1464
