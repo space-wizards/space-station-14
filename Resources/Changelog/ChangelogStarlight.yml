@@ -2599,4 +2599,10 @@ Entries:
   id: 363
   time: '2025-01-23T10:41:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/260
-
+- author: Rinary
+  changes:
+  - message: Fixed ghost theme synchronization. Now all themes shows to all players.
+    type: Fix
+  id: 364
+  time: '2025-01-23T15:51:22.487446+00:00'
+  url: 'null'
