@@ -557,12 +557,9 @@
   components:
     - type: ItemToggle
       soundActivate:
-        path: /Audio/Weapons/ebladeon.ogg
+        path: /Audio/Weapons/telescopicon.ogg
       soundDeactivate:
-        path: /Audio/Weapons/ebladeoff.ogg
-    - type: ItemToggleActiveSound
-      activeSound:
-        path: /Audio/Weapons/ebladehum.ogg
+        path: /Audio/Weapons/telescopicon.ogg
     - type: ItemToggleSize
       activatedSize: Huge
     - type: ComponentToggler
