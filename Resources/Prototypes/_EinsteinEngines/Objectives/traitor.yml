@@ -1,10 +1,11 @@
-- type: entity
-  parent: BaseTraitorStealObjective
-  id: StealSupermatterSliverObjective
-  components:
-  - type: Objective
-    difficulty: 3.5
-  - type: StealCondition
-    stealGroup: SupermatterSliver
-    objectiveNoOwnerText: objective-condition-steal-smsliver-title
-    descriptionText: objective-condition-steal-smsliver-description
+# one day...
+# - type: entity
+#   parent: BaseTraitorStealObjective
+#   id: StealSupermatterSliverObjective
+#   components:
+#   - type: Objective
+#     difficulty: 3.5
+#   - type: StealCondition
+#     stealGroup: SupermatterSliver
+#     objectiveNoOwnerText: objective-condition-steal-smsliver-title
+#     descriptionText: objective-condition-steal-smsliver-description
