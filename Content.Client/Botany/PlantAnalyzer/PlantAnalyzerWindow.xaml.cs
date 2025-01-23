@@ -41,7 +41,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         ScanModeLabel.FontColorOverride = msg.ScanMode.HasValue && msg.ScanMode.Value ? Color.Green : Color.Red;
 
         SeedLabel.Text = msg.SeedData == null
-            ? Loc.GetString("generic-unknown")
+            ? Loc.GetString("plant-analyzer-component-no-seed")
             : Loc.GetString(msg.SeedData.DisplayName);
 
         ContainerLabel.Text = _entityManager.HasComponent<MetaDataComponent>(target.Value)
