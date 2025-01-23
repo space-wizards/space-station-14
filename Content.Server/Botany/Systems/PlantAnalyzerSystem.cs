@@ -22,14 +22,28 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
             return;
 
         PlantAnalyzerSeedData? seedData = null;
-        if (_entityManager.TryGetComponent<PlantHolderComponent>(target, out var plantHolder) && plantHolder.Seed is not null)
-            seedData = new PlantAnalyzerSeedData(plantHolder.Seed.DisplayName);
+        PlantAnalyzerTrayData? trayData = null;
+        if (_entityManager.TryGetComponent<PlantHolderComponent>(target, out var plantHolder))
+        {
+            if (plantHolder.Seed is not null)
+            {
+                // TODO: PA
+                seedData = new PlantAnalyzerSeedData(plantHolder.Seed.DisplayName);
+            }
+            trayData = new PlantAnalyzerTrayData(
+                waterLevel: plantHolder.WaterLevel,
+                nutritionLevel: plantHolder.NutritionLevel,
+                toxins: plantHolder.Toxins,
+                pestLevel: plantHolder.PestLevel,
+                weedLevel: plantHolder.WeedLevel
+            );
+        }
 
-        // TODO: PA
         _uiSystem.ServerSendUiMessage(analyzer, PlantAnalyzerUiKey.Key, new PlantAnalyzerScannedUserMessage(
             GetNetEntity(target),
             scanMode,
-            seedData
+            seedData,
+            trayData
         ));
     }
 
