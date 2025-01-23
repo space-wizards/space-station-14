@@ -12,6 +12,9 @@
       shader: unshaded
   - type: Item
     storedRotation: -90
+  - type: Tag
+    tags:
+    - PlantAnalyzer
   - type: ActivatableUI
     key: enum.PlantAnalyzerUiKey.Key
   - type: UserInterface
