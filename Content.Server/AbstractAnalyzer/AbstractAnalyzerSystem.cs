@@ -1,4 +1,4 @@
-using Content.Server.Medical.Components;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.PowerCell;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -11,7 +11,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Medical;
+namespace Content.Server.AbstractAnalyzer;
 
 public abstract class AbstractAnalyzerSystem<TAnalyzerComponent, TAnalyzerDoAfterEvent> : EntitySystem
     where TAnalyzerComponent : AbstractAnalyzerComponent
@@ -184,7 +184,7 @@ public abstract class AbstractAnalyzerSystem<TAnalyzerComponent, TAnalyzerDoAfte
     /// The message the scan target recieves on scan.
     /// </summary>
     /// <returns>true if the message should be shown</returns>
-    protected abstract bool ScanTargetPopupMessage(Entity<TAnalyzerComponent> uid, AfterInteractEvent args, out string message);
+    protected abstract bool ScanTargetPopupMessage(Entity<TAnalyzerComponent> uid, AfterInteractEvent args, [NotNullWhen(true)] out string? message);
 
     /// <summary>
     /// Used to validate if a specific entity is a valid target for a specific analyzer.
