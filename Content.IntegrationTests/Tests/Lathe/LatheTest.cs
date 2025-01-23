@@ -76,7 +76,7 @@ public sealed class LatheTest
                     }
 
                     // Collect all possible recipes assigned to this lathe
-                    var recipes = new List<ProtoId<LatheRecipePrototype>>();
+                    var recipes = new HashSet<ProtoId<LatheRecipePrototype>>();
                     latheSystem.AddRecipesFromPacks(recipes, latheComp.StaticPacks);
                     latheSystem.AddRecipesFromPacks(recipes, latheComp.DynamicPacks);
                     if (latheProto.TryGetComponent<EmagLatheRecipesComponent>(out var emagRecipesComp, compFactory))
