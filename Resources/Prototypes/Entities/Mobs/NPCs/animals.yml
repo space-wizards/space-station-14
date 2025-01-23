@@ -2278,7 +2278,7 @@
   - type: Item
     size: Normal
   - type: OnUseTimerTrigger
-    delay: 10
+    delay: 15 # imp
     beepSound:
       path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg #funny sfx use
       params:
