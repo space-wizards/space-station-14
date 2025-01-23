@@ -396,6 +396,25 @@ public abstract partial class SharedDoorSystem : EntitySystem
         Dirty(uid, door);
 
     }
+
+    /// <summary>
+    /// Opens and then bolts a door.
+    /// Different from emagging this does not remove the access reader, so it can be repaired by simply unbolting the door.
+    /// </summary>
+    public bool TryOpenAndBolt(EntityUid uid, DoorComponent? door = null, AirlockComponent? airlock = null)
+    {
+        if (!Resolve(uid, ref door, ref airlock))
+            return false;
+
+        if (IsBolted(uid) || !airlock.Powered || door.State != DoorState.Closed)
+        {
+            return false;
+        }
+
+        SetState(uid, DoorState.Emagging, door);
+
+        return true;
+    }
     #endregion
 
     #region Closing
@@ -461,17 +480,17 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door, ref physics))
             return false;
 
-        door.Partial = true;
-
         // Make sure no entity walked into the airlock when it started closing.
         if (!CanClose(uid, door))
         {
             door.NextStateChange = GameTiming.CurTime + door.OpenTimeTwo;
-            door.State = DoorState.Opening;
-            AppearanceSystem.SetData(uid, DoorVisuals.State, DoorState.Opening);
+            door.State = DoorState.Open;
+            AppearanceSystem.SetData(uid, DoorVisuals.State, DoorState.Open);
+            Dirty(uid, door);
             return false;
         }
 
+        door.Partial = true;
         SetCollidable(uid, true, door, physics);
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
         Dirty(uid, door);
@@ -552,8 +571,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         var tileRef = _mapSystem.GetTileRef(xform.GridUid.Value, mapGridComp, xform.Coordinates);
 
         _doorIntersecting.Clear();
-
-        _entityLookup.GetLocalEntitiesIntersecting(xform.GridUid.Value, tileRef.GridIndices, _doorIntersecting, gridComp: mapGridComp);
+        _entityLookup.GetLocalEntitiesIntersecting(xform.GridUid.Value, tileRef.GridIndices, _doorIntersecting, gridComp: mapGridComp, flags: (LookupFlags.All & ~LookupFlags.Sensors));
 
         // TODO SLOTH fix electro's code.
         // ReSharper disable once InconsistentNaming
@@ -571,8 +589,8 @@ public abstract partial class SharedDoorSystem : EntitySystem
             if (otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.GlassLayer || otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.GlassAirlockLayer || otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.TableLayer)
                 continue;
 
-            //If the colliding entity is a slippable item ignore it by the airlock
-            if (otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.SlipLayer && otherPhysics.Comp.CollisionMask == (int) CollisionGroup.ItemMask)
+            // Ignore low-passable entities.
+            if ((otherPhysics.Comp.CollisionMask & (int)CollisionGroup.LowImpassable) == 0)
                 continue;
 
             //For when doors need to close over conveyor belts
@@ -701,6 +719,8 @@ public abstract partial class SharedDoorSystem : EntitySystem
         }
 
         door.NextStateChange = GameTiming.CurTime + delay.Value;
+        Dirty(uid, door);
+
         _activeDoors.Add((uid, door));
     }
 

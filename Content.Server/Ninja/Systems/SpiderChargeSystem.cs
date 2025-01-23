@@ -1,14 +1,12 @@
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives.Components;
 using Content.Server.Popups;
 using Content.Server.Roles;
-using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
+using Content.Shared.Roles;
 using Content.Shared.Sticky;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Ninja.Systems;
 
@@ -19,6 +17,7 @@ public sealed class SpiderChargeSystem : SharedSpiderChargeSystem
 {
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedRoleSystem _role = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
 
@@ -41,7 +40,10 @@ public sealed class SpiderChargeSystem : SharedSpiderChargeSystem
 
         var user = args.User;
 
-        if (!_mind.TryGetRole<NinjaRoleComponent>(user, out var _))
+        if (!_mind.TryGetMind(args.User, out var mind, out _))
+            return;
+
+        if (!_role.MindHasRole<NinjaRoleComponent>(mind))
         {
             _popup.PopupEntity(Loc.GetString("spider-charge-not-ninja"), user, user);
             args.Cancelled = true;
