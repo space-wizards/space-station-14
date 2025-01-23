@@ -140,6 +140,7 @@
     - id: ClothingUniformOveralls
     - id: ClothingHeadHatTrucker
       prob: 0.1
+    - id: PlantAnalyzer
 
 - type: entity
   id: LockerBotanistLoot
