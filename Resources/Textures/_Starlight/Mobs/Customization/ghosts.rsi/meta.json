@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Paradise Station",
+  "copyright": "Taken from Skyrat",
   "size": {
     "x": 32,
     "y": 32
@@ -13,6 +13,38 @@
     },
     {
       "name": "ghost-sheet",
+      "directions": 4
+    },
+    {
+      "name": "ghost-cat",
+      "directions": 4
+    },
+    {
+      "name": "ghost-ian",
+      "directions": 4
+    },
+    {
+      "name": "ghost-ian_cute",
+      "directions": 4
+    },
+    {
+      "name": "ghost-king",
+      "directions": 4
+    },
+    {
+      "name": "ghost-mellow",
+      "directions": 4
+    },
+    {
+      "name": "ghost-blazeit",
+      "directions": 4
+    },
+    {
+      "name": "ghost-funkypurp",
+      "directions": 4
+    },
+    {
+      "name": "ghost-skeleton",
       "directions": 4
     }
   ]

@@ -37,8 +37,7 @@ public sealed class GhostThemeSystem : EntitySystem
     
     private void SyncTheme(EntityUid uid, GhostThemeComponent component)
     {
-        if (component.SelectedGhostTheme == "None" 
-            || !_prototypeManager.TryIndex<GhostThemePrototype>(component.SelectedGhostTheme, out var ghostThemePrototype) 
+        if (!_prototypeManager.TryIndex<GhostThemePrototype>(component.SelectedGhostTheme, out var ghostThemePrototype) 
             || !EntityManager.TryGetComponent<SpriteComponent>(uid, out var sprite)
             || sprite.LayerMapTryGet(EffectLayers.Unshaded, out var layer) 
             || !_playerManager.HasAnyPlayerFlags(uid, ghostThemePrototype.Flags))

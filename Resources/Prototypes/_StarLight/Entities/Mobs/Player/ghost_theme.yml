@@ -1,4 +1,16 @@
 - type: ghostTheme
+  id: None
+  name: Default
+  description: Just a regular boring guy.
+  spriteSpecifier:
+    sprite:
+      sprite: Mobs/Ghosts/ghost_human.rsi
+      state: animated
+    color: "#fff8"
+  requiredFlags:
+    - None
+
+- type: ghostTheme
   id: Abomination
   name: Abomination
   description: Cute man.
@@ -8,7 +20,7 @@
       state: abomination
     color: "#fff8"
   requiredFlags:
-    - None
+    - Staff
     
 - type: ghostTheme
   id: Narsie
@@ -20,7 +32,7 @@
       state: ghost-narsie
     color: "#fff8"
   requiredFlags:
-    - None
+    - Mentor
     
 - type: ghostTheme
   id: Sheet
@@ -30,6 +42,107 @@
     sprite:
       sprite: _Starlight/Mobs/Customization/ghosts.rsi
       state: ghost-sheet
+    color: "#fff8"
+  requiredFlags:
+    - BetaTester
+    - AlfaTester
+    
+- type: ghostTheme
+  id: Cat
+  name: Cat
+  description: A cute little cat.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-cat
+    color: "#fff8"
+  requiredFlags:
+    - BetaTester
+    - AlfaTester
+    
+- type: ghostTheme
+  id: King
+  name: King
+  description: The Majestic King.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-king
+    color: "#fff8"
+  requiredFlags:
+    - GoldEventWinner
+    
+- type: ghostTheme
+  id: Ian
+  name: Ian
+  description: A pure dog.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-ian
+    color: "#fff8"
+  requiredFlags:
+    - BetaTester
+    - AlfaTester
+    
+- type: ghostTheme
+  id: IanCute
+  name: IanCute
+  description: A pure dog.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-ian_cute
+    color: "#fff8"
+  requiredFlags:
+    - BetaTester
+    - AlfaTester
+    
+- type: ghostTheme
+  id: Skeleton
+  name: Skeleton
+  description: skeleton.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-skeleton
+    color: "#fff8"
+  requiredFlags:
+    - BetaTester
+    - AlfaTester
+    
+- type: ghostTheme
+  id: Mellow
+  name: Mellow
+  description: a mellow ghost.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-mellow
+    color: "#fff8"
+  requiredFlags:
+    - None
+    
+- type: ghostTheme
+  id: Blazeit
+  name: Blazeit
+  description: a blazeit ghost.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-blazeit
+    color: "#fff8"
+  requiredFlags:
+    - None
+    
+- type: ghostTheme
+  id: Funkypurp
+  name: Funkypurp
+  description: a funkypurp ghost.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-funkypurp
     color: "#fff8"
   requiredFlags:
     - None
