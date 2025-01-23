@@ -23,6 +23,9 @@ public abstract class SharedMobCollisionSystem : EntitySystem
     /*
      * Looks like movespeed not panning out?
      * Also try hard contact but ignore it on server and have client handle it, but that's just clientside movement KEKW
+     *
+     * Push away version somewhat works but only for 30tps not 60tps
+     * Also try old pushing with KC / clientside movement I think.
      */
 
     public override void Initialize()
