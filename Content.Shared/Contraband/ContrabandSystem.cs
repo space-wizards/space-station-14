@@ -55,8 +55,8 @@ public sealed class ContrabandSystem : EntitySystem
         // two strings:
         // one, the actual informative 'this is restricted'
         // then, the 'you can/shouldn't carry this around' based on the ID the user is wearing
-        var localizedDepartments = component.AllowedDepartments.Select(p => Loc.GetString($"department-{p.Id}"));
-        var localizedJobs = component.AllowedJobs.Select(p => _proto.Index(p).LocalizedName);
+        var localizedDepartments = component.AllowedDepartments.Select(p => Loc.GetString("contraband-department-plural", ("department", Loc.GetString($"department-{p.Id}"))));
+        var localizedJobs = component.AllowedJobs.Select(p => Loc.GetString("contraband-job-plural", ("job", _proto.Index(p).LocalizedName)));
         var severity = _proto.Index(component.Severity);
         String departmentExamineMessage;
         if (severity.ShowDepartmentsAndJobs)
