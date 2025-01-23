@@ -89,6 +89,8 @@
       - id: ClothingShoesTourist
       - id: ClothingUniformJumpsuitLoungewear
       - id: ClothingHeadHatCowboyRed
+      - id: HeartLocket
+      - id: CDDogtags
     # Uncommon Group
     - !type:GroupSelector
       weight: 23

@@ -8,20 +8,6 @@
       department: Command
       time: 3600 # 1 hour
 
-- type: loadoutEffectGroup
-  id: PrestigeGold
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:OverallPlaytimeRequirement
-
-      time: 1512000 #420 hours
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Silicon
-      time: 36000 #10 hours
-
 # Flowers
 - type: loadout
   id: FlowerWreath
@@ -42,7 +28,7 @@
     back:
     - ClothingNeckHeadphones
 
-# Plushies
+# Toys
 - type: loadout
   id: PlushieLizard
   storage:
@@ -55,6 +41,15 @@
   storage:
     back:
     - PlushieSpaceLizard
+
+- type: loadout
+  id: ThreeCandles
+  dummyEntity: LoadoutDummyCandles
+  storage:
+    back:
+    - CandleRed
+    - CandleBlue
+    - CandleGreenSmall
 
 # Smokeables
 - type: loadout

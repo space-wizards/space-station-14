@@ -3,7 +3,7 @@
   mapName: 'Amber'
   mapPath: /Maps/_Impstation/amber.yml
   minPlayers: 15
-  maxPlayers: 35
+  maxPlayers: 40
   stations:
     Amber:
       stationProto: StandardNanotrasenStation
@@ -56,6 +56,7 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 2, 3 ]
             CargoTechnician: [ 2, 3 ]
+            Courier: [ 1, 2 ]
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]

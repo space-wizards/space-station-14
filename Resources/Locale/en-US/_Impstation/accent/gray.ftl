@@ -1,8 +1,8 @@
 accent-gray-words-1 = the
 accent-gray-words-replace-1 = thusd
 
-accent-gray-words-2 = we
-accent-gray-words-replace-2 = gleep
+accent-gray-words-2 = we're
+accent-gray-words-replace-2 = gleepzz
 
 accent-gray-words-3 = go
 accent-gray-words-replace-3 = glorm
@@ -46,8 +46,8 @@ accent-gray-words-replace-15 = jumba
 accent-gray-words-16 = she
 accent-gray-words-replace-16 = jambu
 
-accent-gray-words-17 = you
-accent-gray-words-replace-17 = mo
+accent-gray-words-17 = you're
+accent-gray-words-replace-17 = mozz
 
 accent-gray-words-18 = at
 accent-gray-words-replace-18 = tii
@@ -226,14 +226,14 @@ accent-gray-words-replace-75 = jamga
 accent-gray-words-76 = coming
 accent-gray-words-replace-76 = ouuti
 
-accent-gray-words-77 = what
-accent-gray-words-replace-77 = seben
+accent-gray-words-77 = what's
+accent-gray-words-replace-77 = sebon
 
-accent-gray-words-78 = it
-accent-gray-words-replace-78 = ei
+accent-gray-words-78 = it's
+accent-gray-words-replace-78 = eif
 
-accent-gray-words-79 = it's
-accent-gray-words-replace-79 = eif
+accent-gray-words-79 = it
+accent-gray-words-replace-79 = ei
 
 accent-gray-words-80 = thank
 accent-gray-words-replace-80 = graba
@@ -286,8 +286,8 @@ accent-gray-words-replace-95 = vru
 accent-gray-words-96 = down
 accent-gray-words-replace-96 = keb
 
-accent-gray-words-97 = i
-accent-gray-words-replace-97 = thui
+accent-gray-words-97 = i'm
+accent-gray-words-replace-97 = thui-wa
 
 accent-gray-words-98 = who
 accent-gray-words-replace-98 = wamba
@@ -361,17 +361,17 @@ accent-gray-words-replace-120 = tin
 accent-gray-words-121 = ten
 accent-gray-words-replace-121 = plod
 
-accent-gray-words-122 = you're
-accent-gray-words-replace-122 = mozz
+accent-gray-words-122 = you
+accent-gray-words-replace-122 = mo
 
-accent-gray-words-123 = i'm
-accent-gray-words-replace-123 = thui-wa
+accent-gray-words-123 = i
+accent-gray-words-replace-123 = thui
 
 accent-gray-words-124 = im
 accent-gray-words-replace-124 = thui-wa
 
-accent-gray-words-125 = we're
-accent-gray-words-replace-125 = gleepzz
+accent-gray-words-125 = we
+accent-gray-words-replace-125 = gleep
 
 accent-gray-words-126 = a
 accent-gray-words-replace-126 = pu
@@ -454,8 +454,8 @@ accent-gray-words-replace-151 = zwu
 accent-gray-words-152 = whats
 accent-gray-words-replace-152 = sebon
 
-accent-gray-words-153 = what's
-accent-gray-words-replace-153 = sebon
+accent-gray-words-153 = what
+accent-gray-words-replace-153 = seben
 
 accent-gray-words-154 = it
 accent-gray-words-replace-154 = ei
@@ -687,3 +687,6 @@ accent-gray-words-replace-230 = dum jut
 
 accent-gray-words-231 = hello
 accent-gray-words-replace-231 = oum
+
+accent-gray-words-232 = tesloose
+accent-gray-words-replace-232 = tellzoos

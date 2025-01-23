@@ -3,7 +3,7 @@
   id: Scream
   name: chat-emote-name-scream
   category: Vocal
-  icon: Interface/Emotes/scream.png
+  icon: _Impstation/Interface/Emotes/scream.png #imp
   whitelist:
     components:
     - Vocal
@@ -33,7 +33,7 @@
   id: Laugh
   name: chat-emote-name-laugh
   category: Vocal
-  icon: Interface/Emotes/laugh.png
+  icon: _Impstation/Interface/Emotes/laugh.png #imp
   whitelist:
     components:
     - Vocal
@@ -62,7 +62,7 @@
   id: Honk
   name: chat-emote-name-honk
   category: Vocal
-  icon: Interface/Emotes/honk.png
+  icon: _Impstation/Interface/Emotes/honk.png #imp
   whitelist:
     requireAll: true
     components:
@@ -79,7 +79,7 @@
   id: Sigh
   name: chat-emote-name-sigh
   category: Vocal
-  icon: Interface/Emotes/sigh.png
+  icon: _Impstation/Interface/Emotes/sigh.png #imp
   whitelist:
     components:
     - Vocal
@@ -96,7 +96,7 @@
   id: Whistle
   name: chat-emote-name-whistle
   category: Vocal
-  icon: Interface/Emotes/whistle.png
+  icon: _Impstation/Interface/Emotes/whistle.png #imp
   whitelist:
     components:
     - Vocal
@@ -113,7 +113,7 @@
   id: Crying
   name: chat-emote-name-crying
   category: Vocal
-  icon: Interface/Emotes/cry.png
+  icon: _Impstation/Interface/Emotes/cry.png #imp
   whitelist:
     components:
     - Vocal
@@ -134,7 +134,7 @@
   name: chat-emote-name-squish
   category: Vocal
   available: false
-  icon: Interface/Emotes/squish.png
+  icon: _Impstation/Interface/Emotes/squish.png #imp
   whitelist:
     components:
     - Vocal
@@ -152,7 +152,7 @@
   name: chat-emote-name-chitter
   category: Vocal
   available: false
-  icon: Interface/Emotes/chitter.png
+  icon: _Impstation/Interface/Emotes/chitter.png #imp
   whitelist:
     components:
     - Vocal
@@ -164,13 +164,31 @@
    - chitter
    - chitters
    - chittered
+   
+- type: emote #imp
+  id: Coo
+  name: chat-emote-name-coo
+  category: Vocal
+  available: false
+  icon: _Impstation/Interface/Emotes/chirp.png #placeholder
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-coo"]
+  chatTriggers:
+   - coo
+   - coos
+   - cooed
 
 - type: emote
   id: Squeak
   name: chat-emote-name-squeak
   category: Vocal
   available: false
-  icon: Interface/Emotes/squeak.png
+  icon: _Impstation/Interface/Emotes/squeak.png #imp
   whitelist:
     components:
       - Vocal
@@ -188,7 +206,7 @@
   name: chat-emote-name-click
   category: Vocal
   available: false
-  icon: Interface/Emotes/click.png
+  icon: _Impstation/Interface/Emotes/click.png #imp
   whitelist:
     components:
     - Vocal
@@ -205,7 +223,7 @@
   id: Clap
   name: chat-emote-name-clap
   category: Hands
-  icon: Interface/Emotes/clap.png
+  icon: _Impstation/Interface/Emotes/clap.png #imp
   whitelist:
     components:
     - Hands
@@ -223,7 +241,7 @@
   id: Snap
   name: chat-emote-name-snap
   category: Hands
-  icon: Interface/Emotes/snap.png
+  icon: _Impstation/Interface/Emotes/snap.png #imp
   whitelist:
     components:
     - Hands
@@ -247,7 +265,7 @@
   name: chat-emote-name-thump
   category: Hands
   available: false
-  icon: Interface/Emotes/tailslap.png
+  icon: _Impstation/Interface/Emotes/tailslap.png #imp
   whitelist:
     components:
     - Hands
@@ -271,7 +289,7 @@
   id: Salute
   name: chat-emote-name-salute
   category: Hands
-  icon: Interface/Emotes/salute.png
+  icon: _Impstation/Interface/Emotes/salute.png #imp
   whitelist:
     components:
     - Hands
@@ -287,7 +305,7 @@
   id: Crack
   name: chat-emote-name-crack
   category: Hands
-  icon: _Impstation/Interface/Emotes/crack.png
+  icon: _Impstation/Interface/Emotes/knucklecrack.png #imp
   whitelist:
     components:
     - Hands
@@ -320,7 +338,7 @@
 - type: emote
   id: DefaultDeathgasp
   name: chat-emote-name-deathgasp
-  icon: Interface/Emotes/deathgasp.png
+  icon: _Impstation/Interface/Emotes/deathgasp.png #imp
   whitelist:
     components:
     - MobState
@@ -331,14 +349,14 @@
 - type: emote
   id: MonkeyDeathgasp
   name: chat-emote-name-deathgasp
-  icon: Interface/Emotes/deathgasp.png
+  icon: _Impstation/Interface/Emotes/deathgasp.png #imp
   chatMessages: ["chat-emote-msg-deathgasp-monkey"]
 
 - type: emote
   id: Buzz
   name: chat-emote-name-buzz
   category: Vocal
-  icon: Interface/Emotes/buzz.png
+  icon: _Impstation/Interface/Emotes/buzz.png #imp
   whitelist:
     requireAll: true
     components:
@@ -366,17 +384,11 @@
   chatMessages: ["chat-emote-msg-hew"]
 
 - type: emote
-  id: Ungh
-  name: chat-emote-name-weh
-  category: Vocal
-  chatMessages: [UNGHs!]
-
-- type: emote
   id: Chirp
   name: chat-emote-name-chirp
   category: Vocal
   available: false
-  icon: Interface/Emotes/chirp.png
+  icon: _Impstation/Interface/Emotes/chirp.png #imp
   whitelist:
     components:
     - Nymph
@@ -396,7 +408,7 @@
   id: Beep
   name: chat-emote-name-beep
   category: Vocal
-  icon: Interface/Emotes/beep.png
+  icon: _Impstation/Interface/Emotes/beep.png #imp
   whitelist:
     requireAll: true
     components:
@@ -413,7 +425,7 @@
   id: Chime
   name: chat-emote-name-chime
   category: Vocal
-  icon: Interface/Emotes/chime.png
+  icon: _Impstation/Interface/Emotes/chime.png #imp
   whitelist:
     requireAll: true
     components:
@@ -430,7 +442,7 @@
   id: Buzz-Two
   name: chat-emote-name-buzztwo
   category: Vocal
-  icon: Interface/Emotes/buzztwo.png
+  icon: _Impstation/Interface/Emotes/buzztwo.png #imp
   whitelist:
     requireAll: true
     components:
@@ -453,7 +465,7 @@
   id: Ping
   name: chat-emote-name-ping
   category: Vocal
-  icon: Interface/Emotes/ping.png
+  icon: _Impstation/Interface/Emotes/ping.png #imp
   whitelist:
     requireAll: true
     components:

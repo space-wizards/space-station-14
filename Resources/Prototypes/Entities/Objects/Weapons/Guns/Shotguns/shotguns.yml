@@ -48,7 +48,7 @@
   # Don't parent to BaseWeaponShotgun because it differs significantly
   parent: [BaseItem, BaseGunWieldable, Tier3Contraband]
   id: WeaponShotgunBulldog
-  description: A fully-automatic magazine-fed assault shotgun designed for close-quarters combat. This will get the job done. Uses .50 shotgun shells.
+  description: A fully-automatic magazine-fed assault shotgun designed for close-quarters combat. This will get the job done. Uses .50 shotgun shells. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
@@ -105,7 +105,7 @@
   name: double-barreled shotgun
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseMinorSecurityCivilianContraband]
   id: WeaponShotgunDoubleBarreled
-  description: An immortal classic of the American Frontier, whatever that is. Uses .50 shotgun shells.
+  description: An immortal classic of the American Frontier, whatever that is. Uses .50 shotgun shells. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
@@ -128,7 +128,7 @@
   name: double-barreled shotgun
   parent: WeaponShotgunDoubleBarreled
   id: WeaponShotgunDoubleBarreledRubber
-  description: An immortal classic of the American Frontier, whatever that is. Uses .50 shotgun shells.
+  description: An immortal classic of the American Frontier, whatever that is. Uses .50 shotgun shells. #imp
   suffix: Non-Lethal
   components:
   - type: BallisticAmmoProvider
@@ -138,7 +138,7 @@
   name: Enforcer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunEnforcer
-  description: A premium semi-automatic combat shotgun, featuring a pistol grip and full-length magazine tube for those nasty close-quarters engagements. Uses .50 shotgun shells.
+  description: A premium semi-automatic combat shotgun, featuring a pistol grip and full-length magazine tube for those nasty close-quarters engagements. Uses .50 shotgun shells. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
@@ -160,7 +160,7 @@
   name: Kammerer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunKammerer
-  description: Even centuries after his time, the legacy of John Moses Browning lives on. This pump-action shotgun is a favorite of hunters and militia forces throughout many worlds. Uses .50 shotgun shells.
+  description: Even centuries after his time, the legacy of John Moses Browning lives on. This pump-action shotgun is a favorite of hunters and militia forces throughout many worlds. Uses .50 shotgun shells. #imp
   components:
   - type: Item
     size: Normal

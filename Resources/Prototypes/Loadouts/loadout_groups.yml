@@ -3,46 +3,52 @@
   id: Trinkets
   name: loadout-group-trinkets
   minLimit: 0
-  maxLimit: 3
+  maxLimit: 4 #imp
   loadouts:
-  - FlowerWreath
-  - Hairflower
-  - Headphones
-  - WalkingCane #imp
-  - PlushieLizard
-  - PlushieSpaceLizard
-  - Lighter
-  - FlippoLighter #imp
-  - CigPackGreen
-  - CigPackRed
-  - CigPackBlue
-  - CigPackBlack
-  - CigPackNewport #imp
-  - CigPackSpirits #imp
+  - BarFlask
+  - CardBoxBlack
+  - CDDogtags #_CD
+  - ThreeCandles
   - CigarCase
   - CigarGold
-  - GoldPersonalAI #imp
+  - CigPackBlack
+  - CigPackBlue
+  - CigPackGreen
+  - CigPackNewport #imp
+  - CigPackRed
+  - CigPackSpirits #imp
+  - ClothingHeadHatKippahBlueAndGold #imp
+  - ClothingHeadHatKippahSimple #imp
+  - ClothingHeadHatKippahWhiteAndBlue #imp
+  - ClothingHeadPaperSack #imp
+  - ClothingHeadPaperSackSmile #imp
+  - ClothingNeckAromanticPin
+  - ClothingNeckAsexualPin
+  - ClothingNeckAutismPin
+  - ClothingNeckBisexualPin
+  - ClothingNeckGayPin
+  - ClothingNeckGoldAutismPin
+  - ClothingNeckIntersexPin
+  - ClothingNeckLesbianPin
+  - ClothingNeckLGBTPin
+  - ClothingNeckNonBinaryPin
+  - ClothingNeckPansexualPin
+  - ClothingNeckTransPin
+  - FlippoLighter #imp
+  - FlowerWreath
   - FolderBlack #imp
   - FolderHamster #imp
   - FolderMime #imp
   - FolderPun #imp
-  - BarFlask
+  - GoldPersonalAI #imp
+  - Hairflower
+  - HarmonicaInstrument #imp
+  - Headphones
+  - HeartLocket #imp
+  - Lighter
   - NewtonCradle
-  - ClothingNeckLGBTPin
-  - ClothingNeckAromanticPin
-  - ClothingNeckAsexualPin
-  - ClothingNeckBisexualPin
-  - ClothingNeckGayPin
-  - ClothingNeckIntersexPin
-  - ClothingNeckLesbianPin
-  - ClothingNeckNonBinaryPin
-  - ClothingNeckPansexualPin
-  - ClothingNeckTransPin
-  - ClothingNeckAutismPin
-  - ClothingNeckGoldAutismPin
-  - ClothingHeadHatKippahBlueAndGold #imp
-  - ClothingHeadHatKippahSimple #imp
-  - ClothingHeadHatKippahWhiteAndBlue #imp
+  - PlushieLizard
+  - PlushieSpaceLizard
   - TowelColorBlack
   - TowelColorDarkBlue
   - TowelColorDarkGreen
@@ -59,17 +65,8 @@
   - TowelColorSilver
   - TowelColorWhite
   - TowelColorYellow
-  - CardBoxBlack
-  - HarmonicaInstrument #imp
-
-# For introductory roles learning more complex jobs, like an in-game personal mentor
-- type: loadoutGroup
-  id: Learner
-  name: loadout-group-learner
-  minLimit: 0
-  maxLimit: 1
-  loadouts:
-  - PersonalAI
+  - TutorialAI_Newcomer #imp <15 hours
+  - WalkingCane #imp
 
 - type: loadoutGroup
   id: Glasses
@@ -656,7 +653,8 @@
   - ClownSkirt
   - JesterSuit
   - JesterAltSuit
-  - CirclusClownSuit #imp
+  - CircusClownSuit #imp
+  - JokesterSuit #imp
 
 #imp
 - type: loadoutGroup
@@ -689,6 +687,7 @@
   loadouts:
   - ClownRobes
   - ClownWintercoat
+  - JokesterOuterCoat
 
 - type: loadoutGroup
   id: ClownShoes
@@ -697,6 +696,7 @@
   - ClownShoes
   - JesterShoes
   - CircusClownShoes
+  - JokesterShoes
 
 - type: loadoutGroup
   id: SurvivalClown
@@ -1357,6 +1357,7 @@
   - HeadofSecurityWinterCoatUnarmored
   - ArmorVest #imp
   - ArmorVestSlim #imp
+  - ArmorVestCompact #imp
   - HeadofSecurityEliteArmor #imp
 
 - type: loadoutGroup
@@ -1397,6 +1398,9 @@
   loadouts:
   - WardenCoat
   - WardenArmoredWinterCoat
+  - ArmorVest #imp
+  - ArmorVestSlim #imp
+  - ArmorVestCompact #imp
   - WardenWinterCoatUnarmored
 
 - type: loadoutGroup
@@ -1464,6 +1468,7 @@
   loadouts:
   - ArmorVest
   - ArmorVestSlim
+  - ArmorVestCompact #imp
   - SecurityOfficerWintercoat
 
 - type: loadoutGroup
@@ -1746,14 +1751,7 @@
   minLimit: 0
   loadouts:
   - SterileMask
-
-- type: loadoutGroup
-  id: MedicalDoctorMask
-  name: loadout-group-medical-doctor-mask
-  minLimit: 0
-  loadouts:
-  - SterileMask
-  - DoctorClown
+  - DoctorClown # imp
 
 - type: loadoutGroup
   id: MedicalInternJumpsuit
@@ -1920,6 +1918,7 @@
   - LeatherShoes
   - BlackShoes
   - WhiteShoes
+  - ClownShoesExpert # imp
 
 - type: loadoutGroup
   id: BoxerJumpsuit

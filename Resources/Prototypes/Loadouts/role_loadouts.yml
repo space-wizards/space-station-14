@@ -65,7 +65,7 @@
   id: JobBartender
   groups:
   - BartenderHead
-  - BartenderMask
+  - BartenderMask # imp
   - BartenderNeck
   - BartenderJumpsuit
   - BartenderOuterClothing
@@ -83,7 +83,9 @@
 - type: roleLoadout
   id: JobServiceWorker
   groups:
+  - BartenderMask # imp
   - BartenderJumpsuit
+  - BartenderShoes # imp
   - Glasses
   - CommonBackpack
   - Survival
@@ -292,7 +294,9 @@
 - type: roleLoadout
   id: JobSalvageSpecialist
   groups:
+  - CargoTechnicianMask # imp
   - SalvageSpecialistNeck
+  - SalvageSpecialistJumpsuit # imp unspecial
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
   - SalvageSpecialistGlasses
@@ -329,7 +333,6 @@
   - TechnicalAssistantJumpsuit
   - StationEngineerBackpack
   - SurvivalExtended
-  - Learner
   - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarness
@@ -340,7 +343,7 @@
   id: JobStationEngineer
   groups:
   - StationEngineerHead
-  - StationEngineerMask
+  - StationEngineerMask # imp
   - StationEngineerNeck
   - StationEngineerJumpsuit
   - StationEngineerOuterClothing
@@ -357,6 +360,7 @@
 - type: roleLoadout
   id: JobAtmosphericTechnician
   groups:
+  - StationEngineerMask # imp
   - AtmosphericTechnicianNeck
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianOuterClothing
@@ -417,7 +421,6 @@
   - ScientistBackpack
   - Glasses
   - Survival
-  - Learner
   - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarness
@@ -448,6 +451,7 @@
   id: JobWarden
   groups:
   - WardenHead
+  - SecurityMask # imp
   - WardenNeck
   - WardenJumpsuit
   - WardenOuterClothing
@@ -467,7 +471,7 @@
   id: JobSecurityOfficer
   groups:
   - SecurityHead
-  - SecurityMask
+  - SecurityMask # imp
   - SecurityNeck
   - SecurityJumpsuit
   - SecurityOuterClothing
@@ -527,7 +531,6 @@
   - SecurityCadetJumpsuit
   - SecurityBackpack
   - SurvivalSecurity
-  - Learner
   - Trinkets
   - GroupSpeciesBreathToolSecurity
   - GroupTankHarness
@@ -559,7 +562,7 @@
   id: JobMedicalDoctor
   groups:
   - MedicalDoctorHead
-  - MedicalDoctorMask
+  - MedicalMask
   - MedicalDoctorNeck
   - MedicalDoctorJumpsuit
   - MedicalDoctorOuterClothing
@@ -582,7 +585,6 @@
   - Glasses
   - MedicalBackpack
   - SurvivalMedical
-  - Learner
   - Trinkets
   - GroupSpeciesBreathToolMedical
   - GroupTankHarness
@@ -660,6 +662,7 @@
 - type: roleLoadout
   id: JobPsychologist
   groups:
+  - MedicalMask
   - PsychologistNeck
   - PsychologistJumpsuit
   - PsychologistShoes

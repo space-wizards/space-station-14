@@ -97,6 +97,8 @@
       - ClothingHeadHatCone
       - SprayPainter
       - HandLabeler
+      - TapeRecorder
+      - CassetteTape
     dynamicRecipes:
       #janitorial
       - MegaSprayBottle
@@ -104,6 +106,8 @@
       - WeaponSprayNozzle
       - ClothingBackpackWaterTank
       - CleanerGrenade #imp recipe
+      #service
+      - PlantAnalyzer #NF recipe
       #misc.
       - FauxTileAstroGrass
       - FauxTileMowedAstroGrass

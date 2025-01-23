@@ -3,23 +3,25 @@
   parent: BaseMindRoleAntag
   id: MindRoleRecruiter
   name: Recruiter Role
-#  description: mind-role-recruiter-description
   components:
   - type: MindRole
     antagPrototype: Recruiter
     exclusiveAntag: true
   - type: RecruiterRole
+  - type: RoleBriefing
+    briefing: recruiter-role-briefing
 
 - type: entity
   parent: BaseMindRoleAntag
   id: MindRolePostOperator
   name: Listening Post Role
-#  description: mind-role-post-op-description
   components:
   - type: MindRole
     antagPrototype: ListeningPost
     exclusiveAntag: true
   - type: ListeningPostRole
+  - type: RoleBriefing
+    briefing: listening-post-role-briefing
 
 - type: entity
   parent: BaseMindRoleAntag
@@ -32,3 +34,13 @@
   - type: SynthesisRole
   - type: RoleBriefing
     briefing: synthesis-role-briefing
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleFugitive
+  name: Fugitive Role
+  components:
+  - type: MindRole
+    antagPrototype: Fugitive
+    exclusiveAntag: true
+  - type: FugitiveRole

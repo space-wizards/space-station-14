@@ -1,0 +1,54 @@
+- type: entity
+  name: Finfin Spawner
+  id: SpawnMobFinfin
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobFinfin
+
+- type: entity
+  name: Poppy Spawner
+  id: SpawnMobPoppy
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobPossumPoppy
+
+- type: entity
+  name: Goji Spawner
+  id: SpawnMobGoji
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobGoji
+
+- type: entity
+  name: Kobold Spawner
+  id: SpawnMobKobold
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: kobold
+      sprite: Mobs/Animals/kobold.rsi
+    - state: outline
+      sprite: Mobs/Animals/kobold.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobKobold

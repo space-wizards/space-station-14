@@ -20,3 +20,5 @@
     - CrayonRed
     - Recyclable
     - Trash
+  - type: SignatureWriter
+    font: /Fonts/_DV/SwampWitch/SwampWitch.ttf

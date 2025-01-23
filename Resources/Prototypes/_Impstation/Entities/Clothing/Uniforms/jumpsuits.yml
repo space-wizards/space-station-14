@@ -89,6 +89,17 @@
 
 - type: entity
   parent: [ClothingUniformBase]
+  id: ClothingUniformJokester
+  name: jokester's jumpsuit
+  description: Now 100% more tomato-proof!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/clown_jokester.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/clown_jokester.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
   id: ClothingUniformHitmanSuit
   name: contract killer suit
   description: The perfect outfit for blending in at any event, office, or space station.
@@ -146,7 +157,7 @@
   parent: [ClothingUniformBase]
   id: ClothingUniformCreamSuit
   name: cream suit
-  description: A suit fit for a humble, small town gentleman with something to say. 
+  description: A suit fit for a humble, small town gentleman with something to say.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/creamsuit.rsi
@@ -185,7 +196,7 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/senior_bartender.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/senior_bartender.rsi
-    
+
 - type: entity
   parent: [ClothingUniformBase]
   id: ClothingUniformBrosBlazer
@@ -196,3 +207,14 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/brosblazer.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/brosblazer.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitCourier
+  name: courier jumpsuit
+  description: A courier uniform, with blue accents.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/courier.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/courier.rsi

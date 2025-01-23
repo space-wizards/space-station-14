@@ -25,3 +25,9 @@
   parent: ApidBotanist
   product: ApidCryopodChef
   category: cargoproduct-category-name-service
+
+- type: cargoProduct
+  id: ApidCourier
+  parent: ApidBotanist
+  product: ApidCryopodCourier
+  category: cargoproduct-category-name-cargo

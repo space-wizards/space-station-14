@@ -536,6 +536,9 @@ LightTree04: LightTree
 LightTree05: LightTree
 LightTree06: LightTree
 
+#2024-12-28
+# DrinkIrishCarBomb: DrinkIrishSlammer - reverted on imp
+
 # IMPSTATION SPECIFIC MIGRATIONS BELOW
 # ====================================
 
@@ -552,3 +555,10 @@ RightLegBorgCargo: RightLegBorg
 HeadBorgCargo: LightHeadBorg
 TorsoBorgCargo: TorsoBorg
 
+# 2025-01-16
+# impstation: Removal of duplicate holopad Entity, oopsies
+HolopadCargoMailroomCourier: HolopadCargoMailroom
+
+# 2025-01-20
+# impstation: Make sure the templar helmet doesn't slink back in and break new maps
+ClothingHeadHelmetTemplar: null

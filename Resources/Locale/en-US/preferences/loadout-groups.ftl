@@ -3,7 +3,6 @@ loadout-group-species-restriction = This item is not available for your current 
 
 # Miscellaneous
 loadout-group-trinkets = Trinkets
-loadout-group-learner = pAI Assistant
 loadout-group-glasses = Glasses
 loadout-group-backpack = Backpack
 loadout-group-instruments = Instruments
@@ -248,7 +247,6 @@ loadout-group-chief-medical-officer-neck = Chief Medical Officer neck
 loadout-group-chief-medical-officer-headset = Chief Medical Officer headset
 
 loadout-group-medical-doctor-head = Medical Doctor head
-loadout-group-medical-doctor-mask = Medical Doctor mask
 loadout-group-medical-doctor-jumpsuit = Medical Doctor jumpsuit
 loadout-group-medical-doctor-neck = Medical Doctor neck
 loadout-group-medical-doctor-outerclothing = Medical Doctor outer clothing

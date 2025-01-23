@@ -63,5 +63,10 @@ ghost-role-information-apid-beert-description = A Beefolk emergency responder, c
 ghost-role-information-apid-chef-name = Apid Chef
 ghost-role-information-apid-chef-description = A Beefolk chef, called in as backup to help a crew in need.
 
+ghost-role-information-apid-courier-name = Apid Courier
+ghost-role-information-apid-courier-description = A Beefolk courier, called in as backup to help a crew in need.
+
 ghost-role-information-apid-name = Apid
 ghost-role-information-apid-description = A Beefolk worker, called in as backup to help a crew in need.
+
+ghost-role-information-tutorial-rules = You are a [color=#39f5ab][bold]special Tutorial pAI[/bold][/color]. This pAI is only available to those either new to the game generally, or to those in trainee roles. By taking this ghost role, you will be expected to know how your master's role works, be on hand to help them learn, and generally be welcoming and helpful. [color=red][bold]Failure to do so may result in administrator action.[/bold][/color]

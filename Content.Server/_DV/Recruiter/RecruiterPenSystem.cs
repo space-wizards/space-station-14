@@ -3,8 +3,10 @@ using Content.Server.Forensics;
 using Content.Server.Objectives.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.DV.Paper;
 using Content.Shared.DV.Recruiter;
 using Content.Shared.Popups;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.DV.Recruiter;
 
@@ -15,6 +17,7 @@ public sealed class RecruiterPenSystem : SharedRecruiterPenSystem
 {
     [Dependency] private readonly ForensicsSystem _forensics = default!;
     [Dependency] private readonly SolutionTransferSystem _transfer = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     protected override void DrawBlood(EntityUid uid, Entity<SolutionComponent> dest, EntityUid user)
     {
@@ -36,6 +39,12 @@ public sealed class RecruiterPenSystem : SharedRecruiterPenSystem
         // this is why you have to keep the pen safe, it has the dna of everyone you recruited!
         _forensics.TransferDna(uid, user, canDnaBeCleaned: false);
 
+        if (TryComp<SignatureWriterComponent>(uid, out var signatureComp))
+        {
+            var bloodColor = blood.Comp.Solution.GetColor(_proto);
+            signatureComp.Color = bloodColor;
+        }
+
         Popup.PopupEntity(Loc.GetString("recruiter-pen-pricked", ("pen", uid)), user, user, PopupType.LargeCaution);
     }
 
@@ -45,7 +54,11 @@ public sealed class RecruiterPenSystem : SharedRecruiterPenSystem
         if (!ent.Comp.Recruited.Add(user))
             return;
 
+        if (!Mind.TryGetMind(user, out var userMindId, out _))
+            return;
+
         if (ent.Comp.RecruiterMind is {} mindId &&
+            mindId != userMindId &&
             Mind.TryGetObjectiveComp<RecruitingConditionComponent>(mindId, out var obj, null))
         {
             obj.Recruited++;

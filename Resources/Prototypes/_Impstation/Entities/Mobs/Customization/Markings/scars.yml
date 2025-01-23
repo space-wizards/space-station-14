@@ -2,7 +2,7 @@
   id: ArmProstheticLeft
   bodyPart: LArm
   markingCategory: Arms
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, SpElf, Arachnid]
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Thaven, Arachnid]
   followSkinColor: false
   coloring:
     default:
@@ -17,7 +17,7 @@
   id: ArmTwistingLeft
   bodyPart: LArm
   markingCategory: Arms
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, SpElf, Arachnid]
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Thaven, Arachnid]
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/scars.rsi
@@ -27,7 +27,7 @@
   id: ArmProstheticRight
   bodyPart: RArm
   markingCategory: Arms
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, SpElf, Arachnid]
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Thaven, Arachnid]
   followSkinColor: false
   coloring:
     default:
@@ -42,7 +42,7 @@
   id: ArmTwistingRight
   bodyPart: RArm
   markingCategory: Arms
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, SpElf, Arachnid]
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Thaven, Arachnid]
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/scars.rsi
@@ -52,7 +52,7 @@
   id: ChestBackstabbed
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, SpElf]
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Thaven]
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/scars.rsi
@@ -62,7 +62,7 @@
   id: ChestTwistingLeft
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, SpElf]
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Thaven]
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/scars.rsi
@@ -72,7 +72,7 @@
   id: ChestTwistingRight
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, SpElf]
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Thaven]
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/scars.rsi
@@ -82,7 +82,7 @@
   id: ChestStar
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Gray, SpElf, Arachnid]
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Gray, Thaven, Arachnid]
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/scars.rsi
@@ -92,7 +92,7 @@
   id: FootProstheticLeft
   bodyPart: LFoot
   markingCategory: Legs
-  speciesRestriction: [Human, Dwarf, SlimePerson, SpElf, Arachnid]
+  speciesRestriction: [Human, Dwarf, SlimePerson, Thaven, Arachnid]
   followSkinColor: false
   coloring:
     default:
@@ -107,7 +107,7 @@
   id: FootProstheticRight
   bodyPart: RFoot
   markingCategory: Legs
-  speciesRestriction: [Human, Dwarf, SlimePerson, SpElf, Arachnid]
+  speciesRestriction: [Human, Dwarf, SlimePerson, Thaven, Arachnid]
   followSkinColor: false
   coloring:
     default:
@@ -122,7 +122,7 @@
   id: HandProstheticLeft
   bodyPart: LHand
   markingCategory: Arms
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, SpElf, Arachnid]
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Thaven, Arachnid]
   followSkinColor: false
   coloring:
     default:
@@ -137,7 +137,7 @@
   id: HandTwistingLeft
   bodyPart: LHand
   markingCategory: Arms
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, SpElf, Arachnid]
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Thaven, Arachnid]
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/scars.rsi
@@ -147,7 +147,7 @@
   id: HandProstheticRight
   bodyPart: RHand
   markingCategory: Arms
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, SpElf, Arachnid]
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Thaven, Arachnid]
   followSkinColor: false
   coloring:
     default:
@@ -162,7 +162,7 @@
   id: HandTwistingRight
   bodyPart: RHand
   markingCategory: Arms
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, SpElf, Arachnid]
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Thaven, Arachnid]
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/scars.rsi
@@ -192,7 +192,7 @@
   id: LegProstheticLeft
   bodyPart: LLeg
   markingCategory: Legs
-  speciesRestriction: [Human, Dwarf, SlimePerson, SpElf, Arachnid]
+  speciesRestriction: [Human, Dwarf, SlimePerson, Thaven, Arachnid]
   followSkinColor: false
   coloring:
     default:
@@ -207,7 +207,7 @@
   id: LegTwistingLeft
   bodyPart: LLeg
   markingCategory: Legs
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, SpElf, Arachnid]
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Thaven, Arachnid]
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/scars.rsi
@@ -217,7 +217,7 @@
   id: LegProstheticRight
   bodyPart: RLeg
   markingCategory: Legs
-  speciesRestriction: [Human, Dwarf, SlimePerson, SpElf, Arachnid]
+  speciesRestriction: [Human, Dwarf, SlimePerson, Thaven, Arachnid]
   followSkinColor: false
   coloring:
     default:
@@ -232,7 +232,7 @@
   id: LegTwistingRight
   bodyPart: RLeg
   markingCategory: Legs
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, SpElf, Arachnid]
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Thaven, Arachnid]
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/scars.rsi
@@ -242,7 +242,7 @@
   id: TorsoIncision
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, SpElf, Arachnid]
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Thaven, Arachnid]
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/scars.rsi

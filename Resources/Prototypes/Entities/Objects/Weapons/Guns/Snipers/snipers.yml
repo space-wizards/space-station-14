@@ -27,7 +27,7 @@
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: BallisticAmmoProvider
     capacity: 10
-    proto: CartridgeRifle
+    proto: CartridgeRifle #imp
     whitelist:
       tags:
       - CartridgeRifle
@@ -42,7 +42,7 @@
   name: Kardashev-Mosin
   parent: [BaseWeaponSniper, BaseGunWieldable, Tier3Contraband]
   id: WeaponSniperMosin
-  description: A weapon for hunting, or endless trench warfare. There's a bayonet at the end, and the heft of the rifle could do some damage. Uses .20 rifle ammo.
+  description: A weapon for hunting, or endless trench warfare. There's a bayonet at the end, and the heft of the rifle could do some damage. Uses .20 rifle ammo. #imp
 # Melee and gun components don't play nice; description will change when fixed. Melee components also disabled for the time being
   components:
   - type: Gun
@@ -63,13 +63,13 @@
 #    animation: WeaponArcThrust
 #    soundHit:
 #      path: /Audio/Weapons/bladeslice.ogg
-  - type: EmbeddableProjectile
+  - type: EmbeddableProjectile #imp
     offset: -0.15,0.0
     sound: /Audio/Weapons/star_hit.ogg
-  - type: ThrowingAngle
+  - type: ThrowingAngle #imp
     angle: 225
-  - type: LandAtCursor
-  - type: DamageOtherOnHit
+  - type: LandAtCursor #imp
+  - type: DamageOtherOnHit #imp
     damage:
       types:
         Piercing: 15
@@ -85,7 +85,7 @@
   name: Hristov
   parent: [BaseWeaponSniper, BaseGunWieldable, Tier3Contraband]
   id: WeaponSniperHristov
-  description: A portable anti-materiel rifle, originally intended for destroying the engine blocks of moving vehicles. Uses .60 anti-materiel ammo.
+  description: A portable anti-materiel rifle, originally intended for destroying the engine blocks of moving vehicles. Uses .60 anti-materiel ammo. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi

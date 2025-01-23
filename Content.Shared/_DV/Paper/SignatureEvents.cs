@@ -1,3 +1,5 @@
+using Content.Shared.Paper;
+
 namespace Content.Shared.DV.Paper;
 
 /// <summary>
@@ -5,4 +7,4 @@ namespace Content.Shared.DV.Paper;
 /// If it's cancelled the signature isn't made.
 /// </summary>
 [ByRefEvent]
-public record struct SignAttemptEvent(EntityUid Paper, EntityUid User, bool Cancelled = false);
+public record struct SignAttemptEvent(Entity<PaperComponent> Paper, EntityUid User, EntityUid Pen, bool Cancelled = false);

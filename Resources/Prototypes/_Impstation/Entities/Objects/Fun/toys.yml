@@ -120,9 +120,18 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Arachnid/arachnid_scream.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_scream.ogg
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Voice/Arachnid/arachnid_scream.ogg
+  - type: Item
+    inhandVisuals:
+      left:
+        - state: plushie_bug-inhand-left
+      right:
+        - state: plushie_bug-inhand-right
   - type: Food
     requiresSpecialDigestion: false
     useSound:
@@ -223,3 +232,16 @@
       path: /Audio/_Impstation/Voice/Misc/wuhey.ogg
   - type: Food
     requiresSpecialDigestion: true
+
+- type: entity
+  id: HomeDepotCockHero
+  categories: [HideSpawnMenu]
+  name: Homer
+  description: SEE YOU NEXT WEEK
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/homer.rsi
+    state: icon
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepExplosion

@@ -1,0 +1,7 @@
+- type: alert
+  id: Waddling
+  icons:
+  - sprite: Clothing/Shoes/Specific/clown.rsi
+    state: icon
+  name: alerts-waddling-name
+  description: alerts-waddling-desc

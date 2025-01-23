@@ -610,6 +610,7 @@
     - Hamster
     - VimPilot
     - ChefPilot
+    - MultitoolDefibrillatorTarget
   - type: FlavorProfile
     flavors:
     - meaty
@@ -714,7 +715,7 @@
 - type: entity
   name: Smile
   id: MobSlimesPet
-  parent: MobAdultSlimes
+  parent: [MobAdultSlimes, StripableInventoryBase]
   description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
   components:
   - type: Sprite
@@ -724,6 +725,16 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: aslime-_3
       shader: unshaded
+    - map: [ "head" ]
+  - type: Inventory
+    speciesId: slime
+    templateId: head
+    displacements:
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/Smile/smile_displacement.rsi
+            state: head
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -769,7 +780,7 @@
         Caustic: 1
   - type: MultiHandedItem
   - type: Item
-    sprite: Mobs/Pets/smile.rsi
+    sprite: Mobs/Pets/Smile/smile.rsi
     size: Huge
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-slime

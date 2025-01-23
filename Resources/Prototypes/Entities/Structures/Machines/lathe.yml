@@ -204,6 +204,9 @@
       - ClothingHeadHatCone
       - FreezerElectronics
       - Flare
+      # Delta-V ports
+      - TapeRecorder
+      - CassetteTape
     dynamicRecipes:
       - Fulton
 
@@ -362,6 +365,7 @@
       - OreBagOfHolding
       - DeviceQuantumSpinInverter
       - CleanerGrenade #imp addition
+      - PlantAnalyzer #NF addition
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - BoxBeanbag
@@ -383,11 +387,11 @@
       - MagazineBoxPistolUranium
       - MagazineBoxRifleIncendiary
       - MagazineBoxRifleUranium
-      - MagazineDMRIncendiary
-      - MagazineDMRUranium
+      - MagazineDMRIncendiary #imp
+      - MagazineDMRUranium #imp
       - MagazineGrenadeEmpty
-      - MagazineLPistolIncendiary
-      - MagazineLPistolUranium
+      - MagazineLPistolIncendiary #imp
+      - MagazineLPistolUranium #imp
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
       - MagazinePistolIncendiary
@@ -494,7 +498,6 @@
       - SolarControlComputerCircuitboard
       - SolarTrackerElectronics
       - TurboItemRechargerCircuitboard
-      - PowerComputerCircuitboard
       - AutolatheHyperConvectionMachineCircuitboard
       - ProtolatheHyperConvectionMachineCircuitboard
       - CircuitImprinterHyperConvectionMachineCircuitboard
@@ -542,6 +545,7 @@
       - ReagentGrinderIndustrialMachineCircuitboard
       - JukeboxCircuitBoard
       - SMESAdvancedMachineCircuitboard
+      - HolopadMachineCircuitboard
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ShuttleGunDusterCircuitboard
@@ -729,19 +733,19 @@
       - MagazineBoxLightRiflePractice
       - MagazineBoxMagnum
       - MagazineBoxMagnumPractice
-      - MagazineBoxLPistol
-      - MagazineBoxLPistolPractice
+      - MagazineBoxLPistol #imp
+      - MagazineBoxLPistolPractice #imp
       - MagazineBoxPistol
       - MagazineBoxPistolPractice
       - MagazineBoxRifle
       - MagazineBoxRiflePractice
-      - MagazineDMR
-      - MagazineDMREmpty
+      - MagazineDMR #imp
+      - MagazineDMREmpty #imp
       - MagazineLightRifle
       - MagazineLightRifleEmpty
-      - MagazineLPistol
-      - MagazineLPistolEmpty
-      - MagazineLPistolPractice
+      - MagazineLPistol #imp
+      - MagazineLPistolEmpty #imp
+      - MagazineLPistolPractice #imp
       - MagazinePistol
       - MagazinePistolEmpty
       - MagazinePistolSubMachineGun
@@ -780,21 +784,21 @@
       - HyperBurstConversionKit
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
-      - MagazineBoxLPistolIncendiary
-      - MagazineBoxLPistolUranium
+      - MagazineBoxLPistolIncendiary #imp
+      - MagazineBoxLPistolUranium #imp
       - MagazineBoxMagnumIncendiary
       - MagazineBoxMagnumUranium
       - MagazineBoxPistolIncendiary
       - MagazineBoxPistolUranium
       - MagazineBoxRifleIncendiary
       - MagazineBoxRifleUranium
-      - MagazineDMRIncendiary
-      - MagazineDMRUranium
+      - MagazineDMRIncendiary #imp
+      - MagazineDMRUranium #imp
       - MagazineGrenadeEmpty
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
-      - MagazineLPistolIncendiary
-      - MagazineLPistolUranium
+      - MagazineLPistolIncendiary #imp
+      - MagazineLPistolUranium #imp
       - MagazinePistolIncendiary
       - MagazinePistolUranium
       - MagazineRifleIncendiary
@@ -866,12 +870,12 @@
         - MagazineBoxMagnum
         - MagazineBoxPistol
         - MagazineBoxRifle
-        - MagazineDMR
-        - MagazineDMREmpty
+        - MagazineDMR #imp
+        - MagazineDMREmpty #imp
         - MagazineLightRifle
         - MagazineLightRifleEmpty
-        - MagazineLPistol
-        - MagazineLPistolEmpty
+        - MagazineLPistol #imp
+        - MagazineLPistolEmpty #imp
         - MagazinePistol
         - MagazinePistolEmpty
         - MagazineRifle
@@ -1000,6 +1004,7 @@
       - ClothingUniformJumpsuitCargo
       - ClothingUniformJumpskirtCargo
       - ClothingUniformJumpsuitSalvageSpecialist
+      - ClothingUniformJumpskirtSalvageSpecialist # imp
       - ClothingHeadHatBeretEngineering
       - ClothingUniformJumpsuitChiefEngineer
       - ClothingUniformJumpskirtChiefEngineer
@@ -1084,6 +1089,9 @@
       - ClothingUniformJumpsuitWarden
       - ClothingUniformJumpskirtWarden
       - ClothingHeadHatParamedicsoft
+      - ClothingUniformJumpsuitCourier #Imp
+      - ClothingUniformJumpskirtCourier #Imp
+      - ClothingHeadHatCouriersoft #Imp
       # Winter outfits
       - ClothingOuterWinterCap
       - ClothingOuterWinterCE
@@ -1114,6 +1122,7 @@
       - ClothingOuterWinterRobo
       - ClothingOuterWinterSec
       - ClothingOuterWinterBrigmedic
+      - ClothingOuterWinterCourier #Imp
       # Ties
       - ClothingNeckTieRed
       - ClothingNeckTieDet

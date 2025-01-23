@@ -144,6 +144,7 @@
       - id: HoloprojectorSecurity
       - id: BoxEvidenceMarkers
       - id: HandLabeler
+      - id: BoxTapeRecorder # DeltaV
 
 - type: entity
   id: ClosetBombFilled
@@ -224,7 +225,7 @@
     contents:
     - id: WeaponShotgunEnforcer
       amount: 2
-    - id: MagazineShotgun
+    - id: BoxLethalshot
       amount: 4
 
 - type: entity
@@ -242,6 +243,8 @@
       amount: 2
     - id: BoxBeanbag
       amount: 2
+    - id: BoxLethalshot
+      amount: 2
 
 - type: entity
   id: GunSafeSubMachineGunWt550
@@ -257,7 +260,7 @@
       amount: 4
 
 - type: entity
-  parent: GunSafeBaseSecure
+  parent: [GunSafeBaseSecure, BaseRestrictedContraband]
   id: GunSafeLaserCarbine
   name: laser safe
   components:

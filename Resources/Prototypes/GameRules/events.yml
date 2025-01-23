@@ -13,7 +13,7 @@
     - id: IonStorm # its calm like 90% of the time smh
     - id: KudzuGrowth
     - id: MassHallucinations
-    - id: MimicVendorRule
+    # - id: MimicVendorRule
     - id: PowerGridCheck
     - id: RandomSentience
     - id: SolarFlare

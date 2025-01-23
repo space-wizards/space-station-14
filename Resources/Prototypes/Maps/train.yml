@@ -5,7 +5,7 @@
   maxRandomOffset: 0
   randomRotation: false
   minPlayers: 35
-  maxPlayers: 80
+  maxPlayers: 70
   stations:
     Train:
       stationProto: StandardNanotrasenStation
@@ -28,24 +28,24 @@
             Janitor: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
-            ServiceWorker: [ 2, 3 ]
+            ServiceWorker: [ 2, 2 ]
             Detective: [ 1, 1 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
-            AtmosphericTechnician: [ 2, 2 ]
+            AtmosphericTechnician: [ 3, 3 ]
             StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 3, 3 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 4, 4 ]
-            MedicalIntern: [ 2, 2 ]
+            MedicalIntern: [ 3, 3 ]
             Paramedic: [ 1, 1 ]
             Psychologist: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 4, 4 ]
-            ResearchAssistant: [ 2, 2 ]
+            ResearchAssistant: [ 3, 3 ]
             #silicon
             StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]
@@ -54,12 +54,13 @@
             Warden: [ 1, 1 ]
             SecurityOfficer: [ 6, 6 ]
             SecurityCadet: [ 3, 3 ]
-            Lawyer: [ 1, 2 ]
+            Lawyer: [ 2, 2 ]
             Brigmedic: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 3, 3 ]
+            Courier: [ 2, 2 ]
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]

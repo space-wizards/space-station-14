@@ -275,6 +275,17 @@
       orGroup: Pizza
     - id: KnifePlastic
 
+- type: entity
+  name: pizza box
+  parent: FoodBoxPizzaFilled
+  id: FoodBoxPizzaCotton
+  suffix: Cotton Pizza
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodPizzaCotton
+    - id: KnifePlastic
+
 # Nugget
 
 - type: entity
@@ -573,6 +584,8 @@
       - id: GoldenBikeHorn
         prob: 0.1
         orGroup: GiftPool
+      - id: SpaceBladeMc #imp
+        orGroup: GiftPool
 
 - type: entity
   id: HappyHonkMime
@@ -622,6 +635,8 @@
         orGroup: GiftPool
       - id: PlushieNuke
         orGroup: GiftPool
+      - id: SpaceBladeContra #imp
+        orGroup: GiftPool
 
 - type: entity
   parent: HappyHonkNukie
@@ -650,6 +665,8 @@
       prob: 0.6
       orGroup: GiftPool
     - id: PlushieNuke
+      orGroup: GiftPool
+    - id: SpaceBladeContra #imp
       orGroup: GiftPool
     # drinks - 4 cans, up to 2 blood-red brews
     - id: DrinkNukieCan
@@ -772,4 +789,6 @@
         orGroup: GiftPool
       - id: GoldenBikeHorn
         prob: 0.1
+        orGroup: GiftPool
+      - id: SpaceBladeMc #imp
         orGroup: GiftPool
