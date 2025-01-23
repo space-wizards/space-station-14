@@ -1532,6 +1532,11 @@ entities:
     - type: Transform
       pos: -1.5,-5.5
       parent: 1
+  - uid: 865
+    components:
+    - type: Transform
+      pos: -3.5,-11.5
+      parent: 1
 - proto: CableMV
   entities:
   - uid: 359
@@ -2194,6 +2199,11 @@ entities:
     - type: Transform
       pos: 1.5,7.5
       parent: 1
+  - uid: 864
+    components:
+    - type: Transform
+      pos: 4.5,-11.5
+      parent: 1
 - proto: ClosetEmergencyFilledRandom
   entities:
   - uid: 175
@@ -2237,6 +2247,54 @@ entities:
     components:
     - type: Transform
       pos: 6.5,-2.5
+      parent: 1
+- proto: ClosetWallEmergencyFilledRandom
+  entities:
+  - uid: 857
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -3.5,7.5
+      parent: 1
+  - uid: 858
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 6.5,7.5
+      parent: 1
+  - uid: 860
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 6.5,-4.5
+      parent: 1
+  - uid: 862
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -0.5,-4.5
+      parent: 1
+- proto: ClosetWallFireFilledRandom
+  entities:
+  - uid: 859
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,-4.5
+      parent: 1
+  - uid: 861
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 3.5,-4.5
+      parent: 1
+- proto: ClosetWallOrange
+  entities:
+  - uid: 863
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 7.5,-9.5
       parent: 1
 - proto: ComputerAlert
   entities:
@@ -4421,6 +4479,20 @@ entities:
     - type: Transform
       pos: -3.5,-8.5
       parent: 1
+- proto: GeneratorWallmountAPU
+  entities:
+  - uid: 866
+    components:
+    - type: Transform
+      pos: -3.5,-11.5
+      parent: 1
+- proto: GravityGeneratorMini
+  entities:
+  - uid: 292
+    components:
+    - type: Transform
+      pos: -1.5,-11.5
+      parent: 1
 - proto: Grille
   entities:
   - uid: 14
@@ -4667,8 +4739,7 @@ entities:
   - uid: 768
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -1.5,-11.5
+      pos: 1.5,-14.5
       parent: 1
 - proto: LockerMedicineFilled
   entities:
@@ -5300,12 +5371,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,-14.5
-      parent: 1
-  - uid: 292
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 1.5,-14.5
       parent: 1
   - uid: 293
     components:
