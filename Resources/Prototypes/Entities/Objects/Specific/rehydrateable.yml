@@ -41,6 +41,7 @@
 - type: entity
   parent: RehydratableItem
   id: RehydratableAnimalCube
+  description: Just add water!
   abstract: true
   components:
   - type: Sprite
