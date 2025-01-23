@@ -24,5 +24,5 @@ public sealed partial class ImpEvaporationComponent : Component
 
 
     [DataField(required: true)]
-    public string Solution = string.Empty;
+    public string Solution;
 }
