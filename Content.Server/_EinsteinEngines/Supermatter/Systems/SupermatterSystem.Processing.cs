@@ -794,37 +794,34 @@ public sealed partial class SupermatterSystem
     {
         var currentStatus = GetStatus(uid, sm);
 
-        if (sm.Status != currentStatus)
+        sm.Status = currentStatus;
+
+        if (!TryComp<SpeechComponent>(uid, out var speech))
+            return;
+
+        // Supermatter is healing, so don't play speech sounds
+        if (sm.Damage < sm.DamageArchived && currentStatus != SupermatterStatusType.Delaminating)
         {
-            sm.Status = currentStatus;
-
-            if (!TryComp<SpeechComponent>(uid, out var speech))
-                return;
-
-            // Supermatter is healing, so don't play speech sounds
-            if (sm.Damage < sm.DamageArchived && currentStatus != SupermatterStatusType.Delaminating)
-            {
-                sm.StatusCurrentSound = null;
-                speech.SpeechSounds = null;
-                return;
-            }
-
-            sm.StatusCurrentSound = currentStatus switch
-            {
-                SupermatterStatusType.Warning => sm.StatusWarningSound,
-                SupermatterStatusType.Danger => sm.StatusDangerSound,
-                SupermatterStatusType.Emergency => sm.StatusEmergencySound,
-                SupermatterStatusType.Delaminating => sm.StatusDelamSound,
-                _ => default
-            };
-
-            if (currentStatus == SupermatterStatusType.Warning)
-                speech.AudioParams = AudioParams.Default.AddVolume(7.5f);
-            else
-                speech.AudioParams = AudioParams.Default.AddVolume(10f);
-
-            speech.SpeechSounds = sm.StatusCurrentSound;
+            sm.StatusCurrentSound = sm.StatusSilentSound;
+            speech.SpeechSounds = sm.StatusSilentSound;
+            return;
         }
+
+        sm.StatusCurrentSound = currentStatus switch
+        {
+            SupermatterStatusType.Warning => sm.StatusWarningSound,
+            SupermatterStatusType.Danger => sm.StatusDangerSound,
+            SupermatterStatusType.Emergency => sm.StatusEmergencySound,
+            SupermatterStatusType.Delaminating => sm.StatusDelamSound,
+            _ => sm.StatusSilentSound
+        };
+
+        if (currentStatus == SupermatterStatusType.Warning)
+            speech.AudioParams = AudioParams.Default.AddVolume(7.5f);
+        else
+            speech.AudioParams = AudioParams.Default.AddVolume(10f);
+
+        speech.SpeechSounds = sm.StatusCurrentSound;
     }
 
     // This currently has some audio clipping issues: this is likely an issue with AmbientSoundComponent or the engine

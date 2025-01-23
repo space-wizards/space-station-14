@@ -97,6 +97,9 @@ public sealed partial class SupermatterComponent : Component
     public SoundSpecifier DelamAccent = new SoundCollectionSpecifier("SupermatterAccentDelam");
 
     [DataField]
+    public ProtoId<SpeechSoundsPrototype> StatusSilentSound = "SupermatterSilent";
+
+    [DataField]
     public ProtoId<SpeechSoundsPrototype> StatusWarningSound = "SupermatterWarning";
 
     [DataField]

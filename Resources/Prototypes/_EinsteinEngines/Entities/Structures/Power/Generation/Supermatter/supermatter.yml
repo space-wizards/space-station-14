@@ -45,7 +45,7 @@
     sound:
       path: /Audio/_EinsteinEngines/Supermatter/calm.ogg
   - type: Speech
-    speechSounds: null
+    speechSounds: SupermatterSilent
     speechVerb: Supermatter
     soundCooldownTime: 0
     suffixSpeechVerbs:
