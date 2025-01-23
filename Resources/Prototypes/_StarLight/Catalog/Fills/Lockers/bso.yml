@@ -1,0 +1,23 @@
+- type: entity
+  id: LockerBSOFilled
+  suffix: Filled
+  parent: LockerBlueshield
+  components:
+  - type: StorageFill
+    contents:
+      - id: FlashlightSeclite
+      - id: ClothingHandsGlovesCombat
+      - id: ClothingShoesBootsCombat
+      - id: TrackingImplanter
+        amount: 3
+      - id: WeaponPistolMk58
+      - id: MagazinePistol
+        amount: 2
+      - id: MedkitAdvancedFilled
+      - id: ClothingEyesGlassesBlueShield
+      - id: ClothingHeadHatBeretBlueShield
+      - id: ClothingUniformJumpsuitBlueShield
+      - id: ClothingUniformJumpskirtBlueShield
+      - id: HandheldGPSBasic
+      - id: WeaponGrapplingGun
+      - id: ClothingNeckCloakBsoElite

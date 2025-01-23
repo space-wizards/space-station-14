@@ -2,6 +2,7 @@
   parent: [ClothingOuterHardsuitBase, BaseCommandContraband]
   id: ClothingOuterHardsuitBlueshield
   name: blueshield officer's hardsuit
+  description: A high-tech hardsuit perfect for diving in front of Mr. Pre- Er, Captain.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/OuterClothing/Hardsuits/blueshield.rsi

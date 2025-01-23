@@ -45,3 +45,33 @@
       types:
         Blunt: 4
         Shock: 7
+
+- type: entity
+  id: DefibrillatorParamedical
+  parent: [ BaseDefibrillator, PowerCellSlotTinyItem2 ]
+  name: Paramedic Defibrillator
+  description: Hand-held device that can save lives with such a terrible battery life you'd be hard pressed to neglectfully leave it on!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/defibpara.rsi
+    layers:
+      - state: icon
+      - state: screen
+        map: [ "enum.ToggleVisuals.Layer" ]
+        visible: false
+        shader: unshaded
+      - state: ready
+        map: ["enum.PowerDeviceVisualLayers.Powered"]
+        shader: unshaded
+  - type: Item
+    size: Normal
+  - type: ToggleCellDraw
+  - type: PowerCellDraw
+    useRate: 50
+  - type: Defibrillator
+    zapHeal:
+      types:
+        Asphyxiation: -40
+    doAfterDuration: 6
+  - type: DoAfter
+  - type: UseDelay
