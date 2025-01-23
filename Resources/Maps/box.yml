@@ -7809,7 +7809,7 @@ entities:
             0: 61423
           8,-1:
             0: 12320
-            2: 34944
+            4: 34944
           -8,-4:
             0: 30583
           -8,-5:
@@ -8162,7 +8162,7 @@ entities:
             0: 30583
           6,-12:
             1: 4369
-            4: 204
+            2: 204
             3: 49152
           6,-11:
             1: 61713
@@ -8171,10 +8171,10 @@ entities:
             0: 29424
           6,-13:
             1: 4369
-            4: 49152
+            2: 49152
             3: 204
           7,-12:
-            4: 17
+            2: 17
             3: 4096
             1: 17476
           7,-11:
@@ -8183,7 +8183,7 @@ entities:
           7,-10:
             0: 61680
           7,-13:
-            4: 4096
+            2: 4096
             1: 17476
             3: 17
           8,-12:
@@ -8221,7 +8221,7 @@ entities:
             1: 8704
           8,0:
             0: 63523
-            2: 8
+            4: 8
           8,1:
             0: 61440
           8,2:
@@ -8503,24 +8503,24 @@ entities:
             1: 35064
             3: 771
           9,0:
-            2: 15
+            4: 15
             0: 65296
           9,1:
             0: 47232
           9,2:
             0: 48955
           9,-1:
-            2: 65520
+            4: 65520
             0: 1
           10,0:
-            2: 1
+            4: 1
             0: 65292
           10,1:
             0: 56789
           10,2:
             0: 64961
           10,-1:
-            2: 4368
+            4: 4368
             0: 57548
           11,0:
             0: 30543
@@ -9648,8 +9648,7 @@ entities:
             0: 15
           16,-20:
             1: 16
-            0: 32
-            3: 52422
+            3: 52454
           15,-20:
             1: 44719
           16,-19:
@@ -10117,7 +10116,7 @@ entities:
             1: 15
             3: 65280
           5,-24:
-            1: 63456
+            1: 62432
           6,-24:
             1: 61680
           6,-23:
@@ -10313,42 +10312,42 @@ entities:
           - 0
           - 0
         - volume: 2500
-          temperature: 235
-          moles:
-          - 21.824879
-          - 82.10312
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
           temperature: 293.15
           moles:
           - 0
           - 0
           - 0
           - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 235
+          moles:
+          - 21.824879
+          - 82.10312
+          - 0
+          - 0
           - 0
           - 0
           - 0
@@ -13707,7 +13706,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -73884.125
+      secondsUntilStateChange: -74012.63
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -87921,7 +87920,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -68072.664
+      secondsUntilStateChange: -68201.17
       state: Closing
   - uid: 15010
     components:
@@ -96081,6 +96080,8 @@ entities:
     - type: Transform
       pos: -58.5,0.5
       parent: 8364
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 19936
     components:
     - type: Transform
@@ -96583,6 +96584,8 @@ entities:
       rot: 3.141592653589793 rad
       pos: -58.5,-4.5
       parent: 8364
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 22642
     components:
     - type: Transform
@@ -112085,6 +112088,8 @@ entities:
       rot: 3.141592653589793 rad
       pos: -59.5,-4.5
       parent: 8364
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 20050
     components:
     - type: Transform
@@ -112278,6 +112283,8 @@ entities:
     - type: Transform
       pos: -59.5,0.5
       parent: 8364
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 22976
     components:
     - type: Transform
@@ -115170,6 +115177,8 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 25825
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 16882
     components:
     - type: Transform
@@ -115252,6 +115261,8 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 25825
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 19952
     components:
     - type: Transform
@@ -116773,6 +116784,8 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 25825
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 4403
     components:
     - type: Transform
@@ -117097,6 +117110,8 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 25825
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 22747
     components:
     - type: Transform
@@ -139423,7 +139438,7 @@ entities:
   - uid: 14606
     components:
     - type: Transform
-      pos: -19.5,-0.5
+      pos: -30.5,-12.5
       parent: 8364
   - uid: 14607
     components:
@@ -139609,6 +139624,21 @@ entities:
     components:
     - type: Transform
       pos: -12.5,47.5
+      parent: 8364
+  - uid: 28237
+    components:
+    - type: Transform
+      pos: -21.5,-0.5
+      parent: 8364
+  - uid: 28238
+    components:
+    - type: Transform
+      pos: -59.5,-15.5
+      parent: 8364
+  - uid: 28239
+    components:
+    - type: Transform
+      pos: -61.5,-16.5
       parent: 8364
 - proto: RandomSpawner100
   entities:
@@ -153141,12 +153171,10 @@ entities:
   - uid: 16786
     components:
     - type: Transform
-      pos: -30.5,-16.5
+      rot: 1.5707963267948966 rad
+      pos: -29.5,-13.5
       parent: 8364
     - type: SurveillanceCamera
-      setupAvailableNetworks:
-      - SurveillanceCameraSupply
-      nameSet: True
       id: Cargo Bay Closet
   - uid: 16787
     components:
