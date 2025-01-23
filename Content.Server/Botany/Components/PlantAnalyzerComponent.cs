@@ -1,14 +1,16 @@
+using Content.Server.Botany.Systems;
+using Content.Server.Medical.Components;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Medical.Components;
+namespace Content.Server.Botany.Components;
 
 /// <inheritdoc/>
 [RegisterComponent, AutoGenerateComponentPause]
-[Access(typeof(HealthAnalyzerSystem), typeof(CryoPodSystem))]
-public sealed partial class HealthAnalyzerComponent : AbstractAnalyzerComponent
+[Access(typeof(PlantAnalyzerSystem))]
+public sealed partial class PlantAnalyzerComponent : AbstractAnalyzerComponent
 {
     /// <summary>
-    /// When should the next update be sent for the patient
+    /// When should the next update be sent
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
