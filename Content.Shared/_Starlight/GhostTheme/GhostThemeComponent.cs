@@ -17,3 +17,14 @@ public enum GhostThemeVisualLayers : byte
 {
     Base
 }
+
+[Serializable, NetSerializable]
+public sealed class GhostThemeSyncEvent : EntityEventArgs
+{
+    public readonly NetEntity Player;
+    
+    public GhostThemeSyncEvent(NetEntity player)
+    {
+        Player = player;
+    }
+}

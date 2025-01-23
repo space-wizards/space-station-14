@@ -721,6 +721,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("flags");
 
+                    b.Property<string>("GhostTheme")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ghost_theme");
+
                     b.Property<string>("Title")
                         .HasColumnType("TEXT")
                         .HasColumnName("title");

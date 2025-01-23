@@ -102,6 +102,13 @@ public sealed class GhostThemeSystem : EntitySystem
         themes.SelectedGhostTheme = Theme;
         
         Dirty(attached, themes);
+        
+        var playerData = _playerRoles.GetPlayerData(attached);
+        if (playerData != null)
+        {
+            Logger.Warning($"current ghost theme: {playerData.GhostTheme}, new ghost theme {Theme}");
+            playerData.GhostTheme = Theme;
+        }
     }
     public void UpdateAllEui()
     {
@@ -121,7 +128,14 @@ public sealed class GhostThemeSystem : EntitySystem
         var theme = EnsureComp<GhostThemeComponent>(uid);
         var playerData = _playerRoles.GetPlayerData(uid);
         if (playerData != null && playerData.GhostTheme != null)
+        {
+            Logger.Warning($"current ghost theme: {theme.SelectedGhostTheme}, new ghost theme {playerData.GhostTheme}");
             theme.SelectedGhostTheme = playerData.GhostTheme;
+            Dirty(uid, theme);
+        }
+        
+        if (TryComp(uid, out ActorComponent? actor))
+            RaiseNetworkEvent(new GhostThemeSyncEvent(GetNetEntity(uid)), actor.PlayerSession);
     }
 }
 
