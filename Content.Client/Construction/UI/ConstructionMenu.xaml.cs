@@ -25,10 +25,15 @@ namespace Content.Client.Construction.UI
         OptionButton OptionCategories { get; }
 
         bool EraseButtonPressed { get; set; }
+        bool GridViewButtonPressed { get; set; }
         bool BuildButtonPressed { get; set; }
 
         ItemList Recipes { get; }
         ItemList RecipeStepList { get; }
+
+
+        ScrollContainer RecipesGridScrollContainer { get; }
+        GridContainer RecipesGrid { get; }
 
         event EventHandler<(string search, string catagory)> PopulateRecipes;
         event EventHandler<ItemList.Item?> RecipeSelected;
@@ -72,9 +77,16 @@ namespace Content.Client.Construction.UI
             set => EraseButton.Pressed = value;
         }
 
+        public bool GridViewButtonPressed
+        {
+            get => MenuGridViewButton.Pressed;
+            set => MenuGridViewButton.Pressed = value;
+        }
+
         public ConstructionMenu()
         {
-            SetSize = MinSize = new Vector2(720, 320);
+            SetSize = new Vector2(560, 450);
+            MinSize = new Vector2(560, 320);
 
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
@@ -102,6 +114,9 @@ namespace Content.Client.Construction.UI
             EraseButton.OnToggled += args => EraseButtonToggled?.Invoke(this, args.Pressed);
 
             FavoriteButton.OnPressed += args => RecipeFavorited?.Invoke(this, EventArgs.Empty);
+
+            MenuGridViewButton.OnPressed += _ =>
+                PopulateRecipes?.Invoke(this, (SearchBar.Text, Categories[OptionCategories.SelectedId]));
         }
 
         public event EventHandler? ClearAllGhosts;

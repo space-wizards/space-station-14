@@ -24,6 +24,8 @@
   - ExteriorLightTube
   - LightBulb
   - LedLightBulb
+  - DimLightBulb
+  - WarmLightBulb
 
 - type: latheRecipePack
   id: PowerCellsStatic

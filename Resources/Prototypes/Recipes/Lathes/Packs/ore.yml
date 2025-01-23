@@ -15,7 +15,7 @@
 - type: latheRecipePack
   id: RGlassSmelting
   recipes:
-  - SheetRGlass
+  - SheetRGlassRaw
   - SheetPGlass1
   - SheetRPGlass1
 

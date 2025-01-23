@@ -50,7 +50,6 @@
   id: EngineeringBoardsStatic
   recipes:
   - SpaceHeaterMachineCircuitBoard
-  - StationAnchorCircuitboard
 
 ## Dynamic
 
@@ -79,10 +78,11 @@
   - PortableScrubberMachineCircuitBoard
   - SolarControlComputerCircuitboard
   - SolarTrackerElectronics
-  - PowerComputerCircuitboard
   - GasRecyclerMachineCircuitboard
   - PortableGeneratorPacmanMachineCircuitboard
   - PortableGeneratorSuperPacmanMachineCircuitboard
   - PortableGeneratorJrPacmanMachineCircuitboard
   - EmitterCircuitboard
   - TelecomServerCircuitboard
+  - SMESAdvancedMachineCircuitboard
+  - HolopadMachineCircuitboard
