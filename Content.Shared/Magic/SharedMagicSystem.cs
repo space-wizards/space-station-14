@@ -420,17 +420,7 @@ public abstract class SharedMagicSystem : EntitySystem
         ev.Handled = true;
         Speak(ev);
 
-        var perfXForm = Transform(ev.Performer);
-        var targetXForm = Transform(ev.Target);
-
-        var originalPerfCoords = perfXForm.Coordinates;
-        var originalTargetCoords = targetXForm.Coordinates;
-
-        _transform.SetCoordinates(ev.Performer, originalTargetCoords);
-        _transform.AttachToGridOrMap(ev.Performer, perfXForm);
-
-        _transform.SetCoordinates(ev.Target, originalPerfCoords);
-        _transform.AttachToGridOrMap(ev.Target, targetXForm);
+        _transform.SwapPositions(ev.Performer, ev.Target);
     }
     // End Teleport Spells
     #endregion
