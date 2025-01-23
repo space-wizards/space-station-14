@@ -699,7 +699,8 @@ public sealed partial class SupermatterSystem
         switch (sm.PreferredDelamType)
         {
             case DelamType.Cascade:
-                Spawn(sm.KudzuSpawnPrototype, xform.Coordinates);
+                // one day...
+                // Spawn(sm.KudzuSpawnPrototype, xform.Coordinates);
                 break;
 
             case DelamType.Singulo:
