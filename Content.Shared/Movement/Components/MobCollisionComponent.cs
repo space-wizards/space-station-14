@@ -11,4 +11,7 @@ public sealed partial class MobCollisionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public IPhysShape Shape = new PhysShapeCircle(radius: 0.35f);
+
+    [DataField, AutoNetworkedField]
+    public float Strength = 0.5f;
 }
