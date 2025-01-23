@@ -133,7 +133,7 @@
   components:
   - type: SpawnItemsOnUse
     items:
-      - id: MopBucketCube
+    - id: MopBucketCube
   - type: Sprite
     state: wrapper
 
