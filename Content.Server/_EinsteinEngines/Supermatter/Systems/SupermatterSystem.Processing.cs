@@ -78,9 +78,9 @@ public sealed partial class SupermatterSystem
         if (ammoniaProportion > 0)
         {
             var ammoniaPartialPressure = mix.Pressure * ammoniaProportion;
-            var consumedMiasma = Math.Clamp((ammoniaPartialPressure - sm.AmmoniaConsumptionPressure) /
-                (ammoniaPartialPressure + sm.AmmoniaPressureScaling) *
-                (1 + powerRatio * sm.AmmoniaGasMixScaling),
+            var consumedMiasma = Math.Clamp((ammoniaPartialPressure - _config.GetCVar(EinsteinCCVars.SupermatterAmmoniaConsumptionPressure)) /
+                (ammoniaPartialPressure + _config.GetCVar(EinsteinCCVars.SupermatterAmmoniaPressureScaling)) *
+                (1 + powerRatio * _config.GetCVar(EinsteinCCVars.SupermatterAmmoniaGasMixScaling)),
                 0f, 1f);
 
             consumedMiasma *= ammoniaProportion * moles;
@@ -88,7 +88,7 @@ public sealed partial class SupermatterSystem
             if (consumedMiasma > 0)
             {
                 sm.GasStorage.AdjustMoles(Gas.Ammonia, -consumedMiasma);
-                sm.MatterPower += consumedMiasma * sm.AmmoniaPowerGain;
+                sm.MatterPower += consumedMiasma * _config.GetCVar(EinsteinCCVars.SupermatterAmmoniaPowerGain);
             }
         }
 
@@ -97,12 +97,13 @@ public sealed partial class SupermatterSystem
         sm.DynamicHeatResistance = Math.Max(heatResistance, 1);
 
         // More moles of gases are harder to heat than fewer, so let's scale heat damage around them
-        sm.MoleHeatPenaltyThreshold = (float)Math.Max(moles / sm.MoleHeatPenalty, 0.25);
+        sm.MoleHeatPenaltyThreshold = (float)Math.Max(moles / _config.GetCVar(EinsteinCCVars.SupermatterMoleHeatPenalty), 0.25);
 
         // Ramps up or down in increments of 0.02 up to the proportion of CO2
         // Given infinite time, powerloss_dynamic_scaling = co2comp
         // Some value from 0-1
-        if (moles > sm.PowerlossInhibitionMoleThreshold && gasComposition.GetMoles(Gas.CarbonDioxide) > sm.PowerlossInhibitionGasThreshold)
+        if (moles > _config.GetCVar(EinsteinCCVars.SupermatterPowerlossInhibitionMoleThreshold) &&
+            gasComposition.GetMoles(Gas.CarbonDioxide) > _config.GetCVar(EinsteinCCVars.SupermatterPowerlossInhibitionGasThreshold))
         {
             var co2powerloss = Math.Clamp(gasComposition.GetMoles(Gas.CarbonDioxide) - sm.PowerlossDynamicScaling, -0.02f, 0.02f);
             sm.PowerlossDynamicScaling = Math.Clamp(sm.PowerlossDynamicScaling + co2powerloss, 0f, 1f);
@@ -112,12 +113,14 @@ public sealed partial class SupermatterSystem
 
         // Ranges from 0~1(1 - (0~1 * 1~(1.5 * (mol / 500))))
         // We take the mol count, and scale it to be our inhibitor
-        sm.PowerlossInhibitor = Math.Clamp(1 - sm.PowerlossDynamicScaling * Math.Clamp(moles / sm.PowerlossInhibitionMoleBoostThreshold, 1f, 1.5f), 0f, 1f);
+        sm.PowerlossInhibitor = Math.Clamp(
+            1 - sm.PowerlossDynamicScaling * Math.Clamp(moles / _config.GetCVar(EinsteinCCVars.SupermatterPowerlossInhibitionMoleBoostThreshold), 1f, 1.5f),
+            0f, 1f);
 
         if (sm.MatterPower != 0)
         {
             // We base our removed power off 1/10 the matter_power.
-            var removedMatter = Math.Max(sm.MatterPower / sm.MatterPowerConversion, 40);
+            var removedMatter = Math.Max(sm.MatterPower / _config.GetCVar(EinsteinCCVars.SupermatterMatterPowerConversion), 40);
             // Adds at least 40 power
             sm.Power = Math.Max(sm.Power + removedMatter, 0);
             // Removes at least 40 matter power
@@ -128,40 +131,44 @@ public sealed partial class SupermatterSystem
         var tempFactor = powerRatio > 0.8 ? 50f : 30f;
 
         // If there is more frezon and N2 than anything else, we receive no power increase from heat
-        sm.Power = Math.Max((sm.GasStorage.Temperature * tempFactor / Atmospherics.T0C) * powerRatio + sm.Power, 0);
+        sm.Power = Math.Max(sm.GasStorage.Temperature * tempFactor / Atmospherics.T0C * powerRatio + sm.Power, 0);
 
         // Irradiate stuff
         if (TryComp<RadiationSourceComponent>(uid, out var rad))
         {
             rad.Intensity =
                 _config.GetCVar(EinsteinCCVars.SupermatterRadsBase) +
-                (sm.Power
+                sm.Power
                 * Math.Max(0, 1f + transmissionBonus / 10f)
                 * 0.003f
-                * _config.GetCVar(EinsteinCCVars.SupermatterRadsModifier));
+                * _config.GetCVar(EinsteinCCVars.SupermatterRadsModifier);
 
             rad.Slope = Math.Clamp(rad.Intensity / 15, 0.2f, 1f);
         }
 
         // Power * 0.55 * a value between 1 and 0.8
-        var energy = sm.Power * sm.ReactionPowerModifier * (1f - sm.PsyCoefficient * 0.2f);
+        var energy = sm.Power * _config.GetCVar(EinsteinCCVars.SupermatterReactionPowerModifier) * (1f - sm.PsyCoefficient * 0.2f);
 
         // Keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock is on.
         // An increase of 4°C at 25% efficiency here results in an increase of 1°C / (#tilesincore) overall.
         // Power * 0.55 * 1.5~23 / 5
         var gasReleased = sm.GasStorage.Clone();
 
-        gasReleased.Temperature += (energy * sm.HeatModifier) / sm.ThermalReleaseModifier;
+        gasReleased.Temperature += energy * sm.HeatModifier / _config.GetCVar(EinsteinCCVars.SupermatterThermalReleaseModifier);
         gasReleased.Temperature = Math.Max(0,
             Math.Min(gasReleased.Temperature, 2500f * sm.HeatModifier));
 
         // Release the waste
-        gasReleased.AdjustMoles(Gas.Plasma, Math.Max(energy * sm.HeatModifier / sm.PlasmaReleaseModifier, 0f));
-        gasReleased.AdjustMoles(Gas.Oxygen, Math.Max((energy + gasReleased.Temperature * sm.HeatModifier - Atmospherics.T0C) / sm.OxygenReleaseEfficiencyModifier, 0f));
+        gasReleased.AdjustMoles(
+            Gas.Plasma,
+            Math.Max(energy * sm.HeatModifier / _config.GetCVar(EinsteinCCVars.SupermatterPlasmaReleaseModifier), 0f));
+        gasReleased.AdjustMoles(
+            Gas.Oxygen,
+            Math.Max((energy + gasReleased.Temperature * sm.HeatModifier - Atmospherics.T0C) / _config.GetCVar(EinsteinCCVars.SupermatterOxygenReleaseModifier), 0f));
 
         _atmosphere.Merge(mix, gasReleased);
 
-        var powerReduction = (float) Math.Pow(sm.Power / 500, 3);
+        var powerReduction = (float)Math.Pow(sm.Power / 500, 3);
 
         // After this point power is lowered
         // This wraps around to the begining of the function
@@ -189,16 +196,16 @@ public sealed partial class SupermatterSystem
         if (_random.Prob(0.05f))
             zapCount += 1;
 
-        if (sm.Power >= sm.PowerPenaltyThreshold)
+        if (sm.Power >= _config.GetCVar(EinsteinCCVars.SupermatterPowerPenaltyThreshold))
             zapCount += 2;
 
-        if (sm.Power >= sm.SeverePowerPenaltyThreshold)
+        if (sm.Power >= _config.GetCVar(EinsteinCCVars.SupermatterSeverePowerPenaltyThreshold))
         {
             zapPower += 1;
             zapCount += 1;
         }
 
-        if (sm.Power >= sm.CriticalPowerPenaltyThreshold)
+        if (sm.Power >= _config.GetCVar(EinsteinCCVars.SupermatterCriticalPowerPenaltyThreshold))
         {
             zapPower += 1;
             zapCount += 1;
@@ -224,13 +231,13 @@ public sealed partial class SupermatterSystem
             anomalies.Add(sm.AnomalyBluespaceSpawnPrototype);
 
         // Gravity anomaly: ~1/150 chance above SeverePowerPenaltyThreshold, or ~1/750 chance otherwise
-        if (sm.Power > sm.SeverePowerPenaltyThreshold && _random.Prob(1 / sm.AnomalyGravityChanceSevere) ||
+        if (sm.Power > _config.GetCVar(EinsteinCCVars.SupermatterSeverePowerPenaltyThreshold) && _random.Prob(1 / sm.AnomalyGravityChanceSevere) ||
             _random.Prob(1 / sm.AnomalyGravityChance))
             anomalies.Add(sm.AnomalyGravitySpawnPrototype);
 
         // Pyroclastic anomaly: ~1/375 chance above SeverePowerPenaltyThreshold, or ~1/2500 chance above PowerPenaltyThreshold
-        if (sm.Power > sm.SeverePowerPenaltyThreshold && _random.Prob(1 / sm.AnomalyPyroChanceSevere) ||
-            sm.Power > sm.PowerPenaltyThreshold && _random.Prob(1 / sm.AnomalyPyroChance))
+        if (sm.Power > _config.GetCVar(EinsteinCCVars.SupermatterSeverePowerPenaltyThreshold) && _random.Prob(1 / sm.AnomalyPyroChanceSevere) ||
+            sm.Power > _config.GetCVar(EinsteinCCVars.SupermatterPowerPenaltyThreshold) && _random.Prob(1 / sm.AnomalyPyroChance))
             anomalies.Add(sm.AnomalyPyroSpawnPrototype);
 
         var count = anomalies.Count;
@@ -347,15 +354,15 @@ public sealed partial class SupermatterSystem
         totalDamage += tempDamage;
 
         // Power only starts affecting damage when it is above 5000
-        var powerDamage = Math.Max(sm.Power - sm.PowerPenaltyThreshold, 0f) / 500f * sm.DamageIncreaseMultiplier;
+        var powerDamage = Math.Max(sm.Power - _config.GetCVar(EinsteinCCVars.SupermatterPowerPenaltyThreshold), 0f) / 500f * sm.DamageIncreaseMultiplier;
         totalDamage += powerDamage;
 
         // Mol count only starts affecting damage when it is above 1800
-        var moleDamage = Math.Max(moles - sm.MolePenaltyThreshold, 0f) / 80 * sm.DamageIncreaseMultiplier;
+        var moleDamage = Math.Max(moles - _config.GetCVar(EinsteinCCVars.SupermatterMolePenaltyThreshold), 0f) / 80 * sm.DamageIncreaseMultiplier;
         totalDamage += moleDamage;
 
         // Healing damage
-        if (moles < sm.MolePenaltyThreshold)
+        if (moles < _config.GetCVar(EinsteinCCVars.SupermatterMolePenaltyThreshold))
         {
             // Only has a net positive effect when the temp is below 313.15, heals up to 2 damage. Psychologists increase this temp min by up to 45
             sm.HeatHealing = Math.Min(absorbedGas.Temperature - (tempThreshold + 45f * sm.PsyCoefficient), 0f) / 150f;
@@ -422,7 +429,7 @@ public sealed partial class SupermatterSystem
         if (sm.Damage == 0)
             return;
 
-        var message = string.Empty;
+        string message;
         var global = false;
 
         var integrity = GetIntegrity(sm).ToString("0.00");
@@ -431,15 +438,13 @@ public sealed partial class SupermatterSystem
         if (sm.Delamming && !sm.DelamAnnounced)
         {
             var sb = new StringBuilder();
-            var loc = string.Empty;
-
-            switch (sm.PreferredDelamType)
+            var loc = sm.PreferredDelamType switch
             {
-                case DelamType.Cascade: loc = "supermatter-delam-cascade";   break;
-                case DelamType.Singulo: loc = "supermatter-delam-overmass";  break;
-                case DelamType.Tesla:   loc = "supermatter-delam-tesla";     break;
-                default:                loc = "supermatter-delam-explosion"; break;
-            }
+                DelamType.Cascade => "supermatter-delam-cascade",
+                DelamType.Singulo => "supermatter-delam-overmass",
+                DelamType.Tesla => "supermatter-delam-tesla",
+                _ => "supermatter-delam-explosion"
+            };
 
             sb.AppendLine(Loc.GetString(loc));
             sb.Append(Loc.GetString("supermatter-seconds-before-delam", ("seconds", sm.DelamTimer)));
@@ -479,15 +484,15 @@ public sealed partial class SupermatterSystem
 
             var loc = seconds switch
             {
-                >  5 => "supermatter-seconds-before-delam-countdown",
+                > 5 => "supermatter-seconds-before-delam-countdown",
                 <= 5 => "supermatter-seconds-before-delam-imminent",
-                _ => String.Empty
+                _ => string.Empty
             };
 
             sm.YellTimer = seconds switch
             {
                 > 30 => TimeSpan.FromSeconds(10),
-                >  5 => TimeSpan.FromSeconds(5),
+                > 5 => TimeSpan.FromSeconds(5),
                 <= 5 => TimeSpan.FromSeconds(1),
                 _ => TimeSpan.FromSeconds(_config.GetCVar(EinsteinCCVars.SupermatterYellTimer))
             };
@@ -541,7 +546,7 @@ public sealed partial class SupermatterSystem
 
             global = false;
 
-            if (sm.Power >= sm.PowerPenaltyThreshold)
+            if (sm.Power >= _config.GetCVar(EinsteinCCVars.SupermatterPowerPenaltyThreshold))
             {
                 message = Loc.GetString("supermatter-threshold-power");
                 SendSupermatterAnnouncement(uid, sm, message, global);
@@ -553,7 +558,7 @@ public sealed partial class SupermatterSystem
                 }
             }
 
-            if (sm.GasStorage != null && sm.GasStorage.TotalMoles >= sm.MolePenaltyThreshold)
+            if (sm.GasStorage != null && sm.GasStorage.TotalMoles >= _config.GetCVar(EinsteinCCVars.SupermatterMolePenaltyThreshold))
             {
                 message = Loc.GetString("supermatter-threshold-mole");
                 SendSupermatterAnnouncement(uid, sm, message, global);
@@ -589,7 +594,7 @@ public sealed partial class SupermatterSystem
     public static float GetIntegrity(SupermatterComponent sm)
     {
         var integrity = sm.Damage / sm.DamageDelaminationPoint;
-        integrity = (float) Math.Round(100 - integrity * 100, 2);
+        integrity = (float)Math.Round(100 - integrity * 100, 2);
         integrity = integrity < 0 ? 0 : integrity;
         return integrity;
     }
@@ -610,12 +615,12 @@ public sealed partial class SupermatterSystem
             var moles = absorbedGas.TotalMoles;
 
             if (_config.GetCVar(EinsteinCCVars.SupermatterDoSingulooseDelam)
-                && moles >= sm.MolePenaltyThreshold * _config.GetCVar(EinsteinCCVars.SupermatterSingulooseMolesModifier))
+                && moles >= _config.GetCVar(EinsteinCCVars.SupermatterMolePenaltyThreshold) * _config.GetCVar(EinsteinCCVars.SupermatterSingulooseMolesModifier))
                 return DelamType.Singulo;
         }
 
         if (_config.GetCVar(EinsteinCCVars.SupermatterDoTeslooseDelam)
-            && sm.Power >= sm.PowerPenaltyThreshold * _config.GetCVar(EinsteinCCVars.SupermatterTesloosePowerModifier))
+            && sm.Power >= _config.GetCVar(EinsteinCCVars.SupermatterPowerPenaltyThreshold) * _config.GetCVar(EinsteinCCVars.SupermatterTesloosePowerModifier))
             return DelamType.Tesla;
 
         //TODO: Add resonance cascade when there's crazy conditions or a destabilizing crystal
@@ -831,7 +836,7 @@ public sealed partial class SupermatterSystem
         if (!TryComp<AmbientSoundComponent>(uid, out var ambient))
             return;
 
-        var volume = (float) Math.Round(Math.Clamp((sm.Power / 50) - 5, -5, 5));
+        var volume = (float)Math.Round(Math.Clamp((sm.Power / 50) - 5, -5, 5));
 
         _ambient.SetVolume(uid, volume);
 

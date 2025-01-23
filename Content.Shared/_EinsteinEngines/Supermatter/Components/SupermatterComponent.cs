@@ -128,19 +128,13 @@ public sealed partial class SupermatterComponent : Component
     public float MatterPower;
 
     /// <summary>
-    /// The fraction of <see cref="MatterPower"/> that is converted into power
-    /// </summary>
-    [DataField]
-    public float MatterPowerConversion = 10f;
-
-    /// <summary>
     /// Affects the amount of oxygen and plasma that is released during supermatter reactions, as well as the heat generated
     /// </summary>
     [DataField]
     public float HeatModifier;
 
     /// <summary>
-    /// The portion of the gasmix we're on
+    /// The percentage of the gas on the supermatter's tile that is absorbed each atmos tick.
     /// </summary>
     [DataField]
     public float GasEfficiency = 0.15f;
@@ -165,35 +159,10 @@ public sealed partial class SupermatterComponent : Component
     public float DynamicHeatResistance = 1;
 
     /// <summary>
-    /// Multiplier on damage the core takes from absorbing hot gas.
+    /// More moles of gases are harder to heat than fewer, so let's scale heat damage around them
     /// </summary>
     [DataField]
-    public float MoleHeatPenalty = 350f;
-
-    /// <summary>
-    /// Multiplier on overall power production during supermatter reactions
-    /// </summary>
-    [DataField]
-    public float ReactionPowerModifier = 0.55f;
-
-    /// <summary>
-    /// Divisor on the amount that reactions increase the supermatter core temperature
-    /// </summary>
-    [DataField]
-    public float ThermalReleaseModifier = 5f;
-
-    /// <summary>
-    /// Divisor on how much plasma is released during supermatter reactions
-    /// </summary>
-    [DataField]
-    public float PlasmaReleaseModifier = 750f;
-
-    /// <summary>
-    /// Multiplier on how much oxygen is released during supermatter reactions.
-    /// Default is ~1/325
-    /// </summary>
-    [DataField]
-    public float OxygenReleaseEfficiencyModifier = 325f;
+    public float MoleHeatPenaltyThreshold;
 
     /// <summary>
     /// Modifier to damage taken during supermatter reactions, soothing the supermatter when a psychologist is nearby
@@ -300,60 +269,6 @@ public sealed partial class SupermatterComponent : Component
 
     #endregion
 
-    #region Thresholds
-
-    /// <summary>
-    /// Percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
-    /// </summary>
-    [DataField]
-    public float PowerlossInhibitionGasThreshold = 0.2f;
-
-    /// <summary>
-    /// Moles of the gas needed before the charge inertia chain reaction effect starts.
-    /// Scales powerloss inhibition down until this amount of moles is reached.
-    /// </summary>
-    [DataField]
-    public float PowerlossInhibitionMoleThreshold = 20f;
-
-    /// <summary>
-    /// Bonus powerloss inhibition boost if this amount of moles is reached
-    /// </summary>
-    [DataField]
-    public float PowerlossInhibitionMoleBoostThreshold = 500f;
-
-    /// <summary>
-    /// Above this value we can get a singulo and independent mol damage, below it we can heal damage
-    /// </summary>
-    [DataField]
-    public float MolePenaltyThreshold = 1800f;
-
-    /// <summary>
-    /// More moles of gases are harder to heat than fewer, so let's scale heat damage around them
-    /// </summary>
-    [DataField]
-    public float MoleHeatPenaltyThreshold;
-
-    /// <summary>
-    /// The cutoff on power properly doing damage, pulling shit around,
-    /// and delamming into a tesla. Spawns anomalies, +2 bolts of electricity
-    /// </summary>
-    [DataField]
-    public float PowerPenaltyThreshold = 5000f;
-
-    /// <summary>
-    /// Increased anomaly spawns, +1 bolt of electricity
-    /// </summary>
-    [DataField]
-    public float SeverePowerPenaltyThreshold = 7000f;
-
-    /// <summary>
-    /// +1 bolt of electricity
-    /// </summary>
-    [DataField]
-    public float CriticalPowerPenaltyThreshold = 9000f;
-
-    #endregion
-
     #region Damage
 
     /// <summary>
@@ -447,34 +362,6 @@ public sealed partial class SupermatterComponent : Component
     /// </summary>
     [DataField]
     public bool HasBeenPowered;
-
-    #endregion
-
-    #region Ammonia
-
-    /// <summary>
-    /// The minimum pressure for a pure ammonia atmosphere to begin being consumed.
-    /// </summary>
-    [DataField]
-    public float AmmoniaConsumptionPressure = Atmospherics.OneAtmosphere * 0.01f;
-
-    /// <summary>
-    /// How the amount of ammonia consumed per tick scaled with partial pressure.
-    /// </summary>
-    [DataField]
-    public float AmmoniaPressureScaling = Atmospherics.OneAtmosphere * 0.5f;
-
-    /// <summary>
-    /// How much the amount of ammonia consumed per tick scales with gasmix power ratio.
-    /// </summary>
-    [DataField]
-    public float AmmoniaGasMixScaling = 0.3f;
-
-    /// <summary>
-    /// The amount of matter power generated for every mole of ammonia consumed.
-    /// </summary>
-    [DataField]
-    public float AmmoniaPowerGain = 10f;
 
     #endregion
 

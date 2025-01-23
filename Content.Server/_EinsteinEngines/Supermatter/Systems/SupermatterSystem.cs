@@ -64,7 +64,6 @@ public sealed partial class SupermatterSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
-
     public override void Initialize()
     {
         base.Initialize();
@@ -118,7 +117,7 @@ public sealed partial class SupermatterSystem : EntitySystem
         HandleSoundLoop(uid, sm);
         HandleAccent(uid, sm);
 
-        if (sm.Power > sm.PowerPenaltyThreshold || sm.Damage > sm.DamagePenaltyPoint)
+        if (sm.Power > _config.GetCVar(EinsteinCCVars.SupermatterPowerPenaltyThreshold) || sm.Damage > sm.DamagePenaltyPoint)
         {
             SupermatterZap(uid, sm);
             GenerateAnomalies(uid, sm);
@@ -226,21 +225,6 @@ public sealed partial class SupermatterSystem : EntitySystem
         }
 
         args.Handled = true;
-
-        /*if (!HasComp<SharpComponent>(args.Used))
-            return;
-
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, 30f, new SupermatterDoAfterEvent(), args.Target)
-        {
-            BreakOnDamage = true,
-            BreakOnHandChange = false,
-            BreakOnWeightlessMove = false,
-            NeedHand = true,
-            RequireCanInteract = true
-        };
-
-        _doAfter.TryStartDoAfter(doAfterArgs);
-        _popup.PopupClient(Loc.GetString("supermatter-tamper-begin"), uid, args.User);*/
     }
 
     private void OnGetSliver(EntityUid uid, SupermatterComponent sm, ref SupermatterDoAfterEvent args)
