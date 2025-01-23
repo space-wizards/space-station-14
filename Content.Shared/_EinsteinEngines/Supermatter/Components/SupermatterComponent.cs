@@ -352,13 +352,6 @@ public sealed partial class SupermatterComponent : Component
     [DataField]
     public float CriticalPowerPenaltyThreshold = 9000f;
 
-    /// <summary>
-    /// Maximum safe operational temperature in degrees Celsius.
-    /// Supermatter begins taking damage above this temperature.
-    /// </summary>
-    [DataField]
-    public float HeatPenaltyThreshold = 40f;
-
     #endregion
 
     #region Damage
@@ -484,6 +477,28 @@ public sealed partial class SupermatterComponent : Component
     public float AmmoniaPowerGain = 10f;
 
     #endregion
+
+    #region Console-Only Values
+
+    /// <summary>
+    /// The power decay of the supermatter, to be displayed on the monitoring console
+    /// </summary>
+    [DataField]
+    public float PowerLoss;
+
+    /// <summary>
+    /// The low temperature healing of the supermatter, to be displayed on the monitoring console
+    /// </summary>
+    [DataField]
+    public float HeatHealing;
+
+    /// <summary>
+    /// The true value of <see cref="HeatModifier"/> without a lower bound, to be displayed on the monitoring console
+    /// </summary>
+    [DataField]
+    public float GasHeatModifier;
+
+    #endregion
 }
 
 public enum DelamType : int
@@ -529,7 +544,7 @@ public struct SupermatterGasFact
 [Serializable, NetSerializable]
 public static class SupermatterGasData
 {
-    private static readonly Dictionary<Gas, SupermatterGasFact> GasData = new()
+    public static readonly Dictionary<Gas, SupermatterGasFact> GasData = new()
     {
         { Gas.Oxygen,        new(1.5f, 1f,    1f,  1f) },
         { Gas.Nitrogen,      new(0f,   -1.5f, -1f, 1f) },

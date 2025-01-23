@@ -63,13 +63,13 @@ public sealed partial class SupermatterSystem
         var powerRatio = SupermatterGasData.GetPowerMixRatios(gasComposition);
 
         // Affects plasma, o2 and heat output.
-        sm.HeatModifier = SupermatterGasData.GetHeatPenalties(gasComposition);
+        sm.GasHeatModifier = SupermatterGasData.GetHeatPenalties(gasComposition);
         var transmissionBonus = SupermatterGasData.GetTransmitModifiers(gasComposition);
 
         var h2OBonus = 1 - gasComposition.GetMoles(Gas.WaterVapor) * 0.25f;
 
         powerRatio = Math.Clamp(powerRatio, 0, 1);
-        sm.HeatModifier = Math.Max(sm.HeatModifier, 0.5f);
+        sm.HeatModifier = Math.Max(sm.GasHeatModifier, 0.5f);
         transmissionBonus *= h2OBonus;
 
         // Miasma is really just microscopic particulate. It gets consumed like anything else that touches the crystal.
@@ -127,7 +127,7 @@ public sealed partial class SupermatterSystem
         // Based on gas mix, makes the power more based on heat or less effected by heat
         var tempFactor = powerRatio > 0.8 ? 50f : 30f;
 
-        // If there is more frezon and N2 then anything else, we receive no power increase from heat
+        // If there is more frezon and N2 than anything else, we receive no power increase from heat
         sm.Power = Math.Max((sm.GasStorage.Temperature * tempFactor / Atmospherics.T0C) * powerRatio + sm.Power, 0);
 
         // Irradiate stuff
@@ -163,7 +163,8 @@ public sealed partial class SupermatterSystem
 
         // After this point power is lowered
         // This wraps around to the begining of the function
-        sm.Power = Math.Max(sm.Power - Math.Min(powerReduction * sm.PowerlossInhibitor, sm.Power * 0.83f * sm.PowerlossInhibitor), 0f);
+        sm.PowerLoss = Math.Min(powerReduction * sm.PowerlossInhibitor, sm.Power * 0.83f * sm.PowerlossInhibitor);
+        sm.Power = Math.Max(sm.Power - sm.PowerLoss, 0f);
 
         // Adjust the gravity pull range
         if (TryComp<GravityWellComponent>(uid, out var gravityWell))
@@ -336,7 +337,7 @@ public sealed partial class SupermatterSystem
 
         var totalDamage = 0f;
 
-        var tempThreshold = Atmospherics.T0C + sm.HeatPenaltyThreshold;
+        var tempThreshold = Atmospherics.T0C + _config.GetCVar(EinsteinCCVars.SupermatterHeatPenaltyThreshold);
 
         // Temperature start to have a positive effect on damage after 350
         var tempDamage = Math.Max(Math.Clamp(moles / 200f, .5f, 1f) * absorbedGas.Temperature - tempThreshold * sm.DynamicHeatResistance, 0f) *
@@ -355,9 +356,11 @@ public sealed partial class SupermatterSystem
         if (moles < sm.MolePenaltyThreshold)
         {
             // Only has a net positive effect when the temp is below 313.15, heals up to 2 damage. Psychologists increase this temp min by up to 45
-            var healHeatDamage = Math.Min(absorbedGas.Temperature - (tempThreshold + 45f * sm.PsyCoefficient), 0f) / 150f;
-            totalDamage += healHeatDamage;
+            sm.HeatHealing = Math.Min(absorbedGas.Temperature - (tempThreshold + 45f * sm.PsyCoefficient), 0f) / 150f;
+            totalDamage += sm.HeatHealing;
         }
+        else
+            sm.HeatHealing = 0f;
 
         // Check for space tiles next to SM
         if (TryComp<MapGridComponent>(gridId, out var grid))

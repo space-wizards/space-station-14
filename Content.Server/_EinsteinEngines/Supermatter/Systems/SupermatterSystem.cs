@@ -363,7 +363,7 @@ public sealed partial class SupermatterSystem : EntitySystem
         if (sm.Damage >= sm.DamageWarningThreshold)
             return SupermatterStatusType.Warning;
 
-        if (mix.Temperature > Atmospherics.T0C + (sm.HeatPenaltyThreshold * 0.8))
+        if (mix.Temperature > Atmospherics.T0C + _config.GetCVar(EinsteinCCVars.SupermatterHeatPenaltyThreshold) * 0.8)
             return SupermatterStatusType.Caution;
 
         if (sm.Power > 5)

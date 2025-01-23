@@ -17,7 +17,18 @@ public sealed partial class SupermatterConsoleComponent : Component
 }
 
 [Serializable, NetSerializable]
-public struct SupermatterFocusData(NetEntity netEntity, GasMixture gasStorage, float integrity, float power, float radiation, float temperatureLimit, float heatModifier, float absorptionRatio)
+public struct SupermatterFocusData(
+    NetEntity netEntity,
+    GasMixture gasStorage,
+    float integrity,
+    float heatHealing,
+    float power,
+    float powerLoss,
+    float radiation,
+    float temperatureLimit,
+    float heatModifier,
+    float gasHeatModifier,
+    float absorptionRatio)
 {
     /// <summary>
     /// Focus entity
@@ -28,13 +39,19 @@ public struct SupermatterFocusData(NetEntity netEntity, GasMixture gasStorage, f
 
     public float Integrity = integrity;
 
+    public float HeatHealing = heatHealing;
+
     public float Power = power;
+
+    public float PowerLoss = powerLoss;
 
     public float Radiation = radiation;
 
     public float TemperatureLimit = temperatureLimit;
 
     public float HeatModifier = heatModifier;
+
+    public float GasHeatModifier = gasHeatModifier;
 
     public float AbsorptionRatio = absorptionRatio;
 }

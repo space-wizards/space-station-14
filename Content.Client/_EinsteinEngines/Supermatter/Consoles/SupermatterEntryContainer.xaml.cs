@@ -1,5 +1,6 @@
 using Content.Client.Atmos.EntitySystems;
 using Content.Client.Stylesheets;
+using Content.Shared._EinsteinEngines.CCVar;
 using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Prototypes;
@@ -9,6 +10,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Configuration;
 using System.Linq;
 
 namespace Content.Client._EinsteinEngines.Supermatter.Consoles;
@@ -18,22 +20,34 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
 {
     public NetEntity NetEntity;
 
+    private readonly IConfigurationManager _config;
     private readonly IEntityManager _entManager;
     private readonly IResourceCache _cache;
 
     private readonly Dictionary<string, (Label label, ProgressBar bar, PanelContainer border, float leftSize, float rightSize, Color leftColor, Color middleColor, Color rightColor)>? _engineDictionary;
+    private readonly List<(SupermatterGasBarContainer Bar, Gas Gas)> _gasBarData;
 
     // Colors
     private readonly Color _colorGray = Color.Gray;
+    private readonly Color _colorSlate = Color.LightSlateGray;
     private readonly Color _colorRed = StyleNano.DangerousRedFore;
     private readonly Color _colorOrange = StyleNano.ConcerningOrangeFore;
     private readonly Color _colorGreen = StyleNano.GoodGreenFore;
     private readonly Color _colorTurqoise = Color.FromHex("#00fff7");
 
+    // Supermatter base values
+    private readonly float _radiationBase;
+    private readonly float _temperatureLimitBase;
+    private readonly float _wasteBase;
+
+    // Save focus data values so we don't update too often
+    private SupermatterFocusData _focusData;
+
     public SupermatterEntryContainer(NetEntity uid)
     {
         RobustXamlLoader.Load(this);
 
+        _config = IoCManager.Resolve<IConfigurationManager>();
         _entManager = IoCManager.Resolve<IEntityManager>();
         _cache = IoCManager.Resolve<IResourceCache>();
 
@@ -50,7 +64,18 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
             { "waste",       ( WasteBarLabel,       WasteBar,       WasteBarBorder,       0.5f, 0.5f, _colorGreen,    _colorOrange, _colorRed   ) }
         };
 
-        // Set lists so we can iterate through them
+        // Set the gas bar data
+        _gasBarData = [];
+        var gasData = Enum.GetValues<Gas>();
+
+        foreach (var gas in gasData)
+        {
+            var data = (new SupermatterGasBarContainer(gas), gas);
+            _gasBarData.Add(data);
+        }
+
+        #region List Definitions
+
         var mainLabels = new List<Label>()
         {
             IntegrityLabel,
@@ -66,23 +91,59 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
         var barLabels = new List<Label>()
         {
             IntegrityBarLabel,
+            IntegrityHealingInfoLabel,
             PowerBarLabel,
+            PowerDecayInfoLabel,
             RadiationBarLabel,
+            RadiationBaseInfoLabel,
+            RadiationPowerInfoLabel,
             MolesBarLabel,
             TemperatureBarLabel,
             TemperatureLimitBarLabel,
+            TemperatureLimitBaseInfoLabel,
+            TemperatureLimitGasInfoLabel,
             WasteBarLabel,
+            WasteBaseInfoLabel,
+            WasteGasInfoLabel,
             AbsorptionBarLabel
         };
+
+        var detailLabels = new List<Label>()
+        {
+            IntegrityHealingLabel,
+            PowerDecayLabel,
+            RadiationBaseLabel,
+            RadiationPowerLabel,
+            TemperatureLimitBaseLabel,
+            TemperatureLimitGasLabel,
+            WasteBaseLabel,
+            WasteGasLabel
+        };
+
+        #endregion
+
+        // Load values and set base labels
+        _radiationBase = _config.GetCVar(EinsteinCCVars.SupermatterRadsBase);
+        _temperatureLimitBase = Atmospherics.T0C + _config.GetCVar(EinsteinCCVars.SupermatterHeatPenaltyThreshold);
+        _wasteBase = 1f;
+
+        RadiationBaseInfoLabel.Text = Loc.GetString("supermatter-console-window-label-radiation-bar", ("radiation", _radiationBase.ToString("0.00")));
+        TemperatureLimitBaseInfoLabel.Text = Loc.GetString("supermatter-console-window-label-temperature-bar", ("temperature", _temperatureLimitBase.ToString("0.00")));
+        WasteBaseInfoLabel.Text = Loc.GetString("supermatter-console-window-label-waste-bar", ("waste", _wasteBase.ToString("0.00")));
 
         // Load fonts
         var headerFont = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), 11);
         var normalFont = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSansDisplay/NotoSansDisplay-Regular.ttf"), 11);
         var monoFont = new VectorFont(_cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf"), 10);
 
-        // Set fonts and colors
+        // Set fonts and font colors
         SupermatterNameLabel.FontOverride = headerFont;
         SupermatterStatusLabel.FontOverride = normalFont;
+
+        IntegrityHealingInfoLabel.FontColorOverride = _colorGreen;
+        RadiationBaseInfoLabel.FontColorOverride = _colorGreen;
+        TemperatureLimitBaseInfoLabel.FontColorOverride = _colorGreen;
+        WasteBaseInfoLabel.FontColorOverride = _colorRed;
 
         foreach (var label in mainLabels)
         {
@@ -93,6 +154,12 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
         foreach (var label in barLabels)
         {
             label.FontOverride = monoFont;
+        }
+
+        foreach (var label in detailLabels)
+        {
+            label.FontOverride = normalFont;
+            label.FontColorOverride = _colorSlate;
         }
     }
 
@@ -117,46 +184,32 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
         };
 
         // Focus updates
-        FocusContainer.Visible = false;
+        FocusContainer.Visible = isFocus && focusData != null;
 
         if (isFocus)
         {
-            if (focusData != null && _engineDictionary != null)
+            if (focusData != null && !focusData.Value.Equals(_focusData) && _engineDictionary != null)
             {
-                FocusContainer.Visible = true;
+                _focusData = focusData.Value;
 
                 // Update the bar values every time
-                Dictionary<string, float> barData = new()
+                Dictionary<string, float> engineBarData = new()
                 {
-                    { "integrity",   focusData.Value.Integrity },
-                    { "power",       focusData.Value.Power },
-                    { "radiation",   focusData.Value.Radiation },
-                    { "moles",       focusData.Value.GasStorage.TotalMoles },
-                    { "temperature", focusData.Value.GasStorage.Temperature },
-                    { "waste",       focusData.Value.HeatModifier }
+                    { "integrity",   _focusData.Integrity },
+                    { "power",       _focusData.Power },
+                    { "radiation",   _focusData.Radiation },
+                    { "moles",       _focusData.GasStorage.TotalMoles },
+                    { "temperature", _focusData.GasStorage.Temperature },
+                    { "waste",       _focusData.HeatModifier }
                 };
 
-                // Special cases
-                var powerValue = barData["power"];
-                var powerPrefix = powerValue switch { >= 1000 => "G", >= 1 => "M", _ => "" };
-                var powerMultiplier = powerValue switch { >= 1000 => 0.001, >= 1 => 1, _ => 1000 };
-                _engineDictionary["power"].label.Text = Loc.GetString(
-                    "supermatter-console-window-label-power-bar",
-                    ("power", (powerValue * powerMultiplier).ToString("0.000")),
-                    ("prefix", powerPrefix));
+                #region Main Bars
 
-                var temperatureLimit = focusData.Value.TemperatureLimit;
-                TemperatureBar.MaxValue = temperatureLimit;
-                TemperatureLimitBarLabel.Text = Loc.GetString("supermatter-console-window-label-temperature-bar", ("temperature", temperatureLimit.ToString("0.00")));
-
-                var absorptionRatio = focusData.Value.AbsorptionRatio;
-                AbsorptionBarLabel.Text = Loc.GetString("supermatter-console-window-label-absorption-bar", ("absorption", absorptionRatio.ToString("0")));
-
-                // Update engine bars
+                // Engine bars
                 foreach (var bar in _engineDictionary)
                 {
                     var current = bar.Value;
-                    var value = barData[bar.Key];
+                    var value = engineBarData[bar.Key];
                     UpdateEngineBar(current.bar, current.border, value, current.leftSize, current.rightSize, current.leftColor, current.middleColor, current.rightColor);
 
                     if (bar.Key == "power")
@@ -165,32 +218,84 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
                     current.label.Text = Loc.GetString($"supermatter-console-window-label-{bar.Key}-bar", (bar.Key, value.ToString("0.00")));
                 }
 
-                // Update gas bars
-                var atmosphereSystem = _entManager.System<AtmosphereSystem>();
-                var gases = atmosphereSystem.Gases.OrderByDescending(gas => GetStoredGas(gas, focusData));
-                var index = 0;
+                // Gas bars
+                var gases = Enum.GetValues<Gas>();
+                var gasData = new List<((SupermatterGasBarContainer Bar, Gas Gas) GasBarData, float Moles)>();
 
                 foreach (var gas in gases)
                 {
-                    var name = gas.Name;
-                    var color = Color.FromHex("#" + gas.Color);
-                    var value = GetStoredGas(gas, focusData) / focusData.Value.GasStorage.TotalMoles * 100;
+                    var gasId = (int)gas;
+                    var moles = _focusData.GasStorage.GetMoles(gas);
+                    var data = _gasBarData.ElementAt(gasId);
 
-                    UpdateGasBar(index, GasTable, name, color, value);
-                    index++;
+                    gasData.Add((data, moles));
+                    data.Bar.UpdateEntry(gas, _focusData);
+
+                    // Hide 0% gases
+                    if (moles < 0.01f)
+                        data.Bar.Visible = false;
+                    else
+                        data.Bar.Visible = true;
                 }
+
+                var gasSort = gasData.OrderByDescending(x => x.Moles).ThenBy(x => x.GasBarData.Gas);
+                GasTable.RemoveAllChildren();
+
+                foreach (var (gasBarData, moles) in gasSort)
+                    GasTable.AddChild(gasBarData.Bar);
+
+                #endregion
+
+                #region Special Cases & Detailed Information
+
+                // Integrity
+                var integrityHealing = float.Abs(_focusData.HeatHealing);
+                IntegrityHealingInfoLabel.Text = Loc.GetString("supermatter-console-window-label-integrity-bar", ("integrity", integrityHealing.ToString("0.00")));
+
+                // Internal energy
+                var powerValue = engineBarData["power"];
+                var powerPrefix = powerValue switch { >= 1000 => "G", >= 1 => "M", _ => "" };
+                var powerMultiplier = powerValue switch { >= 1000 => 0.001, >= 1 => 1, _ => 1000 };
+                _engineDictionary["power"].label.Text = Loc.GetString(
+                    "supermatter-console-window-label-power-bar",
+                    ("power", (powerValue * powerMultiplier).ToString("0.000")),
+                    ("prefix", powerPrefix));
+
+                var powerLossValue = _focusData.PowerLoss > 0 ? -_focusData.PowerLoss : _focusData.PowerLoss;
+                var powerLossPrefix = powerLossValue switch { <= -1000 => "G", <= -1 => "M", _ => "" };
+                var powerLossMultiplier = powerLossValue switch { <= -1000 => 0.001, <= -1 => 1, _ => 1000 };
+                PowerDecayInfoLabel.Text = Loc.GetString(
+                    "supermatter-console-window-label-power-bar",
+                    ("power", (powerLossValue * powerLossMultiplier).ToString("0.000")),
+                    ("prefix", powerLossPrefix));
+                PowerDecayInfoLabel.FontColorOverride = GetDetailColor(powerLossValue);
+
+                // Radiation emission
+                var radiationPower = _focusData.Radiation - _radiationBase;
+                RadiationPowerInfoLabel.Text = Loc.GetString("supermatter-console-window-label-radiation-bar", ("radiation", radiationPower.ToString("0.00")));
+                RadiationPowerInfoLabel.FontColorOverride = GetDetailColor(radiationPower);
+
+                // Temperature limit
+                var temperatureLimit = _focusData.TemperatureLimit;
+                TemperatureBar.MaxValue = temperatureLimit;
+                TemperatureLimitBarLabel.Text = Loc.GetString("supermatter-console-window-label-temperature-bar", ("temperature", temperatureLimit.ToString("0.00")));
+
+                var temperatureLimitGas = temperatureLimit - _temperatureLimitBase;
+                TemperatureLimitGasInfoLabel.Text = Loc.GetString("supermatter-console-window-label-temperature-bar", ("temperature", temperatureLimitGas.ToString("0.00")));
+                TemperatureLimitGasInfoLabel.FontColorOverride = GetDetailColor(temperatureLimitGas);
+
+                // Waste multiplier
+                var wasteGas = _focusData.GasHeatModifier;
+                WasteGasInfoLabel.Text = Loc.GetString("supermatter-console-window-label-waste-bar", ("waste", wasteGas.ToString("0.00")));
+                WasteGasInfoLabel.FontColorOverride = GetDetailColor(wasteGas, true);
+
+                // Absorption ratio
+                var absorptionRatio = _focusData.AbsorptionRatio;
+                AbsorptionBarLabel.Text = Loc.GetString("supermatter-console-window-label-absorption-bar", ("absorption", absorptionRatio.ToString("0")));
+
+                #endregion
             }
         }
-    }
-
-    private static float GetStoredGas(GasPrototype gas, SupermatterFocusData? focusData)
-    {
-        var id = int.Parse(gas.ID);
-
-        if (focusData == null)
-            return 0f;
-
-        return focusData.Value.GasStorage.GetMoles((Gas)id);
     }
 
     private static void UpdateEngineBar(ProgressBar bar, PanelContainer border, float value, float leftSize, float rightSize, Color leftColor, Color middleColor, Color rightColor)
@@ -236,30 +341,14 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
         bar.Value = clamped;
     }
 
-    private static void UpdateGasBar(int index, Control table, string name, Color color, float value)
+    private Color GetDetailColor(float value, bool invert = false)
     {
-        // Make new UI entry if required
-        if (index >= table.ChildCount)
+        var color = value switch
         {
-            var newEntryContainer = new SupermatterGasBarContainer();
+            >= 0 => invert ? _colorRed : _colorGreen,
+            _ => invert ? _colorGreen : _colorRed
+        };
 
-            // Add the entry to the current table
-            table.AddChild(newEntryContainer);
-        }
-
-        // Update values and UI elements
-        var tableChild = table.GetChild(index);
-
-        if (tableChild is not SupermatterGasBarContainer)
-        {
-            table.RemoveChild(tableChild);
-            UpdateGasBar(index, table, name, color, value);
-
-            return;
-        }
-
-        var entryContainer = (SupermatterGasBarContainer)tableChild;
-
-        entryContainer.UpdateEntry(name, color, value);
+        return color;
     }
 }

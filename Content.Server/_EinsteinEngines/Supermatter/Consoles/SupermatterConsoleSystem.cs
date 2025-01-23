@@ -1,8 +1,10 @@
+using Content.Shared._EinsteinEngines.CCVar;
 using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Content.Shared._EinsteinEngines.Supermatter.Consoles;
 using Content.Shared.Atmos;
 using Content.Shared.Radiation.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using System.Linq;
 
 namespace Content.Server._EinsteinEngines.Supermatter.Console.Systems;
@@ -11,6 +13,7 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
 {
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
 
     public override void Initialize()
     {
@@ -168,16 +171,19 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
         if (sm.GasStorage != null)
             gases = sm.GasStorage;
 
-        var tempThreshold = Atmospherics.T0C + sm.HeatPenaltyThreshold;
+        var tempThreshold = Atmospherics.T0C + _config.GetCVar(EinsteinCCVars.SupermatterHeatPenaltyThreshold);
 
         return new SupermatterFocusData(
             GetNetEntity(focusSupermatter.Value),
             gases,
             GetIntegrity(sm),
+            GetHeatHealing(sm),
             sm.Power,
+            sm.PowerLoss,
             radiationComp.Intensity,
             tempThreshold * sm.DynamicHeatResistance,
             sm.HeatModifier,
+            sm.GasHeatModifier,
             sm.GasEfficiency * 100);
     }
 
@@ -187,6 +193,14 @@ public sealed class SupermatterConsoleSystem : SharedSupermatterConsoleSystem
         integrity = (float)Math.Round(100 - integrity * 100, 2);
         integrity = integrity < 0 ? 0 : integrity;
         return integrity;
+    }
+
+    private static float GetHeatHealing(SupermatterComponent sm)
+    {
+        var heatHealing = sm.HeatHealing / sm.DamageDelaminationPoint;
+        heatHealing = (float)Math.Round(heatHealing * 100, 2);
+        heatHealing = heatHealing > 0 ? 0 : heatHealing;
+        return heatHealing;
     }
 
     private void InitalizeConsole(EntityUid uid, SupermatterConsoleComponent component)

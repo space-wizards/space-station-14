@@ -86,6 +86,13 @@ public sealed partial class EinsteinCCVars : CVars
         CVarDef.Create("supermatter.forced_delam_type", DelamType.Singulo, CVar.SERVER);
 
     /// <summary>
+    ///     Maximum safe operational temperature in degrees Celsius.
+    ///     Supermatter begins taking damage above this temperature.
+    /// </summary>
+    public static readonly CVarDef<float> SupermatterHeatPenaltyThreshold =
+        CVarDef.Create("supermatter.heat_penalty_threshold", 40f, CVar.SERVER);
+
+    /// <summary>
     ///     Base amount of radiation that the supermatter emits.
     /// </summary>
     public static readonly CVarDef<float> SupermatterRadsBase =
