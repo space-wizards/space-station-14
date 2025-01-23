@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: The salvage magnet circuitboard has been added to QM's locker. It can
-      also be made at the circuit imprinter roundstart. NOW GET BACK TO WORK!!!
-    type: Tweak
-  id: 7346
-  time: '2024-09-10T23:25:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31996
 - author: Lank
   changes:
   - message: Several antagonist shuttle events have been removed.
@@ -3892,3 +3884,10 @@
   id: 7845
   time: '2025-01-23T21:11:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34076
+- author: WarPigeon
+  changes:
+  - message: Uranium is now slightly radioactive.
+    type: Add
+  id: 7846
+  time: '2025-01-23T21:39:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34436
