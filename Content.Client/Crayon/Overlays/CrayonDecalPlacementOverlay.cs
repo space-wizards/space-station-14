@@ -17,8 +17,8 @@ public sealed class CrayonDecalPlacementOverlay : Overlay
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     private readonly SharedInteractionSystem _interaction;
-    private readonly SharedTransformSystem _transform;
     private readonly SpriteSystem _sprite;
+    private readonly SharedTransformSystem _transform;
 
     private readonly DecalPrototype? _decal;
     private readonly Angle _rotation;
@@ -46,6 +46,7 @@ public sealed class CrayonDecalPlacementOverlay : Overlay
         if (playerEnt == null)
             return false;
 
+        // only show preview decal if it is within range to be drawn
         return _interaction.InRangeUnobstructed(mousePos, playerEnt.Value, collisionMask: Shared.Physics.CollisionGroup.None);
     }
 

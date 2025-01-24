@@ -80,6 +80,7 @@ namespace Content.Client.Crayon.UI
 
         public void TogglePreviewMode(bool previewMode)
         {
+            // sent to server for validation logic
             SendMessage(new CrayonPreviewModeMessage(previewMode));
         }
     }

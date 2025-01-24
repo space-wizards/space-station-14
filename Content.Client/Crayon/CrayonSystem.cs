@@ -19,11 +19,11 @@ namespace Content.Client.Crayon;
 
 public sealed class CrayonSystem : SharedCrayonSystem
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     // Didn't do in shared because I don't think most of the server stuff can be predicted.
     public override void Initialize()
@@ -87,10 +87,10 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
             _parent.UIUpdateNeeded = false;
             _label.SetMarkup(Robust.Shared.Localization.Loc.GetString("crayon-drawing-label",
-                ("color", _parent.Color),
-                ("state", _parent.SelectedState),
+                ("color",_parent.Color),
+                ("state",_parent.SelectedState),
                 ("charges", _parent.Charges),
-                ("capacity", _parent.Capacity)));
+                ("capacity",_parent.Capacity)));
         }
     }
 
@@ -128,7 +128,6 @@ public sealed class CrayonSystem : SharedCrayonSystem
     private void OnCrayonRotationMessage(EntityUid uid, CrayonComponent component, ref CrayonRotationMessage args)
     {
         UpdateOverlayInternal(component.State, args.Rotation, component.Color, component.PreviewMode);
-
     }
 
     private void OnPlayerDetached(LocalPlayerDetachedEvent args)
