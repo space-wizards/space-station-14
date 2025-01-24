@@ -31,6 +31,7 @@ public sealed partial class InFactionContainerPrecondition : HTNPrecondition
         if (!_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
             return !IsInFactionContainer; // If it doesn't have an xform it's probably not in a container
 
+        // TODO recursively check containers instead of just the container most likely to be a player
         if (!_container.TryGetOuterContainer(owner, xform, out var container))
             return !IsInFactionContainer;
 
