@@ -33,7 +33,7 @@
 - type: soundCollection
   id: ClapSingle
   files:
-    - /Audio/Effects/Emotes/clap-single.ogg
+  - /Audio/Effects/Emotes/clap-single.ogg
 
 - type: soundCollection
   id: Snaps
