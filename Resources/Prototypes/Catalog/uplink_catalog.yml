@@ -699,9 +699,9 @@
   productEntity: ClothingBackpackDuffelSyndicateMedicalBundleFilled
   discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 12
+    Telecrystal: 16
   cost:
-    Telecrystal: 20
+    Telecrystal: 24
   categories:
   - UplinkChemicals
   conditions:
