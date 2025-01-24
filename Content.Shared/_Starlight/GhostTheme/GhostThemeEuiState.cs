@@ -27,3 +27,14 @@ public sealed class GhostThemeSelectedMessage : EuiMessageBase
         ID = id;
     }
 }
+
+[Serializable, NetSerializable]
+public sealed class GhostThemeColorSelectedMessage : EuiMessageBase
+{
+    public readonly Color Color;
+
+    public GhostThemeColorSelectedMessage(Color color)
+    {
+        Color = color;
+    }
+}

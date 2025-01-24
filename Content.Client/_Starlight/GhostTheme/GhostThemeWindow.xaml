@@ -6,8 +6,11 @@
     SetSize="600 560">
     <SplitContainer State="Auto" HorizontalExpand="True">
         <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
-            <BoxContainer Orientation="Vertical" Name="GhostThemesContainer" VerticalExpand="True">
-            </BoxContainer>
+			<BoxContainer Orientation="Vertical" VerticalExpand="True">
+			    <LineEdit Name="Search" VerticalAlignment="Top" Margin="0 0 0 8" PlaceHolder="{Loc 'crayon-window-placeholder'}" />
+                <BoxContainer Orientation="Vertical" Name="GhostThemesContainer" VerticalExpand="True" SeparationOverride="4">
+                </BoxContainer>
+			</BoxContainer>
         </ScrollContainer>
         <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
             <BoxContainer Orientation="Vertical" Name="GhostThemeDescriptionContainer" VerticalExpand="True">

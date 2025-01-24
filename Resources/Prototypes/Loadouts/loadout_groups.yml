@@ -1023,6 +1023,13 @@
   - SecurityOfficerWintercoat
 
 - type: loadoutGroup
+  id: BrigmedicBelt
+  name: loadout-group-brigmedic-belt
+  loadouts:
+  - BrigmedicRig
+  - BrigmedicBelt
+
+- type: loadoutGroup
   id: SecurityHead
   name: loadout-group-security-head
   minLimit: 0

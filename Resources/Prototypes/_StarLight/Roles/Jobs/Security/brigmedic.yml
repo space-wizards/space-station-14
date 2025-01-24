@@ -37,7 +37,6 @@
     mask: ClothingMaskBreathMedicalSecurity
     id: BrigmedicPDA
     gloves: ClothingHandsGlovesNitrile
-    belt: ClothingBeltBrigmedicFilled
   storage:
     back:
     - Flash

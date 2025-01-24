@@ -205,3 +205,15 @@
     sprite: _Starlight/Clothing/Belt/blueshieldwebbing.rsi
   - type: ExplosionResistance
     damageCoefficient: 0.5
+
+- type: entity
+  parent: [ClothingBeltBrigmedic]
+  id: ClothingBeltBrigmedicWeb
+  name: Tactical Trauma Rig
+  description: A stylish alternative to the belt.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Belt/brigmedicwebbing.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Belt/brigmedicwebbing.rsi
+  - type: Appearance

@@ -8,5 +8,7 @@
 	 <Label Name="ThemeNameLabel" Access="Public" HorizontalAlignment="Center" FontColorOverride="{x:Static maths:Color.White}" Margin="0 8 0 4" />
 	</controls:StripeBack>
 	<Label Name="ThemeDescriptionLabel" Access="Public" ClipText="True" FontColorOverride="{x:Static maths:Color.LightGray}" VerticalAlignment="Top" Margin="0 8 0 16" />
+	<Label Name="RgbSkinColorLabel" Text="{Loc 'humanoid-profile-editor-skin-color-label'}" />
+	<BoxContainer Name="RgbSkinColorContainer" Visible="False" Orientation="Vertical" HorizontalExpand="True"></BoxContainer>
 	<Button Name="SelectButton" Text="{Loc 'ghost-gui-choose-theme'}" HorizontalAlignment="Center" VerticalAlignment="Bottom" StyleClasses="OpenBoth" />
 </BoxContainer>

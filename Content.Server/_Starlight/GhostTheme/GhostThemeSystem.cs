@@ -47,6 +47,7 @@ namespace Content.Server.Ghost.Roles;
 [UsedImplicitly]
 public sealed class GhostThemeSystem : EntitySystem
 {
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -79,7 +80,15 @@ public sealed class GhostThemeSystem : EntitySystem
         foreach (var ghostTheme in _prototypeManager.EnumeratePrototypes<GhostThemePrototype>())
         {
             if (_playerRoles.HasAnyPlayerFlags(session, ghostTheme.Flags))
+            {
+                if (ghostTheme.Ckey != null && 
+                    session.Name != ghostTheme.Ckey && 
+                    session.Name != $"localhost@{ghostTheme.Ckey}")
+                {
+                    continue;
+                }
                 AvailableThemes.Add(ghostTheme.ID);
+            }
         }
 
         var eui = _openUis[session] = new GhostThemeEui(AvailableThemes);
@@ -96,6 +105,24 @@ public sealed class GhostThemeSystem : EntitySystem
 
         eui?.Close();
     }
+    public void ChangeColor(ICommonSession session, Color Color)
+    {
+        if (session.AttachedEntity is not { Valid: true } attached ||
+            !EntityManager.TryGetComponent<GhostThemeComponent>(attached, out var themes))
+            return;
+            
+        themes.GhostThemeColor = Color;
+        
+        Dirty(attached, themes);
+        
+        var playerData = _playerRoles.GetPlayerData(attached);
+        if (playerData != null)
+        {
+            playerData.GhostThemeColor = Color;
+        }
+        
+        _appearance.SetData(attached, GhostThemeVisualLayers.Color, Color);
+    }
     public void ChangeTheme(ICommonSession session, string Theme)
     {
         if (session.AttachedEntity is not { Valid: true } attached ||
@@ -109,7 +136,6 @@ public sealed class GhostThemeSystem : EntitySystem
         var playerData = _playerRoles.GetPlayerData(attached);
         if (playerData != null)
         {
-            Logger.Warning($"current ghost theme: {playerData.GhostTheme}, new ghost theme {Theme}");
             playerData.GhostTheme = Theme;
         }
         
@@ -127,15 +153,16 @@ public sealed class GhostThemeSystem : EntitySystem
     {
         base.Update(frameTime);
     }
-    
     private void OnPlayerAttached(EntityUid uid, GhostComponent component, PlayerAttachedEvent args)
     {
         var theme = EnsureComp<GhostThemeComponent>(uid);
         var playerData = _playerRoles.GetPlayerData(uid);
         if (playerData != null && playerData.GhostTheme != null)
         {
-            Logger.Warning($"current ghost theme: {theme.SelectedGhostTheme}, new ghost theme {playerData.GhostTheme}");
             theme.SelectedGhostTheme = playerData.GhostTheme;
+            theme.GhostThemeColor = playerData.GhostThemeColor;
+            _appearance.SetData(uid, GhostThemeVisualLayers.Color, playerData.GhostThemeColor);
+
             Dirty(uid, theme);
             
             _appearance.SetData(uid, GhostThemeVisualLayers.Base, playerData.GhostTheme);

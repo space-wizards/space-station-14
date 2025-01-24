@@ -23,4 +23,10 @@ public sealed class GhostThemePrototype : IPrototype
     
     [DataField("requiredFlags", required: true)]
     public List<PlayerFlags> Flags = [];
+    
+    [DataField("requiredCkey")]
+    public string? Ckey = null;
+    
+    [DataField("colorizeable")]
+    public bool Colorizeable = false;
 }
