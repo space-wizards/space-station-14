@@ -80,10 +80,10 @@
   id: SyndicateOperativeMedicFull
   parent: SyndicateOperativeGearFull
   equipment:
-    eyes: ClothingEyesHudSyndicateAgent
+    eyes: ClothingEyesHudSyndicateMedic
     outerClothing: ClothingOuterHardsuitSyndieMedic
     shoes: ClothingShoesBootsMagSyndie
-    id: SyndiAgentPDA
+    id: SyndiMedicPDA
     belt: ClothingBeltMilitaryWebbingMedFilled
   storage:
     back:

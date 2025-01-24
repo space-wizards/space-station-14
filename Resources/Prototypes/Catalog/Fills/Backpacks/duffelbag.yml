@@ -326,7 +326,7 @@
   - type: StorageFill
     contents:
       - id: BalloonOperative
-      - id: BalloonAgent
+      - id: BalloonMedic
       - id: BalloonElite
       - id: BalloonJuggernaut
       - id: BalloonCommander
