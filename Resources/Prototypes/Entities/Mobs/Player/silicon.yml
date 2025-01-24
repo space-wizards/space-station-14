@@ -142,8 +142,10 @@
   - type: SiliconLawProvider
     laws: Crewsimov
   - type: DetailedInspect # imp. this is the format, please add it to everything else
-    verbMessage: verbs-detailed-inspect-lawset
-    demarcated: true
+    verbMessage: verbs-detailed-inspect-lawset"
+    tickEntries: true
+    numberedEntries: true
+    lineBreak: true
     examineText:
       - law-crewsimov-1
       - law-crewsimov-2
