@@ -270,7 +270,6 @@
         - DiscreteHealthAnalyzer
         - SurgeryTool
         - Dropper
-        - BodyBag
       components:
         - Hypospray
         - Injector
@@ -491,7 +490,6 @@
         - DoorRemote
         - Whistle
         - BalloonPopper
-        - Ensnaring
   - type: ItemMapper
     mapLayers:
       flashbang:
