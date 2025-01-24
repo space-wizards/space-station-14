@@ -62,7 +62,7 @@ public sealed class ReflectSystem : EntitySystem
 
         foreach (var ent in _inventorySystem.GetHandOrInventoryEntities(uid, SlotFlags.All & ~SlotFlags.POCKET))
         {
-            if (!TryReflectHitscan(uid, ent, args.Shooter, args.SourceItem, args.Direction, out var dir))
+            if (!TryReflectHitscan(uid, ent, args.Shooter, args.SourceItem, args.Reflective, args.Direction, out var dir))
                 continue;
 
             args.Direction = dir.Value;
@@ -142,13 +142,10 @@ public sealed class ReflectSystem : EntitySystem
 
     private void OnReflectHitscan(EntityUid uid, ReflectComponent component, ref HitScanReflectAttemptEvent args)
     {
-        if (args.Reflected ||
-            (component.Reflects & args.Reflective) == 0x0)
-        {
+        if (args.Reflected)
             return;
-        }
 
-        if (TryReflectHitscan(uid, uid, args.Shooter, args.SourceItem, args.Direction, out var dir))
+        if (TryReflectHitscan(uid, uid, args.Shooter, args.SourceItem, args.Reflective, args.Direction, out var dir))
         {
             args.Direction = dir.Value;
             args.Reflected = true;
@@ -160,11 +157,13 @@ public sealed class ReflectSystem : EntitySystem
         EntityUid reflector,
         EntityUid? shooter,
         EntityUid shotSource,
+        ReflectType reflective,
         Vector2 direction,
         [NotNullWhen(true)] out Vector2? newDirection)
     {
         if (!TryComp<ReflectComponent>(reflector, out var reflect) ||
             !_toggle.IsActivated(reflector) ||
+            (reflect.Reflects & reflective) == 0x0 ||
             !_random.Prob(reflect.ReflectProb))
         {
             newDirection = null;
