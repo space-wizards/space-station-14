@@ -5,6 +5,8 @@
   components:
   - type: StorageFill
     contents:
+      - id: WeaponShotgunEnforcer
+      - id: BoxLethalshot
       - id: FlashlightSeclite
       - id: WeaponDisabler
       - id: ClothingBeltSecurityFilled
@@ -31,6 +33,8 @@
   components:
   - type: StorageFill
     contents:
+      - id: WeaponShotgunEnforcer
+      - id: BoxLethalshot
       - id: FlashlightSeclite
       - id: WeaponDisabler
       - id: ClothingBeltSecurityFilled
