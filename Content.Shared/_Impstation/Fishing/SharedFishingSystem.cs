@@ -6,7 +6,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement.Events;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
-using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Misc;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
@@ -17,9 +17,10 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Weapons.Misc;
+namespace Content.Shared._Impstation.Fishing;
 
-public abstract class SharedGrapplingGunSystem : EntitySystem
+//Imp : Basically a copy of GrapplingGunSystem
+public abstract class SharedFishingRodSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly INetManager _netManager = default!;
@@ -34,27 +35,27 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GrapplingProjectileComponent, ProjectileEmbedEvent>(OnGrappleCollide);
-        SubscribeLocalEvent<GrapplingProjectileComponent, JointRemovedEvent>(OnGrappleJointRemoved);
+        SubscribeLocalEvent<FishingProjectileComponent, ProjectileEmbedEvent>(OnGrappleCollide);
+        SubscribeLocalEvent<FishingProjectileComponent, JointRemovedEvent>(OnGrappleJointRemoved);
         SubscribeLocalEvent<CanWeightlessMoveEvent>(OnWeightlessMove);
         SubscribeAllEvent<RequestGrapplingReelMessage>(OnGrapplingReel);
 
-        SubscribeLocalEvent<GrapplingGunComponent, GunShotEvent>(OnGrapplingShot);
-        SubscribeLocalEvent<GrapplingGunComponent, ActivateInWorldEvent>(OnGunActivate);
-        SubscribeLocalEvent<GrapplingGunComponent, HandDeselectedEvent>(OnGrapplingDeselected);
+        SubscribeLocalEvent<FishingRodComponent, GunShotEvent>(OnGrapplingShot);
+        SubscribeLocalEvent<FishingRodComponent, ActivateInWorldEvent>(OnGunActivate);
+        SubscribeLocalEvent<FishingRodComponent, HandDeselectedEvent>(OnGrapplingDeselected);
     }
 
-    private void OnGrappleJointRemoved(EntityUid uid, GrapplingProjectileComponent component, JointRemovedEvent args)
+    private void OnGrappleJointRemoved(EntityUid uid, FishingProjectileComponent component, JointRemovedEvent args)
     {
         if (_netManager.IsServer)
             QueueDel(uid);
     }
 
-    private void OnGrapplingShot(EntityUid uid, GrapplingGunComponent component, ref GunShotEvent args)
+    private void OnGrapplingShot(EntityUid uid, FishingRodComponent component, ref GunShotEvent args)
     {
         foreach (var (shotUid, _) in args.Ammo)
         {
-            if (!HasComp<GrapplingProjectileComponent>(shotUid))
+            if (!HasComp<FishingProjectileComponent>(shotUid))
                 continue;
 
             //todo: this doesn't actually support multigrapple
@@ -73,7 +74,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    private void OnGrapplingDeselected(EntityUid uid, GrapplingGunComponent component, HandDeselectedEvent args)
+    private void OnGrapplingDeselected(EntityUid uid, FishingRodComponent component, HandDeselectedEvent args)
     {
         SetReeling(uid, component, false, args.User);
     }
@@ -82,7 +83,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     {
         var player = args.SenderSession.AttachedEntity;
         if (!TryComp<HandsComponent>(player, out var hands) ||
-            !TryComp<GrapplingGunComponent>(hands.ActiveHandEntity, out var grappling))
+            !TryComp<FishingRodComponent>(hands.ActiveHandEntity, out var grappling))
         {
             return;
         }
@@ -112,7 +113,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         }
     }
 
-    private void OnGunActivate(EntityUid uid, GrapplingGunComponent component, ActivateInWorldEvent args)
+    private void OnGunActivate(EntityUid uid, FishingRodComponent component, ActivateInWorldEvent args)
     {
         if (!Timing.IsFirstTimePredicted || args.Handled || !args.Complex || component.Projectile is not {} projectile)
             return;
@@ -127,10 +128,12 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         SetReeling(uid, component, false, args.User);
         _gun.ChangeBasicEntityAmmoCount(uid,  1);
 
+        _joints.RemoveJoint(uid, GrapplingJoint);
+
         args.Handled = true;
     }
 
-    private void SetReeling(EntityUid uid, GrapplingGunComponent component, bool value, EntityUid? user)
+    private void SetReeling(EntityUid uid, FishingRodComponent component, bool value, EntityUid? user)
     {
         if (component.Reeling == value)
             return;
@@ -156,7 +159,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<GrapplingGunComponent>();
+        var query = EntityQueryEnumerator<FishingRodComponent>();
 
         while (query.MoveNext(out var uid, out var grappling))
         {
@@ -200,13 +203,14 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         }
     }
 
-    private void OnGrappleCollide(EntityUid uid, GrapplingProjectileComponent component, ref ProjectileEmbedEvent args)
+    private void OnGrappleCollide(EntityUid uid, FishingProjectileComponent component, ref ProjectileEmbedEvent args)
     {
         if (!Timing.IsFirstTimePredicted)
             return;
 
+        //joint between the hook and the weapon 
         var jointComp = EnsureComp<JointComponent>(uid);
-        var joint = _joints.CreateDistanceJoint(uid, args.Weapon, anchorA: new Vector2(0f, 0.5f), id: GrapplingJoint);
+        var joint = _joints.CreateDistanceJoint(args.Embedded, args.Weapon, anchorA: new Vector2(0f, 0.5f), id: GrapplingJoint);
         joint.MaxLength = joint.Length + 0.2f;
         joint.Stiffness = 1f;
         joint.MinLength = 0.35f;

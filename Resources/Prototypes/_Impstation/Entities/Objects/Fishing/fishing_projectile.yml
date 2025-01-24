@@ -33,4 +33,4 @@
           hard: false
           mask:
             - BulletImpassable
-    - type: GrapplingProjectile
+    - type: FishingProjectile

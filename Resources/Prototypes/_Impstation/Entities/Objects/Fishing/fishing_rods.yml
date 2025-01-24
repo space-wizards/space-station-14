@@ -4,7 +4,7 @@
   id: FishingRodBase
   components:
     - type: AmmoCounter
-    - type: GrapplingGun
+    - type: FishingRod
     - type: Gun
       soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
       fireRate: 0.5
