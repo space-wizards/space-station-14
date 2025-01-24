@@ -121,30 +121,6 @@
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
   parent: SpawnPointLoneNukeOperative
-  id: SpawnPointNukeopsCommander
-  components:
-  - type: GhostRole
-    name: roles-antag-nuclear-operative-commander-name
-    description: roles-antag-nuclear-operative-commander-objective
-    rules: ghost-role-information-rules-default-team-antagonist
-    mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
-
-- type: entity
-  categories: [ HideSpawnMenu, Spawner ]
-  parent: SpawnPointLoneNukeOperative
-  id: SpawnPointNukeopsMedic
-  components:
-  - type: GhostRole
-    name: roles-antag-nuclear-operative-medic-name
-    description: roles-antag-nuclear-operative-medic-objective
-    rules: ghost-role-information-rules-default-team-antagonist
-    mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
-
-- type: entity
-  categories: [ HideSpawnMenu, Spawner ]
-  parent: SpawnPointLoneNukeOperative
   id: SpawnPointNukeopsOperative
   components:
   - type: GhostRole
