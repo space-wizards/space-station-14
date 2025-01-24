@@ -20,7 +20,7 @@
       sprite: Objects/Magic/magicactions.rsi
       state: spell_default
     event: !type:AnimateSpellEvent
-      components:
+      addComponents:
       - type: MindContainer
       - type: InputMover
       - type: MobMover
@@ -45,4 +45,9 @@
       - type: NpcFactionMember
         factions:
         - Wizard
+      - type: NoSlip
+      - type: MovementAlwaysTouching
+      - type: CanMoveInAir 
+      removeComponents:
+      - RequireProjectileTarget
       speech: action-speech-spell-animate

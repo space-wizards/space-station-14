@@ -1,19 +1,14 @@
+using System.Linq;
 using System.Numerics;
 using Content.Shared.Actions;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
-using Content.Shared.Chat.TypingIndicator;
-using Content.Shared.CombatMode;
-using Content.Shared.Construction.Components;
 using Content.Shared.Coordinates.Helpers;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
-using Content.Shared.Emoting;
-using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Lock;
@@ -21,30 +16,22 @@ using Content.Shared.Magic.Components;
 using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
 using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
-using Content.Shared.Movement.Components;
-using Content.Shared.NPC;
-using Content.Shared.NPC.Components;
-using Content.Shared.NPC.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
-using Content.Shared.Speech;
 using Content.Shared.Speech.Muting;
 using Content.Shared.Storage;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
-using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
-using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Spawners;
@@ -74,13 +61,9 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly LockSystem _lock = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly NpcFactionSystem _faction = default!;
-    [Dependency] private readonly FixtureSystem _fixture = default!;
 
     public override void Initialize()
     {
@@ -389,22 +372,8 @@ public abstract class SharedMagicSystem : EntitySystem
         ev.Handled = true;
         Speak(ev);
 
-        foreach (var toRemove in ev.ToRemove)
-        {
-            if (_compFact.TryGetRegistration(toRemove, out var registration))
-                RemComp(ev.Target, registration.Type);
-        }
-
-        foreach (var (name, data) in ev.ToAdd)
-        {
-            if (HasComp(ev.Target, data.Component.GetType()))
-                continue;
-
-            var component = (Component)_compFact.GetComponent(name);
-            var temp = (object)component;
-            _seriMan.CopyTo(data.Component, ref temp);
-            EntityManager.AddComponent(ev.Target, (Component)temp!);
-        }
+        RemoveComponents(ev.Target, ev.ToRemove);
+        AddComponents(ev.Target, ev.ToAdd);
     }
     // End Change Component Spells
     #endregion
@@ -449,6 +418,29 @@ public abstract class SharedMagicSystem : EntitySystem
         {
             var comp = EnsureComp<PreventCollideComponent>(ent);
             comp.Uid = performer;
+        }
+    }
+
+    private void AddComponents(EntityUid target, ComponentRegistry comps)
+    {
+        foreach (var (name, data) in comps)
+        {
+            if (HasComp(target, data.Component.GetType()))
+                continue;
+
+            var component = (Component)_compFact.GetComponent(name);
+            var temp = (object)component;
+            _seriMan.CopyTo(data.Component, ref temp);
+            EntityManager.AddComponent(target, (Component)temp!);
+        }
+    }
+
+    private void RemoveComponents(EntityUid target, HashSet<string> comps)
+    {
+        foreach (var toRemove in comps)
+        {
+            if (_compFact.TryGetRegistration(toRemove, out var registration))
+                RemComp(target, registration.Type);
         }
     }
     // End Spell Helpers
@@ -599,24 +591,25 @@ public abstract class SharedMagicSystem : EntitySystem
 
     private void OnAnimateSpell(AnimateSpellEvent ev)
     {
-        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer) || !TryComp<FixturesComponent>(ev.Target, out var fixtures) ||
+            !TryComp<PhysicsComponent>(ev.Target, out var physics))
             return;
 
         ev.Handled = true;
-        Speak(ev);
+        //Speak(ev);
 
-        foreach (var (name, data) in ev.Components)
-        {
-            if (HasComp(ev.Target, data.Component.GetType()))
-                continue;
+        RemoveComponents(ev.Target, ev.RemoveComponents);
+        AddComponents(ev.Target, ev.AddComponents);
 
-            var component = (Component)_compFact.GetComponent(name);
-            var temp = (object)component;
-            _seriMan.CopyTo(data.Component, ref temp);
-            EntityManager.AddComponent(ev.Target, (Component)temp!);
-        }
+        var xform = Transform(ev.Target);
+        var fixture = fixtures.Fixtures.First();
 
         _transform.Unanchor(ev.Target);
+        _physics.SetCanCollide(ev.Target, true, true, false, fixtures, physics);
+        _physics.SetCollisionMask(ev.Target, fixture.Key, fixture.Value, (int)CollisionGroup.FlyingMobMask, fixtures, physics);
+        _physics.SetCollisionLayer(ev.Target, fixture.Key, fixture.Value, (int)CollisionGroup.FlyingMobLayer, fixtures, physics);
+        _physics.SetBodyType(ev.Target, BodyType.KinematicController, fixtures, physics, xform);
+        _physics.SetBodyStatus(ev.Target, physics, BodyStatus.InAir, true);
     }
 
     #endregion
