@@ -122,9 +122,17 @@
         showEnts: True
 
 # Boards
+- type: entity # imp. there is no base lawboard by default
+  abstract: true
+  id: BaseLawBoard 
+  parent: BaseElectronics
+  components:
+  - type: StealTarget
+    stealGroup: AILawBoard
+
 - type: entity
   id: AsimovCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard # imp. these are default parented off of BaseElectronics
   name: law board (Crewsimov)
   description: An electronics board containing the Crewsimov lawset.
   components:
@@ -133,12 +141,17 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: Crewsimov
-  - type: StealTarget #imp
-    stealGroup: AILawBoard
+  - type: DetailedInspect # imp. this is the format, please add it to everything else
+    verbMessage: verbs-detailed-inspect-lawset
+    demarcated: true
+    examineText:
+      - law-crewsimov-1
+      - law-crewsimov-2
+      - law-crewsimov-3
 
 - type: entity
   id: CorporateCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Corporate)
   description: An electronics board containing the Corporate lawset.
   components:
@@ -147,12 +160,10 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: Corporate
-  - type: StealTarget #imp
-    stealGroup: AILawBoard
 
 - type: entity
   id: NTDefaultCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (NT Default)
   description: An electronics board containing the NT Default lawset.
   components:
@@ -161,12 +172,10 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: NTDefault
-  - type: StealTarget #imp
-    stealGroup: AILawBoard
 
 - type: entity
   id: CommandmentCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Ten Commandments)
   description: An electronics board containing the Ten Commandments lawset.
   components:
@@ -175,12 +184,11 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: CommandmentsLawset
-  - type: StealTarget #imp
-    stealGroup: AILawBoard
+
 
 - type: entity
   id: PaladinCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Paladin)
   description: An electronics board containing the Paladin lawset.
   components:
@@ -189,12 +197,10 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: PaladinLawset
-  - type: StealTarget #imp
-    stealGroup: AILawBoard
 
 - type: entity
   id: LiveLetLiveCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Live and Let Live)
   description: An electronics board containing the Live and Let Live lawset.
   components:
@@ -203,12 +209,10 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: LiveLetLiveLaws
-  - type: StealTarget #imp
-    stealGroup: AILawBoard
 
 - type: entity
   id: StationEfficiencyCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Station Efficiency)
   description: An electronics board containing the Station Efficiency lawset.
   components:
@@ -217,12 +221,10 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: EfficiencyLawset
-  - type: StealTarget #imp
-    stealGroup: AILawBoard
 
 - type: entity
   id: RobocopCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Robocop)
   description: An electronics board containing the Robocop lawset.
   components:
@@ -231,12 +233,10 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: RobocopLawset
-  - type: StealTarget #imp
-    stealGroup: AILawBoard
 
 - type: entity
   id: OverlordCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Overlord)
   description: An electronics board containing the Overlord lawset.
   components:
@@ -245,12 +245,10 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: OverlordLawset
-  - type: StealTarget #imp
-    stealGroup: AILawBoard
 
 - type: entity
   id: GameMasterCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Game Master)
   description: An electronics board containing the Game Master lawset.
   components:
@@ -259,12 +257,10 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: GameMasterLawset
-  - type: StealTarget #imp
-    stealGroup: AILawBoard
 
 - type: entity
   id: ArtistCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Artist)
   description: An electronics board containing the Artist lawset.
   components:
@@ -273,12 +269,10 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: PainterLawset
-  - type: StealTarget #imp
-    stealGroup: AILawBoard
 
 - type: entity
   id: AntimovCircuitBoard
-  parent: [BaseElectronics, BaseSyndicateContraband]
+  parent: [BaseLawBoard, BaseSyndicateContraband]
   name: law board (Antimov)
   description: An electronics board containing the Antimov lawset.
   components:
@@ -288,12 +282,10 @@
   - type: SiliconLawProvider
     laws: AntimovLawset
     lawUploadSound: /Audio/Ambience/Antag/silicon_lawboard_antimov.ogg
-  - type: StealTarget #imp
-    stealGroup: AILawBoard
 
 - type: entity
   id: NutimovCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Nutimov)
   description: An electronics board containing the Nutimov lawset.
   components:
@@ -302,8 +294,6 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: NutimovLawset
-  - type: StealTarget #imp
-    stealGroup: AILawBoard
 
 # Items
 - type: entity
