@@ -546,8 +546,6 @@ ClothingMaskSexyClown: ClothingMaskBlushingClown
 ClothingMaskSexyMime: ClothingMaskBlushingMime
 
 #2025-01-24
-roles-antag-nuclear-operative-agent-name: roles-antag-nuclear-operative-medic-name
-roles-antag-nuclear-operative-agent-objective: roles-antag-nuclear-operative-medic-objective
 SyndiAgentPDA: SyndiMedicPDA
 ClothingEyesHudSyndicateAgent: ClothingEyesHudSyndicateMedic
 BalloonAgent: BalloonMedic
