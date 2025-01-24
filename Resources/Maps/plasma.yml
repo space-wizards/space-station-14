@@ -4916,7 +4916,6 @@ entities:
             5804: -5,-19
             5805: -4,-19
             5806: -3,-19
-            5807: -26,-63
             5808: -33,-64
             5820: -124,15
             5821: -124,16
@@ -6030,6 +6029,7 @@ entities:
             id: Remains
           decals:
             6341: -133,-36
+            7861: -24.903984,-68.040665
         - node:
             cleanable: True
             color: '#FFFFFFFF'
@@ -16175,17 +16175,17 @@ entities:
   - uid: 5619
     components:
     - type: Transform
-      pos: -25.143217,-62.774654
+      pos: -26.532116,-63.969265
       parent: 2
   - uid: 6032
     components:
     - type: Transform
-      pos: -24.486967,-66.39966
+      pos: -25.528984,-62.44691
       parent: 2
   - uid: 16884
     components:
     - type: Transform
-      pos: -24.471342,-68.54028
+      pos: -25.560234,-68.571915
       parent: 2
   - uid: 16888
     components:
@@ -24165,6 +24165,7 @@ entities:
       pos: -15.5,18.5
       parent: 2
     - type: Contraband
+      allowedJobs: []
       allowedDepartments:
       - Security
       severity: Syndicate
@@ -24362,6 +24363,7 @@ entities:
       pos: -13.5,17.5
       parent: 2
     - type: Contraband
+      allowedJobs: []
       allowedDepartments:
       - Security
       severity: Syndicate
@@ -24717,6 +24719,7 @@ entities:
       pos: -13.5,17.5
       parent: 2
     - type: Contraband
+      allowedJobs: []
       allowedDepartments:
       - Security
       severity: Syndicate
@@ -37157,16 +37160,6 @@ entities:
     - type: Transform
       pos: -27.5,-67.5
       parent: 2
-  - uid: 22950
-    components:
-    - type: Transform
-      pos: -26.5,-64.5
-      parent: 2
-  - uid: 22951
-    components:
-    - type: Transform
-      pos: -26.5,-65.5
-      parent: 2
   - uid: 22952
     components:
     - type: Transform
@@ -39501,6 +39494,36 @@ entities:
     components:
     - type: Transform
       pos: -121.5,-27.5
+      parent: 2
+  - uid: 26204
+    components:
+    - type: Transform
+      pos: -25.5,-63.5
+      parent: 2
+  - uid: 26205
+    components:
+    - type: Transform
+      pos: -25.5,-64.5
+      parent: 2
+  - uid: 26206
+    components:
+    - type: Transform
+      pos: -25.5,-66.5
+      parent: 2
+  - uid: 26207
+    components:
+    - type: Transform
+      pos: -25.5,-67.5
+      parent: 2
+  - uid: 26208
+    components:
+    - type: Transform
+      pos: -25.5,-65.5
+      parent: 2
+  - uid: 26209
+    components:
+    - type: Transform
+      pos: -26.5,-67.5
       parent: 2
 - proto: CableApcStack
   entities:
@@ -64865,6 +64888,13 @@ entities:
     - type: Transform
       pos: -116.47996,12.489793
       parent: 2
+- proto: ClothingNeckCloakLesbian
+  entities:
+  - uid: 22951
+    components:
+    - type: Transform
+      pos: -24.48211,-68.415665
+      parent: 2
 - proto: ClothingNeckGoldAutismPin
   entities:
   - uid: 2395
@@ -82952,6 +82982,11 @@ entities:
     components:
     - type: Transform
       pos: -119.513954,26.718058
+      parent: 2
+  - uid: 22950
+    components:
+    - type: Transform
+      pos: -102.307976,-65.23773
       parent: 2
   - uid: 26092
     components:
@@ -127384,6 +127419,7 @@ entities:
           occludes: True
           ent: null
     - type: Contraband
+      allowedJobs: []
       allowedDepartments:
       - Security
       severity: Syndicate
@@ -132176,6 +132212,12 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -83.5,-50.5
+      parent: 2
+  - uid: 26203
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -24.5,-65.5
       parent: 2
 - proto: PoweredlightExterior
   entities:
@@ -137401,6 +137443,13 @@ entities:
     - type: Transform
       pos: -73.4463,-46.27329
       parent: 2
+- proto: ScrapFireExtinguisher
+  entities:
+  - uid: 26202
+    components:
+    - type: Transform
+      pos: -24.466484,-66.446915
+      parent: 2
 - proto: Screen
   entities:
   - uid: 17848
@@ -137552,7 +137601,7 @@ entities:
   - uid: 11090
     components:
     - type: Transform
-      pos: -24.495424,-65.501526
+      pos: -24.51336,-65.540665
       parent: 2
 - proto: SheetGlass
   entities:
@@ -141257,6 +141306,7 @@ entities:
     - type: Item
       size: Huge
     - type: Contraband
+      allowedJobs: []
       allowedDepartments:
       - Security
       severity: Syndicate
@@ -146320,6 +146370,7 @@ entities:
       pos: -13.5,19.5
       parent: 2
     - type: Contraband
+      allowedJobs: []
       allowedDepartments:
       - Security
       severity: Syndicate
@@ -167402,7 +167453,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -191201.36
+      secondsUntilStateChange: -191478.16
       state: Opening
     - type: Airlock
       autoClose: False
