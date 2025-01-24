@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Vermidia
-  changes:
-  - message: Borgs and other creatures that shouldn't get hurt stepping on things
-      no longer get hurt stepping on things.
-    type: Fix
-  - message: Honkbots slip again
-    type: Fix
-  id: 7348
-  time: '2024-09-11T02:12:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31011
 - author: EmoGarbage404
   changes:
   - message: The mining asteroid now generates small structures full of treasure and
@@ -3891,3 +3881,10 @@
   id: 7847
   time: '2025-01-24T03:56:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34258
+- author: Velken
+  changes:
+  - message: Moved Cyborg Charger Circuit Board from Auto Lathe to Circuit Imprinter.
+    type: Tweak
+  id: 7848
+  time: '2025-01-24T04:30:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34612
