@@ -1,9 +1,9 @@
-using Content.Shared.Revenant.Systems;
+using Content.Server.Abilities;
 using Content.Shared.Whitelist;
 
 namespace Content.Server.Revenant.Components;
 
-[RegisterComponent, Access(typeof(SharedRevenantSystem))]
+[RegisterComponent, Access(typeof(AbilitySystem))]
 public sealed partial class MalfunctionActionComponent : Component
 {
     /// <summary>

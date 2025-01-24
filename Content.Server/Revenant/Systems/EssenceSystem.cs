@@ -5,7 +5,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Revenant.Systems;
 using Robust.Shared.Random;
 
-namespace Content.Server.Revenant.EntitySystems;
+namespace Content.Server.Revenant.Systems;
 
 /// <summary>
 ///     Attached to entities when a revenant drains them in order to manage their essence.

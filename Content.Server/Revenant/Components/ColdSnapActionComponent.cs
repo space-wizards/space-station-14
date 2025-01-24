@@ -3,17 +3,17 @@ using Content.Server.Abilities;
 namespace Content.Server.Revenant.Components;
 
 [RegisterComponent, Access(typeof(AbilitySystem))]
-public sealed partial class OverloadLightsActionComponent : Component
+public sealed partial class ColdSnapActionComponent : Component
 {
     /// <summary>
     ///     The radius around the user that this ability affects.
     /// </summary>
     [DataField]
-    public float OverloadRadius = 5f;
+    public float ColdSnapRadius = 4f;
 
     /// <summary>
-    ///     How close to the light the entity has to be in order to be zapped.
+    ///     Energy removed from each tile in Joules.
     /// </summary>
     [DataField]
-    public float OverloadZapRadius = 2f;
+    public float EnergyChange = -2000f;
 }

@@ -2,7 +2,7 @@
 using Content.Shared.Revenant.Components;
 using Content.Shared.Revenant.Systems;
 
-namespace Content.Server.Revenant.EntitySystems;
+namespace Content.Server.Revenant.Systems;
 
 public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLightsSystem
 {

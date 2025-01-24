@@ -7,7 +7,6 @@ using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Eye;
 using Content.Shared.FixedPoint;
-using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Physics;
@@ -18,34 +17,28 @@ using Content.Shared.Revenant.Systems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Store.Components;
 using Content.Shared.Stunnable;
-using Content.Shared.Tag;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Revenant.EntitySystems;
+namespace Content.Server.Revenant.Systems;
 
 public sealed partial class RevenantSystem : SharedRevenantSystem
 {
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
-    [Dependency] private readonly SharedInteractionSystem _interact = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly StoreSystem _store = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly VisibilitySystem _visibility = default!;
 
     private readonly EntProtoId _revenantShopId = "ActionRevenantShop";
@@ -163,7 +156,7 @@ public sealed partial class RevenantSystem : SharedRevenantSystem
         return true;
     }
 
-    public bool TryUseAbility(Entity<RevenantComponent> ent, RevenantActionComponent action)
+    private bool TryUseAbility(Entity<RevenantComponent> ent, RevenantActionComponent action)
     {
         if (ent.Comp.Essence <= action.Cost)
         {

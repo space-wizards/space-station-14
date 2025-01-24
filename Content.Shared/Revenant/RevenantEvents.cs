@@ -30,6 +30,10 @@ public sealed partial class RevenantDefileActionEvent : InstantActionEvent;
 
 public sealed partial class RevenantOverloadLightsActionEvent : InstantActionEvent;
 
+public sealed partial class RevenantColdSnapActionEvent : InstantActionEvent;
+
+public sealed partial class RevenantEnergyDrainActionEvent : InstantActionEvent;
+
 public sealed partial class RevenantMalfunctionActionEvent : InstantActionEvent;
 
 [NetSerializable, Serializable]

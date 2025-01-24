@@ -10,7 +10,7 @@
 - type: entity
   id: ActionRevenantDefile
   name: Defile
-  description: Costs 30 Essence.
+  description: Damages the nearby tiles and windows. Costs 30 Essence.
   components:
   - type: InstantAction
     icon: Interface/Actions/defile.png
@@ -23,7 +23,7 @@
 - type: entity
   id: ActionRevenantOverloadLights
   name: Overload Lights
-  description: Costs 40 Essence.
+  description: Overloads the lights around you. Costs 40 Essence.
   components:
   - type: InstantAction
     icon: Interface/Actions/overloadlight.png
@@ -34,9 +34,35 @@
   - type: OverloadLightsAction
 
 - type: entity
+  id: ActionRevenantColdSnap
+  name: Cold Snap
+  description: Lowers the temperature of ambient air around you. Costs 45 Essence.
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/overloadlight.png
+    event: !type:RevenantColdSnapActionEvent
+    useDelay: 20
+  - type: RevenantAction
+    cost: 45
+  - type: ColdSnapAction
+
+- type: entity
+  id: ActionRevenantEnergyDrain
+  name: Energy Drain
+  description: Drains nearby batteries. Costs 50 Essence.
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/overloadlight.png
+    event: !type:RevenantEnergyDrainActionEvent
+    useDelay: 20
+  - type: RevenantAction
+    cost: 50
+  - type: EnergyDrainAction
+
+- type: entity
   id: ActionRevenantMalfunction
   name: Malfunction
-  description: Costs 60 Essence.
+  description: Emags nearby machines. Costs 60 Essence.
   components:
   - type: InstantAction
     icon: Interface/Actions/malfunction.png
@@ -45,3 +71,14 @@
   - type: RevenantAction
     cost: 60
   - type: MalfunctionAction
+    malfunctionWhitelist:
+      components:
+      # emag lockers open
+      - EntityStorage
+      # emag doors open
+      - Airlock
+      # troll medical to help get kills
+      - StasisBed
+      - EmaggableMedibot
+      # borg become killer
+      - EmagSiliconLaw
