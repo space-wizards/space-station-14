@@ -47,7 +47,17 @@
         - Wizard
       - type: NoSlip
       - type: MovementAlwaysTouching
-      - type: CanMoveInAir 
+      - type: CanMoveInAir
+      - type: Damageable
+        damageContainer: ManifestedSpirit
+      - type: Destructible
+        thresholds:
+        - trigger:
+            !type:DamageTypeTrigger
+            damage: 100
+          behaviors:
+          - !type:DoActsBehavior
+          acts: [ "Destruction" ]
       removeComponents:
       - RequireProjectileTarget
       speech: action-speech-spell-animate
