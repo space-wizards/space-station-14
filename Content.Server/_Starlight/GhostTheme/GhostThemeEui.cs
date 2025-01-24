@@ -24,13 +24,18 @@ public sealed class GhostThemeEui : BaseEui
     {
         base.HandleMessage(msg);
         
-        if (msg is not GhostThemeSelectedMessage selectedTheme)
+        if (msg is GhostThemeSelectedMessage selectedTheme)
+        {
+            _ghostThemeSystem.ChangeTheme(Player, selectedTheme.ID);
+        }
+        else if (msg is GhostThemeColorSelectedMessage colorSelected)
+        {
+            _ghostThemeSystem.ChangeColor(Player, colorSelected.Color);
+        }
+        else
         {
             Close();
-            return;
         }
-        
-        _ghostThemeSystem.ChangeTheme(Player, selectedTheme.ID);
     }
 
     public override void Closed()

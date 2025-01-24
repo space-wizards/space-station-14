@@ -33,6 +33,11 @@ public sealed class GhostThemeEui : BaseEui
         {
             base.SendMessage(new GhostThemeSelectedMessage(slot));
         };
+        
+        _window.SelectColor += color =>
+        {
+            base.SendMessage(new GhostThemeColorSelectedMessage(color));
+        };
     }
 
     public override void Opened()

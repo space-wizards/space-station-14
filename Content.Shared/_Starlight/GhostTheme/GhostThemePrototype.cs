@@ -26,4 +26,7 @@ public sealed class GhostThemePrototype : IPrototype
     
     [DataField("requiredCkey")]
     public string? Ckey = null;
+    
+    [DataField("colorizeable")]
+    public bool Colorizeable = false;
 }

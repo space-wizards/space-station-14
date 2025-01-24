@@ -2,6 +2,7 @@
   id: None
   name: Default
   description: Just a regular boring guy.
+  colorizeable: true
   spriteSpecifier:
     sprite:
       sprite: Mobs/Ghosts/ghost_human.rsi
@@ -38,6 +39,7 @@
   id: Sheet
   name: Sheet
   description: Cute sheet.
+  colorizeable: true
   spriteSpecifier:
     sprite:
       sprite: _Starlight/Mobs/Customization/ghosts.rsi
@@ -51,6 +53,7 @@
   id: Cat
   name: Cat
   description: A cute little cat.
+  colorizeable: true
   spriteSpecifier:
     sprite:
       sprite: _Starlight/Mobs/Customization/ghosts.rsi
@@ -76,6 +79,7 @@
   id: Ian
   name: Ian
   description: A pure dog.
+  colorizeable: true
   spriteSpecifier:
     sprite:
       sprite: _Starlight/Mobs/Customization/ghosts.rsi
@@ -89,6 +93,7 @@
   id: IanCute
   name: IanCute
   description: A pure dog.
+  colorizeable: true
   spriteSpecifier:
     sprite:
       sprite: _Starlight/Mobs/Customization/ghosts.rsi
@@ -102,6 +107,7 @@
   id: Skeleton
   name: Skeleton
   description: skeleton.
+  colorizeable: true
   spriteSpecifier:
     sprite:
       sprite: _Starlight/Mobs/Customization/ghosts.rsi
@@ -208,8 +214,8 @@
       state: ghost-bowmon
     color: "#ffffff"
   requiredFlags:
-    - None
-  requiredCkey: darkrell
+    - BetaTester
+    - AlfaTester
     
 - type: ghostTheme
   id: Firewraith
@@ -223,6 +229,7 @@
   requiredFlags:
     - BetaTester
     - AlfaTester
+  requiredCkey: Killerdash
     
 - type: ghostTheme
   id: Metroid
@@ -236,3 +243,16 @@
   requiredFlags:
     - BetaTester
     - AlfaTester
+    
+- type: ghostTheme
+  id: Cateor
+  name: Cateor
+  description: a cute cateor.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-darkrell
+    color: "#ffffff"
+  requiredFlags:
+    - None
+  requiredCkey: darkrell

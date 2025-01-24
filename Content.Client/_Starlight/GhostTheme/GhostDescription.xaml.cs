@@ -10,19 +10,37 @@ namespace Content.Client._Starlight.GhostTheme;
 public sealed partial class GhostDescription : BoxContainer
 {
     public event Action? OnThemeSelected;
-    
+
+    public event Action<Color>? OnColorSelected;
+
+    private ColorSelectorSliders? _rgbSkinColorSelector = null;
+
     public GhostDescription(
         SpriteSystem spriteSystem,
         SpriteSpecifier icon,
         string name,
-        string description)
+        string description,
+        bool colorizeable)
     {
         RobustXamlLoader.Load(this);
 
         PreviewImage.Texture = spriteSystem.Frame0(icon);
+ 
         ThemeNameLabel.Text = name;
         ThemeDescriptionLabel.Text = description;
         
         SelectButton.OnPressed += _ => OnThemeSelected?.Invoke();
+
+        RgbSkinColorLabel.Visible = colorizeable;
+
+        if (colorizeable)
+        {
+            RgbSkinColorContainer.AddChild(_rgbSkinColorSelector = new ColorSelectorSliders());
+            RgbSkinColorContainer.Visible = colorizeable;
+            _rgbSkinColorSelector.OnColorChanged += _ =>
+            {
+                OnColorSelected?.Invoke(_rgbSkinColorSelector.Color);
+            };
+        }
     }
 }

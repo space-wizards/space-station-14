@@ -47,7 +47,12 @@ public sealed partial class GhostThemeWindow : DefaultWindow
     
     public event Action<string>? SelectTheme;
     
+    public event Action<Color>? SelectColor;
+    
+    public Color _selectedColor = Color.White;
+    
     public HashSet<string> _availableThemes = [];
+    private string _searchFilter = "";
 
     public GhostThemeWindow(IClientPreferencesManager preferencesManager)
     {
@@ -57,11 +62,37 @@ public sealed partial class GhostThemeWindow : DefaultWindow
         _preferencesManager = preferencesManager;
         _sprites = _entitySystem.GetEntitySystem<SpriteSystem>();
         _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
+        
+        Search.OnTextChanged += OnSearchEntered;
     
         ReloadGhostThemes();
         RefreshUI();
     }
     
+    private void OnSearchEntered(LineEdit.LineEditEventArgs obj)
+    {
+        _searchFilter = obj.Text.Trim().ToLowerInvariant();
+        FilterGhostThemes(_searchFilter);
+    }
+
+    private void FilterGhostThemes(string searchText)
+    {
+        var searchTerms = searchText.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                                    .Select(term => term.Trim())
+                                    .Where(term => !string.IsNullOrWhiteSpace(term))
+                                    .ToList();
+
+        foreach (var child in GhostThemesContainer.Children)
+        {
+            if (child is GhostPicker ghostPicker)
+            {
+                var descriptionText = ghostPicker.DescriptionLabel?.Text?.ToLowerInvariant();
+
+                ghostPicker.Visible = searchTerms.Count == 0 || searchTerms.Any(term => descriptionText?.Contains(term) == true);
+            }
+        }
+    }
+
     public void ReloadGhostThemes()
     {
         GhostThemesContainer.RemoveAllChildren();
@@ -71,11 +102,29 @@ public sealed partial class GhostThemeWindow : DefaultWindow
 
         foreach (var ghostTheme in _prototypeManager.EnumeratePrototypes<GhostThemePrototype>())
         {
+            string toolTipText = "";
+            
+            
+            if (ghostTheme.Flags != null)
+            {
+                var flags = ghostTheme.Flags.Select(flag => $"- {flag}").ToList();
+                    
+                toolTipText = "You need one of these roles on Discord to open this ghost role:\n" + string.Join("\n", flags);
+            }
+            
             var ghostPicker = new GhostPicker(_sprites,
                 ghostTheme.SpriteSpecifier.Sprite,
                 ghostTheme.Name,
                 !_availableThemes.Contains(ghostTheme.ID));
             GhostThemesContainer.AddChild(ghostPicker);
+
+            if (!_availableThemes.Contains(ghostTheme.ID))
+            {
+                ghostPicker.ToolTip = toolTipText;
+            }
+            
+            if (ghostTheme.Ckey != null)
+                ghostPicker.Visible = _availableThemes.Contains(ghostTheme.ID);
 
             ghostPicker.OnPressed += args =>
             {
@@ -97,17 +146,26 @@ public sealed partial class GhostThemeWindow : DefaultWindow
     {
         GhostThemeDescriptionContainer.RemoveAllChildren();
         
+        _selectedColor = Color.White;
+        
         if (!_prototypeManager.TryIndex<GhostThemePrototype>(SelectedTheme, out var ghostThemePrototype))
             return;
         
         var ghostDescription = new GhostDescription(_sprites,
                 ghostThemePrototype.SpriteSpecifier.Sprite,
                 ghostThemePrototype.Name,
-                ghostThemePrototype.Description);
+                ghostThemePrototype.Description,
+                ghostThemePrototype.Colorizeable);
                 
+        ghostDescription.OnColorSelected += color =>
+        {
+            _selectedColor = color;
+        };
+        
         ghostDescription.OnThemeSelected += () =>
         {
             SelectTheme?.Invoke(ghostThemePrototype.ID);
+            SelectColor?.Invoke(_selectedColor);
         };
         
         GhostThemeDescriptionContainer.AddChild(ghostDescription);

@@ -27,7 +27,8 @@ public sealed class GhostThemeSystem : EntitySystem
     
     private void SyncTheme(EntityUid uid, GhostThemeComponent component)
     {
-        if (!_appearance.TryGetData<string>(uid, GhostThemeVisualLayers.Base, out var Theme)
+        if (!_appearance.TryGetData<string>(uid, GhostThemeVisualLayers.Base, out var Theme) 
+            || !_appearance.TryGetData<Color>(uid, GhostThemeVisualLayers.Color, out var Color)
             || !_prototypeManager.TryIndex<GhostThemePrototype>(Theme, out var ghostThemePrototype) 
             || !EntityManager.TryGetComponent<SpriteComponent>(uid, out var sprite)
             || sprite.LayerMapTryGet(EffectLayers.Unshaded, out var layer))
@@ -35,7 +36,7 @@ public sealed class GhostThemeSystem : EntitySystem
 
         sprite.LayerSetSprite(layer, ghostThemePrototype.SpriteSpecifier.Sprite);
         sprite.LayerSetShader(layer, "unshaded");
-        sprite.LayerSetColor(layer, ghostThemePrototype.SpriteSpecifier.SpriteColor);
+        sprite.LayerSetColor(layer, Color != Color.White ? Color : ghostThemePrototype.SpriteSpecifier.SpriteColor);
         sprite.LayerSetScale(layer, ghostThemePrototype.SpriteSpecifier.SpriteScale);
         sprite.NoRotation = ghostThemePrototype.SpriteSpecifier.SpriteRotation;
 
