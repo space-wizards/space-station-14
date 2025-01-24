@@ -6472,18 +6472,18 @@ entities:
             2: 34952
           6,-6:
             2: 61440
-            6: 224
+            4: 224
           6,-5:
             0: 112
             2: 2184
           6,-8:
             3: 224
-            4: 57344
-          6,-7:
-            4: 224
             5: 57344
+          6,-7:
+            5: 224
+            6: 57344
           6,-9:
-            4: 57568
+            5: 57568
           7,-5:
             2: 4080
           7,-8:
@@ -6586,7 +6586,7 @@ entities:
             0: 56477
           -4,-13:
             0: 56524
-            4: 17
+            5: 17
           -5,-12:
             0: 62719
           -4,-11:
@@ -6653,7 +6653,7 @@ entities:
             2: 34944
           -5,-13:
             0: 62464
-            4: 255
+            5: 255
           -8,-14:
             2: 7168
           -8,-13:
@@ -6671,49 +6671,49 @@ entities:
             2: 76
           -7,-16:
             2: 49143
-            4: 16392
+            5: 16392
           -7,-15:
             2: 4411
-            4: 49348
+            5: 49348
           -7,-14:
             2: 49408
-            4: 204
+            5: 204
           -7,-17:
             2: 65263
           -6,-16:
             2: 13313
-            4: 49152
+            5: 49152
           -6,-15:
             2: 15
-            4: 63984
+            5: 63984
           -6,-14:
-            4: 255
+            5: 255
             2: 28672
           -5,-16:
-            4: 61440
+            5: 61440
             2: 1024
           -5,-15:
             2: 15
-            4: 65520
+            5: 65520
           -5,-14:
-            4: 65535
+            5: 65535
           -4,-16:
-            4: 28672
+            5: 28672
             2: 33792
           -4,-15:
             2: 15
-            4: 62448
+            5: 62448
           -4,-14:
-            4: 4607
+            5: 4607
             0: 49152
           -3,-16:
             2: 48877
-            4: 16386
+            5: 16386
           -3,-15:
             2: 11
-            4: 29044
+            5: 29044
           -3,-14:
-            4: 119
+            5: 119
             0: 61440
           -3,-17:
             2: 61167
@@ -6872,7 +6872,7 @@ entities:
           3,16:
             2: 242
           12,11:
-            4: 2
+            5: 2
           14,9:
             2: 39304
             0: 17476
@@ -7546,6 +7546,21 @@ entities:
           temperature: 293.15
           moles:
           - 0
+          - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
           - 0
           - 0
           - 0
@@ -7562,21 +7577,6 @@ entities:
           moles:
           - 6666.982
           - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 6666.982
           - 0
           - 0
           - 0
@@ -23567,21 +23567,6 @@ entities:
     - type: Transform
       pos: -8.5,-29.5
       parent: 2
-  - uid: 2620
-    components:
-    - type: Transform
-      pos: -17.5,-55.5
-      parent: 2
-  - uid: 2621
-    components:
-    - type: Transform
-      pos: -16.5,-55.5
-      parent: 2
-  - uid: 2622
-    components:
-    - type: Transform
-      pos: -18.5,-55.5
-      parent: 2
   - uid: 2623
     components:
     - type: Transform
@@ -32687,11 +32672,6 @@ entities:
     - type: Transform
       pos: -23.5,-58.5
       parent: 2
-  - uid: 6881
-    components:
-    - type: Transform
-      pos: -17.5,-57.5
-      parent: 2
   - uid: 7356
     components:
     - type: Transform
@@ -32766,11 +32746,6 @@ entities:
     components:
     - type: Transform
       pos: -20.5,-58.5
-      parent: 2
-  - uid: 18326
-    components:
-    - type: Transform
-      pos: -17.5,-56.5
       parent: 2
   - uid: 18694
     components:
@@ -108640,6 +108615,22 @@ entities:
       parent: 2
 - proto: Poweredlight
   entities:
+  - uid: 2620
+    components:
+    - type: Transform
+      pos: -11.5,-54.5
+      parent: 2
+  - uid: 2621
+    components:
+    - type: Transform
+      pos: -22.5,-54.5
+      parent: 2
+  - uid: 2622
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -15.5,-52.5
+      parent: 2
   - uid: 16395
     components:
     - type: Transform
@@ -110784,16 +110775,6 @@ entities:
       parent: 2
 - proto: PoweredlightExterior
   entities:
-  - uid: 14865
-    components:
-    - type: Transform
-      pos: -11.5,-54.5
-      parent: 2
-  - uid: 14867
-    components:
-    - type: Transform
-      pos: -22.5,-54.5
-      parent: 2
   - uid: 16694
     components:
     - type: Transform
@@ -110838,12 +110819,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 8.5,63.5
-      parent: 2
-  - uid: 16988
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -15.5,-52.5
       parent: 2
 - proto: PoweredlightLED
   entities:
