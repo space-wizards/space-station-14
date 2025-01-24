@@ -46,6 +46,60 @@
     {
       "name": "ghost-skeleton",
       "directions": 4
+    },
+    {
+      "name": "ghost-rinary",
+      "directions": 4
+    },
+    {
+      "name": "ghost-bowmon",
+      "directions": 4
+    },
+    {
+      "name": "ghost-daemon",
+      "directions": 4
+    },
+    {
+      "name": "ghost-revenant",
+      "directions": 4
+    },
+    {
+      "name": "ghost-imp",
+      "directions": 4
+    },
+    {
+      "name": "ghost-metroid",
+      "directions": 4
+    },
+    {
+      "name": "ghost-firewraith",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     }
   ]
 }

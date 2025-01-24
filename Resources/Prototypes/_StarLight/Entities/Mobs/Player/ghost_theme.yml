@@ -146,3 +146,93 @@
     color: "#ffffff"
   requiredFlags:
     - None
+    
+- type: ghostTheme
+  id: Robot
+  name: Robot
+  description: a funny robot.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-rinary
+    color: "#ffffff"
+  requiredFlags:
+    - None
+  requiredCkey: Rinary
+  
+- type: ghostTheme
+  id: Imp
+  name: Imp
+  description: a cute imp.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-imp
+    color: "#ffffff"
+  requiredFlags:
+    - BetaTester
+    - AlfaTester
+    
+- type: ghostTheme
+  id: Revenant
+  name: Revenant
+  description: a cute revenant.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-revenant
+    color: "#ffffff"
+  requiredFlags:
+    - BetaTester
+    - AlfaTester
+    
+- type: ghostTheme
+  id: Daemon
+  name: Daemon
+  description: a cute daemon.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-daemon
+    color: "#ffffff"
+  requiredFlags:
+    - Mentor
+    
+- type: ghostTheme
+  id: Bowmon
+  name: Bowmon
+  description: a cute bowmon.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-bowmon
+    color: "#ffffff"
+  requiredFlags:
+    - None
+  requiredCkey: darkrell
+    
+- type: ghostTheme
+  id: Firewraith
+  name: Firewraith
+  description: a cute firewraith.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-firewraith
+    color: "#ffffff"
+  requiredFlags:
+    - BetaTester
+    - AlfaTester
+    
+- type: ghostTheme
+  id: Metroid
+  name: Metroid
+  description: a cute metroid.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/ghosts.rsi
+      state: ghost-metroid
+    color: "#ffffff"
+  requiredFlags:
+    - BetaTester
+    - AlfaTester

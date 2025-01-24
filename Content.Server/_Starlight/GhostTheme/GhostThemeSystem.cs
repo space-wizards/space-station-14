@@ -79,7 +79,11 @@ public sealed class GhostThemeSystem : EntitySystem
         foreach (var ghostTheme in _prototypeManager.EnumeratePrototypes<GhostThemePrototype>())
         {
             if (_playerRoles.HasAnyPlayerFlags(session, ghostTheme.Flags))
+            {
+                if (ghostTheme.Ckey != null && session.Name != ghostTheme.Ckey && session.Name != $"localhost@{ghostTheme.Ckey}")
+                    return;
                 AvailableThemes.Add(ghostTheme.ID);
+            }
         }
 
         var eui = _openUis[session] = new GhostThemeEui(AvailableThemes);
