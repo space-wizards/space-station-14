@@ -41,11 +41,12 @@ public sealed partial class DragInsertContainerSystem : EntitySystem
             !comp.DelaySelfEntry && args.User == args.Dragged
             )
         {
+            //instant insertion
             args.Handled = Insert(args.Dragged, args.User, ent, container);
             return;
         }
 
-
+        //delayed insertion
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, comp.EntryDelay, new DragInsertContainerInsertFinished(), ent, args.Dragged, ent)
         {
             BreakOnDamage = true,
