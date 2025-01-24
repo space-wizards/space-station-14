@@ -2606,3 +2606,46 @@ Entries:
   id: 364
   time: '2025-01-23T15:51:22.487446+00:00'
   url: 'null'
+- author: Killer Tamashi
+  changes:
+  - message: Added BSO Locker definitions, it now spawns with stuff
+    type: Add
+  id: 365
+  time: '2025-01-24T10:05:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/262
+- author: Killer Tamashi
+  changes:
+  - message: Added BSO Magboots, to match the armor
+    type: Add
+  id: 366
+  time: '2025-01-24T10:05:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/262
+- author: Killer Tamashi
+  changes:
+  - message: Added Brigmedic Chestrig
+    type: Add
+  id: 367
+  time: '2025-01-24T10:05:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/262
+- author: Killer Tamashi
+  changes:
+  - message: Tweaked BSO's Hardsuit appearance, now has lighting and looks cooler.
+    type: Tweak
+  id: 368
+  time: '2025-01-24T10:05:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/262
+- author: Killer Tamashi
+  changes:
+  - message: Fixed BSO hardsuit description, actually says something now
+    type: Fix
+  id: 369
+  time: '2025-01-24T10:05:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/262
+- author: Killer Tamashi
+  changes:
+  - message: Fixed BSO hat description, actually says something now.
+    type: Fix
+  id: 370
+  time: '2025-01-24T10:05:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/262
+
