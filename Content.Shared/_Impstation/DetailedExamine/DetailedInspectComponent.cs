@@ -18,7 +18,7 @@ public sealed partial class DetailedInspectComponent : Component
     /// Whether or not the entries in ExamineText are separated by linebreaks.
     /// </summary>
     [DataField]
-    public bool LineBreak = false;
+    public bool LineBreak = true;
 
     /// <summary>
     /// Whether or not the entries in ExamineText are preceded by ticks. 
