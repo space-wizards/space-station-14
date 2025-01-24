@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: The mining asteroid now generates small structures full of treasure and
-      equipment. Keep an eye open for them, nestled within the rock.
-    type: Add
-  id: 7349
-  time: '2024-09-11T03:33:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31638
 - author: SlamBamActionman
   changes:
   - message: The Station AI job is no longer affected by the Bureaucratic Event event.
@@ -3888,3 +3880,10 @@
   id: 7848
   time: '2025-01-24T04:30:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34612
+- author: Errant
+  changes:
+  - message: Cyborgs now start with positronic brains.
+    type: Tweak
+  id: 7849
+  time: '2025-01-24T06:58:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34614
