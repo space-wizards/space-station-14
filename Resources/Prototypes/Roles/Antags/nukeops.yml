@@ -11,10 +11,10 @@
 
 - type: antag
   id: NukeopsMedic
-  name: roles-antag-nuclear-operative-agent-name
+  name: roles-antag-nuclear-operative-medic-name
   antagonist: true
   setPreference: true
-  objective: roles-antag-nuclear-operative-agent-objective
+  objective: roles-antag-nuclear-operative-medic-objective
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 18000 # 5h
