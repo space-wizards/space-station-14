@@ -161,6 +161,7 @@
       - id: ExGrenade
         amount: 2
       - id: GrenadeShrapnel
+        amount: 2
       - id: SyndieMiniBomb
         amount: 2
       - id: EmpGrenade
