@@ -10,7 +10,6 @@ public sealed partial class VoidApplauseSpellEvent : EntityTargetActionEvent, IS
     [DataField]
     public string? Speech { get; private set; }
 
-    // TODO: Make SingleClap emote and add sound from 13
     /// <summary>
     ///     Emote to use.
     /// </summary>
