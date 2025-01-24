@@ -17,7 +17,7 @@ public sealed partial class VoidApplauseSpellEvent : EntityTargetActionEvent, IS
     public ProtoId<EmotePrototype> Emote = "ClapSingle";
 
     /// <summary>
-    ///     Effect to play
+    ///     Visual effect entity that is spawned at both the user's and the target's location.
     /// </summary>
     [DataField]
     public EntProtoId Effect = "EffectVoidBlink";
