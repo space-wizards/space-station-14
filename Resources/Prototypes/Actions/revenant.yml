@@ -16,6 +16,9 @@
     icon: Interface/Actions/defile.png
     event: !type:RevenantDefileActionEvent
     useDelay: 15
+  - type: RevenantAction
+    cost: 30
+  - type: DefileAction
 
 - type: entity
   id: ActionRevenantOverloadLights
@@ -26,16 +29,9 @@
     icon: Interface/Actions/overloadlight.png
     event: !type:RevenantOverloadLightsActionEvent
     useDelay: 20
-
-#- type: entity
-#  id: ActionRevenantBlight
-#  name: Blight
-#  description: Costs 50 Essence.
-#  components:
-#  - type: InstantAction
-#    icon: Interface/Actions/blight.png
-#    event: !type:RevenantBlightActionEvent
-#    useDelay: 20
+  - type: RevenantAction
+    cost: 40
+  - type: OverloadLightsAction
 
 - type: entity
   id: ActionRevenantMalfunction
@@ -46,3 +42,6 @@
     icon: Interface/Actions/malfunction.png
     event: !type:RevenantMalfunctionActionEvent
     useDelay: 20
+  - type: RevenantAction
+    cost: 60
+  - type: MalfunctionAction

@@ -1,8 +1,8 @@
 ﻿using Content.Shared.Revenant.Components;
-using Content.Shared.Revenant.EntitySystems;
+using Content.Shared.Revenant.Systems;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Revenant;
+namespace Content.Client.Revenant.Systems;
 
 public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLightsSystem
 {

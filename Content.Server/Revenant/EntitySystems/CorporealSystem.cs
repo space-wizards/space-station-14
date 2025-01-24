@@ -1,7 +1,7 @@
 using Content.Server.GameTicking;
 using Content.Shared.Eye;
 using Content.Shared.Revenant.Components;
-using Content.Shared.Revenant.EntitySystems;
+using Content.Shared.Revenant.Systems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Revenant.EntitySystems;

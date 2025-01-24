@@ -8,6 +8,7 @@
   components:
   - type: Input
     context: "ghost"
+  - type: RevenantVisuals
   - type: Spectral
   - type: MovementSpeedModifier
     baseWalkSpeed: 6

@@ -1,10 +1,7 @@
 ﻿using Content.Shared.Revenant.Components;
 
-namespace Content.Shared.Revenant.EntitySystems;
+namespace Content.Shared.Revenant.Systems;
 
-/// <summary>
-/// This handles...
-/// </summary>
 public abstract class SharedRevenantOverloadedLightsSystem : EntitySystem
 {
     public override void Update(float frameTime)

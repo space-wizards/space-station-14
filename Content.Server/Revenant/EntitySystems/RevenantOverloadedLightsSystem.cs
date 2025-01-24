@@ -1,12 +1,9 @@
 ﻿using Content.Server.Beam;
 using Content.Shared.Revenant.Components;
-using Content.Shared.Revenant.EntitySystems;
+using Content.Shared.Revenant.Systems;
 
 namespace Content.Server.Revenant.EntitySystems;
 
-/// <summary>
-/// This handles...
-/// </summary>
 public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLightsSystem
 {
     [Dependency] private readonly BeamSystem _beam = default!;

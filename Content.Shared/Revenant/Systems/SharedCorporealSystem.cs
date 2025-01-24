@@ -5,7 +5,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Revenant.Components;
 using Robust.Shared.Physics.Systems;
 
-namespace Content.Shared.Revenant.EntitySystems;
+namespace Content.Shared.Revenant.Systems;
 
 /// <summary>
 /// Makes the revenant solid when the component is applied.
