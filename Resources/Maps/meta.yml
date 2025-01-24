@@ -8780,13 +8780,6 @@ entities:
       container: 7614
 - proto: ActionToggleLight
   entities:
-  - uid: 7435
-    components:
-    - type: Transform
-      parent: 7385
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 7385
   - uid: 9671
     components:
     - type: Transform
@@ -14364,7 +14357,7 @@ entities:
       pos: -29.5,15.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -232830.38
+      secondsUntilStateChange: -232878.16
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14638,7 +14631,7 @@ entities:
       pos: -4.5,53.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -87484.13
+      secondsUntilStateChange: -87531.914
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -22439,7 +22432,7 @@ entities:
   - uid: 1972
     components:
     - type: Transform
-      pos: -3.512158,38.516827
+      pos: -3.488936,37.704124
       parent: 5350
 - proto: BoozeDispenser
   entities:
@@ -22886,11 +22879,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-  - uid: 28210
-    components:
-    - type: Transform
-      pos: -3.559033,37.59495
-      parent: 5350
 - proto: BoxLightbulb
   entities:
   - uid: 3949
@@ -66203,31 +66191,6 @@ entities:
     - type: Transform
       pos: -49.479202,-34.51553
       parent: 5350
-- proto: ClothingBeltSecurityFilled
-  entities:
-  - uid: 7218
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: GroupExamine
-      group:
-      - hoverMessage: ""
-        contextText: verb-examine-group-other
-        icon: /Textures/Interface/examine-star.png
-        components:
-        - Armor
-        - ClothingSpeedModifier
-        entries:
-        - message: >-
-            It provides the following protection:
-
-            - [color=orange]Explosion[/color] damage [color=white]to contents[/color] reduced by [color=lightblue]10%[/color].
-          priority: 0
-          component: Armor
-        title: null
-    - type: InsideEntityStorage
 - proto: ClothingBeltUtility
   entities:
   - uid: 5395
@@ -66297,13 +66260,6 @@ entities:
       parent: 5350
 - proto: ClothingEyesGlassesSecurity
   entities:
-  - uid: 7209
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 8206
     components:
     - type: Transform
@@ -66486,15 +66442,6 @@ entities:
     - type: Transform
       pos: -40.43663,-23.468378
       parent: 5350
-- proto: ClothingHandsGlovesCombat
-  entities:
-  - uid: 7191
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: ClothingHandsGlovesFingerlessInsulated
   entities:
   - uid: 4748
@@ -67460,13 +67407,6 @@ entities:
     - type: Transform
       pos: 26.36865,-59.55566
       parent: 5350
-  - uid: 7545
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: ClothingShoesBootsPerformer
   entities:
   - uid: 9989
@@ -70112,13 +70052,6 @@ entities:
     - type: Transform
       pos: 17.541042,-24.457052
       parent: 5350
-  - uid: 6700
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 10811
     components:
     - type: Transform
@@ -79528,15 +79461,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 76.5,-27.5
       parent: 5350
-- proto: DoorRemoteArmory
-  entities:
-  - uid: 7757
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: Dresser
   entities:
   - uid: 3195
@@ -83034,7 +82958,7 @@ entities:
       pos: 31.5,-33.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -10323.154
+      secondsUntilStateChange: -10370.938
       state: Closing
   - uid: 9615
     components:
@@ -84624,13 +84548,6 @@ entities:
       parent: 5350
 - proto: Flash
   entities:
-  - uid: 7384
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 12066
     components:
     - type: Transform
@@ -84723,27 +84640,6 @@ entities:
     - type: ActionsContainer
 - proto: FlashlightSeclite
   entities:
-  - uid: 7385
-    components:
-    - type: Transform
-      parent: 6696
-    - type: HandheldLight
-      toggleActionEntity: 7435
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: 7462
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 7435
-    - type: Physics
-      canCollide: False
-    - type: ActionsContainer
-    - type: InsideEntityStorage
   - uid: 9670
     components:
     - type: Transform
@@ -128725,6 +128621,11 @@ entities:
           ent: null
     - type: Physics
       canCollide: True
+  - uid: 6696
+    components:
+    - type: Transform
+      pos: -3.629561,38.954124
+      parent: 5350
   - uid: 10515
     components:
     - type: Transform
@@ -129780,56 +129681,13 @@ entities:
       parent: 5350
     - type: Physics
       bodyType: Static
-- proto: LockerWarden
+- proto: LockerWardenFilled
   entities:
-  - uid: 6696
+  - uid: 1876
     components:
     - type: Transform
-      anchored: True
       pos: -3.5,40.5
       parent: 5350
-    - type: Physics
-      bodyType: Static
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-        - 1.8839531
-        - 7.0872526
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 7385
-          - 1876
-          - 7384
-          - 7224
-          - 7218
-          - 7209
-          - 7191
-          - 7131
-          - 7545
-          - 6700
-          - 7757
-          - 13782
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerWeldingSuppliesFilled
   entities:
   - uid: 6288
@@ -131014,13 +130872,6 @@ entities:
       parent: 5350
 - proto: Multitool
   entities:
-  - uid: 1876
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 3662
     components:
     - type: Transform
@@ -133624,12 +133475,6 @@ entities:
       parent: 5350
 - proto: PowerCellHigh
   entities:
-  - uid: 7462
-    components:
-    - type: Transform
-      parent: 7385
-    - type: Physics
-      canCollide: False
   - uid: 9672
     components:
     - type: Transform
@@ -143133,15 +142978,6 @@ entities:
     - type: Transform
       pos: -34.732925,-41.207012
       parent: 5350
-- proto: RubberStampWarden
-  entities:
-  - uid: 7131
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: SalvageMagnet
   entities:
   - uid: 6114
@@ -176318,13 +176154,6 @@ entities:
     - type: Transform
       pos: -0.80255723,44.790676
       parent: 5350
-  - uid: 7224
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 7543
     components:
     - type: Transform
@@ -176432,13 +176261,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: WeaponShotgunEnforcer
-  entities:
-  - uid: 28199
-    components:
-    - type: Transform
-      pos: -3.527783,37.985577
-      parent: 5350
 - proto: WeaponShotgunKammerer
   entities:
   - uid: 15052
@@ -181740,7 +181562,7 @@ entities:
       pos: -28.5,-5.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -16035.059
+      secondsUntilStateChange: -16082.843
       state: Opening
   - uid: 17570
     components:
@@ -181824,13 +181646,6 @@ entities:
     - type: Transform
       pos: 27.49365,-58.477535
       parent: 5350
-  - uid: 13782
-    components:
-    - type: Transform
-      parent: 6696
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 18439
     components:
     - type: Transform

@@ -61440,6 +61440,15 @@ entities:
     - type: Transform
       pos: -35.36938,-10.505542
       parent: 2
+- proto: ClothingMaskBlushingMime
+  entities:
+  - uid: 8192
+    components:
+    - type: Transform
+      parent: 16657
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: ClothingMaskBreath
   entities:
   - uid: 3602
@@ -61504,15 +61513,6 @@ entities:
     - type: Transform
       pos: 37.5265,-16.39656
       parent: 2
-- proto: ClothingMaskSexyMime
-  entities:
-  - uid: 8192
-    components:
-    - type: Transform
-      parent: 16657
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: ClothingNeckAromanticPin
   entities:
   - uid: 21450
@@ -147081,15 +147081,13 @@ entities:
     - type: Transform
       pos: 3.53751,33.53506
       parent: 2
-- proto: WeaponShotgunEnforcer
+- proto: WeaponShotgunKammerer
   entities:
   - uid: 1957
     components:
     - type: Transform
-      pos: 2.550524,33.364468
+      pos: 2.5428169,33.338696
       parent: 2
-- proto: WeaponShotgunKammerer
-  entities:
   - uid: 5091
     components:
     - type: Transform
