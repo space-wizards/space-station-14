@@ -30,6 +30,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public const string GrapplingJoint = "grappling";
+    public const string FishingJoint = "fishing";
 
     public override void Initialize()
     {
@@ -127,6 +128,8 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         SetReeling(uid, component, false, args.User);
         _gun.ChangeBasicEntityAmmoCount(uid,  1);
 
+        _joints.RemoveJoint(uid, GrapplingJoint);
+
         args.Handled = true;
     }
 
@@ -205,8 +208,9 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         if (!Timing.IsFirstTimePredicted)
             return;
 
+        //joint between the hook and the weapon 
         var jointComp = EnsureComp<JointComponent>(uid);
-        var joint = _joints.CreateDistanceJoint(uid, args.Weapon, anchorA: new Vector2(0f, 0.5f), id: GrapplingJoint);
+        var joint = _joints.CreateDistanceJoint(args.Embedded, args.Weapon, anchorA: new Vector2(0f, 0.5f), id: GrapplingJoint);
         joint.MaxLength = joint.Length + 0.2f;
         joint.Stiffness = 1f;
         joint.MinLength = 0.35f;
