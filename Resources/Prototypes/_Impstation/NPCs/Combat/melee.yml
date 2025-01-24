@@ -1,0 +1,9 @@
+- type: htnCompound
+  id: DoNotEscapeCompound
+  branches:
+    - preconditions:
+      - !type:InContainerPrecondition
+        isInContainer: true
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:NoOperator

@@ -1,4 +1,4 @@
-# Chose a target and never give up (until picked up)
+# Chose a target and never give up
 - type: htnCompound
   id: GrenadePenguinCompound
   branches:
@@ -19,6 +19,13 @@
         - !type:HTNPrimitiveTask
           operator: !type:UnbuckleOperator
             shutdownState: TaskFinished
+
+    - preconditions:
+        - !type:InFactionContainerPrecondition
+          isInFactionContainer: true
+      tasks:
+        - !type:HTNCompoundTask
+          task: DoNotEscapeCompound
 
     - preconditions:
         - !type:InContainerPrecondition
@@ -57,9 +64,7 @@
             targetKey: TargetCoordinates
             pathfindKey: TargetPathfind
             rangeKey: MeleeRange
-        - !type:HTNPrimitiveTask
-          operator: !type:JukeOperator
-            jukeType: AdjacentTile
+        # too angry to juke
         - !type:HTNPrimitiveTask
           operator: !type:MeleeOperator
             targetKey: Target
@@ -69,4 +74,4 @@
             - !type:TargetInRangePrecondition
               targetKey: Target
               rangeKey: MeleeRange
-              # no service, no changing target
+          # no service, no changing target
