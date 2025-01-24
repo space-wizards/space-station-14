@@ -36,3 +36,13 @@
   id: BrigmedicCoat
   equipment:
     outerClothing: ClothingOuterCoatAMG
+
+- type: loadout
+  id: BrigmedicRig
+  equipment:
+    back: ClothingBeltBrigmedicWebFilled
+
+- type: loadout
+  id: BrigmedicBelt
+  equipment:
+    back: ClothingBeltBrigmedicFilled

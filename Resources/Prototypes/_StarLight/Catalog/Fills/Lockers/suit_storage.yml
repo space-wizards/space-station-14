@@ -8,7 +8,6 @@
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitBlueshield
         - id: ClothingMaskBreath
-        - id: ClothingShoesBootsMagSec
-        - id: ClothingNeckCloakBsoElite #until the bso locker file is actually made I can't figure out how to put things inside the locker. This'll do for now.
+        - id: ClothingShoesBootsMagBSO
   - type: AccessReader
     access: [["BlueShield"]]

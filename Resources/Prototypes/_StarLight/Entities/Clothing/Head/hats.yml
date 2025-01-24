@@ -13,6 +13,7 @@
   parent: [ClothingHeadBase, BaseCommandContraband]
   id: ClothingHeadHatBeretBlueShield
   name: blueshield officer's beret
+  description: This beret completes the outfit of any true BlueShield.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Head/Hats/blueshield.rsi
