@@ -6,8 +6,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.NPC.HTN.Preconditions;
 
 /// <summary>
-/// Checks if the owner is in a container.
-/// Checks if the outer-most container is part of their faction.
+/// Recursively checks if the owner is in a friendly container.
 /// </summary>
 public sealed partial class InFactionContainerPrecondition : HTNPrecondition
 {
@@ -29,12 +28,25 @@ public sealed partial class InFactionContainerPrecondition : HTNPrecondition
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
         if (!_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
-            return !IsInFactionContainer; // If it doesn't have an xform it's probably not in a container
+            return false; // If it doesn't have an xform there's bigger problems
 
-        // TODO recursively check containers instead of just the container most likely to be a player
-        if (!_container.TryGetOuterContainer(owner, xform, out var container))
+        if (!_container.TryGetContainingContainer((owner, xform), out var container))
             return !IsInFactionContainer;
 
-        return IsInFactionContainer == _npcFaction.IsEntityFriendly(owner, container.Owner);
+        return IsInFactionContainer == IsContainerFriendlyRecursive((owner, xform), container, owner);
+    }
+
+    /// <summary>
+    /// Returns true if a container is friendly with the owner. Recursively checks each parent.
+    /// </summary>
+    private bool IsContainerFriendlyRecursive(Entity<TransformComponent?> ent, BaseContainer container, EntityUid owner)
+    {
+        if (_npcFaction.IsEntityFriendly(owner, container.Owner))
+            return true;
+
+        if (!_container.TryGetContainingContainer(ent, out var nextContainer))
+            return false;
+
+        return IsContainerFriendlyRecursive(container.Owner, nextContainer, owner);
     }
 }
