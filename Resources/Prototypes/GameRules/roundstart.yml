@@ -126,7 +126,7 @@
       - type: NukeOperative
       - type: RandomMetadata
         nameSegments:
-        - nukeops-role-agent
+        - nukeops-role-medic
         - SyndicateNamesNormal
       - type: NpcFactionMember
         factions:
