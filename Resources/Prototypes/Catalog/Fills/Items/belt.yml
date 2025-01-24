@@ -152,7 +152,9 @@
   - type: StorageFill
     contents:
       - id: ExGrenade
-        amount: 4
+        amount: 2
+      - id: GrenadeShrapnel
+        amount: 2      
       - id: SyndieMiniBomb
         amount: 2
       - id: EmpGrenade
