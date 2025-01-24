@@ -5,10 +5,6 @@ namespace Content.Client.Magic;
 
 public sealed class MagicSystem : SharedMagicSystem
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
 
     public override void OnVoidApplause(VoidApplauseSpellEvent ev)
     {
