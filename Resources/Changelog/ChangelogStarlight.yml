@@ -2648,4 +2648,31 @@ Entries:
   id: 370
   time: '2025-01-24T10:05:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/262
-
+- author: Rinary
+  changes:
+  - message: Added search bar at Ghost Theme UI
+    type: Add
+  id: 371
+  time: '2025-01-24T15:36:02.861843+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added new themes.
+    type: Add
+  id: 372
+  time: '2025-01-24T15:36:13.516893+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added color picking on some ghost themes.
+    type: Add
+  id: 373
+  time: '2025-01-24T15:36:27.465373+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: 'Added ToolTip with requirements to Ghost Themes Buttons. '
+    type: Add
+  id: 374
+  time: '2025-01-24T15:37:11.425667+00:00'
+  url: 'null'
