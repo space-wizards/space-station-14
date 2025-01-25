@@ -69,15 +69,13 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
             Mutating.Visible = msg.PlantData.Mutating;
 
             PlantDataGrid.Visible = true;
-            PlantDataTags.Visible = true;
-            PlantDataDivider.Visible = true;
         }
         else
         {
             PlantDataGrid.Visible = false;
-            PlantDataTags.Visible = false;
-            PlantDataDivider.Visible = false;
         }
+        PlantDataTags.Visible = PlantDataGrid.Visible;
+        PlantDataDivider.Visible = PlantDataGrid.Visible;
 
         // Section 3: Input
         if (msg.TrayData is not null)
@@ -91,11 +89,8 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
             // Section 3.1: Tolerances part 1.
             if (msg.TolerancesData is not null)
             {
-                MinusFieldIfTolerances1.Text = ">";
-                MinusFieldIfTolerances2.Text = ">";
+                GtFieldIfTolerances1.Text = ">";
                 LtFieldIfTolerances1.Text = "<";
-                LtFieldIfTolerances2.Text = "<";
-                LtFieldIfTolerances3.Text = "<";
 
                 WaterConsumptionLabel.Text = msg.TolerancesData.WaterConsumption.ToString("0.00");
                 NutritionConsumptionLabel.Text = msg.TolerancesData.NutrientConsumption.ToString("0.00");
@@ -105,11 +100,8 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
             }
             else
             {
-                MinusFieldIfTolerances1.Text = "";
-                MinusFieldIfTolerances2.Text = "";
+                GtFieldIfTolerances1.Text = "";
                 LtFieldIfTolerances1.Text = "";
-                LtFieldIfTolerances2.Text = "";
-                LtFieldIfTolerances3.Text = "";
 
                 WaterConsumptionLabel.Text = "";
                 NutritionConsumptionLabel.Text = "";
@@ -117,15 +109,17 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
                 PestResistanceLabel.Text = "";
                 WeedResistanceLabel.Text = "";
             }
+            GtFieldIfTolerances2.Text = GtFieldIfTolerances1.Text;
+            LtFieldIfTolerances2.Text = LtFieldIfTolerances1.Text;
+            LtFieldIfTolerances3.Text = LtFieldIfTolerances1.Text;
 
             ContainerGrid.Visible = true;
-            ContainerDivider.Visible = true;
         }
         else
         {
             ContainerGrid.Visible = false;
-            ContainerDivider.Visible = false;
         }
+        ContainerDivider.Visible = ContainerGrid.Visible;
 
         // Section 4: Tolerances part 2.
         if (msg.TolerancesData is not null)
@@ -143,7 +137,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
                 if (gasIds.Contains(int.Parse(gas.ID)))
                     gases.Add(Loc.GetString(gas.Name));
 
-            (string, string)[] parameters = {
+            (string, string)[] parameters = [
                 ("seedName", SeedLabel.Text),
                 ("gases", ContentLocalizationManager.FormatList(gases)),
                 ("kpa", kpa.ToString("0.00")),
@@ -152,21 +146,20 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
                 ("tempTolerance", msg.TolerancesData.HeatTolerance.ToString("0.00")),
                 ("lightLevel", msg.TolerancesData.IdealLight.ToString("0.00")),
                 ("lightTolerance", msg.TolerancesData.LightTolerance.ToString("0.00"))
-            };
+            ];
             EnvironmentLabel.Text = msg.TolerancesData.ConsumeGasses.Count == 0
-                ? msg.TolerancesData.IdealHeat == 0f && msg.TolerancesData.LowPressureTolerance == 0f
+                ? msg.TolerancesData.IdealHeat - msg.TolerancesData.HeatTolerance <= 0f && msg.TolerancesData.LowPressureTolerance <= 0f
                     ? Loc.GetString("plant-analyzer-component-environemt-void", [.. parameters])
                     : Loc.GetString("plant-analyzer-component-environemt", [.. parameters])
                 : Loc.GetString("plant-analyzer-component-environemt-gas", [.. parameters]);
 
             EnvironmentBox.Visible = true;
-            EnvironmentDivider.Visible = true;
         }
         else
         {
             EnvironmentBox.Visible = false;
-            EnvironmentDivider.Visible = false;
         }
+        EnvironmentDivider.Visible = EnvironmentBox.Visible;
 
         // Section 5: Output (Gasses, Chemicals, Yield, Potency, Product, Seedless?)
         // Label printer at the bottom (like the forensic scanner)

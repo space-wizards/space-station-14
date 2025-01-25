@@ -60,7 +60,7 @@
                     <Label FontColorOverride="cyan" HorizontalAlignment="Right" Name="WaterLevelLabel" />
                     <Label Text=" / " />
                     <Label HorizontalAlignment="Right" Text="100.00" />
-                    <Label Margin="12 0 0 0" Name="MinusFieldIfTolerances1" />
+                    <Label Margin="12 0 0 0" Name="GtFieldIfTolerances1" />
                     <Label HorizontalAlignment="Left" Name="WaterConsumptionLabel" />
                     <Label Text=" · " />
                     <Label Text="{Loc 'plant-analyzer-component-nutrition'}" />
@@ -68,7 +68,7 @@
                     <Label FontColorOverride="orange" HorizontalAlignment="Right" Name="NutritionLevelLabel" />
                     <Label Text=" / " />
                     <Label HorizontalAlignment="Right" Text="100.00" />
-                    <Label Margin="12 0 0 0" Name="MinusFieldIfTolerances2" />
+                    <Label Margin="12 0 0 0" Name="GtFieldIfTolerances2" />
                     <Label HorizontalAlignment="Left" Name="NutritionConsumptionLabel" />
                     <Label Text=" · " />
                     <Label Text="{Loc 'plant-analyzer-component-toxins'}" />
