@@ -19,3 +19,18 @@
     sprite: _Impstation/Objects/Consumable/Smokeables/Cigarettes/Packs/spirits.rsi
   - type: Item
     sprite: _Impstation/Objects/Consumable/Smokeables/Cigarettes/Packs/spirits.rsi
+
+- type: entity
+  id: CigPackVoid
+  parent: [CigPackBase, Tier2Contraband]
+  name: Interdyne void label packet
+  description: "Brave the void with these prototype special-infused barozine cigarettes, straight from Interdyne's specialized laboratories. Warning: may cause severe third-degree burns."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Smokeables/Cigarettes/Packs/voidlabel.rsi #todo
+  - type: Item
+    sprite: _Impstation/Objects/Consumable/Smokeables/Cigarettes/Packs/voidlabel.rsi
+  - type: StorageFill
+    contents:
+    - id: CigaretteVoid
+      amount: 10
