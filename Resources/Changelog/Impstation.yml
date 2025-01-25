@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: New sprites for Crysosleep pods, Heaters (Atmos), Freezers (Atmos), as
-      well as their Hellfire variants, with new animations!
-    type: Add
-  id: 501
-  time: '2024-11-13T03:02:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/681
 - author: DinnerCalzone
   changes:
   - message: Someone got into the intern's room and showed him how to use the gain
@@ -4401,3 +4393,10 @@
   id: 1000
   time: '2025-01-25T08:05:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1393
+- author: DinnerCalzone
+  changes:
+  - message: Fland has been derotated to reduce map maintenance load.
+    type: Remove
+  id: 1001
+  time: '2025-01-25T08:08:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1472
