@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: "(Hummingbird) Among peque\xF1o has been given proper judge attire."
-    type: Add
-  - message: (Hummingbird) Added the nuke keg to the maints gambling room.
-    type: Add
-  - message: (Hummingbird) Added windows to the security locker room.
-    type: Add
-  - message: (Hummingbird) Added a shuttle dock to the arrivals area.
-    type: Add
-  - message: (Hummingbird) Added a small maints dock west of the port escape pods.
-    type: Add
-  - message: (Hummingbird) Command roles start in the conference room on the bridge.
-    type: Tweak
-  - message: (Hummingbird) Shortened the evac and annex dock hallways and added debris
-      protection to the evac port.
-    type: Tweak
-  - message: (Hummingbird) Adjusted the salvage recycler area.
-    type: Tweak
-  - message: (Hummingbird) Made various visual changes to tiles and decals.
-    type: Tweak
-  - message: (Hummingbird) Power should now reach the TV in the captain's quarters.
-    type: Fix
-  - message: (Hummingbird) Various other minor changes for a more pleasant gaming
-      experience.
-    type: Tweak
-  id: 504
-  time: '2024-11-13T06:37:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/679
 - author: suyo
   changes:
   - message: Added three new expedition tracks!
@@ -4395,3 +4366,16 @@
   id: 1003
   time: '2025-01-25T08:23:00.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1480
+- author: Darkmajia, AftrLite
+  changes:
+  - message: The supermatter has received a large amount of changes and upgrades.
+      Check out the updated guidebook!
+    type: Tweak
+  - message: The supermatter monitoring console now has full functionality.
+    type: Tweak
+  - message: The supermatter now emits waste gas as intended, instead of storing waste
+      inside itself.
+    type: Fix
+  id: 1004
+  time: '2025-01-25T08:44:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1359
