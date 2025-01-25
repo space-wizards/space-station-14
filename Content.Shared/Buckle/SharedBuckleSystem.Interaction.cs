@@ -138,7 +138,7 @@ public abstract partial class SharedBuckleSystem
 
             var verb = new InteractionVerb()
             {
-                Act = () => TryUnbuckle(entity, args.User, buckleComp: buckledComp),
+                Act = () => TryUnbuckle(entity, args.User, buckledComp),
                 Category = VerbCategory.Unbuckle,
                 Text = entity == args.User
                     ? Loc.GetString("verb-self-target-pronoun")
