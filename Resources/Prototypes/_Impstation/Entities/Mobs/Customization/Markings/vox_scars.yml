@@ -9,7 +9,7 @@
         !type:SimpleColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/vox_scars.rsi
+  - sprite: _Impstation/Mobs/Customization/vox_scars.rsi
     state: roadrash_l_head
 
 - type: marking
@@ -23,7 +23,7 @@
         !type:SimpleColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/vox_scars.rsi
+  - sprite: _Impstation/Mobs/Customization/vox_scars.rsi
     state: roadrash_r_head
 
 - type: marking
@@ -37,7 +37,7 @@
         !type:SimpleColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/vox_scars.rsi
+  - sprite: _Impstation/Mobs/Customization/vox_scars.rsi
     state: bigslash_l_head
 
 - type: marking
@@ -51,7 +51,7 @@
         !type:SimpleColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/vox_scars.rsi
+  - sprite: _Impstation/Mobs/Customization/vox_scars.rsi
     state: bigslash_r_head
 
 - type: marking
@@ -65,7 +65,7 @@
         !type:SimpleColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/vox_scars.rsi
+  - sprite: _Impstation/Mobs/Customization/vox_scars.rsi
     state: slash_l_head
 
 - type: marking
@@ -79,9 +79,9 @@
         !type:SimpleColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/vox_scars.rsi
+  - sprite: _Impstation/Mobs/Customization/vox_scars.rsi
     state: slash_r_head
-    
+
 - type: marking
   id: ScarsVoxClawTorso
   bodyPart: Chest
@@ -93,6 +93,6 @@
         !type:SimpleColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/vox_scars.rsi
+  - sprite: _Impstation/Mobs/Customization/vox_scars.rsi
     state: claw_torso
 
