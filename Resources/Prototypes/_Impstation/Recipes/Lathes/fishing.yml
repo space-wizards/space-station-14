@@ -1,0 +1,8 @@
+- type: latheRecipe
+  id: FishingRod
+  result: FishingRodBase
+  completetime: 3
+  materials:
+    Wood: 500
+    Cloth: 200
+    Steel: 100

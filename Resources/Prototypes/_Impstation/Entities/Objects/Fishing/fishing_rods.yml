@@ -3,29 +3,28 @@
   parent: BaseItem
   id: FishingRodBase
   components:
-    - type: AmmoCounter
-    - type: FishingRod
-    - type: Gun
+    - type: FishingRod #The component that handles all the joint stuff
+    - type: Gun #The component that handles the firing
       soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
       fireRate: 0.5
       clumsyProof: true
-    - type: BasicEntityAmmoProvider
+    - type: BasicEntityAmmoProvider #The component that handles whats being fired
       proto: FishingHook
       capacity: 1
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
+    - type: AmmoCounter #The component that adds the ui element to if the hook is attached or not
+    - type: UseDelay #The component that prevents the server from being spammed too much
+      delay: 1.5
+    - type: Appearance #The component that gives the item a visual
+    - type: Sprite #The component that contains the visual itself
+      sprite: _Impstation/Objects/Fishing/fishingrod.rsi
       layers:
         - state: base
         - state: base-unshaded
           map: [ "unshaded" ]
           visible: true
-    - type: UseDelay
-      delay: 1.5
-    - type: Appearance
-    - type: GenericVisualizer
+    - type: GenericVisualizer #The component that handles multiple states for the sprite
       visuals:
         enum.TetherVisualsStatus.Key:
           unshaded:
             True: { state: base-unshaded }
             False: { state: base-unshaded-off }
-    - type: PacifismAllowedGun

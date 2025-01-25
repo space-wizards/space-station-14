@@ -4,27 +4,23 @@
   name: fishing hook
   categories: [ HideSpawnMenu ]
   components:
-    - type: EmbeddableProjectile
+    - type: FishingProjectile #The component that's used for joint stuff
+    - type: EmbeddableProjectile #The component that tells the item to embed onto things
       deleteOnRemove: true
       sound: 
         path: /Audio/_Impstation/Effects/grapple_impact.ogg
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Sprite
-      noRot: false
-      sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
-      layers:
-        - state: hook
-    - type: Physics
-      bodyType: Dynamic
-      linearDamping: 0
-      angularDamping: 0
-    - type: Projectile
+    - type: Clickable #The component that lets the item be picked up when embedded
+    - type: InteractionOutline #The component that gives the item a highlight when hovered
+    - type: Projectile #The component that handles the fact that this was fired from something
       deleteOnCollide: false
       damage:
         types:
-          Blunt: 5
-    - type: Fixtures
+          Piercing: 5
+    - type: Physics #The component that handles movement upon firing
+      bodyType: Dynamic
+      linearDamping: 0
+      angularDamping: 0
+    - type: Fixtures #The component that handles the hitbox and what it can connect to
       fixtures:
         projectile:
           shape:
@@ -33,4 +29,8 @@
           hard: false
           mask:
             - BulletImpassable
-    - type: FishingProjectile
+    - type: Sprite #The component that handles basic visuals
+      noRot: false
+      sprite: _Impstation/Objects/Fishing/fishingrod.rsi
+      layers:
+        - state: hook

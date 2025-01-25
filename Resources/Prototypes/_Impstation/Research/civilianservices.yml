@@ -1,0 +1,12 @@
+- type: technology
+  id: Fishing
+  name: research-technology-basic-fishing
+  icon:
+    sprite: _Impstation/Objects/Fishing/fishingrod.rsi
+    state: base
+  discipline: CivilianServices
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - FishingRod
+  
