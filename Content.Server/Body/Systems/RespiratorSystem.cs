@@ -76,7 +76,7 @@ public sealed class RespiratorSystem : EntitySystem
 
             UpdateSaturation(uid, -(float) respirator.UpdateInterval.TotalSeconds, respirator);
 
-            if (!_mobState.IsIncapacitated(uid)) // cannot breathe in crit.
+            if (!_mobState.IsIncapacitated(uid) || (TryComp<InternalsComponent>(uid, out var internals) && internals.GasTankEntity != null))
             {
                 switch (respirator.Status)
                 {
