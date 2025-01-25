@@ -21,14 +21,23 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
         if (!ValidScanTarget(target))
             return;
 
-        string? seedDisplayName = null;
+        PlantAnalyzerPlantData? plantData = null;
         PlantAnalyzerTrayData? trayData = null;
         PlantAnalyzerTolerancesData? tolerancesData = null;
         if (_entityManager.TryGetComponent<PlantHolderComponent>(target, out var plantHolder))
         {
             if (plantHolder.Seed is not null)
             {
-                seedDisplayName = plantHolder.Seed.DisplayName;
+                plantData = new PlantAnalyzerPlantData(
+                    seedDisplayName: plantHolder.Seed.DisplayName,
+                    health: plantHolder.Health,
+                    endurance: plantHolder.Seed.Endurance,
+                    age: plantHolder.Age,
+                    lifespan: plantHolder.Seed.Lifespan,
+                    dead: plantHolder.Dead,
+                    viable: plantHolder.Seed.Viable,
+                    mutating: plantHolder.MutationLevel > 0f
+                );
                 tolerancesData = new PlantAnalyzerTolerancesData(
                     waterConsumption: plantHolder.Seed.WaterConsumption,
                     nutrientConsumption: plantHolder.Seed.NutrientConsumption,
@@ -57,7 +66,7 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
         _uiSystem.ServerSendUiMessage(analyzer, PlantAnalyzerUiKey.Key, new PlantAnalyzerScannedUserMessage(
             GetNetEntity(target),
             scanMode,
-            seedDisplayName,
+            plantData,
             trayData,
             tolerancesData
         ));

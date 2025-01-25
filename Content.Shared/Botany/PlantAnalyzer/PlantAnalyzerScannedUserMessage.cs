@@ -9,16 +9,16 @@ public sealed class PlantAnalyzerScannedUserMessage : BoundUserInterfaceMessage
     // TODO: PA
     public readonly NetEntity? TargetEntity;
     public bool? ScanMode;
-    public string? SeedDisplayName;
+    public PlantAnalyzerPlantData? PlantData;
     public PlantAnalyzerTrayData? TrayData;
     public PlantAnalyzerTolerancesData? TolerancesData;
 
 
-    public PlantAnalyzerScannedUserMessage(NetEntity? targetEntity, bool? scanMode, string? seedDisplayName, PlantAnalyzerTrayData? trayData, PlantAnalyzerTolerancesData? tolerancesData)
+    public PlantAnalyzerScannedUserMessage(NetEntity? targetEntity, bool? scanMode, PlantAnalyzerPlantData? plantData, PlantAnalyzerTrayData? trayData, PlantAnalyzerTolerancesData? tolerancesData)
     {
         TargetEntity = targetEntity;
         ScanMode = scanMode;
-        SeedDisplayName = seedDisplayName;
+        PlantData = plantData;
         TrayData = trayData;
         TolerancesData = tolerancesData;
     }
@@ -57,4 +57,20 @@ public sealed class PlantAnalyzerTolerancesData(float nutrientConsumption, float
     public float IdealLight = idealLight;
     public float LightTolerance = lightTolerance;
     public List<Gas> ConsumeGasses = consumeGasses;
+}
+
+/// <summary>
+/// Information about the plant inside the tray.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class PlantAnalyzerPlantData(string seedDisplayName, float health, float endurance, float age, float lifespan, bool dead, bool viable, bool mutating)
+{
+    public string SeedDisplayName = seedDisplayName;
+    public float Health = health;
+    public float Endurance = endurance;
+    public float Age = age;
+    public float Lifespan = lifespan;
+    public bool Dead = dead;
+    public bool Viable = viable;
+    public bool Mutating = mutating;
 }
