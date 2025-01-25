@@ -24,7 +24,11 @@ using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Humanoid; //imp addition
+using Content.Shared.Mind; //imp addition
+using Content.Shared.Roles; //imp addition
 using Content.Shared.Store.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -37,6 +41,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!; //imp addition
 
     [ValidatePrototypeId<CurrencyPrototype>]
     private const string TelecrystalCurrencyPrototype = "Telecrystal";
@@ -106,9 +111,116 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         var antags =_antag.GetAntagIdentifiers(uid);
 
-        foreach (var (_, sessionData, name) in antags)
+        foreach (var (mind, sessionData, name) in antags) //imp edit - replaced an unnamed variable with "mind"
         {
             args.AddLine(Loc.GetString("nukeops-list-name-user", ("name", name), ("user", sessionData.UserName)));
+
+            //imp edit start
+            //this is mostly replicated from the server ObjectivesSystem, lines 206~312
+            //make sure we have a mindComp
+            if (!TryComp<MindComponent>(mind, out var mindComp))
+                continue;
+
+            //get the operative's gender
+            var genderString = "epicene"; //default to they/them'ing people
+            if (TryComp<HumanoidAppearanceComponent>(GetEntity(mindComp.OriginalOwnedEntity!), out var appearance))
+            {
+                genderString = appearance.Gender.ToString().ToLowerInvariant();
+            }
+
+            foreach (var mindRole in mindComp.MindRoles)
+            {
+                //make sure we have a mindRole comp
+                if (!TryComp<MindRoleComponent>(mindRole, out var mindRoleComp))
+                    continue;
+
+                //make sure that the mindRole comp is from some flavour of nukie
+                if (!(mindRoleComp.AntagPrototype == "Nukeops" || mindRoleComp.AntagPrototype == "NukeopsMedic" ||
+                    mindRoleComp.AntagPrototype == "NukeopsCommander"))
+                    continue;
+
+                //get the total costs & how many times each individual thing was bought
+                var costs = new Dictionary<string, int>(); //the total costs
+                var purchaseCounts = new Dictionary<string, int>(); //how many times a given thing was bought
+                //no no-spend text for nukies despite the mindRole saying it gets it because it's annoying to implement :(
+                foreach (var purchase in mindRoleComp.Purchases)
+                {
+                    //get how much was spent
+                    foreach (var key in purchase.Item2.Keys)
+                    {
+                        var currencyName = _prototypeManager.Index(key).DisplayName;
+                        if (!costs.TryGetValue(currencyName, out var cost))
+                        {
+                            cost = 0;
+                        }
+
+                        costs[currencyName] = cost + purchase.Item2[key].Int();
+                    }
+
+                    //get the amount of times each entry was bought
+                    if (!purchaseCounts.TryGetValue(purchase.Item1, out var purchaseCount))
+                    {
+                        purchaseCount = 0;
+                    }
+
+                    purchaseCounts[purchase.Item1] = purchaseCount + 1;
+                }
+
+                var index = 0;
+                var costString = Loc.GetString("roundend-spend-summary-spent", ("gender", genderString)) + " ";
+                //list totals spent
+                //hardcoding english grammar into this probably isn't great but I don't think fluent can do lists?
+                foreach (var costPair in costs) //technically can just get index 0 of the list because it should always have only 1 entry, but let's be safe
+                {
+                    index++;
+                    //if this is the last entry, do a full stop.
+                    if (index == costs.Count)
+                    {
+                        costString += costPair.Value + " " + Loc.GetString(costPair.Key) + ".";
+                        args.AddLine(costString); //appendLine as this is the last entry
+                        continue; //continue early for sanity
+                    }
+
+                    //if this is the second to last entry, use an & instead of a comma
+                    if (index == costs.Count)
+                    {
+                        costString += costPair.Value + " " + Loc.GetString(costPair.Key) + " & ";
+                        continue; // continue early for sanity
+                    }
+
+                    //finally, just do the entry with a comma
+
+                    costString += costPair.Value + " " + Loc.GetString(costPair.Key) + ", ";
+                }
+
+                index = 0; //reset index
+
+                //list things bought
+                //todo figure out how to embed images in these? might need to wait for this UI being turned into an actual UI and not whatever the fuck it currently is
+                var purchasesString = Loc.GetString("roundend-spend-summary-bought", ("gender", genderString)) + " ";
+                foreach (var boughtThing in purchaseCounts)
+                {
+                    index++;
+                    //if this is the last entry, do a full stop.
+                    if (index == purchaseCounts.Count)
+                    {
+                        purchasesString += boughtThing.Value + "x " + Loc.GetString(boughtThing.Key) + ".";
+                        args.AddLine(purchasesString); //appendLine as this is the last entry
+                        continue; //continue early for sanity
+                    }
+
+                    //if this is the second to last entry, use an & instead of a comma
+                    if (index == purchaseCounts.Count - 1)
+                    {
+                        purchasesString += boughtThing.Value + "x " + Loc.GetString(boughtThing.Key) + " & ";
+                        continue; // continue early for sanity
+                    }
+
+                    //finally, just do the entry with a comma
+                    purchasesString += boughtThing.Value + "x " + Loc.GetString(boughtThing.Key) + ", ";
+                }
+            }
+            //imp edit end
         }
     }
 
