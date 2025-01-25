@@ -27,7 +27,7 @@
   description: "Brave the void with these prototype special-infused barozine cigarettes, straight from Interdyne's specialized laboratories. Warning: may cause severe third-degree burns."
   components:
   - type: Sprite
-    sprite: _Impstation/Objects/Consumable/Smokeables/Cigarettes/Packs/voidlabel.rsi #todo
+    sprite: _Impstation/Objects/Consumable/Smokeables/Cigarettes/Packs/voidlabel.rsi
   - type: Item
     sprite: _Impstation/Objects/Consumable/Smokeables/Cigarettes/Packs/voidlabel.rsi
   - type: StorageFill
