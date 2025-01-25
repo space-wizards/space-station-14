@@ -1,4 +1,5 @@
 using Content.Server.Body.Systems;
+using Content.Shared.Alert;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage;
 using Robust.Shared.Prototypes;
@@ -9,6 +10,14 @@ namespace Content.Server.Body.Components
     [RegisterComponent, Access(typeof(RespiratorSystem))]
     public sealed partial class RespiratorComponent : Component
     {
+        /// <summary>
+        ///     Whether the entity is breathing
+        /// </summary>
+        [DataField]
+        public bool Breathing = true;
+
+        public ProtoId<AlertPrototype> BreathingAlert = "Breathing";
+
         /// <summary>
         ///     The next time that this body will inhale or exhale.
         /// </summary>
@@ -85,3 +94,4 @@ public enum RespiratorStatus
     Inhaling,
     Exhaling
 }
+
