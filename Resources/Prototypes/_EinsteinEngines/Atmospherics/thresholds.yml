@@ -1,9 +1,9 @@
 - type: alarmThreshold
   id: supermatterTemperature
   upperBound: !type:AlarmThresholdSetting
-    threshold: 626.3
+    threshold: 313.15
   upperWarnAround: !type:AlarmThresholdSetting
-    threshold: 0.5
+    threshold: 0.9
 
 - type: alarmThreshold
   id: supermatterPressure

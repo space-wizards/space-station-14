@@ -84,6 +84,9 @@
   - type: EyeProtection
   - type: IdentityBlocker
     coverage: EYES
+  - type: ClothingGrantComponent # imp
+    component:
+    - type: SupermatterHallucinationImmune
 
 - type: entity
   parent: [ClothingEyesBase, BaseLensSlot] # BaseLensSlot from imp
