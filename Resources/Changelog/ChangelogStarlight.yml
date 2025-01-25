@@ -2676,3 +2676,30 @@ Entries:
   id: 374
   time: '2025-01-24T15:37:11.425667+00:00'
   url: 'null'
+- author: Conflee
+  changes:
+  - message: 'VoxATS shuttle for Admemes. Comes with Vox atmos in the main rooms,
+      Oxy Atmos in the two docking/trade arms, currency and merchandise to facilitate
+      trade, tools, and a bar. Event: **VoxATSSpawn**'
+    type: Add
+  id: 375
+  time: '2025-01-25T07:25:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/263
+- author: Conflee
+  changes:
+  - message: 'Signaleer shuttle for Admemes. A Syndicate Listening Outpost, with all
+      the tools the job should have, plus their orders, within. Spawn the Syndicate
+      with no Uplink or TC if used please, else they''re OP. Event: **SignaleerSpawn**'
+    type: Add
+  id: 376
+  time: '2025-01-25T07:25:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/263
+- author: Conflee
+  changes:
+  - message: 'cable terminals on Lance shuttle, gave it a proper spawn gamerule for
+      Admeme. Event: **LancePiratesSpawn**'
+    type: Fix
+  id: 377
+  time: '2025-01-25T07:25:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/263
+
