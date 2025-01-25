@@ -24,6 +24,7 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
         PlantAnalyzerPlantData? plantData = null;
         PlantAnalyzerTrayData? trayData = null;
         PlantAnalyzerTolerancesData? tolerancesData = null;
+        PlantAnalyzerProduceData? produceData = null;
         if (_entityManager.TryGetComponent<PlantHolderComponent>(target, out var plantHolder))
         {
             if (plantHolder.Seed is not null)
@@ -52,7 +53,13 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
                     lightTolerance: plantHolder.Seed.LightTolerance,
                     consumeGasses: [.. plantHolder.Seed.ConsumeGasses.Keys]
                 );
-                // TODO: PA
+                produceData = new PlantAnalyzerProduceData(
+                    yield: BotanySystem.CalculateTotalYield(plantHolder.Seed.Yield, plantHolder.YieldMod),
+                    potency: plantHolder.Seed.Potency,
+                    chemicals: [.. plantHolder.Seed.Chemicals.Keys],
+                    produce: plantHolder.Seed.ProductPrototypes,
+                    exudeGasses: [.. plantHolder.Seed.ExudeGasses.Keys]
+                );
             }
             trayData = new PlantAnalyzerTrayData(
                 waterLevel: plantHolder.WaterLevel,
@@ -68,7 +75,8 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
             scanMode,
             plantData,
             trayData,
-            tolerancesData
+            tolerancesData,
+            produceData
         ));
     }
 
