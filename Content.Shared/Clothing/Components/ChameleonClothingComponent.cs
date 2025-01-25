@@ -39,6 +39,7 @@ public sealed partial class ChameleonClothingComponent : Component
     [DataField]
     public string? RequireTag;
 
+    /// <summary>
     ///     Will component owner be affected by EMP pulses?
     /// </summary>
     [DataField]
