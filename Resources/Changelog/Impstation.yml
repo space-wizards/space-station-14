@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Medical and Chemist versions of the Space Jumpsuit
-    type: Add
-  - message: Adjusted Space Cadet Jumpsuit textures
-    type: Tweak
-  id: 500
-  time: '2024-11-13T03:01:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/686
 - author: AftrLite
   changes:
   - message: New sprites for Crysosleep pods, Heaters (Atmos), Freezers (Atmos), as
@@ -4399,3 +4390,14 @@
   id: 999
   time: '2025-01-25T07:58:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1463
+- author: ruddygreat
+  changes:
+  - message: Nuclear Operatives now have their TC spend displayed at the end of a
+      round!
+    type: Add
+  - message: The round end TC summary no longer misgenders the dead. It will still
+      misgender those who have been gibbed, unfortunately.
+    type: Fix
+  id: 1000
+  time: '2025-01-25T08:05:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1393
