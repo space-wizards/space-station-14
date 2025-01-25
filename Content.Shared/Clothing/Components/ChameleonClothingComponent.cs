@@ -61,7 +61,7 @@ public sealed partial class ChameleonClothingComponent : Component
     /// </summary>
     [ViewVariables]
     [DataField]
-    public bool EmpContinious = false;
+    public bool EmpContinious = true;
 
     [AutoPausedField]
     [DataField]
