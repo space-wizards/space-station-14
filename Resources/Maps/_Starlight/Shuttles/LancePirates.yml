@@ -15,7 +15,7 @@ entities:
   - uid: 2
     components:
     - type: MetaData
-      name: LancePirates
+      name: Lance
     - type: Transform
       pos: -0.5,-0.484375
       parent: invalid
@@ -2843,7 +2843,7 @@ entities:
   - uid: 288
     components:
     - type: Transform
-      pos: 2.5,-45.5
+      pos: 3.5,-46.5
       parent: 2
   - uid: 289
     components:
@@ -2868,12 +2868,12 @@ entities:
   - uid: 293
     components:
     - type: Transform
-      pos: -1.5,-46.5
+      pos: 1.5,-44.5
       parent: 2
   - uid: 294
     components:
     - type: Transform
-      pos: -1.5,-45.5
+      pos: -1.5,-46.5
       parent: 2
   - uid: 295
     components:
@@ -2924,6 +2924,16 @@ entities:
     components:
     - type: Transform
       pos: 0.5,-41.5
+      parent: 2
+  - uid: 1340
+    components:
+    - type: Transform
+      pos: -2.5,-46.5
+      parent: 2
+  - uid: 1341
+    components:
+    - type: Transform
+      pos: -0.5,-44.5
       parent: 2
 - proto: CableHVUncuttable
   entities:
@@ -4991,7 +5001,6 @@ entities:
     - type: GasMixer
       inletTwoConcentration: 0.22000003
       inletOneConcentration: 0.78
-      enabled: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
 - proto: GasPassiveVent
@@ -6391,8 +6400,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 3.5,-41.5
       parent: 2
-    - type: GasPressurePump
-      enabled: True
     - type: VentCrawTube
       connected: True
   - uid: 1071
@@ -6401,8 +6408,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -2.5,-41.5
       parent: 2
-    - type: GasPressurePump
-      enabled: True
     - type: VentCrawTube
       connected: True
 - proto: GasValve

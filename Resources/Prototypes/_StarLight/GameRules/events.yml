@@ -68,3 +68,28 @@
         - SimpleHostile
       mindRoles:
       - MindRoleLoneAbductor
+      
+#Conf's Admeme Shuttles 
+- type: entity
+  parent: BaseGameRule
+  id: SignaleerSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    mapPath: /Maps/_Starlight/Shuttles/Signaleer.yml
+    
+- type: entity
+  parent: BaseGameRule
+  id: LancePiratesSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    mapPath: /Maps/_Starlight/Shuttles/LancePirates.yml
+    
+- type: entity
+  parent: BaseGameRule
+  id: VoxATSSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    mapPath: /Maps/_Starlight/Shuttles/VoxATS.yml
