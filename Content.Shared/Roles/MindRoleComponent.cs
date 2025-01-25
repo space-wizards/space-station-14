@@ -1,4 +1,6 @@
+using Content.Shared.FixedPoint;
 using Content.Shared.Mind;
+using Content.Shared.Store;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -42,17 +44,29 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     public ProtoId<JobPrototype>? JobPrototype { get; set; }
 
     /// <summary>
-    /// imp edit - should purchases made by this role be tracked?
-    /// Defaults to true because normal jobs are also mindRoles.
+    /// imp edit - the primary currency used by this role. if null, do not track purchases at all.
     /// </summary>
     [DataField]
-    public bool TrackPurchases = true;
+    public ProtoId<CurrencyPrototype>? PrimaryCurrency;
 
     /// <summary>
     /// imp edit - if true, the player with this role will get complimented for not spending anything
     /// </summary>
     [DataField]
     public bool GetsNoSpendtext;
+
+    /// <summary>
+    /// imp edit - list of things that have been bought by this mind.
+    /// </summary>
+    [ViewVariables]
+    public List<(string, IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2>)> Purchases = new();
+
+    /// <summary>
+    /// imp edit - the priority for this role to be assigned to "making" a purchase. mostly so we can distinguish between purchases as a traitor and purchases as a nukie
+    /// </summary>
+    [ViewVariables]
+    [DataField]
+    public int PurchasePriority = 0;
 }
 
 // Why does this base component actually exist? It does make auto-categorization easy, but before that it was useless?

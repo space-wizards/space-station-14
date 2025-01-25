@@ -22,7 +22,7 @@
     CaptainJetpackStealObjective: 0.5
     HandTeleporterStealObjective: 0.5
     EnergyShotgunStealObjective: 0.5
-    #StealSupermatterSliverObjective: 0.5
+    #StealSupermatterSliverObjective: 0.5 # imp, disabled until StealCondition can verify the supermatter's existence
 
 - type: weightedRandom
   id: TraitorObjectiveGroupKill

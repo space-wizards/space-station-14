@@ -69,7 +69,7 @@
   description: Upon closer inspection, this Syndicate operative is actually a balloon.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Decoys/operative_decoy.rsi
+    sprite: _Impstation/Objects/Tools/Decoys/operative_decoy.rsi #imp edit
     layers:
     - state: oballoon
       map: ["unfoldedLayer"]
@@ -84,7 +84,7 @@
   description: Upon closer inspection, this Syndicate agent is actually a balloon.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Decoys/agent_decoy.rsi
+    sprite: _Impstation/Objects/Tools/Decoys/agent_decoy.rsi #imp edit
     layers:
     - state: aballoon
       map: ["unfoldedLayer"]
@@ -99,7 +99,7 @@
   description: Upon closer inspection, this Syndicate elite operative is actually a balloon.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Decoys/elite_decoy.rsi
+    sprite: _Impstation/Objects/Tools/Decoys/elite_decoy.rsi #imp edit
     layers:
     - state: eballoon
       map: ["unfoldedLayer"]
@@ -116,7 +116,7 @@
   description: Upon closer inspection, this Syndicate juggernaut is actually a balloon.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Decoys/juggernaut_decoy.rsi
+    sprite: _Impstation/Objects/Tools/Decoys/juggernaut_decoy.rsi #imp edit
     layers:
     - state: jballoon
       map: ["unfoldedLayer"]
@@ -131,7 +131,7 @@
   description: Upon closer inspection, this Syndicate commander is actually a balloon.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Decoys/commander_decoy.rsi
+    sprite: _Impstation/Objects/Tools/Decoys/commander_decoy.rsi #imp edit
     layers:
     - state: cballoon
       map: ["unfoldedLayer"]

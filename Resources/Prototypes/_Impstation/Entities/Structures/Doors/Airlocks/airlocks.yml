@@ -6,6 +6,8 @@
   components:
   - type: Wires
     layoutId: AirlockService
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
 
 - type: entity
   parent: AirlockService
