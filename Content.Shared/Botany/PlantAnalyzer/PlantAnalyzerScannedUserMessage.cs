@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Botany.PlantAnalyzer;
 
 [Serializable, NetSerializable]
-public sealed class PlantAnalyzerScannedUserMessage(NetEntity? targetEntity, bool? scanMode, PlantAnalyzerPlantData? plantData, PlantAnalyzerTrayData? trayData, PlantAnalyzerTolerancesData? tolerancesData, PlantAnalyzerProduceData? produceData) : BoundUserInterfaceMessage
+public sealed class PlantAnalyzerScannedUserMessage(NetEntity? targetEntity, bool? scanMode, PlantAnalyzerPlantData? plantData, PlantAnalyzerTrayData? trayData, PlantAnalyzerTolerancesData? tolerancesData, PlantAnalyzerProduceData? produceData, TimeSpan? printReadyAt) : BoundUserInterfaceMessage
 {
     public readonly NetEntity? TargetEntity = targetEntity;
     public bool? ScanMode = scanMode;
@@ -12,6 +12,7 @@ public sealed class PlantAnalyzerScannedUserMessage(NetEntity? targetEntity, boo
     public PlantAnalyzerTrayData? TrayData = trayData;
     public PlantAnalyzerTolerancesData? TolerancesData = tolerancesData;
     public PlantAnalyzerProduceData? ProduceData = produceData;
+    public readonly TimeSpan? PrintReadyAt = printReadyAt;
 }
 
 /// <summary>
@@ -76,4 +77,9 @@ public sealed class PlantAnalyzerProduceData(int yield, float potency, List<stri
     public List<string> Chemicals = chemicals;
     public List<string> Produce = produce;
     public List<Gas> ExudeGasses = exudeGasses;
+}
+
+[Serializable, NetSerializable]
+public sealed class PlantAnalyzerPrintMessage : BoundUserInterfaceMessage
+{
 }
