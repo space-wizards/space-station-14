@@ -11,10 +11,10 @@
 
 - type: antag
   id: NukeopsMedic
-  name: roles-antag-nuclear-operative-medic-name
+  name: roles-antag-nuclear-operative-agent-name
   antagonist: true
   setPreference: true
-  objective: roles-antag-nuclear-operative-medic-objective
+  objective: roles-antag-nuclear-operative-agent-objective
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 18000 # 5h
@@ -80,10 +80,10 @@
   id: SyndicateOperativeMedicFull
   parent: SyndicateOperativeGearFull
   equipment:
-    eyes: ClothingEyesHudSyndicateMedic
+    eyes: ClothingEyesHudSyndicateAgent
     outerClothing: ClothingOuterHardsuitSyndieMedic
     shoes: ClothingShoesBootsMagSyndie
-    id: SyndiMedicPDA
+    id: SyndiAgentPDA
     belt: ClothingBeltMilitaryWebbingMedFilled
   storage:
     back:

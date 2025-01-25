@@ -79,7 +79,7 @@
 
 - type: entity
   parent: BaseDecoy
-  id: BalloonMedic
+  id: BalloonAgent
   name: operative medic balloon
   description: Upon closer inspection, this Syndicate operative medic is actually a balloon.
   components:

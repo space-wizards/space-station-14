@@ -1404,7 +1404,7 @@
 
 - type: entity
   parent: BaseMedicalPDA
-  id: SyndiMedicPDA
+  id: SyndiAgentPDA
   name: syndicate medic PDA
   description: For those days when healing normal syndicates aren't enough, try healing nuclear operatives instead!
   components:
