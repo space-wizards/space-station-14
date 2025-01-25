@@ -157,7 +157,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
                                                    || !EntityManager.TryGetComponent<SpeechComponent>(player.Value, out var speech)
                                                    || speech.AllowedEmotes.Contains(emote.ID);
                                         }).Select(
-                                            emote => new RadialMenuActionOption(() => _entityManager.RaisePredictiveEvent(new PlayEmoteMessage(emote.ID)))
+                                            emote => new RadialMenuActionOption<EmotePrototype>(HandleRadialButtonClick, emote)
                                             {
                                                 Sprite = emote.Icon,
                                                 ToolTip = Loc.GetString(emote.Name)
@@ -171,5 +171,10 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
                                         };
                                     });
         return models;
+    }
+
+    private void HandleRadialButtonClick(EmotePrototype prototype)
+    {
+        _entityManager.RaisePredictiveEvent(new PlayEmoteMessage(prototype.ID));
     }
 }

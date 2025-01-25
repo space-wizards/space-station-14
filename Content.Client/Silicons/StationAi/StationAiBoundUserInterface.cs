@@ -23,13 +23,16 @@ public sealed class StationAiBoundUserInterface(EntityUid owner, Enum uiKey) : B
     private IEnumerable<RadialMenuActionOption> ConvertToButtons(IEnumerable<StationAiRadial> actions)
     {
         return actions.Select(
-            x => new RadialMenuActionOption(
-                () => SendPredictedMessage(new StationAiRadialMessage { Event = x })
-            )
+            x => new RadialMenuActionOption<StationAiRadial>(HandleRadialMenuClick, x)
             {
                 Sprite = x.Sprite,
                 ToolTip = x.Tooltip
             }
         );
+    }
+
+    private void HandleRadialMenuClick(StationAiRadial p)
+    {
+        SendPredictedMessage(new StationAiRadialMessage { Event = p });
     }
 }

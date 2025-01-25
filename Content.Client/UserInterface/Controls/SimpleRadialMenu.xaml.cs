@@ -118,12 +118,17 @@ public partial class SimpleRadialMenu : RadialMenu
         {
             button.TextureNormal = sprites.Frame0(model.Sprite);
         }
-        button.OnPressed += _ =>
+
+        if (model is RadialMenuActionOption actionOption)
         {
-            model.OnPressed?.Invoke();
-            if(!haveNested)
-                Close();
-        };
+            button.OnPressed += _ =>
+            {
+                actionOption.OnPressed?.Invoke();
+                if (!haveNested)
+                    Close();
+            };
+        }
+        
         return button;
     }
 
@@ -173,16 +178,15 @@ public abstract class RadialMenuOption
     
     public SpriteSpecifier? Sprite { get; init; }
 
-    public Action? OnPressed { get; protected set; }
 }
 
-public class RadialMenuActionOption : RadialMenuOption
+public class RadialMenuActionOption(Action onPressed) : RadialMenuOption
 {
-    public RadialMenuActionOption(Action onPressed)
-    {
-        OnPressed = onPressed;
-    }
+    public Action OnPressed { get; } = onPressed;
 }
+
+public class RadialMenuActionOption<T>(Action<T> onPressed, T data)
+    : RadialMenuActionOption(onPressed: () => onPressed(data));
 
 public class RadialMenuNestedLayerOption : RadialMenuOption
 {
@@ -195,5 +199,4 @@ public class RadialMenuNestedLayerOption : RadialMenuOption
     public float? ContainerRadius { get; }
 
     public IReadOnlyCollection<RadialMenuOption> Nested { get; }
-
 }

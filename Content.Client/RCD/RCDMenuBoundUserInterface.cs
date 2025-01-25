@@ -60,33 +60,7 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
                         .Where(x => PrototypesGroupingInfo.ContainsKey(x.Key))
                         .Select(x =>
                         {
-                            var nested = x.Select(proto => new RadialMenuActionOption(() =>
-                            {
-                                // A predicted message cannot be used here as the RCD UI is closed immediately
-                                // after this message is sent, which will stop the server from receiving it
-                                SendMessage(new RCDSystemMessage(proto.ID));
-
-                                var popup = EntMan.System<PopupSystem>();
-
-                                if (_playerManager.LocalSession?.AttachedEntity != null)
-                                {
-                                    var msg = Loc.GetString("rcd-component-change-mode", ("mode", Loc.GetString(proto.SetName)));
-
-                                    if (proto.Mode == RcdMode.ConstructTile || proto.Mode == RcdMode.ConstructObject)
-                                    {
-                                        var name = Loc.GetString(proto.SetName);
-
-                                        if (proto.Prototype != null &&
-                                            _prototypeManager.TryIndex(proto.Prototype, out var entProto, logError: false))
-                                            name = entProto.Name;
-
-                                        msg = Loc.GetString("rcd-component-change-build-mode", ("name", name));
-                                    }
-
-                                    // Popup message
-                                    popup.PopupClient(msg, Owner, _playerManager.LocalSession.AttachedEntity);
-                                }
-                            })
+                            var nested = x.Select(proto => new RadialMenuActionOption<RCDPrototype>(HandleMenuOptionClick, proto)
                             {
                                 Sprite = proto.Sprite,
                                 ToolTip = GetTooltip(proto)
@@ -102,16 +76,57 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
         return models;
     }
 
+    private void HandleMenuOptionClick(RCDPrototype proto)
+    {
+        // A predicted message cannot be used here as the RCD UI is closed immediately
+        // after this message is sent, which will stop the server from receiving it
+        SendMessage(new RCDSystemMessage(proto.ID));
+
+
+        if (_playerManager.LocalSession?.AttachedEntity == null)
+            return;
+
+        var msg = Loc.GetString("rcd-component-change-mode", ("mode", Loc.GetString(proto.SetName)));
+
+        if (proto.Mode is RcdMode.ConstructTile or RcdMode.ConstructObject)
+        {
+            var name = Loc.GetString(proto.SetName);
+
+            if (proto.Prototype != null &&
+                _prototypeManager.TryIndex(proto.Prototype, out var entProto, logError: false))
+                name = entProto.Name;
+
+            msg = Loc.GetString("rcd-component-change-build-mode", ("name", name));
+        }
+
+        // Popup message
+        var popup = EntMan.System<PopupSystem>();
+        popup.PopupClient(msg, Owner, _playerManager.LocalSession.AttachedEntity);
+    }
+
     private string GetTooltip(RCDPrototype proto)
     {
-        var tooltip = Loc.GetString(proto.SetName);
+        string tooltip;
 
-        if ((proto.Mode == RcdMode.ConstructTile || proto.Mode == RcdMode.ConstructObject) &&
-            proto.Prototype != null && _prototypeManager.TryIndex(proto.Prototype, out var entProto, logError: false))
+        if (proto.Mode is RcdMode.ConstructTile or RcdMode.ConstructObject
+            && proto.Prototype != null
+            && _prototypeManager.TryIndex(proto.Prototype, out var entProto, logError: false))
         {
             tooltip = Loc.GetString(entProto.Name);
         }
+        else
+        {
+            tooltip = Loc.GetString(proto.SetName);
+        }
+
+        tooltip = OopsConcat(char.ToUpper(tooltip[0]).ToString(), tooltip.Remove(0, 1));
 
         return tooltip;
+    }
+
+    private static string OopsConcat(string a, string b)
+    {
+        // This exists to prevent Roslyn being clever and compiling something that fails sandbox checks.
+        return a + b;
     }
 }
