@@ -6,7 +6,6 @@
     state: base
   discipline: CivilianServices
   tier: 1
-  cost: 5000
+  cost: 2500 #Making it cheap until I add the rest of it
   recipeUnlocks:
   - FishingRod
-  
