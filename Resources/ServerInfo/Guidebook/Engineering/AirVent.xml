@@ -12,7 +12,7 @@
   The air vent can be welded with any welding tool to stop it from functioning.
 
   ## Default Operation
-  The default behavior of an air vent is to simply output gas to the exposed atmosphere at a pressure of 101.3 kPa.
+  The default behavior of an air vent is to simply output gas to the exposed atmosphere at a pressure of [color=orange][protodata="GasVentPump" comp="GasVentPump" member="DefaultExternalBound"/] kPa[/color].
 
   The speed of the air vent scales with the difference between twice the connected [textlink="pipenet's" link="PipeNetworks"] pressure and the pressure of the exposed atmosphere.
   To put it in a word equation:
@@ -20,10 +20,10 @@
     [italic]Speed = 2 × Pipenet Pressure - Exposed Atmosphere Pressure[/italic]
   </Box>
 
-  For example, this means that an air vent will be unable to pump to 101.3 kPa if the gas inside the vent goes below half that (50.65 kPa).
+  For example, this means that an air vent will be unable to pump to 101.3 kPa if the gas inside the vent goes below half that.
 
   ## Pressure Lockout
-  Air vents will enter [color=red]pressure lockout[/color] when the pressure of the atmosphere it's exposed to is below 80 kPa.
+  Air vents will enter [color=red]pressure lockout[/color] when the pressure of the atmosphere it's exposed to is below [color=orange][protodata="GasVentPump" comp="GasVentPump" member="UnderPressureLockoutThreshold"/] kPa[/color].
   This is to prevent wasting useful gasses to space if a room is not sealed.
   The lights on the air vent will turn [color=yellow]yellow[/color] to highlight this change.
 

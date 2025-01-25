@@ -8,12 +8,8 @@
 
   The air injector does not require [textlink="power" link="Power"] to function.
 
-  The air injector will inject gasses into the atmosphere it's exposed to until the atmosphere reaches 9000 kPa.
+  The air injector will inject gasses into the atmosphere it's exposed to until the atmosphere reaches [color=orange][protodata="GasOutletInjector" comp="GasOutletInjector" member="MaxPressure"/] kPa[/color].
 
   The air injector's speed is proportional to the amount of gas in the injector.
   The more gas in the injector, the faster it will inject gas into the exposed atmosphere.
-
-  A normal air injector (even one that has no gasses to inject) will have a [color=green]green[/color] light.
-  An air injector that cannot inject gasses into the atmosphere will have a [color=red]red[/color] light.
-
 </Document>

@@ -16,7 +16,7 @@
   To prevent overshooting their target value, thermomachines will scale back their heating/cooling power as they approach the target temperature.
   However, they will still consume the same amount of electrical power, even when idle.
 
-  All thermomachines have a target temperature tolerance of 2 K, meaning they will stop heating or cooling when the temperature is within 2 K of the target temperature.
+  All thermomachines have a target temperature tolerance of [color=orange][protodata="GasThermoMachineFreezer" comp="GasThermoMachine" member="TemperatureTolerance"/] K[/color], meaning they will stop heating or cooling when the temperature is within [color=orange][protodata="GasThermoMachineFreezer" comp="GasThermoMachine" member="TemperatureTolerance"/] K[/color] of the target temperature.
 
   ## Space Heater
   The space heater is a portable temperature control unit that preforms work to heat or cool gas in the atmosphere it's exposed to.
@@ -28,14 +28,9 @@
 
   They can be commonly found in Atmospherics, although the relevant machine board can be printed at a circuit imprinter, commonly found in Science.
 
-  The space heater can cool to as low as -10°C (263.15 K) and heat to as high as 40°C (313.15 K).
+  The space heater can cool to as low as [color=orange][protodata="SpaceHeater" comp="SpaceHeater" member="MinTemperature"/] K[/color] and heat to as high as [color=orange][protodata="SpaceHeater" comp="SpaceHeater" member="MaxTemperature"/] K[/color].
 
   It also has three power settings, which determine how much power it consumes and how much work it does.
-  - Low: 1750 W
-  - Medium: 3500 W
-  - High: 7000 W
-
-  For space heaters, heating is 100% efficient, while cooling is only 90% efficient.
 
   Botany or science will often request these to maintain the temperature of their plants or department.
 
@@ -47,11 +42,7 @@
     <GuideEntityEmbed Entity="GasThermoMachineFreezer"/>
   </Box>
 
-  They draw 5000 W of power and can heat or cool gas in a pipenet to as high as 593.15 K (320°C) or as low as 73.15 K (-200°C).
-
-  Heaters are 95% efficient, while freezers are 390% efficient.
-  That's almost 4 watts of cooling for the power of 1!
-  Bluespace technology at its finest.
+  They draw [color=orange][protodata="GasThermoMachineFreezer" comp="GasThermoMachine" member="HeatCapacity" format="N0"/] W[/color] of power and can heat or cool gas in a pipenet to as high as [color=orange][protodata="GasThermoMachineFreezer" comp="GasThermoMachine" member="MaxTemperature"/] K[/color] or as low as [color=orange][protodata="GasThermoMachineFreezer" comp="GasThermoMachine" member="MinTemperature"/] K[/color].
 
   You can swap the mode of the thermomachine by deconstructing it and using a screwdriver on its board.
   The board can be printed at a circuit imprinter, commonly found in Science.
@@ -76,9 +67,9 @@
     <GuideEntityEmbed Entity="GasThermoMachineHellfireFreezer"/>
   </Box>
 
-  These machines draw 40,000 W of power and can heat or cool gas in a pipenet to as high as 1193.15 K (920°C) or as low as 23.15 K (-250°C).
+  These machines draw [color=orange][protodata="GasThermoMachineHellfireFreezer" comp="GasThermoMachine" member="HeatCapacity" format="N0"/] W[/color] of power and can heat or cool gas in a pipenet to as high as [color=orange][protodata="GasThermoMachineHellfireFreezer" comp="GasThermoMachine" member="MaxTemperature"/] K[/color] or as low as [color=orange][protodata="GasThermoMachineHellfireFreezer" comp="GasThermoMachine" member="MinTemperature"/] K[/color].
 
-  However, they also leak 15% of their energy to the surrounding environment, heating or cooling the exposed atmosphere respectively.
-  This is 6000 W of heating or cooling, which can be dangerous if not properly managed.
+  However, they also leak [color=orange][protodata="GasThermoMachineHellfireFreezer" comp="GasThermoMachine" member="EnergyLeakPercentage" format="P0"/][/color] of their energy to the surrounding environment, heating or cooling the exposed atmosphere respectively.
+  This can be dangerous if not properly managed.
 
 </Document>

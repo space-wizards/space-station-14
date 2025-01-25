@@ -10,7 +10,7 @@
 
   It has a [textlink="pipenet" link="PipeNetworks"] connection to input gas, and an internal tank to store the condensed liquid.
 
-  It can hold 400u of liquid, and will stop condensing gas if the tank is full.
+  A condensor will stop condensing gas if the tank is full.
   You can take liquid out of the condenser by interacting with it using any empty container.
 
   Gas condensors can take multiple gasses as input, and will condense them into their liquid forms.

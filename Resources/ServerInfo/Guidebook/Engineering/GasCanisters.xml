@@ -12,7 +12,7 @@
   </Box>
 
   Gas canisters are a way to store gas in a portable container for easy transport.
-  They can store 1000 liters of gas.
+  They can store [color=orange][protodata="StorageCanister" comp="GasCanister" member="Volume"/] liters[/color] of gas.
 
   You can connect handheld tanks to a gas canister to refill them using the release valve on the canister.
   The release valve also has a adjustable pressure regulator to control the pressure of the handheld tank connected.

@@ -31,8 +31,22 @@
     </Box>
   </Box>
 
-  SMESes can store 8 MJ of power, and can output a maximum 150 kW of power.
+  SMESes can store [color=orange][protodata="SMESBasic" comp="Battery" member="MaxCharge" format="N0"/] J[/color] of power, and can output a maximum [color=orange][protodata="SMESBasic" comp="PowerNetworkBattery" member="MaxSupply" format="N0"/] W[/color] of power.
 
   If the battery is full, the SMES will pass through the power it receives from the input cable to the output cable. In the event of a power deficit, the SMES will ramp up to supplement the power draw.
 
+  ## Advanced SMES
+  The Advanced SMES unit is a more advanced version of the SMES unit that can store even more power.
+
+  <Box>
+    <GuideEntityEmbed Entity="SMESAdvanced"/>
+  </Box>
+
+  They're primarily used in station SMES arrays to store large amounts of power for the station's power grid.
+  They help to buy engineers time to setup power at roundstart, or to provide power in the event of a power deficit for extended periods of time.
+
+  Advanced SMESes can store [color=orange][protodata="SMESAdvanced" comp="Battery" member="MaxCharge" format="N0"/] J[/color] of power, and can output a maximum [color=orange][protodata="SMESAdvanced" comp="PowerNetworkBattery" member="MaxSupply" format="N0"/] W[/color] of power.
+
+  Keep in mind that these aren't a magic solution to power deficits, and they can't store infinite power.
+  A station load will drain these battries quickly if there is no power source partially supporting them.
 </Document>

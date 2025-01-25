@@ -31,7 +31,7 @@
 
   For example, a pressure pump cannot pump gas to a pipe that is currently at 500 kPa, if the pressure pump is set at 500 kPa.
 
-  Pressure pumps can pump up to a maximum pressure of 4500 kPa.
+  Pressure pumps can pump up to a maximum pressure of [color=orange][protodata="GasPressurePump" comp="GasPressurePump" member="MaxTargetPressure"/] kPa[/color].
   They will become [color=red]blocked[/color] if they try to push gas into a pipe higher than this pressure.
 
   ## Volumetric Pumps
@@ -44,5 +44,5 @@
   They are extremely useful for moving large amounts of gas quickly.
   They can typically achieve higher pressures than a pressure pump.
 
-  While volumetric pumps work off of the principle of volume, they will become [color=red]blocked[/color] if they try to push gas into a pipe higher than 9000 kPa.
+  While volumetric pumps work off of the principle of volume, they will become [color=red]blocked[/color] if they try to push gas into a pipe higher than [color=orange][protodata="GasVolumePump" comp="GasVolumePump" member="HigherThreshold"/] kPa[/color].
 </Document>

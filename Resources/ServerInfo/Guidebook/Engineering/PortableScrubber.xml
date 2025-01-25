@@ -11,7 +11,7 @@
 
   The portable scrubber automatically starts scrubbing all non-breathable gasses from the room when it is bolted (wrenched) to the floor.
 
-  It will stop scrubbing when unbolted (unwrenched) from the floor, or when its internal volume is full. The scrubber has an internal capacity of 1250 liters.
+  It will stop scrubbing when unbolted (unwrenched) from the floor, or when its internal volume is full. The scrubber has an internal capacity of [color=orange][protodata="PortableScrubber" comp="PortableScrubber" member="Volume"/] liters[/color].
 
   ## Dumping Waste and Storage
   The scrubber's internal volume can be emptied by bolting (wrenching it) onto a [textlink="connector" link="GasCanisters"].
