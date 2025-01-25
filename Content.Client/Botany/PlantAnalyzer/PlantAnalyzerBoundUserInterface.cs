@@ -19,6 +19,7 @@ public sealed class PlantAnalyzerBoundUserInterface : BoundUserInterface
         base.Open();
         _window = this.CreateWindow<PlantAnalyzerWindow>();
         _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+        _window.Print.OnPressed += _ => Print();
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)
@@ -30,5 +31,12 @@ public sealed class PlantAnalyzerBoundUserInterface : BoundUserInterface
             return;
 
         _window.Populate(cast);
+    }
+
+    private void Print()
+    {
+        SendMessage(new PlantAnalyzerPrintMessage());
+        if (_window != null)
+            _window.Print.Disabled = true;
     }
 }
