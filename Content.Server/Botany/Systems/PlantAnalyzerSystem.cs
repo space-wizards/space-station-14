@@ -21,14 +21,29 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
         if (!ValidScanTarget(target))
             return;
 
-        PlantAnalyzerSeedData? seedData = null;
+        string? seedDisplayName = null;
         PlantAnalyzerTrayData? trayData = null;
+        PlantAnalyzerTolerancesData? tolerancesData = null;
         if (_entityManager.TryGetComponent<PlantHolderComponent>(target, out var plantHolder))
         {
             if (plantHolder.Seed is not null)
             {
+                seedDisplayName = plantHolder.Seed.DisplayName;
+                tolerancesData = new PlantAnalyzerTolerancesData(
+                    waterConsumption: plantHolder.Seed.WaterConsumption,
+                    nutrientConsumption: plantHolder.Seed.NutrientConsumption,
+                    toxinsTolerance: plantHolder.Seed.ToxinsTolerance,
+                    pestTolerance: plantHolder.Seed.PestTolerance,
+                    weedTolerance: plantHolder.Seed.WeedTolerance,
+                    lowPressureTolerance: plantHolder.Seed.LowPressureTolerance,
+                    highPressureTolerance: plantHolder.Seed.HighPressureTolerance,
+                    idealHeat: plantHolder.Seed.IdealHeat,
+                    heatTolerance: plantHolder.Seed.HeatTolerance,
+                    idealLight: plantHolder.Seed.IdealLight,
+                    lightTolerance: plantHolder.Seed.LightTolerance,
+                    consumeGasses: [.. plantHolder.Seed.ConsumeGasses.Keys]
+                );
                 // TODO: PA
-                seedData = new PlantAnalyzerSeedData(plantHolder.Seed.DisplayName);
             }
             trayData = new PlantAnalyzerTrayData(
                 waterLevel: plantHolder.WaterLevel,
@@ -42,8 +57,9 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
         _uiSystem.ServerSendUiMessage(analyzer, PlantAnalyzerUiKey.Key, new PlantAnalyzerScannedUserMessage(
             GetNetEntity(target),
             scanMode,
-            seedData,
-            trayData
+            seedDisplayName,
+            trayData,
+            tolerancesData
         ));
     }
 
