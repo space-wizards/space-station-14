@@ -31776,6 +31776,11 @@ entities:
     - type: Transform
       pos: 15.5,46.5
       parent: 1
+  - uid: 16680
+    components:
+    - type: Transform
+      pos: -12.5,3.5
+      parent: 1
   - uid: 16879
     components:
     - type: Transform
@@ -32395,6 +32400,11 @@ entities:
     components:
     - type: Transform
       pos: -18.5,-36.5
+      parent: 1
+  - uid: 17722
+    components:
+    - type: Transform
+      pos: -12.5,4.5
       parent: 1
 - proto: CableApcStack
   entities:
@@ -101187,7 +101197,7 @@ entities:
       pos: 16.5,48.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -35829.55
+      secondsUntilStateChange: -35891.152
       state: Opening
 - proto: SpaceCash10000
   entities:
