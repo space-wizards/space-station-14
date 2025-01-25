@@ -133,7 +133,7 @@
 
 - type: entity
   id: SpaceBladeSec # todo - it would be so fucking funny if this chased wanted people like how the other beyblades chase each other. i aint doing that tho
-  parent: SpaceBlade
+  parent: [ SpaceBlade, BaseSecurityContraband ] # imp
   suffix: security # imp
   components:
   - type: Sprite
@@ -278,7 +278,7 @@
   description: Let it honk!
   components:
   - type: Sprite
-    state: clown
+    state: clown # imp
   - type: Slippery
     paralyzeTime: 0.5
     launchForwardsMultiplier: 0.5
