@@ -3392,6 +3392,17 @@
         Base: dead
       Dead:
         Base: dead
+  - type: SolutionContainerManager
+    solutions: 
+      udder:
+        maxVol: 87
+        reagents:
+        - ReagentId: PigMilk
+          Quantity: 20
+  - type: Udder
+    reagentId: PigMilk
+    quantityPerUpdate: 20
+    growthDelay: 32
   - type: Butcherable
     spawned:
     - id: FoodMeatBacon

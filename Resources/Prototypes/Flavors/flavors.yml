@@ -785,6 +785,11 @@
   description: flavor-complex-milk
 
 - type: flavor
+  id: pigmilk
+  flavorType: Complex
+  description: flavor-complex-pigmilk
+
+- type: flavor
   id: tea
   flavorType: Complex
   description: flavor-complex-tea
