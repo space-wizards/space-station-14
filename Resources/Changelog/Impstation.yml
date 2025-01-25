@@ -1,29 +1,6 @@
 ﻿Entries:
 - author: honeyed-lemons
   changes:
-  - message: Minor changes to the mobster and cowboy accents
-    type: Tweak
-  id: 497
-  time: '2024-11-12T18:00:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/684
-- author: Darkmajia
-  changes:
-  - message: Greatwrenches are now large items instead of being as small as regular
-      wrenches.
-    type: Tweak
-  id: 498
-  time: '2024-11-12T18:28:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/685
-- author: ATDoop
-  changes:
-  - message: Added giant lollipops!!! They can be made by cooking a skewer and 10
-      units of sugar for 5 seconds in a microwave.
-    type: Add
-  id: 499
-  time: '2024-11-12T20:04:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/687
-- author: honeyed-lemons
-  changes:
   - message: Medical and Chemist versions of the Space Jumpsuit
     type: Add
   - message: Adjusted Space Cadet Jumpsuit textures
@@ -4398,3 +4375,27 @@
   id: 996
   time: '2025-01-25T07:54:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1461
+- author: DinnerCalzone
+  changes:
+  - message: Supermatter has been added to Cog, along with some other layout changes.
+    type: Add
+  id: 997
+  time: '2025-01-25T07:59:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1468
+- author: DinnerCalzone
+  changes:
+  - message: The engine has been removed from Marathon.
+    type: Remove
+  id: 998
+  time: '2025-01-25T08:00:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1473
+- author: widgetbeck
+  changes:
+  - message: Gastropoid Mucin no longer speeds them up directly. Instead, using the
+      "Slime Trail" action will give you a brief, but substantial, speed boost, and
+      lay a quickly-vanishing trail of slippery Mucin. This new ability has a substantially
+      higher thirst cost and minimum thirst threshold.
+    type: Tweak
+  id: 999
+  time: '2025-01-25T07:58:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1463
