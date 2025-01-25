@@ -3,7 +3,7 @@
   iconPriority: 100
   stylePaths:
     atmospherics: Structures/Doors/Airlocks/Standard/atmospherics.rsi
-    basic:       Structures/Doors/Airlocks/Standard/basic.rsi
+    service:       Structures/Doors/Airlocks/Standard/basic.rsi #imp edit
     cargo:       Structures/Doors/Airlocks/Standard/cargo.rsi
     chemistry:   Structures/Doors/Airlocks/Standard/chemistry.rsi
     command:     Structures/Doors/Airlocks/Standard/command.rsi
@@ -15,40 +15,45 @@
     science:     Structures/Doors/Airlocks/Standard/science.rsi
     security:    Structures/Doors/Airlocks/Standard/security.rsi
     virology:    Structures/Doors/Airlocks/Standard/virology.rsi
-    bar:         _Impstation/Structures/Doors/Airlocks/Standard/bar.rsi #imp edit
-    chapel:      _Impstation/Structures/Doors/Airlocks/Standard/chapel.rsi #imp edit
-    janitor:     _Impstation/Structures/Doors/Airlocks/Standard/janitor.rsi #imp edit
-    kitchen:     _Impstation/Structures/Doors/Airlocks/Standard/kitchen.rsi #imp edit
-    lawyer:      _Impstation/Structures/Doors/Airlocks/Standard/lawyer.rsi #imp edit
-    theatre:     _Impstation/Structures/Doors/Airlocks/Standard/theatre.rsi #imp edit
-    salvage:     _Impstation/Structures/Doors/Airlocks/Standard/salvage.rsi #imp edit
-    courier:     _Impstation/Structures/Doors/Airlocks/Standard/courier.rsi #imp edit
+    #begin imp edit
+    bar:         _Impstation/Structures/Doors/Airlocks/Standard/bar.rsi
+    chapel:      _Impstation/Structures/Doors/Airlocks/Standard/chapel.rsi
+    janitor:     _Impstation/Structures/Doors/Airlocks/Standard/janitor.rsi
+    kitchen:     _Impstation/Structures/Doors/Airlocks/Standard/kitchen.rsi
+    lawyer:      _Impstation/Structures/Doors/Airlocks/Standard/lawyer.rsi
+    theatre:     _Impstation/Structures/Doors/Airlocks/Standard/theatre.rsi
+    salvage:     _Impstation/Structures/Doors/Airlocks/Standard/salvage.rsi
+    courier:     _Impstation/Structures/Doors/Airlocks/Standard/courier.rsi
+    public:      _Impstation/Structures/Doors/Airlocks/Standard/public.rsi
+    #end imp edit
 
 - type: AirlockGroup
   id: Glass
   iconPriority: 90
   stylePaths:
     atmospherics: Structures/Doors/Airlocks/Glass/atmospherics.rsi
-    basic:       Structures/Doors/Airlocks/Glass/basic.rsi
+    service:       Structures/Doors/Airlocks/Glass/basic.rsi #imp edit
     cargo:       Structures/Doors/Airlocks/Glass/cargo.rsi
     command:     Structures/Doors/Airlocks/Glass/command.rsi
     chemistry:   Structures/Doors/Airlocks/Glass/chemistry.rsi
     science:     Structures/Doors/Airlocks/Glass/science.rsi
     engineering: Structures/Doors/Airlocks/Glass/engineering.rsi
-    glass:       Structures/Doors/Airlocks/Glass/glass.rsi
+    public:       Structures/Doors/Airlocks/Glass/glass.rsi #imp edit
     hydroponics: Structures/Doors/Airlocks/Glass/hydroponics.rsi
     maintenance: Structures/Doors/Airlocks/Glass/maint.rsi
     medical:     Structures/Doors/Airlocks/Glass/medical.rsi
     security:    Structures/Doors/Airlocks/Glass/security.rsi
     virology:    Structures/Doors/Airlocks/Glass/virology.rsi
-    bar:         _Impstation/Structures/Doors/Airlocks/Glass/bar.rsi #imp edit
-    chapel:      _Impstation/Structures/Doors/Airlocks/Glass/chapel.rsi #imp edit
-    janitor:     _Impstation/Structures/Doors/Airlocks/Glass/janitor.rsi #imp edit
-    kitchen:     _Impstation/Structures/Doors/Airlocks/Glass/kitchen.rsi #imp edit
-    lawyer:      _Impstation/Structures/Doors/Airlocks/Glass/lawyer.rsi #imp edit
-    theatre:     _Impstation/Structures/Doors/Airlocks/Glass/theatre.rsi #imp edit
-    salvage:     _Impstation/Structures/Doors/Airlocks/Glass/salvage.rsi #imp edit
-    courier:     _Impstation/Structures/Doors/Airlocks/Glass/courier.rsi #imp edit
+    #begin imp edit
+    bar:         _Impstation/Structures/Doors/Airlocks/Glass/bar.rsi
+    chapel:      _Impstation/Structures/Doors/Airlocks/Glass/chapel.rsi
+    janitor:     _Impstation/Structures/Doors/Airlocks/Glass/janitor.rsi
+    kitchen:     _Impstation/Structures/Doors/Airlocks/Glass/kitchen.rsi
+    lawyer:      _Impstation/Structures/Doors/Airlocks/Glass/lawyer.rsi
+    theatre:     _Impstation/Structures/Doors/Airlocks/Glass/theatre.rsi
+    salvage:     _Impstation/Structures/Doors/Airlocks/Glass/salvage.rsi
+    courier:     _Impstation/Structures/Doors/Airlocks/Glass/courier.rsi
+    #end imp edit
 
 - type: AirlockGroup
   id: Windoor
@@ -85,24 +90,26 @@
   id: Departments
   departments:
     atmospherics: Engineering
-    basic: Civilian
+    service: Civilian #imp edit
     cargo: Cargo
     chemistry: Medical
     command: Command
     engineering: Engineering
     freezer: Civilian
-    glass: Civilian
+    public: Civilian #imp edit
     hydroponics: Civilian
     maintenance: Civilian
     medical: Medical
     science: Science
     security: Security
     virology: Medical
-    bar: Civilian #imp edit
-    chapel: Civilian #imp edit
-    janitor: Civilian #imp edit
-    kitchen: Civilian #imp edit
-    lawyer: Civilian #imp edit
-    theatre: Civilian #imp edit
-    salvage: Cargo #imp edit
-    courier: Cargo #imp edit
+    #begin imp edit
+    bar: Civilian
+    chapel: Civilian
+    janitor: Civilian
+    kitchen: Civilian
+    lawyer: Civilian
+    theatre: Civilian
+    salvage: Cargo
+    courier: Cargo
+    #end imp edit
