@@ -23,6 +23,17 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] protected readonly IGameTiming _timing = default!;
+
+    private static readonly SlotFlags[] IgnoredSlots =
+    {
+        SlotFlags.All,
+        SlotFlags.PREVENTEQUIP,
+        SlotFlags.NONE
+    };
+    private static readonly SlotFlags[] Slots = Enum.GetValues<SlotFlags>().Except(IgnoredSlots).ToArray();
+
+    public readonly Dictionary<SlotFlags, List<string>> ValidVariants = new();
 
     public override void Initialize()
     {
@@ -129,5 +140,50 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             return false;
 
         return true;
+    }
+
+    /// <summary>
+    ///     Get a list of valid chameleon targets for these slots.
+    /// </summary>
+    public IEnumerable<string> GetValidTargets(SlotFlags slot)
+    {
+        var set = new HashSet<string>();
+        foreach (var availableSlot in ValidVariants.Keys)
+        {
+            if (slot.HasFlag(availableSlot))
+            {
+                set.UnionWith(ValidVariants[availableSlot]);
+            }
+        }
+        return set;
+    }
+
+    public void PrepareAllVariants()
+    {
+        ValidVariants.Clear();
+        var prototypes = _proto.EnumeratePrototypes<EntityPrototype>();
+
+        foreach (var proto in prototypes)
+        {
+            // check if this is valid clothing
+            if (!IsValidTarget(proto))
+                continue;
+            if (!proto.TryGetComponent(out ClothingComponent? item, _factory))
+                continue;
+
+            // sort item by their slot flags
+            // one item can be placed in several buckets
+            foreach (var slot in Slots)
+            {
+                if (!item.Slots.HasFlag(slot))
+                    continue;
+
+                if (!ValidVariants.ContainsKey(slot))
+                {
+                    ValidVariants.Add(slot, new List<string>());
+                }
+                ValidVariants[slot].Add(proto.ID);
+            }
+        }
     }
 }
