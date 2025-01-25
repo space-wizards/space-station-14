@@ -6,6 +6,7 @@ namespace Content.Shared.Doors.Systems;
 
 public abstract partial class SharedDoorSystem
 {
+
     [Dependency] protected readonly SharedDoorSystem DoorSystem = default!;
     [Dependency] private readonly SharedWiresSystem _wiresSystem = default!;
 
@@ -28,12 +29,12 @@ public abstract partial class SharedDoorSystem
         if (!airlock.Comp.Safety)
             args.PerformCollisionCheck = false;
 
-        // only block based on bolts / power status when initially closing the door, not when its already
+        // Only block based on bolts / power status when initially closing the door, not when its already
         // mid-transition. Particularly relevant for when the door was pried-closed with a crowbar, which bypasses
         // the initial power-check.
 
         if (!TryComp(airlock, out DoorComponent? door)
-            || door.State is DoorState.Opening or DoorState.Closing
+            || door.State is DoorState.PartiallyOpen or DoorState.PartiallyClosed
             || CanChangeState(airlock,
                 door.State is DoorState.AttemptingCloseByPrying or DoorState.AttemptingOpenByPrying))
             return;
@@ -103,12 +104,12 @@ public abstract partial class SharedDoorSystem
     /// <summary>
     /// Updates the auto close timer.
     /// </summary>
-    public void UpdateAutoClose(Entity<AirlockComponent> airlock, DoorComponent? door = null)
+    protected void UpdateAutoClose(Entity<AirlockComponent> airlock, DoorComponent? door = null)
     {
         if (!Resolve(airlock, ref door))
             return;
 
-        if (door.State != DoorState.Open)
+        if (door.State is not DoorState.Open)
             return;
 
         if (!airlock.Comp.AutoClose)
@@ -140,11 +141,6 @@ public abstract partial class SharedDoorSystem
         args.Cancelled = true;
     }
 
-    public void UpdateEmergencyLightStatus(EntityUid uid, AirlockComponent component)
-    {
-        _appearance.SetData(uid, DoorVisuals.EmergencyLights, component.EmergencyAccess);
-    }
-
     public void SetEmergencyAccess(Entity<AirlockComponent> airlock,
         bool value,
         EntityUid? user = null,
@@ -157,8 +153,9 @@ public abstract partial class SharedDoorSystem
             return;
 
         airlock.Comp.EmergencyAccess = value;
-        Dirty(airlock, airlock.Comp); // This only runs on the server apparently, so we need this.
-        UpdateEmergencyLightStatus(airlock, airlock.Comp);
+        _appearance.SetData(airlock, DoorVisuals.EmergencyLights, airlock.Comp.EmergencyAccess);
+
+        Dirty(airlock, airlock.Comp);
 
         var sound = airlock.Comp.EmergencyAccess ? airlock.Comp.EmergencyOnSound : airlock.Comp.EmergencyOffSound;
         if (predicted)
@@ -180,8 +177,9 @@ public abstract partial class SharedDoorSystem
         component.Safety = value;
     }
 
-    public bool CanChangeState(Entity<AirlockComponent> airlock, bool isPried = false)
+    private bool CanChangeState(Entity<AirlockComponent> airlock, bool isPried = false)
     {
         return (isPried || airlock.Comp.Powered) && !DoorSystem.IsBolted(airlock);
     }
+
 }

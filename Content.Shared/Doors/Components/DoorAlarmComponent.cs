@@ -12,15 +12,15 @@ namespace Content.Shared.Doors.Components
         #region Settings
 
         /// <summary>
-        /// Pry time modifier to be used when the firelock is currently locked due to an alarm.
+        /// Pry time modifier to be used when the alarm is currently triggered.
         /// </summary>
         /// <returns></returns>
         [DataField]
         public float LockedPryTimeModifier = 1.5f;
 
         /// <summary>
-        /// The cooldown duration before a firelock can automatically close due to a hazardous environment after it has
-        /// been pried open. Measured in seconds.
+        /// The cooldown duration before an alarmed door can automatically close due to a hazardous environment after it
+        /// has been pried open. Measured in seconds.
         /// </summary>
         [DataField]
         public TimeSpan EmergencyCloseCooldownDuration = TimeSpan.FromSeconds(2);

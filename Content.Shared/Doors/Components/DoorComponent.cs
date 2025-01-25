@@ -18,9 +18,6 @@ public sealed partial class DoorComponent : Component
     /// <summary>
     /// The current state of the door -- whether it is open, closed, opening, or closing.
     /// </summary>
-    /// <remarks>
-    /// This should never be set directly, use <see cref="SharedDoorSystem.SetState(EntityUid, DoorState, DoorComponent?, bool)"/> instead.
-    /// </remarks>
     [DataField, AutoNetworkedField, Access(typeof(SharedDoorSystem))]
     public DoorState State = DoorState.Closed;
 
@@ -67,13 +64,6 @@ public sealed partial class DoorComponent : Component
     /// </summary>
     [AutoNetworkedField, ViewVariables]
     public TimeSpan? NextStateChange;
-
-    // /// <summary>
-    // ///     Whether the door is currently partially closed or open. I.e., when the door is "closing" and is already opaque,
-    // ///     but not yet actually closed.
-    // /// </summary>
-    // [DataField, AutoNetworkedField]
-    // public bool Partial;
 
     #endregion
 
@@ -325,20 +315,20 @@ public enum DoorState : byte
     /// <summary>
     /// The door is attempting to close under its own power.
     /// </summary>
-    /// <remarks>Transitions to ClosingInProgress or Open.</remarks>
+    /// <remarks>Transitions to PartiallyClosed or Open.</remarks>
     AttemptingCloseBySelf,
 
     /// <summary>
     /// The door is attempting to close due to an external force, such as a crowbar.
     /// </summary>
-    /// <remarks>Transitions to ClosingInProgress or Open.</remarks>
+    /// <remarks>Transitions to PartiallyClosed or Open.</remarks>
     AttemptingCloseByPrying,
 
     /// <summary>
     /// The door is currently in the process of closing.
     /// </summary>
     /// <remarks>Transitions to Closed.</remarks>
-    Closing,
+    PartiallyClosed,
 
     /// <summary>
     /// The door is currently open, ajar, agape, etc.
@@ -349,20 +339,20 @@ public enum DoorState : byte
     /// <summary>
     /// The door is attempting to open under its own power.
     /// </summary>
-    /// <remarks>Transitions to OpeningInProgress or Closed.</remarks>
+    /// <remarks>Transitions to PartiallyOpen or Closed.</remarks>
     AttemptingOpenBySelf,
 
     /// <summary>
     /// The door is attempting to open due to an external force, such as a crowbar.
     /// </summary>
-    /// <remarks>Transitions to OpeningInProgress or Closed.</remarks>
+    /// <remarks>Transitions to PartiallyOpen or Closed.</remarks>
     AttemptingOpenByPrying,
 
     /// <summary>
     /// The door is currently in the process of opening.
     /// </summary>
     /// <remarks>Transitions to Open.</remarks>
-    Opening,
+    PartiallyOpen,
 
     /// <summary>
     /// The door is welded shut. Door stuck. Please, I'm begging you.

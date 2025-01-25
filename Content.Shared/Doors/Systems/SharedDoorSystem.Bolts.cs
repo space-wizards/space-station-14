@@ -5,6 +5,7 @@ namespace Content.Shared.Doors.Systems;
 
 public abstract partial class SharedDoorSystem
 {
+
     public void InitializeBolts()
     {
         SubscribeLocalEvent<DoorBoltComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
@@ -48,6 +49,7 @@ public abstract partial class SharedDoorSystem
     public void SetBoltWireCut(Entity<DoorBoltComponent> door, bool value)
     {
         door.Comp.BoltWireCut = value;
+
         Dirty(door, door.Comp);
     }
 
@@ -58,7 +60,7 @@ public abstract partial class SharedDoorSystem
 
     public static bool GetBoltLightsVisible(Entity<DoorBoltComponent> door)
     {
-        return door.Comp is {BoltLightsEnabled: true, BoltsDown: true, Powered: true};
+        return door.Comp is { BoltLightsEnabled: true, BoltsDown: true, Powered: true };
     }
 
     public void SetBoltLightsEnabled(Entity<DoorBoltComponent> door, bool value)
@@ -67,7 +69,9 @@ public abstract partial class SharedDoorSystem
             return;
 
         door.Comp.BoltLightsEnabled = value;
+
         Dirty(door, door.Comp);
+
         UpdateBoltLightStatus(door);
     }
 
@@ -76,23 +80,23 @@ public abstract partial class SharedDoorSystem
         TrySetBoltDown(door, value, user, predicted);
     }
 
-    public bool TrySetBoltDown(
-        Entity<DoorBoltComponent> door,
+    public bool TrySetBoltDown(Entity<DoorBoltComponent> door,
         bool value,
         EntityUid? user = null,
-        bool predicted = false
-    )
+        bool predicted = false)
     {
         if (!_powerReceiver.IsPowered(door.Owner))
             return false;
+
         if (door.Comp.BoltsDown == value)
             return false;
 
         door.Comp.BoltsDown = value;
+
         Dirty(door, door.Comp);
         UpdateBoltLightStatus(door);
 
-        // used to reset the auto-close timer after unbolting
+        // Used to reset the auto-close timer after unbolting.
         var ev = new DoorBoltsChangedEvent(value);
         RaiseLocalEvent(door.Owner, ev);
 

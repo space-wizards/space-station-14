@@ -7,7 +7,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Doors.Components;
 
 /// <summary>
-/// Companion component to DoorComponent that handles airlock-specific behavior -- wires, requiring power to operate, bolts, and allowing automatic closing.
+/// Companion component to DoorComponent that handles airlock-specific behavior, including wires, requiring power to
+/// operate, bolts, and allowing automatic closing.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedDoorSystem), Friend = AccessPermissions.ReadWriteExecute, Other = AccessPermissions.Read)]
@@ -16,7 +17,8 @@ public sealed partial class AirlockComponent : Component
     [DataField, AutoNetworkedField]
     public bool Powered;
 
-    // Need to network airlock safety state to avoid mis-predicts when a door auto-closes as the client walks through the door.
+    // Need to network airlock safety state to avoid mis-predicts when a door auto-closes as the client walks through
+    // the door.
     [DataField, AutoNetworkedField]
     public bool Safety = true;
 

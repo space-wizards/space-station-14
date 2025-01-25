@@ -1,35 +1,30 @@
 using Content.Shared.Doors.Components;
 using Content.Shared.Power;
-using Content.Shared.Power.Components;
 using Content.Shared.Prying.Components;
 
 namespace Content.Shared.Doors.Systems;
 
 public abstract partial class SharedDoorSystem
 {
+
     private void InitializeAlarm()
     {
-        // Access/Prying
         SubscribeLocalEvent<DoorAlarmComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<DoorAlarmComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
         SubscribeLocalEvent<DoorAlarmComponent, BeforePryEvent>(OnBeforePry);
         SubscribeLocalEvent<DoorAlarmComponent, GetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
-        SubscribeLocalEvent((Entity<DoorAlarmComponent> doorAlarm, ref PriedEvent _) => OnAfterPried(doorAlarm));
-
-        // Visuals
-        SubscribeLocalEvent((Entity<DoorAlarmComponent> doorAlarm, ref MapInitEvent _) => UpdateVisuals(doorAlarm));
-        SubscribeLocalEvent((Entity<DoorAlarmComponent> doorAlarm, ref ComponentStartup _) => UpdateVisuals(doorAlarm));
+        SubscribeLocalEvent((Entity<DoorAlarmComponent> doorAlarm, ref PriedEvent args) => OnAfterPried(doorAlarm));
+        SubscribeLocalEvent<DoorAlarmComponent, DoorStateChangedEvent>(OnDoorStateChanged);
     }
 
     private void OnPowerChanged(Entity<DoorAlarmComponent> doorAlarm, ref PowerChangedEvent args)
     {
         doorAlarm.Comp.IsPowered = args.Powered;
-        UpdateVisuals(doorAlarm);
 
         Dirty(doorAlarm);
     }
 
-    public bool TriggerAlarm(Entity<DoorAlarmComponent> doorAlarm)
+    public bool TriggerAlarm(Entity<DoorAlarmComponent> doorAlarm, bool predicted = false)
     {
         if (doorAlarm.Comp.IsTriggered)
             return true;
@@ -39,12 +34,29 @@ public abstract partial class SharedDoorSystem
             _gameTiming.CurTime < doorAlarm.Comp.EmergencyCloseCooldown)
             return false;
 
-        doorAlarm.Comp.IsTriggered = true;
+        return SetAlarm(doorAlarm, true, predicted);
+    }
 
-        // If this door alarm has a door, try to close it. If it can be legally closed, skip the wait and close it.
-        return TryComp<DoorComponent>(doorAlarm, out var door) &&
-               TryClose((doorAlarm, door)) &&
-               OnPartialClose((doorAlarm, door));
+    protected bool SetAlarm(Entity<DoorAlarmComponent> doorAlarm, bool alarmTriggered, bool predicted = false)
+    {
+        if (!TryComp<DoorComponent>(doorAlarm, out var door))
+            return false;
+
+        var success = alarmTriggered
+            ? TryClose((doorAlarm, door), predicted: predicted)
+            : TryOpen((doorAlarm, door), predicted: predicted);
+
+        if (!success)
+            return false;
+
+        doorAlarm.Comp.IsTriggered = alarmTriggered;
+
+        var ev = new DoorAlarmChangedEvent();
+        RaiseLocalEvent(ev);
+
+        Dirty(doorAlarm, doorAlarm.Comp);
+
+        return true;
     }
 
     #region Access/Prying
@@ -78,6 +90,18 @@ public abstract partial class SharedDoorSystem
         args.Cancel();
     }
 
+    protected virtual void OnDoorStateChanged(Entity<DoorAlarmComponent> doorAlarm, ref DoorStateChangedEvent args)
+    {
+        if (args.State != DoorState.Open)
+            return;
+
+        // An alarmed door will always de-trigger if the door is opened, allowing the door to re-trigger
+        // in the future.
+        doorAlarm.Comp.IsTriggered = false;
+
+        Dirty(doorAlarm, doorAlarm.Comp);
+    }
+
     private void OnAfterPried(Entity<DoorAlarmComponent> doorAlarm)
     {
         doorAlarm.Comp.EmergencyCloseCooldown = _gameTiming.CurTime + doorAlarm.Comp.EmergencyCloseCooldownDuration;
@@ -85,21 +109,4 @@ public abstract partial class SharedDoorSystem
 
     #endregion
 
-    #region Visuals
-
-    private void UpdateVisuals(Entity<DoorAlarmComponent> doorAlarm)
-    {
-        _appearance.SetData(doorAlarm, DoorVisuals.Powered, doorAlarm.Comp.IsPowered);
-
-        if (!TryComp<DoorComponent>(doorAlarm, out var door))
-            return;
-
-        _appearance.SetData(
-            doorAlarm,
-            DoorVisuals.ClosedLights,
-            door.State is DoorState.Closed or DoorState.WeldedClosed or DoorState.Denying && doorAlarm.Comp.IsActive
-        );
-    }
-
-    #endregion
 }

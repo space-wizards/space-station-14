@@ -5,8 +5,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Power;
-using Robust.Server.GameObjects;
-using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Doors.Systems;
 
@@ -14,7 +12,6 @@ public sealed partial class DoorSystem : SharedDoorSystem
 {
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly PointLightSystem _pointLight = default!;
 
     public override void Initialize()
     {
@@ -29,12 +26,7 @@ public sealed partial class DoorSystem : SharedDoorSystem
     protected override void SetCollidable(Entity<DoorComponent> door, bool isClosed)
     {
         if (door.Comp.ChangeAirtight && TryComp<AirtightComponent>(door, out var airtight))
-        {
-            if (!TryComp<CyclingDoorComponent>(door, out _))
-                _airtightSystem.SetAirblocked((door, airtight), isClosed);
-            else
-                SetCyclingAtmosAirtightDirection(door, airtight, isClosed);
-        }
+            SetCyclingAtmosAirtightDirection(door, airtight, isClosed);
 
         // Pathfinding / AI stuff.
         RaiseLocalEvent(new AccessReaderChangeEvent(door, isClosed));

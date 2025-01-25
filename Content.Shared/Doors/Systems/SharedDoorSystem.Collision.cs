@@ -9,7 +9,6 @@ namespace Content.Shared.Doors.Systems;
 
 public abstract partial class SharedDoorSystem
 {
-    [Dependency] private FixtureSystem _fixture = default!;
 
     private void InitializeCollision()
     {
@@ -26,33 +25,21 @@ public abstract partial class SharedDoorSystem
     {
         switch (door.State)
         {
-            case DoorState.Closed:
-            case DoorState.AttemptingOpenBySelf:
-            case DoorState.AttemptingOpenByPrying:
-            case DoorState.Closing:
-            case DoorState.WeldedClosed:
-            case DoorState.Denying:
-            case DoorState.Emagging:
+            case DoorState.Closed
+                or DoorState.AttemptingOpenBySelf
+                or DoorState.AttemptingOpenByPrying
+                or DoorState.PartiallyClosed
+                or DoorState.WeldedClosed
+                or DoorState.Denying
+                or DoorState.Emagging:
                 return true;
-            case DoorState.AttemptingCloseBySelf:
-            case DoorState.AttemptingCloseByPrying:
-            case DoorState.Open:
-            case DoorState.Opening:
-            default:
-                return false;
         }
+
+        return false;
     }
 
     protected virtual void SetCollidable(Entity<DoorComponent> door, bool isClosed)
     {
-        // If the door is a rotating door, flip which of the two door fixtures exist.
-        if (TryComp<CyclingDoorComponent>(door, out var cycling))
-        {
-            SetCyclingCollision((door, cycling), isClosed);
-
-            return;
-        }
-
         if (!isClosed)
             door.Comp.CurrentlyCrushing.Clear();
 
@@ -72,14 +59,13 @@ public abstract partial class SharedDoorSystem
             return;
 
         // Find entities and apply crushing effects
-        var stunTime = door.Comp.DoorStunTime + door.Comp.OpenTimeOne;
         foreach (var entity in GetColliding(door))
         {
             door.Comp.CurrentlyCrushing.Add(entity);
             if (door.Comp.CrushDamage != null)
                 _damageableSystem.TryChangeDamage(entity, door.Comp.CrushDamage, origin: door);
 
-            _stunSystem.TryParalyze(entity, stunTime, true);
+            _stunSystem.TryParalyze(entity, door.Comp.DoorStunTime + door.Comp.OpenTimeOne, true);
         }
 
         if (door.Comp.CurrentlyCrushing.Count == 0)
@@ -90,24 +76,13 @@ public abstract partial class SharedDoorSystem
 
         switch (door.Comp.State)
         {
-            case DoorState.Closing:
+            case DoorState.PartiallyClosed:
                 SetState(door, DoorState.Open);
 
-                break;
-            case DoorState.Opening:
+                return;
+            case DoorState.PartiallyOpen:
                 SetState(door, DoorState.Closed);
 
-                break;
-            case DoorState.Closed:
-            case DoorState.AttemptingCloseBySelf:
-            case DoorState.AttemptingCloseByPrying:
-            case DoorState.Open:
-            case DoorState.AttemptingOpenBySelf:
-            case DoorState.AttemptingOpenByPrying:
-            case DoorState.WeldedClosed:
-            case DoorState.Denying:
-            case DoorState.Emagging:
-            default:
                 return;
         }
     }
@@ -120,11 +95,12 @@ public abstract partial class SharedDoorSystem
         if (!TryComp<PhysicsComponent>(uid, out var physics))
             yield break;
 
-        var xform = Transform(uid);
         // Getting the world bounds from the gridUid allows us to use the version of
         // GetCollidingEntities that returns Entity<PhysicsComponent>
+        var xform = Transform(uid);
         if (!TryComp<MapGridComponent>(xform.GridUid, out var mapGridComp))
             yield break;
+
         var tileRef = _mapSystem.GetTileRef(xform.GridUid.Value, mapGridComp, xform.Coordinates);
 
         _doorIntersecting.Clear();
@@ -132,7 +108,7 @@ public abstract partial class SharedDoorSystem
             tileRef.GridIndices,
             _doorIntersecting,
             gridComp: mapGridComp,
-            flags: (LookupFlags.All & ~LookupFlags.Sensors));
+            flags: LookupFlags.All & ~LookupFlags.Sensors);
 
         // TODO SLOTH fix electro's code.
         // ReSharper disable once InconsistentNaming
@@ -181,13 +157,6 @@ public abstract partial class SharedDoorSystem
     {
         if (!door.Comp.BumpOpen || !_tag.HasTag(args.OtherEntity, DoorBumpTag))
             return;
-
-        if (TryComp<CyclingDoorComponent>(door, out var cycle))
-        {
-            HandleCyclingBump(door, args, cycle);
-
-            return;
-        }
 
         if (door.Comp.State is not (DoorState.Closed or DoorState.Denying))
             return;

@@ -1,26 +1,24 @@
 using Content.Shared.Access;
-using Content.Shared.Doors.Electronics;
-using Robust.Client.GameObjects;
+using Content.Shared.Doors.Components;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Doors.Electronics;
+namespace Content.Client.Doors.UI;
 
-public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
+public sealed class DoorElectronicsBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
+
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private DoorElectronicsConfigurationMenu? _window;
 
-    public DoorElectronicsBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
-
     protected override void Open()
     {
         base.Open();
+
         _window = this.CreateWindow<DoorElectronicsConfigurationMenu>();
         _window.OnAccessChanged += UpdateConfiguration;
+
         Reset();
     }
 
@@ -54,13 +52,14 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
     {
         base.UpdateState(state);
 
-        var castState = (DoorElectronicsConfigurationState) state;
+        var castState = (DoorElectronicsConfigurationState)state;
 
         _window?.UpdateState(castState);
     }
 
-    public void UpdateConfiguration(List<ProtoId<AccessLevelPrototype>> newAccessList)
+    private void UpdateConfiguration(List<ProtoId<AccessLevelPrototype>> newAccessList)
     {
         SendMessage(new DoorElectronicsUpdateConfigurationMessage(newAccessList));
     }
+
 }

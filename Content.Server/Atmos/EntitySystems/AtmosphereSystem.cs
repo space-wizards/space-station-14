@@ -45,8 +45,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     private EntityQuery<GridAtmosphereComponent> _atmosQuery;
     private EntityQuery<MapAtmosphereComponent> _mapAtmosQuery;
     private EntityQuery<AirtightComponent> _airtightQuery;
-    private EntityQuery<DoorAlarmComponent> _firelockQuery;
-    private EntityQuery<DoorComponent> _doorQuery;
+    private EntityQuery<DoorAlarmComponent> _doorAlarmQuery;
     private HashSet<EntityUid> _entSet = new();
 
     private string[] _burntDecals = [];
@@ -67,8 +66,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         _mapAtmosQuery = GetEntityQuery<MapAtmosphereComponent>();
         _atmosQuery = GetEntityQuery<GridAtmosphereComponent>();
         _airtightQuery = GetEntityQuery<AirtightComponent>();
-        _firelockQuery = GetEntityQuery<DoorAlarmComponent>();
-        _doorQuery = GetEntityQuery<DoorComponent>();
+        _doorAlarmQuery = GetEntityQuery<DoorAlarmComponent>();
 
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
