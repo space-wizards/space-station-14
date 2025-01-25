@@ -40,6 +40,7 @@ public sealed class ContrabandSystem : EntitySystem
 
         contraband.Severity = other.Severity;
         contraband.AllowedDepartments = other.AllowedDepartments;
+        contraband.AllowedJobs = other.AllowedJobs;
         Dirty(uid, contraband);
     }
 
@@ -54,11 +55,14 @@ public sealed class ContrabandSystem : EntitySystem
 
         using (args.PushGroup(nameof(ContrabandComponent)))
         {
+            var localizedDepartments = ent.Comp.AllowedDepartments.Select(p => Loc.GetString("contraband-department-plural", ("department", Loc.GetString(_proto.Index(p).Name))));
+            var localizedJobs = ent.Comp.AllowedJobs.Select(p => Loc.GetString("contraband-job-plural", ("job", _proto.Index(p).LocalizedName)));
+
             var severity = _proto.Index(ent.Comp.Severity);
-            if (severity.ShowDepartments && ent.Comp is { AllowedDepartments: not null })
+            if (severity.ShowDepartmentsAndJobs)
             {
-                // TODO shouldn't department prototypes have a localized name instead of just using the ID for this?
-                var list = ContentLocalizationManager.FormatList(ent.Comp.AllowedDepartments.Select(p => Loc.GetString($"department-{p.Id}")).ToList());
+                //creating a combined list of jobs and departments for the restricted text
+                var list = ContentLocalizationManager.FormatList(localizedDepartments.Concat(localizedJobs).ToList());
 
                 // department restricted text
                 args.PushMarkup(Loc.GetString("contraband-examine-text-Restricted-department", ("departments", list)));
@@ -69,23 +73,30 @@ public sealed class ContrabandSystem : EntitySystem
             }
 
             // text based on ID card
-            List<ProtoId<DepartmentPrototype>>? departments = null;
+            List<ProtoId<DepartmentPrototype>> departments = new();
+            var jobId = "";
+
             if (_id.TryFindIdCard(args.Examiner, out var id))
             {
                 departments = id.Comp.JobDepartments;
+                if (id.Comp.LocalizedJobTitle is not null)
+                {
+                    jobId = id.Comp.LocalizedJobTitle;
+                }
             }
 
-            // either its fully restricted, you have no departments, or your departments dont intersect with the restricted departments
-            if (ent.Comp.AllowedDepartments is null
-                || departments is null
-                || !departments.Intersect(ent.Comp.AllowedDepartments).Any())
+            // for the jobs we compare the localized string in case you use an agent ID or custom job name that is not a prototype
+            if (departments.Intersect(ent.Comp.AllowedDepartments).Any()
+                || localizedJobs.Contains(jobId))
             {
-                args.PushMarkup(Loc.GetString("contraband-examine-text-avoid-carrying-around"));
-                return;
+                // you are allowed to use this!
+                args.PushMarkup(Loc.GetString("contraband-examine-text-in-the-clear"));
             }
-
-            // otherwise fine to use :tm:
-            args.PushMarkup(Loc.GetString("contraband-examine-text-in-the-clear"));
+            else
+            {
+                // straight to jail!
+                args.PushMarkup(Loc.GetString("contraband-examine-text-avoid-carrying-around"));
+            }
         }
     }
 }
