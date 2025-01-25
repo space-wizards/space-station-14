@@ -1,6 +1,9 @@
+﻿using System.Linq;
+using Content.Server.Emp;
 using Content.Server.IdentityManagement;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Emp;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Prototypes;
 using Content.Shared.Verbs;
@@ -8,6 +11,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Robust.Shared.Random;
 
 namespace Content.Server.Clothing.Systems;
 
@@ -17,6 +21,8 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     public override void Initialize()
     {
@@ -24,6 +30,8 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         SubscribeLocalEvent<ChameleonClothingComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ChameleonClothingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
         SubscribeLocalEvent<ChameleonClothingComponent, ChameleonPrototypeSelectedMessage>(OnSelected);
+
+        SubscribeLocalEvent<ChameleonClothingComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
     private void OnMapInit(EntityUid uid, ChameleonClothingComponent component, MapInitEvent args)
@@ -47,6 +55,15 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     private void OnSelected(EntityUid uid, ChameleonClothingComponent component, ChameleonPrototypeSelectedMessage args)
     {
         SetSelectedPrototype(uid, args.SelectedId, component: component);
+    }
+
+    private void OnEmpPulse(EntityUid uid, ChameleonClothingComponent component, ref EmpPulseEvent args)
+    {
+        if (component.EmpAffected)
+        {
+            args.Affected = true;
+            args.Disabled = true;
+        }
     }
 
     private void TryOpenUi(EntityUid uid, EntityUid user, ChameleonClothingComponent? component = null)
@@ -92,6 +109,26 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         UpdateVisuals(uid, component);
         UpdateUi(uid, component);
         Dirty(uid, component);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        // Randomize EMP-affected clothing
+        var query = EntityQueryEnumerator<EmpDisabledComponent, ChameleonClothingComponent>();
+        while (query.MoveNext(out var uid, out var emp, out var chameleon))
+        {
+            if (_timing.CurTime < emp.DisabledUntil)
+            {
+                // randomly pick cloth element from available
+                var variants = GetValidTargets(chameleon.Slot);
+                var clothPickIndex = _random.Next(variants.Count());
+                var pick = variants.ToList()[clothPickIndex];
+
+                // and apply it
+                SetSelectedPrototype(uid, pick, component: chameleon);
+            }
+        }
     }
 
     private void UpdateIdentityBlocker(EntityUid uid, ChameleonClothingComponent component, EntityPrototype proto)
