@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Drags-His-Tail
-  changes:
-  - message: Keel-Ree's Guide To Medbay will now appear on shelves in a library near
-      you!
-    type: Add
-  - message: "Books written and submitted by you all will now appear more frequently\
-      \ in the library! Can\u2019t repeat the past? \u2026Why of course you can!"
-    type: Tweak
-  id: 503
-  time: '2024-11-13T06:35:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/691
 - author: DinnerCalzone
   changes:
   - message: "(Hummingbird) Among peque\xF1o has been given proper judge attire."
@@ -4398,3 +4387,11 @@
   id: 1002
   time: '2025-01-25T08:13:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1478
+- author: DinnerCalzone
+  changes:
+  - message: Basic solid airlocks have had their sprite changed to better match their
+      glass counterpart.
+    type: Tweak
+  id: 1003
+  time: '2025-01-25T08:23:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1480
