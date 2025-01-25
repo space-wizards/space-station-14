@@ -56,9 +56,6 @@
   id: WallBrick
   name: brick wall
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/brick.rsi
   - type: Icon
@@ -540,15 +537,13 @@
     snap:
     - Wall
   components:
-  - type: Tag
-    tags:
-    - Diagonal
   - type: Transform
     anchored: true
   - type: Clickable
   - type: Tag
     tags:
     - Wall
+    - Diagonal    
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/plastitanium_diagonal.rsi
