@@ -267,25 +267,25 @@
       - !type:SatiateThirst
         factor: 4
 
-- type: reagent
-  id: PigMilk
-  name: reagent-name-pigmilk
-  group: Drinks
-  desc: reagent-desc-pigmilk
-  physicalDesc: reagent-physical-desc-opaque
-  flavor: pigmilk
-  color: "#FDF5E6"
-  recognizable: true
-  plantMetabolism:
-    - !type:PlantAdjustNutrition
-      amount: 0.1
-    - !type:PlantAdjustWater
-      amount: 0.9
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 5
+- type: reagent 
+  id: PigMilk 
+  name: reagent-name-pigmilk 
+  group: Drinks 
+  desc: reagent-desc-pigmilk 
+  physicalDesc: reagent-physical-desc-opaque 
+  flavor: pigmilk 
+  color: "#FDF5E6" 
+  recognizable: true 
+  plantMetabolism: 
+    - !type:PlantAdjustNutrition 
+      amount: 0.1 
+    - !type:PlantAdjustWater 
+      amount: 0.9 
+  metabolisms: 
+    Drink: 
+      effects: 
+      - !type:SatiateThirst 
+        factor: 5 
         
 - type: reagent
   id: MilkGoat
