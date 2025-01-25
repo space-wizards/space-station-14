@@ -45,15 +45,41 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
             : Loc.GetString("health-analyzer-window-entity-unknown-text");
         ScanModeLabel.FontColorOverride = msg.ScanMode.HasValue && msg.ScanMode.Value ? Color.Green : Color.Red;
 
-        SeedLabel.Text = msg.SeedDisplayName == null
+        SeedLabel.Text = msg.PlantData == null
             ? Loc.GetString("plant-analyzer-component-no-seed")
-            : Loc.GetString(msg.SeedDisplayName);
+            : Loc.GetString(msg.PlantData.SeedDisplayName);
 
         ContainerLabel.Text = _entityManager.HasComponent<MetaDataComponent>(target.Value)
             ? Identity.Name(target.Value, _entityManager)
             : Loc.GetString("generic-unknown");
 
-        // Section 2: Information regarding the tray.
+        // Section 2: Information regarding the plant.
+        if (msg.PlantData is not null)
+        {
+            Health.Text = msg.PlantData.Health.ToString("0.00");
+            Endurance.Text = msg.PlantData.Endurance.ToString("0.00");
+            Age.Text = msg.PlantData.Age.ToString("0.00");
+            Lifespan.Text = msg.PlantData.Lifespan.ToString("0.00");
+
+            // These mostly exists to prevent shifting of the text.
+            Dead.Visible = msg.PlantData.Dead;
+            Alive.Visible = !Dead.Visible;
+
+            Unviable.Visible = !msg.PlantData.Viable;
+            Mutating.Visible = msg.PlantData.Mutating;
+
+            PlantDataGrid.Visible = true;
+            PlantDataTags.Visible = true;
+            PlantDataDivider.Visible = true;
+        }
+        else
+        {
+            PlantDataGrid.Visible = false;
+            PlantDataTags.Visible = false;
+            PlantDataDivider.Visible = false;
+        }
+
+        // Section 3: Input
         if (msg.TrayData is not null)
         {
             WaterLevelLabel.Text = msg.TrayData.WaterLevel.ToString("0.00");
@@ -62,14 +88,14 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
             PestLevelLabel.Text = msg.TrayData.PestLevel.ToString("0.00");
             WeedLevelLabel.Text = msg.TrayData.WeedLevel.ToString("0.00");
 
-            // Section 2.1: Tolerances part 1.
+            // Section 3.1: Tolerances part 1.
             if (msg.TolerancesData is not null)
             {
-                MinusFieldIfTolerances1.Text = "  -";
-                MinusFieldIfTolerances2.Text = "  -";
-                LtFieldIfTolerances1.Text = "  <";
-                LtFieldIfTolerances2.Text = "  <";
-                LtFieldIfTolerances3.Text = "  <";
+                MinusFieldIfTolerances1.Text = ">";
+                MinusFieldIfTolerances2.Text = ">";
+                LtFieldIfTolerances1.Text = "<";
+                LtFieldIfTolerances2.Text = "<";
+                LtFieldIfTolerances3.Text = "<";
 
                 WaterConsumptionLabel.Text = msg.TolerancesData.WaterConsumption.ToString("0.00");
                 NutritionConsumptionLabel.Text = msg.TolerancesData.NutrientConsumption.ToString("0.00");
@@ -77,13 +103,31 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
                 PestResistanceLabel.Text = (msg.TolerancesData.PestTolerance + 1).ToString("0.00");
                 WeedResistanceLabel.Text = msg.TolerancesData.WeedTolerance.ToString("0.00"); // Only one that is checked diffently...
             }
+            else
+            {
+                MinusFieldIfTolerances1.Text = "";
+                MinusFieldIfTolerances2.Text = "";
+                LtFieldIfTolerances1.Text = "";
+                LtFieldIfTolerances2.Text = "";
+                LtFieldIfTolerances3.Text = "";
+
+                WaterConsumptionLabel.Text = "";
+                NutritionConsumptionLabel.Text = "";
+                ToxinsResistanceLabel.Text = "";
+                PestResistanceLabel.Text = "";
+                WeedResistanceLabel.Text = "";
+            }
 
             ContainerGrid.Visible = true;
             ContainerDivider.Visible = true;
         }
+        else
+        {
+            ContainerGrid.Visible = false;
+            ContainerDivider.Visible = false;
+        }
 
-        // Section 3: Information regarding the plant.
-        // Section 3.1: Tolerances part 2.
+        // Section 4: Tolerances part 2.
         if (msg.TolerancesData is not null)
         {
             var kpa = (msg.TolerancesData.LowPressureTolerance + msg.TolerancesData.HighPressureTolerance) / 2;
@@ -118,11 +162,13 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
             EnvironmentBox.Visible = true;
             EnvironmentDivider.Visible = true;
         }
+        else
+        {
+            EnvironmentBox.Visible = false;
+            EnvironmentDivider.Visible = false;
+        }
 
-        // Maybe move some of those above the tray?
-        // Section 3.X: Plant itself (health/endurance, age/lifespan, growthStages?)
-        // Section 3.X: Output (Gasses, Chemicals, Yield, Potency, Product)
-        // Section 3.X: Traits (light, scream, seedless, viable, ligneous)
+        // Section 5: Output (Gasses, Chemicals, Yield, Potency, Product, Seedless?)
         // Label printer at the bottom (like the forensic scanner)
         // TODO: PA
     }
