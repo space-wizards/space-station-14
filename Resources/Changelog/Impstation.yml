@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Tables can now be built from uranium glass.
-    type: Add
-  id: 496
-  time: '2024-11-12T17:34:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/682
 - author: honeyed-lemons
   changes:
   - message: Minor changes to the mobster and cowboy accents
@@ -4398,3 +4391,10 @@
   id: 995
   time: '2025-01-25T07:52:19.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1460
+- author: ATDoop
+  changes:
+  - message: Crewsimov Law 1 no longer has the "inaction" clause.
+    type: Tweak
+  id: 996
+  time: '2025-01-25T07:54:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1461
