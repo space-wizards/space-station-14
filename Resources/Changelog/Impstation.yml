@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: suyo
-  changes:
-  - message: Added three new expedition tracks!
-    type: Add
-  id: 505
-  time: '2024-11-13T06:45:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/689
 - author: hivehum
   changes:
   - message: Added the Hypereutactic Blade.
@@ -4379,3 +4372,13 @@
   id: 1004
   time: '2025-01-25T08:44:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1359
+- author: AftrLite
+  changes:
+  - message: Syndicate Decoys have been fixed to match the new hardsuit sprites. Deploy
+      a swole new juggernaut dakimakura decoy today.
+    type: Fix
+  - message: Divine Grasp no longer unanchors on hit. That wasn't intended, whoops.
+    type: Fix
+  id: 1005
+  time: '2025-01-25T08:49:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1477
