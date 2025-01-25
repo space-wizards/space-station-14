@@ -79,4 +79,29 @@ public sealed partial class StationJobsComponent : Component
     /// </summary>
     [DataField("availableJobs", required: true)]
     public Dictionary<ProtoId<JobPrototype>, int[]> SetupAvailableJobs = default!;
+
+    /// <summary>
+    /// Dictionary contatining jobs that are in a shared job pools, containing the usual roundstart, midround or negative value.
+    /// JobGroup class described separately
+    /// </summary>
+    [DataField("jobGroups")]
+    public Dictionary<string, JobGroup> JobGroups = new();
+
+}
+
+/// <summary>
+/// Containing list of jobs that are part of shared job pool
+/// Also containing numbers for the usual roundstart/midround amount logic
+/// </summary>
+[DataDefinition]
+public sealed partial class JobGroup
+{
+    [DataField("roundStart")]
+    public int RoundStart;
+
+    [DataField("midRound")]
+    public int MidRound;
+
+    [DataField("members")]
+    public List<ProtoId<JobPrototype>> Members = new();
 }

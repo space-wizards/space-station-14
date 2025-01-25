@@ -32,8 +32,8 @@
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
-            StationEngineer: [ 4, 4 ]
-            TechnicalAssistant: [ 3, 3 ]
+            StationEngineer: [ 0, 0 ]
+            TechnicalAssistant: [ 0, 0 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
             Chemist: [ 3, 3 ]
@@ -65,3 +65,10 @@
             #silicon
             StationAi: [ 1, 1 ]
             Borg: [ 3, 3 ]
+          jobGroups:
+            EngineeringTeam:
+              roundStart: 7
+              midRound: 7
+              members:
+                - StationEngineer
+                - TechnicalAssistant
