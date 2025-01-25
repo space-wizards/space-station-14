@@ -60,7 +60,7 @@
                     <Label Text=" / " />
                     <Label HorizontalAlignment="Right" Text="100.00" />
                     <Label Margin="12 0 0 0" Name="GtFieldIfTolerances1" />
-                    <Label HorizontalAlignment="Left" Name="WaterConsumptionLabel" />
+                    <Label HorizontalAlignment="Right" Name="WaterConsumptionLabel" />
                     <Label Text=" · " />
                     <Label Text="{Loc 'plant-analyzer-component-nutrition'}" />
                     <Label SetWidth="8" />
@@ -68,7 +68,7 @@
                     <Label Text=" / " />
                     <Label HorizontalAlignment="Right" Text="100.00" />
                     <Label Margin="12 0 0 0" Name="GtFieldIfTolerances2" />
-                    <Label HorizontalAlignment="Left" Name="NutritionConsumptionLabel" />
+                    <Label HorizontalAlignment="Right" Name="NutritionConsumptionLabel" />
                     <Label Text=" · " />
                     <Label Text="{Loc 'plant-analyzer-component-toxins'}" />
                     <Label SetWidth="8" />
@@ -76,7 +76,7 @@
                     <Label Text=" / " />
                     <Label HorizontalAlignment="Right" Text="100.00" />
                     <Label Margin="12 0 0 0" Name="LtFieldIfTolerances1" />
-                    <Label HorizontalAlignment="Left" Name="ToxinsResistanceLabel" />
+                    <Label HorizontalAlignment="Right" Name="ToxinsResistanceLabel" />
                     <Label Text=" · " />
                     <Label Text="{Loc 'plant-analyzer-component-pests'}" />
                     <Label SetWidth="8" />
@@ -84,7 +84,7 @@
                     <Label Text=" / " />
                     <Label HorizontalAlignment="Right" Text="10.00" />
                     <Label Margin="12 0 0 0" Name="LtFieldIfTolerances2" />
-                    <Label HorizontalAlignment="Left" Name="PestResistanceLabel" />
+                    <Label HorizontalAlignment="Right" Name="PestResistanceLabel" />
                     <Label Text=" · " />
                     <Label Text="{Loc 'plant-analyzer-component-weeds'}" />
                     <Label SetWidth="8" />
@@ -92,7 +92,7 @@
                     <Label Text=" / " />
                     <Label HorizontalAlignment="Right" Text="10.00" />
                     <Label Margin="12 0 0 0" Name="LtFieldIfTolerances3" />
-                    <Label HorizontalAlignment="Left" Name="WeedResistanceLabel" />
+                    <Label HorizontalAlignment="Right" Name="WeedResistanceLabel" />
                 </GridContainer>
                 <PanelContainer Name="ContainerDivider" Visible="false" StyleClasses="LowDivider" />
                 <BoxContainer Name="EnvironmentBox" Visible="false" Orientation="Horizontal" Margin="5">
@@ -103,7 +103,13 @@
                     <RichTextLabel Name="ProduceLabel" SetWidth="290" />
                 </BoxContainer>
                 <PanelContainer Name="ProduceDivider" Visible="false" StyleClasses="LowDivider" />
-                <!-- TODO: PA -->
+                <Button Name="Print"
+                    TextAlign="Center"
+                    HorizontalExpand="True"
+                    Access="Public"
+                    Disabled="True"
+                    Margin="0 5 0 0"
+                    Text="{Loc 'plant-analyzer-print'}" />
             </BoxContainer>
         </BoxContainer>
     </ScrollContainer>

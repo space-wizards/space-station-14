@@ -28,3 +28,26 @@
     guides:
     - Botany
     - Chemicals
+
+- type: entity
+  name: plant analyzer report
+  parent: Paper
+  id: PlantAnalyzerReportPaper
+  description: A printout from a plant analyzer.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper_receipt_horizontal
+    - state: paper_receipt_horizontal_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_perforated.svg.96dpi.png"
+    backgroundImageTile: true
+    backgroundPatchMargin: 6.0, 0.0, 6.0, 0.0
+    contentMargin: 6.0, 6.0, 6.0, 6.0
+    maxWritableArea: 368.0, 512.0
