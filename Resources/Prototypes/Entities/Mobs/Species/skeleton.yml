@@ -74,7 +74,7 @@
       methods: [ Touch ]
       effects:
       - !type:WashCreamPieReaction
-    - reagents: [ Milk, MilkGoat, MilkSoy, MilkSpoiled ]
+    - reagents: [ Milk, MilkGoat, MilkSoy, MilkSpoiled, PigMilk  ]
       # add new types of milk to reagents as they appear, oat milk isn't on the list
       # because turns out oat milk has 1/30th the amount of calcium in it compared to the rest
       # even if it's a meme - I did research
