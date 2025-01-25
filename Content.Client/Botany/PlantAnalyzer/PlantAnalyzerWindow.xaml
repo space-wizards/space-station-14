@@ -29,7 +29,7 @@
                            Text="{Loc 'health-analyzer-window-entity-unknown-text'}" />
                 </BoxContainer>
                 <PanelContainer StyleClasses="LowDivider" />
-                <GridContainer Name="ContainerGrid" Margin="0 5" Columns="6" Visible="false">
+                <GridContainer Name="ContainerGrid" Margin="0 5" Columns="8" Visible="false">
                     <!-- Max values from `PlantHolderSystem.CheckLevelSanity` -->
                     <Label Text=" · " />
                     <Label Text="{Loc 'plant-analyzer-component-water'}" />
@@ -37,32 +37,46 @@
                     <Label FontColorOverride="cyan" HorizontalAlignment="Right" Name="WaterLevelLabel" />
                     <Label Text=" / " />
                     <Label HorizontalAlignment="Right" Text="100.00" />
+                    <Label Name="MinusFieldIfTolerances1" />
+                    <Label HorizontalAlignment="Left" Name="WaterConsumptionLabel" />
                     <Label Text=" · " />
                     <Label Text="{Loc 'plant-analyzer-component-nutrition'}" />
                     <Label SetWidth="8" />
                     <Label FontColorOverride="orange" HorizontalAlignment="Right" Name="NutritionLevelLabel" />
                     <Label Text=" / " />
                     <Label HorizontalAlignment="Right" Text="100.00" />
+                    <Label Name="MinusFieldIfTolerances2" />
+                    <Label HorizontalAlignment="Left" Name="NutritionConsumptionLabel" />
                     <Label Text=" · " />
                     <Label Text="{Loc 'plant-analyzer-component-toxins'}" />
                     <Label SetWidth="8" />
                     <Label FontColorOverride="yellowgreen" HorizontalAlignment="Right" Name="ToxinsLabel" />
                     <Label Text=" / " />
                     <Label HorizontalAlignment="Right" Text="100.00" />
+                    <Label Name="LtFieldIfTolerances1" />
+                    <Label HorizontalAlignment="Left" Name="ToxinsResistanceLabel" />
                     <Label Text=" · " />
                     <Label Text="{Loc 'plant-analyzer-component-pests'}" />
                     <Label SetWidth="8" />
                     <Label FontColorOverride="magenta" HorizontalAlignment="Right" Name="PestLevelLabel" />
                     <Label Text=" / " />
                     <Label HorizontalAlignment="Right" Text="10.00" />
+                    <Label Name="LtFieldIfTolerances2" />
+                    <Label HorizontalAlignment="Left" Name="PestResistanceLabel" />
                     <Label Text=" · " />
                     <Label Text="{Loc 'plant-analyzer-component-weeds'}" />
                     <Label SetWidth="8" />
                     <Label FontColorOverride="red" HorizontalAlignment="Right" Name="WeedLevelLabel" />
                     <Label Text=" / " />
                     <Label HorizontalAlignment="Right" Text="10.00" />
+                    <Label Name="LtFieldIfTolerances3" />
+                    <Label HorizontalAlignment="Left" Name="WeedResistanceLabel" />
                 </GridContainer>
-                <PanelContainer StyleClasses="LowDivider" />
+                <PanelContainer Name="ContainerDivider" Visible="false" StyleClasses="LowDivider" />
+                <BoxContainer Name="EnvironmentBox" Visible="false" Orientation="Horizontal" Margin="0 5">
+                    <RichTextLabel Name="EnvironmentLabel" SetWidth="300" />
+                </BoxContainer>
+                <PanelContainer Name="EnvironmentDivider" Visible="false" StyleClasses="LowDivider" />
                 <!-- TODO: PA -->
             </BoxContainer>
         </BoxContainer>
