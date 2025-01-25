@@ -114,8 +114,10 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         var xform = Transform(entity.Owner);
 
         // TODO: Raycast to the specified spot so we don't clip into a wall.
+        // TODO: Does wakebody break this???
+        Physics.WakeBody(entity.Owner);
 
-        _xformSystem.SetLocalPositionNoLerp(entity.Owner, xform.LocalPosition + direction);
+        _xformSystem.SetLocalPosition(entity.Owner, xform.LocalPosition + direction);
     }
 
     protected bool HandleCollisions(Entity<MobCollisionComponent, PhysicsComponent> entity, float frameTime)
@@ -153,7 +155,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             //penDepth = MathF.Pow(penDepth, 1.2f);
 
             // Sum the strengths so we get pushes back the same amount (impulse-wise, ignoring prediction).
-            var mobMovement = penDepth * diff.Normalized() * (entity.Comp1.Strength + otherComp.Strength) * frameTime;
+            var mobMovement = penDepth * diff.Normalized() * (entity.Comp1.Strength + otherComp.Strength);
 
             // Need the push strength proportional to penetration depth.
             direction += mobMovement;
@@ -165,6 +167,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             return contactCount > 0;
         }
 
+        direction *= frameTime;
         entity.Comp1.EndAccumulator = MobCollisionComponent.BufferTime;
         var parentAngle = worldRot - xform.LocalRotation;
         var localDir = (-parentAngle).RotateVec(direction);
