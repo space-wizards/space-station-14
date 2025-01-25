@@ -9,7 +9,7 @@
   - type: Marker
   - type: Clickable
   - type: InteractionOutline
-  - tyoe: Tag
+  - type: Tag
     tags:
     - ForceFixRotations
   - type: Sprite
