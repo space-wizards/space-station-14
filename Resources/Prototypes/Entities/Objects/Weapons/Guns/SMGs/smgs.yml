@@ -82,7 +82,7 @@
   - type: Appearance
 
 - type: entity
-  name: C-20r sub machine gun
+  name: C-20r submachine gun
   parent: [BaseWeaponSubMachineGun, BaseSyndicateContraband]
   id: WeaponSubMachineGunC20r
   description: A firearm that is often used by the infamous nuclear operatives. Uses .35 auto ammo.

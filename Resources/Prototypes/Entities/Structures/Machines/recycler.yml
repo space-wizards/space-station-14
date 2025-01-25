@@ -84,6 +84,10 @@
       params:
         volume: -3
     cutOffSound: false
+    damage: # Harmony
+      types:
+        Slash: 25
+        Piercing: 25
   - type: MaterialStorage
     insertOnInteract: false
   - type: Conveyor

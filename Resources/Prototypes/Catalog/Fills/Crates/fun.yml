@@ -16,6 +16,8 @@
         weight: 9
       - id: PlushieSpaceLizard
         weight: 1
+      - id: PlushieLizardInversed
+        weight: 0.5
     - !type:GroupSelector
       children:
       - id: PlushieCarp
@@ -324,6 +326,8 @@
       - id: PlasticBanana
       - id: WhoopieCushion
       - id: ToyHammer
+      - id: ToyRubberDuck # Harmony change. More ways to spawn duckies
+        amount: 2
       - id: MrChips
         orGroup: GiftPool
       - id: MrDips

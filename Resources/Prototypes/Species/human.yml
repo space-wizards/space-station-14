@@ -33,12 +33,13 @@
     RLeg: MobHumanRLeg
     LFoot: MobHumanLFoot
     RFoot: MobHumanRFoot
+    Tail: MobHumanoidAnyMarking # Harmony: Cat Tail Support
 
 - type: markingPoints
   id: MobHumanMarkingLimits
   points:
     Special: # the cat ear joke
-      points: 0
+      points: 1 # Harmony: Cat Ear Support
       required: false
     Hair:
       points: 1
@@ -50,7 +51,7 @@
       points: 1
       required: false
     Tail: # the cat tail joke
-      points: 0
+      points: 1 # Harmony Cat Tail Support
       required: false
     HeadTop:
       points: 1

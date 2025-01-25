@@ -1,0 +1,22 @@
+- type: entity
+  parent: ClothingShoesGaloshes
+  id: ClothingShoesDuckyGaloshes
+  description: Rubber boots. Quack Quack!
+  components:
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepDuck
+      params:
+        variation: 0.07
+  - type: Sprite
+    sprite: _Harmony/Clothing/Shoes/Misc/ducky-galoshes.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Shoes/Misc/ducky-galoshes.rsi
+  - type: Construction
+    graph: ClothingShoesDuckyGaloshes
+    node: shoes
+  - type: Tag
+    tags:
+    - ClothingShoesDuckyGaloshes
+    - WhitelistChameleon
+    - ClothMade

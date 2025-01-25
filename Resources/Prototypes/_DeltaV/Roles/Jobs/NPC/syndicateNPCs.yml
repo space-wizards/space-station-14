@@ -1,0 +1,21 @@
+- type: startingGear
+  id: RadioGuardGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerBlack
+    shoes: ClothingShoesBootsLaceup
+    id: SyndiListeningPostPDA
+    ears: ClothingHeadsetAltSyndicate
+    mask: ClothingMaskGasSyndicate
+    eyes: ClothingEyesHudSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterArmorPlateCarrierUnremoveable
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: ClothingOuterArmorPlateCarrier
+  id: ClothingOuterArmorPlateCarrierUnremoveable
+  name: grafted plate carrier
+  suffix: Unremoveable
+  description: An off-the-shelf plate carrier that has been cruelly grafted onto its wearers body
+  components:
+  - type: Unremoveable

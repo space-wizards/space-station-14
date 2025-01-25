@@ -1,0 +1,46 @@
+- type: entity
+  id: CrateArmoryRSC
+  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  name: bolt-action rifle crate
+  description:  Contains several high-powered, bolt-action rifles with sufficient ammunition. Packaging is questionable, your mileage will vary. Requires Armory, Security or Supply access to open.
+  components:
+  - type: Icon
+    sprite: _Harmony/Structures/Storage/Crates/old_wooden_crate.rsi
+  - type: Sprite
+    sprite: _Harmony/Structures/Storage/Crates/old_wooden_crate.rsi
+  - type: EntityStorage
+    capacity: 50
+  - type: AccessReader
+    access: [["Armory"], ["Security"], ["Cargo"]]
+  - type: StorageFill
+    contents:
+      - id: WeaponSniperRSC
+        orGroup: guns
+        amount: 2
+      - id: WeaponSniperRSC
+        orGroup: guns
+        amount: 3
+      - id: WeaponSniperRSC
+        orGroup: guns
+        amount: 4
+      - id: WeaponSniperRSC
+        orGroup: guns
+        amount: 5
+      - id: SpeedLoaderLightRifle
+        orGroup: ammo
+        amount: 4
+      - id: SpeedLoaderLightRifle
+        orGroup: ammo
+        amount: 8
+      - id: SpeedLoaderLightRifle
+        orGroup: ammo
+        amount: 15
+      - id: SpeedLoaderLightRifle
+        orGroup: ammo
+        amount: 16
+      - id: SpeedLoaderLightRifle
+        orGroup: ammo
+        amount: 23
+      - id: SpeedLoaderLightRifle
+        orGroup: ammo
+        amount: 42

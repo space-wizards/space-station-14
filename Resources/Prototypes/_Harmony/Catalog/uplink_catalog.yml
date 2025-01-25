@@ -1,8 +1,26 @@
 # Guns
 # Explosives
+- type: listing
+  id: UplinkPizzaBomb
+  name: uplink-pizza-bomb-name
+  description: uplink-pizza-bomb-desc
+  productEntity: Pizzabomb
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkExplosives
 # Ammo
 # Chemicals
 # Deception
+- type: listing
+  id: UplinkSmugglerSatchel
+  name: uplink-smuggler-satchel-name
+  description: uplink-smuggler-satchel-desc
+  productEntity: ClothingSatchelSmugglers
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkDeception
 
 - type: listing
   id: UplinkSyndicateIDHarmony
@@ -20,6 +38,21 @@
 # Disruption
 # Allies
 # Implants
+- type: listing
+  id: UplinkDeathRattleTraitor
+  name: uplink-traitor-deathrattle-implant-name
+  description: uplink-traitor-deathrattle-implant-desc
+  productEntity: BoxDeathRattleImplantsTraitor
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkImplants
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+
 # Wearables
 # Pointless
 # Job Specific

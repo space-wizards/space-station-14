@@ -90,6 +90,7 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/salvage.rsi
 
+# Harmony Change: Updates Sprite Pathing for CE Sprite Consistency Update
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitChiefEngineer
@@ -97,10 +98,11 @@
   description: It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of Chief Engineer.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ce.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/ce.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ce.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/ce.rsi
 
+# Harmony Change: Updates Sprite Pathing for CE Sprite Consistency Update
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitChiefEngineerTurtle
@@ -108,9 +110,9 @@
   description: A yellow turtleneck designed specifically for work in conditions of the engineering department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/ce_turtle.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/ce_turtle.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/ce_turtle.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/ce_turtle.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -325,10 +327,11 @@
   description: Rather bland and inoffensive. Perfect for vanishing off the face of the universe.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/hop.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hop.rsi # Harmony change. Resprite
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/hop.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hop.rsi # Harmony change. Resprite
 
+#Harmony Change: Updated Pathing for security resprite update
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitHoS
@@ -336,32 +339,22 @@
   description: It's bright red and rather crisp, much like security's victims tend to be.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hos.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-        color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpsuit/color.rsi
-      - state: overlay-inhand-left
-      right:
-      - state: inhand-right
-        color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpsuit/color.rsi
-      - state: overlay-inhand-right
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hos.rsi
 
+# Harmony Change: Updated Sprite Pathing, Name, and Description for Harmony Security Sprite Fixing Update
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitHoSAlt
-  name: head of security's turtleneck
-  description: It's a turtleneck worn by those strong and disciplined enough to achieve the position of Head of Security.
+  name: head of security's assault jumpsuit
+  description: It's an assault suit worn by those strong and disciplined enough to achieve the position of Head of Security.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/hos_alt.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/hos_alt.rsi
+
 #Harmony Change: Updated the name and sprite for bluesec update
 - type: entity 
   parent: [ClothingUniformBase, BaseCommandContraband]
@@ -589,6 +582,7 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/roboticist.rsi
 
+#Harmony Change: Updated Pathing and Name for security resprite update
 - type: entity
   parent: [ClothingUniformBase, BaseRestrictedContraband]
   id: ClothingUniformJumpsuitSec
@@ -596,21 +590,10 @@
   description: A jumpsuit made of strong material, providing robust protection.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/security.rsi 
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/security.rsi
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-        color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpsuit/color.rsi
-      - state: overlay-inhand-left
-      right:
-      - state: inhand-right
-        color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpsuit/color.rsi
-      - state: overlay-inhand-right
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/security.rsi
+
 #Harmony Change: Updated the name, sprite, and contraband level for bluesec update
 - type: entity 
   parent: [ClothingUniformBase, BaseRestrictedContraband]
@@ -645,28 +628,17 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/security_trooper.rsi
 
+#Harmony Change: Updated Pathing and Name for security resprite update
 - type: entity
   parent: [ClothingUniformBase, BaseRestrictedContraband]
   id: ClothingUniformJumpsuitWarden
-  name: warden's uniform
+  name: warden's jumpsuit
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/warden.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-        color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpsuit/color.rsi
-      - state: overlay-inhand-left
-      right:
-      - state: inhand-right
-        color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpsuit/color.rsi
-      - state: overlay-inhand-right
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/warden.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -860,7 +832,7 @@
       mode: SensorOff
 
 - type: entity
-  parent: [ ClothingUniformBase, BaseRestrictedContraband ]
+  parent: [ ClothingUniformBase ]
   id: ClothingUniformJumpsuitMercenary
   name: mercenary jumpsuit
   description: Clothing for real mercenaries who have gone through fire, water and the jungle of planets flooded with dangerous monsters or targets for which a reward has been assigned.
@@ -1193,6 +1165,7 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/senior_physician.rsi
 
+#Harmony Change: Updated Pathing for security resprite update
 - type: entity
   parent: [ClothingUniformBase, BaseRestrictedContraband]
   id: ClothingUniformJumpsuitSeniorOfficer
@@ -1200,9 +1173,9 @@
   description: A sign of skill and prestige within the security department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/senior_officer.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/senior_officer.rsi
 
 - type: entity
   parent: ClothingUniformBase

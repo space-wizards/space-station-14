@@ -1,0 +1,11 @@
+- type: entity
+  id: OrwellianCircuitBoard
+  parent: BaseElectronics
+  name: law board (Orwellian)
+  description: An electronics board containing the Orwellian lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: OrwellianLawset

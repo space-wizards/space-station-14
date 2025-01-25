@@ -1,0 +1,31 @@
+﻿# Base
+# teach lesson
+- type: entity
+  abstract: true
+  parent: BaseTargetObjective
+  id: BaseTeachLessonObjective
+  components:
+  - type: Objective
+    unique: false
+    icon:
+      sprite: Objects/Weapons/Melee/fireaxe.rsi
+      state: icon
+  - type: TeachLessonCondition
+  - type: CodeCondition
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
+      components:
+      - SocialObjective
+
+# Kill
+- type: entity
+  parent: [BaseTraitorObjective, BaseTeachLessonObjective]
+  id: TeachLessonRandomPersonObjective
+  description: Kill them, and show everyone we mean business. They only need to die once.
+  components:
+  - type: Objective
+    difficulty: 1.75
+    unique: false
+  - type: TargetObjective
+    title: objective-condition-teach-person-title
+  - type: PickRandomPerson

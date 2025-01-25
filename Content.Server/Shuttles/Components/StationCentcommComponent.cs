@@ -16,7 +16,7 @@ public sealed partial class StationCentcommComponent : Component
     public float ShuttleIndex;
 
     [DataField]
-    public ResPath Map = new("/Maps/centcomm.yml");
+    public ResPath Map = new("/Maps/_Harmony/centcomm.yml"); // Harmony file path.
 
     /// <summary>
     /// Centcomm entity that was loaded.

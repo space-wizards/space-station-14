@@ -28,7 +28,7 @@
     back:
     - ClothingNeckHeadphones
 
-# Plushies
+# Toys
 - type: loadout
   id: PlushieLizard
   storage:
@@ -40,6 +40,15 @@
   storage:
     back:
     - PlushieSpaceLizard
+
+- type: loadout
+  id: ThreeCandles
+  dummyEntity: LoadoutDummyCandles
+  storage:
+    back:
+    - CandleRed
+    - CandleBlue
+    - CandleGreenSmall
 
 # Smokeables
 - type: loadout
@@ -162,67 +171,6 @@
   storage:
     back:
     - ClothingNeckGoldAutismPin
-
-#Harmony trinkets below
-- type: loadout
-  id: ClothingNeckVulturePin
-  storage:
-    back:
-    - ClothingNeckVulturePin
-
-- type: loadout
-  id: ClothingNeckMirosPin
-  storage:
-    back:
-    - ClothingNeckMirosPin
-
-- type: loadout
-  id: ClothingNeckSalamanderPin
-  storage:
-    back:
-    - ClothingNeckSalamanderPin
-
-- type: loadout
-  id: ClothingNeckLizardPin
-  storage:
-    back:
-    - ClothingNeckLizardPin
-
-- type: loadout
-  id: ClothingNeckLeviathanPin
-  storage:
-    back:
-    - ClothingNeckLeviathanPin
-
-- type: loadout
-  id: ClothingNeckFrontierPin
-  storage:
-    back:
-    - ClothingNeckFrontierPin
-
-- type: loadout
-  id: ClothingNeckCosmaticDriftPin
-  storage:
-    back:
-    - ClothingNeckCosmaticDriftPin
-
-- type: loadout
-  id: ClothingNeckDeltaVPin
-  storage:
-    back:
-    - ClothingNeckDeltaVPin
-
-- type: loadout
-  id: ClothingNeckAxolotlPin
-  storage:
-    back:
-    - ClothingNeckAxolotlPin
-
-- type: loadout
-  id: HarmonicaInstrument
-  storage:
-    back:
-    - HarmonicaInstrument
 
 # Towels
 - type: loadout
@@ -411,5 +359,5 @@
       role: JobMime
       time: 360000 # 100hr
   storage:
-    back: 
+    back:
     - TowelColorMime

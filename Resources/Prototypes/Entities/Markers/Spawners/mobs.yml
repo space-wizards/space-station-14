@@ -376,6 +376,7 @@
   - type: ConditionalSpawner
     prototypes:
       - MobAlexander
+      - MobKoboldPoquito # Harmony Pet
 
 - type: entity
   name: Shiva Spawner
@@ -561,7 +562,8 @@
     layers:
     - state: green
     - state: monkey
-      sprite: Mobs/Animals/monkey.rsi
+#     sprite: Mobs/Animals/monkey.rsi
+      sprite: _Harmony/Mobs/Animals/monkey.rsi # Harmony Change: Updated Sprite Pathing
   - type: ConditionalSpawner
     prototypes:
     - MobMonkeyPunpun
@@ -592,7 +594,8 @@
     layers:
     - state: green
     - state: monkey
-      sprite: Mobs/Animals/monkey.rsi
+#     sprite: Mobs/Animals/monkey.rsi
+      sprite: _Harmony/Mobs/Animals/monkey.rsi # Harmony Change: Updates Sprite Pathing
   - type: ConditionalSpawner
     prototypes:
     - MobMonkey
@@ -880,3 +883,46 @@
   - type: ConditionalSpawner
     prototypes:
     - MobHonkBot
+
+- type: entity
+  name: gingerbread man Spawner
+  id: SpawnMobGingerbreadAI
+  suffix: Ghostrole
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: full
+        sprite: Mobs/Species/Gingerbread/parts.rsi
+  - type: ConditionalSpawner
+    prototypes:
+      - MobGingerbreadAI
+
+- type: entity
+  name: Reindeer Buck Spawner
+  id: SpawnMobReindeerBuck
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: reindeer_buck_still
+      sprite: Mobs/Animals/reindeer_buck.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobReindeerBuck
+
+- type: entity
+  name: Reindeer Doe Spawner
+  id: SpawnMobReindeerDoe
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: reindeer_doe_still
+      sprite: Mobs/Animals/reindeer_doe.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobReindeerDoe

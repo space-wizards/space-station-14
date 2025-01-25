@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432, orb, orb-inhand-left and orb-inhand-right created by Pancake, plushie_diona and plushie_diona1 created by discord user Deos#5630, toy-mouse-equipped-HELMET is a resprited 1-equipped-HELMET in mouse.rsi by PuroSlavKing (Github), plushie_xeno by LinkUyx#6557, plushie_hampter by RenLou#4333, beachball taken from https://github.com/ss220-space/Paradise/commit/662c08272acd7be79531550919f56f846726eabb, beachb-inhand by ;3#1161, bee hat and in-hand sprites drawn by Ubaser, plushie_penguin by netwy, plushie_arachnid by PixelTheKermit (github), plushie human by TheShuEd, NanoTrasen Balloon by MACMAN2003, holoplush and magicplush modified by deltanedas (github). Lizard hat sprite made by Cinder, rubber_chicken by xprospero",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432, orb, orb-inhand-left and orb-inhand-right created by Pancake, plushie_diona and plushie_diona1 created by discord user Deos#5630, toy-mouse-equipped-HELMET is a resprited 1-equipped-HELMET in mouse.rsi by PuroSlavKing (Github), plushie_xeno by LinkUyx#6557, plushie_hampter by RenLou#4333, beachball taken from https://github.com/ss220-space/Paradise/commit/662c08272acd7be79531550919f56f846726eabb, beachb-inhand by ;3#1161, bee hat and in-hand sprites drawn by Ubaser, plushie_penguin by netwy, plushie_arachnid by PixelTheKermit (github), plushie human by TheShuEd, NanoTrasen Balloon by MACMAN2003, holoplush and magicplush modified by deltanedas (github), lizard hat sprite made by Cinder, rubber_chicken by xprospero, in-hand lizard plushie sprites by KieueCaprie, plushie_lizard_inversed and inhand sprites modified from plushie_lizard_mirrored and plushielizard-inhand-left, plushielizard-inhand-right by ArtisticRoomba, rainbowcarplush and inhand sprites modified from carpplush and inhand sprites by ArtisticRoomba",
   "size": {
     "x": 32,
     "y": 32
@@ -18,6 +18,21 @@
     },
     {
       "name": "plushie_rouny",
+      "directions": 4
+    },
+    {
+      "name": "plushie_lizard"
+    },
+    {
+      "name": "plushielizard-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "plushielizard-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "lizard-equipped-HELMET",
       "directions": 4
     },
     {
@@ -62,6 +77,17 @@
       "directions": 4
     },
     {
+      "name": "rainbowlizardplush"
+    },
+    {
+      "name": "rainbowlizardplush-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "rainbowlizardplush-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "narplush"
     },
     {
@@ -86,14 +112,19 @@
       "name": "plushie_arachnid"
     },
     {
-      "name": "plushie_lizard"
+      "name": "plushie_lizard_inversed"
     },
     {
-      "name": "plushie_lizard_mirrored"
+       "name": "lizard-inversed-equipped-HELMET",
+       "directions": 4
     },
     {
-      "name": "lizard-equipped-HELMET",
-      "directions": 4
+       "name": "plushielizardinversed-inhand-left",
+       "directions": 4
+    },
+    {
+       "name": "plushielizardinversed-inhand-right",
+       "directions": 4
     },
     {
       "name": "plushie_lamp"

@@ -9,3 +9,15 @@
     sprite: _Harmony/Clothing/Head/Hoods/Coat/hoodcaptainarmored.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/Head/Hoods/Coat/hoodcaptainarmored.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterCurator
+  categories: [ HideSpawnMenu ]
+  name: curator's coat hood
+  description: A faded brown hood for comfy days in your study.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Head/Hoods/Coat/hoodcuratorcoat.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Head/Hoods/Coat/hoodcuratorcoat.rsi

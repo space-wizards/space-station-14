@@ -4,6 +4,24 @@
   equipment:
     head: ClothingHeadBandRed
 
+- type: loadout
+  id: SecurityBlueCapHarmony
+  equipment:
+    head: ClothingHeadHatSecSoftBlueHarmony
+
+- type: loadout
+  id: SeniorOfficerBeretHarmony
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorOfficer
+  equipment:
+    head: ClothingHeadHatBeretSecuritySeniorOfficerHarmony
+
+- type: loadout
+  id: SecurityBlueBeretHarmony
+  equipment:
+    head: ClothingHeadHatBeretSecurityBlueHarmony
+
 # Jumpsuit
 - type: loadout
   id: JumpsuitSecBlue

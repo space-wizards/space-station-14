@@ -119,6 +119,11 @@
   - type: SpeedModifierContactCapClothing
     maxContactSprintSlowdown: 0.7
     maxContactWalkSlowdown: 0.7
+  - type: Tag # Harmony change. Tag component is needed for ducky galoshes
+    tags:
+    - ClothingShoesGaloshes
+    - WhitelistChameleon
+    - ClothMade
 
 - type: entity
   parent: [ClothingShoesBaseButcherable, BaseMajorContraband]
@@ -136,6 +141,8 @@
     # ninja are masters of sneaking around relatively quickly, won't break cloak
     walkModifier: 1.1
     sprintModifier: 1.3
+  - type: FootstepModifier
+    footstepSoundCollection: null
 
 - type: entity
   parent: ClothingShoesBaseButcherable

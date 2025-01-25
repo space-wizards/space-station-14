@@ -1,0 +1,9 @@
+﻿- files: ["rustycansbattle.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Aaron Opfer, Rusty Cans Battle, created for FTL Captain's edition mod."
+  source: "https://www.subsetgames.com/forum/viewtopic.php?f=11&t=15663"
+
+- files: ["harmonilla.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "meatballwalkin"
+  source: "https://github.com/ss14-harmony/ss14-harmony"

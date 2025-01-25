@@ -13,6 +13,9 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Shared.Player;
+// Harmony refs
+using Robust.Shared.Configuration;
+using Content.Shared._Harmony.CCVars;
 
 namespace Content.Server.Chat;
 
@@ -25,6 +28,10 @@ public sealed class SuicideSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
     [Dependency] private readonly SharedSuicideSystem _suicide = default!;
+    // Harmony change. Add config manager and boolean to hold the CVar value
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
+
+    private bool _disable_suicide;
 
     public override void Initialize()
     {
@@ -33,6 +40,8 @@ public sealed class SuicideSystem : EntitySystem
         SubscribeLocalEvent<DamageableComponent, SuicideEvent>(OnDamageableSuicide);
         SubscribeLocalEvent<MobStateComponent, SuicideEvent>(OnEnvironmentalSuicide);
         SubscribeLocalEvent<MindContainerComponent, SuicideGhostEvent>(OnSuicideGhost);
+        // Harmony change. Subscribe to DisableSuicide CVar
+        Subs.CVar(_configuration, HCCVars.DisableSuicide, value => _disable_suicide = value, true);
     }
 
     /// <summary>
@@ -61,6 +70,10 @@ public sealed class SuicideSystem : EntitySystem
         // Suiciding with the CannotSuicide tag will ghost the player but not kill the body
         if (!suicideGhostEvent.Handled || _tagSystem.HasTag(victim, "CannotSuicide"))
             return false;
+
+        // Harmony change. If disable_suicide CVar is set, return without throwing an error or calling SuicideEvent()
+        if (_disable_suicide)
+            return true;
 
         var suicideEvent = new SuicideEvent(victim);
         RaiseLocalEvent(victim, suicideEvent);

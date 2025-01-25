@@ -1,5 +1,27 @@
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitCaptainTurtleneckHarmony
+  name: captain's turtleneck
+  description: A regal blue turtleneck sweater finely made with mothroach silk. Fit for a captain.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/capturtleneck.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/capturtleneck.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitCaptainHawaiianHarmony
+  name: captain's hawaiian shirt
+  description: Actually, you know what? YOU'RE FIRED!!
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/captain_hawaiian.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/captain_hawaiian.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitHeadOfPersonnelTurtleneckHarmony
   name: head of personnel's turtleneck
   description: A blue turtle neck meant to amplify the comfort of the office. Watch out for dog hairs.
@@ -8,3 +30,47 @@
     sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hop_turtle.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hop_turtle.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitHeadOfSecurityTurtleneckHarmony
+  name: head of security's turtleneck
+  description: You feel... innovative. Maybe you'll find a way to permabrig the clown later.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hos_turtle.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hos_turtle.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  id: ClothingUniformJumpsuitWardenBlueHarmony
+  name: warden's blue suit
+  description: A fashionable blue suit designed for the warden. Be careful though, it won't hide the bloodstains from the prisoners you've been abusing.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/warden_blue.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/warden_blue.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  id: ClothingUniformJumpsuitDetectiveBlueHarmony
+  name: detective's blue suit
+  description: For when the time calls for you to find the clues, which happen to be blue.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/det_blue.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/det_blue.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitHeadofPersonnelMessKitHarmony
+  name: head of personnel's mess kit
+  description: Blue jeans and a gold trimmed white shirt.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hopmesskit.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hopmesskit.rsi

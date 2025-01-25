@@ -29,7 +29,7 @@
 # Silicons
 - type: roleLoadout
   id: JobStationAi
-  nameDataset: names_ai
+  nameDataset: NamesAI
 
 # Civilian
 - type: roleLoadout
@@ -91,6 +91,8 @@
   groups:
   - GroupTankHarness
   - LibrarianJumpsuit
+  - LibrarianOuterClothingHarmony #Harmony Change: Librarian clothing addition -- Curator Coat
+  - LibrarianNeckHarmony #Harmony Change: Librarian clothing addition -- Curator Mantle
   - CommonBackpack
   - Glasses
   - Survival
@@ -378,7 +380,6 @@
 - type: roleLoadout
   id: JobDetective
   groups:
-  - GroupTankHarness
   - DetectiveHead
   - DetectiveNeck
   - DetectiveJumpsuit

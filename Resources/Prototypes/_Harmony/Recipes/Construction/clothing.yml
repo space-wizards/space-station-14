@@ -1,0 +1,10 @@
+- type: construction
+  name: ducky galoshes
+  id: ClothingShoesDuckyGaloshes
+  graph: ClothingShoesDuckyGaloshes
+  startNode: start
+  targetNode: shoes
+  category: construction-category-clothing
+  description: Rubber boots. Quack Quack!
+  icon: { sprite: _Harmony/Clothing/Shoes/Misc/ducky-galoshes.rsi, state: icon }
+  objectType: Item

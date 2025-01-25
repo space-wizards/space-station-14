@@ -15,10 +15,11 @@
   name: detective trenchcoat
   description: An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business.
   components:
+  # Harmony Change: Sprites updated for use in detective clothing update
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/detective.rsi
+    sprite: _Harmony/Clothing/OuterClothing/Coats/detective.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/detective.rsi
+    sprite: _Harmony/Clothing/OuterClothing/Coats/detective.rsi
   - type: StorageFill
     contents:
     - id: SmokingPipeFilledTobacco
@@ -32,10 +33,11 @@
   name: noir trenchcoat
   description: Ah, your trusty coat. There's a few tears here and there, giving it a more timely look. Or at least, that's what you told yourself when you found out gettin' it repaired would set you back 200 speos.
   components:
+  # Harmony Change: Sprites updated for use in detective clothing update
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/detective_grey.rsi
+    sprite: _Harmony/Clothing/OuterClothing/Coats/detective_grey.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/detective_grey.rsi
+    sprite: _Harmony/Clothing/OuterClothing/Coats/detective_grey.rsi
 
 
 - type: entity
@@ -94,11 +96,14 @@
   id: ClothingOuterCoatHoSTrench
   name: head of security's armored trenchcoat
   description: A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence.
-  components:
+  components: #Harmony Update:Updating pathing for the new HoS coat
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
+    sprite: _Harmony/Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
+    sprite: _Harmony/Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
+  - type: StorageFill # Harmony Update: Adds the HoS Flask to the HoS Trenchcoat Pocket for the HoS Flask in HoS Trenchcoat Pocket Update
+    contents:
+    - id: DrinkHosFlask
 
 - type: entity
   parent: ClothingOuterStorageToggleableBase
@@ -313,7 +318,8 @@
     sprite: Clothing/OuterClothing/Coats/pirate.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/pirate.rsi
-
+    
+#Harmony Change: Updated Pathing for security resprite update
 - type: entity
   parent: [ClothingOuterArmorWarden, ClothingOuterStorageBase, BaseRestrictedContraband]
   id: ClothingOuterCoatWarden
@@ -321,9 +327,9 @@
   description: A sturdy, utilitarian jacket designed to protect a warden from any brig-bound threats.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/warden.rsi
+    sprite: _Harmony/Clothing/OuterClothing/Coats/warden.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/warden.rsi
+    sprite: _Harmony/Clothing/OuterClothing/Coats/warden.rsi
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -348,7 +354,7 @@
     sprite: Clothing/OuterClothing/Coats/clownpriest.rsi
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ClothingOuterStorageBase, BaseMajorContraband]
   id: ClothingOuterDogi
   name: samurai dogi
   description: Dogi is a type of traditional Japanese clothing. The dogi is made of heavy, durable fabric, it is practical in combat and stylish in appearance. It is decorated with intricate patterns and embroidery on the back.

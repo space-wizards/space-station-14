@@ -4,7 +4,6 @@ shuttle-pilot-end = Stopped piloting
 shuttle-console-in-ftl = Currently in FTL
 shuttle-console-mass = Too large to FTL
 shuttle-console-prevent = You are unable to pilot this ship
-shuttle-console-static = Grid is static
 
 # NAV
 
@@ -31,6 +30,7 @@ shuttle-console-ftl-state-Starting = Starting
 shuttle-console-ftl-state-Travelling = Travelling
 shuttle-console-ftl-state-Arriving = Arriving
 shuttle-console-ftl-state-Cooldown = Cooldown
+shuttle-console-ftl-state-Invalid = Invalid
 
 shuttle-console-map-settings = Settings
 shuttle-console-ftl-button = FTL

@@ -1,7 +1,8 @@
-﻿- type: soundCollection
+- type: soundCollection
   id: NukeMusic
   files:
     - /Audio/StationEvents/running_out.ogg
     - /Audio/StationEvents/countdown.ogg
-    - /Audio/StationEvents/clearly_nuclear.ogg    
     - /Audio/StationEvents/sound_station_14.ogg
+#Harmony additions
+    - /Audio/_Harmony/StationEvents/moodswings.ogg

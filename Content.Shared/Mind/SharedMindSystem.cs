@@ -532,22 +532,19 @@ public abstract class SharedMindSystem : EntitySystem
     /// <summary>
     /// Returns a list of every living humanoid player's minds, except for a single one which is exluded.
     /// </summary>
-    public List<EntityUid> GetAliveHumansExcept(EntityUid exclude)
+    public HashSet<Entity<MindComponent>> GetAliveHumans(EntityUid? exclude = null)
     {
-        var mindQuery = EntityQuery<MindComponent>();
-
-        var allHumans = new List<EntityUid>();
+        var allHumans = new HashSet<Entity<MindComponent>>();
         // HumanoidAppearanceComponent is used to prevent mice, pAIs, etc from being chosen
-        var query = EntityQueryEnumerator<MindContainerComponent, MobStateComponent, HumanoidAppearanceComponent>();
-        while (query.MoveNext(out var uid, out var mc, out var mobState, out _))
+        var query = EntityQueryEnumerator<MobStateComponent, HumanoidAppearanceComponent>();
+        while (query.MoveNext(out var uid, out var mobState, out _))
         {
-            // the player needs to have a mind and not be the excluded one
-            if (mc.Mind == null || mc.Mind == exclude)
+            // the player needs to have a mind and not be the excluded one +
+            // the player has to be alive
+            if (!TryGetMind(uid, out var mind, out var mindComp) || mind == exclude || !_mobState.IsAlive(uid, mobState))
                 continue;
 
-            // the player has to be alive
-            if (_mobState.IsAlive(uid, mobState))
-                allHumans.Add(mc.Mind.Value);
+            allHumans.Add(new Entity<MindComponent>(mind, mindComp));
         }
 
         return allHumans;

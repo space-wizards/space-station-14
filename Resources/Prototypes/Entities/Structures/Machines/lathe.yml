@@ -150,6 +150,7 @@
       - ExteriorLightTube
       - LightBulb
       - LedLightBulb
+      - DimLightBulb
       - Bucket
       - DrinkMug
       - DrinkMugMetal
@@ -202,6 +203,8 @@
       - BoxFolderClipboard # Harmony
       - FreezerElectronics
       - Flare
+      - CassetteTape # DeltaV
+      - TapeRecorder # DeltaV
 
   - type: EmagLatheRecipes
     emagStaticRecipes:
@@ -228,6 +231,7 @@
       - RiotShield
       - SpeedLoaderMagnum
       - SpeedLoaderMagnumEmpty
+      - StripperClip  # Harmony change - part of RSC PR
   - type: BlueprintReceiver
     whitelist:
       tags:
@@ -476,7 +480,6 @@
       - SolarControlComputerCircuitboard
       - SolarTrackerElectronics
       - TurboItemRechargerCircuitboard
-      - PowerComputerCircuitboard
       - AutolatheHyperConvectionMachineCircuitboard
       - ProtolatheHyperConvectionMachineCircuitboard
       - CircuitImprinterHyperConvectionMachineCircuitboard
@@ -522,6 +525,8 @@
       - MassMediaCircuitboard
       - ReagentGrinderIndustrialMachineCircuitboard
       - JukeboxCircuitBoard
+      - SMESAdvancedMachineCircuitboard
+      - HolopadMachineCircuitboard
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ShuttleGunDusterCircuitboard
@@ -575,11 +580,6 @@
     - BorgModuleFireExtinguisher
     - BorgModuleRadiationDetection
     - BorgModuleTool
-    - BorgModuleAppraisal
-    - BorgModuleConstruction
-    - BorgModuleService
-    - BorgModuleTreatment
-    - BorgModuleCleaning
     - CyborgEndoskeleton
     - LeftArmBorg
     - RightArmBorg
@@ -587,50 +587,15 @@
     - RightLegBorg
     - LightHeadBorg
     - TorsoBorg
-    - LeftArmBorgEngineer
-    - RightArmBorgEngineer
-    - LeftLegBorgEngineer
-    - RightLegBorgEngineer
-    - HeadBorgEngineer
-    - TorsoBorgEngineer
-    - LeftLegBorgJanitor
-    - RightLegBorgJanitor
-    - HeadBorgJanitor
-    - TorsoBorgJanitor
-    - LeftArmBorgMedical
-    - RightArmBorgMedical
-    - LeftLegBorgMedical
-    - RightLegBorgMedical
-    - HeadBorgMedical
-    - TorsoBorgMedical
-    - LeftArmBorgMining
-    - RightArmBorgMining
-    - LeftLegBorgMining
-    - RightLegBorgMining
-    - HeadBorgMining
-    - TorsoBorgMining
-    - LeftArmBorgService
-    - RightArmBorgService
-    - LeftLegBorgService
-    - RightLegBorgService
-    - HeadBorgService
-    - TorsoBorgService
     dynamicRecipes:
     - ProximitySensor
-    - BorgModuleLightReplacer
     - BorgModuleAdvancedCleaning
-    - BorgModuleMining
-    - BorgModuleGrapplingGun
     - BorgModuleAdvancedTool
     - BorgModuleGPS
-    - BorgModuleRCD
     - BorgModuleArtifact
     - BorgModuleAnomaly
     - BorgModuleGardening
     - BorgModuleHarvesting
-    - BorgModuleMusique
-    - BorgModuleClowning
-    - BorgModuleDiagnosis
     - BorgModuleDefibrillator
     - BorgModuleAdvancedTreatment
     - RipleyHarness
@@ -763,6 +728,7 @@
       - MagazineShotgun
       - MagazineShotgunEmpty
       - MagazineShotgunSlug
+      - StripperClip  # Harmony change - part of RSC PR
       - RiotShield
       - SpeedLoaderMagnum
       - SpeedLoaderMagnumEmpty
@@ -771,8 +737,10 @@
       - TargetHuman
       - TargetSyndicate
       - WeaponDisablerPractice
+      - WeaponFlareGunSecurity
       - WeaponLaserCarbinePractice
       - Zipties
+      - SecurityBola #Harmony Change: Adds Security Bolas
     dynamicRecipes:
       - BoxBeanbag
       - BoxShotgunIncendiary
@@ -874,6 +842,7 @@
         - MagazineShotgunSlug
         - SpeedLoaderMagnum
         - SpeedLoaderMagnumEmpty
+        - StripperClip  # Harmony change - part of RSC PR
     - type: MaterialStorage
       whitelist:
         tags:
@@ -906,6 +875,7 @@
     staticRecipes:
       - Brutepack
       - Ointment
+      - Bloodpack # Harmony
       - Gauze
       - HandLabeler
       - Defibrillator
@@ -923,6 +893,7 @@
       - PillCanister
       - BodyBag
       - ChemistryEmptyBottle01
+      - BaseChemistryEmptyVial # Harmony
       - RollerBedSpawnFolded
       - CheapRollerBedSpawnFolded
       - EmergencyRollerBedSpawnFolded
@@ -933,14 +904,17 @@
       - MedkitBrute
       - MedkitAdvanced
       - MedkitRadiation
-      - MedkitCombat
+      # - MedkitCombat -- Harmony
       - Scalpel
       - Retractor
       - Cautery
       - Drill
       - Saw
       - Hemostat
+      - CircularSaw # Harmony
       - ClothingEyesGlassesChemical
+      - ClothingEyesHudMedical # Harmony
+      - ClothingEyesEyepatchHudMedical # Harmony
       - WhiteCane
     dynamicRecipes:
       - ChemicalPayload
@@ -980,14 +954,19 @@
       - ClothingUniformJumpskirtBartender
       - ClothingHeadHatCapcap
       - ClothingHeadHatCaptain
+      - ClothingHeadHatBeretCaptainHarmony # Harmony
       - ClothingUniformJumpsuitCaptain
       - ClothingUniformJumpskirtCaptain
       - ClothingUniformJumpsuitCapFormal
       - ClothingUniformJumpskirtCapFormalDress
+      - ClothingUniformJumpsuitCaptainTurtleneckHarmony # Harmony
+      - ClothingUniformJumpskirtCaptainTurtleneckHarmony # Harmony
+      - ClothingUniformJumpsuitCaptainHawaiianHarmony # Harmony
       - ClothingUniformJumpsuitCargo
       - ClothingUniformJumpskirtCargo
       - ClothingUniformJumpsuitSalvageSpecialist
       - ClothingHeadHatBeretEngineering
+      - ClothingHeadHatBeretChiefEngineerHarmony # Harmony
       - ClothingUniformJumpsuitChiefEngineer
       - ClothingUniformJumpskirtChiefEngineer
       - ClothingUniformJumpsuitChiefEngineerTurtle
@@ -1006,22 +985,29 @@
       - ClothingUniformJumpskirtCMOTurtle
       - ClothingUniformJumpsuitDetective
       - ClothingUniformJumpskirtDetective
+      - ClothingUniformJumpsuitDetectiveBlueHarmony # Harmony
       - ClothingUniformJumpsuitEngineering
       - ClothingUniformJumpskirtEngineering
       - ClothingUniformJumpsuitSeniorEngineer
       - ClothingUniformJumpskirtSeniorEngineer
+      - ClothingHeadHatBeretHeadofPersonnelHarmony # Harmony
       - ClothingHeadHatHopcap
       - ClothingUniformJumpsuitHoP
       - ClothingUniformJumpskirtHoP
       - ClothingUniformJumpsuitTurtleneckHoPHarmony # Harmony
       - ClothingUniformJumpskirtTurtleneckHoPHarmony #Harmony
+      - ClothingUniformJumpsuitHoPMessKitHarmony #Harmony
+      - ClothingUniformJumpskirtHoPMessKitHarmony #Harmony
       - ClothingHeadHatBeretHoS
       - ClothingHeadHatHoshat
       - ClothingHeadHatHoSWidebrimHarmony # Harmony
+      - ClothingHeadHatHoSSoftHarmony # Harmony
       - ClothingUniformJumpsuitHoS
       - ClothingUniformJumpskirtHoS
       - ClothingUniformJumpsuitHosFormal
       - ClothingUniformJumpskirtHosFormal
+      - ClothingUniformJumpsuitHeadOfSecurityTurtleneckHarmony # Harmony
+      - ClothingUniformJumpskirtHeadOfSecurityTurtleneckHarmony # Harmony
       - ClothingUniformJumpsuitHoSAlt
       - ClothingUniformJumpskirtHoSAlt
       - ClothingUniformJumpsuitHoSBlue
@@ -1057,6 +1043,7 @@
       - ClothingUniformJumpskirtQMTurtleneck
       - ClothingUniformJumpsuitQMFormal
       - ClothingHeadHatBeretRND
+      - ClothingHeadHatBeretResearchDirectorHarmony # Harmony
       - ClothingUniformJumpsuitResearchDirector
       - ClothingUniformJumpskirtResearchDirector
       - ClothingUniformJumpsuitScientist
@@ -1064,8 +1051,12 @@
       - ClothingUniformJumpsuitSeniorResearcher
       - ClothingUniformJumpskirtSeniorResearcher
       - ClothingHeadHatBeretSecurity
+      - ClothingHeadHatBeretSecuritySeniorOfficerHarmony # Harmony
       - ClothingUniformJumpsuitSec
       - ClothingUniformJumpskirtSec
+      - ClothingUniformJumpsuitSecBlueHarmony # Harmony
+      - ClothingHeadHatBeretSecurityBlueHarmony # Harmony
+      - ClothingHeadHatSecSoftBlueHarmony # Harmony
       - ClothingHeadHatBeretBrigmedic
       - ClothingUniformJumpsuitBrigmedic
       - ClothingUniformJumpskirtBrigmedic
@@ -1073,6 +1064,7 @@
       - ClothingHeadHatWarden
       - ClothingUniformJumpsuitWarden
       - ClothingUniformJumpskirtWarden
+      - ClothingUniformJumpsuitWardenBlueHarmony # Harmony
       - ClothingHeadHatParamedicsoft
       # Winter outfits
       - ClothingOuterWinterCap
@@ -1251,7 +1243,7 @@
       staticRecipes:
         - SheetSteel
         - SheetGlass1
-        - SheetRGlass
+        - SheetRGlassRaw
         - SheetPlasma1
         - SheetPGlass1
         - SheetRPGlass1
@@ -1277,7 +1269,7 @@
     staticRecipes:
       - SheetSteel
       - SheetGlass1
-      - SheetRGlass
+      - SheetRGlassRaw
       - SheetPlasma1
       - SheetPGlass1
       - SheetRPGlass1

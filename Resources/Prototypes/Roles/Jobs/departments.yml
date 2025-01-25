@@ -112,6 +112,7 @@
   - SecurityOfficer
   - Detective
   - Warden
+  - PermaPrisoner # Harmony
 
 - type: department
   id: Science

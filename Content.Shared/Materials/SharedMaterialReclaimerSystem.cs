@@ -88,7 +88,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         if (!CanStart(uid, component))
             return false;
 
-        if (HasComp<MobStateComponent>(item) && !CanGib(uid, item, component)) // whitelist? We be gibbing, boy!
+        if (HasComp<MobStateComponent>(item) && !CanRecycleMob(uid, item, component)) // whitelist? We be gibbing, boy!
             return false;
 
         if (_whitelistSystem.IsWhitelistFail(component.Whitelist, item) ||
@@ -148,7 +148,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 
     /// <summary>
     /// Spawns the materials and chemicals associated
-    /// with an entity. Also deletes the item.
+    /// with an entity. Also deletes the item if it is not a mob.
     /// </summary>
     public virtual void Reclaim(EntityUid uid,
         EntityUid item,
@@ -199,9 +199,10 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 
     /// <summary>
     /// Whether or not the reclaimer satisfies the conditions
-    /// allowing it to gib/reclaim a living creature.
+    /// allowing it to reclaim a living creature.
+    /// Harmony - The recycler can no longer gib living creatures, instead dealing significant brute damage.
     /// </summary>
-    public bool CanGib(EntityUid uid, EntityUid victim, MaterialReclaimerComponent component)
+    public bool CanRecycleMob(EntityUid uid, EntityUid victim, MaterialReclaimerComponent component)
     {
         return component.Powered &&
                component.Enabled &&

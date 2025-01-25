@@ -21,6 +21,18 @@
     EspressoMartini: 2
 
 - type: reaction
+  id: StarsetSarsaparilla
+  reactants:
+    SolDry:
+      amount: 2
+    Cola:
+      amount: 2
+    JuiceLemon:
+      amount: 1
+  products:
+    StarsetSarsaparilla: 5
+
+- type: reaction
   id: SunsetSoda
   reactants:
     Cream:

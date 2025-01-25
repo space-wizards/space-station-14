@@ -3,10 +3,13 @@
   startingInventory:
     ClothingUniformJumpsuitDetective: 2
     ClothingUniformJumpskirtDetective: 2
+    ClothingUniformJumpsuitDetectiveBlueHarmony: 2 # Harmony
     ClothingShoesColorBrown: 2
     ClothingOuterCoatDetectiveLoadout: 1
     ClothingOuterCoatDetectiveLoadoutGrey: 1
+    ClothingOuterCoatDetectiveLoadoutBlueHarmony: 1 # Harmony
     ClothingHeadHatFedoraBrown: 2
+    ClothingHeadHatFedoraBlueHarmony: 2 # Harmony
     ClothingUniformJumpsuitDetectiveGrey: 2
     ClothingUniformJumpskirtDetectiveGrey: 2
     ClothingOuterVestDetective: 2

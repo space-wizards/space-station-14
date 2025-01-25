@@ -188,6 +188,7 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMaxim
 
+# Harmony change. Adjusted damage resistance values
 #Security Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseRestrictedContraband]
@@ -210,10 +211,11 @@
         Blunt: 0.6
         Slash: 0.6
         Piercing: 0.6
+        Heat: 0.8
         Caustic: 0.7
   - type: ClothingSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.75
+    walkModifier: 0.85
+    sprintModifier: 0.85
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurity
@@ -245,12 +247,13 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
 
+# Harmony change. Adjusted damage resistance values
 #Warden's Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseRestrictedContraband]
   id: ClothingOuterHardsuitWarden
   name: warden's hardsuit
-  description: A specialized riot suit geared to combat low pressure environments.
+  description: The Warden's suit. Built like a tank.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
@@ -264,13 +267,14 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.5
-        Slash: 0.6
-        Piercing: 0.6
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.4
+        Heat: 0.7
         Caustic: 0.7
   - type: ClothingSpeedModifier
-    walkModifier: 0.7
-    sprintModifier: 0.7
+    walkModifier: 0.70
+    sprintModifier: 0.70
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWarden
@@ -410,12 +414,13 @@
   - type: StealTarget
     stealGroup: ClothingOuterHardsuitRd
 
+# Harmony change. Adjusted damage resistance values
 #Head of Security's Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseCommandContraband]
   id: ClothingOuterHardsuitSecurityRed
-  name: head of security's hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
+  name: head of security's assault suit
+  description: A huge, looming, armored space suit. The biggest and the baddest.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/security-red.rsi
@@ -425,18 +430,18 @@
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.6
+    damageCoefficient: 0.4
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.6
+        Blunt: 0.5
         Slash: 0.5
         Piercing: 0.5
-        Radiation: 0.5
+        Heat: 0.75
         Caustic: 0.6
   - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
+    walkModifier: 0.85
+    sprintModifier: 0.85
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityRed

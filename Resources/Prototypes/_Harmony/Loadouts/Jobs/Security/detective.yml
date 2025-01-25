@@ -1,0 +1,17 @@
+# Head
+- type: loadout
+  id: DetectiveFedoraBlueHarmony
+  equipment:
+    head: ClothingHeadHatFedoraBlueHarmony
+
+# Jumpsuit
+- type: loadout
+  id: DetectiveBlueSuitHarmony
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDetectiveBlueHarmony
+
+#OuterClothing
+- type: loadout
+  id: DetectiveBlueCoatHarmony
+  equipment:
+    outerClothing: ClothingOuterCoatDetectiveLoadoutBlueHarmony

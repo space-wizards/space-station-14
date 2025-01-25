@@ -2,14 +2,14 @@ Entries:
   - id: 2
     author: liltenhead
     time: "2024-07-01T02:43:36.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/2
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/2
     changes:
       - type: Add
         message: Added server pins to the trinket section in character loadouts.
   - id: 6
     author: KeldWolf
     time: "2024-07-28T19:19:10.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/6
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/6
     changes:
       - type: Add
         message: Added the lobby art made by Amatiramasu
@@ -18,7 +18,7 @@ Entries:
   - id: 7
     author: KeldWolf
     time: "2024-08-09T05:28:35.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/7
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/7
     changes:
       - type: Tweak
         message:
@@ -27,14 +27,14 @@ Entries:
   - id: 17
     author: DieselMohawk
     time: "2024-08-24T05:21:55.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/17
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/17
     changes:
       - type: Tweak
         message: Resprited the Vulture Pins
   - id: 22
     author: KeldWolf
     time: "2024-09-01T19:53:38.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/22
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/22
     changes:
       - type: Tweak
         message:
@@ -43,21 +43,21 @@ Entries:
   - id: 25
     author: KeldWolf
     time: "2024-09-04T06:57:35.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/25
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/25
     changes:
       - type: Add
         message: Added 2 new shuttles by spanky to load (for admins)
   - id: 28
     author: KeldWolf
     time: "2024-09-06T15:26:28.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/28
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/28
     changes:
       - type: Add
         message: Added more shuttles by spanky to load (for admins)
   - id: 30
     author: KeldWolf
     time: "2024-09-07T04:39:41.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/30
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/30
     changes:
       - type: Tweak
         message:
@@ -66,21 +66,21 @@ Entries:
   - id: 31
     author: KeldWolf
     time: "2024-09-07T05:29:00.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/31
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/31
     changes:
       - type: Tweak
         message: Tweaks on shuttles made by Spanky.
   - id: 33
     author: TheCrimsonJupiter
     time: "2024-09-09T21:35:20.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/33
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/33
     changes:
       - type: Tweak
         message: Reduced the likelihood of mid-round round-ending antagonists to appear.
   - id: 43
     author: Tsawodi
     time: "2024-09-12T19:17:52.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/43
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/43
     changes:
       - type: Add
         message:
@@ -89,14 +89,14 @@ Entries:
   - id: 47
     author: spanky-spanky
     time: "2024-09-12T18:49:42.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/47
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/47
     changes:
       - type: Add
         message: Added 14 ERT shuttles, credit to TsjipTsjip, luckyshotpictures, & IProduceWidgets.
   - id: 48
     author: FluffMe
     time: "2024-09-12T19:20:38.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/48
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/48
     changes:
       - type: Add
         message:
@@ -107,35 +107,35 @@ Entries:
   - id: 49
     author: spanky-spanky
     time: "2024-09-13T03:20:18.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/49
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/49
     changes:
       - type: Add
         message: Added a Deathsquad shuttle, and renamed other custom shuttles to date.
   - id: 51
     author: spanky-spanky
     time: "2024-09-13T05:01:16.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/51
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/51
     changes:
       - type: Tweak
         message: Lowered the minimum population of several mid-pop maps.
   - id: 53
     author: FluffMe
     time: "2024-09-14T05:13:57.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/53
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/53
     changes:
       - type: Add
         message: Clipboard can now be printed in Autolathe.
   - id: 55
     author: spanky-spanky
     time: "2024-09-16T15:55:55.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/55
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/55
     changes:
       - type: Tweak
         message: QOL improvements to Omega.
   - id: 57
     author: FluffMe
     time: "2024-09-16T15:56:59.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/57
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/57
     changes:
       - type: Add
         message:
@@ -144,28 +144,28 @@ Entries:
   - id: 59
     author: spanky-spanky
     time: "2024-09-16T23:48:12.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/59
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/59
     changes:
       - type: Add
         message: Add Man of Weh poster, by eli_sarek.
   - id: 60
     author: spanky-spanky
     time: "2024-09-17T06:28:34.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/60
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/60
     changes:
       - type: Tweak
         message: Second round of Harmony updates to Omega, mainly featuring a TEG.
   - id: 61
     author: DieselMohawk
     time: "2024-09-17T15:45:55.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/61
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/61
     changes:
       - type: Tweak
         message: Rat King is now a Solo Antag.
   - id: 62
     author: spanky-spanky
     time: "2024-09-19T03:24:17.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/62
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/62
     changes:
       - type: Tweak
         message:
@@ -174,7 +174,7 @@ Entries:
   - id: 63
     author: FluffMe
     time: "2024-09-18T16:21:04.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/63
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/63
     changes:
       - type: Add
         message:
@@ -183,21 +183,21 @@ Entries:
   - id: 64
     author: FluffMe
     time: "2024-09-21T05:16:17.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/64
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/64
     changes:
       - type: Add
         message: Added "The Floodlight" poster by sevount.
   - id: 65
     author: jack-thedragon95
     time: "2024-09-22T02:10:50.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/65
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/65
     changes:
       - type: Add
         message: Added "Purplicious" HUD theme. PURPLE!
   - id: 68
     author: spanky-spanky
     time: "2024-09-20T18:40:53.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/68
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/68
     changes:
       - type: Remove
         message: Removed Spanky's beta of refined Omega due to changes being merged upstream.
@@ -206,7 +206,7 @@ Entries:
   - id: 69
     author: FluffMe
     time: "2024-09-20T18:39:19.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/69
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/69
     changes:
       - type: Tweak
         message:
@@ -215,7 +215,7 @@ Entries:
   - id: 71
     author: FluffMe
     time: "2024-09-23T15:40:11.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/71
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/71
     changes:
       - type: Add
         message:
@@ -224,7 +224,7 @@ Entries:
   - id: 73
     author: FluffMe
     time: "2024-09-23T15:47:12.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/73
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/73
     changes:
       - type: Add
         message: Added "brown bandana" as a headwear option for Cargo Tech loadout.
@@ -235,7 +235,7 @@ Entries:
   - id: 76
     author: Unisol
     time: "2024-09-26T03:48:23.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/76
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/76
     changes:
       - type: Add
         message:
@@ -244,49 +244,49 @@ Entries:
   - id: 77
     author: FluffMe
     time: "2024-09-26T06:09:18.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/77
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/77
     changes:
       - type: Add
         message: Added "Harmony Changelog" tab to the in-game Changelogs.
   - id: 82
     author: FluffMe
     time: "2024-09-27T11:13:49.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/82
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/82
     changes:
       - type: Add
         message: Added 4 more posters by LevitatingTree.
   - id: 85
     author: FluffMe
     time: "2024-09-27T15:45:53.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/85
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/85
     changes:
       - type: Tweak
         message: In-game Space Law guidebooks are now Harmony Space Law.
   - id: 93
     author: spanky-spanky
     time: "2024-09-30T02:00:09.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/93
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/93
     changes:
       - type: Add
         message: Added two syndicate shuttles for admin events.
   - id: 96
     author: FluffMe
     time: "2024-09-30T15:31:30.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/96
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/96
     changes:
       - type: Add
         message: Added no EORG reminder popup at the end of the round.
   - id: 90
     author: FluffMe
     time: "2024-10-03T07:23:02.0000000+00:00"
-    url: https://github.com/ss14-harmony/space-station-14/pull/90
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/90
     changes:
       - type: Tweak
         message: Frezon selling price is changed to 2 spesos per mole.
   - id: 104
     author: DieselMohawk
     time: '2024-10-04T21:25:52.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/104
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/104
     changes:
     - type: Add
       message: Added HoP Turtleneck. Available in HoP Loadout and in Uniform Printer.
@@ -296,14 +296,14 @@ Entries:
   - id: 106
     author: FluffMe
     time: '2024-10-05T10:40:58.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/106
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/106
     changes:
     - type: Tweak
       message: Red phone is now an intercom for CentCom channel.
   - id: 95
     author: Unisol
     time: '2024-10-05T15:57:48.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/95
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/95
     changes:
     - type: Add
       message: Syndicate ID is now available in the uplink. Opens Syndicate doors. Does
@@ -311,42 +311,42 @@ Entries:
   - id: 108
     author: DieselMohawk
     time: '2024-10-05T20:12:59.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/108
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/108
     changes:
     - type: Add
       message: Added HoP Turtleneck Skirt variant.
   - id: 109
     author: DieselMohawk
     time: '2024-10-06T13:29:53.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/109
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/109
     changes:
     - type: Add
       message: Added Captain's Armored Winter Coat
   - id: 110
     author: DieselMohawk
     time: '2024-10-06T13:31:54.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/110
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/110
     changes:
     - type: Add
       message: Added Harmonica to Loadouts under Trinkets
   - id: 27
     author: SlamBamActionman
     time: '2024-10-06T15:32:34.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/27
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/27
     changes:
     - type: Add
       message: Xeno map Beta is available for playtest on Harmony.
   - id: 114
     author: spanky-spanky
     time: '2024-10-11T04:40:08.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/114
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/114
     changes:
     - type: Add
       message: Harmony now has a custom startup logo, credit to Emii-olii.
   - id: 118
     author: Dogbone10
     time: '2024-10-16T08:18:37.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/118
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/118
     changes:
     - type: Add
       message: The Syndicate now have a ship for diplomacy in the sector. Next time
@@ -354,7 +354,7 @@ Entries:
   - id: 121
     author: FluffMe
     time: '2024-10-16T23:38:14.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/121
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/121
     changes:
     - type: Fix
       message: Fixed playtime requirements for lawyer, mime, bartender, chef, and technical
@@ -362,7 +362,7 @@ Entries:
   - id: 120
     author: Tofsel
     time: '2024-10-17T01:36:29.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/120
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/120
     changes:
     - type: Add
       message: Added missing poster of a well known individual
@@ -377,28 +377,28 @@ Entries:
   - id: 123
     author: spanky-spanky
     time: '2024-10-17T01:37:29.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/123
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/123
     changes:
     - type: Add
       message: Added Detroit.
   - id: 124
     author: liltenhead
     time: '2024-10-17T06:12:42.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/124
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/124
     changes:
     - type: Tweak
       message: Clarified EORG rules further, and tweaked the AI law change rule.
   - id: 129
     author: Unisol
     time: '2024-10-21T03:39:39.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/129
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/129
     changes:
     - type: Add
       message: added a hand labeler to chem lab in nukie outpost
   - id: 130
     author: FluffMe
     time: '2024-10-22T03:13:15.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/130
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/130
     changes:
     - type: Add
       message: Added anti-EORG measures.
@@ -407,7 +407,7 @@ Entries:
   - id: 138
     author: Dogbone10
     time: '2024-10-24T20:46:00.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/138
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/138
     changes:
     - type: Add
       message: The Syndicate has begun funding Paramedic rescue! A Syndicate Paramedic
@@ -415,7 +415,7 @@ Entries:
   - id: 141
     author: TillsterRulz
     time: '2024-10-27T22:07:52.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/141
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/141
     changes:
     - type: Add
       message: The Maints Slasher poster. Just who was this "slasher" and where are
@@ -426,14 +426,14 @@ Entries:
   - id: 144
     author: jack-thedragon95
     time: '2024-10-30T16:52:43.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/144
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/144
     changes:
     - type: Tweak
       message: Changed ss14 decal to a more server specific decal. FANCY!
   - id: 127
     author: Unisol
     time: '2024-10-30T18:11:08.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/127
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/127
     changes:
     - type: Add
       message: added deathmatch map DM01 Entryway
@@ -442,7 +442,7 @@ Entries:
   - id: 137
     author: spanky-spanky
     time: '2024-10-30T18:20:02.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/137
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/137
     changes:
     - type: Tweak
       message: Barotrauma damage has been quadrupled (to be in line with values before
@@ -450,21 +450,21 @@ Entries:
   - id: 150
     author: SlamBamActionman
     time: '2024-11-03T19:12:49.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/150
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/150
     changes:
     - type: Fix
       message: Xeno map has been updated with correct jobs, Pun Pun and minor additions/changes
   - id: 154
     author: spanky-spanky
     time: '2024-11-04T07:17:55.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/154
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/154
     changes:
     - type: Tweak
       message: Barratry added into rotation.
   - id: 157
     author: FluffMe
     time: '2024-11-04T16:21:57.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/157
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/157
     changes:
     - type: Add
       message: Added a crew manifest dropdown to the Cargo console Order menu. Paperwork
@@ -472,7 +472,7 @@ Entries:
   - id: 149
     author: FluffMe
     time: '2024-11-04T16:23:01.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/149
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/149
     changes:
     - type: Add
       message: Added Raised by species character traits. These traits allow you
@@ -483,14 +483,14 @@ Entries:
   - id: 153
     author: thesaladmancer
     time: '2024-11-04T16:24:28.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/153
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/153
     changes:
     - type: Add
       message: Added "Maints Slasher" lobby art by thesaladmancer.
   - id: 152
     author: FluffMe
     time: '2024-11-04T16:55:48.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/152
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/152
     changes:
     - type: Add
       message: Added Hypophonia trait. With this trait you have a very soft voice and
@@ -498,14 +498,14 @@ Entries:
   - id: 163
     author: spanky-spanky
     time: '2024-11-07T15:51:17.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/163
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/163
     changes:
     - type: Tweak
       message: Server rules have been updated for better clarity.
   - id: 172
     author: BoskiYourk
     time: '2024-11-10T21:28:18.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/172
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/172
     changes:
     - type: Tweak
       message: Updated the blue security uniforms to fit with the rest of security's
@@ -515,21 +515,21 @@ Entries:
   - id: 167
     author: elisarek
     time: '2024-11-10T23:36:26.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/167
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/167
     changes:
     - type: Add
       message: Added "Survival Harmony" lobby art by Logan Avery
   - id: 169
     author: FluffMe
     time: '2024-11-10T23:37:16.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/169
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/169
     changes:
     - type: Tweak
       message: Crew member list in cargo order menu is now sorted by name.
   - id: 171
     author: Unisol
     time: '2024-11-11T01:05:46.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/171
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/171
     changes:
     - type: Add
       message: Added purple toolbox with a little extra something to help janitor through
@@ -537,7 +537,503 @@ Entries:
   - id: 176
     author: BoskiYourk
     time: '2024-11-11T05:39:56.0000000+00:00'
-    url: https://github.com/ss14-harmony/space-station-14/pull/176
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/176
     changes:
     - type: Add
       message: Added the HoS sheriff hat back to the game.
+  - id: 178
+    author: KeldWolf
+    time: '2024-11-12T09:44:50.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/178
+    changes:
+    - type: Add
+      message: Two more memorable Liltenlines to round end!
+  - id: 182
+    author: spanky-spanky
+    time: '2024-11-13T14:52:59.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/182
+    changes:
+    - type: Add
+      message: New lobby track, "Rusty Cans (Battle)."
+  - id: 181
+    author: FluffMe
+    time: '2024-11-13T14:58:47.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/181
+    changes:
+    - type: Tweak
+      message: Suicide console command is now disabled on Harmony. It will just ghost
+        you instead.
+  - id: 168
+    author: Unisol
+    time: '2024-11-13T15:58:03.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/168
+    changes:
+    - type: Add
+      message: added rubber ducky galoshes. Quack Quack!
+  - id: 183
+    author: Jajsha
+    time: '2024-11-13T23:15:55.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/183
+    changes:
+    - type: Add
+      message: Added the ability to flip, spin and jump!
+  - id: 170
+    author: FluffMe
+    time: '2024-11-14T07:19:50.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/170
+    changes:
+    - type: Add
+      message: 'Added two new wanted statuses to the criminal records: monitor and search.'
+  - id: 186
+    author: thesaladmancer
+    time: '2024-11-16T01:40:43.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/186
+    changes:
+    - type: Add
+      message: Added Captain's Turtleneck and skirt variant.
+  - id: 193
+    author: BoskiYourk
+    time: '2024-11-18T01:58:54.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/193
+    changes:
+    - type: Tweak
+      message: Updated the detective's trenchcoats and fedoras
+  - id: 195
+    author: jack-thedragon95
+    time: '2024-11-18T02:06:26.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/195
+    changes:
+    - type: Add
+      message: Added Auralis Worship Mask to loadout menu SKREEEEEE!!!!
+  - id: 194
+    author: TheCrimsonJupiter
+    time: '2024-11-18T02:20:51.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/194
+    changes:
+    - type: Tweak
+      message: Holoparasites now take longer to gib targets
+  - id: 192
+    author: Jajsha
+    time: '2024-11-18T03:12:30.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/192
+    changes:
+    - type: Tweak
+      message: The emagged recycler now deals massive brute damage instead of instantly
+        gibbing players.
+  - id: 203
+    author: Golinth
+    time: '2024-11-19T23:48:11.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/203
+    changes:
+    - type: Add
+      message: Added Aspid, a medium pop map based around a luxury star cruiser!
+  - id: 199
+    author: thetolbean
+    time: '2024-11-20T18:06:39.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/199
+    changes:
+    - type: Add
+      message: Added illeism as a selectable speech trait!
+  - id: 201
+    author: Jajsha
+    time: '2024-11-20T19:19:26.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/201
+    changes:
+    - type: Tweak
+      message: Immovable rods now deal massive pierce damage instead of deleting you.
+  - id: 189
+    author: Unisol
+    time: '2024-11-20T19:59:09.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/189
+    changes:
+    - type: Add
+      message: added RSC Model 1917 for purchase in supply dept
+    - type: Add
+      message: added stripper clips with .30 ammo to security and ammo techfabs, as
+        well as emagged protolathe
+  - id: 204
+    author: meatballwalkin
+    time: '2024-11-21T15:13:58.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/204
+    changes:
+    - type: Add
+      message: New Lobby Track, "That's a Wrap!"
+  - id: 206
+    author: Unisol
+    time: '2024-11-21T20:00:41.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/206
+    changes:
+    - type: Tweak
+      message: changed starting loadout in PROMOD to have two spare mk58 magazines
+    - type: Tweak
+      message: added guaranteed mk58 magazine drop to PROMOD loot table
+    - type: Tweak
+      message: removed whitehole grenade from PROMOD loot table
+    - type: Tweak
+      message: minor changes to DM01 Entryway
+  - id: 209
+    author: Unisol
+    time: '2024-11-25T12:17:15.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/209
+    changes:
+    - type: Tweak
+      message: bolt-action rifle crate received a facelift
+  - id: 210
+    author: BoskiYourk
+    time: '2024-11-28T07:12:08.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/210
+    changes:
+    - type: Add
+      message: Finished adding blue sec options for the rest of the security team.
+  - id: 214
+    author: Jajsha
+    time: '2024-11-28T07:14:30.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/214
+    changes:
+    - type: Tweak
+      message: Security personnel now start with a disabler on them instead of in their
+        locker.
+  - id: 215
+    author: BoskiYourk
+    time: '2024-11-29T12:28:05.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/215
+    changes:
+    - type: Tweak
+      message: Resprited the Head of Security's Armored Trenchcoat, and altered the
+        Head of Security's Mantle's front-facing sprite.
+  - id: 219
+    author: TheCrimsonJupiter
+    time: '2024-11-30T10:26:23.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/219
+    changes:
+    - type: Tweak
+      message: Rebalanced the security family of space suits.
+  - id: 217
+    author: DieselMohawk
+    time: '2024-12-03T10:05:58.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/217
+    changes:
+    - type: Add
+      message: Made Cat Markings Accessible to humans
+  - id: 223
+    author: spanky-spanky
+    time: '2024-12-05T06:28:44.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/223
+    changes:
+    - type: Tweak
+      message: Nukeops game mode chance has been reduced and Extended has been added.
+  - id: 226
+    author: liltenhead
+    time: '2024-12-05T14:32:20.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/226
+    changes:
+    - type: Tweak
+      message: Updated space law to reflect the current version on the wiki.
+  - id: 224
+    author: BoskiYourk
+    time: '2024-12-05T18:26:47.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/224
+    changes:
+    - type: Add
+      message: Added the Captain's Beret and Hawaiian Shirt.
+  - id: 233
+    author: liltenhead
+    time: '2024-12-13T13:25:52.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/233
+    changes:
+    - type: Tweak
+      message: Prisoner wardrobes now contain tank harnesses and passenger headsets.
+  - id: 229
+    author: Ermucat
+    time: '2024-12-15T17:04:49.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/229
+    changes:
+    - type: Add
+      message: Added more ways to obtain rubber duckies. Ducks are now included in toy
+        box and janitorial supplies crate cargo purchases
+  - id: 231
+    author: TheCrimsonJupiter
+    time: '2024-12-15T17:06:07.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/231
+    changes:
+    - type: Add
+      message: New clothes for the HoP
+  - id: 234
+    author: jack-thedragon95
+    time: '2024-12-15T17:48:17.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/234
+    changes:
+    - type: Add
+      message: Added more vox masks SKREEEEEEE!!!!!
+  - id: 228
+    author: Ermucat
+    time: '2024-12-15T18:21:28.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/228
+    changes:
+    - type: Add
+      message: Added Smuggler's Satchel, a stealthy syndicate item
+  - id: 232
+    author: Ermucat
+    time: '2024-12-25T22:23:45.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/232
+    changes:
+    - type: Add
+      message: Added new syndicate objective, Teach someone a lesson
+  - id: 248
+    author: Ermucat
+    time: '2024-12-27T22:01:51.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/248
+    changes:
+    - type: Add
+      message: Added the smugglers satchel to the theifs smugglers kit
+  - id: 249
+    author: spanky-spanky
+    time: '2024-12-27T22:03:17.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/249
+    changes:
+    - type: Add
+      message: New visiting shuttle event "ChemLab."
+  - id: 240
+    author: Ermucat
+    time: '2024-12-27T22:04:46.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/240
+    changes:
+    - type: Add
+      message: Added poquito, the new station pet.
+  - id: 250
+    author: spanky-spanky
+    time: '2024-12-28T20:52:03.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/250
+    changes:
+    - type: Add
+      message: New visiting shuttle event "Syndicate Reinforcement."
+    - type: Remove
+      message: Removed Instigator from shuttle event pool.
+  - id: 261
+    author: DieselMohawk
+    time: '2024-12-30T19:13:14.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/261
+    changes:
+    - type: Tweak
+      message: Recolored Improvised Bolas
+  - id: 212
+    author: Jajsha
+    time: '2025-01-03T03:13:01.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/212
+    changes:
+    - type: Tweak
+      message: Modified medical fabricator inventory.
+    - type: Tweak
+      message: Jugs now fit in chemistry bags.
+    - type: Fix
+      message: Vials now fit in medical related containers.
+  - id: 269
+    author: MissKay1994
+    time: '2025-01-03T14:07:41.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/269
+    changes:
+    - type: Add
+      message: Added vox plushie to loadouts. Skreee!
+  - id: 256
+    author: BoskiYourk
+    time: '2025-01-03T14:15:34.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/256
+    changes:
+    - type: Tweak
+      message: Recolored the QM's winter coat and cloak.
+  - id: 277
+    author: BoskiYourk
+    time: '2025-01-05T18:09:16.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/277
+    changes:
+    - type: Add
+      message: Added the CE, RD, and HoP Berets.
+    - type: Tweak
+      message: Updated the QM's Beret.
+  - id: 213
+    author: Jajsha
+    time: '2025-01-05T18:09:51.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/213
+    changes:
+    - type: Tweak
+      message: Lowered nukie max count to 4
+  - id: 260
+    author: D0mtron
+    time: '2025-01-05T18:12:25.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/260
+    changes:
+    - type: Tweak
+      message: Granted ID cards with the Command or Security access tag to open and
+        close firelocks.
+  - id: 239
+    author: youtissoum
+    time: '2025-01-06T13:40:08.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/239
+    changes:
+    - type: Add
+      message: Added a new prisoner round-start job, this job is not an antagonist and
+        is intended for roleplay only.
+  - id: 247
+    author: SteroidsOnSteroids
+    time: '2025-01-06T13:43:11.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/247
+    changes:
+    - type: Add
+      message: Admemes can now use the Orwellian lawset to catch those filthy thought
+        criminals (syndicates).
+  - id: 257
+    author: BoskiYourk
+    time: '2025-01-06T14:07:36.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/257
+    changes:
+    - type: Add
+      message: Added the Head of Security's turtle neck, Head of Security's ball cap,
+        and Senior Officer beret.
+    - type: Tweak
+      message: Resprited most of the basic security jumpsuits.
+    - type: Tweak
+      message: Fixed numerous errors with in-hand and worn sprites.
+    - type: Tweak
+      message: Updated the winter jackboots to be in line with the normal counterpart
+  - id: 270
+    author: NakataRin
+    time: '2025-01-06T14:47:21.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/270
+    changes:
+    - type: Add
+      message: Port of the tape recorder from DeltaV to Harmony
+  - id: 274
+    author: BoskiYourk
+    time: '2025-01-06T14:56:43.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/274
+    changes:
+    - type: Add
+      message: Added the HoS Flask to the HoS Armored Trench Coat Pocket
+  - id: 278
+    author: BoskiYourk
+    time: '2025-01-06T15:01:27.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/278
+    changes:
+    - type: Tweak
+      message: Updated the CE's jumpsuits to have consistent coloring.
+  - id: 244
+    author: Ermucat
+    time: '2025-01-06T15:19:58.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/244
+    changes:
+    - type: Tweak
+      message: Changed Vent Critters to be a bit more fair
+  - id: 263
+    author: spanky-spanky
+    time: '2025-01-08T01:39:21.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/263
+    changes:
+    - type: Add
+      message: Added the Syndicate Listening Post mid-round ghost role event.
+  - id: 258
+    author: Ermucat
+    time: '2025-01-08T01:41:19.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/258
+    changes:
+    - type: Tweak
+      message: Made poquito naturally spawn in the kitchen
+  - id: 298
+    author: liltenhead
+    time: '2025-01-10T07:30:24.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/298
+    changes:
+    - type: Tweak
+      message: Tweaked Space Law to use a new sentencing system
+  - id: 271
+    author: SteroidsOnSteroids
+    time: '2025-01-12T17:02:17.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/271
+    changes:
+    - type: Add
+      message: The Bartender can now go riding merrily along with the Starset Sarsaparilla
+        and give the crewmembers spurs that jingle jangle jingle.
+  - id: 272
+    author: Ermucat
+    time: '2025-01-12T17:10:31.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/272
+    changes:
+    - type: Add
+      message: Added the Pizza bomb, a new syndicate explosive device
+  - id: 299
+    author: spanky-spanky
+    time: '2025-01-19T03:32:04.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/299
+    changes:
+    - type: Add
+      message: Syndicate traitors can now purchase deathrattle implants.
+  - id: 310
+    author: spanky-spanky
+    time: '2025-01-19T03:55:37.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/310
+    changes:
+    - type: Tweak
+      message: Central Command has been replaced with a custom map.
+  - id: 315
+    author: Blackern5000
+    time: '2025-01-19T05:47:08.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/315
+    changes:
+    - type: Add
+      message: Added four new big snake tail markings for reptilians.
+  - id: 311
+    author: DieselMohawk
+    time: '2025-01-19T05:56:59.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/311
+    changes:
+    - type: Add
+      message: Added Curator clothing as a Senior Librarian option.
+  - id: 287
+    author: DieselMohawk
+    time: '2025-01-22T04:26:15.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/287
+    changes:
+    - type: Add
+      message: Riot Shields, Makeshift Shields, and Bucklers can now be put into your
+        Suit Storage Slot.
+  - id: 284
+    author: DieselMohawk
+    time: '2025-01-22T04:36:15.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/284
+    changes:
+    - type: Add
+      message: Security Bolas added.
+  - id: 322
+    author: Sadie-silly
+    time: '2025-01-22T13:42:00.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/322
+    changes:
+    - type: Add
+      message: New song as the nuke approaches detonation.
+  - id: 314
+    author: ilovehans10
+    time: '2025-01-22T13:43:52.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/314
+    changes:
+    - type: Add
+      message: Rapid Piping Device
+  - id: 303
+    author: Anno-Midi
+    time: '2025-01-22T13:44:41.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/303
+    changes:
+    - type: Tweak
+      message: Gave service worker hydroponics access
+  - id: 243
+    author: Unisol
+    time: '2025-01-22T13:48:18.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/243
+    changes:
+    - type: Tweak
+      message: tarantulas had their sinuses cleaned
+  - id: 313
+    author: BoskiYourk
+    time: '2025-01-22T13:52:17.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/313
+    changes:
+    - type: Tweak
+      message: Slightly tweaked the monkey sprite.

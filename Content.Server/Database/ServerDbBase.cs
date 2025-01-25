@@ -388,12 +388,14 @@ namespace Content.Server.Database
         /// </summary>
         /// <param name="address">The ip address of the user.</param>
         /// <param name="userId">The id of the user.</param>
-        /// <param name="hwId">The HWId of the user.</param>
+        /// <param name="hwId">The legacy HWId of the user.</param>
+        /// <param name="modernHWIds">The modern HWIDs of the user.</param>
         /// <returns>The user's latest received un-pardoned ban, or null if none exist.</returns>
         public abstract Task<ServerBanDef?> GetServerBanAsync(
             IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId);
+            ImmutableArray<byte>? hwId,
+            ImmutableArray<ImmutableArray<byte>>? modernHWIds);
 
         /// <summary>
         ///     Looks up an user's ban history.
@@ -402,13 +404,15 @@ namespace Content.Server.Database
         /// </summary>
         /// <param name="address">The ip address of the user.</param>
         /// <param name="userId">The id of the user.</param>
-        /// <param name="hwId">The HWId of the user.</param>
+        /// <param name="hwId">The legacy HWId of the user.</param>
+        /// <param name="modernHWIds">The modern HWIDs of the user.</param>
         /// <param name="includeUnbanned">Include pardoned and expired bans.</param>
         /// <returns>The user's ban history.</returns>
         public abstract Task<List<ServerBanDef>> GetServerBansAsync(
             IPAddress? address,
             NetUserId? userId,
             ImmutableArray<byte>? hwId,
+            ImmutableArray<ImmutableArray<byte>>? modernHWIds,
             bool includeUnbanned);
 
         public abstract Task AddServerBanAsync(ServerBanDef serverBan);
@@ -499,11 +503,13 @@ namespace Content.Server.Database
         /// <param name="address">The IP address of the user.</param>
         /// <param name="userId">The NetUserId of the user.</param>
         /// <param name="hwId">The Hardware Id of the user.</param>
+        /// <param name="modernHWIds">The modern HWIDs of the user.</param>
         /// <param name="includeUnbanned">Whether expired and pardoned bans are included.</param>
         /// <returns>The user's role ban history.</returns>
         public abstract Task<List<ServerRoleBanDef>> GetServerRoleBansAsync(IPAddress? address,
             NetUserId? userId,
             ImmutableArray<byte>? hwId,
+            ImmutableArray<ImmutableArray<byte>>? modernHWIds,
             bool includeUnbanned);
 
         public abstract Task<ServerRoleBanDef> AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan);
@@ -512,16 +518,23 @@ namespace Content.Server.Database
         public async Task EditServerRoleBan(int id, string reason, NoteSeverity severity, DateTimeOffset? expiration, Guid editedBy, DateTimeOffset editedAt)
         {
             await using var db = await GetDb();
+            var roleBanDetails = await db.DbContext.RoleBan
+                .Where(b => b.Id == id)
+                .Select(b => new { b.BanTime, b.PlayerUserId })
+                .SingleOrDefaultAsync();
 
-            var ban = await db.DbContext.RoleBan.SingleOrDefaultAsync(b => b.Id == id);
-            if (ban is null)
+            if (roleBanDetails == default)
                 return;
-            ban.Severity = severity;
-            ban.Reason = reason;
-            ban.ExpirationTime = expiration?.UtcDateTime;
-            ban.LastEditedById = editedBy;
-            ban.LastEditedAt = editedAt.UtcDateTime;
-            await db.DbContext.SaveChangesAsync();
+
+            await db.DbContext.RoleBan
+                .Where(b => b.BanTime == roleBanDetails.BanTime && b.PlayerUserId == roleBanDetails.PlayerUserId)
+                .ExecuteUpdateAsync(setters => setters
+                    .SetProperty(b => b.Severity, severity)
+                    .SetProperty(b => b.Reason, reason)
+                    .SetProperty(b => b.ExpirationTime, expiration.HasValue ? expiration.Value.UtcDateTime : (DateTime?)null)
+                    .SetProperty(b => b.LastEditedById, editedBy)
+                    .SetProperty(b => b.LastEditedAt, editedAt.UtcDateTime)
+                );
         }
         #endregion
 
@@ -586,7 +599,7 @@ namespace Content.Server.Database
             NetUserId userId,
             string userName,
             IPAddress address,
-            ImmutableArray<byte> hwId)
+            ImmutableTypedHwid? hwId)
         {
             await using var db = await GetDb();
 
@@ -603,7 +616,7 @@ namespace Content.Server.Database
             record.LastSeenTime = DateTime.UtcNow;
             record.LastSeenAddress = address;
             record.LastSeenUserName = userName;
-            record.LastSeenHWId = hwId.ToArray();
+            record.LastSeenHWId = hwId;
 
             await db.DbContext.SaveChangesAsync();
         }
@@ -649,7 +662,7 @@ namespace Content.Server.Database
                 player.LastSeenUserName,
                 new DateTimeOffset(NormalizeDatabaseTime(player.LastSeenTime)),
                 player.LastSeenAddress,
-                player.LastSeenHWId?.ToImmutableArray());
+                player.LastSeenHWId);
         }
 
         #endregion
@@ -658,11 +671,11 @@ namespace Content.Server.Database
         /*
          * CONNECTION LOG
          */
-        public abstract Task<int> AddConnectionLogAsync(
-            NetUserId userId,
+        public abstract Task<int> AddConnectionLogAsync(NetUserId userId,
             string userName,
             IPAddress address,
-            ImmutableArray<byte> hwId,
+            ImmutableTypedHwid? hwId,
+            float trust,
             ConnectionDenyReason? denied,
             int serverId);
 

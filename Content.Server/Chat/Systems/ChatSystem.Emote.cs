@@ -210,7 +210,11 @@ public partial class ChatSystem
     private void InvokeEmoteEvent(EntityUid uid, EmotePrototype proto)
     {
         var ev = new EmoteEvent(proto);
-        RaiseLocalEvent(uid, ref ev);
+        //Harmony change. No idea why goob had it broadcast, though.
+        if (proto.Animated)
+            RaiseLocalEvent(uid, ref ev, true);
+        else
+            RaiseLocalEvent(uid, ref ev);
     }
 }
 

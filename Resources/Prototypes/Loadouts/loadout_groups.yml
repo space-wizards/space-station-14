@@ -10,6 +10,7 @@
   - Headphones
   - PlushieLizard
   - PlushieSpaceLizard
+  - ThreeCandles
   - Lighter
   - CigPackGreen
   - CigPackRed
@@ -56,6 +57,9 @@
   - TowelColorSilver
   - TowelColorWhite
   - TowelColorYellow
+  - PlushieVox
+#deltav specific trinkets
+  - TapeRecorder
 
 - type: loadoutGroup
   id: Glasses
@@ -108,6 +112,7 @@
   loadouts:
   - CaptainHead
   - CaptainCap
+  - BeretCaptainHarmony # Harmony
 
 - type: loadoutGroup
   id: CaptainJumpsuit
@@ -117,6 +122,9 @@
   - CaptainJumpskirt
   - CaptainFormalSuit
   - CaptainFormalSkirt
+  - CaptainJumpsuitTurtleneckHarmony #Harmony
+  - CaptainJumpskirtTurtleneckHarmony #Harmony
+  - CaptainHawaiianHarmony # Harmony
 
 - type: loadoutGroup
   id: CaptainNeck
@@ -149,6 +157,7 @@
   minLimit: 0
   loadouts:
   - HoPHead
+  - HoPBeretHarmony # Harmony
 
 - type: loadoutGroup
   id: HoPJumpsuit
@@ -158,6 +167,8 @@
   - HoPJumpskirt
   - HoPJumpsuitTurtleneckHarmony #Harmony
   - HoPJumpskirtTurtleneckHarmony #Harmony
+  - HoPJumpsuitMessKitHarmony #Harmony
+  - HoPJumpskirtMessKitHarmony #Harmony
 
 - type: loadoutGroup
   id: HoPNeck
@@ -697,7 +708,8 @@
   minLimit: 0
   loadouts:
   - ChiefEngineerHead
-  - ChiefEngineerBeret
+#  - ChiefEngineerBeret
+  - CEBeretHarmony # Harmony Change
 
 - type: loadoutGroup
   id: ChiefEngineerJumpsuit
@@ -832,7 +844,8 @@
   name: loadout-group-research-director-head
   minLimit: 0
   loadouts:
-  - ResearchDirectorBeret
+#  - ResearchDirectorBeret
+  - RDBeretHarmony # Harmony Change
 
 - type: loadoutGroup
   id: ResearchDirectorNeck
@@ -951,18 +964,24 @@
   - HeadofSecurityHead
   - HeadofSecurityBeret
   - HoSWidebrimHarmony # Harmony
-  
+  - HoSSoftHarmony # Harmony
+
 - type: loadoutGroup
   id: HeadofSecurityJumpsuit
   name: loadout-group-head-of-security-jumpsuit
   loadouts:
   - HeadofSecurityJumpsuit
   - HeadofSecurityJumpskirt
-  - HeadofSecurityTurtleneck
-  - HeadofSecurityTurtleneckSkirt
+  - JumpsuitHoSBlueHarmony # Harmony
+  - JumpsuitHoSGrey # Harmony
+  - JumpsuitHoSTurtleNeckHarmony # Harmony
+  - JumpskirtHoSTurtleNeckHarmony # Harmony
+# - HeadofSecurityTurtleneck
+# - HeadofSecurityTurtleneckSkirt
+  - HeadofSecurityAssaultSuit # Harmony
+  - HeadofSecurityAssaultSkirt # Harmony
   - HeadofSecurityFormalSuit
   - HeadofSecurityFormalSkirt
-  - JumpsuitHoSBlue # Harmony
 
 - type: loadoutGroup
   id: HeadofSecurityNeck
@@ -993,6 +1012,7 @@
   loadouts:
   - WardenJumpsuit
   - WardenJumpskirt
+  - WardenBlueSuitHarmony # Harmony
 
 - type: loadoutGroup
   id: WardenOuterClothing
@@ -1011,6 +1031,9 @@
   - SecurityHat
   - TrooperHat
   - SecurityBandanaHarmony # Harmony
+  - SecurityBlueCapHarmony # Harmony
+  - SeniorOfficerBeretHarmony # Harmony
+  - SecurityBlueBeretHarmony # Harmony
 
 - type: loadoutGroup
   id: SecurityJumpsuit
@@ -1069,6 +1092,7 @@
   loadouts:
   - DetectiveFedora
   - DetectiveFedoraGrey
+  - DetectiveFedoraBlueHarmony # Harmony
 
 - type: loadoutGroup
   id: DetectiveNeck
@@ -1085,15 +1109,16 @@
   - DetectiveJumpskirt
   - NoirJumpsuit
   - NoirJumpskirt
+  - DetectiveBlueSuitHarmony # Harmony
 
 - type: loadoutGroup
   id: DetectiveOuterClothing
   name: loadout-group-detective-outerclothing
-  minLimit: 0
   loadouts:
   - DetectiveArmorVest
   - DetectiveCoat
   - DetectiveCoatGrey
+  - DetectiveBlueCoatHarmony # Harmony
 
 - type: loadoutGroup
   id: SecurityCadetJumpsuit
@@ -1348,24 +1373,31 @@
   name: loadout-group-breath-tool
   minLimit: 1
   maxLimit: 1
-  hidden: true
+  hidden: false # Harmony change for various Vox masks
   loadouts:
   - LoadoutSpeciesBreathTool
+  - LoadoutClothingMaskAuralis # Harmony
+  - LoadoutClothingMaskVoxSpecial # Harmony
 
 - type: loadoutGroup
   id: GroupSpeciesBreathToolMedical
   name: loadout-group-breath-tool
   minLimit: 1
   maxLimit: 1
-  hidden: true
+  hidden: false # Harmony change for various Vox masks
   loadouts:
   - LoadoutSpeciesBreathToolMedical
+  - LoadoutClothingMaskAuralis # Harmony
+  - LoadoutClothingMaskVoxSpecial # Harmony
 
 - type: loadoutGroup
   id: GroupSpeciesBreathToolSecurity
   name: loadout-group-breath-tool
   minLimit: 1
   maxLimit: 1
-  hidden: true
+  hidden: false # Harmony change for various Vox masks
   loadouts:
   - LoadoutSpeciesBreathToolSecurity
+  - LoadoutClothingMaskAuralis # Harmony
+  - LoadoutClothingMaskVoxSpecial # Harmony
+  - LoadoutClothingMaskNTEnforcer # Harmony

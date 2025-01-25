@@ -68,6 +68,14 @@ public sealed partial class EmotePrototype : IPrototype
     /// </summary>
     [DataField]
     public HashSet<string> ChatTriggers = new();
+
+    // Harmony - Is this emote animated.
+    [DataField]
+    public bool Animated = false;
+
+    // Harmony - Duration of animation.
+    [DataField]
+    public int? AnimationLength;
 }
 
 /// <summary>
