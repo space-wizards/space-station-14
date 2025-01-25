@@ -110,15 +110,6 @@
     sprite: Clothing/Back/Backpacks/captain.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseCommandContraband]
-  id: ClothingBackpackCommandveteran
-  name: command veteran backpack
-  description: A sleek backpack, earned through a long career as command.
-  components:
-  - type: Sprite
-    sprite: Clothing/Back/Backpacks/commandveteran.rsi
-
-- type: entity
   parent: ClothingBackpack
   id: ClothingBackpackMime
   name: mime backpack
@@ -193,7 +184,7 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackMerc
-  name: merc bag
+  name: mercenary bag
   description: A backpack that has been in many dangerous places, a reliable combat backpack.
   components:
     - type: Sprite
@@ -278,7 +269,7 @@
 
 #Syndicate
 - type: entity
-  parent: [ClothingBackpack, BaseSyndicateContraband]
+  parent: [ClothingBackpack, Tier1Contraband]
   id: ClothingBackpackSyndicate
   name: syndicate backpack
   description:

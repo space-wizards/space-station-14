@@ -1,0 +1,21 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+              Margin="4"
+              Orientation="Vertical">
+    <BoxContainer Orientation="Horizontal">
+        <Label Name="NumberLabel"
+               Align="Right"
+               SetWidth="26"
+               ClipText="True" />
+        <Label Name="TimeLabel"
+               Align="Center"
+               SetWidth="100"
+               ClipText="True" />
+        <Label Name="MessageLabel"
+               Align="Left"
+               MinWidth="390"
+               HorizontalExpand="True"
+               ClipText="False" />
+    </BoxContainer>
+    <customControls:HSeparator Margin="0 5 0 5" />
+</BoxContainer>

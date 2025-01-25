@@ -19,7 +19,6 @@
         mask: # tables should collide with other tables
         - TableMask
         layer:
-        - BulletImpassable # Goobstation - Crawling
         - TableLayer
   - type: SpriteFade
   - type: Sprite
@@ -38,6 +37,7 @@
     footstepSoundCollection:
       collection: FootstepHull
   - type: RequireProjectileTarget # Goobstation - Crawling
+  - type: ThrownItemImmune # imp
 
 - type: entity
   id: CounterBase
@@ -55,5 +55,4 @@
         mask:
         - TableMask
         layer:
-        - TableLayer 
-        - BulletImpassable # Goobstation - Crawling
+        - TableLayer

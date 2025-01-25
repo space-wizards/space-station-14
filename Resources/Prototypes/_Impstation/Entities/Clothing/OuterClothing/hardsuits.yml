@@ -24,3 +24,44 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitJanitor
+
+#Black mime Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitMime
+  id: ClothingOuterHardsuitMimeBlack
+  name: black mime hardsuit
+  description: A custom-made mime hardsuit.
+  components:
+  - type: Tag
+    tags:
+      - MimeHardsuit
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/mimeblack.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/mimeblack.rsi
+  - type: Construction
+    graph: BlackMimeHardsuit
+    node: blackmimeHardsuit
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitMimeBlack
+
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseCargoContraband]
+  id: ClothingOuterHardsuitCourier
+  name: courier hardsuit
+  description: For urgent deliveries, no matter the weather.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/courier.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/courier.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Cold: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitCourier

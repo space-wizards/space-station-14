@@ -5845,8 +5845,6 @@ entities:
       pos: -10.5,42.5
       parent: 31
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 12088
   - uid: 12127
@@ -5856,8 +5854,6 @@ entities:
       pos: -30.5,-17.5
       parent: 31
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 12126
 - proto: AltarDruid
@@ -46470,8 +46466,6 @@ entities:
       pos: -18.5,42.5
       parent: 31
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 12088
     - type: AtmosPipeColor
@@ -46483,8 +46477,6 @@ entities:
       pos: -30.5,-15.5
       parent: 31
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 12126
     - type: AtmosPipeColor
@@ -47032,8 +47024,6 @@ entities:
       pos: -32.5,-14.5
       parent: 31
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 12126
     - type: AtmosPipeColor
@@ -47130,8 +47120,6 @@ entities:
       pos: -18.5,40.5
       parent: 31
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 12088
     - type: AtmosPipeColor

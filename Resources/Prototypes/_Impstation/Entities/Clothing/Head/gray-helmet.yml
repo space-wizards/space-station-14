@@ -2,7 +2,7 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitGray
-  name: A gray's hardsuit helmet.
+  name: gray hardsuit helmet
   description: I wonder what's inside.
   components:
   - type: Sprite

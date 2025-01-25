@@ -1,5 +1,5 @@
 ﻿- type: entity
-  name: Bros Vent Spawner
+  name: BROS Vent Spawner
   id: BrosVentSpawner
   parent: MarkerBase
   components:

@@ -6,8 +6,8 @@
 - type: damageModifierSet
   id: Dinosaur
   coefficients:
-    Blunt: 0.6
-    Slash: 0.7
+    Blunt: 0.5
+    Slash: 0.8
     Cold: 1.4
     Poison: 0.8
   flatReductions:

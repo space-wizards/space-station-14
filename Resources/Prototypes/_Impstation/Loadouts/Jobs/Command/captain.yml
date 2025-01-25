@@ -1,0 +1,79 @@
+# For the veteran captain cosmetic set
+- type: loadoutEffectGroup
+  id: VeteranCap
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobCaptain
+      time: 180000 #50 hrs
+
+# For the veteran command cosmetic set, used for all command jobs
+- type: loadoutEffectGroup
+  id: VeteranCommand
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Command
+      time: 180000 # 50 hrs
+
+# Jumpsuit
+- type: loadout
+  id: CaptainEveningAttire
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCaptaineveningattire
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCap
+
+# Head
+- type: loadout
+  id: CaptainBeret
+  equipment:
+    head: ClothingHeadHatBeretCaptain
+
+# Glasses
+- type: loadout
+  id: CaptainVisor
+  equipment:
+    eyes: ClothingEyesGlassesCaptainvisor
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCap
+
+# Neck
+- type: loadout
+  id: CaptainGreatcoat
+  equipment:
+    neck: ClothingNeckCloakCaptaingreatcoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCap
+
+# Outer clothing
+- type: loadout
+  id: CaptainRepeller
+  equipment:
+    outerClothing: ClothingOuterArmorCaptainRepeller
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCap
+
+# Gloves
+- type: loadout
+  id: CaptainFlightGloves
+  equipment:
+    gloves: ClothingHandsGlovesCaptainflightgloves
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCap
+
+# Shoes
+- type: loadout
+  id: CaptainJumpBoots
+  equipment:
+    shoes: ClothingShoesBootsCaptainjumpboots
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCap

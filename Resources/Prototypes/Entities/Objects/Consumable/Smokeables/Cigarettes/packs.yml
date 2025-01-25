@@ -67,6 +67,8 @@
     - cig5
     - cig6
   - type: Appearance
+  - type: StealTarget #imp
+    stealGroup: Cigarettes
 
 - type: entity
   id: CigPackMixedBase
@@ -137,6 +139,8 @@
     - cig5
     - cig6
   - type: Appearance
+  - type: StealTarget #imp
+    stealGroup: Cigarettes
 
 - type: entity
   id: CigPackGreen
@@ -183,30 +187,8 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
 
 - type: entity
-  id: CigPackNewport
-  parent: CigPackBase
-  name: Newports
-  description: You're gonna be rich bitch!
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/newport.rsi
-  - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/newport.rsi
-
-- type: entity
-  id: CigPackSpirits
-  parent: CigPackBase
-  name: Spirits
-  description: Designer cigarettes containing genetically-modified tobacco that smells like wood smoke when burnt.
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/spirits.rsi
-  - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/spirits.rsi
-
-- type: entity
   id: CigPackSyndicate
-  parent: [CigPackBase, BaseSyndicateContraband]
+  parent: [CigPackBase, Tier2Contraband]
   name: Interdyne herbals packet
   description: Elite cigarettes for elite syndicate agents. Infused with medicine for when you need to do more than calm your nerves.
   components:

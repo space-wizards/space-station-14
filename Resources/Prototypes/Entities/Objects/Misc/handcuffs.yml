@@ -70,6 +70,10 @@
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff
     color: forestgreen
+  - type: Tag # Imp start
+    tags:
+    - Handcuffs
+    - Cablecuffs # Imp end
 
 - type: entity
   name: zipties

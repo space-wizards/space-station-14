@@ -19,3 +19,65 @@
     - SpaceTrafficControlEventScheduler
     - SpaceTrafficControlFriendlyEventScheduler
     - BasicRoundstartVariation
+
+- type: gamePreset
+  id: TraitorLowpop
+  alias:
+    - LowpopTraitor
+  name: traitor-lowpop-title
+  description: traitor-lowpop-description
+  showInVote: false
+  rules:
+    - Traitor
+    - SubGamemodesRule
+    - LowpopStationEventScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
+    - BasicRoundstartVariation
+    - LowpopLimiter
+
+- type: gamePreset
+  id: ThiefLowpop
+  alias:
+    - LowpopThief
+  name: thief-lowpop-title
+  description: thief-lowpop-description
+  showInVote: false
+  rules:
+    - Thief
+    - LowpopStationEventScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
+    - BasicRoundstartVariation
+    - LowpopLimiter
+
+- type: gamePreset
+  id: SurvivalLowpop
+  alias:
+    - LowpopSurvival
+  name: survival-lowpop-title
+  description: survival-lowpop-description
+  showInVote: false
+  cooldown: 2
+  rules:
+    - MeteorSwarmScheduler
+    - LowpopRampingStationEventScheduler
+    - SpaceTrafficControlEventScheduler
+    - SpaceTrafficControlFriendlyEventScheduler
+    - BasicRoundstartVariation
+    - LowpopLimiter
+
+- type: gamePreset
+  id: ExtendedLowpop
+  alias:
+    - LowpopExtended
+  name: extended-lowpop-title
+  description: extended-lowpop-description
+  showInVote: false
+  cooldown: 1 # zzz
+  rules:
+    - LowpopStationEventScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
+    - BasicRoundstartVariation
+    - LowpopLimiter

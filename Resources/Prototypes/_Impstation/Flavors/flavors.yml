@@ -24,6 +24,11 @@
   description: flavor-complex-horsepussy
 
 - type: flavor
+  id: moscowmule
+  flavorType: Complex
+  description: flavor-complex-moscowmule
+
+- type: flavor
   id: drinkdrink
   flavorType: Base
   description: flavor-base-drinkdrink
@@ -97,3 +102,18 @@
   id: piquant
   flavorType: Base
   description: flavor-base-piquant
+
+- type: flavor
+  id: unholy
+  flavorType: Base
+  description: flavor-base-unholy
+
+- type: flavor
+  id: medium
+  flavorType: Complex
+  description: flavor-complex-medium
+  
+- type: flavor
+  id: rodent
+  flavorType: Complex
+  description: flavor-complex-rodent

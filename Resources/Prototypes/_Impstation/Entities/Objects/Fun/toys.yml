@@ -1,7 +1,7 @@
 - type: entity
   parent: BasePlushie
   id: PlushieFinfin
-  name: fin fin plushie
+  name: Fin Fin plushie
   description: A highly marketable plushie of the adorable dolphin-bird recently discovered on the distant planet Teo. Made artificially rare on purpose.
   components:
   - type: Sprite
@@ -99,3 +99,149 @@
   - type: FlavorProfile
     flavors:
       - stardust
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieBug
+  name: bug plushie
+  description: What the hell is this ugly thing? Better throw it away.
+  components:
+  - type: Sprite
+    state: plushie_bug
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_scream.ogg #YAY!!!
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_scream.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_scream.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_scream.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_scream.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Arachnid/arachnid_scream.ogg
+  - type: Item
+    inhandVisuals:
+      left:
+        - state: plushie_bug-inhand-left
+      right:
+        - state: plushie_bug-inhand-right
+  - type: Food
+    requiresSpecialDigestion: false
+    useSound:
+      path: /Audio/Voice/Arachnid/arachnid_scream.ogg #OW!!! OWIE!!
+  - type: FlavorProfile
+    flavors:
+      - whimsy
+  - type: Extractable
+    grindableSolutionName: bugblood #AUUUUH!!!!!!
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: HeartbreakerToxin #anti-mice countermeasures
+          Quantity: 10
+      bugblood:
+        maxVol: 10
+        reagents:
+        - ReagentId: CopperBlood
+          Quantity: 10
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieDecapoid
+  name: decapoid plushie
+  description: The claw on this thing looks ominously sharp. Didn't you hear something about these getting recalled?
+  components:
+  - type: Sprite
+    state: plushie_decapoid
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Impstation/Voice/Decapoid/decapoid_laugh.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: -90
+    damage:
+      types:
+        Piercing: 1
+    attackRate: 1
+    soundHit:
+      path: "/Audio/Items/wirecutter.ogg"
+  - type: Tool
+    qualities:
+      - Cutting
+    useSound:
+      path: /Audio/Items/wirecutter.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: FlavorProfile
+    flavors:
+    - crabby
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieSnail
+  name: gastropoid plushie
+  description: It's a little slimy...
+  components:
+  - type: Sprite
+    state: plushie_snail
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Impstation/Voice/Snail/snail_scream.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: Extractable
+    grindableSolutionName: mucin
+  - type: SolutionContainerManager
+    solutions:
+      mucin:
+        maxVol: 10
+        reagents:
+        - ReagentId: Mucin
+          Quantity: 10
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieImp
+  name: imp plushie
+  description: Huh? Who's this stoner?
+  components:
+  - type: Sprite
+    state: plushie_imp
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Impstation/Voice/Misc/wuhey.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Impstation/Voice/Misc/wuhey.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Impstation/Voice/Misc/wuhey.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Impstation/Voice/Misc/wuhey.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/_Impstation/Voice/Misc/wuhey.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+
+- type: entity
+  id: HomeDepotCockHero
+  categories: [HideSpawnMenu]
+  name: Homer
+  description: SEE YOU NEXT WEEK
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/homer.rsi
+    state: icon
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepExplosion

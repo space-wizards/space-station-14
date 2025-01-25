@@ -12,6 +12,8 @@
   femaleFirstNames: names_arachnid_first
   lastNames: names_arachnid_last
   sexes:
+  - Male
+  - Female
   - Unsexed
 
 - type: speciesBaseSprites
@@ -72,10 +74,10 @@
       points: 1
       required: false
     Legs:
-      points: 4
+      points: 8 #impspecial
       required: false
     Arms:
-      points: 4
+      points: 8 #impspecial
       required: false
 
 - type: humanoidBaseSprite

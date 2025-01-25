@@ -11,6 +11,7 @@
   - Maintenance
   extendedAccess:
   - Salvage
+  - Courier # Imp
 
 - type: startingGear
   id: CargoTechGear

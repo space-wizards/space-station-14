@@ -1,8 +1,9 @@
 - type: gameMap
   id: Box
   mapName: 'Box Station'
-  mapPath: /Maps/box.yml
-  minPlayers: 50
+  mapPath: /Maps/_Impstation/box.yml
+  minPlayers: 35
+  maxPlayers: 70
   stations:
     Boxstation:
       stationProto: StandardNanotrasenStation
@@ -54,6 +55,7 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 3, 3 ]
+            Courier: [ 2, 2 ] # Imp
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]

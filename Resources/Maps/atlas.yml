@@ -14224,6 +14224,26 @@ entities:
     - type: Transform
       pos: -44.5,13.5
       parent: 30
+  - uid: 9842
+    components:
+    - type: Transform
+      pos: -26.5,-10.5
+      parent: 30
+  - uid: 9843
+    components:
+    - type: Transform
+      pos: -27.5,-10.5
+      parent: 30
+  - uid: 9844
+    components:
+    - type: Transform
+      pos: -28.5,-10.5
+      parent: 30
+  - uid: 9845
+    components:
+    - type: Transform
+      pos: -29.5,-10.5
+      parent: 30
 - proto: CableApcStack
   entities:
   - uid: 7222
@@ -24325,10 +24345,10 @@ entities:
       parent: 30
 - proto: DeployableBarrier
   entities:
-  - uid: 8679
+  - uid: 9846
     components:
     - type: Transform
-      pos: 12.5,19.5
+      pos: 15.5,13.5
       parent: 30
 - proto: DiceBag
   entities:
@@ -46711,6 +46731,13 @@ entities:
     - type: Transform
       pos: -10.5,6.5
       parent: 30
+- proto: LockerBrigmedicFilled
+  entities:
+  - uid: 9847
+    components:
+    - type: Transform
+      pos: 12.5,19.5
+      parent: 30
 - proto: LockerCaptainFilledHardsuit
   entities:
   - uid: 4054
@@ -54209,6 +54236,13 @@ entities:
     components:
     - type: Transform
       pos: -10.5,5.5
+      parent: 30
+- proto: SpawnPointBrigmedic
+  entities:
+  - uid: 8679
+    components:
+    - type: Transform
+      pos: 13.5,19.5
       parent: 30
 - proto: SpawnPointCaptain
   entities:

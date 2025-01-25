@@ -55,6 +55,7 @@
     skipChecks: true
   - type: Ghost
   - type: GhostHearing
+  - type: ShowElectrocutionHUD
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
     receiveAllChannels: true
@@ -69,6 +70,7 @@
   id: MobObserver
   components:
   - type: Spectral
+  - type: SolutionScanner
 
 - type: entity
   id: ActionGhostBoo

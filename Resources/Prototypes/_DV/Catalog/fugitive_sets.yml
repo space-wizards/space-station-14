@@ -1,0 +1,72 @@
+﻿- type: thiefBackpackSet
+  id: FugitiveHitman
+  name: fugitive-set-hitman-name
+  description: fugitive-set-hitman-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+    state: icon
+  content:
+  - WeaponPistolViper
+  - MagazinePistol
+  - BriefcaseBrown
+
+- type: thiefBackpackSet
+  id: FugitiveSaboteur
+  name: fugitive-set-saboteur-name
+  description: fugitive-set-saboteur-description
+  sprite:
+    sprite: Objects/Weapons/Grenades/empgrenade.rsi
+    state: icon
+  content:
+  - EmpGrenade
+  - EmpGrenade
+  - C4
+  - ClothingMaskGas
+
+- type: thiefBackpackSet
+  id: FugitiveGhost
+  name: fugitive-set-ghost-name
+  description: fugitive-set-ghost-description
+  sprite:
+    sprite: Objects/Weapons/Grenades/smoke.rsi
+    state: icon
+  content:
+  - SmokeGrenade
+  - SmokeGrenade
+  - ScramImplanter
+  - ClothingOuterGhostSheet
+
+- type: thiefBackpackSet
+  id: FugitiveLeverage
+  name: fugitive-set-leverage-name
+  description: fugitive-set-leverage-description
+  sprite:
+    sprite: Objects/Misc/handcuffs.rsi
+    state: handcuff
+  content:
+  - DeathAcidifierImplanter
+  - Handcuffs
+  - Handcuffs
+  - Bola
+
+- type: thiefBackpackSet
+  id: FugitiveInfiltrator
+  name: fugitive-set-infiltrator-name
+  description: fugitive-set-infiltrator-description
+  sprite:
+    entity: AgentIDCard
+  content:
+  - AgentIDCard
+  - FreedomImplanter
+  - ClothingMaskGasSyndicate
+
+- type: thiefBackpackSet
+  id: FugitiveDisruptor
+  name: fugitive-set-disruptor-name
+  description: fugitive-set-disruptor-description
+  sprite:
+    sprite: Objects/Tools/emag.rsi
+    state: icon
+  content:
+  - Emag
+  - CameraBug

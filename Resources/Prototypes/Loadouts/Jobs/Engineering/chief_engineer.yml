@@ -8,16 +8,6 @@
       role: JobChiefEngineer
       time: 72000 #20 hrs
 
-# For the veteran chief engineer cosmetics
-- type: loadoutEffectGroup
-  id: VeteranCE
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobChiefEngineer
-      time: 180000 #50 hrs
-
 # Jumpsuit
 - type: loadout
   id: ChiefEngineerJumpsuit
@@ -90,11 +80,3 @@
   id: ChiefEngineerHeadset
   equipment:
     ears: ClothingHeadsetAltEngineering
-
-- type: loadout
-  id: ChiefEngineerVeteranHeadset
-  equipment:
-    ears: ClothingHeadsetCEveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCE

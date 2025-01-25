@@ -15,3 +15,17 @@
     - /Audio/_Impstation/Voice/Slime/s_femalescream_3.ogg
     - /Audio/_Impstation/Voice/Slime/s_femalescream_4.ogg
     - /Audio/_Impstation/Voice/Slime/s_femalescream_5.ogg
+
+- type: soundCollection
+  id: UnisexSlimeScreams
+  files:
+    - /Audio/_Impstation/Voice/Slime/s_malescream_1.ogg
+    - /Audio/_Impstation/Voice/Slime/s_malescream_2.ogg
+    - /Audio/_Impstation/Voice/Slime/s_malescream_3.ogg
+    - /Audio/_Impstation/Voice/Slime/s_malescream_4.ogg
+    - /Audio/_Impstation/Voice/Slime/s_malescream_5.ogg
+    - /Audio/_Impstation/Voice/Slime/s_femalescream_1.ogg
+    - /Audio/_Impstation/Voice/Slime/s_femalescream_2.ogg
+    - /Audio/_Impstation/Voice/Slime/s_femalescream_3.ogg
+    - /Audio/_Impstation/Voice/Slime/s_femalescream_4.ogg
+    - /Audio/_Impstation/Voice/Slime/s_femalescream_5.ogg

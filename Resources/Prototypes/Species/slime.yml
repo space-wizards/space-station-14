@@ -8,6 +8,10 @@
   markingLimits: MobSlimeMarkingLimits
   dollPrototype: MobSlimePersonDummy
   skinColoration: Hues
+  sexes:
+  - Male
+  - Female
+  - Unsexed
 
 - type: speciesBaseSprites
   id: MobSlimeSprites
@@ -47,16 +51,16 @@
       points: 1
       required: false
     Legs:
-      points: 4
+      points: 8 #impspecial
       required: false
     Arms:
-      points: 4
+      points: 8 #impspecial
       required: false
 
 - type: humanoidBaseSprite
   id: MobSlimeMarkingFollowSkin
   markingsMatchSkin: true
-  layerAlpha: 0.65 # Impstation Special
+  layerAlpha: 0.75 # Impstation Special
 
 - type: humanoidBaseSprite
   id: MobSlimeHead

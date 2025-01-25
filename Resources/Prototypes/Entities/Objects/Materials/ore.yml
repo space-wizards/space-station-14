@@ -46,6 +46,8 @@
         reagents:
         - ReagentId: Gold
           Quantity: 10
+  - type: Item
+    heldPrefix: gold
 
 - type: entity
   parent: GoldOre
@@ -77,6 +79,8 @@
         reagents:
         - ReagentId: Carbon
           Quantity: 20
+  - type: Item
+    heldPrefix: diamond
 
 - type: entity
   parent: DiamondOre
@@ -108,6 +112,8 @@
         reagents:
         - ReagentId: Iron
           Quantity: 10
+  - type: Item
+    heldPrefix: iron
 
 - type: entity
   id: SteelOre1
@@ -144,6 +150,8 @@
         reagents:
         - ReagentId: Plasma
           Quantity: 10
+  - type: Item
+    heldPrefix: plasma
 
 - type: entity
   parent: PlasmaOre
@@ -175,6 +183,8 @@
         reagents:
         - ReagentId: Silver
           Quantity: 10
+  - type: Item
+    heldPrefix: silver
 
 - type: entity
   parent: SilverOre
@@ -206,6 +216,8 @@
         reagents:
         - ReagentId: Silicon
           Quantity: 10
+  - type: Item
+    heldPrefix: spacequartz
 
 - type: entity
   parent: SpaceQuartz
@@ -245,6 +257,8 @@
         - ReagentId: Radium
           Quantity: 2
         canReact: false
+  - type: Item
+    heldPrefix: uranium
 
 - type: entity
   parent: UraniumOre
@@ -285,6 +299,8 @@
           Quantity: 2
         - ReagentId: Honk
           Quantity: 5
+  - type: Item
+    heldPrefix: bananium
 
 - type: entity
   parent: BananiumOre
@@ -324,6 +340,8 @@
   - type: PhysicalComposition
     materialComposition:
       Coal: 100
+  - type: Item
+    heldPrefix: coal
 
 - type: entity
   parent: Coal
@@ -386,6 +404,8 @@
           Quantity: 10
         - ReagentId: Iodine
           Quantity: 5
+  - type: Item
+    heldPrefix: salt
 
 - type: entity
   parent: SaltOre

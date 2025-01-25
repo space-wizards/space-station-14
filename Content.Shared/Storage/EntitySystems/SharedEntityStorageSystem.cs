@@ -6,6 +6,7 @@ using Content.Shared.Destructible;
 using Content.Shared.Foldable;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components; // imp edit
 using Content.Shared.Item;
 using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
@@ -345,12 +346,20 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         return true;
     }
 
+    public bool IsOpen(EntityUid target, SharedEntityStorageComponent? component = null)
+    {
+        if (!ResolveStorage(target, ref component))
+            return false;
+
+        return component.Open;
+    }
+
     public bool CanOpen(EntityUid user, EntityUid target, bool silent = false, SharedEntityStorageComponent? component = null)
     {
         if (!ResolveStorage(target, ref component))
             return false;
 
-        if (!HasComp<HandsComponent>(user))
+        if (!HasComp<HandsComponent>(user) && !HasComp<ComplexInteractionComponent>(user)) // imp edit - can add ComplexInteractionComponent to entities to allow them to do certain actions without hands
             return false;
 
         if (_weldable.IsWelded(target))

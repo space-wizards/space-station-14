@@ -1,0 +1,8 @@
+- type: entity
+  parent: [ClothingBackpackDuffel, BaseCommandContraband]
+  id: ClothingBackpackDuffelCommandveteran
+  name: command veteran duffel bag
+  description: A sleek duffel bag, earned through a long career as command.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Back/Duffels/commandveteran.rsi

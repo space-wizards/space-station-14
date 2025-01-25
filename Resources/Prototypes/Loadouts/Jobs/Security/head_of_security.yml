@@ -6,17 +6,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobHeadOfSecurity
-      time: 72000 #20 hrs
-
-# For the veteran head of security cosmetics
-- type: loadoutEffectGroup
-  id: VeteranHOS
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobHeadOfSecurity
-      time: 180000 #50 hrs
+      time: 36000 # Imp, 10 hrs
 
 # Jumpsuit
 - type: loadout
@@ -28,16 +18,6 @@
   id: HeadofSecurityJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtHoS
-
-- type: loadout
-  id: HeadofSecurityJumpsuitGrey
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitHoSGrey
-
-- type: loadout
-  id: HeadofSecurityJumpskirtGrey
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtHoSGrey
 
 - type: loadout
   id: HeadofSecurityTurtleneck
@@ -104,14 +84,6 @@
   equipment:
     neck: ClothingNeckMantleHOS
 
-- type: loadout
-  id: HeadofSecurityGreatcoat
-  equipment:
-    neck: ClothingNeckCloakHosgreatcoat
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranHOS
-
 # OuterClothing
 - type: loadout
   id: HeadofSecurityCoat
@@ -128,14 +100,6 @@
   equipment:
     outerClothing: ClothingOuterWinterHoSUnarmored
 
-- type: loadout
-  id: HeadofSecurityEliteArmor
-  equipment:
-    outerClothing: ClothingOuterArmorHoSEliteArmor
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranHOS
-
 # Headset
 - type: loadout
   id: HeadofSecurityHeadsetBasic
@@ -146,14 +110,6 @@
   id: HeadofSecurityHeadset
   equipment:
     ears: ClothingHeadsetAltSecurity
-
-- type: loadout
-  id: HeadofSecurityVeteranHeadset
-  equipment:
-    ears: ClothingHeadsetHOSveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranHOS
 
 # Belt
 - type: loadout

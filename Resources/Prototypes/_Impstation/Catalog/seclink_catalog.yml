@@ -1,0 +1,112 @@
+#Baton Skins
+- type: listing
+  id: SeclinkBaton
+  name: seclink-stun-baton-name
+  description: seclink-stun-baton-desc
+  productEntity: Stunbaton
+  cost:
+    BatonToken: 1
+  categories:
+  - SeclinkBaton
+
+- type: listing
+  id: SeclinkFunBaton
+  name: seclink-fun-baton-name
+  description: seclink-fun-baton-desc
+  productEntity: Funbaton
+  cost:
+    BatonToken: 1
+  categories:
+  - SeclinkBaton
+
+- type: listing
+  id: SeclinkBat
+  name: seclink-stun-bat-name
+  description: seclink-stun-bat-desc
+  productEntity: Stunbat
+  cost:
+    BatonToken: 1
+  categories:
+  - SeclinkBaton
+
+- type: listing
+  id: SeclinkSabre
+  name: seclink-stun-sabre-name
+  description: seclink-stun-sabre-desc
+  productEntity: Stunsabre
+  cost:
+    BatonToken: 1
+  categories:
+  - SeclinkBaton
+
+#Disabler Options
+- type: listing
+  id: SeclinkDisabler
+  name: seclink-disabler-name
+  description: seclink-disabler-desc
+  productEntity: WeaponDisabler
+  cost:
+    DisablerToken: 1
+  categories:
+  - SeclinkDisabler
+  
+- type: listing
+  id: SeclinkFunnyDisabler
+  name: seclink-funny-disabler-name
+  description: seclink-funny-disabler-desc
+  productEntity: WeaponFunnyDisabler
+  cost:
+    DisablerToken: 1
+  categories:
+  - SeclinkDisabler
+
+- type: listing
+  id: SeclinkPocketDisabler
+  name: seclink-pocket-disabler-name
+  description: seclink-pocket-disabler-desc
+  productEntity: WeaponPocketDisabler
+  cost:
+    DisablerToken: 1
+  categories:
+    - SeclinkDisabler
+
+- type: listing
+  id: SeclinkAutoDisabler
+  name: seclink-auto-disabler-name
+  description: seclink-auto-disabler-desc
+  productEntity: WeaponAutoDisabler
+  cost:
+    DisablerToken: 1
+  categories:
+    - SeclinkDisabler
+
+- type: listing
+  id: SeclinkStunProjector
+  name: seclink-stun-projector-name
+  description: seclink-stun-projector-desc
+  productEntity: WeaponStunProjector
+  cost:
+    DisablerToken: 1
+  categories:
+    - SeclinkDisabler
+
+#Utility Options
+- type: listing
+  id: SeclinkCrowbar
+  name: seclink-crowbar-name
+  description: seclink-crowbar-desc
+  productEntity: Pribar
+  cost:
+    UtilityToken: 1
+  categories:
+  - SeclinkUtility
+  
+- type: listing
+  id: SeclinkHandheldCriminalRecords
+  name: seclink-handheld-records-name
+  description: seclink-handheld-records-desc
+  productEntity: HandheldCriminalRecords
+  cost:
+    UtilityToken: 1
+  categories:
+    - SeclinkUtility

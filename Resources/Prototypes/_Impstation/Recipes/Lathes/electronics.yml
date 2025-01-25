@@ -20,3 +20,8 @@
     Glass: 300
     Plastic: 100
     Gold: 100
+    
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: ServiceTechFabCircuitboard
+  result: ServiceTechFabCircuitboard

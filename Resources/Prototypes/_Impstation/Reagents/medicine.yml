@@ -6,6 +6,7 @@
   physicalDesc: reagent-physical-desc-enigmatic
   flavor: magical
   color: "#a50ed8"
+  contraband: Tier2Contraband
   metabolisms:
     Medicine:
       effects:
@@ -21,6 +22,7 @@
   physicalDesc: reagent-physical-desc-enigmatic
   flavor: magical
   color: "#911d06"
+  contraband: Tier2Contraband
   metabolisms:
     Medicine:
       effects:
@@ -28,7 +30,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 5
-          
+
 - type: reagent
   id: Caramexinin
   name: reagent-name-caramexinin
@@ -49,3 +51,63 @@
           types:
             Poison: -0.2
 
+- type: reagent
+  id: Anomalium
+  name: reagent-name-anomalium
+  group: Medicine
+  desc: reagent-desc-anomalium
+  flavor: sour
+  color: "#64ffe6"
+  physicalDesc: reagent-physical-desc-enigmatic
+  slippery: false
+  metabolisms:
+    # Bad omnizine that also gives you cancer
+    Medicine:
+      effects:
+      - !type:ModifyBloodLevel
+        amount: 2
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -2
+            Burn: -2
+            Airloss: -2
+            Toxin: -2
+            Genetic: 5
+      - !type:ModifyBleedAmount
+        amount: -1
+
+- type: reagent
+  id: AquamDivinos
+  name: reagent-name-aquamdivinos
+  group: Medicine
+  desc: reagent-desc-aquamdivinos
+  physicalDesc: reagent-physical-desc-holy
+  flavor: holy
+  color: "#B4D1F0"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.1
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: AquaAvari
+          min: 1
+        reagent: AquaAvari
+        amount: -1
+  reactiveEffects:
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:ExtinguishReaction
+  tileReactions:
+  - !type:ExtinguishTileReaction { }

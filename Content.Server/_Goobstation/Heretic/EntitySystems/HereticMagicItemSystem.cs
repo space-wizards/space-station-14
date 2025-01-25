@@ -1,3 +1,4 @@
+using Content.Shared.Clothing.Components;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Heretic;
@@ -18,9 +19,22 @@ public sealed partial class HereticMagicItemSystem : EntitySystem
     }
 
     private void OnCheckMagicItem(Entity<HereticMagicItemComponent> ent, ref CheckMagicItemEvent args)
-        => args.Handled = true;
+    {
+        args.Handled = true;
+    }
+
     private void OnCheckMagicItem(Entity<HereticMagicItemComponent> ent, ref HeldRelayedEvent<CheckMagicItemEvent> args)
-        => args.Args.Handled = true;
+    {
+        //extra check to make sure clothing-based focus doesn't work in hand
+        if (!HasComp<ClothingComponent>(ent))
+        {
+            args.Args.Handled = true;
+        }
+        else
+        {
+            args.Args.Handled = false;
+        }
+    }
     private void OnCheckMagicItem(Entity<HereticMagicItemComponent> ent, ref InventoryRelayedEvent<CheckMagicItemEvent> args)
         => args.Args.Handled = true;
 

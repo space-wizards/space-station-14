@@ -74,8 +74,3 @@
   id: LeatherShoes
   equipment:
     shoes: ClothingShoesLeather
-
-- type: loadout
-  id: HoPShoesWhite
-  equipment:
-    shoes: ClothingShoesDameDane

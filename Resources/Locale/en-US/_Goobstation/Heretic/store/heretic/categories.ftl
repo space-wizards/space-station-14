@@ -1,4 +1,4 @@
-store-heretic-path-ash = Ashen Path
+store-heretic-path-ash = Path of Ash
 store-heretic-path-lock = Path of Lock
 store-heretic-path-flesh = Path of Flesh
 store-heretic-path-void = Path of Void

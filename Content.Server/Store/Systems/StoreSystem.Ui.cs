@@ -3,6 +3,7 @@ using Content.Server.Actions;
 using Content.Server.Administration.Logs;
 using Content.Server.Heretic.EntitySystems;
 using Content.Server.PDA.Ringer;
+using Content.Server.Roles;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions;
@@ -12,6 +13,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Heretic;
 using Content.Shared.Heretic.Prototypes;
 using Content.Shared.Mind;
+using Content.Shared.Roles;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.UserInterface;
@@ -282,6 +284,24 @@ public sealed partial class StoreSystem
             LogImpact.Low,
             $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _proto)}\" from {ToPrettyString(uid)}");
 
+        //imp edit - add a record of this purchase to the mind that bought this item
+        if (_mind.TryGetMind(buyer, out _, out var mindComp))
+        {
+            //a little messy, but only track purchases from entities with mindRoles that should log track them
+            //cannot distinguish between what role bought what on the same player, so if they have multiple roles, the one that doesn't track takes precedence
+            var ignore = false;
+            foreach (var _ in from mindRole in mindComp.MindRoles from mindRoleComp in AllComps<MindRoleComponent>(mindRole) where !mindRoleComp.TrackPurchases select mindRoleComp) //rider is responsible for this linq. keeping it because this was like 5 loc and this is equally readable
+            {
+                ignore = true;
+            }
+            if (!ignore)
+            {
+                var listingName = listing.Name ?? listing.ID;
+                mindComp.Purchases.Add((listingName, listing.Cost));
+            }
+        }
+        //imp edit end
+
         listing.PurchaseAmount++; //track how many times something has been purchased
         _audio.PlayEntity(component.BuySuccessSound, msg.Actor, uid); //cha-ching!
 
@@ -385,6 +405,9 @@ public sealed partial class StoreSystem
         RefreshAllListings(component);
         component.BalanceSpent = new();
         UpdateUserInterface(buyer, uid, component);
+
+        var ev = new StoreRefundedEvent();
+        RaiseLocalEvent(uid, ref ev, true);
     }
 
     private void HandleRefundComp(EntityUid uid, StoreComponent component, EntityUid purchase)
@@ -401,14 +424,29 @@ public sealed partial class StoreSystem
     }
 
     /// <summary>
+    ///     Enables refunds for this store
+    /// </summary>
+    public void EnableRefund(EntityUid buyer, EntityUid store, StoreComponent? component = null)
+    {
+        if (!Resolve(store, ref component))
+            return;
+
+        component.RefundAllowed = true;
+
+        UpdateUserInterface(buyer, store, component);
+    }
+
+    /// <summary>
     ///     Disables refunds for this store
     /// </summary>
-    public void DisableRefund(EntityUid store, StoreComponent? component = null)
+    public void DisableRefund(EntityUid buyer, EntityUid store, StoreComponent? component = null)
     {
         if (!Resolve(store, ref component))
             return;
 
         component.RefundAllowed = false;
+
+        UpdateUserInterface(buyer, store, component);
     }
 }
 

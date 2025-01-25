@@ -115,9 +115,9 @@
   description: It's a jumpskirt worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/cmo.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/cmo.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/cmo.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/cmo.rsi
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
@@ -209,17 +209,6 @@
     sprite: Clothing/Uniforms/Jumpskirt/hos_alt.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/hos_alt.rsi
-
-- type: entity
-  parent: [ClothingUniformBase, BaseCommandContraband]
-  id: ClothingUniformJumpskirtHoSGrey
-  name: head of security's grey jumpskirt
-  description: A grey jumpskirt for the Head of Security, unfortunately resembling a passenger's uniform.
-  components:
-  - type: Sprite
-    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/hos_grey.rsi
-  - type: Clothing
-    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/hos_grey.rsi
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
@@ -511,7 +500,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi
 
 - type: entity
-  parent: [UnsensoredClothingUniformSkirtBase, BaseSyndicateContraband]
+  parent: [UnsensoredClothingUniformSkirtBase, Tier1Contraband]
   id: ClothingUniformJumpskirtOperative
   name: operative jumpskirt
   description: Uniform for elite syndicate operatives performing tactical operations in deep space.

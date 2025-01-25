@@ -14,9 +14,26 @@
   - /Audio/_Impstation/Effects/Gasp/s_female_deathgasp_2.ogg
   - /Audio/_Impstation/Effects/Gasp/s_female_deathgasp_3.ogg
   - /Audio/_Impstation/Effects/Gasp/s_female_deathgasp_4.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_female_deathgasp_5.ogg
 
 - type: soundCollection
   id: SlimeDeathGasp
   files:
+  - /Audio/_Impstation/Effects/Gasp/s_deathgasp_1.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_deathgasp_2.ogg
+
+- type: soundCollection
+  id: UnisexSlimeDeathGasp
+  files:
+  - /Audio/_Impstation/Effects/Gasp/s_male_deathgasp_1.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_male_deathgasp_2.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_male_deathgasp_3.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_male_deathgasp_4.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_male_deathgasp_5.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_female_deathgasp_1.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_female_deathgasp_2.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_female_deathgasp_3.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_female_deathgasp_4.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_female_deathgasp_5.ogg
   - /Audio/_Impstation/Effects/Gasp/s_deathgasp_1.ogg
   - /Audio/_Impstation/Effects/Gasp/s_deathgasp_2.ogg

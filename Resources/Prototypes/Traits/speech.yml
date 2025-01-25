@@ -93,7 +93,7 @@
   cost: 1
   components:
   - type: ScrambledAccent
-  
+
 - type: trait
   id: NoContractions
   name: trait-nocontractions-name
@@ -104,7 +104,7 @@
   - type: ReplacementAccent
     accent: nocontractions
   - type: NoContractionsAccent
-  
+
 - type: trait
   id: SharpInflection
   name: trait-sharpinflection-name
@@ -113,7 +113,7 @@
   cost: 1
   components:
   - type: SharpInflection
-  
+
 - type: trait
   id: Monotonous
   name: trait-monotonous-name
@@ -122,7 +122,7 @@
   cost: 1
   components:
   - type: Monotonous
-  
+
 - type: trait
   id: BasicFrenchAccent
   name: trait-basicfrench-name
@@ -211,7 +211,7 @@
   cost: 2
   components:
   - type: BasicRussianAccent
-  
+
 - type: trait
   id: FrenchAccent
   name: trait-french-name
@@ -220,3 +220,35 @@
   cost: 2
   components:
   - type: FrenchAccent
+
+- type: trait
+  id: AccentImmune
+  name: trait-accentimmune-name
+  description: trait-accentimmune-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+  - type: Accentless
+    removes:
+    - type: SouthernAccent
+    - type: PirateAccent
+    - type: GermanAccent
+    - type: SpanishAccent
+    - type: ScrambledAccent
+    - type: NoContractionsAccent
+    - type: SharpInflection
+    - type: Monotonous
+    - type: BasicFrenchAccent
+    - type: SnalienAccent
+    - type: StutteringAccent
+    - type: FrontalLisp
+    - type: RatvarianLanguage
+    - type: RussianAccent
+    - type: BasicRussianAccent
+    - type: FrenchAccent
+    - type: LizardAccent
+    - type: MothAccent
+    - type: GrayAccent
+    - type: ReplacementAccent
+      accent: dwarf
+      # Imp TODO: add cowboy, italian, liar, mobster, and slimes to this list one day since apparently you can only remove one ReplacementAccent at a time without pissing off the linter, maybe we can figure it out later. For now, adding the dwarf accent since that's an accent you can spawn with under current circumstances.

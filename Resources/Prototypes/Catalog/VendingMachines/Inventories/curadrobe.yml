@@ -12,6 +12,9 @@
     ClothingUniformJumpskirtCurator: 3
     ClothingUniformJumpsuitLibrarian: 3
     ClothingUniformJumpskirtLibrarian: 3
+    ClothingUniformBrownSuit: 2 #imp
+    ClothingUniformBrownSuitSkirt: 2 #imp
     ClothingShoesBootsLaceup: 2
     ClothingHeadsetService: 2
+    
 

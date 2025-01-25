@@ -1,5 +1,5 @@
 - type: entity
-  name: Stun Enforcer
+  name: stun Enforcer
   parent: WeaponShotgunEnforcer
   id: WeaponShotgunEnforcerBeanbag
   description: A premium combat shotgun with an extended magazine and a built-in silencer, modified to only accept .50 stun slugs.
@@ -29,7 +29,7 @@
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
 
 - type: entity
-  name: Stun Kammerer
+  name: stun Kammerer
   parent:  [BaseWeaponShotgun, BaseGunWieldable, BaseMinorSecurityCivilianContraband]
   id: WeaponShotgunKammererBeanbag
   description: A pump shotgun with a built-in silencer, modified to only accept .50 stun slugs.

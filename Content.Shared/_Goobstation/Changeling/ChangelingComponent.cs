@@ -103,6 +103,9 @@ public sealed partial class ChangelingComponent : Component
     public float BiomassUpdateTimer = 0f;
     public float BiomassUpdateCooldown = 60f;
 
+    [DataField, AutoNetworkedField]
+    public int MaxEvolutionPoints = 10;
+
     [ViewVariables(VVAccess.ReadOnly)]
     public List<TransformData> AbsorbedDNA = new();
     /// <summary>

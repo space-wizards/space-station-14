@@ -8,16 +8,6 @@
       role: JobQuartermaster
       time: 72000 #20 hrs
 
-# For the veteran quartermaster cosmetics
-- type: loadoutEffectGroup
-  id: VeteranQM
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobQuartermaster
-      time: 180000 #50 hrs
-
 # Jumpsuit
 - type: loadout
   id: QuartermasterJumpsuit
@@ -69,14 +59,6 @@
   - !type:GroupLoadoutEffect
     proto: MasterQM
 
-- type: loadout
-  id: QuartermasterGreatcoat
-  equipment:
-    neck: ClothingNeckCloakQmgreatcoat
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranQM
-
 - type: startingGear
   id: QuartermasterMantle
   equipment:
@@ -98,11 +80,3 @@
   id: QuartermasterHeadset
   equipment:
     ears: ClothingHeadsetAltCargo
-
-- type: loadout
-  id: QuartermasterVeteranHeadset
-  equipment:
-    ears: ClothingHeadsetQMveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranQM

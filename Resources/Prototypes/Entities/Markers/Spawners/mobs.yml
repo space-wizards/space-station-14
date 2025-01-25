@@ -63,19 +63,6 @@
       - MobCorgiMouse
 
 - type: entity
-  name: Finfin Spawner
-  id: SpawnMobFinfin
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-      - state: green
-      - state: ai
-  - type: ConditionalSpawner
-    prototypes:
-      - MobFinfin
-
-- type: entity
   name: Possum Morty Spawner
   id: SpawnMobPossumMorty
   parent: MarkerBase
@@ -89,32 +76,6 @@
       - MobPossumMortyOld
 
 - type: entity
-  name: Poppy Spawner
-  id: SpawnMobPoppy
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-      - state: green
-      - state: ai
-  - type: ConditionalSpawner
-    prototypes:
-      - MobPossumPoppy
-
-- type: entity
-  name: Goji Spawner
-  id: SpawnMobGoji
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-      - state: green
-      - state: ai
-  - type: ConditionalSpawner
-    prototypes:
-      - MobGoji
-
-- type: entity
   name: Raccoon Morticia Spawner
   id: SpawnMobRaccoonMorticia
   parent: MarkerBase
@@ -126,20 +87,6 @@
   - type: ConditionalSpawner
     prototypes:
       - MobRaccoonMorticia
-
-- type: entity
-  name: Drone Spawner
-  id: SpawnMobDrone
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-      - state: green
-      - sprite: Mobs/Silicon/drone.rsi
-        state: shell
-  - type: ConditionalSpawner
-    prototypes:
-      - Drone
 
 - type: entity
   name: Fox Renault Spawner
@@ -157,6 +104,8 @@
 - type: entity
   name: Runtime Spawner
   id: SpawnMobCatRuntime
+  #suffix imp edit
+  suffix: CMO's pet, steal target
   parent: MarkerBase
   components:
   - type: Sprite
@@ -170,6 +119,8 @@
 - type: entity
   name: Exception Spawner
   id: SpawnMobCatException
+  #suffix imp edit
+  suffix: CMO's pet, steal target
   parent: MarkerBase
   components:
   - type: Sprite
@@ -196,6 +147,8 @@
 - type: entity
   name: Floppa Spawner
   id: SpawnMobCatFloppa
+  #suffix imp edit
+  suffix: CMO's pet, steal target
   parent: MarkerBase
   components:
   - type: Sprite
@@ -209,6 +162,8 @@
 - type: entity
   name: Bingus Spawner
   id: SpawnMobCatBingus
+  #suffix imp edit
+  suffix: CMO's pet, steal target
   parent: MarkerBase
   components:
   - type: Sprite
@@ -218,19 +173,6 @@
   - type: ConditionalSpawner
     prototypes:
       - MobBingus
-
-- type: entity
-  name: Pipi Spawner
-  id: SpawnMobCatKittenPipi
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-      - state: green
-      - state: ai
-  - type: ConditionalSpawner
-    prototypes:
-      - MobPipi
 
 - type: entity
   name: Space Cat Spawner
@@ -261,6 +203,8 @@
 - type: entity
   name: Cat Spawner
   id: SpawnMobCat
+  #suffix imp edit
+  suffix: CMO's pet, steal target
   parent: MarkerBase
   components:
   - type: Sprite
@@ -275,7 +219,7 @@
       - MobBingus
       - MobPipi
     rarePrototypes:
-      - MobFinfin
+      - MobFinfin #imp edit
     rareChance: 0.05
 
 - type: entity
@@ -295,7 +239,7 @@
       - MobCatKitten
     rarePrototypes:
       - MobCatSpace
-      - MobFinfin
+      - MobFinfin #imp edit
     rareChance: 0.05
 
 - type: entity
@@ -953,102 +897,44 @@
     - MobHonkBot
 
 - type: entity
-  name: xeno lone praetorian spawner
-  id: SpawnMobXenoPraetorian
+  name: gingerbread man Spawner
+  id: SpawnMobGingerbreadAI
+  suffix: Ghostrole
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: full
+        sprite: Mobs/Species/Gingerbread/parts.rsi
+  - type: ConditionalSpawner
+    prototypes:
+      - MobGingerbreadAI
+
+- type: entity
+  name: Reindeer Buck Spawner
+  id: SpawnMobReindeerBuck
   parent: MarkerBase
   components:
   - type: Sprite
     layers:
     - state: green
-    - state: running
-      sprite: Mobs/Aliens/Xenos/praetorian.rsi
+    - state: reindeer_buck_still
+      sprite: Mobs/Animals/reindeer_buck.rsi
   - type: ConditionalSpawner
     prototypes:
-    - MobXenoLonePraetorianNoGhost
+    - MobReindeerBuck
 
 - type: entity
-  name: Space Bear Major Spawner
-  id: SpawnMobBearMajor
+  name: Reindeer Doe Spawner
+  id: SpawnMobReindeerDoe
   parent: MarkerBase
   components:
   - type: Sprite
     layers:
     - state: green
-    - state: major
-      sprite: Mobs/Animals/major.rsi
+    - state: reindeer_doe_still
+      sprite: Mobs/Animals/reindeer_doe.rsi
   - type: ConditionalSpawner
     prototypes:
-    - MobBearSpaceMajor
-
-- type: entity
-  name: Laser Raptor Spawner
-  id: SpawnMobLaserRaptor
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-    - state: green
-    - state: laser_raptor
-      sprite: Mobs/Aliens/laser_raptor.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobLaserRaptor
-
-- type: entity
-  name: Kisser Tomato Spawner
-  id: SpawnMobKisserTomato
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-    - state: green
-    - state: alive
-      sprite: Mobs/Demons/tomatokisser.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobTomatoKisser
-
-- type: entity
-  name: Laser-less Laser Raptor Spawner
-  id: SpawnMobRaptor
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-    - state: green
-    - state: raptor
-      sprite: Mobs/Aliens/laser-less_laser_raptor.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobRaptor
-
-- type: entity
-  name: BROS/SORB Spawner
-  id: BrosSorbSpawner
-  parent: MarkerBase
-  components:
-    - type: Sprite
-      layers:
-        - state: blue
-        - sprite: Mobs/Animals/bros.rsi
-          state: bros
-    - type: ClusterSpawner
-      prototypes:
-        - MobBros
-        - MobSorb
-
-- type: entity
-  name: Duck Duck Goose Spawner
-  id: DuckDuckGooseSpawner
-  parent: MarkerBase
-  components:
-    - type: Sprite
-      layers:
-        - state: blue
-        - sprite: Mobs/Animals/goose.rsi
-    - type: GroupSpawner
-      spawns:
-      - id: MobDuckWhite
-        amount: 2
-        maxAmount: 2
-      - id: MobGoose
+    - MobReindeerDoe

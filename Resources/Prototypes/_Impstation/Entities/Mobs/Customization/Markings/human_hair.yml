@@ -5,3 +5,11 @@
   sprites:
     - sprite: _Impstation/Mobs/Customization/human_hair.rsi
       state: gatheredlow
+
+- type: marking
+  id: HumanHairLowpigtails
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/human_hair.rsi
+      state: lowpigtails

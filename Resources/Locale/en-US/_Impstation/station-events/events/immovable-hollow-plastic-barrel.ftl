@@ -1,0 +1,1 @@
+station-event-immovable-hollow-plastic-barrel-spawn-announcement = A high velocity object composed of high-density polyethylene has been detected on a collision course with the station. It has no honor.

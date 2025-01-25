@@ -5,7 +5,7 @@
   - !type:GroupLoadoutEffect
     proto: GreyTider
   equipment:
-    jumpsuit: ClothingSpaceCadetJumpsuitColorGray
+    jumpsuit: ClothingUniformSpaceJumpsuitGrayTider
 
 # Passenger Cloak Loadout Effect
 - type: loadoutEffectGroup

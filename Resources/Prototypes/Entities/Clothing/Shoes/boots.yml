@@ -76,7 +76,7 @@
       collection: FootstepHighheels
 
 - type: entity
-  parent: [ ClothingShoesMilitaryBase, BaseRestrictedContraband ]
+  parent: [ ClothingShoesMilitaryBase ]
   id: ClothingShoesBootsMerc
   name: mercenary boots
   description: Boots that have gone through many conflicts and that have proven their combat reliability.
@@ -96,20 +96,6 @@
     sprite: Clothing/Shoes/Boots/laceups.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/laceups.rsi
-
-- type: entity
-  parent: [ClothingShoesMilitaryBaseInedible, BaseCommandContraband]
-  id: ClothingShoesBootsCaptainjumpboots
-  name: jump boots
-  description: "Polished leather boots with strong ankle support, originally designed for paratroopers. Designed with gold honor guard heel taps. They'll know you're coming."
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/Boots/captainjumpboots.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/Boots/captainjumpboots.rsi
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepBoots
 
 - type: entity
   parent: ClothingShoesBaseWinterBoots
@@ -192,7 +178,7 @@
     sprite: Clothing/Shoes/Boots/winterbootssec.rsi
 
 - type: entity
-  parent: [ClothingShoesBaseWinterBoots, BaseSyndicateContraband]
+  parent: [ClothingShoesBaseWinterBoots, Tier1Contraband]
   id: ClothingShoesBootsWinterSyndicate
   name: syndicate's winter boots
   description: Durable heavy boots, looks like merch from "Syndieland".

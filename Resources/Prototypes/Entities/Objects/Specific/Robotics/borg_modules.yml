@@ -463,25 +463,6 @@
 
 # service modules
 - type: entity
-  id: BorgModuleBartender
-  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
-  name: bartender cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: service
-    - state: icon-beer
-  - type: ItemBorgModule
-    items:
-    - Lighter
-    - DrinkShaker
-    - BarSpoon
-    - BorgIceBucket
-    - Pitcher
-    - BorgDropper
-
-# depreciated. included in case of merge errors
-- type: entity
   id: BorgModuleService
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
   name: service cyborg module
@@ -570,28 +551,10 @@
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: clowning-module }
 
-- type: entity
-  id: BorgModulePaper
-  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
-  name: bureaucracy cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: service
-    - state: icon-pen
-  - type: ItemBorgModule
-    items:
-    - Pen
-    - BooksBag
-    - HandLabeler
-    - RubberStampApproved
-    - RubberStampDenied
-    - RubberStampBorg
-
 #syndicate modules
 - type: entity
   id: BorgModuleSyndicateWeapon
-  parent: [ BaseBorgModule, BaseProviderBorgModule, BaseSyndicateContraband ]
+  parent: [ BaseBorgModule, BaseProviderBorgModule, Tier3Contraband ]
   name: weapon cyborg module
   components:
   - type: Sprite
@@ -607,7 +570,7 @@
 
 - type: entity
   id: BorgModuleOperative
-  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, Tier2Contraband ]
   name: operative cyborg module
   description: A module that comes with a crowbar, an Emag and a syndicate pinpointer.
   components:
@@ -626,7 +589,7 @@
 
 - type: entity
   id: BorgModuleEsword
-  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, Tier3Contraband ]
   name: energy sword cyborg module
   description: A module that comes with a double energy sword.
   components:
@@ -643,7 +606,7 @@
 
 - type: entity
   id: BorgModuleL6C
-  parent: [ BaseBorgModuleSyndicateAssault, BaseProviderBorgModule, BaseSyndicateContraband ]
+  parent: [ BaseBorgModuleSyndicateAssault, BaseProviderBorgModule, Tier3Contraband ]
   name: L6C ROW cyborg module
   description: A module that comes with a L6C.
   components:
@@ -657,10 +620,13 @@
         - PinpointerSyndicateNuclear
     - type: BorgModuleIcon
       icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-l6c-module }
+    - type: Tag #imp edit - let crew borgs use the l6 if salvagers find one or an assault borg is killed.
+      tags:
+      - BorgModuleGeneric
 
 - type: entity
   id: BorgModuleMartyr
-  parent: [ BaseBorgModule, BaseProviderBorgModule, BaseSyndicateContraband ]
+  parent: [ BaseBorgModule, BaseProviderBorgModule, Tier3Contraband ]
   name: martyr cyborg module
   description: "A module that comes with an explosive you probably don't want to handle yourself."
   components:

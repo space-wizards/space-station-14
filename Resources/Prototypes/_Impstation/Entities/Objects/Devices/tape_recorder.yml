@@ -1,0 +1,166 @@
+- type: entity
+  parent: TapeRecorder
+  id: TapeRecorderFilledSupermatter
+  suffix: Filled, Guide to the Supermatter
+  components:
+  - type: ContainerFill
+    containers:
+      cassette_tape:
+      - CassetteTapeSupermatter
+
+- type: entity
+  suffix: Guide to the Supermatter
+  parent: CassetteTape
+  id: CassetteTapeSupermatter
+  components:
+  - type: Label
+    currentLabel: Guide to the Supermatter
+  - type: TapeCassette
+    recordedData:
+      - timestamp: 1
+        name: Tells-Tall-Tales
+        message: "This is Chief Engineer Tells-Tall-Tales. Today, we will be going over the setup process for a classic N2 setup of the supermatter engine."
+      - timestamp: 5
+        name: Tells-Tall-Tales
+        message: "I am currently on Union Station, although this guide should work for any supermatter engine."
+      - timestamp: 9
+        name: Tells-Tall-Tales
+        message: "At a basic level, the supermatter crystal produces radiation when it is hit by emitter beams."
+      - timestamp: 13
+        name: Tells-Tall-Tales
+        message: "As this happens, it produces heated waste gas."
+      - timestamp: 16
+        name: Tells-Tall-Tales
+        message: "If the supermatter is left exposed to certain types or temperatures of gases, it will destabilize and begin delaminating."
+      - timestamp: 20
+        name: Tells-Tall-Tales
+        message: "We want to avoid this, so we will pump the gas out to cool it and filter it before pumping it back in."
+      - timestamp: 24
+        name: Tells-Tall-Tales
+        message: "It is crucial that you do not turn on the emitters before the loop is set up, and that you do not EVER walk into the supermatter crystal."
+      - timestamp: 29
+        name: Tells-Tall-Tales
+        message: "For safety reasons, put on a radiation suit and turn on your magboots."
+      - timestamp: 33
+        name: Tells-Tall-Tales
+        message: "With that out of the way, let us start by setting up the loop."
+      - timestamp: 36
+        name: Tells-Tall-Tales
+        message: "The most important section of the engine are the pumps in and out of the supermatter chamber."
+      - timestamp: 40
+        name: Tells-Tall-Tales
+        message: "They should be able to be found at the entrance to the chamber. Turn these pumps on and set them to maximum pressure."
+      - timestamp: 45
+        name: Tells-Tall-Tales
+        message: "You may notice a pump that goes past the supermatter; this is for bypassing the chamber pumps. Do not turn this on."
+      - timestamp: 49
+        name: Tells-Tall-Tales
+        message: "The air alarm will also need to be configured, to control the inflow and outflow of gas."
+      - timestamp: 53
+        name: Tells-Tall-Tales
+        message: "On the air alarm, turn off 'auto mode' at the bottom."
+      - timestamp: 57
+        name: Tells-Tall-Tales
+        message: "For the vents, enable 'Pressure Lockout Override' and set the pressure bound field to 'InternalBound'."
+      - timestamp: 62
+        name: Tells-Tall-Tales
+        message: "For the scrubbers, enable 'WideNet' and, under the gas filters, enable all types of gases to be filtered out."
+      - timestamp: 67
+        name: Tells-Tall-Tales
+        message: "With that complete, the air alarm should now pump out all of the gas, and then pump them back in after they have cooled."
+      - timestamp: 71
+        name: Tells-Tall-Tales
+        message: "Another important step is turning on the filters."
+      - timestamp: 74
+        name: Tells-Tall-Tales
+        message: "For this basic setup, we only want nitrogen to be pumped into the chamber."
+      - timestamp: 77
+        name: Tells-Tall-Tales
+        message: "One filter leading back into the loop should be set to filter 'nitrogen', while the others should filter 'none'."
+      - timestamp: 81
+        name: Tells-Tall-Tales
+        message: "Turn on all of these filters so that gas may flow through them."
+      - timestamp: 85
+        name: Tells-Tall-Tales
+        message: "With that done, only nitrogen should remain in the loop. You may change this to experiment, if you wish. Just be careful."
+      - timestamp: 89
+        name: Tells-Tall-Tales
+        message: "We also need to set up the cooling pumps."
+      - timestamp: 92
+        name: Tells-Tall-Tales
+        message: "There should be a section where the gas loop goes outside the station to a series of radiators."
+      - timestamp: 95
+        name: Tells-Tall-Tales
+        message: "You will want to turn on the pumps going in and out of this section -- again, use max pressure!"
+      - timestamp: 99
+        name: Tells-Tall-Tales
+        message: "There is another bypass pump here; do not turn this on for this setup."
+      - timestamp: 102
+        name: Tells-Tall-Tales
+        message: "You may notice an alternate cooling setup with freezers and canister ports."
+      - timestamp: 105
+        name: Tells-Tall-Tales
+        message: "Turn on the bypass pump for this section -- max pressure. We will not need it."
+      - timestamp: 109
+        name: Tells-Tall-Tales
+        message: "You should now have the three basic parts set up: the pumps for the chamber, the filters for the gas, and the pumps for the freezing."
+      - timestamp: 113
+        name: Tells-Tall-Tales
+        message: "The order of these segments may differ from station to station, so beware!"
+      - timestamp: 116
+        name: Tells-Tall-Tales
+        message: "Make sure all of the pumps and filters are turned on and set to max pressure, and make sure you are bypassing -- or not bypassing -- the correct sections."
+      - timestamp: 122
+        name: Tells-Tall-Tales
+        message: "After this is all done, we now need to add nitrogen to the loop."
+      - timestamp: 125
+        name: Tells-Tall-Tales
+        message: "Locate the nitrogen canisters and connector ports leading into the loop."
+      - timestamp: 128
+        name: Tells-Tall-Tales
+        message: "Wrench these canisters onto the connector ports and turn on their respective pumps."
+      - timestamp: 132
+        name: Tells-Tall-Tales
+        message: "Nitrogen should now be flowing in and out of the chamber before getting filtered, cooled and sent back in."
+      - timestamp: 136
+        name: Tells-Tall-Tales
+        message: "Now that the gas loop is complete, it's time to set up the power."
+      - timestamp: 139
+        name: Tells-Tall-Tales
+        message: "For each radiation collector around the crystal, insert a plasma tank and turn the collector on."
+      - timestamp: 143
+        name: Tells-Tall-Tales
+        message: "Finally, go ahead and turn on the emitters to start the powering process."
+      - timestamp: 147
+        name: Three Mile Island
+        message: "Bweee... thusd crystal..."
+      - timestamp: 148
+        name: Tells-Tall-Tales
+        message: "With that, the supermatter engine should be complete! Congratulations!"
+      - timestamp: 152
+        name: Three Mile Island
+        message: "Seben if..."
+      - timestamp: 154
+        name: cassette tape
+        message: "(screaming, followed by explosions)"
+      - timestamp: 155
+        name: Tells-Tall-Tales
+        message: "OH SHIT!"
+      - timestamp: 157
+        name: Tells-Tall-Tales
+        message: "Uh, it is also advised to weld and bolt the doors to the supermatter!"
+      - timestamp: 158
+        name: supermatter crystal
+        message: "Warning! Crystal hyperstructure integrity faltering! Integrity: 94.40%."
+      - timestamp: 161
+        name: Tells-Tall-Tales
+        message: "Once delamination starts, it can be very hard to reverse the effects, so make sure to double check everything with gas analyzers before starting the emitters!"
+      - timestamp: 165
+        name: Tells-Tall-Tales
+        message: "Chief Engineer Tells-Tall-Tales, out!"
+      - timestamp: 166
+        name: supermatter crystal
+        message: "Warning! Crystal hyp-"
+      - timestamp: 167
+        name: cassette tape
+        message: "(The audio suddenly cuts out.)"

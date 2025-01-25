@@ -16,7 +16,7 @@
   - !type:AddComponentSpecial
     components:
     - type: MimePowers
-    - type: FrenchAccent
+    - type: BasicFrenchAccent # Imp
 
 - type: startingGear
   id: MimeGear

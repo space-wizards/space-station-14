@@ -36,7 +36,7 @@
   inhand:
     - DecapoidVaporTank
     - DecapoidClawItem
-    
+
 # Full tank for auqatics as part of any Survival loadout
 - type: loadout
   id: LoadoutSpeciesAquaticFullTank
@@ -98,7 +98,62 @@
   - !type:GroupLoadoutEffect
     proto: Aquatic
   storage:
-    back: 
+    back:
     - DecapoidBreathingApparatus
 
+# Command
+- type: loadout
+  id: EmergencyOxygenCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  storage:
+    back:
+    - BoxSurvivalCommand
 
+- type: loadout
+  id: EmergencyNitrogenCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  storage:
+    back:
+    - BoxSurvivalNitrogenCommand
+
+# Chief Engineer
+- type: loadout
+  id: EmergencyOxygenExtendedCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  storage:
+    back:
+    - BoxSurvivalEngineeringCommand
+
+- type: loadout
+  id: EmergencyNitrogenExtendedCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  storage:
+    back:
+    - BoxSurvivalEngineeringNitrogenCommand
+
+# Head of Security
+- type: loadout
+  id: EmergencyOxygenSecurityCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  storage:
+    back:
+    - BoxSurvivalSecurityCommand
+
+- type: loadout
+  id: EmergencyNitrogenSecurityCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  storage:
+    back:
+    - BoxSurvivalSecurityNitrogenCommand

@@ -13,10 +13,14 @@ using Content.Shared.Throwing;
 using Content.Shared.Wires;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
+using Content.Shared.Popups;
+using Content.Shared.Damage.Components;
+using Content.Shared.Weapons.Melee.Events;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Damage.Systems
 {
-    public sealed class DamageOtherOnHitSystem : EntitySystem
+    public sealed class DamageOtherOnHitSystem : SharedDamageOtherOnHitSystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly GunSystem _guns = default!;
@@ -24,49 +28,41 @@ namespace Content.Server.Damage.Systems
         [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
         [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
         [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<DamageOtherOnHitComponent, ThrowDoHitEvent>(OnDoHit);
+            base.Initialize();
+
+            SubscribeLocalEvent<StaminaComponent, BeforeThrowEvent>(OnBeforeThrow);
             SubscribeLocalEvent<DamageOtherOnHitComponent, DamageExamineEvent>(OnDamageExamine);
-            SubscribeLocalEvent<DamageOtherOnHitComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
         }
 
-        private void OnDoHit(EntityUid uid, DamageOtherOnHitComponent component, ThrowDoHitEvent args)
+        private void OnBeforeThrow(EntityUid uid, StaminaComponent component, ref BeforeThrowEvent args)
         {
-            if (TerminatingOrDeleted(args.Target))
+            if (!TryComp<DamageOtherOnHitComponent>(args.ItemUid, out var damage))
                 return;
 
-            var dmg = _damageable.TryChangeDamage(args.Target, component.Damage, component.IgnoreResistances, origin: args.Component.Thrower);
-
-            // Log damage only for mobs. Useful for when people throw spears at each other, but also avoids log-spam when explosions send glass shards flying.
-            if (dmg != null && HasComp<MobStateComponent>(args.Target))
-                _adminLogger.Add(LogType.ThrowHit, $"{ToPrettyString(args.Target):target} received {dmg.GetTotal():damage} damage from collision");
-
-            if (dmg is { Empty: false })
+            if (component.CritThreshold - component.StaminaDamage <= damage.StaminaCost)
             {
-                _color.RaiseEffect(Color.Red, new List<EntityUid>() { args.Target }, Filter.Pvs(args.Target, entityManager: EntityManager));
-            }
-
-            _guns.PlayImpactSound(args.Target, dmg, null, false);
-            if (TryComp<PhysicsComponent>(uid, out var body) && body.LinearVelocity.LengthSquared() > 0f)
-            {
-                var direction = body.LinearVelocity.Normalized();
-                _sharedCameraRecoil.KickCamera(args.Target, direction);
+                args.Cancelled = true;
+                _popup.PopupEntity(Loc.GetString("throw-no-stamina", ("item", args.ItemUid)), uid, uid);
+                return;
             }
         }
 
         private void OnDamageExamine(EntityUid uid, DamageOtherOnHitComponent component, ref DamageExamineEvent args)
         {
-            _damageExamine.AddDamageExamine(args.Message, component.Damage, Loc.GetString("damage-throw"));
-        }
+            _damageExamine.AddDamageExamine(args.Message, GetDamage(uid, component, args.User), Loc.GetString("damage-throw"));
 
-        /// <summary>
-        /// Prevent players with the Pacified status effect from throwing things that deal damage.
-        /// </summary>
-        private void OnAttemptPacifiedThrow(Entity<DamageOtherOnHitComponent> ent, ref AttemptPacifiedThrowEvent args)
-        {
-            args.Cancel("pacified-cannot-throw");
+            if (component.StaminaCost == 0)
+                return;
+
+            var staminaCostMarkup = FormattedMessage.FromMarkupOrThrow(
+                Loc.GetString("damage-stamina-cost",
+                ("type", Loc.GetString("damage-throw")), ("cost", component.StaminaCost)));
+            args.Message.PushNewline();
+            args.Message.AddMessage(staminaCostMarkup);
         }
     }
 }

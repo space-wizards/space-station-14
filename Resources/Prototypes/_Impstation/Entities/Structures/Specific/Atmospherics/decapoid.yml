@@ -1,0 +1,51 @@
+- type: entity
+  abstract: true
+  parent: AirSensorBase
+  id: AirSensorDecapoidBase
+  suffix: Decapoid Atmosphere
+  components:
+  - type: AtmosMonitor
+    gasThresholdPrototypes:
+      Oxygen: ignore
+      Nitrogen: ignore
+      CarbonDioxide: stationCO2
+      Plasma: stationPlasma
+      Tritium: stationTritium
+      WaterVapor: decapoidWaterVapor
+      Ammonia: stationAmmonia
+      NitrousOxide: stationNO
+      Frezon: danger
+
+- type: entity
+  parent: [AirSensorDecapoidBase, AirSensor]
+  id: AirSensorDecapoid
+
+- type: entity
+  parent: [AirSensorDecapoidBase, GasVentPump]
+  id: GasVentPumpDecapoid
+
+- type: entity
+  parent: [AirSensorDecapoidBase, GasVentScrubber]
+  id: GasVentScrubberDecapoid
+  components:
+  - type: GasVentScrubber
+    wideNet: true # Air alarm with auto mode overrides filters with hardcoded defaults so default to widenet
+    filterGases:
+    - Oxygen # oxygen and nitrogen aren't necessary to remove, but they help prevent an atmospheric imbalance
+    - Nitrogen
+    - CarbonDioxide
+    - Plasma
+    - Tritium
+    - Ammonia
+    - NitrousOxide
+    - Frezon
+
+# use this to prevent overriding filters with hardcoded defaults
+# this is actually just an exact copy of AirAlarmVox, but it's more clear for mappers
+- type: entity
+  parent: AirAlarm
+  id: AirAlarmDecapoid
+  suffix: Decapoid Atmosphere, auto mode disabled
+  components:
+  - type: AirAlarm
+    autoMode: false

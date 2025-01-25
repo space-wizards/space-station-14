@@ -1,80 +1,66 @@
 # Airlocks
 - type: entity
-  parent: Airlock
+  parent: AirlockService #imp edit
   id: AirlockServiceLocked
   suffix: Service, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsService ]
-  - type: Wires
-    layoutId: AirlockService
 
 - type: entity
-  parent: AirlockServiceLocked
+  parent: AirlockLawyer #imp edit
   id: AirlockLawyerLocked
   suffix: Lawyer, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsLawyer ]
-  - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Standard/lawyer.rsi
 
 - type: entity
-  parent: AirlockServiceLocked
+  parent: AirlockTheatre #imp edit
   id: AirlockTheatreLocked
   suffix: Theatre, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsTheatre ]
-  - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Standard/theatre.rsi
 
 - type: entity
-  parent: AirlockServiceLocked
+  parent: AirlockChapel #imp edit
   id: AirlockChapelLocked
   suffix: Chapel, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsChapel ]
-  - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Standard/chapel.rsi
 
 - type: entity
-  parent: AirlockServiceLocked
+  parent: AirlockJanitor #imp edit
   id: AirlockJanitorLocked
   suffix: Janitor, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsJanitor ]
-  - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Standard/janitor.rsi
 
 - type: entity
-  parent: AirlockServiceLocked
+  parent: AirlockKitchen #imp edit
   id: AirlockKitchenLocked
   suffix: Kitchen, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsKitchen ]
-  - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Standard/kitchen.rsi
 
 - type: entity
-  parent: AirlockServiceLocked
+  parent: AirlockBar #imp edit
   id: AirlockBarLocked
   suffix: Bar, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsBar ]
-  - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Standard/bar.rsi
 
 - type: entity
   parent: AirlockHydroponics
@@ -226,7 +212,7 @@
       board: [ DoorElectronicsCargo ]
 
 - type: entity
-  parent: AirlockCargo
+  parent: AirlockSalvage #imp edit
   id: AirlockSalvageLocked
   suffix: Salvage, Locked
   components:
@@ -445,50 +431,40 @@
 
 # Glass Airlocks
 - type: entity
-  parent: AirlockGlass
+  parent: AirlockServiceGlass #imp edit
   id: AirlockServiceGlassLocked
   suffix: Service, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsService ]
-  - type: Wires
-    layoutId: AirlockService
-  - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/basic.rsi
 
 - type: entity
-  parent: AirlockServiceGlassLocked
+  parent: AirlockLawyerGlass #imp edit
   id: AirlockLawyerGlassLocked
   suffix: Lawyer, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsLawyer ]
-  - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Glass/lawyer.rsi
 
 - type: entity
-  parent: AirlockServiceGlassLocked
+  parent: AirlockTheatreGlass #imp edit
   id: AirlockTheatreGlassLocked
   suffix: Theatre, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsTheatre ]
-  - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Glass/theatre.rsi
 
 - type: entity
-  parent: AirlockServiceGlassLocked
+  parent: AirlockBarGlass #imp edit
   id: AirlockBarGlassLocked
   suffix: Bar, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsBar ]
-  - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Glass/bar.rsi
 
 - type: entity
   parent: AirlockExternalGlass
@@ -555,26 +531,22 @@
     layoutId: AirlockEngineering
 
 - type: entity
-  parent: AirlockServiceGlassLocked
+  parent: AirlockKitchenGlass #imp edit
   id: AirlockKitchenGlassLocked
   suffix: Kitchen, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsKitchen ]
-  - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Glass/kitchen.rsi
 
 - type: entity
-  parent: AirlockServiceGlassLocked
+  parent: AirlockJanitorGlass #imp edit
   id: AirlockJanitorGlassLocked
   suffix: Janitor, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsJanitor ]
-  - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Glass/janitor.rsi
 
 - type: entity
   parent: AirlockHydroponicsGlass
@@ -586,15 +558,13 @@
       board: [ DoorElectronicsHydroponics ]
 
 - type: entity
-  parent: AirlockServiceGlassLocked
+  parent: AirlockChapelGlass #imp edit
   id: AirlockChapelGlassLocked
   suffix: Chapel, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsChapel ]
-  - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Glass/chapel.rsi
 
 - type: entity
   parent: AirlockEngineeringGlass
@@ -624,7 +594,7 @@
       board: [ DoorElectronicsCargo ]
 
 - type: entity
-  parent: AirlockCargoGlass
+  parent: AirlockSalvageGlass #imp edit
   id: AirlockSalvageGlassLocked
   suffix: Salvage, Locked
   components:
@@ -996,6 +966,15 @@
       board: [ DoorElectronicsKitchen ]
 
 - type: entity
+  parent: AirlockMaintServiceLocked
+  id: AirlockMaintKitchenHydroLocked
+  suffix: Kitchen/Hydroponics, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsKitchenHydroponics ]
+
+- type: entity
   parent: AirlockMaint
   id: AirlockMaintIntLocked
   suffix: Interior, Locked
@@ -1014,6 +993,15 @@
       board: [ DoorElectronicsMedical ]
   - type: Wires
     layoutId: AirlockMedical
+
+- type: entity
+  parent: AirlockMaintMedLocked
+  id: AirlockMedicalMorgueMaintLocked
+  suffix: Morgue, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMorgue ]
 
 - type: entity
   parent: AirlockMaintMedLocked

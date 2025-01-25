@@ -1,0 +1,36 @@
+- type: entity
+  parent: ClothingEyesBase
+  id: PrescriptionLens
+  name: prescription lens
+  description: Adaptive lenses that fit inside frames or your face.
+  components:
+  - type: Sprite
+    layers:
+      - sprite: Clothing/Eyes/Misc/lenses.rsi
+        state: small
+  - type: VisionCorrection
+    correctionPower: 2
+  - type: Tag
+    tags:
+    - Lens
+
+- type: entity
+  parent: PrescriptionLens
+  id: PrescriptionLensStrong
+  name: strong prescription lens
+  components:
+  - type: Sprite
+    layers:
+      - sprite: Clothing/Eyes/Misc/lenses.rsi
+        state: large
+  - type: VisionCorrection
+    correctionPower: 4
+
+# admeme right now
+- type: entity
+  parent: PrescriptionLens
+  id: AntiPrescriptionLens
+  suffix: Inverse
+  components:
+  - type: VisionCorrection
+    visionBonus: 2

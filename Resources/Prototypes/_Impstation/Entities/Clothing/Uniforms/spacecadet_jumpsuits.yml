@@ -3,7 +3,7 @@
   parent: ClothingUniformBase
   id: ClothingSpaceCadetJumpsuitColorWhite
   name: white space cadet jumpsuit
-  description: A well crafted white uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
+  description: A well crafted white uniform made by expensive Nanotrasen machines.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
@@ -26,7 +26,7 @@
   parent: ClothingUniformBase
   id: ClothingSpaceCadetJumpsuitColorGray
   name: gray space cadet jumpsuit
-  description: A well crafted gray uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
+  description: A well crafted gray uniform made by expensive Nanotrasen machines.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
@@ -53,7 +53,7 @@
   parent: ClothingUniformBase
   id: ClothingSpaceCadetJumpsuitColorBlack
   name: black space cadet jumpsuit
-  description: A well crafted black uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
+  description: A well crafted black uniform made by expensive Nanotrasen machines.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
@@ -81,7 +81,7 @@
   parent: ClothingUniformBase
   id: ClothingSpaceCadetJumpsuitColorBlue
   name: blue space cadet jumpsuit
-  description: A well crafted blue uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
+  description: A well crafted blue uniform made by expensive Nanotrasen machines.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
@@ -108,7 +108,7 @@
   parent: ClothingUniformBase
   id: ClothingSpaceCadetJumpsuitColorDarkBlue
   name: dark blue space cadet jumpsuit
-  description: A well crafted dark blue uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
+  description: A well crafted dark blue uniform made by expensive Nanotrasen machines.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
@@ -135,7 +135,7 @@
   parent: ClothingUniformBase
   id: ClothingSpaceCadetJumpsuitColorTeal
   name: teal space cadet jumpsuit
-  description: A well crafted teal uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
+  description: A well crafted teal uniform made by expensive Nanotrasen machines.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
@@ -162,7 +162,7 @@
   parent: ClothingUniformBase
   id: ClothingSpaceCadetJumpsuitColorGreen
   name: green space cadet jumpsuit
-  description: A well crafted green uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
+  description: A well crafted green uniform made by expensive Nanotrasen machines.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
@@ -189,7 +189,7 @@
   parent: ClothingUniformBase
   id: ClothingSpaceCadetJumpsuitColorDarkGreen
   name: dark green space cadet jumpsuit
-  description: A well crafted dark green uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
+  description: A well crafted dark green uniform made by expensive Nanotrasen machines.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
@@ -216,7 +216,7 @@
   parent: ClothingUniformBase
   id: ClothingSpaceCadetJumpsuitColorOrange
   name: orange space cadet jumpsuit
-  description: A well crafted orange uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
+  description: A well crafted orange uniform made by expensive Nanotrasen machines.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
@@ -243,7 +243,7 @@
   parent: ClothingUniformBase
   id: ClothingSpaceCadetJumpsuitColorPink
   name: pink space cadet jumpsuit
-  description: A well crafted pink uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
+  description: A well crafted pink uniform made by expensive Nanotrasen machines.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
@@ -270,7 +270,7 @@
   parent: ClothingUniformBase
   id: ClothingSpaceCadetJumpsuitColorRed
   name: red space cadet jumpsuit
-  description: A well crafted red uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
+  description: A well crafted red uniform made by expensive Nanotrasen machines.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
@@ -297,7 +297,7 @@
   parent: ClothingUniformBase
   id: ClothingSpaceCadetJumpsuitColorYellow
   name: yellow space cadet jumpsuit
-  description: A well crafted yellow uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
+  description: A well crafted yellow uniform made by expensive Nanotrasen machines.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
@@ -324,7 +324,7 @@
   parent: ClothingUniformBase
   id: ClothingSpaceCadetJumpsuitColorPurple
   name: purple space cadet jumpsuit
-  description: A well crafted purple uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
+  description: A well crafted purple uniform made by expensive Nanotrasen machines.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
@@ -351,7 +351,7 @@
   parent: ClothingUniformBase
   id: ClothingSpaceCadetJumpsuitColorLightBrown
   name: light brown space cadet jumpsuit
-  description: A well crafted light brown uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
+  description: A well crafted light brown uniform made by expensive Nanotrasen machines.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
@@ -378,7 +378,7 @@
   parent: ClothingUniformBase
   id: ClothingSpaceCadetJumpsuitColorBrown
   name: brown space cadet jumpsuit
-  description: A well crafted brown uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
+  description: A well crafted brown uniform made by expensive Nanotrasen machines.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
@@ -405,7 +405,7 @@
   parent: ClothingUniformBase
   id: ClothingSpaceCadetJumpsuitColorMaroon
   name: maroon space cadet jumpsuit
-  description: A well crafted maroon uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
+  description: A well crafted maroon uniform made by expensive Nanotrasen machines.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi

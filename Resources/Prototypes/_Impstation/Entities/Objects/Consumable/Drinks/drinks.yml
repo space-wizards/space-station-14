@@ -197,7 +197,7 @@
 - type: entity
   parent: DrinkGlass
   id: DrinkDontTellGlass
-  suffix: don't tell D sherrif
+  suffix: don't tell D sheriff
   components:
   - type: SolutionContainerManager
     solutions:
@@ -261,7 +261,7 @@
 - type: entity
   parent: DrinkGlass
   id: DrinkUAPGlass
-  suffix: uap
+  suffix: U.A.P.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -401,3 +401,17 @@
   - type: Icon
     sprite: _Impstation/Objects/Consumable/Drinks/clevergirl.rsi
     state: icon
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkTeapotEmpty
+  name: teapot
+  suffix: Empty
+  description: An elegant teapot. It simply oozes class.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/teapot.rsi

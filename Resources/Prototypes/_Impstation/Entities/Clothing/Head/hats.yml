@@ -5,9 +5,9 @@
   description: "A captain's cap with the so-called fifty mission crush, losing its structure from extended use. A prized symbol of veteran status. It bears a winged star on the front."
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/captaincrushercap.rsi
+    sprite: _Impstation/Clothing/Head/Hats/captaincrushercap.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/captaincrushercap.rsi
+    sprite: _Impstation/Clothing/Head/Hats/captaincrushercap.rsi
   - type: Tag
     tags:
     - ClothMade
@@ -16,6 +16,22 @@
     flavorKind: station-event-random-sentience-flavor-inanimate
     weight: 0.0002 # 5,000 times less likely than 1 regular animal
   - type: BlockMovement
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretCaptain
+  name: captain's beret
+  description: A regal blue beret with a commander's rank emblem. For captains that are more inclined towards style.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hats/beret_captain.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hats/beret_captain.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -136,3 +152,22 @@
     useDelay: 1
     itemIconStyle: BigItem
     event: !type:ToggleActionEvent
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCircusClown
+  name: circus clown hat
+  description: "Rumors suggest that the pointed end represents the narrowing path all clowns walk to their Last Laugh."
+  components:
+  - type: Icon
+    sprite: _Impstation/Clothing/Head/Hats/circusclownhat.rsi
+    state: "icon"
+  - type: Sprite
+    state: "icon"
+    sprite: _Impstation/Clothing/Head/Hats/circusclownhat.rsi
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.15" #this shit is so fiddly and i don't understand it at all
+    sprite: _Impstation/Clothing/Head/Hats/circusclownhat.rsi

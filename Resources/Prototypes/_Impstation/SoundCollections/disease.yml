@@ -8,6 +8,11 @@
   files:
     - /Audio/_Impstation/Voice/Slime/s_female_sneeze_1.ogg
 
+- type: soundCollection
+  id: UnisexSlimeSneezes
+  files:
+    - /Audio/_Impstation/Voice/Slime/s_male_sneeze_1.ogg
+    - /Audio/_Impstation/Voice/Slime/s_female_sneeze_1.ogg
 
 - type: soundCollection
   id: MaleSlimeCoughs
@@ -22,6 +27,14 @@
   - /Audio/_Impstation/Voice/Slime/s_female_cough_2.ogg
 
 - type: soundCollection
+  id: UnisexSlimeCoughs
+  files:
+  - /Audio/_Impstation/Voice/Slime/s_male_cough_1.ogg
+  - /Audio/_Impstation/Voice/Slime/s_male_cough_2.ogg
+  - /Audio/_Impstation/Voice/Slime/s_female_cough_1.ogg
+  - /Audio/_Impstation/Voice/Slime/s_female_cough_2.ogg
+
+- type: soundCollection
   id: MaleSlimeYawn
   files:
   - /Audio/_Impstation/Voice/Slime/s_male_yawn_1.ogg
@@ -29,6 +42,12 @@
 - type: soundCollection
   id: FemaleSlimeYawn
   files:
+  - /Audio/_Impstation/Voice/Slime/s_female_yawn_1.ogg
+
+- type: soundCollection
+  id: UnisexSlimeYawn
+  files:
+  - /Audio/_Impstation/Voice/Slime/s_male_yawn_1.ogg
   - /Audio/_Impstation/Voice/Slime/s_female_yawn_1.ogg
 
 - type: soundCollection

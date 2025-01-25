@@ -2,7 +2,7 @@
   id: CrateSecurityArmor
   parent: CrateSecgear
   name: armor crate
-  description: Three vests of well-rounded, decently-protective armor. Requires Security access to open.
+  description: Contains three bulletproof vests. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
@@ -24,7 +24,7 @@
   id: CrateSecurityNonlethal
   parent: CrateSecgear
   name: nonlethals crate
-  description: Disabler weapons. Requires Security access to open.
+  description: Contains a mix of disablers, stun batons, and flashes. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
@@ -69,7 +69,7 @@
   id: CrateSecurityBiosuit
   parent: CrateSecgear
   name: security bio suit crate
-  description: Contains 2 biohazard suits to ensure that no disease will distract you from your duties. Requires Security access to open.
+  description: Contains two biohazard suits to ensure that no disease will distract you from your duties. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
@@ -83,7 +83,7 @@
 - type: entity
   id: CrateSecurityTrackingMindshieldImplants
   name: implanter crate
-  description: Contains 4 MindShield implants and 4 tracking implant. Requires Security access to open.
+  description: Contains four Mindshield implants and four tracking implants. Requires Security access to open.
   parent: CrateSecgear
   components:
   - type: StorageFill

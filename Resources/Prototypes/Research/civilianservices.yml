@@ -15,6 +15,7 @@
   - SeedExtractorMachineCircuitboard
   - HydroponicsTrayMachineCircuitboard
   - ReagentGrinderIndustrialMachineCircuitboard
+  - PlantAnalyzer # Frontier
 
 - type: technology
   id: CritterMechs
@@ -53,6 +54,7 @@
   - SurveillanceCameraMonitorCircuitboard
   - SurveillanceWirelessCameraMonitorCircuitboard
   - TelecomServerCircuitboard
+  - HolopadMachineCircuitboard
 
 - type: technology
   id: AdvancedEntertainment
@@ -154,6 +156,7 @@
   recipeUnlocks:
   - AdvMopItem
   - MegaSprayBottle
+  - CleanerGrenade #imp addition
 
 - type: technology
   id: HONKMech
@@ -192,7 +195,7 @@
   id: BluespaceCargoTransport
   name: research-technology-bluespace-cargo-transport
   icon:
-    sprite: Structures/cargo_telepad.rsi
+    sprite: _Impstation/Structures/cargo_telepad.rsi
     state: display
   discipline: CivilianServices
   tier: 2

@@ -6,6 +6,7 @@
   physicalDesc: reagent-physical-desc-really-cruddy
   flavor: crud
   color: "#47181A"
+  contraband: Minor
   tileReactions:
   - !type:CreateEntityTileReaction
     entity: BrosSorbSpawner
@@ -73,7 +74,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 50
-          
+
 - type: reagent
   id: PropulsionGel
   name: reagent-name-propulsion-gel
@@ -95,17 +96,88 @@
   tileReactions:
     - !type:SpillTileReaction
 
-    # These two dont actually do anything, theyre just here for rp
+# Thui beego pu suggestion.
 - type: reagent
   id: Estradiol
   name: reagent-name-estradiol
+  group: Medicine # DeltaV
   desc: reagent-desc-estradiol
-  physicalDesc: reagent-physical-desc-clear
+  physicalDesc: reagent-physical-desc-hormonal # DeltaV
   color: "pink"
-  
+  boilingPoint: 1573.0 # DeltaV
+  meltingPoint: 446.5 # DeltaV
+  metabolisms: # DeltaV
+    Medicine:
+      metabolismRate: 0.02
+      effects:
+      - !type:GenericStatusEffect
+        key: Feminized
+        component: Feminized
+        type: Add
+        time: 2
+        refresh: false
+
 - type: reagent
   id: Testosterone
   name: reagent-name-testosterone
+  group: Medicine # DeltaV
   desc: reagent-desc-testosterone
-  physicalDesc: reagent-physical-desc-chalky
+  physicalDesc: reagent-physical-desc-hormonal # DeltaV
+  flavor: bitter # DeltaV
   color: "#267ef0"
+  boilingPoint: 1321.0 # DeltaV
+  meltingPoint: 424.1 # DeltaV
+  metabolisms: # DeltaV
+    Medicine:
+      metabolismRate: 0.02
+      effects:
+      - !type:GenericStatusEffect
+        key: Masculinized
+        component: Masculinized
+        type: Add
+        time: 2
+        refresh: false
+
+- type: reagent
+  id: Holium
+  # group: Special # The recipe is complicated enough that I think we shouldnt hide the recipe honestly
+  name: reagent-name-holium
+  desc: reagent-desc-holium
+  physicalDesc: reagent-physical-desc-threat
+  flavor: singulo
+  color: "#000000"
+  contraband: Major
+  tileReactions:
+  - !type:CreateEntityTileReaction
+    entity: FloorChasmEntity
+    maxOnTileWhitelist:
+      tags: [ FloorChasmEntity ]
+
+- type: reagent
+  id: Medium
+  name: reagent-name-medium
+  desc: reagent-desc-medium
+  physicalDesc: reagent-physical-desc-reflective
+  flavor: medium
+  color: "#DC89E0"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:Medium
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+
+- type: reagent
+  id: MouseBites
+  name: reagent-name-mouse-bites
+  desc: reagent-desc-mouse-bites
+  physicalDesc: reagent-physical-desc-rodent
+  flavor: rodent
+  color: "#C70039"
+  metabolisms:
+    Medicine:
+      effects:
+      # its just a weaker tranex with no od
+      - !type:ModifyBleedAmount
+        amount: -0.5

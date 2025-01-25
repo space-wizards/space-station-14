@@ -71,7 +71,7 @@ namespace Content.Server.Nuke
                     "paper_stamp-centcom",
                     new List<StampDisplayInfo>
                     {
-                        new StampDisplayInfo { StampedName = Loc.GetString("stamp-component-stamped-name-centcom"), StampedColor = Color.FromHex("#BB3232") },
+                        new StampDisplayInfo { StampedName = Loc.GetString("stamp-component-stamped-name-centcom"), StampedColor = Color.FromHex("#BB3232"), StampLargeIcon = "large_stamp-centcom" }, // imp edit
                     }
                 );
                 _faxSystem.Receive(faxEnt, printout, null, fax);

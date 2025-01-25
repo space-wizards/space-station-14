@@ -28,6 +28,12 @@ public sealed partial class PullerComponent : Component
     public float WalkSpeedModifier => Pulling == default ? 1.0f : 0.95f;
 
     public float SprintSpeedModifier => Pulling == default ? 1.0f : 0.95f;
+	
+    /// <summary>
+    /// whether or not to apply speed modifiers to the puller
+    /// </summary>
+	[AutoNetworkedField, DataField]
+	public bool ApplySpeedModifier = true;
 
     /// <summary>
     /// Entity currently being pulled if applicable.

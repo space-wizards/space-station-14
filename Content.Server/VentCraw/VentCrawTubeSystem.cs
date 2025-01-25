@@ -11,11 +11,14 @@ using Content.Shared.DoAfter;
 using Content.Shared.Movement.Systems;
 using Content.Shared.VentCraw;
 using Content.Shared.Verbs;
+using Content.Shared.Eye.Blinding.Systems;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Hands.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Content.Shared.Eye.Blinding.Systems;
+
 
 namespace Content.Server.VentCraw
 {
@@ -30,6 +33,7 @@ namespace Content.Server.VentCraw
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly SharedMoverController _mover = default!;
         [Dependency] private readonly BlindableSystem _blind = default!;
+        [Dependency] private readonly SharedHandsSystem _hands = default!;
 
         public override void Initialize()
         {
@@ -62,7 +66,7 @@ namespace Content.Server.VentCraw
             AlternativeVerb verb = new()
             {
                 Act = () => TryEnter(uid, args.User, ventCrawlerComponent),
-                Text = Loc.GetString("comp-climbable-verb-climb")
+                Text = Loc.GetString("comp-crawlable-verb-enter-vent")
             };
             args.Verbs.Add(verb);
         }
@@ -86,6 +90,13 @@ namespace Content.Server.VentCraw
                     _popup.PopupEntity(Loc.GetString("entity-storage-component-welded-shut-message"), user);
                     return;
                 }
+            }
+
+            // Check if they have any items in their hands that they can drop
+            if (TryComp<HandsComponent>(user, out var hands) && _hands.CountFreeableHands((user, hands)) != hands.CountFreeHands())
+            {
+                _popup.PopupEntity(Loc.GetString("vent-entry-denied-held-items"), user);
+                return;
             }
 
             var args = new DoAfterArgs(EntityManager, user, crawler.EnterDelay, new EnterVentDoAfterEvent(), user, uid, user)

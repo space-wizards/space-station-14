@@ -9,6 +9,8 @@
     state: icon_alt
   - type: Clothing
     equippedPrefix: alt
+  - type: StealTarget #imp
+    stealGroup: CommandHeadset # catches the freelancer and syndicate over ear headsets but this is funny so idc
 
 - type: entity
   parent: ClothingHeadsetAlt
@@ -86,8 +88,6 @@
     sprite: Clothing/Ears/Headsets/medical.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/medical.rsi
-  - type: StealTarget
-    stealGroup: ClothingHeadsetAltMedical
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseCommandContraband]
@@ -122,7 +122,7 @@
     sprite: Clothing/Ears/Headsets/science.rsi
 
 - type: entity
-  parent: [ClothingHeadsetAlt, BaseSyndicateContraband]
+  parent: [ClothingHeadsetAlt, Tier2Contraband]
   id: ClothingHeadsetAltSyndicate
   name: blood-red over-ear headset
   description: An updated, modular syndicate intercom that fits over the head and takes encryption keys (there are 5 key slots.).

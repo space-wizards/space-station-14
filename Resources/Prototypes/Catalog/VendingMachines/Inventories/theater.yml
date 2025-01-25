@@ -6,6 +6,14 @@
     ClothingHeadHatJesterAlt: 1
     ClothingUniformJumpsuitJesterAlt: 1
     ClothingShoesJester: 2
+    ClothingHeadHatCircusClown: 1 #imp
+    ClothingMaskClownNose: 3 #imp
+    ClothingNeckRuffle: 2 #imp
+    ClothingUniformCircusClown: 1 #imp
+    ClothingShoesCircus: 2 #imp
+    ClothingUniformJokester: 1 #imp
+    ClothingOuterCoatJokester: 1 #imp
+    ClothingShoesJokester: 2 #imp
     ClothingOuterWinterClown: 1
     ClothingOuterWinterMime: 1
     ClothingOuterWinterMusician: 1
@@ -22,6 +30,8 @@
     ClothingHeadHatSkub: 2
     ClothingOuterSkub: 2
     ClothingHeadHatBeretFrench: 2
+    ClothingUniformMrSpaceWide: 2 #imp
+    ClothingUniformMrSpaceWideSkirt: 2 #imp
     ClothingOuterSuitChicken: 2
     ClothingHeadHatChickenhead: 2
     ClothingOuterSuitMonkey: 2
@@ -63,6 +73,10 @@
     ClothingShoesSlippers: 1
     ClothingShoesTourist: 1
     ClothingShoesWizard: 1
+    ClothingUniformHitmanSuit: 1 #imp
+    ClothingUniformHitmanSuitSkirt: 1 #imp
+    ClothingUniformBrosBlazer: 1 #imp
+    ClothingUniformBrosBlazerSkirt: 1 #imp
   emaggedInventory:
     ClothingShoesBling: 1
     ClothingShoesBootsCowboyFancy: 1

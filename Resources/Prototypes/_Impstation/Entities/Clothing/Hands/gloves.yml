@@ -1,0 +1,47 @@
+- type: entity
+  parent: [ClothingHandsInedibleBase, BaseCommandContraband]
+  id: ClothingHandsGlovesCaptainflightgloves
+  name: flight gloves
+  description: "Regal black leather gloves with gold trim, insulated from electricity. So comfortable you forget you're wearing them."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Hands/Gloves/captainflightgloves.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Hands/Gloves/captainflightgloves.rsi
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-regal-black
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsGlovesSpaceNinja
+  id: ClothingHandsGlovesSpaceNinjaWeak
+  suffix: weak stun
+  components:
+  - type: NinjaGloves
+    abilities:
+    - components:
+      - type: BatteryDrainer
+      - type: StunProvider
+        stunTime: 3
+        cooldown: 30
+        stunCharge: 180
+        noPowerPopup: ninja-no-power
+        whitelist:
+          components:
+          - Stamina
+      - type: EmagProvider
+        whitelist:
+          components:
+          - Airlock
+    - objective: StealResearchObjective
+      components:
+      - type: ResearchStealer
+    - objective: TerrorObjective
+      components:
+      - type: CommsHacker
+        threats: NinjaThreats
+    - objective: MassArrestObjective
+      components:
+      - type: CriminalRecordsHacker

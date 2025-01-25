@@ -25,14 +25,15 @@
   id: UnknownShuttlesFreelanceTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
-    - !type:NestedSelector # DeltaV
-      tableId: UnknownShuttlesFreelanceTableDeltaV
+    - !type:NestedSelector # DV
+      tableId: UnknownShuttlesFreelanceTableDV
     - id: UnknownShuttleSyndieEvacPod
 
 - type: entityTable
   id: UnknownShuttlesHostileTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
+    - id: UnknownShuttleManOWar
     - id: UnknownShuttleInstigator
 
 # Shuttle Game Rules
@@ -200,6 +201,17 @@
     startAnnouncement: true #!!
   - type: LoadMapRule
     preloadedGrid: Lambordeere
+
+- type: entity
+  id: UnknownShuttleManOWar
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: true
+    weight: 1 # lower because antags
+    earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly. (4) & antags
+  - type: LoadMapRule
+    preloadedGrid: ManOWar
 
 - type: entity
   id: UnknownShuttleMeatZone

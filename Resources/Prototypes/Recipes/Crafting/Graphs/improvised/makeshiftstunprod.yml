@@ -13,12 +13,13 @@
               icon:
                 sprite: Objects/Power/power_cells.rsi
                 state: small
-            - tag: Handcuffs
+            - tag: Cablecuffs
+              name: makeshift handcuffs
               icon:
                 sprite: Objects/Misc/cablecuffs.rsi
                 state: cuff
-                color: red
-              name: cuffs
+                color: forestgreen
+              doAfter: 1
             - tag: Igniter
               name: igniter
               icon:
@@ -27,4 +28,4 @@
               doAfter: 15
     - node: msstunprod
       entity: Stunprod
-      
+

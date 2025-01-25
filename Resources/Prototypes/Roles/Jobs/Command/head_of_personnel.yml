@@ -13,6 +13,12 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 36000 # 10 hrs
+    - !type:DepartmentTimeRequirement #imp
+      department: Cargo
+      time: 36000 # 10 hrs
+    - !type:DepartmentTimeRequirement #imp
+      department: Science
+      time: 36000 # 10 hrs
     - !type:DepartmentTimeRequirement
       department: Command
       time: 36000 # 10 hours

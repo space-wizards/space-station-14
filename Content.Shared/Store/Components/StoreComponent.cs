@@ -111,6 +111,19 @@ public readonly record struct StoreAddedEvent;
 /// </summary>
 [ByRefEvent]
 public readonly record struct StoreRemovedEvent;
+/// <summary>
+/// Event that is broadcast when a store is refunded
+/// </summary>
+[ByRefEvent]
+public readonly struct StoreRefundedEvent
+{
+    public EntityUid Uid { get; }
+
+    public StoreRefundedEvent(EntityUid uid)
+    {
+        Uid = uid;
+    }
+}
 
 /// <summary>
 ///     Broadcast when an Entity with the <see cref="StoreRefundComponent"/> is deleted

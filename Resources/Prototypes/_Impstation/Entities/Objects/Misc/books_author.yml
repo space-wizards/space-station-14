@@ -75,7 +75,7 @@
 - type: entity
   parent: BookBase
   id: BookKeelBayWorn
-  name: Keel-Ree's Guide to Medical
+  name: Keel-Ree's guide to medical
   description: This copy seems less than pristine, the margins are filled with illegible notes and some diagrams depicting medibot placements have been scratched out entirely.
   components:
   - type: Sprite
@@ -94,7 +94,7 @@
 - type: entity
   parent: BookBase
   id: BookKeelBay
-  name: Keel-Ree's Guide to Medical
+  name: Keel-Ree's guide to medical
   description: This copy seems to be in pristine condition, lovingly cared for. There are little heart symbols etched into the spine and it smells faintly like a bakery.
   components:
   - type: Sprite
@@ -135,3 +135,16 @@
     - state: tenebraeconspiracybook
   - type: Paper
     content: book-text-tenebraeconspiracy
+
+- type: entity
+  parent: BookBase
+  id: BookSMForDummies
+  name: the supermatter for dummies
+  description: A brand new book, with a holographic cover.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/book.rsi
+    layers:
+    - state: smfordummies
+  - type: Paper
+    content: book-text-smfordummies

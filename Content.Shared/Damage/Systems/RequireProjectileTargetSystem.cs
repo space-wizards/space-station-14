@@ -28,12 +28,21 @@ public sealed class RequireProjectileTargetSystem : EntitySystem
             return;
 
         var other = args.OtherEntity;
-        if (TryComp(other, out ProjectileComponent? projectile) &&
-            CompOrNull<TargetedProjectileComponent>(other)?.Target != ent)
+
+        if (TryComp(other, out TargetedProjectileComponent? targeted) &&
+            (targeted.Target == null || targeted.Target == ent))
+            return;
+
+        if (TryComp(other, out ProjectileComponent? projectile))
         {
             // Prevents shooting out of while inside of crates
             var shooter = projectile.Shooter;
             if (!shooter.HasValue)
+                return;
+
+            // ProjectileGrenades delete the entity that's shooting the projectile,
+            // so it's impossible to check if the entity is in a container
+            if (TerminatingOrDeleted(shooter.Value))
                 return;
 
             // Goobstation - Crawling

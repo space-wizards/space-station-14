@@ -6,6 +6,7 @@
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
   - type: VentCrawler
+    enterDelay: 3
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/slimes.rsi
@@ -234,8 +235,7 @@
         types:
           Blunt: 6
           Structural: 4
-          Caustic: 1
-          Cellular: 3
+          Caustic: 4
 
 - type: entity
   name: yellow slime

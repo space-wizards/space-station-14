@@ -135,3 +135,5 @@
       whitelist:
         components:
         - SecretStash
+    - type: StealTarget #imp
+      stealGroup: PositronicBrains

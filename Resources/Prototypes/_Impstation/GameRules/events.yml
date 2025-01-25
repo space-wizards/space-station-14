@@ -1,3 +1,16 @@
+- type: entityTable
+  id: LowpopAntagEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - !type:NestedSelector # DV
+      tableId: BasicAntagEventsTableDV
+    - id: ClosetSkeleton
+    - id: DragonSpawn
+    - id: KingRatMigration
+    - id: NinjaSpawn
+    - id: RevenantSpawn
+    - id: GoblinStowawaysEvent # imp
+
 - type: entity
   id: ChangelingAwakening
   parent: BaseGameRule

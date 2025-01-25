@@ -1,5 +1,5 @@
 - type: entity
-  name: P.V.C
+  name: P.V.C.
   parent: BaseSword
   id: PVC
   description: Percision Velocity Channeler.
@@ -13,6 +13,7 @@
         Structural: 10
     soundHit:
         path: /Audio/_Impstation/Weapons/pvc.ogg
+  - type: DamageOtherOnHit
   - type: MeleeThrowOnHit
     unanchorOnHit: False
     enabled: true

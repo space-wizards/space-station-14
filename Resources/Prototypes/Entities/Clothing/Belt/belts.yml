@@ -337,7 +337,7 @@
   - type: Storage
     whitelist:
       tags:
-        # - PlantAnalyzer
+        - PlantAnalyzer # Oh hey it was already there I just had to uncomment it. NF addition.
         - PlantSampleTaker
         - BotanyShovel
         - BotanyHoe
@@ -459,7 +459,7 @@
   - type: Appearance
 
 - type: entity
-  parent: [ClothingBeltStorageBase, BaseRestrictedContraband]
+  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseRestrictedContraband]
   id: ClothingBeltSecurity
   name: security belt
   description: Can hold security gear like handcuffs and flashes.
@@ -468,6 +468,8 @@
     sprite: Clothing/Belt/security.rsi
   - type: Clothing
     sprite: Clothing/Belt/security.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
   - type: Storage
     whitelist:
       tags:
@@ -591,7 +593,7 @@
     - 0,0,3,1
 
 - type: entity
-  parent: [ClothingBeltStorageBase, BaseSyndicateContraband]
+  parent: [ClothingBeltStorageBase, Tier1Contraband]
   id: ClothingBeltSyndieHolster
   name: syndicate shoulder holster
   description: A deep shoulder holster capable of holding many types of ballistics.
@@ -646,7 +648,7 @@
     sprite: Clothing/Belt/salvagewebbing.rsi
 
 - type: entity
-  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseSyndicateContraband]
+  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, Tier3Contraband]
   id: ClothingBeltMilitaryWebbing
   name: chest rig
   description: A set of tactical webbing worn by Syndicate boarding parties.
@@ -682,6 +684,7 @@
   - type: Tag
     tags:
     - MimeBelt
+    - MimeBeltRed # Imp
   - type: Sprite
     sprite: Clothing/Belt/suspenders_red.rsi
     state: icon
@@ -690,14 +693,21 @@
     quickEquip: true
 
 - type: entity
-  parent: ClothingBeltSuspendersRed
+  parent: ClothingBeltBase # Imp edit to make it not inherit tag MimeBeltRed
   id: ClothingBeltSuspendersBlack
   name: black suspenders
+  description: For holding your pants up. # Imp start
   components:
+  - type: Tag
+    tags:
+    - MimeBelt
+    - MimeBeltBlack
   - type: Sprite
     sprite: Clothing/Belt/suspenders_black.rsi
+    state: icon
   - type: Clothing
     sprite: Clothing/Belt/suspenders_black.rsi
+    quickEquip: true # Imp end
 
 - type: entity
   parent: ClothingBeltStorageBase

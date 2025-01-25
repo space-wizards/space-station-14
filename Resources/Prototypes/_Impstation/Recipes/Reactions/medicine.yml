@@ -1,0 +1,9 @@
+- type: reaction
+  id: AquamDivinos
+  reactants:
+    Holywater:
+      amount: 1
+    Silver:
+      amount: 1
+  products:
+    AquamDivinos: 1

@@ -1,4 +1,5 @@
 using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs;
 
 namespace Content.Shared.Changeling;
@@ -15,7 +16,7 @@ public sealed partial class AbsorbedSystem : EntitySystem
 
     private void OnExamine(Entity<AbsorbedComponent> ent, ref ExaminedEvent args)
     {
-        args.PushMarkup(Loc.GetString("changeling-absorb-onexamine"));
+        args.PushMarkup(Loc.GetString("changeling-absorb-onexamine", ("target", Identity.Entity(ent, EntityManager))));
     }
 
     private void OnMobStateChange(Entity<AbsorbedComponent> ent, ref MobStateChangedEvent args)

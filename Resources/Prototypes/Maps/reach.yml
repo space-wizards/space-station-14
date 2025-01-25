@@ -1,9 +1,9 @@
 - type: gameMap
   id: Reach
   mapName: 'Reach'
-  mapPath: /Maps/reach.yml
+  mapPath: /Maps/_Impstation/reach.yml
   minPlayers: 0
-  maxPlayers: 15
+  maxPlayers: 7
   stations:
     Reach:
       stationProto: StandardNanotrasenStation
@@ -20,17 +20,22 @@
             Captain: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
             SecurityOfficer: [ 1, 3 ]
+            SecurityCadet: [ 1, 1 ]
             CargoTechnician: [ 1, 1 ]
+            Courier: [ 1, 1 ]
             SalvageSpecialist: [ 1, 1 ]
             Bartender: [ 1, 1 ]
             Botanist: [ 1, 1 ]
             Chef: [ 1, 1 ]
             MedicalDoctor: [ 1, 2 ]
+            MedicalIntern: [ 1, 1 ]
             Chemist: [ 1, 1 ]
             Janitor: [ 1, 1 ]
             Musician: [ 1, 1 ]
             AtmosphericTechnician: [ 1, 1 ]
             StationEngineer: [ 1, 2 ]
+            TechnicalAssistant: [ 1, 1 ]
             Scientist: [ 1, 1 ]
+            ResearchAssistant: [ 1, 1 ]
             Passenger: [ -1, -1 ]
 

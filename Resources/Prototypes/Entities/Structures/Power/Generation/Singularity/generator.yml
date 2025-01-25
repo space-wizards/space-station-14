@@ -33,4 +33,6 @@
   - type: Pullable
   - type: GuideHelp
     guides: [ Singularity, Power ]
+  - type: StealTarget #imp
+    stealGroup: Generator
 

@@ -1,29 +1,84 @@
+#this is technically a throwable now but it will absolutely not work as anything other than a bullet shot from a gun
 - type: entity
   id: BulletGrenadeCleaner
   name: cleaner grenade
-  parent: BaseBulletTrigger
   categories: [ HideSpawnMenu ]
   components:
+  - type: CollisionWake
+  - type: Physics
+    bodyType: Dynamic
+    fixedRotation: false
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Projectiles/cleanmine.rsi
     layers:
-      - state: frag
-  - type: SoundOnTrigger
-    sound: /Audio/Items/smoke_grenade_smoke.ogg
+      - state: cleanmine
+    noRot: true
   - type: SmokeOnTrigger
-    duration: 15
-    spreadAmount: 50
+    duration: 5
+    spreadAmount: 7
     smokePrototype: Foam
     solution:
       reagents:
       - ReagentId: SpaceCleaner
-        Quantity: 30
+        Quantity: 50
+  - type: EmitSmokeOnDespawn
+    duration: 7
+    spreadAmount: 20
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: SpaceCleaner
+        Quantity: 50
+  - type: EmitSmokePeriodically
+    duration: 7
+    spreadAmount: 1
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: SpaceCleaner
+        Quantity: 50
   - type: Ammo
     muzzleFlash: null
   - type: PointLight
     radius: 3.5
     color: blue
     energy: 0.5
+  - type: TileFrictionModifier
+    modifier: 0.01
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.15 #I am going to become the joker why does the game not error out if there's a fucking typo in a field name in a component come the fuck on
+        density: 10
+        mask:
+        - ItemMask
+        restitution: 1.0  # 100% bouncy
+        friction: 0.1
+  - type: TimedDespawn
+    lifetime: 7
+  - type: TriggerOnCollide
+    fixtureID: fix1
+  - type: EmitSoundOnCollide
+    sound:
+      collection: WeakHit
+  - type: EmitSoundOnSpawn
+    sound: /Audio/Items/smoke_grenade_smoke.ogg
+  - type: ProjectileSpeedOverride
+    speedOverride: 17
+
+    #potential todos
+    #restore old cleanade projectile?
+      #make this a new flavour of cleanade in general?
+      #something something clean-puck?
+      #that might need a shit ton of wierd extra code though
+      #stuff like an EnableTriggers comp / event
+      #or triggerOnThrown?
+      #would be wierd either way
+      #will want to look into it eventually though
+    #add projectile speed to ammo protos instead of the gun
+      #will do in a PR to upstream
 
 - type: entity #BaseBullet isnt declared globally I guess? if its not here then the game doesnt build bc it cant find the parent for bullets in this file.
   id: ImpstationBaseBullet
@@ -133,3 +188,83 @@
     damage:
       types:
         Heat: 15
+
+- type: entity
+  name: godly laser bolt
+  id: BulletLaserGold
+  parent: ImpstationBaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Reflective
+    reflective:
+    - Energy
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Projectiles/goldzipper.rsi
+    layers:
+    - state: goldlaser
+      shader: unshaded
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: *flybyfixture
+  - type: Ammo
+  - type: Projectile
+    impactEffect: GZipImpactEffect
+    damage:
+      types:
+        Blunt: 200
+        Piercing: 200
+        Heat: 200
+        Shock: 200
+        Radiation: 200
+    ignoreResistances: true
+    soundHit:
+      path: "/Audio/_Impstation/Weapons/Guns/Hits/gamemaker-explosion.ogg"
+    forceSound: true
+  - type: PointLight
+    radius: 1.2
+    energy: 1.34
+    castShadows: false
+    color: "#9b68ff"
+
+- type: entity
+  name : ungodly laser bolt
+  id: BulletLaserFGold
+  parent: BulletLaserGold
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Heat: 1
+
+- type: entity
+  parent: GrapplingHook
+  id: GrapplingHookImprovised
+  name: grappling plunger
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: EmbeddableProjectile
+      deleteOnRemove: true
+      sound:
+        path: /Audio/Weapons/pop.ogg
+        params:
+          volume: 4
+    - type: Sprite
+      noRot: false
+      sprite: _Impstation/Objects/Weapons/Guns/Launchers/grappling_gun_improvised.rsi
+      layers:
+        - state: hook

@@ -1,0 +1,49 @@
+{
+    "version": 1,
+    "copyright": "Sprited for impstation by kipdotnet(github)",
+    "license": "CC-BY-SA-4.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "defaultAntennae",
+            "directions": 4
+        },
+        {
+            "name": "antennaeSad",
+            "directions": 4
+        },
+        {
+            "name": "antennaeForward",
+            "directions": 4
+        },
+        {
+            "name": "antennaeDroopy",
+            "directions": 4
+        },
+        {
+            "name": "apidWingsDefault",
+            "directions": 4,
+            "delays": [
+                [
+                  0.11,
+                  0.11
+                ],
+                [
+                  0.11,
+                  0.11
+                ],
+                [
+                  0.11,
+                  0.11
+                ],
+                [
+                  0.11,
+                  0.11
+                ]
+            ]
+        }
+    ]
+}

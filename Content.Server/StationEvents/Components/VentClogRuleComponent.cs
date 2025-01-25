@@ -19,6 +19,15 @@ public sealed partial class VentClogRuleComponent : Component
     };
 
     /// <summary>
+    /// Blacklist for chemicals that should never be available from vent clog.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<ReagentPrototype>))]
+    public IReadOnlyList<string> BlacklistedVentChemicals = new[]
+    {
+        "Holium", "PhilosophersJuice"
+    };
+
+    /// <summary>
     /// Sound played when foam is being created.
     /// </summary>
     [DataField]

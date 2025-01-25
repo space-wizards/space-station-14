@@ -1,10 +1,11 @@
 - type: entity
   name: BROS
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: [ MobCombat, SimpleMobBase ]
   id: MobBros
   description: OH FUCK IT'S BROS
   components:
     - type: VentCrawler
+      enterDelay: 1
     - type: Item
       size: Tiny
     - type: Sprite
@@ -95,6 +96,7 @@
       tags:
       - BROS
       - Trash
+      - MultitoolDefibrillatorTarget
     - type: FoodSequenceElement
       entries:
         Burger: BrosBurger
@@ -138,6 +140,8 @@
   parent: MobRaccoon
   id: MobRaccoonGhost
   components:
+  - type: VentCrawler
+    enterDelay: 3
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -163,6 +167,8 @@
   parent: MobPossum
   id: MobPossumGhost
   components:
+  - type: VentCrawler
+    enterDelay: 3
   - type: GhostRole
     makeSentient: true
     allowSpeech: true

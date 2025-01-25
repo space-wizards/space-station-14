@@ -11,4 +11,9 @@
   femaleFirstNames: DwarfFirst
   middleNames: DwarfMiddle
   lastNames: DwarfLast
-  naming: FirstMiddleLast
+  naming: FirstMiddleLast  
+  sexes:
+  - Male
+  - Female
+  - Unsexed
+

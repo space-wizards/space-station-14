@@ -62,9 +62,10 @@
   suffix: goblin castaway
   parent: MarkerBase
   components:
+  - type: Item
   - type: GhostRole
     name: ghost-role-information-goblin-castaway-name
-    description: ghost-role-information-goblin-stowaway-description
+    description: ghost-role-information-goblin-castaway-description
     rules: ghost-role-information-nonantagonist-freeagent-goblin-stowaway
     raffle:
       settings: default
@@ -79,11 +80,31 @@
 
 - type: entity
   id: CrateFullOGoblins
-  parent: CratePlastic
+  parent: CrateBaseSecure
   name: goblin banishment crate
-  description: The most severe punishment. 
+  description: The most severe punishment known to gobkind. Sealed by a wizard's curse. Occasionally releases goblins, once they have served their sentence.
   components:
   - type: StorageFill
     contents:
       - id: SpawnPointGhostGoblinCastaway
         amount: 10
+  - type: AccessReader
+    access: [[Wizard]]
+    breakOnEmag: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+         path: "/Audio/_NF/Voice/Goblin/goblin-cackle-05.ogg"
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SpawnPointGhostGoblinCastaway:
+            min: 20
+            max: 20
+        offset: 0

@@ -11,6 +11,7 @@
     - id: CargoShuttleConsoleCircuitboard
     - id: SalvageMagnetMachineCircuitboard
     - id: ShipyardComputerCircuitboard
+    - id: SalvageExpeditionsComputerCircuitboard
     - id: CigPackGreen
       prob: 0.50
     - id: ClothingHeadsetAltCargo
@@ -19,6 +20,7 @@
     - id: RubberStampDenied
     - id: RubberStampQm
     - id: AstroNavCartridge
+    - id: StockTradingCartridge # Delta-V
 
 - type: entity
   id: LockerQuarterMasterFilled
@@ -332,8 +334,10 @@
     - id: SecurityTechFabCircuitboard
     - id: WeaponDisabler
     - id: WantedListCartridge
-    - id: ClothingNeckBronzeheart
+    - id: ClothingNeckBronzeheart #imp
     - id: TicketPad #imp special
+    - id: BaseSeclinkRadio #imp
+    - id: PillCanisterHOS #imp
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable

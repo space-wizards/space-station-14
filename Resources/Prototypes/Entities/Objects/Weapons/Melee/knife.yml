@@ -27,6 +27,13 @@
       - Slicing
     useSound:
       path: /Audio/Items/Culinary/chop.ogg
+  # imp edits #
+  - type: DamageOtherOnHit
+    staminaCost: 5
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: EmbedPassiveDamage
+  # end imp edits #
 
 - type: entity
   name: kitchen knife
@@ -47,6 +54,8 @@
     guides:
     - Chef
     - FoodRecipes
+  - type: ThrowingAngle # imp
+    angle: 225
 
 - type: entity
   name: butcher's cleaver
@@ -74,6 +83,12 @@
     guides:
     - Chef
     - FoodRecipes
+  # imp edits #
+  - type: DamageOtherOnHit
+    staminaCost: 7.5
+  - type: ThrowingAngle
+    angle: 315
+  # end imp edits #
 
 - type: entity
   name: combat knife
@@ -94,8 +109,6 @@
     damage:
       types:
         Slash: 12
-  - type: EmbeddableProjectile
-    sound: /Audio/Weapons/star_hit.ogg
   - type: LandAtCursor
   - type: DamageOtherOnHit
     damage:
@@ -108,6 +121,8 @@
       sprite: Objects/Weapons/Melee/combat_knife.rsi
   - type: DisarmMalus
     malus: 0.225
+  - type: ThrowingAngle
+    angle: 225
 
 - type: entity
   name: survival knife
@@ -123,10 +138,12 @@
     storedSprite:
       state: storage
       sprite: Objects/Weapons/Melee/survival_knife.rsi
+  - type: ThrowingAngle # imp
+    angle: 225
 
 - type: entity
   name: kukri knife
-  parent: [CombatKnife, BaseMinorContraband]
+  parent: [CombatKnife, BaseSecurityCargoContraband]
   id: KukriKnife
   description: Professionals have standards. Be polite. Be efficient. Have a plan to kill everyone you meet.
   components:
@@ -140,6 +157,9 @@
         Slash: 15
   - type: Item
     sprite: Objects/Weapons/Melee/kukri_knife.rsi
+    storedSprite: null
+  - type: ThrowingAngle # imp
+    angle: 225
 
 - type: entity
   parent: ClothingHeadHatGreyFlatcap
@@ -157,15 +177,17 @@
     damage:
       types:
         Slash: 5
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Slash: 10
   - type: LandAtCursor
   - type: Sprite
     sprite: Clothing/Head/Hats/greyflatcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/greyflatcap.rsi
+  # imp edits #
+  - type: DamageOtherOnHit
+    staminaCost: 5
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  # end imp edits #
 
 - type: entity
   parent: BladedFlatcapGrey
@@ -206,6 +228,8 @@
     sprite: Objects/Weapons/Melee/shiv.rsi
   - type: DisarmMalus
     malus: 0.225
+  - type: ThrowingAngle # imp
+    angle: 200
 
 - type: entity
   name: reinforced shiv
@@ -267,7 +291,7 @@
 
 - type: entity
   name: throwing knife
-  parent: [BaseKnife, BaseSyndicateContraband]
+  parent: [BaseKnife, Tier3Contraband]
   id: ThrowingKnife
   description: This blood-red knife is very aerodynamic and easy to throw, but good luck trying to fight someone hand-to-hand.
   components:
@@ -284,8 +308,6 @@
     damage:
       types:
         Slash: 5
-  - type: EmbeddableProjectile
-    sound: /Audio/Weapons/star_hit.ogg
   - type: LandAtCursor
   - type: DamageOtherOnHit
     ignoreResistances: true
@@ -295,3 +317,5 @@
         Piercing: 15
   - type: Item
     sprite: Objects/Weapons/Melee/throwing_knife.rsi
+  - type: ThrowingAngle
+    angle: 225

@@ -4,7 +4,7 @@ using Content.Shared.Announcements.Prototypes;
 using Content.Shared.Announcements.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
-using Content.Shared._EinsteinEngine.CCVar;
+using Content.Shared._EinsteinEngines.CCVar;
 
 namespace Content.Server.Announcements.Systems;
 

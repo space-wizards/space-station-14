@@ -1,8 +1,8 @@
 - type: gameMap
   id: Oasis
   mapName: 'Oasis'
-  mapPath: /Maps/oasis.yml
-  minPlayers: 70
+  mapPath: /Maps/_Impstation/oasis.yml
+  minPlayers: 60
   stations:
     Oasis:
       stationProto: StandardNanotrasenStation
@@ -58,6 +58,7 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 4, 4 ]
+            Courier: [ 3, 3 ] #Imp
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]

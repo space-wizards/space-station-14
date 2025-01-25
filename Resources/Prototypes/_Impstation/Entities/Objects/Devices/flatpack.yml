@@ -14,6 +14,7 @@
     - state: icon-default
 
 - type: entity
+  parent: BaseFlatpack
   id: ChemMasterFlatpack
   name: ChemMaster 4000 flatpack
   description: A flatpack used for constructing a ChemMaster 4000.

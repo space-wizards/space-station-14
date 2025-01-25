@@ -3,6 +3,12 @@
   id: BeltUtility
 
 - type: Tag
+  id: BorgModuleTckTck
+
+- type: Tag
+  id: Cablecuffs
+
+- type: Tag
   id: CartridgeLPistol
 
 - type: Tag
@@ -15,19 +21,58 @@
   id: ConversionKitHB
 
 - type: Tag
+  id: DecapoidClaw
+
+- type: Tag
+  id: DecapoidGenericTag
+
+- type: Tag
+  id: DionaMinded
+
+- type: Tag
+  id: FloorChasmEntity
+
+- type: Tag
+  id: Gastropod
+
+- type: Tag
+  id: HolyArrow
+
+- type: Tag
+  id: MagazineBR
+
+- type: Tag
+  id: MagazineDMR
+
+- type: Tag
   id: MagazineLPistol
 
 - type: Tag
   id: MagazineZipper
 
 - type: Tag
-  id: HolyArrow
+  id: MimeBeltBlack
+
+- type: Tag
+  id: MimeBeltRed
+
+- type: Tag
+  id: MultitoolDefibrillatorTarget
 
 - type: Tag
   id: NullRod
 
 - type: Tag
+  id: OreBag
+
+- type: Tag
+  id: RubberStamp
+
+- type: Tag
   id: SecTicket
+
+- type: Tag
+  id: SGD
 
 - type: Tag
   id: ShellShotgunBeanbag
@@ -48,7 +93,4 @@
   id: WeaponSurvivalRifleUpgradeSMGKit
 
 - type: Tag
-  id: DionaMinded
-
-- type: Tag
-  id: SGD
+  id: EvidenceMarker

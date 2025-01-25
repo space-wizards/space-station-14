@@ -22,6 +22,7 @@
         gills: OrganDecapoidLungs
         liver: OrganHumanLiver
         kidneys: OrganHumanKidneys
+        stomach: OrganHumanStomach
     right_arm:
       part: RightArmDecapoid
       connections:

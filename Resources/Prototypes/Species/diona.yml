@@ -12,6 +12,10 @@
   femaleFirstNames: DionaFirst
   lastNames: DionaLast
   naming: TheFirstofLast
+  sexes:
+  - Male
+  - Female
+  - Unsexed
 
 - type: speciesBaseSprites
   id: MobDionaSprites

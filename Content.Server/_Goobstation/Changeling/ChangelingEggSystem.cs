@@ -42,15 +42,15 @@ public sealed partial class ChangelingEggSystem : EntitySystem
         }
 
         var newUid = Spawn("MobMonkey", Transform(uid).Coordinates);
-        
+
         var mind = EnsureComp<MindComponent>(newUid);
         _mind.TransferTo(comp.lingMind, newUid);
 
         var ling = EnsureComp<ChangelingComponent>(newUid);
         ling = comp.lingComp;
-        
+
         EntityManager.AddComponent(newUid, comp.lingStore);
 
-        _bodySystem.GibBody((EntityUid) uid);
+        _bodySystem.GibBody((EntityUid)uid);
     }
 }

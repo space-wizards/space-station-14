@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Doll and incision tattoos by Sha-Seng (Github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "l_arm_doll",
+      "directions": 4
+    },
+    {
+      "name": "r_arm_doll",
+      "directions": 4
+    },
+    {
+      "name": "l_hand_doll",
+      "directions": 4
+    },
+    {
+      "name": "r_hand_doll",
+      "directions": 4
+    },
+    {
+      "name": "l_leg_doll",
+      "directions": 4
+    },
+    {
+      "name": "r_leg_doll",
+      "directions": 4
+    },
+    {
+      "name": "l_foot_doll",
+      "directions": 4
+    },
+    {
+      "name": "r_foot_doll",
+      "directions": 4
+    },
+    {
+      "name": "chest_cuthere",
+      "directions": 4
+    }
+  ]
+}

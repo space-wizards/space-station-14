@@ -2,7 +2,7 @@
   id: CrateSecurityShotgunNonlethal
   parent: CrateSecgear
   name: nonlethal shotgun crate
-  description: For when the station is being a bit too rowdy. Contains two Stun Kammerer shotguns with extra ammunition. Requires Security access to open.
+  description: For when the station is being a bit too rowdy. Contains two stun Kammerer shotguns with extra ammunition. Requires Security access to open.
   components:
   - type: StorageFill
     contents:

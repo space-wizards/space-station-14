@@ -1,0 +1,25 @@
+- type: entity
+  name: Atmos Fix Water Vapor Marker
+  id: AtmosFixWaterVaporMarker
+  description: "Water vapor @ gas miner pressure, T20C"
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - sprite: Markers/atmos.rsi # {
+          state: base
+          shader: unshaded
+        - sprite: Markers/atmos.rsi
+          shader: unshaded # }
+          state: watervapour
+    - type: AtmosFixMarker
+      mode: 8
+
+- type: entity
+  parent: AtmosFixWaterVaporMarker
+  id: AtmosFixDecapoidMarker
+  suffix: Decapoid Atmosphere
+  description: "Water Vapor @ 101 kPa, 20C"
+  components:
+  - type: AtmosFixMarker
+    mode: 9

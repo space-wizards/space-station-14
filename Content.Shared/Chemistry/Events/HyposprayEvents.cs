@@ -32,7 +32,7 @@ public sealed class SelfBeforeHyposprayInjectsEvent : BeforeHyposprayInjectsTarg
 ///     This event is raised on the target before the hypospray is injected.
 ///     The event is triggered on the target itself and all its clothing.
 /// </summary>
-public sealed class TargetBeforeHyposprayInjectsEvent  : BeforeHyposprayInjectsTargetEvent
+public sealed class TargetBeforeHyposprayInjectsEvent : BeforeHyposprayInjectsTargetEvent
 {
-    public TargetBeforeHyposprayInjectsEvent (EntityUid user, EntityUid hypospray, EntityUid target) : base(user, hypospray, target) { }
+    public TargetBeforeHyposprayInjectsEvent(EntityUid user, EntityUid hypospray, EntityUid target) : base(user, hypospray, target) { }
 }

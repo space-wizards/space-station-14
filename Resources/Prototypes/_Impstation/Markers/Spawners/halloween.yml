@@ -285,7 +285,7 @@
       - MobXenoRouny
 
 - type: entity
-  name: Special guy Spawner
+  name: Special Guy Spawner
   id: SpawnMobSpecialGuy
   parent: MarkerBase
   components:

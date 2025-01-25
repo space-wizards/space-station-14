@@ -1,8 +1,8 @@
 - type: gameMap
   id: Fland
   mapName: 'Fland Installation'
-  mapPath: /Maps/fland.yml
-  minPlayers: 70
+  mapPath: /Maps/_Impstation/fland.yml
+  minPlayers: 60
   stations:
     Fland:
       stationProto: StandardNanotrasenStation
@@ -55,6 +55,7 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 4, 4 ]
+            Courier: [ 3, 3 ] #Imp
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]

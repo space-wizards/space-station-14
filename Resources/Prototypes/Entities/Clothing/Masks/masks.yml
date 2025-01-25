@@ -22,34 +22,6 @@
     hideOnToggle: true
 
 - type: entity
-  parent: [ClothingMaskPullableBase, BaseCommandContraband]
-  id: ClothingMaskBreathCommand
-  name: command breath mask
-  description: A fancy and comfortable breath mask, but functionally identical to the clear plastic ones.
-  components:
-  - type: Item
-    size: Tiny
-  - type: Sprite
-    sprite: Clothing/Mask/breathcommand.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/breathcommand.rsi
-  - type: BreathMask
-  - type: IngestionBlocker
-  - type: Tag
-    tags:
-    - PetWearable
-    - WhitelistChameleon
-    - BreathMask # goob edit
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 50
-      Plastic: 100
-  - type: HideLayerClothing
-    slots:
-    - Snout
-    hideOnToggle: true
-
-- type: entity
   parent: [ClothingMaskGas, BaseRestrictedContraband]
   id: ClothingMaskGasSecurity
   name: security gas mask
@@ -73,7 +45,7 @@
       - SecurityBreathMask
 
 - type: entity
-  parent: [ClothingMaskGas, BaseSyndicateContraband]
+  parent: [ClothingMaskGas, Tier2Contraband]
   id: ClothingMaskGasSyndicate
   name: syndicate gas mask
   description: A close-fitting tactical mask that can be connected to an air supply.
@@ -519,35 +491,7 @@
         Heat: 0.95
 
 - type: entity
-  parent: [ ClothingMaskGas, BaseCommandContraband ]
-  id: ClothingMaskGasHOS
-  name: head of security's gas mask
-  description: A compact armored mask made just for the head of security.
-  components:
-  - type: Item
-    size: Tiny
-  - type: Sprite
-    sprite: Clothing/Mask/gashos.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/gashos.rsi
-  - type: Tag
-    tags:
-    - WhitelistChameleon
-  - type: HideLayerClothing
-    slots:
-    - Hair
-    - Snout
-    hideOnToggle: true
-  - type: Armor
-    modifiers:
-      coefficients: # Same as the gas masks that come in security survival boxes
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.95
-        Heat: 0.95
-
-- type: entity
-  parent: [ ClothingMaskGas, BaseRestrictedContraband ]
+  parent: [ ClothingMaskGas, BaseSecurityCargoContraband ]
   id: ClothingMaskGasMerc
   name: mercenary gas mask
   description: Slightly outdated, but reliable military-style gas mask.
@@ -808,9 +752,9 @@
     sprite: Clothing/Mask/italian_moustache.rsi
   - type: Item
     storedRotation: -90
-  - type: AddAccentClothing
-    accent: ReplacementAccent
-    replacement: italian
+#  - type: AddAccentClothing # Imp
+#    accent: ReplacementAccent
+#    replacement: italian
 
 - type: entity
   parent: ClothingMaskBase

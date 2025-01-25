@@ -3,7 +3,6 @@ loadout-group-species-restriction = This item is not available for your current 
 
 # Miscellaneous
 loadout-group-trinkets = Trinkets
-loadout-group-learner = pAI Assistant
 loadout-group-glasses = Glasses
 loadout-group-backpack = Backpack
 loadout-group-instruments = Instruments
@@ -41,7 +40,6 @@ loadout-group-hop-jumpsuit = Head of Personnel jumpsuit
 loadout-group-hop-neck = Head of Personnel neck
 loadout-group-hop-backpack = Head of Personnel backpack
 loadout-group-hop-outerclothing = Head of Personnel outer clothing
-loadout-group-hop-shoes = Head of Personnel shoes
 
 # Civilian
 loadout-group-passenger-jumpsuit = Passenger jumpsuit
@@ -58,7 +56,6 @@ loadout-group-bartender-neck = Bartender neck
 loadout-group-bartender-outerclothing = Bartender outer clothing
 loadout-group-bartender-shoes = Bartender shoes
 loadout-group-bartender-id = Bartender ID
-loadout-group-bartender-mixologist = Mixologist Qualification
 
 loadout-group-chef-head = Chef head
 loadout-group-chef-mask = Chef mask
@@ -250,7 +247,6 @@ loadout-group-chief-medical-officer-neck = Chief Medical Officer neck
 loadout-group-chief-medical-officer-headset = Chief Medical Officer headset
 
 loadout-group-medical-doctor-head = Medical Doctor head
-loadout-group-medical-doctor-mask = Medical Doctor mask
 loadout-group-medical-doctor-jumpsuit = Medical Doctor jumpsuit
 loadout-group-medical-doctor-neck = Medical Doctor neck
 loadout-group-medical-doctor-outerclothing = Medical Doctor outer clothing

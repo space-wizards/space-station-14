@@ -1,0 +1,33 @@
+# For the veteran chief medical officer cosmetics
+- type: loadoutEffectGroup
+  id: VeteranCMO
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChiefMedicalOfficer
+      time: 180000 #50 hrs
+
+- type: loadout
+  id: ChiefMedicalOfficerVeteranHeadset
+  equipment:
+    ears: ClothingHeadsetCMOveteran
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCMO
+
+- type: loadout
+  id: CMOGreatCloak
+  equipment:
+    neck: ClothingNeckCloakCmosGreatcloak
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCMO
+
+- type: loadout
+  id: CMOPrestigeLabcoat
+  equipment:
+    outerClothing: ClothingOuterCoatCMO
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCMO

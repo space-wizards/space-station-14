@@ -476,6 +476,9 @@
   id: FoodMeatSpider
   description: A slab of spider meat. That's so Kafkaesque.
   components:
+  - type: Tag
+    tags:
+      - SpiderMeat
   - type: Sprite
     state: spider
   - type: SolutionContainerManager
@@ -690,6 +693,11 @@
     tags:
     - Raw
     - Meat
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Slime
+        Quantity: 10
   - type: Sprite
     state: slime
   - type: FoodSequenceElement
@@ -1814,7 +1822,7 @@
   name: raw thaven fillet
   parent: FoodMeatBase
   # MeatFish?...
-  id: FoodSpElfMeat
+  id: FoodThavenMeat
   description: Concerning.
   components:
   - type: FlavorProfile

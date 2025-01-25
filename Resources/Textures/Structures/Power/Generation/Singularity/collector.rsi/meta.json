@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from goonstation at https://github.com/goonstation/goonstation/commit/cbe076402ed43b1cd861295bbcb95608c453de7a. Edited by chromiumboy",
+  "copyright": "Resprite by AftrLite(GitHub), inspired by CV-eris. | cu.png Taken from goonstation at https://github.com/goonstation/goonstation/commit/cbe076402ed43b1cd861295bbcb95608c453de7a. ",
   "size": {
     "x": 32,
     "y": 32
@@ -24,6 +24,12 @@
           0.1,
           0.1,
           0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
           0.1
         ]
       ]
@@ -32,11 +38,17 @@
       "name": "ca_deactive",
       "delays": [
         [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1
         ]
       ]
     },

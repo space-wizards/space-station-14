@@ -1,9 +1,9 @@
 - type: gameMap
   id: Xeno
   mapName: 'Xeno'
-  mapPath: /Maps/xeno.yml
-  minPlayers: 25
-  maxPlayers: 70
+  mapPath: /Maps/_Impstation/xeno.yml
+  minPlayers: 35
+  maxPlayers: 80
   stations:
     Xeno:
       stationProto: StandardNanotrasenStation
@@ -56,6 +56,7 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 3, 3 ]
+            Courier: [ 2, 2 ] # Imp
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]

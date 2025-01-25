@@ -16,6 +16,6 @@ public sealed partial class ChangelingEggComponent : Component
     ///     Countdown before spawning monkey.
     /// </summary>
     public TimeSpan UpdateTimer = TimeSpan.Zero;
-    public float UpdateCooldown = 120f;
+    public float UpdateCooldown = 60f;
     public bool active = false;
 }
