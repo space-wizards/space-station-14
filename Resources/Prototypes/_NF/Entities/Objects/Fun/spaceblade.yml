@@ -24,6 +24,7 @@
           bounds: "-0.25,-0.25,0.25,0.25"
         density: 0.1
         mask:
+        - TableMask # Should collide with tables (MidImpassible, Impassible)
         - InteractImpassable
         layer:
         - InteractImpassable
@@ -103,7 +104,7 @@
     state: check
 
 - type: entity
-  id: SpaceBladeRune # imp edit wtf is the joke on this. why is it gnome child. this has to be some kind of nf admin injoke
+  id: SpaceBladeRune
   parent: SpaceBlade
   description: Birthday parties are yearly reminders that as soon as you're born you start dying, unless you let it rip!
   components:
@@ -112,6 +113,7 @@
 
 - type: entity
   id: SpaceBladeMc
+  suffix: deepfryer # imp
   parent: SpaceBlade
   description: Let it McDrip!
   components:
@@ -130,8 +132,9 @@
         volume: -5
 
 - type: entity
-  id: SpaceBladeSec # todo add this to seclink
+  id: SpaceBladeSec # todo - it would be so fucking funny if this chased wanted people like how the other beyblades chase each other. i aint doing that tho
   parent: SpaceBlade
+  suffix: security # imp
   components:
   - type: Sprite
     state: secblade
@@ -139,10 +142,27 @@
     damage: 8
   - type: DisarmMalus
     malus: 0.225
+  - type: ItemToggle # imp edit - it deserves to weewoo
+    predictable: false
+    onUse: false
+    soundActivate:
+      path: /Audio/Items/flashlight_on.ogg
+    soundDeactivate:
+      path: /Audio/Items/flashlight_off.ogg
+    soundFailToActivate:
+      path: /Audio/Machines/button.ogg
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Effects/Vehicle/policesiren.ogg
+      params:
+        volume: -4
+  - type: UseDelay
+    delay: 1.0
 
 - type: entity
   id: SpaceBladeContra
   parent: [ SpaceBlade, Tier3Contraband ] # imp edit mq says a beyblade with knives on it is the highest severity of contraband
+  suffix: syndicate # imp
   description: Let it reap
   components:
   - type: Sprite
@@ -166,6 +186,7 @@
 - type: entity
   id: SpaceBladeMoff
   parent: SpaceBlade
+  suffix: moth # imp
   components:
   - type: Sprite
     state: moff
@@ -184,6 +205,7 @@
 - type: entity
   id: SpaceBladeWeh
   parent: SpaceBlade
+  suffix: weh # imp
   description: Let it weh!
   components:
   - type: Sprite
@@ -202,6 +224,7 @@
 
 - type: entity
   id: SpaceBladeTesla
+  suffix: tesla # imp
   parent: SpaceBlade
   components:
   - type: Sprite
@@ -234,6 +257,7 @@
   id: SpaceBladeSingularity
   parent: SpaceBlade
   name: space blade
+  suffix: singularity # imp
   description: Let it consume!
   components:
   - type: Sprite
@@ -250,6 +274,7 @@
   id: SpaceBladeClown
   parent: SpaceBlade
   name: space blade
+  suffix: clown
   description: Let it honk!
   components:
   - type: Sprite
