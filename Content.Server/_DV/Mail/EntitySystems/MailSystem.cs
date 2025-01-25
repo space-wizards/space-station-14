@@ -518,7 +518,7 @@ public sealed class MailSystem : EntitySystem
                                 logisticStats,
                                 mailComp.IsProfitable ? mailComp.Penalty : 0);
                         });
-                    PenalizeStationFailedDelivery(uid!, "mail-penalty-expired");
+                    PenalizeStationFailedDelivery((uid, mailComp), "mail-penalty-expired");
                 },
                 mailComp.PriorityCancelToken.Token);
         }
