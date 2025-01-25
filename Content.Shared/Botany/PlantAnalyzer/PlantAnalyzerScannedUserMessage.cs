@@ -4,24 +4,14 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Botany.PlantAnalyzer;
 
 [Serializable, NetSerializable]
-public sealed class PlantAnalyzerScannedUserMessage : BoundUserInterfaceMessage
+public sealed class PlantAnalyzerScannedUserMessage(NetEntity? targetEntity, bool? scanMode, PlantAnalyzerPlantData? plantData, PlantAnalyzerTrayData? trayData, PlantAnalyzerTolerancesData? tolerancesData, PlantAnalyzerProduceData? produceData) : BoundUserInterfaceMessage
 {
-    // TODO: PA
-    public readonly NetEntity? TargetEntity;
-    public bool? ScanMode;
-    public PlantAnalyzerPlantData? PlantData;
-    public PlantAnalyzerTrayData? TrayData;
-    public PlantAnalyzerTolerancesData? TolerancesData;
-
-
-    public PlantAnalyzerScannedUserMessage(NetEntity? targetEntity, bool? scanMode, PlantAnalyzerPlantData? plantData, PlantAnalyzerTrayData? trayData, PlantAnalyzerTolerancesData? tolerancesData)
-    {
-        TargetEntity = targetEntity;
-        ScanMode = scanMode;
-        PlantData = plantData;
-        TrayData = trayData;
-        TolerancesData = tolerancesData;
-    }
+    public readonly NetEntity? TargetEntity = targetEntity;
+    public bool? ScanMode = scanMode;
+    public PlantAnalyzerPlantData? PlantData = plantData;
+    public PlantAnalyzerTrayData? TrayData = trayData;
+    public PlantAnalyzerTolerancesData? TolerancesData = tolerancesData;
+    public PlantAnalyzerProduceData? ProduceData = produceData;
 }
 
 /// <summary>
@@ -73,4 +63,17 @@ public sealed class PlantAnalyzerPlantData(string seedDisplayName, float health,
     public bool Dead = dead;
     public bool Viable = viable;
     public bool Mutating = mutating;
+}
+
+/// <summary>
+/// Information about the output of a plant (produce and gas).
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class PlantAnalyzerProduceData(int yield, float potency, List<string> chemicals, List<string> produce, List<Gas> exudeGasses)
+{
+    public int Yield = yield;
+    public float Potency = potency;
+    public List<string> Chemicals = chemicals;
+    public List<string> Produce = produce;
+    public List<Gas> ExudeGasses = exudeGasses;
 }

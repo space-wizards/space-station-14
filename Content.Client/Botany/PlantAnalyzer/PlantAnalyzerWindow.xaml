@@ -1,7 +1,6 @@
 <controls:FancyWindow
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-    MaxHeight="525"
     MinWidth="320"
     MaxWidth="320">
     <ScrollContainer
@@ -100,6 +99,10 @@
                     <RichTextLabel Name="EnvironmentLabel" SetWidth="290" />
                 </BoxContainer>
                 <PanelContainer Name="EnvironmentDivider" Visible="false" StyleClasses="LowDivider" />
+                <BoxContainer Name="ProduceBox" Visible="false" Orientation="Horizontal" Margin="5">
+                    <RichTextLabel Name="ProduceLabel" SetWidth="290" />
+                </BoxContainer>
+                <PanelContainer Name="ProduceDivider" Visible="false" StyleClasses="LowDivider" />
                 <!-- TODO: PA -->
             </BoxContainer>
         </BoxContainer>
