@@ -24,7 +24,7 @@
     theatre:     _Impstation/Structures/Doors/Airlocks/Standard/theatre.rsi
     salvage:     _Impstation/Structures/Doors/Airlocks/Standard/salvage.rsi
     courier:     _Impstation/Structures/Doors/Airlocks/Standard/courier.rsi
-    public:      _Impstation/Structures/Doors/Airlocks/Standard/public.rsi
+    basic:      _Impstation/Structures/Doors/Airlocks/Standard/public.rsi
     #end imp edit
 
 - type: AirlockGroup
@@ -32,13 +32,13 @@
   iconPriority: 90
   stylePaths:
     atmospherics: Structures/Doors/Airlocks/Glass/atmospherics.rsi
-    service:       Structures/Doors/Airlocks/Glass/basic.rsi #imp edit
+    service:     Structures/Doors/Airlocks/Glass/basic.rsi #imp edit
     cargo:       Structures/Doors/Airlocks/Glass/cargo.rsi
     command:     Structures/Doors/Airlocks/Glass/command.rsi
     chemistry:   Structures/Doors/Airlocks/Glass/chemistry.rsi
     science:     Structures/Doors/Airlocks/Glass/science.rsi
     engineering: Structures/Doors/Airlocks/Glass/engineering.rsi
-    public:       Structures/Doors/Airlocks/Glass/glass.rsi #imp edit
+    basic:       Structures/Doors/Airlocks/Glass/glass.rsi #imp edit
     hydroponics: Structures/Doors/Airlocks/Glass/hydroponics.rsi
     maintenance: Structures/Doors/Airlocks/Glass/maint.rsi
     medical:     Structures/Doors/Airlocks/Glass/medical.rsi
@@ -96,7 +96,7 @@
     command: Command
     engineering: Engineering
     freezer: Civilian
-    public: Civilian #imp edit
+    basic: Civilian
     hydroponics: Civilian
     maintenance: Civilian
     medical: Medical
