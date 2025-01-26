@@ -48,3 +48,5 @@
     canThrowTrigger: true
     canMoveBreakout: true
   - type: LandAtCursor
+  - type: ExplosionResistance
+    damageCoefficient: 0.0
