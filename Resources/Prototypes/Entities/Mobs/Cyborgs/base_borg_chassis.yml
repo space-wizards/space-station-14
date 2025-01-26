@@ -81,8 +81,10 @@
     - ActionViewLaws
   - type: EmagSiliconLaw
     stunTime: 5
+# - type: SiliconLawProvider
+#   laws: Crewsimov
   - type: SiliconLawProvider
-    laws: Crewsimov
+    laws: CrewsimovBorgLawset #Harmony Lawset to add law 0 to follow AI orders
   - type: IonStormTarget
   - type: Inventory
     templateId: borg
