@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Reduced canister prices from 1000 to 200 spesos
-    type: Tweak
-  id: 7351
-  time: '2024-09-11T12:53:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31965
 - author: EmoGarbage404
   changes:
   - message: Added the hivelord! This self-replicating alien is found on the mining
@@ -3887,3 +3880,10 @@
   id: 7850
   time: '2025-01-26T14:01:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29224
+- author: Coolsurf6
+  changes:
+  - message: Added the HoS's flask to their respective lockers.
+    type: Add
+  id: 7851
+  time: '2025-01-26T23:39:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34658
