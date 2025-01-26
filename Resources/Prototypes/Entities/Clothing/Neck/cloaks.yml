@@ -229,8 +229,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakBi
-  name: bifurcated cloak
-  description: The cloak's colors bifurcated at the middle.
+  name: biathalon cloak
+  description: A cloak for folk in multiple competitions
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/bi.rsi
