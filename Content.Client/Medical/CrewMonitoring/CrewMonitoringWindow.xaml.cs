@@ -432,17 +432,14 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
     /// </summary>
     private EntityCoordinates CoordinatesToLocal(EntityCoordinates refCoords)
     {
-        if (NavMap.MapUid == null || NavMap.MapUid == refCoords.EntityId)
+        if (NavMap.MapUid != null)
+        {
+            return _transformSystem.WithEntityId(refCoords, (EntityUid)NavMap.MapUid);
+        }
+        else
         {
             return refCoords;
         }
-
-        var refEntToWorld = _transformSystem.GetWorldMatrix(refCoords.EntityId);
-        var refPosition = Vector2.Transform(refCoords.Position, refEntToWorld);
-
-        var worldToMonitor = _transformSystem.GetInvWorldMatrix((EntityUid)NavMap.MapUid);
-        var refInMonitor = Vector2.Transform(refPosition, worldToMonitor);
-        return new EntityCoordinates((EntityUid)NavMap.MapUid, refInMonitor);
     }
 
     private void ClearOutDatedData()
