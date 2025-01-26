@@ -73,6 +73,7 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
 
             Unviable.Visible = !msg.PlantData.Viable;
             Mutating.Visible = msg.PlantData.Mutating;
+            Kudzu.Visible = msg.PlantData.Kudzu;
 
             PlantDataGrid.Visible = true;
         }
@@ -128,6 +129,26 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
             ContainerGrid.Visible = false;
         }
         ContainerDivider.Visible = ContainerGrid.Visible;
+
+
+        // Section 3.5: They are putting chemicals in the water!
+        if (msg.TrayData?.Chemicals != null)
+        {
+            var count = msg.TrayData.Chemicals.Count;
+            var holder = ContainerLabel.Text;
+            var chemicals = PlantAnalyzerLocalizationHelper.ChemicalsToLocalizedStrings(msg.TrayData.Chemicals, _prototypeManager);
+            if (count == 0)
+                ChemicalsInWaterLabel.Text = Loc.GetString("plant-analyzer-soil-empty", ("holder", holder));
+            else
+                ChemicalsInWaterLabel.Text = Loc.GetString("plant-analyzer-soil", ("count", count), ("holder", holder), ("chemicals", chemicals));
+
+            ChemicalsInWaterBox.Visible = true;
+        }
+        else
+        {
+            ChemicalsInWaterBox.Visible = false;
+        }
+        ChemicalsInWaterDivider.Visible = ChemicalsInWaterBox.Visible;
 
         // Section 4: Tolerances part 2.
         if (msg.TolerancesData is not null)

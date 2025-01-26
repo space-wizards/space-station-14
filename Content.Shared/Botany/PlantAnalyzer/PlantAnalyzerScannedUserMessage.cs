@@ -19,13 +19,14 @@ public sealed class PlantAnalyzerScannedUserMessage(NetEntity? targetEntity, boo
 /// Everything that is kept independed of a given plant/seed.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class PlantAnalyzerTrayData(float waterLevel, float nutritionLevel, float toxins, float pestLevel, float weedLevel)
+public sealed class PlantAnalyzerTrayData(float waterLevel, float nutritionLevel, float toxins, float pestLevel, float weedLevel, List<string>? chemicals)
 {
     public float WaterLevel = waterLevel;
     public float NutritionLevel = nutritionLevel;
     public float Toxins = toxins;
     public float PestLevel = pestLevel;
     public float WeedLevel = weedLevel;
+    public List<string>? Chemicals = chemicals;
 }
 
 
@@ -54,7 +55,7 @@ public sealed class PlantAnalyzerTolerancesData(float nutrientConsumption, float
 /// Information about the plant inside the tray.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class PlantAnalyzerPlantData(string seedDisplayName, float health, float endurance, float age, float lifespan, bool dead, bool viable, bool mutating)
+public sealed class PlantAnalyzerPlantData(string seedDisplayName, float health, float endurance, float age, float lifespan, bool dead, bool viable, bool mutating, bool kudzu)
 {
     public string SeedDisplayName = seedDisplayName;
     public float Health = health;
@@ -64,6 +65,7 @@ public sealed class PlantAnalyzerPlantData(string seedDisplayName, float health,
     public bool Dead = dead;
     public bool Viable = viable;
     public bool Mutating = mutating;
+    public bool Kudzu = kudzu;
 }
 
 /// <summary>

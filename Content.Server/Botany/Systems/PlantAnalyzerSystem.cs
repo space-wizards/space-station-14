@@ -1,9 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
 using Content.Server.AbstractAnalyzer;
 using Content.Server.Botany.Components;
 using Content.Server.Popups;
 using Content.Shared.Botany.PlantAnalyzer;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Labels.EntitySystems;
@@ -27,6 +29,7 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
     [Dependency] private readonly PaperSystem _paperSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedLabelSystem _labelSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     public override void Initialize()
     {
@@ -69,7 +72,8 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
                     lifespan: plantHolder.Seed.Lifespan,
                     dead: plantHolder.Dead,
                     viable: plantHolder.Seed.Viable,
-                    mutating: plantHolder.MutationLevel > 0f
+                    mutating: plantHolder.MutationLevel > 0f,
+                    kudzu: plantHolder.Seed.TurnIntoKudzu
                 );
                 tolerancesData = new PlantAnalyzerTolerancesData(
                     waterConsumption: plantHolder.Seed.WaterConsumption,
@@ -99,7 +103,8 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
                 nutritionLevel: plantHolder.NutritionLevel,
                 toxins: plantHolder.Toxins,
                 pestLevel: plantHolder.PestLevel,
-                weedLevel: plantHolder.WeedLevel
+                weedLevel: plantHolder.WeedLevel,
+                chemicals: plantHolder.SoilSolution?.Comp.Solution.Contents.Select(r => r.Reagent.Prototype).ToList()
             );
         }
 
