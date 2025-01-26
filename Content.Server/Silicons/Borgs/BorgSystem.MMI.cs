@@ -49,6 +49,10 @@ public sealed partial class BorgSystem
             return;
 
         var ent = args.Entity;
+        if (HasComp<UnborgableComponent>(ent))
+        {
+            return;
+        }
         var linked = EnsureComp<MMILinkedComponent>(ent);
         linked.LinkedMMI = uid;
         Dirty(uid, component);
@@ -108,7 +112,7 @@ public sealed partial class BorgSystem
                     _puddle.TrySpillAt(Transform(uid).Coordinates, solutions.Comp.Solution, out _);
                 }
             }
-            EntityManager.DeleteEntity(ent);
+            EntityManager.QueueDeleteEntity(ent);
         }
     }
 }
