@@ -164,7 +164,7 @@ public sealed partial class StoreSystem
         }
 
         if (!IsOnStartingMap(uid, component))
-            component.RefundAllowed = false;
+            DisableRefund(uid, component);
 
         //subtract the cash
         foreach (var (currency, amount) in cost)
@@ -332,7 +332,7 @@ public sealed partial class StoreSystem
 
         if (!IsOnStartingMap(uid, component))
         {
-            component.RefundAllowed = false;
+            DisableRefund(uid, component);
             UpdateUserInterface(buyer, uid, component);
         }
 
