@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Botany.PlantAnalyzer;
 using Content.Shared.IdentityManagement;
@@ -158,25 +159,25 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
         // Section 5: Output
         if (msg.ProduceData is not null)
         {
-            (string, string)[] parameters = [
-                ("n", msg.ProduceData.Yield.ToString("0")),
+            var gases = PlantAnalyzerLocalizationHelper.GasesToLocalizedStrings(msg.ProduceData.ExudeGasses, _prototypeManager);
+            var (produce, producePlural) = PlantAnalyzerLocalizationHelper.ProduceToLocalizedStrings(msg.ProduceData.Produce, _prototypeManager);
+            var chemicals = PlantAnalyzerLocalizationHelper.ChemicalsToLocalizedStrings(msg.ProduceData.Chemicals, _prototypeManager);
+
+            (string, object)[] parameters = [
+                ("yield", msg.ProduceData.Yield),
+                ("gasCount", msg.ProduceData.ExudeGasses.Count),
+                ("gases", gases),
                 ("potency", Loc.GetString(msg.ProduceData.Potency)),
-                ("produce", PlantAnalyzerLocalizationHelper.ProduceToLocalizedStrings(msg.ProduceData.Produce, _prototypeManager)),
-                ("gases", PlantAnalyzerLocalizationHelper.GasesToLocalizedStrings(msg.ProduceData.ExudeGasses, _prototypeManager)),
-                ("chemicals", PlantAnalyzerLocalizationHelper.ChemicalsToLocalizedStrings(msg.ProduceData.Chemicals, _prototypeManager)),
-                ("seedless", msg.ProduceData.Seedless ? Loc.GetString("plant-analyzer-seedless", ("space", " ")) : "")
+                ("seedless", msg.ProduceData.Seedless),
+                ("firstProduce", msg.ProduceData.Produce.FirstOrDefault() ?? ""),
+                ("produce", produce),
+                ("producePlural", producePlural),
+                ("chemCount", msg.ProduceData.Chemicals.Count),
+                ("chemicals", chemicals),
+                ("nothing", "")
             ];
 
-            ProduceLabel.Text = (msg.ProduceData.Yield == 0 || msg.ProduceData.Produce.Count == 0)
-                ? msg.ProduceData.ExudeGasses.Count == 0
-                    ? Loc.GetString("plant-analyzer-output-nothing")
-                    : Loc.GetString("plant-analyzer-output-nothing-gas", [.. parameters])
-                : (msg.ProduceData.ExudeGasses.Count == 0
-                    ? Loc.GetString("plant-analyzer-output", [.. parameters])
-                    : Loc.GetString("plant-analyzer-output-gas", [.. parameters])) + (msg.ProduceData.Chemicals.Count == 0
-                        ? ""
-                        : " " + Loc.GetString("plant-analyzer-chemicals", [.. parameters]));
-
+            ProduceLabel.Text = Loc.GetString("plant-analyzer-output", [.. parameters]);
             ProduceBox.Visible = true;
         }
         else
