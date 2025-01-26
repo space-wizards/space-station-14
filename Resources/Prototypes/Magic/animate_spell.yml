@@ -50,10 +50,11 @@
       - type: CanMoveInAir
       - type: Damageable
         damageContainer: ManifestedSpirit
+        damageModifierSet: ManifestedSpirit
       - type: Destructible
         thresholds:
         - trigger:
-            !type:DamageTypeTrigger
+            !type:DamageTrigger
             damage: 100
           behaviors:
           - !type:DoActsBehavior

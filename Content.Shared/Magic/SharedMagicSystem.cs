@@ -599,8 +599,6 @@ public abstract class SharedMagicSystem : EntitySystem
         ev.Handled = true;
         //Speak(ev);
 
-        var damage = EnsureComp<DamageableComponent>(ev.Target);
-
         RemoveComponents(ev.Target, ev.RemoveComponents);
         AddComponents(ev.Target, ev.AddComponents);
 
