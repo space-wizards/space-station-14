@@ -2322,7 +2322,7 @@
       - ReagentId: Mechanotoxin
         Quantity: 1
   - type: MeleeChemicalInjector
-    transferAmount: 3 # harmony change - part of tarantula buff PR
+    transferAmount: 1.5 # harmony change - part of tarantula buff PR
     solution: melee
   - type: ReplacementAccent
     accent: xeno
