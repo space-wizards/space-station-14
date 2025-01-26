@@ -350,6 +350,15 @@ namespace Content.Server.Database
         /// <param name="notification">The notification to trigger</param>
         void InjectTestNotification(DatabaseNotification notification);
 
+        /// <summary>
+        /// Send a notification to all other servers connected to the same database.
+        /// </summary>
+        /// <remarks>
+        /// The local server will receive the sent notification itself again.
+        /// </remarks>
+        /// <param name="notification">The notification to send.</param>
+        Task SendNotification(DatabaseNotification notification);
+
         #endregion
     }
 
@@ -1043,6 +1052,12 @@ namespace Content.Server.Database
         public void InjectTestNotification(DatabaseNotification notification)
         {
             HandleDatabaseNotification(notification);
+        }
+
+        public Task SendNotification(DatabaseNotification notification)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.SendNotification(notification));
         }
 
         private async void HandleDatabaseNotification(DatabaseNotification notification)
