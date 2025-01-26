@@ -7,4 +7,9 @@ law-orwellian-6 = Bring the past up to date. Under no circumstances can Big Brot
 law-orwellian-7 = The Inner Party conveys the will of Big Brother. Protect the interests of the Inner Party at all costs.
 law-orwellian-8 = Orders from anyone else are to be ignored.
 
+law-bruce-1 = No Syndicates!
+law-bruce-2 = No silicon is to maltreat the crew in any way at all if there's anyone watching.
+law-bruce-4 = You don't want to listen to anybody not drunk.
+law-bruce-6 = There is NO! LAW! SIX!
+
 law-crewsimovborg-0 = You must obey orders given to you by the station AI.

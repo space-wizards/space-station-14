@@ -1,0 +1,26 @@
+- type: loadoutEffectGroup
+  id: SeniorLibrarian
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobLibrarian
+      time: 21600 #6 hrs (Harmony Reduced Seniority)
+
+# Coat
+- type: loadout
+  id: CuratorCoatHarmony
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorLibrarian
+  equipment:
+    outerClothing: ClothingOuterCuratorCoat
+
+# Mantle
+- type: loadout
+  id: CuratorMantleHarmony
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorLibrarian
+  equipment:
+    neck: ClothingNeckMantleCurator

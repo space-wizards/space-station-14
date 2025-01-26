@@ -12,3 +12,18 @@
   metamorphicMaxFillLevels: 6
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+
+- type: reagent
+  id: StarsetSarsaparilla
+  name: reagent-name-starset-sarsaparilla
+  parent: BaseSoda
+  desc: reagent-desc-starset-sarsaparilla
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: themojave
+  color: "#2a1704"
+  metamorphicSprite:
+    sprite: _Harmony/Objects/Consumable/Drinks/starset-sarsaparilla.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false

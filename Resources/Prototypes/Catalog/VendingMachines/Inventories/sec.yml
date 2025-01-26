@@ -20,6 +20,7 @@
     RiotLaserShield: 2
     RiotBulletShield: 2
     RadioHandheldSecurity: 5
+    SecurityBola: 4 #Harmony Change: Security Bolas added
   # security officers need to follow a diet regimen!
   contrabandInventory:
     FoodDonutHomer: 12

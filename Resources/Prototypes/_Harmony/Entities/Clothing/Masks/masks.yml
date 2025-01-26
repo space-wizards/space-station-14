@@ -8,6 +8,8 @@
     sprite: _Harmony/Clothing/Mask/voxcorpsepaint.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/Mask/voxcorpsepaint.rsi
+  - type: Tag
+    tags: []
   - type: BreathMask
   - type: IdentityBlocker
   - type: HideLayerClothing
@@ -24,6 +26,8 @@
     sprite: _Harmony/Clothing/Mask/specvoxmask.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/Mask/specvoxmask.rsi
+  - type: Tag
+    tags: []
   - type: BreathMask
   - type: IdentityBlocker
   - type: HideLayerClothing
@@ -41,8 +45,7 @@
   - type: Clothing
     sprite: _Harmony/Clothing/Mask/NTenforcer.rsi
   - type: Tag
-    tags:
-    - WhitelistChameleon
+    tags: []
   - type: HideLayerClothing
     slots:
     - Snout

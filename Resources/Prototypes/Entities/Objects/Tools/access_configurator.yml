@@ -126,6 +126,7 @@
       insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
       ejectOnBreak: true
       swap: false
+      startingItem: UniversalIDCard # Harmony
       whitelist:
         components:
         - IdCard
