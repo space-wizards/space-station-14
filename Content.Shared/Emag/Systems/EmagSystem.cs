@@ -7,6 +7,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Emag.Systems;
 
@@ -22,14 +23,24 @@ public sealed class EmagSystem : EntitySystem
     [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<EmagComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<EmaggedComponent, OnAccessOverriderAccessUpdatedEvent>(OnAccessOverriderAccessUpdated);
     }
 
+    private void OnAccessOverriderAccessUpdated(Entity<EmaggedComponent> entity, ref OnAccessOverriderAccessUpdatedEvent args)
+    {
+        if ((entity.Comp.EmagType & EmagType.Access) == 0)
+            return;
+
+        entity.Comp.EmagType &= ~EmagType.Access;
+        Dirty(entity);
+    }
     private void OnAfterInteract(EntityUid uid, EmagComponent comp, AfterInteractEvent args)
     {
         if (!args.CanReach || args.Target is not { } target)
@@ -56,14 +67,16 @@ public sealed class EmagSystem : EntitySystem
             return false;
         }
 
-        var handled = DoEmagEffect(user, target);
+        var handled = DoEmagEffect(user, target, comp.EmagType);
         if (!handled)
             return false;
 
-        _popup.PopupClient(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user,
+        _popup.PopupPredicted(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user,
             user, PopupType.Medium);
 
-        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} emagged {ToPrettyString(target):target}");
+        _audio.PlayPredicted(comp.EmagSound, uid, uid);
+
+        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} emagged {ToPrettyString(target):target} with flag(s): {comp.EmagType}");
 
         if (charges != null)
             _charges.UseCharge(uid, charges);
@@ -73,28 +86,49 @@ public sealed class EmagSystem : EntitySystem
     /// <summary>
     /// Does the emag effect on a specified entity
     /// </summary>
-    public bool DoEmagEffect(EntityUid user, EntityUid target)
+    public bool DoEmagEffect(EntityUid user, EntityUid target, EmagType type = EmagType.Interaction)
     {
-        // prevent emagging twice
-        if (HasComp<EmaggedComponent>(target))
-            return false;
-
-        var onAttemptEmagEvent = new OnAttemptEmagEvent(user);
+        var onAttemptEmagEvent = new OnAttemptEmagEvent(user, type);
         RaiseLocalEvent(target, ref onAttemptEmagEvent);
 
         // prevent emagging if attempt fails
         if (onAttemptEmagEvent.Handled)
             return false;
 
-        var emaggedEvent = new GotEmaggedEvent(user);
+        var emaggedEvent = new GotEmaggedEvent(user, type);
         RaiseLocalEvent(target, ref emaggedEvent);
 
         if (emaggedEvent.Handled && !emaggedEvent.Repeatable)
-            EnsureComp<EmaggedComponent>(target);
+        {
+            EnsureComp<EmaggedComponent>(target, out var comp);
+
+            comp.EmagType |= type;
+            Dirty(target, comp);
+        }
+
         return emaggedEvent.Handled;
+    }
+
+    public bool CheckFlag(EntityUid target, EmagType flag)
+    {
+        if (!TryComp<EmaggedComponent>(target, out var comp))
+            return false;
+
+        if ((comp.EmagType & flag) == flag)
+            return true;
+
+        return false;
     }
 }
 
+
+[Flags]
+public enum EmagType : byte
+{
+    None = 0,
+    Interaction = 1 << 1,
+    Access = 1 << 2
+}
 /// <summary>
 /// Shows a popup to emag user (client side only!) and adds <see cref="EmaggedComponent"/> to the entity when handled
 /// </summary>
@@ -103,7 +137,7 @@ public sealed class EmagSystem : EntitySystem
 /// <param name="Repeatable">Can the entity be emagged more than once? Prevents adding of <see cref="EmaggedComponent"/></param>
 /// <remarks>Needs to be handled in shared/client, not just the server, to actually show the emagging popup</remarks>
 [ByRefEvent]
-public record struct GotEmaggedEvent(EntityUid UserUid, bool Handled = false, bool Repeatable = false);
+public record struct GotEmaggedEvent(EntityUid UserUid, EmagType Type, bool Handled = false, bool Repeatable = false);
 
 [ByRefEvent]
-public record struct OnAttemptEmagEvent(EntityUid UserUid, bool Handled = false);
+public record struct OnAttemptEmagEvent(EntityUid UserUid, EmagType Type, bool Handled = false);

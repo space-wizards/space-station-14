@@ -24,6 +24,7 @@ namespace Content.Server.Nutrition.EntitySystems
     {
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly EmagSystem _emag = default!;
         [Dependency] private readonly FoodSystem _foodSystem = default!;
         [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -32,6 +33,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             SubscribeLocalEvent<VapeComponent, AfterInteractEvent>(OnVapeInteraction);
             SubscribeLocalEvent<VapeComponent, VapeDoAfterEvent>(OnVapeDoAfter);
+            SubscribeLocalEvent<VapeComponent, OnAttemptEmagEvent>(OnAttemptEmag);
             SubscribeLocalEvent<VapeComponent, GotEmaggedEvent>(OnEmagged);
         }
 
@@ -63,7 +65,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 forced = false;
             }
 
-            if (entity.Comp.ExplodeOnUse || HasComp<EmaggedComponent>(entity.Owner))
+            if (entity.Comp.ExplodeOnUse || _emag.CheckFlag(entity, EmagType.Interaction))
             {
                 _explosionSystem.QueueExplosion(entity.Owner, "Default", entity.Comp.ExplosionIntensity, 0.5f, 3, canCreateVacuum: false);
                 EntityManager.DeleteEntity(entity);
@@ -161,6 +163,20 @@ namespace Content.Server.Nutrition.EntitySystems
                     args.Args.Target.Value);
             }
         }
+
+        private void OnAttemptEmag(Entity<VapeComponent> entity, ref OnAttemptEmagEvent args)
+        {
+            if (args.Type != EmagType.Interaction)
+            {
+                args.Handled = true;
+                return;
+            }
+            if (_emag.CheckFlag(entity, EmagType.Interaction))
+            {
+                args.Handled = true;
+            }
+        }
+
         private void OnEmagged(Entity<VapeComponent> entity, ref GotEmaggedEvent args)
         {
             args.Handled = true;

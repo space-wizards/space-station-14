@@ -20,6 +20,7 @@ namespace Content.Server.Bed
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly ActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly EmagSystem _emag = default!;
         [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
@@ -33,6 +34,7 @@ namespace Content.Server.Bed
             SubscribeLocalEvent<StasisBedComponent, StrappedEvent>(OnStasisStrapped);
             SubscribeLocalEvent<StasisBedComponent, UnstrappedEvent>(OnStasisUnstrapped);
             SubscribeLocalEvent<StasisBedComponent, PowerChangedEvent>(OnPowerChanged);
+            SubscribeLocalEvent<StasisBedComponent, OnAttemptEmagEvent>(OnAttemptEmag);
             SubscribeLocalEvent<StasisBedComponent, GotEmaggedEvent>(OnEmagged);
         }
 
@@ -112,9 +114,21 @@ namespace Content.Server.Bed
             UpdateMetabolisms(uid, component, args.Powered);
         }
 
+        private void OnAttemptEmag(EntityUid uid, StasisBedComponent component, ref OnAttemptEmagEvent args)
+        {
+            if (args.Type != EmagType.Interaction)
+            {
+                args.Handled = true;
+                return;
+            }
+            if (_emag.CheckFlag(uid, EmagType.Interaction))
+            {
+                args.Handled = true;
+            }
+        }
+
         private void OnEmagged(EntityUid uid, StasisBedComponent component, ref GotEmaggedEvent args)
         {
-            args.Repeatable = true;
             // Reset any metabolisms first so they receive the multiplier correctly
             UpdateMetabolisms(uid, component, false);
             component.Multiplier = 1 / component.Multiplier;

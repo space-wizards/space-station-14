@@ -1,9 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Access.Components;
-using Content.Shared.AccessBreaker;
 using Content.Shared.DeviceLinking.Events;
-using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
@@ -25,6 +23,7 @@ public sealed class AccessReaderSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedGameTicker _gameTicker = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -34,7 +33,8 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AccessReaderComponent, GotAccessBrokenEvent>(OnAccessBreak);
+        SubscribeLocalEvent<AccessReaderComponent, OnAttemptEmagEvent>(OnAttemptEmag);
+        SubscribeLocalEvent<AccessReaderComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<AccessReaderComponent, LinkAttemptEvent>(OnLinkAttempt);
 
         SubscribeLocalEvent<AccessReaderComponent, ComponentGetState>(OnGetState);
@@ -72,15 +72,32 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         if (args.User == null) // AutoLink (and presumably future external linkers) have no user.
             return;
-        if (!HasComp<EmaggedComponent>(uid) && !IsAllowed(args.User.Value, uid, component))
+        if (!_emag.CheckFlag(uid, EmagType.Access) && !IsAllowed(args.User.Value, uid, component))
             args.Cancel();
     }
 
-    private void OnAccessBreak(EntityUid uid, AccessReaderComponent reader, ref GotAccessBrokenEvent args)
+    private void OnAttemptEmag(EntityUid uid, AccessReaderComponent reader, ref OnAttemptEmagEvent args)
     {
-        if (!reader.BreakOnAccessBreaker)
+        if (args.Type != EmagType.Access)
+        {
+            args.Handled = true;
             return;
+        }
 
+        if (!reader.BreakOnAccessBreaker)
+        {
+            args.Handled = true;
+            return;
+        }
+
+        if (!GetMainAccessReader(uid, out var accessReader))
+        {
+            args.Handled = true;
+        }
+    }
+
+    private void OnEmagged(EntityUid uid, AccessReaderComponent reader, ref GotEmaggedEvent args)
+    {
         if (!GetMainAccessReader(uid, out var accessReader))
             return;
 

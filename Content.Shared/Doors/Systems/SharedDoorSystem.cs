@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.AccessBreaker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -79,8 +78,8 @@ public abstract partial class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<DoorComponent, GetPryTimeModifierEvent>(OnPryTimeModifier);
 
-        SubscribeLocalEvent<DoorComponent, OnAttemptAccessBreakEvent>(OnAttemptAccessBreak);
-        SubscribeLocalEvent<DoorComponent, GotAccessBrokenEvent>(OnAccessBreak);
+        SubscribeLocalEvent<DoorComponent, OnAttemptEmagEvent>(OnEmaggedAttempt);
+        SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
     }
 
     protected virtual void OnComponentInit(Entity<DoorComponent> ent, ref ComponentInit args)
@@ -119,7 +118,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         _activeDoors.Remove(door);
     }
 
-    private void OnAttemptAccessBreak(EntityUid uid, DoorComponent door, ref OnAttemptAccessBreakEvent args)
+    private void OnEmaggedAttempt(EntityUid uid, DoorComponent door, ref OnAttemptEmagEvent args)
     {
         if (!TryComp<AirlockComponent>(uid, out var airlock))
         {
@@ -139,11 +138,11 @@ public abstract partial class SharedDoorSystem : EntitySystem
         }
     }
 
-    private void OnAccessBreak(EntityUid uid, DoorComponent door, ref GotAccessBrokenEvent args)
+    private void OnEmagged(EntityUid uid, DoorComponent door, ref GotEmaggedEvent args)
     {
         if (!SetState(uid, DoorState.Emagging, door))
             return;
-        Audio.PlayPredicted(door.SparkSound, uid, args.UserUid, AudioParams.Default.WithVolume(8));
+
         args.Handled = true;
     }
 
