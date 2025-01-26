@@ -57,3 +57,6 @@
 
 - files: ["cog.yml"]
   authors: Spacemann
+
+- files: ["prather.yml"]
+  authors: Lemuria
