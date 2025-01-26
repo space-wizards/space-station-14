@@ -65,7 +65,7 @@ public sealed partial class StoreSystem
 
         var endTime = component.BoughtTime + component.DisableTime;
 
-        if (_timing.CurTime < endTime)
+        if (IsOnStartingMap(component.StoreEntity.Value, storeComp) && _timing.CurTime < endTime)
             return;
 
         DisableRefund(component.StoreEntity.Value, storeComp);
