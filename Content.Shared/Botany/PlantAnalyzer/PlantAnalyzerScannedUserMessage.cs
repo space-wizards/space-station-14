@@ -70,13 +70,14 @@ public sealed class PlantAnalyzerPlantData(string seedDisplayName, float health,
 /// Information about the output of a plant (produce and gas).
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class PlantAnalyzerProduceData(int yield, float potency, List<string> chemicals, List<string> produce, List<Gas> exudeGasses)
+public sealed class PlantAnalyzerProduceData(int yield, float potency, List<string> chemicals, List<string> produce, List<Gas> exudeGasses, bool seedless)
 {
     public int Yield = yield;
     public string Potency = ObscurePotency(potency);
     public List<string> Chemicals = chemicals;
     public List<string> Produce = produce;
     public List<Gas> ExudeGasses = exudeGasses;
+    public bool Seedless = seedless;
 
     private static string ObscurePotency(float potency)
     {
