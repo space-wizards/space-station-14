@@ -1,4 +1,5 @@
 using Content.Server.Store.Components;
+using Content.Shared.Actions.Events;
 using Content.Shared.Store.Components;
 using Robust.Shared.Containers;
 
@@ -12,22 +13,22 @@ public sealed partial class StoreSystem
         SubscribeLocalEvent<StoreRefundComponent, EntityTerminatingEvent>(OnRefundTerminating);
         SubscribeLocalEvent<StoreRefundComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
         SubscribeLocalEvent<StoreRefundComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
+        SubscribeLocalEvent<StoreRefundComponent, ActionPerformedEvent>(OnActionPerformed);
     }
 
-    private void OnEntityRemoved(EntityUid uid, StoreRefundComponent component, EntRemovedFromContainerMessage args)
+    private void OnEntityRemoved(Entity<StoreRefundComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (component.StoreEntity == null || _actions.TryGetActionData(uid, out _, false) || !TryComp<StoreComponent>(component.StoreEntity.Value, out var storeComp))
-            return;
-
-        DisableRefund(component.StoreEntity.Value, storeComp);
+        CheckDisableRefund(ent);
     }
 
-    private void OnEntityInserted(EntityUid uid, StoreRefundComponent component, EntInsertedIntoContainerMessage args)
+    private void OnEntityInserted(Entity<StoreRefundComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (component.StoreEntity == null || _actions.TryGetActionData(uid, out _) || !TryComp<StoreComponent>(component.StoreEntity.Value, out var storeComp))
-            return;
+        CheckDisableRefund(ent);
+    }
 
-        DisableRefund(component.StoreEntity.Value, storeComp);
+    private void OnActionPerformed(Entity<StoreRefundComponent> ent, ref ActionPerformedEvent args)
+    {
+        CheckDisableRefund(ent);
     }
 
     private void OnStoreTerminating(Entity<StoreComponent> ent, ref EntityTerminatingEvent args)
@@ -51,5 +52,16 @@ public sealed partial class StoreSystem
 
         var ev = new RefundEntityDeletedEvent(ent);
         RaiseLocalEvent(ent.Comp.StoreEntity.Value, ref ev);
+    }
+
+    private void CheckDisableRefund(Entity<StoreRefundComponent> ent)
+    {
+        var component = ent.Comp;
+
+        // TODO: Should check for time & grid here
+        if (component.StoreEntity == null || !TryComp<StoreComponent>(component.StoreEntity.Value, out var storeComp))
+            return;
+
+        DisableRefund(component.StoreEntity.Value, storeComp);
     }
 }
