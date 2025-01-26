@@ -14,6 +14,8 @@ public sealed partial class StoreSystem
         SubscribeLocalEvent<StoreRefundComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
         SubscribeLocalEvent<StoreRefundComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
         SubscribeLocalEvent<StoreRefundComponent, ActionPerformedEvent>(OnActionPerformed);
+        // TODO: Use in hand event?
+        // TODO: MeleeHitEvent?
     }
 
     private void OnEntityRemoved(Entity<StoreRefundComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -59,7 +61,7 @@ public sealed partial class StoreSystem
         var component = ent.Comp;
 
         // TODO: Should check for time & grid here
-        if (component.StoreEntity == null || !TryComp<StoreComponent>(component.StoreEntity.Value, out var storeComp))
+        if (component.StoreEntity == null || !TryComp<StoreComponent>(component.StoreEntity.Value, out var storeComp) || !storeComp.RefundAllowed)
             return;
 
         DisableRefund(component.StoreEntity.Value, storeComp);
