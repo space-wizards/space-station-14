@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Added the Hypereutactic Blade.
-    type: Add
-  id: 506
-  time: '2024-11-13T19:27:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/639
 - author: honeyed-lemons
   changes:
   - message: The Grease
@@ -4382,3 +4375,10 @@
   id: 1005
   time: '2025-01-25T08:49:40.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1477
+- author: hivehum
+  changes:
+  - message: 'New to the SecLink: A special, non-lethal Space Blade!'
+    type: Add
+  id: 1006
+  time: '2025-01-26T03:13:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1484
