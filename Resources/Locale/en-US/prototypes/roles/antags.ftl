@@ -1,5 +1,4 @@
-﻿
-roles-antag-syndicate-agent-name = Syndicate agent
+﻿roles-antag-syndicate-agent-name = Syndicate agent
 roles-antag-syndicate-agent-objective = Complete your objectives without being caught.
 
 roles-antag-syndicate-agent-sleeper-name = Syndicate sleeper agent

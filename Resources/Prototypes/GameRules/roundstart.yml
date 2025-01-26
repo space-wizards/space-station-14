@@ -93,7 +93,7 @@
   id: Nukeops
   components:
   - type: GameRule
-    minPlayers: 0
+    minPlayers: 20
   - type: LoadMapRule
     mapPath: /Maps/Nonstations/nukieplanet.yml
   - type: AntagSelection
