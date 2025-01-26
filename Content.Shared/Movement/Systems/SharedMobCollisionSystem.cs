@@ -44,7 +44,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         SubscribeLocalEvent<MobCollisionComponent, ComponentStartup>(OnCollisionStartup);
         SubscribeLocalEvent<MobCollisionComponent, RefreshMovementSpeedModifiersEvent>(OnMoveModifier);
 
-        UpdatesAfter.Add(typeof(SharedPhysicsSystem));
+        UpdatesBefore.Add(typeof(SharedPhysicsSystem));
     }
 
     private void UpdatePushCap()
@@ -60,7 +60,18 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var comp))
         {
-            SetColliding((uid, comp), false);
+            comp.HandledThisTick = false;
+
+            if (!comp.Colliding)
+                continue;
+
+            comp.BufferTime -= frameTime;
+            Dirty(uid, comp);
+
+            if (comp.BufferTime <= 0f)
+            {
+                SetColliding((uid, comp), false);
+            }
         }
     }
 
@@ -74,6 +85,15 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
     private void SetColliding(Entity<MobCollisionComponent> entity, bool value)
     {
+        if (entity.Comp.SpeedModifier.Equals(1f))
+            return;
+
+        if (value)
+        {
+            entity.Comp.BufferTime = 0.20f;
+            Dirty(entity);
+        }
+
         if (entity.Comp.Colliding == value)
             return;
 
@@ -114,9 +134,10 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         var xform = Transform(entity.Owner);
 
         // TODO: Raycast to the specified spot so we don't clip into a wall.
-        // TODO: Does wakebody break this???
         Physics.WakeBody(entity.Owner);
 
+        // Alternative though needs tweaks to mob movement code.
+        // Physics.ApplyLinearImpulse(entity.Owner, direction);
         _xformSystem.SetLocalPosition(entity.Owner, xform.LocalPosition + direction);
         SetColliding(entity, true);
     }
@@ -130,6 +151,10 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         if (physics.ContactCount == 0)
             return false;
 
+        if (entity.Comp1.HandledThisTick)
+            return true;
+
+        entity.Comp1.HandledThisTick = true;
         var xform = Transform(entity.Owner);
         var (worldPos, worldRot) = _xformSystem.GetWorldPositionRotation(entity.Owner);
         var ourTransform = new Transform(worldPos, worldRot);
@@ -178,8 +203,8 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             return contactCount > 0;
         }
 
-        direction *= frameTime;
         var parentAngle = worldRot - xform.LocalRotation;
+        direction *= frameTime;
         var localDir = (-parentAngle).RotateVec(direction);
         RaiseCollisionEvent(entity.Owner, localDir);
         return true;

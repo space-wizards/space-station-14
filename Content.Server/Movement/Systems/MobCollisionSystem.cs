@@ -24,8 +24,6 @@ public sealed class MobCollisionSystem : SharedMobCollisionSystem
 
     public override void Update(float frameTime)
     {
-        base.Update(frameTime);
-
         if (!CfgManager.GetCVar(CCVars.MovementMobPushing))
             return;
 
@@ -38,6 +36,8 @@ public sealed class MobCollisionSystem : SharedMobCollisionSystem
 
             HandleCollisions((uid, comp, physics), frameTime);
         }
+
+        base.Update(frameTime);
     }
 
     protected override void RaiseCollisionEvent(EntityUid uid, Vector2 direction)

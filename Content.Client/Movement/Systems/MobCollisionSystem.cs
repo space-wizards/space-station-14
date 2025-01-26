@@ -15,19 +15,22 @@ public sealed class MobCollisionSystem : SharedMobCollisionSystem
 
     public override void Update(float frameTime)
     {
+        if (!CfgManager.GetCVar(CCVars.MovementMobPushing))
+            return;
+
+        if (_timing.IsFirstTimePredicted)
+        {
+            var player = _player.LocalEntity;
+
+            if (MobQuery.TryComp(player, out var comp) && PhysicsQuery.TryComp(player, out var physics))
+            {
+                // TODO: Actual fixture
+                Physics.WakeBody(player.Value, body: physics);
+                HandleCollisions((player.Value, comp, physics), frameTime);
+            }
+        }
+
         base.Update(frameTime);
-
-        if (!_timing.IsFirstTimePredicted || !CfgManager.GetCVar(CCVars.MovementMobPushing))
-            return;
-
-        var player = _player.LocalEntity;
-
-        if (!MobQuery.TryComp(player, out var comp) || !PhysicsQuery.TryComp(player, out var physics))
-            return;
-
-        // TODO: Actual fixture
-        Physics.WakeBody(player.Value, body: physics);
-        HandleCollisions((player.Value, comp, physics), frameTime);
     }
 
     protected override void RaiseCollisionEvent(EntityUid uid, Vector2 direction)
