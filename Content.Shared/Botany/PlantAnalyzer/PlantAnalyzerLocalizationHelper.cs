@@ -44,7 +44,7 @@ public sealed class PlantAnalyzerLocalizationHelper
 
         List<string> locStrings = [];
         foreach (var id in ids)
-            locStrings.Add(protMan.TryIndex<EntityPrototype>(id, out var prototype) ? prototype.Name : id);
+            locStrings.Add(Loc.GetString("plant-analyzer-produce-plural", ("thing", protMan.TryIndex<EntityPrototype>(id, out var prototype) ? prototype.Name : id)));
 
         return ContentLocalizationManager.FormatListToOr(locStrings);
     }

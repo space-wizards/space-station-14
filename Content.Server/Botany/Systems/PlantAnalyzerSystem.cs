@@ -88,7 +88,8 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
                     potency: plantHolder.Seed.Potency,
                     chemicals: [.. plantHolder.Seed.Chemicals.Keys],
                     produce: plantHolder.Seed.ProductPrototypes,
-                    exudeGasses: [.. plantHolder.Seed.ExudeGasses.Keys]
+                    exudeGasses: [.. plantHolder.Seed.ExudeGasses.Keys],
+                    seedless: plantHolder.Seed.Seedless
                 );
             }
             trayData = new PlantAnalyzerTrayData(
@@ -158,6 +159,7 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
             ("gasesOut", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.GasesToLocalizedStrings(data.ProduceData.ExudeGasses, _prototypeManager) : missingData),
             ("endurance", data.PlantData?.Endurance.ToString("0.00") ?? missingData),
             ("lifespan", data.PlantData?.Lifespan.ToString("0.00") ?? missingData),
+            ("seedless", data.ProduceData is not null ? (data.ProduceData.Seedless ? Loc.GetString("plant-analyzer-seedless", ("space", " ")) : "") : missingData),
             ("indent", "    ")
         ];
         var text = new StringBuilder();
