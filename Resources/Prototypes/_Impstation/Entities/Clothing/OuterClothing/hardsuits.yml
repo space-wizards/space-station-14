@@ -69,7 +69,7 @@
 # antag hardsuit
 
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseSyndicateContraband]
+  parent: [ClothingOuterHardsuitBase, Tier3Contraband]
   id: ClothingOuterHardsuitRepomen
   name: cybersun repoman's hardsuit
   description: A daunting hardsuit used by the infamous Cybersun Repomen. Its design allows for better maneuverability with insulation from hazardous environments.
