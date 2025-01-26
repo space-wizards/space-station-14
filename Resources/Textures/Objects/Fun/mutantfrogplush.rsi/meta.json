@@ -7,38 +7,38 @@
         "y": 32
     },
     "states": [
-        {
-            "name": "green"
-        },
-        {
-            "name": "green-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "green-inhand-right",
-            "directions": 4
-        },
-        {
-            "name": "red"
-        },
-        {
-            "name": "red-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "red-inhand-right",
-            "directions": 4
-        },
-        {
-            "name": "blue"
-        },
-        {
-            "name": "blue-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "blue-inhand-right",
-            "directions": 4
-        }
+      {
+        "name": "green"
+      },
+      {
+        "name": "green-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "green-inhand-right",
+        "directions": 4
+      },
+      {
+        "name": "red"
+      },
+      {
+        "name": "red-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "red-inhand-right",
+        "directions": 4
+      },
+      {
+        "name": "blue"
+      },
+      {
+        "name": "blue-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "blue-inhand-right",
+        "directions": 4
+      }
     ]
-}
+  }
