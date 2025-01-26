@@ -41,8 +41,8 @@ public sealed class PlantAnalyzerTolerancesData(float nutrientConsumption, float
     public float ToxinsTolerance = toxinsTolerance;
     public float PestTolerance = pestTolerance;
     public float WeedTolerance = weedTolerance;
-    public float LowPressureTolerance = lowPressureTolerance;
-    public float HighPressureTolerance = highPressureTolerance;
+    public float IdealPressure = (lowPressureTolerance + highPressureTolerance) / 2;
+    public float PressureTolerance = (lowPressureTolerance + highPressureTolerance) / 2 - lowPressureTolerance;
     public float IdealHeat = idealHeat;
     public float HeatTolerance = heatTolerance;
     public float IdealLight = idealLight;
@@ -73,10 +73,37 @@ public sealed class PlantAnalyzerPlantData(string seedDisplayName, float health,
 public sealed class PlantAnalyzerProduceData(int yield, float potency, List<string> chemicals, List<string> produce, List<Gas> exudeGasses)
 {
     public int Yield = yield;
-    public float Potency = potency;
+    public string Potency = ObscurePotency(potency);
     public List<string> Chemicals = chemicals;
     public List<string> Produce = produce;
     public List<Gas> ExudeGasses = exudeGasses;
+
+    private static string ObscurePotency(float potency)
+    {
+        var potencyFtl = "plant-analyzer-potency-";
+        if (potency <= 5)      // 5 should still be tiny
+            potencyFtl += "tiny";
+        else if (potency < 10) // 10 should be below-average
+            potencyFtl += "small";
+        else if (potency < 15)
+            potencyFtl += "below-average";
+        else if (potency < 20)
+            potencyFtl += "average";
+        else if (potency <= 25) // 25 is the highest starting value
+            potencyFtl += "above-average";
+        else if (potency < 30)
+            potencyFtl += "large";
+        else if (potency < 40)
+            potencyFtl += "huge";
+        else if (potency < 50)
+            potencyFtl += "gigantic";
+        else if (potency < 60)
+            potencyFtl += "ludicrous";
+        else
+            potencyFtl += "immeasurable";
+
+        return potencyFtl;
+    }
 }
 
 [Serializable, NetSerializable]

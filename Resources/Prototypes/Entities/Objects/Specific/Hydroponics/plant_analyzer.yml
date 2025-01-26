@@ -50,4 +50,4 @@
     backgroundImageTile: true
     backgroundPatchMargin: 6.0, 0.0, 6.0, 0.0
     contentMargin: 6.0, 6.0, 6.0, 6.0
-    maxWritableArea: 368.0, 512.0
+    maxWritableArea: 375.0, 550.0
