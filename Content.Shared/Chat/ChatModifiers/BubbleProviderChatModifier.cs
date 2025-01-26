@@ -14,13 +14,14 @@ public sealed partial class BubbleProviderChatModifier : ChatModifier
     [DataField]
     public SpeechType SpeechType = SpeechType.Say;
 
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
-        return InsertOutsideTag(InsertOutsideTag(message, new MarkupNode("BubbleHeader", new MarkupParameter((int)SpeechType), null), "EntityNameHeader"), new MarkupNode("BubbleMessage", null, null), "MainMessage");
+        message.InsertOutsideTag(new MarkupNode("BubbleHeader", new MarkupParameter((int)SpeechType), null), "EntityNameHeader");
+        message.InsertOutsideTag(new MarkupNode("BubbleMessage", new MarkupParameter((int)SpeechType), null), "MainMessage");
     }
 }
 
-// This enum needs to be merged with the one in SpeechBubble.cs
+// CHAT-TODO: This enum needs to be merged with the one in SpeechBubble.cs
 public enum SpeechType : byte
 {
     Emote,

@@ -11,8 +11,6 @@ namespace Content.Server.Chat.ChatConditions;
 [DataDefinition]
 public sealed partial class RangeChatCondition : ChatCondition
 {
-    public override Type? ConsumerType { get; set; } = typeof(EntityUid);
-
     /// <summary>
     /// The minimum range to meet this condition; inclusive.
     /// </summary>
@@ -27,43 +25,41 @@ public sealed partial class RangeChatCondition : ChatCondition
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
-    public override HashSet<T> FilterConsumers<T>(HashSet<T> consumers, Dictionary<Enum, object> channelParameters)
+    protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
     {
-        if (consumers is HashSet<EntityUid> entityConsumers)
+        IoCManager.InjectDependencies(this);
+
+        if (channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var senderEntity) &&
+            _entityManager.TryGetComponent<TransformComponent>((EntityUid)senderEntity, out var sourceTransform))
         {
-            IoCManager.InjectDependencies(this);
-
-            if (channelParameters.TryGetValue(DefaultChannelParameters.SenderEntity, out var senderEntity) &&
-                _entityManager.TryGetComponent<TransformComponent>((EntityUid)senderEntity, out var sourceTransform))
+            if (_entityManager.TryGetComponent<TransformComponent>(subjectEntity, out var transform))
             {
-                var returnConsumers = new HashSet<EntityUid>();
+                if (transform.MapID != sourceTransform.MapID)
+                    return false;
 
-                foreach (var entity in entityConsumers)
+                Logger.Debug("wph");
+                // If you wanted to do something like a hard-of-hearing trait, our hearing extension component,
+                // this is probably where you'd check for it.
+
+                // Even if they are a ghost hearer, in some situations we still need the range
+                if (sourceTransform.Coordinates.TryDistance(_entityManager,
+                        transform.Coordinates,
+                        out var distance) &&
+                    distance < MaximumRange &&
+                    distance >= MinimumRange)
                 {
-                    if (_entityManager.TryGetComponent<TransformComponent>(entity, out var transform))
-                    {
-                        if (transform.MapID != sourceTransform.MapID)
-                            continue;
-
-                        // If you wanted to do something like a hard-of-hearing trait, our hearing extension component,
-                        // this is probably where you'd check for it.
-
-                        // Even if they are a ghost hearer, in some situations we still need the range
-                        if (sourceTransform.Coordinates.TryDistance(_entityManager,
-                                transform.Coordinates,
-                                out var distance) &&
-                            distance < MaximumRange &&
-                            distance >= MinimumRange)
-                        {
-                            returnConsumers.Add(entity);
-                        }
-                    }
+                    Logger.Debug("wrh");
+                    return true;
                 }
-
-                return returnConsumers as HashSet<T> ?? new HashSet<T>();
             }
         }
 
-        return new HashSet<T>();
+        Logger.Debug("wzh");
+        return false;
+    }
+
+    protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)
+    {
+        return false;
     }
 }

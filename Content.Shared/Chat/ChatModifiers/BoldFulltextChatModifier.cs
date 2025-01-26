@@ -9,8 +9,8 @@ namespace Content.Shared.Chat.ChatModifiers;
 [DataDefinition]
 public sealed partial class BoldFulltextChatModifier : ChatModifier
 {
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
-        return InsertAroundMessage(message, new MarkupNode("bold", null, null));
+        message.InsertAroundMessage(new MarkupNode("bold", null, null));
     }
 }

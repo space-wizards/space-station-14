@@ -15,7 +15,7 @@ public sealed partial class SessionNameHeaderChatModifier : ChatModifier
 {
     [Dependency] private readonly EntityManager _entityManager = default!;
 
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
         IoCManager.InjectDependencies(this);
 
@@ -23,10 +23,7 @@ public sealed partial class SessionNameHeaderChatModifier : ChatModifier
         {
             var sessionName = ((ICommonSession)sender).Name;
 
-            return InsertBeforeMessage(message,
-                new MarkupNode("SessionNameHeader", new MarkupParameter(sessionName), null));
+            message.InsertBeforeMessage(new MarkupNode("SessionNameHeader", new MarkupParameter(sessionName), null));
         }
-
-        return message;
     }
 }

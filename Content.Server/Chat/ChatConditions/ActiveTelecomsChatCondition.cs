@@ -4,6 +4,7 @@ using Content.Shared.Chat.Prototypes;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Microsoft.Extensions.Logging;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chat.ChatConditions;
@@ -14,12 +15,11 @@ namespace Content.Server.Chat.ChatConditions;
 [DataDefinition]
 public sealed partial class ActiveTelecomsChatCondition : ChatCondition
 {
-    public override Type? ConsumerType { get; set; } = null;
 
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
-    public override HashSet<T> FilterConsumers<T>(HashSet<T> consumers, Dictionary<Enum, object> channelParameters)
+    public bool CheckTelecomms(ChatMessageContext channelParameters)
     {
         IoCManager.InjectDependencies(this);
 
@@ -27,7 +27,7 @@ public sealed partial class ActiveTelecomsChatCondition : ChatCondition
             !channelParameters.TryGetValue(DefaultChannelParameters.RadioChannel, out var radioChannel) ||
             !_prototypeManager.TryIndex((string)radioChannel, out RadioChannelPrototype? radioPrototype) ||
             !_entityManager.TryGetComponent<TransformComponent>((EntityUid)senderEntity, out var sourceTransform))
-            return new HashSet<T>();
+            return false;
 
         var activeServer = radioPrototype.LongRange;
 
@@ -41,11 +41,22 @@ public sealed partial class ActiveTelecomsChatCondition : ChatCondition
                     power.Powered &&
                     keys.Channels.Contains(radioPrototype.ID))
                 {
-                    activeServer = true;
+                    return true;
                 }
             }
         }
 
-        return activeServer ? consumers : new HashSet<T>();
+        return false;
+    }
+
+
+    protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
+    {
+        return CheckTelecomms(channelParameters);
+    }
+
+    protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)
+    {
+        return CheckTelecomms(channelParameters);
     }
 }

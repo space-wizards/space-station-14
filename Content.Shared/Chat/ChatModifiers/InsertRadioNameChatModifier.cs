@@ -30,7 +30,7 @@ public sealed partial class InsertRadioNameChatModifier : ChatModifier
     [DataField]
     public bool AfterNode = true;
 
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
         IoCManager.InjectDependencies(this);
         if (channelParameters.TryGetValue(DefaultChannelParameters.RadioChannel, out var radioChannel) &&
@@ -41,12 +41,13 @@ public sealed partial class InsertRadioNameChatModifier : ChatModifier
                 var str = "[" + Loc.GetString(radioPrototype.LocalizedName) + "] ";
 
                 if (AfterNode)
-                    return InsertAfterTag(message, new MarkupNode(str), TargetNode);
+                {
+                    message.InsertAfterTag(new MarkupNode(str), TargetNode);
+                    return;
+                }
 
-                return InsertBeforeTag(message, new MarkupNode(str), TargetNode);
+                message.InsertBeforeTag(new MarkupNode(str), TargetNode);
             }
         }
-
-        return message;
     }
 }

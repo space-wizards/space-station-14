@@ -13,14 +13,14 @@ public sealed partial class ColorFulltextChatModifier : ChatModifier
     [DataField]
     public string ColorKey = "Base";
 
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
 
         var colorKey = ColorKey;
         if (channelParameters.TryGetValue(ColorFulltextMarkupParameter.Color, out var color))
             colorKey = (string)color;
 
-        return InsertAroundMessage(message, new MarkupNode("ColorValue", new MarkupParameter(colorKey), null, false));
+        message.InsertAroundMessage(new MarkupNode("ColorValue", new MarkupParameter(colorKey), null, false));
     }
 
     public enum ColorFulltextMarkupParameter

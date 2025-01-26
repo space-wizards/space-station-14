@@ -21,7 +21,6 @@ namespace Content.Server.Chat.ChatConditions;
 [DataDefinition]
 public sealed partial class HasComponentChatCondition : ChatCondition
 {
-    public override Type? ConsumerType { get; set; } = typeof(EntityUid);
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
@@ -29,28 +28,24 @@ public sealed partial class HasComponentChatCondition : ChatCondition
     [DataField]
     public string? Component;
 
-    public override HashSet<T> FilterConsumers<T>(HashSet<T> consumers, Dictionary<Enum, object> channelParameters)
+    protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
     {
-        if (consumers is HashSet<EntityUid> entityConsumers)
+        IoCManager.InjectDependencies(this);
+
+        if (Component != null)
         {
-            IoCManager.InjectDependencies(this);
-
-            var returnConsumers = new HashSet<EntityUid>();
-
-            if (Component != null)
+            var comp = _componentFactory.GetRegistration(Component, true);
+            if (_entityManager.HasComponent(subjectEntity, comp.Type))
             {
-                foreach (var consumer in entityConsumers)
-                {
-                    var comp = _componentFactory.GetRegistration(Component, true);
-                    if (_entityManager.HasComponent(consumer, comp.Type))
-                    {
-                        returnConsumers.Add(consumer);
-                    }
-                }
+                return true;
             }
-            return returnConsumers as HashSet<T> ?? new HashSet<T>();
         }
 
-        return new HashSet<T>();
+        return false;
+    }
+
+    protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)
+    {
+        return false;
     }
 }

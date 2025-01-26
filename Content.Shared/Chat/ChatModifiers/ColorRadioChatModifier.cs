@@ -15,16 +15,14 @@ public sealed partial class ColorRadioChatModifier : ChatModifier
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
         IoCManager.InjectDependencies(this);
 
         if (channelParameters.TryGetValue(DefaultChannelParameters.RadioChannel, out var radio) &&
             _prototypeManager.TryIndex((string)radio, out RadioChannelPrototype? radioPrototype))
         {
-            return InsertAroundMessage(message, new MarkupNode("color", new MarkupParameter(radioPrototype.Color), null, false));
+            message.InsertAroundMessage(new MarkupNode("color", new MarkupParameter(radioPrototype.Color), null, false));
         }
-
-        return message;
     }
 }

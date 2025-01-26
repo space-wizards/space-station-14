@@ -9,8 +9,8 @@ namespace Content.Shared.Chat.ChatModifiers;
 [DataDefinition]
 public sealed partial class SpaceMainMessageChatModifier : ChatModifier
 {
-    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
+    public override void ProcessChatModifier(ref FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
-        return InsertBeforeTag(message, new MarkupNode(" "), "MainMessage");
+        message.InsertBeforeTag(new MarkupNode(" "), "MainMessage");
     }
 }

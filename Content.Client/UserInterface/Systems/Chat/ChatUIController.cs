@@ -824,15 +824,14 @@ public sealed class ChatUIController : UIController
     {
         if (_prototypeManager.TryIndex(msg.CommunicationChannel, out var proto))
         {
-            foreach (var markupSupplier in proto.ClientChatModifiers)
+            foreach (var markupSupplier in proto.ClientModifiers)
             {
-                msg.Message = markupSupplier.ProcessChatModifier(msg.Message, proto.ChannelParameters);
+                markupSupplier.ProcessChatModifier(ref msg.Message, proto.ChannelParameters);
             }
 
             // Process any remaining clientside content markups.
             msg.Message = _contentMarkupTagManager.ProcessMessage(msg.Message, null);
 
-            Logger.Debug(msg.HideChat.ToString());
             // Log all incoming chat to repopulate when filter is un-toggled
             if (!msg.HideChat)
             {
@@ -851,7 +850,7 @@ public sealed class ChatUIController : UIController
                 }
             }
 
-            if (proto.ClientChatModifiers.Where(x => x is BubbleProviderChatModifier).Count() > 0)
+            if (proto.ClientModifiers.Where(x => x is BubbleProviderChatModifier).Count() > 0)
             {
                 var bubbleHeaderNode = msg.Message.Nodes.First(x => x.Name == "BubbleHeader");
                 if (bubbleHeaderNode.Value.TryGetLong(out var speechEnum))

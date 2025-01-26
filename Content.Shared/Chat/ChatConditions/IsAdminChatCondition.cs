@@ -10,8 +10,6 @@ namespace Content.Shared.Chat.ChatConditions;
 [DataDefinition]
 public sealed partial class IsAdminChatCondition : ChatCondition
 {
-    public override Type? ConsumerType { get; set; } = typeof(ICommonSession);
-
     /// <summary>
     /// If true, deadmined sessions will be included.
     /// </summary>
@@ -20,16 +18,15 @@ public sealed partial class IsAdminChatCondition : ChatCondition
 
     [Dependency] private readonly ISharedAdminManager _admin = default!;
 
-    public override HashSet<T> FilterConsumers<T>(HashSet<T> consumers, Dictionary<Enum, object> channelParameters)
+    protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
     {
-        if (consumers is HashSet<ICommonSession> sessionConsumers)
-        {
-            IoCManager.InjectDependencies(this);
+        return false;
+    }
 
-            var filteredConsumers = sessionConsumers.Where(x => _admin.IsAdmin(x, IncludeDeadmin)).ToHashSet();
-            return filteredConsumers as HashSet<T> ?? new HashSet<T>();
-        }
+    protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)
+    {
+        IoCManager.InjectDependencies(this);
 
-        return new HashSet<T>();
+        return _admin.IsAdmin(subjectSession, IncludeDeadmin);
     }
 }
