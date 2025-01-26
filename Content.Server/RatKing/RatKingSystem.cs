@@ -111,6 +111,7 @@ namespace Content.Server.RatKing
         }
 
         /// <summary>
+        /// #IMP
         /// Give leeway on how close you have to point to a target.
         /// Allows you to point near someone and still have them targeted
         /// </summary>

@@ -1384,11 +1384,3 @@
   sprites:
     - sprite: Mobs/Customization/human_hair.rsi
       state: longbow
-
-- type: marking
-  id: HumanHairFrenchBraid
-  bodyPart: Hair
-  markingCategory: Hair
-  sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: frenchbraid
