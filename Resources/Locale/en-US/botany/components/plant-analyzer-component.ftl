@@ -42,22 +42,23 @@ plant-analyzer-potency-immeasurable = immeasurably large
 
 plant-analyzer-print = Print
 plant-analyzer-printout-missing = N/A
-plant-analyzer-printout-l0 = [color=white][/color]
-plant-analyzer-printout-l1 = [color=#9FED58][head=2]Plant Analyzer Report[/head][/color]
-plant-analyzer-printout-l2 = ──────────────────────────────
-plant-analyzer-printout-l3 = [bullet/] Species: {$seedName}
-plant-analyzer-printout-l4 = [bullet/] Product: [color=#a4885c]{$produce}[/color]
-plant-analyzer-printout-l5 = [bullet/] Growth profile:
-plant-analyzer-printout-l6 = {$indent}[bullet/] Water: [color=cyan]{$water}[/color]
-plant-analyzer-printout-l7 = {$indent}[bullet/] Nutrition: [color=orange]{$nutrients}[/color]
-plant-analyzer-printout-l8 = {$indent}[bullet/] Toxins: [color=yellowgreen]{$toxins}[/color]
-plant-analyzer-printout-l9 = {$indent}[bullet/] Pests: [color=magenta]{$pests}[/color]
-plant-analyzer-printout-l10 = {$indent}[bullet/] Weeds: [color=red]{$weeds}[/color]
-plant-analyzer-printout-l11 = [bullet/] Environmental profile:
-plant-analyzer-printout-l12 = {$indent}[bullet/] Composition: [bold]{$gasesIn}[/bold]
-plant-analyzer-printout-l13 = {$indent}[bullet/] Pressure: [color=lightblue]{$kpa}kPa ± {$kpaTolerance}kPa[/color]
-plant-analyzer-printout-l14 = {$indent}[bullet/] Temperature: [color=lightsalmon]{$temp}°k ± {$tempTolerance}°k[/color]
-plant-analyzer-printout-l15 = {$indent}[bullet/] Light: [color=gray][bold]{$lightLevel} ± {$lightTolerance}[/bold][/color]
-plant-analyzer-printout-l16 = [bullet/] Observed flowers: [color=lightgreen]{$n} {$potency}[/color]
-plant-analyzer-printout-l17 = [bullet/] Observed chemicals: [color=gray][bold]{$chemicals}[/bold][/color]
-plant-analyzer-printout-l18 = [bullet/] Observed emissions: [bold]{$gasesOut}[/bold]
+plant-analyzer-printout-l0 = [color=#9FED58][head=2]Plant Analyzer Report[/head][/color]
+plant-analyzer-printout-l1 = ──────────────────────────────
+plant-analyzer-printout-l2 = [bullet/] Species: {$seedName}
+plant-analyzer-printout-l3 = {$indent}[bullet/] Endurance: {$endurance}
+plant-analyzer-printout-l4 = {$indent}[bullet/] Lifespan: {$lifespan}
+plant-analyzer-printout-l5 = {$indent}[bullet/] Product: [color=#a4885c]{$produce}[/color]
+plant-analyzer-printout-l6 = [bullet/] Growth profile:
+plant-analyzer-printout-l7 = {$indent}[bullet/] Water: [color=cyan]{$water}[/color]
+plant-analyzer-printout-l8 = {$indent}[bullet/] Nutrition: [color=orange]{$nutrients}[/color]
+plant-analyzer-printout-l9 = {$indent}[bullet/] Toxins: [color=yellowgreen]{$toxins}[/color]
+plant-analyzer-printout-l10 = {$indent}[bullet/] Pests: [color=magenta]{$pests}[/color]
+plant-analyzer-printout-l11 = {$indent}[bullet/] Weeds: [color=red]{$weeds}[/color]
+plant-analyzer-printout-l12 = [bullet/] Environmental profile:
+plant-analyzer-printout-l13 = {$indent}[bullet/] Composition: [bold]{$gasesIn}[/bold]
+plant-analyzer-printout-l14 = {$indent}[bullet/] Pressure: [color=lightblue]{$kpa}kPa ± {$kpaTolerance}kPa[/color]
+plant-analyzer-printout-l15 = {$indent}[bullet/] Temperature: [color=lightsalmon]{$temp}°k ± {$tempTolerance}°k[/color]
+plant-analyzer-printout-l16 = {$indent}[bullet/] Light: [color=gray][bold]{$lightLevel} ± {$lightTolerance}[/bold][/color]
+plant-analyzer-printout-l17 = [bullet/] Observed flowers: [color=lightgreen]{$n} {$potency}[/color]
+plant-analyzer-printout-l18 = [bullet/] Observed chemicals: [color=gray][bold]{$chemicals}[/bold][/color]
+plant-analyzer-printout-l19 = [bullet/] Observed emissions: [bold]{$gasesOut}[/bold]
