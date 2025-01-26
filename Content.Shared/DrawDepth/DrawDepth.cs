@@ -9,37 +9,42 @@ namespace Content.Shared.DrawDepth
         /// <summary>
         ///     This is for sub-floors, the floors you see after prying off a tile.
         /// </summary>
-        LowFloors = DrawDepthTag.Default - 13,
+        LowFloors = DrawDepthTag.Default - 14,
 
         // various entity types that require different
         // draw depths, as to avoid hiding
         #region SubfloorEntities
-        ThickPipe = DrawDepthTag.Default - 12,
-        ThickWire = DrawDepthTag.Default - 11,
-        ThinPipe = DrawDepthTag.Default - 10,
-        ThinWire = DrawDepthTag.Default - 9,
+        ThickPipe = DrawDepthTag.Default - 13,
+        ThickWire = DrawDepthTag.Default - 12,
+        ThinPipe = DrawDepthTag.Default - 11,
+        ThinWire = DrawDepthTag.Default - 10,
         #endregion
 
         /// <summary>
         ///     Things that are beneath regular floors.
         /// </summary>
-        BelowFloor = DrawDepthTag.Default - 8,
+        BelowFloor = DrawDepthTag.Default - 9,
 
         /// <summary>
         ///     Used for entities like carpets.
         /// </summary>
-        FloorTiles = DrawDepthTag.Default - 7,
+        FloorTiles = DrawDepthTag.Default - 8,
 
         /// <summary>
-        ///     Things that are actually right on the floor, like conveyor belts, ice crust or atmos devices. This does not mean objects like
+        ///     Things that are actually right on the floor, like ice crust or atmos devices. This does not mean objects like
         ///     tables, even though they are technically "on the floor".
         /// </summary>
-        FloorObjects = DrawDepthTag.Default - 6,
+        FloorObjects = DrawDepthTag.Default - 7,
 
         /// <summary>
         //     Discrete drawdepth to avoid z-fighting with other FloorObjects but also above floor entities.
         /// </summary>
-        Puddles = DrawDepthTag.Default - 5,
+        Puddles = DrawDepthTag.Default - 6,
+
+        /// <summary>
+        //     Objects that are on the floor, but should render above puddles. This includes kudzu, holopads, telepads and levers.
+        /// </summary>
+        HighFloorObjects = DrawDepthTag.Default - 5,
 
         DeadMobs = DrawDepthTag.Default - 4,
 
