@@ -43,29 +43,29 @@ public sealed partial class ChameleonClothingComponent : Component
     ///     Will component owner be affected by EMP pulses?
     /// </summary>
     [DataField]
-    public bool EmpAffected = true;
+    public bool AffectedByEmp = true;
 
     /// <summary>
     ///     Intensity of clothes change on EMP.
     ///     Can be interpreted as "How many times clothes will change every second?".
-    ///     Useless without <see cref="EmpAffected"/> set to true.
+    ///     Useless without <see cref="AffectedByEmp"/> set to true.
     /// </summary>
-    [ViewVariables]
-    [DataField]
+    [ViewVariables, DataField]
     public int EmpChangeIntensity = 7;
 
     /// <summary>
-    ///     Should the EMP-change happen continiously, or only once?
-    ///     (False = once, True = continiously)
-    ///     Useless without <see cref="EmpAffected"/>
+    ///     Should the EMP-change happen continuously, or only once?
+    ///     (False = once, True = continuously)
+    ///     Useless without <see cref="AffectedByEmp"/>
     /// </summary>
-    [ViewVariables]
-    [DataField]
-    public bool EmpContinious = true;
+    [ViewVariables, DataField]
+    public bool EmpContinuous = true;
 
-    [AutoPausedField]
-    [DataField]
-    public TimeSpan NextEmpChange = TimeSpan.Zero; // When we need to change outfit next time
+    /// <summary>
+    ///     When should next EMP-caused appearance change happen?
+    /// </summary>
+    [AutoPausedField, DataField]
+    public TimeSpan NextEmpChange = TimeSpan.Zero;
 }
 
 [Serializable, NetSerializable]

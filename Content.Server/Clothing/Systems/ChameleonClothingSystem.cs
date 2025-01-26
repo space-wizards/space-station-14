@@ -60,17 +60,17 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private void OnEmpPulse(EntityUid uid, ChameleonClothingComponent component, ref EmpPulseEvent args)
     {
-        if (component.EmpAffected)
-        {
-            if (component.EmpContinious)
-                component.NextEmpChange = _timing.CurTime + TimeSpan.FromSeconds(1f / component.EmpChangeIntensity);
+        if (!component.AffectedByEmp)
+            return;
 
-            var pick = GetRandomValidPrototype(component.Slot);
-            SetSelectedPrototype(uid, pick, component: component);
+        if (component.EmpContinuous)
+            component.NextEmpChange = _timing.CurTime + TimeSpan.FromSeconds(1f / component.EmpChangeIntensity);
 
-            args.Affected = true;
-            args.Disabled = true;
-        }
+        var pick = GetRandomValidPrototype(component.Slot);
+        SetSelectedPrototype(uid, pick, component: component);
+
+        args.Affected = true;
+        args.Disabled = true;
     }
 
     private void TryOpenUi(EntityUid uid, EntityUid user, ChameleonClothingComponent? component = null)
@@ -118,6 +118,9 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         Dirty(uid, component);
     }
 
+    /// <summary>
+    ///     Get a random prototype for a given slot.
+    /// </summary>
     public string GetRandomValidPrototype(SlotFlags slot)
     {
         return _random.Pick(GetValidTargets(slot).ToList());
@@ -130,17 +133,17 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         var query = EntityQueryEnumerator<EmpDisabledComponent, ChameleonClothingComponent>();
         while (query.MoveNext(out var uid, out var emp, out var chameleon))
         {
-            if (chameleon.EmpContinious)
-            {
-                if (_timing.CurTime < chameleon.NextEmpChange)
-                    continue;
+            if (!chameleon.EmpContinuous)
+                continue;
 
-                // randomly pick cloth element from available an apply it
-                var pick = GetRandomValidPrototype(chameleon.Slot);
-                SetSelectedPrototype(uid, pick, component: chameleon);
+            if (_timing.CurTime < chameleon.NextEmpChange)
+                continue;
 
-                chameleon.NextEmpChange += TimeSpan.FromSeconds(1f / chameleon.EmpChangeIntensity);
-            }
+            // randomly pick cloth element from available and apply it
+            var pick = GetRandomValidPrototype(chameleon.Slot);
+            SetSelectedPrototype(uid, pick, component: chameleon);
+
+            chameleon.NextEmpChange += TimeSpan.FromSeconds(1f / chameleon.EmpChangeIntensity);
         }
     }
 
