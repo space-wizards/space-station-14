@@ -1037,3 +1037,17 @@ Entries:
     changes:
     - type: Tweak
       message: Slightly tweaked the monkey sprite.
+  - id: 255
+    author: Ermucat
+    time: '2025-01-23T21:36:13.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/255
+    changes:
+    - type: Tweak
+      message: Bonfires now set you on fire, watch your step.
+  - id: 317
+    author: BoskiYourk
+    time: '2025-01-26T11:00:24.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/317
+    changes:
+    - type: Tweak
+      message: Updated the senior job berets to better match their jumpsuits.
