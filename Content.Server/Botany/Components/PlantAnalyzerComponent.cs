@@ -1,6 +1,5 @@
 using Content.Server.AbstractAnalyzer;
 using Content.Server.Botany.Systems;
-using Content.Server.Medical.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;

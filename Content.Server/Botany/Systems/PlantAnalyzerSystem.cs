@@ -10,6 +10,7 @@ using Content.Shared.Paper;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Botany.Systems;
@@ -23,6 +24,7 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly PaperSystem _paperSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -40,9 +42,15 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
         if (!ValidScanTarget(target))
             return;
 
-        if (!_entityManager.TryGetComponent<PlantAnalyzerComponent>(analyzer, out var component))
+        if (!_entityManager.TryGetComponent<PlantAnalyzerComponent>(analyzer, out var analyzerComponent))
             return;
 
+        _uiSystem.ServerSendUiMessage(analyzer, PlantAnalyzerUiKey.Key, GatherData(analyzerComponent, scanMode, target: target));
+    }
+
+    private PlantAnalyzerScannedUserMessage GatherData(PlantAnalyzerComponent analyzer, bool? scanMode = null, EntityUid? target = null)
+    {
+        target ??= analyzer.ScannedEntity;
         PlantAnalyzerPlantData? plantData = null;
         PlantAnalyzerTrayData? trayData = null;
         PlantAnalyzerTolerancesData? tolerancesData = null;
@@ -92,15 +100,15 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
             );
         }
 
-        _uiSystem.ServerSendUiMessage(analyzer, PlantAnalyzerUiKey.Key, new PlantAnalyzerScannedUserMessage(
+        return new PlantAnalyzerScannedUserMessage(
             GetNetEntity(target),
             scanMode,
             plantData,
             trayData,
             tolerancesData,
             produceData,
-            component.PrintReadyAt
-        ));
+            analyzer.PrintReadyAt
+        );
     }
 
     private void OnPrint(EntityUid uid, PlantAnalyzerComponent component, PlantAnalyzerPrintMessage args)
@@ -125,34 +133,38 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
             return;
         }
 
-        // TODO: PA
-        var missingData = Loc.GetString("plant-analyzer-printout-missing");
+        var data = GatherData(component);
+        var missingDataFtl = "plant-analyzer-printout-missing";
+        var missingData = Loc.GetString(missingDataFtl);
+
         (string, string)[] parameters = [
-            ("seedName", missingData),
-            ("produce", missingData),
-            ("water", missingData),
-            ("nutrients", missingData),
-            ("toxins", missingData),
-            ("pests", missingData),
-            ("weeds", missingData),
-            ("gasesIn", missingData),
-            ("kpa", missingData),
-            ("kpaTolerance", missingData),
-            ("temp", missingData),
-            ("tempTolerance", missingData),
-            ("lightLevel", missingData),
-            ("lightTolerance", missingData),
-            ("n", missingData),
-            ("potency", missingData),
-            ("chemicals", missingData),
-            ("gasesOut", missingData),
+            ("seedName", Loc.GetString(data.PlantData?.SeedDisplayName ?? missingDataFtl)),
+            ("produce", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.ProduceToLocalizedStrings(data.ProduceData.Produce, _prototypeManager) : missingData),
+            ("water", data.TolerancesData?.WaterConsumption.ToString("0.00") ?? missingData),
+            ("nutrients", data.TolerancesData?.NutrientConsumption.ToString("0.00") ?? missingData),
+            ("toxins", data.TolerancesData?.ToxinsTolerance.ToString("0.00") ?? missingData),
+            ("pests", data.TolerancesData?.PestTolerance.ToString("0.00") ?? missingData),
+            ("weeds", data.TolerancesData?.WeedTolerance.ToString("0.00") ?? missingData),
+            ("gasesIn", data.TolerancesData is not null ? PlantAnalyzerLocalizationHelper.GasesToLocalizedStrings(data.TolerancesData.ConsumeGasses, _prototypeManager) : missingData),
+            ("kpa", data.TolerancesData?.IdealPressure.ToString("0.00") ?? missingData),
+            ("kpaTolerance", data.TolerancesData?.PressureTolerance.ToString("0.00") ?? missingData),
+            ("temp", data.TolerancesData?.IdealHeat.ToString("0.00") ?? missingData),
+            ("tempTolerance", data.TolerancesData?.HeatTolerance.ToString("0.00") ?? missingData),
+            ("lightLevel", data.TolerancesData?.IdealLight.ToString("0.00") ?? missingData),
+            ("lightTolerance", data.TolerancesData?.LightTolerance.ToString("0.00") ?? missingData),
+            ("n", data.ProduceData?.Yield.ToString("0") ?? missingData),
+            ("potency", Loc.GetString(data.ProduceData?.Potency ?? missingDataFtl)),
+            ("chemicals", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.ChemicalsToLocalizedStrings(data.ProduceData.Chemicals, _prototypeManager) : missingData),
+            ("gasesOut", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.GasesToLocalizedStrings(data.ProduceData.ExudeGasses, _prototypeManager) : missingData),
+            ("endurance", data.PlantData?.Endurance.ToString("0.00") ?? missingData),
+            ("lifespan", data.PlantData?.Lifespan.ToString("0.00") ?? missingData),
             ("indent", "    ")
         ];
         var text = new StringBuilder();
-        for (var i = 0; i < 19; i++)
+        for (var i = 0; i < 20; i++)
             text.AppendLine(Loc.GetString($"plant-analyzer-printout-l{i}", [.. parameters]));
 
-        _paperSystem.SetContent((printed, paperComp), text.ToString());
+        _paperSystem.SetContent((printed, paperComp), text.ToString().TrimEnd('\r', '\n'));
         _audioSystem.PlayPvs(component.SoundPrint, uid,
             AudioParams.Default
             .WithVariation(0.25f)
