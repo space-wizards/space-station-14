@@ -11,6 +11,12 @@ public sealed partial class CCVars
         CVarDef.Create("movement.mob_pushing", false, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
+    /// Can we push mobs not moving.
+    /// </summary>
+    public static readonly CVarDef<bool> MovementPushingStatic =
+        CVarDef.Create("movement.pushing_static", false, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
     /// Dot product for the pushed entity's velocity to a target entity's velocity before it gets moved.
     /// </summary>
     public static readonly CVarDef<float> MovementPushingVelocityProduct =

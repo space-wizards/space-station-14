@@ -9,6 +9,9 @@ public sealed partial class MobCollisionComponent : Component
     [DataField, AutoNetworkedField]
     public bool Colliding;
 
+    [DataField, AutoNetworkedField]
+    public float SpeedModifier = 0.5f;
+
     /// <summary>
     /// Shape to give this entity for mob collisions.
     /// </summary>

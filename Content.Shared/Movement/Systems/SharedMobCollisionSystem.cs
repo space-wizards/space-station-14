@@ -15,6 +15,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 {
     [Dependency] protected readonly IConfigurationManager CfgManager = default!;
     [Dependency] private   readonly FixtureSystem _fixtures = default!;
+    [Dependency] private   readonly MovementSpeedModifierSystem _moveMod = default!;
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] private   readonly SharedTransformSystem _xformSystem = default!;
 
@@ -41,6 +42,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         PhysicsQuery = GetEntityQuery<PhysicsComponent>();
         SubscribeAllEvent<MobCollisionMessage>(OnCollision);
         SubscribeLocalEvent<MobCollisionComponent, ComponentStartup>(OnCollisionStartup);
+        SubscribeLocalEvent<MobCollisionComponent, RefreshMovementSpeedModifiersEvent>(OnMoveModifier);
 
         UpdatesAfter.Add(typeof(SharedPhysicsSystem));
     }
@@ -48,6 +50,36 @@ public abstract class SharedMobCollisionSystem : EntitySystem
     private void UpdatePushCap()
     {
         _pushingCap = (1f / CfgManager.GetCVar(CVars.NetTickrate)) * CfgManager.GetCVar(CCVars.MovementPushingCap);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = AllEntityQuery<MobCollisionComponent>();
+
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            SetColliding((uid, comp), false);
+        }
+    }
+
+    private void OnMoveModifier(Entity<MobCollisionComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
+    {
+        if (!ent.Comp.Colliding)
+            return;
+
+        args.ModifySpeed(ent.Comp.SpeedModifier);
+    }
+
+    private void SetColliding(Entity<MobCollisionComponent> entity, bool value)
+    {
+        if (entity.Comp.Colliding == value)
+            return;
+
+        entity.Comp.Colliding = value;
+        Dirty(entity);
+        _moveMod.RefreshMovementSpeedModifiers(entity.Owner);
     }
 
     private void OnCollision(MobCollisionMessage msg, EntitySessionEventArgs args)
@@ -86,6 +118,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         Physics.WakeBody(entity.Owner);
 
         _xformSystem.SetLocalPosition(entity.Owner, xform.LocalPosition + direction);
+        SetColliding(entity, true);
     }
 
     protected bool HandleCollisions(Entity<MobCollisionComponent, PhysicsComponent> entity, float frameTime)
@@ -104,6 +137,9 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         var direction = Vector2.Zero;
         var contactCount = 0;
         var ourVelocity = entity.Comp2.LinearVelocity;
+
+        if (!CfgManager.GetCVar(CCVars.MovementPushingStatic) && ourVelocity == Vector2.Zero)
+            return false;
 
         while (contacts.MoveNext(out var contact))
         {
@@ -127,7 +163,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             var diff = ourTransform.Position - otherTransform.Position;
             var penDepth = MathF.Max(0f, 0.6f - diff.Length());
 
-            //penDepth = MathF.Pow(penDepth, 1.2f);
+            penDepth = MathF.Pow(penDepth, 1f);
 
             // Sum the strengths so we get pushes back the same amount (impulse-wise, ignoring prediction).
             var mobMovement = penDepth * diff.Normalized() * (entity.Comp1.Strength + otherComp.Strength);
