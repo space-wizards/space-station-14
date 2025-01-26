@@ -34,6 +34,7 @@
                     <RichTextLabel Margin="0 0 8 0" Name="Alive" Visible="false" Text="{Loc 'plant-analyzer-component-alive'}" />
                     <RichTextLabel Margin="0 0 8 0" Name="Dead" Visible="false" Text="{Loc 'plant-analyzer-component-dead'}" />
                     <RichTextLabel Margin="0 0 8 0" Name="Unviable" Visible="false" Text="{Loc 'plant-analyzer-component-unviable'}" />
+                    <RichTextLabel Margin="0 0 8 0" Name="Kudzu" Visible="false" Text="{Loc 'plant-analyzer-component-kudzu'}" />
                     <RichTextLabel Margin="0 0 8 0" Name="Mutating" Visible="false" Text="{Loc 'plant-analyzer-component-mutating'}" />
                 </BoxContainer>
                 <GridContainer Name="PlantDataGrid" Margin="0 0 0 5" Columns="6" Visible="false">
@@ -95,6 +96,10 @@
                     <Label HorizontalAlignment="Right" Name="WeedResistanceLabel" />
                 </GridContainer>
                 <PanelContainer Name="ContainerDivider" Visible="false" StyleClasses="LowDivider" />
+                <BoxContainer Name="ChemicalsInWaterBox" Visible="false" Orientation="Horizontal" Margin="5">
+                    <RichTextLabel Name="ChemicalsInWaterLabel" SetWidth="290" />
+                </BoxContainer>
+                <PanelContainer Name="ChemicalsInWaterDivider" Visible="false" StyleClasses="LowDivider" />
                 <BoxContainer Name="EnvironmentBox" Visible="false" Orientation="Horizontal" Margin="5">
                     <RichTextLabel Name="EnvironmentLabel" SetWidth="290" />
                 </BoxContainer>
