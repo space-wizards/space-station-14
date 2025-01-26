@@ -27,7 +27,10 @@
         enum.TetherVisualsStatus.Key:
           unshaded:
             True: { state: base-unshaded }
-            False: { state: base-unshaded-off }
+            False: { state: base-unshaded-off }         
+    - type: Construction
+      graph: FishingRod
+      node: rod
 
 - type: entity
   name: plasma rod

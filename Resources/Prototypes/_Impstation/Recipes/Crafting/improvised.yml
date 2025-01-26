@@ -10,3 +10,16 @@
     sprite: _Impstation/Objects/Weapons/Guns/Launchers/grappling_gun_improvised.rsi
     state: icon
   objectType: Item
+
+- type: construction
+  name: fishing rod
+  id: FishingRod
+  graph: FishingRod
+  startNode: start
+  targetNode: rod
+  category: construction-category-tools
+  objectType: Item
+  description: A tool of the ages used to bring things out of reach closer.
+  icon:
+    sprite: _Impstation/Objects/Fishing/fishingrod.rsi
+    state: base
