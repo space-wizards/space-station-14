@@ -11,19 +11,25 @@
       "name": "icon"
     },
     {
-      "name": "equipped-HELMET",
+      "name": "icon-flash"
+    },
+    {
+      "name": "light-overlay"
+    },
+    {
+      "name": "equipped-head",
       "directions": 4
     },
     {
-      "name": "equipped-HELMET-vox",
+      "name": "equipped-head-light",
       "directions": 4
     },
     {
-      "name": "inhand-left",
+      "name": "equipped-head-vox",
       "directions": 4
     },
     {
-      "name": "inhand-right",
+      "name": "equipped-head-light-vox",
       "directions": 4
     }
   ]

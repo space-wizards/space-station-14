@@ -50,26 +50,6 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/cosmonaut.rsi
 
-#Paramedic Void Helmet
-- type: entity
-  parent: ClothingHeadEVAHelmetBase
-  id: ClothingHeadHelmetVoidParamed
-  name: paramedic void helmet
-  description: A void helmet made for paramedics.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Helmets/paramedhelm.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Helmets/paramedhelm.rsi
-  - type: TemperatureProtection
-    heatingCoefficient: 0.1
-    coolingCoefficient: 0.1
-  - type: Armor
-    modifiers:
-      coefficients:
-        Heat: 0.90
-        Radiation: 0.75
-
 #Ancient Void Helmet
 - type: entity
   parent: ClothingHeadEVAHelmetBase

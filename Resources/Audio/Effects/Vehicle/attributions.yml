@@ -19,3 +19,8 @@
   source: "https://freesound.org/people/13gkopeckak/sounds/378911/"
   license: "CC0-1.0"
   copyright: "13gkopeckak on freesound.org"
+
+- files: ["ambulancesiren.ogg"]
+  source: "https://freesound.org/people/potsi/sounds/668608/"
+  license: "CC0-1.0"
+  copyright: "potsi on freesound.org"
