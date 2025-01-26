@@ -39,6 +39,17 @@
     {
       "name": "grey-inhand-right",
       "directions": 4
-    }
+    },
+      {
+          "name": "purple"
+      },
+      {
+          "name": "purple-inhand-left",
+          "directions": 4
+      },
+      {
+          "name": "purple-inhand-right",
+          "directions": 4
+      }
   ]
 }

@@ -47,6 +47,10 @@
         whitelist:
           tags:
             - PlushieSharkGrey
+      mopbucket_shark_purple:
+        whitelist:
+          tags:
+          - PlushieSharkPurple
       mopbucket_carpplush:
         whitelist:
           tags:
@@ -64,6 +68,7 @@
             - PlushieSharkBlue
             - PlushieSharkPink
             - PlushieSharkGrey
+            - PlushieSharkPurple
             - PlushieCarp
           components:
             - Rehydratable

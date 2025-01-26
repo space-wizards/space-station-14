@@ -92,6 +92,8 @@
         orGroup: GiftPool
       - id: PlushieSharkGrey
         orGroup: GiftPool
+      - id: PlushieSharkPurple
+        orGroup: GiftPool
       - id: ToyAmongPequeno
         orGroup: GiftPool
       - id: PlushieDiona

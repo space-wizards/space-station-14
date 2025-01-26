@@ -614,6 +614,22 @@
 
 - type: entity
   parent: PlushieSharkBlue
+  id: PlushieSharkPurple
+  name: purple shark soft toy
+  description: The legendary shonk.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/sharkplush.rsi
+    state: purple
+  - type: Item
+    heldPrefix: purple
+  - type: Tag
+    tags:
+    - PlushieSharkPurple
+    - Payload
+
+- type: entity
+  parent: PlushieSharkBlue
   id: PlushieSharkGrey
   name: grey shark soft toy
   description: A quiet, reserved kind of shonk. Loves to ride the grey tide.
