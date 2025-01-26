@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: The Grease
-    type: Add
-  - message: Moved reagent and flavor stuff to imp folders
-    type: Tweak
-  id: 507
-  time: '2024-11-14T01:21:11.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/699
 - author: Saeko-44
   changes:
   - message: Added a new section in the guidebook with microwave recipes, complete
@@ -4382,3 +4373,10 @@
   id: 1006
   time: '2025-01-26T03:13:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1484
+- author: mqole
+  changes:
+  - message: GOBLIN AND GREY LESS SICK! GOOBABA
+    type: Fix
+  id: 1007
+  time: '2025-01-26T03:18:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1487
