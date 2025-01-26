@@ -163,7 +163,8 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
                 ("potency", Loc.GetString(msg.ProduceData.Potency)),
                 ("produce", PlantAnalyzerLocalizationHelper.ProduceToLocalizedStrings(msg.ProduceData.Produce, _prototypeManager)),
                 ("gases", PlantAnalyzerLocalizationHelper.GasesToLocalizedStrings(msg.ProduceData.ExudeGasses, _prototypeManager)),
-                ("chemicals", PlantAnalyzerLocalizationHelper.ChemicalsToLocalizedStrings(msg.ProduceData.Chemicals, _prototypeManager))
+                ("chemicals", PlantAnalyzerLocalizationHelper.ChemicalsToLocalizedStrings(msg.ProduceData.Chemicals, _prototypeManager)),
+                ("seedless", msg.ProduceData.Seedless ? Loc.GetString("plant-analyzer-seedless", ("space", " ")) : "")
             ];
 
             ProduceLabel.Text = (msg.ProduceData.Yield == 0 || msg.ProduceData.Produce.Count == 0)
