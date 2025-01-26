@@ -140,7 +140,7 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
 
         (string, string)[] parameters = [
             ("seedName", Loc.GetString(data.PlantData?.SeedDisplayName ?? missingDataFtl)),
-            ("produce", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.ProduceToLocalizedStrings(data.ProduceData.Produce, _prototypeManager) : missingData),
+            ("produce", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.ProduceToLocalizedStrings(data.ProduceData.Produce, _prototypeManager).Plural : missingData),
             ("water", data.TolerancesData?.WaterConsumption.ToString("0.00") ?? missingData),
             ("nutrients", data.TolerancesData?.NutrientConsumption.ToString("0.00") ?? missingData),
             ("toxins", data.TolerancesData?.ToxinsTolerance.ToString("0.00") ?? missingData),
@@ -159,11 +159,11 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
             ("gasesOut", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.GasesToLocalizedStrings(data.ProduceData.ExudeGasses, _prototypeManager) : missingData),
             ("endurance", data.PlantData?.Endurance.ToString("0.00") ?? missingData),
             ("lifespan", data.PlantData?.Lifespan.ToString("0.00") ?? missingData),
-            ("seedless", data.ProduceData is not null ? (data.ProduceData.Seedless ? Loc.GetString("plant-analyzer-seedless", ("space", " ")) : "") : missingData),
+            ("seedless", data.ProduceData is not null ? (data.ProduceData.Seedless ? "yes" : "no") : "other"),
             ("indent", "    ")
         ];
         var text = new StringBuilder();
-        for (var i = 0; i < 20; i++)
+        for (var i = 0; i < 21; i++)
             text.AppendLine(Loc.GetString($"plant-analyzer-printout-l{i}", [.. parameters]));
 
         _paperSystem.SetContent((printed, paperComp), text.ToString().TrimEnd('\r', '\n'));
