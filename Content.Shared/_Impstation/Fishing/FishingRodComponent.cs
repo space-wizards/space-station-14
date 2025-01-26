@@ -21,19 +21,19 @@ public sealed partial class FishingRodComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? Projectile;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("reeling"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool Reeling;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("reelSound"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? ReelSound = new SoundPathSpecifier("/Audio/Weapons/reel.ogg")
     {
         Params = AudioParams.Default.WithLoop(true)
     };
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("cycleSound"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? CycleSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/kinetic_reload.ogg");
 
-    [DataField, ViewVariables]
+    [DataField]
     public SpriteSpecifier RopeSprite =
         new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Guns/Launchers/grappling_gun.rsi"), "rope");
 
