@@ -65,3 +65,33 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCourier
+
+# antag hardsuit
+
+- type: entity
+  parent: [ClothingOuterHardsuitBase, Tier3Contraband]
+  id: ClothingOuterHardsuitRepomen
+  name: cybersun repoman's hardsuit
+  description: A daunting hardsuit used by the infamous Cybersun Repomen. Its design allows for better maneuverability with insulation from hazardous environments.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/repoman.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/repoman.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.1
+        Radiation: 0.1
+        Heat: 0.25
+        Blunt: 0.9
+        Slash: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.95
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitRepomen
