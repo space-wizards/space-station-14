@@ -40,6 +40,7 @@ steal-target-groups-clothing-eyes-hud-beer = beer goggles
 steal-target-groups-bible = bible
 steal-target-groups-clothing-neck-goldmedal = gold medal of crewmanship
 steal-target-groups-clothing-neck-clownmedal = clown medal
+steal-target-groups-wanted-list-cartridge = wanted list cartridge
 
 # Thief structures
 steal-target-groups-teg = teg generator part

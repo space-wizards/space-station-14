@@ -282,6 +282,17 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
+        ///     Compares two TileAtmospheres to see if they are within acceptable ranges for group processing to be enabled.
+        /// </summary>
+        public GasCompareResult CompareExchange(TileAtmosphere sample, TileAtmosphere otherSample)
+        {
+            if (sample.AirArchived == null || otherSample.AirArchived == null)
+                return GasCompareResult.NoExchange;
+
+            return CompareExchange(sample.AirArchived, otherSample.AirArchived);
+        }
+
+        /// <summary>
         ///     Compares two gas mixtures to see if they are within acceptable ranges for group processing to be enabled.
         /// </summary>
         public GasCompareResult CompareExchange(GasMixture sample, GasMixture otherSample)

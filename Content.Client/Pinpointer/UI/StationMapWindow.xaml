@@ -3,11 +3,28 @@
                       xmlns:ui="clr-namespace:Content.Client.Pinpointer.UI"
                       Title="{Loc 'station-map-window-title'}"
                       Resizable="False"
-                      SetSize="668 713"
-                      MinSize="668 713">
+                      SetSize="868 748"
+                      MinSize="868 748">
     <BoxContainer Orientation="Vertical">
-        <BoxContainer Orientation="Horizontal"  HorizontalExpand="True" Margin="0 8 0 10" VerticalAlignment="Top">
+        <!-- Station name -->
+        <controls:StripeBack>
+            <PanelContainer>
+                <Label Name="StationName" Text="Unknown station" StyleClasses="LabelBig" Align="Center"/>
+            </PanelContainer>
+        </controls:StripeBack>
+
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalAlignment="Top">
             <ui:NavMapControl Name="NavMapScreen"/>
+
+            <BoxContainer Orientation="Vertical" SetWidth="200">
+                <!-- Search bar -->
+                <LineEdit Name="FilterBar" PlaceHolder="{Loc 'station-map-filter-placeholder'}" Margin="0 0 10 10" HorizontalExpand="True"/>
+
+                <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+                    <!-- Beacon Buttons (filled by code) -->
+                    <BoxContainer Name="BeaconButtons" Orientation="Vertical" HorizontalExpand="True" />
+                </ScrollContainer>
+            </BoxContainer>
         </BoxContainer>
 
         <!-- Footer -->

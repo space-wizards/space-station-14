@@ -20,7 +20,6 @@ public sealed partial class ContentAudioSystem
 {
     [Dependency] private readonly IBaseClient _client = default!;
     [Dependency] private readonly ClientGameTicker _gameTicker = default!;
-    [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
 
     private readonly AudioParams _lobbySoundtrackParams = new(-5f, 1, 0, 0, 0, false, 0f);
@@ -71,7 +70,7 @@ public sealed partial class ContentAudioSystem
         Subs.CVar(_configManager, CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
         Subs.CVar(_configManager, CCVars.LobbyMusicVolume, LobbyMusicVolumeCVarChanged);
 
-        _stateManager.OnStateChanged += StateManagerOnStateChanged;
+        _state.OnStateChanged += StateManagerOnStateChanged;
 
         _client.PlayerLeaveServer += OnLeave;
 
@@ -115,7 +114,7 @@ public sealed partial class ContentAudioSystem
 
     private void LobbyMusicCVarChanged(bool musicEnabled)
     {
-        if (musicEnabled && _stateManager.CurrentState is LobbyState)
+        if (musicEnabled && _state.CurrentState is LobbyState)
         {
             StartLobbyMusic();
         }
@@ -234,7 +233,7 @@ public sealed partial class ContentAudioSystem
 
     private void ShutdownLobbyMusic()
     {
-        _stateManager.OnStateChanged -= StateManagerOnStateChanged;
+        _state.OnStateChanged -= StateManagerOnStateChanged;
 
         _client.PlayerLeaveServer -= OnLeave;
 

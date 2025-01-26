@@ -76,6 +76,7 @@ food-sequence-content-berries = berries
 food-sequence-content-spacemans-trumpet = spaceman's trupmet
 food-sequence-content-cherry = cherry
 food-sequence-content-snail = snail
+food-sequence-content-anomaly-berry = anomaly berry
 
 # BURGERS
 
@@ -116,6 +117,7 @@ food-sequence-burger-content-suppermatter = supper
 food-sequence-burger-content-hamster = hams
 food-sequence-burger-content-berries = berri
 food-sequence-burger-content-spacemans-trumpet = spacetrump
+food-sequence-burger-content-anomaly-berry = anom
 food-sequence-burger-content-extradimensional-orange = 3d
 food-sequence-burger-content-world-pea = peace
 

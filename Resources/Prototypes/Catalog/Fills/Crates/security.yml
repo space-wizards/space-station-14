@@ -2,7 +2,7 @@
   id: CrateSecurityArmor
   parent: CrateSecgear
   name: armor crate
-  description: Three vests of well-rounded, decently-protective armor. Requires Security access to open.
+  description: Contains three bulletproof vests. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
@@ -24,7 +24,7 @@
   id: CrateSecurityNonlethal
   parent: CrateSecgear
   name: nonlethals crate
-  description: Disabler weapons. Requires Security access to open.
+  description: Contains a mix of disablers, stun batons, and flashes. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
@@ -37,26 +37,6 @@
         amount: 3
 #      - Pepperspray
 #      - GrenadeTeargas
-
-- type: entity
-  id: CrateSecurityRiot
-  parent: CrateSecgear
-  name: swat crate
-  description: Contains two sets of riot armor, helmets, shields, and enforcers loaded with beanbags. Extra ammo is included. Requires Armory access to open.
-  components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterArmorRiot
-        amount: 2
-      - id: ClothingHeadHelmetRiot
-        amount: 2
-      - id: WeaponShotgunEnforcerRubber
-        amount: 2
-      - id: BoxBeanbag
-        amount: 2
-      - id: RiotShield
-        amount: 2
-#      - SecGasmask
 
 - type: entity
   id: CrateSecuritySupplies
