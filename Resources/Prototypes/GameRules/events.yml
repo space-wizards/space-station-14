@@ -503,6 +503,7 @@
       blacklist:
         components:
         - AntagImmune
+        - MindShield
       mindRoles:
       - MindRoleTraitorSleeper
 
