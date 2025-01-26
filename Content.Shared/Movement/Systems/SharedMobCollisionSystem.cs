@@ -1,54 +1,53 @@
 using System.Numerics;
+using Content.Shared.CCVar;
 using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
-using Robust.Shared.Network;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Movement.Systems;
 
 public abstract class SharedMobCollisionSystem : EntitySystem
 {
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
-    [Dependency] private readonly RayCastSystem _rayCast = default!;
+    [Dependency] protected readonly IConfigurationManager CfgManager = default!;
+    [Dependency] private   readonly FixtureSystem _fixtures = default!;
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+    [Dependency] private   readonly SharedTransformSystem _xformSystem = default!;
 
     protected EntityQuery<MobCollisionComponent> MobQuery;
     protected EntityQuery<PhysicsComponent> PhysicsQuery;
 
-    /*
-     * Looks like movespeed not panning out?
-     * Also try hard contact but ignore it on server and have client handle it, but that's just clientside movement KEKW
-     *
-     * Push away version somewhat works but only for 30tps not 60tps
-     * Also try old pushing with KC / clientside movement I think.
-     */
+    private float _pushingCap;
+    private float _pushingDotProduct;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        UpdatePushCap();
+        Subs.CVar(CfgManager, CVars.NetTickrate, _ => UpdatePushCap());
+        Subs.CVar(CfgManager, CCVars.MovementPushingCap, _ => UpdatePushCap());
+        Subs.CVar(CfgManager, CCVars.MovementPushingVelocityProduct,
+            value =>
+            {
+                _pushingDotProduct = value;
+            }, true);
+
         MobQuery = GetEntityQuery<MobCollisionComponent>();
         PhysicsQuery = GetEntityQuery<PhysicsComponent>();
         SubscribeAllEvent<MobCollisionMessage>(OnCollision);
-        SubscribeAllEvent<MobCollisionToggleMessage>(OnCollisionToggle);
         SubscribeLocalEvent<MobCollisionComponent, ComponentStartup>(OnCollisionStartup);
-        SubscribeLocalEvent<MobCollisionComponent, RefreshMovementSpeedModifiersEvent>(OnMoveSpeed);
 
         UpdatesAfter.Add(typeof(SharedPhysicsSystem));
     }
 
-    private void OnCollisionToggle(MobCollisionToggleMessage msg, EntitySessionEventArgs args)
+    private void UpdatePushCap()
     {
-        var player = args.SenderSession.AttachedEntity;
-
-        if (!MobQuery.TryComp(player, out var comp))
-            return;
-
-        SetColliding((player.Value, comp), value: msg.Enabled, update: false);
+        _pushingCap = (1f / CfgManager.GetCVar(CVars.NetTickrate)) * CfgManager.GetCVar(CCVars.MovementPushingCap);
     }
 
     private void OnCollision(MobCollisionMessage msg, EntitySessionEventArgs args)
@@ -58,16 +57,14 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         if (!MobQuery.TryComp(player, out var comp))
             return;
 
-        // TODO: Validation
-        MoveMob((player.Value, comp), msg.Direction);
-    }
+        var direction = msg.Direction;
 
-    private void OnMoveSpeed(Entity<MobCollisionComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
-    {
-        if (!ent.Comp.Colliding)
-            return;
+        if (direction.Length() > _pushingCap)
+        {
+            direction = direction.Normalized() * _pushingCap;
+        }
 
-        args.ModifySpeed(0.25f);
+        MoveMob((player.Value, comp), direction);
     }
 
     private void OnCollisionStartup(Entity<MobCollisionComponent> ent, ref ComponentStartup args)
@@ -78,35 +75,6 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             hard: false,
             collisionLayer: (int) CollisionGroup.MidImpassable,
             collisionMask: (int) CollisionGroup.MidImpassable);
-    }
-
-    protected void SetColliding(Entity<MobCollisionComponent> entity, bool value, bool update = false)
-    {
-        return;
-        if (entity.Comp.Colliding == value)
-            return;
-
-        entity.Comp.Colliding = value;
-        Dirty(entity);
-        //_moveSpeed.RefreshMovementSpeedModifiers(entity.Owner);
-
-        if (!update)
-            return;
-
-        if (IoCManager.Resolve<INetManager>().IsClient)
-        {
-            RaisePredictiveEvent(new MobCollisionToggleMessage()
-            {
-                Enabled = value,
-            });
-        }
-        else
-        {
-            RaiseLocalEvent(entity.Owner, new MobCollisionToggleMessage()
-            {
-                Enabled = value,
-            });
-        }
     }
 
     protected void MoveMob(Entity<MobCollisionComponent> entity, Vector2 direction)
@@ -124,8 +92,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
     {
         var physics = entity.Comp2;
 
-        //if (physics.LinearVelocity == Vector2.Zero)
-        //    return;
+        // TODO: Dot product check
 
         if (physics.ContactCount == 0)
             return false;
@@ -136,6 +103,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         var contacts = Physics.GetContacts(entity.Owner);
         var direction = Vector2.Zero;
         var contactCount = 0;
+        var ourVelocity = entity.Comp2.LinearVelocity;
 
         while (contacts.MoveNext(out var contact))
         {
@@ -144,8 +112,15 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
             var other = contact.OtherEnt(entity.Owner);
 
-            if (!MobQuery.TryComp(other, out var otherComp))
+            if (!MobQuery.TryComp(other, out var otherComp) || !PhysicsQuery.TryComp(other, out var otherPhysics))
                 continue;
+
+            var velocityProduct = Vector2.Dot(ourVelocity, otherPhysics.LinearVelocity);
+
+            if (velocityProduct < _pushingDotProduct)
+            {
+                continue;
+            }
 
             // TODO: Get overlap amount
             var otherTransform = Physics.GetPhysicsTransform(other);
@@ -168,7 +143,6 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         }
 
         direction *= frameTime;
-        entity.Comp1.EndAccumulator = MobCollisionComponent.BufferTime;
         var parentAngle = worldRot - xform.LocalRotation;
         var localDir = (-parentAngle).RotateVec(direction);
         RaiseCollisionEvent(entity.Owner, localDir);
@@ -181,11 +155,5 @@ public abstract class SharedMobCollisionSystem : EntitySystem
     protected sealed class MobCollisionMessage : EntityEventArgs
     {
         public Vector2 Direction;
-    }
-
-    [Serializable, NetSerializable]
-    protected sealed class MobCollisionToggleMessage : EntityEventArgs
-    {
-        public bool Enabled;
     }
 }

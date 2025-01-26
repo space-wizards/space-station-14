@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.CCVar;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Player;
@@ -25,23 +26,17 @@ public sealed class MobCollisionSystem : SharedMobCollisionSystem
     {
         base.Update(frameTime);
 
+        if (!CfgManager.GetCVar(CCVars.MovementMobPushing))
+            return;
+
         var query = EntityQueryEnumerator<MobCollisionComponent>();
 
         while (query.MoveNext(out var uid, out var comp))
         {
-            SetColliding((uid, comp), false);
-
             if (_actorQuery.HasComp(uid) || !PhysicsQuery.TryComp(uid, out var physics))
                 continue;
 
-            if (!HandleCollisions((uid, comp, physics), frameTime))
-            {
-                SetColliding((uid, comp), false, update: true);
-            }
-            else
-            {
-                SetColliding((uid, comp), true, update: true);
-            }
+            HandleCollisions((uid, comp, physics), frameTime);
         }
     }
 

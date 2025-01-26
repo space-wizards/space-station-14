@@ -6,14 +6,8 @@ namespace Content.Shared.Movement.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MobCollisionComponent : Component
 {
-    public const float BufferTime = 0.5f;
-
-    /// <summary>
-    /// When to end the collision on the client.
-    /// This is to avoid the client leaving collision for a frame then re-colliding causing jerkiness.
-    /// </summary>
-    [ViewVariables]
-    public float EndAccumulator;
+    [DataField, AutoNetworkedField]
+    public bool Colliding;
 
     /// <summary>
     /// Shape to give this entity for mob collisions.
@@ -23,7 +17,4 @@ public sealed partial class MobCollisionComponent : Component
 
     [DataField, AutoNetworkedField]
     public float Strength = 1f;
-
-    [DataField, AutoNetworkedField]
-    public bool Colliding = false;
 }
