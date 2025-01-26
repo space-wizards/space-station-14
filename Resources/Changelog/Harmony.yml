@@ -1051,3 +1051,10 @@ Entries:
     changes:
     - type: Tweak
       message: Updated the senior job berets to better match their jumpsuits.
+  - id: 296
+    author: NakataRin
+    time: '2025-01-26T11:56:16.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/296
+    changes:
+    - type: Add
+      message: 'Added law 0 for borgs: obey AI.'
