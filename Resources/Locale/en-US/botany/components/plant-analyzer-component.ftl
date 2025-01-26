@@ -12,6 +12,13 @@ plant-analyzer-component-alive = [color=green]ALIVE[color]
 plant-analyzer-component-dead = [color=red]DEAD[color]
 plant-analyzer-component-unviable = [color=red]UNVIABLE[color]
 plant-analyzer-component-mutating = [color=#00ff5f]MUTATING[color]
+plant-analyzer-component-kudzu = [color=red]KUDZU[color]
+
+plant-analyzer-soil = There is some [color=white]{$chemicals}[/color] in this {$holder} that {$count ->
+    [one]has
+    *[other]have
+} not been absorbed.
+plant-analyzer-soil-empty = There are no unabsorbed chemicals in this {$holder}.
 
 plant-analyzer-component-environemt = This [color=green]{$seedName}[/color] requires an atmosphere at a pressure level of [color=lightblue]{$kpa}kPa ± {$kpaTolerance}kPa[/color], temperature of [color=lightsalmon]{$temp}°k ± {$tempTolerance}°k[/color] and a light level of [color=white]{$lightLevel} ± {$lightTolerance}[/color].
 plant-analyzer-component-environemt-void = This [color=green]{$seedName}[/color] has to be grown [bolditalic]in the vacuum of space[/bolditalic] at a light level of [color=white]{$lightLevel} ± {$lightTolerance}[/color].
