@@ -33,9 +33,9 @@ plant-analyzer-produce-plural = {MAKEPLURAL($thing)}
 
 plant-analyzer-potency-tiny = tiny
 plant-analyzer-potency-small = small
-plant-analyzer-potency-below-average = below average sized
+plant-analyzer-potency-below-average = below-average sized
 plant-analyzer-potency-average = average sized
-plant-analyzer-potency-above-average = above average sized
+plant-analyzer-potency-above-average = above-average sized
 plant-analyzer-potency-large = rather large
 plant-analyzer-potency-huge = huge
 plant-analyzer-potency-gigantic = gigantic
