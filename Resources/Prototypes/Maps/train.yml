@@ -33,23 +33,23 @@
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 2, 2 ]
-            StationEngineer: [ 4, 4 ]
-            TechnicalAssistant: [ 3, 3 ]
+            StationEngineer: [ 0, 0 ] # Handled in its own jobgroup
+            TechnicalAssistant: [ 0, 0 ] # Handled in its own jobgroup
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
             Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 2, 2 ]
-            MedicalIntern: [ 2, 2 ]
+            MedicalDoctor: [ 0, 0 ] # Handled in its own jobgroup
+            MedicalIntern: [ 0, 0 ] # Handled in its own jobgroup
             Paramedic: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
-            Scientist: [ 4, 4 ]
-            ResearchAssistant: [ 2, 2 ]
+            Scientist: [ 0, 0 ] # Handled in its own jobgroup
+            ResearchAssistant: [ 0, 0 ] # Handled in its own jobgroup
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 6, 6 ]
-            SecurityCadet: [ 3, 3 ]
+            SecurityOfficer: [ 0, 0 ] # Handled in its own jobgroup
+            SecurityCadet: [ 0, 0 ] # Handled in its own jobgroup
             Lawyer: [ 1, 2 ]
             #supply
             Quartermaster: [ 1, 1 ]
@@ -62,3 +62,29 @@
             Musician: [ 1, 1 ]
             Borg: [ 2, 2 ]
             Reporter: [ 1, 1 ]
+          jobGroups:
+            EngineeringTeam:
+              roundStart: 7
+              midRound: 7
+              members:
+                - StationEngineer
+                - TechnicalAssistant
+            MedicalTeam:
+              roundStart: 4
+              midRound: 4
+              members:
+                - MedicalIntern
+                - MedicalDoctor
+            ResearchTeam:
+              roundStart: 6
+              midRound: 6
+              members:
+                - Scientist
+                - ResearchAssistant
+            SecurityTeam:
+              roundStart: 9
+              midRound: 9
+              members:
+                - SecurityOfficer
+                - SecurityCadet
+
