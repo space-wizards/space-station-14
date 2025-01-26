@@ -6914,7 +6914,8 @@ entities:
           -2,9:
             0: 63351
           -2,10:
-            0: 30471
+            0: 30465
+            6: 6
           -2,11:
             0: 1919
           -2,12:
@@ -7357,7 +7358,8 @@ entities:
           -13,8:
             0: 8
             1: 12032
-            3: 119
+            3: 7
+            7: 112
           -12,9:
             0: 2
             1: 65408
@@ -7522,7 +7524,7 @@ entities:
             1: 61440
           16,-4:
             1: 8738
-            6: 2184
+            8: 2184
           16,-3:
             1: 8738
             3: 2184
@@ -7533,7 +7535,7 @@ entities:
             1: 8738
             3: 2184
           17,-4:
-            6: 819
+            8: 819
             3: 2176
             1: 32768
           17,-3:
@@ -8596,7 +8598,8 @@ entities:
           -15,9:
             1: 12
           -14,8:
-            3: 255
+            3: 191
+            7: 64
             1: 20224
           -14,9:
             1: 15
@@ -8697,6 +8700,36 @@ entities:
           temperature: 293.15
           moles:
           - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14975
+          moles:
+          - 20.078888
+          - 75.53487
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 147.92499
+          moles:
+          - 0
           - 0
           - 0
           - 0
@@ -14486,7 +14519,7 @@ entities:
       pos: -29.5,15.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -239972.73
+      secondsUntilStateChange: -240799.38
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14742,7 +14775,7 @@ entities:
       pos: -4.5,53.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -94626.484
+      secondsUntilStateChange: -95453.125
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -70075,21 +70108,113 @@ entities:
     - type: Transform
       pos: -49.5,33.5
       parent: 5350
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 75.31249
+        moles:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
   - uid: 10039
     components:
     - type: Transform
       pos: -50.5,33.5
       parent: 5350
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 75.31249
+        moles:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
   - uid: 19427
     components:
     - type: Transform
       pos: -51.5,33.5
       parent: 5350
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 75.31249
+        moles:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
   - uid: 27890
     components:
     - type: Transform
       pos: -24.5,15.5
       parent: 5350
+  - uid: 28450
+    components:
+    - type: Transform
+      pos: -53.5,33.5
+      parent: 5350
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 75.31249
+        moles:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 28451
+          - 28452
+          - 28453
+          - 28454
+          - 28455
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: CrateMaterialSteel
   entities:
   - uid: 28057
@@ -83177,7 +83302,7 @@ entities:
       pos: 31.5,-33.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -17465.52
+      secondsUntilStateChange: -18292.162
       state: Closing
   - uid: 9615
     components:
@@ -85042,6 +85167,27 @@ entities:
     components:
     - type: Transform
       pos: 51.5,7.5
+      parent: 5350
+    - type: Fixtures
+      fixtures: {}
+  - uid: 28462
+    components:
+    - type: Transform
+      pos: -16.5,-47.5
+      parent: 5350
+    - type: Fixtures
+      fixtures: {}
+  - uid: 28463
+    components:
+    - type: Transform
+      pos: -21.5,-24.5
+      parent: 5350
+    - type: Fixtures
+      fixtures: {}
+  - uid: 28464
+    components:
+    - type: Transform
+      pos: -15.5,-24.5
       parent: 5350
     - type: Fixtures
       fixtures: {}
@@ -127311,6 +127457,37 @@ entities:
       parent: 5350
     - type: Physics
       bodyType: Static
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 14878
+          - 21468
+          - 28207
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: GunSafeSubMachineGunDrozd
   entities:
   - uid: 13851
@@ -127321,14 +127498,46 @@ entities:
       parent: 5350
     - type: Physics
       bodyType: Static
-- proto: GyroscopeUnanchored
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 28208
+          - 28209
+          - 28446
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+- proto: GyroscopeFlatpack
   entities:
-  - uid: 28209
+  - uid: 28452
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -52.5,33.5
-      parent: 5350
+      parent: 28450
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: HandheldGPSBasic
   entities:
   - uid: 3632
@@ -130240,6 +130449,22 @@ entities:
     - type: Transform
       pos: -15.689243,42.42685
       parent: 5350
+- proto: MagazinePistolSubMachineGun
+  entities:
+  - uid: 14878
+    components:
+    - type: Transform
+      parent: 22966
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 21468
+    components:
+    - type: Transform
+      parent: 22966
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: MagazinePistolSubMachineGunPractice
   entities:
   - uid: 22238
@@ -130268,6 +130493,22 @@ entities:
       parent: 5350
     - type: BallisticAmmoProvider
       unspawnedCount: 30
+- proto: MagazineRifle
+  entities:
+  - uid: 28208
+    components:
+    - type: Transform
+      parent: 13851
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 28209
+    components:
+    - type: Transform
+      parent: 13851
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: MagazineRiflePractice
   entities:
   - uid: 22345
@@ -151842,6 +152083,61 @@ entities:
       parent: 5350
     - type: SurveillanceCamera
       id: North Singularity Airlock
+  - uid: 28447
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 69.5,-9.5
+      parent: 5350
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos Waste Tank South
+  - uid: 28448
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 69.5,-5.5
+      parent: 5350
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos Waste Tank North
+  - uid: 28449
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 69.5,-13.5
+      parent: 5350
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos Plasma Tank
+  - uid: 28456
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 69.5,-17.5
+      parent: 5350
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos Water Vapor Tank
+  - uid: 28465
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 71.5,-25.5
+      parent: 5350
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos TEG Secure Storage
 - proto: SurveillanceCameraGeneral
   entities:
   - uid: 4385
@@ -157284,32 +157580,36 @@ entities:
     - type: Transform
       pos: 61.5,15.5
       parent: 5350
-- proto: ThrusterUnanchored
+- proto: ThrusterFlatpack
   entities:
-  - uid: 14878
+  - uid: 28451
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -56.5,33.5
-      parent: 5350
-  - uid: 21468
+      parent: 28450
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 28453
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -55.5,33.5
-      parent: 5350
-  - uid: 28207
+      parent: 28450
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 28454
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -54.5,33.5
-      parent: 5350
-  - uid: 28208
+      parent: 28450
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 28455
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -53.5,33.5
-      parent: 5350
+      parent: 28450
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: TintedWindow
   entities:
   - uid: 2563
@@ -176597,6 +176897,31 @@ entities:
     - type: Transform
       pos: -5.425219,36.320488
       parent: 5350
+  - uid: 28457
+    components:
+    - type: Transform
+      pos: -5.438532,36.582253
+      parent: 5350
+  - uid: 28458
+    components:
+    - type: Transform
+      pos: -5.431587,36.42253
+      parent: 5350
+  - uid: 28459
+    components:
+    - type: Transform
+      pos: -5.4246426,36.241974
+      parent: 5350
+  - uid: 28460
+    components:
+    - type: Transform
+      pos: -5.431587,36.644753
+      parent: 5350
+  - uid: 28461
+    components:
+    - type: Transform
+      pos: -5.438532,36.48503
+      parent: 5350
 - proto: WeaponLaserCarbinePractice
   entities:
   - uid: 22291
@@ -176636,6 +176961,15 @@ entities:
     - type: Transform
       pos: -18.483227,41.285686
       parent: 5350
+- proto: WeaponRifleLecter
+  entities:
+  - uid: 28446
+    components:
+    - type: Transform
+      parent: 13851
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: WeaponShotgunEnforcer
   entities:
   - uid: 28199
@@ -176660,6 +176994,15 @@ entities:
     - type: Transform
       pos: -5.4668856,37.570488
       parent: 5350
+- proto: WeaponSubMachineGunDrozd
+  entities:
+  - uid: 28207
+    components:
+    - type: Transform
+      parent: 22966
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: WeaponSubMachineGunWt550
   entities:
   - uid: 10437
@@ -181935,7 +182278,7 @@ entities:
       pos: -28.5,-5.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -23177.424
+      secondsUntilStateChange: -24004.066
       state: Opening
   - uid: 17570
     components:
