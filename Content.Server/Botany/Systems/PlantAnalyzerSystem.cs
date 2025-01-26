@@ -6,6 +6,7 @@ using Content.Server.Popups;
 using Content.Shared.Botany.PlantAnalyzer;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Paper;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -25,6 +26,7 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly PaperSystem _paperSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedLabelSystem _labelSystem = default!;
 
     public override void Initialize()
     {
@@ -135,11 +137,11 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
         }
 
         var data = GatherData(component);
-        var missingDataFtl = "plant-analyzer-printout-missing";
-        var missingData = Loc.GetString(missingDataFtl);
+        var missingData = Loc.GetString("plant-analyzer-printout-missing");
 
+        var seedName = data.PlantData is not null ? Loc.GetString(data.PlantData.SeedDisplayName) : null;
         (string, string)[] parameters = [
-            ("seedName", Loc.GetString(data.PlantData?.SeedDisplayName ?? missingDataFtl)),
+            ("seedName", seedName ?? missingData),
             ("produce", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.ProduceToLocalizedStrings(data.ProduceData.Produce, _prototypeManager).Plural : missingData),
             ("water", data.TolerancesData?.WaterConsumption.ToString("0.00") ?? missingData),
             ("nutrients", data.TolerancesData?.NutrientConsumption.ToString("0.00") ?? missingData),
@@ -154,19 +156,21 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
             ("lightLevel", data.TolerancesData?.IdealLight.ToString("0.00") ?? missingData),
             ("lightTolerance", data.TolerancesData?.LightTolerance.ToString("0.00") ?? missingData),
             ("n", data.ProduceData?.Yield.ToString("0") ?? missingData),
-            ("potency", Loc.GetString(data.ProduceData?.Potency ?? missingDataFtl)),
+            ("potency", data.ProduceData is not null ? Loc.GetString(data.ProduceData.Potency) : missingData),
             ("chemicals", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.ChemicalsToLocalizedStrings(data.ProduceData.Chemicals, _prototypeManager) : missingData),
             ("gasesOut", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.GasesToLocalizedStrings(data.ProduceData.ExudeGasses, _prototypeManager) : missingData),
             ("endurance", data.PlantData?.Endurance.ToString("0.00") ?? missingData),
             ("lifespan", data.PlantData?.Lifespan.ToString("0.00") ?? missingData),
-            ("seedless", data.ProduceData is not null ? (data.ProduceData.Seedless ? "yes" : "no") : "other"),
+            ("seeds", data.ProduceData is not null ? (data.ProduceData.Seedless ? "no" : "yes") : "other"),
+            ("viable", data.PlantData is not null ? (data.PlantData.Viable ? "yes" : "no") : "other"),
             ("indent", "    ")
         ];
         var text = new StringBuilder();
-        for (var i = 0; i < 21; i++)
+        for (var i = 0; i < 22; i++)
             text.AppendLine(Loc.GetString($"plant-analyzer-printout-l{i}", [.. parameters]));
 
         _paperSystem.SetContent((printed, paperComp), text.ToString().TrimEnd('\r', '\n'));
+        _labelSystem.Label(printed, seedName);
         _audioSystem.PlayPvs(component.SoundPrint, uid,
             AudioParams.Default
             .WithVariation(0.25f)
