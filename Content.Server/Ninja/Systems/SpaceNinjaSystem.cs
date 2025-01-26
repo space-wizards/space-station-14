@@ -39,7 +39,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpaceNinjaComponent, AccessBrokeSomethingEvent>(OnDoorjack);
+        SubscribeLocalEvent<SpaceNinjaComponent, EmaggedSomething>(OnDoorjack);
         SubscribeLocalEvent<SpaceNinjaComponent, ResearchStolenEvent>(OnResearchStolen);
         SubscribeLocalEvent<SpaceNinjaComponent, ThreatCalledInEvent>(OnThreatCalledIn);
         SubscribeLocalEvent<SpaceNinjaComponent, CriminalRecordsHackedEvent>(OnCriminalRecordsHacked);
@@ -118,7 +118,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// <summary>
     /// Increment greentext when emagging a door.
     /// </summary>
-    private void OnDoorjack(EntityUid uid, SpaceNinjaComponent comp, ref AccessBrokeSomethingEvent args)
+    private void OnDoorjack(EntityUid uid, SpaceNinjaComponent comp, ref EmaggedSomething args)
     {
         // incase someone lets ninja emag non-doors double check it here
         if (!HasComp<DoorComponent>(args.Target))

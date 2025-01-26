@@ -1,4 +1,3 @@
-using Content.Shared.AccessBreaker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
@@ -6,15 +5,17 @@ using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Tag;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Ninja.Systems;
 
 /// <summary>
 /// Handles emagging whitelisted objects when clicked.
 /// </summary>
-public sealed class AccessBreakerProviderSystem : EntitySystem
+public sealed class EmagProviderSystem : EntitySystem
 {
-    [Dependency] private readonly AccessBreakerSystem _accessbreaker = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
@@ -24,13 +25,13 @@ public sealed class AccessBreakerProviderSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AccessBreakerProviderComponent, BeforeInteractHandEvent>(OnBeforeInteractHand);
+        SubscribeLocalEvent<EmagProviderComponent, BeforeInteractHandEvent>(OnBeforeInteractHand);
     }
 
     /// <summary>
     /// Emag clicked entities that are on the whitelist.
     /// </summary>
-    private void OnBeforeInteractHand(Entity<AccessBreakerProviderComponent> ent, ref BeforeInteractHandEvent args)
+    private void OnBeforeInteractHand(Entity<EmagProviderComponent> ent, ref BeforeInteractHandEvent args)
     {
         // TODO: change this into a generic check event thing
         if (args.Handled || !_gloves.AbilityCheck(ent, args, out var target))
@@ -46,12 +47,14 @@ public sealed class AccessBreakerProviderSystem : EntitySystem
         if (_tag.HasTag(target, comp.AccessBreakerImmuneTag))
             return;
 
-        var handled = _accessbreaker.DoAccessBreakerEffect(uid, target);
+        var handled = _emag.DoEmagEffect(uid, target, ent.Comp.EmagType);
         if (!handled)
             return;
 
-        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(uid):player} broke access of {ToPrettyString(target):target}");
-        var ev = new AccessBrokeSomethingEvent(target);
+        _audio.PlayPredicted(comp.EmagSound, uid, uid);
+
+        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(uid):player} emagged {ToPrettyString(target):target} with flag(s): {ent.Comp.EmagType}");
+        var ev = new EmaggedSomething(target);
         RaiseLocalEvent(uid, ref ev);
         args.Handled = true;
     }
@@ -61,4 +64,4 @@ public sealed class AccessBreakerProviderSystem : EntitySystem
 /// Raised on the player when access breaking something.
 /// </summary>
 [ByRefEvent]
-public record struct AccessBrokeSomethingEvent(EntityUid Target);
+public record struct EmaggedSomething(EntityUid Target);

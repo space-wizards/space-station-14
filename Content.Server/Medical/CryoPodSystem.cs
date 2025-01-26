@@ -57,6 +57,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
 
         SubscribeLocalEvent<CryoPodComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<CryoPodComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
+        SubscribeLocalEvent<CryoPodComponent, OnAttemptEmagEvent>(OnAttemptEmag);
         SubscribeLocalEvent<CryoPodComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<CryoPodComponent, CryoPodDragFinished>(OnDragFinished);
         SubscribeLocalEvent<CryoPodComponent, CryoPodPryFinished>(OnCryoPodPryFinished);

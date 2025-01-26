@@ -78,7 +78,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<DoorComponent, GetPryTimeModifierEvent>(OnPryTimeModifier);
 
-        SubscribeLocalEvent<DoorComponent, OnAttemptEmagEvent>(OnEmaggedAttempt);
+        SubscribeLocalEvent<DoorComponent, OnAttemptEmagEvent>(OnAttemptEmag);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
     }
 
@@ -118,7 +118,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         _activeDoors.Remove(door);
     }
 
-    private void OnEmaggedAttempt(EntityUid uid, DoorComponent door, ref OnAttemptEmagEvent args)
+    private void OnAttemptEmag(EntityUid uid, DoorComponent door, ref OnAttemptEmagEvent args)
     {
         if (!TryComp<AirlockComponent>(uid, out var airlock))
         {

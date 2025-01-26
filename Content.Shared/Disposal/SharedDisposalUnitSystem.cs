@@ -24,6 +24,7 @@ public sealed partial class DisposalDoAfterEvent : SimpleDoAfterEvent
 public abstract class SharedDisposalUnitSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming GameTiming = default!;
+    [Dependency] protected readonly EmagSystem _emag = default!;
     [Dependency] protected readonly MetaDataSystem Metadata = default!;
     [Dependency] protected readonly SharedJointSystem Joints = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
@@ -98,6 +99,20 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         args.CanDrop = CanInsert(uid, component, args.Dragged);
         args.Handled = true;
+    }
+
+    protected void OnAttemptEmag(EntityUid uid, SharedDisposalUnitComponent component, ref OnAttemptEmagEvent args)
+    {
+        if (args.Type != EmagType.Interaction)
+        {
+            args.Handled = true;
+            return;
+        }
+
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+        {
+            args.Handled = true;
+        }
     }
 
     protected void OnEmagged(EntityUid uid, SharedDisposalUnitComponent component, ref GotEmaggedEvent args)

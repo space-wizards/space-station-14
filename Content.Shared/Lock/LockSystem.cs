@@ -1,6 +1,5 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.AccessBreaker;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction.Components;
 using Content.Shared.DoAfter;
@@ -298,7 +297,7 @@ public sealed class LockSystem : EntitySystem
 
     private void OnAttemptEmag(EntityUid uid, LockComponent reader, ref OnAttemptEmagEvent args)
     {
-        if (_emag.CheckFlag(uid, EmagType.Access))
+        if (args.Type != EmagType.Access)
         {
             args.Handled = true;
             return;

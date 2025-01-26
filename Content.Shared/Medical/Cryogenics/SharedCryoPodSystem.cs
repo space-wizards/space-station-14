@@ -20,6 +20,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -150,6 +151,21 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
                 Priority = 1, // Promote to top to make ejecting the ALT-click action
                 Act = () => TryEjectBody(uid, args.User, cryoPodComponent)
             });
+        }
+    }
+
+
+    protected void OnAttemptEmag(EntityUid uid, CryoPodComponent? cryoPodComponent, ref OnAttemptEmagEvent args)
+    {
+        if (args.Type != EmagType.Interaction)
+        {
+            args.Handled = true;
+            return;
+        }
+
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+        {
+            args.Handled = true;
         }
     }
 

@@ -240,7 +240,7 @@
         whitelist:
           components:
           - Stamina
-      - type: AccessBreakerProvider
+      - type: EmagProvider
         whitelist:
           components:
           - Airlock
