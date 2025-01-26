@@ -82,7 +82,7 @@ public sealed partial class StationJobsSystem : EntitySystem
             {
                 if (stationJobs.JobList.TryGetValue(member, out _))
                 {
-                    stationJobs.JobList[member] = group.MidRound;
+                    stationJobs.JobList[member] = group.RoundStart;
                 }
             }
         }
