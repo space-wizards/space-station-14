@@ -17,19 +17,32 @@ plant-analyzer-component-environemt = This [color=green]{$seedName}[/color] requ
 plant-analyzer-component-environemt-void = This [color=green]{$seedName}[/color] has to be grown [bolditalic]in the vacuum of space[/bolditalic] at a light level of [color=white]{$lightLevel} ± {$lightTolerance}[/color].
 plant-analyzer-component-environemt-gas = This [color=green]{$seedName}[/color] requires an atmosphere containing [bold]{$gases}[/bold] at a pressure level of [color=lightblue]{$kpa}kPa ± {$kpaTolerance}kPa[/color], temperature of [color=lightsalmon]{$temp}°k ± {$tempTolerance}°k[/color] and a light level of [color=white]{$lightLevel} ± {$lightTolerance}[/color].
 
-plant-analyzer-output = It has [color=lightgreen]{$n} {$potency}[/color]{$seedless} {$n ->
-    [one]flower
-    *[other]flowers
-} that will turn into [color=#a4885c]{$produce}[/color].
-plant-analyzer-output-gas = It has [color=lightgreen]{$n} {$potency}[/color]{$seedless} {$n ->
-    [one]flower
-    *[other]flowers
-} that emit [bold]{$gases}[/bold] and will turn into [color=#a4885c]{$produce}[/color].
-plant-analyzer-output-nothing = The only thing it seems to do is consume water and nutrients.
-plant-analyzer-output-nothing-gas = The only thing it seems to do is turn water and nutrients into [bold]{$gases}[/bold].
-plant-analyzer-chemicals = There are trace amounts of [color=white]{$chemicals}[/color] in its stem.
-plant-analyzer-seedless = {$space}but [color=red]seedless[/color]
 plant-analyzer-produce-plural = {MAKEPLURAL($thing)}
+plant-analyzer-output = {$yield ->
+    [0]{$gasCount ->
+        [0]The only thing it seems to do is consume water and nutrients.
+        *[other]The only thing it seems to do is turn water and nutrients into [bold]{$gases}[/bold].
+    }
+    *[other]It has [color=lightgreen]{$yield} {$potency}[/color]{$seedless ->
+        [true]{" "}but [color=red]seedless[/color]
+        *[false]{$nothing}
+    }{" "}{$yield ->
+        [one]flower
+        *[other]flowers
+    }{" "}that{$gasCount ->
+        [0]{$nothing}
+        *[other]{$yield ->
+            [one]{" "}emits
+            *[other]{" "}emit
+        }{" "}[bold]{$gases}[/bold] and
+    }{" "}will turn into{$yield ->
+        [one]{" "}{INDEFINITE($firstProduce)} [color=#a4885c]{$produce}[/color]
+        *[other]{" "}[color=#a4885c]{$producePlural}[/color]
+    }.{$chemCount ->
+        [0]{$nothing}
+        *[other]{" "}There are trace amounts of [color=white]{$chemicals}[/color] in its stem.
+    }
+}
 
 plant-analyzer-potency-tiny = tiny
 plant-analyzer-potency-small = small
@@ -61,6 +74,11 @@ plant-analyzer-printout-l13 = {$indent}[bullet/] Composition: [bold]{$gasesIn}[/
 plant-analyzer-printout-l14 = {$indent}[bullet/] Pressure: [color=lightblue]{$kpa}kPa ± {$kpaTolerance}kPa[/color]
 plant-analyzer-printout-l15 = {$indent}[bullet/] Temperature: [color=lightsalmon]{$temp}°k ± {$tempTolerance}°k[/color]
 plant-analyzer-printout-l16 = {$indent}[bullet/] Light: [color=gray][bold]{$lightLevel} ± {$lightTolerance}[/bold][/color]
-plant-analyzer-printout-l17 = [bullet/] Flowers: [color=lightgreen]{$n} {$potency}[/color]{$seedless}
-plant-analyzer-printout-l18 = [bullet/] Chemicals: [color=gray][bold]{$chemicals}[/bold][/color]
-plant-analyzer-printout-l19 = [bullet/] Emissions: [bold]{$gasesOut}[/bold]
+plant-analyzer-printout-l17 = [bullet/] Flowers: [color=lightgreen]{$n} {$potency}[/color]
+plant-analyzer-printout-l18 = [bullet/] Seeds: {$seedless ->
+    [yes][color=red]No[/color]
+    [no][color=green]Yes[/color]
+    *[other]{LOC("plant-analyzer-printout-missing")}
+}
+plant-analyzer-printout-l19 = [bullet/] Chemicals: [color=gray][bold]{$chemicals}[/bold][/color]
+plant-analyzer-printout-l20 = [bullet/] Emissions: [bold]{$gasesOut}[/bold]
