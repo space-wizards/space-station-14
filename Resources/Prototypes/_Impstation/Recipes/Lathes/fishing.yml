@@ -1,8 +1,8 @@
 - type: latheRecipe
   id: FishingRod
-  result: FishingRodBase
+  result: FishingRodPlasma
   completetime: 3
   materials:
-    Wood: 500
-    Cloth: 200
-    Steel: 100
+    Steel: 500
+    Durathread: 200
+    Plasma: 100

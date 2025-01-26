@@ -2,7 +2,7 @@
   id: Fishing
   name: research-technology-basic-fishing
   icon:
-    sprite: _Impstation/Objects/Fishing/fishingrod.rsi
+    sprite: _Impstation/Objects/Fishing/fishingrod_plasma.rsi
     state: base
   discipline: CivilianServices
   tier: 1

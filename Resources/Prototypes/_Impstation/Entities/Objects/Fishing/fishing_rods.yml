@@ -9,7 +9,7 @@
       fireRate: 0.5
       clumsyProof: true
     - type: BasicEntityAmmoProvider #The component that handles whats being fired
-      proto: FishingHook
+      proto: FishingHookBase
       capacity: 1
     - type: AmmoCounter #The component that adds the ui element to if the hook is attached or not
     - type: UseDelay #The component that prevents the server from being spammed too much
@@ -28,3 +28,19 @@
           unshaded:
             True: { state: base-unshaded }
             False: { state: base-unshaded-off }
+
+- type: entity
+  name: plasma rod
+  parent: FishingRodBase
+  id: FishingRodPlasma
+  components:
+    - type: BasicEntityAmmoProvider #The component that handles whats being fired
+      proto: FishingHookPlasma
+      capacity: 1
+    - type: Sprite #The component that contains the visual itself
+      sprite: _Impstation/Objects/Fishing/fishingrod_plasma.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          visible: true

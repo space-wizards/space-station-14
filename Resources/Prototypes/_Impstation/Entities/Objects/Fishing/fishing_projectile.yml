@@ -1,6 +1,6 @@
 
 - type: entity
-  id: FishingHook
+  id: FishingHookBase
   name: fishing hook
   categories: [ HideSpawnMenu ]
   components:
@@ -32,5 +32,23 @@
     - type: Sprite #The component that handles basic visuals
       noRot: false
       sprite: _Impstation/Objects/Fishing/fishingrod.rsi
+      layers:
+        - state: hook
+
+- type: entity
+  id: FishingHookPlasma
+  name: fishing hook
+  parent: FishingHookBase
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Projectile #The component that handles the fact that this was fired from something
+      deleteOnCollide: false
+      damage:
+        types:
+          Piercing: 5
+          Heat: 10
+    - type: Sprite #The component that handles basic visuals
+      noRot: false
+      sprite: _Impstation/Objects/Fishing/fishingrod_plasma.rsi
       layers:
         - state: hook
