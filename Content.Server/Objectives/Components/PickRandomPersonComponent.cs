@@ -22,7 +22,7 @@ public sealed partial class PickRandomPersonComponent : Component
     public EntityWhitelist? RoleBlacklist;
 
     /// <summary>
-    /// If non-null a target must have a job with SetPreference set to true.
+    /// If true a target must have a job with SetPreference set to true.
     /// </summary>
     [DataField]
     public bool OnlyChoosableJobs;
