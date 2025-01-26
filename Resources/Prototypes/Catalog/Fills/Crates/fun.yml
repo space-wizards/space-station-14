@@ -35,6 +35,11 @@
       - id: PlushieSharkGrey
       - id: PlushieSharkPink
       - id: PlushieSharkPurple
+    - !type:GroupSelector
+      children:
+      - id: PlushieMutantFrogBlue
+      - id: PlushieMutantFrogGreen
+      - id: PlushieMutantFrogRed
     - id: PlushieAtmosian
     - id: PlushieDiona
     - id: PlushieXeno

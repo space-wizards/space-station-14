@@ -565,6 +565,71 @@
 
 - type: entity
   parent: BasePlushie
+  id: PlushieMutantFrogBlue
+  name: blue mutant frog soft toy
+  description: Hm, is a frog supposed to be this big? Whatever, it is soft.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/mutantfrogplush.rsi
+    state: blue
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/mutantfrog.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/mutantfrog.ogg
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/mutantfrog.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/mutantfrog.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/mutantfrog.ogg
+  - type: Item
+    heldPrefix: blue
+    storedRotation: -90
+  - type: Tag
+    tags:
+    - PlushieMutantFrogBlue
+    - Payload
+
+- type: entity
+  parent: PlushieMutantFrogBlue
+  id: PlushieMutantFrogRed
+  name: red mutant frog soft toy
+  description: This one is better than the blue one.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/mutantfrogplush.rsi
+    state: red
+  - type: Item
+    heldPrefix: red
+  - type: Tag
+    tags:
+    - PlushieMutantFrogRed
+    - Payload
+
+- type: entity
+  parent: PlushieMutantFrogBlue
+  id: PlushieMutantFrogGreen
+  name: green mutant frog soft toy
+  description: There is a green one?
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/mutantfrogplush.rsi
+    state: green
+  - type: Item
+    heldPrefix: green
+  - type: Tag
+    tags:
+    - PlushieMutantFrogGreen
+    - Payload
+
+- type: entity
+  parent: BasePlushie
   id: PlushieSharkBlue
   name: blue shark soft toy
   description: Big and safe to have by your side if you want to discover the world below the surface of the ocean.

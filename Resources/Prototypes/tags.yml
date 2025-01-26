@@ -1006,6 +1006,15 @@
   id: PlushieSharkPurple
 
 - type: Tag
+  id: PlushieMutantFrogBlue
+
+- type: Tag
+  id: PlushieMutantFrogGreen
+
+- type: Tag
+  id: PlushieMutantFrogRed
+
+- type: Tag
   id: Potato
 
 - type: Tag
