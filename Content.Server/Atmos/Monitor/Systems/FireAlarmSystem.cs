@@ -21,6 +21,7 @@ public sealed class FireAlarmSystem : EntitySystem
 {
     [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNet = default!;
     [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
@@ -29,6 +30,7 @@ public sealed class FireAlarmSystem : EntitySystem
     {
         SubscribeLocalEvent<FireAlarmComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<FireAlarmComponent, DeviceListUpdateEvent>(OnDeviceListSync);
+        SubscribeLocalEvent<FireAlarmComponent, OnAttemptEmagEvent>(OnAttemptEmag);
         SubscribeLocalEvent<FireAlarmComponent, GotEmaggedEvent>(OnEmagged);
     }
 
@@ -73,6 +75,18 @@ public sealed class FireAlarmSystem : EntitySystem
                 _atmosAlarmable.ResetAllOnNetwork(uid);
             }
         }
+    }
+
+    private void OnAttemptEmag(EntityUid uid, FireAlarmComponent component, ref OnAttemptEmagEvent args)
+    {
+        if (args.Type != EmagType.Interaction)
+        {
+            args.Handled = true;
+            return;
+        }
+
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            args.Handled = true;
     }
 
     private void OnEmagged(EntityUid uid, FireAlarmComponent component, ref GotEmaggedEvent args)
