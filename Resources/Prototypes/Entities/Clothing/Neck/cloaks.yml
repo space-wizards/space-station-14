@@ -229,8 +229,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakBi
-  name: poison cloak
-  description: The purple color is a clear indicator you are poisonous.
+  name: bifurcated cloak
+  description: The cloak's colors bifurcated at the middle.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/bi.rsi
