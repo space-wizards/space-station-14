@@ -11,6 +11,20 @@
       "name": "icon"
     },
     {
+      "name": "icon-siren"
+    },
+	{
+      "name": "icon-siren-light",
+	  "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+	  ]
+    },
+    {
       "name": "equipped-OUTERCLOTHING",
       "directions": 4
     },

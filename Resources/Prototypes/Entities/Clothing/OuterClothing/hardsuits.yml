@@ -481,6 +481,9 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+    layers:
+      - state: icon
+  - type: Appearance
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
   - type: PressureProtection
@@ -534,8 +537,8 @@
   id: ActionToggleParamedicSiren
   name: Toggle Paramedic Siren
   description: Toggles the paramedic siren on and off.
-  components:
-  - type: InstantAction
+  components: #need to make hotbar icon use icon-siren and icon-siren-light, don't know how tho -Velken
+  - type: InstantAction 
     useDelay: 1
     itemIconStyle: BigItem
     event: !type:ToggleActionEvent
