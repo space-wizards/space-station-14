@@ -60,8 +60,12 @@ public sealed partial class StoreSystem
     {
         var component = ent.Comp;
 
-        // TODO: Should check for time & grid here
         if (component.StoreEntity == null || !TryComp<StoreComponent>(component.StoreEntity.Value, out var storeComp) || !storeComp.RefundAllowed)
+            return;
+
+        var endTime = component.BoughtTime + component.DisableTime;
+
+        if (_timing.CurTime < endTime)
             return;
 
         DisableRefund(component.StoreEntity.Value, storeComp);
