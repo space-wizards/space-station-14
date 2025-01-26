@@ -104,7 +104,7 @@
         node: machineFrame
       - !type:DoActsBehavior
         acts: ["Destruction"]
- 
+
 - type: entity
   name: long-range holopad
   description: "A floor-mounted device for projecting holographic images to similar devices that are far away."
@@ -117,7 +117,7 @@
     - Map
     - Unlimited
     ignoreTelephonesOnSameGrid: true
-    
+
 - type: entity
   name: quantum entangling holopad
   description: "An floor-mounted device for projecting holographic images to similar devices at extreme distances."
@@ -149,20 +149,20 @@
 # These are spawned by holopads
 - type: entity
   id: HolopadHologram
+  name: hologram
   categories: [ HideSpawnMenu ]
   suffix: DO NOT MAP
   components:
   - type: Transform
     anchored: true
-  - type: Sprite
-    noRot: true
-    drawdepth: Mobs
-    offset: -0.02, 0.45
-    overrideDir: South
-    enableOverrideDir: true
+  - type: Sprite # Sprite data is dynamically set in Client.HolopadSystem
   - type: Appearance
   - type: TypingIndicator
     proto: robot
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
+    speechBubbleOffset: 0.45
   - type: HolopadHologram
     rsiPath: Structures/Machines/holopad.rsi
     rsiState: icon_in_call
@@ -172,6 +172,7 @@
     alpha: 0.9
     intensity: 2
     scrollRate: 0.125
+    offset: -0.02, 0.45
   - type: Tag
     tags:
     - HideContextMenu
@@ -484,6 +485,14 @@
   components:
   - type: Label
     currentLabel: holopad-medical-breakroom
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalClinic
+  suffix: Med Clinic
+  components:
+  - type: Label
+    currentLabel: holopad-medical-clinic
 
 # Cargo
 - type: entity

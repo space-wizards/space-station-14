@@ -91,12 +91,27 @@ namespace Content.Server.Administration.Managers
             _chat.SendAdminAnnouncement(Loc.GetString("admin-manager-self-de-admin-message", ("exAdminName", session.Name)));
             _chat.DispatchServerMessage(session, Loc.GetString("admin-manager-became-normal-player-message"));
 
-            var plyData = session.ContentData()!;
-            plyData.ExplicitlyDeadminned = true;
+            UpdateDatabaseDeadminnedState(session, true);
             reg.Data.Active = false;
 
             SendPermsChangedEvent(session);
             UpdateAdminStatus(session);
+        }
+
+        private async void UpdateDatabaseDeadminnedState(ICommonSession player, bool newState)
+        {
+            try
+            {
+                // NOTE: This function gets called if you deadmin/readmin from a transient admin status.
+                // (e.g. loginlocal)
+                // In which case there may not be a database record.
+                // The DB function handles this scenario fine, but it's worth noting.
+                await _dbManager.UpdateAdminDeadminnedAsync(player.UserId, newState);
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error("Failed to save deadmin state to database for {Admin}", player.UserId);
+            }
         }
 
         public void Stealth(ICommonSession session)
@@ -151,8 +166,7 @@ namespace Content.Server.Administration.Managers
 
             _chat.DispatchServerMessage(session, Loc.GetString("admin-manager-became-admin-message"));
 
-            var plyData = session.ContentData()!;
-            plyData.ExplicitlyDeadminned = false;
+            UpdateDatabaseDeadminnedState(session, false);
             reg.Data.Active = true;
 
             if (!reg.Data.Stealth)
@@ -208,13 +222,13 @@ namespace Content.Server.Administration.Managers
                     curAdmin.IsSpecialLogin = special;
                     curAdmin.RankId = rankId;
                     curAdmin.Data = aData;
-                }
 
-                if (!player.ContentData()!.ExplicitlyDeadminned)
-                {
-                    aData.Active = true;
+                    if (curAdmin.Data.Active)
+                    {
+                        aData.Active = true;
 
-                    _chat.DispatchServerMessage(player, Loc.GetString("admin-manager-admin-permissions-updated-message"));
+                        _chat.DispatchServerMessage(player, Loc.GetString("admin-manager-admin-permissions-updated-message"));
+                    }
                 }
 
                 if (player.ContentData()!.Stealthed)
@@ -381,10 +395,8 @@ namespace Content.Server.Administration.Managers
             if (session.ContentData()!.Stealthed)
                 reg.Data.Stealth = true;
 
-            if (!session.ContentData()!.ExplicitlyDeadminned)
+            if (reg.Data.Active)
             {
-                reg.Data.Active = true;
-
                 if (_cfg.GetCVar(CCVars.AdminAnnounceLogin))
                 {
                     if (reg.Data.Stealth)
@@ -430,6 +442,7 @@ namespace Content.Server.Administration.Managers
                 {
                     Title = Loc.GetString("admin-manager-admin-data-host-title"),
                     Flags = AdminFlagsHelper.Everything,
+                    Active = true,
                 };
 
                 return (data, null, true);
@@ -441,6 +454,12 @@ namespace Content.Server.Administration.Managers
                 if (dbData == null)
                 {
                     // Not an admin!
+                    return null;
+                }
+
+                if (dbData.Suspended)
+                {
+                    // Suspended admins don't count.
                     return null;
                 }
 
@@ -466,7 +485,8 @@ namespace Content.Server.Administration.Managers
 
                 var data = new AdminData
                 {
-                    Flags = flags
+                    Flags = flags,
+                    Active = !dbData.Deadminned,
                 };
 
                 if (dbData.Title != null  && _cfg.GetCVar(CCVars.AdminUseCustomNamesAdminRank))
