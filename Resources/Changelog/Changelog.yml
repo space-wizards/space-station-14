@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Borgs and Station AI will not receive selected in preferences traits.
-    type: Tweak
-  id: 7359
-  time: '2024-09-12T10:36:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31990
 - author: MrRobDemo
   changes:
   - message: Added 5% chance to make killer tomatoes a ghost role.
@@ -3884,3 +3877,14 @@
   id: 7858
   time: '2025-01-27T18:48:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33048
+- author: ArtisticRoomba
+  changes:
+  - message: The Engineering Guidebook has been significantly revamped and is now
+      mostly up to date.
+    type: Add
+  - message: Most Atmospherics and Engineering-related devices and equipment now have
+      a link to their relevant guidebook entry upon examine.
+    type: Add
+  id: 7859
+  time: '2025-01-27T19:42:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33062
