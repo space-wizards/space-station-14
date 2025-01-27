@@ -96,6 +96,7 @@ public sealed class DamageOverlayUiController : UIController
             case MobState.Alive:
             {
                 FixedPoint2 painLevel = 0;
+                _overlay.PainLevel = 0;
 
                 if (!EntityManager.HasComponent<PainNumbnessComponent>(entity))
                 {
@@ -105,16 +106,16 @@ public sealed class DamageOverlayUiController : UIController
                         painLevel += painDamage;
                     }
                     _overlay.PainLevel = FixedPoint2.Min(1f, painLevel / critThreshold).Float();
+
+                    if (_overlay.PainLevel < 0.05f) // Don't show damage overlay if they're near enough to max.
+                    {
+                        _overlay.PainLevel = 0;
+                    }
                 }
 
                 if (damageable.DamagePerGroup.TryGetValue("Airloss", out var oxyDamage))
                 {
                     _overlay.OxygenLevel = FixedPoint2.Min(1f, oxyDamage / critThreshold).Float();
-                }
-
-                if (_overlay.PainLevel < 0.05f) // Don't show damage overlay if they're near enough to max.
-                {
-                    _overlay.PainLevel = 0;
                 }
 
                 _overlay.CritLevel = 0;
