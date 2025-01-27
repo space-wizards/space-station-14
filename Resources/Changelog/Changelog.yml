@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Very small amounts of heat damage no longer play the cauterization sound
-      (e.g. spacing)
-    type: Fix
-  id: 7356
-  time: '2024-09-11T16:05:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32080
 - author: deltanedas
   changes:
   - message: Coins and Supercharged CPUs can now be recycled for rarer materials.
@@ -3886,3 +3878,12 @@
   id: 7855
   time: '2025-01-27T10:29:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33045
+- author: Coolsurf6
+  changes:
+  - message: Added the ability for a creature to be unable to feel pain
+    type: Add
+  - message: Added a Pain Numbness Trait to character creation.
+    type: Add
+  id: 7856
+  time: '2025-01-27T10:34:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34538
