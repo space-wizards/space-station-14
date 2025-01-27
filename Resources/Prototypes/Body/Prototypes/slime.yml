@@ -19,6 +19,7 @@
       - right leg
       - left leg
       organs:
+        heart: OrganSlimeHeart
         core: SentientSlimeCore
         lungs: OrganSlimeLungs
     right arm:

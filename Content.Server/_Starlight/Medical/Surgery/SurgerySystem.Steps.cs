@@ -95,19 +95,14 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
             && TryComp<DamageableComponent>(organId, out var organDamageable)
             && TryComp<DamageableComponent>(body, out var bodyDamageable))
             {
+                var ev = new SurgeryOrganInsertCompleted(body, part, organId);
+                RaiseLocalEvent(organId, ref ev);
+                
                 if (TryComp<OrganEyesComponent>(organId, out var organEyes)
                     && TryComp<BlindableComponent>(body, out var blindable))
                 {
                     _blindable.SetMinDamage((body, blindable), organEyes.MinDamage ?? 0);
                     _blindable.AdjustEyeDamage((body, blindable), (organEyes.EyeDamage ?? 0) - blindable.MaxDamage);
-                }
-                if (TryComp<OrganImplantComponent>(organId, out var implant))
-                {
-                    foreach (var comp in (implant.AddComp ?? []).Values)
-                    {
-                        if (!EntityManager.HasComponent(body, comp.Component.GetType()))
-                            EntityManager.AddComponent(body, _compFactory.GetComponent(comp.Component.GetType()));
-                    }
                 }
                 if (TryComp<AbductorOrganComponent>(organId, out var abductorOrgan))
                 {
@@ -135,6 +130,9 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         {
             if (HasComp(organ.Id, type))
             {
+                var ev = new SurgeryOrganExtractCompleted(args.Body, args.Part, organ.Id);
+                RaiseLocalEvent(organ.Id, ref ev);
+                
                 if (_body.RemoveOrgan(organ.Id, organ.Component)
                     && TryComp<OrganDamageComponent>(organ.Id, out var damageRule)
                     && damageRule.Damage is not null
@@ -147,14 +145,6 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
                         organEyes.EyeDamage = blindable.EyeDamage;
                         organEyes.MinDamage = blindable.MinDamage;
                         _blindable.UpdateIsBlind((args.Body, blindable));
-                    }
-                    if (TryComp<OrganImplantComponent>(organ.Id, out var implant))
-                    {
-                        foreach (var comp in (implant.AddComp ?? []).Values)
-                        {
-                            if (EntityManager.HasComponent(args.Body, comp.Component.GetType()))
-                                EntityManager.RemoveComponent(args.Body, _compFactory.GetComponent(comp.Component.GetType()));
-                        }
                     }
                     if (TryComp<OrganTongueComponent>(organ.Id, out var organTongue))
                     {

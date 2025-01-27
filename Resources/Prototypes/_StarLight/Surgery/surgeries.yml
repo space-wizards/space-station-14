@@ -14,6 +14,23 @@
     - SurgeryStepOpenIncisionScalpel
     - SurgeryStepClampBleeders
     - SurgeryStepRetractSkin
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
+    
+- type: entity
+  parent: SurgeryOpenIncision
+  id: SurgeryOpenIncisionSlime
+  components:
+  - type: Surgery
+    priority: -100
+    steps:
+    - SurgeryStepOpenIncisionScalpel
+    - SurgeryStepRetractSkin
+  - type: SurgerySpeciesCondition
+    speciesBlacklist: []
+    speciesWhitelist:
+    - SlimePerson
 
 - type: entity
   parent: SurgeryBase
@@ -21,12 +38,31 @@
   name: Close Incision
   components:
   - type: Surgery
-    requirement: SurgeryOpenIncision
+    requirement:
+    - SurgeryOpenIncision
     priority: 100
     steps:
     - SurgeryStepCloseBones
     - SurgeryStepMendRibcage
     - SurgeryStepCloseIncision
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
+    
+- type: entity
+  parent: SurgeryCloseIncision
+  id: SurgeryCloseIncisionSlime
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenIncisionSlime
+    priority: 100
+    steps:
+    - SurgeryStepCloseIncision
+  - type: SurgerySpeciesCondition
+    speciesBlacklist: []
+    speciesWhitelist:
+    - SlimePerson
 
 - type: entity
   parent: SurgeryBase
@@ -34,7 +70,8 @@
   name: Open Ribcage
   components:
   - type: Surgery
-    requirement: SurgeryOpenIncision
+    requirement:
+    - SurgeryOpenIncision
     priority: -50
     steps:
     - SurgeryStepSawBones
@@ -42,6 +79,9 @@
   - type: SurgeryPartCondition
     parts: 
     - Torso
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
   - type: Sprite
     sprite: Mobs/Species/Skeleton/parts.rsi
     state: torso_m
@@ -52,7 +92,9 @@
   name: Open Abdomen
   components:
   - type: Surgery
-    requirement: SurgeryOpenIncision
+    requirement: 
+    - SurgeryOpenIncision
+    - SurgeryOpenIncisionSlime
     priority: -50
     steps:
     - SurgeryStepCutAbdominalMuscles
@@ -66,12 +108,14 @@
 
 - type: entity
   parent: SurgeryBase
-  id: SurgeryEliminateVocalCordDefects.
-  name: Eliminate vocal cord defects.
+  id: SurgeryEliminateVocalCordDefects
+  name: Eliminate vocal cord defects
   description: Remove speech defects, accents.
   components:
   - type: Surgery
-    requirement: SurgeryOpenIncision
+    requirement: 
+    - SurgeryOpenIncision
+    - SurgeryOpenIncisionSlime
     steps:
     - SurgeryStepExposeVocalCords
     - SurgeryStepAdjustVocalCords
@@ -91,11 +135,15 @@
   description: Surgical removal of a limb.
   components:
   - type: Surgery
-    requirement: SurgeryOpenIncision
+    requirement:
+    - SurgeryOpenIncision
     steps:
     - SurgeryStepExposeNerves
     - SurgeryStepExposeBloodVessels
     - SurgeryAmputationStep
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
   - type: SurgeryPartCondition
     parts: 
     - Arm
@@ -106,6 +154,20 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/saw.rsi
     state: saw
+    
+- type: entity
+  parent: SurgeryAmputation
+  id: SurgeryAmputationSlime
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenIncisionSlime
+    steps:
+    - SurgeryAmputationStep
+  - type: SurgerySpeciesCondition
+    speciesBlacklist: []
+    speciesWhitelist:
+    - SlimePerson
 
 - type: entity
   parent: SurgeryBase
@@ -114,7 +176,8 @@
   description: Surgical attachment of a limb.
   components:
   - type: Surgery
-    requirement: SurgeryOpenIncision
+    requirement:
+    - SurgeryOpenIncision
     steps:
     - SurgeryStepExposeNerves
     - SurgeryStepExposeBloodVessels
@@ -122,10 +185,27 @@
     - SurgeryStepRejoinNerves
     - SurgeryStepRejoinBloodVessels
     - SurgeryStepRestoreCartilage
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
   - type: SurgeryAnyLimbSlotCondition
   - type: Sprite
     sprite: Objects/Specific/Medical/medical.rsi
     state: medicated-suture
+    
+- type: entity
+  parent: SurgeryLimbAttachment
+  id: SurgeryLimbAttachmentSlime
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenIncisionSlime
+    steps:
+    - SurgeryLimbAttachmentStep
+  - type: SurgerySpeciesCondition
+    speciesBlacklist: []
+    speciesWhitelist:
+    - SlimePerson
 #organs
 
 - type: entity
@@ -134,11 +214,15 @@
   name: Extract Liver
   components:
   - type: Surgery
-    requirement: SurgeryOpenAbdomen
+    requirement:
+    - SurgeryOpenAbdomen
     steps:
     - SurgeryStepLocateLiver
     - SurgeryStepClampLiverVessels
     - SurgeryStepRemoveLiver
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
@@ -155,13 +239,17 @@
   name: Implant Liver
   components:
   - type: Surgery
-    requirement: SurgeryOpenAbdomen
+    requirement:
+    - SurgeryOpenAbdomen
     steps:
     - SurgeryStepPrepareImplantSiteLiver
     - SurgeryStepInsertLiver
     - SurgeryStepConnectLiverVessels
     - SurgeryStepRestoreAbdominalWalls
     - SurgeryStepSutureMuscles
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
@@ -178,11 +266,15 @@
   name: Extract Appendix
   components:
   - type: Surgery
-    requirement: SurgeryOpenAbdomen
+    requirement:
+    - SurgeryOpenAbdomen
     steps:
     - SurgeryStepLocateAppendix
     - SurgeryStepClampAppendix
     - SurgeryStepRemoveAppendix
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
@@ -199,11 +291,15 @@
   name: Extract Kidneys
   components:
   - type: Surgery
-    requirement: SurgeryOpenAbdomen
+    requirement:
+    - SurgeryOpenAbdomen
     steps:
     - SurgeryStepLocateKidneys
     - SurgeryStepClampKidneysVessels
     - SurgeryStepRemoveKidneys
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
@@ -222,13 +318,17 @@
   name: Implant Kidneys
   components:
   - type: Surgery
-    requirement: SurgeryOpenAbdomen
+    requirement:
+    - SurgeryOpenAbdomen
     steps:
     - SurgeryStepPrepareImplantSiteKidneys
     - SurgeryStepInsertKidneys
     - SurgeryStepConnectKidneysVessels
     - SurgeryStepRestoreAbdominalWalls
     - SurgeryStepSutureMuscles
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
@@ -247,11 +347,15 @@
   name: Extract Stomach
   components:
   - type: Surgery
-    requirement: SurgeryOpenAbdomen
+    requirement:
+    - SurgeryOpenAbdomen
     steps:
     - SurgeryStepLocateStomach
     - SurgeryStepClampStomachVessels
     - SurgeryStepRemoveStomach
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
@@ -268,13 +372,17 @@
   name: Implant Stomach
   components:
   - type: Surgery
-    requirement: SurgeryOpenAbdomen
+    requirement:
+    - SurgeryOpenAbdomen
     steps:
     - SurgeryStepPrepareImplantSiteStomach
     - SurgeryStepInsertStomach
     - SurgeryStepConnectStomachVessels
     - SurgeryStepRestoreAbdominalWalls
     - SurgeryStepSutureMuscles
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
@@ -291,11 +399,15 @@
   name: Extract Lungs
   components:
   - type: Surgery
-    requirement: SurgeryOpenRibcage
+    requirement:
+    - SurgeryOpenRibcage
     steps:
     - SurgeryStepLocateLungs
     - SurgeryStepClampLungVessels
     - SurgeryStepRemoveLungs
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
@@ -314,11 +426,71 @@
   name: Implant Lungs
   components:
   - type: Surgery
-    requirement: SurgeryOpenRibcage
+    requirement:
+    - SurgeryOpenRibcage
     steps:
     - SurgeryStepPrepareImplantSiteLungs
     - SurgeryStepInsertLungs
     - SurgeryStepConnectLungVessels
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganDontExistCondition
+    organ:
+    - type: OrganLungs
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    layers:
+      - state: lung-l
+      - state: lung-r
+      
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryExtractLungsSlime
+  name: Extract Lungs
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenAbdomen
+    steps:
+    - SurgeryStepLocateLungs
+    - SurgeryStepClampLungVessels
+    - SurgeryStepRemoveLungs
+  - type: SurgerySpeciesCondition
+    speciesBlacklist: []
+    speciesWhitelist:
+    - SlimePerson
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganExistCondition
+    organ:
+    - type: OrganLungs
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    layers:
+      - state: lung-l
+      - state: lung-r
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryImplantLungsSlime
+  name: Implant Lungs
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenAbdomen
+    steps:
+    - SurgeryStepPrepareImplantSiteLungs
+    - SurgeryStepInsertLungs
+    - SurgeryStepConnectLungVessels
+  - type: SurgerySpeciesCondition
+    speciesBlacklist: []
+    speciesWhitelist:
+    - SlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
@@ -337,11 +509,15 @@
   name: Extract Heart
   components:
   - type: Surgery
-    requirement: SurgeryOpenRibcage
+    requirement:
+    - SurgeryOpenRibcage
     steps:
     - SurgeryStepLocateHeart
     - SurgeryStepClampHeartVessels
     - SurgeryStepRemoveHeart
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
@@ -358,11 +534,15 @@
   name: Implant Heart
   components:
   - type: Surgery
-    requirement: SurgeryOpenRibcage
+    requirement:
+    - SurgeryOpenRibcage
     steps:
     - SurgeryStepPrepareImplantSiteHeart
     - SurgeryStepInsertHeart
     - SurgeryStepConnectHeartVessels
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
   - type: SurgeryPartCondition
     parts:
     - Torso
@@ -374,12 +554,64 @@
     state: heart-on
 #
 - type: entity
+  parent: SurgeryExtractHeart
+  id: SurgeryExtractHeartSlime
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenAbdomen
+    steps:
+    - SurgeryStepLocateHeart
+    - SurgeryStepClampHeartVessels
+    - SurgeryStepRemoveHeart
+  - type: SurgerySpeciesCondition
+    speciesBlacklist: []
+    speciesWhitelist:
+    - SlimePerson
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganExistCondition
+    organ:
+    - type: OrganHeart
+  - type: Sprite
+    sprite: Mobs/Species/Slime/organs.rsi
+    state: heart-on
+
+- type: entity
+  parent: SurgeryImplantHeart
+  id: SurgeryImplantHeartSlime
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenAbdomen
+    steps:
+    - SurgeryStepPrepareImplantSiteHeart
+    - SurgeryStepInsertHeart
+    - SurgeryStepConnectHeartVessels
+  - type: SurgerySpeciesCondition
+    speciesBlacklist: []
+    speciesWhitelist:
+    - SlimePerson
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganDontExistCondition
+    organ:
+    - type: OrganHeart
+  - type: Sprite
+    sprite: Mobs/Species/Slime/organs.rsi
+    state: heart-on
+#
+- type: entity
   parent: SurgeryBase
   id: SurgeryExtractEyes
   name: Extract Eyes
   components:
   - type: Surgery
-    requirement: SurgeryOpenIncision
+    requirement:
+    - SurgeryOpenIncision
+    - SurgeryOpenIncisionSlime
     steps:
     - SurgeryStepLocateEyes
     - SurgeryStepClampOpticNerve
@@ -402,7 +634,9 @@
   name: Implant Eyes
   components:
   - type: Surgery
-    requirement: SurgeryOpenIncision
+    requirement:
+    - SurgeryOpenIncision
+    - SurgeryOpenIncisionSlime
     steps:
     - SurgeryStepPrepareImplantSiteEyes
     - SurgeryStepInsertEyes
@@ -425,7 +659,9 @@
   name: Extract Eye Implant
   components:
   - type: Surgery
-    requirement: SurgeryOpenIncision
+    requirement:
+    - SurgeryOpenIncision
+    - SurgeryOpenIncisionSlime
     steps:
     - SurgeryStepLocateImplant
     - SurgeryStepClampOpticNerve
@@ -447,7 +683,9 @@
   name: Implant Eye Implant
   components:
   - type: Surgery
-    requirement: SurgeryOpenIncision
+    requirement:
+    - SurgeryOpenIncision
+    - SurgeryOpenIncisionSlime
     steps:
     - SurgeryStepPrepareImplantSiteEyes
     - SurgeryStepInsertEyeImplant
@@ -508,7 +746,8 @@
   name: Extract Brain
   components:
   - type: Surgery
-    requirement: SurgeryOpenIncision
+    requirement:
+    - SurgeryOpenIncision
     steps:
     - SurgeryStepPreparePatient
     - SurgeryStepShaveHead
@@ -523,6 +762,9 @@
     - SurgeryStepRetractDuraMater
     - SurgeryStepSeverCranialNerves
     - SurgeryStepExtractBrain
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
   - type: SurgeryPartCondition
     parts:
     - Head
@@ -539,7 +781,8 @@
   name: Implant Brain
   components:
   - type: Surgery
-    requirement: SurgeryOpenIncision
+    requirement:
+    - SurgeryOpenIncision
     steps:
     - SurgeryStepCleanImplantSite
     - SurgeryStepPrepareScalp
@@ -559,6 +802,9 @@
     - SurgeryStepSecureBoneFlap
     - SurgeryStepReplaceScalp
     - SurgeryStepSutureScalp
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
   - type: SurgeryPartCondition
     parts:
     - Head
@@ -568,6 +814,65 @@
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
     state: brain
+
+# 
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryExtractCore
+  name: Extract Core
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenAbdomen
+    steps:
+    - SurgeryStepPreparePatient
+    - SurgeryStepDisinfectScalp
+    - SurgeryStepMakeIncisionScalp
+    - SurgeryStepRetractScalp
+    - SurgeryStepExtractBrain
+  - type: SurgerySpeciesCondition
+    speciesBlacklist: []
+    speciesWhitelist:
+    - SlimePerson
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganExistCondition
+    organ:
+    - type: OrganBrain
+  - type: Sprite
+    sprite: Mobs/Species/Slime/organs.rsi
+    state: brain-slime
+    
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryImplantCore
+  name: Implant Core
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenAbdomen
+    steps:
+    - SurgeryStepCleanImplantSite
+    - SurgeryStepPrepareScalp
+    - SurgeryStepMakeIncisionScalp
+    - SurgeryStepRetractScalp
+    - SurgeryStepInsertBrain
+    - SurgeryStepReplaceScalp
+    - SurgeryStepSutureScalp
+  - type: SurgerySpeciesCondition
+    speciesBlacklist: []
+    speciesWhitelist:
+    - SlimePerson
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganDontExistCondition
+    organ:
+    - type: OrganBrain
+  - type: Sprite
+    sprite: Mobs/Species/Slime/organs.rsi
+    state: brain-slime
 #
 - type: entity
   parent: SurgeryBase
@@ -575,7 +880,8 @@
   name: Extract Egg
   components:
   - type: Surgery
-    requirement: SurgeryOpenAbdomen
+    requirement:
+    - SurgeryOpenAbdomen
     steps:
     - SurgeryStepRemoveEgg
   - type: SurgeryPartCondition

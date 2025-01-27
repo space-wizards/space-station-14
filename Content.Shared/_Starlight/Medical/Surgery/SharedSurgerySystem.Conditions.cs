@@ -1,4 +1,6 @@
 ﻿using Content.Shared.Body.Part;
+using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Humanoid;
 using System.Linq;
 using Content.Shared.Starlight.Medical.Surgery.Steps.Parts;
 using Content.Shared.Starlight.Medical.Surgery.Events;
@@ -17,6 +19,7 @@ public abstract partial class SharedSurgerySystem
             .ToList();
 
         SubscribeLocalEvent<SurgeryPartConditionComponent, SurgeryValidEvent>(OnPartConditionValid);
+        SubscribeLocalEvent<SurgerySpeciesConditionComponent, SurgeryValidEvent>(OnSpeciesConditionValid);
         SubscribeLocalEvent<SurgeryOrganExistConditionComponent, SurgeryValidEvent>(OnOrganExistConditionValid);
         SubscribeLocalEvent<SurgeryOrganDontExistConditionComponent, SurgeryValidEvent>(OnOrganDontExistConditionValid);
         SubscribeLocalEvent<SurgeryAnyAccentConditionComponent, SurgeryValidEvent>(OnAnyAccentConditionValid);
@@ -53,6 +56,26 @@ public abstract partial class SharedSurgerySystem
 
         if (CompOrNull<BodyPartComponent>(args.Part)?.PartType is BodyPartType part && !ent.Comp.Parts.Contains(part))
             args.Cancelled = true;
+    }
+    private void OnSpeciesConditionValid(Entity<SurgerySpeciesConditionComponent> ent, ref SurgeryValidEvent args)
+    {
+        if (!EntityManager.TryGetComponent<HumanoidAppearanceComponent>(args.Body, out var humanoidAppearanceComponent))
+        {
+            args.Cancelled = true;
+            return;
+        }
+
+        if (ent.Comp.SpeciesBlacklist.Contains(humanoidAppearanceComponent.Species))
+        {
+            args.Cancelled = true;
+            return;
+        }
+
+        if (ent.Comp.SpeciesWhitelist.Count > 0 && !ent.Comp.SpeciesWhitelist.Contains(humanoidAppearanceComponent.Species))
+        {
+            args.Cancelled = true;
+            return;
+        }
     }
     private void OnAnyAccentConditionValid(Entity<SurgeryAnyAccentConditionComponent> ent, ref SurgeryValidEvent args)
     {

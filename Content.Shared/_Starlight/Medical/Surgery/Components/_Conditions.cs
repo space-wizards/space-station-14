@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Body.Part;
+using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 // Based on the RMC14.
@@ -14,6 +15,15 @@ public sealed partial class SurgeryPartConditionComponent : Component
 {
     [DataField]
     public List<BodyPartType> Parts = [];
+}
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))]
+public sealed partial class SurgerySpeciesConditionComponent : Component
+{
+    [DataField]
+    public HashSet<ProtoId<SpeciesPrototype>> SpeciesBlacklist = [];
+    
+    [DataField]
+    public HashSet<ProtoId<SpeciesPrototype>> SpeciesWhitelist = [];
 }
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))]
 public sealed partial class SurgeryOrganExistConditionComponent : Component

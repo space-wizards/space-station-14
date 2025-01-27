@@ -15,9 +15,6 @@
       groups:
         - id: Food
         - id: Drink
-        - id: Medicine
-        - id: Poison
-        - id: Narcotic
         - id: Alcohol
           rateModifier: 0.25
     - type: SolutionContainerManager
@@ -76,3 +73,24 @@
   - type: Item
     size: Small
     heldPrefix: lungs
+    
+- type: entity
+  id: OrganSlimeHeart
+  parent: [BaseHumanOrgan, BaseOrganHeart]
+  name: slime circulator
+  description: "A little circulator what makes the fluid move through the slime body."
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Slime/organs.rsi
+    state: heart-on
+  - type: Item
+    size: Small
+    heldPrefix: heart
+  - type: Metabolizer
+    maxReagents: 6
+    metabolizerTypes: [ Slime ]
+    removeEmpty: true
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
