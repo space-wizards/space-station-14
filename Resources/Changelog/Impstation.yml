@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: Saeko-44
-  changes:
-  - message: Added a new section in the guidebook with microwave recipes, complete
-      with filtering.
-    type: Add
-  id: 508
-  time: '2024-11-14T01:20:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/701
-- author: honeyed-lemons
-  changes:
-  - message: Space Scientist Jumpsuit
-    type: Add
-  id: 509
-  time: '2024-11-14T01:22:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/698
-- author: widgetbeck
-  changes:
-  - message: Added new shittle lobby art.
-    type: Add
-  id: 510
-  time: '2024-11-14T05:52:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/696
 - author: EpicToast
   changes:
   - message: 'Made a bunch of miscellaneous updates and fixes for Union Station:'
@@ -4380,3 +4358,24 @@
   id: 1007
   time: '2025-01-26T03:18:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1487
+- author: 12rabbits
+  changes:
+  - message: Unborgable brains now dissolve into more appropriate reagents.
+    type: Tweak
+  id: 1008
+  time: '2025-01-27T00:40:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1437
+- author: kipdotnet
+  changes:
+  - message: Monkeys and Kobolds can now pilot shuttles.
+    type: Add
+  id: 1009
+  time: '2025-01-27T00:54:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1495
+- author: DinnerCalzone
+  changes:
+  - message: Fixed Marathon engineering missing it's PA computer board.
+    type: Fix
+  id: 1010
+  time: '2025-01-27T01:56:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1496
