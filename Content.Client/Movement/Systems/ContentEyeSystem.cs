@@ -60,7 +60,7 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
         var eyeEntities = AllEntityQuery<ContentEyeComponent, EyeComponent>();
         while (eyeEntities.MoveNext(out var entity, out ContentEyeComponent? contentComponent, out EyeComponent? eyeComponent))
         {
-            UpdateEyeOffset((entity, contentComponent, eyeComponent));
+            UpdateEyeOffset((entity, eyeComponent));
         }
     }
 }

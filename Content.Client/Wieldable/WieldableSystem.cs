@@ -6,12 +6,14 @@ using Content.Shared.Hands;
 using Content.Shared.Movement.Components;
 using Content.Shared.Wieldable;
 using Content.Shared.Wieldable.Components;
+using Robust.Client.Timing;
 
 namespace Content.Client.Wieldable;
 
 public sealed class WieldableSystem : SharedWieldableSystem
 {
     [Dependency] private readonly EyeCursorOffsetSystem _eyeOffset = default!;
+    [Dependency] private readonly IClientGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {
@@ -26,7 +28,8 @@ public sealed class WieldableSystem : SharedWieldableSystem
         if (!TryComp(entity.Owner, out EyeCursorOffsetComponent? cursorOffsetComp))
             return;
 
-        cursorOffsetComp.CurrentPosition = Vector2.Zero;
+        if (_gameTiming.IsFirstTimePredicted)
+            cursorOffsetComp.CurrentPosition = Vector2.Zero;
     }
 
     public void OnGetEyeOffset(Entity<CursorOffsetRequiresWieldComponent> entity, ref HeldRelayedEvent<GetEyeOffsetRelayedEvent> args)
