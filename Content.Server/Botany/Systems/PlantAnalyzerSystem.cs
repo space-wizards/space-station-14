@@ -90,7 +90,7 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
                     consumeGasses: [.. plantHolder.Seed.ConsumeGasses.Keys]
                 );
                 produceData = new PlantAnalyzerProduceData(
-                    yield: BotanySystem.CalculateTotalYield(plantHolder.Seed.Yield, plantHolder.YieldMod),
+                    yield: plantHolder.Seed.ProductPrototypes.Count == 0 ? 0 : BotanySystem.CalculateTotalYield(plantHolder.Seed.Yield, plantHolder.YieldMod),
                     potency: plantHolder.Seed.Potency,
                     chemicals: [.. plantHolder.Seed.Chemicals.Keys],
                     produce: plantHolder.Seed.ProductPrototypes,
@@ -145,7 +145,7 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
         var missingData = Loc.GetString("plant-analyzer-printout-missing");
 
         var seedName = data.PlantData is not null ? Loc.GetString(data.PlantData.SeedDisplayName) : null;
-        (string, string)[] parameters = [
+        (string, object)[] parameters = [
             ("seedName", seedName ?? missingData),
             ("produce", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.ProduceToLocalizedStrings(data.ProduceData.Produce, _prototypeManager).Plural : missingData),
             ("water", data.TolerancesData?.WaterConsumption.ToString("0.00") ?? missingData),
@@ -160,7 +160,7 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
             ("tempTolerance", data.TolerancesData?.HeatTolerance.ToString("0.00") ?? missingData),
             ("lightLevel", data.TolerancesData?.IdealLight.ToString("0.00") ?? missingData),
             ("lightTolerance", data.TolerancesData?.LightTolerance.ToString("0.00") ?? missingData),
-            ("n", data.ProduceData?.Yield.ToString("0") ?? missingData),
+            ("yield", data.ProduceData?.Yield ?? -1),
             ("potency", data.ProduceData is not null ? Loc.GetString(data.ProduceData.Potency) : missingData),
             ("chemicals", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.ChemicalsToLocalizedStrings(data.ProduceData.Chemicals, _prototypeManager) : missingData),
             ("gasesOut", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.GasesToLocalizedStrings(data.ProduceData.ExudeGasses, _prototypeManager) : missingData),
@@ -168,13 +168,12 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
             ("lifespan", data.PlantData?.Lifespan.ToString("0.00") ?? missingData),
             ("seeds", data.ProduceData is not null ? (data.ProduceData.Seedless ? "no" : "yes") : "other"),
             ("viable", data.PlantData is not null ? (data.PlantData.Viable ? "yes" : "no") : "other"),
-            ("indent", "    ")
+            ("kudzu", data.PlantData is not null ? (data.PlantData.Kudzu ? "yes" : "no") : "other"),
+            ("indent", "    "),
+            ("nl", "\n")
         ];
-        var text = new StringBuilder();
-        for (var i = 0; i < 22; i++)
-            text.AppendLine(Loc.GetString($"plant-analyzer-printout-l{i}", [.. parameters]));
 
-        _paperSystem.SetContent((printed, paperComp), text.ToString().TrimEnd('\r', '\n'));
+        _paperSystem.SetContent((printed, paperComp), Loc.GetString($"plant-analyzer-printout", [.. parameters]));
         _labelSystem.Label(printed, seedName);
         _audioSystem.PlayPvs(component.SoundPrint, uid,
             AudioParams.Default
