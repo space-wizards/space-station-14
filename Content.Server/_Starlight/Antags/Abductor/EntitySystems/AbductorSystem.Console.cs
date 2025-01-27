@@ -68,7 +68,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     private void OnVestModeChangeBuiMsg(EntityUid uid, AbductorConsoleComponent component, AbductorVestModeChangeBuiMsg args)
     {
         if (component.Armor != null)
-            _itemSwitch.Switch(GetEntity(component.Armor.Value), args.Mode);
+            _itemSwitch.Switch(GetEntity(component.Armor.Value), args.Mode.ToString());
     }
     
     private void OnItemBuyedBuiMsg(Entity<AbductorConsoleComponent> ent, ref AbductorItemBuyedBuiMsg args)
@@ -239,14 +239,14 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         }
         
         var armorLock = false;
-        var armorMode = "stealth";
+        var armorMode = AbductorArmorModeType.Stealth;
         
         if (computer.Comp.Armor != null)
         {
             if (HasComp<UnremoveableComponent>(GetEntity(computer.Comp.Armor.Value)))
                 armorLock = true;
-            if (TryComp<ItemSwitchComponent>(GetEntity(computer.Comp.Armor.Value), out var switchVest))
-                armorMode = switchVest.State;
+            if (TryComp<ItemSwitchComponent>(GetEntity(computer.Comp.Armor.Value), out var switchVest) && Enum.TryParse<AbductorArmorModeType>(switchVest.State, ignoreCase: true, out var State))
+                armorMode = State;
         }
 
         _uiSystem.SetUiState(computer.Owner, AbductorConsoleUIKey.Key, new AbductorConsoleBuiState()

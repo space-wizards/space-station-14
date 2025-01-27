@@ -27,7 +27,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
    
     private void OnEquipped(Entity<AbductorVestComponent> ent, ref GotEquippedEvent args)
     {
-        if (args.Equipee != null && !HasComp<StealthComponent>(args.Equipee) && ent.Comp.CurrentState != "combat")
+        if (args.Equipee != null && !HasComp<StealthComponent>(args.Equipee) && ent.Comp.CurrentState != AbductorArmorModeType.Combat)
         {
             AddComp<StealthComponent>(args.Equipee);
             AddComp<StealthOnMoveComponent>(args.Equipee);
@@ -46,11 +46,12 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     private void OnItemSwitch(EntityUid uid, AbductorVestComponent component, ref ItemSwitchedEvent args)
     {
         
-        component.CurrentState = args.State;
+        if (Enum.TryParse<AbductorArmorModeType>(args.State, ignoreCase: true, out var State))
+            component.CurrentState = State;
         
         var user = Transform(uid).ParentUid;
         
-        if (args.State == "combat")
+        if (State == AbductorArmorModeType.Combat)
         {
             if (TryComp<ClothingComponent>(uid, out var clothingComponent))
                 _clothing.SetEquippedPrefix(uid, "combat", clothingComponent);

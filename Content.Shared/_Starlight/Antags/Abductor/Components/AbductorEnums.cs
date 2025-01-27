@@ -19,6 +19,12 @@ public enum AbductorOrganType : byte
     Vent
 }
 [Serializable, NetSerializable]
+public enum AbductorArmorModeType : byte
+{
+    Combat,
+    Stealth
+}
+[Serializable, NetSerializable]
 public enum AbductorCameraConsoleUIKey
 {
     Key

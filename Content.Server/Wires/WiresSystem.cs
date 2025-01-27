@@ -450,10 +450,10 @@ public sealed class WiresSystem : SharedWiresSystem
         {
             if (TryComp(args.User, out ActorComponent? actor))
             {
-                if (_tags.HasTag(args.Used, "ShowWires"))
-                    component.viewWires = true;
+                if (_tags.HasTag(args.Used, component.ShowWiresTag))
+                    component.ViewWires = true;
                 else
-                    component.viewWires = false;
+                    component.ViewWires = false;
                 
                 UpdateUserInterface(uid);
                 
@@ -555,14 +555,17 @@ public sealed class WiresSystem : SharedWiresSystem
             var lightData = (((int, StatusLightData?)) tempValue);
             if (lightData.Item2 != null && lightData.Item2 is StatusLightData data)
             {
-                var foundWires = wires.WiresList
-                    .Where(wire => wire.OriginalPosition == lightData.Item1)
-                    .ToList();
-                    
-                if (foundWires.Any() && wires.viewWires)
+                if (wires.ViewWires)
                 {
-                    var wireLetters = string.Join(", ", foundWires.Select(wire => wire.Letter.ToString()));
-                    data.Text = $"{data.Text}({wireLetters})";
+                    var foundWires = wires.WiresList
+                        .Where(wire => wire.OriginalPosition == lightData.Item1)
+                        .ToList();
+
+                    if (foundWires.Any())
+                    {
+                        var wireLetters = string.Join(", ", foundWires.Select(wire => wire.Letter.ToString()));
+                        data.Text = $"{data.Text}({wireLetters})";
+                    }
                 }
 
                 statuses.Add((lightData.Item1, key, data));

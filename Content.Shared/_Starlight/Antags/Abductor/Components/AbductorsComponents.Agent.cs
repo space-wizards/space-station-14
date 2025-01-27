@@ -24,5 +24,5 @@ public sealed partial class AbductorAgentComponent : Component
 public sealed partial class AbductorVestComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public string CurrentState = "stealth";
+    public AbductorArmorModeType CurrentState = AbductorArmorModeType.Stealth;
 }

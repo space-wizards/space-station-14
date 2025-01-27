@@ -22,7 +22,7 @@ public sealed class AbductorConsoleBui : BoundUserInterface
     [ViewVariables]
     private bool armorLocked = false;
     [ViewVariables]
-    private string? armorMode;
+    private AbductorArmorModeType armorMode = AbductorArmorModeType.Stealth;
     [ViewVariables]
     private int balance = 0;
     public AbductorConsoleBui(EntityUid owner, Enum uiKey) : base(owner, uiKey)
@@ -68,7 +68,7 @@ public sealed class AbductorConsoleBui : BoundUserInterface
             _window.CombatModeButton.Disabled = true;
             SendMessage(new AbductorVestModeChangeBuiMsg()
             {
-                Mode = "combat",
+                Mode = AbductorArmorModeType.Combat,
             });
         };
         
@@ -77,11 +77,11 @@ public sealed class AbductorConsoleBui : BoundUserInterface
             _window.CombatModeButton.Disabled = false;
             SendMessage(new AbductorVestModeChangeBuiMsg()
             {
-                Mode = "stealth",
+                Mode = AbductorArmorModeType.Stealth,
             });
         };
         
-        if (armorMode == "combat")
+        if (armorMode == AbductorArmorModeType.Combat)
         {
             _window.CombatModeButton.Disabled = true;
             _window.StealthModeButton.Disabled = false;
@@ -203,7 +203,7 @@ public sealed class AbductorConsoleBui : BoundUserInterface
         
         armorMode = state.CurrentArmorMode;
         
-        if (armorMode == "combat")
+        if (armorMode == AbductorArmorModeType.Combat)
         {
             _window.CombatModeButton.Disabled = true;
             _window.StealthModeButton.Disabled = false;

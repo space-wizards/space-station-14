@@ -36,8 +36,8 @@
   - type: ItemSwitch
     state: stealth
     states:
-      stealth: !type:ItemSwitchState
-        verb: stealth
+      Stealth: !type:ItemSwitchState
+        verb: Stealth
         hiden: true
         sprite:
           sprite: _Starlight/Clothing/OuterClothing/Armor/abductor.rsi
@@ -56,8 +56,8 @@
         - type: ExplosionResistance
           damageCoefficient: 0.85
 
-      combat: !type:ItemSwitchState
-        verb: combat
+      Combat: !type:ItemSwitchState
+        verb: Combat
         hiden: true
         sprite:
           sprite: _Starlight/Clothing/OuterClothing/Armor/abductor.rsi
