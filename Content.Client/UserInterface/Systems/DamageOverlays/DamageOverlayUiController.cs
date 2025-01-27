@@ -3,6 +3,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Traits.Assorted;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -95,12 +96,16 @@ public sealed class DamageOverlayUiController : UIController
             case MobState.Alive:
             {
                 FixedPoint2 painLevel = 0;
-                foreach (var painDamageType in damageable.PainDamageGroupIDs)
+
+                if (!EntityManager.HasComponent<PainNumbnessComponent>(entity))
                 {
-                    damageable.DamagePerGroup.TryGetValue(painDamageType, out var painDamage);
-                    painLevel += painDamage;
+                    foreach (var painDamageType in damageable.PainDamageGroupIDs)
+                    {
+                        damageable.DamagePerGroup.TryGetValue(painDamageType, out var painDamage);
+                        painLevel += painDamage;
+                    }
+                    _overlay.PainLevel = FixedPoint2.Min(1f, painLevel / critThreshold).Float();
                 }
-                _overlay.PainLevel = FixedPoint2.Min(1f, painLevel / critThreshold).Float();
 
                 if (damageable.DamagePerGroup.TryGetValue("Airloss", out var oxyDamage))
                 {
