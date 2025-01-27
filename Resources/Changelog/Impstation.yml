@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Quick construction radial menus work with more materials.
-    type: Add
-  - message: Uranium directional windows are now in the construction menu.
-    type: Add
-  id: 514
-  time: '2024-11-14T22:57:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/683
 - author: AirFryerBuyOneGetOneFree
   changes:
   - message: Changed crawling and stand up speed to be slower overall.
@@ -4338,3 +4329,10 @@
   id: 1013
   time: '2025-01-27T22:09:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1503
+- author: EpicToast
+  changes:
+  - message: You can now label mechs like the Ripley APLU with a hand labeler.
+    type: Tweak
+  id: 1014
+  time: '2025-01-27T22:13:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1502
