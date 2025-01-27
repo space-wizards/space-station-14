@@ -602,8 +602,6 @@ entities:
             6462: -141,-44
             6463: -141,-43
             6482: -96,33
-            6483: -96,34
-            6484: -96,35
             6524: -91,27
             6525: -91,28
             6526: -91,29
@@ -2634,7 +2632,6 @@ entities:
             7149: -94,33
             7150: -95,33
             7151: -96,33
-            7152: -96,34
             7153: -95,34
             7154: -94,34
             7155: -93,34
@@ -2645,7 +2642,6 @@ entities:
             7160: -93,35
             7161: -94,35
             7162: -95,35
-            7163: -96,35
             7164: -97,33
             7165: -97,32
             7166: -98,32
@@ -5310,6 +5306,8 @@ entities:
             7732: -58,-33
             7733: -59,-33
             7734: -58,-34
+            7864: -96,34
+            7865: -96,35
         - node:
             color: '#52B4E996'
             id: FullTileOverlayGreyscale
@@ -5717,13 +5715,13 @@ entities:
             color: '#8D1C9996'
             id: QuarterTileOverlayGreyscale
           decals:
-            6495: -96,35
             6496: -95,35
             6497: -94,35
             6499: -95,30
             6500: -94,30
             6501: -93,30
             6502: -92,30
+            7862: -96,35
         - node:
             color: '#9FED5896'
             id: QuarterTileOverlayGreyscale
@@ -6014,9 +6012,9 @@ entities:
             6510: -94,30
             6511: -93,30
             6512: -92,30
-            6521: -96,35
             6522: -95,35
             6523: -94,35
+            7863: -96,35
         - node:
             color: '#D4D4D496'
             id: QuarterTileOverlayGreyscale90
@@ -8891,7 +8889,8 @@ entities:
           -25,7:
             1: 20206
           -24,8:
-            1: 65535
+            8: 1
+            1: 65534
           -23,5:
             1: 65535
           -23,6:
@@ -9759,6 +9758,21 @@ entities:
           moles:
           - 0
           - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14975
+          moles:
+          - 21.824879
+          - 82.10312
           - 0
           - 0
           - 0
@@ -12241,7 +12255,11 @@ entities:
       pos: -36.5,19.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        8648:
+        - DoorStatus: DoorBolt
   - uid: 332
     components:
     - type: Transform
@@ -12249,7 +12267,11 @@ entities:
       pos: -36.5,12.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        8647:
+        - DoorStatus: DoorBolt
   - uid: 1771
     components:
     - type: Transform
@@ -12268,14 +12290,22 @@ entities:
       pos: -1.5,-16.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        8719:
+        - DoorStatus: DoorBolt
   - uid: 8301
     components:
     - type: Transform
       pos: -1.5,-10.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        8721:
+        - DoorStatus: DoorBolt
   - uid: 8713
     components:
     - type: Transform
@@ -12283,7 +12313,13 @@ entities:
       pos: -6.5,-36.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        8742:
+        - DoorStatus: DoorBolt
+        8741:
+        - DoorStatus: DoorBolt
   - uid: 9280
     components:
     - type: Transform
@@ -12291,7 +12327,13 @@ entities:
       pos: -29.5,22.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        8653:
+        - DoorStatus: DoorBolt
+        8652:
+        - DoorStatus: DoorBolt
   - uid: 10081
     components:
     - type: Transform
@@ -12347,7 +12389,11 @@ entities:
       pos: -1.5,-18.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        8718:
+        - DoorStatus: DoorBolt
   - uid: 10565
     components:
     - type: Transform
@@ -12355,7 +12401,11 @@ entities:
       pos: -83.5,18.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        10563:
+        - DoorStatus: DoorBolt
   - uid: 10566
     components:
     - type: Transform
@@ -12363,7 +12413,11 @@ entities:
       pos: -83.5,20.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        10564:
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalGlassCommandLocked
   entities:
   - uid: 1880
@@ -12372,7 +12426,11 @@ entities:
       pos: -1.5,-8.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        8722:
+        - DoorStatus: DoorBolt
   - uid: 24574
     components:
     - type: Transform
@@ -12604,16 +12662,26 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -39.5,12.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        26239:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
   - uid: 8648
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -39.5,19.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        16903:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
 - proto: AirlockExternalGlassShuttleEmergencyLocked
   entities:
   - uid: 8718
@@ -12622,32 +12690,52 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 2.5,-18.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        8950:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
   - uid: 8719
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 2.5,-16.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        13489:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
   - uid: 8721
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 2.5,-10.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        26238:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
   - uid: 8722
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 2.5,-8.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        26237:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
 - proto: AirlockExternalGlassShuttleEscape
   entities:
   - uid: 5882
@@ -13037,48 +13125,78 @@ entities:
       rot: 3.141592653589793 rad
       pos: -30.5,26.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        19502:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
   - uid: 8653
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -28.5,26.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        19503:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
   - uid: 8741
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -3.5,-37.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        22372:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
   - uid: 8742
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -3.5,-35.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        22371:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
   - uid: 10563
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -81.5,18.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        8961:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
   - uid: 10564
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -81.5,20.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        12421:
+        - DoorStatus: InputA
+        - DockStatus: InputB
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
   - uid: 24212
     components:
     - type: Transform
@@ -23387,66 +23505,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -13.5,-65.5
-      parent: 2
-  - uid: 12421
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -3.5,-35.5
-      parent: 2
-  - uid: 22368
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -39.5,19.5
-      parent: 2
-  - uid: 22369
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -39.5,12.5
-      parent: 2
-  - uid: 22370
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -81.5,20.5
-      parent: 2
-  - uid: 22371
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -3.5,-37.5
-      parent: 2
-  - uid: 22372
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 2.5,-18.5
-      parent: 2
-  - uid: 22985
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 2.5,-16.5
-      parent: 2
-  - uid: 22986
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 2.5,-8.5
-      parent: 2
-  - uid: 22987
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 2.5,-10.5
-      parent: 2
-  - uid: 22988
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -81.5,18.5
       parent: 2
   - uid: 22991
     components:
@@ -64991,6 +65049,13 @@ entities:
     - type: Transform
       pos: -86.49207,-7.485811
       parent: 2
+- proto: ClothingShoesBootsCombatFilled
+  entities:
+  - uid: 23784
+    components:
+    - type: Transform
+      pos: -127.52387,-21.458458
+      parent: 2
 - proto: ClothingShoesBootsMag
   entities:
   - uid: 24375
@@ -65665,6 +65730,13 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -133.5,-48.5
+      parent: 2
+- proto: ComputerSalvageExpedition
+  entities:
+  - uid: 22987
+    components:
+    - type: Transform
+      pos: -95.5,35.5
       parent: 2
 - proto: ComputerShuttleCargo
   entities:
@@ -66875,11 +66947,6 @@ entities:
     - type: Transform
       pos: -63.5,-63.5
       parent: 2
-  - uid: 17089
-    components:
-    - type: Transform
-      pos: -95.5,32.5
-      parent: 2
   - uid: 20514
     components:
     - type: Transform
@@ -67898,6 +67965,56 @@ entities:
     components:
     - type: Transform
       pos: -92.52145,-24.442335
+      parent: 2
+  - uid: 22985
+    components:
+    - type: Transform
+      pos: -99.95677,12.58157
+      parent: 2
+  - uid: 22986
+    components:
+    - type: Transform
+      pos: -93.50802,-18.397871
+      parent: 2
+  - uid: 26229
+    components:
+    - type: Transform
+      pos: -109.466736,-13.371529
+      parent: 2
+  - uid: 26230
+    components:
+    - type: Transform
+      pos: -119.46937,-42.42088
+      parent: 2
+  - uid: 26231
+    components:
+    - type: Transform
+      pos: -121.45374,-48.454586
+      parent: 2
+  - uid: 26232
+    components:
+    - type: Transform
+      pos: -56.468803,-29.385876
+      parent: 2
+  - uid: 26233
+    components:
+    - type: Transform
+      pos: -56.531303,-21.472557
+      parent: 2
+  - uid: 26234
+    components:
+    - type: Transform
+      pos: -37.491085,-16.41949
+      parent: 2
+  - uid: 26235
+    components:
+    - type: Transform
+      pos: -37.53796,-26.494999
+      parent: 2
+  - uid: 26236
+    components:
+    - type: Transform
+      pos: -20.523346,-4.445061
       parent: 2
 - proto: DiseaseDiagnoser
   entities:
@@ -77675,11 +77792,9 @@ entities:
       parent: 2
     - type: DeviceList
       devices:
-      - 8961
       - 8955
       - 13485
       - 19610
-      - 8950
   - uid: 13736
     components:
     - type: Transform
@@ -77876,9 +77991,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -142.5,-11.5
       parent: 2
-    - type: DeviceList
-      devices:
-      - 13489
   - uid: 19506
     components:
     - type: MetaData
@@ -78903,15 +79015,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13492
-  - uid: 13489
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -152.5,-10.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 18819
   - uid: 13629
     components:
     - type: Transform
@@ -80688,15 +80791,6 @@ entities:
       deviceLists:
       - 25598
       - 25603
-  - uid: 8950
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -142.5,-10.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 13492
   - uid: 8955
     components:
     - type: Transform
@@ -80707,15 +80801,6 @@ entities:
       deviceLists:
       - 13492
       - 25599
-  - uid: 8961
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -139.5,-10.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 13492
   - uid: 8976
     components:
     - type: Transform
@@ -81823,16 +81908,6 @@ entities:
       parent: 2
 - proto: FlashlightLantern
   entities:
-  - uid: 19502
-    components:
-    - type: Transform
-      pos: -109.39066,-13.270811
-      parent: 2
-  - uid: 19503
-    components:
-    - type: Transform
-      pos: -109.56254,-13.536436
-      parent: 2
   - uid: 22903
     components:
     - type: Transform
@@ -125266,12 +125341,12 @@ entities:
   - uid: 20328
     components:
     - type: Transform
-      pos: -95.65996,35.329193
+      pos: -95.63546,32.26982
       parent: 2
   - uid: 20342
     components:
     - type: Transform
-      pos: -95.45683,35.31357
+      pos: -95.38546,32.285446
       parent: 2
 - proto: HandheldHealthAnalyzer
   entities:
@@ -125308,7 +125383,7 @@ entities:
   - uid: 22292
     components:
     - type: Transform
-      pos: -37.506813,-16.451693
+      pos: -36.50671,-17.824657
       parent: 2
   - uid: 22293
     components:
@@ -125323,7 +125398,7 @@ entities:
   - uid: 23930
     components:
     - type: Transform
-      pos: -37.50611,-26.530968
+      pos: -38.38171,-26.499212
       parent: 2
   - uid: 25704
     components:
@@ -127437,8 +127512,175 @@ entities:
     - type: Transform
       pos: -60.5,-64.5
       parent: 2
+- proto: LogicGateOr
+  entities:
+  - uid: 17089
+    components:
+    - type: Transform
+      anchored: True
+      pos: -29.5,25.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        9280:
+        - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 22370
+    components:
+    - type: Transform
+      anchored: True
+      pos: -4.5,-36.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        8713:
+        - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
 - proto: LogicGateXor
   entities:
+  - uid: 8950
+    components:
+    - type: Transform
+      anchored: True
+      pos: 1.5,-18.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        1898:
+        - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 8961
+    components:
+    - type: Transform
+      anchored: True
+      pos: -82.5,18.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        10565:
+        - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 12421
+    components:
+    - type: Transform
+      anchored: True
+      pos: -82.5,20.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        10566:
+        - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 13489
+    components:
+    - type: Transform
+      anchored: True
+      pos: 1.5,-16.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        8300:
+        - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 16903
+    components:
+    - type: Transform
+      anchored: True
+      pos: -38.5,19.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        115:
+        - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 19502
+    components:
+    - type: Transform
+      anchored: True
+      pos: -30.5,25.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        17089:
+        - Output: InputA
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 19503
+    components:
+    - type: Transform
+      anchored: True
+      pos: -28.5,25.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        17089:
+        - Output: InputB
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 22371
+    components:
+    - type: Transform
+      anchored: True
+      pos: -4.5,-35.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        22370:
+        - Output: InputA
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 22372
+    components:
+    - type: Transform
+      anchored: True
+      pos: -4.5,-37.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        22370:
+        - Output: InputB
+    - type: Physics
+      canCollide: False
+      bodyType: Static
   - uid: 24217
     components:
     - type: Transform
@@ -127450,6 +127692,51 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         10081:
+        - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 26237
+    components:
+    - type: Transform
+      anchored: True
+      pos: 1.5,-8.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        1880:
+        - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 26238
+    components:
+    - type: Transform
+      anchored: True
+      pos: 1.5,-10.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        8301:
+        - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 26239
+    components:
+    - type: Transform
+      anchored: True
+      pos: -38.5,12.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        332:
         - Output: DoorBolt
     - type: Physics
       canCollide: False
@@ -128818,6 +129105,17 @@ entities:
       currentLabel: Logbook
     - type: NameModifier
       baseName: paper
+  - uid: 22368
+    components:
+    - type: Transform
+      pos: -84.44287,19.534288
+      parent: 2
+    - type: Paper
+      content: >2-
+
+        [head=1][color=#ff0000]                   WARNING![/color][/head]
+
+        [bold]Ensure internal airlock is fully closed before undocking. Failure to ensure internal airlock is closed will lead to internal and external airlocks remaining open during undocking proceedure.[/bold]
   - uid: 25911
     components:
     - type: Transform
@@ -133421,12 +133719,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -86.5,-50.5
       parent: 2
-  - uid: 16903
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -95.5,35.5
-      parent: 2
   - uid: 18750
     components:
     - type: Transform
@@ -133452,6 +133744,11 @@ entities:
     components:
     - type: Transform
       pos: -26.5,-3.5
+      parent: 2
+  - uid: 22369
+    components:
+    - type: Transform
+      pos: -95.5,32.5
       parent: 2
   - uid: 22396
     components:
@@ -145103,6 +145400,16 @@ entities:
       - SurveillanceCameraEngineering
       nameSet: True
       id: Northeast Maintenance Substation
+  - uid: 22988
+    components:
+    - type: Transform
+      pos: -92.5,-9.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: 'Plasma Pit #045'
   - uid: 23759
     components:
     - type: Transform
@@ -145113,16 +145420,6 @@ entities:
       - SurveillanceCameraEngineering
       nameSet: True
       id: Evac Storage
-  - uid: 23784
-    components:
-    - type: Transform
-      pos: -84.5,-9.5
-      parent: 2
-    - type: SurveillanceCamera
-      setupAvailableNetworks:
-      - SurveillanceCameraEngineering
-      nameSet: True
-      id: Telecommunications South
   - uid: 23793
     components:
     - type: Transform
@@ -145373,6 +145670,50 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -123.5,4.5
       parent: 2
+  - uid: 26210
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -148.5,2.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: TEG Burn Chamber
+  - uid: 26211
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -136.5,-16.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: AME
+  - uid: 26226
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -90.5,-60.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: 'Plasma Pit #046'
+  - uid: 26227
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -86.5,-1.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: telecommunications
 - proto: SurveillanceCameraGeneral
   entities:
   - uid: 2400
@@ -145560,6 +145901,61 @@ entities:
       - SurveillanceCameraGeneral
       nameSet: True
       id: West Hallway
+  - uid: 26212
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -101.5,3.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Northwest Hallway
+  - uid: 26213
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -102.5,23.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Disposals
+  - uid: 26214
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -105.5,-13.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: West Hallway
+  - uid: 26218
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -101.5,-29.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Southwest Hallway
+  - uid: 26225
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -57.5,-42.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Pool East
 - proto: SurveillanceCameraMedical
   entities:
   - uid: 8625
@@ -145808,6 +146204,17 @@ entities:
       - SurveillanceCameraMedical
       nameSet: True
       id: Hallway North
+  - uid: 26228
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -17.5,-44.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraMedical
+      nameSet: True
+      id: Freezer
 - proto: SurveillanceCameraRouterCommand
   entities:
   - uid: 16844
@@ -146076,6 +146483,78 @@ entities:
       - SurveillanceCameraSecurity
       nameSet: True
       id: Breakroom
+  - uid: 26216
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -88.5,-41.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Permabrig Cell 4
+  - uid: 26217
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -84.5,-44.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Permabrig
+  - uid: 26219
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -84.5,-41.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Permabrig Cell 5
+  - uid: 26220
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -80.5,-41.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Permabrig Cell 6
+  - uid: 26221
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -83.5,-37.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Permabrig Corridor
+  - uid: 26222
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -90.5,-41.5
+      parent: 2
+  - uid: 26223
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -92.5,-49.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Permabrig Bathroom
 - proto: SurveillanceCameraService
   entities:
   - uid: 23712
@@ -146154,6 +146633,17 @@ entities:
       - SurveillanceCameraService
       nameSet: True
       id: Theatre
+  - uid: 26224
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -66.5,-37.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraService
+      nameSet: True
+      id: Bar Outdoor
 - proto: SurveillanceCameraSupply
   entities:
   - uid: 23760
@@ -146263,6 +146753,16 @@ entities:
       - SurveillanceCameraSupply
       nameSet: True
       id: QM Bedroom
+  - uid: 26215
+    components:
+    - type: Transform
+      pos: -88.5,7.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSupply
+      nameSet: True
+      id: Warehouse
 - proto: SurveillanceCameraWirelessRouterEntertainment
   entities:
   - uid: 14530
@@ -149435,7 +149935,7 @@ entities:
   - uid: 16894
     components:
     - type: Transform
-      pos: -95.55058,35.704193
+      pos: -95.494835,32.70732
       parent: 2
   - uid: 19748
     components:
@@ -167453,7 +167953,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -191478.16
+      secondsUntilStateChange: -192828.02
       state: Opening
     - type: Airlock
       autoClose: False
