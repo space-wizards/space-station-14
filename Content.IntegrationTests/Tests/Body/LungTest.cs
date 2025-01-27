@@ -46,6 +46,13 @@ namespace Content.IntegrationTests.Tests.Body
     damageRecovery:
       types:
         Asphyxiation: -1.5
+    highTemperatureDamage:
+      types:
+        Heat: 1
+        Caustic: 0.25
+    lowTemperatureDamage:
+      types:
+        Cold: 1.25
 ";
 
         [Test]

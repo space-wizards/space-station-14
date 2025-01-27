@@ -51,7 +51,7 @@ namespace Content.Server.Body.Components
         ///     The minimum temperature of gas the entity can breathe before it starts taking damage.
         /// </summary>
         [DataField]
-        public float LowTemperatureDamageThreshold = 313.15f; // 40C
+        public float LowTemperatureDamageThreshold = 333.15f; // 60C
 
         /// <summary>
         ///     At what level of saturation will you begin to suffocate?

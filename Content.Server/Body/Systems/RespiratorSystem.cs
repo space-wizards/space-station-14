@@ -133,20 +133,35 @@ public sealed class RespiratorSystem : EntitySystem
         // Handle high temperature damage
         if (gasTemp > ent.Comp1.HighTemperatureDamageThreshold)
         {
-            _damageableSys.TryChangeDamage(ent, ent.Comp1.HighTemperatureDamage, true);
+            var tempDelta = gasTemp - ent.Comp1.HighTemperatureDamageThreshold;
+            // Scale factor starts at 1.0 at threshold and increases by 0.5 for every 50K above
+            var scaleFactor = 1.0f + tempDelta / 50.0f * 0.5f;
+            // Cap the scale factor at 5x damage
+            scaleFactor = Math.Min(scaleFactor, 5.0f);
+
+            var scaledDamage = ent.Comp1.HighTemperatureDamage * scaleFactor;
+            _damageableSys.TryChangeDamage(ent, scaledDamage, true);
 
             // Log damage for admins
             _adminLogger.Add(LogType.Temperature,
-                $"{ToPrettyString(ent):entity} took high temperature breathing damage from {gasTemp:F1}K gas");
+                $"{ToPrettyString(ent):entity} took {scaledDamage} breathing damage from {gasTemp:F1}K gas");
         }
         // Handle low temperature damage
         else if (gasTemp < ent.Comp1.LowTemperatureDamageThreshold)
         {
-            _damageableSys.TryChangeDamage(ent, ent.Comp1.LowTemperatureDamage, true);
+            var tempDelta = ent.Comp1.LowTemperatureDamageThreshold - gasTemp;
+            // Scale factor starts at 1.0 at threshold and increases by 0.5 for every 10K below
+            // Using a smaller temperature step (10K vs 50K) since low temperatures have a smaller range
+            var scaleFactor = 1.0f + tempDelta / 10.0f * 0.5f;
+            // Cap the scale factor at 5x damage
+            scaleFactor = Math.Min(scaleFactor, 5.0f);
+
+            var scaledDamage = ent.Comp1.LowTemperatureDamage * scaleFactor;
+            _damageableSys.TryChangeDamage(ent, scaledDamage, true);
 
             // Log damage for admins
             _adminLogger.Add(LogType.Temperature,
-                $"{ToPrettyString(ent):entity} took low temperature breathing damage from {gasTemp:F1}K gas");
+                $"{ToPrettyString(ent):entity} took {scaledDamage} breathing damage from {gasTemp:F1}K gas");
         }
 
         var actualGas = ev.Gas.RemoveVolume(Atmospherics.BreathVolume);

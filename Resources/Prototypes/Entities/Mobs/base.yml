@@ -222,11 +222,11 @@
         Asphyxiation: -1.0
     highTemperatureDamage:
       types:
-        Heat: 2  # Deals 2 heat damage per breath of hot gas
-        Caustic: 0.5 # Deals 0.5 caustic damage per breath of hot gas
+        Heat: 1  # Deals 1 heat damage per breath of hot gas
+        Caustic: 0.25 # Deals 0.25 caustic damage per breath of hot gas
     lowTemperatureDamage:
       types:
-        Cold: 2.5  # Deals 2 cold damage per breath of cold gas
+        Cold: 1.25  # Deals 1.2 cold damage per breath of cold gas
 
 # Used for mobs that have a bloodstream
 - type: entity
