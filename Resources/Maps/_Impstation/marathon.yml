@@ -55193,6 +55193,11 @@ entities:
     - type: Transform
       pos: -24.5,-56.5
       parent: 2
+  - uid: 14865
+    components:
+    - type: Transform
+      pos: -23.5,-56.5
+      parent: 2
 - proto: ContainmentFieldGeneratorFlatpack
   entities:
   - uid: 6301
@@ -106711,6 +106716,13 @@ entities:
     components:
     - type: Transform
       pos: 12.5,58.5
+      parent: 2
+- proto: ParticleAcceleratorComputerCircuitboard
+  entities:
+  - uid: 6881
+    components:
+    - type: Transform
+      pos: -12.494787,-54.37429
       parent: 2
 - proto: PartRodMetal
   entities:
