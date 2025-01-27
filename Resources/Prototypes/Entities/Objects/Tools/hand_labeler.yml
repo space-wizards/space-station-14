@@ -23,5 +23,6 @@
       whitelist:
         components:
           - Item
+          - Mech
         tags:
           - Structure
