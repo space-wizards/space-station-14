@@ -10,7 +10,7 @@ namespace Content.Shared.Mobs.Events;
 [Serializable, NetSerializable]
 public sealed class BeforeAlertSeverityCheckEvent(ProtoId<AlertPrototype> currentAlert, short severity) : EntityEventArgs
 {
-    public bool Cancelled = false;
+    public bool CancelUpdate = false;
     public ProtoId<AlertPrototype> CurrentAlert = currentAlert;
     public short Severity = severity;
 }

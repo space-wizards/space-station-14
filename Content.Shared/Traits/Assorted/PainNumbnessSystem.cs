@@ -41,6 +41,6 @@ public sealed class PainNumbnessSystem : EntitySystem
     private void OnAlertSeverityCheck(Entity<PainNumbnessComponent> ent, ref BeforeAlertSeverityCheckEvent args)
     {
         if (args.CurrentAlert == "HumanHealth")
-            args.Cancelled = true;
+            args.CancelUpdate = true;
     }
 }

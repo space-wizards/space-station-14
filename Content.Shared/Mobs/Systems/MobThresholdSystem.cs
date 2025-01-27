@@ -396,7 +396,7 @@ public sealed class MobThresholdSystem : EntitySystem
             var ev = new BeforeAlertSeverityCheckEvent(currentAlert, severity);
             RaiseLocalEvent(target, ev);
 
-            if (ev.Cancelled)
+            if (ev.CancelUpdate)
             {
                 _alerts.ShowAlert(target, ev.CurrentAlert, ev.Severity);
                 return;
@@ -407,7 +407,7 @@ public sealed class MobThresholdSystem : EntitySystem
             {
                 percentage = FixedPoint2.Clamp(percentage.Value, 0, 1);
 
-                severity = (short)MathF.Round(
+                severity = (short) MathF.Round(
                     MathHelper.Lerp(
                         _alerts.GetMinSeverity(currentAlert),
                         _alerts.GetMaxSeverity(currentAlert),
