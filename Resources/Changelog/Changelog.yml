@@ -1,65 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added the hivelord! This self-replicating alien is found on the mining
-      asteroid. It's core is known to have powerful healing properties.
-    type: Add
-  id: 7352
-  time: '2024-09-11T13:52:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31322
-- author: PeccNeck
-  changes:
-  - message: Fixed a bug where ore processors could not produce reinforced glass
-    type: Fix
-  id: 7353
-  time: '2024-09-11T14:06:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32069
-- author: Plykiya
-  changes:
-  - message: You can now use swords to make baseball bats.
-    type: Fix
-  id: 7354
-  time: '2024-09-11T14:45:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32075
-- author: Plykiya
-  changes:
-  - message: Banners are no longer invincible.
-    type: Fix
-  id: 7355
-  time: '2024-09-11T15:29:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32077
-- author: themias
-  changes:
-  - message: Very small amounts of heat damage no longer play the cauterization sound
-      (e.g. spacing)
-    type: Fix
-  id: 7356
-  time: '2024-09-11T16:05:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32080
-- author: deltanedas
-  changes:
-  - message: Coins and Supercharged CPUs can now be recycled for rarer materials.
-    type: Tweak
-  id: 7357
-  time: '2024-09-11T16:24:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31970
-- author: lzk228
-  changes:
-  - message: Fixed forensic pad didn't care about target identity.
-    type: Fix
-  - message: Instead of name changing, forensic pad now will have a label with target's
-      name.
-    type: Tweak
-  id: 7358
-  time: '2024-09-12T00:52:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31842
-- author: lzk228
-  changes:
-  - message: Borgs and Station AI will not receive selected in preferences traits.
-    type: Tweak
-  id: 7359
-  time: '2024-09-12T10:36:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31990
 - author: MrRobDemo
   changes:
   - message: Added 5% chance to make killer tomatoes a ghost role.
@@ -3887,3 +3826,65 @@
   id: 7851
   time: '2025-01-26T23:39:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34658
+- author: Compilatron144
+  changes:
+  - message: Plasma station fixes
+    type: Tweak
+  id: 7852
+  time: '2025-01-27T07:07:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34602
+- author: ArtisticRoomba
+  changes:
+  - message: The pneumatic valve now has a more descriptive description.
+    type: Tweak
+  id: 7853
+  time: '2025-01-27T07:40:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32655
+- author: Helm
+  changes:
+  - message: Fixed an overly roomy matchbox!
+    type: Fix
+  id: 7854
+  time: '2025-01-27T08:30:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34632
+- author: metalgearsloth
+  changes:
+  - message: Fix hovering storage containers flickering sometimes.
+    type: Fix
+  id: 7855
+  time: '2025-01-27T10:29:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33045
+- author: Coolsurf6
+  changes:
+  - message: Added the ability for a creature to be unable to feel pain
+    type: Add
+  - message: Added a Pain Numbness Trait to character creation.
+    type: Add
+  id: 7856
+  time: '2025-01-27T10:34:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34538
+- author: metalgearsloth
+  changes:
+  - message: Puddles will now draw below floor objects like vents.
+    type: Fix
+  id: 7857
+  time: '2025-01-27T12:44:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32369
+- author: august-sun
+  changes:
+  - message: Utility and CE belts can now hold the pAI and the handheld station map.
+    type: Tweak
+  id: 7858
+  time: '2025-01-27T18:48:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33048
+- author: ArtisticRoomba
+  changes:
+  - message: The Engineering Guidebook has been significantly revamped and is now
+      mostly up to date.
+    type: Add
+  - message: Most Atmospherics and Engineering-related devices and equipment now have
+      a link to their relevant guidebook entry upon examine.
+    type: Add
+  id: 7859
+  time: '2025-01-27T19:42:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33062
