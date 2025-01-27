@@ -6,6 +6,7 @@ namespace Content.Shared.Actions;
 public sealed class ActionGrantSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
     {
@@ -43,6 +44,7 @@ public sealed class ActionGrantSystem : EntitySystem
         foreach (var actionEnt in ent.Comp.ActionEntities)
         {
             _actions.RemoveAction(ent.Owner, actionEnt);
+            _actionContainer.RemoveAction(actionEnt);
         }
     }
 }
