@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: MrRobDemo
-  changes:
-  - message: Added 5% chance to make killer tomatoes a ghost role.
-    type: Add
-  - message: Killer tomatoes can now heal from being splashed with water, blood or
-      RobustHarvest.
-    type: Add
-  - message: Killer tomatoes can now escape from inventory (only intelligent).
-    type: Tweak
-  id: 7360
-  time: '2024-09-12T12:51:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31932
 - author: ScarKy0
   changes:
   - message: Station AI now has a comms console ability.
@@ -3888,3 +3876,10 @@
   id: 7859
   time: '2025-01-27T19:42:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33062
+- author: SlamBamActionman
+  changes:
+  - message: Hristov now provides an increased view range of 3 tiles when wielded.
+    type: Tweak
+  id: 7860
+  time: '2025-01-27T23:20:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31626
