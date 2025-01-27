@@ -93,6 +93,12 @@ public sealed class EmagSystem : EntitySystem
         return emaggedEvent.Handled;
     }
 
+    /// <summary>
+    /// Checks whether an entity has the EmaggedComponent with a set flag.
+    /// </summary>
+    /// <param name="target">The target entity to check for the flag.</param>
+    /// <param name="flag">The EmagType flag to check for.</param>
+    /// <returns>True if entity has EmaggedComponent and the provided flag. False if the entity lacks EmaggedComponent or provided flag.</returns>
     public bool CheckFlag(EntityUid target, EmagType flag)
     {
         if (!TryComp<EmaggedComponent>(target, out var comp))
@@ -104,6 +110,12 @@ public sealed class EmagSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Compares a flag to the target.
+    /// </summary>
+    /// <param name="target">The target flag to check.</param>
+    /// <param name="flag">The flag to check for within the target.</param>
+    /// <returns>True if target contains flag. Otherwise false.</returns>
     public bool CompareFlag(EmagType target, EmagType flag)
     {
         if ((target & flag) == flag)
