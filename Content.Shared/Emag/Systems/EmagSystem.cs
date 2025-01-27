@@ -46,13 +46,13 @@ public sealed class EmagSystem : EntitySystem
         if (!args.CanReach || args.Target is not { } target)
             return;
 
-        args.Handled = TryEmagEffect(uid, args.User, target, comp);
+        args.Handled = UseEmagEffect(uid, args.User, target, comp);
     }
 
     /// <summary>
     /// Does the emag effect on a specified entity
     /// </summary>
-    public bool TryEmagEffect(EntityUid uid, EntityUid user, EntityUid target, EmagComponent? comp = null)
+    public bool UseEmagEffect(EntityUid uid, EntityUid user, EntityUid target, EmagComponent? comp = null)
     {
         if (!Resolve(uid, ref comp, false))
             return false;

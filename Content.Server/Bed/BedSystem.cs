@@ -34,7 +34,6 @@ namespace Content.Server.Bed
             SubscribeLocalEvent<StasisBedComponent, StrappedEvent>(OnStasisStrapped);
             SubscribeLocalEvent<StasisBedComponent, UnstrappedEvent>(OnStasisUnstrapped);
             SubscribeLocalEvent<StasisBedComponent, PowerChangedEvent>(OnPowerChanged);
-            SubscribeLocalEvent<StasisBedComponent, OnAttemptEmagEvent>(OnAttemptEmag);
             SubscribeLocalEvent<StasisBedComponent, GotEmaggedEvent>(OnEmagged);
         }
 
@@ -114,21 +113,14 @@ namespace Content.Server.Bed
             UpdateMetabolisms(uid, component, args.Powered);
         }
 
-        private void OnAttemptEmag(EntityUid uid, StasisBedComponent component, ref OnAttemptEmagEvent args)
-        {
-            if (args.Type != EmagType.Interaction)
-            {
-                args.Handled = true;
-                return;
-            }
-            if (_emag.CheckFlag(uid, EmagType.Interaction))
-            {
-                args.Handled = true;
-            }
-        }
-
         private void OnEmagged(EntityUid uid, StasisBedComponent component, ref GotEmaggedEvent args)
         {
+            if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+                return;
+
+            if (_emag.CheckFlag(uid, EmagType.Interaction))
+                return;
+
             // Reset any metabolisms first so they receive the multiplier correctly
             UpdateMetabolisms(uid, component, false);
             component.Multiplier = 1 / component.Multiplier;
