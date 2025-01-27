@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Shared.Movement.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
@@ -53,9 +52,9 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
 
     private void UpdateEyes(float frameTime)
     {
-        var query = AllEntityQuery<CameraRecoilComponent>();
+        var query = AllEntityQuery<CameraRecoilComponent, EyeComponent>();
 
-        while (query.MoveNext(out var uid, out var recoil))
+        while (query.MoveNext(out var uid, out var recoil, out var eye))
         {
             var magnitude = recoil.CurrentKick.Length();
             if (magnitude <= 0.005f)
@@ -82,6 +81,9 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
                 continue;
 
             recoil.LastKick = recoil.CurrentKick;
+            var ev = new GetEyeOffsetEvent();
+            RaiseLocalEvent(uid, ref ev);
+            _eye.SetOffset(uid, ev.Offset, eye);
         }
     }
 

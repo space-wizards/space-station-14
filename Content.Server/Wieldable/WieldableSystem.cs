@@ -26,7 +26,7 @@ public sealed class WieldableSystem : SharedWieldableSystem
         if (args.User == null)
             return;
 
-        _eye.UpdatePvsScale(args.User.Value);
+        _eye.UpdatePvsScale(args.User);
     }
 
     private void OnEyeOffsetWielded(Entity<CursorOffsetRequiresWieldComponent> entity, ref ItemWieldedEvent args)
@@ -34,7 +34,7 @@ public sealed class WieldableSystem : SharedWieldableSystem
         if (args.User == null)
             return;
 
-        _eye.UpdatePvsScale(args.User.Value);
+        _eye.UpdatePvsScale(args.User);
     }
 
     private void OnGetEyePvsScale(Entity<CursorOffsetRequiresWieldComponent> entity,
