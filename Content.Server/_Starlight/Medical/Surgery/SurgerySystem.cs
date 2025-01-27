@@ -1,4 +1,5 @@
-﻿using Content.Server.Body.Systems;
+﻿using System.Linq;
+using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Hands.Systems;
 using Content.Server.Humanoid;
@@ -76,7 +77,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
             {
                 if (GetSingleton(surgery) is not { } surgeryEnt
                     || !TryComp(surgeryEnt, out SurgeryComponent? surgeryComp)
-                    || (surgeryComp.Requirement is not null && !progress.CompletedSurgeries.Contains(surgeryComp.Requirement.Value)))
+                    || (surgeryComp.Requirement.Count() > 0 && !progress.CompletedSurgeries.Any(x => surgeryComp.Requirement.Contains(x))))
                     continue;
 
                 var ev = new SurgeryValidEvent(body, part.Id);

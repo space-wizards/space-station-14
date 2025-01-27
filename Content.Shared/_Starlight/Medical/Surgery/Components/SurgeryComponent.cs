@@ -13,7 +13,7 @@ public sealed partial class SurgeryComponent : Component
     public int Priority;
 
     [DataField, AutoNetworkedField]
-    public EntProtoId? Requirement;
+    public List<EntProtoId> Requirement = [];
 
     [DataField(required: true), AutoNetworkedField]
     public List<EntProtoId> Steps = new();
