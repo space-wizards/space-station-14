@@ -17,12 +17,10 @@ public sealed class SharedFakeMindShieldImplantSystem : EntitySystem
     /// <summary>
     /// Raise the Action of a Implanted user toggling their implant to the FakeMindshieldComponent on their entity
     /// </summary>
-    private void OnFakeMindShieldToggle(EntityUid uid,
-        SubdermalImplantComponent component,
-        FakeMindShieldToggleEvent ev)
+    private void OnFakeMindShieldToggle(Entity<SubdermalImplantComponent> entity, ref FakeMindShieldToggleEvent ev)
     {
         ev.Handled = true;
-        if (component.ImplantedEntity is not { } ent)
+        if (entity.Comp.ImplantedEntity is not { } ent)
             return;
 
         if (!TryComp<FakeMindShieldComponent>(ent, out var comp))

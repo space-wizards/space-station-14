@@ -8,6 +8,9 @@ namespace Content.Shared.Mindshield.Components;
 public sealed partial class FakeMindShieldComponent : Component
 {
 
+    /// <summary>
+    /// The state of the Fake mindshield, if true the owning entity will display a mindshield effect on their job icon
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool IsEnabled { get; set; } = false;
 
