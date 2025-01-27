@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: The Station AI job is no longer affected by the Bureaucratic Event event.
-    type: Fix
-  id: 7350
-  time: '2024-09-11T11:24:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32021
-- author: K-Dynamic
-  changes:
-  - message: Reduced canister prices from 1000 to 200 spesos
-    type: Tweak
-  id: 7351
-  time: '2024-09-11T12:53:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31965
-- author: EmoGarbage404
-  changes:
-  - message: Added the hivelord! This self-replicating alien is found on the mining
-      asteroid. It's core is known to have powerful healing properties.
-    type: Add
-  id: 7352
-  time: '2024-09-11T13:52:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31322
-- author: PeccNeck
-  changes:
-  - message: Fixed a bug where ore processors could not produce reinforced glass
-    type: Fix
-  id: 7353
-  time: '2024-09-11T14:06:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32069
 - author: Plykiya
   changes:
   - message: You can now use swords to make baseball bats.
@@ -3887,3 +3858,31 @@
   id: 7849
   time: '2025-01-24T06:58:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34614
+- author: CaasGit
+  changes:
+  - message: Solar panels can now be upgraded with plasma or uranium glass.
+    type: Add
+  id: 7850
+  time: '2025-01-26T14:01:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29224
+- author: Coolsurf6
+  changes:
+  - message: Added the HoS's flask to their respective lockers.
+    type: Add
+  id: 7851
+  time: '2025-01-26T23:39:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34658
+- author: Compilatron144
+  changes:
+  - message: Plasma station fixes
+    type: Tweak
+  id: 7852
+  time: '2025-01-27T07:07:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34602
+- author: ArtisticRoomba
+  changes:
+  - message: The pneumatic valve now has a more descriptive description.
+    type: Tweak
+  id: 7853
+  time: '2025-01-27T07:40:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32655
