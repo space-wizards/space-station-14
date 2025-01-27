@@ -33,6 +33,18 @@
     guardianProto: MobIfritGuardian
 
 - type: entity
+  parent: [BaseItem, BaseMajorContraband]
+  id: HolocarpInjector
+  name: holocarp injector
+  description: This holocarp seems awfully tired and meek. It may die soon without a host.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: holoplush
+  - type: GuardianCreator
+    guardianProto: MobHolocarpGuardian
+
+- type: entity
   name: holoparasite box
   parent: [BoxCardboard, BaseSyndicateContraband]
   id: BoxHoloparasite
