@@ -1,5 +1,9 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
+using Content.Shared.Eye.Blinding.Components;
+using Content.Shared.Eye.Blinding.Systems;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
@@ -9,6 +13,7 @@ namespace Content.Shared.Lens;
 public sealed class LensSlotSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private readonly BlurryVisionSystem _Blurry = default!;
 
     public override void Initialize()
     {
@@ -18,6 +23,12 @@ public sealed class LensSlotSystem : EntitySystem
 
         SubscribeLocalEvent<LensSlotComponent, EntInsertedIntoContainerMessage>(OnLensInserted);
         SubscribeLocalEvent<LensSlotComponent, EntRemovedFromContainerMessage>(OnLensRemoved);
+
+        SubscribeLocalEvent<LensSlotComponent, GotEquippedEvent>(OnGlassesEquipped);
+        SubscribeLocalEvent<LensSlotComponent, GotUnequippedEvent>(OnGlassesUnequipped);
+        SubscribeLocalEvent<LensSlotComponent, LensChangedEvent>(OnLensChanged);
+
+        SubscribeLocalEvent<LensSlotComponent, InventoryRelayedEvent<GetBlurEvent>>(OnGetBlurLens);
     }
 
     private void OnExamine(EntityUid glasses, LensSlotComponent component, ref ExaminedEvent args)
@@ -49,11 +60,38 @@ public sealed class LensSlotSystem : EntitySystem
         RaiseLocalEvent(glasses, new LensChangedEvent(false));
     }
 
-        private void OnLensRemoved(EntityUid glasses, LensSlotComponent component, EntRemovedFromContainerMessage args)
+    private void OnLensRemoved(EntityUid glasses, LensSlotComponent component, EntRemovedFromContainerMessage args)
     {
         if (args.Container.ID != component.LensSlotId)
             return;
 
         RaiseLocalEvent(glasses, new LensChangedEvent(true));
+    }
+
+    private void OnGlassesEquipped(Entity<LensSlotComponent> glasses, ref GotEquippedEvent args)
+    {
+        _Blurry.UpdateBlurMagnitude(args.Equipee);
+    }
+
+    private void OnGlassesUnequipped(Entity<LensSlotComponent> glasses, ref GotUnequippedEvent args)
+    {
+        _Blurry.UpdateBlurMagnitude(args.Equipee);
+    }
+
+    private void OnLensChanged(Entity<LensSlotComponent> glasses, ref LensChangedEvent args)
+    {
+        _Blurry.UpdateBlurMagnitude(Transform(glasses.Owner).ParentUid);
+    }
+
+    private void OnGetBlurLens(Entity<LensSlotComponent> glasses, ref InventoryRelayedEvent<GetBlurEvent> args)
+    {
+        if (!_itemSlots.TryGetSlot(glasses.Owner, glasses.Comp.LensSlotId, out var itemSlot))
+            return;
+
+        if (!TryComp<VisionCorrectionComponent>(itemSlot.Item, out var component))
+            return;
+
+        args.Args.Blur += component.VisionBonus;
+        args.Args.CorrectionPower *= component.CorrectionPower;
     }
 }
