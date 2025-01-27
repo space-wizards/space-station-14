@@ -171,7 +171,7 @@
       - MopItem
       - Holoprojector
       - Mousetrap
-      - DeskBell # imp
+      - DeskBell
       - LightReplacer
       - TrashBag
       - PowerCellSmall
@@ -261,7 +261,7 @@
 
 - type: entity
   id: Protolathe
-  parent: [ BaseLatheLube, BaseScienceContraband ] # imp
+  parent: [ BaseLatheLube, BaseScienceContraband ]
   name: protolathe
   description: Converts raw materials into advanced items.
   components:
@@ -318,8 +318,8 @@
       - Implanter
       - PillCanister
       - ChemistryEmptyBottle01
-      - BaseChemistryEmptyVial # imp
-      - Drone # imp
+      - BaseChemistryEmptyVial
+      - Drone
       - AdvMopItem
       - WeaponSprayNozzle
       - ClothingBackpackWaterTank
@@ -373,12 +373,12 @@
       - BoxShotgunUranium
       - BoxShellTranquilizer
       - ExplosivePayload
-      - FullAutoConversionKit # imp
+      - FullAutoConversionKit
       - GrenadeBlast
       - GrenadeEMP
       - GrenadeFlash
       - HoloprojectorSecurity
-      - HyperBurstConversionKit # imp
+      - HyperBurstConversionKit
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
       - MagazineBoxMagnumIncendiary
@@ -427,7 +427,7 @@
 
 - type: entity
   id: CircuitImprinter
-  parent: [ BaseLatheLube, BaseScienceContraband ] # imp
+  parent: [ BaseLatheLube, BaseScienceContraband ]
   name: circuit imprinter
   description: Prints circuit boards for machines.
   components:
@@ -573,7 +573,7 @@
 
 - type: entity
   id: ExosuitFabricator
-  parent: [ BaseLatheLube, BaseScienceContraband ] # imp
+  parent: [ BaseLatheLube, BaseScienceContraband ]
   name: exosuit fabricator
   description: Creates parts for robotics and other mechanical needs.
   components:
@@ -696,7 +696,7 @@
 
 - type: entity
   id: SecurityTechFab
-  parent: [ BaseLatheLube, BaseSecurityContraband ] # imp
+  parent: [ BaseLatheLube, BaseSecurityContraband ]
   name: security techfab
   description: Prints equipment for use by security crew.
   components:
@@ -776,12 +776,12 @@
       - ClothingBackpackElectropack
       - ExplosivePayload
       - FlashPayload
-      - FullAutoConversionKit # imp
+      - FullAutoConversionKit
       - GrenadeBlast
       - GrenadeEMP
       - GrenadeFlash
       - HoloprojectorSecurity
-      - HyperBurstConversionKit # imp
+      - HyperBurstConversionKit
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
       - MagazineBoxLPistolIncendiary #imp
@@ -838,7 +838,7 @@
 
 - type: entity
   id: AmmoTechFab
-  parent: [ BaseLatheLube, BaseSecurityContraband ] # imp
+  parent: [ BaseLatheLube, BaseSecurityContraband ]
   name: ammo techfab
   description: Prints the bare minimum of bullets that any budget military or armory could need. Nothing fancy.
   components:
@@ -936,7 +936,7 @@
       - PillCanister
       - BodyBag
       - ChemistryEmptyBottle01
-      - BaseChemistryEmptyVial # imp
+      - BaseChemistryEmptyVial
       - RollerBedSpawnFolded
       - CheapRollerBedSpawnFolded
       - EmergencyRollerBedSpawnFolded
