@@ -2702,4 +2702,11 @@ Entries:
   id: 377
   time: '2025-01-25T07:25:57.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/263
+- author: STARLIGHT TEAM
+  changes:
+  - message: 14 new voices.
+    type: Add
+  id: 378
+  time: '2025-01-27T05:15:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/266
 
