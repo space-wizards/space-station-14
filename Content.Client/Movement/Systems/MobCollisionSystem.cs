@@ -24,8 +24,6 @@ public sealed class MobCollisionSystem : SharedMobCollisionSystem
 
             if (MobQuery.TryComp(player, out var comp) && PhysicsQuery.TryComp(player, out var physics))
             {
-                // TODO: Actual fixture
-                Physics.WakeBody(player.Value, body: physics);
                 HandleCollisions((player.Value, comp, physics), frameTime);
             }
         }

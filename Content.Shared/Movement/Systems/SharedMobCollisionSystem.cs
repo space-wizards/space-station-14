@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Movement.Components;
-using Content.Shared.Physics;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics;
@@ -14,7 +13,6 @@ namespace Content.Shared.Movement.Systems;
 public abstract class SharedMobCollisionSystem : EntitySystem
 {
     [Dependency] protected readonly IConfigurationManager CfgManager = default!;
-    [Dependency] private   readonly FixtureSystem _fixtures = default!;
     [Dependency] private   readonly MovementSpeedModifierSystem _moveMod = default!;
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] private   readonly SharedTransformSystem _xformSystem = default!;
@@ -124,7 +122,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
     {
         var xform = Transform(entity.Owner);
 
-        // TODO: Raycast to the specified spot so we don't clip into a wall.
+        // Wake it so we don't clip into a wall.
         Physics.WakeBody(entity.Owner);
 
         // Alternative though needs tweaks to mob movement code.
