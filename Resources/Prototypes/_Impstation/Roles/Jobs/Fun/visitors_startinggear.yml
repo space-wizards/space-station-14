@@ -1,0 +1,333 @@
+# Command
+
+- type: startingGear
+  id: VisitorCaptainAltA
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCapFormalDress
+    shoes: ClothingShoesHeelsCommandBlack
+    eyes: ClothingEyesGlassesCaptainvisor
+    gloves: ClothingHandsGlovesCaptainflightgloves
+    head: ClothingHeadHatBeretCaptain
+    neck: ClothingNeckCloakCapFormal
+    id: CaptainPDA
+    belt: WeaponDisabler
+    back: ClothingBackpackCaptain
+    ears: ClothingHeadsetAltCommand
+    outerClothing: ClothingOuterArmorCaptainCarapace
+    pocket1: WeaponDisabler
+
+- type: startingGear
+  id: VisitorCaptainAltB
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCaptaineveningattire
+    shoes: ClothingShoesBootsCaptainjumpboots
+    eyes: ClothingEyesGlassesCaptainvisor
+    gloves: ClothingHandsGlovesCaptainflightgloves
+    head: ClothingHeadHatCaptaincrushercap
+    neck: ClothingNeckCloakCaptaingreatcoat
+    id: CaptainPDA
+    belt: WeaponDisabler
+    back: ClothingBackpackSatchelCaptain
+    ears: ClothingHeadsetAltCommand
+    outerClothing: ClothingOuterArmorCaptainCarapace
+    pocket1: WeaponDisabler
+    
+- type: startingGear
+  id: VisitorCMOAltA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCMO
+    shoes: ClothingShoesColorBrown
+    gloves: ClothingHandsGlovesChemist
+    head: ClothingHeadHatBeretCmo
+    neck: ClothingNeckCloakCmosGreatcloak
+    id: CMOPDA
+    back: ClothingBackpackSatchelMedical
+    ears: ClothingHeadsetCMO
+    belt: ClothingBeltMedicalFilled
+    outerClothing: ClothingOuterCoatCMO
+    pocket1: WeaponDisabler
+
+- type: startingGear
+  id: VisitorHOSAltA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoSPro
+    shoes: ClothingShoesBootsJackFilled
+    gloves: ClothingHandsGlovesCombat
+    head: ClothingHeadHatHOSsoft
+    neck: ClothingNeckCloakHosgreatcoat
+    id: HoSPDA
+    belt: ClothingBeltSecurityFilled
+    back: ClothingBackpackSatchelLeather
+    ears: ClothingHeadsetAltSecurity
+    eyes: ClothingEyesGlassesSecurity
+    outerClothing: ClothingOuterArmorHoSEliteArmor
+    pocket1: WeaponDisabler
+    pocket2: MagazinePistolSubMachineGunTopMounted
+  inhand:
+  - WeaponSubMachineGunWt550
+
+- type: startingGear
+  id: VisitorHOSAltB
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoSGrey
+    shoes: ClothingShoesBootsCowboyFancyFilled
+    gloves: ClothingHandsGlovesCombat
+    head: ClothingHeadHatBeretHoS
+    neck: ClothingNeckMantleHOS
+    id: HoSPDA
+    belt: ClothingBeltSecurityFilled
+    back: ClothingBackpackSatchelLeather
+    ears: ClothingHeadsetAltSecurity
+    eyes: ClothingEyesGlassesSecurity
+    outerClothing: ClothingOuterWinterHoS
+    pocket1: WeaponDisabler
+    pocket2: MagazinePistolSubMachineGunTopMounted
+  inhand:
+  - WeaponSubMachineGunWt550
+
+# Security
+
+- type: startingGear
+  id: VisitorSecurityOfficerAltA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSeniorOfficer
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHelmetJustice
+    id: SecurityPDA
+    belt: ClothingBeltSecurityWebbingFilled
+    back: ClothingBackpackSecurity
+    ears: ClothingHeadsetSecurity
+    eyes: ClothingEyesGlassesSecurity
+    outerClothing: ClothingOuterArmorBasic
+    pocket1: WeaponPistolMk58
+    pocket2: MagazinePistol
+  inhand:
+  - FlashlightSeclite
+
+- type: startingGear
+  id: VisitorDetectiveAltA
+  equipment:
+    jumpsuit: ClothingUniformMiamiVice
+    shoes: ClothingShoesBootsCombatFilled
+    neck: ClothingNeckTieDet
+    id: DetectivePDA
+    belt: ClothingBeltHolsterFilled
+    back: ClothingBackpackSecurity
+    ears: ClothingHeadsetSecurity
+    eyes: ClothingEyesGlassesSecurity
+    pocket1: ForensicScanner
+    pocket2: ForensicPad
+  inhand:
+  - FlashlightSeclite
+  - CrayonChalk # imp edit
+
+- type: startingGear
+  id: VisitorDetectiveAltB
+  equipment:
+    jumpsuit: ClothingUniformDetectiveSuit
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHatFedoraBrown
+    neck: ClothingNeckTieDet
+    id: DetectivePDA
+    belt: ClothingBeltHolsterFilled
+    back: ClothingBackpackSatchelSecurity
+    ears: ClothingHeadsetSecurity
+    eyes: ClothingEyesGlassesSecurity
+    outerClothing: ClothingOuterCoatDetectiveLoadout
+    pocket1: ForensicScanner
+    pocket2: ForensicPad
+  inhand:
+  - FlashlightSeclite
+  - CrayonChalk # imp edit
+
+- type: startingGear
+  id: VisitorBrigmedic
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBrigmedic
+    shoes: ClothingShoesBootsJackFilled
+    gloves: ClothingHandsGlovesNitrile
+    head: ClothingHeadHatBrigmedicsoft
+    neck: ClothingNeckStethoscope
+    id: BrigmedicPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackBrigmedic
+    ears: ClothingHeadsetBrigmedic
+    eyes: ClothingEyesHudMedSec
+    outerClothing: ClothingOuterCoatAMG
+    pocket1: PillCanisterTricordrazine
+    pocket2: PillCanisterDermaline
+  inhand:
+  - SyringeEphedrine
+
+- type: startingGear
+  id: VisitorBrigmedicAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBrigmedic
+    shoes: ClothingShoesBootsJackFilled
+    gloves: ClothingHandsGlovesLatex
+    head: ClothingHeadHatBeretBrigmedic
+    neck: ClothingNeckStethoscope
+    id: BrigmedicPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackBrigmedic
+    ears: ClothingHeadsetBrigmedic
+    eyes: ClothingEyesHudMedSec
+    outerClothing: ClothingOuterWinterBrigmedic
+    pocket1: PillCanisterTricordrazine
+    pocket2: PillCanisterDermaline
+  inhand:
+  - SyringeEphedrine
+
+# Cargo
+
+- type: startingGear
+  id: VisitorCourier
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCourier
+    shoes: ClothingShoesLeather
+    head: ClothingHeadHatCouriersoft
+    id: CourierPDA
+    belt: MailBag
+    back: ClothingBackpackCargo
+    ears: ClothingHeadsetCargo
+    pocket1: HoloBellProjector
+  inhand:
+  - DrinkEnergyDrinkCan
+
+- type: startingGear
+  id: VisitorCourierAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCourier
+    shoes: ClothingShoesBootsWinterCourier
+    head: ClothingHeadHatCouriersoftFlipped
+    id: CourierPDA
+    belt: MailBag
+    back: ClothingBackpackCargo
+    ears: ClothingHeadsetCargo
+    outerClothing: ClothingOuterWinterCourier
+    pocket1: HoloBellProjector
+  inhand:
+  - ClothingShoesSkates
+
+# Medical
+
+- type: startingGear
+  id: VisitorChemistAltA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChemShirt
+    shoes: ClothingShoesEnclosedChem
+    gloves: ClothingHandsGlovesChemist
+    head: ClothingHeadHatBeretMedic
+    id: ChemistryPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackSatchelChemistry
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesGlassesChemical
+    outerClothing: ClothingOuterApronChemist
+    pocket1: PillCanisterRandom
+    pocket2: PillCanisterRandom
+  inhand:
+  - PillCanisterRandom
+  - PillCanisterRandom
+
+# Science
+
+- type: startingGear
+  id: VisitorRoboticist
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitRoboticist
+    shoes: ClothingShoesColorBlack
+    gloves: ClothingHandsGlovesRobohands
+    head: ClothingHeadHatBlacksoft
+    id: RoboticsPDA
+    belt: ClothingBeltUtilityBlackFilled
+    back: ClothingBackpackScience
+    ears: ClothingHeadsetScience
+    eyes: ClothingEyesGlasses
+    outerClothing: ClothingOuterCoatRobo
+  inhand:
+  - SciFlash
+
+- type: startingGear
+  id: VisitorRoboticistAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitRoboticist
+    shoes: ClothingShoesBootsWinterRobo
+    gloves: ClothingHandsGlovesFingerless
+    head: ClothingHeadHatBeretRND
+    id: RoboticsPDA
+    belt: ClothingBeltUtilityBlackFilled
+    back: ClothingBackpackScience
+    ears: ClothingHeadsetScience
+    eyes: ClothingEyesGlasses
+    outerClothing: ClothingOuterCoatRobo
+  inhand:
+  - SciFlash
+
+# Civilian
+
+- type: startingGear
+  id: VisitorBartenderAltA
+  equipment:
+    jumpsuit: ClothingUniformNightclubSuit
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadHatTophat
+    id: BartenderPDA # imp
+    back: ClothingBackpack
+    suitstorage: WeaponShotgunDoubleBarreledRubber
+    ears: ClothingHeadsetService
+    eyes: ClothingEyesGlassesSunglasses
+    outerClothing: ClothingOuterArmorBasicSlim
+    pocket1: DrinkWineBottleFull
+    pocket2: BarSpoon
+
+- type: startingGear
+  id: VisitorBartenderAltB
+  equipment:
+    jumpsuit: ClothingUniformSeniorBartender
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadHatBowlerHat
+    id: BartenderPDA # imp
+    back: ClothingBackpackSatchel
+    ears: ClothingHeadsetService
+    eyes: ClothingEyesHudBeer
+    pocket1: WeaponShotgunSawn
+    pocket2: DrinkGildlagerBottleFull
+
+- type: startingGear
+  id: VisitorClownAltA
+  equipment:
+    jumpsuit: ClothingUniformCircusClown
+    shoes: ClothingShoesCircus
+    head: ClothingHeadHatCircusClown
+    id: ClownPDA
+    back: ClothingBackpackClown
+    ears: ClothingHeadsetService
+    pocket1: BikeHorn
+    pocket2: ClownRecorder
+  inhand:
+  - ClothingMaskClownNose
+  
+- type: startingGear
+  id: VisitorClownAltB
+  equipment:
+    jumpsuit: ClothingUniformJokester
+    shoes: ClothingShoesJokester
+    outerClothing: ClothingOuterCoatJokester
+    id: ClownPDA
+    back: ClothingBackpackClown
+    ears: ClothingHeadsetService
+    mask: ClothingMaskClown
+    pocket1: BikeHorn
+    pocket2: ClownRecorder
+
+- type: startingGear
+  id: VisitorReporterAltA
+  equipment:
+    jumpsuit: ClothingUniformBrosBlazer
+    shoes: ClothingShoesColorBrown
+    id: ReporterPDA # imp
+    back: ClothingBackpackSatchel
+    ears: ClothingHeadsetService
+    pocket1: MicrophoneInstrument
+    pocket2: TapeRecorderFilled # imp
