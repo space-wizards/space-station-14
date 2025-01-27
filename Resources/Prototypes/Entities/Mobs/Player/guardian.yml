@@ -120,9 +120,9 @@
       interactSuccessString: petting-success-holo
       interactFailureString: petting-failure-holo
       successChance: 0.7
-    - type: HTN
-      rootTask:
-        task: SimpleHumanoidHostileCompound
+#    - type: HTN
+#      rootTask:
+#        task: SimpleHumanoidHostileCompound # Can't be used unless you want holos to reveal their users by fisting the air around people
     - type: Tag
       tags:
         - CannotSuicide
@@ -156,9 +156,6 @@
           map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
           color: "#40a7d7"
           shader: unshaded
-    - type: HTN
-      rootTask:
-        task: SimpleHumanoidHostileCompound
     - type: NpcFactionMember
       factions:
         - Syndicate
@@ -274,6 +271,9 @@
           map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
           color: "#40a7d7"
           shader: unshaded
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
 
 # From holocarp injector
 - type: entity
@@ -329,3 +329,6 @@
     - type: NpcFactionMember
       factions:
         - PetsNT
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
