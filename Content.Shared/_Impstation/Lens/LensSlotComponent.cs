@@ -9,7 +9,7 @@ namespace Content.Shared.Lens;
 [RegisterComponent]
 public sealed partial class LensSlotComponent : Component
 {
-    [DataField("LensSlotId", required: true)]
+    [DataField(required: true)]
     public string LensSlotId = string.Empty;
 }
 
