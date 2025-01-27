@@ -81,7 +81,7 @@ public sealed class RespiratorSystem : EntitySystem
                 switch (respirator.Status)
                 {
                     case RespiratorStatus.Inhaling:
-                        Inhale(uid, body);
+                        Inhale((uid, respirator, body));
                         respirator.Status = RespiratorStatus.Exhaling;
                         break;
                     case RespiratorStatus.Exhaling:
@@ -109,22 +109,44 @@ public sealed class RespiratorSystem : EntitySystem
         }
     }
 
-    public void Inhale(EntityUid uid, BodyComponent? body = null)
+    public void Inhale(Entity<RespiratorComponent?, BodyComponent?> ent)
     {
-        if (!Resolve(uid, ref body, logMissing: false))
+        if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2, logMissing: false))
             return;
 
-        var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((uid, body));
+        var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((ent, ent.Comp2));
 
         // Inhale gas
         var ev = new InhaleLocationEvent();
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(ent, ref ev);
 
-        ev.Gas ??= _atmosSys.GetContainingMixture(uid, excite: true);
+        ev.Gas ??= _atmosSys.GetContainingMixture(ent.Owner, excite: true);
 
         if (ev.Gas is null)
         {
             return;
+        }
+
+        // Check for temperature damage before removing gas
+        var gasTemp = ev.Gas.Temperature;
+
+        // Handle high temperature damage
+        if (gasTemp > ent.Comp1.HighTemperatureDamageThreshold)
+        {
+            _damageableSys.TryChangeDamage(ent, ent.Comp1.HighTemperatureDamage, true);
+
+            // Log damage for admins
+            _adminLogger.Add(LogType.Temperature,
+                $"{ToPrettyString(ent):entity} took high temperature breathing damage from {gasTemp:F1}K gas");
+        }
+        // Handle low temperature damage
+        else if (gasTemp < ent.Comp1.LowTemperatureDamageThreshold)
+        {
+            _damageableSys.TryChangeDamage(ent, ent.Comp1.LowTemperatureDamage, true);
+
+            // Log damage for admins
+            _adminLogger.Add(LogType.Temperature,
+                $"{ToPrettyString(ent):entity} took low temperature breathing damage from {gasTemp:F1}K gas");
         }
 
         var actualGas = ev.Gas.RemoveVolume(Atmospherics.BreathVolume);
