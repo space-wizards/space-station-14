@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: (Hummingbird) Added a map beacon to the storage area in the shooting
-      range.
-    type: Add
-  - message: (Hummingbird) Added biohazard suit closets to virology and sec storage
-      area.
-    type: Add
-  - message: (Hummingbird) Added emergency wall closet and fire-safety wall closet
-      to sec storage area.
-    type: Add
-  - message: (Hummingbird) Added wall shelves to the kitchen and bar.
-    type: Add
-  - message: (Hummingbird) Added HoS's and Captain's flasks to their quarters.
-    type: Add
-  - message: (Hummingbird) Added a containment zone to keep a dark entity at bay.
-    type: Add
-  - message: (Hummingbird) Added a few more disposals chutes around the map.
-    type: Add
-  - message: (Hummingbird) You can now have a lollipop for being so brave at the doctor's.
-    type: Add
-  - message: (Hummingbird) Replaced a number of ore and asteroid rocks with bananium
-      ore rocks. Treat your clowns.
-    type: Tweak
-  - message: (Hummingbird) Made evac lounge narrower and fixed LV cabling.
-    type: Tweak
-  id: 512
-  time: '2024-11-14T22:43:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/707
 - author: AirFryerBuyOneGetOneFree
   changes:
   - message: 'Added three animated emotes: flipping, spinning, and jumping!!'
@@ -4360,3 +4331,10 @@
   id: 1011
   time: '2025-01-27T15:04:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1498
+- author: Sleiphros
+  changes:
+  - message: Several changes to a few derelicts.
+    type: Tweak
+  id: 1012
+  time: '2025-01-27T15:06:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1497
