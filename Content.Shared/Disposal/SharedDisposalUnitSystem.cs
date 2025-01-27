@@ -101,22 +101,14 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         args.Handled = true;
     }
 
-    protected void OnAttemptEmag(EntityUid uid, SharedDisposalUnitComponent component, ref OnAttemptEmagEvent args)
-    {
-        if (args.Type != EmagType.Interaction)
-        {
-            args.Handled = true;
-            return;
-        }
-
-        if (_emag.CheckFlag(uid, EmagType.Interaction))
-        {
-            args.Handled = true;
-        }
-    }
-
     protected void OnEmagged(EntityUid uid, SharedDisposalUnitComponent component, ref GotEmaggedEvent args)
     {
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
+        if (component.DisablePressure == true)
+            return;
+
         component.DisablePressure = true;
         args.Handled = true;
     }

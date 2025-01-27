@@ -87,7 +87,7 @@ public sealed class EmagSystem : EntitySystem
             EnsureComp<EmaggedComponent>(target, out var emaggedComp);
 
             emaggedComp.EmagType |= comp.EmagType;
-            Dirty(target, comp);
+            Dirty(target, emaggedComp);
         }
 
         return emaggedEvent.Handled;
