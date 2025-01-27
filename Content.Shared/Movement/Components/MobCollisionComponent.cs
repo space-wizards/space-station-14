@@ -41,7 +41,7 @@ public sealed partial class MobCollisionComponent : Component
     /// By setting this low you can ensure you don't have to set the push-strength too high if you can push static entities.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float SpeedModifier = 0.60f;
+    public float SpeedModifier = 0.50f;
 
     /// <summary>
     /// Strength of the pushback for entities. This is combined between the 2 entities being pushed.
