@@ -26,6 +26,27 @@
 # Boxes
 - type: entity
   parent: BaseMagazineBoxRifle
+  id: MagazineBoxRifleBig
+  name: ammunition box (.20 rifle)
+  suffix: Big
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 200
+    proto: CartridgeRifle
+  - type: Sprite
+    layers:
+    - state: base-big
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-big-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag-big
+    steps: 4
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  parent: BaseMagazineBoxRifle
   id: MagazineBoxRifle
   name: ammunition box (.20 rifle)
   components:
