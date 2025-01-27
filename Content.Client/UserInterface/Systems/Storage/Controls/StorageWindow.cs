@@ -280,7 +280,7 @@ public sealed class StorageWindow : BaseWindow
                 {
                     new TextureRect
                     {
-                        Texture = boundingGrid.Height > 1 ? _sidebarMiddleTexture : _sidebarBottomTexture,
+                        Texture = boundingGrid.Height > 2 ? _sidebarMiddleTexture : _sidebarBottomTexture,
                         TextureScale = new Vector2(2, 2),
                         Children =
                         {
@@ -293,7 +293,9 @@ public sealed class StorageWindow : BaseWindow
             _sidebar.AddChild(backContainer);
         }
 
-        for (var i = 0; i < boundingGrid.Height - offset; i++)
+        var rows = boundingGrid.Height - offset;
+
+        for (var i = 0; i < rows; i++)
         {
             _sidebar.AddChild(new TextureRect
             {
@@ -302,7 +304,7 @@ public sealed class StorageWindow : BaseWindow
             });
         }
 
-        if (boundingGrid.Height > 0)
+        if (rows > 0)
         {
             _sidebar.AddChild(new TextureRect
             {
