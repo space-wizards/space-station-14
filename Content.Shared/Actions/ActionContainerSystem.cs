@@ -239,13 +239,16 @@ public sealed class ActionContainerSystem : EntitySystem
         comp ??= EnsureComp<ActionsContainerComponent>(uid);
 
         if (!TryComp<MetaDataComponent>(actionId, out var actionData))
-            return false;
-        if (!TryPrototype(actionId, out var actionProto, actionData))
-            return false;
-
-        if (HasAction(uid, actionProto.ID))
         {
-            Log.Debug($"Tried to insert action {ToPrettyString(actionId)} into {ToPrettyString(uid)}. Failed due to duplicate actions.");
+            Log.Debug(
+                $"Tried to insert action {ToPrettyString(actionId)} into {ToPrettyString(uid)}. Failed due to lack of MetaDataComponent.");
+            return false;
+        }
+
+        if (!TryPrototype(actionId, out var actionProto, actionData))
+        {
+            Log.Debug(
+                $"Tried to insert action {ToPrettyString(actionId)} into {ToPrettyString(uid)}. Failed, could not retrieve prototype.");
             return false;
         }
 
