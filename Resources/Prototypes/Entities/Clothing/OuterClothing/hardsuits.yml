@@ -543,6 +543,7 @@
       sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
       state: icon-siren
     useDelay: 1
+    itemIconStyle: BigAction
     event: !type:ToggleActionEvent
 
 
