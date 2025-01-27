@@ -603,7 +603,6 @@
   description: This one is better than the blue one.
   components:
   - type: Sprite
-    sprite: Objects/Fun/mutantfrogplush.rsi
     state: red
   - type: Item
     heldPrefix: red
@@ -619,7 +618,6 @@
   description: There is a green one?
   components:
   - type: Sprite
-    sprite: Objects/Fun/mutantfrogplush.rsi
     state: green
   - type: Item
     heldPrefix: green
@@ -684,7 +682,6 @@
   description: The legendary shonk.
   components:
   - type: Sprite
-    sprite: Objects/Fun/sharkplush.rsi
     state: purple
   - type: Item
     heldPrefix: purple

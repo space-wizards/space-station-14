@@ -78,6 +78,11 @@
   copyright: "Taken from ss200, made by Daeberdir"
   source: "https://github.com/ss220-space/Paradise/pull/3756"
 
+- files: ["mutantfrog.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by AntumDeluge"
+  source: "https://freesound.org/people/AntumDeluge/sounds/417822/"
+
 - files: ["rubber_chicken_1.ogg"]
   license: "CC0-1.0"
   copyright: "Created by xprospero for ss14"
