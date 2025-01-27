@@ -108,6 +108,9 @@
       interactSuccessString: petting-success-holo
       interactFailureString: petting-failure-holo
       successChance: 0.7
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
     - type: Tag
       tags:
         - CannotSuicide
@@ -144,6 +147,9 @@
     - type: HTN
       rootTask:
         task: SimpleHumanoidHostileCompound
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
 
 # From Wizard deck of cards
 - type: entity
@@ -256,9 +262,6 @@
     - type: NpcFactionMember
       factions:
         - Syndicate
-    - type: HTN
-      rootTask:
-        task: SimpleHumanoidHostileCompound
 
 - type: entity
   id: ActionToggleGuardian
