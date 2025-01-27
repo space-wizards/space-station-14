@@ -418,7 +418,11 @@ public abstract class SharedStorageSystem : EntitySystem
             }
             else
             {
-                UI.CloseUserUis<StorageComponent.StorageUiKey>(args.User);
+                // If you need something more sophisticated for multi-UI you'll need to code some smarter
+                // interactions.
+                if (_openStorageLimit == 1)
+                    UI.CloseUserUis<StorageComponent.StorageUiKey>(args.User);
+
                 OpenStorageUI(uid, args.User, storageComp, silent: false);
             }
         }
