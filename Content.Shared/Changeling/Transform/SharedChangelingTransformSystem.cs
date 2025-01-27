@@ -20,50 +20,46 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearanceSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentitySystem = default!;
-    [Dependency] private readonly SharedTypingIndicatorSystem _typingIndicatorSystem = default!;
 
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ChangelingTransformComponent, MapInitEvent>(OnInit);
+        SubscribeLocalEvent<ChangelingTransformComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformActionEvent>(OnTransformAction);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformWindupDoAfterEvent>(OnSuccessfulTransform);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformIdentitySelectMessage>(OnTransformSelected);
     }
 
-    private void OnInit(EntityUid uid, ChangelingTransformComponent component, MapInitEvent init)
+    private void OnMapInit(Entity<ChangelingTransformComponent> ent, ref MapInitEvent init)
     {
-        if(!component.ChangelingTransformActionEntity.HasValue)
-            _actionsSystem.AddAction(uid, ref component.ChangelingTransformActionEntity, component.ChangelingTransformAction);
-        TryComp<UserInterfaceComponent>(component.ChangelingTransformActionEntity, out var comp);
+        if(!ent.Comp.ChangelingTransformActionEntity.HasValue)
+            _actionsSystem.AddAction(ent, ref ent.Comp.ChangelingTransformActionEntity, ent.Comp.ChangelingTransformAction);
 
-        var userInterfaceComp = EnsureComp<UserInterfaceComponent>(uid);
-        _uiSystem.SetUi((uid, userInterfaceComp), TransformUi.Key, new InterfaceData("ChangelingTransformBoundUserInterface"));
+        var userInterfaceComp = EnsureComp<UserInterfaceComponent>(ent);
+        _uiSystem.SetUi((ent, userInterfaceComp), TransformUi.Key, new InterfaceData("ChangelingTransformBoundUserInterface"));
 
-        var identityStorage = EnsureComp<ChangelingIdentityComponent>(uid);
-        _changelingIdentitySystem.CloneLingStart(uid, identityStorage);
+        var identityStorage = EnsureComp<ChangelingIdentityComponent>(ent);
+        _changelingIdentitySystem.CloneLingStart((ent, identityStorage));
     }
 
-    protected virtual void OnTransformAction(EntityUid uid,
-        ChangelingTransformComponent component,
-        ChangelingTransformActionEvent args)
+    protected virtual void OnTransformAction(Entity<ChangelingTransformComponent> ent,
+        ref ChangelingTransformActionEvent args)
     {
-        if (!TryComp<UserInterfaceComponent>(uid, out var userInterface))
+        if (!HasComp<UserInterfaceComponent>(ent))
             return;
-        if(!TryComp<ChangelingIdentityComponent>(uid, out var userIdentity))
+        if(!TryComp<ChangelingIdentityComponent>(ent, out var userIdentity))
             return;
-        Dirty(uid, userIdentity);
+        Dirty(ent, userIdentity);
 
-        if (!_uiSystem.IsUiOpen(uid, TransformUi.Key, args.Performer))
+        if (!_uiSystem.IsUiOpen(ent.Owner, TransformUi.Key, args.Performer))
         {
-            _uiSystem.OpenUi(uid, TransformUi.Key, args.Performer);
+            _uiSystem.OpenUi(ent.Owner, TransformUi.Key, args.Performer);
 
             var x = userIdentity.ConsumedIdentities.Select(x =>
             {
@@ -72,27 +68,27 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
             })
                 .ToList();
 
-            _uiSystem.SetUiState(uid, TransformUi.Key, new ChangelingTransformBoundUserInterfaceState(x));
+            _uiSystem.SetUiState(ent.Owner, TransformUi.Key, new ChangelingTransformBoundUserInterfaceState(x));
         }
         else // if the UI is already opened and the command action is done again, transform into the last consumed identity
         {
-            TransformPreviousConsumed(uid, component);
-            _uiSystem.CloseUi(uid, TransformUi.Key, args.Performer);
+            TransformPreviousConsumed(ent);
+            _uiSystem.CloseUi(ent.Owner, TransformUi.Key, args.Performer);
         }
     }
 
-    private void TransformPreviousConsumed(EntityUid uid, ChangelingTransformComponent component)
+    private void TransformPreviousConsumed(Entity<ChangelingTransformComponent> ent)
     {
-        if(!TryComp<ChangelingIdentityComponent>(uid, out var identity))
+        if(!TryComp<ChangelingIdentityComponent>(ent, out var identity))
             return;
-        _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), uid, null, PopupType.MediumCaution);
-        StartSound(uid, component, component.TransformAttemptNoise);
+        _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), ent, null, PopupType.MediumCaution);
+        StartSound(ent, ent.Comp.TransformAttemptNoise);
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
-            uid,
-            component.TransformWindup,
+            ent,
+            ent.Comp.TransformWindup,
             new ChangelingTransformWindupDoAfterEvent(GetNetEntity(identity.LastConsumedEntityUid!.Value)),
-            uid,
-            used: uid)
+            ent,
+            used: ent)
         {
             BreakOnMove = true,
             BreakOnWeightlessMove = true,
@@ -100,66 +96,64 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         });
     }
 
-    private void OnTransformSelected(EntityUid uid,
-        ChangelingTransformComponent component,
-        ChangelingTransformIdentitySelectMessage args)
+    private void OnTransformSelected(Entity<ChangelingTransformComponent> ent,
+       ref ChangelingTransformIdentitySelectMessage args)
     {
-        _uiSystem.CloseUi(uid, TransformUi.Key, uid);
+        _uiSystem.CloseUi(ent.Owner, TransformUi.Key, ent);
         var selectedIdentity = args.TargetIdentity;
-        _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), uid, null, PopupType.MediumCaution);
-        StartSound(uid, component, component.TransformAttemptNoise);
+        _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), ent, null, PopupType.MediumCaution);
+        StartSound(ent, ent.Comp.TransformAttemptNoise);
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
-            uid,
-            component.TransformWindup,
+            ent,
+            ent.Comp.TransformWindup,
             new ChangelingTransformWindupDoAfterEvent(selectedIdentity),
-            uid,
-            used: uid)
+            ent,
+            used: ent)
         {
             BreakOnMove = true,
             BreakOnWeightlessMove = true,
             DuplicateCondition = DuplicateConditions.None,
         });
     }
-    private void OnSuccessfulTransform(EntityUid uid,
-        ChangelingTransformComponent component,
-        ChangelingTransformWindupDoAfterEvent args)
+    private void OnSuccessfulTransform(Entity<ChangelingTransformComponent> ent,
+       ref ChangelingTransformWindupDoAfterEvent args)
     {
         args.Handled = true;
 
-        StopSound(uid, component);
+        StopSound(ent);
         if (args.Cancelled)
             return;
 
-        if (!TryComp<HumanoidAppearanceComponent>(uid, out var currentAppearance)
-           || !TryComp<VocalComponent>(uid, out var currentVocals)
-           || !TryComp<SpeechComponent>(uid, out var currentSpeech)
-           || !TryComp<DnaComponent>(uid, out var currentDna)
-           || !TryComp<TypingIndicatorComponent>(uid, out var currentTypingIndicator)
-           || !HasComp<GrammarComponent>(uid))
+        if (!TryComp<HumanoidAppearanceComponent>(ent, out var currentAppearance)
+           || !TryComp<VocalComponent>(ent, out var currentVocals)
+           || !TryComp<SpeechComponent>(ent, out var currentSpeech)
+           || !TryComp<DnaComponent>(ent, out var currentDna)
+           || !TryComp<TypingIndicatorComponent>(ent, out var currentTypingIndicator)
+           || !HasComp<GrammarComponent>(ent))
             return;
 
         var targetIdentity = GetEntity(args.TargetIdentity);
-        if(!TryComp<DnaComponent>(uid, out var targetConsumedDna)
+        if(!TryComp<DnaComponent>(ent, out var targetConsumedDna)
            || !TryComp<HumanoidAppearanceComponent>(targetIdentity, out var targetConsumedHumanoid)
            || !TryComp<VocalComponent>(targetIdentity, out var targetConsumedVocals)
            || !TryComp<SpeechComponent>(targetIdentity, out var targetConsumedSpeech))
             return;
 
         //Handle species with the ability to wag their tail
-        if (TryComp<WaggingComponent>(uid, out var waggingComp))
+        if (TryComp<WaggingComponent>(ent, out var waggingComp))
         {
-            _actionsSystem.RemoveAction(uid, waggingComp.ActionEntity);
-            RemComp<WaggingComponent>(uid);
+            _actionsSystem.RemoveAction(ent, waggingComp.ActionEntity);
+            RemComp<WaggingComponent>(ent);
         }
         if (HasComp<WaggingComponent>(targetIdentity)
-            && !HasComp<WaggingComponent>(uid))
+            && !HasComp<WaggingComponent>(ent))
         {
-            EnsureComp<WaggingComponent>(uid, out _);
+            EnsureComp<WaggingComponent>(ent, out _);
         }
 
         _humanoidAppearanceSystem.CloneAppearance(targetIdentity, args.User);
 
-        TransformBodyEmotes(uid, targetIdentity);
+        TransformBodyEmotes(ent, targetIdentity);
 
         currentDna.DNA = targetConsumedDna.DNA;
         currentVocals.EmoteSounds = targetConsumedVocals.EmoteSounds;
@@ -179,19 +173,19 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         EnsureComp<TypingIndicatorComponent>(targetIdentity, out var targetTypingIndicator);
         SharedTypingIndicatorSystem.Replace(currentTypingIndicator, targetTypingIndicator);
 
-        _metaSystem.SetEntityName(uid, Name(targetIdentity), raiseEvents: false);
-        _metaSystem.SetEntityDescription(uid, MetaData(targetIdentity).EntityDescription);
-        TransformGrammarSet(uid, targetConsumedHumanoid.Gender);
+        _metaSystem.SetEntityName(ent, Name(targetIdentity), raiseEvents: false);
+        _metaSystem.SetEntityDescription(ent, MetaData(targetIdentity).EntityDescription);
+        TransformGrammarSet(ent, targetConsumedHumanoid.Gender);
 
-        Dirty(uid, currentAppearance);
-        Dirty(uid, currentVocals);
-        Dirty(uid, currentSpeech);
+        Dirty(ent, currentAppearance);
+        Dirty(ent, currentVocals);
+        Dirty(ent, currentSpeech);
     }
 
     protected virtual void TransformBodyEmotes(EntityUid uid, EntityUid target) { }
     public virtual void TransformGrammarSet(EntityUid uid, Gender gender) { }
-    protected virtual void StartSound(EntityUid uid, ChangelingTransformComponent component, SoundSpecifier? sound) { }
-    protected virtual void StopSound(EntityUid uid, ChangelingTransformComponent component) { }
+    protected virtual void StartSound(Entity<ChangelingTransformComponent> ent, SoundSpecifier? sound) { }
+    protected virtual void StopSound(Entity<ChangelingTransformComponent> ent) { }
 }
 
 

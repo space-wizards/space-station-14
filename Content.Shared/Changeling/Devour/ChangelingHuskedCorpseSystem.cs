@@ -18,25 +18,25 @@ public sealed class ChangelingHuskedCorpseSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ChangelingHuskedCorpseComponent, MapInitEvent>(OnInit);
+        SubscribeLocalEvent<ChangelingHuskedCorpseComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ChangelingHuskedCorpseComponent, ExaminedEvent>(OnExamined);
     }
 
 
-    private void OnInit(EntityUid uid, ChangelingHuskedCorpseComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<ChangelingHuskedCorpseComponent> ent, ref MapInitEvent args)
     {
-        if (!TryComp<HumanoidAppearanceComponent>(uid, out var humanoid)
+        if (!TryComp<HumanoidAppearanceComponent>(ent, out var humanoid)
             || !_prototype.TryIndex(humanoid.Species, out var speciesPrototype))
             return;
         var huskedBodyAppearance = Spawn(speciesPrototype.Prototype, MapCoordinates.Nullspace);
-        _humanoidSystem.CloneAppearance(huskedBodyAppearance, uid);
+        _humanoidSystem.CloneAppearance(huskedBodyAppearance, ent);
         QueueDel(huskedBodyAppearance);
-        _metaSystem.SetEntityName(uid, Loc.GetString("changeling-unidentified-husked-corpse"));
-        _changelingTransformSystem.TransformGrammarSet(uid, Gender.Epicene);
+        _metaSystem.SetEntityName(ent, Loc.GetString("changeling-unidentified-husked-corpse"));
+        _changelingTransformSystem.TransformGrammarSet(ent, Gender.Epicene);
     }
 
-    private void OnExamined(EntityUid uid, ChangelingHuskedCorpseComponent comp, ExaminedEvent args)
+    private void OnExamined(Entity<ChangelingHuskedCorpseComponent> ent, ref ExaminedEvent args)
     {
-        args.PushMarkup(Loc.GetString("changeling-husked-corpse", ("target", Identity.Entity(uid, EntityManager))));
+        args.PushMarkup(Loc.GetString("changeling-husked-corpse", ("target", Identity.Entity(ent, EntityManager))));
     }
 }

@@ -16,39 +16,20 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
-
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<ChangelingIdentityComponent, MapInitEvent>(OnInit);
-    }
-
-    /// <summary>
-    /// Setup the requirements for ling (mostly their organs)
-    /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="component"></param>
-    /// <param name="args"></param>
-    private void OnInit(EntityUid uid, ChangelingIdentityComponent component, MapInitEvent args)
-    {
-        ReplaceLingsLungs(uid);
-    }
-
     /// <summary>
     /// Initialize the Starting ling entity in nullspace and set the ling as a View Subscriber to the Body to load the PVS
     /// nullspace
     /// </summary>
-    /// <param name="uid">The ling to startup</param>
-    /// <param name="component">The ChangelingIdentityComponent attached to the ling</param>
-    public void CloneLingStart(EntityUid uid, ChangelingIdentityComponent component)
+    /// <param name="ent">The ling to startup</param>
+    public void CloneLingStart(Entity<ChangelingIdentityComponent> ent)
     {
-        if (component.ConsumedIdentities.Count > 0)
+        if (ent.Comp.ConsumedIdentities.Count > 0)
             return;
 
-        CloneToNullspace(uid, component, uid);
+        CloneToNullspace(ent, ent.Owner);
     }
 
-    public void CloneToNullspace(EntityUid uid, ChangelingIdentityComponent comp, EntityUid target)
+    public void CloneToNullspace(Entity<ChangelingIdentityComponent> ent, EntityUid target)
     {
         if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoid)
             || !_prototype.TryIndex(humanoid.Species, out var speciesPrototype)
@@ -66,16 +47,15 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
 
         _metaSystem.SetEntityName(mob, Name(target));
         _metaSystem.SetEntityDescription(mob, MetaData(target).EntityDescription);
-        comp.ConsumedIdentities.Add(mob);
+        ent.Comp.ConsumedIdentities.Add(mob);
 
-        comp.LastConsumedEntityUid = mob;
+        ent.Comp.LastConsumedEntityUid = mob;
 
         SetPaused(mob, true);
-        Dirty(uid, comp);
-        HandlePvsOverride(uid, mob);
+        Dirty(ent);
+        HandlePvsOverride(ent, mob);
     }
 
-    protected virtual void ReplaceLingsLungs(EntityUid uid) { }
     protected virtual void HandlePvsOverride(EntityUid uid, EntityUid target) { }
 
 }

@@ -40,17 +40,17 @@ public sealed class ChangelingDevourSystem : SharedChangelingDevourSystem
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-    protected override void StartSound(EntityUid uid, ChangelingDevourComponent component, SoundSpecifier? sound)
+    protected override void StartSound(Entity<ChangelingDevourComponent> ent, SoundSpecifier? sound)
     {
         if(sound is not null)
-            component.CurrentDevourSound = _audioSystem.PlayPvs(sound, uid)!.Value.Entity;
+            ent.Comp.CurrentDevourSound = _audioSystem.PlayPvs(sound, ent)!.Value.Entity;
     }
 
-    protected override void StopSound(EntityUid uid, ChangelingDevourComponent component)
+    protected override void StopSound(Entity<ChangelingDevourComponent> ent)
     {
-        if (component.CurrentDevourSound is not null)
-            _audioSystem.Stop(component.CurrentDevourSound);
-        component.CurrentDevourSound = null;
+        if (ent.Comp.CurrentDevourSound is not null)
+            _audioSystem.Stop(ent.Comp.CurrentDevourSound);
+        ent.Comp.CurrentDevourSound = null;
     }
 
     protected override void RipClothing(EntityUid uid, EntityUid item,  ButcherableComponent butcher)

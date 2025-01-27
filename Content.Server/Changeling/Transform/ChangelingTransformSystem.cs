@@ -22,8 +22,6 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
     [Dependency] private readonly GrammarSystem _grammarSystem = default!;
     [Dependency] private readonly IdentitySystem _identitySystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly BodyEmotesSystem _bodyEmotesSystem = default!;
-
 
     public override void TransformGrammarSet(EntityUid uid, Gender gender)
     {
@@ -52,17 +50,17 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
         BodyEmotesSystem.Replace(existingBodyEmotes, targetBodyEmotes);
 
     }
-    protected override void StartSound(EntityUid uid, ChangelingTransformComponent component, SoundSpecifier? sound)
+    protected override void StartSound(Entity<ChangelingTransformComponent> ent, SoundSpecifier? sound)
     {
         if(sound is not null)
-            component.CurrentTransformSound = _audioSystem.PlayPvs(sound, uid)!.Value.Entity;
+            ent.Comp.CurrentTransformSound = _audioSystem.PlayPvs(sound, ent)!.Value.Entity;
     }
 
-    protected override void StopSound(EntityUid uid, ChangelingTransformComponent component)
+    protected override void StopSound(Entity<ChangelingTransformComponent> ent)
     {
-        if (component.CurrentTransformSound is not null)
-            _audioSystem.Stop(component.CurrentTransformSound);
-        component.CurrentTransformSound = null;
+        if (ent.Comp.CurrentTransformSound is not null)
+            _audioSystem.Stop(ent.Comp.CurrentTransformSound);
+        ent.Comp.CurrentTransformSound = null;
     }
 }
 
