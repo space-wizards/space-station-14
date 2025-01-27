@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Saeko-44
-  changes:
-  - message: Added a new section in the guidebook with microwave recipes, complete
-      with filtering.
-    type: Add
-  id: 508
-  time: '2024-11-14T01:20:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/701
 - author: honeyed-lemons
   changes:
   - message: Space Scientist Jumpsuit
@@ -4380,3 +4372,10 @@
   id: 1007
   time: '2025-01-26T03:18:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1487
+- author: 12rabbits
+  changes:
+  - message: Unborgable brains now dissolve into more appropriate reagents.
+    type: Tweak
+  id: 1008
+  time: '2025-01-27T00:40:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1437
