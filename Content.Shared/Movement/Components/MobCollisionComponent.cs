@@ -1,12 +1,18 @@
 using Content.Shared.Movement.Systems;
 using Robust.Shared.GameStates;
-using Robust.Shared.Physics.Collision.Shapes;
 
 namespace Content.Shared.Movement.Components;
 
+/// <summary>
+/// Handles mobs pushing against each other.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class MobCollisionComponent : Component
 {
+    // If you want to tweak the feel of the pushing use SpeedModifier and Strength.
+    // Strength goes both ways and affects how much the other mob is pushed by so controls static pushing a lot.
+    // Speed mod affects your own mob primarily.
+
     /// <summary>
     /// Flags this component as being handled this tick to avoid receiving 10 trillion messages.
     /// </summary>
@@ -38,14 +44,16 @@ public sealed partial class MobCollisionComponent : Component
     public float SpeedModifier = 0.60f;
 
     /// <summary>
-    /// Shape to give this entity for mob collisions.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public IPhysShape Shape = new PhysShapeCircle(radius: 0.35f);
-
-    /// <summary>
     /// Strength of the pushback for entities. This is combined between the 2 entities being pushed.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float Strength = 0.5f;
+    public float Strength = 3f;
+
+    // Yes I know, I will deal with it if I ever refactor collision layers due to misuse.
+    // If anything it probably needs some assurance on mobcollisionsystem for it.
+    /// <summary>
+    /// Fixture to listen to for mob collisions.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string FixtureId = "flammable";
 }

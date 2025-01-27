@@ -43,7 +43,6 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         MobQuery = GetEntityQuery<MobCollisionComponent>();
         PhysicsQuery = GetEntityQuery<PhysicsComponent>();
         SubscribeAllEvent<MobCollisionMessage>(OnCollision);
-        SubscribeLocalEvent<MobCollisionComponent, ComponentStartup>(OnCollisionStartup);
         SubscribeLocalEvent<MobCollisionComponent, RefreshMovementSpeedModifiersEvent>(OnMoveModifier);
 
         UpdatesBefore.Add(typeof(SharedPhysicsSystem));
@@ -121,16 +120,6 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         MoveMob((player.Value, comp), direction);
     }
 
-    private void OnCollisionStartup(Entity<MobCollisionComponent> ent, ref ComponentStartup args)
-    {
-        _fixtures.TryCreateFixture(ent.Owner,
-            ent.Comp.Shape,
-            "mob_collision",
-            hard: false,
-            collisionLayer: (int) CollisionGroup.MidImpassable,
-            collisionMask: (int) CollisionGroup.MidImpassable);
-    }
-
     protected void MoveMob(Entity<MobCollisionComponent> entity, Vector2 direction)
     {
         var xform = Transform(entity.Owner);
@@ -148,8 +137,6 @@ public abstract class SharedMobCollisionSystem : EntitySystem
     {
         var physics = entity.Comp2;
 
-        // TODO: Dot product check
-
         if (physics.ContactCount == 0)
             return false;
 
@@ -157,20 +144,26 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             return true;
 
         entity.Comp1.HandledThisTick = true;
+        var ourVelocity = entity.Comp2.LinearVelocity;
+
+        if (ourVelocity == Vector2.Zero && !CfgManager.GetCVar(CCVars.MovementPushingStatic))
+            return false;
+
         var xform = Transform(entity.Owner);
-        var (worldPos, worldRot) = _xformSystem.GetWorldPositionRotation(entity.Owner);
+        var (worldPos, worldRot) = _xformSystem.GetWorldPositionRotation(xform);
         var ourTransform = new Transform(worldPos, worldRot);
         var contacts = Physics.GetContacts(entity.Owner);
         var direction = Vector2.Zero;
         var contactCount = 0;
-        var ourVelocity = entity.Comp2.LinearVelocity;
-
-        if (!CfgManager.GetCVar(CCVars.MovementPushingStatic) && ourVelocity == Vector2.Zero)
-            return false;
 
         while (contacts.MoveNext(out var contact))
         {
             if (!contact.IsTouching)
+                continue;
+
+            var ourFixture = contact.OurFixture(entity.Owner);
+
+            if (ourFixture.Id != entity.Comp1.FixtureId)
                 continue;
 
             var other = contact.OtherEnt(entity.Owner);
@@ -185,12 +178,15 @@ public abstract class SharedMobCollisionSystem : EntitySystem
                 continue;
             }
 
-            // TODO: Get overlap amount
+            // TODO: More robust overlap detection.
             var otherTransform = Physics.GetPhysicsTransform(other);
             var diff = ourTransform.Position - otherTransform.Position;
-            var penDepth = MathF.Max(0f, 0.6f - diff.Length());
 
-            penDepth = MathF.Pow(penDepth, 1f);
+            // 0.7 for 0.35 + 0.35 for mob bounds (see TODO above).
+            // Clamp so we don't get a heap of penetration depth and suddenly lurch other mobs.
+            // This is also so we don't have to trigger the speed-cap above.
+            // Maybe we just do speedcap and dump this? Though it's less configurable and the cap is just there for cheaters.
+            var penDepth = Math.Clamp(0.7f - diff.Length(), 0f, 0.40f);
 
             // Sum the strengths so we get pushes back the same amount (impulse-wise, ignoring prediction).
             var mobMovement = penDepth * diff.Normalized() * (entity.Comp1.Strength + otherComp.Strength);
