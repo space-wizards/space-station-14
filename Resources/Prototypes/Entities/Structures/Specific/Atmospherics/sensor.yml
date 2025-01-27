@@ -17,7 +17,7 @@
     pressureThresholdId: stationPressure
     gasThresholdPrototypes:
       Oxygen: stationOxygen
-      Nitrogen: stationNitrogen
+      Nitrogen: ignore
       CarbonDioxide: stationCO2
       Plasma: stationPlasma
       Tritium: stationTritium
@@ -27,8 +27,12 @@
       Frezon: danger
   - type: Tag
     tags:
-    - AirSensor
-    - ForceFixRotations
+      - AirSensor
+      - ForceFixRotations
+  - type: GuideHelp
+    guides:
+    - DeviceMonitoringAndControl
+    - AtmosphericsSystems
 
 - type: entity
   id: AirSensor

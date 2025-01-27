@@ -95,6 +95,9 @@
                 max: 2
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+  - type: GuideHelp
+    guides:
+    - PortableScrubber
 
 - type: entity
   id: SpaceHeater
@@ -180,6 +183,9 @@
                 max: 3
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+  - type: GuideHelp
+    guides:
+    - Thermomachines
 
 - type: entity
   parent: SpaceHeater
