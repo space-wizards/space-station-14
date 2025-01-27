@@ -1,3 +1,15 @@
+- type: entity
+  id: ActionToggleGuardian
+  name: Toggle Guardian
+  description: Either manifests the guardian or recalls it back into your body.
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/manifest.png
+    event: !type:GuardianToggleActionEvent
+    useDelay: 2
+    checkCanInteract: false
+    checkConsciousness: false
+
 # Does not inherit from simplemob
 - type: entity
   abstract: true
@@ -263,14 +275,84 @@
       factions:
         - Syndicate
 
+# From Wizard deck of cards or magical lamp
 - type: entity
-  id: ActionToggleGuardian
-  name: Toggle Guardian
-  description: Either manifests the guardian or recalls it back into your body
+  name: Ifrit
+  parent: MobGuardianBase
+  id: MobIfritGuardian
+  description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into its owner's life to sustain itself.
   components:
-  - type: InstantAction
-    icon: Interface/Actions/manifest.png
-    event: !type:GuardianToggleActionEvent
-    useDelay: 2
-    checkCanInteract: false
-    checkConsciousness: false
+    - type: GhostRole
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: ghost-role-information-ifrit-name
+      description: ghost-role-information-ifrit-description
+      rules: ghost-role-information-familiar-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: RandomSprite
+      available:
+        - enum.DamageStateVisualLayers.BaseUnshaded:
+            magic_flare: Sixteen
+    - type: Sprite
+      layers:
+        - state: magic_base
+          map: [ "enum.DamageStateVisualLayers.Base" ]
+        - state: magic_flare
+          map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+          color: "#40a7d7"
+          shader: unshaded
+
+# From holocarp injector
+- type: entity
+  name: Holocarp
+  parent: MobGuardianBase
+  id: MobHolocarpGuardian
+  description: What's better than a pet carp? A guardian holocarp that lives off your own life energy!
+  components:
+    - type: GhostRole
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: ghost-role-information-holocarp-name
+      description: ghost-role-information-holocarp-description
+      rules: ghost-role-information-familiar-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Sprite
+      sprite: Mobs/Aliens/Carps/holo.rsi
+      layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+    - type: RandomSprite
+      available:
+        - enum.DamageStateVisualLayers.BaseUnshaded:
+            magic_flare: Sixteen
+    - type: MeleeWeapon
+      hidden: false
+      altDisarm: false
+      angle: 0
+      animation: WeaponArcBite
+      attackRate: 1
+      soundHit:
+        path: /Audio/Effects/bite.ogg
+      damage:
+        types:
+          Blunt: 5
+          Slash: 10
+          Structural: 20
+    - type: Tag
+      tags:
+        - Carp
+    - type: Speech
+      speechVerb: LargeMob
+    - type: InteractionPopup
+      interactSuccessString: petting-success-holocarp
+      interactFailureString: petting-failure-holocarp
+      successChance: 0.7
+    - type: NpcFactionMember
+      factions:
+        - PetsNT

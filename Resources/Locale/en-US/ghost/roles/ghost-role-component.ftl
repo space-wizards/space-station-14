@@ -132,6 +132,9 @@ ghost-role-information-holoclown-description = Listen to your owner. Utilize you
 ghost-role-information-ifrit-name = Ifrit
 ghost-role-information-ifrit-description = Listen to your owner. Don't tank damage. Punch people hard.
 
+ghost-role-information-holocarp-name = Holocarp
+ghost-role-information-holocarp-description = Listen to your owner. Don't tank damage. Bite things hard (even other carps).
+
 ghost-role-information-space-dragon-name = Space Dragon
 ghost-role-information-space-dragon-description = Call in 3 carp rifts and take over this quadrant! You have only 5 minutes in between each rift before you will disappear.
 ghost-role-information-space-dragon-rules = You are a [color=red][bold]Team Antagonist[/bold][/color] with all your summoned carp.
