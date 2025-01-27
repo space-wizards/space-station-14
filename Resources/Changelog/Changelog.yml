@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PeccNeck
-  changes:
-  - message: Fixed a bug where ore processors could not produce reinforced glass
-    type: Fix
-  id: 7353
-  time: '2024-09-11T14:06:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32069
 - author: Plykiya
   changes:
   - message: You can now use swords to make baseball bats.
@@ -3886,3 +3879,10 @@
   id: 7852
   time: '2025-01-27T07:07:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34602
+- author: ArtisticRoomba
+  changes:
+  - message: The pneumatic valve now has a more descriptive description.
+    type: Tweak
+  id: 7853
+  time: '2025-01-27T07:40:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32655
