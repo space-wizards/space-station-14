@@ -25,6 +25,8 @@ public abstract class SharedMobCollisionSystem : EntitySystem
     private float _pushingCap;
     private float _pushingDotProduct;
 
+    public const float BufferTime = 0.2f;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -65,10 +67,10 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             if (!comp.Colliding)
                 continue;
 
-            comp.BufferTime -= frameTime;
+            comp.BufferAccumulator -= frameTime;
             Dirty(uid, comp);
 
-            if (comp.BufferTime <= 0f)
+            if (comp.BufferAccumulator <= 0f)
             {
                 SetColliding((uid, comp), false);
             }
@@ -90,7 +92,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
         if (value)
         {
-            entity.Comp.BufferTime = 0.20f;
+            entity.Comp.BufferAccumulator = BufferTime;
             Dirty(entity);
         }
 
