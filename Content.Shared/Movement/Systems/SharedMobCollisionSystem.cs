@@ -8,6 +8,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Movement.Systems;
 
@@ -24,6 +25,8 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
     private float _pushingCap;
     private float _pushingDotProduct;
+
+    protected const float BufferTime = 0.2f;
 
     public override void Initialize()
     {
@@ -52,29 +55,6 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         _pushingCap = (1f / CfgManager.GetCVar(CVars.NetTickrate)) * CfgManager.GetCVar(CCVars.MovementPushingCap);
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = AllEntityQuery<MobCollisionComponent>();
-
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            comp.HandledThisTick = false;
-
-            if (!comp.Colliding)
-                continue;
-
-            comp.BufferTime -= frameTime;
-            Dirty(uid, comp);
-
-            if (comp.BufferTime <= 0f)
-            {
-                SetColliding((uid, comp), false);
-            }
-        }
-    }
-
     private void OnMoveModifier(Entity<MobCollisionComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
     {
         if (!ent.Comp.Colliding)
@@ -83,16 +63,21 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         args.ModifySpeed(ent.Comp.SpeedModifier);
     }
 
-    private void SetColliding(Entity<MobCollisionComponent> entity, bool value)
+    protected void HandleBuffer(Entity<MobCollisionComponent> entity, float frameTime)
+    {
+        var comp = entity.Comp;
+        comp.BufferAccumulator -= frameTime;
+
+        if (comp.BufferAccumulator <= 0f)
+        {
+            SetColliding(entity, false);
+        }
+    }
+
+    protected void SetColliding(Entity<MobCollisionComponent> entity, bool value)
     {
         if (entity.Comp.SpeedModifier.Equals(1f))
             return;
-
-        if (value)
-        {
-            entity.Comp.BufferTime = 0.20f;
-            Dirty(entity);
-        }
 
         if (entity.Comp.Colliding == value)
             return;
@@ -131,6 +116,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
     protected void MoveMob(Entity<MobCollisionComponent> entity, Vector2 direction)
     {
+        entity.Comp.BufferAccumulator = BufferTime;
         var xform = Transform(entity.Owner);
 
         // TODO: Raycast to the specified spot so we don't clip into a wall.
