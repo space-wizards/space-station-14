@@ -9999,7 +9999,7 @@ entities:
       pos: -36.5,0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -87179.914
+      secondsUntilStateChange: -87222.164
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -10334,7 +10334,7 @@ entities:
       pos: 33.5,-43.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -215517
+      secondsUntilStateChange: -215559.25
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10999,7 +10999,7 @@ entities:
       pos: 37.5,-46.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -37852.44
+      secondsUntilStateChange: -37894.69
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11626,7 +11626,7 @@ entities:
       pos: -8.5,-0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -29976.068
+      secondsUntilStateChange: -30018.318
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -102168,6 +102168,13 @@ entities:
     components:
     - type: Transform
       pos: 52.5,12.5
+      parent: 2
+- proto: MechEquipmentGrabberSmall
+  entities:
+  - uid: 21442
+    components:
+    - type: Transform
+      pos: -33.680935,-19.208366
       parent: 2
 - proto: MedicalBed
   entities:
