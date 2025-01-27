@@ -923,3 +923,102 @@
   sex: Female
   silicon: false
   voice: 10091
+
+- type: voice
+  id: jhin
+  name: tts-voice-name-jhin
+  sex: Male
+  silicon: false
+  voice: 20001
+  
+- type: voice
+  id: yasuo
+  name: tts-voice-name-yasuo
+  sex: Male
+  silicon: false
+  voice: 20002
+
+- type: voice
+  id: cavejohnson
+  name: tts-voice-name-cavejohnson
+  sex: Male
+  silicon: false
+  voice: 20003
+  
+- type: voice
+  id: gohan
+  name: tts-voice-name-gohan
+  sex: Male
+  silicon: false
+  voice: 20004
+  
+- type: voice
+  id: arthurmorgan
+  name: tts-voice-name-arthurmorgan
+  sex: Male
+  silicon: false
+  voice: 20005
+
+- type: voice
+  id: volition
+  name: tts-voice-name-volition
+  sex: Male
+  silicon: false
+  voice: 20006
+  
+- type: voice
+  id: halflight
+  name: tts-voice-name-halflight
+  sex: Male
+  silicon: false
+  voice: 20007
+    
+- type: voice
+  id: cuno
+  name: tts-voice-name-cuno
+  sex: Male
+  silicon: false
+  voice: 20008
+      
+- type: voice
+  id: kimkitsuragi
+  name: tts-voice-name-kimkitsuragi
+  sex: Male
+  silicon: false
+  voice: 20009
+      
+- type: voice
+  id: evrartclaire
+  name: tts-voice-name-evrartclaire
+  sex: Male
+  silicon: false
+  voice: 20010
+      
+- type: voice
+  id: klaasjeamandou
+  name: tts-voice-name-klaasjeamandou
+  sex: Female
+  silicon: false
+  voice: 20011
+      
+- type: voice
+  id: horrificnecktie
+  name: tts-voice-name-horrificnecktie
+  sex: Male
+  silicon: false
+  voice: 20012
+        
+- type: voice
+  id: ancientreptilianbrain
+  name: tts-voice-name-ancientreptilianbrain
+  sex: Male
+  silicon: false
+  voice: 20013
+          
+- type: voice
+  id: galadriel
+  name: tts-voice-name-galadriel
+  sex: Female
+  silicon: false
+  voice: 20014
+  
