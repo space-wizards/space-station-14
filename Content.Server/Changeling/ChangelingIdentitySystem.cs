@@ -1,4 +1,5 @@
 ﻿using Content.Server.Body.Components;
+using Content.Server.Mind;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Changeling;
@@ -13,6 +14,7 @@ namespace Content.Server.Changeling;
 public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
 {
     [Dependency] private readonly PvsOverrideSystem _pvsOverrideSystem = default!;
+
     protected override void HandlePvsOverride(EntityUid uid, EntityUid target)
     {
         if(!TryComp<ActorComponent>(uid, out var actor))

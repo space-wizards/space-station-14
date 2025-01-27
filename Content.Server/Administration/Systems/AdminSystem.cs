@@ -11,6 +11,7 @@ using Content.Server.StationRecords.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
 using Content.Shared.CCVar;
+using Content.Shared.Forensics;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
@@ -31,7 +32,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using DnaComponent = Content.Shared.Forensics.DnaComponent;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Systems;

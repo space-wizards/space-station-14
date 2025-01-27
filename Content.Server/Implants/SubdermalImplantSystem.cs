@@ -25,7 +25,6 @@ using Content.Server.IdentityManagement;
 using Content.Shared.Store.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
-using DnaComponent = Content.Shared.Forensics.DnaComponent;
 
 namespace Content.Server.Implants;
 

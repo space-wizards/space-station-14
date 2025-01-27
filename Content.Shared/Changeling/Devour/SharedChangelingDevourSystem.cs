@@ -1,8 +1,10 @@
 using Content.Shared.Actions;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
@@ -32,6 +34,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentitySystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
 
     public override void Initialize()
@@ -117,7 +120,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             return;
         }
         StartSound(ent, new SoundPathSpecifier(_audio.GetSound(ent.Comp.DevourWindupNoise!)));
-
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent:player} started changeling devour windup against {target:player}");
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, ent.Comp.DevourWindupTime, new ChangelingDevourWindupDoAfterEvent(), ent, target: target, used: ent)
         {
             BreakOnMove = true,
@@ -146,7 +149,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         StartSound(ent, new SoundPathSpecifier(_audio.GetSound(ent.Comp.ConsumeNoise!)));
 
         ent.Comp.NextTick = curTime + TimeSpan.FromSeconds(1);
-
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} began to devour {ToPrettyString(args.Target):player} identity");
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             ent,
             ent.Comp.DevourConsumeTime,
@@ -176,6 +179,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
 
         if (!_mobState.IsDead((EntityUid)target))
         {
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player}  unsuccessfully devoured {ToPrettyString(args.Target):player}'s identity");
             _popupSystem.PopupClient(Loc.GetString("changeling-devour-consume-failed-not-dead"), args.User,  args.User, PopupType.Medium);
             return;
         }
@@ -187,6 +191,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             && HasComp<HumanoidAppearanceComponent>(target)
             && TryComp<ChangelingIdentityComponent>(args.User, out var identityStorage))
         {
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player}  successfully devoured {ToPrettyString(args.Target):player}'s identity");
             _changelingIdentitySystem.CloneToNullspace((ent, identityStorage), target.Value);
             EnsureComp<ChangelingHuskedCorpseComponent>(target.Value);
 

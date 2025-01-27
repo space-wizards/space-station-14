@@ -1,11 +1,8 @@
-﻿using System.Linq;
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Systems;
-using Content.Shared.Forensics;
+﻿using Content.Shared.Forensics;
 using Content.Shared.Humanoid;
-using Content.Shared.Radiation.Events;
+using Content.Shared.Mind;
+using Content.Shared.Roles;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Changeling;
@@ -15,6 +12,23 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<ChangelingIdentityComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(Entity<ChangelingIdentityComponent> ent, ref MapInitEvent args)
+    {
+        if (!_mind.TryGetMind(ent, out var mindId, out _))
+            return;
+        if (_roles.MindHasRole<ChangelingRoleComponent>(mindId))
+            return;
+        _roles.MindAddRole(mindId, "MindRoleChangeling");
+    }
 
     /// <summary>
     /// Initialize the Starting ling entity in nullspace and set the ling as a View Subscriber to the Body to load the PVS
@@ -59,3 +73,4 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     protected virtual void HandlePvsOverride(EntityUid uid, EntityUid target) { }
 
 }
+

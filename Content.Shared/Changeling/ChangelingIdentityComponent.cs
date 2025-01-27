@@ -1,3 +1,4 @@
+using Content.Shared.Roles;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Changeling;
@@ -12,3 +13,5 @@ public sealed partial class ChangelingIdentityComponent : Component
     public EntityUid? LastConsumedEntityUid;
 
 }
+[RegisterComponent]
+public sealed partial class ChangelingRoleComponent : BaseMindRoleComponent;

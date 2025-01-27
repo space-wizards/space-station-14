@@ -1,11 +1,15 @@
 using System.Linq;
 using Content.Shared.Actions;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Chat;
 using Content.Shared.Chat.TypingIndicator;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Speech.Components;
 using Robust.Shared.Serialization;
 using Content.Shared.Forensics;
 using Content.Shared.Humanoid;
+using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.Speech;
 using Content.Shared.Wagging;
@@ -25,6 +29,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentitySystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
 
     public override void Initialize()
@@ -103,6 +108,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         var selectedIdentity = args.TargetIdentity;
         _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), ent, null, PopupType.MediumCaution);
         StartSound(ent, ent.Comp.TransformAttemptNoise);
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} begun an attempt to transform into \"{Name(GetEntity(selectedIdentity))}\"");
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             ent,
             ent.Comp.TransformWindup,
@@ -173,6 +179,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         EnsureComp<TypingIndicatorComponent>(targetIdentity, out var targetTypingIndicator);
         SharedTypingIndicatorSystem.Replace(currentTypingIndicator, targetTypingIndicator);
 
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player}  successfully transformed into \"{Name(targetIdentity)}\"");
         _metaSystem.SetEntityName(ent, Name(targetIdentity), raiseEvents: false);
         _metaSystem.SetEntityDescription(ent, MetaData(targetIdentity).EntityDescription);
         TransformGrammarSet(ent, targetConsumedHumanoid.Gender);
