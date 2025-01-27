@@ -70,7 +70,6 @@ public sealed class FaxSystem : EntitySystem
 
         // Interaction
         SubscribeLocalEvent<FaxMachineComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<FaxMachineComponent, OnAttemptEmagEvent>(OnAttemptEmag);
         SubscribeLocalEvent<FaxMachineComponent, GotEmaggedEvent>(OnEmagged);
 
         // UI
@@ -246,20 +245,14 @@ public sealed class FaxSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnAttemptEmag(EntityUid uid, FaxMachineComponent component, ref OnAttemptEmagEvent args)
-    {
-        if (args.Type != EmagType.Interaction)
-        {
-            args.Handled = true;
-            return;
-        }
-
-        if (_emag.CheckFlag(uid, EmagType.Interaction))
-            args.Handled = true;
-    }
-
     private void OnEmagged(EntityUid uid, FaxMachineComponent component, ref GotEmaggedEvent args)
     {
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            return;
+
         args.Handled = true;
     }
 
