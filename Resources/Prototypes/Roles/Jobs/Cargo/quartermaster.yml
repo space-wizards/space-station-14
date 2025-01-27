@@ -30,6 +30,7 @@
   - Command
   - Brig
   - Cryogenics
+  - Logistics #Imp
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

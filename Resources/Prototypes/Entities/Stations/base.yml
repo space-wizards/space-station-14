@@ -43,7 +43,7 @@
   abstract: true
   components:
     - type: StationCargoShuttle
-      path: /Maps/Shuttles/cargo.yml
+      path: /Maps/_Impstation/Shuttles/cargo.yml #imp
     - type: GridSpawn
       groups:
         trade: !type:GridSpawnGroup

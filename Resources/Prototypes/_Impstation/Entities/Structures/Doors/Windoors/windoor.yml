@@ -19,3 +19,14 @@
       board: [ DoorElectronicsCourier ]
   - type: Wires
     layoutId: AirlockCargo
+
+- type: entity
+  parent: WindoorSecure
+  id: WindoorSecureLogisticsLocked
+  suffix: Logistics, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsLogistics ]
+  - type: Wires
+    layoutId: AirlockCargo
