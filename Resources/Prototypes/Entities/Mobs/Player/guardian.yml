@@ -163,37 +163,6 @@
       factions:
         - Syndicate
 
-# From Wizard deck of cards or magical lamp
-- type: entity
-  name: Ifrit
-  parent: MobGuardianBase
-  id: MobIfritGuardian
-  description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into its owner's life to sustain itself.
-  components:
-    - type: GhostRole
-      allowMovement: true
-      allowSpeech: true
-      makeSentient: true
-      name: ghost-role-information-ifrit-name
-      description: ghost-role-information-ifrit-description
-      rules: ghost-role-information-familiar-rules
-      raffle:
-        settings: default
-    - type: GhostTakeoverAvailable
-    - type: RandomSprite
-      available:
-        - enum.DamageStateVisualLayers.BaseUnshaded:
-            magic_flare: Sixteen
-    - type: Sprite
-      layers:
-        - state: magic_base
-          map: [ "enum.DamageStateVisualLayers.Base" ]
-        - state: magic_flare
-          map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-          color: "#40a7d7"
-          shader: unshaded
-
-# From the uplink injector
 - type: entity
   name: HoloClown
   id: MobHoloClownGuardian
@@ -275,6 +244,36 @@
     - type: NpcFactionMember
       factions:
         - Syndicate
+
+# From Wizard deck of cards or magical lamp
+- type: entity
+  name: Ifrit
+  parent: MobGuardianBase
+  id: MobIfritGuardian
+  description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into its owner's life to sustain itself.
+  components:
+    - type: GhostRole
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: ghost-role-information-ifrit-name
+      description: ghost-role-information-ifrit-description
+      rules: ghost-role-information-familiar-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: RandomSprite
+      available:
+        - enum.DamageStateVisualLayers.BaseUnshaded:
+            magic_flare: Sixteen
+    - type: Sprite
+      layers:
+        - state: magic_base
+          map: [ "enum.DamageStateVisualLayers.Base" ]
+        - state: magic_flare
+          map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+          color: "#40a7d7"
+          shader: unshaded
 
 # From holocarp injector
 - type: entity
