@@ -116,7 +116,7 @@
   parent: Kudzu
   components:
     - type: Sprite
-      drawdepth: FloorObjects
+      drawdepth: HighFloorObjects
       sprite: Objects/Misc/kudzuflower.rsi
       state: kudzu_11
     - type: Kudzu

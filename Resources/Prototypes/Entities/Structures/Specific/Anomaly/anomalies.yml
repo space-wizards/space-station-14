@@ -28,9 +28,9 @@
           radius: 0.35
         density: 50
         mask:
-        - MobMask
+        - FlyingMobMask
         layer:
-        - MobLayer
+        - FlyingMobLayer
   - type: Sprite
     noRot: true
     drawdepth: Effects #it needs to draw over stuff.
@@ -452,6 +452,9 @@
         maxRange: 5
       spawns:
       - MobSpawnCrabUranium
+  - type: RadiationSource
+    intensity: 0.2
+    slope: 0.1
 
 - type: entity
   id: AnomalyRockQuartz
