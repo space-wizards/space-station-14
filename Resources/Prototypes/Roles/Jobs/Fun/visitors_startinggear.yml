@@ -557,7 +557,7 @@
 - type: startingGear
   id: VisitorChemistAlt
   equipment:
-    jumpsuit: ClothingUniformSpaceJumpsuitChemistry
+    jumpsuit: ClothingUniformSpaceJumpsuitChemist
     shoes: ClothingShoesColorOrange
     gloves: ClothingHandsGlovesNitrile # imp
     head: ClothingHeadHatBeretSeniorPhysician # imp

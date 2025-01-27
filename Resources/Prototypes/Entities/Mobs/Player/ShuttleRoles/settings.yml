@@ -23,7 +23,6 @@
     - type: GhostRole
       name: job-name-captain
       description: ghost-role-information-command-description
-      playTimeTracker: JobCaptain # imp
       requirements: # imp
         - !type:DepartmentTimeRequirement
           department: Engineering
@@ -54,7 +53,6 @@
     - type: GhostRole
       name: job-name-ce
       description: ghost-role-information-command-description
-      playTimeTracker: JobChiefEngineer # imp
       requirements: # imp
         - !type:RoleTimeRequirement
           role: JobAtmosphericTechnician
@@ -78,7 +76,6 @@
     - type: GhostRole
       name: job-name-cmo
       description: ghost-role-information-command-description
-      playTimeTracker: JobChiefMedicalOfficer # imp
       requirements: # imp
         - !type:RoleTimeRequirement
           role: JobChemist
@@ -102,7 +99,6 @@
     - type: GhostRole
       name: job-name-hop
       description: ghost-role-information-command-description
-      playTimeTracker: JobHeadOfPersonnel # imp
       requirements: # imp
         - !type:DepartmentTimeRequirement
           department: Engineering
@@ -133,7 +129,6 @@
     - type: GhostRole
       name: job-name-hos
       description: ghost-role-information-command-description
-      playTimeTracker: JobHeadOfSecurity # imp
       requirements: # imp
         - !type:RoleTimeRequirement
           role: JobWarden
@@ -157,7 +152,6 @@
     - type: GhostRole
       name: job-name-rd
       description: ghost-role-information-command-description
-      playTimeTracker: JobResearchDirector # imp
       requirements: # imp
         - !type:DepartmentTimeRequirement
           department: Science
@@ -175,7 +169,6 @@
     - type: GhostRole
       name: job-name-qm
       description: ghost-role-information-command-description
-      playTimeTracker: JobQuartermaster # imp
       requirements: # imp
         - !type:RoleTimeRequirement
           role: JobCargoTechnician
@@ -212,7 +205,6 @@
   components:
     - type: GhostRole
       name: job-name-cadet
-      playTimeTracker: JobSecurityCadet # imp
       requirements: # imp
         - !type:OverallPlaytimeRequirement
           time: 36000 #10 hrs
@@ -226,7 +218,6 @@
   components:
     - type: GhostRole
       name: job-name-security
-      playTimeTracker: JobSecurityOfficer # imp
       requirements: # imp
         - !type:OverallPlaytimeRequirement
           time: 36000 #10 hrs
@@ -240,7 +231,6 @@
   components:
     - type: GhostRole
       name: job-name-detective
-      playTimeTracker: JobDetective # imp
       requirements: # imp
         - !type:DepartmentTimeRequirement
           department: Security
@@ -255,7 +245,6 @@
   components:
     - type: GhostRole
       name: job-name-warden
-      playTimeTracker: JobWarden # imp
       requirements: # imp
         - !type:RoleTimeRequirement
           role: JobSecurityOfficer
@@ -283,7 +272,6 @@
   components:
     - type: GhostRole
       name: job-name-cargotech
-      playTimeTracker: JobCargoTechnician # imp
     - type: Loadout
       prototypes: [ VisitorCargoTech, VisitorCargoTechAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -294,7 +282,6 @@
   components:
     - type: GhostRole
       name: job-name-salvagespec
-      playTimeTracker: JobSalvageSpecialist # imp
       requirements: # imp
         - !type:DepartmentTimeRequirement
           department: Cargo
@@ -324,7 +311,6 @@
   components:
     - type: GhostRole
       name: job-name-atmostech
-      playTimeTracker: JobAtmosphericTechnician # imp
       requirements: # imp
         - !type:DepartmentTimeRequirement
           department: Engineering
@@ -339,7 +325,6 @@
   components:
     - type: GhostRole
       name: job-name-technical-assistant
-      playTimeTracker: JobTechnicalAssistant # imp
       requirements: # imp
         - !type:OverallPlaytimeRequirement
           time: 3600 #1 hr
@@ -353,7 +338,6 @@
   components:
     - type: GhostRole
       name: job-name-engineer
-      playTimeTracker: JobStationEngineer # imp
       requirements: # imp
         - !type:OverallPlaytimeRequirement
           time: 3600 #1 hr
@@ -380,7 +364,6 @@
   components:
     - type: GhostRole
       name: job-name-intern
-      playTimeTracker: JobMedicalIntern # imp
     - type: Loadout
       prototypes: [ VisitorMedicalIntern, VisitorMedicalInternAlt ]
       roleLoadout: [ RoleSurvivalMedical ]
@@ -391,7 +374,6 @@
   components:
     - type: GhostRole
       name: job-name-doctor
-      playTimeTracker: JobMedicalDoctor # imp
     - type: Loadout
       prototypes: [ VisitorMedicalDoctor, VisitorMedicalDoctorAlt , VisitorScrubsPurple, VisitorScrubsGreen, VisitorScrubsBlue]
       roleLoadout: [ RoleSurvivalMedical ]
@@ -402,7 +384,6 @@
   components:
     - type: GhostRole
       name: job-name-paramedic
-      playTimeTracker: JobParamedic # imp
       requirements: # imp
         - !type:RoleTimeRequirement
           role: JobMedicalDoctor
@@ -419,7 +400,6 @@
   components:
     - type: GhostRole
       name: ghost-role-information-medical-virologist-name
-      playTimeTracker: JobMedicalDoctor # imp
     - type: Loadout
       prototypes: [ VisitorVirologist, VisitorVirologistAlt ]
       roleLoadout: [ RoleSurvivalMedical ]
@@ -430,7 +410,6 @@
   components:
     - type: GhostRole
       name: ghost-role-information-medical-geneticist-name
-      playTimeTracker: JobMedicalDoctor # imp
     - type: Loadout
       prototypes: [ VisitorGeneticist, VisitorGeneticistAlt ]
       roleLoadout: [ RoleSurvivalMedical ]
@@ -441,7 +420,6 @@
   components:
     - type: GhostRole
       name: job-name-psychologist
-      playTimeTracker: JobPsychologist # imp
     - type: Loadout
       prototypes: [ VisitorPsychologist, VisitorPsychologistAlt ]
       roleLoadout: [ RoleSurvivalMedical ]
@@ -452,7 +430,6 @@
   components:
     - type: GhostRole
       name: job-name-chemist
-      playTimeTracker: JobChemist # imp
       requirements: # imp
         - !type:DepartmentTimeRequirement
           department: Medical
@@ -467,7 +444,6 @@
   components:
     - type: GhostRole
       name: ghost-role-information-medical-dentist-name
-      playTimeTracker: JobMedicalDoctor # imp
     - type: Loadout
       prototypes: [ VisitorDentist ]
       roleLoadout: [ RoleSurvivalMedical ]
@@ -491,7 +467,6 @@
   components:
     - type: GhostRole
       name: job-name-research-assistant
-      playTimeTracker: JobResearchAssistant # imp
     - type: Loadout
       prototypes: [ VisitorResearchAssistant, VisitorResearchAssistantAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -502,7 +477,6 @@
   components:
     - type: GhostRole
       name: job-name-scientist
-      playTimeTracker: JobScientist # imp
     - type: Loadout
       prototypes: [ VisitorScientist, VisitorScientistAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -526,7 +500,6 @@
   components:
     - type: GhostRole
       name: job-name-bartender
-      playTimeTracker: JobBartender # imp
       requirements: # imp
         - !type:DepartmentTimeRequirement
           department: Civilian
@@ -541,7 +514,6 @@
   components:
     - type: GhostRole
       name: job-name-botanist
-      playTimeTracker: JobBotanist # imp
     - type: Loadout
       prototypes: [ VisitorBotanist, VisitorBotanistAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -552,7 +524,6 @@
   components:
     - type: GhostRole
       name: job-name-boxer
-      playTimeTracker: JobBoxer # imp
     - type: Loadout
       prototypes: [ VisitorBoxer, VisitorBoxerAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -564,7 +535,6 @@
     - type: BibleUser
     - type: GhostRole
       name: job-name-chaplain
-      playTimeTracker: JobChaplain # imp
     - type: Loadout
       prototypes: [ VisitorChaplain, VisitorChaplainAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -575,7 +545,6 @@
   components:
     - type: GhostRole
       name: job-name-chef
-      playTimeTracker: JobChef # imp
       requirements: # imp
         - !type:DepartmentTimeRequirement
           department: Civilian
@@ -591,7 +560,6 @@
   components:
     - type: GhostRole
       name: job-name-clown
-      playTimeTracker: JobClown # imp
     - type: Loadout
       prototypes: [ VisitorClown, VisitorClownAltA, VisitorClownAltB ] # imp
       roleLoadout: [ RoleSurvivalClown ]
@@ -605,7 +573,6 @@
   components:
     - type: GhostRole
       name: job-name-janitor
-      playTimeTracker: JobJanitor # imp
     - type: Loadout
       prototypes: [ VisitorJanitor, VisitorJanitorAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -616,7 +583,6 @@
   components:
     - type: GhostRole
       name: job-name-lawyer
-      playTimeTracker: JobLawyer # imp
       requirements: # imp
         - !type:OverallPlaytimeRequirement
           time: 36000 # 10 hrs
@@ -641,7 +607,6 @@
   components:
     - type: GhostRole
       name: job-name-librarian
-      playTimeTracker: JobLibrarian # imp
     - type: Loadout
       prototypes: [ VisitorLibrarian, VisitorLibrarianAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -652,7 +617,6 @@
   components:
     - type: GhostRole
       name: job-name-musician
-      playTimeTracker: JobMusician # imp
     - type: Loadout
       prototypes: [ VisitorMusicianFancyAltA, VisitorMusicianFancyAltB, VisitorMusicianFancyAltC, VisitorMusicianFancyAltD, VisitorMusicianFancyAltE, VisitorMusicianFancyAltF, VisitorMusicianFancyAltG, VisitorMusicianFancyAltH, VisitorMusicianFancyAltI, VisitorMusicianRelaxedAltA, VisitorMusicianRelaxedAltB, VisitorMusicianRelaxedAltC, VisitorMusicianRelaxedAltD, VisitorMusicianRelaxedAltE, VisitorMusicianRelaxedAltF, VisitorMusicianMariachi ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -663,7 +627,6 @@
   components:
     - type: GhostRole
       name: job-name-musician
-      playTimeTracker: JobMusician # imp
     - type: Loadout
       prototypes: [ VisitorMusicianFancyAltA, VisitorMusicianFancyAltB, VisitorMusicianFancyAltC, VisitorMusicianFancyAltD, VisitorMusicianFancyAltE, VisitorMusicianFancyAltF, VisitorMusicianFancyAltG, VisitorMusicianFancyAltH, VisitorMusicianFancyAltI ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -674,7 +637,6 @@
   components:
     - type: GhostRole
       name: job-name-musician
-      playTimeTracker: JobMusician # imp
     - type: Loadout
       prototypes: [ VisitorMusicianRelaxedAltA, VisitorMusicianRelaxedAltB, VisitorMusicianRelaxedAltC, VisitorMusicianRelaxedAltD, VisitorMusicianRelaxedAltE, VisitorMusicianRelaxedAltF, VisitorMusicianMariachi ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -686,7 +648,6 @@
     - type: MimePowers
     - type: GhostRole
       name: job-name-mime
-      playTimeTracker: JobMime # imp
       requirements: # imp
         - !type:OverallPlaytimeRequirement
           time: 14400 #4 hrs
@@ -700,7 +661,6 @@
   components:
     - type: GhostRole
       name: job-name-reporter
-      playTimeTracker: JobReporter # imp
     - type: Loadout
       prototypes: [ VisitorReporter, VisitorReporterAlt, VisitorReporterAltA ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -711,7 +671,6 @@
   components:
     - type: GhostRole
       name: job-name-serviceworker
-      playTimeTracker: JobServiceWorker # imp
     - type: Loadout
       prototypes: [ VisitorServiceWorker, VisitorServiceWorkerAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -722,7 +681,6 @@
   components:
     - type: GhostRole
       name: job-name-zookeeper
-      playTimeTracker: JobZookeeper # imp
     - type: Loadout
       prototypes: [ VisitorZookeeper, VisitorZookeeperAlt ]
       roleLoadout: [ RoleSurvivalStandard ]

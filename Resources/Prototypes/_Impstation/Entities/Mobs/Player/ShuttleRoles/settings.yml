@@ -4,7 +4,6 @@
   components:
     - type: GhostRole
       name: job-name-brigmedic
-      playTimeTracker: JobBrigmedic
       requirements:
         - !type:DepartmentTimeRequirement
           department: Security
@@ -22,7 +21,6 @@
   components:
     - type: GhostRole
       name: job-name-courier
-      playTimeTracker: JobCourier
     - type: Loadout
       prototypes: [ VisitorCourier, VisitorCourierAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -33,7 +31,6 @@
   components:
     - type: GhostRole
       name: job-name-roboticist
-      playTimeTracker: JobScientist
     - type: Loadout
       prototypes: [ VisitorRoboticist, VisitorRoboticistAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
