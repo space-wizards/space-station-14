@@ -10,6 +10,7 @@
   - Cargo
   - Courier
   - Maintenance
+  - Logistics
 
 - type: startingGear
   id: CourierGear
