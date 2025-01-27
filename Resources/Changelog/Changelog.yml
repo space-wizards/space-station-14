@@ -1,16 +1,6 @@
 ﻿Entries:
 - author: lzk228
   changes:
-  - message: Fixed forensic pad didn't care about target identity.
-    type: Fix
-  - message: Instead of name changing, forensic pad now will have a label with target's
-      name.
-    type: Tweak
-  id: 7358
-  time: '2024-09-12T00:52:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31842
-- author: lzk228
-  changes:
   - message: Borgs and Station AI will not receive selected in preferences traits.
     type: Tweak
   id: 7359
@@ -3887,3 +3877,10 @@
   id: 7857
   time: '2025-01-27T12:44:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32369
+- author: august-sun
+  changes:
+  - message: Utility and CE belts can now hold the pAI and the handheld station map.
+    type: Tweak
+  id: 7858
+  time: '2025-01-27T18:48:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33048
