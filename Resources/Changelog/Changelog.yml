@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Banners are no longer invincible.
-    type: Fix
-  id: 7355
-  time: '2024-09-11T15:29:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32077
 - author: themias
   changes:
   - message: Very small amounts of heat damage no longer play the cauterization sound
@@ -3886,3 +3879,10 @@
   id: 7854
   time: '2025-01-27T08:30:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34632
+- author: metalgearsloth
+  changes:
+  - message: Fix hovering storage containers flickering sometimes.
+    type: Fix
+  id: 7855
+  time: '2025-01-27T10:29:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33045
