@@ -2731,4 +2731,11 @@ Entries:
   id: 381
   time: '2025-01-27T14:06:51.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/267
+- author: STARLIGHT TEAM
+  changes:
+  - message: AI Actions when reinserted in core
+    type: Fix
+  id: 382
+  time: '2025-01-27T14:13:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/259
 
