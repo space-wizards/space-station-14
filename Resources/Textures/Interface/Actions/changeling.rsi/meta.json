@@ -1,7 +1,7 @@
 {
     "version": 1,
-    "license": "CC-BY-SA3.0",
-    "copyright": "",
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made for SS14 by @obscenelytinyshark on Discord",
     "size": {
       "x": 32,
       "y": 32
@@ -15,6 +15,9 @@
       },
       {
         "name": "devour_on"
+      },
+      {
+        "name": "armblade"
       }
     ]
   }
