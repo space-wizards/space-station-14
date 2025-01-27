@@ -29,7 +29,8 @@ public sealed class IntrinsicUISystem : EntitySystem
         {
             var actionId = actionEntry.ToggleActionEntity;
             _actionsSystem.RemoveAction(uid, actionId);
-            _actionContainer.RemoveAction(actionId);
+            if (actionId != null)
+                _actionContainer.RemoveAction(actionId.Value);
         }
     }
 
