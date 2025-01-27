@@ -167,7 +167,6 @@
         variation: 0.35
     mustBeEquippedToUse: true
   - type: MeleeThrowOnHit
-    unanchorOnHit: true
     speed: 7
     lifetime: 0.2
   - type: Reflect

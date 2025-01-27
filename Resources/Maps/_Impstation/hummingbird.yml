@@ -592,6 +592,7 @@ entities:
             5218: 122,-8
             5219: 122,-7
             5220: 122,-6
+            5272: 94,32
         - node:
             color: '#FF0000FF'
             id: BotLeft
@@ -5242,7 +5243,8 @@ entities:
           23,7:
             1: 8189
           24,8:
-            8: 65535
+            8: 65407
+            9: 128
           25,5:
             0: 17
             1: 61440
@@ -6382,6 +6384,21 @@ entities:
           moles:
           - 0
           - 103.92799
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 103.92766
           - 0
           - 0
           - 0
@@ -7803,7 +7820,6 @@ entities:
       - 11594
       - 11523
       - 11522
-      - 11585
   - uid: 92
     components:
     - type: MetaData
@@ -8798,7 +8814,6 @@ entities:
       - 15027
       - 15221
       - 700
-      - 11586
 - proto: AirCanister
   entities:
   - uid: 144
@@ -57555,6 +57570,11 @@ entities:
     - type: Transform
       pos: 42.475952,49.42393
       parent: 2
+  - uid: 24443
+    components:
+    - type: Transform
+      pos: 98.77372,32.487453
+      parent: 2
 - proto: ClothingEyesGlassesJensen
   entities:
   - uid: 9388
@@ -57836,6 +57856,13 @@ entities:
     components:
     - type: Transform
       pos: 132.65239,-20.971273
+      parent: 2
+- proto: ClothingHeadHatHairflower
+  entities:
+  - uid: 24446
+    components:
+    - type: Transform
+      pos: 98.789345,32.72183
       parent: 2
 - proto: ClothingHeadHatJesterAlt
   entities:
@@ -67142,6 +67169,11 @@ entities:
     - type: Transform
       pos: 64.39983,41.75714
       parent: 2
+  - uid: 24447
+    components:
+    - type: Transform
+      pos: 97.633095,40.48238
+      parent: 2
 - proto: DoubleEmergencyOxygenTankFilled
   entities:
   - uid: 10905
@@ -68004,11 +68036,6 @@ entities:
     components:
     - type: Transform
       pos: 83.5,45.5
-      parent: 2
-  - uid: 11047
-    components:
-    - type: Transform
-      pos: 98.5,35.5
       parent: 2
   - uid: 11048
     components:
@@ -70233,7 +70260,6 @@ entities:
       - 11594
       - 11523
       - 11522
-      - 11585
   - uid: 11233
     components:
     - type: MetaData
@@ -74207,23 +74233,6 @@ entities:
       - 89
       - 97
       - 11238
-  - uid: 11585
-    components:
-    - type: Transform
-      pos: 93.5,33.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 91
-      - 11232
-  - uid: 11586
-    components:
-    - type: Transform
-      pos: 95.5,33.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 143
   - uid: 11587
     components:
     - type: Transform
@@ -76874,7 +76883,7 @@ entities:
   - uid: 11919
     components:
     - type: Transform
-      pos: 98.33478,32.60367
+      pos: 98.17997,32.72183
       parent: 2
 - proto: GasFilter
   entities:
@@ -110799,13 +110808,11 @@ entities:
       parent: 2
 - proto: HolopadGeneralArcade
   entities:
-  - uid: 16522
+  - uid: 11586
     components:
     - type: Transform
-      pos: 97.5,36.5
+      pos: 98.5,36.5
       parent: 2
-    - type: Label
-      currentLabel: General - Nitrogen Lounge
 - proto: HolopadGeneralArrivals
   entities:
   - uid: 16523
@@ -112525,7 +112532,7 @@ entities:
         temperature: 293.147
         moles:
         - 0
-        - 9.036847
+        - 9.037188
         - 0
         - 0
         - 0
@@ -112542,9 +112549,9 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 10951
-          - 10949
           - 10950
+          - 10949
+          - 10951
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -114082,6 +114089,11 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+  - uid: 11047
+    components:
+    - type: Transform
+      pos: 98.383095,32.50308
+      parent: 2
   - uid: 16982
     components:
     - type: Transform
@@ -115581,6 +115593,13 @@ entities:
     - type: Transform
       pos: 86.532135,11.590857
       parent: 2
+- proto: PlushieSlime
+  entities:
+  - uid: 24444
+    components:
+    - type: Transform
+      pos: 99.5,34.5
+      parent: 2
 - proto: PlushieSpaceLizard
   entities:
   - uid: 17207
@@ -115606,6 +115625,11 @@ entities:
     components:
     - type: Transform
       pos: 101.531006,32.748806
+      parent: 2
+  - uid: 24445
+    components:
+    - type: Transform
+      pos: 99.5,37.5
       parent: 2
 - proto: PlushieXeno
   entities:
@@ -118794,6 +118818,12 @@ entities:
       parent: 2
 - proto: PoweredSmallLight
   entities:
+  - uid: 11585
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 94.5,32.5
+      parent: 2
   - uid: 17184
     components:
     - type: Transform
@@ -138099,6 +138129,11 @@ entities:
       parent: 2
 - proto: ToyFigurineSpaceDragon
   entities:
+  - uid: 16522
+    components:
+    - type: Transform
+      pos: 94.633095,37.65933
+      parent: 2
   - uid: 20876
     components:
     - type: Transform
@@ -156148,7 +156183,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -165422.47
+      secondsUntilStateChange: -165833.58
       state: Opening
     - type: Airlock
       autoClose: False
@@ -156971,11 +157006,17 @@ entities:
     - type: Transform
       pos: 105.5,33.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
   - uid: 24268
     components:
     - type: Transform
       pos: 91.5,40.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        bucket: !type:ContainerSlot {}
 - proto: WoodenBench
   entities:
   - uid: 24269

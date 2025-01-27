@@ -872,7 +872,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     {
         if (!args.CanInteract || !args.CanAccess)
         {
-            if (!HasComp<GhostComponent>(args.User))
+            if (!HasComp<GhostComponent>(args.User)) //IMP: Ghosts can see solution contents
                 return;
         }
 
@@ -922,6 +922,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
         return (float) ((luminosity * 0.2) + 0.4);
     }
+
     private FormattedMessage GetSolutionExamine(Solution solution)
     {
         var msg = new FormattedMessage();

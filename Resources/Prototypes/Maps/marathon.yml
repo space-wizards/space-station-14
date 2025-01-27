@@ -3,7 +3,7 @@
   mapName: 'Marathon Station'
   mapPath: /Maps/_Impstation/marathon.yml
   minPlayers: 35
-  maxPlayers: 70
+  maxPlayers: 80
   stations:
     Marathon:
       stationProto: StandardNanotrasenStation
@@ -23,7 +23,7 @@
             Bartender: [ 2, 2 ]
             Botanist: [ 2, 3 ]
             Chef: [ 2, 2 ]
-            Janitor: [ 1, 2 ]
+            Janitor: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 2 ]

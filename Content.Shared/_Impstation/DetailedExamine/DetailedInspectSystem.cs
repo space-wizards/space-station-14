@@ -24,18 +24,27 @@ public sealed partial class DetailedInspectSystem : EntitySystem
             return;
 
         var msg = new FormattedMessage();
+        var numberedIndex = 1;
 
-        if (ent.Comp.Demarcated)
+        foreach (var locId in ent.Comp.ExamineText)
         {
-            foreach (var locId in ent.Comp.ExamineText)
+            if (ent.Comp.TickEntries)
+                msg.AddMarkupOrThrow("- ");
+
+            if (ent.Comp.NumberedEntries)
             {
-                msg.AddMarkupOrThrow("- " + Loc.GetString(locId));
-                msg.PushNewline();
+                msg.AddMarkupOrThrow($"{numberedIndex}. ");
+                numberedIndex++;
             }
+
+            msg.AddMarkupOrThrow(Loc.GetString(locId));
+
+            if (ent.Comp.LineBreak)
+                msg.PushNewline();
+            else
+                msg.AddMarkupOrThrow(" ");
         }
-        else
-            foreach (var locId in ent.Comp.ExamineText)
-                msg.AddMarkupOrThrow(Loc.GetString(locId) + " ");
+
 
         _examine.AddDetailedExamineVerb(args, ent.Comp, msg, Loc.GetString(ent.Comp.VerbText), ent.Comp.Icon, Loc.GetString(ent.Comp.VerbMessage));
     }

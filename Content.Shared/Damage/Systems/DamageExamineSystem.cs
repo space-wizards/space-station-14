@@ -26,7 +26,7 @@ public sealed class DamageExamineSystem : EntitySystem
     {
         if (!args.CanInteract || !args.CanAccess)
         {
-            if (!HasComp<GhostComponent>(args.User))
+            if (!HasComp<GhostComponent>(args.User)) //IMP: Ghosts can see damage
                 return;
         }
 
