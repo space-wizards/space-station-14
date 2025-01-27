@@ -1,6 +1,8 @@
 using Content.Server.Store.Components;
 using Content.Shared.Actions.Events;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Store.Components;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Store.Systems;
@@ -14,8 +16,9 @@ public sealed partial class StoreSystem
         SubscribeLocalEvent<StoreRefundComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
         SubscribeLocalEvent<StoreRefundComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
         SubscribeLocalEvent<StoreRefundComponent, ActionPerformedEvent>(OnActionPerformed);
-        // TODO: Use in hand event?
-        // TODO: MeleeHitEvent?
+        SubscribeLocalEvent<StoreRefundComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<StoreRefundComponent, AttemptShootEvent>(OnShootAttempt);
+        // TODO: Handle guardian refund disabling when guardians support refunds.
     }
 
     private void OnEntityRemoved(Entity<StoreRefundComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -30,6 +33,20 @@ public sealed partial class StoreSystem
 
     private void OnActionPerformed(Entity<StoreRefundComponent> ent, ref ActionPerformedEvent args)
     {
+        CheckDisableRefund(ent);
+    }
+
+    private void OnUseInHand(Entity<StoreRefundComponent> ent, ref UseInHandEvent args)
+    {
+        args.Handled = true;
+        CheckDisableRefund(ent);
+    }
+
+    private void OnShootAttempt(Entity<StoreRefundComponent> ent, ref AttemptShootEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
         CheckDisableRefund(ent);
     }
 
