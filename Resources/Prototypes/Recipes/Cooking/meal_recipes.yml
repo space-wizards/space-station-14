@@ -24,6 +24,14 @@
     FoodDoughRope: 1
     PoppySeeds: 1
 
+- type: microwaveMealRecipe
+  id: RecipeBagelCotton
+  name: cotton bagel recipe
+  result: FoodBagelCotton
+  time: 5
+  solids:
+    FoodDoughCottonRope: 1
+
 #Burgers
 
 - type: microwaveMealRecipe
@@ -457,6 +465,17 @@
     Blackpepper: 5
   solids:
     FoodDough: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBaguetteCotton
+  name: baguette recipe
+  result: FoodBreadBaguetteCotton
+  time: 15
+  reagents:
+    TableSalt: 5
+    Blackpepper: 5
+  solids:
+    FoodDoughCotton: 1
 
 - type: microwaveMealRecipe
   id: RecipeBaguetteSword
@@ -1221,6 +1240,41 @@
     FoodCarrot: 1
 
 - type: microwaveMealRecipe
+  id: RecipeNachos
+  name: nachos recipe
+  result: FoodMealNachos
+  time: 10
+  reagents:
+    TableSalt: 1
+  solids:
+    FoodDoughTortillaFlat: 1
+    FoodPlateSmall: 1
+
+- type: microwaveMealRecipe
+  id: RecipeNachosCheesy
+  name: cheesy nachos recipe
+  result: FoodMealNachosCheesy
+  time: 10
+  reagents:
+    TableSalt: 1
+  solids:
+    FoodCheeseSlice: 1
+    FoodDoughTortillaFlat: 1
+    FoodPlateSmall: 1
+
+- type: microwaveMealRecipe
+  id: RecipeNachosCuban
+  name: cuban nachos recipe
+  result: FoodMealNachosCuban
+  time: 10
+  reagents:
+    Ketchup: 5
+  solids:
+    FoodChiliPepper: 1
+    FoodDoughTortillaFlat: 1
+    FoodPlateSmall: 1
+
+- type: microwaveMealRecipe
   id: RecipePopcorn
   name: popcorn recipe
   result: FoodSnackPopcorn
@@ -1905,12 +1959,13 @@
     FoodBreadBaguetteSlice: 1
 
 - type: microwaveMealRecipe
-  id: RecipeCookedSpaceshroom
-  name: cooked spaceshroom recipe
-  result: FoodSpaceshroomCooked
+  id: RecipeFoodBakedChevreChaudCotton
+  name: cotton chevre chaud recipe
+  result: FoodBakedChevreChaudCotton
   time: 5
   solids:
-    FoodSpaceshroom: 1
+    FoodChevreSlice: 1
+    FoodBreadBaguetteCottonSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeCannabisButter
@@ -2038,6 +2093,15 @@
   time: 5
   solids:
     FoodCroissantRaw: 1
+    FoodButterSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCroissantCotton
+  name: cotton croissant recipe
+  result: FoodBakedCroissantCotton
+  time: 5
+  solids:
+    FoodCroissantRawCotton: 1
     FoodButterSlice: 1
 
 - type: microwaveMealRecipe
