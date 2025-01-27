@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: EpicToast
-  changes:
-  - message: 'Made a bunch of miscellaneous updates and fixes for Union Station:'
-    type: Fix
-  - message: Made some layout changes.
-    type: Tweak
-  - message: Filled the Research Director's locker.
-    type: Tweak
-  - message: Fixed the slot count for paramedics, atmospheric technicians, salvage
-      specialists, and others.
-    type: Tweak
-  - message: Added a command-only area to the tech vault.
-    type: Add
-  - message: Gave every department extra resources.
-    type: Add
-  - message: Gave chemistry, salvage, atmos and robotics some extra utilities they
-      were missing.
-    type: Add
-  - message: Gave the captain their captain's thoughts, spare ID and flask.
-    type: Add
-  - message: Added more decals.
-    type: Add
-  - message: Added the pleasure pig.
-    type: Add
-  - message: And much more.
-    type: Tweak
-  id: 511
-  time: '2024-11-14T22:40:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/706
 - author: DinnerCalzone
   changes:
   - message: (Hummingbird) Added a map beacon to the storage area in the shooting
@@ -4379,3 +4350,13 @@
   id: 1010
   time: '2025-01-27T01:56:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1496
+- author: kipdotnet
+  changes:
+  - message: Added the NT-strugglebug, a cheap, compact salvage shuttle. Buy from
+      the shipyard today!
+    type: Add
+  - message: Drastically lowered the cost of the Shipyard's bargain bin option.
+    type: Tweak
+  id: 1011
+  time: '2025-01-27T15:04:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1498
