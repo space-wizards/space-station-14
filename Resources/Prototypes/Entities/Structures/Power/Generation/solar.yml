@@ -50,6 +50,9 @@
     requirePower: true
     highVoltageNode: output
   - type: RequireProjectileTarget
+  - type: GuideHelp
+    guides:
+    - SolarPanels
 
 - type: entity
   id: SolarPanelPlasma
@@ -291,6 +294,9 @@
     node: solarassembly
     defaultTarget: solarpanel
   - type: RequireProjectileTarget
+  - type: GuideHelp
+    guides:
+    - SolarPanels
 
 - type: entity
   id: SolarTracker
@@ -336,3 +342,6 @@
     graph: SolarPanel
     node: solartracker
   - type: RequireProjectileTarget
+  - type: GuideHelp
+    guides:
+    - SolarPanels
