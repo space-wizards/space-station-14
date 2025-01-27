@@ -36,6 +36,8 @@
       collection: Weh
     Hew:
       collection: Hew
+    Rawr:
+      collection: Rawr
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
@@ -78,6 +80,8 @@
       collection: Weh
     Hew:
       collection: Hew
+    Rawr:
+      collection: Rawr
     Gasp:
       collection: FemaleGasp
     DefaultDeathgasp:
@@ -102,6 +106,8 @@
       collection: Weh
     Hew:
       collection: Hew
+    Rawr:
+      collection: Rawr
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
@@ -126,6 +132,8 @@
       collection: Weh
     Hew:
       collection: Hew
+    Rawr:
+      collection: Rawr
     Gasp:
       collection: FemaleGasp
     DefaultDeathgasp:
@@ -168,6 +176,8 @@
       collection: Weh
     Hew:
       collection: Hew
+    Rawr:
+      collection: Rawr
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
@@ -212,6 +222,8 @@
       collection: Weh
     Hew:
       collection: Hew
+    Rawr:
+      collection: Rawr
     Gasp:
       collection: FemaleGasp
     DefaultDeathgasp:
@@ -251,6 +263,8 @@
       collection: Weh
     Hew:
       collection: Hew
+    Rawr:
+      collection: Rawr
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
@@ -275,6 +289,8 @@
       collection: Weh
     Hew:
       collection: Hew
+    Rawr:
+      collection: Rawr
     Honk:
       collection: BikeHorn
     Gasp:
@@ -317,6 +333,8 @@
       collection: Weh
     Hew:
       collection: Hew
+    Rawr:
+      collection: Rawr
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
@@ -360,6 +378,8 @@
       collection: Weh
     Hew:
       collection: Hew
+    Rawr:
+      collection: Rawr
     Gasp:
       collection: FemaleGasp
     DefaultDeathgasp:
@@ -387,6 +407,8 @@
       collection: Weh
     Hew:
       collection: Hew
+    Rawr:
+      collection: Rawr
     Honk:
       collection: BikeHorn
     Gasp:

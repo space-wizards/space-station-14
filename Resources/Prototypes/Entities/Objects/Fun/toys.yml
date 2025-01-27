@@ -595,6 +595,20 @@
     tags:
       - PlushieSharkBlue
       - Payload
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: RawrJuiceBlue
+        Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+        - ReagentId: RawrJuiceBlue
+          Quantity: 10
 
 - type: entity
   parent: PlushieSharkBlue
@@ -611,6 +625,20 @@
     tags:
       - PlushieSharkPink
       - Payload
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: RawrJuicePink
+        Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+        - ReagentId: RawrJuicePink
+          Quantity: 10
 
 - type: entity
   parent: PlushieSharkBlue
@@ -627,6 +655,20 @@
     tags:
       - PlushieSharkGrey
       - Payload
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: RawrJuiceGrey
+        Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+        - ReagentId: RawrJuiceGrey
+          Quantity: 10
 
 - type: entity
   parent: BasePlushie

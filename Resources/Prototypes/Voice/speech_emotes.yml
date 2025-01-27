@@ -344,6 +344,13 @@
   chatMessages: ["chat-emote-msg-hew"]
 
 - type: emote
+  id: Rawr
+  name: chat-emote-name-rawr
+  category: Vocal
+  icon: Objects/Fun/sharkplush.rsi/grey.png
+  chatMessages: ["chat-emote-msg-rawr"]
+
+- type: emote
   id: Chirp
   name: chat-emote-name-chirp
   category: Vocal

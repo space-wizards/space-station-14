@@ -381,3 +381,72 @@
         conditions:
         - !type:ReagentThreshold
           min: 50
+
+- type: reagent
+  id: RawrJuiceBlue
+  name: reagent-name-rawr-blue
+  desc: reagent-desc-rawr-blue
+  physicalDesc: reagent-physical-desc-vibrant
+  color: "#467f90"
+  flavor: rawr
+  metabolisms:
+    Poison:
+      metabolismRate: 0.25
+      effects:
+      - !type:Emote
+        emote: Rawr
+        showInChat: true
+        force: true
+        probability: 0.25
+      - !type:AdjustSex
+        gender: Male
+        sex: Male
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+
+- type: reagent
+  id: RawrJuicePink
+  name: reagent-name-rawr-pink
+  desc: reagent-desc-rawr-pink
+  physicalDesc: reagent-physical-desc-vibrant
+  color: "#ff7f7f"
+  flavor: rawr
+  metabolisms:
+    Poison:
+      metabolismRate: 0.25
+      effects:
+      - !type:Emote
+        emote: Rawr
+        showInChat: true
+        force: true
+        probability: 0.25
+      - !type:AdjustSex
+        gender: Female
+        sex: Female
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+
+- type: reagent
+  id: RawrJuiceGrey
+  name: reagent-name-rawr-grey
+  desc: reagent-desc-rawr-grey
+  physicalDesc: reagent-physical-desc-vibrant
+  color: "#a0a0a0"
+  flavor: rawr
+  metabolisms:
+    Poison:
+      metabolismRate: 0.25
+      effects:
+      - !type:Emote
+        emote: Rawr
+        showInChat: true
+        force: true
+        probability: 0.25
+      - !type:AdjustSex
+        gender: Epicene
+        sex: Unsexed
+        conditions:
+        - !type:ReagentThreshold
+          min: 20

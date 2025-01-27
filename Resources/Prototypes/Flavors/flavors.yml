@@ -1280,6 +1280,11 @@
   description: flavor-hew
 
 - type: flavor
+  id: rawr
+  flavorType: Base
+  description: flavor-rawr
+
+- type: flavor
   id: fishops
   flavorType: Complex
   description: flavor-complex-fishops

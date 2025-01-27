@@ -30,3 +30,12 @@ reagent-desc-weh = Pure essence of lizard plush. Makes you Weh!
 
 reagent-name-hew = juice that makes you Hew
 reagent-desc-hew = Pure essence of inversed lizard plush. Makes you Hew!
+
+reagent-name-rawr-blue = blue rawr juice
+reagent-desc-rawr-blue = Pure essence of blue shark soft toy.
+
+reagent-name-rawr-pink = pink rawr juice
+reagent-desc-rawr-pink = Pure essence of pink shark soft toy.
+
+reagent-name-rawr-grey = grey rawr juice
+reagent-desc-rawr-grey = Pure essence of grey shark soft toy.

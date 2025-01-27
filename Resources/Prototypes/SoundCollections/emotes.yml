@@ -97,3 +97,8 @@
   id: Hew
   files:
   - /Audio/Items/Toys/hew.ogg
+
+- type: soundCollection
+  id: Rawr
+  files:
+  - /Audio/Items/Toys/rawr.ogg
