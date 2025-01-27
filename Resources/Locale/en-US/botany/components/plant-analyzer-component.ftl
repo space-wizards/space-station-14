@@ -64,33 +64,42 @@ plant-analyzer-potency-immeasurable = immeasurably large
 
 plant-analyzer-print = Print
 plant-analyzer-printout-missing = N/A
-plant-analyzer-printout-l0 = [color=#9FED58][head=2]Plant Analyzer Report[/head][/color]
-plant-analyzer-printout-l1 = ──────────────────────────────
-plant-analyzer-printout-l2 = [bullet/] Species: {$seedName}
-plant-analyzer-printout-l3 = {$indent}[bullet/] Viable: {$viable ->
-    [no][color=red]No[/color]
-    [yes][color=green]Yes[/color]
-    *[other]{LOC("plant-analyzer-printout-missing")}
-}
-plant-analyzer-printout-l4 = {$indent}[bullet/] Endurance: {$endurance}
-plant-analyzer-printout-l5 = {$indent}[bullet/] Lifespan: {$lifespan}
-plant-analyzer-printout-l6 = {$indent}[bullet/] Product: [color=#a4885c]{$produce}[/color]
-plant-analyzer-printout-l7 = [bullet/] Growth profile:
-plant-analyzer-printout-l8 = {$indent}[bullet/] Water: [color=cyan]{$water}[/color]
-plant-analyzer-printout-l9 = {$indent}[bullet/] Nutrition: [color=orange]{$nutrients}[/color]
-plant-analyzer-printout-l10 = {$indent}[bullet/] Toxins: [color=yellowgreen]{$toxins}[/color]
-plant-analyzer-printout-l11 = {$indent}[bullet/] Pests: [color=magenta]{$pests}[/color]
-plant-analyzer-printout-l12 = {$indent}[bullet/] Weeds: [color=red]{$weeds}[/color]
-plant-analyzer-printout-l13 = [bullet/] Environmental profile:
-plant-analyzer-printout-l14 = {$indent}[bullet/] Composition: [bold]{$gasesIn}[/bold]
-plant-analyzer-printout-l15 = {$indent}[bullet/] Pressure: [color=lightblue]{$kpa}kPa ± {$kpaTolerance}kPa[/color]
-plant-analyzer-printout-l16 = {$indent}[bullet/] Temperature: [color=lightsalmon]{$temp}°k ± {$tempTolerance}°k[/color]
-plant-analyzer-printout-l17 = {$indent}[bullet/] Light: [color=gray][bold]{$lightLevel} ± {$lightTolerance}[/bold][/color]
-plant-analyzer-printout-l18 = [bullet/] Flowers: [color=lightgreen]{$n} {$potency}[/color]
-plant-analyzer-printout-l19 = [bullet/] Seeds: {$seeds ->
-    [no][color=red]No[/color]
-    [yes][color=green]Yes[/color]
-    *[other]{LOC("plant-analyzer-printout-missing")}
-}
-plant-analyzer-printout-l20 = [bullet/] Chemicals: [color=gray][bold]{$chemicals}[/bold][/color]
-plant-analyzer-printout-l21 = [bullet/] Emissions: [bold]{$gasesOut}[/bold]
+plant-analyzer-printout = [color=#9FED58][head=2]Plant Analyzer Report[/head][/color]{$nl
+    }──────────────────────────────{$nl
+    }[bullet/] Species: {$seedName}{$nl
+    }{$indent}[bullet/] Viable: {$viable ->
+        [no][color=red]No[/color]
+        [yes][color=green]Yes[/color]
+        *[other]{LOC("plant-analyzer-printout-missing")}
+    }{$nl
+    }{$indent}[bullet/] Endurance: {$endurance}{$nl
+    }{$indent}[bullet/] Lifespan: {$lifespan}{$nl
+    }{$indent}[bullet/] Product: [color=#a4885c]{$produce}[/color]{$nl
+    }{$indent}[bullet/] Kudzu: {$kudzu ->
+        [no][color=green]No[/color]
+        [yes][color=red]Yes[/color]
+        *[other]{LOC("plant-analyzer-printout-missing")}
+    }{$nl
+    }[bullet/] Growth profile:{$nl
+    }{$indent}[bullet/] Water: [color=cyan]{$water}[/color]{$nl
+    }{$indent}[bullet/] Nutrition: [color=orange]{$nutrients}[/color]{$nl
+    }{$indent}[bullet/] Toxins: [color=yellowgreen]{$toxins}[/color]{$nl
+    }{$indent}[bullet/] Pests: [color=magenta]{$pests}[/color]{$nl
+    }{$indent}[bullet/] Weeds: [color=red]{$weeds}[/color]{$nl
+    }[bullet/] Environmental profile:{$nl
+    }{$indent}[bullet/] Composition: [bold]{$gasesIn}[/bold]{$nl
+    }{$indent}[bullet/] Pressure: [color=lightblue]{$kpa}kPa ± {$kpaTolerance}kPa[/color]{$nl
+    }{$indent}[bullet/] Temperature: [color=lightsalmon]{$temp}°k ± {$tempTolerance}°k[/color]{$nl
+    }{$indent}[bullet/] Light: [color=gray][bold]{$lightLevel} ± {$lightTolerance}[/bold][/color]{$nl
+    }[bullet/] Flowers: {$yield ->
+        [-1]{LOC("plant-analyzer-printout-missing")}
+        [0][color=red]0[/color]
+        *[other][color=lightgreen]{$yield} {$potency}[/color]
+    }{$nl
+    }[bullet/] Seeds: {$seeds ->
+        [no][color=red]No[/color]
+        [yes][color=green]Yes[/color]
+        *[other]{LOC("plant-analyzer-printout-missing")}
+    }{$nl
+    }[bullet/] Chemicals: [color=gray][bold]{$chemicals}[/bold][/color]{$nl
+    }[bullet/] Emissions: [bold]{$gasesOut}[/bold]
