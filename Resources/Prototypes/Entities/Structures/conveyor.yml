@@ -13,7 +13,7 @@
     anchored: true
   - type: Sprite
     sprite: Structures/conveyor.rsi
-    state: conveyor_started_cw
+    state: conveyor_stopped_cw
     drawdepth: FloorObjects
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
