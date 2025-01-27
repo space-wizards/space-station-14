@@ -30,7 +30,6 @@ public sealed class FireAlarmSystem : EntitySystem
     {
         SubscribeLocalEvent<FireAlarmComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<FireAlarmComponent, DeviceListUpdateEvent>(OnDeviceListSync);
-        SubscribeLocalEvent<FireAlarmComponent, OnAttemptEmagEvent>(OnAttemptEmag);
         SubscribeLocalEvent<FireAlarmComponent, GotEmaggedEvent>(OnEmagged);
     }
 
@@ -77,25 +76,20 @@ public sealed class FireAlarmSystem : EntitySystem
         }
     }
 
-    private void OnAttemptEmag(EntityUid uid, FireAlarmComponent component, ref OnAttemptEmagEvent args)
-    {
-        if (args.Type != EmagType.Interaction)
-        {
-            args.Handled = true;
-            return;
-        }
-
-        if (_emag.CheckFlag(uid, EmagType.Interaction))
-            args.Handled = true;
-    }
-
     private void OnEmagged(EntityUid uid, FireAlarmComponent component, ref GotEmaggedEvent args)
     {
-        if (TryComp<AtmosAlarmableComponent>(uid, out var alarmable))
-        {
-            // Remove the atmos alarmable component permanently from this device.
-            _atmosAlarmable.ForceAlert(uid, AtmosAlarmType.Emagged, alarmable);
-            RemCompDeferred<AtmosAlarmableComponent>(uid);
-        }
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            return;
+
+        if (!TryComp<AtmosAlarmableComponent>(uid, out var alarmable))
+            return;
+
+        // Remove the atmos alarmable component permanently from this device.
+        _atmosAlarmable.ForceAlert(uid, AtmosAlarmType.Emagged, alarmable);
+        RemCompDeferred<AtmosAlarmableComponent>(uid);
+        args.Handled = true;
     }
 }
