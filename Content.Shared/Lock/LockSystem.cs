@@ -44,7 +44,6 @@ public sealed class LockSystem : EntitySystem
         SubscribeLocalEvent<LockComponent, StorageOpenAttemptEvent>(OnStorageOpenAttempt);
         SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<LockComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleLockVerb);
-        SubscribeLocalEvent<LockComponent, OnAttemptEmagEvent>(OnAttemptEmag);
         SubscribeLocalEvent<LockComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<LockComponent, LockDoAfter>(OnDoAfterLock);
         SubscribeLocalEvent<LockComponent, UnlockDoAfter>(OnDoAfterUnlock);
@@ -295,20 +294,14 @@ public sealed class LockSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void OnAttemptEmag(EntityUid uid, LockComponent reader, ref OnAttemptEmagEvent args)
-    {
-        if (args.Type != EmagType.Access)
-        {
-            args.Handled = true;
-            return;
-        }
-
-        if (!reader.Locked || !reader.BreakOnAccessBreaker)
-            args.Handled = true;
-    }
-
     private void OnEmagged(EntityUid uid, LockComponent component, ref GotEmaggedEvent args)
     {
+        if (!_emag.CompareFlag(args.Type, EmagType.Access))
+            return;
+
+        if (!component.Locked || !component.BreakOnAccessBreaker)
+            return;
+
         _audio.PlayPredicted(component.UnlockSound, uid, args.UserUid);
 
         component.Locked = false;
@@ -318,6 +311,7 @@ public sealed class LockSystem : EntitySystem
         var ev = new LockToggledEvent(false);
         RaiseLocalEvent(uid, ref ev, true);
 
+        args.Repeatable = true;
         args.Handled = true;
     }
 

@@ -33,7 +33,6 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AccessReaderComponent, OnAttemptEmagEvent>(OnAttemptEmag);
         SubscribeLocalEvent<AccessReaderComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<AccessReaderComponent, LinkAttemptEvent>(OnLinkAttempt);
 
@@ -72,35 +71,25 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         if (args.User == null) // AutoLink (and presumably future external linkers) have no user.
             return;
-        if (!_emag.CheckFlag(uid, EmagType.Access) && !IsAllowed(args.User.Value, uid, component))
+        if (!IsAllowed(args.User.Value, uid, component))
             args.Cancel();
-    }
-
-    private void OnAttemptEmag(EntityUid uid, AccessReaderComponent reader, ref OnAttemptEmagEvent args)
-    {
-        if (args.Type != EmagType.Access)
-        {
-            args.Handled = true;
-            return;
-        }
-
-        if (!reader.BreakOnAccessBreaker)
-        {
-            args.Handled = true;
-            return;
-        }
-
-        if (!GetMainAccessReader(uid, out var accessReader))
-        {
-            args.Handled = true;
-        }
     }
 
     private void OnEmagged(EntityUid uid, AccessReaderComponent reader, ref GotEmaggedEvent args)
     {
+        if (!_emag.CompareFlag(args.Type, EmagType.Access))
+            return;
+
+        if (!reader.BreakOnAccessBreaker)
+            return;
+
         if (!GetMainAccessReader(uid, out var accessReader))
             return;
 
+        if (accessReader.Value.Comp.AccessLists.Count < 1)
+            return;
+
+        args.Repeatable = true;
         args.Handled = true;
         accessReader.Value.Comp.AccessLists.Clear();
         accessReader.Value.Comp.AccessLog.Clear();

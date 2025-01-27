@@ -35,7 +35,7 @@ public sealed class EmagSystem : EntitySystem
 
     private void OnAccessOverriderAccessUpdated(Entity<EmaggedComponent> entity, ref OnAccessOverriderAccessUpdatedEvent args)
     {
-        if ((entity.Comp.EmagType & EmagType.Access) == 0)
+        if (!CompareFlag(entity.Comp.EmagType, EmagType.Access))
             return;
 
         entity.Comp.EmagType &= ~EmagType.Access;
@@ -46,13 +46,13 @@ public sealed class EmagSystem : EntitySystem
         if (!args.CanReach || args.Target is not { } target)
             return;
 
-        args.Handled = TryUseEmag(uid, args.User, target, comp);
+        args.Handled = TryEmagEffect(uid, args.User, target, comp);
     }
 
     /// <summary>
-    /// Tries to use the emag on a target entity
+    /// Does the emag effect on a specified entity
     /// </summary>
-    public bool TryUseEmag(EntityUid uid, EntityUid user, EntityUid target, EmagComponent? comp = null)
+    public bool TryEmagEffect(EntityUid uid, EntityUid user, EntityUid target, EmagComponent? comp = null)
     {
         if (!Resolve(uid, ref comp, false))
             return false;
@@ -67,42 +67,26 @@ public sealed class EmagSystem : EntitySystem
             return false;
         }
 
-        var handled = DoEmagEffect(user, target, comp.EmagType);
-        if (!handled)
+        var emaggedEvent = new GotEmaggedEvent(user, comp.EmagType);
+        RaiseLocalEvent(target, ref emaggedEvent);
+
+        if (!emaggedEvent.Handled)
             return false;
 
-        _popup.PopupPredicted(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user,
-            user, PopupType.Medium);
+        _popup.PopupPredicted(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user, user, PopupType.Medium);
 
         _audio.PlayPredicted(comp.EmagSound, uid, uid);
 
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} emagged {ToPrettyString(target):target} with flag(s): {comp.EmagType}");
 
-        if (charges != null)
+        if (charges != null  && emaggedEvent.Handled)
             _charges.UseCharge(uid, charges);
-        return true;
-    }
 
-    /// <summary>
-    /// Does the emag effect on a specified entity
-    /// </summary>
-    public bool DoEmagEffect(EntityUid user, EntityUid target, EmagType type = EmagType.Interaction)
-    {
-        var onAttemptEmagEvent = new OnAttemptEmagEvent(user, type);
-        RaiseLocalEvent(target, ref onAttemptEmagEvent);
-
-        // prevent emagging if attempt fails
-        if (onAttemptEmagEvent.Handled)
-            return false;
-
-        var emaggedEvent = new GotEmaggedEvent(user, type);
-        RaiseLocalEvent(target, ref emaggedEvent);
-
-        if (emaggedEvent.Handled && !emaggedEvent.Repeatable)
+        if (!emaggedEvent.Repeatable)
         {
-            EnsureComp<EmaggedComponent>(target, out var comp);
+            EnsureComp<EmaggedComponent>(target, out var emaggedComp);
 
-            comp.EmagType |= type;
+            emaggedComp.EmagType |= comp.EmagType;
             Dirty(target, comp);
         }
 
@@ -115,6 +99,14 @@ public sealed class EmagSystem : EntitySystem
             return false;
 
         if ((comp.EmagType & flag) == flag)
+            return true;
+
+        return false;
+    }
+
+    public bool CompareFlag(EmagType target, EmagType flag)
+    {
+        if ((target & flag) == flag)
             return true;
 
         return false;

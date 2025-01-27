@@ -47,8 +47,10 @@ public sealed class EmagProviderSystem : EntitySystem
         if (_tag.HasTag(target, comp.AccessBreakerImmuneTag))
             return;
 
-        var handled = _emag.DoEmagEffect(uid, target, ent.Comp.EmagType);
-        if (!handled)
+        var emagEv = new GotEmaggedEvent(uid, EmagType.Access);
+        RaiseLocalEvent(args.Target, ref emagEv);
+
+        if (!emagEv.Handled)
             return;
 
         _audio.PlayPredicted(comp.EmagSound, uid, uid);
