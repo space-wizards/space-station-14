@@ -146,6 +146,7 @@
     - SlimePerson
   - type: SurgeryPartCondition
     parts: 
+    - Head
     - Arm
     - Hand
     - Leg
