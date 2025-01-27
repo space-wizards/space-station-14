@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "From https://github.com/BeeStation/BeeStation-Hornet/blob/master/icons/turf/turf_damage.dmi at f2d6fbdf36aa0951049498cf28e028a38e32fe0b",
+    "states": [
+        {
+            "name": "burnt1"
+
+        },
+        {
+            "name": "burnt2"
+
+        },
+        {
+            "name": "burnt3"
+
+        },
+        {
+            "name": "burnt4"
+
+        }
+    ]
+}

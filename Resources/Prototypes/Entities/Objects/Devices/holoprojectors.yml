@@ -121,6 +121,7 @@
     - type: Tag
       tags:
         - HolofanProjector
+        - SecBeltEquip
     - type: StaticPrice
       price: 50
 

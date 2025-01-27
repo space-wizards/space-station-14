@@ -82,6 +82,9 @@ public sealed partial class BorgSystem
         if (!component.ModuleContainer.Contains(module))
             return;
 
+        if (!CanRemoveModule((uid, component), (module, Comp<BorgModuleComponent>(module)), args.Actor))
+            return;
+
         _adminLog.Add(LogType.Action, LogImpact.Medium,
             $"{ToPrettyString(args.Actor):player} removed module {ToPrettyString(module)} from borg {ToPrettyString(uid)}");
         _container.Remove(module, component.ModuleContainer);

@@ -12,7 +12,7 @@
   - type: Transform
     anchored: true
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: SubFloorHide
   - type: CollideOnAnchor
@@ -54,6 +54,7 @@
   - type: PipeRestrictOverlap
   - type: AtmosUnsafeUnanchor
   - type: AtmosPipeColor
+  - type: AtmosMonitoringConsoleDevice
   - type: Tag
     tags:
     - Pipe

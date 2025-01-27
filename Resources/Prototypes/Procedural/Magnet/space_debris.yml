@@ -5,7 +5,7 @@
     - !type:NoiseDunGen
       tileCap: 500
       capStd: 32
-      iterations: 5
+      iterations: 7
       layers:
       - tile: FloorSteel
         threshold: 0.50
