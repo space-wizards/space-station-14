@@ -894,7 +894,7 @@
 
 - type: entity
   id: MedicalTechFab
-  parent: [ BaseLatheLube, BaseMedicalContraband ] # imp
+  parent: [ BaseLatheLube, BaseMedicalContraband ]
   name: medical techfab
   description: Prints equipment for use by the medbay.
   components:
