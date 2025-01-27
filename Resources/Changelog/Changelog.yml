@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Plykiya
   changes:
-  - message: You can now use swords to make baseball bats.
-    type: Fix
-  id: 7354
-  time: '2024-09-11T14:45:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32075
-- author: Plykiya
-  changes:
   - message: Banners are no longer invincible.
     type: Fix
   id: 7355
@@ -3886,3 +3879,10 @@
   id: 7853
   time: '2025-01-27T07:40:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32655
+- author: Helm
+  changes:
+  - message: Fixed an overly roomy matchbox!
+    type: Fix
+  id: 7854
+  time: '2025-01-27T08:30:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34632
