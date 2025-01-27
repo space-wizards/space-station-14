@@ -10,6 +10,7 @@
   - Cargo
   - Courier
   - Maintenance
+  extendedAccess:
   - Logistics
 
 - type: startingGear
