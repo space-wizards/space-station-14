@@ -49,44 +49,43 @@ public partial class EyeCursorOffsetSystem : EntitySystem
 
         var mouseNormalizedPos = new Vector2(-(mousePos.X - screenSize.X / 2) / minValue, (mousePos.Y - screenSize.Y / 2) / minValue); // X needs to be inverted here for some reason, otherwise it ends up flipped.
 
-        if (localPlayer != null)
+        if (localPlayer == null)
+            return null;
+
+        var playerPos = _transform.GetWorldPosition(localPlayer.Value);
+
+        if (component == null)
         {
-            var playerPos = _transform.GetWorldPosition(localPlayer.Value);
-
-            if (component == null)
-            {
-                component = EnsureComp<EyeCursorOffsetComponent>(uid);
-            }
-
-            // Doesn't move the offset if the mouse has left the game window!
-            if (mousePos.Window != WindowId.Invalid)
-            {
-                // The offset must account for the in-world rotation.
-                var eyeRotation = _eyeManager.CurrentEye.Rotation;
-                var mouseActualRelativePos = Vector2.Transform(mouseNormalizedPos, System.Numerics.Quaternion.CreateFromAxisAngle(-System.Numerics.Vector3.UnitZ, (float)(eyeRotation.Opposite().Theta))); // I don't know, it just works.
-
-                // Caps the offset into a circle around the player.
-                mouseActualRelativePos *= component.MaxOffset;
-                if (mouseActualRelativePos.Length() > component.MaxOffset)
-                {
-                    mouseActualRelativePos = mouseActualRelativePos.Normalized() * component.MaxOffset;
-                }
-
-                component.TargetPosition = mouseActualRelativePos;
-
-                //Makes the view not jump immediately when moving the cursor fast.
-                if (component.CurrentPosition != component.TargetPosition)
-                {
-                    Vector2 vectorOffset = component.TargetPosition - component.CurrentPosition;
-                    if (vectorOffset.Length() > component.OffsetSpeed)
-                    {
-                        vectorOffset = vectorOffset.Normalized() * component.OffsetSpeed;
-                    }
-                    component.CurrentPosition += vectorOffset;
-                }
-            }
-            return component.CurrentPosition;
+            component = EnsureComp<EyeCursorOffsetComponent>(uid);
         }
-        return null;
+
+        // Doesn't move the offset if the mouse has left the game window!
+        if (mousePos.Window != WindowId.Invalid)
+        {
+            // The offset must account for the in-world rotation.
+            var eyeRotation = _eyeManager.CurrentEye.Rotation;
+            var mouseActualRelativePos = Vector2.Transform(mouseNormalizedPos, System.Numerics.Quaternion.CreateFromAxisAngle(-System.Numerics.Vector3.UnitZ, (float)(eyeRotation.Opposite().Theta))); // I don't know, it just works.
+
+            // Caps the offset into a circle around the player.
+            mouseActualRelativePos *= component.MaxOffset;
+            if (mouseActualRelativePos.Length() > component.MaxOffset)
+            {
+                mouseActualRelativePos = mouseActualRelativePos.Normalized() * component.MaxOffset;
+            }
+
+            component.TargetPosition = mouseActualRelativePos;
+
+            //Makes the view not jump immediately when moving the cursor fast.
+            if (component.CurrentPosition != component.TargetPosition)
+            {
+                Vector2 vectorOffset = component.TargetPosition - component.CurrentPosition;
+                if (vectorOffset.Length() > component.OffsetSpeed)
+                {
+                    vectorOffset = vectorOffset.Normalized() * component.OffsetSpeed;
+                }
+                component.CurrentPosition += vectorOffset;
+            }
+        }
+        return component.CurrentPosition;
     }
 }
