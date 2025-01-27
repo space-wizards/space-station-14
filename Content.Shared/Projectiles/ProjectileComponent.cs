@@ -82,13 +82,13 @@ public sealed partial class ProjectileComponent : Component
     public bool DamagedEntity;
 
     /// <summary>
-    ///     When a projectile has this threshold set, it will continue to penetrate entities until it reaches this threshold.
+    ///     When a projectile has this threshold set, it will continue to penetrate entities until the damage dealt reaches this threshold.
     /// </summary>
     [DataField]
     public FixedPoint2 PenetrationThreshold = FixedPoint2.Zero;
 
     /// <summary>
-    ///     If set, the projectile will not penetrate objects that lack the ability to take these damage types. 
+    ///     If set, the projectile will not penetrate objects that lack the ability to take these damage types.
     /// </summary>
     [DataField]
     public List<string> PenetrationDamageTypeRequirement = new List<string>();

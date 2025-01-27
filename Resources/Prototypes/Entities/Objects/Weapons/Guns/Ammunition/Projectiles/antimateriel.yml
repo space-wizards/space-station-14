@@ -8,7 +8,7 @@
     damage:
       types:
         Piercing: 75
-        Structural: 150
+        Structural: 226
     penetrationThreshold: 360
     penetrationDamageTypeRequirement:
     - Structural
