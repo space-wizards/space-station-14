@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Coins and Supercharged CPUs can now be recycled for rarer materials.
-    type: Tweak
-  id: 7357
-  time: '2024-09-11T16:24:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31970
 - author: lzk228
   changes:
   - message: Fixed forensic pad didn't care about target identity.
@@ -3887,3 +3880,10 @@
   id: 7856
   time: '2025-01-27T10:34:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34538
+- author: metalgearsloth
+  changes:
+  - message: Puddles will now draw below floor objects like vents.
+    type: Fix
+  id: 7857
+  time: '2025-01-27T12:44:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32369
