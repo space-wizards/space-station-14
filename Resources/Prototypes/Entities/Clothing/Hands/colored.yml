@@ -292,6 +292,54 @@
   - type: Fiber
     fiberColor: fibers-white
 
+# Web Gloves
+- type: entity
+  parent: ClothingHandsGlovesSyntheticBase
+  id: ClothingHandsGlovesColorWeb
+  name: web gloves
+  description: Gloves made out of spider silk. Still won't keep you from frying.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
+    layers:
+    - state: WEB-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#ebebeb"
+      right:
+      - state: inhand-right
+        color: "#ebebeb"
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
+    clothingVisuals:
+      gloves:
+      - state: equipped-HAND
+        color: "#ebebeb"
+  - type: Fiber
+    fiberColor: fibers-web
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 2
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: SolutionContainerManager
+    solutions: # 6 (3 (fiber count of web) * 2 (to craft)) + 6 (magical crafting bonus)
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 12
+  - type: Construction
+    graph: WebObjects
+    node: gloves
+
 # Black Gloves
 # TECHNICALLY, if you ported the worn state to the RSI, this could be greyscaled, but I do not really feel like doing that.
 - type: entity

@@ -625,6 +625,8 @@
   packetPrototype: KillerTomatoSeeds
   productPrototypes:
     - MobTomatoKiller
+  mutationPrototypes:
+    - kisserTomato
   harvestRepeat: Repeat
   lifespan: 25
   maturation: 15
@@ -942,6 +944,36 @@
   packetPrototype: CannabisSeeds
   productPrototypes:
     - LeavesCannabis
+    - MaterialHemp1
+  mutationPrototypes:
+    - rainbowCannabis
+    - greenMarijuana
+  harvestRepeat: Repeat
+  lifespan: 75
+  maturation: 8
+  production: 12
+  yield: 2
+  potency: 20
+  growthStages: 3
+  waterConsumption: 0.40
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    THC:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: greenMarijuana
+  name: seeds-green-marijuana-name
+  noun: seeds-noun-seeds
+  displayName: seeds-green-marijuana-display-name
+  plantRsi: Objects/Specific/Hydroponics/cannabis.rsi
+  packetPrototype: GreenMarijuanaSeeds
+  productPrototypes:
+    - LeavesGreenMarijuana
+    - MaterialHemp1
   mutationPrototypes:
     - rainbowCannabis
   harvestRepeat: Repeat
@@ -969,6 +1001,7 @@
   packetPrototype: RainbowCannabisSeeds
   productPrototypes:
     - LeavesCannabisRainbow
+    - MaterialHemp1
   harvestRepeat: Repeat
   lifespan: 75
   maturation: 8
@@ -1989,3 +2022,60 @@
       Min: 1
       Max: 2
       PotencyDivisor: 40
+
+- type: seed
+  id: lemo
+  name: seeds-lemo-name
+  noun: seeds-noun-seeds
+  displayName: seeds-lemo-display-name
+  plantRsi: Objects/Specific/Hydroponics/lemo.rsi
+  packetPrototype: LemoSeeds
+  productPrototypes:
+    - FoodLemo
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: kisserTomato
+  name: seeds-kissertomato-name
+  noun: seeds-noun-seeds
+  displayName: seeds-kissertomato-display-name
+  plantRsi: Objects/Specific/Hydroponics/tomatokisser.rsi
+  packetPrototype: KisserTomatoSeeds
+  productPrototypes:
+    - MobTomatoKisser
+  harvestRepeat: Repeat
+  lifespan: 25
+  maturation: 15
+  production: 6
+  yield: 2
+  potency: 10
+  waterConsumption: 0.60
+  nutrientConsumption: 0.70
+  idealLight: 8
+  idealHeat: 298
+  growthStages: 2
+  splatPrototype: PuddleSplatter
+  chemicals:
+    Blood:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    JuiceTomato:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25

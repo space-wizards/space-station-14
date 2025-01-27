@@ -1,0 +1,173 @@
+#Candy!!!!
+
+- type: entity
+  name: giant lollipop
+  parent: FoodMealBase
+  id: FoodMealBigLollipop
+  description: Wow!!! It's as big as your head!!!
+  components:
+  - type: Tag
+    tags:
+    - FoodSnack
+  - type: Food
+    trash:
+    - FoodKebabSkewer
+  - type: FlavorProfile
+    flavors:
+      - whimsy
+      - sugar
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/meals.rsi
+    state: big-lollipop
+  - type: Item
+    heldPrefix: big-lollipop
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 10
+
+- type: entity
+  name: cloth lollipop
+  parent: FoodMealBigLollipop
+  id: FoodMealClothLollipop
+  description: Woven with love.
+  components:
+  - type: Tag
+    tags:
+    - FoodSnack
+    - ClothMade
+  - type: Food
+    requiresSpecialDigestion: true
+    trash:
+    - FoodKebabSkewer
+  - type: FlavorProfile
+    flavors:
+      - whimsy
+      - sugar
+      - cotton
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/meals.rsi
+    state: cloth-lollipop
+  - type: Item
+    heldPrefix: cloth-lollipop
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 10
+        - ReagentId: Fiber
+          Quantity: 10
+
+- type: entity
+  name: fruit lollipop
+  parent: FoodMealBigLollipop
+  id: FoodMealFruitLollipop
+  description: Didn't this come out of a microwave? How did the chef even do this?
+  components:
+  - type: Tag
+    tags:
+    - FoodSnack
+    - Fruit
+  - type: Food
+    trash:
+    - FoodKebabSkewer
+  - type: FlavorProfile
+    flavors:
+      - whimsy
+      - fruity
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/meals.rsi
+    state: fruit-lollipop
+  - type: Item
+    heldPrefix: fruit-lollipop
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 5
+        - ReagentId: JuiceOrange
+          Quantity: 5
+        - ReagentId: JuiceApple
+          Quantity: 5
+        - ReagentId: JuiceWatermelon
+          Quantity: 5
+
+- type: entity
+  name: meat lollipop
+  parent: FoodMealBigLollipop
+  id: FoodMealMeatLollipop
+  description: It's still dripping...
+  components:
+  - type: Tag
+    tags:
+    - Meat
+    - FoodSnack
+  - type: Food
+    trash:
+    - FoodKebabSkewer
+  - type: FlavorProfile
+    flavors:
+      - whimsy
+      - meaty
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/meals.rsi
+    state: meat-lollipop
+  - type: Item
+    heldPrefix: meat-lollipop
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 10
+        - ReagentId: Blood
+          Quantity: 5
+
+- type: entity
+  name: entro-pop
+  parent: FoodMealBigLollipop
+  id: FoodMealCultLollipop #no recipe yet but it is a rare spawn from meal spawners
+  description: It seems to flicker in and out of view, your eyes never truly focusing on it. It's cosmically delicious!
+  components:
+  - type: Tag
+    tags:
+    - FoodSnack
+  - type: Food
+    trash:
+    - FoodKebabSkewer
+  - type: FlavorProfile
+    flavors:
+      - whimsy
+      - strange
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/meals.rsi
+    state: entro-lollipop
+  - type: Item
+    heldPrefix: entro-lollipop
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 10
+        - ReagentId: Fresium
+          Quantity: 10

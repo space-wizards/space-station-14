@@ -1,0 +1,24 @@
+# Goob content merge to bring it into line with the new system - impstation addition
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleChangeling
+  name: Changeling Role
+#  description: mind-role-changeling-description
+  components:
+  - type: MindRole
+    antagPrototype: Changeling
+    exclusiveAntag: true
+    primaryCurrency: EvolutionPoint #imp edit
+  - type: ChangelingRole
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleHeretic
+  name: Heretic Role
+#  description: mind-role-changeling-description
+  components:
+  - type: MindRole
+    antagPrototype: Heretic
+    exclusiveAntag: true
+    primaryCurrency: KnowledgePoint #imp edit
+  - type: HereticRole

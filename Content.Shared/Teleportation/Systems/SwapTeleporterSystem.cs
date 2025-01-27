@@ -1,13 +1,17 @@
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
@@ -26,6 +30,9 @@ public sealed class SwapTeleporterSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly PullingSystem _pulling = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -150,14 +157,20 @@ public sealed class SwapTeleporterSystem : EntitySystem
             return;
         }
 
+        // can't predict if either entity doesn't exist on the client / is outside of PVS
+        if (_netMan.IsClient)
+        {
+            if (!Exists(uid) || Transform(uid).MapID == MapId.Nullspace || !Exists(linkedEnt) || Transform(linkedEnt).MapID == MapId.Nullspace)
+                return;
+        }
+
         var teleEnt = GetTeleportingEntity((uid, xform));
         var otherTeleEnt = GetTeleportingEntity((linkedEnt, Transform(linkedEnt)));
 
         _container.TryGetOuterContainer(teleEnt, Transform(teleEnt), out var cont);
         _container.TryGetOuterContainer(otherTeleEnt, Transform(otherTeleEnt), out var otherCont);
 
-        if (otherCont != null && !_container.CanInsert(teleEnt, otherCont) ||
-            cont != null && !_container.CanInsert(otherTeleEnt, cont))
+        if (!CanTeleport(teleEnt,otherTeleEnt)) // Logic moved upon request
         {
             _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-teleport-fail",
                 ("entity", Identity.Entity(linkedEnt, EntityManager))),
@@ -172,7 +185,54 @@ public sealed class SwapTeleporterSystem : EntitySystem
             teleEnt,
             otherTeleEnt,
             PopupType.MediumCaution);
+
+        // break pulls before teleport so we dont break shit
+        // Ideally this situation would be well-handled by the physics engine, but until it is this needs to handle it
+        // https://github.com/space-wizards/space-station-14/issues/31214
+        if (TryComp<PullableComponent>(teleEnt, out var pullable) && pullable.BeingPulled)
+        {
+            _pulling.TryStopPull(teleEnt, pullable);
+        }
+
+        if (TryComp<PullerComponent>(teleEnt, out var pullerComp)
+            && TryComp<PullableComponent>(pullerComp.Pulling, out var subjectPulling))
+        {
+            _pulling.TryStopPull(pullerComp.Pulling.Value, subjectPulling);
+        }
+        // both sides
+        if (TryComp<PullableComponent>(otherTeleEnt, out var otherPullable) && otherPullable.BeingPulled)
+        {
+            _pulling.TryStopPull(otherTeleEnt, otherPullable);
+        }
+
+        if (TryComp<PullerComponent>(otherTeleEnt, out var otherPullerComp)
+            && TryComp<PullableComponent>(otherPullerComp.Pulling, out var otherSubjectPulling))
+        {
+            _pulling.TryStopPull(otherPullerComp.Pulling.Value, otherSubjectPulling);
+        }
+
         _transform.SwapPositions(teleEnt, otherTeleEnt);
+    }
+
+    public bool CanTeleport(EntityUid teleEnt, EntityUid otherTeleEnt)
+    {
+        _container.TryGetOuterContainer(teleEnt, Transform(teleEnt), out var cont);
+        _container.TryGetOuterContainer(otherTeleEnt, Transform(otherTeleEnt), out var otherCont);
+
+        // Checks if the objects can actually be swapped with respect to containers
+
+        bool containerBlocked = otherCont != null && !_container.CanInsert(teleEnt, otherCont) ||
+            cont != null && !_container.CanInsert(otherTeleEnt, cont);
+
+        // Prevents teleporting to the polymorph zone or the cryosleep zone.
+
+        bool pausedMap = _map.IsPaused(Transform(teleEnt).MapID) || _map.IsPaused(Transform(otherTeleEnt).MapID);
+
+        // Room for more logic in case more situations come up in the future
+
+        // Bring it all together
+
+        return !(containerBlocked || pausedMap);
     }
 
     /// <remarks>

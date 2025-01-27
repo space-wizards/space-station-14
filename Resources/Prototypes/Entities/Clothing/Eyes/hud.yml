@@ -5,6 +5,7 @@
   components:
   - type: ShowJobIcons
   - type: ShowMindShieldIcons
+  - type: ShowFakeMindShieldIcons
   - type: ShowCriminalRecordIcons
 
 - type: entity
@@ -13,14 +14,10 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: ShowHealthBars
-    damageContainers:
-    - Biological
   - type: ShowHealthIcons
-    damageContainers:
-    - Biological
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot]
+  parent: [ClothingEyesBase, BaseLensSlot] # BaseLensSlot from imp
   id: ClothingEyesHudDiagnostic
   name: diagnostic hud
   description: A heads-up display capable of analyzing the integrity and status of robotics and exosuits. Made out of see-borg-ium.
@@ -35,7 +32,7 @@
     - Silicon
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot, ShowMedicalIcons]
+  parent: [ClothingEyesBase, BaseLensSlot, ShowMedicalIcons] # BaseLensSlot from imp
   id: ClothingEyesHudMedical
   name: medical hud
   description: A heads-up display that scans the humanoids in view and provides accurate data about their health status.
@@ -49,7 +46,7 @@
     - HudMedical
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, BaseRestrictedContraband]
+  parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, BaseRestrictedContraband] # BaseLensSlot from imp
   id: ClothingEyesHudSecurity
   name: security hud
   description: A heads-up display that scans the humanoids in view and provides accurate data about their ID status and security records.
@@ -63,7 +60,7 @@
     - HudSecurity
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot, BaseCommandContraband]
+  parent: [ClothingEyesBase, BaseLensSlot, BaseCommandContraband] # BaseLensSlot from imp
   id: ClothingEyesHudCommand
   name: administration hud
   description: A heads-up display that scans the humanoids in view and provides accurate data about their ID status.
@@ -75,7 +72,7 @@
   - type: ShowJobIcons
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot]
+  parent: [ClothingEyesBase, BaseLensSlot] # BaseLensSlot from imp
   id: ClothingEyesHudBeer
   name: beer goggles
   description: A pair of sunHud outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion.
@@ -152,10 +149,10 @@
   - type: ShowThirstIcons
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, ShowMedicalIcons, BaseSecurityCommandContraband]
+  parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, ShowMedicalIcons, BaseSecurityCommandContraband] # BaseLensSlot from imp
   id: ClothingEyesHudMedSec
   name: medsec hud
-  description: An eye display that looks like a mixture of medical and security huds.
+  description: A specialized pair of glasses that displays both medical and security information, complete with a compact antenna for data downlink and a flash-protective coating.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Hud/medsec.rsi
@@ -164,9 +161,12 @@
   - type: Construction
     graph: HudMedSec
     node: medsecHud
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, ShowMedicalIcons]
+  parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, ShowMedicalIcons] # BaseLensSlot from imp
   id: ClothingEyesHudMultiversal
   name: multiversal hud
   description: Filler
@@ -182,7 +182,7 @@
   - type: ShowSyndicateIcons
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, ShowMedicalIcons]
+  parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, ShowMedicalIcons] # BaseLensSlot from imp
   id: ClothingEyesHudOmni
   name: omni hud
   description: Filler
@@ -200,7 +200,7 @@
   - type: ShowSyndicateIcons
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSyndicateContraband]
+  parent: [ClothingEyesBase, ShowSecurityIcons, Tier2Contraband]
   id: ClothingEyesHudSyndicate
   name: syndicate visor
   description: The syndicate's professional head-up display, designed for better detection of humanoids and their subsequent elimination.
@@ -212,7 +212,7 @@
   - type: ShowSyndicateIcons
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSyndicateContraband]
+  parent: [ClothingEyesBase, ShowSecurityIcons, Tier2Contraband]
   id: ClothingEyesHudSyndicateAgent
   name: syndicate agent visor
   description: The Syndicate Agent's professional heads-up display, designed for quick diagnosis of their team's status.
@@ -223,8 +223,6 @@
     sprite: Clothing/Eyes/Hud/syndagent.rsi
   - type: ShowSyndicateIcons
   - type: ShowHealthBars
-    damageContainers:
-    - Biological
 
 - type: entity
   parent: [ClothingEyesGlassesSunglasses, ShowSecurityIcons]
@@ -294,3 +292,14 @@
   parent: [ClothingEyesEyepatchHudDiag, ClothingHeadEyeBaseFlipped]
   id: ClothingEyesEyepatchHudDiagFlipped
   name: diagnostic hud eyepatch
+
+- type: entity
+  parent: [ClothingEyesHudMedical]
+  id: ClothingEyesGlassesHudMedical
+  name: medical hud glasses
+  description: A stylish heads-up display that scans the humanoids in view and provides accurate data about their health status.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/medglasses.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/medglasses.rsi

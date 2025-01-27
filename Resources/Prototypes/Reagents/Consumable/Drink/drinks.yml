@@ -447,6 +447,60 @@
       effects:
       - !type:SatiateThirst
         factor: 4
+    Gas: # imp special.
+      effects:
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Decapoid
+      - !type:ModifyLungGas
+        conditions:
+        - !type:OrganType
+          type: Decapoid
+        ratios:
+          Ammonia: 1.0
+          WaterVapor: -1.0
+      - !type:HealthChange # for slimes
+        scaleByQuantity: true
+        ignoreResistances: true
+        conditions:
+        - !type:OrganType
+          type: Slime 
+        damage:
+          types:
+            Caustic: 8
+      - !type:PopupMessage # for apids. they're bees, they get calm if you smoke 'em
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Water
+          min: 0.5
+        - !type:OrganType
+          type: Apid
+        type: Local
+        visualType: Medium
+        messages: [ "effect-sleepy" ]
+        probability: 0.1
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Water
+          min: 1
+        - !type:OrganType
+          type: Apid
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Water
+          min: 1.8
+        - !type:OrganType
+          type: Apid
+        key: ForcedSleep
+        component: ForcedSleeping
+        time: 3
+        type: Add
+
 
 - type: reagent
   id: Ice
@@ -506,7 +560,10 @@
   color: "#d8cc5d"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/arnoldpalmer.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -539,6 +596,19 @@
   physicalDesc: reagent-physical-desc-sour
   flavor: bitter
   color: "#B3B599"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Snail
+          shouldHave: true
+        damage:
+          types:
+            Poison: 4
 
 - type: reagent
   id: KiraSpecial

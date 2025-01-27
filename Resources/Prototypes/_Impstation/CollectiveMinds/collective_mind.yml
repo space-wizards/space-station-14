@@ -1,0 +1,15 @@
+- type: collectiveMind
+  id: Mycorrhizal
+  name: collective-mind-dionas
+  keycode: 'm'
+  color: "#3C720D"
+  requiredTags:
+  - DionaMinded
+
+- type: collectiveMind
+  id: Changeling
+  name: collective-mind-changeling
+  keycode: 'h'
+  color: "#e36b00"
+  requiredComponents:
+  - Hivemind

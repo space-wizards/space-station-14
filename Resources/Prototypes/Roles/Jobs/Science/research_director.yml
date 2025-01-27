@@ -6,13 +6,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 36000 #10 hrs
+      time: 72000 #20 hrs, imp
     - !type:OverallPlaytimeRequirement
       time: 144000 #40 hrs
   weight: 10
   startingGear: ResearchDirectorGear
   icon: "JobIconResearchDirector"
-  requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
   access:
@@ -33,7 +32,6 @@
   id: ResearchDirectorGear
   equipment:
     id: RnDPDA
-    ears: ClothingHeadsetRD
   storage:
     back:
     - Flash

@@ -2,10 +2,13 @@
   name: stun baton
   parent: [BaseItem, BaseRestrictedContraband]
   id: Stunbaton
-  description: A stun baton for incapacitating people with. Actively harming with this is considered bad tone.
+  description: A powered implement capable of safely incapacitating any criminal, just be mindful of the 'on' switch. #imp
   components:
+  - type: Tag # goob edit
+    tags:
+    - Stunbaton
   - type: Sprite
-    sprite: Objects/Weapons/Melee/stunbaton.rsi
+    sprite: _Impstation/Objects/Weapons/Melee/stunbaton.rsi #imp
     layers:
     - state: stunbaton_off
       map: [ "enum.ToggleVisuals.Layer" ]
@@ -40,9 +43,6 @@
   - type: StaminaDamageOnHit
     damage: 35
     sound: /Audio/Weapons/egloves.ogg
-  - type: StaminaDamageOnCollide
-    damage: 35
-    sound: /Audio/Weapons/egloves.ogg
   - type: LandAtCursor # it deals stamina damage when thrown
   - type: Battery
     maxCharge: 1000
@@ -52,7 +52,7 @@
     heldPrefix: off
     size: Normal
   - type: Clothing
-    sprite: Objects/Weapons/Melee/stunbaton.rsi
+    sprite: _Impstation/Objects/Weapons/Melee/stunbaton.rsi
     quickEquip: false
     slots:
     - Belt
@@ -88,6 +88,10 @@
     guides:
     - Security
     - Antagonists
+  # imp edits #
+  - type: ItemToggleDamageOtherOnHit
+  - type: DamageOtherOnHit
+  # end imp edits #
 
 - type: entity
   name: truncheon
@@ -125,6 +129,8 @@
     guides:
     - Security
     - Antagonists
+  - type: DamageOtherOnHit # imp
+    staminaCost: 9
 
 - type: entity
   name: flash
@@ -171,6 +177,10 @@
       guides:
       - Security
       - Antagonists
+    - type: DamageOtherOnHit # imp
+      damage:
+        types:
+          Blunt: 0
 
 - type: entity
   name: flash

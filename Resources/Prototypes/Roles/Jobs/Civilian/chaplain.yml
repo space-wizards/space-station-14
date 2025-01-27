@@ -12,15 +12,15 @@
   special:
   - !type:AddComponentSpecial
     components:
-    - type: BibleUser #Lets them heal with bibles
+    - type: BibleUser #Lets them heal with bibles and transform null rods.
 
 - type: startingGear
   id: ChaplainGear
   equipment:
-    shoes: ClothingShoesColorBlack
     id: ChaplainPDA
     ears: ClothingHeadsetService
   storage:
     back:
     - Bible
     - RubberStampChaplain
+    - NullRodDefault

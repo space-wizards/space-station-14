@@ -1,0 +1,4 @@
+- type: typingIndicator
+  id: Gastropoid
+  typingState: snail
+  offset: -0.1, 0.1

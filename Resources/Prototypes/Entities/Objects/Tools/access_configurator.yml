@@ -31,6 +31,7 @@
       - ChiefEngineer
       - ChiefMedicalOfficer
       - Command
+      - Courier #Imp
       - Engineering
       - External
       - HeadOfPersonnel
@@ -98,6 +99,7 @@
     - Chemistry
     - ChiefEngineer
     - ChiefMedicalOfficer
+    - Courier #Imp
     - Command
     - Engineering
     - External
@@ -119,6 +121,7 @@
     - CentralCommand
     - NuclearOperative
     - SyndicateAgent
+    - Wizard
     privilegedIdSlot:
       name: id-card-console-privileged-id
       ejectSound: /Audio/Machines/id_swipe.ogg

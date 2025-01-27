@@ -1,0 +1,42 @@
+- type: emote
+  id: Flip
+  name: chat-emote-name-flip
+  chatMessages: ["chat-emote-msg-flip"]
+  icon: _Impstation/Interface/Emotes/backflip.png #imp
+  chatTriggers:
+  - flip
+  - flips
+  - flips.
+  - flips!
+  - does a flip
+  - does a flip.
+  - does a flip!
+  event: !type:AnimationFlipEmoteEvent
+
+- type: emote
+  id: Spin
+  name: chat-emote-name-spin
+  chatMessages: ["chat-emote-msg-spin"]
+  icon: _Impstation/Interface/Emotes/spin.png #imp
+  chatTriggers:
+  - spin
+  - spins
+  - spins.
+  - spins!
+  event: !type:AnimationSpinEmoteEvent
+
+- type: emote
+  id: Jump
+  name: chat-emote-name-jump
+  chatMessages: ["chat-emote-msg-jump"]
+  icon: _Impstation/Interface/Emotes/jump.png #imp
+  chatTriggers:
+  - jump
+  - jumps
+  - jumps.
+  - jumps!
+  - bounce
+  - bounces
+  - bounces.
+  - bounces!
+  event: !type:AnimationJumpEmoteEvent

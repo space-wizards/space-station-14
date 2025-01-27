@@ -16,9 +16,16 @@
       - DrinkSpaceMountainWindBottleFull
       - DrinkSpaceUpBottleFull
       - DrinkWaterBottleFull
+      - DrinkOrangeAsteradeBottleFull
+      - DrinkPurpleAsteradeBottleFull
+      - DrinkRedAsteradeBottleFull
+      - DrinkGreenAsteradeBottleFull
+      - DrinkYellowAsteradeBottleFull
+      - DrinkLemonAsteradeBottleFull
       - DrinkColaCan
       - DrinkIcedTeaCan
       - DrinkLemonLimeCan
+      - DrinkLemonLimeCranberryCan
       - DrinkGrapeCan
       - DrinkRootBeerCan
       - DrinkSodaWaterCan

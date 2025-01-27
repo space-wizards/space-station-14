@@ -1,0 +1,385 @@
+- type: reaction
+  id: UAP
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    XenoBasher:
+      amount: 1
+    GargleBlaster:
+      amount: 1
+    Uranium:
+      amount: 1
+    Radium:
+      amount: 1
+    SpaceCleaner:
+      amount: 1
+    SpaceLube:
+      amount: 1
+  products:
+    UAP: 6
+
+- type: reaction
+  id: MoscowMule
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    Vodka:
+      amount: 2
+    JuiceLime:
+      amount: 1
+    SolDry:
+      amount: 3
+  products:
+    MoscowMule: 6
+
+       # Razz whatever the fuck you did here has caused horrible things
+- type: reaction
+  id: TheeHorsepussy
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    JuiceApple:
+      amount: 1
+    Martini:
+      amount: 1
+    Desoxyephedrine:
+      amount: 1
+  products:
+    TheeHorsepussy: 3
+  sound:
+    path: /Audio/_Impstation/Animals/spooky_horse.ogg
+
+- type: reaction
+  id: Calimotxo
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Wine:
+      amount: 1
+    Cola:
+      amount: 1
+  products:
+    Calimotxo: 2
+
+- type: reaction
+  id: LoveTap
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Rum:
+      amount: 1
+    RootBeer:
+      amount: 9
+  products:
+    LoveTap: 10
+
+- type: reaction
+  id: Raeganomics
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    THC:
+      amount: 1
+    Nicotine:
+      amount: 1
+    Lemonade:
+      amount: 1
+    Vodka:
+      amount: 2
+  products:
+    Reaganomics: 5
+
+- type: reaction
+  id: GatorWine
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    LemonAsterade:
+      amount: 1
+    Wine:
+      amount: 1
+  products:
+    GatorWine: 2
+
+- type: reaction
+  id: Rotgut
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    Water:
+      amount: 1
+    Sugar:
+      amount: 4
+    Nicotine:
+      amount: 5
+  products:
+    Rotgut: 10
+
+- type: reaction
+  id: BumWine
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Wine:
+      amount: 2
+    Sugar:
+      amount: 1
+    Water:
+      amount: 3
+  products:
+    BumWine: 5
+
+- type: reaction
+  id: VoxRocks
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Dylovene:
+      amount: 5
+    IcedBeer:
+      amount: 5
+  products:
+    VoxRocks: 10
+
+- type: reaction
+  id: KingSoda
+  reactants:
+    CoconutWater:
+      amount: 1
+    IcedCoffee:
+      amount: 1.5
+    Cola:
+      amount: 0.5
+    JuiceWatermelon:
+      amount: 1
+    DrGibb:
+      amount: 1
+    IcedGreenTea:
+      amount: 1.5
+    LemonLime:
+      amount: 1
+    JuiceLime:
+      amount: 1
+    Starkist:
+      amount: 1
+    EnergyDrink:
+      amount: 1
+    IceCream:
+      amount: 2.5
+    SodaWater:
+      amount: 1
+    SpaceMountainWind:
+      amount: 1
+    SpaceUp:
+      amount: 1
+    TonicWater:
+      amount: 1
+    Tea:
+      amount: 1
+    RootBeerFloat:
+      amount: 1.5
+  products:
+    KingSoda: 20
+
+- type: reaction
+  id: JungleJuice
+  reactants:
+    Beer:
+      amount: 0.5
+    ManlyDorf:
+      amount: 1.5
+    Vermouth:
+      amount: 1
+    Cognac:
+      amount: 1
+    Gin:
+      amount: 1
+    Mead:
+      amount: 1
+    Rum:
+      amount: 1
+    BraveBull:
+      amount: 1.5
+    BlackRussian:
+      amount: 1.5
+    Whiskey:
+      amount: 1
+    Wine:
+      amount: 1
+  products:
+    JungleJuice: 10
+
+- type: reaction
+  id: TheDrink
+  reactants:
+    KingSoda:
+      amount: 1
+    JungleJuice:
+      amount: 1
+  products:
+    TheDrink: 2
+
+- type: reaction
+  id: BloodierMary
+  reactants:
+    BloodyMary:
+      amount: 2
+    Blood:
+      amount: 1
+  products:
+    BloodierMary: 3
+
+- type: reaction
+  id: SalvagersSoothe
+  reactants:
+    Bicaridine:
+      amount: 1
+    Dexalin:
+      amount: 1
+    Dylovene:
+      amount: 1
+    Moonshine:
+      amount: 2
+  products:
+    SalvagersSoothe: 3
+
+- type: reaction
+  id: HummingBird
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    Water:
+      amount: 4
+    Sugar:
+      amount: 1
+  products:
+    HummingBird: 5
+
+- type: reaction
+  id: DontTell
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Hooch:
+      amount: 1
+    Moonshine:
+      amount: 1
+  products:
+    DontTell: 2
+
+- type: reaction
+  id: CottonBool
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Fiber:
+      amount: 1
+    EnergyDrink:
+      amount: 1
+  products:
+    CottonBool: 2
+
+- type: reaction
+  id: Genderfluid
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    Testosterone:
+      amount: 1
+    Estradiol:
+      amount: 1
+  products:
+    Genderfluid: 2
+
+- type: reaction
+  id: ThavenBad
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    WhiskeyCola:
+      amount: 1
+    BbqSauce:
+      amount: 1
+  products:
+    ThavenBad: 2
+
+- type: reaction
+  id: StarryNight
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    BlueCuracao:
+      amount: 1
+    Vodka:
+      amount: 1
+    Plasma:
+      amount: 1
+  products:
+    StarryNight: 3
+
+- type: reaction
+  id: ZombieSlushie
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    Protein:
+      amount: 1
+    Cream:
+      amount: 1
+    Ice:
+      amount: 1
+  products:
+    ZombieSlushie: 3
+
+- type: reaction
+  id: Raktaccino
+  requiredMixerCategories:
+    - Stir
+  minTemp: 370
+  reactants:
+    Coffee:
+      amount: 1
+  products:
+    Raktaccino: 1
+
+- type: reaction
+  id: ThumperDrink
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    JuiceBerry:
+      amount: 1
+    JuiceApple:
+      amount: 1
+    MelonLiquor:
+      amount: 1
+  products:
+    ThumperDrink: 3
+
+- type: reaction
+  id: TheGrease
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    DontTell:
+      amount: 3
+    Slime:
+      amount: 2
+    Plasma:
+      amount: 1
+  products:
+    TheGrease: 6
+
+- type: reaction
+  id: CleverGirl
+  reactants:
+    Vodka:
+      amount: 2
+    JuiceLime:
+      amount: 1
+    BlueCuracao:
+      amount: 1
+    DinoBlood:
+      amount: 1
+  products:
+    CleverGirl: 5

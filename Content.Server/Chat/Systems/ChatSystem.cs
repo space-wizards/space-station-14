@@ -1,6 +1,8 @@
+using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Content.Server.Abilities.Mime;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
@@ -14,9 +16,11 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.CollectiveMind;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
+using Content.Shared._Impstation.Ghost;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Players;
@@ -60,6 +64,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly ReplacementAccentSystem _wordreplacement = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
+    [Dependency] private readonly CollectiveMindUpdateSystem _collectiveMind = default!;
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
@@ -181,6 +186,9 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
         }
 
+        if (TryComp<CollectiveMindComponent>(source, out var collective))
+            _collectiveMind.UpdateCollectiveMind(source, collective);
+
         if (player != null && _chatManager.HandleRateLimit(player) != RateLimitStatus.Allowed)
             return;
 
@@ -243,6 +251,15 @@ public sealed partial class ChatSystem : SharedChatSystem
             }
         }
 
+        if (desiredType == InGameICChatType.CollectiveMind)
+        {
+            if (TryProccessCollectiveMindMessage(source, message, out var modMessage, out var channel))
+            {
+                SendCollectiveMindChat(source, modMessage, channel);
+                return;
+            }
+        }
+
         // Otherwise, send whatever type.
         switch (desiredType)
         {
@@ -283,6 +300,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         var sendType = type;
         // If dead player LOOC is disabled, unless you are an admin with Moderator perms, send dead messages to dead chat
         if ((_adminManager.IsAdmin(player) && _adminManager.HasAdminFlag(player, AdminFlags.Moderator)) // Override if admin
+            || !HasComp<GhostBarPatronComponent>(source) // I'm part of the problem!
             || _deadLoocEnabled
             || (!HasComp<GhostComponent>(source) && !_mobStateSystem.IsDead(source))) // Check that player is not dead
         {
@@ -407,6 +425,67 @@ public sealed partial class ChatSystem : SharedChatSystem
     #endregion
 
     #region Private API
+
+    private void SendCollectiveMindChat(EntityUid source, string message, CollectiveMindPrototype? collectiveMind)
+    {
+        if (_mobStateSystem.IsDead(source) || collectiveMind == null || message == "" || !TryComp<CollectiveMindComponent>(source, out var sourseCollectiveMindComp) || !sourseCollectiveMindComp.Minds.ContainsKey(collectiveMind.ID))
+            return;
+
+        if (TryComp<MimePowersComponent>(source, out var comp) && comp.Enabled) // No cheating
+            return; // Ideally would display the mime-cant-speak string but doing that here would be messy. Collective mind needs an equivalent to OnSpeakAttempt so this can be handled in MutingSystem
+
+        var clients = Filter.Empty();
+        var mindQuery = EntityQueryEnumerator<CollectiveMindComponent, ActorComponent>();
+        while (mindQuery.MoveNext(out var uid, out var collectMindComp, out var actorComp))
+        {
+            if (_mobStateSystem.IsDead(uid))
+                continue;
+
+            if (collectMindComp.Minds.ContainsKey(collectiveMind.ID))
+            {
+                clients.AddPlayer(actorComp.PlayerSession);
+            }
+        }
+
+        var Number = $"{sourseCollectiveMindComp.Minds[collectiveMind.ID]}";
+
+        var admins = _adminManager.ActiveAdmins
+            .Select(p => p.Channel);
+        string messageWrap;
+        string adminMessageWrap;
+
+        messageWrap = Loc.GetString("collective-mind-chat-wrap-message",
+            ("message", message),
+            ("channel", collectiveMind.LocalizedName),
+            ("number", Number));
+
+        adminMessageWrap = Loc.GetString("collective-mind-chat-wrap-message-admin",
+            ("source", source),
+            ("message", message),
+            ("channel", collectiveMind.LocalizedName),
+            ("number", Number));
+
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"CollectiveMind chat from {ToPrettyString(source):Player}: {message}");
+
+        _chatManager.ChatMessageToManyFiltered(clients,
+            ChatChannel.CollectiveMind,
+            message,
+            messageWrap,
+            source,
+            false,
+            true,
+            collectiveMind.Color);
+
+        // FOR ADMINS
+        _chatManager.ChatMessageToMany(ChatChannel.CollectiveMind,
+            message,
+            adminMessageWrap,
+            source,
+            false,
+            true,
+            admins,
+            collectiveMind.Color);
+    }
 
     private void SendEntitySpeak(
         EntityUid source,
@@ -746,8 +825,12 @@ public sealed partial class ChatSystem : SharedChatSystem
     // ReSharper disable once InconsistentNaming
     private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true, bool punctuate = false, bool capitalizeTheWordI = true)
     {
-        var newMessage = message.Trim();
-        newMessage = SanitizeMessageReplaceWords(newMessage);
+        var newMessage = SanitizeMessageReplaceWords(message.Trim());
+
+        GetRadioKeycodePrefix(source, newMessage, out newMessage, out var prefix);
+
+        // Sanitize it first as it might change the word order
+        _sanitizer.TrySanitizeEmoteShorthands(newMessage, source, out newMessage, out emoteStr);
 
         if (capitalize)
             newMessage = SanitizeMessageCapital(newMessage);
@@ -756,9 +839,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (punctuate)
             newMessage = SanitizeMessagePeriod(newMessage);
 
-        _sanitizer.TrySanitizeOutSmilies(newMessage, source, out newMessage, out emoteStr);
-
-        return newMessage;
+        return prefix + newMessage;
     }
 
     private string SanitizeInGameOOCMessage(string message)
@@ -792,6 +873,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
         return Filter.Empty()
             .AddWhereAttachedEntity(HasComp<GhostComponent>)
+            .AddWhereAttachedEntity(HasComp<GhostBarPatronComponent>)
             .Recipients
             .Union(_adminManager.ActiveAdmins)
             .Select(p => p.Channel);
@@ -967,7 +1049,8 @@ public enum InGameICChatType : byte
 {
     Speak,
     Emote,
-    Whisper
+    Whisper,
+    CollectiveMind
 }
 
 /// <summary>

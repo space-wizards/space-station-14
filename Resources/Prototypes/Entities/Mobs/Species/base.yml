@@ -19,6 +19,8 @@
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
     - map: [ "enum.HumanoidVisualLayers.RLeg" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+    - map: [ "enum.HumanoidVisualLayers.Underwear" ]
+    - map: [ "enum.HumanoidVisualLayers.Undershirt" ]
     - map: ["jumpsuit"]
     - map: ["enum.HumanoidVisualLayers.LFoot"]
     - map: ["enum.HumanoidVisualLayers.RFoot"]
@@ -136,6 +138,8 @@
     - RadiationProtection
     - Drowsiness
     - Adrenaline
+    - Feminized # DeltaV - Hormone system
+    - Masculinized # DeltaV - Hormone system
   - type: Body
     prototype: Human
     requiredLegs: 2
@@ -187,6 +191,13 @@
         type: HumanoidMarkingModifierBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+      enum.HereticLivingHeartKey.Key: # goob edit - heretics
+        type: LivingHeartMenuBoundUserInterface
+      enum.ThavenMoodsUiKey.Key: # impstation edit
+        type: ThavenMoodsBoundUserInterface
+        requireInputValidation: false
   - type: Puller
   - type: Speech
     speechSounds: Alto
@@ -195,7 +206,7 @@
     sounds:
       Male: MaleHuman
       Female: FemaleHuman
-      Unsexed: MaleHuman
+      Unsexed: UnisexHuman
   - type: Emoting
   - type: BodyEmotes
     soundsId: GeneralBodyEmotes
@@ -211,6 +222,7 @@
     - FootstepSound
     - DoorBumpOpener
     - AnomalyHost
+  - type: LayingDown # WD EDIT
 
 - type: entity
   save: false
@@ -305,6 +317,8 @@
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
     - map: [ "enum.HumanoidVisualLayers.RLeg" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+    - map: [ "enum.HumanoidVisualLayers.Underwear" ]
+    - map: [ "enum.HumanoidVisualLayers.Undershirt" ]
     - map: ["jumpsuit"]
     - map: ["enum.HumanoidVisualLayers.LFoot"]
     - map: ["enum.HumanoidVisualLayers.RFoot"]
@@ -339,6 +353,7 @@
   - type: Body
     prototype: Human
     requiredLegs: 2
+  - type: Absorbable
   - type: UserInterface
     interfaces:
       enum.HumanoidMarkingModifierKey.Key: # sure, this can go here too

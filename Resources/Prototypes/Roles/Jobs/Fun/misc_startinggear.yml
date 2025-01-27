@@ -115,22 +115,22 @@
   inhand:
     - WeaponMeleeToolboxRobust
 
-#Brigmedic
+# Brigmedic
 
-- type: startingGear
-  id: BrigmedicGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitBrigmedic
-    outerClothing: ClothingOuterCoatAMG
-    back: ClothingBackpackBrigmedic
-    shoes: ClothingShoesColorRed
-    gloves: ClothingHandsGlovesNitrile
-    eyes: ClothingEyesHudMedical
-    head: ClothingHeadHatBeretBrigmedic
-    id: BrigmedicPDA
-    ears: ClothingHeadsetBrigmedic
-    mask: ClothingMaskBreathMedicalSecurity
-    belt: ClothingBeltMedicalFilled
+# - type: startingGear
+#   id: BrigmedicGear
+#   equipment:
+#     jumpsuit: ClothingUniformJumpsuitBrigmedic
+#     outerClothing: ClothingOuterCoatAMG
+#     back: ClothingBackpackBrigmedic
+#     shoes: ClothingShoesColorRed
+#     gloves: ClothingHandsGlovesNitrile
+#     eyes: ClothingEyesHudMedical
+#     head: ClothingHeadHatBeretBrigmedic
+#     id: BrigmedicPDA
+#     ears: ClothingHeadsetBrigmedic
+#     mask: ClothingMaskBreathMedicalSecurity
+#     belt: ClothingBeltMedicalFilled
 
 # Aghost
 - type: startingGear
@@ -180,5 +180,5 @@
 - type: startingGear
   id: LimitedPassengerGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorGrey
+    jumpsuit: ClothingUniformJumpsuitAncient
     shoes: ClothingShoesColorBlack

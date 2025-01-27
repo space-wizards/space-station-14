@@ -10,3 +10,12 @@
   - /Audio/Effects/Gasp/gasp_female1.ogg
   - /Audio/Effects/Gasp/gasp_female2.ogg
   - /Audio/Effects/Gasp/gasp_female3.ogg
+
+- type: soundCollection
+  id: UnisexGasp
+  files:
+  - /Audio/Effects/Gasp/gasp_male1.ogg
+  - /Audio/Effects/Gasp/gasp_male2.ogg
+  - /Audio/Effects/Gasp/gasp_female1.ogg
+  - /Audio/Effects/Gasp/gasp_female2.ogg
+  - /Audio/Effects/Gasp/gasp_female3.ogg

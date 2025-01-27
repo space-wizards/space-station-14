@@ -1,0 +1,51 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseHereticObjective
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: objective-issuer-heretic
+
+- type: entity
+  parent: BaseHereticObjective
+  id: HereticKnowledgeObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: _Goobstation/Heretic/reality_fracture.rsi
+      state: icon_harvested
+  - type: NumberObjective
+    min: 12
+    max: 18
+    title: objective-condition-knowledge-title
+  - type: HereticKnowledgeCondition
+
+- type: entity
+  parent: BaseHereticObjective
+  id: HereticSacrificeObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: _Goobstation/Heretic/Blades/blade_blade.rsi
+      state: icon
+  - type: NumberObjective
+    min: 2
+    max: 4
+    title: objective-condition-sacrifice-title
+  - type: HereticSacrificeCondition
+
+- type: entity
+  parent: BaseHereticObjective
+  id: HereticSacrificeHeadObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: _Goobstation/Heretic/Blades/blade_blade.rsi
+      state: icon
+  - type: NumberObjective
+    min: 1
+    max: 1
+    title: objective-condition-sacrifice-head-title
+  - type: HereticSacrificeCondition
+    isCommand: true

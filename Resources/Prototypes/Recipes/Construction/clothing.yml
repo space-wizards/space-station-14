@@ -10,7 +10,7 @@
   objectType: Item
 
 - type: construction
-  name: mime hardsuit
+  name: red mime hardsuit # Imp
   id: MimeHardsuit
   graph: MimeHardsuit
   startNode: start
@@ -82,7 +82,7 @@
   startNode: start
   targetNode: medsecHud
   category: construction-category-clothing
-  description: Two huds joined by arms
+  description: Two huds joined into a new frame.
   icon: { sprite: Clothing/Eyes/Hud/medsec.rsi, state: icon }
   objectType: Item
 
@@ -117,6 +117,17 @@
   category: construction-category-clothing
   description: Can hold up to 15 arrows, and fits snug around your waist.
   icon: { sprite: Clothing/Belt/quiver.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: hemp sack with eyeholes
+  id: SackHead
+  graph: SackHead
+  startNode: start
+  targetNode: eyesack
+  category: construction-category-clothing
+  description: A hemp sack with eyeholes in it.
+  icon: { sprite: Clothing/Head/Helmets/hempsack.rsi, state: icon }
   objectType: Item
 
 - type: construction

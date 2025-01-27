@@ -30,11 +30,19 @@
   setPreference: true
   objective: roles-antag-nuclear-operative-commander-objective
   requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 18000 # 5h
   - !type:DepartmentTimeRequirement
-    department: Security
-    time: 18000 # 5h
+      department: Engineering
+      time: 27000 # 7.5 hours
+  - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 27000 # 7.5 hours
+  - !type:DepartmentTimeRequirement
+      department: Security
+      time: 27000 # 7.5 hours
+  - !type:DepartmentTimeRequirement
+      department: Command
+      time: 27000 # 7.5 hours
+  # this is half the requirements to unlock captain, and should be enough for a nuke ops commander to have a basic, broad understanding of the game
   # should be changed to nukie playtime when thats tracked (wyci)
   guides: [ NuclearOperatives ]
 

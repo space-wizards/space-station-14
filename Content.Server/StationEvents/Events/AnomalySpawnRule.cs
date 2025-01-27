@@ -2,23 +2,32 @@
 using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
 ﻿using Content.Shared.GameTicking.Components;
+using Content.Server.Announcements.Systems;
+using Robust.Shared.Player;
 
 namespace Content.Server.StationEvents.Events;
 
 public sealed class AnomalySpawnRule : StationEventSystem<AnomalySpawnRuleComponent>
 {
     [Dependency] private readonly AnomalySystem _anomaly = default!;
+    [Dependency] private readonly AnnouncerSystem _announcer = default!;
 
     protected override void Added(EntityUid uid, AnomalySpawnRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
+        base.Added(uid, component, gameRule, args);
+
         if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
 
-        var str = Loc.GetString("anomaly-spawn-event-announcement",
-            ("sighting", Loc.GetString($"anomaly-spawn-sighting-{RobustRandom.Next(1, 6)}")));
-        stationEvent.StartAnnouncement = str;
-
-        base.Added(uid, component, gameRule, args);
+        _announcer.SendAnnouncement(
+            _announcer.GetAnnouncementId(args.RuleId),
+            Filter.Broadcast(),
+            "anomaly-spawn-event-announcement",
+            null,
+            Color.FromHex("#18abf5"),
+            null, null,
+            ("sighting", Loc.GetString($"anomaly-spawn-sighting-{RobustRandom.Next(1, 6)}"))
+        );
     }
 
     protected override void Started(EntityUid uid, AnomalySpawnRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)

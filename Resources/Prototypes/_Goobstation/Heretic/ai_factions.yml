@@ -1,0 +1,9 @@
+- type: npcFaction
+  id: Heretic
+  hostile:
+  - NanoTrasen
+  - Syndicate
+  - Zombie
+  - Revolutionary
+  - Changeling
+  - Dino

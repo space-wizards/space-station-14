@@ -8,6 +8,9 @@
     state: rods
   - type: Item
     sprite: Objects/Materials/parts.rsi
+  - type: Tag
+    tags:
+      - DroneUsable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: FlimsyMetallic
@@ -45,7 +48,7 @@
       map: ["base"]
   - type: Item
     size: Normal
-#    heldPrefix: rods
+    heldPrefix: rods
   - type: Construction
     graph: MetalRod
     node: MetalRod
@@ -68,6 +71,16 @@
           Quantity: 4.5
         - ReagentId: Carbon
           Quantity: 0.5
+  - type: UserInterface
+    interfaces:
+      enum.ShortConstructionUiKey.Key:
+        type: ShortConstructionMenuBUI
+  - type: ActivatableUI
+    key: enum.ShortConstructionUiKey.Key
+  - type: ShortConstruction
+    prototypes:
+    - Grille
+    - Table
 
 - type: entity
   parent: PartRodMetal
@@ -78,6 +91,7 @@
   - type: Tag
     tags:
     - RodMetal1
+    - DroneUsable
   - type: Sprite
     state: rods
   - type: Stack
@@ -92,6 +106,7 @@
   - type: Tag
     tags:
     - RodMetal1
+    - DroneUsable
   - type: Sprite
     state: rods
   - type: Stack

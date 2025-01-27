@@ -1,0 +1,7 @@
+- type: radioChannel
+  id: Mansus
+  name: chat-radio-mansus
+  keycode: 'z'
+  frequency: 80085
+  color: "#237500"
+  longRange: true

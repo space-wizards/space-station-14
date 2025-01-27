@@ -1,0 +1,12 @@
+- type: entity
+  id: CrateSecurityShotgunNonlethal
+  parent: CrateSecgear
+  name: nonlethal shotgun crate
+  description: For when the station is being a bit too rowdy. Contains two stun Kammerer shotguns with extra ammunition. Requires Security access to open.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponShotgunKammererBeanbag
+        amount: 2
+      - id: BoxBeanbag
+        amount: 3

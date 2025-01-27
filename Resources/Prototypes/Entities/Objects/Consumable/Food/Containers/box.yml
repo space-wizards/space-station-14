@@ -275,6 +275,17 @@
       orGroup: Pizza
     - id: KnifePlastic
 
+- type: entity
+  name: pizza box
+  parent: FoodBoxPizzaFilled
+  id: FoodBoxPizzaCotton
+  suffix: Cotton Pizza
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodPizzaCotton
+    - id: KnifePlastic
+
 # Nugget
 
 - type: entity
@@ -471,6 +482,21 @@
       amount: 6
 
 - type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketCloth
+  name: box of cloth-pockets
+  description: A box of imitation donk-pockets made of cloth.
+  components:
+  - type: Sprite
+    state: cloth-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+    - id: FoodDonkpocketCloth
+      amount: 6
+
+- type: entity
   id: HappyHonk
   parent: [ BoxCardboard, BaseBagOpenClose ]
   name: happy honk meal
@@ -558,6 +584,8 @@
       - id: GoldenBikeHorn
         prob: 0.1
         orGroup: GiftPool
+      - id: SpaceBladeMc #imp
+        orGroup: GiftPool
 
 - type: entity
   id: HappyHonkMime
@@ -578,7 +606,7 @@
 
 - type: entity
   id: HappyHonkNukie
-  parent: [HappyHonk, BaseSyndicateContraband]
+  parent: [HappyHonk, Tier1Contraband]
   name: robust nukie meal
   description: A sus meal with a potentially explosive surprise.
   suffix: Toy Unsafe
@@ -606,6 +634,8 @@
         prob: 0.6
         orGroup: GiftPool
       - id: PlushieNuke
+        orGroup: GiftPool
+      - id: SpaceBladeContra #imp
         orGroup: GiftPool
 
 - type: entity
@@ -635,6 +665,8 @@
       prob: 0.6
       orGroup: GiftPool
     - id: PlushieNuke
+      orGroup: GiftPool
+    - id: SpaceBladeContra #imp
       orGroup: GiftPool
     # drinks - 4 cans, up to 2 blood-red brews
     - id: DrinkNukieCan
@@ -693,6 +725,8 @@
       - id: DrinkColaCan
         orGroup: DrinkPool
       - id: DrinkLemonLimeCan
+        orGroup: DrinkPool
+      - id: DrinkLemonLimeCranberryCan
         orGroup: DrinkPool
       - id: DrinkIcedTeaCan
         orGroup: DrinkPool
@@ -755,4 +789,6 @@
         orGroup: GiftPool
       - id: GoldenBikeHorn
         prob: 0.1
+        orGroup: GiftPool
+      - id: SpaceBladeMc #imp
         orGroup: GiftPool

@@ -35,6 +35,8 @@
     sprite: Objects/Weapons/Melee/pickaxe.rsi
     storedRotation: -45
   - type: UseDelay
+  - type: DamageOtherOnHit # Imp
+    staminaCost: 5
 
 - type: entity
   name: mining drill
@@ -62,6 +64,12 @@
         Brute: 3
       types:
         Structural: 15
+  # imp edits #
+  - type: DamageOtherOnHit
+    staminaCost: 8
+  - type: ThrowingAngle
+    angle: 270
+  # end imp edits #
 
 - type: entity
   name: diamond tipped mining drill
@@ -99,6 +107,13 @@
     color: "#ffeead"
     enabled: false
     radius: 4
+  - type: Sprite # Imp note: The lit sprites of crushers don't work at all, and it'll take modifying all equipped, held, and wielded sprites of them to make them work
+    layers:
+    - state: icon
+    - state: icon-lit
+      shader: unshaded
+      visible: false
+      map: [ "light" ]
 
 - type: entity
   parent: [BaseWeaponCrusher, BaseSecurityCargoContraband]
@@ -107,9 +122,9 @@
   - type: Tag
     tags:
       - Pickaxe
+      - Crusher
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher.rsi
-    state: icon
   - type: AmmoCounter
   - type: UseDelayOnShoot
   - type: UseDelay
@@ -149,8 +164,19 @@
   - type: GunRequiresWield
   - type: Item
     size: Ginormous
+    sprite: Objects/Weapons/Melee/crusher-inhands.rsi
   - type: DisarmMalus
   - type: Prying
+  # imp edits #
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/crusher.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: DamageOtherOnHit
+    staminaCost: 8
+  # end imp edits #
 
 - type: entity
   parent: [ BaseWeaponCrusher, BaseSecurityCargoContraband]
@@ -167,10 +193,21 @@
     attackRate: 2
     damage:
       types:
-        Slash: 15
+        Slash: 10
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
   - type: Tag
     tags:
     - Knife
+    - Crusher
+  # imp edits #
+  - type: DamageOtherOnHit
+    staminaCost: 5
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 225
+  # end imp edits #
 
 # Like a crusher... but better
 - type: entity
@@ -191,3 +228,19 @@
   - type: Tag
     tags:
       - Pickaxe
+      - Crusher
+  - type: Item
+    size: Ginormous
+    sprite: Objects/Weapons/Melee/crusher_glaive-inhands.rsi
+  - type: Clothing # Imp
+    sprite: Objects/Weapons/Melee/crusher_glaive.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  # imp edits #
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 225
+  # end imp edits #

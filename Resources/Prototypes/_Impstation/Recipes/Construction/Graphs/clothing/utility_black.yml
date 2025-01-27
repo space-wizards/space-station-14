@@ -1,0 +1,28 @@
+﻿- type: constructionGraph
+  id: UtilityBlack
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: utilityBlack
+          completed:
+          - !type:PlaySound
+            sound: /Audio//Effects/spray2.ogg
+          - !type:SpawnPrototype
+            prototype: SprayPainter
+          steps:
+            - tag: BeltUtility
+              name: utility belt
+              icon:
+                sprite: Clothing/Belt/utility.rsi
+                state: icon
+              doAfter: 5
+            - tag: SprayPainter
+              name: spray painter
+              icon:
+                sprite: Objects/Tools/spray_painter.rsi
+                state: spray_painter
+              doAfter: 5
+
+    - node: utilityBlack
+      entity: ClothingBeltUtilityBlack

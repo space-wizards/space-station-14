@@ -1,0 +1,13 @@
+- type: accent
+  id: dino
+  fullReplacements:
+  - accent-words-dino-1
+  - accent-words-dino-2
+  - accent-words-dino-3
+  - accent-words-dino-4
+  - accent-words-dino-5
+  - accent-words-dino-6
+  - accent-words-dino-7
+  - accent-words-dino-8
+  - accent-words-dino-9
+  - accent-words-dino-10

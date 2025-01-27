@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Edited by Nairodian (github) from the formal scientist jumpsuit by Flareguy for Space Station 14.",
+  "copyright": "Edited by Nairodian (github) from the formal scientist jumpsuit by Flareguy for Space Station 14. Folded version taken from tgstation spritework and edited by Pinkbat5 (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-INNERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "folded-equipped-INNERCLOTHING",
       "directions": 4
     },
     {

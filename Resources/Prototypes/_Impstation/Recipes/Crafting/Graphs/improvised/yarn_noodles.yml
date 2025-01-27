@@ -1,0 +1,18 @@
+- type: constructionGraph
+  id: YarnNoodles
+  start: start
+  graph:
+  - node: start
+    edges:
+      - to: noodles
+        steps:
+          - material: Cloth
+            amount: 3
+            doAfter: 5
+          - tag: Chopsticks
+            name: chopsticks
+            icon:
+              sprite: Objects/Misc/chopstick.rsi
+              state: icon
+  - node: noodles
+    entity: YarnNoodles

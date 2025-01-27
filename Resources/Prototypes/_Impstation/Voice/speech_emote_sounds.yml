@@ -1,0 +1,104 @@
+- type: emoteSounds
+  id: Gorilla
+  sounds:
+    Scream:
+      path: /Audio/_Impstation/Animals/Gorilla_Scream.ogg
+      params:
+        variation: 0.125
+        pitch: 0.75
+    Laugh:
+      path: /Audio/_Impstation/Animals/Gorilla_Laugh.ogg
+    Gasp:
+      path: /Audio/_Impstation/Animals/Gorilla_Gasp.ogg
+    DefaultDeathgasp:
+      path: /Audio/_Impstation/Animals/Gorilla_Scream.ogg
+
+- type: emoteSounds
+  id: Bros
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: Ungh
+    Laugh:
+      collection: Ungh
+    Sneeze:
+      collection: Ungh
+    Cough:
+      collection: Ungh
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      collection: Ungh
+    Snore:
+      collection: Ungh
+    Honk:
+      collection: BikeHorn
+    Sigh:
+      collection: Ungh
+    Crying:
+      collection: Ungh
+    Whistle:
+      collection: Ungh
+    Weh:
+      collection: Weh
+    Wuhey:
+      collection: Wuhey
+    Ungh:
+      collection: Ungh
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      path: /Audio/_Impstation/Animals/bros_hurt.ogg
+
+
+- type: emoteSounds
+  id: AnimalSlime
+  sounds:
+    Squish:
+      collection: Squishes
+    Bubble:
+      collection: Bubbles
+    Pop:
+      collection: Pops
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Honk:
+      collection: BikeHorn
+    Weh:
+      collection: Weh
+    Wuhey:
+      collection: Wuhey
+    Ungh:
+      collection: Ungh
+    DefaultDeathgasp:
+      collection: MaleSlimeDeathGasp
+  params:
+    variation: 0.125
+
+- type: emoteSounds
+  id: Monkey
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Animals/monkey_scream.ogg
+      params:
+        variation: 0.125
+        pitch: 0.90
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    DefaultDeathgasp:
+      path: /Audio/_Impstation/Animals/bros_hurt.ogg

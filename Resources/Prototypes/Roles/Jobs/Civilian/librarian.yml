@@ -13,7 +13,6 @@
 - type: startingGear
   id: LibrarianGear
   equipment:
-    shoes: ClothingShoesBootsLaceup
     id: LibrarianPDA
     ears: ClothingHeadsetService
     pocket1: d20Dice
@@ -21,3 +20,6 @@
   storage:
     back:
     - BookRandom
+    - TapeRecorder # DeltaV addition
+    - CassetteTape
+    - CassetteTape

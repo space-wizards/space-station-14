@@ -1,9 +1,14 @@
+using Content.Shared._Goobstation.Overlays;
+using Content.Shared.Chat;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Hypospray.Events;
+using Content.Shared.Climbing.Events;
 using Content.Shared.Damage;
 using Content.Shared.Electrocution;
 using Content.Shared.Explosion;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Gravity;
+using Content.Shared.Heretic;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.Events;
@@ -15,7 +20,7 @@ using Content.Shared.Slippery;
 using Content.Shared.Strip.Components;
 using Content.Shared.Temperature;
 using Content.Shared.Verbs;
-using Content.Shared.Chat;
+using Content.Shared.Weapons.Ranged.Events;
 
 namespace Content.Shared.Inventory;
 
@@ -33,6 +38,12 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, GetDefaultRadioChannelEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshNameModifiersEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, TransformSpeakerNameEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, TransformSpeakerVoiceEvent>(RelayInventoryEvent); // impstation edit
+        SubscribeLocalEvent<InventoryComponent, CheckMagicItemEvent>(RelayInventoryEvent); // goob edit
+        SubscribeLocalEvent<InventoryComponent, SelfBeforeHyposprayInjectsEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, TargetBeforeHyposprayInjectsEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, SelfBeforeGunShotEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, SelfBeforeClimbEvent>(RelayInventoryEvent);
 
         // by-ref events
         SubscribeLocalEvent<InventoryComponent, GetExplosionResistanceEvent>(RefRelayInventoryEvent);
@@ -54,6 +65,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowHungerIconsComponent>>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowThirstIconsComponent>>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowMindShieldIconsComponent>>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowFakeMindShieldIconsComponent>>(RelayInventoryEvent); // goob edit
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowSyndicateIconsComponent>>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowCriminalRecordIconsComponent>>(RelayInventoryEvent);
 
@@ -107,7 +119,7 @@ public partial class InventorySystem
         var enumerator = new InventorySlotEnumerator(component);
         while (enumerator.NextItem(out var item, out var slotDef))
         {
-            if (!slotDef.StripHidden || args.User == uid)
+            if (!_strippable.IsStripHidden(slotDef, args.User) || args.User == uid)
                 RaiseLocalEvent(item, ev);
         }
     }

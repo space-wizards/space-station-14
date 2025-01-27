@@ -97,6 +97,29 @@
     clothingPrototype: ClothingHeadHatHoodWinterBartender
 
 - type: entity
+  parent: ClothingOuterWinterCoatToggleable
+  id: ClothingOuterWinterBrigmedic
+  name: brigmedic winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    layers:
+    - state: BRIGMEDIC-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: BRIGMEDIC-inhand-left
+      right:
+      - state: BRIGMEDIC-inhand-right
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: BRIGMEDIC-equipped-OUTERCLOTHING
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterBrigmedic
+
+- type: entity
   parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband]
   id: ClothingOuterWinterCap
   name: captain's winter coat
@@ -756,7 +779,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterWarden
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseSyndicateContraband]
+  parent: [ClothingOuterWinterCoatToggleable, Tier1Contraband]
   id: ClothingOuterWinterSyndieCap
   name: syndicate's winter coat
   description: "The syndicate's winter coat is made of durable fabric, with gilded patterns, and coarse wool."
@@ -781,7 +804,7 @@
 
 ##############################################################
 - type: entity
-  parent: [ClothingOuterWinterWarden, BaseSyndicateContraband]
+  parent: [ClothingOuterWinterWarden, Tier1Contraband]
   id: ClothingOuterWinterSyndieCapArmored
   name: syndicate's armored winter coat
   description: "The syndicate's armored winter coat is made of durable fabric, with gilded patterns, and coarse wool."
@@ -795,7 +818,7 @@
 ##############################################################
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseSyndicateContraband]
+  parent: [ClothingOuterWinterCoatToggleable, Tier1Contraband]
   id: ClothingOuterWinterSyndie
   name: syndicate's winter coat
   description: Insulated winter coat, looks like a merch from "Syndieland".
@@ -853,6 +876,10 @@
   - type: Construction
     graph: WebObjects
     node: coat
+  - type: Butcherable
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 5
   - type: FlavorProfile
     flavors:
       - cobwebs

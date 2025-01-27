@@ -9,4 +9,7 @@ public sealed partial class SpawnOnTriggerComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Proto = string.Empty;
+
+    [DataField("amount")]
+    public int Amount = 1;
 }

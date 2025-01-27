@@ -5,7 +5,15 @@
     <GuideEntityEmbed Entity="MobDwarf" Caption=""/>
   </Box>
 
-  Dwarves are similar to humans in most respect, but tolerate alcohol better and are healed by it.
+  Dwarves are in most respects fairly similar to Humans, having diverged fairly recently on an evolutionary timescale. Aside from their [color=#1e90ff]smaller stature[/color] and [color=#1e90ff]ability to regenerate damage by consuming alcohol,[/color] the differences between Humans and Dwarves are largely cultural. 
 
+ ## Dwarf Naming Conventions
 
+  Dwarves typically use a first name in their native language and two compounded words for their last name.
+  - [color=#449944]Acceptable:[/color] Lorbam Shieldvault
+  - [color=#449944]Acceptable:[/color] Solon Metalrope
+  - [color=#449944]Acceptable:[/color] Tirist Stakearena
+  - [color=#449944]Acceptable:[/color] Obok Mirrorgolden
+  - [color=#449944]Acceptable:[/color] Unib Postknife
+  - [color=#994444]Bad:[/color] Benry
 </Document>

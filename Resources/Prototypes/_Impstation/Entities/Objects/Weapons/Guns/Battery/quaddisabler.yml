@@ -1,0 +1,27 @@
+- type: entity
+  name: quad disabler
+  parent: [ WeaponDisablerPractice, BaseSecurityCommandContraband ]
+  id: WeaponQuadDisabler
+  description: The disabling will be of extraordinary magnitude.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Launchers/quaddisabler.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Launchers/quaddisabler.rsi
+    quickEquip: false
+    slots:
+    - Back
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisablerQuad
+    fireCost: 1000
+  - type: GuideHelp
+    guides:
+    - Security
+    - Antagonists
+  - type: Item
+    size: Ginormous
+  - type: Gun
+    projectileSpeed: 1.3

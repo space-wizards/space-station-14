@@ -1,17 +1,29 @@
 - type: entity
-  parent: [BaseItem, BaseSyndicateContraband]
+  parent: [BaseItem, Tier2Contraband]
   id: EmagUnlimited
   suffix: Unlimited
   name: cryptographic sequencer
   description: The all-in-one hacking solution. The thinking man's lockpick. The iconic EMAG.
   components:
   - type: Emag
+    blacklist: # DV - Split Emag into 2 items, this one cannot emag doors
+      components:
+      - Airlock
   - type: Sprite
     sprite: Objects/Tools/emag.rsi
     state: icon
   - type: Item
     sprite: Objects/Tools/emag.rsi
     storedRotation: -90
+  # imp edits #
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 5
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: EmbedPassiveDamage
+  # end imp edits #
 
 - type: entity
   parent: EmagUnlimited

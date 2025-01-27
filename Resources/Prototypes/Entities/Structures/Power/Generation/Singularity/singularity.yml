@@ -100,3 +100,4 @@
             sprite: Structures/Power/Generation/Singularity/singularity_6.rsi
             state: singularity_6
             scale: .9,.9
+  - type: SupermatterImmune # imp

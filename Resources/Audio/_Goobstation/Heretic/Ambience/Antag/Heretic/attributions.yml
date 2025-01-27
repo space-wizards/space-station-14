@@ -1,0 +1,4 @@
+- files: ["ascend_ash.ogg", "ascend_blade.ogg", "ascend_flesh.ogg", "ascend_knock.ogg", "ascend_rust.ogg", "ascend_void.ogg", "heretic_gain.ogg", "heretic_gain_intense.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station"
+  source: "https://github.com/tgstation/tgstation/tree/master/sound/music/antag/heretic"

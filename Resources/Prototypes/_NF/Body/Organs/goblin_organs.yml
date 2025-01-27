@@ -1,0 +1,180 @@
+- type: entity
+  parent: OrganHumanBrain
+  id: OrganGoblinBrain
+  name: brain
+  suffix: Goblin
+  description: "The source of your woes."
+  components:
+  - type: Sprite
+    sprite: _NF/Mobs/Species/Goblin/organs.rsi
+    state: brain
+  - type: Organ
+  - type: Input
+    context: "ghost"
+  - type: Brain
+  - type: InputMover
+  - type: Examiner
+  - type: BlockMovement
+  - type: BadFood
+  - type: Tag
+    tags:
+      - Meat
+
+- type: entity
+  parent: OrganHumanEyes
+  id: OrganGoblinEyes
+  name: eyes
+  suffix: Goblin
+  components:
+  - type: Sprite
+    sprite: _NF/Mobs/Species/Goblin/organs.rsi
+    layers:
+      - state: eyeball-l
+      - state: eyeball-r
+
+- type: entity
+  parent: OrganHumanTongue
+  id: OrganGoblinTongue
+  name: tongue
+  suffix: Goblin
+  components:
+  - type: Sprite
+    sprite: _NF/Mobs/Species/Goblin/organs.rsi
+    state: tongue
+
+- type: entity
+  parent: OrganHumanAppendix
+  id: OrganGoblinAppendix
+  name: appendix
+  suffix: Goblin
+  components:
+  - type: Sprite
+    sprite: _NF/Mobs/Species/Goblin/organs.rsi
+    layers:
+    - state: appendix
+    - state: appendix-inflamed
+      visible: false
+
+- type: entity
+  parent: OrganHumanEars
+  id: OrganGoblinEars
+  name: ears
+  suffix: Goblin
+  components:
+  - type: Sprite
+    sprite: _NF/Mobs/Species/Goblin/organs.rsi
+    state: ears
+
+- type: entity
+  parent: BaseHumanOrgan
+  id: OrganGoblinLungs
+  name: lungs
+  suffix: Goblin
+  description: "They breathe business."
+  components:
+  - type: Sprite
+    sprite: _NF/Mobs/Species/Goblin/organs.rsi
+    layers:
+      - state: lung-l
+      - state: lung-r
+  - type: Lung
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Animal ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      Lung:
+        maxVol: 100.0
+        canReact: false
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+
+- type: entity
+  parent: OrganHumanHeart
+  id: OrganGoblinHeart
+  name: heart
+  suffix: Goblin
+  components:
+  - type: Sprite
+    sprite: _NF/Mobs/Species/Goblin/organs.rsi
+    state: heart-on
+  - type: Metabolizer
+    metabolizerTypes: [ Goblin ]
+
+- type: entity
+  parent: [ OrganHumanStomach, OrganAnimalStomach ]
+  id: OrganGoblinStomach
+  name: stomach
+  suffix: Goblin
+  description: "Shrooms go in here."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _NF/Mobs/Species/Goblin/organs.rsi
+    state: stomach
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Stomach
+  - type: Metabolizer
+    maxReagents: 3
+    metabolizerTypes: [ Animal ] # [ Goblin ]
+    removeEmpty: true
+    groups:
+    - id: Food
+    - id: Drink
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+    - id: Alcohol
+
+- type: entity
+  parent: OrganHumanLiver
+  id: OrganGoblinLiver
+  name: liver
+  suffix: Goblin
+  components:
+  - type: Sprite
+    sprite: _NF/Mobs/Species/Goblin/organs.rsi
+    state: liver
+  - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+    maxReagents: 1
+    metabolizerTypes: [ Goblin ]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+
+- type: entity
+  parent: OrganHumanKidneys
+  id: OrganGoblinKidneys
+  name: kidneys
+  suffix: Goblin
+  components:
+  - type: Sprite
+    sprite: _NF/Mobs/Species/Goblin/organs.rsi
+    layers:
+      - state: kidney-l
+      - state: kidney-r
+  # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
+  - type: Metabolizer
+    maxReagents: 5
+    metabolizerTypes: [ Animal ]
+    removeEmpty: true

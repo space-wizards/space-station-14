@@ -7,3 +7,13 @@
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobDwarfDummy
   skinColoration: HumanToned
+  maleFirstNames: DwarfFirst
+  femaleFirstNames: DwarfFirst
+  middleNames: DwarfMiddle
+  lastNames: DwarfLast
+  naming: FirstMiddleLast  
+  sexes:
+  - Male
+  - Female
+  - Unsexed
+

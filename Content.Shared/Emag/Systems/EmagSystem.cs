@@ -8,6 +8,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Tag;
+using Content.Shared.Whitelist;
 
 namespace Content.Shared.Emag.Systems;
 
@@ -23,7 +24,7 @@ public sealed class EmagSystem : EntitySystem
     [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!; // DeltaV - Add a whitelist/blacklist to the Emag
     public override void Initialize()
     {
         base.Initialize();
@@ -49,6 +50,15 @@ public sealed class EmagSystem : EntitySystem
 
         if (_tag.HasTag(target, comp.EmagImmuneTag))
             return false;
+
+            // DeltaV - Add a whitelist / blacklist to the Emag
+        if (_whitelist.IsWhitelistFail(comp.Whitelist, target)
+            || _whitelist.IsBlacklistPass(comp.Blacklist, target))
+        {
+            _popup.PopupClient(Loc.GetString("emag-invalid-target", ("emag", uid), ("target", target)), user, user);
+            return false;
+        }
+            // End of DV code
 
         TryComp<LimitedChargesComponent>(uid, out var charges);
         if (_charges.IsEmpty(uid, charges))
@@ -96,6 +106,13 @@ public sealed class EmagSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// Shows a popup to emag user (client side only!) and adds <see cref="EmaggedComponent"/> to the entity when handled
+/// </summary>
+/// <param name="UserUid">Emag user</param>
+/// <param name="Handled">Did the emagging succeed? Causes a user-only popup to show on client side</param>
+/// <param name="Repeatable">Can the entity be emagged more than once? Prevents adding of <see cref="EmaggedComponent"/></param>
+/// <remarks>Needs to be handled in shared/client, not just the server, to actually show the emagging popup</remarks>
 [ByRefEvent]
 public record struct GotEmaggedEvent(EntityUid UserUid, bool Handled = false, bool Repeatable = false);
 

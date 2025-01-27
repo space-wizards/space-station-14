@@ -1,0 +1,243 @@
+# Timers
+- type: loadoutEffectGroup
+  id: ClownExpertTimer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 108000 # 30 hrs
+
+- type: loadoutEffectGroup
+  id: ClownJanitorTimer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 108000 # 30 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobJanitor
+      time: 108000 # 30 hrs
+
+- type: loadoutEffectGroup
+  id: ClownCargoTimer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 108000 # 30 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 216000 #60 hrs
+
+- type: loadoutEffectGroup
+  id: ClownEngineerTimer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 108000 # 30 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 216000 #60 hrs
+
+- type: loadoutEffectGroup
+  id: ClownDoctorTimer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 108000 # 30 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Medical
+      time: 216000 #60 hrs
+
+- type: loadoutEffectGroup
+  id: ClownScientistTimer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 108000 # 30 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Science
+      time: 216000 #60 hrs
+
+- type: loadoutEffectGroup
+  id: ClownSecurityTimer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 108000 # 30 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Security
+      time: 216000 #60 hrs
+
+# Civilian
+- type: loadout
+  id: ChaplinClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownExpertTimer
+  equipment:
+    mask: ClothingMaskClownChaplin
+
+- type: loadout
+  id: ChaplinHonkrobes
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownExpertTimer
+  equipment:
+    outerClothing: ClothingOuterClownPriest
+
+- type: loadout
+  id: ServiceClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownExpertTimer
+  equipment:
+    mask: ClothingMaskClownService
+
+- type: loadout
+  id: ServiceClownApron
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownExpertTimer
+  equipment:
+    outerClothing: ClothingOuterApronClown
+
+- type: loadout
+  id: ClownShoesExpert
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownExpertTimer
+  equipment:
+    shoes: ClothingShoesClown
+
+- type: loadout
+  id: JanitorClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownJanitorTimer
+  equipment:
+    mask: ClothingMaskClownScience
+
+- type: loadout
+  id: JanitorClownShoes
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownJanitorTimer
+  equipment:
+    shoes: ClothingShoesClown
+
+# Cargo
+- type: loadout
+  id: CargoClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownCargoTimer
+  equipment:
+    mask: ClothingMaskClownCargo
+
+- type: loadout
+  id: CargoClownShoes
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownCargoTimer
+  equipment:
+    shoes: ClothingShoesClown
+
+# Engineer
+- type: loadout
+  id: EngineerClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownEngineerTimer
+  equipment:
+    mask: ClothingMaskClownEngineer
+
+- type: loadout
+  id: EngineerClownShoes
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownEngineerTimer
+  equipment:
+    shoes: ClothingShoesClown
+
+# Doctor
+- type: loadout
+  id: DoctorClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownDoctorTimer
+  equipment:
+    mask: ClothingMaskClownMedical
+
+- type: loadout
+  id: DoctorClownShoes
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownDoctorTimer
+  equipment:
+    shoes: ClothingShoesClown
+
+# Scientist
+- type: loadout
+  id: ScientistClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownScientistTimer
+  equipment:
+    mask: ClothingMaskClownScience
+
+- type: loadout
+  id: RoboticsClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownScientistTimer
+  equipment:
+    mask: ClothingMaskClownRobotics
+
+- type: loadout
+  id: ScientistClownShoes
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownScientistTimer
+  equipment:
+    shoes: ClothingShoesClown
+
+# Security
+- type: loadout
+  id: SecurityClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownSecurityTimer
+  equipment:
+    mask: ClothingMaskClownSecurity
+
+- type: loadout
+  id: SecurityClownShoes
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownSecurityTimer
+  equipment:
+    shoes: ClothingShoesClown

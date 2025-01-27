@@ -1,0 +1,119 @@
+# TODO: Add descriptions (many)
+# TODO BODY: Part damage
+- type: entity
+  id: PartGray
+  parent: [BaseItem, BasePart]
+  name: "gray body part"
+  abstract: true
+  components:
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: Blood
+        Quantity: 10
+
+- type: entity
+  id: TorsoGray
+  name: "gray torso"
+  parent: [PartGray, BaseTorso]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
+    state: "torso_m"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 10
+      - ReagentId: Blood
+        Quantity: 20
+
+- type: entity
+  id: HeadGray
+  name: "gray head"
+  parent: [PartGray, BaseHead]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
+    state: "head_m"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 5
+      - ReagentId: Blood
+        Quantity: 10
+
+- type: entity
+  id: LeftArmGray
+  name: "left gray arm"
+  parent: [PartGray, BaseLeftArm]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
+    state: "l_arm"
+
+- type: entity
+  id: RightArmGray
+  name: "right gray arm"
+  parent: [PartGray, BaseRightArm]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
+    state: "r_arm"
+
+- type: entity
+  id: LeftHandGray
+  name: "left gray hand"
+  parent: [PartGray, BaseLeftHand]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
+    state: "l_hand"
+
+- type: entity
+  id: RightHandGray
+  name: "right gray hand"
+  parent: [PartGray, BaseRightHand]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
+    state: "r_hand"
+
+- type: entity
+  id: LeftLegGray
+  name: "left gray leg"
+  parent: [PartGray, BaseLeftLeg]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
+    state: "l_leg"
+
+- type: entity
+  id: RightLegGray
+  name: "right gray leg"
+  parent: [PartGray, BaseRightLeg]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
+    state: "r_leg"
+
+- type: entity
+  id: LeftFootGray
+  name: "left gray foot"
+  parent: [PartGray, BaseLeftFoot]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
+    state: "l_foot"
+
+- type: entity
+  id: RightFootGray
+  name: "right gray foot"
+  parent: [PartGray, BaseRightFoot]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Gray/parts.rsi
+    state: "r_foot"

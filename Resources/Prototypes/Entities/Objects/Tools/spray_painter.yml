@@ -9,6 +9,9 @@
     state: spray_painter
   - type: Item
     sprite: Objects/Tools/spray_painter.rsi
+  - type: Tag # Imp
+    tags:
+    - SprayPainter
   - type: ActivatableUI
     key: enum.SprayPainterUiKey.Key
   - type: UserInterface
@@ -18,13 +21,19 @@
   - type: SprayPainter
     colorPalette:
       red: '#FF1212FF'
-      yellow: '#B3A234FF'
-      brown: '#947507FF'
+      yellow: '#FFFF00FF'
+      orange: '#FF6600FF'
       green: '#3AB334FF'
-      cyan: '#03FCD3FF'
+      cyan: '#00FFFFFF'
       blue: '#0335FCFF'
       white: '#FFFFFFFF'
       black: '#333333FF'
+      purple: '#7A2DFFFF'
+      magenta: '#FF00FFFF'
+      ice blue: '#64DAFFFF'
+      sky blue: '#0099FFFF'
+      lime green: '#D3FC03FF'
+      seafoam green: '#00FF87FF'
       # standard atmos pipes
       waste: '#990000'
       distro: '#0055cc'

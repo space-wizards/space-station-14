@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: ClothingOuterCoatRobesGoblinGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: ClothingOuterCoatRobesGoblinNode
+      steps:
+      - material: Cloth
+        amount: 10
+        doAfter: 10
+  - node: ClothingOuterCoatRobesGoblinNode
+    entity: ClothingOuterCoatRobesGoblin

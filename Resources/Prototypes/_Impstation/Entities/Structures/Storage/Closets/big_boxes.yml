@@ -1,0 +1,59 @@
+- type: entity
+  id: BaseLittleTykesCar
+  name: little guys car #it's still just a box
+  description: Vroom vroom.
+  components:
+    - type: InteractionOutline
+    - type: InputMover
+    - type: Sprite
+      noRot: false #if anyone enables this i will kill them personally with my bare hands
+      sprite: _Impstation/Objects/Storage/littlecar.rsi
+      layers:
+      - state: littletykescar
+        map: ["enum.StorageVisualLayers.Base"]
+      - state: littletykescar_open
+        map: ["enum.StorageVisualLayers.Door"]
+    - type: Transform
+      noRot: false
+    - type: Clickable
+    - type: Physics
+      bodyType: KinematicController
+    - type: Rotatable
+      rotateWhileAnchored: false
+    - type: MobMover
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: "0.35"
+          density: 100
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+          hard: true
+    - type: Pullable
+    - type: CardboardBox
+      effectSound: /Audio/_Impstation/Effects/tinycarhorn.ogg
+    - type: EntityStorage
+      isCollidableWhenOpen: false
+      openOnMove: false
+      airtight: false
+      capacity: 4
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+    - type: Damageable
+      damageContainer: Box
+    - type: Appearance
+    - type: EntityStorageVisuals
+      stateBaseClosed: littletykescar
+      stateDoorOpen: littletykescar_open
+    - type: Tag
+      tags:
+        - DoorBumpOpener
+        - FootstepSound
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepSkates

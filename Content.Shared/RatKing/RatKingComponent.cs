@@ -59,6 +59,13 @@ public sealed partial class RatKingComponent : Component
     public RatKingOrderType CurrentOrder = RatKingOrderType.Loose;
 
     /// <summary>
+    /// How far away your pointing arrow be from something and still have it be targeted if the arrow isn't directly ON it.
+    /// </summary>
+    [DataField("pointingMargin"), ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public float PointingMargin = 1f;
+
+    /// <summary>
     /// The servants that the rat king is currently controlling
     /// </summary>
     [DataField("servants")]

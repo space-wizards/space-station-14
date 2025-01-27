@@ -29,6 +29,11 @@
   - type: Tag
     tags:
     - Trash
+    - PetWearable
+  - type: Food
+  - type: FlavorProfile
+    flavors:
+      - cigarettes
   - type: SolutionContainerManager
     solutions:
       smokable:
@@ -36,6 +41,14 @@
         reagents:
           - ReagentId: Nicotine
             Quantity: 10
+      food:
+        maxVol: 20
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+  - type: FoodSequenceElement
+    entries:
+      Burger: CigarBurger
 
 - type: entity
   parent: BaseSmokable

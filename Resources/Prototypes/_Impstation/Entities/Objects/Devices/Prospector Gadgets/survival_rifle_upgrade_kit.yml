@@ -1,0 +1,29 @@
+- type: entity
+  name: survival rifle .20 converter
+  parent: [BaseItem, BaseMajorContraband]
+  id: WeaponSurvivalRifleUpgradeRifleKit
+  description: A converter module that upgrades the possible ammo selections for the survival rifle to include .20 rifle rounds.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: abductor_mod
+  - type: Item
+    size: Small
+  - type: Tag
+    tags:
+    - WeaponSurvivalRifleUpgradeRifleKit
+
+- type: entity
+  name: survival rifle .35 converter
+  parent: [BaseItem, BaseMajorContraband]
+  id: WeaponSurvivalRifleUpgradeSMGKit
+  description: A converter module that upgrades the possible ammo selections for the survival rifle to include .35 SMG rounds.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: abductor_mod
+  - type: Item
+    size: Small
+  - type: Tag
+    tags:
+    - WeaponSurvivalRifleUpgradeSMGKit

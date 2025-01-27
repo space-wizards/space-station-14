@@ -8,6 +8,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Announcements.Systems;
 
 namespace Content.Server.PowerSink
 {
@@ -33,6 +34,7 @@ namespace Content.Server.PowerSink
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly BatterySystem _battery = default!;
+        [Dependency] private readonly AnnouncerSystem _announcer = default!;
 
         public override void Initialize()
         {
@@ -126,12 +128,9 @@ namespace Content.Server.PowerSink
             if (station == null)
                 return;
 
-            _chat.DispatchStationAnnouncement(
-                station.Value,
-                Loc.GetString("powersink-immiment-explosion-announcement"),
-                playDefaultSound: true,
-                colorOverride: Color.Yellow
-            );
+            _announcer.SendAnnouncement(_announcer.GetAnnouncementId("PowerSinkExplosion"),
+                _station.GetInOwningStation(station.Value), "powersink-imminent-explosion-announcement",
+                colorOverride: Color.Yellow, station: station.Value);
         }
     }
 }

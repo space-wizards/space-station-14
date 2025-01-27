@@ -175,6 +175,14 @@
   description: barsign-prototype-description-emprah
 
 - type: barSign
+  id: imp
+  name: barsign-prototype-name-imp
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: imp
+  description: barsign-prototype-description-imp
+
+- type: barSign
   id: Spacebucks
   name: barsign-prototype-name-spacebucks
   icon:

@@ -1,47 +1,313 @@
 - type: dataset
   id: fake_human_first
-  values:
+  values: # i input the ENTIRE roster of Fighting Baseball (SNES) into this list and if I annotated which ones were new i might do something drastic
+  - Adam
+  - Adrien
   - Al
+  - Alex
+  - Alexnder
+  - Allan
+  - Allen
   - Anatoli
+  - Andre
+  - Andres
+  - Andrew
+  - Andrey
+  - Andujar
+  - Andy
+  - Anthony
+  - Archi
+  - Arison
+  - Ark
+  - Armando
+  - Arturs
+  - Ave
+  - Barry
+  - Ben
+  - Benito
+  - Benoit
+  - Bernard
+  - Bernie
+  - Bill
+  - Billy
   - Bip
   - Birry
   - Biry
+  - Blas
+  - Bob
+  - Bobby
   - Bobson
+  - Brad
+  - Brent
+  - Bret
+  - Brett
+  - Brian
+  - Bruce
+  - Bryan
+  - Byron
+  - Calle
   - Cam
+  - Carlie
+  - Carlos
+  - Cary
+  - Casey
+  - Charlie
+  - Chico
+  - Chris
+  - Chuck
+  - Claude
+  - Cliff
+  - Corey
   - Cort
+  - Craig
+  - Curt
+  - Dale
+  - Damon
+  - Dan
+  - Dana
+  - Danny
+  - Dante
+  - Darrell
+  - Darren
+  - Darrin
   - Darryl
+  - Daryl
+  - Dave
+  - David
   - Dean
+  - Deion
+  - Delino
   - Denis
+  - Dennis
+  - Derek
+  - Derrick
+  - Dick
+  - Dimitri
+  - Dominic
+  - Don
+  - Donn
+  - Donovan
+  - Doug
+  - Dwight
   - Dwigt
+  - Ed
+  - Eddie
+  - Elvis
   - Emitri
+  - Eric
+  - Esa
+  - Fran
+  - Franco
+  - Frank
   - Fred
+  - Gaetan
+  - Garry
+  - Gary
+  - Gene
+  - Geoff
+  - Gerald
+  - German
+  - Geronimo
+  - Gino
+  - Glen
   - Glenallen
+  - Glenn
+  - Gran
+  - Grant
+  - Greg
+  - Gregg
+  - Guy
+  - Hal
+  - Henry
+  - Howard
+  - Howel
+  - Ick
+  - Igor
+  - Jack
+  - Jacky
+  - Jacob
+  - Jakson
+  - James
+  - Jamie
+  - Jan
+  - Jari
+  - Jarvis
+  - Jason
+  - Jay
+  - Jeff
+  - Jemus
+  - Jerald
   - Jeromy
+  - Jerry
+  - Jes
+  - Jesse
+  - Jim
+  - Jimmy
+  - Jody
+  - Joe
+  - Joel
+  - Joey
+  - Johan
+  - John
+  - Jon
   - Jonasan
+  - Jose
+  - Josef
+  - Juan
   - Karl
+  - Kay
+  - Keith
+  - Kelly
+  - Ken
+  - Kent
+  - Kerry
   - Kevin
+  - Kim
+  - Kirk
+  - Kirt
   - Krik
+  - Larry
   - Lay
+  - Lee
+  - Lenny
+  - Les
+  - Llyod
+  - Lou
+  - Luc
+  - Luis
+  - Luke
+  - Mac
   - Mario
+  - Mark
+  - Marquis
+  - Martin
+  - Marty
+  - Matias
+  - Matt
+  - Mel
+  - Melvin
   - Mibre
+  - Michael
+  - Michal
+  - Mickey
+  - Mikael
   - Mike
+  - Mikhail
+  - Milt
+  - Mirano
+  - Mitch
+  - Moises
+  - Murray
+  - Naigal
+  - Nelson
+  - Nick
   - Nicol
   - Nigel
+  - Oleg
+  - Olis
+  - Omar
   - Onson
+  - Orel
+  - Oreste
+  - Orestes
+  - Orlando
+  - Otiz
+  - Ozzi
   - Ozzie
+  - Pat
+  - Patrick
+  - Paul
+  - Pavel
+  - Pedro
+  - Pele
+  - Pete
+  - Peter
+  - Phil
+  - Pierre
+  - Rafael
+  - Ramon
+  - Randy
   - Raul
+  - Ray
+  - Reggie
+  - Rehal
+  - Rene
   - Rey
+  - Rian
+  - Rich
+  - Richard
+  - Richie
+  - Rick
+  - Rickey
+  - Ricky
+  - Rob
+  - Robby
+  - Robert
+  - Roberto
+  - Rocky
+  - Rod
+  - Roger
   - Roid
+  - Roman
+  - Ron
   - Ronnis
+  - Roy
+  - Royce
+  - Ruben
+  - Ryan
+  - Ryne
+  - Sala
+  - Salomon
+  - Sam
+  - Sammy
+  - Sandis
+  - Sandy
+  - Scooter
   - Scott
+  - Sean
   - Secil
+  - Sergei
+  - Shawn
+  - Sho
   - Shown
+  - Sib
+  - Sid
   - Sleeve
   - Sleve
+  - Stan
+  - Stephan
+  - Stephane
+  - Stephen
+  - Steve
+  - Steven
+  - Sylvain
+  - Ted
+  - Terry
+  - Thomas
   - Tim
   - Todd
+  - Tom
+  - Tomas
+  - Tommy
+  - Tonny
   - Tony
-  - Willie
+  - Tracy
+  - Travis
+  - Trent
+  - Trevor
+  - Troy
+  - Valeri
+  - Vince
+  - Vincent
+  - Vinny
+  - Wally
+  - Walt
+  - Warren
+  - Wayne
+  - Wes
+  - Wil
   - Willie
   - Wirry
+  - Xavier
   - Yan
+  - Zane

@@ -1,0 +1,14 @@
+# Cargo
+
+- type: entity
+  id: SpawnPointCourier
+  parent: SpawnPointJobBase
+  name: courier
+  components:
+  - type: SpawnPoint
+    job_id: Courier
+  - type: Sprite
+    sprite: _Impstation/Markers/jobs.rsi
+    layers:
+    - state: green
+    - state: courier

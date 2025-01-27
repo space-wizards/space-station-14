@@ -1,15 +1,13 @@
 using System.Linq;
 using System.Numerics;
+using Content.Server._Impstation.Weapons.Ranged;
 using Content.Server.Cargo.Systems;
-using Content.Server.Interaction;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Stunnable;
 using Content.Server.Weapons.Ranged.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Effects;
-using Content.Shared.Interaction.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
@@ -33,16 +31,13 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
-    [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
-    [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
     private const float DamagePitchVariation = 0.05f;
-    public const float GunClumsyChance = 0.5f;
 
     public override void Initialize()
     {
@@ -71,26 +66,14 @@ public sealed partial class GunSystem : SharedGunSystem
     {
         userImpulse = true;
 
-        // Try a clumsy roll
-        // TODO: Who put this here
-        if (TryComp<ClumsyComponent>(user, out var clumsy) && gun.ClumsyProof == false)
+        if (user != null)
         {
-            for (var i = 0; i < ammo.Count; i++)
+            var selfEvent = new SelfBeforeGunShotEvent(user.Value, (gunUid, gun), ammo);
+            RaiseLocalEvent(user.Value, selfEvent);
+            if (selfEvent.Cancelled)
             {
-                if (_interaction.TryRollClumsy(user.Value, GunClumsyChance, clumsy))
-                {
-                    // Wound them
-                    Damageable.TryChangeDamage(user, clumsy.ClumsyDamage, origin: user);
-                    _stun.TryParalyze(user.Value, TimeSpan.FromSeconds(3f), true);
-
-                    // Apply salt to the wound ("Honk!")
-                    Audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), gunUid);
-                    Audio.PlayPvs(clumsy.ClumsySound, gunUid);
-
-                    PopupSystem.PopupEntity(Loc.GetString("gun-clumsy"), user.Value);
-                    userImpulse = false;
-                    return;
-                }
+                userImpulse = false;
+                return;
             }
         }
 
@@ -315,16 +298,32 @@ public sealed partial class GunSystem : SharedGunSystem
             Dirty(uid, targeted);
         }
 
+        //imp special - reverse engineer proj speed buffs from the weapon
+        //this is a vile evil hack and also probably the only good way to do this without a complete rewrite of this entire system
+        //todo turn this into a specific event?
+        //or something more complicated that (hopefully) goes into upstream instead of exclusively being an us thing
+        //anyway - tried hooking into a couple different events & it didn't like working consistently, would either break after the first shot or persist after the ammo w/ modified proj speed had been fired w/ no clear way to un-modify the proj speed
+        var projspeed = gun.ProjectileSpeedModified;
+        if (TryComp<ProjectileSpeedOverrideComponent>(uid, out var speedComp))
+        {
+            var baseSpeed = gun.ProjectileSpeed;
+            var modifiedSpeed = gun.ProjectileSpeedModified;
+            var ratio = modifiedSpeed / baseSpeed;
+
+            projspeed = speedComp.SpeedOverride * ratio;
+        }
+        //imp special end
+
         // Do a throw
         if (!HasComp<ProjectileComponent>(uid))
         {
             RemoveShootable(uid);
             // TODO: Someone can probably yeet this a billion miles so need to pre-validate input somewhere up the call stack.
-            ThrowingSystem.TryThrow(uid, mapDirection, gun.ProjectileSpeedModified, user);
+            ThrowingSystem.TryThrow(uid, mapDirection, projspeed, user);
             return;
         }
 
-        ShootProjectile(uid, mapDirection, gunVelocity, gunUid, user, gun.ProjectileSpeedModified);
+        ShootProjectile(uid, mapDirection, gunVelocity, gunUid, user, projspeed);
     }
 
     /// <summary>

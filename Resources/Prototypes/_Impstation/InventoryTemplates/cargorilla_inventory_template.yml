@@ -1,0 +1,17 @@
+- type: inventoryTemplate
+  id: cargorilla
+  slots:
+  - name: id
+    slotTexture: id
+    slotFlags: IDCARD
+    stripTime: 6
+    uiWindowPos: 0,1
+    strippingWindowPos: 2,4
+    displayName: ID
+  - name: ears
+    slotTexture: ears
+    slotFlags: EARS
+    stripTime: 3
+    uiWindowPos: 2,2
+    strippingWindowPos: 2,0
+    displayName: Ears

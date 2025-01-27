@@ -53,7 +53,7 @@
 
 - type: loadout
   id: QuartermasterMantle
-  equipment: 
+  equipment:
     neck: ClothingNeckMantleQM
   effects:
   - !type:GroupLoadoutEffect
@@ -69,3 +69,14 @@
   id: QuartermasterWintercoat
   equipment:
     outerClothing: ClothingOuterWinterQM
+
+# Headset
+- type: loadout
+  id: QuartermasterHeadsetBasic
+  equipment:
+    ears: ClothingHeadsetQM
+
+- type: loadout
+  id: QuartermasterHeadset
+  equipment:
+    ears: ClothingHeadsetAltCargo

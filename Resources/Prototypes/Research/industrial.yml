@@ -12,8 +12,6 @@
   recipeUnlocks:
   - MiningDrill
   - MineralScannerEmpty
-  - BorgModuleMining
-  - BorgModuleGrapplingGun
   - OreProcessorIndustrialMachineCircuitboard
   - ClothingMaskWeldingGas
 
@@ -43,6 +41,7 @@
   recipeUnlocks:
   - PowerCellHigh
   - TurboItemRechargerCircuitboard
+  - SMESAdvancedMachineCircuitboard
 
 - type: technology
   id: MechanicalCompression
@@ -84,7 +83,6 @@
   - PortableGeneratorPacmanMachineCircuitboard
   - PortableGeneratorSuperPacmanMachineCircuitboard
   - PortableGeneratorJrPacmanMachineCircuitboard
-  - PowerComputerCircuitboard #the actual solar panel itself should be in here
   - SolarControlComputerCircuitboard
   - SolarTrackerElectronics
   - EmitterCircuitboard
@@ -93,7 +91,7 @@
   id: AtmosphericTech
   name: research-technology-atmospheric-tech
   icon:
-    sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+    sprite: _Impstation/Structures/Piping/Atmospherics/thermomachine.rsi
     state: freezerOff
   discipline: Industrial
   tier: 1
@@ -136,6 +134,7 @@
   - ShuttleConsoleCircuitboard
   - ThrusterMachineCircuitboard
   - GyroscopeMachineCircuitboard
+  - MiniGyroscopeMachineCircuitboard
   - MiniGravityGeneratorCircuitboard
 
 - type: technology
@@ -168,11 +167,10 @@
     - PowerDrill
     - JawsOfLife
     - BorgModuleAdvancedTool
-    - BorgModuleRCD
 
 - type: technology
-  id: MassExcavation
-  name: research-technology-excavation
+  id: AdvancedSalvage
+  name: research-technology-advanced-salvage
   icon:
     sprite: Objects/Tools/handdrilldiamond.rsi
     state: handdrill
@@ -183,6 +181,8 @@
     - OreBagOfHolding
     - MiningDrillDiamond
     - AdvancedMineralScannerEmpty
+    - Fulton
+    - FultonBeacon
 
 # Tier 3
 

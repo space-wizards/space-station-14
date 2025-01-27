@@ -11,3 +11,8 @@ grass1.ogg and grass2.ogg are taken from https://freesound.org/people/D001447733
 grass3.ogg and grass4.ogg are taken from https://freesound.org/people/jevans27/sounds/563529/ by jevans27 licensed under CC-0 and split/modified by mirrorcult
 
 snowstep1.ogg, snowstep2.ogg, snowstep3.ogg, and snowstep4.ogg are taken from https://freesound.org/people/alexo400/sounds/543385/ by alexo400 licensed under CC-0 and split by EmoGarbage404
+
+snailstep.ogg by widgetbeck
+
+boots are taken from https://freesound.org/s/583715/ and made by DexD73 under CC-0
+highheels were provided by DinnerCalzone (github) and modified by Sha-Seng (github) under CC-0

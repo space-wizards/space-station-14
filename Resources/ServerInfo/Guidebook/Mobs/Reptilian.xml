@@ -4,13 +4,29 @@
   <Box>
     <GuideEntityEmbed Entity="MobReptilian" Caption=""/>
   </Box>
+  
+  Reptillians are universally adapted for warm climates, but are remarkably biodiverse - ranging from desert-adapted subspecies with heat-regulating radiative sails, to semi-aquatic subspecies complete with gills and fins.
+  
+  As all Reptillians possess prehensile tails, [color=#1e90ff]they are capable of dragging objects behind them without using their hands.[/color]
+  
+  ## Dietary Restrictions
+  
+  Reptillians are obligate carnivores, and as such are [color=#ffa500]only able to digest meat and fruit products.[/color] Their immune system has adapted to provide immunity to most food-borne illnesses, meaning [color=#1e90ff]they are able to eat raw meat and drink blood without suffering any ill effects.[/color]
 
-  They can ONLY eat fruits and meat, but can eat raw meat and drink blood without any ill effects.
-  They prefer a somewhat higher temperature range than humans.
-  They can drag objects with their tail, keeping both their hands free.
+  ## Damage
+  Due to their cold-blooded nature, Reptillians take [color=#ffa500]30% more Cold damage.[/color]
+  
+  As they possess claws, [color=#1e90ff]their unarmed attacks do Slash damage instead of blunt.[/color]
 
-  Their unarmed claw attacks deal Slash damage instead of Blunt.
-
-  They take [color=#ffa500]30% more Cold damage.[/color]
-
+ ## Reptilian Naming Conventions
+  Reptilian names traditionally take the form of a short hyphenated phrase in their native language, typically related to their professions or interests. Some Reptilians may choose to translate this name into Common.
+  - [color=#449944]Acceptable:[/color] Kepanuu-Topith
+  - [color=#449944]Acceptable:[/color] Ja-Tasha
+  - [color=#449944]Acceptable:[/color] Ta-Zeen
+  - [color=#449944]Acceptable:[/color] Protects-and-Serves
+  - [color=#449944]Acceptable:[/color] Bites-Off-Faces
+  - [color=#449944]Acceptable:[/color] Brain-Transplant-Successful
+  - [color=#449944]Acceptable:[/color] Odds-and-Ends
+  - [color=#994444]Bad:[/color] Bans-the-Admins
+  - [color=#994444]Bad:[/color] Benry
 </Document>

@@ -1,0 +1,16 @@
+- type: constructionGraph
+  id: SackHead
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: eyesack
+      steps:
+      - tag: HempSack
+        name: a sack made from hemp cloth
+        icon:
+         sprite: Clothing/Head/Helmets/hempsack.rsi
+         state: icon
+        doAfter: 5
+  - node: eyesack
+    entity: ClothingHeadSack

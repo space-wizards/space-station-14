@@ -1,0 +1,40 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+						xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+						xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+						Title="{Loc 'chaplain-gearmenu-window-title'}"
+						MinSize="700 500">
+	<BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+		<!-- First Informational panel -->
+		<Label Name="Description" Margin="5 5"/>
+		<controls:HLine Color="#d19c26" Thickness="2" Margin="5 5"/>
+		<Label Name="SelectedSets" Text="{Loc 'chaplain-gearmenu-window-selected'}" Margin="5 5"/>
+
+		<!-- Second sets panel -->
+		<PanelContainer Margin="5 5">
+			<PanelContainer.PanelOverride>
+				<gfx:StyleBoxFlat BackgroundColor="#1c1c23" />
+			</PanelContainer.PanelOverride>
+			<ScrollContainer
+					HScrollEnabled="False"
+					MinSize="0 400"
+					SizeFlagsStretchRatio="2"
+					VerticalExpand="True"
+                    HorizontalExpand="True">
+				<BoxContainer Name="SetsGrid" Orientation="Vertical" MinSize="460 200">
+					<!-- Sets is filled by code -->
+
+				</BoxContainer>
+			</ScrollContainer>
+		</PanelContainer>
+
+		<!-- Third approve button panel -->
+		<PanelContainer Margin="10">
+			<Button Name="ApproveButton"
+					Text="{Loc 'thief-backpack-window-approve-button'}"
+					Margin="0 5"
+					Access="Public"
+					HorizontalAlignment ="Right"
+					StyleClasses="OpenRight"/>
+		</PanelContainer>
+	</BoxContainer>
+</controls:FancyWindow>

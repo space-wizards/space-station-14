@@ -11,11 +11,14 @@
   - Maintenance
   extendedAccess:
   - Chemistry
+  special: # imp
+  - !type:AddComponentSpecial
+    components:
+    - type: SupermatterSoother
 
 - type: startingGear
   id: PsychologistGear
   equipment:
-    shoes: ClothingShoesLeather
     id: PsychologistPDA
     ears: ClothingHeadsetMedical
   storage:

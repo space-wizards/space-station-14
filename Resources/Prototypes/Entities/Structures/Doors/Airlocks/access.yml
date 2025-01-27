@@ -1,17 +1,15 @@
 # Airlocks
 - type: entity
-  parent: Airlock
+  parent: AirlockService #imp edit
   id: AirlockServiceLocked
   suffix: Service, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsService ]
-  - type: Wires
-    layoutId: AirlockService
 
 - type: entity
-  parent: AirlockServiceLocked
+  parent: AirlockLawyer #imp edit
   id: AirlockLawyerLocked
   suffix: Lawyer, Locked
   components:
@@ -20,7 +18,7 @@
       board: [ DoorElectronicsLawyer ]
 
 - type: entity
-  parent: AirlockServiceLocked
+  parent: AirlockTheatre #imp edit
   id: AirlockTheatreLocked
   suffix: Theatre, Locked
   components:
@@ -29,7 +27,7 @@
       board: [ DoorElectronicsTheatre ]
 
 - type: entity
-  parent: AirlockServiceLocked
+  parent: AirlockChapel #imp edit
   id: AirlockChapelLocked
   suffix: Chapel, Locked
   components:
@@ -38,7 +36,7 @@
       board: [ DoorElectronicsChapel ]
 
 - type: entity
-  parent: AirlockServiceLocked
+  parent: AirlockJanitor #imp edit
   id: AirlockJanitorLocked
   suffix: Janitor, Locked
   components:
@@ -47,7 +45,7 @@
       board: [ DoorElectronicsJanitor ]
 
 - type: entity
-  parent: AirlockServiceLocked
+  parent: AirlockKitchen #imp edit
   id: AirlockKitchenLocked
   suffix: Kitchen, Locked
   components:
@@ -56,7 +54,7 @@
       board: [ DoorElectronicsKitchen ]
 
 - type: entity
-  parent: AirlockServiceLocked
+  parent: AirlockBar #imp edit
   id: AirlockBarLocked
   suffix: Bar, Locked
   components:
@@ -103,6 +101,28 @@
       board: [ DoorElectronicsEngineering ]
   - type: Wires
     layoutId: AirlockEngineering
+
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalCommandLocked
+  suffix: External, Command, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCommand ]
+  - type: Wires
+    layoutId: AirlockCommand
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassCommandLocked
+  suffix: External, Glass, Command, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCommand ]
+  - type: Wires
+    layoutId: AirlockCommand
 
 - type: entity
   parent: AirlockExternal
@@ -192,7 +212,7 @@
       board: [ DoorElectronicsCargo ]
 
 - type: entity
-  parent: AirlockCargo
+  parent: AirlockSalvage #imp edit
   id: AirlockSalvageLocked
   suffix: Salvage, Locked
   components:
@@ -411,18 +431,16 @@
 
 # Glass Airlocks
 - type: entity
-  parent: AirlockGlass
+  parent: AirlockServiceGlass #imp edit
   id: AirlockServiceGlassLocked
   suffix: Service, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsService ]
-  - type: Wires
-    layoutId: AirlockService
 
 - type: entity
-  parent: AirlockServiceGlassLocked
+  parent: AirlockLawyerGlass #imp edit
   id: AirlockLawyerGlassLocked
   suffix: Lawyer, Locked
   components:
@@ -431,7 +449,7 @@
       board: [ DoorElectronicsLawyer ]
 
 - type: entity
-  parent: AirlockServiceGlassLocked
+  parent: AirlockTheatreGlass #imp edit
   id: AirlockTheatreGlassLocked
   suffix: Theatre, Locked
   components:
@@ -440,7 +458,7 @@
       board: [ DoorElectronicsTheatre ]
 
 - type: entity
-  parent: AirlockServiceGlassLocked
+  parent: AirlockBarGlass #imp edit
   id: AirlockBarGlassLocked
   suffix: Bar, Locked
   components:
@@ -513,7 +531,7 @@
     layoutId: AirlockEngineering
 
 - type: entity
-  parent: AirlockServiceGlassLocked
+  parent: AirlockKitchenGlass #imp edit
   id: AirlockKitchenGlassLocked
   suffix: Kitchen, Locked
   components:
@@ -522,7 +540,7 @@
       board: [ DoorElectronicsKitchen ]
 
 - type: entity
-  parent: AirlockServiceGlassLocked
+  parent: AirlockJanitorGlass #imp edit
   id: AirlockJanitorGlassLocked
   suffix: Janitor, Locked
   components:
@@ -540,7 +558,7 @@
       board: [ DoorElectronicsHydroponics ]
 
 - type: entity
-  parent: AirlockServiceGlassLocked
+  parent: AirlockChapelGlass #imp edit
   id: AirlockChapelGlassLocked
   suffix: Chapel, Locked
   components:
@@ -576,7 +594,7 @@
       board: [ DoorElectronicsCargo ]
 
 - type: entity
-  parent: AirlockCargoGlass
+  parent: AirlockSalvageGlass #imp edit
   id: AirlockSalvageGlassLocked
   suffix: Salvage, Locked
   components:
@@ -948,6 +966,15 @@
       board: [ DoorElectronicsKitchen ]
 
 - type: entity
+  parent: AirlockMaintServiceLocked
+  id: AirlockMaintKitchenHydroLocked
+  suffix: Kitchen/Hydroponics, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsKitchenHydroponics ]
+
+- type: entity
   parent: AirlockMaint
   id: AirlockMaintIntLocked
   suffix: Interior, Locked
@@ -966,6 +993,15 @@
       board: [ DoorElectronicsMedical ]
   - type: Wires
     layoutId: AirlockMedical
+
+- type: entity
+  parent: AirlockMaintMedLocked
+  id: AirlockMedicalMorgueMaintLocked
+  suffix: Morgue, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMorgue ]
 
 - type: entity
   parent: AirlockMaintMedLocked

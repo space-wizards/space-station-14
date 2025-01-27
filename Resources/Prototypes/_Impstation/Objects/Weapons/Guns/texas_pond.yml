@@ -1,0 +1,39 @@
+- type: entity
+  name: texas pond
+  parent: BaseWeaponLauncher
+  id: WeaponTexasPond
+  description: A compact, violently-modified, spray-painted, single-shot pistol that fires grenades. Make sure it doesn't blow in your hand.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Prospectors/Weapons/texas_pond.rsi
+    layers:
+      - state: icon
+        map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    size: Small
+    sprite: _Impstation/Prospectors/Weapons/texas_pond.rsi
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - Grenade
+    capacity: 1
+    proto: GrenadeFrag
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
+    quickEquip: false
+    slots:
+    - Belt
+    - suitStorage

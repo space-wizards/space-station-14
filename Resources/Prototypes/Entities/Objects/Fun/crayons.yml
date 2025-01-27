@@ -21,7 +21,7 @@
       enum.CrayonUiKey.Key:
         type: CrayonBoundUserInterface
   - type: Crayon
-    capacity: 25
+    capacity: 100
   - type: Food
   - type: FlavorProfile
     flavors:
@@ -37,6 +37,11 @@
           Quantity: 2
   - type: StaticPrice
     price: 5
+  - type: FoodSequenceElement
+    entries:
+      Burger: CrayonBurger
+  - type: SignatureWriter # imp
+    font: /Fonts/_DV/ComicNeue/ComicNeue-Bold.ttf
 
 - type: entity
   parent: Crayon
@@ -88,7 +93,7 @@
   - type: Crayon
     color: Red
     selectableColor: true
-    capacity: 30
+    capacity: 200
   - type: Tag
     tags:
     - Write

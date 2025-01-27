@@ -1,0 +1,21 @@
+- type: antag
+  id: Recruiter
+  name: roles-antag-syndicate-recruiter-name
+  objective: roles-antag-syndicate-recruiter-objective
+  antagonist: false # you ask questions and write papers not kill people
+
+- type: startingGear
+  id: SyndicateRecruiterGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDetectiveGrey
+    jumpskirt: ClothingUniformJumpskirtDetectiveGrey
+    back: ClothingBackpackSatchel
+    head: ClothingHeadHatFedoraBrown
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesColorWhite
+    outerClothing: ClothingOuterCoatTrench
+    shoes: ClothingShoesLeather
+    id: UndercoverPDA
+    ears: ClothingHeadsetGrey
+    pocket1: PenRecruiter
+    pocket2: RubberStampSyndicate

@@ -1,0 +1,5 @@
+- type: entity
+  save: false
+  name: Uristtsiru McShell
+  parent: BaseMobGastropoid
+  id: MobGastropoid

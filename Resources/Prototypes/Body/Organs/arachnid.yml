@@ -21,9 +21,10 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-  - type: Tag
+  - type: Tag # goob edit
     tags:
-      - Meat
+    - Meat
+    - Organ
 
 - type: entity
   id: OrganArachnidStomach
@@ -34,6 +35,9 @@
   - type: Sprite
     sprite: Mobs/Species/Arachnid/organs.rsi
     state: stomach
+  - type: Item
+    size: Small
+    heldPrefix: stomach
   - type: Stomach
     updateInterval: 1.5
   - type: SolutionContainerManager
@@ -47,6 +51,11 @@
           Quantity: 5
   - type: Metabolizer
     updateInterval: 1.5
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Stomach
 
 - type: entity
   id: OrganArachnidLungs
@@ -82,6 +91,11 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Lungs
 
 - type: entity
   id: OrganArachnidHeart
@@ -91,6 +105,9 @@
   components:
   - type: Sprite
     state: heart-on
+  - type: Item
+    size: Small
+    heldPrefix: heart
   - type: Metabolizer
     updateInterval: 1.5
     maxReagents: 2
@@ -99,6 +116,11 @@
     - id: Medicine
     - id: Poison
     - id: Narcotic
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Heart
 
 - type: entity
   id: OrganArachnidLiver
@@ -107,6 +129,9 @@
   description: "Pairing suggestion: chianti and fava beans."
   categories: [ HideSpawnMenu ]
   components:
+  - type: Item
+    size: Small
+    heldPrefix: liver
   - type: Sprite
     state: liver
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
@@ -116,6 +141,11 @@
     groups:
     - id: Alcohol
       rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Liver
 
 - type: entity
   id: OrganArachnidKidneys
@@ -129,11 +159,19 @@
       - state: kidney-l
       - state: kidney-r
   # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
+  - type: Item
+    size: Small
+    heldPrefix: kidneys
   - type: Metabolizer
     updateInterval: 1.5
     maxReagents: 5
     metabolizerTypes: [Animal]
     removeEmpty: true
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Kidneys
 
 - type: entity
   id: OrganArachnidEyes
@@ -145,6 +183,15 @@
     layers:
       - state: eyeball-l
       - state: eyeball-r
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Eyes
+  - type: Item
+    size: Small
+    heldPrefix: eyeballs
+
 
 - type: entity
   id: OrganArachnidTongue
@@ -154,3 +201,8 @@
   components:
   - type: Sprite
     state: tongue
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Tongue

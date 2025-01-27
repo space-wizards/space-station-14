@@ -1,0 +1,9 @@
+- type: reaction
+  id: AquaAvari
+  reactants:
+    Holywater:
+      amount: 1
+    Gold:
+      amount: 1
+  products:
+    AquaAvari: 1

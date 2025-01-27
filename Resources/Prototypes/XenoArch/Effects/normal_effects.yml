@@ -148,7 +148,7 @@
   targetDepth: 0
   effectHint: artifact-effect-hint-environment
   components:
-    - type: ThrowArtifact
+  - type: ThrowArtifact
 
 - type: artifactEffect
   id: EffectChemicalPuddle
@@ -561,6 +561,17 @@
     slope: 0.3
 
 - type: artifactEffect
+  id: EffectLocalKnockdown
+  targetDepth: 3
+  effectHint: artifact-effect-hint-environment
+  effectProb: 0.7
+  components:
+  - type: KnockdownArtifact
+    range: 8
+    entireGrid: false
+    knockdownTime: 4
+
+- type: artifactEffect
   id: EffectMaterialSpawn
   targetDepth: 3
   effectHint: artifact-effect-hint-creation
@@ -628,8 +639,15 @@
     - id: RandomArtifactSpawner
 
 - type: artifactEffect
-  id: EffectAnomaly
+  id: EffectPortal
   targetDepth: 3
+  effectHint: artifact-effect-hint-displacement
+  components:
+  - type: PortalArtifact
+
+- type: artifactEffect
+  id: EffectAnomaly
+  targetDepth: 4 # IMP: Moved depth to 4 from 3
   effectHint: artifact-effect-hint-creation
   components:
   - type: SpawnArtifact
@@ -639,7 +657,8 @@
 
 - type: artifactEffect
   id: EffectBoom
-  targetDepth: 3
+  targetDepth: 4  # IMP: Moved depth to 4 from 3
+  effectProb: 0.75 # IMP: reduced probability because this is forces scientists to rebuild the xenoarch chamber
   effectHint: artifact-effect-hint-environment
   components:
   - type: TriggerArtifact
@@ -650,13 +669,6 @@
     totalIntensity: 500
     intensitySlope: 2.5
     maxIntensity: 50
-
-- type: artifactEffect
-  id: EffectPortal
-  targetDepth: 3
-  effectHint: artifact-effect-hint-displacement
-  components:
-  - type: PortalArtifact
 
 - type: artifactEffect
   id: EffectSingulo

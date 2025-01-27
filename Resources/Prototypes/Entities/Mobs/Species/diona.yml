@@ -5,6 +5,14 @@
   id: BaseMobDiona
   abstract: true
   components:
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+    - DionaMinded
+  - type: Absorbable
   - type: HumanoidAppearance
     species: Diona
   - type: Hunger
@@ -86,10 +94,11 @@
           - MobLayer
   - type: Speech
     speechVerb: Plant
+    allowedEmotes: ['Chirp']
   - type: Vocal
     sounds:
-      Male: UnisexDiona
-      Female: UnisexDiona
+      Male: MaleDiona
+      Female: FemaleDiona
       Unsexed: UnisexDiona
   - type: BodyEmotes
     soundsId: DionaBodyEmotes

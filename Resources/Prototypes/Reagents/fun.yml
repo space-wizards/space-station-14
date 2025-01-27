@@ -43,6 +43,28 @@
           type: Moth
 
 - type: reagent
+  id: Trash
+  name: reagent-name-trash
+  desc: reagent-desc-trash
+  physicalDesc: reagent-physical-desc-murky
+  flavor: trash
+  metabolisms:
+    Food:
+      effects:
+        - !type:SatiateHunger
+          conditions:
+            - !type:OrganType
+              type: Rat
+        - !type:HealthChange
+          conditions:
+          - !type:OrganType
+            type: Rat
+            shouldHave: false
+          damage:
+            types:
+              Poison: 0.5
+
+- type: reagent
   id: BuzzochloricBees
   name: reagent-name-buzzochloric-bees
   group: Toxins
@@ -50,6 +72,7 @@
   physicalDesc: reagent-physical-desc-buzzy
   flavor: bee
   color: "#FFD35D"
+  contraband: Minor # imp
   tileReactions:
   - !type:CreateEntityTileReaction
     entity: MobBee
@@ -345,6 +368,38 @@
           min: 50
       - !type:AdjustReagent
         reagent: JuiceThatMakesYouWeh
+        amount: -20
+        conditions:
+        - !type:ReagentThreshold
+          min: 50
+
+- type: reagent
+  id: JuiceThatMakesYouHew
+  name: reagent-name-hew
+  group: Toxins
+  desc: reagent-desc-hew
+  physicalDesc: reagent-physical-desc-inversed
+  flavor: hew
+  color: "#a64dc5"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.25
+      effects:
+      - !type:Emote
+        emote: Hew
+        showInChat: true
+        force: true
+        probability: 0.5
+      - !type:Polymorph
+        prototype: ArtifactLizard
+        conditions:
+        - !type:OrganType
+          type: Animal
+          shouldHave: false
+        - !type:ReagentThreshold
+          min: 50
+      - !type:AdjustReagent
+        reagent: JuiceThatMakesYouHew
         amount: -20
         conditions:
         - !type:ReagentThreshold

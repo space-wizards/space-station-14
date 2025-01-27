@@ -1,6 +1,8 @@
 using System.Numerics;
 using Content.Server.Actions;
 using Content.Server.GameTicking;
+using Content.Server.Mind;
+using Content.Server.Revenant.Components;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Alert;
@@ -21,8 +23,10 @@ using Content.Shared.Store.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -45,9 +49,15 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly VisibilitySystem _visibility = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly MetaDataSystem _meta = default!;
 
     [ValidatePrototypeId<EntityPrototype>]
     private const string RevenantShopId = "ActionRevenantShop";
+
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string RevenantHauntId = "ActionRevenantHaunt";
 
     public override void Initialize()
     {
@@ -92,7 +102,8 @@ public sealed partial class RevenantSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, RevenantComponent component, MapInitEvent args)
     {
-        _action.AddAction(uid, ref component.Action, RevenantShopId);
+        _action.AddAction(uid, ref component.ShopAction, RevenantShopId);
+        _action.AddAction(uid, ref component.HauntAction, RevenantHauntId);
     }
 
     private void OnStatusAdded(EntityUid uid, RevenantComponent component, StatusEffectAddedEvent args)
@@ -146,8 +157,15 @@ public sealed partial class RevenantSystem : EntitySystem
 
         if (component.Essence <= 0)
         {
-            Spawn(component.SpawnOnDeathPrototype, Transform(uid).Coordinates);
-            QueueDel(uid);
+            component.Essence = 0;
+            _statusEffects.TryRemoveAllStatusEffects(uid);
+            var stasisObj = Spawn(component.SpawnOnDeathPrototype, Transform(uid).Coordinates);
+            AddComp(stasisObj, new RevenantStasisComponent(component.StasisTime, (uid, component)));
+            // TODO: Make a RevenantInStasisComponent and attach that to the inert Revenant entity
+            if (_mind.TryGetMind(uid, out var mindId, out var _))
+                _mind.TransferTo(mindId, stasisObj);
+            _transformSystem.DetachEntity(uid, Comp<TransformComponent>(uid));
+            _meta.SetEntityPaused(uid, true);
         }
         return true;
     }
@@ -174,6 +192,8 @@ public sealed partial class RevenantSystem : EntitySystem
 
         _statusEffects.TryAddStatusEffect<CorporealComponent>(uid, "Corporeal", TimeSpan.FromSeconds(debuffs.Y), false);
         _stun.TryStun(uid, TimeSpan.FromSeconds(debuffs.X), false);
+        if (debuffs.X > 0)
+            _physics.ResetDynamics(uid, Comp<PhysicsComponent>(uid));
 
         return true;
     }
@@ -219,7 +239,12 @@ public sealed partial class RevenantSystem : EntitySystem
 
             if (rev.Essence < rev.EssenceRegenCap)
             {
-                ChangeEssenceAmount(uid, rev.EssencePerSecond, rev, regenCap: true);
+                var essence = rev.EssencePerSecond;
+
+                if (TryComp<RevenantRegenModifierComponent>(uid, out var regen))
+                    essence += rev.HauntEssenceRegenPerWitness * regen.NewHaunts;
+
+                ChangeEssenceAmount(uid, essence, rev, regenCap: true);
             }
         }
     }

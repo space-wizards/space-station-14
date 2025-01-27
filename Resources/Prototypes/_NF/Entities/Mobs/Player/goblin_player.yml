@@ -1,0 +1,71 @@
+- type: entity
+  save: false
+  name: Urist McGoblin
+  parent: [MobGoblinBase, BaseMob]
+  id: MobGoblin
+  components:
+  - type: Speech
+    speechVerb: Goblin
+  - type: Absorbable
+    reducedBiomass: true
+
+- type: entity
+  parent: MobGoblin
+  id: MobGoblinStowaway
+  name: goblin stowaway
+  components:
+  - type: GhostRole
+    name: ghost-role-information-goblin-stowaway-name
+    description: ghost-role-information-goblin-stowaway-description
+    rules: ghost-role-information-nonantagonist-freeagent-goblin-stowaway
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [GoblinRobeOSP]
+  - type: RandomHumanoidAppearance
+
+- type: entity
+  parent: MobGoblin
+  id: MobGoblinKnight
+  name: Sir Gollylad
+  description: The noble Knight Gollylad, first among his peers. Strong enough to open powered doors.
+  components:
+  - type: GhostRole
+    name: ghost-role-information-goblin-knight-name
+    description: ghost-role-information-goblin-knight-description
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: Prying # approved by mira
+    pryPowered: true
+    force: true
+    speedModifier: 0.5
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [GoblinKnightArmor]
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+    hair: GoblinHairA
+
+- type: entity
+  parent: MobGoblin
+  id: MobGoblinCastaway
+  name: goblin castaway
+  components:
+  - type: GhostRole
+    name: ghost-role-information-goblin-castaway-name
+    description: ghost-role-information-goblin-castaway-description
+    rules: ghost-role-information-nonantagonist-freeagent-goblin-stowaway
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [GoblinOSPEVA]
+  - type: RandomHumanoidAppearance

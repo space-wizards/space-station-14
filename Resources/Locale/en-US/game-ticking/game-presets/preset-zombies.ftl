@@ -7,9 +7,12 @@ zombieteors-description = The undead have been unleashed on the station amid a c
 zombie-not-enough-ready-players = Not enough players readied up for the game! There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start Zombies.
 zombie-no-one-ready = No players readied up! Can't start Zombies.
 
-zombie-patientzero-role-greeting = You are an initial infected. Get supplies and prepare for your eventual transformation. Your goal is to overtake the station while infecting as many people as possible.
+zombie-patientzero-role-greeting =
+    A sense of doom washes over you, like your life is about to end violently, and very soon. Minutes tick down the clock.
+    You feel compelled to be in a large crowd, surrounded by all your closest friends. They deserve to die, too. They get to discover what's coming.
+    You are an [color=crimson]initial infected[/color].
 zombie-healing = You feel a stirring in your flesh
-zombie-infection-warning = You feel the zombie virus take hold
+zombie-infection-warning = You feel the virus take hold
 zombie-infection-underway = Your blood begins to thicken
 
 zombie-alone = You feel entirely alone.

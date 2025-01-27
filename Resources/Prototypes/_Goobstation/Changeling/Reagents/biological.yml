@@ -1,0 +1,27 @@
+- type: reagent
+  parent: Blood
+  id: BloodChangeling
+
+- type: reaction
+  id: ChangelingBloodBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    BloodChangeling:
+      amount: 5
+  products:
+    Water: 11
+    Iron: 0.5
+    Sugar: 2
+    CarbonDioxide: 3
+    Protein: 4
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FleshKudzu
+    - !type:ExplosionReactionEffect
+      explosionType: Default
+      maxIntensity: 2
+      intensityPerUnit: 0.5
+      intensitySlope: 4
+      maxTotalIntensity: 1

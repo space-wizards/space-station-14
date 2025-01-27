@@ -1,0 +1,50 @@
+- type: soundCollection
+  id: cardFan
+  files:
+  - /Audio/EstacaoPirata/Effects/Cards/cardFan1.ogg
+  - /Audio/EstacaoPirata/Effects/Cards/cardFan2.ogg
+
+- type: soundCollection
+  id: cardOpenPackage
+  files:
+  - /Audio/EstacaoPirata/Effects/Cards/cardOpenPackage1.ogg
+  - /Audio/EstacaoPirata/Effects/Cards/cardOpenPackage2.ogg
+
+- type: soundCollection
+  id: cardPlace
+  files:
+  - /Audio/EstacaoPirata/Effects/Cards/cardPlace1.ogg
+  - /Audio/EstacaoPirata/Effects/Cards/cardPlace2.ogg
+  - /Audio/EstacaoPirata/Effects/Cards/cardPlace3.ogg
+  - /Audio/EstacaoPirata/Effects/Cards/cardPlace4.ogg
+
+- type: soundCollection
+  id: cardShove
+  files:
+  - /Audio/EstacaoPirata/Effects/Cards/cardShove1.ogg
+  - /Audio/EstacaoPirata/Effects/Cards/cardShove2.ogg
+  - /Audio/EstacaoPirata/Effects/Cards/cardShove3.ogg
+  - /Audio/EstacaoPirata/Effects/Cards/cardShove4.ogg
+
+- type: soundCollection
+  id: cardShuffle
+  files:
+  - /Audio/EstacaoPirata/Effects/Cards/cardShuffle.ogg
+
+- type: soundCollection
+  id: cardSlide
+  files:
+  - /Audio/EstacaoPirata/Effects/Cards/cardSlide1.ogg
+  - /Audio/EstacaoPirata/Effects/Cards/cardSlide2.ogg
+  - /Audio/EstacaoPirata/Effects/Cards/cardSlide3.ogg
+  - /Audio/EstacaoPirata/Effects/Cards/cardSlide4.ogg
+  - /Audio/EstacaoPirata/Effects/Cards/cardSlide5.ogg
+  - /Audio/EstacaoPirata/Effects/Cards/cardSlide6.ogg
+  - /Audio/EstacaoPirata/Effects/Cards/cardSlide7.ogg
+  - /Audio/EstacaoPirata/Effects/Cards/cardSlide8.ogg
+
+- type: soundCollection
+  id: cardTakeOutPackage
+  files:
+  - /Audio/EstacaoPirata/Effects/Cards/cardTakeOutPackage1.ogg
+  - /Audio/EstacaoPirata/Effects/Cards/cardTakeOutPackage2.ogg

@@ -4,7 +4,7 @@
     sprite: Structures/Shuttles/thruster.rsi
     state: base
   product: CrateEngineeringThruster
-  cost: 1500
+  cost: 650 #buffed on imp
   category: cargoproduct-category-name-shuttle
   group: market
 

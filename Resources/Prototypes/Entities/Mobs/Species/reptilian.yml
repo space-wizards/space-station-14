@@ -5,6 +5,7 @@
   id: BaseMobReptilian
   abstract: true
   components:
+  - type: Absorbable
   - type: HumanoidAppearance
     species: Reptilian
     hideLayersOnEquip:
@@ -30,13 +31,16 @@
   - type: Speech
     speechSounds: Lizard
     speechVerb: Reptilian
+    allowedEmotes: ['Thump', 'Hiss']
   - type: TypingIndicator
     proto: lizard
   - type: Vocal
     sounds:
       Male: MaleReptilian
       Female: FemaleReptilian
-      Unsexed: MaleReptilian
+      Unsexed: UnisexReptilian
+  - type: BodyEmotes
+    soundsId: ReptilianBodyEmotes
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale

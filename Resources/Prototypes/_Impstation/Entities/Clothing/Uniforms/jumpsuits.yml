@@ -1,0 +1,220 @@
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformSpaceJumpsuitMedical
+  name: space medical jumpsuit
+  description: A high quality medical jumpsuit made from the highest quality fibers.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacedoctor.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacedoctor.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformSpaceJumpsuitChemist
+  name: space chemist jumpsuit
+  description: A high quality chemist jumpsuit made from the highest quality fibers.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacechemist.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacechemist.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformSpaceJumpsuitScientist
+  name: space scientist jumpsuit
+  description: A high quality scientist jumpsuit made from the highest quality fibers.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacescientist.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacescientist.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformSpaceJumpsuitEngineer
+  name: space engineer jumpsuit
+  description: A high quality engineer jumpsuit made from the highest quality fibers.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spaceengineer.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spaceengineer.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformSpaceJumpsuitGrayTider
+  name: gilded grey space jumpsuit
+  description: A high quality gray jumpsuit made from the highest quality fiber, with gold accents.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacegreytider.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacegreytider.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitCaptaineveningattire
+  name: captain's evening attire
+  description: "A comfortable captain's uniform with a low-cut collar and three-quarter sleeves, complete with a sword belt. Held fastened in part by a medal-like brooch."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/captaineveningattire.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/captaineveningattire.rsi
+
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitHoSPro
+  name: head of security's professional jumpsuit
+  description: A clean, decorated jumpsuit for the Head of Security.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hos_pro.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hos_pro.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformCircusClown
+  name: circus clown jumpsuit
+  description: A replica of the regalia of the great Googoo Funnyball, who tragically disappeared in a mysterious circus fire.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/circusclown.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/circusclown.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformJokester
+  name: jokester's jumpsuit
+  description: Now 100% more tomato-proof!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/clown_jokester.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/clown_jokester.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformHitmanSuit
+  name: contract killer suit
+  description: The perfect outfit for blending in at any event, office, or space station.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hitmansuit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hitmansuit.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformFuneralSuit
+  name: funeral suit
+  description: For when no color is allowed and all must be mourned.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/funeralsuit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/funeralsuit.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformNightclubSuit
+  name: nightclub suit
+  description: ID please?
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/nightclubsuit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/nightclubsuit.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformMrSpaceWide
+  name: mr space wide suit
+  description: The unspoken attire for any hotel, motel, or branded inn activities.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/mrspacewide.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/mrspacewide.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformBrownSuit
+  name: brown suit
+  description: Not even the worst coffee spills will show up on this puppy, guaranteed.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/brownsuit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/brownsuit.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformCreamSuit
+  name: cream suit
+  description: A suit fit for a humble, small town gentleman with something to say.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/creamsuit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/creamsuit.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformDetectiveSuit
+  name: detective suit
+  description: Now excuse me, if I may just have a moment of your time...
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/detectivesuit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/detectivesuit.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformMiamiVice
+  name: miami vice suit
+  description: When you need to arrest the clown at twelve o'clock and boogie board at one.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/miamivice.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/miamivice.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformSeniorBartender
+  name: senior bartender suit
+  description: But you are the bartender, you've always been the bartender.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/senior_bartender.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/senior_bartender.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformBrosBlazer
+  name: BROS blazer and jeans
+  description: BROS... Two!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/brosblazer.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/brosblazer.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitCourier
+  name: courier jumpsuit
+  description: A courier uniform, with blue accents.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/courier.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/courier.rsi

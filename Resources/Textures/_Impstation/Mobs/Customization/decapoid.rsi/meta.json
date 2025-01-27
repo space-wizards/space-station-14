@@ -1,0 +1,79 @@
+{
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "copyright": "widgetbeck",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+    {
+      "name": "flathead",
+      "directions": 4
+    },
+	{
+      "name": "pauldronspike",
+      "directions": 4
+    },
+    {
+      "name": "clawgradient",
+      "directions": 4
+    },
+	{
+      "name": "abdominalplate",
+      "directions": 4
+    },
+	{
+      "name": "pectoralplate",
+      "directions": 4
+    },
+	{
+      "name": "lowerplate",
+      "directions": 4
+    },
+	{
+      "name": "pauldronleft",
+      "directions": 4
+    },
+	{
+      "name": "pauldronright",
+      "directions": 4
+    },
+	{
+      "name": "righthandgradient",
+      "directions": 4
+    },
+	{
+	  "name": "righthandplate",
+	  "directions": 4
+	},
+	{
+	  "name": "clawplate",
+	  "directions": 4
+	},
+	{
+	  "name": "eyes-1",
+	  "directions": 4
+	},
+	{
+	  "name": "eyes-2",
+	  "directions": 4
+	},
+	{
+	  "name": "eyes-3",
+	  "directions": 4
+	},
+	{
+	  "name": "eyes-4",
+	  "directions": 4
+	},
+	{
+	  "name": "eyes-5",
+	  "directions": 4
+	},
+	{
+	  "name": "eyes-6",
+	  "directions": 4
+	}
+  ]
+}

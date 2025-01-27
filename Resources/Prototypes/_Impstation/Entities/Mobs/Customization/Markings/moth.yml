@@ -1,0 +1,457 @@
+
+
+- type: marking
+  id: MothBodyClaw
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: moth_body_claw
+
+- type: marking
+  id: MothBurnLeft
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: moth_burn_l
+
+- type: marking
+  id: MothBurnRight
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: moth_burn_r
+
+- type: marking
+  id: MothFaceClaw
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: moth_face_claw
+
+- type: marking
+  id: MothSlashLeft
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: moth_slash_l
+
+- type: marking
+  id: ChimeraArmLeftMoth
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+          negative: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: arm_l_chimera_moth
+
+- type: marking
+  id: ProstheticArmLeftMoth
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#E4E4E4"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: arm_l_prosthetic_moth
+
+- type: marking
+  id: TwistingArmLeftMoth
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: arm_l_twisting_moth
+
+- type: marking
+  id: ProstheticArmRightMoth
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#E4E4E4"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: arm_r_prosthetic_moth
+
+- type: marking
+  id: TwistingArmRightMoth
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: arm_r_twisting_moth
+
+- type: marking
+  id: WingsBackstabbed
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: wings_backstabbed
+
+- type: marking
+  id: ChestChimeraFemaleMoth
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sexRestriction: [Female]
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+          negative: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: chest_chimera_f_moth
+
+- type: marking
+  id: ChestChimeraMaleMoth
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sexRestriction: [Male]
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+          negative: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: chest_chimera_m_moth
+
+- type: marking
+  id: ChestTwistingLeftFemaleMoth
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sexRestriction: [Female]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: chest_l_twisting_f_moth
+
+- type: marking
+  id: ChestTwistingLeftMaleMoth
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sexRestriction: [Male]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: chest_l_twisting_m_moth
+
+- type: marking
+  id: ChestTwistingRightFemaleMoth
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sexRestriction: [Female]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: chest_r_twisting_f_moth
+
+- type: marking
+  id: ChestTwistingRightMaleMoth
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sexRestriction: [Male]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: chest_r_twisting_m_moth
+
+- type: marking
+  id: ChestStarMoth
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: chest_star_moth
+
+- type: marking
+  id: HeterochromiaMoth
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: eyes_heterochromia_moth
+
+- type: marking
+  id: FootChimeraLeftMoth
+  bodyPart: LFoot
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+          negative: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: foot_l_chimera_moth
+
+- type: marking
+  id: FootProstheticLeftMoth
+  bodyPart: LFoot
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#E4E4E4"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: foot_l_prosthetic_moth
+
+- type: marking
+  id: FootProstheticRightMoth
+  bodyPart: RFoot
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#E4E4E4"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: foot_r_prosthetic_moth
+
+- type: marking
+  id: HandChimeraLeftMoth
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+          negative: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: hand_l_chimera_moth
+
+- type: marking
+  id: HandProstheticLeftMoth
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#E4E4E4"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: hand_l_prosthetic_moth
+
+- type: marking
+  id: HandTwistingLeftMoth
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: hand_l_twisting_moth
+
+- type: marking
+  id: HandProstheticRightMoth
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#E4E4E4"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: hand_r_prosthetic_moth
+
+- type: marking
+  id: HandTwistingRightMoth
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: hand_r_twisting_moth
+
+- type: marking
+  id: BadmoltMoth
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: head_badmolt_moth
+
+- type: marking
+  id: HeadChimeraMoth
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+          negative: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: head_chimera_moth
+
+- type: marking
+  id: EyebagsMoth
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: head_eyebags_moth
+
+- type: marking
+  id: HeadTwistingMoth
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: head_twisting_moth
+
+- type: marking
+  id: LegChimeraLeftMoth
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+          negative: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: leg_l_chimera_moth
+
+- type: marking
+  id: LegProstheticLeftMoth
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#E4E4E4"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: leg_l_prosthetic_moth
+
+- type: marking
+  id: LegTwistingLeftMoth
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: leg_l_twisting_moth
+
+- type: marking
+  id: LegProstheticRightMoth
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#E4E4E4"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: leg_r_prosthetic_moth
+
+- type: marking
+  id: LegTwistingRightMoth
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: leg_r_twisting_moth
+
+- type: marking
+  id: TorsoIncisionMoth
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: torso_incision_moth

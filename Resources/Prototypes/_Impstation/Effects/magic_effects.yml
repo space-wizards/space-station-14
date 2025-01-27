@@ -1,0 +1,19 @@
+- type: entity
+  id: MagicInstantEffectSpaceGrease
+  name: Space Grease
+  parent: AdminInstantEffectBase
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: space_grease
+  - type: SmokeOnTrigger
+    duration: 3
+    spreadAmount: 40
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: SpaceGrease
+        Quantity: 15
+  - type: SoundOnTrigger
+    sound: /Audio/Effects/Fluids/splat.ogg

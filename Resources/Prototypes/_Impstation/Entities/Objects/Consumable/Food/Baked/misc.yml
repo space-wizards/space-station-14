@@ -1,0 +1,12 @@
+- type: entity
+  name: lemuffin
+  parent: FoodBakedBase
+  id: FoodBakedMuffinLemo
+  description: A muffin made with bits of lemo fruit.
+  components:
+  - type: Sprite
+    state: muffin-bluecherry
+  - type: Tag
+    tags:
+    - Fruit
+    - Muffin

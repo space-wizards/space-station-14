@@ -1,0 +1,126 @@
+- type: entity
+  name: luggage
+  parent: [SimpleSpaceMobBase, StripableInventoryBase]
+  id: MobDiscworldLuggage
+  description: A chest made of sapient pearwood. Hundreds of little feet patter beneath it. It looks... Mischievous.
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: false
+    allowMovement: true
+    name: ghost-role-information-luggage-name
+    description: ghost-role-information-luggage-description
+    rules: ghost-role-information-familiar-rules
+  - type: Hands
+    showInHands: false
+    disableExplosionRecursion: true
+    canBeStripped: false
+  - type: ComplexInteraction
+  - type: Clumsy # tongue can't manipulate a trigger good
+    gunShootFailDamage:
+      types:
+        Blunt: 50 # this is to further discourage the luggage from trying to shoot guns.
+        Piercing: 5
+      groups:
+        Burn: 3
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 200
+        mask:
+          - CrateMask # this is so that they can go under plastic flaps.
+        layer:
+          - MobLayer
+        hard: true
+  - type: Transform
+    noRot: false
+  - type: Bloodstream
+    bloodReagent: Sap
+  - type: GhostTakeoverAvailable
+  - type: Puller
+    needsHands: false
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Critical
+      100: Dead
+  - type: Sprite
+    sprite: _Impstation/Mobs/NPCs/luggage.rsi
+    norot: true
+    layers:
+    - state: luggage_closed
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: luggage_open
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Appearance
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 4
+    weightlessAcceleration: 1.5
+    weightlessFriction: 1
+    weightlessModifier: 1
+  - type: TemperatureSpeed
+    thresholds:
+      300: 1
+      200: 1
+  - type: Damageable
+    damageContainer: Box
+    damageModifierSet: Wood
+  - type: CombatMode
+  - type: Butcherable
+    spawned:
+    - id: MaterialWoodPlank
+      amount: 2
+  - type: MobPrice
+    price: 6000
+  - type: Inventory
+    templateId: luggage
+    speciesId: luggage
+  - type: NpcFactionMember
+    factions:
+      - Passive
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - FootstepSound
+  - type: TypingIndicator
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 60
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Generic_mob_burning
+  - type: Clickable
+  - type: Physics
+    bodyType: KinematicController
+  - type: Rotatable
+    rotateWhileAnchored: false
+  - type: MobMover
+  - type: EntityStorage
+    isCollidableWhenOpen: false
+    openOnMove: false
+    airtight: true
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+  - type: EntityStorageVisuals
+    stateBaseClosed: luggage_closed
+    stateBaseOpen: luggage_open
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/_Impstation/Effects/Footsteps/luggage.ogg

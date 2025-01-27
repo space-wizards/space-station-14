@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprited by KingFroozy (github) for space station 14",
+  "copyright": "Sprited by KingFroozy (github) for space station 14, folded version taken from tgstation and edited by Pinkbat5 (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-INNERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "folded-equipped-INNERCLOTHING",
       "directions": 4
     },
     {

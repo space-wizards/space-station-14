@@ -12,7 +12,7 @@
     attackRate: 1.5
     damage:
       types:
-        Blunt: 7
+        Blunt: 10
 
 - type: entity
   parent: ClothingEyesBase
@@ -53,7 +53,26 @@
         Blunt: 10
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot, BaseEngineeringContraband]
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesGarMecha
+  name: mecha gar glasses
+  description: Believe in me! Believe in the me who believes in you!
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/gar.rsi
+    state: icon-mecha
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/gar.rsi
+    equippedPrefix: mecha
+  - type: Item
+    heldPrefix: mecha
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+
+- type: entity
+  parent: [ClothingEyesBase, BaseLensSlot, BaseEngineeringContraband] # BaseLensSlot from imp
   id: ClothingEyesGlassesMeson
   name: engineering goggles #less confusion
   description: Green-tinted goggles using a proprietary polymer that provides protection from eye damage of all types.
@@ -65,9 +84,12 @@
   - type: EyeProtection
   - type: IdentityBlocker
     coverage: EYES
+  - type: ClothingGrantComponent # imp
+    component:
+    - type: SupermatterHallucinationImmune
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot]
+  parent: [ClothingEyesBase, BaseLensSlot] # BaseLensSlot from imp
   id: ClothingEyesGlasses
   name: glasses
   description: A pair of spectacular spectacles with removable prescription lenses.
@@ -76,7 +98,7 @@
     sprite: Clothing/Eyes/Glasses/glasses.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/glasses.rsi
-  - type: ItemSlots
+  - type: ItemSlots # imp
     slots:
       lens_slot:
         startingItem: PrescriptionLens
@@ -96,7 +118,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot]
+  parent: [ClothingEyesBase, BaseLensSlot] # BaseLensSlot from imp
   id: ClothingEyesGlassesJensen
   name: jensen glasses
   description: A pair of yellow tinted folding glasses. You never asked for these.
@@ -127,7 +149,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot]
+  parent: [ClothingEyesBase, BaseLensSlot] # BaseLensSlot from imp
   id: ClothingEyesGlassesOutlawGlasses
   name: outlaw glasses
   description: A must for every self-respecting undercover agent.
@@ -178,7 +200,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, BaseRestrictedContraband]
+  parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, BaseRestrictedContraband] # BaseLensSlot from imp
   id: ClothingEyesGlassesSecurity
   name: security glasses
   description: Upgraded sunglasses that provide flash immunity and a security HUD.
@@ -197,6 +219,7 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+    - GlassesSecurity
   - type: GuideHelp
     guides:
     - Security
@@ -205,7 +228,7 @@
     coverage: EYES
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot, BaseCommandContraband]
+  parent: [ClothingEyesBase, BaseLensSlot, BaseCommandContraband] # BaseLensSlot from imp
   id: ClothingEyesGlassesCommand
   name: administration glasses
   description: Upgraded sunglasses that provide flash immunity and show ID card status.
@@ -226,7 +249,7 @@
   - type: ShowJobIcons
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot]
+  parent: [ClothingEyesBase, BaseLensSlot] # BaseLensSlot from imp
   id: ClothingEyesGlassesMercenary
   name: mercenary glasses
   description: Glasses made for combat, to protect the eyes from bright blinding flashes.
@@ -243,7 +266,7 @@
 
 #Make a scanner category when these actually function and we get the trayson
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot]
+  parent: [ClothingEyesBase, BaseLensSlot] # BaseLensSlot from imp
   id: ClothingEyesGlassesThermal
   name: optical thermal scanner
   description: Thermals in the shape of glasses.
@@ -261,7 +284,7 @@
     coverage: EYES
 
 - type: entity
-  parent: [ClothingEyesBase, BaseLensSlot]
+  parent: [ClothingEyesBase, BaseLensSlot] # BaseLensSlot from imp
   id: ClothingEyesGlassesChemical
   name: chemical analysis goggles
   description: Goggles that can scan the chemical composition of a solution.

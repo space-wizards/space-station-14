@@ -1,0 +1,103 @@
+- type: entity
+  id: BaseCartridgeLPistol
+  name: cartridge (.22 auto)
+  parent: [ BaseCartridge, BaseRestrictedContraband ]
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgeLPistol
+  - type: CartridgeAmmo
+    proto: BulletLPistol
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+
+- type: entity
+  id: CartridgeLPistol
+  name: cartridge (.22 auto)
+  parent: BaseCartridgeLPistol
+  components:
+  - type: CartridgeAmmo
+    proto: BulletLPistol
+
+- type: entity
+  id: CartridgeLPistolPractice
+  name: cartridge (.22 auto practice)
+  parent: BaseCartridgeLPistol
+  components:
+  - type: CartridgeAmmo
+    proto: BulletLPistolPractice
+  -  type: Sprite
+     layers:
+       - state: base
+         map: [ "enum.AmmoVisualLayers.Base" ]
+       - state: tip
+         map: [ "enum.AmmoVisualLayers.Tip" ]
+         color: "#dbdbdb"
+
+- type: entity
+  id: CartridgeLPistolIncendiary
+  name: cartridge (.22 auto incendiary)
+  parent: BaseCartridgeLPistol
+  components:
+  - type: CartridgeAmmo
+    proto: BulletLPistolIncendiary
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#ff6e52"
+
+- type: entity
+  id: CartridgeLPistolAP
+  name: cartridge (.22 Auto APDSFS)
+  parent: BaseCartridgeLPistol
+  components:
+  - type: CartridgeAmmo
+    proto: BulletLPistolAP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#0a0a0a"
+
+- type: entity
+  id: CartridgeLPistolUranium
+  name: cartridge (.22 auto uranium)
+  parent: BaseCartridgeLPistol
+  components:
+  - type: CartridgeAmmo
+    proto: BulletLPistolUranium
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#65fe08"
+
+- type: entity
+  id: CartridgeLPistolSpent
+  name: cartridge (.22 auto)
+  suffix: spent
+  parent: BaseCartridgeLPistol
+  components:
+  - type: SpentAmmoVisuals
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    layers:
+      - state: base-spent
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: BulletLPistol
+    spent: true

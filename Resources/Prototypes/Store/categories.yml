@@ -89,12 +89,12 @@
   name: store-category-pointless
   priority: 10
 
-#revenant
-- type: storeCategory
-  id: RevenantAbilities
-  name: store-category-abilities
-
 - type: storeCategory
   id: DiscountedItems
   name: store-discounted-items
   priority: 200
+
+#revenant
+- type: storeCategory
+  id: RevenantAbilities
+  name: store-category-abilities

@@ -13,13 +13,18 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 36000 # 10 hrs
+    - !type:DepartmentTimeRequirement #imp
+      department: Cargo
+      time: 36000 # 10 hrs
+    - !type:DepartmentTimeRequirement #imp
+      department: Science
+      time: 36000 # 10 hrs
     - !type:DepartmentTimeRequirement
       department: Command
       time: 36000 # 10 hours
   weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"
-  requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
   access:
@@ -59,10 +64,8 @@
 - type: startingGear
   id: HoPGear
   equipment:
-    shoes: ClothingShoesColorBrown
     id: HoPPDA
     gloves: ClothingHandsGlovesHop
-    ears: ClothingHeadsetAltCommand
     belt: BoxFolderClipboard
   storage:
     back:

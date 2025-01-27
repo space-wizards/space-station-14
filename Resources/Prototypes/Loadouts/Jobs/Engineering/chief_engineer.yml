@@ -69,3 +69,14 @@
   id: BrownShoes
   equipment:
     shoes: ClothingShoesColorBrown
+
+# Headset
+- type: loadout
+  id: ChiefEngineerHeadsetBasic
+  equipment:
+    ears: ClothingHeadsetCE
+
+- type: loadout
+  id: ChiefEngineerHeadset
+  equipment:
+    ears: ClothingHeadsetAltEngineering

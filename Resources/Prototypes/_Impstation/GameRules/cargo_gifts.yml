@@ -1,0 +1,20 @@
+- type: entityTable
+  id: GiftsImpstation
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: CargoCargorilla
+
+- type: entity
+  id: CargoCargorilla
+  parent: CargoGiftsBase
+  components:
+  - type: StationEvent
+    weight: 1
+    duration: 120
+    earliestStart: 20
+    minimumPlayers: 40
+  - type: CargoGiftsRule
+    description: cargo-gift-cargorilla
+    dest: cargo-gift-dest-cargo
+    gifts:
+      LivestockCargorilla: 1

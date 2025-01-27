@@ -5,6 +5,8 @@
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
+  - type: VentCrawler
+    enterDelay: 3
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/slimes.rsi
@@ -133,9 +135,14 @@
   - type: Speech
     speechVerb: Slime
     speechSounds: Slime
-    allowedEmotes: ['Squish']
+    allowedEmotes: ['Squish', 'Bubble', 'Pop']
   - type: TypingIndicator
     proto: slime
+  - type: Vocal
+    sounds:
+      Male: AnimalSlime
+      Female: AnimalSlime
+      Unsexed: AnimalSlime
   - type: NpcFactionMember
     factions:
     - SimpleNeutral
@@ -228,8 +235,7 @@
         types:
           Blunt: 6
           Structural: 4
-          Caustic: 1
-          Cellular: 3
+          Caustic: 4
 
 - type: entity
   name: yellow slime

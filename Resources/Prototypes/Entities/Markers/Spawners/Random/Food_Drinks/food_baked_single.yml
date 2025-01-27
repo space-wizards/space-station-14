@@ -46,6 +46,9 @@
       - FoodBakedMuffinBerry
       - FoodBakedMuffinCherry
       - FoodBakedMuffinBluecherry
+      - FoodBakedMuffinChocolate
+      - FoodBakedMuffinBanana
+      - FoodBakedMuffinLemo
       - FoodBakedBunHoney
       - FoodBakedBunHotX
       - FoodBakedBunMeat
@@ -64,6 +67,7 @@
       - FoodBakedPretzel
       - FoodBakedCannoli
       - FoodPieAppleSlice
+      - FoodPieLemoSlice
       - FoodPieBaklavaSlice
       - FoodPieClafoutisSlice
       - FoodPieMeatSlice

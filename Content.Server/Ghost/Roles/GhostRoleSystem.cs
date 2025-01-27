@@ -38,7 +38,7 @@ using Content.Shared.Roles.Jobs;
 namespace Content.Server.Ghost.Roles;
 
 [UsedImplicitly]
-public sealed class GhostRoleSystem : EntitySystem
+public sealed partial class GhostRoleSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
@@ -516,8 +516,8 @@ public sealed class GhostRoleSystem : EntitySystem
 
         _roleSystem.MindAddRole(newMind, "MindRoleGhostMarker");
 
-        if(_roleSystem.MindHasRole<GhostRoleMarkerRoleComponent>(newMind, out _, out var markerRole))
-            markerRole.Value.Comp.Name = role.RoleName;
+        if(_roleSystem.MindHasRole<GhostRoleMarkerRoleComponent>(newMind!, out var markerRole))
+            markerRole.Value.Comp2.Name = role.RoleName;
 
         _mindSystem.SetUserId(newMind, player.UserId);
         _mindSystem.TransferTo(newMind, mob);

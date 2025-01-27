@@ -1,0 +1,321 @@
+- type: decal
+  id: ww1
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 1
+
+- type: decal
+  id: ww2
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 2
+
+- type: decal
+  id: ww3
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 3
+
+- type: decal
+  id: ww4
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 4
+
+- type: decal
+  id: ww5
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 5
+
+- type: decal
+  id: ww6
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 6
+
+- type: decal
+  id: ww7
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 7
+
+- type: decal
+  id: ww8
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 8
+
+- type: decal
+  id: ww9
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 9
+
+- type: decal
+  id: ww10
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 10
+
+- type: decal
+  id: ww11
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 11
+
+- type: decal
+  id: ww12
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 12
+
+- type: decal
+  id: ww13
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 13
+
+- type: decal
+  id: ww14
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 14
+
+- type: decal
+  id: ww15
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 15
+
+- type: decal
+  id: ww16
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 16
+
+- type: decal
+  id: ww17
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 17
+
+- type: decal
+  id: ww18
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 18
+
+- type: decal
+  id: ww19
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 19
+
+- type: decal
+  id: ww20
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 20
+
+- type: decal
+  id: ww1h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 1h
+
+- type: decal
+  id: ww2h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 2h
+
+- type: decal
+  id: ww3h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 3h
+
+- type: decal
+  id: ww4h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 4h
+
+- type: decal
+  id: ww5h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 5h
+
+- type: decal
+  id: ww6h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 6h
+
+- type: decal
+  id: ww7h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 7h
+
+- type: decal
+  id: ww8h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 8h
+
+- type: decal
+  id: ww9h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 9h
+
+- type: decal
+  id: ww10h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 10h
+
+- type: decal
+  id: ww11h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 11h
+
+- type: decal
+  id: ww12h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 12h
+
+- type: decal
+  id: ww13h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 13h
+
+- type: decal
+  id: ww14h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 14h
+
+- type: decal
+  id: ww15h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 15h
+
+- type: decal
+  id: ww16h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 16h
+
+- type: decal
+  id: ww17h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 17h
+
+- type: decal
+  id: ww18h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 18h
+
+- type: decal
+  id: ww19h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 19h
+
+- type: decal
+  id: ww20h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 20h
+
+- type: decal
+  id: ww21h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 21h
+
+- type: decal
+  id: ww22h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 22h
+
+- type: decal
+  id: ww23h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 23h
+
+- type: decal
+  id: ww24h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 24h
+
+- type: decal
+  id: ww25h
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: 25h
+
+- type: decal
+  id: odds
+  tags: ["whale"]
+  sprite:
+    sprite: Decals/ntasww.rsi
+    state: odds

@@ -36,5 +36,6 @@
     offset: 0.0
     #rare
     rarePrototypes:
+      - DrinkAppleMartiniCrystalLiteBottleFull
       - DrinkPoisonWinebottleFull
-    rareChance: 0.01
+    rareChance: 0.1

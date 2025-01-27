@@ -1,3 +1,4 @@
+using Content.Shared.Tag;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
@@ -60,4 +61,10 @@ public sealed partial class TraitPrototype : IPrototype
     /// </summary>
     [DataField]
     public ProtoId<TraitCategoryPrototype>? Category;
+
+    /// <summary>
+    /// The organ that this trait should be assigned to instead of the body.
+    /// </summary>
+    [DataField]
+    public ProtoId<TagPrototype>? Organ;
 }

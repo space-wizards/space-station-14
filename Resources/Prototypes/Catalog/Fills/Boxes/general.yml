@@ -53,6 +53,9 @@
     contents:
       - id: LightBulb
         amount: 12
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: lighttube box
@@ -67,6 +70,9 @@
     contents:
       - id: LightTube
         amount: 12
+  - type: Tag
+    tags:
+      - DroneUsable        
 
 - type: entity
   name: mixed lights box
@@ -83,6 +89,29 @@
         amount: 6
       - id: LightBulb
         amount: 6
+  - type: Tag
+    tags:
+      - DroneUsable        
+
+- type: entity
+  name: holiday lighttube box
+  parent: BoxLightbulb
+  id: BoxLighttubeHoliday
+  components:
+  - type: StorageFill
+    contents:
+      - id: LightTubeCrystalRed # Its alternating on purpose for the light replacer.
+      - id: LightTubeCrystalGreen
+      - id: LightTubeCrystalRed
+      - id: LightTubeCrystalGreen
+      - id: LightTubeCrystalRed
+      - id: LightTubeCrystalGreen
+      - id: LightTubeCrystalRed
+      - id: LightTubeCrystalGreen
+      - id: LightTubeCrystalRed
+      - id: LightTubeCrystalGreen
+      - id: LightTubeCrystalRed
+      - id: LightTubeCrystalGreen
 
 - type: entity
   name: PDA box
@@ -187,7 +216,9 @@
     layers:
       - state: box
       - state: inflatable
-
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: hatsune miku day bag
@@ -238,6 +269,9 @@
     layers:
       - state: box
       - state: trashbag
+  - type: Tag
+    tags:
+      - DroneUsable      
 
 - type: entity
   name: passenger encryption key box
@@ -340,7 +374,7 @@
 
 - type: entity
   name: syndicate encryption key box
-  parent: [BoxEncryptionKeyPassenger, BaseSyndicateContraband]
+  parent: [BoxEncryptionKeyPassenger, Tier2Contraband]
   id: BoxEncryptionKeySyndie
   description: Two syndicate encryption keys for the price of one. Miniaturized for ease of use.
   components:

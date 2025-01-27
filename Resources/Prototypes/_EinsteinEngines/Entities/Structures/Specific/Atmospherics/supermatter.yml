@@ -1,0 +1,39 @@
+- type: entity
+  abstract: true
+  parent: AirSensorBase
+  id: AirSensorSupermatterBase
+  suffix: Supermatter
+  components:
+  - type: AtmosMonitor
+    temperatureThresholdId: supermatterTemperature
+    pressureThresholdId: supermatterPressure
+    gasThresholdPrototypes:
+      Oxygen: ignore
+      Nitrogen: ignore
+      CarbonDioxide: ignore
+      Plasma: stationPlasma # dangerous
+      Tritium: stationTritium # VERY dangerous
+      WaterVapor: ignore
+      Ammonia: ignore
+      NitrousOxide: ignore
+      Frezon: ignore
+
+- type: entity
+  parent: [AirSensorSupermatterBase, AirSensor]
+  id: AirSensorSupermatter
+
+- type: entity
+  parent: [AirSensorSupermatterBase, GasVentPump]
+  id: GasVentPumpSupermatter
+
+- type: entity
+  parent: [AirSensorSupermatterBase, GasVentScrubber]
+  id: GasVentScrubberSupermatter
+
+- type: entity
+  parent: AirAlarm
+  id: AirAlarmSupermatter
+  suffix: Supermatter
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"], ["Engineering"]]

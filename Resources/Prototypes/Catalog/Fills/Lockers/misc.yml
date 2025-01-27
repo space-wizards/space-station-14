@@ -30,7 +30,7 @@
     - id: MedkitOxygenFilled
       prob: 0.2
     - id: WeaponFlareGun
-      prob: 0.05
+      prob: 0.1
     - id: BoxMRE
       prob: 0.1
 
@@ -53,6 +53,29 @@
     containers:
       entity_storage: !type:NestedSelector
         tableId: FillLockerEmergencyStandard
+
+- type: entity
+  id: ClosetWallEmergencyN2FilledRandom
+  parent: ClosetWallEmergencyNitrogen
+  suffix: Filled, Random
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingMaskBreath
+      - id: EmergencyNitrogenTankFilled
+        prob: 0.80
+        orGroup: EmergencyTankOrRegularTank
+      - id: NitrogenTankFilled
+        prob: 0.20
+        orGroup: EmergencyTankOrRegularTank
+      - id: ToolboxEmergencyFilled
+        prob: 0.4
+      - id: MedkitNitrogenFilled
+        prob: 0.2
+      - id: WeaponFlareGun
+        prob: 0.05
+      - id: BoxMRE
+        prob: 0.1
 
 - type: entity
   id: ClosetEmergencyN2FilledRandom
@@ -159,23 +182,27 @@
     - !type:NestedSelector
       tableId: SyndieMaintLoot
       prob: 0.05
+    # Enemy "Loot"
+    - !type:NestedSelector
+      tableId: MaintEnemyTable
+      prob: 0.01
 
 - type: entity
   id: ClosetMaintenanceFilledRandom
   suffix: Filled, Random
   parent: ClosetMaintenance
   components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:NestedSelector
-        tableId: MaintenanceLockerLoot
+    - type: EntityTableContainerFill
+      containers:
+        entity_storage: !type:NestedSelector
+          tableId: MaintenanceLockerLoot
 
 - type: entity
   id: ClosetWallMaintenanceFilledRandom
   parent: ClosetWall
   suffix: Filled, Random
   components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:NestedSelector
-        tableId: MaintenanceLockerLoot
+    - type: EntityTableContainerFill
+      containers:
+        entity_storage: !type:NestedSelector
+          tableId: MaintenanceLockerLoot

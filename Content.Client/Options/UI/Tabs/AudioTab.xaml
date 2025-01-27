@@ -1,4 +1,4 @@
-﻿<Control xmlns="https://spacestation14.io"
+<Control xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:ui="clr-namespace:Content.Client.Options.UI">
     <BoxContainer Orientation="Vertical">
@@ -13,11 +13,15 @@
                 <ui:OptionSlider Name="SliderVolumeAmbience" Title="{Loc 'ui-options-ambience-volume'}" />
                 <ui:OptionSlider Name="SliderVolumeLobby" Title="{Loc 'ui-options-lobby-volume'}" />
                 <ui:OptionSlider Name="SliderVolumeInterface" Title="{Loc 'ui-options-interface-volume'}" />
+                <ui:OptionSlider Name="SliderVolumeAnnouncer" Title="{Loc 'ui-options-announcer-volume'}" />
                 <ui:OptionSlider Name="SliderMaxAmbienceSounds" Title="{Loc 'ui-options-ambience-max-sounds'}"
                                  Margin="0 0 0 8" />
                 <CheckBox Name="LobbyMusicCheckBox" Text="{Loc 'ui-options-lobby-music'}" />
                 <CheckBox Name="RestartSoundsCheckBox" Text="{Loc 'ui-options-restart-sounds'}" />
                 <CheckBox Name="EventMusicCheckBox" Text="{Loc 'ui-options-event-music'}" />
+                <CheckBox Name="AnnouncerDisableMultipleSoundsCheckBox"
+                                Text="{Loc 'ui-options-announcer-disable-multiple-sounds'}"
+                                ToolTip="{Loc 'ui-options-announcer-disable-multiple-sounds-tooltip'}" />
                 <CheckBox Name="AdminSoundsCheckBox" Text="{Loc 'ui-options-admin-sounds'}" />
             </BoxContainer>
         </BoxContainer>

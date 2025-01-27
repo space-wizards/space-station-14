@@ -1,0 +1,44 @@
+#Medical
+- type: entity
+  parent: DefaultStationBeaconScience
+  id: DefaultStationBeaconParamedic
+  suffix: Paramedic
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-paramedic
+
+#Science
+- type: entity
+  parent: DefaultStationBeaconScience
+  id: DefaultStationBeaconXenoarchaeology
+  suffix: Xenoarchaeology
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-xenoarchaeology
+
+#Supply
+- type: entity
+  parent: DefaultStationBeaconSupply
+  id: DefaultStationBeaconMailroomCourier
+  suffix: Cargo Mailroom
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-mailroom
+
+#Engineering
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSMEngine
+  suffix: Supermatter
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-smengine
+
+#Service
+- type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconNews
+  suffix: News
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-news

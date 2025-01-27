@@ -1,0 +1,97 @@
+- type: entity
+  id: PartDecapoid
+  parent: [BaseItem, BasePart]
+  name: "decapoid body part"
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+
+- type: entity
+  id: TorsoDecapoid
+  name: "decapoid torso"
+  parent: [PartDecapoid, BaseTorso]
+  components:
+  - type: Sprite
+    state: "torso"
+
+- type: entity
+  id: HeadDecapoid
+  name: "decapoid head"
+  parent: [PartDecapoid, BaseHead]
+  components:
+  - type: Sprite
+    state: "head"
+
+- type: entity
+  id: LeftArmDecapoid
+  name: "left decapoid arm"
+  parent: [PartDecapoid, BaseLeftArm]
+  components:
+  - type: Sprite
+    state: "l_arm"
+
+- type: entity
+  id: RightArmDecapoid
+  name: "right decapoid arm"
+  parent: [PartDecapoid, BaseRightArm]
+  components:
+  - type: Sprite
+    state: "r_arm"
+
+- type: entity
+  id: LeftHandDecapoid
+  name: "decapoid claw"
+  parent: [PartDecapoid, BaseLeftHand]
+  components:
+  - type: Sprite
+    state: "l_hand"
+
+- type: entity
+  id: RightHandDecapoid
+  name: "right decapoid hand"
+  parent: [PartDecapoid, BaseRightHand]
+  components:
+  - type: Sprite
+    state: "r_hand"
+
+- type: entity
+  id: LeftLegDecapoid # these are the front legs
+  name: "front decapoid legs"
+  parent: [PartDecapoid, BaseLeftLeg]
+  components:
+  - type: Sprite
+    state: "front_leg"
+
+- type: entity
+  id: RightLegDecapoid # these are the back legs
+  name: "back decapoid legs"
+  parent: [PartDecapoid, BaseRightLeg]
+  components:
+  - type: Sprite
+    state: "back_leg"
+  - type: BodyPart
+    partType: Leg
+    symmetry: Right
+
+- type: entity
+  id: LeftFootDecapoid # these are the front feet TODO: custom front feet sprites
+  name: "front decapoid feet"
+  parent: [PartDecapoid, BaseLeftFoot]
+  components:
+  - type: Sprite
+    state: "front_feet"
+  - type: BodyPart
+    partType: Foot
+    symmetry: Left
+
+- type: entity
+  id: RightFootDecapoid # these are the back feet TODO: custom back feet sprites
+  name: "back decapoid feet"
+  parent: [PartDecapoid, BaseRightFoot]
+  components:
+  - type: Sprite
+    state: "back_feet"
+  - type: BodyPart
+    partType: Foot
+    symmetry: Right

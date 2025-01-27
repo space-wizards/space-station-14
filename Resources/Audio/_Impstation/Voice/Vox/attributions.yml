@@ -1,0 +1,34 @@
+- files: ["voxchitter1.ogg"]
+  license: "Custom"
+  copyright: "Recorded by June Hunter Images; modified by AvianMaiden."
+  source: "https://www.youtube.com/watch?v=8xybFI2Q-No"
+
+- files: ["voxchitter2.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "AlexTriceratops123"
+  source: "https://web.archive.org/web/20200223000457/https://www.youtube.com/watch?v=uA5yGyB_z5U"
+
+- files: ["voxcoo1.ogg"]
+  license: "Custom"
+  copyright: "Recorded by lulzBrownie; modified by AvianMaiden."
+  source: "https://www.youtube.com/watch?v=-qS77R0Y1K8"
+  
+- files: ["voxcoo2.ogg"]
+  license: "Custom"
+  copyright: "Recorded by Critter Cam; modified by AvianMaiden."
+  source: "https://www.youtube.com/watch?v=AOZmkZ72ISI"
+  
+- files: ["voxcry.ogg"]
+  license: "Custom"
+  copyright: "Recorded by Wil Hershberger; modified by AvianMaiden."
+  source: "https://macaulaylibrary.org/asset/100707"
+  
+- files: ["voxhiss.ogg"]
+  license: "Custom"
+  copyright: "Recorded by John Naran; modified by AvianMaiden."
+  source: "https://www.youtube.com/watch?v=ETS5NGOankI"
+  
+- files: ["voxgasp1.ogg", "voxgasp2.ogg", "voxgasp3.ogg"]
+  license: "Custom"
+  copyright: "Recorded by Lance Benner; modified by AvianMaiden."
+  source: "https://macaulaylibrary.org/asset/25670251"

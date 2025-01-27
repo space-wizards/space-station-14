@@ -1,0 +1,117 @@
+- type: entity
+  id: PartGoblin
+  parent: [BaseItem, BasePart]
+  name: "goblin body part"
+  abstract: true
+  components:
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: GoblinBlood
+        Quantity: 10
+
+- type: entity
+  id: TorsoGoblin
+  name: "goblin torso"
+  parent: [PartGoblin, BaseTorso]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: "torso"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 10
+      - ReagentId: GoblinBlood
+        Quantity: 20
+
+- type: entity
+  id: HeadGoblin
+  name: "goblin head"
+  parent: [PartGoblin, BaseHead]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: "head"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 5
+      - ReagentId: GoblinBlood
+        Quantity: 10
+
+- type: entity
+  id: LeftArmGoblin
+  name: "left goblin arm"
+  parent: [PartGoblin, BaseLeftArm]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: "l_arm"
+
+- type: entity
+  id: RightArmGoblin
+  name: "right goblin arm"
+  parent: [PartGoblin, BaseRightArm]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: "r_arm"
+
+- type: entity
+  id: LeftHandGoblin
+  name: "left goblin hand"
+  parent: [PartGoblin, BaseLeftHand]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: "l_hand"
+
+- type: entity
+  id: RightHandGoblin
+  name: "right goblin hand"
+  parent: [PartGoblin, BaseRightHand]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: "r_hand"
+
+- type: entity
+  id: LeftLegGoblin
+  name: "left goblin leg"
+  parent: [PartGoblin, BaseLeftLeg]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: "l_leg"
+
+- type: entity
+  id: RightLegGoblin
+  name: "right goblin leg"
+  parent: [PartGoblin, BaseRightLeg]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: "r_leg"
+
+- type: entity
+  id: LeftFootGoblin
+  name: "left goblin foot"
+  parent: [PartGoblin, BaseLeftFoot]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: "l_foot"
+
+- type: entity
+  id: RightFootGoblin
+  name: "right goblin foot"
+  parent: [PartGoblin, BaseRightFoot]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: "r_foot"

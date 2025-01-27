@@ -11,6 +11,12 @@ public sealed partial class MeteorSwarmComponent : Component
     [DataField, AutoPausedField]
     public TimeSpan NextWaveTime;
 
+    [DataField("startAnnouncement")]
+    public bool StartAnnouncement;
+
+    [DataField("endAnnouncement")]
+    public bool EndAnnouncement;
+
     /// <summary>
     /// We'll send a specific amount of waves of meteors towards the station per ending rather than using a timer.
     /// </summary>
@@ -25,21 +31,6 @@ public sealed partial class MeteorSwarmComponent : Component
     /// </summary>
     [DataField]
     public bool NonDirectional;
-
-    /// <summary>
-    /// The announcement played when a meteor swarm begins.
-    /// </summary>
-    [DataField]
-    public LocId? Announcement = "station-event-meteor-swarm-start-announcement";
-
-    [DataField]
-    public SoundSpecifier? AnnouncementSound = new SoundPathSpecifier("/Audio/Announcements/meteors.ogg")
-    {
-        Params = new()
-        {
-            Volume = -4
-        }
-    };
 
     /// <summary>
     /// Each meteor entity prototype and their corresponding weight in being picked.

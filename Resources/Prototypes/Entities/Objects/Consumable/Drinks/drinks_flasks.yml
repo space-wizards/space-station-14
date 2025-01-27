@@ -9,6 +9,10 @@
       Steel: 300
   - type: FitsInDispenser
     solution: drink
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 5
 
 - type: entity
   parent: FlaskBase

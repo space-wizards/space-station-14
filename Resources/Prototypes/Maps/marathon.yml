@@ -1,9 +1,9 @@
 - type: gameMap
   id: Marathon
   mapName: 'Marathon Station'
-  mapPath: /Maps/marathon.yml
+  mapPath: /Maps/_Impstation/marathon.yml
   minPlayers: 35
-  maxPlayers: 70
+  maxPlayers: 80
   stations:
     Marathon:
       stationProto: StandardNanotrasenStation
@@ -23,7 +23,7 @@
             Bartender: [ 2, 2 ]
             Botanist: [ 2, 3 ]
             Chef: [ 2, 2 ]
-            Janitor: [ 1, 2 ]
+            Janitor: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 2 ]
@@ -50,15 +50,18 @@
             Detective: [ 1, 1 ]
             SecurityCadet: [ 4, 4 ]
             Lawyer: [ 2, 2 ]
+            Brigmedic: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 3, 3 ]
+            Courier: [ 2, 2 ]
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
+            Reporter: [ 1, 1 ]
             #silicon
             StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]

@@ -1,0 +1,23 @@
+- type: entity
+  id: ImmovableFriendSpawn
+  parent: ImmovableRodSpawn
+  components:
+  - type: ImmovableRodRule
+    rodPrototypes:
+    - id: ImmovableRodFinFin
+
+- type: entity
+  id: ImmovableGondalSpawn
+  parent: ImmovableRodSpawn
+  components:
+  - type: ImmovableRodRule
+    rodPrototypes:
+    - id: ImmovableRodGondal
+
+- type: entity
+  id: ImmovableHollowPlasticBarrelSpawn
+  parent: ImmovableRodSpawn
+  components:
+  - type: ImmovableRodRule
+    rodPrototypes:
+    - id: ImmovableRodHollowPlasticBarrel

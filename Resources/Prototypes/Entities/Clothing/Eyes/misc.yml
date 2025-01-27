@@ -17,6 +17,22 @@
   - type: FlashImmunity
 
 - type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesDoubleEyepatch
+  name: double eyepatch
+  description: Signature wear of the dread pirate Blindbeard.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Misc/doubleeyepatch.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Misc/doubleeyepatch.rsi
+  - type: Blindfold
+  - type: Construction
+    graph: DoubleEyepatch
+    node: doubleeyepatch
+  - type: FlashImmunity
+
+- type: entity
   parent: ClothingHeadEyeBaseFlippable
   id: ClothingEyesEyepatch
   name: eyepatch
@@ -28,6 +44,9 @@
     sprite: Clothing/Eyes/Misc/eyepatch.rsi
   - type: EyeProtection
     protectionTime: 5
+  - type: Tag
+    tags:
+      - Eyepatch
 
 - type: entity
   parent: [ClothingEyesEyepatch, ClothingHeadEyeBaseFlipped]

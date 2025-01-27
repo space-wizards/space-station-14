@@ -25,6 +25,15 @@
   price: 0.05
 
 - type: material
+  id: HempCloth
+  stackEntity: MaterialHempCloth1
+  name: materials-hemp-cloth
+  unit: materials-unit-roll
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: hemp_cloth }
+  color: "#e7e7de"
+  price: 0.03
+
+- type: material
   id: Durathread
   stackEntity: MaterialDurathread1
   name: materials-durathread

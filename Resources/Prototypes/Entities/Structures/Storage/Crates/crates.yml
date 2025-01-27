@@ -12,6 +12,11 @@
     - Energy
     reflectProb: 0.2
     spread: 90
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 16
+    staminaCost: 45
 
 - type: entity
   parent: CrateBaseWeldable
@@ -29,6 +34,11 @@
     - entity_storage
   - type: StaticPrice
     price: 100
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 10
+    staminaCost: 30
 
 - type: entity
   parent: CratePlastic
@@ -290,6 +300,8 @@
     sprite: Structures/Storage/Crates/weapon.rsi
   - type: AccessReader
     access: [["Armory"]]
+  - type: AntiTamper # impstation edit
+    containers: [ entity_storage ]
 
 - type: entity
   parent: [ CrateBaseSecure, BaseRestrictedContraband ]

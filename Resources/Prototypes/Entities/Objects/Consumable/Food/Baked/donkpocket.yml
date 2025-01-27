@@ -77,7 +77,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 3
+        - ReagentId: THC
+          Quantity: 1
   - type: Sprite
     state: dank
 
@@ -96,9 +98,11 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 8
         - ReagentId: Omnizine
-          Quantity: 4
+          Quantity: 2
+        - ReagentId: THC
+          Quantity: 5
 
 - type: entity
   name: spicy-pocket
@@ -108,9 +112,16 @@
   components:
   - type: FlavorProfile
     flavors:
-      - spicy
       - meaty
       - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: CapsaicinOil
+          Quantity: 1
   - type: Sprite
     state: plain
 
@@ -130,9 +141,11 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 8
         - ReagentId: Omnizine
           Quantity: 2
+        - ReagentId: CapsaicinOil
+          Quantity: 5
   - type: Sprite
     state: spicy
 
@@ -147,6 +160,14 @@
       - meaty
       - sweet
       - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: TeriyakiSauce
+          Quantity: 1
   - type: Sprite
     state: teriyaki
 
@@ -166,9 +187,11 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 8
         - ReagentId: Omnizine
           Quantity: 2
+        - ReagentId: TeriyakiSauce
+          Quantity: 5
 
 - type: entity
   name: pizza-pocket
@@ -187,7 +210,7 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 8
   - type: Sprite
     state: pizza
 
@@ -208,7 +231,7 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 13
         - ReagentId: Omnizine
           Quantity: 2
 
@@ -227,9 +250,11 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 3
         - ReagentId: Omnizine
-          Quantity: 2
+          Quantity: 1
+        - ReagentId: JuiceBanana
+          Quantity: 1
   - type: Sprite
     state: banana
 
@@ -248,9 +273,11 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 8
         - ReagentId: Omnizine
-          Quantity: 2
+          Quantity: 4
+        - ReagentId: JuiceBanana
+          Quantity: 3
 
 - type: entity
   name: berry-pocket
@@ -260,14 +287,15 @@
   components:
   - type: FlavorProfile
     flavors:
-      - sweet
       - cheap
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 1
   - type: Sprite
     state: berry
 
@@ -279,18 +307,17 @@
   components:
   - type: FlavorProfile
     flavors:
-      - sweet
       - cheap
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 9
         - ReagentId: Omnizine
           Quantity: 2
         - ReagentId: Sugar
-          Quantity: 2
+          Quantity: 3
 
 - type: entity
   name: stonk-pocket
@@ -302,12 +329,6 @@
     flavors:
       - profits
       - cheap
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
   - type: Sprite
     state: stonk
 
@@ -323,11 +344,35 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 3
         - ReagentId: Omnizine
-          Quantity: 2
+          Quantity: 1
+  - type: RandomFillSolution
+    solution: food
+    weightedRandomId: RandomFillStonk
+
+- type: weightedRandomFillSolution
+  id: RandomFillStonk
+  fills:
+  - quantity: 5 # Average result
+    weight: 5
+    reagents:
+    - Nutriment
+  - quantity: 10 # Quality result
+    weight: 3
+    reagents:
+    - Nutriment
+  - quantity: 1 # Losing result
+    weight: 3
+    reagents:
+    - Omnizine
+  - quantity: 9 # Jackpot
+    weight: 1
+    reagents:
+    - Omnizine
 
 - type: entity
   name: carp-pocket
@@ -344,7 +389,9 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 4
+        - ReagentId: CarpoToxin
+          Quantity: 0.5
   - type: Sprite
     state: carp
 
@@ -364,7 +411,9 @@
         - ReagentId: Nutriment
           Quantity: 10
         - ReagentId: Omnizine
-          Quantity: 2
+          Quantity: 4
+        - ReagentId: CarpoToxin
+          Quantity: 1
 
 - type: entity
   name: dink-pocket
@@ -386,3 +435,46 @@
           Quantity: 1
   - type: Sprite
     state: dink
+
+- type: entity
+  name: cloth-pocket
+  parent: FoodDonkpocketBase
+  id: FoodDonkpocketCloth
+  description: Imitation donk-pockets woven from cheap cloth.
+  components:
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: FlavorProfile
+    flavors:
+      - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 3
+  - type: Sprite
+    state: cloth
+  - type: Tag
+    tags:
+    - DonkPocket
+    - ClothMade
+
+- type: entity
+  name: warm cloth-pocket
+  parent: FoodDonkpocketCloth
+  id: FoodDonkpocketClothWarm
+  description: Imitation donk-pockets woven from cheap cloth and burnt to perfection.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 8
+        - ReagentId: Omnizine
+          Quantity: 2

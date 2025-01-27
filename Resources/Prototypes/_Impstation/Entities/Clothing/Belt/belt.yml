@@ -1,0 +1,97 @@
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltUtilityGoblinRandomFill
+  name: utility belt
+  description: Can hold various things.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/utility.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/utility.rsi
+  - type: Storage
+    maxItemSize: Normal
+    # inherited from utility belt
+    whitelist:
+      tags:
+        - Powerdrill
+        - Wirecutter
+        - Crowbar
+        - Screwdriver
+        - Flashlight
+        - Wrench
+        - GeigerCounter
+        - Flare
+        - CableCoil
+        - CigPack
+        - Radio
+        - HolofanProjector
+        - Multitool
+        - AppraisalTool
+        - JawsOfLife
+        - GPS
+        - WeldingMask
+      components:
+        - SprayPainter
+        - NetworkConfigurator
+        - RCD
+        - RCDAmmo
+        - Welder
+        - PowerCell
+        - Geiger
+        - TrayScanner
+        - GasAnalyzer
+        - HandLabeler
+  - type: ItemMapper
+    mapLayers:
+      drill:
+        whitelist:
+          tags:
+          - Powerdrill
+      cutters_red:
+        whitelist:
+          tags:
+          - Wirecutter
+      crowbar:
+        whitelist:
+          tags:
+          - Crowbar
+      crowbar_red:
+        whitelist:
+          tags:
+          - CrowbarRed
+      jaws:
+        whitelist:
+          tags:
+          - JawsOfLife
+      screwdriver_nuke:
+        whitelist:
+          tags:
+          - Screwdriver
+      wrench:
+        whitelist:
+          tags:
+          - Wrench
+      multitool:
+        whitelist:
+          tags:
+            - Multitool
+    sprite: Clothing/Belt/belt_overlay.rsi
+  - type: Appearance
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesColorYellow
+        prob: 0.01
+      - id: ClothingHeadHatWelding
+        prob: 0.5
+      - id: GoblinWirecutters
+        prob: 0.3
+      - id: GoblinScrewdriver
+        prob: 0.3
+      - id: GoblinWrench
+        prob: 0.3
+      - id: GoblinCrowbar
+        prob: 0.3
+      - id: GoblinMultitool
+        prob: 0.3
+      - id: GoblinWelder
+        prob: 0.3

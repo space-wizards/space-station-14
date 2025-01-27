@@ -1,0 +1,253 @@
+- type: entity
+  id: BaseGrayOrganUnGibbable
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Gray/organs.rsi
+  - type: Organ
+  - type: Food
+  - type: Extractable
+    grindableSolutionName: organ
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - people
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+
+- type: entity
+  id: BaseGrayOrgan
+  parent: BaseGrayOrganUnGibbable
+  abstract: true
+  components:
+  - type: Gibbable
+
+- type: entity
+  id: OrganGrayBrain
+  parent: BaseGrayOrganUnGibbable
+  name: moluuma
+  description: "Jazee thinking pib talking."
+  components:
+  - type: Sprite
+    state: brain
+  - type: Organ
+  - type: Input
+    context: "ghost"
+  - type: Brain
+  - type: InputMover
+  - type: Examiner
+  - type: BlockMovement
+  - type: BadFood
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Brain
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - people
+  - type: FoodSequenceElement
+    entries:
+      Burger: Brain
+      Taco: Brain
+
+- type: entity
+  id: OrganGrayEyes
+  parent: BaseGrayOrgan
+  name: shuui
+  description: "Soulful."
+  components:
+  - type: Sprite
+    layers:
+      - state: eyeball-l
+      - state: eyeball-r
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Eyes
+
+- type: entity
+  id: OrganGrayTongue
+  parent: BaseGrayOrgan
+  name: jorp
+  description: "It's still wriggling..."
+  components:
+  - type: Sprite
+    state: tongue
+
+- type: entity
+  id: OrganGrayAppendix
+  parent: BaseGrayOrgan
+  name: weird squishy part
+  description: "Seben?"
+  components:
+  - type: Sprite
+    state: appendix
+
+
+- type: entity
+  id: OrganGrayEars
+  parent: BaseGrayOrgan
+  name: tubules
+  description: "You think maybe this is like, their ears."
+  components:
+  - type: Sprite
+    state: ears
+
+- type: entity
+  id: OrganGrayLungs
+  parent: [ BaseGrayOrgan, BaseHandheldInstrument ]
+  name: cupod
+  description: "Eugh..."
+  components:
+  - type: Sprite
+    layers:
+      - state: lung-l
+      - state: lung-r
+  - type: Lung
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Human ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      Lung:
+        maxVol: 100.0
+        canReact: false
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Instrument
+    program: 109
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Lungs
+    - WoodwindInstrument
+
+- type: entity
+  id: OrganGrayHeart
+  parent: BaseGrayOrgan
+  name: tumpii
+  description: "You honestly have no idea what this does."
+  components:
+  - type: Sprite
+    state: heart-on
+  # The heart 'metabolizes' medicines and poisons that aren't filtered out by other organs.
+  # This is done because these chemicals need to have some effect even if they aren't being filtered out of your body.
+  # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes: [Human]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Heart
+
+- type: entity
+  id: OrganGrayStomach
+  parent: BaseGrayOrgan
+  name: fuubu
+  description: "Looks kind of appetizing."
+  components:
+  - type: Sprite
+    state: stomach
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Stomach
+  # The stomach metabolizes stuff like foods and drinks.
+  # TODO: Have it work off of the ent's solution container, and move this
+  # to intestines instead.
+  - type: Metabolizer
+    # mm yummy
+    maxReagents: 3
+    metabolizerTypes: [Human]
+    groups:
+    - id: Food
+    - id: Drink
+
+- type: entity
+  id: OrganGrayLiver
+  parent: BaseGrayOrgan
+  name: beobu
+  description: "Jazee sipsun alcohol."
+  components:
+  - type: Sprite
+    state: liver
+  - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+    maxReagents: 1
+    metabolizerTypes: [Human]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+
+- type: entity
+  id: OrganGrayKidneys
+  parent: BaseGrayOrgan
+  name: cube
+  description: "A small, hard cube of an unidentifiable metal. It's warm to the touch, and pulsates faintly."
+  components:
+  - type: Sprite
+    state: kidney-r
+  # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
+  - type: Metabolizer
+    maxReagents: 5
+    metabolizerTypes: [Human]
+    removeEmpty: true
+  - type: Tool
+    qualities:
+    - Pulsing
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Kidneys
+    - Multitool

@@ -1,0 +1,48 @@
+- type: entity
+  parent: [ClothingBeltStorageBase, BaseCommandContraband]
+  id: ClothingBeltHolsterHOS
+  name: head of security's shoulder holster
+  description: A low-profile shoulder holster for your gear. Remind them who you are.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Belt/hosholster.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Belt/hosholster.rsi
+  - type: Storage
+    whitelist:
+      tags:
+        - CigPack
+        - Taser
+        - SecBeltEquip
+        - Radio
+        - Sidearm
+        - MagazinePistol
+        - MagazineMagnum
+        - CombatKnife
+        - Truncheon
+        - SecTicket
+      components:
+        - Stunbaton
+        - FlashOnTrigger
+        - SmokeOnTrigger
+        - Flash
+        - Handcuff
+        - BallisticAmmoProvider
+        - CartridgeAmmo
+        - DoorRemote
+        - Whistle
+        - BalloonPopper
+
+- type: entity
+  parent: ClothingBeltUtility
+  id: ClothingBeltUtilityBlack
+  name: black utility belt
+  description: Can hold various things. Dyed black for fashion.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Belt/utility_black.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Belt/utility_black.rsi
+  - type: Construction
+    graph: UtilityBlack
+    node: utilityBlack

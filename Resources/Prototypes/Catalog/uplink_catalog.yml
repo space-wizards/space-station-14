@@ -67,6 +67,20 @@
   - UplinkWeaponry
 
 - type: listing
+  id: UplinkHyperEutacticBlade
+  name: uplink-hypereutactic-blade-name
+  description: uplink-hypereutactic-blade-desc
+  icon: { sprite: /Textures/Objects/Weapons/Melee/hypereutactic_blade.rsi, state: icon }
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 10
+  productEntity: HyperEutacticBlade
+  cost:
+    Telecrystal: 16 # Original DSword Cost
+  categories:
+  - UplinkWeaponry
+
+- type: listing
   id: UplinkEnergyDagger
   name: uplink-edagger-name
   description: uplink-edagger-desc
@@ -276,6 +290,16 @@
     - UplinkExplosives
 
 - type: listing
+  id: UplinkBeenade
+  name: uplink-beenade-name
+  description: uplink-beenade-desc
+  productEntity: BeeGrenade
+  cost:
+    Telecrystal: 6
+  categories:
+    - UplinkExplosives
+
+- type: listing
   id: UplinkWhiteholeGrenade
   name: uplink-whitehole-grenade-name
   description: uplink-whitehole-grenade-desc
@@ -460,6 +484,21 @@
   categories:
     - UplinkExplosives
 
+- type: listing
+  id: UplinkBrosGrenade
+  name: uplink-bros-grenade-name
+  description: uplink-bros-grenade-desc
+  productEntity: BrosGrenade
+  cost:
+    Telecrystal: 14
+  categories:
+    - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+
 # Ammo
 
 - type: listing
@@ -514,7 +553,7 @@
   id: UplinkMosinAmmo
   name: uplink-mosin-ammo-name
   description: uplink-mosin-ammo-desc
-  productEntity: MagazineBoxLightRifle
+  productEntity: MagazineBoxRifle
   cost:
     Telecrystal: 1
   categories:
@@ -699,9 +738,9 @@
   productEntity: ClothingBackpackDuffelSyndicateMedicalBundleFilled
   discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 12
+    Telecrystal: 16
   cost:
-    Telecrystal: 20
+    Telecrystal: 24
   categories:
   - UplinkChemicals
   conditions:
@@ -872,9 +911,9 @@
   productEntity: Emag
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 5
+    Telecrystal: 2 # 5 is um. not a discount when it's normally 4
   cost:
-    Telecrystal: 8
+    Telecrystal: 4 # DV was 8, can no longer emag doors
   categories:
   - UplinkDisruption
 
@@ -1015,6 +1054,10 @@
      blacklist:
        tags:
        - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+        - SurplusBundle #imp special (dud roll as a traitor unless you have dagd)
 
 - type: listing
   id: UplinkNukieAntimovCircuitBoard
@@ -1033,6 +1076,10 @@
     whitelist:
       tags:
       - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+        - SurplusBundle #imp special
 
 - type: listing
   id: UplinkSurplusBundle
@@ -1048,10 +1095,12 @@
     blacklist:
       tags:
       - NukeOpsUplink
-  - !type:BuyerWhitelistCondition
-    blacklist:
-      components:
-      - SurplusBundle
+  # the impstation special (it's really funny when this happens)
+  # seems to be a roughly 10% chance to hit the juck pot 1 million$ and get a double surplus crate
+  #- !type:BuyerWhitelistCondition
+  #  blacklist:
+  #    components:
+  #    - SurplusBundle
 
 - type: listing
   id: UplinkSuperSurplusBundle
@@ -1067,6 +1116,8 @@
     blacklist:
       tags:
       - NukeOpsUplink
+  # not allowed to be recursive because it set off a chain reaction that crashed my localhost
+  # can still contain normal surplus bundles though smile
   - !type:BuyerWhitelistCondition
     blacklist:
       components:
@@ -1084,6 +1135,11 @@
     Telecrystal: 12
   categories:
     - UplinkDisruption
+  conditions:
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+        - SurplusBundle # imp special. could maybe make a flatpack that only shows up in surplus bundles at some point, but rn its worse than useless and has a good chance of getting people stuck in wallsa nd shit
 
 - type: listing
   id: UplinkCameraBug
@@ -1115,6 +1171,17 @@
     blacklist:
       tags:
       - NukeOpsUplink
+
+- type: listing
+  id: UplinkAnimalFriendsKit
+  name: uplink-animal-friends-kit-name
+  description: uplink-animal-friends-kit-desc
+  icon: { sprite: /Textures/Mobs/Animals/mouse.rsi, state: icon-2 }
+  productEntity: AnimalFriendsKit
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkAllies
 
 - type: listing
   id: UplinkReinforcementRadioSyndicate
@@ -1810,6 +1877,26 @@
   name: uplink-scarf-syndie-green-name
   description: uplink-scarf-syndie-green-desc
   productEntity: ClothingNeckScarfStripedSyndieGreen
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkPointless
+
+- type: listing
+  id: UplinkPinStraight
+  name: uplink-pin-straight-name
+  description: uplink-pin-straight-desc
+  productEntity: ClothingNeckStraightPin
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkPointless
+
+- type: listing
+  id: UplinkCloakStraight
+  name: uplink-cloak-straight-name
+  description: uplink-cloak-straight-desc
+  productEntity: ClothingNeckCloakStraight
   cost:
     Telecrystal: 1
   categories:

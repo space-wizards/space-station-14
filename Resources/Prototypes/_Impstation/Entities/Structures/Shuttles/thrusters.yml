@@ -1,0 +1,71 @@
+- type: entity
+  id: MiniGyroscope
+  parent: Gyroscope
+  name: mini gyroscope
+  description: Increases the shuttle's potential angular rotation. Used for smaller shuttles.
+  components:
+  - type: Thruster
+    thrusterType: Angular
+    requireSpace: false
+    thrust: 300
+    machinePartThrust: Manipulator
+  - type: ApcPowerReceiver
+    powerLoad: 500
+  - type: Sprite
+    sprite: _Impstation/Structures/Shuttles/minigyroscope.rsi
+    snapCardinals: true
+    layers:
+    - state: base
+      map: ["enum.ThrusterVisualLayers.Base"]
+    - state: thrust
+      map: ["enum.ThrusterVisualLayers.ThrustOn"]
+      shader: unshaded
+      visible: false
+    - state: thrust_burn
+      map: [ "enum.ThrusterVisualLayers.Thrusting" ]
+      visible: false
+    - state: thrust_burn_unshaded
+      map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
+      shader: unshaded
+      visible: false
+  - type: PointLight
+    radius: 1.2
+    energy: 0.8
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    offset: "0, 0.1" # shine from the top, not bottom of the computer
+    color: "#4246b3"
+  - type: Machine
+    board: MiniGyroscopeMachineCircuitboard
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  id: MiniGyroscopeUnanchored
+  parent: MiniGyroscope
+  suffix: Unanchored
+  components:
+    - type: Transform
+      anchored: false
+    - type: Physics
+      bodyType: Dynamic

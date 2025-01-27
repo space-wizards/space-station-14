@@ -25,6 +25,20 @@
     BuzzochloricBees: 3
 
 - type: reaction
+  id: BrosochloricBros
+  reactants:
+    VentCrud: # bros already make a ton of this. it is their blood. their being
+      amount: 1
+    GroundBros: # just ripping off buzzochloric from here, minus the fiber
+      amount: 1
+    Chlorine:
+      amount: 1
+    UnstableMutagen:
+      amount: 1
+  products:
+    BrosochloricBros: 3
+
+- type: reaction
   id: CreateSoap
   impact: Low
   quantized: true
@@ -73,6 +87,7 @@
 
 - type: reaction
   id: SpaceGlue
+  preserveDNA: true
   minTemp: 370
   reactants:
     SpaceLube:
@@ -81,6 +96,17 @@
       amount: 1
   products:
     SpaceGlue: 2
+
+- type: reaction
+  id: PropulsionGel
+  minTemp: 370
+  reactants:
+    Mucin:
+      amount: 1
+    Tricordrazine:
+      amount: 1
+  products:
+    PropulsionGel: 2
 
 - type: reaction
   id: Licoxide
@@ -201,3 +227,13 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
+
+- type: reaction
+  id: JuiceThatMakesYouUngh
+  reactants:
+    VentCrud:
+      amount: 1
+    Lemonade:
+      amount: 1
+  products:
+    JuiceThatMakesYouUngh: 2

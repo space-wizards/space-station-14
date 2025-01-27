@@ -1,0 +1,14 @@
+- type: entity
+  id: HeartLocket
+  parent: ClothingNeckBase
+  name: heart locket
+  description: A charming heart-shaped locket, to wear around ones neck or perhaps give as a gift.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/heartlocket.rsi
+    layers:
+    - state: heartlocket
+  - type: Clothing
+    sprite: _Impstation/Objects/Misc/heartlocket.rsi
+  - type: Appearance
+  - type: Engraveable

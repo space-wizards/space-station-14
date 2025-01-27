@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/commit/1dbcf389b0ec6b2c51b002df5fef8dd1519f8068, lemo fruits by stonylogray",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "dead"
+    },
+    {
+      "name": "harvest"
+    },
+    {
+      "name": "fruit_dead"
+    },
+    {
+      "name": "fruit_green"
+    },
+    {
+      "name": "fruit_orange"
+    },
+    {
+      "name": "fruit_pink"
+    },
+    {
+      "name": "fruit_red"
+    },
+    {
+      "name": "fruit_yellow"
+    },
+    {
+      "name": "seed"
+    },
+    {
+      "name": "slice"
+    },
+    {
+      "name": "stage-1"
+    },
+    {
+      "name": "stage-2"
+    },
+    {
+      "name": "stage-3"
+    },
+    {
+      "name": "stage-4"
+    },
+    {
+      "name": "stage-5"
+    },
+    {
+      "name": "stage-6"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+- type: construction
+  name: directional uranium window
+  id: UraniumWindowDirectional
+  graph: WindowDirectional
+  startNode: start
+  targetNode: uraniumWindowDirectional
+  category: construction-category-structures
+  canBuildInImpassable: true
+  description: Clear, with a green tint.
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/directional.rsi
+    state: uranium_window
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  name: directional reinforced uranium window
+  id: UraniumReinforcedWindowDirectional
+  graph: WindowDirectional
+  startNode: start
+  targetNode: uraniumReinforcedWindowDirectional
+  category: construction-category-structures
+  canBuildInImpassable: true
+  description: Clear and even tougher, with a green tint.
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/directional.rsi
+    state: uranium_reinforced_window
+  objectType: Structure
+  placementMode: SnapgridCenter

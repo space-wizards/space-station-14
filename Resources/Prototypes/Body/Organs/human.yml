@@ -23,9 +23,10 @@
   - type: FlavorProfile
     flavors:
       - people
-  - type: Tag
+  - type: Tag # goob edit
     tags:
-      - Meat
+    - Meat
+    - Organ
 
 - type: entity
   id: BaseHumanOrgan
@@ -50,9 +51,11 @@
   - type: Examiner
   - type: BlockMovement
   - type: BadFood
-  - type: Tag
+  - type: Tag # goob edit
     tags:
-      - Meat
+    - Meat
+    - Organ
+    - Brain
   - type: SolutionContainerManager
     solutions:
       organ:
@@ -71,7 +74,10 @@
     entries:
       Burger: Brain
       Taco: Brain
-  
+  - type: Item
+    size: Small
+    heldPrefix: brain
+
 - type: entity
   id: OrganHumanEyes
   parent: BaseHumanOrgan
@@ -82,6 +88,14 @@
     layers:
       - state: eyeball-l
       - state: eyeball-r
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Eyes
+  - type: Item
+    size: Small
+    heldPrefix: eyeballs
 
 - type: entity
   id: OrganHumanTongue
@@ -122,6 +136,9 @@
     layers:
       - state: lung-l
       - state: lung-r
+  - type: Item
+    size: Small
+    heldPrefix: lungs
   - type: Lung
   - type: Metabolizer
     removeEmpty: true
@@ -145,6 +162,11 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Lungs
 
 - type: entity
   id: OrganHumanHeart
@@ -164,6 +186,14 @@
     - id: Medicine
     - id: Poison
     - id: Narcotic
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Heart
+  - type: Item
+    size: Small
+    heldPrefix: heart
 
 - type: entity
   id: OrganHumanStomach
@@ -173,6 +203,9 @@
   components:
   - type: Sprite
     state: stomach
+  - type: Item
+    size: Small
+    heldPrefix: stomach
   - type: SolutionContainerManager
     solutions:
       stomach:
@@ -193,6 +226,11 @@
     groups:
     - id: Food
     - id: Drink
+  - type: Tag # goob edit
+    tags:
+      - Meat
+      - Organ
+      - Stomach
 
 - type: entity
   id: OrganHumanLiver
@@ -202,12 +240,20 @@
   components:
   - type: Sprite
     state: liver
+  - type: Item
+    size: Small
+    heldPrefix: liver
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
     maxReagents: 1
     metabolizerTypes: [Human]
     groups:
     - id: Alcohol
       rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+  - type: Tag # goob edit
+    tags:
+      - Meat
+      - Organ
+      - Liver
 
 - type: entity
   id: OrganHumanKidneys
@@ -219,8 +265,16 @@
     layers:
       - state: kidney-l
       - state: kidney-r
+  - type: Item
+    size: Small
+    heldPrefix: kidneys
   # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
   - type: Metabolizer
     maxReagents: 5
     metabolizerTypes: [Human]
     removeEmpty: true
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Kidneys

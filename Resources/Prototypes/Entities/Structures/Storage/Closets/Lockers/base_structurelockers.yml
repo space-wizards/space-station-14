@@ -20,6 +20,11 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      offset: "-0.065,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Destructible
     thresholds:
     - trigger:
@@ -49,6 +54,11 @@
     node: done
     containers:
     - entity_storage
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 10
+    staminaCost: 35
 
 - type: entity
   id: LockerBaseSecure

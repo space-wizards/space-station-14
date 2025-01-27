@@ -1,0 +1,381 @@
+- type: loadoutGroup
+  id: GroupFullTankAquatic
+  name: loadout-group-full-tank-aquatic
+  minLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutSpeciesAquaticFullTank
+
+# decapoid claw and tank
+- type: loadoutGroup
+  id: GroupDecapoidClawLeft
+  name: loadout-group-decapoid-claw-left
+  minLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutDecapoidClaw
+
+# the claw and tank but as StartingGear
+- type: startingGear
+  id: StartingGearDecapoidClaw
+  inhand:
+    - DecapoidVaporTank
+    - DecapoidClawItem
+
+# the full internals setup for decapoids but as StartingGear
+- type: startingGear
+  id: StartingGearDecapoidVaporizer
+  equipment:
+    mask: DecapoidBreathingApparatus
+  inhand:
+    - DecapoidVaporTank
+    - DecapoidClawItem
+
+# The usual loadouts of the decapoid harness that spawn in your chest slot for jobs that don't have outerwear in their loadout
+- type: loadoutGroup
+  id: GroupTankHarnessAquatic
+  name: loadout-group-tank-harness-aquatic
+  minLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutTankHarnessAquatic
+
+- type: loadoutGroup
+  id: GroupTankHarnessCommandAquatic
+  name: loadout-group-tank-harness-command-aquatic
+  minLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutTankHarnessAquaticCommand
+
+# Tank harnesses for jobs that spawn with outerwear, puts them in their inventory instead of dropping items at their feet
+- type: loadoutGroup
+  id: GroupTankHarnessWithOuterwearAquatic
+  name: loadout-group-tank-harness-with-outerwear-aquatic
+  minLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutTankHarnessAquaticWithOuterwear
+
+- type: loadoutGroup
+  id: GroupTankHarnessCommandWithOuterwearAquatic
+  name: loadout-group-tank-harness-command-with-outerwear-aquatic
+  minLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutTankHarnessAquaticCommandWithOuterwear
+
+# vaporizer
+- type: loadoutGroup
+  id: GroupBreathToolDecapoid
+  name: loadout-group-breath-tool-decapoid
+  minLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutDecapoidBreathTool
+
+
+- type: loadoutGroup
+  id: GroupBreathToolDecapoidInventory
+  name: loadout-group-breath-tool-inventory-decapoid
+  minLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutDecapoidBreathToolInventory
+
+- type: loadoutGroup
+  id: ChemistHead
+  name: loadout-group-chemist-head
+  minLimit: 0
+  loadouts:
+  - MedicalBeret
+  - SeniorPhysicianBeret
+
+
+- type: loadoutGroup
+  id: CaptainGlasses
+  name: loadout-group-captain-glasses
+  loadouts:
+  - CaptainSunglasses
+  - CaptainVisor
+
+- type: loadoutGroup
+  id: CaptainGloves
+  name: loadout-group-captain-gloves
+  loadouts:
+  - CaptainGloves
+  - CaptainFlightGloves
+
+- type: loadoutGroup
+  id: CaptainShoes
+  name: loadout-group-captain-shoes
+  loadouts:
+  - LacedShoes
+  - LeatherShoes
+  - BlackCommandHeels
+  - BlueCommandHeels
+  - CaptainJumpBoots
+
+- type: loadoutGroup
+  id: CommandHeadset
+  name: loadout-group-command-headset
+  loadouts:
+  - CommandHeadsetBasic
+  - CommandHeadset
+  - CommandVeteranHeadset
+
+- type: loadoutGroup
+  id: SurvivalCommand
+  name: loadout-group-survival-command
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenCommand
+  - EmergencyOxygenCommand
+  - LoadoutSpeciesVoxNitrogenCommand
+
+- type: loadoutGroup
+  id: SurvivalExtendedCommand
+  name: loadout-group-survival-extended-command
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenExtendedCommand
+  - EmergencyOxygenExtendedCommand
+  - LoadoutSpeciesVoxNitrogenCommand
+
+- type: loadoutGroup
+  id: SurvivalSecurityCommand
+  name: loadout-group-survival-security-command
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenSecurityCommand
+  - EmergencyOxygenSecurityCommand
+  - LoadoutSpeciesVoxNitrogenCommand
+
+- type: loadoutGroup
+  id: QuartermasterHeadset
+  name: loadout-group-quartermaster-headset
+  loadouts:
+  - QuartermasterHeadsetBasic
+  - QuartermasterHeadset
+  - QuartermasterVeteranHeadset
+
+- type: loadoutGroup
+  id: QuartermasterBackpack
+  name: loadout-group-quartermaster-backpack
+  loadouts:
+  - CargoTechnicianBackpack
+  - CargoTechnicianSatchel
+  - CargoTechnicianDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: ChiefEngineerHeadset
+  name: loadout-group-chief-engineer-headset
+  loadouts:
+  - ChiefEngineerHeadsetBasic
+  - ChiefEngineerHeadset
+  - ChiefEngineerVeteranHeadset
+
+- type: loadoutGroup
+  id: ChiefEngineerBackpack
+  name: loadout-group-chief-engineer-backpack
+  loadouts:
+  - StationEngineerBackpack
+  - StationEngineerSatchel
+  - StationEngineerDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: ResearchDirectorBackpack
+  name: loadout-group-research-director-backpack
+  loadouts:
+  - ScientistBackpack
+  - ScientistSatchel
+  - ScientistDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: HeadofSecurityHeadset
+  name: loadout-group-head-of-security-headset
+  loadouts:
+  - HeadofSecurityHeadsetBasic
+  - HeadofSecurityHeadset
+  - HeadofSecurityVeteranHeadset
+
+- type: loadoutGroup
+  id: HeadofSecurityBackpack
+  name: loadout-group-head-of-security-backpack
+  loadouts:
+  - SecurityBackpack
+  - SecuritySatchel
+  - SecurityDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerHeadset
+  name: loadout-group-chief-medical-officer-headset
+  loadouts:
+  - ChiefMedicalOfficerHeadsetBasic
+  - ChiefMedicalOfficerHeadset
+  - ChiefMedicalOfficerVeteranHeadset
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerBackpack
+  name: loadout-group-chief-medical-officer-backpack
+  loadouts:
+  - MedicalDoctorBackpack
+  - MedicalDoctorSatchel
+  - MedicalDoctorDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: HoPShoes
+  name: loadout-group-hop-shoes
+  loadouts:
+  - BrownShoes
+  - LacedShoes
+  - LeatherShoes
+  - HoPShoesWhite
+  - BlackCommandHeels
+  - BlueCommandHeels
+
+- type: startingGear #the starting gear for the apid botanist. they dont have a backslot and whatever so ive gotta do it bespoke
+  id: StartingGearApidBotanist
+  equipment:
+    jumpsuit: ClothingUniformOveralls
+    id: BotanistPDA
+    belt: ClothingBeltPlantFilled
+    outerClothing: ClothingOuterApronBotanist
+    head: ClothingHeadBandBotany
+    pocket1: EmergencyOxygenTankFilled
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetService
+
+- type: startingGear #the doctor too
+  id: StartingGearApidDoctor
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+    id: MedicalPDA
+    belt: ClothingBeltMedicalFilled
+    outerClothing: ClothingOuterWinterMed
+    #head:
+    pocket1: EmergencyOxygenTankFilled
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesGlassesHudMedical
+
+- type: startingGear #the engineer!
+  id: StartingGearApidEngineer
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitEngineering
+    id: EngineerPDA
+    belt: ClothingBeltUtilityEngineering
+    outerClothing: ClothingOuterHardsuitEngineering
+    head: ClothingHeadHatHardhatYellow
+    pocket1: DoubleEmergencyOxygenTankFilled
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetEngineering
+    eyes: ClothingEyesGlassesMeson
+
+- type: startingGear #emergency responder
+  id: StartingGearApidEmergency
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTMedic
+    id: ParamedicPDA
+    belt: ApidEmergencyResponseBeltFilled
+    outerClothing: ClothingOuterHardsuitERTMedical
+    head: ClothingHeadHatParamedicSirenCap
+    pocket1: DoubleEmergencyOxygenTankFilled
+    pocket2: WeaponDisabler
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedSec
+
+- type: startingGear #chef
+  id: StartingGearApidChef
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChef
+    id: ChefPDA
+    belt: ClothingBeltChefFilled
+    outerClothing: ClothingOuterJacketChef
+    #head:
+    pocket1: EmergencyOxygenTankFilled
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetService
+    eyes: ClothingEyesHudBeer
+
+- type: startingGear #beemail!
+  id: StartingGearApidCourier
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCourier
+    id: CourierPDA
+    belt: MailBag
+    outerClothing: ClothingOuterWinterCourier
+    head: ClothingHeadHatCouriersoftFlipped
+    pocket1: EmergencyOxygenTankFilled
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetCargo
+    #eyes:
+
+- type: loadoutGroup
+  id: SalvageSpecialistJumpsuit
+  name: loadout-group-salvage-specialist-jumpsuit
+  loadouts:
+  - SalvageSpecialistJumpsuit
+  - SalvageSpecialistJumpskirt
+
+- type: loadoutGroup
+  id: CourierHead
+  name: loadout-group-courier-head
+  minLimit: 0
+  loadouts:
+  - CourierHat
+
+- type: loadoutGroup
+  id: CourierJumpsuit
+  name: loadout-group-courier-jumpsuit
+  loadouts:
+  - CourierJumpsuit
+  - CourierJumpskirt
+
+- type: loadoutGroup
+  id: CourierBackpack
+  name: loadout-group-courier-backpack
+  loadouts:
+  - CargoTechnicianBackpack
+  - CargoTechnicianSatchel
+  - CargoTechnicianDuffel
+
+- type: loadoutGroup
+  id: CourierNeck
+  name: loadout-group-courier-neck
+  minLimit: 0
+  loadouts:
+  - ScarfBrown
+  - ScarfBlue
+
+- type: loadoutGroup
+  id: CourierOuterClothing
+  name: loadout-group-courier-outerclothing
+  minLimit: 0
+  loadouts:
+  - CourierWintercoat
+
+- type: loadoutGroup
+  id: CourierShoes
+  name: loadout-group-courier-shoes
+  loadouts:
+  - LeatherShoes
+  - CourierWinterBoots

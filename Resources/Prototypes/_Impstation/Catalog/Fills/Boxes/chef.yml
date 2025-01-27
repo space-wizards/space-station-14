@@ -1,0 +1,150 @@
+- type: entity
+  parent: BoxCardboard
+  id: BoxCardboardIngredient
+  name: ingredients box
+  description: A box containing supplementary ingredients for the aspiring chef.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Storage/boxes.rsi
+    state: box_chef
+
+- type: entity
+  parent: BoxCardboardIngredient
+  id: BoxCardboardIngredientAmerican
+  suffix: american
+  description: A box containing supplementary ingredients for the aspiring chef. The box's theme is 'american'.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodPotato
+    - id: FoodTomato
+    - id: FoodCorn
+    - id: FoodMeatMeatball
+    - id: FoodMeatMeatball
+  - type: Sprite
+    layers:
+    - state: box_chef
+    - state: america
+
+- type: entity
+  parent: BoxCardboardIngredient
+  id: BoxCardboardIngredientCarnivore
+  suffix: carnivore
+  description: A box containing supplementary ingredients for the aspiring chef. The box's theme is 'carnivore'.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodMeat
+    - id: FoodMeatChicken
+    - id: FoodMeatBear
+    - id: FoodMeatFish
+    - id: FoodMeatSpider
+    - id: FoodMeatXeno
+    - id: DrinkBeerBottleFull
+  - type: Sprite
+    layers:
+    - state: box_chef
+    - state: carnivore
+
+- type: entity
+  parent: BoxCardboardIngredient
+  id: BoxCardboardIngredientFiesta
+  suffix: fiesta
+  description: A box containing supplementary ingredients for the aspiring chef. The box's theme is 'fiesta'.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodDoughTortilla
+    - id: FoodCorn
+    - id: FoodSoybeans
+    - id: FoodChiliPepper
+  - type: Sprite
+    layers:
+    - state: box_chef
+    - state: fiesta
+
+- type: entity
+  parent: BoxCardboardIngredient
+  id: BoxCardboardIngredientFruity
+  suffix: fruity
+  description: A box containing supplementary ingredients for the aspiring chef. The box's theme is 'fruity'.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodOrange
+    - id: FoodLemon
+    - id: FoodLime
+    - id: FoodWatermelon
+  - type: Sprite
+    layers:
+    - state: box_chef
+    - state: fruity
+
+- type: entity
+  parent: BoxCardboardIngredient
+  id: BoxCardboardIngredientGrains
+  suffix: grains
+  description: A box containing supplementary ingredients for the aspiring chef. The box's theme is 'grains'.
+  components:
+  - type: StorageFill
+    contents:
+    - id: OatBushel
+    - id: WheatBushel
+    - id: FoodCocoaPod
+    - id: FoodPoppy
+  - type: Sprite
+    layers:
+    - state: box_chef
+    - state: grains
+
+- type: entity
+  parent: BoxCardboardIngredient
+  id: BoxCardboardIngredientItalian
+  suffix: italian
+  description: A box containing supplementary ingredients for the aspiring chef. The box's theme is 'italian'.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodTomato
+    - id: FoodTomato
+    - id: DrinkWineCan
+    - id: FoodMeatMeatball
+    - id: FoodMeatMeatball
+  - type: Sprite
+    layers:
+    - state: box_chef
+    - state: italy
+
+- type: entity
+  parent: BoxCardboardIngredient
+  id: BoxCardboardIngredientSweets
+  suffix: sweets
+  description: A box containing supplementary ingredients for the aspiring chef. The box's theme is 'sweets'.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodCherry
+    - id: FoodBanana
+    - id: FoodCocoaPod
+    - id: FoodApple
+  - type: Sprite
+    layers:
+    - state: box_chef
+    - state: sweets
+
+- type: entity
+  parent: BoxCardboardIngredient
+  id: BoxCardboardIngredientVegetarian
+  suffix: vegetarian
+  description: A box containing supplementary ingredients for the aspiring chef. The box's theme is 'vegetarian'.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodCarrot
+    - id: FoodEggplant
+    - id: FoodPotato
+    - id: FoodTomato
+  - type: Sprite
+    layers:
+    - state: box_chef
+    - state: vegetarian

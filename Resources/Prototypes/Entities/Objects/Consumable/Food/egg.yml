@@ -11,7 +11,7 @@
       - Egg
       - Meat
   - type: Food
-    trash: 
+    trash:
     - Eggshells
   - type: Sprite
     sprite: Objects/Consumable/Food/egg.rsi
@@ -94,6 +94,9 @@
     - Egg
     - Trash
   - type: SpaceGarbage
+  - type: FoodSequenceElement
+    entries:
+      Burger: EggshellsBurger
 
 # Egg
 

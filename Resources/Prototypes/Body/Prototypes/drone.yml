@@ -1,0 +1,26 @@
+﻿- type: body
+  id: Drone
+  name: "drone"
+  root: torso
+  slots:
+    torso:
+      part: TorsoBorg
+      connections:
+      - hand 1
+      - hand 2
+      - hand 3
+      - hand 4
+      - hand 5
+      - hand 6
+    hand 1:
+      part: LeftArmBorg
+    hand 2:
+      part: LeftArmBorg
+    hand 3:
+      part: LeftArmBorg
+    hand 4:
+      part: LeftArmBorg
+    hand 5:
+      part: RightArmBorg
+    hand 6:
+      part: RightArmBorg

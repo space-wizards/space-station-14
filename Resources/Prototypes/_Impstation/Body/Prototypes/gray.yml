@@ -1,0 +1,52 @@
+- type: body
+  id: Gray
+  name: "Gray"
+  root: torso
+  slots:
+    head:
+      part: HeadGray
+      connections:
+      - torso
+      organs:
+        brain: OrganGrayBrain
+        eyes: OrganGrayEyes
+        ears: OrganGrayEars
+        tongue: OrganGrayTongue
+        lungs: OrganGrayLungs
+    torso:
+      part: TorsoGray
+      connections:
+      - right_arm
+      - left_arm
+      - right_leg
+      - left_leg
+      organs:
+        heart: OrganGrayHeart
+        stomach: OrganGrayStomach
+        liver: OrganGrayLiver
+        kidneys: OrganGrayKidneys
+        appendix: OrganGrayAppendix
+    right_arm:
+      part: RightArmGray
+      connections:
+      - right_hand
+    left_arm:
+      part: LeftArmGray
+      connections:
+      - left_hand
+    right_hand:
+      part: RightHandGray
+    left_hand:
+      part: LeftHandGray
+    right_leg:
+      part: RightLegGray
+      connections:
+      - right_foot
+    left_leg:
+      part: LeftLegGray
+      connections:
+      - left_foot
+    right_foot:
+      part: RightFootGray
+    left_foot:
+      part: LeftFootGray

@@ -27,14 +27,16 @@
         food:
           maxVol: 5
           reagents:
-          - ReagentId: GreyMatter
+          - ReagentId: Slime
             Quantity: 5
         organ:
           reagents:
           - ReagentId: Slime
             Quantity: 10
+    - type: Item
+      size: Small
+      heldPrefix: brain
 
-      
 - type: entity
   id: OrganSlimeLungs
   parent: BaseHumanOrgan
@@ -70,3 +72,6 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
+  - type: Item
+    size: Small
+    heldPrefix: lungs

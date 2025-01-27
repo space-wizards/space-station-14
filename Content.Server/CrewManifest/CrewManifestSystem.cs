@@ -230,7 +230,7 @@ public sealed class CrewManifestSystem : EntitySystem
         foreach (var recordObject in iter)
         {
             var record = recordObject.Item2;
-            var entry = new CrewManifestEntry(record.Name, record.JobTitle, record.JobIcon, record.JobPrototype);
+            var entry = new CrewManifestEntry(record.Name, record.Gender.ToString().ToLowerInvariant(), record.JobTitle, record.JobIcon, record.JobPrototype);
 
             _prototypeManager.TryIndex(record.JobPrototype, out JobPrototype? job);
             entriesSort.Add((job, entry));

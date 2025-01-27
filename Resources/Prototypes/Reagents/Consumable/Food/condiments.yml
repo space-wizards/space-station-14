@@ -135,6 +135,23 @@
         factor: -0.5 # high salt content
 
 - type: reagent
+  id: TeriyakiSauce
+  name: reagent-name-teriyaki
+  group: Foods
+  desc: reagent-desc-teriyaki
+  physicalDesc: reagent-physical-desc-salty
+  flavor: savory
+  color: saddlebrown
+  recognizable: true
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 0.5
+      - !type:SatiateThirst
+        factor: -0.5 # high salt content
+
+- type: reagent
   id: TableSalt
   name: reagent-name-table-salt
   group: Foods
@@ -164,6 +181,21 @@
       # eating salt on its own kinda sucks, kids
       - !type:SatiateThirst
         factor: -0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Snail
+          shouldHave: true
+        damage:
+          types:
+            Poison: 4
+  tileReactions:
+    - !type:EnsureTileReaction
+      components:
+        - type: RevealRevenantOnCollide
+          popupText: revenant-revealed-salt
 
 - type: reagent
   id: Syrup

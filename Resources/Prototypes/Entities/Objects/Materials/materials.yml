@@ -11,6 +11,7 @@
     size: Normal
   - type: Tag
     tags:
+      - DroneUsable
       - RawMaterial
   - type: Damageable
     damageContainer: Inorganic
@@ -54,6 +55,8 @@
         reagents:
         - ReagentId: Cellulose
           Quantity: 6
+  - type: Item
+    heldPrefix: cardboard
 
 - type: entity
   parent: MaterialCardboard
@@ -130,11 +133,14 @@
   - type: Tag
     tags:
       - ClothMade
+      - DroneUsable
       - Gauze
       - RawMaterial
   - type: Construction
     graph: WebObjects # not sure if I should either keep this here or just make another prototype. Will keep it here just in case.
     node: cloth
+  - type: Item
+    heldPrefix: cloth
 
 - type: entity
   parent: MaterialCloth
@@ -153,6 +159,87 @@
   components:
   - type: Sprite
     state: cloth
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialHempCloth
+  name: hemp cloth
+  suffix: Full
+  components:
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      types:
+        Slash: -0.3
+        Piercing: -0.3
+    bloodlossModifier: -2
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: Stack
+    stackType: HempCloth
+    baseLayer: base
+    layerStates:
+    - hemp_cloth
+    - hemp_cloth_2
+    - hemp_cloth_3
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      HempCloth: 100
+  - type: Sprite
+    state: hemp_cloth_3
+    layers:
+    - state: hemp_cloth_3
+      map: ["base"]
+  - type: Appearance
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+        - ReagentId: THC
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 4
+      - ReagentId: THC
+        Quantity: 4
+  - type: Tag
+    tags:
+      - ClothMade
+      - RawMaterial
+  - type: Construction
+    graph: HempObjects
+    node: hempcloth
+
+- type: entity
+  parent: MaterialHempCloth
+  id: MaterialHempCloth10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: hemp_cloth
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: MaterialHempCloth
+  id: MaterialHempCloth1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: hemp_cloth
   - type: Stack
     count: 1
 
@@ -194,7 +281,10 @@
   - type: Tag
     tags:
       - ClothMade
+      - DroneUsable
       - RawMaterial
+  - type: Item
+    heldPrefix: durathread
 
 - type: entity
   parent: MaterialDurathread
@@ -241,6 +331,7 @@
   - type: Tag
     tags:
     - Wooden
+    - DroneUsable
     - RawMaterial
   - type: Extractable
     grindableSolutionName: wood
@@ -250,6 +341,16 @@
         reagents:
         - ReagentId: Cellulose
           Quantity: 10
+  - type: UserInterface
+    interfaces:
+      enum.ShortConstructionUiKey.Key:
+        type: ShortConstructionMenuBUI
+  - type: ActivatableUI
+    key: enum.ShortConstructionUiKey.Key
+  - type: ShortConstruction
+    prototypes:
+    - TileWood
+    - TileWoodLarge
 
 - type: entity
   parent: MaterialWoodPlank
@@ -296,7 +397,6 @@
   - type: Stack
     count: 1
 
-# Following not used currently
 - type: entity
   parent: MaterialBase
   id: MaterialHideBear
@@ -323,6 +423,9 @@
     energy: 1.5
     color: "#4faffb"
     slots:
+  - type: Tag
+    tags:
+      - BearHide
 
 - type: entity
   parent: MaterialBase
@@ -334,8 +437,7 @@
     sprite: Objects/Materials/materials.rsi
     state: corgihide
   - type: Item
-    sprite: Clothing/Head/Misc/hides.rsi
-    heldPrefix: corgi
+    heldPrefix: corgihide
   - type: Clothing
     sprite: Clothing/Head/Misc/hides.rsi
     equippedPrefix: corgi2
@@ -426,7 +528,10 @@
   - type: Tag
     tags:
       - ClothMade
+      - DroneUsable
       - RawMaterial
+  - type: Item
+    heldPrefix: cotton
 
 - type: entity
   parent: MaterialCotton
@@ -435,6 +540,59 @@
   components:
   - type: Sprite
     state: cotton
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialHemp
+  name: hemp
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Hemp
+    baseLayer: base
+    layerStates:
+    - hemp
+    - hemp_2
+    - hemp_3
+  - type: Sprite
+    state: hemp_3
+    layers:
+    - state: hemp_3
+      map: ["base"]
+  - type: Appearance
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+        - ReagentId: THC
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 4
+      - ReagentId: THC
+        Quantity: 4
+  - type: Tag
+    tags:
+      - ClothMade
+      - DroneUsable
+      - RawMaterial
+
+- type: entity
+  parent: MaterialHemp
+  id: MaterialHemp1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: hemp
   - type: Stack
     count: 1
 
@@ -479,6 +637,8 @@
     tags:
       - ClothMade
       - RawMaterial
+  - type: Item
+    heldPrefix: pyrotton
 
 - type: entity
   parent: MaterialPyrotton
@@ -538,6 +698,8 @@
       - ReagentId: Honk
         Quantity: 5
   - type: Appearance
+  - type: Item
+    heldPrefix: bananium
 
 - type: entity
   parent: MaterialBananium
@@ -588,6 +750,9 @@
     tags:
       - ClothMade
       - RawMaterial
+  - type: Item
+    sprite: Objects/Materials/silk.rsi
+    heldPrefix: silk
 
 - type: entity
   parent: MaterialWebSilk
@@ -710,6 +875,8 @@
         reagents:
         - ReagentId: Vitamin
           Quantity: 3
+  - type: Item
+    heldPrefix: bones
 
 - type: entity
   parent: MaterialBones
@@ -764,6 +931,8 @@
     - goliath_hide_3
   - type: Item
     size: Large
+    heldPrefix: goliathhide
+    sprite: Objects/Materials/hide.rsi
     shape:
     - 0,0,2,2
 

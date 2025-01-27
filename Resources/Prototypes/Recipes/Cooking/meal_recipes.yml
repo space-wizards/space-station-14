@@ -24,6 +24,14 @@
     FoodDoughRope: 1
     PoppySeeds: 1
 
+- type: microwaveMealRecipe
+  id: RecipeBagelCotton
+  name: cotton bagel recipe
+  result: FoodBagelCotton
+  time: 5
+  solids:
+    FoodDoughCottonRope: 1
+
 #Burgers
 
 - type: microwaveMealRecipe
@@ -340,6 +348,15 @@
     FoodBreadBun: 1
     MobMothroach: 1
 
+- type: microwaveMealRecipe
+  id: RecipeFinfinBurger
+  name: finfin burger recipe
+  result: FoodBurgerFinfin
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    FoodMeatFinfin: 1
+
 #Breads & Sandwiches
 
 - type: microwaveMealRecipe
@@ -457,6 +474,17 @@
     Blackpepper: 5
   solids:
     FoodDough: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBaguetteCotton
+  name: baguette recipe
+  result: FoodBreadBaguetteCotton
+  time: 15
+  reagents:
+    TableSalt: 5
+    Blackpepper: 5
+  solids:
+    FoodDoughCotton: 1
 
 - type: microwaveMealRecipe
   id: RecipeBaguetteSword
@@ -622,6 +650,16 @@
     FoodChiliPepper: 2
     FoodTomato: 2
     SheetUranium1: 2
+
+- type: microwaveMealRecipe
+  id: RecipeTeoeanPizza
+  name: Teoean pizza recipe
+  result: FoodPizzaLemo
+  time: 30
+  solids:
+    FoodDoughFlat: 1
+    FoodMeatFinfinCutlet: 3
+    FoodLemoSlice: 5
 
 - type: microwaveMealRecipe
   id: RecipeCottonPizza
@@ -1003,6 +1041,16 @@
     FoodPlateTin: 1
 
 - type: microwaveMealRecipe
+  id: RecipeLemoPie
+  name: lemo pie recipe
+  result: FoodPieLemo
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodLemo: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
   id: RecipeBaklava
   name: baklava recipe
   result: FoodPieBaklava
@@ -1171,6 +1219,16 @@
     FoodMeatFish: 2
 
 - type: microwaveMealRecipe
+  id: RecipeFinfinSashimi
+  name: finfin sashimi recipe
+  result: FoodMealFinfinSashimi
+  time: 15
+  reagents:
+    TableSalt: 1
+  solids:
+    FoodMeatFinfin: 2
+
+- type: microwaveMealRecipe
   id: RecipeMisoColaSoup
   name: salty sweet misocola soup recipe
   result: DisgustingSweptSoup
@@ -1219,6 +1277,41 @@
     TableSalt: 5
   solids:
     FoodCarrot: 1
+
+- type: microwaveMealRecipe
+  id: RecipeNachos
+  name: nachos recipe
+  result: FoodMealNachos
+  time: 10
+  reagents:
+    TableSalt: 1
+  solids:
+    FoodDoughTortillaFlat: 1
+    FoodPlateSmall: 1
+
+- type: microwaveMealRecipe
+  id: RecipeNachosCheesy
+  name: cheesy nachos recipe
+  result: FoodMealNachosCheesy
+  time: 10
+  reagents:
+    TableSalt: 1
+  solids:
+    FoodCheeseSlice: 1
+    FoodDoughTortillaFlat: 1
+    FoodPlateSmall: 1
+
+- type: microwaveMealRecipe
+  id: RecipeNachosCuban
+  name: cuban nachos recipe
+  result: FoodMealNachosCuban
+  time: 10
+  reagents:
+    Ketchup: 5
+  solids:
+    FoodChiliPepper: 1
+    FoodDoughTortillaFlat: 1
+    FoodPlateSmall: 1
 
 - type: microwaveMealRecipe
   id: RecipePopcorn
@@ -1316,6 +1409,17 @@
     Sugar: 5
   solids:
     FoodButterSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMuffinLemo
+  name: lemuffin recipe
+  result: FoodBakedMuffinLemo
+  time: 5
+  reagents:
+    Flour: 5
+    Sugar: 5
+  solids:
+    FoodLemo: 3
 
 - type: microwaveMealRecipe
   id: RecipeChocolateChipPancake
@@ -1590,6 +1694,14 @@
   solids:
     FoodDonkpocketCarp: 1
 
+- type: microwaveMealRecipe
+  id: RecipeDonkpocketCloth
+  name: warm cloth-pocket recipe
+  result: FoodDonkpocketClothWarm
+  time: 5
+  solids:
+    FoodDonkpocketCloth: 1
+
 
 - type: microwaveMealRecipe
   id: RecipeHotChili
@@ -1779,6 +1891,67 @@
     FoodOrange: 1
     FoodAmbrosiaVulgaris: 1
 
+# Muffins
+
+- type: microwaveMealRecipe
+  id: RecipeMuffin
+  name: muffin recipe
+  result: FoodBakedMuffin
+  time: 15
+  solids:
+    FoodPlateMuffinTin: 1
+    FoodDoughSlice: 1
+  reagents:
+    Sugar: 10
+
+- type: microwaveMealRecipe
+  id: RecipeMuffinChocolate
+  name: chocolate muffin recipe
+  result: FoodBakedMuffinChocolate
+  time: 15
+  solids:
+    FoodPlateMuffinTin: 1
+    FoodDoughSlice: 1
+    FoodSnackChocolateBar: 1
+  reagents:
+    Sugar: 10
+
+- type: microwaveMealRecipe
+  id: RecipeMuffinBerry
+  name: berry muffin recipe
+  result: FoodBakedMuffinBerry
+  time: 15
+  solids:
+    FoodPlateMuffinTin: 1
+    FoodDoughSlice: 1
+    FoodBerries: 1
+  reagents:
+    Sugar: 10
+
+- type: microwaveMealRecipe
+  id: RecipeMuffinBanana
+  name: banana muffin recipe
+  result: FoodBakedMuffinBanana
+  time: 15
+  solids:
+    FoodPlateMuffinTin: 1
+    FoodDoughSlice: 1
+    FoodBanana: 1
+  reagents:
+    Sugar: 10
+
+- type: microwaveMealRecipe
+  id: RecipeMuffinCherry
+  name: cherry muffin recipe
+  result: FoodBakedMuffinCherry
+  time: 15
+  solids:
+    FoodPlateMuffinTin: 1
+    FoodDoughSlice: 1
+    FoodCherry: 3
+  reagents:
+    Sugar: 10
+
 # NOT ACTUAL FOOD
 
 - type: microwaveMealRecipe
@@ -1804,6 +1977,14 @@
   time: 10
   solids:
     LeavesCannabis: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDriedGreenMarijuana
+  name: dried green marijuana leaves recipe
+  result: LeavesCannabisDried
+  time: 10
+  solids:
+    LeavesGreenMarijuana: 1
 
 - type: microwaveMealRecipe
   id: RecipeDriedCannabisRainbow
@@ -1844,12 +2025,13 @@
     FoodBreadBaguetteSlice: 1
 
 - type: microwaveMealRecipe
-  id: RecipeCookedSpaceshroom
-  name: cooked spaceshroom recipe
-  result: FoodSpaceshroomCooked
+  id: RecipeFoodBakedChevreChaudCotton
+  name: cotton chevre chaud recipe
+  result: FoodBakedChevreChaudCotton
   time: 5
   solids:
-    FoodSpaceshroom: 1
+    FoodChevreSlice: 1
+    FoodBreadBaguetteCottonSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeCannabisButter
@@ -1872,6 +2054,28 @@
   solids:
     FoodCannabisButter: 2
     FoodSnackChocolateBar: 2
+
+- type: microwaveMealRecipe
+  id: RecipeRainbowCannabisButter
+  name: cannabis butter recipe
+  result: FoodRainbowCannabisButter
+  time: 15
+  solids:
+    FoodButter: 1
+    LeavesCannabisRainbow: 6
+
+- type: microwaveMealRecipe
+  id: RecipeForeverWeedBrownies
+  name: cannabis brownie recipe
+  result: FoodBakedForeverWeedBrownieBatch
+  time: 25
+  reagents:
+    Flour: 15
+    Sugar: 30
+  solids:
+    FoodRainbowCannabisButter: 2
+    FoodSnackChocolateBar: 2
+    FoodEgg: 3
 
 - type: microwaveMealRecipe
   id: RecipeCornInButter
@@ -1980,6 +2184,15 @@
     FoodButterSlice: 1
 
 - type: microwaveMealRecipe
+  id: RecipeCroissantCotton
+  name: cotton croissant recipe
+  result: FoodBakedCroissantCotton
+  time: 5
+  solids:
+    FoodCroissantRawCotton: 1
+    FoodButterSlice: 1
+
+- type: microwaveMealRecipe
   id: RecipeThrowingCroissant
   name: throwing croissant recipe
   result: WeaponCroissant
@@ -1989,3 +2202,27 @@
     FoodCroissantRaw: 1
     FoodButterSlice: 1
     ShardGlass: 1
+
+- type: microwaveMealRecipe
+  id: RecipeInertAnomalyMeat
+  name: inert meat anomaly recipe
+  result: FoodMeatAnomaly
+  time: 5
+  solids:
+    AnomalyCoreFleshInert: 1
+
+- type: microwaveMealRecipe
+  id: RecipeAnomalyMeat
+  name: meat anomaly recipe
+  result: FoodMeatAnomaly
+  time: 5
+  solids:
+    AnomalyCoreFlesh: 1
+
+- type: microwaveMealRecipe
+  id: RecipeAnomalyMeatCooked
+  name: cooked meat anomaly recipe
+  result: FoodMeatAnomalyCooked
+  time: 5
+  solids:
+    FoodMeatAnomaly: 1

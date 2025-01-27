@@ -1,0 +1,18 @@
+- type: entity
+  parent: [ ClothingHeadBase, TierXContraband ]
+  id: ClothingHeadHatHoodHeretic
+  name: ominous hood
+  description: A torn, dust-caked hood. Strange eyes line the inside.
+  components:
+  - type: HereticMagicItem
+  - type: Sprite
+    sprite: _Goobstation/Heretic/eldritch_hood.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Goobstation/Heretic/eldritch_hood.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair

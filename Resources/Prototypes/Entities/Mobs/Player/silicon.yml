@@ -30,10 +30,10 @@
   - type: IgnoreUIRange
   - type: StationAiHeld
   - type: StationAiOverlay
+  - type: ShowElectrocutionHUD
   - type: ActionGrant
     actions:
     - ActionJumpToCore
-    - ActionShowJobIcons
     - ActionSurvCameraLights
     - ActionAIViewLaws
   - type: UserInterface
@@ -69,8 +69,33 @@
   - type: CommunicationsConsole
     canShuttle: false
     title: comms-console-announcement-title-station-ai
-    color: "#2ed2fd"
+    color: "#5ed7aa"
+  - type: HolographicAvatar
+    layerData:
+    - sprite: Mobs/Silicon/station_ai.rsi
+      state: default
+  - type: ShowJobIcons
 
+- type: entity
+  id: AiHeldIntellicard
+  description: Components added / removed from an entity that gets inserted into an Intellicard.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
+  - type: ActionGrant
+    actions:
+    - ActionAIViewLaws
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
 
 # Ai
 - type: entity
@@ -82,7 +107,8 @@
   - type: StationAiHolder
     slot:
       name: station-ai-mind-slot
-      locked: true
+      locked: false
+      disableEject: true
       whitelist:
         tags:
         - StationAi
@@ -96,9 +122,17 @@
         showEnts: True
 
 # Boards
+- type: entity # imp. there is no base lawboard by default
+  abstract: true
+  id: BaseLawBoard 
+  parent: BaseElectronics
+  components:
+  - type: StealTarget
+    stealGroup: AILawBoard
+
 - type: entity
   id: AsimovCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard # imp. these are default parented off of BaseElectronics
   name: law board (Crewsimov)
   description: An electronics board containing the Crewsimov lawset.
   components:
@@ -107,10 +141,18 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: Crewsimov
+  - type: DetailedInspect # imp. this is the format, please add it to everything else
+    verbMessage: verbs-detailed-inspect-lawset
+    tickEntries: true
+    numberedEntries: true
+    examineText:
+      - law-crewsimov-1
+      - law-crewsimov-2
+      - law-crewsimov-3
 
 - type: entity
   id: CorporateCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Corporate)
   description: An electronics board containing the Corporate lawset.
   components:
@@ -122,7 +164,7 @@
 
 - type: entity
   id: NTDefaultCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (NT Default)
   description: An electronics board containing the NT Default lawset.
   components:
@@ -134,7 +176,7 @@
 
 - type: entity
   id: CommandmentCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Ten Commandments)
   description: An electronics board containing the Ten Commandments lawset.
   components:
@@ -144,9 +186,10 @@
   - type: SiliconLawProvider
     laws: CommandmentsLawset
 
+
 - type: entity
   id: PaladinCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Paladin)
   description: An electronics board containing the Paladin lawset.
   components:
@@ -158,7 +201,7 @@
 
 - type: entity
   id: LiveLetLiveCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Live and Let Live)
   description: An electronics board containing the Live and Let Live lawset.
   components:
@@ -170,7 +213,7 @@
 
 - type: entity
   id: StationEfficiencyCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Station Efficiency)
   description: An electronics board containing the Station Efficiency lawset.
   components:
@@ -182,7 +225,7 @@
 
 - type: entity
   id: RobocopCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Robocop)
   description: An electronics board containing the Robocop lawset.
   components:
@@ -194,7 +237,7 @@
 
 - type: entity
   id: OverlordCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Overlord)
   description: An electronics board containing the Overlord lawset.
   components:
@@ -205,20 +248,20 @@
     laws: OverlordLawset
 
 - type: entity
-  id: DungeonMasterCircuitBoard
-  parent: BaseElectronics
-  name: law board (Dungeon Master)
-  description: An electronics board containing the Dungeon Master lawset.
+  id: GameMasterCircuitBoard
+  parent: BaseLawBoard
+  name: law board (Game Master)
+  description: An electronics board containing the Game Master lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: std_mod
   - type: SiliconLawProvider
-    laws: DungeonMasterLawset
+    laws: GameMasterLawset
 
 - type: entity
   id: ArtistCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Artist)
   description: An electronics board containing the Artist lawset.
   components:
@@ -230,7 +273,7 @@
 
 - type: entity
   id: AntimovCircuitBoard
-  parent: BaseElectronics
+  parent: [BaseLawBoard, BaseSyndicateContraband]
   name: law board (Antimov)
   description: An electronics board containing the Antimov lawset.
   components:
@@ -239,10 +282,11 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: AntimovLawset
+    lawUploadSound: /Audio/Ambience/Antag/silicon_lawboard_antimov.ogg
 
 - type: entity
   id: NutimovCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard
   name: law board (Nutimov)
   description: An electronics board containing the Nutimov lawset.
   components:
@@ -255,15 +299,18 @@
 # Items
 - type: entity
   id: Intellicard
-  name: Intellicard
+  name: intellicard
   description: A storage device for AIs.
   parent:
   - BaseItem
   - AiHolder
   suffix: Empty
   components:
+  - type: ContainerComp
+    proto: AiHeldIntellicard
+    container: station_ai_mind_slot
   - type: Sprite
-    sprite: Objects/Devices/ai_card.rsi
+    sprite: _Impstation/Objects/Devices/ai_card.rsi #imp
     layers:
     - state: base
     - state: full
@@ -276,6 +323,18 @@
         unshaded:
           Empty: { state: empty }
           Occupied: { state: full }
+  - type: Intellicard
+
+- type: entity
+  id: PlayerStationAiPreview
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Silicon/station_ai.rsi #imp
+    layers:
+    - state: base
+    - state: ai
+      shader: unshaded
 
 - type: entity
   id: PlayerStationAiEmpty
@@ -314,12 +373,37 @@
       map: ["unshaded"]
       shader: unshaded
   - type: Appearance
+  - type: InteractionPopup
+    interactSuccessString: petting-success-station-ai
+    interactFailureString: petting-failure-station-ai
+    messagePerceivedByOthers: petting-success-station-ai-others # Otherwise AI cannot tell its being pet as It's just a brain inside of the core, not the core itself.
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
   - type: GenericVisualizer
     visuals:
       enum.StationAiVisualState.Key:
         unshaded:
           Empty: { state: ai_empty }
           Occupied: { state: ai }
+  - type: StealTarget #imp
+    stealGroup: AICore
+  - type: Telephone
+    compatibleRanges:
+    - Grid
+    - Map
+    - Unlimited
+    listeningRange: 0
+    speakerVolume: Speak
+    unlistedNumber: true
+    requiresPower: false
+  - type: Holopad
+  - type: StationAiWhitelist
+  - type: UserInterface
+    interfaces:
+        enum.HolopadUiKey.AiRequestWindow:
+          type: HolopadBoundUserInterface
+        enum.HolopadUiKey.AiActionWindow:
+          type: HolopadBoundUserInterface
 
 # The job-ready version of an AI spawn.
 - type: entity
@@ -331,7 +415,7 @@
     containerId: station_ai_mind_slot
     job: StationAi
   - type: Sprite
-    sprite: Mobs/Silicon/station_ai.rsi
+    sprite: _Impstation/Mobs/Silicon/station_ai.rsi #imp
     layers:
     - state: base
     - state: ai
@@ -359,8 +443,8 @@
     interfaces:
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
+        requireInputValidation: false
   - type: ComplexInteraction
-  - type: DoorRemote
   - type: Actions
   - type: Access
     groups:
@@ -369,10 +453,14 @@
     drawFov: false
   - type: Examiner
   - type: InputMover
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
   - type: Tag
     tags:
     - HideContextMenu
     - StationAi
+    - NoConsoleSound
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
@@ -399,29 +487,32 @@
       shader: unshaded
       map: ["base"]
 
+# The holographic representation of the AI that is projected from a holopad.
+- type: entity
+  id: StationAiHoloLocal
+  name: AI hologram
+  description: A holographic representation of an AI.
+  categories: [ HideSpawnMenu ]
+  suffix: DO NOT MAP
+  components:
+  - type: Transform
+    anchored: true
+  - type: WarpPoint
+    follow: true
+  - type: Eye
+  - type: ContentEye
+  - type: Examiner
+  - type: Actions
+  - type: Alerts
+  - type: FTLSmashImmune
+  - type: CargoSellBlacklist
+  - type: StationAiVision
+    range: 20
+
 # Borgs
 - type: entity
-  id: PlayerBorgGeneric
-  parent: BorgChassisGeneric
-  suffix: Battery, Tools
-  components:
-  - type: ContainerFill
-    containers:
-      borg_brain:
-        - PositronicBrain
-      borg_module:
-        - BorgModuleTool
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
-  - type: RandomMetadata
-    nameSegments: [names_borg]
-
-- type: entity
   id: PlayerBorgBattery
-  parent: BorgChassisGeneric
+  parent: BorgChassisSelectable
   suffix: Battery
   components:
   - type: ContainerFill
@@ -515,3 +606,320 @@
     - PlayerBorgSyndicateAssaultGhostRole
     - PlayerBorgSyndicateAssaultGhostRole # Saboteurs are kinda like cyborg medics, we want less.
     - PlayerBorgSyndicateSaboteurGhostRole
+
+- type: entity
+  id: PlayerBorgDerelict
+  parent: BorgChassisDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleTool
+        - BorgModuleFireExtinguisher
+        - BorgModuleGPS
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: RandomMetadata
+    nameSegments: [names_borg]
+
+- type: entity
+  id: PlayerBorgDerelictGhostRole
+  parent: PlayerBorgDerelict
+  suffix: Ghost role
+  components:
+    - type: GhostRole
+      name: ghost-role-information-derelict-cyborg-name
+      description: ghost-role-information-derelict-cyborg-description
+      rules: ghost-role-information-silicon-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+
+  # Drones and OneStar mech
+- type: entity
+  save: false
+  abstract: true
+  id: PlayerSiliconBase #for player controlled silicons. it's a shitty name, idk why they did it like that.
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
+  - type: Input
+    context: "human"
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      collection: MetalThud
+  - type: Clickable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Bloodstream
+    bloodReagent: Oil
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -1
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          # Circles, cuz rotation of rectangles looks very bad
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 3
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 60
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+  - type: Physics
+    bodyType: KinematicController
+  - type: Hands
+    showInHands: false
+  - type: ComplexInteraction
+  - type: Body
+    prototype: Drone
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
+  - type: DoAfter
+  - type: Pullable
+  - type: Examiner
+  - type: Puller
+  - type: StandingState
+  - type: Alerts
+  - type: ProtectedFromStepTriggers
+
+- type: entity
+  name: drone
+  id: Drone
+  parent: PlayerSiliconBase
+  components:
+  - type: Drone # this system has too much going on, it should really be like three different components
+    whitelist:
+      tags:
+      - DroneUsable
+      - Trash
+    blacklist:
+      tags:
+      - Syringe
+      - HighRiskItem
+      components:
+      - Contraband
+  - type: PAI # imp; this is added specifically for the internal station map feature but the other aspects are not especially against the identity of drones. and i dont want to put the work into ECS-ifying PAIComponent
+  - type: Instrument # imp
+    allowPercussion: false
+    handheld: false
+    bank: 1
+    program: 2
+  - type: Loadout # imp special. this replaces the InnateTool component.
+    prototypes:
+      - StartingGearDroneTools
+  - type: NameIdentifier
+    group: Drone
+  - type: Inventory
+    templateId: drone
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+      enum.InstrumentUiKey.Key: #imp
+        type: InstrumentBoundUserInterface
+        requireInputValidation: false
+      enum.StationMapUiKey.Key: #imp
+        type: StationMapBoundUserInterface
+        requireInputValidation: false
+  - type: StationMap #imp
+  - type: GhostRole
+    makeSentient: true
+    name: Maintenance Drone
+    description: Maintain the station. Ignore other beings except drones.
+    rules: |
+     You are bound by these laws both in-game and out-of-character:
+     1. You may not interfere with the affairs of any being except another drone, regardless of intent or circumstance.
+     2. Your goal is to maintain or improve the station to the best of your ability.
+     3. You may not take any action which causes damage or harm to the station or its inhabitants.
+  - type: GhostTakeoverAvailable
+  - type: SiliconLawBound
+  - type: SiliconLawProvider
+    laws: Drone
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 5
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      60: Dead
+  - type: Flash
+  - type: NoSlip
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      30: 0.7
+      50: 0.5
+  - type: Temperature
+    heatDamageThreshold: 5000
+    currentTemperature: 310.15
+    specificHeat: 42
+    heatDamage:
+      types:
+        Heat : 1 #per second, scales with temperature & other constants
+  - type: Sprite
+    drawdepth: SmallMobs
+    layers:
+    - state: shell
+      sprite: Mobs/Silicon/drone.rsi
+      map: ["base"]
+  - type: MovementIgnoreGravity
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.DroneVisuals.Status:
+        base:
+          Off: { state: shell }
+          On: { state: drone }
+  - type: ReplacementAccent
+    accent: silicon
+  - type: Repairable
+    fuelCost: 15
+    doAfterDelay: 8
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: Actions
+  - type: UnpoweredFlashlight
+  - type: PointLight
+    enabled: false
+    radius: 3.5
+    softness: 1
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+  - type: ProtectedFromStepTriggers
+  - type: InputMover
+  - type: MobMover
+  - type: ContentEye
+    maxZoom: 1.2, 1.2
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - EmagImmune
+
+# onestar is kinda fucked cause the loadout component is broken. sooo they gotta find guns somewhere i guess. /shrug.
+- type: entity
+  name: onestar mecha
+  id: Onestar
+  parent: PlayerSiliconBase
+  components:
+# InnateToolComponent is broken and this doesn't work. might not ever be fixed.
+#  - type: InnateTool
+#    tools:
+#      - id: WeaponMinigun
+#      - id: EnergySword
+#      - id: WeaponLauncherMultipleRocket
+#      - id: WeaponXrayCannon
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-onestar-mecha-name
+    description: ghost-role-information-onestar-mecha-description
+    rules: ghost-role-information-antagonist-rules
+  - type: GhostTakeoverAvailable
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 2
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      1000: Dead
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - state: onestar_boss
+      sprite: Mobs/Silicon/onestar.rsi
+    - state: onestar_boss_screen
+      sprite: Mobs/Silicon/onestar.rsi
+      shader: unshaded
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+  - type: MovementIgnoreGravity
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 1
+        density: 160
+        mask:
+        - LargeMobMask
+        layer:
+        - MobLayer
+  - type: Appearance
+  - type: CombatMode
+  - type: Tag
+    tags:
+      - FootstepSound

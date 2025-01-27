@@ -1,0 +1,97 @@
+- type: entity
+  parent: [ClothingMaskPullableBase, BaseCommandContraband]
+  id: ClothingMaskBreathCommand
+  name: command breath mask
+  description: A fancy and comfortable breath mask, but functionally identical to the clear plastic ones.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _Impstation/Clothing/Mask/breathcommand.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Mask/breathcommand.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - PetWearable
+    - WhitelistChameleon
+    - BreathMask # goob edit
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+      Plastic: 100
+  - type: HideLayerClothing
+    slots:
+    - Snout
+    hideOnToggle: true
+
+- type: entity
+  parent: [ ClothingMaskGas, BaseCommandContraband ]
+  id: ClothingMaskGasHOS
+  name: head of security's gas mask
+  description: A compact armored mask made just for the head of security.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _Impstation/Clothing/Mask/gashos.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Mask/gashos.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    hideOnToggle: true
+  - type: Armor
+    modifiers:
+      coefficients: # Same as the gas masks that come in security survival boxes
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.95
+- type: entity
+  parent: [ClothingMaskPullableBase]
+  id: ClothingMaskBreathSCargo
+  name: S-Cargo breath mask
+  description: While functionally identical to a standard breath mask, nothing can compete when it comes to style.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _Impstation/Clothing/Mask/scargomask.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Mask/scargomask.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - PetWearable
+    - WhitelistChameleon
+    - BreathMask # goob edit
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+      Plastic: 100
+  - type: HideLayerClothing
+    slots:
+    - Snout
+    hideOnToggle: true
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskClownNose
+  name: clown nose
+  description: A particularly controversial fashion statement in clown culture.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Mask/clownnose.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Mask/clownnose.rsi
+  - type: BreathMask #clown magic
+  - type: Tag
+    tags:
+    - ClownMask

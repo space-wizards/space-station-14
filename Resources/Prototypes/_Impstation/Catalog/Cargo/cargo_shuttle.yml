@@ -1,0 +1,30 @@
+- type: cargoProduct
+  id: ShuttleMiniGyroscope
+  icon:
+    sprite: _Impstation/Structures/Shuttles/minigyroscope.rsi
+    state: base
+  product: CrateEngineeringMiniGyroscope
+  cost: 1000
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+- type: cargoProduct
+  id: ShuttleShittleStarterPack
+  icon:
+    sprite: Clothing/Head/Helmets/eva_large.rsi
+    state: icon
+  product: CrateEngineeringShittle
+  cost: 2750
+  category: cargoproduct-category-name-shuttle
+  group: market
+  
+- type: cargoProduct #reimplemented from upstream as an imp special. if people abuse this then re-comment this out and kill them with rocks and hammers
+  id: ShuttleShittleAdvancedPack
+  icon:
+    sprite: Structures/Power/Generation/wallmount_generator.rsi
+    state: static
+  product: CrateEngineeringAdvancedShittle
+  cost: 1250
+  category: cargoproduct-category-name-shuttle
+  group: market
+

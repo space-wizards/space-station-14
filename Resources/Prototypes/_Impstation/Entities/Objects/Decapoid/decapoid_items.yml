@@ -1,0 +1,193 @@
+- type: entity
+  name: decapoid claw
+  suffix: Unremoveable
+  parent: BaseItem
+  id: DecapoidClawItem
+  description: 'A large claw. Not very good for fine manipulation, but very strong and very sharp.'
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Decapoid/claw.rsi # todo: custom. obviously
+    state: icon
+  - type: Item
+    sprite: _Impstation/Objects/Decapoid/claw.rsi
+  - type: MeleeWeapon
+    range: 1
+    angle: 20
+    resetOnHandSelected: true
+    wideAnimationRotation: 135
+    attackRate: 1.5
+    damage:
+      types:
+        Piercing: 10
+        Structural: 10
+    soundHit:
+      collection: AlienClaw
+  - type: Unremoveable
+  - type: Blocking
+    passiveBlockModifier:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 2
+    activeBlockModifier:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 2
+      flatReductions:
+        Blunt: 1
+        Slash: 1
+        Piercing: 1
+    passiveBlockFraction: 0.0
+    activeBlockFraction: 0.2
+  - type: Damageable
+    damageContainer: Shield
+  - type: ToolTileCompatible
+    delay: 0.5
+  - type: Tool
+    qualities:
+      - Prying
+    useSound: /Audio/_Impstation/Items/Decapoid/claw_prying.ogg
+  - type: Prying
+    speedModifier: 1.5
+    pryPowered: false # god damn it
+    useSound: /Audio/_Impstation/Items/Decapoid/claw_prying.ogg
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Prying
+        sprite:
+          sprite: _Impstation/Objects/Decapoid/claw.rsi
+          state: icon-closed
+        useSound: /Audio/_Impstation/Items/Decapoid/claw_prying.ogg
+        changeSound: /Audio/_Impstation/Items/Decapoid/switch.ogg
+      - behavior: Cutting
+        sprite:
+          sprite: _Impstation/Objects/Decapoid/claw.rsi
+          state: icon
+        useSound: /Audio/_Impstation/Items/Decapoid/claw_cutting.ogg
+        changeSound: /Audio/_Impstation/Items/Decapoid/switch.ogg
+  - type: Tag
+    tags:
+      - DecapoidClaw
+
+- type: entity
+  name: vaporizer
+  parent: ClothingMaskPullableBase
+  id: DecapoidBreathingApparatus
+  description: 'A neck-mounted breathing apparatus for Decapoids. Moistens your gills, if you have them. Also functions as a brain-to-voice translator.'
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Decapoid/vaporizer.rsi # todo: custom. obviously. also todo: make it able to take in water, convert it to vapor, and internals that steam into the lungs.
+    state: icon
+  - type: Tag
+    tags:
+      - Vaporizer
+      - BreathMask
+      - WhitelistChameleon
+      - GasMask
+  - type: Clothing
+    quickEquip: true
+    slots:
+    - mask
+    sprite: _Impstation/Objects/Decapoid/vaporizer.rsi
+    clothingVisuals:
+      mask:
+      - state: EQUIPPED-neck
+      - state: EQUIPPED-neckUnshaded
+        shader: unshaded
+  - type: BreathMask
+  - type: HideLayerClothing
+    slots:
+    - Snout
+    hideOnToggle: true
+  - type: SpeechSound
+    speechSounds: Decapoid
+    speechVerb: Robotic
+
+
+- type: entity
+  name: vapor tank
+  suffix: Filled
+  parent: GasTankRoundBase
+  id: DecapoidVaporTank
+  description: 'An alien contraption consisting of two tanks. The smaller tank takes in water and converts it into vapor, which is stored in the larger tank. It can hold 5 L of gas, and 30u of fluid.'
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tanks/vapor.rsi
+    layers:
+      - state: icon
+      - state: fill-1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+      - state: normal
+        map: [ "indicator" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.VaporizerVisuals.Indicator:
+        indicator:
+          Normal:      { state: "normal" }
+          BadSolution: { state: "bad" }
+          LowSolution: { state: "low" }
+          Empty:       { state: "empty" }
+  - type: Appearance
+  - type: Item
+    size: Normal
+    sprite: _Impstation/Objects/Tanks/vapor.rsi
+  - type: Clothing
+    quickEquip: false
+    sprite: _Impstation/Objects/Tanks/vapor.rsi
+    slots:
+    - Back
+    - suitStorage
+  - type: ActivatableUI
+    key: enum.SharedGasTankUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SharedGasTankUiKey.Key:
+        type: GasTankBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: Tag
+    tags:
+      - GasTank
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      volume: 5
+      moles:
+        - 0 # oxygen
+        - 0 # nitrogen
+        - 0 # CO2
+        - 0 # plasma
+        - 0 # tritium
+        - 2.051379050 # water vapor
+      temperature: 293.15
+  - type: Drink
+  - type: SolutionContainerManager
+    solutions:
+      waterTank:
+        maxVol: 30
+  - type: RefillableSolution
+    solution: waterTank
+  - type: ExaminableSolution
+    solution: waterTank
+  - type: Spillable
+    solution: waterTank
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: waterTank
+  - type: MixableSolution
+    solution: waterTank
+  - type: DrainableSolution
+    solution: waterTank
+  - type: DrawableSolution
+    solution: waterTank
+  - type: Vaporizer
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill-
+    solutionName: waterTank

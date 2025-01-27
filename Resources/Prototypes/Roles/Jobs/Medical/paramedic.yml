@@ -15,13 +15,13 @@
   access:
   - Medical
   - Maintenance
+  - External
   extendedAccess:
   - Chemistry
 
 - type: startingGear
   id: ParamedicGear
   equipment:
-    id: ParamedicPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalEMTFilled
   storage:

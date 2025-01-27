@@ -358,6 +358,7 @@
     tags:
     - Trash
     - WhitelistChameleon
+    - DroneUsable
   - type: TrashOnSolutionEmpty
     solution: drink
   - type: Clothing

@@ -340,7 +340,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         _deletionQueue.Remove(entity);
         UpdateSlip(entity, entity.Comp, args.Solution);
-        UpdateSlow(entity, args.Solution);
+        UpdateSlow(entity, entity.Comp, args.Solution);
         UpdateEvaporation(entity, args.Solution);
         UpdateAppearance(entity, entity.Comp);
     }
@@ -421,19 +421,30 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         }
     }
 
-    private void UpdateSlow(EntityUid uid, Solution solution)
+    private void UpdateSlow(EntityUid uid, PuddleComponent component, Solution solution)
     {
-        var maxViscosity = 0f;
+        var totalViscosity = 0f;
+        var totalQuantity = 0f;
+        var fullPuddleAmount = FixedPoint2.New(component.OverflowVolume.Float() * LowThreshold);
+
         foreach (var (reagent, _) in solution.Contents)
         {
+            var reagentQuant = solution.GetReagentQuantity(reagent).Float();
             var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
-            maxViscosity = Math.Max(maxViscosity, reagentProto.Viscosity);
+
+            totalViscosity += reagentQuant * reagentProto.Viscosity;
+            totalQuantity += reagentQuant;
         }
 
-        if (maxViscosity > 0)
+        totalViscosity /= totalQuantity;
+
+        if (totalQuantity < fullPuddleAmount)
+            totalViscosity /= 2;
+
+        if (totalViscosity != 0)
         {
             var comp = EnsureComp<SpeedModifierContactsComponent>(uid);
-            var speed = 1 - maxViscosity;
+            var speed = 1 - totalViscosity;
             _speedModContacts.ChangeModifiers(uid, speed, comp);
         }
         else

@@ -1,0 +1,40 @@
+- files:
+  - backflip.png
+  - beep.png
+  - buzz.png
+  - buzztwo.png
+  - chime.png
+  - chirp.png
+  - chitter.png
+  - clap.png
+  - cough.png
+  - cry.png
+  - deathgasp.png
+  - general.png
+  - hand.png
+  - hiss.png
+  - honk.png
+  - jump.png
+  - knucklecrack.png
+  - laugh.png
+  - ping.png
+  - salute.png
+  - scream.png
+  - sigh.png
+  - snap.png
+  - spin.png
+  - squeak.png
+  - squish.png
+  - tailslap.png
+  - vocal.png
+  - voxhiss.png
+  - whistle.png
+  - yawn.png
+  license: "CC-BY-SA-4.0"
+  copyright: "Created by Carousel for Impstation"
+  source: "https://github.com/impstation/imp-station-14"
+
+- files: ["wuhey.png"]
+  license: "Custom"
+  copyright: "Barry, 63"
+  source: "https://en.wikipedia.org/wiki/Pub"

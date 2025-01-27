@@ -1,0 +1,84 @@
+- type: entity
+  name: raw Fin Fin meat
+  parent: FoodMeatRawBase
+  id: FoodMeatFinfin
+  description: A slab of raw Fin Fin. He was your best friend!
+  components:
+  - type: Sprite
+    state: finfin
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatFinfinCutlet
+  - type: InternalTemperature
+    conductivity: 0.41
+  - type: Construction
+    graph: FinfinSteak
+    node: start
+    defaultTarget: cooked finfin
+
+- type: entity
+  name: cooked Fin Fin
+  parent: FoodMeatBase
+  id: FoodMeatFinfinCooked
+  description: A cooked piece of Fin Fin. Best used in other recipes.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+  - type: Sprite
+    layers:
+    - state: finfin-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatFinfinCutletCooked
+  - type: Construction
+    graph: FinfinSteak
+    node: cooked finfin
+
+- type: entity
+  name: fried Fin Fin
+  parent: FoodMeatBase
+  id: FoodMeatFinfinFried
+  description: A juicy hunk of Fin Fin meat, fried to perfection.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+  - type: Sprite
+    layers:
+    - state: chicken-fried
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          chicken-fried: ""
+          chicken2-fried: ""
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      Burger: FriedFinfinBurger

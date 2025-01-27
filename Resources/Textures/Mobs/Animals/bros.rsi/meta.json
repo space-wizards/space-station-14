@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "size": {
+    "x": 8,
+    "y": 8
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from BROS (ATARI 400/800), ripped by 4MASTY",
+  "states": [
+    {
+      "name": "bros-dead",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "sorb-dead",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "bros",
+      "directions": 4
+    },
+    {
+      "name": "sorb",
+      "directions": 4
+    }
+  ]
+}

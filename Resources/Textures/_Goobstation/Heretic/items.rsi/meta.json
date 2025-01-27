@@ -1,0 +1,101 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from TGStation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "soul_bottle_empty"
+        },
+        {
+            "name": "soul_bottle_full"
+        },
+        {
+            "name": "eye_medalion"
+        },
+        {
+            "name": "ogbook"
+        },
+        {
+            "name": "rusty_medalion"
+        },
+        {
+            "name": "living_heart",
+            "delays": [
+                [
+                    0.6,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "eldritch_flask"
+        },
+        {
+            "name": "rune_carver"
+        },
+        {
+            "name": "crucible",
+            "delays": [
+                [
+                    0.5,
+                    0.5,
+                    0.5
+                ]
+            ]
+        },
+        {
+            "name": "crucible_soul"
+        },
+        {
+            "name": "clarity"
+        },
+        {
+            "name": "marshal"
+        },
+        {
+            "name": "crucible_empty"
+        },
+        {
+            "name": "spacehand_left"
+        },
+        {
+            "name": "spacehand_right"
+        },
+        {
+            "name": "moon_amulette",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
+}

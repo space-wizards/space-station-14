@@ -11,6 +11,7 @@
     tags:
     - PlantSampleTaker
     - Wirecutter
+    - DroneUsable
   - type: Sprite
     sprite: Objects/Tools/wirecutters.rsi
     layers:
@@ -43,6 +44,7 @@
       Steel: 100
   - type: StaticPrice
     price: 30
+  - type: DamageOtherOnHit # imp
 
 - type: entity
   name: screwdriver
@@ -56,6 +58,7 @@
   - type: Tag
     tags:
     - Screwdriver
+    - DroneUsable
   - type: Sprite
     sprite: Objects/Tools/screwdriver.rsi
     layers:
@@ -87,6 +90,16 @@
       Steel: 100
   - type: StaticPrice
     price: 30
+  # imp edits #
+  - type: DamageOtherOnHit
+    staminaCost: 5
+  - type: ThrowingAngle
+    angle: 270
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+    removalTime: 1
+  - type: EmbedPassiveDamage
+  # end imp edits #
 
 - type: entity
   name: wrench
@@ -100,6 +113,7 @@
   - type: Tag
     tags:
     - Wrench
+    - DroneUsable
   - type: Sprite
     sprite: Objects/Tools/wrench.rsi
     state: icon
@@ -126,6 +140,7 @@
       Steel: 100
   - type: StaticPrice
     price: 22
+  - type: DamageOtherOnHit # imp
 
 - type: entity
   name: multitool
@@ -167,6 +182,7 @@
   - type: Tag
     tags:
       - Multitool
+      - DroneUsable
       - DoorElectronicsConfigurator
   - type: PhysicalComposition
     materialComposition:
@@ -174,6 +190,30 @@
       Plastic: 100
   - type: StaticPrice
     price: 56
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Shock: 2
+  - type: Defibrillator # imp
+    zapDelay: 1
+    zapHeal:
+      types:
+        Asphyxiation: -10
+    zapDamage: 0
+    writheDuration: 0
+    skipDoAfter: true
+    ignoreToggle: true
+    ignorePowerCell: true
+    allowSkipCrit: true
+    whitelist:
+      tags:
+      - MultitoolDefibrillatorTarget
+    zapSound: /Audio/Effects/sparks1.ogg
+    playChargeSound: false
+    playFailureSound: false
+    playSuccessSound: false
+    playReadySound: false
+  - type: UseDelay
 
 - type: entity
   name: network configurator
@@ -211,6 +251,7 @@
       inHandsOnly: true
     - type: Tag
       tags:
+        - DroneUsable
         - DoorElectronicsConfigurator
     - type: UserInterface
       interfaces:
@@ -281,6 +322,13 @@
         Piercing: 10
     soundHit:
       path: "/Audio/Items/drill_hit.ogg"
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 8
+    staminaCost: 7.5
+    soundHit:
+      collection: MetalThud
 
 - type: entity
   id: RCD
@@ -312,7 +360,6 @@
   - type: LimitedCharges
     maxCharges: 30
     charges: 30
-  - type: UseDelay
   - type: Sprite
     sprite: Objects/Tools/rcd.rsi
     state: icon
@@ -336,6 +383,9 @@
   - type: ActivatableUI
     inHandsOnly: true
     key: enum.RcdUiKey.Key
+  - type: Tag
+    tags:
+    - DroneUsable
 
 - type: entity
   id: RCDEmpty
@@ -480,6 +530,12 @@
   - type: StaticPrice
     price: 25
   - type: Shovel
+  # imp edits #
+  - type: DamageOtherOnHit
+    staminaCost: 8.5
+  - type: ThrowingAngle
+    angle: 45
+  # end imp edits #
 
 - type: entity
   parent: BaseItem
@@ -517,3 +573,4 @@
   - type: Construction
     graph: WoodenRollingPin
     node: rollingpin
+  - type: DamageOtherOnHit # imp

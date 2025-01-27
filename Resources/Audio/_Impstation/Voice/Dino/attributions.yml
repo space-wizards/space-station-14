@@ -1,0 +1,9 @@
+- files: ["dino1.ogg", "dino2.ogg"]
+  license: "CC0-1.0"
+  copyright: "Dinosaur Breath, Moan, and Roar by 2create"
+  source: "https://freesound.org/people/2create/sounds/670510/"
+
+- files: ["dino_gasp.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Dinosaur.wav by jamesrodavidson"
+  source: "https://freesound.org/people/jamesrodavidson/sounds/192364/"

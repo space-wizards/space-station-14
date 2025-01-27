@@ -182,6 +182,7 @@
     sprite: Clothing/Hands/Gloves/powerglove.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/powerglove.rsi
+  - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-nanomachines
   - type: FingerprintMask
@@ -230,6 +231,7 @@
     stealthy: true
   - type: ToggleClothing
     action: ActionToggleNinjaGloves
+    disableOnUnequip: true
   - type: NinjaGloves
     abilities:
     - components:
@@ -284,7 +286,7 @@
     fiberColor: fibers-black
 
 - type: entity
-  parent: ClothingHandsGlovesCombat
+  parent: [ BaseSecurityCargoContraband, ClothingHandsGlovesCombat ]
   id: ClothingHandsMercGlovesCombat
   name: mercenary combat gloves
   description: High-quality combat gloves to protect hands from mechanical damage during combat.
@@ -378,7 +380,7 @@
   - type: Unremoveable
 
 - type: entity
-  parent: [ClothingHandsButcherable, BaseSyndicateContraband]
+  parent: [ClothingHandsButcherable, Tier3Contraband]
   id: ClothingHandsGlovesNorthStar
   name: gloves of the north star
   description: These gloves allow you to punch incredibly fast.

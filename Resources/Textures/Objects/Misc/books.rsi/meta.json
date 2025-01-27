@@ -139,6 +139,17 @@
       ]
     },
     {
+        "name": "icon_magic_grease",
+        "delays": [
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ]
+        ]
+      },
+    {
       "name": "icon_magic_forcewall",
       "delays": [
         [

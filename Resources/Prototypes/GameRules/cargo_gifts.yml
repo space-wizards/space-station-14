@@ -4,6 +4,8 @@
   id: CargoGiftsTable
   table: !type:GroupSelector # ~~we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp~~ But we arent doing that shit yet, it picks a random one StationEventComp be damned.
     children:
+    - !type:NestedSelector # Impstation
+      tableId: GiftsImpstation
     - id: GiftsEngineering
     - id: GiftsFireProtection
     - id: GiftsJanitor
@@ -16,7 +18,7 @@
     - id: GiftsVendingRestock
 
 # Game Rules
-    
+
 - type: entity
   id: CargoGiftsBase
   parent: BaseGameRule
@@ -28,8 +30,6 @@
       max: 10
   - type: StationEvent
     startColor: "#18abf5"
-    startAudio:
-      path: /Audio/Announcements/announce.ogg
   - type: CargoGiftsRule
     sender: cargo-gift-default-sender
 

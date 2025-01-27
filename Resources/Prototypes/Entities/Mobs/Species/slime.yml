@@ -4,6 +4,7 @@
   id: BaseMobSlimePerson
   abstract: true
   components:
+  - type: Absorbable
   - type: Hunger
   - type: Thirst
   - type: Icon
@@ -15,6 +16,7 @@
   # they like eat it idk lol
   - type: Storage
     clickInsert: false
+    openOnActivate: false
     grid:
     - 0,0,1,2
     maxItemSize: Large
@@ -32,6 +34,13 @@
         type: HumanoidMarkingModifierBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+      enum.HereticLivingHeartKey.Key: # goob edit - heretics
+        type: LivingHeartMenuBoundUserInterface
+      enum.ThavenMoodsUiKey.Key: # impstation edit
+        type: ThavenMoodsBoundUserInterface
+        requireInputValidation: false
   # to prevent bag open/honk spam
   - type: UseDelay
     delay: 0.5
@@ -40,14 +49,14 @@
   - type: Speech
     speechVerb: Slime
     speechSounds: Slime
-    allowedEmotes: ['Squish']
+    allowedEmotes: ['Squish', 'Bubble', 'Pop']
   - type: TypingIndicator
     proto: slime
   - type: Vocal
     sounds:
       Male: MaleSlime
       Female: FemaleSlime
-      Unsexed: MaleSlime
+      Unsexed: UnisexSlime
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Slime
@@ -84,13 +93,13 @@
       effects:
       - !type:WashCreamPieReaction
     - reagents: [ Water ]
-      methods: [ Touch ]
+      methods: [ Touch, Injection ]
       effects:
       - !type:HealthChange
         scaleByQuantity: true
         damage:
           types:
-            Heat: 0.1
+            Caustic: 0.2
       - !type:PopupMessage
         type: Local
         visualType: Large

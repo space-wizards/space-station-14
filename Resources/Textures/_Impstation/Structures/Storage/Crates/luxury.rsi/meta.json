@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by EmoGarbage404 (github) for Space Station 14. Edited by Kipdotnet(Github) based on work by AftrLite(Github).",
+  "size": {
+    "x": 32,
+    "y": 48
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "base"
+    },
+    {
+      "name": "closed"
+    },
+    {
+      "name": "open"
+    },
+    {
+      "name": "welded"
+    },
+    {
+      "name": "sparking",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

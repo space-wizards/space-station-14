@@ -80,11 +80,18 @@
     Glass: 50
 
 - type: latheRecipe
+  id: BaseChemistryEmptyVial
+  result: BaseChemistryEmptyVial
+  completetime: 2
+  materials:
+    Glass: 50
+
+- type: latheRecipe
   id: Vape
+  result: Vape
   icon:
     sprite: Objects/Consumable/Smokeables/Vapes/vape-standard.rsi
     state: icon
-  result: Vape
   completetime: 2
   materials:
     Plastic: 100

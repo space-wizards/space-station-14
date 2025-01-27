@@ -1,0 +1,243 @@
+- type: entity
+  name: Pipi
+  parent: MobCatKitten
+  id: MobPipi
+  description: Pee pee.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Impstation/Mobs/Pets/pipi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: pipi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 12
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Inventory
+    speciesId: cat
+    templateId: pet
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: pipi
+      Critical:
+        Base: pipi_dead
+      Dead:
+        Base: pipi_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 2
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-pipi
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalNamedCat
+
+- type: entity
+  name: Fin Fin
+  parent: MobBat
+  id: MobFinfin
+  description: Your best friend.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Impstation/Mobs/Pets/finfin.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: finfin
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 10
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-finfin-name
+    description: ghost-role-information-finfin-description
+    rules: ghost-role-information-nonantagonist-rules
+  - type: GhostTakeoverAvailable
+  - type: Speech
+    speechSounds: Finfin
+    speechVerb: Finfin
+    suffixSpeechVerbs:
+      chat-speech-verb-suffix-exclamation-strong: FinfinExclamationStrong
+      chat-speech-verb-suffix-exclamation: FinfinExclamation
+      chat-speech-verb-suffix-question: DefaultQuestion
+      chat-speech-verb-suffix-stutter: FinfinStutter
+      chat-speech-verb-suffix-mumble: FinfinMumble
+  - type: Inventory
+    speciesId: finfin
+    templateId: pet
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: finfin
+      Critical:
+        Base: finfin_justresting
+      Dead:
+        Base: finfin_justresting
+  - type: ReplacementAccent
+    accent: finfin
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatFinfin
+      amount: 2
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-finfin
+    interactFailureString: petting-failure-finfin
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/_Impstation/Animals/finfin3.ogg
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-organic
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - CannotSuicide
+    - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalFinFin
+
+- type: entity
+  name: Goji
+  parent: NiceMobCarp
+  id: MobGoji
+  description: Probably doesn't bite. Probably.
+  components:
+    - type: Sprite
+      sprite: Mobs/Aliens/Carps/sharkminnow.rsi
+      layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+      - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+        state: mouth
+        shader: unshaded
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.40
+          density: 100
+          mask:
+            - FlyingMobMask
+          layer:
+            - FlyingMobLayer
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        180: Dead
+    - type: Stamina
+      critThreshold: 150
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: alive
+          BaseUnshaded: mouth
+        Dead:
+          Base: dead
+          BaseUnshaded: dead_mouth
+    - type: Body
+      prototype: Bloodsucker
+      requiredLegs: 1
+    - type: Butcherable
+      spawned:
+        - id: FoodMeatFish
+          amount: 4
+    - type: MeleeWeapon
+      damage:
+        types:
+          Slash: 12
+          Bloodloss: 5
+
+- type: entity
+  name: Major
+  id: MobBearSpaceMajor
+  parent: MobSpaceNice
+  description: Nanotrasen's majority shareholder.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/major.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: major
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: major_glow
+      shader: unshaded
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: major
+        BaseUnshaded: glow_major
+      Critical:
+        Base: major_dead
+      Dead:
+        Base: major_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatBear
+      amount: 3
+    - id: MaterialHideBear
+      amount: 1
+    - id: ClothingHeadHatCentcom
+      amount: 1
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: Vocal
+    sounds:
+      Unsexed: Bear
+  - type: InteractionPopup
+    successChance: 0.25
+    interactSuccessString: petting-success-bear
+    interactFailureString: petting-failure-bear
+    interactSuccessSound:
+      path: /Audio/Animals/sloth_squeak.ogg

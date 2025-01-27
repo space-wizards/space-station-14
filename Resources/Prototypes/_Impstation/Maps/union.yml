@@ -1,0 +1,68 @@
+- type: gameMap
+  id: Union
+  mapName: 'Union'
+  mapPath: /Maps/_Impstation/union.yml
+  minPlayers: 35
+  maxPlayers: 80
+  stations:
+    Union:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Union Station {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_rod.yml
+        - type: StationJobs
+          availableJobs:
+            #service
+            Bartender: [ 2, 2 ]
+            Botanist: [ 2, 2 ]
+            Chef: [ 2, 2 ]
+            Janitor: [ 2, 2 ]
+            Captain: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            Chaplain: [ 1, 1 ]
+            Librarian: [ 1, 1 ]
+            ServiceWorker: [ 2, 2 ]
+            #engineering
+            ChiefEngineer: [ 1, 1 ]
+            StationEngineer: [ 4, 4 ]
+            AtmosphericTechnician: [ 3, 3 ]
+            TechnicalAssistant: [ 3, 3 ]
+            #medical
+            ChiefMedicalOfficer: [ 1, 1 ]
+            MedicalDoctor: [ 4, 4 ]
+            Chemist: [ 2, 2 ]
+            MedicalIntern: [ 3, 3 ]
+            Paramedic: [ 1, 1 ]
+            Psychologist: [ 1, 1 ]
+            #science
+            ResearchDirector: [ 1, 1 ]
+            Scientist: [ 5, 5 ]
+            ResearchAssistant: [ 2, 2 ]
+            #security
+            HeadOfSecurity: [ 1, 1 ]
+            SecurityOfficer: [ 4, 4 ]
+            Warden: [ 1, 1 ]
+            Lawyer: [ 2, 2 ]
+            SecurityCadet: [ 4, 4 ]
+            Detective: [ 1, 1 ]
+            Brigmedic: [ 1, 1 ]
+            #supply
+            CargoTechnician: [ 3, 3 ]
+            Quartermaster: [ 1, 1 ]
+            SalvageSpecialist: [ 3, 3 ]
+            Courier: [ 2, 2 ]
+            #civilian
+            Passenger: [ -1, -1 ]
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 1 ]
+            Boxer: [ 2, 2 ]
+            Reporter: [ 2, 2 ]
+            # silicon
+            StationAi: [ 1, 1 ]
+            Borg: [ 3, 3 ]

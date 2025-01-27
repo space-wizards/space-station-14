@@ -11,6 +11,7 @@
       state: mainboard
     - type: Tag
       tags:
+      - DroneUsable
       - FirelockElectronics
     - type: StaticPrice
       price: 61

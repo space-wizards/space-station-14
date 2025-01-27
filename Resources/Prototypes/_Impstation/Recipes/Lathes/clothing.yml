@@ -1,0 +1,29 @@
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatBeretCaptain
+  result: ClothingHeadHatBeretCaptain
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtSalvageSpecialist
+  result: ClothingUniformJumpskirtSalvageSpecialist
+# Courier
+- type: latheRecipe
+  parent: BaseHatRecipe
+  id: ClothingHeadHatCouriersoft
+  result: ClothingHeadHatCouriersoft
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitCourier
+  result: ClothingUniformJumpsuitCourier
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtCourier
+  result: ClothingUniformJumpskirtCourier
+
+- type: latheRecipe
+  parent: BaseCoatRecipe
+  id: ClothingOuterWinterCourier
+  result: ClothingOuterWinterCourier

@@ -1,0 +1,38 @@
+- type: entity
+  id: ActionRevenantHaunt
+  name: Haunt
+  description: Gives essence and stolen essence for every witness.
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Mobs/Ghosts/revenant.rsi
+      state: icon
+    event: !type:RevenantHauntActionEvent
+    useDelay: 20
+
+- type: entity
+  id: ActionRevenantBloodWriting
+  name: Blood Writing
+  description: Costs 2 Essence per glyph.
+  components:
+    - type: InstantAction
+      itemIconStyle: NoItem
+      icon: Interface/Actions/blood-writing.png
+      event: !type:RevenantBloodWritingEvent
+      useDelay: 1
+
+- type: entity
+  id: ActionRevenantAnimate
+  name: Animate
+  description: Costs 50 Essence.
+  components:
+    - type: EntityTargetAction
+      itemIconStyle: NoItem
+      icon: Interface/Actions/animate.png
+      event: !type:RevenantAnimateEvent
+      useDelay: 1
+      canTargetSelf: false
+      whitelist:
+        components:
+          - Item

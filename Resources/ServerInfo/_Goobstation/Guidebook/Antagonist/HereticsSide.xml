@@ -1,0 +1,16 @@
+<Document>
+  # Side Knowledge
+
+  ## Armorer’s Ritual
+  <Box>
+    <GuideEntityEmbed Entity="ClothingOuterArmorHeretic" Caption=""/>
+  </Box>
+  Allows you to transmute a table and a gas mask to create Eldritch Armor.
+
+  Eldritch Armor provides great protection while also acting as a focus when hooded.
+
+  ## Ritual of Knowledge
+  You learn a special, one-time-only ritual that requires 4 different items, from various organs to candles and stun batons.
+
+  Performing this ritual grants you 4 knowledge points and resets the items needed.
+</Document>

@@ -1,3 +1,13 @@
+# Senior times
+- type: loadoutEffectGroup
+  id: SeniorChef
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChef
+      time: 187200 #52 hrs (1 hour per week for 1 year)
+
 # Head
 - type: loadout
   id: ChefHead
@@ -36,3 +46,23 @@
   id: ChefWintercoat
   equipment:
     outerClothing: ClothingOuterWinterChef
+
+# Shoes
+- type: loadout
+  id: ChefShoes
+  equipment:
+    shoes: ClothingShoesChef
+  
+# id
+- type: loadout
+  id: ChefPDA
+  equipment:
+    id: ChefPDA
+
+- type: loadout
+  id: SeniorChefPDA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorChef
+  equipment:
+    id: SeniorChefPDA

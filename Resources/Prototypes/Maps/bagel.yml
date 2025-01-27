@@ -1,9 +1,9 @@
 - type: gameMap
   id: Bagel
   mapName: 'Bagel Station'
-  mapPath: /Maps/bagel.yml
+  mapPath: /Maps/_Impstation/bagel.yml
   minPlayers: 35
-  maxPlayers: 70
+  maxPlayers: 80
   stations:
     Bagel:
       stationProto: StandardNanotrasenStation
@@ -39,10 +39,11 @@
             MedicalDoctor: [ 3, 3 ]
             Paramedic: [ 1, 1 ]
             MedicalIntern: [ 4, 4 ]
+            Psychologist: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
-            Scientist: [ 5, 5 ]
-            ResearchAssistant: [ 4, 4 ]
+            Scientist: [ 4, 4 ]
+            ResearchAssistant: [ 3, 3 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
@@ -50,10 +51,12 @@
             Detective: [ 1, 1 ]
             SecurityCadet: [ 4, 4 ]
             Lawyer: [ 2, 2 ]
+            Brigmedic: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 3, 3 ]
+            Courier: [ 2, 2 ]
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]

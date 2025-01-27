@@ -1,0 +1,428 @@
+# White Space Cadet Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingSpaceCadetJumpsuitColorWhite
+  name: white space cadet jumpsuit
+  description: A well crafted white uniform made by expensive Nanotrasen machines.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    layers:
+    - state: icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+
+# Gray Space Cadet Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingSpaceCadetJumpsuitColorGray
+  name: gray space cadet jumpsuit
+  description: A well crafted gray uniform made by expensive Nanotrasen machines.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    layers:
+    - state: icon
+      color: "#C4C3C2"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#C4C3C2"
+      right:
+      - state: inhand-right
+        color: "#C4C3C2"
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#C4C3C2"
+
+# Black Space Cadet Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingSpaceCadetJumpsuitColorBlack
+  name: black space cadet jumpsuit
+  description: A well crafted black uniform made by expensive Nanotrasen machines.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    layers:
+    - state: icon
+      color: "#1E1E21"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#1E1E21"
+      right:
+      - state: inhand-right
+        color: "#1E1E21"
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#1E1E21"
+
+
+# Blue Space Cadet Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingSpaceCadetJumpsuitColorBlue
+  name: blue space cadet jumpsuit
+  description: A well crafted blue uniform made by expensive Nanotrasen machines.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    layers:
+    - state: icon
+      color: "#52aecc"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#52aecc"
+      right:
+      - state: inhand-right
+        color: "#52aecc"
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#52aecc"
+
+# Dark Blue Space Cadet Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingSpaceCadetJumpsuitColorDarkBlue
+  name: dark blue space cadet jumpsuit
+  description: A well crafted dark blue uniform made by expensive Nanotrasen machines.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    layers:
+    - state: icon
+      color: "#3285ba"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#3285ba"
+      right:
+      - state: inhand-right
+        color: "#3285ba"
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#3285ba"
+
+# Teal Space Cadet Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingSpaceCadetJumpsuitColorTeal
+  name: teal space cadet jumpsuit
+  description: A well crafted teal uniform made by expensive Nanotrasen machines.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    layers:
+    - state: icon
+      color: "#52aecc"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#52aecc"
+      right:
+      - state: inhand-right
+        color: "#52aecc"
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#52aecc"
+
+# Green Space Cadet Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingSpaceCadetJumpsuitColorGreen
+  name: green space cadet jumpsuit
+  description: A well crafted green uniform made by expensive Nanotrasen machines.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    layers:
+    - state: icon
+      color: "#9ED63A"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#9ED63A"
+      right:
+      - state: inhand-right
+        color: "#9ED63A"
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#9ED63A"
+
+# Dark Green Space Cadet Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingSpaceCadetJumpsuitColorDarkGreen
+  name: dark green space cadet jumpsuit
+  description: A well crafted dark green uniform made by expensive Nanotrasen machines.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    layers:
+    - state: icon
+      color: "#79CC26"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#79CC26"
+      right:
+      - state: inhand-right
+        color: "#79CC26"
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#79CC26"
+
+# Orange Space Cadet Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingSpaceCadetJumpsuitColorOrange
+  name: orange space cadet jumpsuit
+  description: A well crafted orange uniform made by expensive Nanotrasen machines.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    layers:
+    - state: icon
+      color: "#ff8c19"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#ff8c19"
+      right:
+      - state: inhand-right
+        color: "#ff8c19"
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#ff8c19"
+
+# Pink Space Cadet Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingSpaceCadetJumpsuitColorPink
+  name: pink space cadet jumpsuit
+  description: A well crafted pink uniform made by expensive Nanotrasen machines.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    layers:
+    - state: icon
+      color: "#ffa69b"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#ffa69b"
+      right:
+      - state: inhand-right
+        color: "#ffa69b"
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#ffa69b"
+
+# Red Space Cadet Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingSpaceCadetJumpsuitColorRed
+  name: red space cadet jumpsuit
+  description: A well crafted red uniform made by expensive Nanotrasen machines.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    layers:
+    - state: icon
+      color: "#DB2537"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#DB2537"
+      right:
+      - state: inhand-right
+        color: "#DB2537"
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#DB2537"
+
+# Yellow Space Cadet Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingSpaceCadetJumpsuitColorYellow
+  name: yellow space cadet jumpsuit
+  description: A well crafted yellow uniform made by expensive Nanotrasen machines.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    layers:
+    - state: icon
+      color: "#FFD54F"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#FFD54F"
+      right:
+      - state: inhand-right
+        color: "#FFD54F"
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#FFD54F"
+
+# Purple Space Cadet Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingSpaceCadetJumpsuitColorPurple
+  name: purple space cadet jumpsuit
+  description: A well crafted purple uniform made by expensive Nanotrasen machines.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    layers:
+    - state: icon
+      color: "#9f70cc"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#9f70cc"
+      right:
+      - state: inhand-right
+        color: "#9f70cc"
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#9f70cc"
+
+# Light Brown Space Cadet Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingSpaceCadetJumpsuitColorLightBrown
+  name: light brown space cadet jumpsuit
+  description: A well crafted light brown uniform made by expensive Nanotrasen machines.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    layers:
+    - state: icon
+      color: "#BC8669"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#BC8669"
+      right:
+      - state: inhand-right
+        color: "#BC8669"
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#BC8669"
+
+# Brown Space Cadet Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingSpaceCadetJumpsuitColorBrown
+  name: brown space cadet jumpsuit
+  description: A well crafted brown uniform made by expensive Nanotrasen machines.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    layers:
+    - state: icon
+      color: "#633916"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#633916"
+      right:
+      - state: inhand-right
+        color: "#633916"
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#633916"
+
+# Maroon Space Cadet Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingSpaceCadetJumpsuitColorMaroon
+  name: maroon space cadet jumpsuit
+  description: A well crafted maroon uniform made by expensive Nanotrasen machines.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    layers:
+    - state: icon
+      color: "#cc295f"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#cc295f"
+      right:
+      - state: inhand-right
+        color: "#cc295f"
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#cc295f"

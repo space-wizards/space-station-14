@@ -1,0 +1,4 @@
+- type: currency
+  id: EvolutionPoint
+  displayName: store-currency-display-evolutionpoints
+  canWithdraw: false

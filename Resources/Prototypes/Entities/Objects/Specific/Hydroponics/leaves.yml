@@ -17,7 +17,32 @@
         reagents:
         - ReagentId: THC
           Quantity: 15
+  - type: FoodSequenceElement
+    entries:
+      Burger: LeavesCannabisBurger
+      Taco: LeavesCannabis
 
+- type: entity
+  name: green marijuana leaves
+  parent: ProduceBase
+  id: LeavesGreenMarijuana
+  description: "Recently legalized in most galaxies."
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/cannabis.rsi
+  - type: Produce
+    seedId: greenMarijuana
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: THC
+          Quantity: 15
+  - type: FoodSequenceElement
+    entries:
+      Burger: LeavesCannabisBurger
+      Taco: LeavesCannabis
 
 - type: entity
   name: dried cannabis leaves
@@ -28,6 +53,7 @@
   - type: Stack
     stackType: LeavesCannabisDried
     count: 1
+  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -37,6 +63,10 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tobacco.rsi
     state: dried
+  - type: FoodSequenceElement
+    entries:
+      Burger: LeavesCannabisBurger
+      Taco: LeavesCannabis
 
 - type: entity
   name: ground cannabis
@@ -47,6 +77,7 @@
   - type: Stack
     stackType: GroundCannabis
     count: 1
+  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -65,10 +96,11 @@
       - Smokable
   - type: Item
     size: Tiny
-    
+
+
 - type: entity
   name: rainbow cannabis leaves
-  parent: LeavesCannabis
+  parent: [LeavesCannabis, BaseMinorContraband]
   id: LeavesCannabisRainbow
   description: "Is it supposed to be glowing like that...?"
   components:
@@ -81,6 +113,7 @@
     energy: 2
   - type: RgbLightController
     cycleRate: 0.6
+  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -97,16 +130,21 @@
 #         Quantity: 1
         - ReagentId: Psicodine
           Quantity: 0.6
+  - type: FoodSequenceElement
+    entries:
+      Burger: LeavesRainbowCannabisBurger
+      Taco: LeavesRainbowCannabis
 
 - type: entity
   name: dried rainbow cannabis leaves
-  parent: LeavesCannabisDried
+  parent: [LeavesCannabisDried, BaseMinorContraband]
   id: LeavesCannabisRainbowDried
   description: "Dried rainbow cannabis leaves, ready to be ground."
   components:
   - type: Stack
     stackType: LeavesCannabisRainbowDried
     count: 1
+  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -127,16 +165,21 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
     state: dried
+  - type: FoodSequenceElement
+    entries:
+      Burger: LeavesRainbowCannabisBurger
+      Taco: LeavesRainbowCannabis
 
 - type: entity
   name: ground rainbow cannabis
-  parent: GroundCannabis
+  parent: [GroundCannabis, BaseMinorContraband]
   id: GroundCannabisRainbow
   description: "Ground rainbow cannabis, ready to take you on a trip."
   components:
   - type: Stack
     stackType: GroundCannabisRainbow
     count: 1
+  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -204,6 +247,17 @@
     sprite: Objects/Specific/Hydroponics/tobacco.rsi
   - type: Produce
     seedId: tobacco
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nicotine
+          Quantity: 2
+  - type: FoodSequenceElement
+    entries:
+      Burger: LeavesTobaccoBurger
+      Taco: LeavesTobacco
 
 - type: entity
   name: dried tobacco leaves
@@ -214,6 +268,7 @@
   - type: Stack
     stackType: LeavesTobaccoDried
     count: 1
+  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -223,6 +278,10 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tobacco.rsi
     state: dried
+  - type: FoodSequenceElement
+    entries:
+      Burger: LeavesTobaccoBurger
+      Taco: LeavesTobacco
 
 - type: entity
   name: ground tobacco
@@ -233,6 +292,7 @@
   - type: Stack
     stackType: GroundTobacco
     count: 1
+  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:

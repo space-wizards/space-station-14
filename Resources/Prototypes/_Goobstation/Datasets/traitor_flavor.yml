@@ -1,0 +1,14 @@
+- type: dataset
+  id: TraitorFlavor
+  values:
+  - "arc" # animal rights consortium
+  - "blf" # bee liberation front
+  - "cybersun"
+  - "corporateclimber"
+  - "donkco"
+  - "gorlex"
+  - "legaltrouble"
+  - "mi13"
+  - "tiger" # tiger cooperative
+  - "waffleco"
+  - "waffleco-terrorist"

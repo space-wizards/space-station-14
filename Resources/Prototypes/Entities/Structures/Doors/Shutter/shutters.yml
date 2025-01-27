@@ -145,6 +145,14 @@
     - board
   - type: RadiationBlocker
     resistance: 4
+  - type: Destructible # imp
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   id: ShuttersRadiationOpen

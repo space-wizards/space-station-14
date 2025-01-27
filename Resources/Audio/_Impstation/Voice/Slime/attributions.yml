@@ -1,0 +1,121 @@
+- files: ["s_female_sigh.ogg", "s_male_sigh.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "https://github.com/ss220-space/Paradise/. Original modified by harpy and fiend."
+  source: "https://github.com/ss220-space/Paradise/commit/89943a231ced9fc8db0aef65ff87093efee16b4e"
+
+- files:
+  - slimewhistle.ogg
+  license: "CC0-1.0"
+  copyright: "Taken from https://freesound.org/. Original modified by harpy and fiend."
+  source: "https://freesound.org/people/taure/sounds/411638/"
+
+- files:
+  - s_cry_male_1
+  - s_cry_male_2
+  license: "CC-BY-4.0"
+  copyright: "Taken from https://freesound.org/. Convert from WAV to OGG, is divided into several parts. Original modified by harpy and fiend."
+  source: "https://freesound.org/people/jacobmathiassen/sounds/254869/"
+
+- files:
+  - s_cry_male_3.ogg
+  license: "CC0-1.0"
+  copyright: "Taken from https://freesound.org/. Original modified by harpy and fiend."
+  source: "https://freesound.org/people/scottemoil/sounds/263776/"
+
+- files:
+  - s_cry_male_4.ogg
+  license: "CC-BY-4.0"
+  copyright: "Taken from https://freesound.org/. Converted from FLAC to OGG, some part of the sound is taken. Original modified by harpy and fiend."
+  source: "https://freesound.org/people/qubodup/sounds/200428/"
+
+- files:
+  - s_cry_female_1.ogg
+  - s_cry_female_2.ogg
+  license: "CC-BY-NC-3.0"
+  copyright: "Taken from https://freesound.org/. Convert from WAV to OGG, is divided into several parts. Original modified by harpy and fiend."
+  source: "https://freesound.org/people/Luzanne0/sounds/445299/"
+
+- files:
+  - s_cry_female_3.ogg
+  - s_cry_female_4.ogg
+  license: "CC-BY-NC-4.0"
+  copyright: "Taken from https://freesound.org/. Convert from WAV to OGG, is divided into several parts. Original modified by harpy and fiend."
+  source: "https://freesound.org/people/Idalize/sounds/408211/"
+
+- files:
+  - s_femalescream_1.ogg
+  - s_femalescream_2.ogg
+  - s_femalescream_3.ogg
+  - s_femalescream_4.ogg
+  - s_femalescream_5.ogg
+  - s_malescream_1.ogg
+  - s_malescream_2.ogg
+  - s_malescream_3.ogg
+  - s_malescream_4.ogg
+  - s_malescream_5.ogg
+  - s_malescream_6.ogg
+  - s_manlaugh_1.ogg
+  - s_manlaugh_2.ogg
+  - s_wilhelm_scream.ogg
+  - s_womanlaugh.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "/tg/station. Original modified by harpy and fiend."
+  source: "https://github.com/tgstation/tgstation/commit/3d049e69fe71a0be2133005e65ea469135d648c8"
+
+- files: ["s_female_cough_1.ogg"]
+  license: "CC0-1.0"
+  copyright: "Ashe Kirk. Original modified by harpy and fiend."
+  source: "https://freesound.org/people/OwlStorm/sounds/151213/"
+
+- files: ["s_female_cough_2.ogg"]
+  license: "CC0-1.0"
+  copyright: "thatkellytrna on freesound.org. Original modified by harpy and fiend."
+  source: "https://freesound.org/people/thatkellytrna/sounds/425777/"
+
+- files: ["s_male_cough_1.ogg"]
+  license: "CC0-1.0"
+  copyright: "dastudiospr on freesound.org. Original modified by harpy and fiend."
+  source: "https://freesound.org/people/dastudiospr/sounds/537150/"
+
+- files: ["s_male_cough_2.ogg"]
+  license: "CC0-1.0"
+  copyright: "qubodup on freesound.org. Original modified by harpy and fiend."
+  source: "https://freesound.org/people/qubodup/sounds/743360/"
+
+- files: ["s_female_sneeze_1.ogg"]
+  license: "CC0-1.0"
+  copyright: "sherby168 on freesound.org. Original modified by harpy and fiend."
+  source: "https://freesound.org/people/sherby168/sounds/540771/"
+
+- files: ["s_male_sneeze_1.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "InspectorJ (www.jshaw.co.uk) of Freesound.org. Original modified by harpy and fiend."
+  source: "https://freesound.org/people/InspectorJ/sounds/352177/"
+
+- files: ["s_male_yawn_1.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "ckvoiceover on freesound.org. Original modified by harpy and fiend."
+  source: "https://freesound.org/people/ckvoiceover/sounds/401338/"
+
+- files: ["s_female_yawn_1.ogg"]
+  license: "CC0-1.0"
+  copyright: "Reitanna on freesound.org. Original modified by harpy and fiend."
+  source: "https://freesound.org/people/Reitanna/sounds/252239/"
+
+- files:
+  - s_snore1.ogg
+  - s_snore2.ogg
+  - s_snore3.ogg
+  license: "CC0-1.0"
+  copyright: "mattyharm on freesound.org. Original modified by harpy and fiend."
+  source: "https://freesound.org/people/mattyharm/sounds/432995/"
+
+- files: ["s_bubble.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Audiolarx on freesound.org"
+  source: "https://freesound.org/people/audiolarx/sounds/263945/"
+
+- files: ["s_pop.ogg"]
+  license: "CC0-1.0"
+  copyright: "greenvwbeetle on freesound.org"
+  source: "https://freesound.org/people/greenvwbeetle/sounds/244653/"

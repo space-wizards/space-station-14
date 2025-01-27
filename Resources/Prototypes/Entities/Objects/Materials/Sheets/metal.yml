@@ -15,6 +15,7 @@
     tags:
     - Sheet
     - Metal
+    - DroneUsable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -69,6 +70,20 @@
           Quantity: 9
         - ReagentId: Carbon
           Quantity: 1
+  - type: UserInterface
+    interfaces:
+      enum.ShortConstructionUiKey.Key:
+        type: ShortConstructionMenuBUI
+  - type: ActivatableUI
+    key: enum.ShortConstructionUiKey.Key
+  - type: ShortConstruction
+    prototypes:
+    - Girder
+    - MetalRod
+    - MachineFrame
+    - TileSteel
+    - TileWhite
+    - TileDark
 
 - type: entity
   parent: SheetSteel
@@ -142,6 +157,17 @@
           Quantity: 3.3
         - ReagentId: Copper
           Quantity: 6.7
+  - type: UserInterface
+    interfaces:
+      enum.ShortConstructionUiKey.Key:
+        type: ShortConstructionMenuBUI
+  - type: ActivatableUI
+    key: enum.ShortConstructionUiKey.Key
+  - type: ShortConstruction
+    prototypes:
+    - ClockworkGirder
+    - TileBrassFilled
+    - TileBrassReebe
 
 - type: entity
   parent: SheetBrass

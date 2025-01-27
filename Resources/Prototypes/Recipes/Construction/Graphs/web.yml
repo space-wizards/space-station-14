@@ -15,6 +15,15 @@
         amount: 4
         doAfter: 3
 
+    - to: window
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: WebSilk
+        amount: 2
+        doAfter: 3
+
     - to: table
       completed:
       - !type:SnapToGrid
@@ -60,6 +69,39 @@
         amount: 8
         doAfter: 6
 
+    - to: bookshelf
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: WebSilk
+        amount: 4
+        doAfter: 3
+        
+    - to: cobweb1
+      completed:
+      - !type:SnapToGrid
+      steps:
+      - material: WebSilk
+        amount: 1
+        doAfter: 2
+
+    - to: cobweb2
+      completed:
+      - !type:SnapToGrid
+      steps:
+      - material: WebSilk
+        amount: 1
+        doAfter: 2
+
+    - to: walldecor
+      completed:
+      - !type:SnapToGrid
+      steps:
+      - material: WebSilk
+        amount: 3
+        doAfter: 3
+
 
   # Deconstruction is down here
   - node: wall
@@ -73,6 +115,18 @@
       steps:
       - tool: Cutting
         doAfter: 2
+
+  - node: window
+    entity: WebWindow
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWebSilk1
+        amount: 2
+      steps:
+      - tool: Cutting
+        doAfter: 1
 
   - node: table
     entity: TableWeb
@@ -133,3 +187,40 @@
       steps:
       - tool: Cutting
         doAfter: 3
+
+  - node: bookshelf
+    entity: BookshelfWeb
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWebSilk1
+        amount: 4
+      steps:
+      - tool: Cutting
+        doAfter: 2
+
+# you get nothing from tearing these down
+  - node: cobweb1
+    entity: Cobweb1
+    edges:
+    - to: start
+      steps:
+      - tool: Cutting
+        doAfter: 2
+
+  - node: cobweb2
+    entity: Cobweb2
+    edges:
+    - to: start
+      steps:
+      - tool: Cutting
+        doAfter: 2
+
+  - node: walldecor
+    entity: WebWallDecor
+    edges:
+    - to: start
+      steps:
+      - tool: Cutting
+        doAfter: 2

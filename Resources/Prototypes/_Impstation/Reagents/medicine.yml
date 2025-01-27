@@ -1,0 +1,113 @@
+- type: reagent
+  id: Subjuzine
+  name: reagent-name-inert-subjuzine
+  desc: reagent-desc-inert-subjuzine
+  group: Medicine
+  physicalDesc: reagent-physical-desc-enigmatic
+  flavor: magical
+  color: "#a50ed8"
+  contraband: Tier2Contraband
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:MakeSentient
+        conditions:
+        - !type:ReagentThreshold
+
+- type: reagent
+  id: ActivatedSubjuzine
+  name: reagent-name-subjuzine
+  desc: reagent-desc-subjuzine
+  group: Medicine
+  physicalDesc: reagent-physical-desc-enigmatic
+  flavor: magical
+  color: "#911d06"
+  contraband: Tier2Contraband
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:MakeSyndient
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+
+- type: reagent
+  id: Caramexinin
+  name: reagent-name-caramexinin
+  desc: reagent-desc-caramexinin
+  physicalDesc: reagent-physical-desc-grainy
+  flavor: sweet
+  color: "#bdfff3"
+  recognizable: true
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.1 #this should metabolise in the same amount of time as a drink in a 5:1 mix
+      effects:
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: -0.25
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -0.2
+
+- type: reagent
+  id: Anomalium
+  name: reagent-name-anomalium
+  group: Medicine
+  desc: reagent-desc-anomalium
+  flavor: sour
+  color: "#64ffe6"
+  physicalDesc: reagent-physical-desc-enigmatic
+  slippery: false
+  metabolisms:
+    # Bad omnizine that also gives you cancer
+    Medicine:
+      effects:
+      - !type:ModifyBloodLevel
+        amount: 2
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -2
+            Burn: -2
+            Airloss: -2
+            Toxin: -2
+            Genetic: 2
+      - !type:ModifyBleedAmount
+        amount: -1
+
+- type: reagent
+  id: AquamDivinos
+  name: reagent-name-aquamdivinos
+  group: Medicine
+  desc: reagent-desc-aquamdivinos
+  physicalDesc: reagent-physical-desc-holy
+  flavor: holy
+  color: "#B4D1F0"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.1
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: AquaAvari
+          min: 1
+        reagent: AquaAvari
+        amount: -1
+  reactiveEffects:
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:ExtinguishReaction
+  tileReactions:
+  - !type:ExtinguishTileReaction { }

@@ -71,6 +71,12 @@
       - FoodSoupBungo
       - FoodMealCornInButter
       - FoodSoupStew
+      - FoodMealBigLollipop #impstation edit
+      - FoodMealBigLollipop #impstation edit
+      - FoodMealFruitLollipop #imp
+      - FoodMealClothLollipop #imp
+      - FoodMealMeatLollipop #imp
+      - FoodToddlerRingsStew #imp
     chance: 0.8
     offset: 0.0
     #rare
@@ -94,4 +100,6 @@
       - FoodSoupEyeball
       - FoodSoupElectron
       - FoodNoodlesCopy
+      - FoodMealCultLollipop #imp
+      - FoodCamelSoup #imp
     rareChance: 0.05

@@ -12,13 +12,12 @@
       time: 36000 #10 hrs
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 108000 # 30 hrs
+      time: 324000 # 90 hrs
     - !type:OverallPlaytimeRequirement
       time: 144000 #40 hrs
   weight: 10
   startingGear: HoSGear
   icon: "JobIconHeadOfSecurity"
-  requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
   access:
@@ -45,9 +44,12 @@
     eyes: ClothingEyesGlassesSecurity
     id: HoSPDA
     gloves: ClothingHandsGlovesCombat
-    ears: ClothingHeadsetAltSecurity
     pocket1: WeaponPistolMk58
   storage:
     back:
     - Flash
     - MagazinePistol
+    - BatonToken1  #imp
+    - DisablerToken1  #imp
+    - UtilityToken1  #imp
+

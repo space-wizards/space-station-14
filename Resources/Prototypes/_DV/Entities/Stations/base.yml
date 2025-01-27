@@ -1,0 +1,30 @@
+- type: entity
+  id: BaseStationStockMarket
+  abstract: true
+  components:
+  - type: StationStockMarket
+    companies:
+    - displayName: stock-trading-company-nanotrasen
+      basePrice: 100
+      currentPrice: 100
+    - displayName: stock-trading-company-gorlex
+      basePrice: 75
+      currentPrice: 75
+    - displayName: stock-trading-company-interdyne
+      basePrice: 300
+      currentPrice: 300
+    - displayName: stock-trading-company-donk
+      basePrice: 90
+      currentPrice: 90
+    - displayName: stock-trading-company-cybersun
+      basePrice: 175
+      currentPrice: 175
+    - displayName: stock-trading-company-rtvs
+      basePrice: 200
+      currentPrice: 200
+    - displayName: stock-trading-company-scargo
+      basePrice: 150
+      currentPrice: 150
+    - displayName: stock-trading-company-dahir
+      basePrice: 50
+      currentPrice: 50

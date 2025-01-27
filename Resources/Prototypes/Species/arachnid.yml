@@ -12,6 +12,8 @@
   femaleFirstNames: names_arachnid_first
   lastNames: names_arachnid_last
   sexes:
+  - Male
+  - Female
   - Unsexed
 
 - type: speciesBaseSprites
@@ -19,6 +21,8 @@
   sprites:
     Head: MobArachnidHead
     Snout: MobHumanoidAnyMarking
+    Underwear: MobHumanoidAnyMarking
+    Undershirt: MobHumanoidAnyMarking
     Chest: MobArachnidTorso
     HeadTop: MobHumanoidAnyMarking
     HeadSide: MobHumanoidAnyMarking
@@ -61,13 +65,19 @@
       required: true
       defaultMarkings: [ ArachnidCheliceraeDownwards ]
     Chest:
+      points: 4
+      required: false
+    Underwear:
+      points: 1
+      required: false
+    Undershirt:
       points: 1
       required: false
     Legs:
-      points: 2
+      points: 8 #impspecial
       required: false
     Arms:
-      points: 2
+      points: 8 #impspecial
       required: false
 
 - type: humanoidBaseSprite

@@ -91,32 +91,43 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/spatiohelm.rsi
-    layers:
-    - state: icon
-    - state: icon-unshaded
-      shader: unshaded
-    - state: light-overlay
-      visible: false
-      shader: unshaded
-      map: [ "light" ]
-  - type: HandheldLight
-    addPrefix: false
-  - type: ToggleableLightVisuals
-    clothingVisuals:
-      head:
-      - state: equipped-head-light
-        shader: unshaded
   - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-head
-      - state: equipped-head-unshaded
-        shader: unshaded
-  - type: PointLight
-    radius: 6
+    sprite: Clothing/Head/Hardsuits/spatiohelm.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 1000
+  - type: PointLight
+    radius: 6
+# The original components are here, but commented out since doing it this way prevents vox from using their custom sprite for it and because the unshaded pixels didn't seem to work anyway
+#   components:
+#   - type: Sprite
+#     sprite: Clothing/Head/Hardsuits/spatiohelm.rsi
+#     layers:
+#     - state: icon
+#     - state: icon-unshaded
+#       shader: unshaded
+#     - state: light-overlay
+#       visible: false
+#       shader: unshaded
+#       map: [ "light" ]
+#   - type: HandheldLight
+#     addPrefix: false
+#   - type: ToggleableLightVisuals
+#     clothingVisuals:
+#       head:
+#       - state: equipped-head-light
+#         shader: unshaded
+#   - type: Clothing
+#     clothingVisuals:
+#       head:
+#       - state: equipped-head
+#       - state: equipped-head-unshaded
+#         shader: unshaded
+#   - type: PointLight
+#     radius: 6
+#   - type: PressureProtection
+#     highPressureMultiplier: 0.72
+#     lowPressureMultiplier: 1000
 
 #Salvage Hardsuit
 - type: entity
@@ -274,9 +285,9 @@
   description: Lightweight medical hardsuit helmet that doesn't restrict your head movements.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/medical.rsi
+    sprite: _Impstation/Clothing/Head/Helmets/impcmohelmet.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/medical.rsi
+    sprite: _Impstation/Clothing/Head/Helmets/impcmohelmet.rsi
   - type: PointLight
     color: "#adf1ff"
   - type: PressureProtection
@@ -351,9 +362,14 @@
   description: A heavily armored helmet designed for work in special operations. Property of Gorlex Marauders.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/syndicate.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/syndicate_operator.rsi #imp edit
+    layers:
+    - state: icon-helmet #imp edit
+    - state: icon-helmet-light #imp edit
+      map: [ "light" ] #imp edit
+      visible: false
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/syndicate.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/syndicate_operator.rsi #imp edit
   - type: PointLight
     color: green
   - type: PressureProtection
@@ -375,9 +391,14 @@
   description: An advanced red hardsuit helmet specifically designed for field medic operations.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/syndiemedic.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/syndicate_agent.rsi #imp edit
+    layers:
+    - state: icon-helmet #imp edit
+    - state: icon-helmet-light #imp edit
+      map: [ "light" ] #imp edit
+      visible: false
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/syndiemedic.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/syndicate_agent.rsi #imp edit
   - type: PointLight
     color: green
   - type: PressureProtection
@@ -399,9 +420,14 @@
   description: An elite version of the blood-red hardsuit's helmet, with improved armor and fireproofing. Property of Gorlex Marauders.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/syndieelite.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/syndicate_elite.rsi #imp edit
+    layers:
+    - state: icon-helmet #imp edit
+    - state: icon-helmet-light #imp edit
+      map: [ "light" ] #imp edit
+      visible: false
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/syndieelite.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/syndicate_elite.rsi #imp edit
   - type: PointLight
     color: red
   - type: PressureProtection
@@ -428,9 +454,14 @@
   description: A bulked up version of the blood-red hardsuit's helmet, purpose-built for the commander of a syndicate operative squad. Has significantly improved armor for those deadly front-lines firefights.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/syndicate_commander.rsi #imp edit
+    layers:
+    - state: icon-helmet #imp edit
+    - state: icon-helmet-light #imp edit
+      map: [ "light" ] #imp edit
+      visible: false
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/syndicate_commander.rsi #imp edit
   - type: PointLight
     color: green
   - type: PressureProtection
@@ -452,9 +483,11 @@
   description: Made of compressed red matter, this helmet was designed in the Tau chromosphere facility.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/cybersun.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/syndicate_juggernaut.rsi #imp edit
+    layers:
+    - state: icon-helmet
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/cybersun.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/syndicate_juggernaut.rsi #imp edit
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -536,6 +569,69 @@
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
+
+#Makeshift Hardsuit Helmet
+- type: entity
+  parent: [ BaseMajorContraband, ClothingHeadHardsuitWithLightBase ]
+  id: ClothingHeadHelmetProspector
+  name: makeshift hardsuit helmet
+  description: A helmet cobbled together with cloth, insulation, and metal that barely meets low-pressure safety standards. It'll do.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Prospectors/prospector-hardsuit-helmet.rsi
+    layers:
+    - state: icon
+    - state: icon-unshaded
+      shader: unshaded
+    - state: light-overlay
+      visible: false
+      shader: unshaded
+      map: [ "light" ]
+  - type: HandheldLight
+    addPrefix: false
+  - type: ToggleableLightVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 1000
+  - type: PointLight
+    color: green
+
+#Desperado Helmet
+- type: entity
+  parent: [ BaseMajorContraband, ClothingHeadHelmetHardsuitSyndieCommander ]
+  id: ClothingHeadHelmetDesperado
+  name: desperado hardsuit helmet
+  description: An impressively sturdy and impressively Space-Texan hardsuit helmet.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Prospectors/desperado-hardsuit-helmet.rsi
+  - type: PointLight
+    color: green
+  - type: ToggleableLightVisuals
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: off-equipped-HELMET
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
 
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit
@@ -729,7 +825,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitSecurity
   id: ClothingHeadHelmetHardsuitMime
-  name: mime hardsuit helmet
+  name: red mime hardsuit helmet # Imp
   description: A mime hardsuit helmet.
   components:
   - type: BreathMask

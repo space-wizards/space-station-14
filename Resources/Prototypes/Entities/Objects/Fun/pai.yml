@@ -44,6 +44,9 @@
     stopSearchVerbPopup: pai-system-stopped-searching
   - type: Examiner
   - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
   - type: ActiveRadio
     channels:
     - Common
@@ -73,9 +76,13 @@
     whitelist:
       components:
         - SecretStash
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 3
 
 - type: entity
-  parent: [ PersonalAI, BaseSyndicateContraband]
+  parent: [ PersonalAI, Tier2Contraband]
   id: SyndicatePersonalAI
   name: syndicate personal ai device
   description: Your Syndicate pal who's fun to be with!
@@ -105,6 +112,47 @@
           Off: { state: syndicate-pai-off-overlay }
           Searching: { state: syndicate-pai-searching-overlay }
           On: { state: syndicate-pai-on-overlay }
+
+- type: entity
+  parent: PersonalAI
+  id: GoldPersonalAI
+  name: gilded personal ai device
+  description: An incredibly rare, golden electronic pal. Amazing! This would be worth a fortune, but it's got no resale value.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pai.rsi
+    layers:
+    - state: gold-pai-base
+    - state: gold-pai-shimmer-overlay
+      shader: unshaded
+    - state: gold-pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+    - state: gold-pai-swish-overlay
+      shader: unshaded
+  - type: ToggleableGhostRole
+    roleName: pai-system-role-name-gilded
+    roleDescription: pai-system-role-description-gilded
+    roleRules: ghost-role-information-familiar-rules
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+  - type: ActiveRadio
+    channels:
+    - Common
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        screen:
+          Off: { state: gold-pai-off-overlay }
+          Searching: { state: gold-pai-searching-overlay }
+          On: { state: gold-pai-on-overlay }
+  - type: PointLight
+    radius: 1.2
+    energy: 1.34
+    castShadows: false
+    color: "#9b68ff"
 
 - type: entity
   parent: PersonalAI

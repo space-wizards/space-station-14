@@ -1,0 +1,24 @@
+- files: ["blue.ogg", "red.ogg"]
+  license: "Custom"
+  copyright: "Taken from Half-Life, created by Valve Corporation.; spliced with pre-existing Alert audio originally taken from Citadel Station 13; edit by AvianMaiden"
+  source: "https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f2d1b489590b559e4073f41b126cef56f4c50"
+
+- files: ["delta.ogg", "green.ogg", "pink.ogg", "violet.ogg", "yellow.ogg"]
+  license: "Custom"
+  copyright: "Taken from Half-Life, created by Valve Corporation; spliced with pre-existing Alert audio; edit by AvianMaiden"
+  source: "https://store.steampowered.com/app/70/HalfLife/"
+  
+- files: ["epsilon.ogg"]
+  license: "Custom"
+  copyright: "Taken from Half-Life, created by Valve Corporation; spliced with pre-existing Epsilon Alert audio, originally made by dj-34; edit by AvianMaiden"
+  source: "https://github.com/ss220-space/Paradise/blob/05043bcfb35c2e7bcf1efbdbfbf976e1a2504bc2/sound/effects/epsilon.ogg"
+  
+- files: ["gamma.ogg"]
+  license: "Custom"
+  copyright: "Taken from Half-Life, created by Valve Corporation; spliced with pre-existing Gamma Alert audio, originally created by Bhijin & Myr for Space Station 14; edit by AvianMaiden"
+  source: "https://github.com/space-wizards/space-station-14"
+  
+- files: ["announce.ogg", "attention.ogg", "welcome.ogg", "anomaly.ogg", "artifact.ogg", "carp_rift.ogg", "error_bureaucratic.ogg", "error_clerical.ogg", "gas_leak.ogg", "immovable_rod.ogg", "kudzu.ogg", "meteors.ogg", "power_grid_check.ogg", "power_grid_check-complete.ogg", "solar_flare.ogg", "vent_clog.ogg", "vent_critters.ogg", "shuttlecalled.ogg", "shuttledock.ogg", "shuttlerecalled.ogg", "outbreak7.ogg", "radiation.ogg", "fallback.ogg"]
+  license: "Custom"
+  copyright: "Taken from Half-Life, created by Valve Corporation; edit by AvianMaiden"
+  source: "https://store.steampowered.com/app/70/HalfLife/"

@@ -1,0 +1,154 @@
+- type: entity
+  name: shining spring
+  parent: [BaseWeaponLauncher, BaseGunWieldable]
+  id: WeaponLauncherCleanerLake
+  description: A de-militarised piece of military surplus equipment, repurposed for the real troops.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Launchers/cleaner_lake.rsi
+    layers:
+      - state: icon
+        map: ["enum.GunVisualLayers.Base"]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Launchers/cleaner_lake.rsi
+    slots:
+    - Back
+    - suitStorage
+  - type: AmmoCounter
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CleanerGrenade
+    capacity: 3
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: Construction
+    graph: UpgradeWeaponCleanerLake
+    node: start
+  - type: StealTarget
+    stealGroup: ShiningSpring
+
+- type: entity
+  name: remilitarised shining spring
+  parent: [WeaponLauncherCleanerLake, BaseGunWieldable]
+  id: WeaponLauncherCleanerLakeRemilitarised
+  description: A re-militarised piece of military surplus equipment, go nuts.
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - Grenade
+    capacity: 3
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+
+- type: entity
+  name: Urist McMeteor launcher
+  parent: WeaponLauncherAdmemeMeteorLarge
+  id: WeaponLauncherAdmemeUrist
+  description: It fires Urist McMeteors.
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeRocket
+    proto: MeteorUrist
+
+- type: entity
+  name: micro grappling gun
+  parent: WeaponGrapplingGun
+  id: WeaponGrapplingGunTckTck
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Weapons/Guns/Launchers/micrograpple.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          visible: true
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TetherVisualsStatus.Key:
+          unshaded:
+            True: { state: base-unshaded }
+            False: { state: base-unshaded-off }
+
+- type: entity
+  name: improvised grappling gun
+  parent: WeaponGrapplingGun
+  id: WeaponGrapplingGunImprovised
+  description: An improvised pneumatic cannon modified into a grappling gun using a plunger, a lot of wire, and a lot of hope.
+  components:
+    - type: GrapplingGun
+      reelRate: 1.25
+      cycleSound:
+        path: /Audio/Weapons/pop.ogg
+        params:
+          pitch: .75
+      ropeSprite: _Impstation/Objects/Weapons/Guns/Launchers/grappling_gun_improvised.rsi/rope.png
+    - type: Gun
+      soundGunshot: /Audio/Effects/thunk.ogg
+      fireRate: 0.5
+      clumsyProof: true
+    - type: BasicEntityAmmoProvider
+      proto: GrapplingHookImprovised
+      capacity: 1
+    - type: Sprite
+      sprite: _Impstation/Objects/Weapons/Guns/Launchers/grappling_gun_improvised.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          visible: true
+    - type: Item
+      size: Normal
+    - type: Clothing
+      sprite: _Impstation/Objects/Weapons/Guns/Launchers/grappling_gun_improvised.rsi
+      quickEquip: false
+      slots:
+      - Back
+    - type: Construction
+      graph: GrapplingGunImprovised
+      node: doohickey
+
+- type: entity
+  name: improvised grappling gun
+  parent: BaseItem
+  id: WeaponGrapplingGunImprovisedStep1
+  suffix: Needs plunger and tank
+  description: Still needs a plunger.
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Weapons/Guns/Launchers/grappling_gun_improvised.rsi
+      layers:
+        - state: no-hook
+    - type: Item
+      size: Normal
+    - type: Construction
+      graph: GrapplingGunImprovised
+      node: frame
+
+- type: entity
+  name: improvised grappling gun
+  parent: BaseItem
+  id: WeaponGrapplingGunImprovisedStep2
+  suffix: Needs tank
+  description: Still needs a gas tank.
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Weapons/Guns/Launchers/grappling_gun_improvised.rsi
+      layers:
+        - state: no-tank
+    - type: Item
+      size: Normal
+    - type: Construction
+      graph: GrapplingGunImprovised
+      node: hook

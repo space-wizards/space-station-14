@@ -120,7 +120,7 @@
       context: "human"
 
 - type: entity
-  parent: [BaseWeaponTurret, BaseSyndicateContraband]
+  parent: [BaseWeaponTurret, Tier3Contraband]
   id: WeaponTurretSyndicate
   suffix: Syndicate
   components:
@@ -194,6 +194,15 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
+
+- type: entity
+  parent: BaseWeaponTurret
+  id: WeaponTurretAllHostile
+  suffix: All hostile
+  components:
+  - type: NpcFactionMember
+    factions:
+    - AllHostile
 
 - type: entity
   name: xeno turret

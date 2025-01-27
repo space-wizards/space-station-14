@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from TG station",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "raw_prophet"
+    },
+    {
+      "name": "raw_prophet-move",
+      "delays":
+      [
+        [
+          0.05, 0.05, 0.05, 0.05, 0.05,
+          0.05, 0.05, 0.05, 0.05, 0.05,
+          0.05, 0.05, 0.05, 0.05, 0.05
+        ]
+      ]
+    },
+    {
+      "name": "armsy_end",
+      "directions": 4
+    },
+    {
+      "name": "armsy_mid",
+      "directions": 4
+    },
+    {
+      "name": "armsy_start",
+      "directions": 4
+    },
+    {
+      "name": "stalker",
+      "directions": 4
+    },
+    {
+      "name": "ash_walker",
+      "directions": 4
+    },
+    {
+      "name": "rust_walker_s",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "rust_walker_n",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "fire_shark",
+      "directions": 4,
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "moon_mass"
+    }
+  ]
+}

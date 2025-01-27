@@ -39,7 +39,7 @@
 
 #Mercenary Helmet
 - type: entity
-  parent: [ ClothingHeadHelmetBase, BaseRestrictedContraband ]
+  parent: [ ClothingHeadHelmetBase, BaseMajorContraband ]
   id: ClothingHeadHelmetMerc
   name: mercenary helmet
   description: The combat helmet is commonly used by mercenaries, is strong, light and smells like gunpowder and the jungle.
@@ -186,20 +186,6 @@
     - Snout
     - HeadTop
     - HeadSide
-
-#Templar Helmet
-- type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadHelmetTemplar
-  name: templar helmet
-  description: DEUS VULT!
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Helmets/templar.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Helmets/templar.rsi
-  - type: IngestionBlocker
-  - type: IdentityBlocker
 
 #Thunderdome Helmet
 - type: entity
@@ -372,7 +358,7 @@
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
 
 - type: entity
-  parent: [ BaseSyndicateContraband, ClothingHeadHelmetBase ]
+  parent: [ Tier3Contraband, ClothingHeadHelmetBase ]
   id: ClothingHeadHelmetRaid
   name: syndicate raid helmet
   description: An armored helmet for use with the syndicate raid suit. Very stylish.
@@ -415,6 +401,28 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/podwars_helmet.rsi
 
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadSack
+  name: hemp sack with eyeholes
+  description: A hemp sack with eyeholes in it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/hempsack.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/hempsack.rsi
+  - type: Construction
+    graph: SackHead
+    node: eyesack
+  - type: Armor
+    modifiers:
+      coefficients: # Basically nothing
+        Blunt: 0.99
+        Slash: 0.99
+        Piercing: 0.99
+        Heat: 0.99
+  - type: IdentityBlocker
+
 #Justice Helmet
 - type: entity
   parent: [ ClothingHeadHelmetBase, BaseRestrictedContraband ]
@@ -452,6 +460,7 @@
     delay: 1.0
   - type: ToggleClothing
     action: ActionToggleJusticeHelm
+    mustEquip: false
   - type: ItemTogglePointLight
   - type: ToggleableLightVisuals
     clothingVisuals:

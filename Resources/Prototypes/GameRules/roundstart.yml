@@ -190,6 +190,20 @@
       - MindRoleTraitor
 
 - type: entity
+  id: TraitorReinforcement
+  parent: BaseTraitorRule
+  components:
+  - type: TraitorRule
+    giveUplink: false
+    giveCodewords: false # It would actually give them a different set of codewords than the regular traitors, anyway
+    giveBriefing: false
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Traitor ]
+      mindRoles:
+      - MindRoleTraitor
+
+- type: entity
   id: Revolutionary
   parent: BaseGameRule
   components:
@@ -249,6 +263,8 @@
         sound: "/Audio/Ambience/Antag/zombie_start.ogg"
       components:
       - type: PendingZombie
+        minInitialInfectedGrace: 300
+        maxInitialInfectedGrace: 600
       - type: ZombifyOnDeath
       - type: IncurableZombie
       - type: InitialInfected
@@ -271,7 +287,21 @@
         tableId: CalmPestEventsTable
       - !type:NestedSelector
         tableId: SpicyPestEventsTable
-        
+
+- type: entityTable
+  id: SleeperlessGameRulesTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+      - !type:NestedSelector
+        tableId: BasicCalmEventsTable
+      - !type:NestedSelector
+        tableId: SleeperlessAntagEventsTable
+      - !type:NestedSelector
+        tableId: CargoGiftsTable
+      - !type:NestedSelector
+        tableId: CalmPestEventsTable
+      - !type:NestedSelector
+        tableId: SpicyPestEventsTable
 
 - type: entityTable
   id: SpaceTrafficControlTable
@@ -291,6 +321,14 @@
   - type: BasicStationEventScheduler
     scheduledGameRules: !type:NestedSelector
       tableId: BasicGameRulesTable
+
+- type: entity
+  id: SleeperlessStationEventScheduler
+  parent: BaseGameRule
+  components:
+  - type: BasicStationEventScheduler
+    scheduledGameRules: !type:NestedSelector
+      tableId: SleeperlessGameRulesTable
 
 - type: entity
   id: RampingStationEventScheduler

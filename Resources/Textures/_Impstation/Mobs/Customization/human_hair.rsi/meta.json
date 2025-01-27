@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "copyright": "gatheredlow sprited by Sha-Seng (Github), lowpigtails by Skeleskitty (Discord), frenchbraid by AftrLite (Github)",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+      {
+        "name": "gatheredlow",
+        "directions": 4
+      },
+      {
+        "name": "lowpigtails",
+        "directions": 4
+      },
+      {
+        "name": "frenchbraid",
+        "directions": 4
+      }
+    ]
+  }

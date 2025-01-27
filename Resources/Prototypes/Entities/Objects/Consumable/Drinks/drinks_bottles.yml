@@ -636,6 +636,8 @@
     inHandsMaxFillLevels: 2
     inHandsFillBaseName: -fill-
   - type: Sealable
+  - type: FitsInDispenser
+    solution: drink
 
 - type: entity
   parent: DrinkWaterBottleFull
@@ -979,3 +981,134 @@
       drink:
         maxVol: 150
   - type: Drink
+
+- type: entity
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
+  id: DrinkAsteradeBottleFull
+  abstract: true
+  description: It's got what Salvage Specialsts crave!
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/asterade.rsi
+  - type: Item
+    size: Small
+  - type: Sealable
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: fill-
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 30
+
+- type: entity
+  parent: DrinkAsteradeBottleFull
+  id: DrinkOrangeAsteradeBottleFull
+  name: orange Asterade™ bottle
+  description: Ostensibly healthy for you. The label says "Outrageous Orange"
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: OrangeAsterade
+          Quantity: 30
+
+- type: entity
+  parent: DrinkAsteradeBottleFull
+  id: DrinkPurpleAsteradeBottleFull
+  name: purple Asterade™ bottle
+  description: Ostensibly healthy for you. The label says "Boisterous Berry"
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: PurpleAsterade
+          Quantity: 30
+
+- type: entity
+  parent: DrinkAsteradeBottleFull
+  id: DrinkRedAsteradeBottleFull
+  name: red Asterade™ bottle
+  description: Ostensibly healthy for you. The label says "Wild Watermelon"
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: RedAsterade
+          Quantity: 30
+
+- type: entity
+  parent: DrinkAsteradeBottleFull
+  id: DrinkGreenAsteradeBottleFull
+  name: green Asterade™ bottle
+  description: Ostensibly healthy for you. The label says "Lightning Lime"
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: GreenAsterade
+          Quantity: 30
+
+- type: entity
+  parent: DrinkAsteradeBottleFull
+  id: DrinkYellowAsteradeBottleFull
+  name: yellow Asterade™ bottle
+  description: Ostensibly healthy for you. The label says "Preposterous Pineapple"
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: YellowAsterade
+          Quantity: 30
+
+- type: entity
+  parent: DrinkAsteradeBottleFull
+  id: DrinkLemonAsteradeBottleFull
+  name: lemon Asterade™ bottle
+  description: Ostensibly healthy for you. The label says "Tesloose Lemon"
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: LemonAsterade
+          Quantity: 30
+
+- type: entity
+  parent: DrinkAsteradeBottleFull
+  id: DrinkBrownAsteradeBottleFull
+  name: brown Asterade™ bottle
+  description: Ostensibly healthy for you. The label has been scratched off and "Potato" has been written with a marker in its place.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: BrownAsterade
+          Quantity: 30
+
+- type: entity
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
+  id: DrinkAppleMartiniCrystalLiteBottleFull
+  name: apple martini Crystal Lite™ bottle
+  description: A bottle of apple martini flavored Crystal Lite™. Their mocktails line was discontinued in 2015, and it was sold as a powder, so this is very strange.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: AppleMartiniCrystalLite
+          Quantity: 100
+  - type: Label
+    currentLabel: reagent-name-apple-martini-crystal-lite
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/applemartinicrystallitebottle.rsi
+  - type: Sealable

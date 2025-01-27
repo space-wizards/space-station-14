@@ -56,10 +56,11 @@
         ruins: !type:GridSpawnGroup
           hide: true
           nameGrid: true
-          minCount: 2
-          maxCount: 2
+          minCount: 3
+          maxCount: 4
           stationGrid: false
           paths:
+          - /Maps/Ruins/abandoned_outpost.yml
           - /Maps/Ruins/chunked_tcomms.yml
           - /Maps/Ruins/biodome_satellite.yml
           - /Maps/Ruins/derelict.yml
@@ -69,10 +70,17 @@
           - /Maps/Ruins/syndicate_dropship.yml
           - /Maps/Ruins/whiteship_ancient.yml
           - /Maps/Ruins/whiteship_bluespacejumper.yml
+          - /Maps/_Impstation/Ruins/science-satellite.yml #imp
+          - /Maps/_Impstation/Ruins/keyhole-court.yml #imp
+          - /Maps/_Impstation/Ruins/cozy-radio-planetoid.yml #imp
+          - /Maps/_Impstation/Ruins/spooky-garden-bubble.yml #imp
+          - /Maps/_Impstation/Ruins/snowy-sauna.yml #imp
+          - /Maps/_Impstation/Ruins/shuttle-repair-bay.yml #imp
+          - /Maps/_Impstation/Ruins/decapoid-shuttle-wreck.yml #imp
         vgroid: !type:DungeonSpawnGroup
           minimumDistance: 300
           maximumDistance: 350
-          nameDataset: names_borer
+          nameDataset: NamesBorer
           stationGrid: false
           addComponents:
           - type: Gravity

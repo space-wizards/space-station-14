@@ -76,6 +76,16 @@
   metabolisms:
     Medicine:
       effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Snail
+          shouldHave: true
+        damage:
+          types:
+            Poison: 4
       - !type:AdjustReagent
         reagent: Histamine
         amount: -3.0
@@ -654,10 +664,20 @@
   metabolisms:
     Drink:
       effects:
-        - !type:SatiateThirst
-          factor: 6
-        - !type:ModifyBloodLevel
-          amount: 6
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Snail
+          shouldHave: true
+        damage:
+          types:
+            Poison: 4
+      - !type:SatiateThirst
+        factor: 6
+      - !type:ModifyBloodLevel
+        amount: 6
 
 - type: reagent
   id: Siderlac
@@ -784,6 +804,16 @@
   metabolisms:
     Medicine:
       effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Snail
+          shouldHave: true
+        damage:
+          types:
+            Poison: 4
       # what the hell, this isn't satiating at all!!
       - !type:SatiateHunger
         factor: -1
@@ -863,6 +893,16 @@
     Medicine:
       effects:
       - !type:ChemHealEyeDamage
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Snail
+          shouldHave: true
+        damage:
+          types:
+            Poison: 4
 
 - type: reagent
   id: Cognizine
@@ -1070,11 +1110,27 @@
             Heat: -0.2
             Shock: -0.2
             Cold: -0.2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: ForeverWeed
+          min: 1
+        reagent: ForeverWeed
+        amount: -1
   reactiveEffects:
     Extinguish:
       methods: [ Touch ]
       effects:
       - !type:ExtinguishReaction
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 1
@@ -1160,7 +1216,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 12
-          
+
 - type: reagent
   id: Opporozidone #Name based of an altered version of the startreck chem "Opporozine"
   name: reagent-name-opporozidone

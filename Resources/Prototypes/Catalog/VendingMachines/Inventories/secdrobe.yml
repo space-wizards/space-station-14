@@ -8,6 +8,7 @@
     ClothingShoesBootsJack: 3
     ClothingHeadHatBeretSecurity: 3
     ClothingHeadHatSecsoft: 3
+    ClothingHeadHatSecurityTrooper: 3
     ClothingHeadBandRed: 3
     ClothingMaskNeckGaiterRed: 3
     ClothingHandsGlovesColorBlack: 3
@@ -16,14 +17,28 @@
     ClothingUniformJumpsuitSecGrey: 3
     ClothingUniformJumpskirtSecGrey: 3
     ClothingUniformJumpsuitSecBlue: 3
+    ClothingUniformSecurityTrooper: 3
     ClothingHeadsetSecurity: 3
     ClothingOuterWinterSec: 2
-    ClothingOuterArmorBasic: 2
     ClothingNeckScarfStripedRed: 3
-    ClothingOuterArmorBasicSlim: 2
+    ClothingOuterArmorBasic: 2
+    ClothingOuterArmorBasicSlim: 1 #imp
+    ClothingOuterArmorBasicCompact: 1 #imp
     ClothingEyesBlindfold: 1
     ClothingShoesBootsCombat: 1
     ClothingShoesBootsWinterSec: 2
-    ClothingHeadHelmetJustice: 1
+    ClothingUniformJumpsuitBrigmedic: 1
+    ClothingUniformJumpskirtBrigmedic: 1
+    ClothingHeadHatBeretBrigmedic: 1
+    ClothingHeadHatBrigmedicsoft: 1
+    ClothingBackpackDuffelBrigmedic: 1
+    ClothingBackpackBrigmedic: 1
+    ClothingBackpackSatchelBrigmedic: 1
+    ClothingOuterCoatAMG: 1
+    ClothingOuterWinterBrigmedic: 1
+    ClothingShoesBootsWinterBrigmedic: 1
+
+
+    ClothingHeadHelmetJustice: 10
   contrabandInventory:
     ClothingMaskClownSecurity: 1

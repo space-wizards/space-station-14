@@ -179,6 +179,42 @@
       "name": "mining_r_leg+o"
     },
     {
+      "name": "cargo_l_arm"
+    },
+    {
+      "name": "cargo_r_arm"
+    },
+    {
+      "name": "cargo_l_leg"
+    },
+    {
+      "name": "cargo_r_leg"
+    },
+    {
+      "name": "cargo_chest"
+    },
+    {
+      "name": "cargo_head"
+    },
+    {
+      "name": "cargo_head+o"
+    },
+    {
+      "name": "cargo_chest+o"
+    },
+    {
+      "name": "cargo_l_arm+o"
+    },
+    {
+      "name": "cargo_r_arm+o"
+    },
+    {
+      "name": "cargo_l_leg+o"
+    },
+    {
+      "name": "cargo_r_leg+o"
+    },
+    {
       "name": "service_l_arm"
     },
     {

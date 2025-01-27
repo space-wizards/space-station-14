@@ -1,0 +1,128 @@
+- type: entity
+  name: ticket
+  parent: Paper
+  id: FineTicket
+  description: 'A space-glue backed fining ticket. Once its stuck, it wont come off without being destroyed.'
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+      color: "#f07575"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#f07575"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/pop.ogg
+    embedOnThrow: True
+  - type: ThrowingAngle
+    angle: 0
+  - type: LandAtCursor
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
+    backgroundModulate: "#f07575"
+    contentImageModulate: "#f07575"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 16.0, 16.0, 16.0, 16.0
+    headerImagePath: "/Textures/_Impstation/Interface/Paper/paper_heading_fine.svg.96dpi.png"
+    headerMargin: 0.0, 12.0, 0.0, 0.0
+    maxWritableArea: 200.0, 300.0
+  - type: Tag
+    tags:
+    - Document
+    - Paper
+    - SecTicket
+  - type: FlavorProfile
+    flavors:
+    - secticket
+
+
+- type: entity
+  id: TicketPad
+  parent: BoxBase
+  name: ticket pad
+  description: A small folder of sticky-backed tickets.
+  components:
+  - type: Item
+    size: Small
+    shape: null
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/bureaucracy.rsi
+    state: ticket-book
+  - type: Storage
+    maxItemSize: Small
+    grid:
+    - 0,0,1,3
+    whitelist:
+      tags:
+        - Document
+  - type: Appearance
+  - type: Tag
+    tags:
+    - Folder
+    - SecTicket
+  - type: StorageFill
+    contents:
+      - id: FineTicket
+      - id: FineTicket
+      - id: FineTicket
+      - id: FineTicket
+      - id: FineTicket
+      - id: FineTicket
+      - id: FineTicket
+      - id: FineTicket
+
+- type: entity
+  id: BoxFolderBlackLoadout
+  parent: BoxFolderBase
+  name: black folder
+  suffix: Loadout
+  description: A plain black folder filled with top secret paperwork.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-black
+  - type: Item
+    sprite: _Impstation/Objects/Misc/bureaucracy.rsi
+    size: Small
+    shape: null
+  - type: StorageFill
+    contents:
+    - id: Paper
+    - id: Paper
+    - id: PaperOffice
+
+- type: entity
+  id: BoxFolderHamster
+  parent: BoxFolderBlackLoadout
+  name: hamster folder
+  description: A cute hamster-themed folder filled with top secret paperwork.
+  components:
+  - type: Sprite
+    layers:
+    - state: folder-hamster
+
+- type: entity
+  id: BoxFolderMime
+  parent: BoxFolderBlackLoadout
+  name: mime folder
+  description: A striped folder filled with top secret paperwork. Its paper rustle silently.
+  components:
+  - type: Sprite
+    layers:
+    - state: folder-mime
+
+- type: entity
+  id: BoxFolderPun
+  parent: BoxFolderBlackLoadout
+  name: pun pun folder
+  description: A cute Pun Pun-themed folder filled with top secret paperwork.
+  components:
+  - type: Sprite
+    layers:
+    - state: folder-pun

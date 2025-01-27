@@ -14,7 +14,7 @@
 
 - type: entity
   id: PelletShotgunBeanbag
-  name: beanbag (.50)
+  name: stun slug (.50)
   categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
@@ -24,7 +24,7 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 10
+        Shock: 7.5
   - type: StaminaDamageOnCollide
     damage: 40 # 3 hits to stun
 

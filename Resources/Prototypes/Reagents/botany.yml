@@ -65,6 +65,16 @@
     Medicine:
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Snail
+          shouldHave: true
+        damage:
+          types:
+            Poison: 4
+      - !type:HealthChange
         damage:
           types:
             Poison: 3

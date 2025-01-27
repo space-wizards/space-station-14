@@ -1,0 +1,70 @@
+<Document>
+  # Path of Ash
+  The Path of Ash revolves around fire, mobility, and crowd control. It grants multiple tools that are very forgiving for a new Heretic, including a short range jaunt that works while handcuffed and a mask that slowly saps nearby Heathens of sanity and soul, and is highly recommended for first-timers.
+
+  While its abilities may not be the strongest until later in the round, they are very easy to get the ball rolling with and difficult to stop. Ascending gives you the power to burn down the station in a living tornado of flame.
+
+  ## Nightwatcher's Secret
+  <Box>
+    <GuideEntityEmbed Entity="HereticBladeAsh" Caption=""/>
+  </Box>
+  Opens up the Path of Ash to you.
+
+  Allows you to transmute a welding tool and a knife into an Ashen Blade.
+
+  ## Grasp of Ash
+  <Box>
+    <GuideEntityEmbed Entity="TouchSpellMansus" Caption=""/>
+  </Box>
+  Your Mansus Grasp will burn the eyes of the victim, damaging them and blurring their vision.
+
+  ## Ashen Shift
+  Grants you Ashen Passage, a spell that lets you phase out of reality and traverse a short distance, passing though any walls.
+
+  Upon returning to reality, you will emit a distinct sound. Additionally, your body will ignite, dealing minor damage.
+
+  ## Mark of Ash
+  <Box>
+    <GuideEntityEmbed Entity="HereticBladeAsh" Caption=""/>
+  </Box>
+  Your Mansus Grasp now applies the Mark of Ash. The mark is triggered from an attack with your Ashen Blade.
+
+  When triggered, the victim takes additional stamina and burn damage, and the mark is transferred to a nearby heathen.
+
+  ## Volcanic Blast
+  Grants you Volcanic Blast, a spell that fires a ball of flames to the nearest Heathen.
+
+  On successful hit, the fireball divides into multiple smaller fireballs targeting other nearby targets.
+
+  ## Mask of Madness
+  <Box>
+    <GuideEntityEmbed Entity="ClothingMaskMadHeretic" Caption=""/>
+  </Box>
+  Allows you to transmute any mask, four candles, a stun baton, and a liver to create a Mask of Madness.
+
+  The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity.
+
+  It can also be forced onto a heathen, to make them unable to take it off...
+
+  ## Fiery Blade
+  <Box>
+    <GuideEntityEmbed Entity="HereticBladeAsh" Caption=""/>
+  </Box>
+  Your blade now lights enemies ablaze on attack.
+
+  ## Grasp of Ash
+  Grants you Nightwatcher's Rebirth, a spell that extinguishes you and burns all nearby heathens who are currently on fire, healing you for every victim afflicted.
+  
+  If any victims afflicted are in critical condition, they will instantly die.
+
+  ## Ashlord's Rite
+  The ascension ritual of the Path of Ash.
+
+  Bring 3 burning or husked corpses to a transmutation rune to complete the ritual.
+
+  When completed, you become a harbinger of flames, gaining two abilities.
+
+  Cascade, which causes a massive, growing ring of fire around you, and Oath of Flame, causing you to passively create a ring of flames as you walk.
+
+  You will also become immune to flames, space, and similar environmental hazards.
+</Document>

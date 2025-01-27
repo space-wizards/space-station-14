@@ -1,0 +1,49 @@
+﻿- type: body
+  id: Decapoid
+  name: "decapoid"
+  root: torso
+  slots:
+    head:
+      part: HeadDecapoid
+      connections:
+      - torso
+      organs:
+        brain: OrganHumanBrain
+        eyes: OrganHumanEyes
+    torso:
+      part: TorsoDecapoid
+      connections:
+      - right_arm
+      - left_arm
+      - right_leg
+      - left_leg
+      organs:
+        heart: OrganHumanHeart
+        gills: OrganDecapoidLungs
+        liver: OrganHumanLiver
+        kidneys: OrganHumanKidneys
+        stomach: OrganHumanStomach
+    right_arm:
+      part: RightArmDecapoid
+      connections:
+      - right_hand
+    left_arm:
+      part: LeftArmDecapoid
+      connections:
+      - left_hand
+    right_hand:
+      part: RightHandDecapoid
+    left_hand:
+      part: LeftHandDecapoid
+    right_leg:
+      part: RightLegDecapoid # back legs
+      connections:
+      - right_foot
+    left_leg:
+      part: LeftLegDecapoid # front legs
+      connections:
+      - left_foot
+    right_foot:
+      part: RightFootDecapoid # back foot TODO: custom back foot
+    left_foot:
+      part: LeftFootDecapoid # front foot TODO: custom front foot

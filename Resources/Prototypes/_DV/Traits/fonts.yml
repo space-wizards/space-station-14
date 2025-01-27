@@ -1,0 +1,74 @@
+###########################################
+#      IF YOU ARE ADDING A NEW FONT,      #
+#  PLEASE ADD IT TO THE CYBERSUN PEN TOO  #
+###########################################
+
+- type: trait
+  id: FontComicNeue
+  name: trait-font-comic-neue-name
+  description: trait-font-comic-neue-desc
+  category: SignatureFonts
+  cost: 1
+  components:
+  - type: SignatureFont
+    font: "/Fonts/_DV/ComicNeue/ComicNeue-Regular.ttf"
+
+- type: trait
+  id: FontHachiMaruPop
+  name: trait-font-hachi-maru-pop-name
+  description: trait-font-hachi-maru-pop-desc
+  category: SignatureFonts
+  cost: 1
+  components:
+  - type: SignatureFont
+    font: "/Fonts/_DV/HachiMaruPop/HachiMaruPop-Regular.ttf"
+
+- type: trait
+  id: FontKodeMono
+  name: trait-font-kode-mono-name
+  description: trait-font-kode-mono-desc
+  category: SignatureFonts
+  cost: 1
+  components:
+  - type: SignatureFont
+    font: "/Fonts/_DV/KodeMono/KodeMono-Regular.ttf"
+
+- type: trait
+  id: FontReenieBeanie
+  name: trait-font-reenie-beanie-name
+  description: trait-font-reenie-beanie-desc
+  category: SignatureFonts
+  cost: 1
+  components:
+  - type: SignatureFont
+    font: "/Fonts/_DV/ReenieBeanie/ReenieBeanie-Regular.ttf"
+
+- type: trait
+  id: FontTangerine
+  name: trait-font-tangerine-name
+  description: trait-font-tangerine-desc
+  category: SignatureFonts
+  cost: 1
+  components:
+  - type: SignatureFont
+    font: "/Fonts/_DV/Tangerine/Tangerine_Bold.ttf"
+
+- type: trait
+  id: FontUnifrakturMaguntia
+  name: trait-font-unifraktur-name
+  description: trait-font-unifraktur-desc
+  category: SignatureFonts
+  cost: 1
+  components:
+  - type: SignatureFont
+    font: "/Fonts/_DV/UnifrakturMaguntia/UnifrakturMaguntia-Regular.ttf"
+
+- type: trait
+  id: FontWahroonga
+  name: trait-font-wahroonga-name
+  description: trait-font-wahroonga-desc
+  category: SignatureFonts
+  cost: 1
+  components:
+  - type: SignatureFont
+    font: "/Fonts/_DV/Wahroonga/Wahroonga-Regular.ttf"

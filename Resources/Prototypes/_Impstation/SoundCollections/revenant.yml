@@ -1,0 +1,8 @@
+- type: soundCollection
+  id: RevenantHaunt
+  files:
+    - /Audio/_Impstation/Effects/Revenant/haunt0.ogg
+    - /Audio/_Impstation/Effects/Revenant/haunt1.ogg
+    - /Audio/_Impstation/Effects/Revenant/haunt2.ogg
+    - /Audio/_Impstation/Effects/Revenant/haunt3.ogg
+    - /Audio/_Impstation/Effects/Revenant/haunt4.ogg

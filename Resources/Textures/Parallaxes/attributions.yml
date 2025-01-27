@@ -22,3 +22,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "Drawn by Ubaser"
   source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Textures/Parallaxes/core_planet.png"
+
+- files: [ "space_map3.png", "XenoParallaxNeb.png" ]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Made by SlamBamActionman"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Textures/Parallaxes/space_map3.png"

@@ -1,0 +1,16 @@
+<PanelContainer xmlns="https://spacestation14.io"
+                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                HorizontalExpand="True">
+    <BoxContainer Orientation="Horizontal"
+                  HorizontalExpand="True">
+        <Button Name="Purchase" Text="{Loc 'purchase'}" StyleClasses="LabelSubText" />
+        <Label Name="VesselName" HorizontalExpand="True" />
+        <PanelContainer>
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#25252A" />
+            </PanelContainer.PanelOverride>
+
+            <Label Name="Price" MinSize="52 32" Align="Right" />
+        </PanelContainer>
+    </BoxContainer>
+</PanelContainer>

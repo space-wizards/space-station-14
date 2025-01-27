@@ -1,0 +1,40 @@
+- type: entity
+  id: GoblinStowawaysEvent
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    weight: 1.8 # more common than zombies, but should theoretically not happen every shift. maybe once every two shifts. if it's too often, bump it down to 1.5
+    duration: 1
+    minimumPlayers: 15
+    maxOccurrences: 1 # six goblins is a lot
+  - type: VentCrittersRule
+    specialEntries:
+    - id: GoblinStowawaysVentSpawner
+      prob: 0 # this ensures that only one spawner will be created
+
+- type: entity
+  parent: BaseGameRule
+  id: GoblinKnightEvent
+  components:
+  - type: StationEvent
+    weight: 1.5 # gollylad is a calm event, and the station is rolling calm events 90% of the time, so he should be less common if we want him to not roll on every shift
+    duration: 1
+    maxOccurrences: 1 # he's a named character. there's only one of him
+  - type: RandomEntityStorageSpawnRule
+    prototype: SpawnPointGhostGoblinKnight
+
+- type: entity
+  id: GoblinCastawaysEvent
+  parent: BaseStationEventShortDelay
+  components:
+  - type: GameRule
+    delay:
+      min:  30
+      max:  30
+  - type: StationEvent
+    weight: 0.01 # should be extremely rare
+    duration: 1
+    minimumPlayers: 60 # there are ten of them. if they roll at 40, fully 25% of the station has to be dead for every slot to fill.
+    earliestStart: 15
+  - type: BluespaceArtifactRule
+    artifactSpawnerPrototype: CrateFullOGoblins

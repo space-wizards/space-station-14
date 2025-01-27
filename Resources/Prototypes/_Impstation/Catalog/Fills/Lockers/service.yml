@@ -1,0 +1,12 @@
+- type: entityTable
+  id: RandomIngredientBox
+  table: !type:GroupSelector
+    children:
+    - id: BoxCardboardIngredientAmerican
+    - id: BoxCardboardIngredientCarnivore
+    - id: BoxCardboardIngredientFiesta
+    - id: BoxCardboardIngredientFruity
+    - id: BoxCardboardIngredientGrains
+    - id: BoxCardboardIngredientItalian
+    - id: BoxCardboardIngredientSweets
+    - id: BoxCardboardIngredientVegetarian

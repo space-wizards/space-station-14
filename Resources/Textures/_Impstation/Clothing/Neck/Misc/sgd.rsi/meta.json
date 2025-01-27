@@ -1,0 +1,42 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Sprited for impstation by kipdotnet(github)",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "icon",
+        "delays": [
+          [
+            0.9,
+            0.9
+          ]
+        ]
+      },
+      {
+        "name": "equipped-NECK",
+        "directions": 4,
+        "delays": [
+          [
+            0.7,
+            0.7
+          ],
+          [
+            0.7,
+            0.7
+          ],
+          [
+            0.7,
+            0.7
+          ],
+          [
+            0.7,
+            0.7
+          ]
+        ]
+      }
+    ]
+  }

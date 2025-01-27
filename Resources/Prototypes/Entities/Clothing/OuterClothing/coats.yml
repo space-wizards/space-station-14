@@ -348,7 +348,7 @@
     sprite: Clothing/OuterClothing/Coats/clownpriest.rsi
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ClothingOuterStorageBase, BaseMajorContraband]
   id: ClothingOuterDogi
   name: samurai dogi
   description: Dogi is a type of traditional Japanese clothing. The dogi is made of heavy, durable fabric, it is practical in combat and stylish in appearance. It is decorated with intricate patterns and embroidery on the back.
@@ -376,7 +376,7 @@
     sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
 
 - type: entity
-  parent: [ClothingOuterStorageBase, BaseSyndicateContraband]
+  parent: [ClothingOuterStorageBase, Tier1Contraband]
   id: ClothingOuterCoatSyndieCap
   name: syndicate's coat
   description: The syndicate's coat is made of durable fabric, with gilded patterns.
@@ -387,7 +387,7 @@
     sprite: Clothing/OuterClothing/Coats/syndicate/coatsyndiecap.rsi
 
 - type: entity
-  parent: [BaseSyndicateContraband, ClothingOuterCoatHoSTrench] # BaseSyndicateContraband as first parent so contraband system takes that as priority, yeah I know
+  parent: [Tier1Contraband, ClothingOuterCoatHoSTrench] # BaseSyndicateContraband as first parent so contraband system takes that as priority, yeah I know (not what its called anymore)
   id: ClothingOuterCoatSyndieCapArmored
   name: syndicate's armored coat
   description: The syndicate's armored coat is made of durable fabric, with gilded patterns.
@@ -403,6 +403,7 @@
   name: armored medical gown
   description: The version of the medical gown, with elements of a bulletproof vest, looks strange, but your heart is protected.
   components:
+  - type: AllowSuitStorage
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/brigmedic.rsi
   - type: Clothing

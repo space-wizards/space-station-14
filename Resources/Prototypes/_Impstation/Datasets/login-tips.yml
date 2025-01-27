@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: LoginTips
+  values:
+    prefix: login-tips-dataset-
+    count: 315

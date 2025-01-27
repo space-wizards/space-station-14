@@ -1,0 +1,38 @@
+- type: speechSounds
+  id: PVC
+  saySound:
+    path: /Audio/_Impstation/Voice/Talk/gray.ogg
+  askSound:
+    path: /Audio/_Impstation/Voice/Talk/gray_ask.ogg
+  exclaimSound:
+    path: /Audio/_Impstation/Voice/Talk/gray_exclaim.ogg
+
+- type: emoteSounds
+  id: UnisexGray
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/_Impstation/Voice/Gray/gray_scream.ogg
+    Laugh:
+      path: /Audio/_Impstation/Voice/Gray/gray_laugh.ogg
+    Honk:
+      collection: BikeHorn
+    Yawn:
+      path: /Audio/_Impstation/Voice/Gray/gray_yawn.ogg
+    Whistle:
+      collection: Whistles
+    Crying:
+      path: /Audio/_Impstation/Voice/Gray/gray_cry.ogg
+    Sigh:
+      path: /Audio/_Impstation/Voice/Gray/gray_sigh.ogg
+    Gasp:
+      path: /Audio/_Impstation/Voice/Gray/gray_gasp.ogg
+    Cough:
+      path: /Audio/_Impstation/Voice/Gray/gray_cough.ogg
+    DefaultDeathgasp:
+      path: /Audio/_Impstation/Voice/Gray/gray_deathgasp.ogg
+    Ungh:
+      collection: Ungh
+    Weh:
+      collection: Weh

@@ -1,3 +1,24 @@
+# Senior times
+- type: loadoutEffectGroup
+  id: SeniorSalvager
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 187200 #52 hrs (1 hour per week for 1 year)
+
+# Extreme time requirement prestige cape due to how flashy it is
+# They already have a way to show off playing for 52 hours anyway
+- type: loadoutEffectGroup
+  id: DrillerCapeWorthy
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 360000 #100 hrs
+
 # Back
 - type: loadout
   id: SalvageSpecialistBackpack
@@ -14,6 +35,40 @@
   equipment:
     back: ClothingBackpackDuffelSalvage
 
+# Eyes
+- type: loadout
+  id: GlassesGarGreen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: DrillerCapeWorthy
+  equipment:
+    eyes: ClothingEyesGlassesGar
+
+- type: loadout
+  id: GlassesGarOrange
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: DrillerCapeWorthy
+  equipment:
+    eyes: ClothingEyesGlassesGarOrange
+
+- type: loadout
+  id: GlassesGarRed
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: DrillerCapeWorthy
+  equipment:
+    eyes: ClothingEyesGlassesGarGiga
+
+- type: loadout
+  id: GlassesGarBlack
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: DrillerCapeWorthy
+  equipment:
+    eyes: ClothingEyesGlassesGarMecha
+
+
 # OuterClothing
 - type: loadout
   id: SalvageSpecialistWintercoat
@@ -25,3 +80,39 @@
   id: SalvageBoots
   equipment:
     shoes: ClothingShoesBootsSalvage
+
+# Mantle
+- type: loadout
+  id: MinerCloak
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorSalvager
+  equipment:
+    neck: ClothingNeckCloakMiner
+
+- type: loadout
+  id: DrillerCape
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: DrillerCapeWorthy
+  equipment:
+    neck: ClothingNeckCloakDriller
+
+- type: loadout
+  id: SaMantle
+  equipment:
+    neck: ClothingNeckMantle
+
+# id
+- type: loadout
+  id: SalvageSpecialistPDA
+  equipment:
+    id: SalvagePDA
+
+- type: loadout
+  id: SeniorSalvageSpecialistPDA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorSalvager
+  equipment:
+    id: SeniorSalvagePDA

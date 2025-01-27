@@ -1,0 +1,97 @@
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesHeelsRed
+  name: red high-heels
+  description: Fancy red high-heels, great for strutting around the station in style.
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 6
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Heels/heelsred.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Heels/heelsred.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepHighheels
+
+- type: entity
+  parent: ClothingShoesHeelsRed
+  id: ClothingShoesHeelsBlack
+  name: black high-heels
+  description: Fancy black high-heels, great for strutting around the station in style.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Heels/heelsblack.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Heels/heelsblack.rsi
+
+- type: entity
+  parent: ClothingShoesHeelsRed
+  id: ClothingShoesHeelsBrown
+  name: brown high-heels
+  description: Fancy brown high-heels, great for strutting around the station in style.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Heels/heelsbrown.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Heels/heelsbrown.rsi
+
+
+- type: entity
+  parent: ClothingShoesHeelsRed
+  id: ClothingShoesHeelsGold
+  name: golden high-heels
+  description: Extremely fancy golden high-heels, they glitter and shine.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Heels/heelsgold.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Heels/heelsgold.rsi
+  - type: StaticPrice
+    price: 4000
+
+- type: entity
+  parent: ClothingShoesHeelsRed
+  id: ClothingShoesHeelsBlue
+  name: blue high-heels
+  description: Fancy blue high-heels, great for strutting around the station in style.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Heels/heelsblue.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Heels/heelsblue.rsi
+
+- type: entity
+  parent: ClothingShoesHeelsRed
+  id: ClothingShoesHeelsGreen
+  name: green high-heels
+  description: Fancy green high-heels, great for strutting around the station in style.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Heels/heelsgreen.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Heels/heelsgreen.rsi
+
+- type: entity
+  parent: [ClothingShoesHeelsRed, BaseCommandContraband]
+  id: ClothingShoesHeelsCommandBlack
+  name: gilded black high-heels
+  description: Gilded black high-heels specially made for command, these are sure to strike fear in others.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Heels/heelscommandblack.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Heels/heelscommandblack.rsi
+
+- type: entity
+  parent: ClothingShoesHeelsCommandBlack
+  id: ClothingShoesHeelsCommandBlue
+  name: gilded blue high-heels
+  description: Gilded blue high-heels specially made for command, these are sure to strike fear in others.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Heels/heelscommandblue.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Heels/heelscommandblue.rsi

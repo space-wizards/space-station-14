@@ -1,0 +1,29 @@
+- type: entity
+  name: full-auto conversion kit
+  parent: [ BaseItem, BaseRestrictedContraband ]
+  id: FullAutoConversionKit
+  description: A package of parts and tools for modifying an mk 58.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/conversionkit.rsi
+    state: iconfa
+  - type: Item
+    size: Normal
+  - type: Tag
+    tags:
+    - ConversionKitFA
+
+- type: entity
+  name: hyper-burst conversion kit
+  parent: [ BaseItem, BaseRestrictedContraband ]
+  id: HyperBurstConversionKit
+  description: A package of parts and tools for modifying an mk 58.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/conversionkit.rsi
+    state: iconhb  
+  - type: Item
+    size: Normal
+  - type: Tag
+    tags:
+    - ConversionKitHB

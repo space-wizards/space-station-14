@@ -1,0 +1,155 @@
+- type: species
+  id: Decapoid
+  name: species-name-decapoid
+  roundStart: true
+  prototype: MobDecapoid
+  sprites: MobDecapoidSprites
+  defaultSkinTone: "#385878"
+  markingLimits: MobDecapoidMarkingLimits
+  dollPrototype: MobDecapoidDummy
+  skinColoration: Hues
+  maleFirstNames: names_decapoid_first
+  femaleFirstNames: names_decapoid_first
+  lastNames: names_decapoid_last
+  sexes:
+  - Unsexed
+
+- type: speciesBaseSprites
+  id: MobDecapoidSprites
+  sprites:
+    Eyes: MobHumanoidAnyMarking
+    Head: MobDecapoidHead
+    HeadTop: MobHumanoidAnyMarking
+    Hair: MobHumanoidAnyMarking
+    Chest: MobDecapoidTorso
+    LArm: MobDecapoidLArm
+    RArm: MobDecapoidRArm
+    LHand: MobDecapoidLHand
+    RHand: MobDecapoidRHand
+    LLeg: MobDecapoidLLeg
+    RLeg: MobDecapoidRLeg
+    LFoot: MobDecapoidLFoot
+    RFoot: MobDecapoidRFoot
+    Tail: MobHumanoidAnyMarking
+    Snout: MobHumanoidAnyMarking
+
+- type: markingPoints
+  id: MobDecapoidMarkingLimits
+  onlyWhitelisted: true
+  points:
+    Eyes:
+      points: 1
+      required: true
+      defaultMarkings: [ DecapoidEyesDefault ]
+    Head:
+      points: 6
+      required: false
+    HeadTop:
+      points: 2
+      required: false
+    Chest:
+      points: 4
+      required: false
+    Undershirt:
+      points: 1
+      required: false
+    Tail:
+      points: 1
+      required: false
+    Snout:
+      points: 1
+      required: true # set to true
+      defaultMarkings: [ DecapoidGills1 ]
+    Overlay:
+      points: 1
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobDecapoidEyes
+  baseSprite:
+    sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: eyes-1
+
+- type: humanoidBaseSprite
+  id: MobDecapoidHead
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobDecapoidHeadMale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobDecapoidHeadFemale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobDecapoidTorso
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobDecapoidTorsoMale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobDecapoidTorsoFemale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobDecapoidLLeg # this is the front legs
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: front_leg
+
+- type: humanoidBaseSprite
+  id: MobDecapoidLHand # this is the crab claw
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobDecapoidLArm # this is the big arm
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobDecapoidLFoot # these are the front feet TODO: unique front feet sprite
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: front_feet
+
+- type: humanoidBaseSprite
+  id: MobDecapoidRLeg # this is the front legs
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: front_leg
+
+- type: humanoidBaseSprite
+  id: MobDecapoidRHand
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobDecapoidRArm
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobDecapoidRFoot # these are the back feet TODO: unique back feet sprite
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: back_feet

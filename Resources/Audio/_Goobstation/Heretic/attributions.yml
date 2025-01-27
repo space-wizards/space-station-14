@@ -1,0 +1,9 @@
+- files: ["blind.ogg", "castsummon.ogg", "disintegrate.ogg", "hereticknock.ogg", "repulse.ogg", "voidblink.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station"
+  source: "https://github.com/tgstation/tgstation/tree/master/sound/effects/magic"
+
+- files: ["heartbeat.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "made by whateverusername0"
+  source: "https://knowyourmeme.com/memes/source-i-made-it-up"

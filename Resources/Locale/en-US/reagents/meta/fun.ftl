@@ -4,6 +4,9 @@ reagent-desc-carpetium = A mystical chemical, usually outsourced from the Clown 
 reagent-name-fiber = fiber
 reagent-desc-fiber = A raw material, usually extracted from wool or other fabric products.
 
+reagent-name-trash = trash
+reagent-desc-trash = A slurry of discarded food, drink and packaging.
+
 reagent-name-buzzochloric-bees = buzzochloric bees
 reagent-desc-buzzochloric-bees = Liquid bees. Oh god it's LIQUID BEES NO-
 
@@ -27,3 +30,6 @@ reagent-desc-laughter = Some say that this is the best medicine, but recent stud
 
 reagent-name-weh = juice that makes you Weh
 reagent-desc-weh = Pure essence of lizard plush. Makes you Weh!
+
+reagent-name-hew = juice that makes you Hew
+reagent-desc-hew = Pure essence of inversed lizard plush. Makes you Hew!

@@ -1,0 +1,272 @@
+### basic
+# Heartbeat of the Mansus (sacrifice)
+- type: hereticRitual
+  id: Sacrifice
+  locName: heretic-ritual-basic-sacrifice
+  locDesc: heretic-ritual-basic-sacrifice-desc
+  icon: 
+    sprite: Mobs/Species/Human/organs.rsi
+    state: heart-on
+  customBehaviors:
+  - !type:RitualSacrificeBehavior
+    onlyTargets: true
+
+- type: hereticRitual
+  id: AmberFocus
+  locName: heretic-ritual-basic-focus
+  locDesc: heretic-ritual-basic-focus-desc
+  icon: 
+    sprite: _Goobstation/Heretic/amber_focus.rsi
+    state: icon
+  requiredTags:
+    GlassShard: 1
+    Eyes: 1
+  output:
+    ClothingNeckAmberFocus: 1
+
+- type: hereticRitual
+  id: LivingHeart
+  locName: heretic-ritual-basic-heart
+  locDesc: heretic-ritual-basic-heart-desc
+  icon: 
+    sprite: _Goobstation/Heretic/items.rsi
+    state: living_heart
+  requiredTags:
+    Heart: 1
+    Pen: 1
+    Paper: 1
+  outputEvent: !type:EventHereticRerollTargets
+
+- type: hereticRitual
+  id: CodexCicatrix
+  locName: heretic-ritual-basic-codex
+  locDesc: heretic-ritual-basic-codex-desc
+  icon:
+    sprite: _Goobstation/Heretic/book.rsi
+    state: icon-on
+  requiredTags:
+    Eyes: 1
+    Book: 1
+    Pen: 1
+  output:
+    CodexCicatrix: 1
+
+### ash path
+- type: hereticRitual
+  id: BladeAsh
+  locName: knowledge-path-ash-s1-name
+  locDesc: knowledge-path-ash-s1-desc
+  icon: 
+    sprite: _Goobstation/Heretic/Blades/blade_ash.rsi
+    state: icon
+  requiredTags:
+    Knife: 1
+    WeldingTool: 1
+  output:
+    HereticBladeAsh: 1
+
+- type: hereticRitual
+  id: MaskOfMadness
+  locName: knowledge-path-ash-s6-name
+  locDesc: knowledge-path-ash-s6-desc
+  icon: 
+    sprite: _Goobstation/Heretic/mad_mask.rsi
+    state: icon
+  requiredTags:
+    Mask: 1
+    Candle: 4
+    Stunbaton: 1
+  output:
+    ClothingMaskMadHeretic: 1
+
+- type: hereticRitual
+  id: AscensionAsh
+  locName: knowledge-path-ash-s9-name
+  locDesc: knowledge-path-ash-s9-desc
+  icon: 
+    sprite: _Goobstation/Heretic/abilities_heretic.rsi
+    state: ashlord_rite2
+  customBehaviors:
+  - !type:RitualAshAscendBehavior
+    min: 3
+    max: 3
+  outputKnowledge: AshlordRite
+  outputEvent: !type:EventHereticAscension
+
+
+
+### flesh path
+- type: hereticRitual
+  id: BladeFlesh
+  locName: knowledge-path-flesh-s1-name
+  locDesc: knowledge-path-flesh-s1-desc
+  icon: 
+    sprite: _Goobstation/Heretic/Blades/blade_flesh.rsi
+    state: icon
+  customBehaviors:
+  - !type:RitualReagentPuddleBehavior
+    reagents:
+    - Blood
+    - Radium
+    - InsectBlood
+    - Slime
+    - Sap
+    - CopperBlood
+    - AmmoniaBlood
+    - ZombieBlood
+  requiredTags:
+    Knife: 1
+  output:
+    HereticBladeFlesh: 1
+
+- type: hereticRitual
+  id: ImperfectRitual
+  locName: knowledge-path-flesh-s3-name
+  locDesc: knowledge-path-flesh-s3-desc
+  icon: 
+    sprite: Mobs/Species/Skeleton/parts.rsi
+    state: full
+  customBehaviors:
+  - !type:RitualMuteGhoulifyBehavior
+  requiredTags:
+    Poppy: 1
+
+- type: hereticRitual
+  id: RawRitual
+  locName: knowledge-path-flesh-s6-name
+  locDesc: knowledge-path-flesh-s6-desc
+  icon: 
+    sprite: _Goobstation/Heretic/eldritch_mobs.rsi
+    state: raw_prophet
+  customBehaviors:
+  - !type:RitualReagentPuddleBehavior
+    reagents:
+    - Blood
+    - Radium
+    - InsectBlood
+    - Slime
+    - Sap
+    - CopperBlood
+    - AmmoniaBlood
+    - ZombieBlood
+  requiredTags:
+    Eyes: 1
+    Stomach: 1
+  output:
+    MobGhoulProphet: 1
+
+- type: hereticRitual
+  id: LonelyRitual
+  locName: knowledge-path-flesh-s8-name
+  locDesc: knowledge-path-flesh-s8-desc
+  icon: 
+    sprite: _Goobstation/Heretic/eldritch_mobs.rsi
+    state: stalker
+  customBehaviors:
+  - !type:RitualReagentPuddleBehavior
+    reagents:
+    - Blood
+    - Radium
+    - InsectBlood
+    - Slime
+    - Sap
+    - CopperBlood
+    - AmmoniaBlood
+    - ZombieBlood
+  requiredTags:
+    Pen: 1
+    Heart: 1
+    Stomach: 1
+    Lungs: 1
+  output:
+    MobGhoulStalker: 1
+
+- type: hereticRitual
+  id: AscensionFlesh
+  locName: knowledge-path-flesh-s9-name
+  locDesc: knowledge-path-flesh-s9-desc
+  icon: 
+    sprite: _Goobstation/Heretic/abilities_heretic.rsi
+    state: final_hymn
+  customBehaviors:
+  - !type:RitualSacrificeBehavior
+    min: 4
+    max: 4
+  outputKnowledge: PriestFinalHymn
+  outputEvent: !type:EventHereticAscension
+
+
+
+### void path
+- type: hereticRitual
+  id: BladeVoid
+  locName: knowledge-path-void-s1-name
+  locDesc: knowledge-path-void-s1-desc
+  icon: 
+    sprite: _Goobstation/Heretic/Blades/blade_void.rsi
+    state: icon
+  customBehaviors:
+  - !type:RitualTemperatureBehavior
+    minThreshold: 0 # ~= -1 celcius. or sub zero temperatures
+  requiredTags:
+    Knife: 1
+  output:
+    HereticBladeVoid: 1
+
+- type: hereticRitual
+  id: AscensionVoid
+  locName: knowledge-path-void-s9-name
+  locDesc: knowledge-path-void-s9-desc
+  icon: 
+    sprite: Interface/Alerts/temperature.rsi
+    state: cold3
+  customBehaviors:
+  - !type:RitualSacrificeBehavior
+    min: 3
+    max: 3
+  - !type:RitualTemperatureBehavior
+    minThreshold: -20
+  outputKnowledge: WaltzAtTheEndOfTime
+  outputEvent: !type:EventHereticAscension
+
+
+
+### side knowledge
+- type: hereticRitual
+  id: RitualOfKnowledge
+  locName: knowledge-path-side-knowledge-name
+  locDesc: knowledge-path-side-knowledge-desc
+  icon: 
+    sprite: _Goobstation/Heretic/book.rsi
+    state: icon
+  customBehaviors:
+  - !type:RitualKnowledgeBehavior
+
+## stage 3
+- type: hereticRitual
+  id: ArmorerRitual
+  locName: knowledge-path-side-s3-armor-name
+  locDesc: knowledge-path-side-s3-armor-desc
+  icon: 
+    sprite: _Goobstation/Heretic/eldritch_armor.rsi
+    state: icon
+  requiredTags:
+    Table: 1
+    GasMask: 1
+  output:
+    ClothingOuterArmorHeretic: 1
+
+- type: hereticRitual
+  id: PriestRitual
+  locName: knowledge-path-side-s3-flask-name
+  locDesc: knowledge-path-side-s3-flask-desc
+  icon:
+    sprite: _Goobstation/Heretic/items.rsi
+    state: eldritch_flask
+  requiredTags:
+    WaterTank: 1
+    GlassShard: 1
+  output:
+    HereticEldritchFlask: 1
+
+## stage 7

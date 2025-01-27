@@ -13,13 +13,18 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 54000 # 15 hours
+    - !type:DepartmentTimeRequirement #imp
+      department: Cargo
+      time: 54000 # 15 hours
+    - !type:DepartmentTimeRequirement #imp
+      department: Science
+      time: 54000 # 15 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 54000 # 15 hours
+      time: 72000 # 20 hours, imp
   weight: 20
   startingGear: CaptainGear
   icon: "JobIconCaptain"
-  requireAdminNotify: true
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -35,11 +40,7 @@
 - type: startingGear
   id: CaptainGear
   equipment:
-    shoes: ClothingShoesBootsLaceup
-    eyes: ClothingEyesGlassesSunglasses
-    gloves: ClothingHandsGlovesCaptain
     id: CaptainPDA
-    ears: ClothingHeadsetAltCommand
   storage:
     back:
     - Flash

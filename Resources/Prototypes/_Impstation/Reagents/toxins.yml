@@ -1,0 +1,34 @@
+- type: reagent
+  id: AquaAvari 
+  name: reagent-name-aquaavari
+  group: Toxins
+  desc: reagent-desc-aquaavari
+  physicalDesc: reagent-physical-desc-unholy
+  flavor: unholy
+  color: "#6C5675"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.1
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: 0.2
+            Poison: 0.2
+            Heat: 0.2
+            Shock: 0.2
+            Cold: 0.2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: AquamDivinos
+          min: 1
+        reagent: AquamDivinos
+        amount: -1
+  reactiveEffects:
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:ExtinguishReaction
+  tileReactions:
+  - !type:ExtinguishTileReaction { }

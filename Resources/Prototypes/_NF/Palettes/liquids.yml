@@ -1,0 +1,5 @@
+- type: palette
+  id: LiquidsBiological
+  name: biological liquids
+  colors:
+    goblinblood: "#364500cc"

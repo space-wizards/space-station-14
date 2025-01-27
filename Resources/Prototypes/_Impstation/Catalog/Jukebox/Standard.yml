@@ -1,0 +1,407 @@
+- type: jukebox
+  id: Mtamientvsspasm
+  name: Mt. Amient vs Spasm - Soichi Terada
+  path:
+    path: /Audio/_Impstation/Jukebox/mt_amient_vs_spasm.ogg
+
+- type: jukebox
+  id: Moveme
+  name: Kohta Takahashi - Move Me
+  path:
+    path: /Audio/_Impstation/Jukebox/move_me.ogg
+
+- type: jukebox
+  id: Shred
+  name: B. Bravo & Lean Rock - Shred
+  path:
+    path: /Audio/_Impstation/Jukebox/shred.ogg
+
+- type: jukebox
+  id: MorningGlow
+  name: Doc McLennon - Morning Glow (Ft. Nicholas Mangiafico)
+  path:
+    path: /Audio/_Impstation/Jukebox/morning_glow.ogg
+
+- type: jukebox
+  id: LostInRecollection
+  name: DrTapeworm - Lost in Recollection
+  path:
+    path: /Audio/_Impstation/Jukebox/lost_in_recollection.ogg
+
+- type: jukebox
+  id: FinalTagRoll
+  name: Rukunetsu - Final Tag Roll
+  path:
+    path: /Audio/_Impstation/Jukebox/final_tag_roll.ogg
+
+- type: jukebox
+  id: LastHoorah
+  name: KiloWatts - Last Hoorah
+  path:
+    path: /Audio/_Impstation/Jukebox/last_hoorah.ogg
+
+- type: jukebox
+  id: OrdinaryDays
+  name: Klaus Veen - Ordinary Days v2
+  path:
+    path: /Audio/_Impstation/Jukebox/ordinary_days_v2.ogg
+
+- type: jukebox
+  id: 4ff
+  name: NANORAY - 4ff
+  path:
+    path: /Audio/_Impstation/Jukebox/4ff.ogg
+
+- type: jukebox
+  id: RollingDownTheStreet
+  name: Fearofdark - Rolling Down The Street, In My Katamari
+  path:
+    path: /Audio/_Impstation/Jukebox/rolling_down_the_street_in_my_katamari.ogg
+
+- type: jukebox
+  id: ThrashardInTheCave
+  name: Sota Fujimori - Thrashard In The Cave - Stage 2 (Arrange Ver.)
+  path:
+    path: /Audio/_Impstation/Jukebox/thrashard_in_the_cave.ogg
+
+- type: jukebox
+  id: LiveStudioAudience
+  name: Tyron - Live Studio Audience
+  path:
+    path: /Audio/_Impstation/Jukebox/live_studio_audience.ogg
+
+- type: jukebox
+  id: LaxLullaby
+  name: Eero Lahtinen - Lax Lullaby
+  path:
+    path: /Audio/_Impstation/Jukebox/lax_lullaby.ogg
+
+- type: jukebox
+  id: Cizgi
+  name: TRT ÇOCUK - ÇİZGİ FİLM MAKİNESİ
+  path:
+    path: /Audio/_Impstation/Jukebox/cizgi.ogg
+
+- type: jukebox
+  id: DontDrinkIt
+  name: Pilotredsky - Don't Drink It
+  path:
+    path: /Audio/_Impstation/Jukebox/dont_drink_it.ogg
+
+- type: jukebox
+  id: EternalSanctity
+  name: flashygoodness - Eternal Sanctity
+  path:
+    path: /Audio/_Impstation/Jukebox/eternal_sanctity.ogg
+
+- type: jukebox
+  id: PillarsofCreation
+  name: flashygoodness - Pillars of Creation
+  path:
+    path: /Audio/_Impstation/Jukebox/pillars_of_creation.ogg
+
+- type: jukebox
+  id: GrinchsUltimatum
+  name: PilotRedSun - Grinch's Ultimatum
+  path:
+    path: /Audio/_Impstation/Jukebox/grinchs_ultimatum.ogg
+
+- type: jukebox
+  id: InThePocket
+  name: Flamclap - In The Pocket
+  path:
+    path: /Audio/_Impstation/Jukebox/in_the_pocket.ogg
+
+- type: jukebox
+  id: FFXPrelude
+  name: FFX - Prelude
+  path:
+    path: /Audio/_Impstation/Jukebox/prelude.ogg
+
+- type: jukebox
+  id: SnowBurn
+  name: Fearofdark - Snow Burn
+  path:
+    path: /Audio/_Impstation/Jukebox/snow_burn.ogg
+
+- type: jukebox
+  id: TopollaTheatre
+  name: Keiichi Suzuki, Hirokazu Tanaka - Topolla Theatre
+  path:
+    path: /Audio/_Impstation/Jukebox/topolla_theatre.ogg
+
+- type: jukebox
+  id: YouBlowMyMind
+  name: Hideki Okugawa - You Blow My Mind
+  path:
+    path: /Audio/_Impstation/Jukebox/you_blow_my_mind.ogg
+
+- type: jukebox
+  id: TheNomai
+  name: Andrew Prahlow - The Nomai
+  path:
+    path: /Audio/_Impstation/Jukebox/the_nomai.ogg
+
+- type: jukebox
+  id: TheFluteTune
+  name: J-Cut & Kolt Siewerts - The Flute Tune (Soulpride Remix)
+  path:
+    path: /Audio/_Impstation/Jukebox/the_flute_tune.ogg
+
+- type: jukebox
+  id: CreateAWrestler
+  name: Wrestlemania X8 - Create-A-Wrestler
+  path:
+    path: /Audio/_Impstation/Jukebox/create_a_wrestler.ogg
+
+- type: jukebox
+  id: QuantumSpawn
+  name: ELFL - Quantum Spawn
+  path:
+    path: /Audio/_Impstation/Jukebox/quantum_spawn.ogg
+
+- type: jukebox
+  id: Bodybuilder
+  name: Pilotredsun - Bodybuilder
+  path:
+    path: /Audio/_Impstation/Jukebox/bodybuilder.ogg
+
+- type: jukebox
+  id: AlongWithBrew
+  name: Pilotredsky - Along With Brew
+  path:
+    path: /Audio/_Impstation/Jukebox/along_with_brew.ogg
+
+- type: jukebox
+  id: NeoSFStrut
+  name: Aethernaut - Neo-SF Strut
+  path:
+    path: /Audio/_Impstation/Jukebox/neosf_strut.ogg
+
+- type: jukebox
+  id: Match
+  name: Fred Mug - Match
+  path:
+    path: /Audio/_Impstation/Jukebox/match.ogg
+
+- type: jukebox
+  id: Impossible
+  name: Darren Korb - Impossible
+  path:
+    path: /Audio/_Impstation/Jukebox/impossible.ogg
+
+- type: jukebox
+  id: EncounterACaterpillar
+  name: Solaris - song that plays when you encounter a caterpillar
+  path:
+    path: /Audio/_Impstation/Jukebox/song_that_plays_when_you_encounter_a_caterpillar.ogg
+
+- type: jukebox
+  id: GETENUF
+  name: Hideki Naganuma - GET ENUF
+  path:
+    path: /Audio/_Impstation/Jukebox/get_enuf.ogg
+
+- type: jukebox
+  id: ZIPYKKARRANGE
+  name: Rukunetsu - ZIP YKK ARRANGE
+  path:
+    path: /Audio/_Impstation/Jukebox/zip_ykk_arrange.ogg
+
+- type: jukebox
+  id: ThrashardInTheCaveX68000
+  name: Akumajou Dracula X68000 - Thrashard in the Cave
+  path:
+    path: /Audio/_Impstation/Jukebox/thrashard_in_the_cave_x68000.ogg
+
+- type: jukebox
+  id: TwoDaysOff
+  name: KiloWatts - Two Days Off
+  path:
+    path: /Audio/_Impstation/Jukebox/twodaysoff.ogg
+
+- type: jukebox
+  id: SpaceAsshole
+  name: Space Asshole - Chris Remo
+  path:
+    path: /Audio/_Impstation/Jukebox/space_asshole.ogg
+
+- type: jukebox
+  id: ArmoredInGreen
+  name: Ketsuipachi Arrange - Suburb, Armored in Green
+  path:
+    path: /Audio/_Impstation/Jukebox/armored_in_green.ogg
+
+- type: jukebox
+  id: CantGoHomeAgain
+  name: SoundTeMP - Can't go home again, baby
+  path:
+    path: /Audio/_Impstation/Jukebox/cant_go_home_again_baby.ogg
+
+- type: jukebox
+  id: BalladForWhales
+  name: Jussi Elsilä - Ballad for Whales
+  path:
+    path: /Audio/_Impstation/Jukebox/ballad_for_whales.ogg
+
+- type: jukebox
+  id: Sentidub
+  name: Sentient - Sentidub
+  path:
+    path: /Audio/_Impstation/Jukebox/sentidub.ogg
+
+- type: jukebox
+  id: Epoch
+  name: Aaron Cherof - Epoch
+  path:
+    path: /Audio/_Impstation/Jukebox/epoch.ogg
+
+- type: jukebox
+  id: TheConfontation
+  name: Harry Mack - The Confrontation
+  path:
+    path: /Audio/_Impstation/Jukebox/the_confrontation.ogg
+
+- type: jukebox
+  id: ALongFall
+  name: Masayoshi Soken - A Long Fall
+  path:
+    path: /Audio/_Impstation/Jukebox/the_twinning.ogg
+
+- type: jukebox
+  id: Eudora
+  name: David Bergeaud - Eudora, Logging Site
+  path:
+    path: /Audio/_Impstation/Jukebox/eudora.ogg
+
+- type: jukebox
+  id: LonelyRollingStar
+  name: Saki Kabata - Lonely Rolling Star
+  path:
+    path: /Audio/_Impstation/Jukebox/lonely_rolling_star.ogg
+
+- type: jukebox
+  id: SetMeFree
+  name: Minnesota Fats - Pool Legend, Set Me Free
+  path:
+    path: /Audio/_Impstation/Jukebox/set_me_free.ogg
+
+- type: jukebox
+  id: ILikeItHere
+  name: Alistair Lindsay - I Like It Here
+  path:
+    path: /Audio/_Impstation/Jukebox/i_like_it_here.ogg
+
+- type: jukebox
+  id: Wartrauma
+  name: Barotrauma - Wartrauma
+  path:
+    path: /Audio/_Impstation/Jukebox/wartrauma.ogg
+
+- type: jukebox
+  id: OverclockedWeakness
+  name: Barotrauma - Overclocked Weakness
+  path:
+    path: /Audio/_Impstation/Jukebox/overclocked_weakness.ogg
+
+- type: jukebox
+  id: SamJones
+  name: Leslie Fish - Sam Jones
+  path:
+    path: /Audio/_Impstation/Jukebox/sam_jones.ogg
+
+- type: jukebox
+  id: BioEngineering
+  name: James Primate - Bio-Engineering
+  path:
+    path: /Audio/_Impstation/Jukebox/bio-engineering.ogg
+
+- type: jukebox
+  id: Haluci
+  name: Neil Voss - Haluci Theme
+  path:
+    path: /Audio/_Impstation/Jukebox/haluci.ogg
+
+- type: jukebox
+  id: PillarsOfTheUnderworld
+  name: Guilty Gear Korean - Pillars of the underworld
+  path:
+    path: /Audio/_Impstation/Jukebox/pillars_of_the_underworld.ogg
+
+- type: jukebox
+  id: Music1
+  name: P.N.03 - Music 1
+  path:
+    path: /Audio/_Impstation/Jukebox/music_1.ogg
+
+- type: jukebox
+  id: Map01
+  name: NUTS2.wad - Map 01
+  path:
+    path: /Audio/_Impstation/Jukebox/nuts2map1.ogg
+
+- type: jukebox
+  id: PeaceOfTheWorld
+  name: Dark Chronicle - Peace of the World
+  path:
+    path: /Audio/_Impstation/Jukebox/peace_of_the_world.ogg
+
+- type: jukebox
+  id: Montage
+  name: Ace Combat 3 - Montage 8/40
+  path:
+    path: /Audio/_Impstation/Jukebox/montage.ogg
+
+- type: jukebox
+  id: ClockTower
+  name: Super Monkey Ball 2 - Clock Tower
+  path:
+    path: /Audio/_Impstation/Jukebox/clock_tower.ogg
+
+- type: jukebox
+  id: JoinUs4Happy
+  name: Sonic Adventure - Join Us 4 Happy Time
+  path:
+    path: /Audio/_Impstation/Jukebox/join_us_4_happy_time.ogg
+
+- type: jukebox
+  id: Thanks
+  name: Pilotredsun - Thanks
+  path:
+    path: /Audio/_Impstation/Jukebox/thanks.ogg
+
+- type: jukebox
+  id: Warsaw
+  name: PilotRedSun - Warsaw
+  path:
+    path: /Audio/_Impstation/Jukebox/warsaw.ogg
+
+- type: jukebox
+  id: LosingIsFun
+  name: Dabu & Simon Swerwer - Losing is Fun
+  path:
+    path: /Audio/_Impstation/Jukebox/losing_is_fun.ogg
+
+- type: jukebox
+  id: IlunKinem
+  name: Dabu & Simon Swerwer - ilun Kinem
+  path:
+    path: /Audio/_Impstation/Jukebox/ilun_kinem.ogg
+
+- type: jukebox
+  id: Tricktrack
+  name: Hideaki Kobayashi & Fumie Kumatani - Tricktrack PART 2 
+  path:
+    path: /Audio/_Impstation/Jukebox/tricktrack.ogg
+
+- type: jukebox
+  id: BuildThatWall
+  name: Darren Korb - Build That Wall 
+  path:
+    path: /Audio/_Impstation/Jukebox/build_that_wall.ogg
+
+- type: jukebox
+  id: WhatWouldYouGive
+  name: The Bedquilt Ramblers & Ben Babbitt - What Would You Give
+  path:
+    path: /Audio/_Impstation/Jukebox/what_would_you_give.ogg

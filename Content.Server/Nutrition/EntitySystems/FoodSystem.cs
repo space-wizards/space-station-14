@@ -34,6 +34,7 @@ using Content.Shared.Containers.ItemSlots;
 using Robust.Server.GameObjects;
 using Content.Shared.Whitelist;
 using Content.Shared.Destructible;
+using Content.Shared.Projectiles;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -60,6 +61,7 @@ public sealed class FoodSystem : EntitySystem
     [Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly UtensilSystem _utensil = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] public readonly SharedProjectileSystem _projectile = default!;
 
     public const float MaxFeedDistance = 1.0f;
 
@@ -296,7 +298,7 @@ public sealed class FoodSystem : EntitySystem
             _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} ate {ToPrettyString(entity.Owner):food}");
         }
 
-        _audio.PlayPvs(entity.Comp.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-1f));
+        _audio.PlayPvs(entity.Comp.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-1f).WithVariation(0.10f));
 
         // Try to break all used utensils
         foreach (var utensil in utensils)
@@ -335,6 +337,14 @@ public sealed class FoodSystem : EntitySystem
         RaiseLocalEvent(food, ev);
         if (ev.Cancelled)
             return;
+
+        // Unembed any embedded projectiles
+        var childEnumerator = Transform(food).ChildEnumerator;
+        while (childEnumerator.MoveNext(out var child))
+        {
+            if (TryComp<EmbeddableProjectileComponent>(child, out var embeddable))
+                _projectile.RemoveEmbed(child, embeddable);
+        }
 
         var dev = new DestructionEventArgs();
         RaiseLocalEvent(food, dev);
@@ -433,8 +443,12 @@ public sealed class FoodSystem : EntitySystem
             // Check if the food is in the whitelist
             if (_whitelistSystem.IsWhitelistPass(ent.Comp1.SpecialDigestible, food))
                 return true;
-            // They can only eat whitelist food and the food isn't in the whitelist. It's not edible.
-            return false;
+
+            if (ent.Comp1.AdditiveDiet)
+                continue;
+            else
+                // They can only eat whitelist food and the food isn't in the whitelist. It's not edible.
+                return false;
         }
 
         if (component.RequiresSpecialDigestion)

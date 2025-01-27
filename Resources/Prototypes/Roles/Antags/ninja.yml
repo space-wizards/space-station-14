@@ -15,14 +15,14 @@
     mask: ClothingMaskNinja
     head: ClothingHeadHelmetSpaceNinja
     eyes: ClothingEyesVisorNinja
-    gloves: ClothingHandsGlovesSpaceNinja
+    gloves: ClothingHandsGlovesSpaceNinjaWeak # imp
     outerClothing: ClothingOuterSuitSpaceNinja
     shoes: ClothingShoesSpaceNinja
     id: AgentIDCard
     ears: ClothingHeadsetGrey
     pocket1: SpiderCharge
     pocket2: PinpointerStation
-    belt: EnergyKatana
+    belt: EnergyKatanaStun # imp
   inhand:
     - JetpackBlackFilled
   storage:

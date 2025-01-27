@@ -7,10 +7,37 @@
 
   [color=#ffa500]Caution! This species has a severely limiting game mechanic and is not recommended for new players. [/color]
 
-  They breathe nitrogen, and [color=#ffa500] oxygen is very toxic to them.[/color]
-  They need to be on internals at all times to avoid being poisoned by the station's oxygen.
-  Eating or drinking will require you to remove your breath mask, although injecting liquid food is an option.
+  ## Special Accomodations
 
-  Their unarmed claw attacks deal Slash damage instead of Blunt.
+  Vox lungs function very differently from most other species. [color=#ffa500]They are only capable of processing nitrogen,[/color] which is converted to ammonia and exhaled.
+
+  Additionally, due to an unusual set of biological circumstances, [color=red][bold]oxygen is highly toxic to them.[/color][/bold] If exposed to oxygen, it will quickly build up in their blood, causing rapid onset organ failure and eventually death.
+
+  Vox [color=#1e90ff]slowly recover from low levels of poison damage[/color] on their own, so long as they are careful not to exceed 20 poison damage.
+
+  This allows them to endure breathing station air for up to thirty seconds at a time without lasting damage, letting them quickly eat, drink, take oral medication, and so on.
+
+  A thirty second oxygen exposure takes them two minutes to recover from.
+
+  If their health does not seem to improve within a minute of oxygen exposure, they should seek medical attention.
+
+  NT has made special accomodations for this species, [color=#1e90ff]including readily accessible nitrogen tanks in dispensers and lockers throughout most stations.[/color] Some stations may even have a "Vox Box," an enclosed nitrogen-rich environment devoid of oxygen.
+
+  ## Damage
+
+  Vox blood is anaerobic, [color=#1e90ff]but is iron-based, allowing it to be metabolized from iron supplements.[/color]
+
+  As they possess talons, their unarmed attacks deal Slash damage instead of Blunt.
+
+ ## Vox Naming Conventions
+
+  Vox typically use a single name made of random syllables, often with repeating patterns.
+  Names should not be excessively long or be so repetitive/convoluted as to be unreadable.
+
+  - [color=#449944]Acceptable:[/color] Hirixashahre
+  - [color=#449944]Acceptable:[/color] Xapikrikrik
+  - [color=#994444]Bad:[/color] Chipikirchitchitchitbecretretrer
+  - [color=#994444]Bad:[/color] Trololol
+  - [color=#994444]Bad:[/color] Benry
 
 </Document>

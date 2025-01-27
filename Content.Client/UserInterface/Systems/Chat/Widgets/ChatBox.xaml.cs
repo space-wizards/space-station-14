@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Content.Client.UserInterface.Systems.Chat.Controls;
 using Content.Shared.Chat;
 using Content.Shared.Input;
@@ -16,9 +17,8 @@ using static Robust.Client.UserInterface.Controls.LineEdit;
 namespace Content.Client.UserInterface.Systems.Chat.Widgets;
 
 [GenerateTypedNameReferences]
-#pragma warning disable RA0003
+[Virtual]
 public partial class ChatBox : UIWidget
-#pragma warning restore RA0003
 {
     private readonly ChatUIController _controller;
     private readonly IEntityManager _entManager;
@@ -37,9 +37,10 @@ public partial class ChatBox : UIWidget
         ChatInput.Input.OnTextChanged += OnTextChanged;
         ChatInput.ChannelSelector.OnChannelSelect += OnChannelSelect;
         ChatInput.FilterButton.Popup.OnChannelFilter += OnChannelFilter;
-
+        ChatInput.FilterButton.Popup.OnNewHighlights += OnNewHighlights;
         _controller = UserInterfaceManager.GetUIController<ChatUIController>();
         _controller.MessageAdded += OnMessageAdded;
+        _controller.HighlightsUpdated += OnHighlightsReceived;
         _controller.RegisterChat(this);
     }
 
@@ -94,6 +95,11 @@ public partial class ChatBox : UIWidget
         {
             _controller.ClearUnfilteredUnreads(channel);
         }
+    }
+
+    private void OnNewHighlights(string highlighs)
+    {
+        _controller.UpdateHighlights(highlighs);
     }
 
     public void AddLine(string message, Color color)
@@ -173,6 +179,11 @@ public partial class ChatBox : UIWidget
 
         // Warn typing indicator about change
         _controller.NotifyChatTextChange();
+    }
+
+    private void OnHighlightsReceived(string highlights)
+    {
+        ChatInput.FilterButton.Popup.SetHighlights(highlights);
     }
 
     protected override void Dispose(bool disposing)

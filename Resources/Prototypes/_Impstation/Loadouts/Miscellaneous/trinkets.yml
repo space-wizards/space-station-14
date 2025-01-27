@@ -1,0 +1,132 @@
+- type: loadoutEffectGroup
+  id: PrestigeGold
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 1512000 #420 hours
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Silicon
+      time: 36000 #10 hours
+
+- type: loadoutEffectGroup
+  id: Tutorial #imp
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 54000 #15 hrs
+      inverted: true # don't let experienced players select these
+
+- type: loadout
+  id: CigPackNewport
+  storage:
+    back:
+    - CigPackNewport
+
+- type: loadout
+  id: CigPackSpirits
+  storage:
+    back:
+    - CigPackSpirits
+
+- type: loadout
+  id: PersonalAI
+  storage:
+    back:
+    - PersonalAI
+
+- type: loadout
+  id: GoldPersonalAI
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PrestigeGold
+  storage:
+    back:
+    - GoldPersonalAI
+
+- type: loadout
+  id: TutorialAI_Newcomer #imp. <15 hours.
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Tutorial
+  storage:
+    back:
+    - TutorialPersonalAI
+
+- type: loadout
+  id: FolderHamster
+  storage:
+    back:
+    - BoxFolderHamster
+
+- type: loadout
+  id: FolderMime
+  storage:
+    back:
+    - BoxFolderMime
+
+- type: loadout
+  id: FolderPun
+  storage:
+    back:
+    - BoxFolderPun
+
+- type: loadout
+  id: HarmonicaInstrument
+  storage:
+    back:
+    - HarmonicaInstrument
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MusicallyTalented
+
+- type: loadout
+  id: FlippoLighter
+  storage:
+    back:
+    - FlippoLighter
+
+- type: loadout
+  id: WalkingCane
+  storage:
+    back:
+    - WalkingCane
+
+- type: loadout
+  id: ClothingHeadHatKippahSimple
+  storage:
+    back:
+    - ClothingHeadHatKippahSimple
+
+- type: loadout
+  id: ClothingHeadHatKippahWhiteAndBlue
+  storage:
+    back:
+    - ClothingHeadHatKippahWhiteAndBlue
+
+- type: loadout
+  id: ClothingHeadHatKippahBlueAndGold
+  storage:
+    back:
+    - ClothingHeadHatKippahBlueAndGold
+
+- type: loadout
+  id: ClothingHeadPaperSack
+  storage:
+    back:
+    - ClothingHeadPaperSack
+
+- type: loadout
+  id: ClothingHeadPaperSackSmile
+  storage:
+    back:
+    - ClothingHeadPaperSackSmile
+
+- type: loadout
+  id: HeartLocket
+  storage:
+    back:
+    - HeartLocket

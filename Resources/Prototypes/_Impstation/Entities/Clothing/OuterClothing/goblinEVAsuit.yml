@@ -1,0 +1,17 @@
+#Goblin EVA suit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterGoblinEVASuit
+  name: gobsuit
+  description: Is that... Safe? 
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Misc/goblinEVAsuit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Misc/goblinEVAsuit.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadGoblinEVAHelmet

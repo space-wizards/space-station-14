@@ -1,0 +1,111 @@
+﻿- type: decal
+  id: ai
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/signs.rsi
+    state: ai
+
+- type: decal
+  id: atmos
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/signs.rsi
+    state: atmos
+
+- type: decal
+  id: bar
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/signs.rsi
+    state: bar
+
+- type: decal
+  id: bridge
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/signs.rsi
+    state: bridge
+
+- type: decal
+  id: cargo
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/signs.rsi
+    state: cargo
+
+- type: decal
+  id: commander
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/signs.rsi
+    state: commander
+
+- type: decal
+  id: dock
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/signs.rsi
+    state: dock
+
+- type: decal
+  id: eng
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/signs.rsi
+    state: eng
+
+- type: decal
+  id: hydro
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/signs.rsi
+    state: hydro
+
+- type: decal
+  id: janitor
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/signs.rsi
+    state: janitor
+
+- type: decal
+  id: kitchen
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/signs.rsi
+    state: kitchen
+
+- type: decal
+  id: law
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/signs.rsi
+    state: law
+
+- type: decal
+  id: medbay
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/signs.rsi
+    state: medbay
+
+- type: decal
+  id: salvage
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/signs.rsi
+    state: salvage
+
+- type: decal
+  id: sci
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/signs.rsi
+    state: sci
+
+- type: decal
+  id: security
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/signs.rsi
+    state: security

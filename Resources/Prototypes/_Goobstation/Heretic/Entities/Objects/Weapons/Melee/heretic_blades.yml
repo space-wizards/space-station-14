@@ -1,0 +1,122 @@
+- type: entity
+  parent: [ BaseItem, TierXContraband ]
+  id: HereticBladeBase
+  name: eldritch blade
+  description: The sickly blade used by sinister individuals for rituals and sacrifices.
+  components:
+  - type: HereticBlade
+  - type: Sharp
+  - type: Sprite
+    sprite: _Goobstation/Heretic/Blades/blade_blade.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -125
+    attackRate: 1
+    damage:
+      types:
+        Slash: 17.5
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    size: Normal
+    sprite: _Goobstation/Heretic/Blades/blade_blade-inhand.rsi
+  - type: ItemToggle
+  - type: DamageOtherOnHit
+    staminaCost: 7
+
+- type: entity
+  parent: HereticBladeBase
+  id: HereticBladeAsh
+  name: ashen blade
+  suffix: Ash
+  components:
+  - type: HereticBlade
+    path: Ash
+  - type: Sprite
+    sprite: _Goobstation/Heretic/Blades/blade_ash.rsi
+    state: icon
+  - type: Item
+    sprite: _Goobstation/Heretic/Blades/blade_ash-inhand.rsi
+  - type: MeleeWeapon
+    wideAnimationRotation: -125
+    attackRate: 1
+    damage:
+      types:
+        Heat: 10
+        Slash: 7.5
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+
+- type: entity
+  parent: HereticBladeBase
+  id: HereticBladeBlade
+  name: sundered blade
+  suffix: Blade
+  components:
+  - type: HereticBlade
+    path: Blade
+
+- type: entity
+  parent: HereticBladeBase
+  id: HereticBladeFlesh
+  name: bloody blade
+  suffix: Flesh
+  components:
+  - type: HereticBlade
+    path: Flesh
+  - type: Sprite
+    sprite: _Goobstation/Heretic/Blades/blade_flesh.rsi
+    state: icon
+  - type: Item
+    sprite: _Goobstation/Heretic/Blades/blade_flesh-inhand.rsi
+
+- type: entity
+  parent: HereticBladeBase
+  id: HereticBladeLock
+  name: key blade
+  suffix: Lock
+  components:
+  - type: HereticBlade
+    path: Lock
+  - type: Sprite
+    sprite: _Goobstation/Heretic/Blades/blade_lock.rsi
+    state: icon
+  - type: Item
+    sprite: _Goobstation/Heretic/Blades/blade_lock-inhand.rsi
+
+- type: entity
+  parent: HereticBladeBase
+  id: HereticBladeRust
+  name: rusty blade
+  suffix: Rust
+  components:
+  - type: HereticBlade
+    path: Rust
+  - type: Sprite
+    sprite: _Goobstation/Heretic/Blades/blade_rust.rsi
+    state: icon
+  - type: Item
+    sprite: _Goobstation/Heretic/Blades/blade_rust-inhand.rsi
+
+- type: entity
+  parent: HereticBladeBase
+  id: HereticBladeVoid
+  name: void blade
+  suffix: Void
+  components:
+  - type: HereticBlade
+    path: Void
+  - type: Sprite
+    sprite: _Goobstation/Heretic/Blades/blade_void.rsi
+    state: icon
+  - type: Item
+    sprite: _Goobstation/Heretic/Blades/blade_void-inhand.rsi
+  - type: MeleeWeapon
+    wideAnimationRotation: -125
+    attackRate: 1
+    damage:
+      types:
+        Cold: 10
+        Slash: 7.5
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg

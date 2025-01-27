@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from SS220 at commit https://github.com/SerbiaStrong-220/space-station-14/commit/a55288dc926162c28665b542304a6ac1f8e1b91e, then modified by AftrLite (Github).",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "sleeper_0",
+        "directions": 4
+      },
+      {
+        "name": "sleeper_0-overlay",
+        "directions": 4
+      },
+      {
+        "name": "sleeper_1",
+        "directions": 4
+      },
+      {
+        "name": "sleeper_1-overlay",
+        "directions": 4
+      }
+    ]
+  }

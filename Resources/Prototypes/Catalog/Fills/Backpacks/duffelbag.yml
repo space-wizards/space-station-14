@@ -59,6 +59,18 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledBR
+  name: Nemesis-11 bundle
+  description: "Precise and deadly, just as a professional should be. Bundled with three magazines."
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponRifleNemesis
+      - id: MagazineBR
+        amount: 2
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledRevolver
   name: Python bundle
   description: "Go loud and proud with a fully loaded Magnum Python, bundled with two speed loaders."
@@ -126,6 +138,8 @@
         amount: 4
       - id: MagazineLightRifleBox
         amount: 2
+      - id: MagazineBR
+        amount: 2
 
 - type: entity
   parent: ClothingBackpackDuffelClown
@@ -159,7 +173,7 @@
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicatePyjamaBundle
   name: syndicate pyjama duffel bag
-  description: Contains 3 pairs of syndicate pyjamas and 3 plushies for the ultimate sleepover.
+  description: Contains 3 pairs of syndicate pyjamas and 4 plushies for the ultimate sleepover.
   components:
   - type: Storage
     grid:
@@ -199,6 +213,7 @@
   components:
     - type: StorageFill
       contents:
+        - id: ChameleonPDA
         - id: ClothingUniformJumpsuitChameleon
         - id: ClothingOuterChameleon
         - id: ClothingNeckChameleon
@@ -302,13 +317,19 @@
   components:
   - type: StorageFill
     contents:
+      - id: DefibrillatorSyndicate
       - id: MedkitCombatFilled
-      - id: Defibrillator
+        amount: 4
+      - id: Tourniquet
+        amount: 4
       - id: CombatMedipen
-        amount: 3
-      - id: ClothingHandsGlovesNitrile
-      - id: SyringeTranexamicAcid
-      - id: SyringeHyronalin
+        amount: 4
+      - id: PunctAutoInjector
+        amount: 4
+      - id: PyraAutoInjector
+        amount: 4
+      - id: AirlossAutoInjector
+        amount: 4
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle

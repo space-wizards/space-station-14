@@ -1,0 +1,165 @@
+- type: entity
+  id: BaseMagazineLPistol
+  name: pistol magazine (.22 auto)
+  parent: [ BaseItem, BaseRestrictedContraband ]
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - MagazineLPistol
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeLPistol
+    capacity: 20
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/mpistol_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: BaseMagazineZipper
+  name: zipper .22 magazine (.22 auto)
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - MagazineZipper
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeLPistol
+    capacity: 6
+  - type: Item
+    size: Tiny
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/zipper_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: MagazineLPistolEmpty
+  name: pistol magazine (.22 auto any)
+  parent: BaseMagazineLPistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+
+- type: entity
+  id: MagazineLPistol
+  name: pistol magazine (.22 auto)
+  parent: BaseMagazineLPistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLPistol
+  - type: Sprite
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineZipper
+  name: zipper magazine (.22 auto)
+  parent: BaseMagazineZipper
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLPistol
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineZipperAP
+  name: zipper magazine (.22 auto APDSFS)
+  parent: BaseMagazineZipper
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLPistolAP
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineZipperEmpty
+  name: zipper .22 magazine (.22 auto any)
+  suffix: empty
+  parent: BaseMagazineZipper
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+
+- type: entity
+  id: MagazineLPistolIncendiary
+  name: pistol magazine (.22 auto incendiary)
+  parent: BaseMagazineLPistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLPistolIncendiary
+
+- type: entity
+  id: MagazineLPistolPractice
+  name: pistol magazine (.22 auto practice)
+  parent: BaseMagazineLPistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLPistolPractice
+  - type: Sprite
+    layers:
+    - state: practice
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineLPistolUranium
+  name: pistol magazine (.22 auto uranium)
+  parent: BaseMagazineLPistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLPistolUranium
+  - type: Sprite
+    layers:
+    - state: uranium
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+

@@ -234,6 +234,9 @@ namespace Content.Server.Pointing.EntitySystems
                 {
                     position = $"EntId={gridUid} {_map.WorldToTile(gridUid, grid, mapCoordsPointed.Position)}";
                     tileRef = _map.GetTileRef(gridUid, grid, _map.WorldToTile(gridUid, grid, mapCoordsPointed.Position));
+
+                    var arrowEvent = new AfterPointedArrowEvent(arrow); //IMP: Arrow event to detect things near the pointing, used for rat kings
+                    RaiseLocalEvent(player, ref arrowEvent);
                 }
 
                 var tileDef = _tileDefinitionManager[tileRef?.Tile.TypeId ?? 0];

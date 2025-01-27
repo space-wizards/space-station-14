@@ -1,0 +1,151 @@
+#  defaultSkinTone: "#486a1b"
+- type: species
+  id: Goblin
+  name: species-name-goblin
+  roundStart: false
+  prototype: MobGoblin
+  sprites: MobGoblinSprites
+  defaultSkinTone: "#82d074"
+  markingLimits: MobGoblinMarkingLimits
+  dollPrototype: MobGoblinDummy
+  skinColoration: Hues #Possible values: TintedHues, Hues, HumanToned
+  maleFirstNames: names_goblin_male
+  femaleFirstNames: names_goblin_female
+  lastNames: names_goblin_last
+
+- type: speciesBaseSprites
+  id: MobGoblinSprites
+  sprites:
+    Hair: MobHumanoidAnyMarking
+    Snout: MobHumanoidAnyMarking
+    Head: MobGoblinHead
+    HeadTop: MobHumanoidAnyMarking
+    Chest: MobGoblinTorso
+    Eyes: MobGoblinEyes
+    LArm: MobGoblinLArm
+    RArm: MobGoblinRArm
+    LHand: MobGoblinLHand
+    RHand: MobGoblinRHand
+    LLeg: MobGoblinLLeg
+    RLeg: MobGoblinRLeg
+    LFoot: MobGoblinLFoot
+    RFoot: MobGoblinRFoot
+    Tail: MobHumanoidAnyMarking
+
+- type: markingPoints
+  id: MobGoblinMarkingLimits
+  onlyWhitelisted: true
+  points:
+    Hair:
+      points: 1
+      required: false
+    HeadTop:
+      points: 1
+      required: true
+      defaultMarkings: [ GoblinEarsBasic ]
+    Snout:
+      points: 2
+      required: false
+#      defaultMarkings: [ GoblinNoseBasic ]
+    Chest:
+      points: 1
+      required: false
+    Legs:
+      points: 2
+      required: false
+    Arms:
+      points: 2
+      required: false
+    Tail:
+      points: 1
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobGoblinEyes
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: eyes
+
+- type: humanoidBaseSprite
+  id: MobGoblinHead
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: head
+    
+- type: humanoidBaseSprite
+  id: MobGoblinHeadMale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: head
+    
+- type: humanoidBaseSprite
+  id: MobGoblinHeadFemale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobGoblinTorso
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: torso
+    
+- type: humanoidBaseSprite
+  id: MobGoblinTorsoMale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: torso
+    
+- type: humanoidBaseSprite
+  id: MobGoblinTorsoFemale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobGoblinLLeg
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobGoblinLArm
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobGoblinLHand
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobGoblinLFoot
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobGoblinRLeg
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobGoblinRArm
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobGoblinRHand
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobGoblinRFoot
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: r_foot

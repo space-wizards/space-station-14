@@ -99,6 +99,9 @@
       fuelSlot: !type:ContainerSlot
   - type: GuideHelp
     guides: [ AME, Power ]
+  - type: Tag
+    tags:
+      - DroneUsable
   - type: Electrified
     onHandInteract: false
     onInteractUsing: false

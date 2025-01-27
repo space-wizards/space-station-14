@@ -38,7 +38,7 @@
 - type: entity
   name: composition C-4
   description: Used to put holes in specific areas without too much extra hole. A saboteur's favorite.
-  parent: [BasePlasticExplosive, BaseSyndicateContraband]
+  parent: [BasePlasticExplosive, Tier2Contraband]
   id: C4
   components:
   - type: Sprite
@@ -49,7 +49,7 @@
       map: ["base"]
   - type: OnUseTimerTrigger
     delay: 10
-    delayOptions: [10, 30, 60, 120, 300]
+    delayOptions: [1, 10, 30, 60, 120, 300]
     initialBeepDelay: 0
     beepSound: /Audio/Machines/Nuke/general_beep.ogg
     startOnStick: true

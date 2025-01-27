@@ -1,0 +1,191 @@
+- type: entity
+  name: BROS
+  parent: [ MobCombat, SimpleMobBase ]
+  id: MobBros
+  description: OH FUCK IT'S BROS
+  components:
+    - type: VentCrawler
+      enterDelay: 1
+    - type: Item
+      size: Tiny
+    - type: Sprite
+      drawdepth: Mobs
+      layers:
+      - map: ["enum.DamageStateVisualLayers.Base"]
+        state: bros
+        sprite: Mobs/Animals/bros.rsi
+    - type: Butcherable
+      spawned:
+        - id: FoodLingzhi
+          amount: 1
+    - type: NpcFactionMember
+      factions:
+        - Xeno
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.35
+          density: 130
+          mask:
+          - MobMask
+          layer:
+          - MobLayer
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: bros
+        Dead:
+          Base: bros-dead
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        15: Dead
+    - type: MeleeWeapon
+      altDisarm: false
+      angle: 0
+      animation: WeaponArcPunch
+      soundHit:
+        path: /Audio/_Impstation/Animals/bros_hit.ogg
+      damage:
+        types:
+          Blunt: 1
+    - type: ReplacementAccent
+      accent: bros
+    - type: Speech
+      speechSounds: Bros
+      speechVerb: Bros
+    - type: Vocal
+      sounds:
+        Male: Bros
+        Female: Bros
+        Unsexed: Bros
+      wilhelmProbability: 0.001
+    - type: TriggerOnMobstateChange
+      mobState:
+      - Dead
+    - type: EmitSoundOnTrigger
+      sound:
+        path: /Audio/_Impstation/Animals/bros_hurt.ogg
+        params:
+          variation: 0.125
+    - type: Bloodstream
+      bloodMaxVolume: 15
+      bloodReagent: VentCrud
+    - type: NoSlip
+    - type: ZombieImmune
+    - type: Food
+    - type: Extractable
+      grindableSolutionName: food
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          reagents:
+          - ReagentId: VentCrud
+            Quantity: 2
+          - ReagentId: GroundBros
+            Quantity: 3
+    - type: NPCRetaliation
+    - type: Tag
+      tags:
+      - BROS
+      - Trash
+      - MultitoolDefibrillatorTarget
+    - type: FoodSequenceElement
+      entries:
+        Burger: BrosBurger
+    - type: CanEscapeInventory
+      baseResistTime: 2
+
+- type: entity
+  name: SORB
+  parent: MobBros
+  id: MobSorb
+  description: SORB S'TI KCUF HO
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      layers:
+      - map: ["enum.DamageStateVisualLayers.Base"]
+        state: sorb
+        sprite: Mobs/Animals/bros.rsi
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: sorb
+        Dead:
+          Base: sorb-dead
+
+# used for BROS polymorph from juice that makes you UNGH so players don't get one-shot and die for real
+- type: entity
+  name: BROS
+  parent: MobBros
+  id: MobBrosPoly
+  suffix: player transformation
+  description: OH FUCK IT'S BROS
+  components:
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        100: Critical
+        200: Dead
+
+- type: entity
+  parent: MobRaccoon
+  id: MobRaccoonGhost
+  components:
+  - type: VentCrawler
+    enterDelay: 3
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-raccoon-name
+    description: ghost-role-information-raccoon-description
+    rules: ghost-role-information-freeagent-rules
+  - type: GhostTakeoverAvailable
+  - type: Vocal
+    sounds:
+      Male: Raccoon
+      Female: Raccoon
+      Unsexed: Raccoon
+    wilhelmProbability: 0.001
+  - type: Speech
+    speechSounds: Raccoon
+    speechVerb: Raccoon
+    allowedEmotes: ['Squeak']
+  - type: ReplacementAccent
+    accent: raccoon
+
+- type: entity
+  parent: MobPossum
+  id: MobPossumGhost
+  components:
+  - type: VentCrawler
+    enterDelay: 3
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-possum-name
+    description: ghost-role-information-possum-description
+    rules: ghost-role-information-freeagent-rules
+  - type: GhostTakeoverAvailable
+  - type: Vocal
+    sounds:
+      Male: Possum
+      Female: Possum
+      Unsexed: Possum
+    wilhelmProbability: 0.001
+  - type: Speech
+    speechSounds: Possum
+    speechVerb: Possum
+    allowedEmotes: ['Squeak']
+  - type: ReplacementAccent
+    accent: possum

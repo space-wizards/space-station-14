@@ -1,0 +1,31 @@
+- type: entity
+  id: LockerCourier
+  parent: LockerBase
+  name: courier's locker
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Impstation/Structures/Storage/couriercloset.rsi
+    noRot: true
+    layers:
+    - state: courier
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: courier_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      offset: "-0.065,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: EntityStorageVisuals
+    stateBaseClosed: courier
+    stateDoorOpen: courier_open
+    stateDoorClosed: courier_door
+  - type: AccessReader
+    access: [["Courier"]]

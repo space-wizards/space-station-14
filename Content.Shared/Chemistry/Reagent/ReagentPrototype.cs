@@ -5,6 +5,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Contraband; // imp
 using Content.Shared.EntityEffects;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -142,6 +143,18 @@ namespace Content.Shared.Chemistry.Reagent
 
         [DataField]
         public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
+
+        [DataField]
+        public bool ImpEvaporates = false;
+
+        [DataField]
+        public float ImpEvaporationAmount = 0.3f;
+
+        /// <summary>
+        /// Is this reagent considered contraband? And how severe is it?
+        /// </summary> Also, this is an imp edit
+        [DataField]
+        public ProtoId<ContrabandSeverityPrototype>? Contraband = null;
 
         public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume, IEntityManager entityManager, List<ReagentData>? data)
         {

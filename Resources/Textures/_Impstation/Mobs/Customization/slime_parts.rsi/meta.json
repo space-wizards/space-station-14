@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited by Sha-Seng (Github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "nose",
+      "directions": 4
+    },
+    {
+      "name": "mouth",
+      "directions": 4
+    },
+    {
+      "name": "brain",
+      "directions": 4
+    },
+    {
+      "name": "eyeglow",
+      "directions": 4
+    },
+    {
+      "name": "lungs",
+      "directions": 4
+    },
+    {
+      "name": "core",
+      "directions": 4
+    },
+    {
+      "name": "bonearmleft",
+      "directions": 4
+    },
+    {
+      "name": "bonearmright",
+      "directions": 4
+    },
+    {
+      "name": "bonechest",
+      "directions": 4
+    },
+    {
+      "name": "bonefootleft",
+      "directions": 4
+    },
+    {
+      "name": "bonefootright",
+      "directions": 4
+    },
+    {
+      "name": "bonehandleft",
+      "directions": 4
+    },
+    {
+      "name": "bonehandright",
+      "directions": 4
+    },
+    {
+      "name": "bonehead",
+      "directions": 4
+    },
+    {
+      "name": "bonelegleft",
+      "directions": 4
+    },
+    {
+      "name": "bonelegright",
+      "directions": 4
+    }
+  ]
+}

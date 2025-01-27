@@ -87,6 +87,88 @@
         path: /Audio/Effects/bite.ogg
 
 - type: entity
+  name: nice space carp
+  id: NiceMobCarp
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
+  description: It's a nice space carp.
+  abstract: true
+  components:
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: NiceCarpCompound
+      blackboard:
+        NavSmash: !type:Bool
+          true
+    - type: NpcFactionMember
+      factions:
+      - Dragon
+    - type: Sprite
+      drawdepth: Mobs
+      sprite: Mobs/Aliens/Carps/space.rsi
+      layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+    - type: CombatMode
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.40
+          density: 80
+          mask:
+            - FlyingMobMask
+          layer:
+            - FlyingMobLayer
+    - type: MobState
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        50: Dead
+    - type: Stamina
+      critThreshold: 100
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: alive
+          BaseUnshaded: mouth
+        Dead:
+          Base: dead
+          BaseUnshaded: dead_mouth
+    - type: Butcherable
+      spawned:
+        - id: FoodMeatFish
+          amount: 2
+    - type: MeleeWeapon
+      altDisarm: false
+      angle: 0
+      animation: WeaponArcBite
+      soundHit:
+        path: /Audio/Effects/bite.ogg
+      damage:
+        types:
+          Piercing: 5
+          Slash: 10
+    - type: TypingIndicator
+      proto: alien
+    - type: Tag
+      tags:
+        - Carp
+        - DoorBumpOpener
+    - type: ReplacementAccent
+      accent: genericAggressive
+    - type: Speech
+      speechVerb: LargeMob
+    - type: InteractionPopup
+      interactSuccessString: petting-success-nicecarp
+      interactFailureString: petting-failure-nicecarp
+      interactFailureSound:
+        path: /Audio/Effects/bite.ogg
+
+- type: entity
   parent: BaseMobCarp
   id: MobCarp
   components:

@@ -1,0 +1,16 @@
+- type: construction
+  name: uranium glass table
+  id: TableUraniumGlass
+  graph: Table
+  startNode: start
+  targetNode: TableUraniumGlass
+  category: construction-category-furniture
+  description: A square piece of uranium glass, standing on four metal legs. Pretty!
+  icon:
+    sprite: _Impstation/Structures/Furniture/Tables/uranium.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

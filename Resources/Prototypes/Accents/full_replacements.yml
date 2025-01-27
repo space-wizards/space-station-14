@@ -183,3 +183,32 @@
   - accent-words-tomato-3
   - accent-words-tomato-4
   - accent-words-tomato-5
+
+- type: accent
+  id: finfin
+  fullReplacements:
+  - accent-words-finfin-1
+  - accent-words-finfin-2
+  - accent-words-finfin-3
+  - accent-words-finfin-4
+
+- type: accent
+  id: raccoon
+  fullReplacements:
+  - accent-words-raccoon-1
+  - accent-words-raccoon-2
+  - accent-words-raccoon-3
+  - accent-words-raccoon-4
+
+- type: accent
+  id: possum
+  fullReplacements:
+  - accent-words-possum-1
+  - accent-words-possum-2
+  - accent-words-possum-3
+  - accent-words-possum-4
+  
+- type: accent
+  id: bros
+  fullReplacements:
+  - accent-words-bros

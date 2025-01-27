@@ -1,0 +1,23 @@
+#gray's Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitGray
+  name: gray hardsuit helmet
+  description: I wonder what's inside.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/gray.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/gray.rsi
+  - type: PointLight
+    color: "#ffeead"
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9

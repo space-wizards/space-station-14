@@ -53,6 +53,8 @@
     ClothingUniformJumpskirtCasualPurple: 2
     ClothingUniformJumpsuitCasualRed: 2
     ClothingUniformJumpskirtCasualRed: 2
+    ClothingUniformJumpsuitCasualGreen: 2
+    ClothingUniformJumpskirtCasualGreen: 2
     # DO NOT ADD MORE, USE UNIFORM DYING
     ClothingShoesColorBlack: 8
     ClothingShoesColorBrown: 4
@@ -90,8 +92,30 @@
     ClothingHandsGlovesColorPurple: 2
     ClothingEyesGlassesCheapSunglasses: 3
     # DO NOT ADD MORE, USE UNIFORM DYING
+    ClothingShoesHeelsRed: 4
+    ClothingShoesHeelsBlack: 4
+    ClothingShoesHeelsBlue: 3
+    ClothingShoesHeelsGreen: 2
+    ClothingShoesHeelsBrown: 2
+    #Space Cadet Jumpsuits
+    ClothingSpaceCadetJumpsuitColorWhite: 3
+    ClothingSpaceCadetJumpsuitColorBlack: 3
+    ClothingSpaceCadetJumpsuitColorGray: 3
+    ClothingSpaceCadetJumpsuitColorBlue: 2
+    ClothingSpaceCadetJumpsuitColorYellow: 2
+    ClothingSpaceCadetJumpsuitColorGreen: 2
+    ClothingSpaceCadetJumpsuitColorOrange: 2
+    ClothingSpaceCadetJumpsuitColorRed: 2
+    ClothingSpaceCadetJumpsuitColorPurple: 2
+    ClothingSpaceCadetJumpsuitColorPink: 2
+    ClothingSpaceCadetJumpsuitColorDarkBlue: 2
+    ClothingSpaceCadetJumpsuitColorDarkGreen: 2
+    ClothingSpaceCadetJumpsuitColorTeal: 2
   contrabandInventory:
     ClothingMaskNeckGaiter: 2
     ClothingUniformJumpsuitTacticool: 1
     ClothingUniformJumpskirtTacticool: 1
+    ClothingShoesSwat: 2
+    ClothingMaskGas: 1
+
   # DO NOT ADD MORE, USE UNIFORM DYING

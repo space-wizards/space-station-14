@@ -5,21 +5,19 @@
     <GuideEntityEmbed Entity="MobDiona" Caption=""/>
   </Box>
 
-  They can't wear shoes, but are not slowed by Kudzu.
-  They get hungry and thirsty slower.
-  Their "blood" is tree sap and can't be metabolised from Iron.
-  Being plants, Weed Killer poisons them, while Robust Harvest heals them (but not without risk when overused!)
+  Diona are a remarkable species, one of only a handful of sentient creatures known to have evolved from plants. Their woody roots allow them to [color=#1e90ff]ignore difficult terrain such as Kudzu,[/color] but [color=#ffa500]cannot fit into shoes made for other humanoids.[/color]
 
-  They take [color=#1e90ff]30% less Blunt damage and 20% less Slash damage[/color];
-  but [color=#ffa500]50% more Heat damage, 20% more Shock damage, and they can easily
-  catch on fire when receiving enough Heat damage from *any* source.[/color]
+  ## Damage
+  Rather than having a normal humanoid circulatory system, Diona use capillary action to pump nutrient-carrying sap throughout their bodies, [color=#ffa500]which cannot be metabolized from iron.[/color]
+  As their metabolism is very similar to that of Earth plants, chemicals designed to affect the growth and function of other plants have similar effects on Diona. For example, [color=#ffa500]Weed Killer is poisonous to them,[/color] but [color=#1e90ff]Robust Harvest can be used to accelerate their healing [color=#ffa500](At risk of overdose, as explained in the section below.)[/color]
 
-  ## Make Like A Tree And Leave
+  Due to their stiff, woody exterior, they take [color=#1e90ff]30% less Blunt damage and 20% less Slash damage[/color] but [color=#ffa500]50% more Heat damage, 20% more Shock damage, and they can easily catch on fire when receiving enough Heat damage from *any* source.[/color]
+
+  ## Overdose
   <Box>
-    <GuideEntityEmbed Entity="FloraTree06" Caption=""/>
+    <GuideEntityEmbed Entity="FloraTree" Caption=""/>
   </Box>
-  Being exposed to too much Robust Harvest will cause a Diona to grow out of control, turning into an immobile tree (dropping all their equipment).
-  Cutting down the tree will "restore" the Diona to their mobile state.
+  Being exposed to large quantities of Robust Harvest may [color=#ffa500]cause a Diona to grow out of control,[/color] rooting them in place in a sessile, tree-like form. [color=#1e90ff]This change can be reversed by severing the trunk from its root system.[/color]
 
   ## Diona Nymphs
   <Box>
@@ -27,12 +25,23 @@
     <GuideEntityEmbed Entity="MobDionaNymph" Caption=""/>
     <GuideEntityEmbed Entity="MobDionaNymph" Caption=""/>
   </Box>
-  After death, a Diona can voluntarily destroy their own body, releasing their "internal organs" as three Nymphs,
-  with the player taking control of the Brain Nymph.
-  It can talk but has no hands or inventory, and can't do much.
+  A Diona's internal organs are sometimes capable of independence after the death of the main body. [color=#1e90ff]These organs, if voluntarily expelled, will metamorphose into Nymphs, or larval Diona.[/color] Nymphs are capable of speech, but not much else.
 
-  After 10 minutes, a Nymph can reform into a whole Diona. This will be a new randomised body with a random name,
-  and there will be little to no evidence beyond their word about who they were before.
+  After around ten minutes, a Nymph may undergo a second metamorphosis, [color=#1e90ff]reforming into an adult Diona.[/color] This new Diona will be [color=#ffa500]a new individual, with their own appearance, name, and personality,[/color] but may [color=#1e90ff]retain memories of who they were previously.[/color]
 
+  ## Mycorrhizal Gestalt
 
+  The minds of all Diona (and Nymphs) are subtly connected through a Mycorrhizal Gestalt. They can [color=#1e90ff]silently broadcast information to other Diona[/color] at any time, although they [color=#ffa500]cannot distinguish identity over the connection.[/color] This ability may prove useful when traditional communication methods fail.
+  The default radio key for the Gestalt is +m.
+
+  ## Diona Naming Conventions
+
+  Diona typically have qualia names: abstract phrases describing subjective experiences.
+  Diona names tend to evoke nature, but this is not required.
+  - [color=#449944]Acceptable:[/color] The Petal of Tranquility
+  - [color=#449944]Acceptable:[/color] The Garden of Relaxation
+  - [color=#449944]Acceptable:[/color] The Taste of Cigarettes
+  - [color=#994444]Bad:[/color] Tree but Alive
+  - [color=#994444]Bad:[/color] The Inspection of Passports
+  - [color=#994444]Bad:[/color] Benry
 </Document>

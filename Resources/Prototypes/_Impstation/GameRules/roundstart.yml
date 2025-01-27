@@ -1,0 +1,150 @@
+- type: entity
+  abstract: true
+  parent: BaseGameRule
+  id: BaseTraitorRuleNoRandomObjectives
+  components:
+  - type: TraitorRule
+  # TODO: codewords in yml
+  # TODO: uplink in yml
+  - type: AntagSelection
+    agentName: traitor-round-end-agent-name
+
+- type: entity
+  parent: BaseTraitorRuleNoRandomObjectives
+  id: SpyVsSpy3TC
+  components:
+  - type: TraitorRule
+    startingBalance: 3
+  - type: GameRule
+    minPlayers: 15
+    delay:
+      min: 240
+      max: 420
+  - type: AntagObjectives
+    objectives:
+    - KillRandomTraitorSvSObjective
+    - RandomTraitorAliveSvSObjective
+    - EscapeShuttleObjective
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Traitor ]
+      fallbackRoles: [ TraitorSleeper ]
+      max: 100
+      playerRatio: 1
+      blacklist:
+        components:
+        - AntagImmune
+      lateJoinAdditional: true
+      forceAllPossible: true
+      mindRoles:
+      - MindRoleTraitor
+
+- type: entity
+  parent: BaseTraitorRuleNoRandomObjectives
+  id: SpyVsSpy
+  components:
+  - type: TraitorRule
+    startingBalance: 0
+  - type: GameRule
+    minPlayers: 35
+    delay:
+      min: 240
+      max: 420
+  - type: AntagObjectives
+    objectives:
+    - KillRandomTraitorSvSObjective
+    - RandomTraitorAliveSvSObjective
+    - EscapeShuttleObjective
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Traitor ]
+      fallbackRoles: [ TraitorSleeper ]
+      max: 100
+      playerRatio: 1
+      blacklist:
+        components:
+        - AntagImmune
+      lateJoinAdditional: true
+      forceAllPossible: true
+      mindRoles:
+      - MindRoleTraitor
+
+- type: entity
+  parent: BaseTraitorRuleNoRandomObjectives
+  id: SpyVsSpy20TC
+  components:
+  - type: TraitorRule
+    startingBalance: 20
+  - type: GameRule
+    minPlayers: 15
+    delay:
+      min: 240
+      max: 420
+  - type: AntagObjectives
+    objectives:
+    - KillRandomTraitorSvSObjective
+    - RandomTraitorAliveSvSObjective
+    - EscapeShuttleObjective
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Traitor ]
+      fallbackRoles: [ TraitorSleeper ]
+      max: 100
+      playerRatio: 1
+      blacklist:
+        components:
+        - AntagImmune
+      lateJoinAdditional: true
+      forceAllPossible: true
+      mindRoles:
+      - MindRoleTraitor
+
+# population limiters
+
+- type: entity
+  parent: BaseGameRule
+  id: MidpopLimiter
+  components:
+  - type: GameRule
+    minPlayers: 20
+
+- type: entity
+  parent: BaseGameRule
+  id: LowpopLimiter
+  components:
+  - type: GameRule
+    maxPlayers: 19
+    cancelPresetOnTooManyPlayers: true
+
+# event schedulers
+
+- type: entityTable
+  id: LowpopGameRulesTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+      - !type:NestedSelector
+        tableId: BasicCalmEventsTable
+      - !type:NestedSelector
+        tableId: LowpopAntagEventsTable
+      - !type:NestedSelector
+        tableId: CargoGiftsTable
+      - !type:NestedSelector
+        tableId: CalmPestEventsTable
+      - !type:NestedSelector
+        tableId: SpicyPestEventsTable
+
+- type: entity
+  id: LowpopStationEventScheduler
+  parent: BaseGameRule
+  components:
+  - type: BasicStationEventScheduler
+    scheduledGameRules: !type:NestedSelector
+      tableId: LowpopGameRulesTable
+
+- type: entity
+  id: LowpopRampingStationEventScheduler
+  parent: BaseGameRule
+  components:
+  - type: RampingStationEventScheduler
+    scheduledGameRules: !type:NestedSelector
+      tableId: LowpopGameRulesTable

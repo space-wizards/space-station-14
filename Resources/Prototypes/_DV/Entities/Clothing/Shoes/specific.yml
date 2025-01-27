@@ -1,0 +1,14 @@
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesEnclosedChem
+  name: enclosed shoes
+  description: Those shoes will protect you from melting your feet while working.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Shoes/Specific/enclosedshoes.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Shoes/Specific/enclosedshoes.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.95

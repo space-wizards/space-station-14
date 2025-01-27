@@ -1,0 +1,26 @@
+- type: entity
+  name: breaching sledge
+  parent: BaseItem
+  id: BreachingSledge
+  description: A sledgehammer heavily modified and re-calibrated for faster swings, better structural damage, but considerably worse heft against personnel. The red on the hammerhead is spraypaint. Or rust. Or blood.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Prospectors/Weapons/breaching_sledge.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 3
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 2
+        Structural: 20
+    soundHit:
+      collection: MetalThud
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 2
+        Structural: 15
+  - type: Item
+    size: Large

@@ -118,6 +118,7 @@
   color: "#9A040E"
   boilingPoint: 212.0
   meltingPoint: 170.0
+  contraband: Tier3Contraband # imp
   metabolisms:
     Narcotic:
       metabolismRate: 1.0
@@ -255,6 +256,7 @@
   physicalDesc: reagent-physical-desc-syrupy
   flavor: bitter
   color: "#63806e"
+  contraband: Minor
   metabolisms:
     Narcotic:
       effects:
@@ -293,6 +295,7 @@
   color: "#128e80"
   boilingPoint: 444.0
   meltingPoint: 128.0
+  contraband: Tier2Contraband # imp
   metabolisms:
     Narcotic:
       effects:
@@ -313,6 +316,7 @@
   desc: reagent-desc-mute-toxin
   physicalDesc: reagent-physical-desc-syrupy
   color: "#000000"
+  contraband: Tier2Contraband # imp
   boilingPoint: 255.0
   meltingPoint: 36.0
   metabolisms:
@@ -321,6 +325,9 @@
       - !type:GenericStatusEffect
         key: Muted
         component: Muted
+        type: Add
+        time: 10
+        refresh: false
 
 - type: reagent
   id: NorepinephricAcid
@@ -332,6 +339,7 @@
   color: "#96a8b5"
   boilingPoint: 255.0
   meltingPoint: 36.0
+  contraband: Minor
   metabolisms:
     Narcotic:
       effects:
@@ -461,3 +469,27 @@
         type: Add
         time: 5
         refresh: false
+
+- type: reagent
+  id: Methadone
+  name: reagent-name-methadone
+  group: Narcotic
+  desc: reagent-desc-methadone
+  physicalDesc: reagent-physical-desc-clear
+  flavor: bitter
+  color: "#E9EDF5"
+  metabolisms: # since there's no heroin, i've just made it a worse version of tricordrazine. feel free to fix this.
+    Narcotic:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 40
+        damage:
+          groups:
+            Brute: -0.75
+          types:
+            Poison: -0.3
+            Heat: -0.25
+            Shock: -0.25
+            Cold: -0.25

@@ -1,0 +1,38 @@
+- type: trait
+  id: PainInsensitivity
+  name: trait-pain-insensitivity-name
+  description: trait-pain-insensitivity-desc
+  category: Disabilities
+  components:
+    - type: PainInsensitivity
+
+- type: trait
+  id: RandomUnrevivable
+  name: trait-random-unrevivable-name
+  description: trait-random-unrevivable-desc
+  category: Disabilities
+  components:
+    - type: RandomUnrevivable
+
+- type: trait
+  id: SGDrequired
+  name: trait-sgdrequired-name
+  description: trait-sgdrequired-desc
+  traitGear: ClothingNeckSGD
+  category: Disabilities
+  components:
+    - type: SpeechRequiresEquipment
+      equipment:
+        neck:
+          tags:
+            - SGD
+      failMessage: sgdrequired-cant-speak
+
+- type: trait
+  id: Unborgable
+  name: trait-unborgable-name
+  description: trait-unborgable-desc
+  category: Disabilities
+  components:
+    - type: Unborgable
+  organ: Brain

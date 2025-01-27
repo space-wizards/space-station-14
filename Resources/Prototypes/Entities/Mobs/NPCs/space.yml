@@ -181,6 +181,7 @@
   parent: MobSpaceBasic
   description: It's so glowing, it looks dangerous.
   components:
+  - type: VentCrawler
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/spacespider.rsi
@@ -371,6 +372,57 @@
     - type: SalvageMobRestrictions
 
 - type: entity
+  name: basic
+  id: MobSpaceNice
+  parent: SimpleSpaceMobBase
+  abstract: true
+  description: It looks friendly?
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/bear.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: major
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: major_glow
+      shader: unshaded
+  - type: NPCRetaliation
+    attackMemoryLength: 20
+  - type: FactionException
+  - type: NpcFactionMember
+    factions:
+      - Passive
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 100
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: Stamina
+    critThreshold: 150
+  - type: MovementAlwaysTouching
+  - type: Bloodstream
+    bloodMaxVolume: 300
+    bloodReagent: Cryoxadone
+  - type: CombatMode
+  - type: Temperature
+    heatDamageThreshold: 500
+    coldDamageThreshold: 0
+
+- type: entity
   parent: SimpleSpaceMobBase
   id: MobSnail
   name: snail
@@ -448,7 +500,6 @@
       Dead: 0
     baseDecayRate: 0.04
   - type: Hunger
-    currentHunger: 25   # spawn with Okay hunger state
     thresholds:
       Overfed: 35
       Okay: 25
@@ -474,6 +525,7 @@
     - VimPilot
     - ChefPilot
     - Meat
+    - MultitoolDefibrillatorTarget
   - type: CombatMode
     combatToggleAction: ActionCombatModeToggleOff
   - type: Bloodstream

@@ -11,6 +11,10 @@
     - Reptilian
     - SlimePerson
     - Vox
+    - Gray
+    - Snail
+    - Thaven
+    - Decapoid
 
 - type: guideEntry
   id: Arachnid
@@ -51,3 +55,23 @@
   id: Vox
   name: species-name-vox
   text: "/ServerInfo/Guidebook/Mobs/Vox.xml"
+
+- type: guideEntry
+  id: Gray
+  name: Gray
+  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Gray.xml"
+
+- type: guideEntry
+  id: Snail
+  name: Gastropoid
+  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Snail.xml"
+
+- type: guideEntry
+  id: Thaven
+  name: Thaven
+  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Thaven.xml"
+
+- type: guideEntry
+  id: Decapoid
+  name: Decapoid
+  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Decapoid.xml"

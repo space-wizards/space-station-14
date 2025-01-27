@@ -1,3 +1,12 @@
+# Senior times
+- type: loadoutEffectGroup
+  id: SeniorAtmosphericTechnician
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobAtmosphericTechnician
+      time: 187200 #52 hrs (1 hour per week for 1 year)
 # Jumpsuit
 - type: loadout
   id: AtmosphericTechnicianJumpsuit
@@ -41,3 +50,17 @@
   id: WhiteShoes
   equipment:
     shoes: ClothingShoesColorWhite
+
+# id
+- type: loadout
+  id: AtmosphericTechnicianPDA
+  equipment:
+    id: AtmosPDA
+
+- type: loadout
+  id: SeniorAtmosphericTechnicianPDA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorAtmosphericTechnician
+  equipment:
+    id: SeniorAtmosPDA

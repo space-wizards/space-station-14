@@ -1,3 +1,13 @@
+# Senior times
+- type: loadoutEffectGroup
+  id: SeniorBartender
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobBartender
+      time: 187200 #52 hrs (1 hour per week for 1 year)
+
 # Head
 - type: loadout
   id: BartenderHead
@@ -25,6 +35,12 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitBartenderPurple
 
+# Neck
+- type: loadout
+  id: RedTie
+  equipment:
+    neck: ClothingNeckTieRed
+
 # Outer clothing
 - type: loadout
   id: BartenderApron
@@ -40,3 +56,17 @@
   id: BartenderWintercoat
   equipment:
     outerClothing: ClothingOuterWinterBar
+
+# id
+- type: loadout
+  id: BartenderPDA
+  equipment:
+    id: BartenderPDA
+
+- type: loadout
+  id: SeniorBartenderPDA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorBartender
+  equipment:
+    id: SeniorBartenderPDA

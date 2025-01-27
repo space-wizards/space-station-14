@@ -1,0 +1,48 @@
+﻿- type: decal
+  id: RainbowSign1
+  tags: ["station"]
+  sprite:
+    sprite: Decals/rainbowsign.rsi
+    state: rainbow1
+
+- type: decal
+  id: rainbowSign2
+  tags: ["station"]
+  sprite:
+    sprite: Decals/rainbowsign.rsi
+    state: rainbow2
+
+- type: decal
+  id: rainbowSign3
+  tags: ["station"]
+  sprite:
+    sprite: Decals/rainbowsign.rsi
+    state: rainbow3
+
+- type: decal
+  id: rainbowSign4
+  tags: ["station"]
+  sprite:
+    sprite: Decals/rainbowsign.rsi
+    state: rainbow4
+
+- type: decal
+  id: rainbowSign5
+  tags: ["station"]
+  sprite:
+    sprite: Decals/rainbowsign.rsi
+    state: rainbow5
+
+- type: decal
+  id: rainbowSign6
+  tags: ["station"]
+  sprite:
+    sprite: Decals/rainbowsign.rsi
+    state: rainbow6
+
+- type: decal
+  id: rainbowSign7
+  tags: ["station"]
+  sprite:
+    sprite: Decals/rainbowsign.rsi
+    state: rainbow7

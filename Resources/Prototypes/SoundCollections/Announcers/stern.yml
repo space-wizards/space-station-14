@@ -1,0 +1,220 @@
+# welcome
+- type: soundCollection
+  id: SinisterWelcomeAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/comms/welcome/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/comms/welcome/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/comms/welcome/3.ogg
+
+#  -------------------------------------------- EVENTS --------------------------------------------
+
+# anomaly
+- type: soundCollection
+  id: SinisterAnomalyAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/anomaly/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/anomaly/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/anomaly/3.ogg
+
+# artifact
+- type: soundCollection
+  id: SinisterArtifactAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/artifact/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/artifact/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/artifact/3.ogg
+
+# breakerflip
+- type: soundCollection
+  id: SinisterBreakerflipAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/breakerflip/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/breakerflip/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/breakerflip/3.ogg
+
+# error, bureaucratic
+- type: soundCollection
+  id: SinisterErrorBureaucraticAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/errorbureaucratic/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/errorbureaucratic/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/errorbureaucratic/3.ogg
+
+# error, clerical
+- type: soundCollection
+  id: SinisterErrorClericalAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/errorclerical/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/errorclerical/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/errorclerical/3.ogg
+
+# carprift
+- type: soundCollection
+  id: SinisterCarpriftAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/carprift/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/carprift/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/carprift/3.ogg
+
+# revenant
+- type: soundCollection
+  id: SinisterRevenantAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/revenant/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/revenant/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/revenant/3.ogg
+
+# gas leak
+- type: soundCollection
+  id: SinisterGasleakAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/gasleak/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/gasleak/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/gasleak/3.ogg
+
+# gasleak DONE
+- type: soundCollection
+  id: SinisterGasleakCompleteAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/gasleak/1-done.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/gasleak/2-done.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/gasleak/3-done.ogg
+
+# kudzu overgrowth
+- type: soundCollection
+  id: SinisterKudzuAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/kudzu/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/kudzu/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/kudzu/3.ogg
+
+
+# meteors
+- type: soundCollection
+  id: SinisterMeteorsAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/meteors/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/meteors/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/meteors/3.ogg
+
+# meteors DONE
+- type: soundCollection
+  id: SinisterMeteorsCompleteAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/meteors/1-done.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/meteors/2-done.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/meteors/3-done.ogg
+
+# powergrid
+- type: soundCollection
+  id: SinisterPowergridAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/powergrid/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/powergrid/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/powergrid/3.ogg
+
+# powergridfixed
+- type: soundCollection
+  id: SinisterPowergridfixedAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/powergrid/1-done.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/powergrid/2-done.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/powergrid/3-done.ogg
+
+# solar flare
+- type: soundCollection
+  id: SinisterSolarFlareAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/solarflare/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/solarflare/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/solarflare/3.ogg
+
+# solar flare DONE
+- type: soundCollection
+  id: SinisterSolarFlareCompletedAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/solarflare/1-done.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/solarflare/2-done.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/solarflare/3-done.ogg
+
+# ventcritters
+- type: soundCollection
+  id: SinisterVentcrittersAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/ventcritters/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/ventcritters/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/ventcritters/3.ogg
+
+# ventclog
+- type: soundCollection
+  id: SinisterVentcloggedAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/ventclog/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/ventclog/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/ventclog/3.ogg
+
+# immovablerod
+- type: soundCollection
+  id: SinisterImmovablerodAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/events/immovablerod/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/immovablerod/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/events/immovablerod/3.ogg
+
+#  -------------------------------------------- SHUTTLE --------------------------------------------
+
+# called
+- type: soundCollection
+  id: SinisterShuttleCalledAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/called/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/called/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/called/3.ogg
+
+# departed
+- type: soundCollection
+  id: SinisterShuttleDepartedAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/departed/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/departed/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/departed/3.ogg
+
+# docked
+- type: soundCollection
+  id: SinisterShuttleDockedAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/docked/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/docked/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/docked/3.ogg
+
+# goodluck
+- type: soundCollection
+  id: SinisterShuttleGoodluckAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/goodluck/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/goodluck/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/goodluck/3.ogg
+
+# launching
+- type: soundCollection
+  id: SinisterShuttleLaunchingAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/launching/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/launching/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/launching/3.ogg
+
+# nearby
+- type: soundCollection
+  id: SinisterShuttleNearbyAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/nearby/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/nearby/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/nearby/3.ogg
+
+# recalled
+- type: soundCollection
+  id: SinisterShuttleRecalledAnnouncements
+  files:
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/recalled/1.ogg
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/recalled/2.ogg
+    - /Audio/_Impstation/Announcers/Sinister/shuttle/recalled/3.ogg

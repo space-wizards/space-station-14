@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: CrewMonitoringServer
   parent: BaseMachinePowered
   name: crew monitoring server
@@ -29,7 +29,7 @@
       receiveFrequencyId: SuitSensor
       autoConnect: false
     - type: WirelessNetworkConnection
-      range: 500
+      range: 10000 # Delta-V Maximises the range for the Crew Monitor Server to make it work for Listening Post
     - type: StationLimitedNetwork
     - type: ApcPowerReceiver
       powerLoad: 200

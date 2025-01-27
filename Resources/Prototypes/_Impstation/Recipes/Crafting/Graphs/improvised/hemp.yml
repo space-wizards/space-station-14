@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: HempObjects
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: hempcloth
+      steps:
+      - material: Hemp
+        amount: 2
+        doAfter: 3
+  - node: hempcloth
+    entity: MaterialHempCloth1

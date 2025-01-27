@@ -1,0 +1,23 @@
+# Black mime hardsuit
+- type: construction
+  name: black mime hardsuit
+  id: BlackMimeHardsuit
+  graph: BlackMimeHardsuit
+  startNode: start
+  targetNode: blackmimeHardsuit
+  category: construction-category-clothing
+  description: A modified hardsuit fit for a mime.
+  icon: { sprite: _Impstation/Clothing/OuterClothing/Hardsuits/mimeblack.rsi, state: icon }
+  objectType: Item
+
+# Replace this craft with dyeing if that system's ever added
+- type: construction
+  name: black utility belt
+  id: ClothingBeltUtilityBlack
+  graph: UtilityBlack
+  startNode: start
+  targetNode: utilityBlack
+  category: construction-category-clothing
+  description: A haphazard solution, but at least it'll match...
+  icon: { sprite: _Impstation/Clothing/Belt/utility_black.rsi, state: icon }
+  objectType: Item

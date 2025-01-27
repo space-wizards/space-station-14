@@ -4,11 +4,18 @@
   <Box>
     <GuideEntityEmbed Entity="MobArachnid" Caption=""/>
   </Box>
-
-  They have two additional Pocket slots in their inventory. They can eat raw meat without any ill effects, but some foods like chocolate and onion poisons them.
-  They suffocate 50% faster, and their Blue Blood can't be metabolised from Iron, being based on Copper instead.
-
-  Their unarmed attacks deal Piercing damage instead of Blunt.
+  ## Extra Arms
+  Arachnids can use their vestigial back-limbs to carry more items at one time than other species. [color=#1e90ff]This means they have two extra "Pocket" slots.[/color]
+  
+  ## Dietary Restrictions
+  Their species has developed strong stomach enzymes capable of breaking down uncooked proteins more efficiently, [color=#1e90ff]enabling them to eat raw meat without experiencing any ill effects.[/color] However, this adaptation has rendered their stomachs more sensitive to certain alkaline chemicals, [color=#ffa500]causing foods which contain theobromine (like chocolate and onions) to be poisonous to them.[/color]
+  
+  ## Damage
+  Like most invertebrates, Arachnids breathe through many spiracles, or small holes, distributed across the surface of their body. As a result, [color=#ffa500]they suffocate 50% faster than other species.[/color]
+  
+  Similar in composition to the haemolymph used by Earth's arthropods, Arachnid blood uses a copper-based respiratory protein. This means [color=#ffa500]they cannot metabolize more blood from iron, and must instead use copper.[/color]
+  
+  Arachnids' stiff exoskeleton makes punching difficult, so [color=#1e90ff]their unarmed attacks are instead bites, which do piercing damage.[/color]
 
   ## Sericulture
 
@@ -19,7 +26,15 @@
     <GuideEntityEmbed Entity="WallWeb" Caption=""/>
   </Box>
 
-  Arachnids can create Websilk at the cost of getting more hungry. They (and only they) can craft bundles of websilk into various items from clothing and shields to entire walls.
+  Arachnids can utilize their spinnerettes to [color=#1e90ff]create Websilk at the cost of hunger.[/color] Using their auxilliary limbs, they can shape this websilk into various commodities, including clothes, armor, and even entire structures.
 
+  ## Arachnid Naming Conventions
 
+  Arachnids typically use names derived from the Latin scientific names of real-world invertebrate species.
+  - [color=#449944]Acceptable:[/color] Argyroneta Reticulatus
+  - [color=#449944]Acceptable:[/color] Loxosceles Domesticus
+  - [color=#449944]Acceptable:[/color] Trombicula Doremi
+  - [color=#449944]Acceptable:[/color] Pieza Deresistans
+  - [color=#994444]Bad:[/color] Spider-Man
+  - [color=#994444]Bad:[/color] Benry
 </Document>

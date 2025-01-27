@@ -8,6 +8,8 @@ using Content.Shared.Station.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Server.Announcements.Systems;
+using Robust.Shared.Player;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -15,6 +17,23 @@ namespace Content.Server.StationEvents.Events;
 public sealed class VentClogRule : StationEventSystem<VentClogRuleComponent>
 {
     [Dependency] private readonly SmokeSystem _smoke = default!;
+    [Dependency] private readonly AnnouncerSystem _announcer = default!;
+
+    protected override void Added(EntityUid uid, VentClogRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    {
+        base.Added(uid, component, gameRule, args);
+
+        if (!TryGetRandomStation(out var chosenStation))
+            return;
+
+        _announcer.SendAnnouncement(
+            _announcer.GetAnnouncementId(args.RuleId),
+            Filter.Broadcast(),
+            "station-event-vent-clog-announcement",
+            null,
+            Color.Gold
+        );
+    }
 
     protected override void Started(EntityUid uid, VentClogRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
@@ -23,10 +42,12 @@ public sealed class VentClogRule : StationEventSystem<VentClogRuleComponent>
         if (!TryGetRandomStation(out var chosenStation))
             return;
 
-        // TODO: "safe random" for chems. Right now this includes admin chemicals.
         var allReagents = PrototypeManager.EnumeratePrototypes<ReagentPrototype>()
             .Where(x => !x.Abstract)
             .Select(x => x.ID).ToList();
+
+        // 'Safe random' for chems, excludes chems in the blacklist defined in the component
+        allReagents.RemoveAll(r => component.BlacklistedVentChemicals.Any(a => a == r));
 
         foreach (var (_, transform) in EntityManager.EntityQuery<GasVentPumpComponent, TransformComponent>())
         {

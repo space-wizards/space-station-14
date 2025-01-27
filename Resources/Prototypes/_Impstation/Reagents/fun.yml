@@ -1,0 +1,183 @@
+- type: reagent
+  id: BrosochloricBros
+  name: reagent-name-brosochloric-bros
+  group: Toxins
+  desc: reagent-desc-brosochloric-bros
+  physicalDesc: reagent-physical-desc-really-cruddy
+  flavor: crud
+  color: "#47181A"
+  contraband: Minor
+  tileReactions:
+  - !type:CreateEntityTileReaction
+    entity: BrosSorbSpawner
+    usage: 2
+    maxOnTile: 2
+    randomOffsetMax: 0.3
+    maxOnTileWhitelist:
+      tags: [ BROS ]
+  metabolisms:
+    Poison:
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages:
+        - "brosochloricbros-effect-oh-fuck"
+        - "brosochloricbros-effect-ungh"
+        probability: 0.1
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
+            Blunt: 1
+
+- type: reagent
+  id: GroundBros
+  name: reagent-name-ground-bros
+  desc: reagent-desc-ground-bros
+  physicalDesc: reagent-physical-desc-cruddy
+  flavor: crud
+  color: "#5F2123"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+
+- type: reagent
+  id: JuiceThatMakesYouUngh
+  name: reagent-name-ungh-juice
+  group: Toxins
+  desc: reagent-desc-ungh-juice
+  physicalDesc: reagent-physical-desc-brotherly
+  flavor: brotherly
+  color: "#8f3134"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.25
+      effects:
+      - !type:Emote
+        emote: Ungh
+        showInChat: true
+        force: true
+        probability: 0.5
+      - !type:Polymorph
+        prototype: PolymorphBros
+        conditions:
+        - !type:ReagentThreshold
+          min: 50
+      - !type:AdjustReagent
+        reagent: JuiceThatMakesYouUngh
+        amount: -20
+        conditions:
+        - !type:ReagentThreshold
+          min: 50
+
+- type: reagent
+  id: PropulsionGel
+  name: reagent-name-propulsion-gel
+  desc: reagent-desc-propulsion-gel
+  physicalDesc: reagent-physical-desc-energetic
+  flavor: speed
+  color: "#ff8700"
+  recognizable: true
+  viscosity: -0.5
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 2.0
+        type: Remove
+  tileReactions:
+    - !type:SpillTileReaction
+
+# Thui beego pu suggestion.
+- type: reagent
+  id: Estradiol
+  name: reagent-name-estradiol
+  group: Medicine # DeltaV
+  desc: reagent-desc-estradiol
+  physicalDesc: reagent-physical-desc-hormonal # DeltaV
+  color: "pink"
+  boilingPoint: 1573.0 # DeltaV
+  meltingPoint: 446.5 # DeltaV
+  metabolisms: # DeltaV
+    Medicine:
+      metabolismRate: 0.02
+      effects:
+      - !type:GenericStatusEffect
+        key: Feminized
+        component: Feminized
+        type: Add
+        time: 2
+        refresh: false
+
+- type: reagent
+  id: Testosterone
+  name: reagent-name-testosterone
+  group: Medicine # DeltaV
+  desc: reagent-desc-testosterone
+  physicalDesc: reagent-physical-desc-hormonal # DeltaV
+  flavor: bitter # DeltaV
+  color: "#267ef0"
+  boilingPoint: 1321.0 # DeltaV
+  meltingPoint: 424.1 # DeltaV
+  metabolisms: # DeltaV
+    Medicine:
+      metabolismRate: 0.02
+      effects:
+      - !type:GenericStatusEffect
+        key: Masculinized
+        component: Masculinized
+        type: Add
+        time: 2
+        refresh: false
+
+- type: reagent
+  id: Holium
+  # group: Special # The recipe is complicated enough that I think we shouldnt hide the recipe honestly
+  name: reagent-name-holium
+  desc: reagent-desc-holium
+  physicalDesc: reagent-physical-desc-threat
+  flavor: singulo
+  color: "#000000"
+  contraband: Major
+  tileReactions:
+  - !type:CreateEntityTileReaction
+    entity: FloorChasmEntity
+    maxOnTileWhitelist:
+      tags: [ FloorChasmEntity ]
+
+- type: reagent
+  id: Medium
+  name: reagent-name-medium
+  desc: reagent-desc-medium
+  physicalDesc: reagent-physical-desc-reflective
+  flavor: medium
+  color: "#DC89E0"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:Medium
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+
+- type: reagent
+  id: MouseBites
+  name: reagent-name-mouse-bites
+  desc: reagent-desc-mouse-bites
+  physicalDesc: reagent-physical-desc-rodent
+  flavor: rodent
+  color: "#C70039"
+  metabolisms:
+    Medicine:
+      effects:
+      # its just a weaker tranex with no od
+      - !type:ModifyBleedAmount
+        amount: -0.5

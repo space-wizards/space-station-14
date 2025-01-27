@@ -1,0 +1,96 @@
+- type: entity
+  name: apid
+  id: MobApidBaseGhostrole
+  parent: BaseMobApid
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: RandomMetadata
+    nameSegments:
+    - apid_worker
+    - names_apid
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+
+- type: entity
+  name: apid botanist
+  id: MobApidBotanist
+  parent: MobApidBaseGhostrole
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: Loadout
+    prototypes:
+      - StartingGearApidBotanist
+  - type: RandomMetadata
+    nameSegments:
+    - apid_botanist
+    - names_apid
+
+- type: entity
+  name: apid doctor
+  id: MobApidDoctor
+  parent: MobApidBaseGhostrole
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: Loadout
+    prototypes:
+      - StartingGearApidDoctor
+  - type: RandomMetadata
+    nameSegments:
+    - apid_doctor
+    - names_apid
+
+- type: entity
+  name: apid engineer
+  id: MobApidEngineer
+  parent: MobApidBaseGhostrole
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: Loadout
+    prototypes:
+      - StartingGearApidEngineer
+  - type: RandomMetadata
+    nameSegments:
+    - apid_engineer
+    - names_apid
+
+- type: entity
+  name: apid emergency responder
+  id: MobApidEmergency
+  parent: MobApidBaseGhostrole
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: Loadout
+    prototypes:
+      - StartingGearApidEmergency
+  - type: RandomMetadata
+    nameSegments:
+    - apid_emergency
+    - names_apid
+
+- type: entity
+  name: apid chef
+  id: MobApidChef
+  parent: MobApidBaseGhostrole
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: Loadout
+    prototypes:
+      - StartingGearApidChef
+  - type: RandomMetadata
+    nameSegments:
+    - apid_chef
+    - names_apid
+
+- type: entity
+  name: apid courier
+  id: MobApidCourier
+  parent: MobApidBaseGhostrole
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: Loadout
+    prototypes:
+      - StartingGearApidCourier
+  - type: RandomMetadata
+    nameSegments:
+    - apid_courier
+    - names_apid

@@ -1,0 +1,37 @@
+- type: entity
+  id: EldritchInfluence
+  name: reality shift
+  description: Your eyes start to burn just from a single look. Should you delve deeper?
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: InteractionOutline
+  - type: EldritchInfluence
+  - type: Sprite
+    sprite: _Goobstation/Heretic/reality_fracture.rsi
+    state: icon
+  - type: Clickable
+  - type: Visibility
+    layer: 69
+
+- type: entity
+  id: EldritchInfluenceIntermediate
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 30
+  - type: SpawnOnDespawn
+    prototype: EldritchInfluenceSpent
+
+- type: entity
+  id: EldritchInfluenceSpent
+  name: reality fracture
+  description: A reality fracture. Something keeps leaking out of it, should you really be near this thing?
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: _Goobstation/Heretic/reality_fracture.rsi
+    state: icon_harvested
+  - type: Clickable

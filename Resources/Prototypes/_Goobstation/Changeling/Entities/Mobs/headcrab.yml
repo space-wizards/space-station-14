@@ -1,0 +1,51 @@
+- type: entity
+  name: headslug
+  parent: [SimpleMobBase]
+  id: MobHeadcrab
+  description: You don't want to touch it.
+  components:
+  - type: VentCrawler
+    enterDelay: 1
+  - type: NoSlip
+  - type: Sprite
+    drawdepth: SmallMobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: headcrab
+      sprite: _Goobstation/Changeling/headcrab.rsi
+  - type: Tag
+    tags:
+    - Meat
+    - VimPilot
+    - MultitoolDefibrillatorTarget
+  - type: Physics
+  - type: ComplexInteraction # imp edit
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: Bloodstream
+    bloodReagent: BloodChangeling
+    bloodMaxVolume: 60
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: headcrab
+      Dead:
+        Base: headcrab_dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 7
+  - type: ExplosionResistance
+    damageCoefficient: 0

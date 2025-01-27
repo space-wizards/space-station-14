@@ -15,6 +15,7 @@
     - Fork
   - type: Tag
     tags:
+    - Chopsticks
     - Trash
 
 - type: entity
@@ -33,4 +34,5 @@
     state: paired
   - type: Tag
     tags:
+    - Chopsticks
     - Trash

@@ -1,0 +1,54 @@
+- type: guideEntry
+  id: Heretics
+  name: guide-entry-heretics
+  text: "/ServerInfo/_Impstation/Guidebook/Antagonist/Heretics.xml" # given a consistency pass by dark, keeping in imp directory 4 now
+  children:
+  - HereticsKnowledge
+  - HereticsSpells
+  - HereticsRituals
+  - HereticsPaths
+  - HereticsSide
+
+- type: guideEntry
+  id: HereticsPaths
+  name: guide-entry-heretics-paths
+  text: "/ServerInfo/_Goobstation/Guidebook/Antagonist/HereticsPaths.xml"
+  children:
+    - HereticsAsh
+    - HereticsFlesh
+    - HereticsVoid
+
+- type: guideEntry
+  id: HereticsKnowledge
+  name: guide-entry-heretics-knowledge
+  text: "/ServerInfo/_Goobstation/Guidebook/Antagonist/HereticsKnowledge.xml"
+
+- type: guideEntry
+  id: HereticsSpells
+  name: guide-entry-heretics-spells
+  text: "/ServerInfo/_Goobstation/Guidebook/Antagonist/HereticsSpells.xml"
+
+- type: guideEntry
+  id: HereticsRituals
+  name: guide-entry-heretics-rituals
+  text: "/ServerInfo/_Goobstation/Guidebook/Antagonist/HereticsRituals.xml"
+
+- type: guideEntry
+  id: HereticsAsh
+  name: guide-entry-heretics-ash
+  text: "/ServerInfo/_Goobstation/Guidebook/Antagonist/HereticsAsh.xml"
+
+- type: guideEntry
+  id: HereticsFlesh
+  name: guide-entry-heretics-flesh
+  text: "/ServerInfo/_Goobstation/Guidebook/Antagonist/HereticsFlesh.xml"
+
+- type: guideEntry
+  id: HereticsVoid
+  name: guide-entry-heretics-void
+  text: "/ServerInfo/_Goobstation/Guidebook/Antagonist/HereticsVoid.xml"
+
+- type: guideEntry
+  id: HereticsSide
+  name: guide-entry-heretics-side
+  text: "/ServerInfo/_Goobstation/Guidebook/Antagonist/HereticsSide.xml"

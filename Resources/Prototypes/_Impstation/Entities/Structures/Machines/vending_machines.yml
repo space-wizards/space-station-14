@@ -1,0 +1,58 @@
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineCourierDrobe
+  name: CourierDrobe
+  description: A highly advanced vending machine for buying courier related clothing for free.
+  components:
+  - type: VendingMachine
+    pack: CourierDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
+  - type: Advertise
+    pack: CargoDrobeAds
+  - type: SpeakOnUIClosed
+    pack: GenericVendGoodbyes
+  - type: Sprite
+    sprite: _Impstation/Structures/Machines/VendingMachines/courierdrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89e2a"
+  - type: AccessReader
+    access: [["Courier"]]
+
+- type: entity
+  parent: VendingMachineChemicals
+  id: VendingMachineChemicalsInterdyne
+  name: Interdyne ChemVend
+  description: A high tech ChemVend built by InterDyne. Backwards compatible with standard ChemVend restocks. # DeltaV: Add chemvend part
+  components:
+  - type: VendingMachine
+    pack: ChemVendInventoryInterdyne
+    offState: off
+    brokenState: broken
+    normalState: normal
+    denyState: deny
+    ejectDelay: 2
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
+  - type: Sprite # imp
+    sprite: _Impstation/Structures/Machines/VendingMachines/interdynechemdispenser.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AccessReader
+    access: [["SyndicateAgent"]]

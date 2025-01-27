@@ -11,12 +11,18 @@
   maleFirstNames: names_moth_first_male
   femaleFirstNames: names_moth_first_female
   lastNames: names_moth_last
+  sexes:
+  - Male
+  - Female
+  - Unsexed
 
 - type: speciesBaseSprites
   id: MobMothSprites
   sprites:
     Head: MobMothHead
     Snout: MobHumanoidAnyMarking
+    Underwear: MobHumanoidAnyMarking
+    Undershirt: MobHumanoidAnyMarking
     Chest: MobMothTorso
     HeadTop: MobHumanoidAnyMarking
     HeadSide: MobHumanoidAnyMarking
@@ -62,16 +68,22 @@
       points: 1
       required: false
     Head:
-      points: 1
+      points: 4
       required: false
     Chest:
+      points: 4
+      required: false
+    Underwear:
+      points: 1
+      required: false
+    Undershirt:
       points: 1
       required: false
     Legs:
-      points: 2
+      points: 4
       required: false
     Arms:
-      points: 2
+      points: 4
       required: false
 
 - type: humanoidBaseSprite

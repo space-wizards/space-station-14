@@ -1,0 +1,22 @@
+- type: entity
+  id: CrateServiceCleanades
+  parent: CratePlastic
+  name: janitorial cleanades crate
+  description: And Nanotrasen(tm) said, let there be soap. And there was soap.
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxCleanerGrenades
+        amount: 2
+
+- type: entity
+  id: CrateServiceJanitorialHardsuit
+  parent: CrateTrashCartJani
+  name: janitorial hardsuit crate
+  description: A necessity for any janitor trying to keep the oustide of the station as spotless as the inside.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitJanitor
+        amount: 1
+        

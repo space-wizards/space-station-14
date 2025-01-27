@@ -4,10 +4,11 @@ roles-antag-rev-head-name = Head Revolutionary
 roles-antag-rev-head-objective = Your objective is to take over the station by converting people to your cause and killing all Command staff on station.
 
 head-rev-role-greeting =
+    Enough is enough!
     You are a Head Revolutionary.
-    You are tasked with removing all of Command from station via death, exilement or imprisonment.
-    The Syndicate has sponsored you with a flash that converts the crew to your side.
-    Beware, this won't work on Security, Command, or those wearing sunglasses.
+    Your goal is to liberate the station from the Nanotrasen dogs by killing, marooning or imprisoning all Commanding officers.
+    The Syndicate has sponsored you with a flash that removes your crewmates' NT brainwashing.
+    Beware, this won't work on the Mindshielded, the blind, or those with other flash protection.
     Viva la revolución!
 
 head-rev-briefing =
@@ -19,17 +20,17 @@ head-rev-break-mindshield = The Mindshield was destroyed!
 ## Rev
 
 roles-antag-rev-name = Revolutionary
-roles-antag-rev-objective = Your objective is to ensure the safety and follow the orders of the Head Revolutionaries as well as getting rid of all Command staff on station.
+roles-antag-rev-objective = Your objective is to ensure the safety and follow the orders of the Head Revolutionaries as well as assist in taking over the station.
 
 rev-break-control = {$name} has remembered their true allegiance!
 
 rev-role-greeting =
     You are a Revolutionary.
     You are tasked with taking over the station and protecting the Head Revolutionaries.
-    Get rid of all of the Command staff.
+    You are loyal to the revolution, but you are not a psychopath. Keep calm and await your orders.
     Viva la revolución!
 
-rev-briefing = Help your head revolutionaries get rid of every head to take over the station.
+rev-briefing = Help your head revolutionaries take over the station.
 
 ## General
 
@@ -67,7 +68,7 @@ rev-headrev-name = [color=#5e9cff]{$name}[/color] converted {$count} {$count ->
 
 rev-deconverted-title = Deconverted!
 rev-deconverted-text =
-    As the last headrev has died, the revolution is over.
+    As the last Head Revolutionary has died, the revolution is over.
 
     You are no longer a revolutionary, so be nice.
 rev-deconverted-confirm = Confirm

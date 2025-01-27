@@ -204,6 +204,7 @@
     - /Audio/Ambience/spookyspace2.ogg
     - /Audio/Ambience/ambispace2.ogg
     - /Audio/Lobby/title2.ogg
+    - /Audio/_Impstation/Ambience/RW_Stargazer.ogg
 
 - type: soundCollection
   id: AmbienceSpooky
@@ -270,7 +271,7 @@
     - !type:NearbyAccessRule
       access:
         - Engineering
-      range: 3
+      range: 2.5
 
 - type: rules
   id: NearMaintenance
@@ -320,7 +321,7 @@
       components:
         - type: Morgue
       range: 3
-      
+
 - type: rules
   id: NearSpookyFog
   rules:

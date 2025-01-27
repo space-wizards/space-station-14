@@ -68,3 +68,9 @@
   id: HoPWintercoat
   equipment:
     outerClothing: ClothingOuterWinterHoP
+
+# Shoes
+- type: loadout
+  id: LeatherShoes
+  equipment:
+    shoes: ClothingShoesLeather

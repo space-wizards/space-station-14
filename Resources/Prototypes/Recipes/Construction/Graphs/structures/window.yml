@@ -4,63 +4,61 @@
   graph:
     - node: start
       edges:
-        - to: window # 50 hp
-          steps:
-            - material: Glass
-              amount: 2
-              doAfter: 2
-
-        - to: tintedWindow # 50 hp
-          steps:
-            - material: Glass
-              amount: 2
-            - material: Plastic
-              amount: 2
-              doAfter: 2
-
-        - to: plasmaWindow # 75 hp
+        - to: plasmaWindow
           steps:
             - material: PlasmaGlass
               amount: 2
-              doAfter: 3
+              doAfter: 2
 
-        - to: uraniumWindow # 75 hp
-          steps:
-            - material: UraniumGlass
-              amount: 2
-              doAfter: 3
-
-        - to: clockworkWindow # 75 hp reinforced damage mod
-          steps:
-            - material: ClockworkGlass
-              amount: 2
-              doAfter: 3
-
-        - to: reinforcedWindow # 75 hp reinforced damage mod
+        - to: reinforcedWindow
           steps:
             - material: ReinforcedGlass
               amount: 2
-              doAfter: 3
+              doAfter: 2
 
-        - to: reinforcedPlasmaWindow # 150 hp reinforced damage mod
+        - to: tintedWindow
+          steps:
+            - material: ReinforcedGlass
+              amount: 2
+              doAfter: 2
+
+        - to: reinforcedPlasmaWindow
           steps:
             - material: ReinforcedPlasmaGlass
               amount: 2
-              doAfter: 4
+              doAfter: 3
 
-        - to: reinforcedUraniumWindow # 150 hp reinforced damage mod
+        - to: uraniumWindow
+          steps:
+            - material: UraniumGlass
+              amount: 2
+              doAfter: 2
+
+        - to: reinforcedUraniumWindow
           steps:
             - material: ReinforcedUraniumGlass
               amount: 2
-              doAfter: 4
+              doAfter: 3
 
-        - to: shuttleWindow # 500 hp reinforced damage mod (wow)
+        - to: window
+          steps:
+            - material: Glass
+              amount: 2
+              doAfter: 3
+
+        - to: shuttleWindow
           steps:
             - material: Plasteel
               amount: 2
             - material: ReinforcedGlass
               amount: 2
-              doAfter: 6
+              doAfter: 4
+        
+        - to: clockworkWindow
+          steps:
+            - material: ClockworkGlass
+              amount: 2
+              doAfter: 3
 
     - node: window
       entity: Window
@@ -76,24 +74,9 @@
               doAfter: 1
             - tool: Anchoring
               doAfter: 2
-        - to: tintedWindow
-          steps:
-            - material: Plastic
-              amount: 2
-              doAfter: 0.5
         - to: plasmaWindow
           steps:
             - material: Plasma
-              amount: 2
-              doAfter: 1
-        - to: uraniumWindow
-          steps:
-            - material: Uranium
-              amount: 2
-              doAfter: 1
-        - to: clockworkWindow
-          steps:
-            - material: Brass
               amount: 2
               doAfter: 2
         - to: reinforcedWindow
@@ -101,94 +84,15 @@
             - material: MetalRod
               amount: 2
               doAfter: 2
-
-    - node: tintedWindow
-      entity: TintedWindow
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetGlass1
-              amount: 2
-            - !type:SpawnPrototype
-              prototype: SheetPlastic1
-              amount: 2
-            - !type:DeleteEntity {}
+        - to: uraniumWindow
           steps:
-            - tool: Screwing
-              doAfter: 1
-            - tool: Anchoring
-              doAfter: 2
-
-    - node: plasmaWindow
-      entity: PlasmaWindow
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetPGlass1
+            - material: Uranium
               amount: 2
-            - !type:DeleteEntity {}
-          steps:
-            - tool: Screwing
               doAfter: 2
-            - tool: Prying
-              doAfter: 3
-            - tool: Screwing
-              doAfter: 2
-            - tool: Anchoring
-              doAfter: 3
-        - to: reinforcedPlasmaWindow
+        - to: clockworkWindow
           steps:
-            - material: MetalRod
+            - material: Brass
               amount: 2
-              doAfter: 1
-
-    - node: uraniumWindow
-      entity: UraniumWindow
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetUGlass1
-              amount: 2
-            - !type:DeleteEntity {}
-          steps:
-            - tool: Screwing
-              doAfter: 2
-            - tool: Prying
-              doAfter: 3
-            - tool: Screwing
-              doAfter: 2
-            - tool: Anchoring
-              doAfter: 3
-        - to: reinforcedUraniumWindow
-          steps:
-            - material: MetalRod
-              amount: 2
-              doAfter: 1
-
-    - node: clockworkWindow
-      entity: ClockworkWindow
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetClockworkGlass1
-              amount: 2
-            - !type:DeleteEntity {}
-          steps:
-            - tool: Welding
-              doAfter: 5
-            - tool: Screwing
-              doAfter: 2
-            - tool: Prying
-              doAfter: 3
-            - tool: Welding
-              doAfter: 5
-            - tool: Screwing
-              doAfter: 2
-            - tool: Anchoring
               doAfter: 3
 
     - node: reinforcedWindow
@@ -217,15 +121,53 @@
           steps:
             - material: Plasma
               amount: 2
-              doAfter: 1
+              doAfter: 3
         - to: reinforcedUraniumWindow
           steps:
             - material: Uranium
               amount: 2
-              doAfter: 1
-        - to: shuttleWindow
+              doAfter: 3
+
+    - node: tintedWindow
+      entity: TintedWindow
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRGlass1
+              amount: 2
+            - !type:DeleteEntity {}
           steps:
-            - material: Plasteel
+            - tool: Screwing
+              doAfter: 1
+            - tool: Prying
+              doAfter: 2
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2
+
+    - node: plasmaWindow
+      entity: PlasmaWindow
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+        - to: reinforcedPlasmaWindow
+          steps:
+            - material: MetalRod
               amount: 2
               doAfter: 3
 
@@ -252,6 +194,30 @@
             - tool: Anchoring
               doAfter: 3
 
+    - node: uraniumWindow
+      entity: UraniumWindow
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetUGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+        - to: reinforcedUraniumWindow
+          steps:
+            - material: MetalRod
+              amount: 2
+              doAfter: 3
+
     - node: reinforcedUraniumWindow
       entity: ReinforcedUraniumWindow
       edges:
@@ -259,6 +225,29 @@
           completed:
             - !type:SpawnPrototype
               prototype: SheetRUGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+
+    - node: clockworkWindow
+      entity: ClockworkWindow
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetClockworkGlass1
               amount: 2
             - !type:DeleteEntity {}
           steps:

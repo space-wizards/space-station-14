@@ -1,0 +1,29 @@
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitGray
+  name: gray hardsuit
+  description: I wonder what's inside.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/gray.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/gray.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.6
+        Piercing: 0.6
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitGray

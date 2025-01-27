@@ -1,0 +1,19 @@
+- type: entity
+  id: CrateNPCLuggage
+  parent: CrateLivestock
+  name: luggage crate
+  description: A crate containing a chest made of sapient pearwood. It looks hungry...
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobDiscworldLuggage
+
+- type: entity
+  id: CrateNPCCargorilla
+  parent: CrateLivestock
+  name: cargorilla crate
+  description: A crate containing a Very strong cargo technician.
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobCargorilla

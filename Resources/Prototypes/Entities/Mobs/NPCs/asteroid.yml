@@ -50,21 +50,21 @@
       Dead:
         Base: goliath_dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 2.50
-    baseSprintSpeed : 2.50
+    baseWalkSpeed : 2.00
+    baseSprintSpeed : 2.00
   - type: MobThresholds
     thresholds:
       0: Alive
-      300: Dead
+      250: Dead
   - type: MeleeWeapon
     soundHit:
-      path: "/Audio/Weapons/smash.ogg"
+      path: "/Audio/_Impstation/Weapons/strong_hit_slash_pierce.ogg" # imp
     angle: 0
     attackRate: 0.75
     animation: WeaponArcPunch
     damage:
       types:
-        Slash: 15
+        Slash: 10
         Piercing: 10
   - type: NpcFactionMember
     factions:

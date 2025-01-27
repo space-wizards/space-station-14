@@ -18,6 +18,21 @@
     - /Audio/Voice/Human/femalescream_5.ogg
 
 - type: soundCollection
+  id: UnisexScreams #look I know this is redundant but if I have to type "PlantScreams" for unisex emotes i'm going to get confused
+  files:
+    - /Audio/Voice/Human/malescream_1.ogg
+    - /Audio/Voice/Human/malescream_2.ogg
+    - /Audio/Voice/Human/malescream_3.ogg
+    - /Audio/Voice/Human/malescream_4.ogg
+    - /Audio/Voice/Human/malescream_5.ogg
+    - /Audio/Voice/Human/malescream_6.ogg
+    - /Audio/Voice/Human/femalescream_1.ogg
+    - /Audio/Voice/Human/femalescream_2.ogg
+    - /Audio/Voice/Human/femalescream_3.ogg
+    - /Audio/Voice/Human/femalescream_4.ogg
+    - /Audio/Voice/Human/femalescream_5.ogg
+
+- type: soundCollection
   id: ZombieScreams
   files:
     - /Audio/Voice/Zombie/zombie-1.ogg

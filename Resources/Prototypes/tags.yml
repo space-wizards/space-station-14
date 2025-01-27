@@ -13,6 +13,9 @@
   id: AirSensor
 
 - type: Tag
+  id: Aloe
+
+- type: Tag
   id: Ambrosia
 
 - type: Tag
@@ -31,6 +34,9 @@
   id: ATVKeys
 
 - type: Tag
+  id: Bagel
+
+- type: Tag
   id: Balloon
 
 - type: Tag
@@ -47,6 +53,9 @@
 
 - type: Tag
   id: BBQsauce
+
+- type: Tag
+  id: BearHide
 
 - type: Tag
   id: Bedsheet
@@ -76,94 +85,25 @@
   id: BorgArm
 
 - type: Tag
-  id: BorgEngineerHead
-
-- type: Tag
-  id: BorgEngineerLArm
-
-- type: Tag
-  id: BorgEngineerLLeg
-
-- type: Tag
-  id: BorgEngineerRArm
-
-- type: Tag
-  id: BorgEngineerRLeg
-
-- type: Tag
-  id: BorgEngineerTorso
-
-- type: Tag
-  id: BorgGenericHead
-
-- type: Tag
-  id: BorgGenericLArm
-
-- type: Tag
-  id: BorgGenericLLeg
-
-- type: Tag
-  id: BorgGenericRArm
-
-- type: Tag
-  id: BorgGenericRLeg
-
-- type: Tag
-  id: BorgGenericTorso
-
-- type: Tag
   id: BorgHead
 
 - type: Tag
-  id: BorgJanitorHead
+  id: BorgLArm
 
 - type: Tag
-  id: BorgJanitorLLeg
+  id: BorgLLeg
 
 - type: Tag
-  id: BorgJanitorRLeg
+  id: BorgRArm
 
 - type: Tag
-  id: BorgJanitorTorso
+  id: BorgRLeg
+
+- type: Tag
+  id: BorgTorso
 
 - type: Tag
   id: BorgLeg
-
-- type: Tag
-  id: BorgMedicalHead
-
-- type: Tag
-  id: BorgMedicalLArm
-
-- type: Tag
-  id: BorgMedicalLLeg
-
-- type: Tag
-  id: BorgMedicalRArm
-
-- type: Tag
-  id: BorgMedicalRLeg
-
-- type: Tag
-  id: BorgMedicalTorso
-
-- type: Tag
-  id: BorgMiningHead
-
-- type: Tag
-  id: BorgMiningLArm
-
-- type: Tag
-  id: BorgMiningLLeg
-
-- type: Tag
-  id: BorgMiningRArm
-
-- type: Tag
-  id: BorgMiningRLeg
-
-- type: Tag
-  id: BorgMiningTorso
 
 - type: Tag
   id: BorgModuleCargo
@@ -190,24 +130,6 @@
   id: BorgModuleSyndicateAssault
 
 - type: Tag
-  id: BorgServiceHead
-
-- type: Tag
-  id: BorgServiceLArm
-
-- type: Tag
-  id: BorgServiceLLeg
-
-- type: Tag
-  id: BorgServiceRArm
-
-- type: Tag
-  id: BorgServiceRLeg
-
-- type: Tag
-  id: BorgServiceTorso
-
-- type: Tag
   id: Bot
 
 - type: Tag
@@ -221,6 +143,9 @@
 
 - type: Tag
   id: Bottle
+
+- type: Tag
+  id: Bowl
 
 - type: Tag
   id: BoxCardboard
@@ -245,6 +170,9 @@
 
 - type: Tag
   id: BrimFlatcapGrey
+
+- type: Tag
+  id: BROS
 
 - type: Tag
   id: Brutepack
@@ -396,6 +324,9 @@
   id: ChiliBowl
 
 - type: Tag
+  id: Chopsticks
+
+- type: Tag
   id: Cigarette
 
 - type: Tag
@@ -498,6 +429,9 @@
   id: CrowbarRed
 
 - type: Tag
+  id: Crusher
+
+- type: Tag
   id: Cryobeaker
 
 - type: Tag
@@ -567,6 +501,9 @@
   id: DrinkBottle
 
 - type: Tag
+  id: DroneUsable
+
+- type: Tag
   id: DrinkCan
 
 - type: Tag
@@ -601,6 +538,12 @@
 
 - type: Tag
   id: ExplosivePassable
+
+- type: Tag # goob edit
+  id: Eyes
+
+- type: Tag
+  id: Eyepatch
 
 - type: Tag
   id: Figurine
@@ -662,6 +605,9 @@
 - type: Tag
   id: Galaxythistle
 
+- type: Tag # goob edit
+  id: GasMask
+
 - type: Tag
   id: GasScrubber
 
@@ -699,10 +645,16 @@
   id: Grenade
 
 - type: Tag
+  id: GrenadeFlashBang
+
+- type: Tag
   id: HudMedical
 
 - type: Tag
   id: HudSecurity
+
+- type: Tag
+  id: GlassesSecurity
 
 - type: Tag
   id: GuideEmbeded
@@ -746,8 +698,14 @@
 - type: Tag
   id: Head
 
+- type: Tag # goob edit
+  id: Heart
+
 - type: Tag
   id: HelmetEVA
+
+- type: Tag
+  id: HempSack
 
 - type: Tag
   id: HideContextMenu
@@ -778,6 +736,9 @@
 
 - type: Tag
   id: HolosignProjector
+
+- type: Tag
+  id: Holy
 
 - type: Tag
   id: HonkerCentralControlModule
@@ -828,6 +789,9 @@
   id: JawsOfLife
 
 - type: Tag
+  id: Jug
+
+- type: Tag
   id: Kangaroo
 
 - type: Tag
@@ -838,6 +802,9 @@
 
 - type: Tag
   id: KeyedInstrument
+
+- type: Tag # goob edit
+  id: Kidneys
 
 - type: Tag
   id: KitchenKnife
@@ -852,10 +819,22 @@
   id: Lemon
 
 - type: Tag
+  id: Lemo
+
+- type: Tag
   id: LightBulb
 
 - type: Tag
+  id: Lens
+
+- type: Tag
   id: Lime
+
+- type: Tag # goob edit
+  id: Liver
+
+- type: Tag # goob edit
+  id: Lungs
 
 - type: Tag
   id: Machete
@@ -921,6 +900,9 @@
 - type: Tag
   id: MailingUnitElectronics
 
+- type: Tag # goob edit
+  id: Mask
+
 - type: Tag
   id: Matchstick
 
@@ -950,6 +932,9 @@
 
 - type: Tag
   id: MimeHappyHonk
+
+- type: Tag
+  id: MimeHardsuit
 
 - type: Tag
   id: MindShield
@@ -982,10 +967,16 @@
   id: Mouse
 
 - type: Tag
+  id: Muffin
+
+- type: Tag
   id: Multitool
 
 - type: Tag
   id: NoBlockAnchoring
+
+- type: Tag
+  id: NoConsoleSound
 
 - type: Tag
   id: NozzleBackTank
@@ -1004,6 +995,9 @@
 
 - type: Tag
   id: Ore
+
+- type: Tag # goob edit
+  id: Organ
 
 - type: Tag
   id: Packet
@@ -1051,9 +1045,6 @@
   id: Pizza
 
 - type: Tag
-  id: PlantAnalyzer
-
-- type: Tag
   id: PlantBGone
 
 - type: Tag
@@ -1069,6 +1060,9 @@
   id: Plunger
 
 - type: Tag
+  id: PlushieCarp
+
+- type: Tag
   id: PlushieGhost
 
 - type: Tag
@@ -1079,6 +1073,9 @@
 
 - type: Tag
   id: PlushieSharkPink
+
+- type: Tag # goob edit
+  id: Poppy
 
 - type: Tag
   id: Potato
@@ -1121,6 +1118,9 @@
   id: ReinforcedGlassShard
 
 - type: Tag
+  id: RegenerativeMesh
+
+- type: Tag
   id: ReptilianFood
 
 - type: Tag
@@ -1157,6 +1157,9 @@
   id: RollingPin
 
 - type: Tag
+  id: Salt
+
+- type: Tag
   id: SaltShaker
 
 - type: Tag
@@ -1191,6 +1194,9 @@
 
 - type: Tag
   id: ShellShotgun
+
+- type: Tag
+  id: ShellShotgunLight # shotgun shells that are compatible with the flare gun.
 
 - type: Tag
   id: Shiv
@@ -1253,6 +1259,9 @@
   id: SpiderCraft
 
 - type: Tag
+  id: SpiderMeat
+
+- type: Tag
   id: SpookyFog
 
 - type: Tag
@@ -1270,8 +1279,14 @@
 - type: Tag
   id: Steak
 
+- type: Tag # goob edit
+  id: Stomach
+
 - type: Tag
   id: StringInstrument
+
+- type: Tag
+  id: Stunbaton
 
 - type: Tag
   id: SubdermalImplant
@@ -1281,6 +1296,9 @@
 
 - type: Tag
   id: Sunglasses
+
+- type: Tag
+  id: Suppermatter
 
 - type: Tag
   id: SurgeryTool
@@ -1298,7 +1316,13 @@
   id: Syringe
 
 - type: Tag
+  id: SyringeGunAmmo
+
+- type: Tag
   id: Spellbook
+
+- type: Tag # goob edit
+  id: Table
 
 - type: Tag
   id: TabletopBoard
@@ -1320,6 +1344,9 @@
 
 - type: Tag
   id: TimerSignalElectronics
+
+- type: Tag # goob edit
+  id: Tongue
 
 - type: Tag
   id: Toolbox
@@ -1393,6 +1420,9 @@
 - type: Tag
   id: WeldingMask
 
+- type: Tag #imp addon (why the fuck doesn't this exist upstream)
+  id: WeldingTool
+
 - type: Tag
   id: WetFloorSign
 
@@ -1401,6 +1431,12 @@
 
 - type: Tag
   id: WhitelistChameleon
+
+- type: Tag
+  id: WhitelistChameleonIdCard
+
+- type: Tag
+  id: WhitelistChameleonPDA
 
 - type: Tag
   id: Window

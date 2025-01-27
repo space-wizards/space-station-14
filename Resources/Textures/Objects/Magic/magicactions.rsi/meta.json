@@ -23,7 +23,13 @@
       "name": "fireball"
     },
     {
+      "name": "space_grease"
+    },
+    {
       "name": "magicmissile"
+    },
+    {
+      "name": "jaunt"
     },
     {
       "name": "gib"

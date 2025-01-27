@@ -6,6 +6,14 @@
     - id: ClothingShoesBootsMag
     - id: ClothingOuterHardsuitSpatio
     - id: ClothingMaskGasExplorer
+    - !type:GroupSelector # Random jetpack
+      children:
+      - id: JetpackSalvageFilled
+        weight: 80
+      - id: FireExtinguisher
+        weight: 18
+      - id: JetpackMini
+        weight: 2
 
 - type: entityTable
   id: LockerFillSalvageSpecialist
@@ -16,7 +24,6 @@
     - id: HandheldGPSBasic
     - id: RadioHandheld
     - id: AppraisalTool
-    - id: FireExtinguisher
     - id: Flare
       prob: 0.3
       rolls: !type:ConstantNumberSelector

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d7e905e4d5ab2b0a8ce210c6ad686aeeebbab426, monkey made by brainfood1183 (github) for ss14",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d7e905e4d5ab2b0a8ce210c6ad686aeeebbab426, monkey made by brainfood1183 (github) for ss14, folded made by Sha-Seng (Github)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-INNERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "folded-equipped-INNERCLOTHING",
       "directions": 4
     },
     {

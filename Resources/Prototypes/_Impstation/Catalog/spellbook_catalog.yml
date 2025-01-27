@@ -1,0 +1,12 @@
+- type: listing
+  id: SpellbookSpaceGrease
+  name: spellbook-spacegrease-name
+  description: spellbook-spacegrease-desc
+  productAction: ActionSpawnSpaceGreaseSpell
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

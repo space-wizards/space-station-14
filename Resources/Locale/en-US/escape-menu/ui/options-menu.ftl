@@ -32,10 +32,13 @@ ui-options-ambient-music-volume = Ambient music volume:
 ui-options-ambience-volume = Ambience volume:
 ui-options-lobby-volume = Lobby & Round-end volume:
 ui-options-interface-volume = Interface volume:
+ui-options-announcer-volume = Announcer volume:
 ui-options-ambience-max-sounds = Ambience simultaneous sounds:
 ui-options-lobby-music = Lobby & Round-end Music
 ui-options-restart-sounds = Round Restart Sounds
 ui-options-event-music = Event Music
+ui-options-announcer-disable-multiple-sounds = Disable Overlapping Announcer Sounds
+ui-options-announcer-disable-multiple-sounds-tooltip = Some announcements will not sound right, this setting isn't recommended
 ui-options-admin-sounds = Play Admin Sounds
 ui-options-volume-label = Volume
 
@@ -47,6 +50,9 @@ ui-options-misc-label = Misc
 ui-options-interface-label = Interface
 
 
+ui-options-auto-fill-highlights = Auto-fill the highlights with the character's information
+ui-options-highlights-color = Highlights color:
+ui-options-highlights-color-example = This is some highlighted text.
 ui-options-show-held-item = Show held item next to cursor
 ui-options-show-combat-mode-indicators = Show combat mode indicators with cursor
 ui-options-opaque-storage-window = Opaque storage window
@@ -280,5 +286,6 @@ cmd-options-help = Usage: options [tab]
 ui-options-enable-color-name = Add colors to character names
 ui-options-colorblind-friendly = Colorblind friendly mode
 ui-options-reduced-motion = Reduce motion of visual effects
+ui-options-disable-singulo-warp = Disable the singularity's screen warping effect
 ui-options-chat-window-opacity = Chat window opacity
 ui-options-screen-shake-intensity = Screen shake intensity

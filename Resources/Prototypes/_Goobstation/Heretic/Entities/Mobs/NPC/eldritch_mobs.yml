@@ -1,0 +1,132 @@
+- type: entity
+  parent: [ SimpleMobBase, MobCombat ]
+  id: BaseMobGhoul
+  abstract: true
+  components:
+  - type: Ghoul
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.00
+    baseSprintSpeed: 3.00
+  - type: InputMover
+  - type: MobMover
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: NpcFactionMember
+    factions:
+    - Heretic
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 250
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      90: Critical
+      100: Dead
+  - type: MeleeWeapon
+    altDisarm: false
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 12
+        Piercing: 8
+  - type: NoSlip
+  - type: Grammar
+    attributes:
+      gender: male
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghostrole-ghoul-name
+    description: ghostrole-ghoul-desc
+    rules: ghostrole-ghoul-rules
+    raffle:
+      settings: short
+  - type: ActiveRadio
+    channels:
+    - Mansus
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Mansus
+
+
+- type: entity
+  parent: BaseMobGhoul
+  id: MobGhoulStalker
+  name: flesh stalker
+  description: An abomination cobbled together from varied remains. Its appearance changes slightly every time you blink.
+  components:
+  - type: Ghoul
+    totalHealth: 150
+  - type: Sprite
+    sprite: _Goobstation/Heretic/eldritch_mobs.rsi
+    state: stalker
+  - type: GhostRole
+    name: ghostrole-stalker-name
+    description: ghostrole-stalker-desc
+  - type: ActionsProvider
+    actions:
+    - ActionHereticJaunt
+  # basically an EMP implant. don't feel like making 1 more emp action
+    - ActionActivateEmpImplant
+  - type: TriggerImplantAction
+  - type: EmpOnTrigger
+    range: 5
+    energyConsumption: 50000
+    disableDuration: 20
+
+- type: entity
+  parent: BaseMobGhoul
+  id: MobGhoulProphet
+  name: raw prophet
+  description: An abomination stitched together from a few severed arms and one swollen, orphaned eye.
+  components:
+  - type: Ghoul
+    totalHealth: 75
+  - type: Sprite
+    noRot: true
+    sprite: _Goobstation/Heretic/eldritch_mobs.rsi
+    layers:
+    - map: [ "movement" ]
+      state: raw_prophet
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: raw_prophet-move
+    noMovementLayers:
+      movement:
+        state: raw_prophet
+  - type: GhostRole
+    name: ghostrole-prophet-name
+    description: ghostrole-prophet-desc
+  - type: ActionsProvider
+    actions:
+    - ActionHereticJaunt
+    - ActionHereticMansusLink
+
+- type: entity
+  parent: BaseMobGhoul
+  id: MobGhoulRustWalker
+  name: rust walker
+  description: A grinding, clanking construct which leaches life from its surroundings with every armoured step.
+  suffix: DO NOT MAP
+  components:
+  - type: Ghoul
+    totalHealth: 100

@@ -1,0 +1,47 @@
+- type: entity
+  parent: FloorWaterEntity
+  id: FloorChromiteChasmFake
+  suffix: Chromite
+  components:
+  - type: Sprite
+    sprite: Tiles/Planet/Chasms/basalt_chasm.rsi
+    drawdepth: FloorTiles
+    layers:
+    - state: chasm
+  - type: Icon
+    sprite: Tiles/Planet/Chasms/basalt_chasm.rsi
+    state: full
+  - type: IconSmooth
+    key: chasm
+    base: chasm
+  - type: Transform
+    anchored: true
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.2
+    sprintSpeedModifier: 0.2
+  - type: Slippery
+  - type: StepTrigger
+    intersectRatio: 200
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+        - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
+  - type: Tag
+    tags:
+      - Catwalk

@@ -187,8 +187,8 @@ accent-cowboy-replacement-62 = greenhorns
 accent-cowboy-words-63 = planning
 accent-cowboy-replacement-63 = fixing
 
-accent-cowboy-words-64 = please
-accent-cowboy-replacement-64 = pray
+accent-cowboy-words-64 = please tell me
+accent-cowboy-replacement-64 = pray tell,
 
 accent-cowboy-words-65 = punch
 accent-cowboy-replacement-65 = lick
@@ -224,7 +224,7 @@ accent-cowboy-words-75 = secoff
 accent-cowboy-replacement-75 = deputy
 
 accent-cowboy-words-76 = security
-accent-cowboy-replacement-76 = law 
+accent-cowboy-replacement-76 = law
 
 accent-cowboy-words-77 = shitsec
 accent-cowboy-replacement-77 = crooked law

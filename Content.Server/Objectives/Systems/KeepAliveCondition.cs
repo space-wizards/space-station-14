@@ -15,6 +15,7 @@ public sealed class KeepAliveConditionSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedJobSystem _job = default!;
     [Dependency] private readonly TargetObjectiveSystem _target = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
 
@@ -44,16 +45,62 @@ public sealed class KeepAliveConditionSystem : EntitySystem
             return;
         }
 
-        var traitors = Enumerable.ToList<(EntityUid Id, MindComponent Mind)>(_traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind));
+        var traitors = _traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind).Select(t => t.Id).ToHashSet();
+
+        // Can't have multiple objectives to help/save/kill the same person
+        foreach (var objective in args.Mind.Objectives)
+        {
+            if (HasComp<RandomTraitorAliveComponent>(objective) || HasComp<RandomTraitorProgressComponent>(objective) || HasComp<KillPersonConditionComponent>(objective)) // imp edit
+            {
+                if (TryComp<TargetObjectiveComponent>(objective, out var help))
+                {
+                    traitors.RemoveWhere(x => x == help.Target);
+                }
+            }
+        }
 
         // You are the first/only traitor.
         if (traitors.Count == 0)
         {
-            args.Cancelled = true;
-            return;
+            // If not trying to make all possible candidates traitors, cancel the objective
+            if (!_traitorRule.ForceAllPossible)
+            {
+                args.Cancelled = true;
+                return;
+            }
+
+            //Fallback to assign people who COULD be assigned as traitor - might need to just do this from the start on ForceAll rounds, limiting it to existing traitors could be skewing the numbers towards just a few people.
+            var allHumans = _mind.GetAliveHumans(args.MindId).Select(p => p.Owner).ToHashSet();
+            var allValidTraitorCandidates = new HashSet<EntityUid>();
+            if (_traitorRule.CurrentAntagPool != null)
+            {
+                var poolSessions = _traitorRule.CurrentAntagPool.GetPoolSessions();
+                foreach (var mind in allHumans)
+                {
+                    if (!args.Mind.ObjectiveTargets.Contains(mind) && _job.MindTryGetJob(mind, out var prototype) && prototype.CanBeAntag && _mind.TryGetSession(mind, out var session) && poolSessions.Contains(session))
+                    {
+                        allValidTraitorCandidates.Add(mind);
+                    }
+                }
+            }
+
+            // Just try and save some other nerd for some reason. The syndicate needs them alive.
+            if (allValidTraitorCandidates.Count == 0)
+            {
+                allValidTraitorCandidates = allHumans;
+            }
+            traitors = allValidTraitorCandidates;
+
+            // One last check for the road, then cancel it if there's nothing left
+            if (traitors.Count == 0)
+            {
+                args.Cancelled = true;
+                return;
+            }
         }
 
-        _target.SetTarget(uid, _random.Pick(traitors).Id, target);
+        var randomTarget = _random.Pick(traitors);
+        _target.SetTargetExclusive(uid, args.Mind, randomTarget, target);
     }
 
     private float GetProgress(EntityUid target)

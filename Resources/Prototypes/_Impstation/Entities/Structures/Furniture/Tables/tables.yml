@@ -1,0 +1,52 @@
+- type: entity
+  id: TableUraniumGlass
+  parent: TablePlasmaGlass
+  name: uranium glass table
+  description: A square piece of uranium glass, standing on four metal legs. Pretty!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Furniture/Tables/uranium.rsi
+  - type: Icon
+    sprite: _Impstation/Structures/Furniture/Tables/uranium.rsi
+  - type: GlassTable
+    climberDamage:
+      types:
+        Slash: 26
+        Radiation: 8
+    tableDamage:
+      types:
+        Blunt: 100
+    tableMassLimit: 240
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 250
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: TableFrame
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassUranium:
+            min: 1
+            max: 1
+          PartRodMetal1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: Table
+    node: TableUraniumGlass

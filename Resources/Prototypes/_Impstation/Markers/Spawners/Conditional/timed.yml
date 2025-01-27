@@ -1,0 +1,19 @@
+﻿- type: entity
+  name: BROS Vent Spawner
+  id: BrosVentSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - sprite: Mobs/Animals/bros.rsi
+          state: bros
+        - state: timed
+    - type: Timer
+    - type: ClusterSpawner
+      prototypes:
+        - MobBros
+        - MobSorb
+      chance: 0.9
+      minimumEntitiesSpawned: 10
+      maximumEntitiesSpawned: 15

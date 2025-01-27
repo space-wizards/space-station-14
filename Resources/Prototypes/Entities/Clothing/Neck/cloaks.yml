@@ -137,6 +137,15 @@
 
 - type: entity
   parent: ClothingNeckBase
+  id: ClothingNeckCloakDriller
+  name: driller's cape
+  description: Worn by the bravest salvagers, whose diamond-tipped drills can pierce the very heavens.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/driller.rsi
+
+- type: entity
+  parent: ClothingNeckBase
   id: ClothingNeckCloakTrans
   name: vampire cloak
   description: Worn by high ranking vampires of the transylvanian society of vampires.
@@ -279,4 +288,13 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/pan.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakBear
+  name: druid cloak
+  description: This cloak has a wild-looking shape on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/bear.rsi
 

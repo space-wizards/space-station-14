@@ -35,6 +35,21 @@
       temperature: 293.15
 
 - type: entity
+  id: OxygenTankCommandFilled
+  parent: [OxygenTankCommand, BaseCommandContraband]
+  suffix: Filled
+  name: command oxygen tank
+  components:
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      # 31 minutes
+      volume: 5
+      moles:
+        - 2.051379050 # oxygen
+      temperature: 293.15
+
+- type: entity
   id: EmergencyOxygenTankFilled
   parent: EmergencyOxygenTank
   suffix: Filled
@@ -62,7 +77,6 @@
         - 0 # oxygen
         - 0.270782035 # nitrogen
       temperature: 293.15
-
 
 - type: entity
   id: ExtendedEmergencyOxygenTankFilled
@@ -92,7 +106,6 @@
         - 0 # oxygen
         - 0.615413715 # nitrogen
       temperature: 293.15
-
 
 - type: entity
   id: DoubleEmergencyOxygenTankFilled
@@ -142,7 +155,7 @@
         - 0 # water vapor
         - 0 # ammonia
         - 0.014251686 # 5% N2O
-        # 0.285033721       total 
+        # 0.285033721       total
       temperature: 293.15
 
 - type: entity
@@ -166,6 +179,21 @@
   parent: NitrogenTank
   suffix: Filled
   name: nitrogen tank
+  components:
+  - type: GasTank
+    air:
+      # 31 minutes
+      volume: 5
+      moles:
+        - 0           # oxygen not included
+        - 2.051379050 # nitrogen
+      temperature: 293.15
+
+- type: entity
+  id: NitrogenTankCommandFilled
+  parent: [NitrogenTankCommand, BaseCommandContraband]
+  suffix: Filled
+  name: command nitrogen tank
   components:
   - type: GasTank
     air:

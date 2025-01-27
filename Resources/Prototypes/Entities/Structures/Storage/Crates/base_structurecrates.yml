@@ -13,6 +13,7 @@
   - type: Sprite
     noRot: true
     sprite: Structures/Storage/Crates/generic.rsi
+    offset: 0, 0.25
     layers:
     - state: base
       map: ["enum.StorageVisualLayers.Base"]

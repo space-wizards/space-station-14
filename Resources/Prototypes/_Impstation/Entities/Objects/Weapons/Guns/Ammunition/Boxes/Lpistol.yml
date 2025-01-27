@@ -1,0 +1,85 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseMagazineBoxLPistol
+  name: ammunition box (.22 auto)
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeLPistol
+    proto: CartridgeLPistol
+    capacity: 100
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/light_pistol.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 3
+    zeroVisible: false
+  - type: Appearance
+
+# Boxes
+- type: entity
+  parent: BaseMagazineBoxLPistol
+  id: MagazineBoxLPistol
+  name: ammunition box (.22 auto)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLPistol
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  parent: BaseMagazineBoxLPistol
+  id: MagazineBoxLPistolPractice
+  name: ammunition box (.22 auto practice)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLPistolPractice
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: practice
+
+- type: entity
+  id: MagazineBoxLPistolIncendiary
+  parent: BaseMagazineBoxLPistol
+  name: ammunition box (.22 auto incendiary)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLPistolIncendiary
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: incendiary
+
+- type: entity
+  id: MagazineBoxLPistolUranium
+  parent: BaseMagazineBoxLPistol
+  name: ammunition box (.22 auto uranium)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLPistolUranium
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: uranium

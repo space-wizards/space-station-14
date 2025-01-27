@@ -4,6 +4,8 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
+
         {
             "name": "Client",
             "type": "coreclr",
@@ -23,11 +25,29 @@
             "stopAtEntry": false
         },
         {
+            "name": "Client (Tools Config)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
+            "args": ["--configuration Tools"],
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
             "name": "Server",
             "type": "coreclr",
             "request": "launch",
             "program": "${workspaceFolder}/bin/Content.Server/Content.Server.dll",
             "args": [],
+            "console": "integratedTerminal",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Server (Tools Config)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Content.Server/Content.Server.dll",
+            "args": ["--configuration Tools"],
             "console": "integratedTerminal",
             "stopAtEntry": false
         },
@@ -41,6 +61,8 @@
             "console": "internalConsole",
             "stopAtEntry": false
         }
+
+
     ],
     "compounds": [
         {
@@ -50,6 +72,21 @@
                 "Client"
             ],
             "preLaunchTask": "build"
+        },
+        {
+            "name": "Server/Client (Tools Config)",
+            "configurations": [
+                "Server (Tools Config)",
+                "Client (Tools Config)"
+            ],
+            "preLaunchTask": "build"
+        },
+        {
+            "name": "Server/Client (No Build)",
+            "configurations": [
+                "Server",
+                "Client"
+            ],
         }
     ]
 }

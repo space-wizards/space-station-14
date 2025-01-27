@@ -1,0 +1,13 @@
+﻿- type: constructionGraph
+  id: HempWovenSack
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: hempsack
+      steps:
+      - material: HempCloth
+        amount: 2
+        doAfter: 10
+  - node: hempsack
+    entity: HempClothSack

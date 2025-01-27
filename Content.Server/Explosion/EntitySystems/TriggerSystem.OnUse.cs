@@ -1,6 +1,7 @@
 using Content.Server.Explosion.Components;
 using Content.Shared.Examine;
 using Content.Shared.Explosion.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Sticky;

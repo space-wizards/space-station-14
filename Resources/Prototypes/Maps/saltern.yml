@@ -1,8 +1,8 @@
 - type: gameMap
   id: Saltern
   mapName: 'Saltern'
-  mapPath: /Maps/saltern.yml
-  minPlayers: 0
+  mapPath: /Maps/_Impstation/saltern.yml
+  minPlayers: 7
   maxPlayers: 35
   fallback: true
   stations:
@@ -41,6 +41,8 @@
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 4, 4 ]
             ResearchAssistant: [ 2, 2 ]
+            #silicon
+            StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
@@ -48,6 +50,7 @@
             Detective: [ 1, 1 ]
             SecurityOfficer: [ 4, 4 ]
             SecurityCadet: [ 4, 4 ]
+            Brigmedic: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 1, 3 ]

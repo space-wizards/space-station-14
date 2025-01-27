@@ -9,10 +9,10 @@
       time: 21600 #6 hrs
     - !type:RoleTimeRequirement
       role: JobSalvageSpecialist
-      time: 10800 #3 hrs
+      time: 10800 #3 hrs (too popular)
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 36000 #10 hours
+      time: 72000 #20 hours, imp
     - !type:OverallPlaytimeRequirement
       time: 144000 #40 hrs
   weight: 10
@@ -22,9 +22,11 @@
   canBeAntag: false
   access:
   - Cargo
+  - Courier #Imp
   - Salvage
   - Quartermaster
   - Maintenance
+  - External
   - Command
   - Brig
   - Cryogenics
@@ -39,7 +41,6 @@
   id: QuartermasterGear
   equipment:
     id: QuartermasterPDA
-    ears: ClothingHeadsetQM
     belt: BoxFolderClipboard
     pocket1: AppraisalTool
   storage:

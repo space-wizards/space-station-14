@@ -1,23 +1,22 @@
 - type: vendingMachineInventory
   id: ChefvendInventory
   startingInventory:
-    ReagentContainerFlour: 2
-    ReagentContainerCornmeal: 2
-    ReagentContainerSugar: 2
-    ReagentContainerRice: 2
-    FoodCondimentPacketSalt: 4
-    FoodCondimentBottleEnzyme: 2
-    FoodCondimentBottleHotsauce: 1
-    FoodCondimentBottleKetchup: 1
-    FoodCondimentBottleBBQ: 1
-    FoodCondimentBottleVinegar: 2
-    ReagentContainerOliveoil: 2
-    ReagentContainerMayo: 1
+    ReagentContainerFlour: 4
+    ReagentContainerCornmeal: 4
+    ReagentContainerSugar: 4
+    ReagentContainerRice: 4
+    FoodCondimentPacketSalt: 8
+    FoodCondimentBottleEnzyme: 4
+    FoodCondimentBottleHotsauce: 2
+    FoodCondimentBottleKetchup: 2
+    FoodCondimentBottleBBQ: 2
+    FoodCondimentBottleVinegar: 4
+    ReagentContainerOliveoil: 4
+    ReagentContainerMayo: 2
     VariantCubeBox: 1
-    FoodContainerEgg: 1
-    DrinkMilkCarton: 2
-    DrinkSoyMilkCarton: 1
-    FoodButter: 3
-    FoodCheese: 1
-    FoodMeat: 6
-    
+    FoodContainerEgg: 2
+    DrinkMilkCarton: 4
+    DrinkSoyMilkCarton: 2
+    FoodButter: 6
+    FoodCheese: 2
+    FoodMeat: 12

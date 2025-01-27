@@ -63,6 +63,118 @@
   objectType: Item
 
 - type: construction
+  name: web elegant dress
+  id: ClothingUniformJumpskirtWebElegantDress
+  graph: WebObjects
+  startNode: start
+  targetNode: elegantdress
+  category: construction-category-clothing
+  description: "Elegant dress with a silky bow."
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    state: WEB-crafting-icon
+  objectType: Item
+
+- type: construction
+  name: web striped dress
+  id: ClothingUniformJumpskirtWebStripedDress
+  graph: WebObjects
+  startNode: start
+  targetNode: stripeddress
+  category: construction-category-clothing
+  description: "Cute striped dress. Thick weaves of spider silk make up the darker stripes."
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    state: WEB-crafting-icon
+  objectType: Item
+
+- type: construction
+  name: web turtleneck dress
+  id: ClothingUniformJumpskirtWebTurtleneckDress
+  graph: WebObjects
+  startNode: start
+  targetNode: turtledress
+  category: construction-category-clothing
+  description: "Turtleneck dress with an intricate cobweb design."
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  icon:
+    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    state: WEB-crafting-icon
+  objectType: Item
+
+- type: construction
+  name: web loungewear
+  id: ClothingUniformJumpsuitLoungewearWeb
+  graph: WebObjects
+  startNode: start
+  targetNode: loungewear
+  category: construction-category-clothing
+  description: "A long stretch of spider silk that wraps around your body for comfort."
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/loungewearweb.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: web cap
+  id: ClothingHeadHatWebsoft
+  graph: WebObjects
+  startNode: start
+  targetNode: cap
+  category: construction-category-clothing
+  description: "It's a baseball hat in a tasteless off-white color. It has a faint shine to it."
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  icon:
+    sprite: Clothing/Head/Soft/websoft.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: web hat
+  id: ClothingHeadHatWebHat
+  graph: WebObjects
+  startNode: start
+  targetNode: widehat
+  category: construction-category-clothing
+  description: "A roughly woven wide-brim hat made of spider silk! Some strands drift in the air."
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  icon:
+    sprite: Clothing/Head/Hats/web_hat.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: web gloves
+  id: ClothingHandsGlovesColorWeb
+  graph: WebObjects
+  startNode: start
+  targetNode: gloves
+  category: construction-category-clothing
+  description: "Gloves made out of spider silk. Still won't keep you from frying."
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  icon:
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
   name: silk woven cloth
   id: SilkWovenCloth
   graph: WebObjects
@@ -107,5 +219,53 @@
     - SpiderCraft
   icon:
     sprite: Clothing/Shoes/Boots/winterbootsweb.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: striped web scarf
+  id: ClothingNeckScarfStripedWeb
+  graph: WebObjects
+  startNode: start
+  targetNode: scarf
+  category: construction-category-clothing
+  description: "A stylish striped web scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  icon:
+    sprite: Clothing/Neck/Scarfs/web.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: short web scarf
+  id: ClothingNeckScarfStripedZebraWeb
+  graph: WebObjects
+  startNode: start
+  targetNode: shortscarf
+  category: construction-category-clothing
+  description: "A short, striped web scarf. Feels like an unfinished cocoon."
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  icon:
+    sprite: Clothing/Neck/Scarfs/zebraweb.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: web mantle
+  id: ClothingNeckMantleWeb
+  graph: WebObjects
+  startNode: start
+  targetNode: mantle
+  category: construction-category-clothing
+  description: "A soft silk mantle, made with similar weaving to the web winter coat. Gets dirty way too quickly."
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  icon:
+    sprite: Clothing/Neck/mantles/webmantle.rsi
     state: icon
   objectType: Item

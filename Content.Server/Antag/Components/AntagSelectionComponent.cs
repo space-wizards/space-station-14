@@ -44,6 +44,12 @@ public sealed partial class AntagSelectionComponent : Component
     public HashSet<ICommonSession> SelectedSessions = new();
 
     /// <summary>
+    /// Cached sessions of players who are chosen. Used so we don't have to rebuild the pool multiple times in a tick.
+    /// Is not serialized.
+    /// </summary>
+    public HashSet<ICommonSession> ProcessedSessions = new();
+
+    /// <summary>
     /// Locale id for the name of the antag.
     /// If this is set then the antag is listed in the round-end summary.
     /// </summary>
@@ -114,6 +120,12 @@ public partial struct AntagSelectionDefinition()
     /// </summary>
     [DataField]
     public bool LateJoinAdditional = false;
+
+    /// <summary>
+    /// If true, all possible players who have this antag type enabled will be selected. Includes latejoins if LateJoinAdditional is true.
+    /// </summary>
+    [DataField]
+    public bool ForceAllPossible = false;
 
     //todo: find out how to do this with minimal boilerplate: filler department, maybe?
     //public HashSet<ProtoId<JobPrototype>> JobBlacklist = new()

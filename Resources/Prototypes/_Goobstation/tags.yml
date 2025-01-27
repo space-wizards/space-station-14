@@ -1,0 +1,23 @@
+- type: Tag
+  id: BreathMask
+
+- type: Tag
+  id: ClownEmergencyOxygenTank
+
+- type: Tag
+  id: EmergencyMedipen
+
+- type: Tag
+  id: EmergencyNitrogenTank
+
+- type: Tag
+  id: EmergencyOxygenTank
+
+- type: Tag
+  id: ExtendedEmergencyOxygenTank
+
+- type: Tag
+  id: SecurityBreathMask
+
+- type: Tag
+  id: WaterTank

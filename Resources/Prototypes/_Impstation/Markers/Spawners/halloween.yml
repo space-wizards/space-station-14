@@ -1,0 +1,298 @@
+- type: entity
+  name: Slurva Spawner
+  id: SpawnMobSlurva
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobArgocyteSlurva
+
+- type: entity
+  name: Barrier Spawner
+  id: SpawnMobBarrier
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobArgocyteBarrier
+
+- type: entity
+  name: Skitter Spawner
+  id: SpawnMobSkitter
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobArgocyteSkitter
+
+- type: entity
+  name: Swiper Spawner
+  id: SpawnMobSwiper
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobArgocyteSwiper
+
+- type: entity
+  name: Molder Spawner
+  id: SpawnMobMolder
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobArgocyteMolder
+
+- type: entity
+  name: Pouncer Spawner
+  id: SpawnMobPouncer
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobArgocytePouncer
+
+- type: entity
+  name: Glider Spawner
+  id: SpawnMobGlider
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobArgocyteGlider
+
+- type: entity
+  name: Harvester Spawner
+  id: SpawnMobHarvester
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobArgocyteHarvester
+
+- type: entity
+  name: Crawler Spawner
+  id: SpawnMobCrawler
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobArgocyteCrawler
+
+- type: entity
+  name: Enforcer Spawner
+  id: SpawnMobEnforcer
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobArgocyteEnforcer
+
+- type: entity
+  name: Founder Spawner
+  id: SpawnMobFounder
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobArgocyteFounder
+
+- type: entity
+  name: Leviathing Spawner
+  id: SpawnMobLeviathing
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobArgocyteLeviathing
+
+- type: entity
+  name: Hivelord Spawner
+  id: SpawnMobHiverlord
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobHivelord
+
+- type: entity
+  name: Nice Carp Spawner
+  id: SpawnMobNiceCarp
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - NiceMobCarp
+
+- type: entity
+  name: Lava Watcher Spawner
+  id: SpawnMobLavaWatcher
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobWatcherLavaland
+
+- type: entity
+  name: Icewing Watcher Spawner
+  id: SpawnMobIcewingWatcher
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobWatcherIcewing
+
+- type: entity
+  name: Magmawing Watcher Spawner
+  id: SpawnMobMagmawingWatcher
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobWatcherMagmawing
+
+- type: entity
+  name: Mimic Spawner
+  id: SpawnMobMimic
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobMimic
+
+- type: entity
+  name: Shadow Cat Spawner
+  id: SpawnMobShadowCat
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCatShadow
+
+- type: entity
+  name: Tick Spawner
+  id: SpawnMobTick
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobTickSalvage
+
+- type: entity
+  name: Queen Spawner
+  id: SpawnMobQueen
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobXenoQueen
+
+- type: entity
+  name: Rouny Spawner
+  id: SpawnMobRouny
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobXenoRouny
+
+- type: entity
+  name: Special Guy Spawner
+  id: SpawnMobSpecialGuy
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobSpecialGuy

@@ -3,6 +3,8 @@
   startingInventory:
     ClothingUniformJumpsuitChaplain: 2
     ClothingUniformJumpskirtChaplain: 2
+    ClothingUniformFuneralSuit: 4 #imp
+    ClothingUniformFuneralSuitSkirt: 4 #imp
     ClothingUniformJumpsuitMonasticRobeDark: 1
     ClothingUniformJumpsuitMonasticRobeLight: 1
     ClothingNeckStoleChaplain: 1
@@ -17,9 +19,16 @@
     ClothingOuterPlagueSuit: 1
     ClothingMaskPlague: 1
     ClothingHeadsetService: 2
+    Bible: 1
     BoxCandle: 2
     BoxCandleSmall: 2
     Urn: 5
+    ClothingHeadHatKippahSimple: 3 #imp
+    ClothingHeadHatKippahWhiteAndBlue: 1 #imp
+    ClothingHeadHatKippahBlueAndGold: 1 #imp
+  contrabandInventory:
+    ClothingMaskClownChaplin: 1
+    ClothingOuterClownPriest: 1
   emaggedInventory:
     ClothingOuterArmorCult: 1
     ClothingHeadHelmetCult: 1

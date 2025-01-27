@@ -1,0 +1,6 @@
+- type: latheRecipe
+  id: PlantBag
+  result: PlantBag
+  completetime: 3
+  materials:
+    Cloth: 500

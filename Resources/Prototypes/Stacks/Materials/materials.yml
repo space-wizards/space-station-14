@@ -27,6 +27,13 @@
   maxCount: 30
 
 - type: stack
+  id: HempCloth
+  name: hemp cloth
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: hemp_cloth }
+  spawn: MaterialHempCloth1
+  maxCount: 30
+
+- type: stack
   id: Durathread
   name: durathread
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: durathread }
@@ -45,6 +52,13 @@
   name: cotton
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cotton }
   spawn: MaterialCotton1
+  maxCount: 30
+
+- type: stack
+  id: Hemp
+  name: hemp
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: hemp }
+  spawn: MaterialHemp1
   maxCount: 30
 
 - type: stack

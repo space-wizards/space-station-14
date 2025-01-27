@@ -18,11 +18,19 @@
     price: 50
   - type: Tag
     tags:
+    - DroneUsable
     - WhitelistChameleon
     - WeldingMask
   - type: HideLayerClothing
     slots:
     - Snout
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 7
+    staminaCost: 5
+    soundHit:
+      collection: MetalThud
 
 - type: entity
   parent: WeldingMaskBase
@@ -37,6 +45,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - DroneUsable
     - WhitelistChameleon
     - WeldingMask
 

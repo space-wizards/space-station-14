@@ -1,0 +1,159 @@
+# Species
+- type: loadoutEffectGroup
+  id: Aquatic
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Decapoid
+
+#- type: loadout
+#  id: EmergencyAquatic
+#  effects:
+#  - !type:GroupLoadoutEffect
+#    proto: Aquatic
+#  storage:
+#    back:
+#    - BoxSurvivalAquatic
+
+
+#- type: loadout
+#  id: EmergencyAquaticExtended
+#  effects:
+#  - !type:GroupLoadoutEffect
+#    proto: Aquatic
+#  storage:
+#    back:
+#    - BoxSurvivalEngineeringAquatic
+
+# Pre-equipped species gear
+
+# decapoid claw and vapor tank. it is very annoying that it has to be done this way
+- type: loadout
+  id: LoadoutDecapoidClaw
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Aquatic
+  inhand:
+    - DecapoidVaporTank
+    - DecapoidClawItem
+
+# Full tank for auqatics as part of any Survival loadout
+- type: loadout
+  id: LoadoutSpeciesAquaticFullTank
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Aquatic
+  equipment:
+    suitstorage: DecapoidVaporTank
+
+# Tank Harnesses for jobs that don't spawn with outerwear
+- type: loadout
+  id: LoadoutTankHarnessAquatic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Aquatic
+  equipment:
+    outerClothing: ClothingOuterVestTank
+
+- type: loadout
+  id: LoadoutTankHarnessAquaticCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Aquatic
+  equipment:
+    outerClothing: ClothingOuterVestTankCommand
+
+# Tank harnesses for jobs that spawn with outerwear, puts them in their inventory instead of dropping items at their feet
+- type: loadout
+  id: LoadoutTankHarnessAquaticWithOuterwear
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Aquatic
+  storage:
+    back:
+    - ClothingOuterVestTank
+
+- type: loadout
+  id: LoadoutTankHarnessAquaticCommandWithOuterwear
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Aquatic
+  storage:
+    back:
+    - ClothingOuterVestTankCommand
+
+# Breath Tool On Face
+- type: loadout
+  id: LoadoutDecapoidBreathTool
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Aquatic
+  equipment:
+    mask: DecapoidBreathingApparatus
+
+# Breath tool in inventory
+- type: loadout
+  id: LoadoutDecapoidBreathToolInventory
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Aquatic
+  storage:
+    back:
+    - DecapoidBreathingApparatus
+
+# Command
+- type: loadout
+  id: EmergencyOxygenCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  storage:
+    back:
+    - BoxSurvivalCommand
+
+- type: loadout
+  id: EmergencyNitrogenCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  storage:
+    back:
+    - BoxSurvivalNitrogenCommand
+
+# Chief Engineer
+- type: loadout
+  id: EmergencyOxygenExtendedCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  storage:
+    back:
+    - BoxSurvivalEngineeringCommand
+
+- type: loadout
+  id: EmergencyNitrogenExtendedCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  storage:
+    back:
+    - BoxSurvivalEngineeringNitrogenCommand
+
+# Head of Security
+- type: loadout
+  id: EmergencyOxygenSecurityCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  storage:
+    back:
+    - BoxSurvivalSecurityCommand
+
+- type: loadout
+  id: EmergencyNitrogenSecurityCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  storage:
+    back:
+    - BoxSurvivalSecurityNitrogenCommand

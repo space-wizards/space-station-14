@@ -227,3 +227,13 @@
   cost: 5000
   category: cargoproduct-category-name-livestock
   group: market
+
+- type: cargoProduct
+  id: LivestockFinfin
+  icon:
+    sprite: _Impstation/Mobs/Pets/finfin.rsi
+    state: finfin
+  product: CrateNPCFinfin
+  cost: 100000
+  category: cargoproduct-category-name-livestock
+  group: market

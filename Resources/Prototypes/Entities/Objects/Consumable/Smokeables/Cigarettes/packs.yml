@@ -42,6 +42,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 50
+      Plastic: 50
   - type: SpaceGarbage
   - type: Item
     size: Tiny
@@ -66,6 +67,8 @@
     - cig5
     - cig6
   - type: Appearance
+  - type: StealTarget #imp
+    stealGroup: Cigarettes
 
 - type: entity
   id: CigPackMixedBase
@@ -111,6 +114,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 50
+      Plastic: 50
   - type: SpaceGarbage
   - type: Item
     size: Tiny
@@ -135,6 +139,8 @@
     - cig5
     - cig6
   - type: Appearance
+  - type: StealTarget #imp
+    stealGroup: Cigarettes
 
 - type: entity
   id: CigPackGreen
@@ -182,7 +188,7 @@
 
 - type: entity
   id: CigPackSyndicate
-  parent: [CigPackBase, BaseSyndicateContraband]
+  parent: [CigPackBase, Tier2Contraband]
   name: Interdyne herbals packet
   description: Elite cigarettes for elite syndicate agents. Infused with medicine for when you need to do more than calm your nerves.
   components:

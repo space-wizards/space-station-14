@@ -8,26 +8,24 @@
     - id: BreakerFlip
     - id: BureaucraticError
     - id: ClericalError
-    - id: CockroachMigration
     - id: GasLeak
+    # - id: GreytideVirus
     - id: IonStorm # its calm like 90% of the time smh
     - id: KudzuGrowth
     - id: MassHallucinations
-    - id: MimicVendorRule
-    - id: MouseMigration
+    # - id: MimicVendorRule
     - id: PowerGridCheck
     - id: RandomSentience
-    - id: SlimesSpawn
     - id: SolarFlare
-    - id: SnakeSpawn
-    - id: SpiderClownSpawn
-    - id: SpiderSpawn
     - id: VentClog
+    - id: GoblinKnightEvent # imp
 
 - type: entityTable
   id: BasicAntagEventsTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
+    - !type:NestedSelector # DV
+      tableId: BasicAntagEventsTableDV
     - id: ClosetSkeleton
     - id: DragonSpawn
     - id: KingRatMigration
@@ -35,6 +33,29 @@
     - id: RevenantSpawn
     - id: SleeperAgents
     - id: ZombieOutbreak
+    - id: LoneOpsSpawn
+    - id: DerelictCyborgSpawn
+    - id: ChangelingAwakening
+    - id: GoblinStowawaysEvent # imp
+    - id: GoblinCastawaysEvent # imp
+
+- type: entityTable
+  id: SleeperlessAntagEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - !type:NestedSelector # DV
+      tableId: BasicAntagEventsTableDV
+    - id: ClosetSkeleton
+    - id: DragonSpawn
+    - id: KingRatMigration
+    - id: NinjaSpawn
+    - id: RevenantSpawn
+    - id: ZombieOutbreak
+    - id: LoneOpsSpawn
+    - id: DerelictCyborgSpawn
+    - id: ChangelingAwakening
+    - id: GoblinStowawaysEvent # imp
+    - id: GoblinCastawaysEvent # imp
 
 - type: entity
   id: BaseStationEvent
@@ -71,9 +92,6 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncementColor: "#18abf5"
-    startAudio:
-      path: /Audio/Announcements/announce.ogg
     weight: 8
     duration: 35
   - type: AnomalySpawnRule
@@ -87,9 +105,6 @@
       min:  30
       max:  30
   - type: StationEvent
-    startAnnouncementColor: "#18abf5"
-    startAudio:
-      path: /Audio/Announcements/announce.ogg
     weight: 8
     duration: 35
   - type: BluespaceArtifactRule
@@ -120,7 +135,7 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-bureaucratic-error-announcement
+    startAnnouncement: true
     minimumPlayers: 25
     weight: 3
     duration: 1
@@ -133,7 +148,7 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-clerical-error-announcement
+    startAnnouncement: true
     minimumPlayers: 15
     weight: 5
     duration: 1
@@ -146,7 +161,7 @@
   - type: StationEvent
     weight: 5
     duration: 1
-    minimumPlayers: 10
+    minimumPlayers: 15
   - type: RandomEntityStorageSpawnRule
     prototype: MobSkeletonCloset
 
@@ -158,7 +173,7 @@
     weight: 6.5
     earliestStart: 40
     reoccurrenceDelay: 20
-    minimumPlayers: 20
+    minimumPlayers: 30
     duration: null
   - type: SpaceSpawnRule
     spawnDistance: 0
@@ -255,10 +270,8 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: station-event-gas-leak-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    endAnnouncement: station-event-gas-leak-end-announcement
+    startAnnouncement: true
+    endAnnouncement: true
     weight: 8
   - type: GasLeakRule
 
@@ -273,18 +286,15 @@
     duration: 240
   - type: KudzuGrowthRule
 
+
 - type: entity
   id: PowerGridCheck
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
     weight: 5
-    startAnnouncement: station-event-power-grid-check-start-announcement
-    endAnnouncement: station-event-power-grid-check-end-announcement
-    startAudio:
-      path: /Audio/Announcements/power_off.ogg
-      params:
-        volume: -4
+    startAnnouncement: true
+    endAnnouncement: true
     duration: 60
     maxDuration: 120
   - type: PowerGridCheckRule
@@ -295,10 +305,8 @@
   components:
   - type: StationEvent
     weight: 8
-    startAnnouncement: station-event-solar-flare-start-announcement
-    endAnnouncement: station-event-solar-flare-end-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
+    startAnnouncement: true
+    endAnnouncement: true
     duration: 120
     maxDuration: 240
   - type: SolarFlareRule
@@ -322,90 +330,11 @@
   parent: BaseStationEventLongDelay
   components:
   - type: StationEvent
-    startAnnouncement: station-event-vent-clog-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     earliestStart: 15
     minimumPlayers: 15
     weight: 5
     duration: 60
   - type: VentClogRule
-
-- type: entity
-  id: SlimesSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    earliestStart: 20
-    minimumPlayers: 15
-    weight: 5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: MobAdultSlimesBlueAngry
-      prob: 0.02
-    - id: MobAdultSlimesGreenAngry
-      prob: 0.02
-    - id: MobAdultSlimesYellowAngry
-      prob: 0.02
-
-- type: entity
-  id: SnakeSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    earliestStart: 20
-    minimumPlayers: 15
-    weight: 5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: MobPurpleSnake
-      prob: 0.02
-    - id: MobSmallPurpleSnake
-      prob: 0.02
-    - id: MobCobraSpace
-      prob: 0.02
-
-- type: entity
-  id: SpiderSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    earliestStart: 20
-    minimumPlayers: 15
-    weight: 5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: MobGiantSpiderAngry
-      prob: 0.05
-
-- type: entity
-  id: SpiderClownSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    earliestStart: 20
-    minimumPlayers: 20
-    weight: 1.5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: MobClownSpider
-      prob: 0.05
 
 - type: entity
   id: ZombieOutbreak
@@ -451,7 +380,7 @@
     duration: 1
   - type: RuleGrids
   - type: LoadMapRule
-    preloadedGrid: ShuttleStriker
+    mapPath: /Maps/_Impstation/Shuttles/ShuttleEvent/striker.yml
   - type: NukeopsRule
     roundEndBehavior: Nothing
   - type: AntagSelection
@@ -484,9 +413,7 @@
     weight: 8
     minimumPlayers: 15
     maxOccurrences: 1 # can only happen once per round
-    startAnnouncement: station-event-communication-interception
-    startAudio:
-      path: /Audio/Announcements/intercept.ogg
+    startAnnouncement: true
     duration: null # the rule has to last the whole round not 1 second
     occursDuringRoundEnd: false
   - type: AlertLevelInterceptionRule
@@ -508,7 +435,7 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    weight: 7
+    weight: 2
     duration: 150
     maxDuration: 300
     reoccurrenceDelay: 30
@@ -539,3 +466,43 @@
     maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
     weight: 5
   - type: MobReplacementRule
+
+- type: entity
+  id: GreytideVirus
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    weight: 2 #imp. tf you mean this was weight 5
+    minimumPlayers: 25
+    reoccurrenceDelay: 20
+  - type: GreytideVirusRule
+    accessGroups:
+    - Cargo
+    - Command
+    - Engineering
+    - Research
+    - Security
+    - Service
+    blacklist:
+    - External # don't space everything
+
+- type: entity
+  parent: BaseGameRule
+  id: DerelictCyborgSpawn
+  components:
+  - type: StationEvent
+    weight: 5
+    earliestStart: 15
+    reoccurrenceDelay: 20
+    minimumPlayers: 4
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagSpawner
+    prototype: PlayerBorgDerelict
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointGhostDerelictCyborg
+      min: 1
+      max: 1
+      pickPlayer: false

@@ -6,8 +6,7 @@
     weight: 6
     duration: 1
     maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
+    startAnnouncement: true
   - type: RandomSentienceRule
     minSentiences: 2
     maxSentiences: 5

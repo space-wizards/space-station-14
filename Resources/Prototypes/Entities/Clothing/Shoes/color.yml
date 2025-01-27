@@ -276,3 +276,50 @@
       - state: equipped-FEET
         color: "#9C0DE1"
       - state: soles-equipped-FEET
+
+# Web Shoes
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesColorWeb
+  name: web shoes
+  description: Sleek, silky shoes. They pick up a lot of dust...
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/color.rsi
+    layers:
+    - state: WEB-icon
+  - type: Item
+    inhandVisuals: 
+      left:
+      - state: inhand-left
+        color: "#ebebeb"
+      right:
+      - state: inhand-right
+        color: "#ebebeb"
+  - type: Clothing
+    sprite: Clothing/Shoes/color.rsi
+    clothingVisuals:
+      shoes:
+      - state: equipped-FEET
+        color: "#ebebeb"
+      - state: contrastedsoles-equipped-FEET
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 2
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: SolutionContainerManager
+    solutions: # 6 (3 (fiber count of web) * 2 (to craft)) + 6 (magical crafting bonus)
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 12
+  - type: Construction
+    graph: WebObjects
+    node: shoes

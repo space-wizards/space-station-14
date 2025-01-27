@@ -729,6 +729,11 @@
 
 - type: latheRecipe
   parent: BaseCoatRecipe
+  id: ClothingOuterWinterBrigmedic
+  result: ClothingOuterWinterBrigmedic
+
+- type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterSyndie
   result: ClothingOuterWinterSyndie
 
@@ -962,3 +967,58 @@
   parent: BaseCarpetRecipe
   id: CarpetWhite
   result: FloorCarpetItemWhite
+
+- type: latheRecipe
+  parent: BaseNeckClothingRecipe
+  id: ClothingNeckCloakTrans
+  result: ClothingNeckCloakTrans
+
+- type: latheRecipe
+  parent: BaseNeckClothingRecipe
+  id: ClothingNeckCloakAce
+  result: ClothingNeckCloakAce
+
+- type: latheRecipe
+  parent: BaseNeckClothingRecipe
+  id: ClothingNeckCloakAro
+  result: ClothingNeckCloakAro
+
+- type: latheRecipe
+  parent: BaseNeckClothingRecipe
+  id: ClothingNeckCloakBi
+  result: ClothingNeckCloakBi
+
+- type: latheRecipe
+  parent: BaseNeckClothingRecipe
+  id: ClothingNeckCloakIntersex
+  result: ClothingNeckCloakIntersex
+
+- type: latheRecipe
+  parent: BaseNeckClothingRecipe
+  id: ClothingNeckCloakLesbian
+  result: ClothingNeckCloakLesbian
+
+- type: latheRecipe
+  parent: BaseNeckClothingRecipe
+  id: ClothingNeckCloakGay
+  result: ClothingNeckCloakGay
+
+- type: latheRecipe
+  parent: BaseNeckClothingRecipe
+  id: ClothingNeckCloakEnby
+  result: ClothingNeckCloakEnby
+
+- type: latheRecipe
+  parent: BaseNeckClothingRecipe
+  id: ClothingNeckCloakPan
+  result: ClothingNeckCloakPan
+
+- type: latheRecipe
+  parent: BaseNeckClothingRecipe
+  id: ClothingNeckCloakBear
+  result: ClothingNeckCloakBear
+
+- type: latheRecipe
+  parent: BaseNeckClothingRecipe
+  id: ClothingNeckCloakStraight
+  result: ClothingNeckCloakStraight

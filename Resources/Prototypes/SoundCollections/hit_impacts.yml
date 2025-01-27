@@ -27,3 +27,9 @@
   id: GlassSmash
   files:
   - /Audio/Effects/glass_smash.ogg
+
+- type: soundCollection
+  id: GreatWrench
+  files:
+#  - /Audio/Effects/metal_slam2.ogg
+  - /Audio/Effects/metal_slam4.ogg

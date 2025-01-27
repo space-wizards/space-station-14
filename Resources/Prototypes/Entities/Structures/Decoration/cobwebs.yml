@@ -18,16 +18,18 @@
   - type: Transform
     anchored: true
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Wood
+    damageModifierSet: Web
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 20 #With the damage modifier you should have a hard time getting through it with something blunt, but an axe or something flammable will do the trick.
+        damage: 5 # best removed with fire or slashing
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Construction
+    graph: WebStructures
+    node: cobweb1
 
 - type: entity
   id: Cobweb2
@@ -39,3 +41,41 @@
   - type: Icon
     sprite: Structures/Decoration/cobweb.rsi
     state: cobweb2
+  - type: Construction
+    graph: WebStructures
+    node: cobweb2
+
+- type: entity
+  id: WebWallDecor
+  name: web wall decor
+  description: Should somebody remove that?
+  components:
+  - type: Fixtures
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Appearance
+  - type: Rotatable
+  - type: WallMount
+    arc: 360
+  - type: Sprite
+    sprite: Objects/Misc/spiderweb.rsi
+    layers:
+      - state: spider_web_decor
+    drawdepth: WallMountedItems
+  - type: Construction
+    graph: WebStructures
+    node: walldecor
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Damageable
+    damageModifierSet: Web
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

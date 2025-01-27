@@ -1,0 +1,47 @@
+- type: reagent
+  id: AppleMartiniCrystalLite
+  name: reagent-name-apple-martini-crystal-lite
+  parent: BaseDrink
+  desc: reagent-desc-apple-martini-crystal-lite
+  physicalDesc: reagent-physical-desc-appletini
+  flavor: apple-martini-crystal-lite
+  color: "#CAD655"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/martiniglassnoolive.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 0.2
+
+- type: reagent
+  id: Raktaccino
+  name: reagent-name-raktaccino
+  parent: BaseDrink
+  desc: reagent-desc-raktaccino
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: raktaccino
+  color: "#4f2900"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/raktaccino.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 1
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 2.0
+        type: Remove
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.1
+  fizziness: 0.1

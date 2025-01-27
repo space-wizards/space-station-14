@@ -21,6 +21,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Server.Announcements.Systems;
 
 namespace Content.Server.GameTicking
 {
@@ -29,6 +30,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly DiscordWebhook _discord = default!;
         [Dependency] private readonly RoleSystem _role = default!;
         [Dependency] private readonly ITaskManager _taskManager = default!;
+        [Dependency] private readonly AnnouncerSystem _announcer = default!;
 
         private static readonly Counter RoundNumberMetric = Metrics.CreateCounter(
             "ss14_round_number",
@@ -192,9 +194,6 @@ namespace Content.Server.GameTicking
                 if (!_playerManager.TryGetSessionById(userId, out _))
                     continue;
 
-                if (_banManager.GetRoleBans(userId) == null)
-                    continue;
-
                 total++;
             }
 
@@ -238,11 +237,7 @@ namespace Content.Server.GameTicking
 #if DEBUG
                 DebugTools.Assert(_userDb.IsLoadComplete(session), $"Player was readied up but didn't have user DB data loaded yet??");
 #endif
-                if (_banManager.GetRoleBans(userId) == null)
-                {
-                    Logger.ErrorS("RoleBans", $"Role bans for player {session} {userId} have not been loaded yet.");
-                    continue;
-                }
+
                 readyPlayers.Add(session);
                 HumanoidCharacterProfile profile;
                 if (_prefsManager.TryGetCachedPreferences(userId, out var preferences))
@@ -341,8 +336,23 @@ namespace Content.Server.GameTicking
 
             RunLevel = GameRunLevel.PostRound;
 
-            ShowRoundEndScoreboard(text);
-            SendRoundEndDiscordMessage();
+            try
+            {
+                ShowRoundEndScoreboard(text);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error while showing round end scoreboard: {e}");
+            }
+
+            try
+            {
+                SendRoundEndDiscordMessage();
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error while sending round end Discord message: {e}");
+            }
         }
 
         public void ShowRoundEndScoreboard(string text = "")
@@ -635,11 +645,8 @@ namespace Content.Server.GameTicking
 
             var proto = _robustRandom.Pick(options);
 
-            if (proto.Message != null)
-                _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(proto.Message), playSound: true);
-
-            if (proto.Sound != null)
-                _audio.PlayGlobal(proto.Sound, Filter.Broadcast(), true);
+            _announcer.SendAnnouncement(_announcer.GetAnnouncementId(proto.ID), Filter.Broadcast(),
+                proto.Message ?? "game-ticker-welcome-to-the-station");
         }
 
         private async void SendRoundStartedDiscordMessage()

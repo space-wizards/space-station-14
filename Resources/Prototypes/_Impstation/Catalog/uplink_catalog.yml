@@ -1,0 +1,87 @@
+- type: listing
+  id: uplinkCleanerLakeUpgrade
+  name: uplink-cleaner-lake-upgrade-name
+  description: uplink-cleaner-lake-upgrade-desc
+  productEntity: WeaponCleanerLakeUpgradeKit
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 10
+  cost:
+    Telecrystal: 12 # was 14, didn't realise that the real CL came w/ that many grenades so this probably deserves a buff
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Janitor
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+
+- type: listing
+  id: uplinkZipperAP
+  name: uplink-zipper-ap-name
+  description: uplink-zipper-ap-desc
+  productEntity: WeaponPistolZipperAP
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 22
+  cost:
+    Telecrystal: 20
+  categories:
+    - UplinkWeaponry
+
+- type: listing
+  id: uplinkNemesisBR
+  name: uplink-nemesis-br-name
+  description: uplink-nemesis-br-desc
+  icon: { sprite: /Textures/_Impstation/Objects/Weapons/Guns/Rifles/nemesis.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledBR
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 13
+  cost:
+    Telecrystal: 18
+  categories:
+    - UplinkWeaponry
+
+- type: listing
+  id: UplinkMagazineRifleNemesis
+  name: uplink-rifle-magazine-nemesis-name
+  description: uplink-rifle-magazine-nemesis-desc
+  icon: { sprite: /Textures/_Impstation/Objects/Weapons/Guns/Ammunition/Magazine/Rifle/nemesismag.rsi, state: icon }
+  productEntity: MagazineBR
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkAmmo
+
+- type: listing
+  id: UplinkBulletcatcher
+  name: uplink-bulletcatcher-name
+  description: uplink-bulletcatcher-desc
+  icon: { sprite: _Impstation/Objects/Weapons/Melee/bulletcatcher.rsi, state: bulletcatcher }
+  productEntity: BulletCatcherBox
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 6
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Clown
+  categories:
+  - UplinkJob
+
+- type: listing
+  id: UplinkSpaceBlade
+  name: uplink-spaceblade-name
+  description: uplink-spaceblade-desc
+  icon: { sprite: /Textures/_NF/Objects/Fun/spaceblade.rsi, state: contraband }
+  productEntity: MysterySpaceBladeBoxSyndicate
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkPointless

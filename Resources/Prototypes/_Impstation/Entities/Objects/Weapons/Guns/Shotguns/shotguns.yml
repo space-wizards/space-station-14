@@ -1,0 +1,62 @@
+- type: entity
+  name: stun Enforcer
+  parent: WeaponShotgunEnforcer
+  id: WeaponShotgunEnforcerBeanbag
+  description: A premium combat shotgun with an extended magazine and a built-in silencer, modified to only accept .50 stun slugs.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagenforcer.rsi
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagenforcer.rsi
+  - type: Item
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagenforcer_inhands_64x.rsi
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/silenced2.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - ShellShotgunBeanbag
+    capacity: 7
+    proto: ShellShotgunBeanbag
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+
+- type: entity
+  name: stun Kammerer
+  parent:  [BaseWeaponShotgun, BaseGunWieldable, BaseMinorSecurityCivilianContraband]
+  id: WeaponShotgunKammererBeanbag
+  description: A pump shotgun with a built-in silencer, modified to only accept .50 stun slugs.
+  components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,0
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagpump_inhands_64x.rsi
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagpump.rsi
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagpump.rsi
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/silenced2.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - ShellShotgunBeanbag
+    capacity: 4
+    proto: ShellShotgunBeanbag
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg

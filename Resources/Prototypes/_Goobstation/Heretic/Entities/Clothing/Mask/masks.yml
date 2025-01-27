@@ -1,0 +1,23 @@
+- type: entity
+  parent: [ ClothingMaskBase, TierXContraband ]
+  id: ClothingMaskMadHeretic
+  name: abyssal mask
+  description: A mask created from suffering. When you look into its eyes, it looks back.
+  components:
+  # what heretic would remove the mask that will shit on everyone around him?
+  # also forcing the mask on heathens will be funny.
+  - type: SelfUnremovableClothing
+  - type: MadnessMask
+  - type: Sprite
+    sprite: _Goobstation/Heretic/mad_mask.rsi
+  - type: Clothing
+    sprite: _Goobstation/Heretic/mad_mask.rsi
+  - type: BreathMask
+  - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - Mask
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Snout

@@ -1,0 +1,119 @@
+- type: flavor
+  id: cigarettes
+  flavorType: Complex
+  description: flavor-complex-cigarettes
+
+- type: flavor
+  id: finfin
+  flavorType: Complex
+  description: flavor-complex-finfin
+
+- type: flavor
+  id: radiation
+  flavorType: Complex
+  description: flavor-complex-radiation
+
+- type: flavor
+  id: apple-martini-crystal-lite
+  flavorType: Complex
+  description: flavor-complex-apple-martini-crystal-lite
+
+- type: flavor
+  id: horsepussy
+  flavorType: Complex
+  description: flavor-complex-horsepussy
+
+- type: flavor
+  id: moscowmule
+  flavorType: Complex
+  description: flavor-complex-moscowmule
+
+- type: flavor
+  id: drinkdrink
+  flavorType: Base
+  description: flavor-base-drinkdrink
+
+- type: flavor
+  id: kingsoda
+  flavorType: Base
+  description: flavor-base-kingsoda
+
+- type: flavor
+  id: crud
+  flavorType: Complex
+  description: flavor-complex-crud
+
+- type: flavor
+  id: snotty
+  flavorType: Complex
+  description: flavor-complex-snotty
+
+- type: flavor
+  id: speed
+  flavorType: Complex
+  description: flavor-complex-speed
+
+- type: flavor
+  id: cottonbool
+  flavorType: Complex
+  description: flavor-complex-cottonbool
+
+- type: flavor
+  id: genderfluid
+  flavorType: Complex
+  description: flavor-complex-genderfluid
+
+- type: flavor
+  id: thavenbad
+  flavorType: Complex
+  description: flavor-complex-thavenbad
+
+- type: flavor
+  id: zombieslushie
+  flavorType: Complex
+  description: flavor-complex-zombieslushie
+
+- type: flavor
+  id: brotherly
+  flavorType: Complex
+  description: flavor-complex-brotherly
+
+- type: flavor
+  id: raktaccino
+  flavorType: Complex
+  description: flavor-complex-raktaccino
+
+- type: flavor
+  id: grease
+  flavorType: Complex
+  description: flavor-complex-grease
+
+- type: flavor
+  id: whimsy
+  flavorType: Base
+  description: flavor-base-whimsy
+  
+- type: flavor
+  id: secticket
+  flavorType: Complex
+  description: flavor-complex-secticket
+
+- type: flavor
+  id: piquant
+  flavorType: Base
+  description: flavor-base-piquant
+
+- type: flavor
+  id: unholy
+  flavorType: Base
+  description: flavor-base-unholy
+
+- type: flavor
+  id: medium
+  flavorType: Complex
+  description: flavor-complex-medium
+  
+- type: flavor
+  id: rodent
+  flavorType: Complex
+  description: flavor-complex-rodent

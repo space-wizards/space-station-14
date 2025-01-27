@@ -22,6 +22,11 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IComponentFactory _compFact = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
+
+    // Dictionary that contains the minimum round number for certain preset
+    // prototypes to be allowed to roll again
+    private static Dictionary<ProtoId<GamePresetPrototype>, int> _nextRoundAllowed = new();
 
     private string _ruleCompName = default!;
 
@@ -45,6 +50,12 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
 
         Log.Info($"Selected {preset.ID} as the secret preset.");
         _adminLogger.Add(LogType.EventStarted, $"Selected {preset.ID} as the secret preset.");
+
+        if (preset.Cooldown > 0)
+        {
+            _nextRoundAllowed[preset.ID] = _ticker.RoundId + preset.Cooldown + 1;
+            Log.Info($"{preset.ID} is now on cooldown until {_nextRoundAllowed[preset.ID]}");
+        }
 
         foreach (var rule in preset.Rules)
         {
@@ -165,6 +176,15 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
 
             if (ruleComp.MinPlayers > players && ruleComp.CancelPresetOnTooFewPlayers)
                 return false;
+
+            if (ruleComp.MaxPlayers < players && ruleComp.CancelPresetOnTooManyPlayers)
+                return false;
+        }
+
+        if (_nextRoundAllowed.ContainsKey(selected.ID) && _nextRoundAllowed[selected.ID] > _ticker.RoundId)
+        {
+            Log.Info($"Skipping preset {selected.ID} (Not available until round {_nextRoundAllowed[selected.ID]}");
+            return false;
         }
 
         return true;

@@ -1,0 +1,34 @@
+- type: entity
+  parent: [BaseItem, TierXContraband]
+  id: ThrowingStarChangeling
+  name: bone shard
+  description: A shard of sharp bone.
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Changeling/bone_shard.rsi
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: EmbedPassiveDamage
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 5
+        Piercing: 7
+  - type: StaminaDamageOnEmbed
+    damage: 45
+  - type: TimedDespawn
+    lifetime: 30

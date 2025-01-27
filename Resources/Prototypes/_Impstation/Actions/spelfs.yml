@@ -1,0 +1,14 @@
+- type: entity
+  id: ActionViewMoods
+  name: View Moods
+  description: View your current moods.
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    checkCanInteract: false
+    checkConsciousness: false
+    icon:
+      sprite: Interface/Actions/actions_borg.rsi
+      state: state-laws
+    event: !type:ToggleMoodsScreenEvent
+    useDelay: 0.5

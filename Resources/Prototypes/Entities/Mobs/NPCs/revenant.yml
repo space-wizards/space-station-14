@@ -8,6 +8,7 @@
   components:
   - type: Input
     context: "ghost"
+  - type: Spectral
   - type: MovementSpeedModifier
     baseWalkSpeed: 6
     baseSprintSpeed: 6
@@ -19,8 +20,13 @@
     allowed:
     - Stun
     - Corporeal
+    - EssenceRegen
+  - type: Hands
+    showInHands: false
+    disableExplosionRecursion: true
   - type: Damageable
-    damageContainer: Biological
+    damageContainer: ManifestedSpirit
+    damageModifierSet: ManifestedSpirit
   - type: NoSlip
   - type: Eye
     drawFov: false
@@ -40,6 +46,8 @@
       settings: default
   - type: GhostTakeoverAvailable
   - type: Revenant
+    exorcismRequiresBibleUser: true # Escape hatch, change to false if revenant becomes too OP
+    grindingRequiresSalt: true # Escape hatch, change to false if revenant becomes too OP
     malfunctionWhitelist:
       components:
       # emag lockers open
@@ -75,3 +83,6 @@
     - RevenantTheme
   - type: Speech
     speechVerb: Ghost
+  - type: Reactive
+    groups:
+      Acidic: [Touch]

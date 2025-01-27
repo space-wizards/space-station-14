@@ -6,6 +6,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Shared.Ghost;
 
 namespace Content.Shared.Damage.Systems;
 
@@ -24,7 +25,10 @@ public sealed class DamageExamineSystem : EntitySystem
     private void OnGetExamineVerbs(EntityUid uid, DamageExaminableComponent component, GetVerbsEvent<ExamineVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
-            return;
+        {
+            if (!HasComp<GhostComponent>(args.User)) //IMP: Ghosts can see damage
+                return;
+        }
 
         var ev = new DamageExamineEvent(new FormattedMessage(), args.User);
         RaiseLocalEvent(uid, ref ev);
@@ -61,6 +65,12 @@ public sealed class DamageExamineSystem : EntitySystem
         }
         else
         {
+            if (damageSpecifier.GetTotal() == FixedPoint2.Zero && !damageSpecifier.AnyPositive())
+            {
+                msg.AddMarkupOrThrow(Loc.GetString("damage-none"));
+                return msg;
+            }
+
             msg.AddMarkupOrThrow(Loc.GetString("damage-examine-type", ("type", type)));
         }
 

@@ -11,6 +11,9 @@
     sprite: Objects/Consumable/Smokeables/Pipes/pipe.rsi
     slots: [ mask ]
     equippedPrefix: unlit
+  - type: Tag
+    tags:
+      - PetWearable
   - type: Item
     size: Tiny
     sprite: Objects/Consumable/Smokeables/Pipes/pipe.rsi

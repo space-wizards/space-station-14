@@ -1,0 +1,601 @@
+# Starting
+
+- type: entity
+  id: ActionEvolutionMenu
+  name: Open Evolution Menu
+  description: Opens the evolution menu.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: evolution_menu
+    event: !type:OpenEvolutionMenuEvent {}
+  - type: ChangelingAction
+    requireBiomass: false
+    useInLesserForm: true
+    useInLastResort: true
+
+- type: entity
+  id: ActionAbsorbDNA
+  name: Absorb DNA
+  description: Absorbs the DNA of our incapacitated victim. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 5
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: absorb_dna
+    event: !type:AbsorbDNAEvent {}
+  - type: ChangelingAction
+    chemicalCost: 25
+    requireBiomass: false
+    useInLesserForm: true
+
+- type: entity
+  id: ActionStingExtractDNA
+  name: Extract DNA Sting
+  description: We stealthily sting a target and extract their DNA. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: sting_extractdna
+    event: !type:StingExtractDNAEvent {}
+  - type: ChangelingAction
+    chemicalCost: 25
+    useInLesserForm: true
+
+- type: entity
+  id: ActionChangelingTransformCycle
+  name: Cycle DNA
+  description: Cycle our available DNA.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: transform_cycle
+    event: !type:ChangelingTransformCycleEvent {}
+  - type: ChangelingAction
+    requireBiomass: false
+    useInLesserForm: true
+
+- type: entity
+  id: ActionChangelingTransform
+  name: Transform
+  description: We take on the voice and appearance of one we have absorbed. Costs a trace amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 5
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: transform
+    event: !type:ChangelingTransformEvent {}
+  - type: ChangelingAction
+    chemicalCost: 5
+    useInLesserForm: true
+
+- type: entity
+  id: ActionEnterStasis
+  name: Enter Regenerative Stasis
+  description: We fall into a stasis, allowing us to regenerate while appearing dead to the unwise. Drains all of our chemicals, and consumes biomass.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: stasis_enter
+    event: !type:EnterStasisEvent {}
+  - type: ChangelingAction
+    biomassCost: 1
+    useInLesserForm: true
+    useInLastResort: true
+
+- type: entity
+  id: ActionExitStasis
+  name: Exit Stasis
+  description: We arise once more. Costs a large amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: stasis_exit
+    event: !type:ExitStasisEvent {}
+  - type: ChangelingAction
+    chemicalCost: 60
+    useInLesserForm: true
+    useInLastResort: true
+
+# Combat
+
+- type: entity
+  id: ActionToggleArmblade
+  name: Toggle Arm Blade
+  description: We shape one of our arms into a strong blade. We may retract our blade in the same manner as we form it. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 2
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: armblade
+    event: !type:ToggleArmbladeEvent {}
+  - type: ChangelingAction
+    chemicalCost: 15
+
+- type: entity
+  id: ActionCreateBoneShard
+  name: Form Bone Shard
+  description: We break off shards of sharp bone to use as projectiles. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 1
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: bone_shard
+    event: !type:CreateBoneShardEvent {}
+  - type: ChangelingAction
+    chemicalCost: 15
+
+- type: entity
+  id: ActionToggleChitinousArmor
+  name: Toggle Chitin
+  description: We turn our skin into tough chitin to protect us from damage. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 2
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: chitinous_armor
+    event: !type:ToggleChitinousArmorEvent {}
+  - type: ChangelingAction
+    chemicalCost: 25
+    requireAbsorbed: 2
+
+- type: entity
+  id: ActionToggleOrganicShield
+  name: Form Shield
+  description: We reform one of our arms into a hard, yet brittle shield. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 2
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: organic_shield
+    event: !type:ToggleOrganicShieldEvent {}
+  - type: ChangelingAction
+    chemicalCost: 20
+    requireAbsorbed: 1
+
+- type: entity
+  id: ActionShriekDissonant
+  name: Dissonant Shriek
+  description: We shift our vocal cords to release a high-frequency sound that overloads nearby electronics. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 10
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: shriek_dissonant
+    event: !type:ShriekDissonantEvent {}
+  - type: ChangelingAction
+    chemicalCost: 30
+    useInLesserForm: true
+    requireAbsorbed: 1
+
+- type: entity
+  id: ActionShriekResonant
+  name: Resonant Shriek
+  description: We emit a high-frequency sound that confuses and deafens organics, blows out nearby lights, and overloads cyborg sensors. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 10
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: shriek_resonant
+    event: !type:ShriekResonantEvent {}
+  - type: ChangelingAction
+    chemicalCost: 30
+    useInLesserForm: true
+    requireAbsorbed: 1
+
+- type: entity
+  id: ActionToggleStrainedMuscles
+  name: Strain Muscles
+  description: We move at extremely fast speeds. Rapidly fatigues us.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 1
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: strained_muscles
+    event: !type:ToggleStrainedMusclesEvent {}
+  - type: ChangelingAction
+    chemicalCost: 0
+    useInLesserForm: true
+
+# Stings
+
+- type: entity
+  id: ActionStingBlind
+  name: Blind Sting
+  description: We sting a target, blinding them temporarily. Costs a medium amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: sting_blind
+    event: !type:StingBlindEvent {}
+  - type: ChangelingAction
+    chemicalCost: 35
+    useInLesserForm: true
+
+- type: entity
+  id: ActionStingCryo
+  name: Cryogenic Sting
+  description: We inject a target with a cocktail of chemicals that chills the blood. Costs a medium amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: sting_cryo
+    event: !type:StingCryoEvent {}
+  - type: ChangelingAction
+    chemicalCost: 35
+    useInLesserForm: true
+
+- type: entity
+  id: ActionStingLethargic
+  name: Lethargic Sting
+  description: We inject a target with a cocktail of anesthetics, causing them to become slow and drowsy. Costs a medium amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: sting_lethargic
+    event: !type:StingLethargicEvent {}
+  - type: ChangelingAction
+    chemicalCost: 35
+    useInLesserForm: true
+
+- type: entity
+  id: ActionStingMute
+  name: Mute Sting
+  description: We sting a target, silencing them for a few minutes. Costs a medium amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: sting_mute
+    event: !type:StingMuteEvent {}
+  - type: ChangelingAction
+    chemicalCost: 35
+    useInLesserForm: true
+
+- type: entity
+  id: ActionStingFakeArmblade
+  name: Fake Arm Blade Sting
+  description: We sting a target, mutating their arm to temporarily appear as an arm blade. Costs a medium amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: sting_armblade
+    event: !type:StingFakeArmbladeEvent {}
+  - type: ChangelingAction
+    chemicalCost: 50
+    useInLesserForm: true
+
+- type: entity
+  id: ActionStingTransform
+  name: Transformation Sting
+  description: We sting a target, injecting a retrovirus that causes them to transform. Costs a large amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: sting_transform
+    event: !type:StingTransformEvent {}
+  - type: ChangelingAction
+    chemicalCost: 75
+    useInLesserForm: true
+
+- type: entity
+  id: ActionLayEgg
+  name: Lay Egg
+  description: We plant an egg in a dead corpse which will mature into a new form for us.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: lay_egg
+    event: !type:StingLayEggsEvent {}
+  - type: ChangelingAction
+    chemicalCost: 0
+    useInLastResort: true
+
+# Utility
+
+- type: entity
+  id: ActionAnatomicPanacea
+  name: Anatomic Panacea
+  description: We expel impurities from our form, sobering us, and purging radiation and toxins. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 30
+    checkCanInteract: false
+    checkConsciousness: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: anatomic_panacea
+    event: !type:ActionAnatomicPanaceaEvent {}
+  - type: ChangelingAction
+    chemicalCost: 30
+    useInLesserForm: true
+
+- type: entity
+  id: ActionAugmentedEyesight
+  name: Augmented Eyesight
+  description: We grow a tinted nictitating membrane over our eyes, protecting our vision from sudden bright lights.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: augmented_eyesight
+    event: !type:ActionAugmentedEyesightEvent {}
+  - type: ChangelingAction
+    chemicalCost: 0
+
+- type: entity
+  id: ActionBiodegrade
+  name: Biodegrade
+  description: We spew a caustic substance, dissolving restraints and spraying those who hold onto us. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 5
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: biodegrade
+    event: !type:ActionBiodegradeEvent {}
+  - type: ChangelingAction
+    chemicalCost: 30
+
+- type: entity
+  id: ActionChameleonSkin
+  name: Chameleon Skin
+  description: Our skin pigmentation rapidly changes to suit our current environment. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 1
+    checkCanInteract: false
+    checkConsciousness: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: chameleon_skin
+    event: !type:ActionChameleonSkinEvent {}
+  - type: ChangelingAction
+    chemicalCost: 20
+
+- type: entity
+  id: ActionEphedrineOverdose
+  name: Ephedrine Overdose
+  description: We inject a cocktail of stimulants into ourself. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 10
+    checkCanInteract: false
+    checkConsciousness: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: epinephrine_overdose
+    event: !type:ActionEphedrineOverdoseEvent {}
+  - type: ChangelingAction
+    chemicalCost: 30
+    useInLesserForm: true
+
+- type: entity
+  id: ActionFleshmend
+  name: Fleshmend
+  description: Our flesh rapidly regenerates, healing our burns, bruises, and asphyxiation. Costs a medium amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 30
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: fleshmend
+    event: !type:ActionFleshmendEvent {}
+  - type: ChangelingAction
+    chemicalCost: 35
+    useInLesserForm: true
+
+- type: entity
+  id: ActionHivemindAccess
+  name: Hivemind Access
+  description: We tune our chemical receptors for hivemind communication.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: hivemind_access
+    event: !type:ActionHivemindAccessEvent {}
+  - type: ChangelingAction
+    chemicalCost: 0
+    useInLesserForm: true
+
+- type: entity
+  id: ActionLastResort
+  name: Last Resort
+  parent: BaseSuicideAction
+  description: We abandon our vessel, escaping in our vulnerable true self, to find a new body to occupy. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 5
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: last_resort
+    event: !type:ActionLastResortEvent {}
+  - type: ChangelingAction
+    chemicalCost: 20
+    biomassCost: -30 # absorbing the rest of the current body on use
+    useInLesserForm: true
+
+- type: entity
+  id: ActionToggleLesserForm
+  name: Lesser Form
+  description: We become lesser, transforming into a sentient monkey. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 5
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: lesser_form
+    event: !type:ActionLesserFormEvent {}
+  - type: ChangelingAction
+    chemicalCost: 20
+
+- type: entity
+  id: ActionToggleMindshieldFake
+  name: Toggle Mindshield Patterns
+  description: We shape our mental patterns to imitate a mindshield implantation.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 1
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: mindshield
+    event: !type:ActionMindshieldFakeEvent {}
+  - type: ChangelingAction
+    chemicalCost: 0
+    useInLesserForm: true
+
+- type: entity
+  id: ActionToggleSpacesuit
+  name: Toggle Space Adaptation
+  description: We prepare our cells to resist barotrauma. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 2
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: space_adaptation
+    event: !type:ActionSpacesuitEvent {}
+  - type: ChangelingAction
+    chemicalCost: 20

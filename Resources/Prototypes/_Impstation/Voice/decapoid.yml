@@ -1,0 +1,36 @@
+- type: speechSounds
+  id: Decapoid
+  saySound:
+    path: /Audio/Voice/Talk/Silicon/borg.ogg
+  askSound:
+    path: /Audio/Voice/Talk/Silicon/borg_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/Silicon/borg_exclaim.ogg
+
+- type: emoteSounds
+  id: UnisexDecapoid
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/_Impstation/Voice/Decapoid/decapoid_scream.ogg
+    Laugh:
+      path: /Audio/_Impstation/Voice/Decapoid/decapoid_laugh.ogg
+    Honk:
+      collection: BikeHorn
+    Yawn:
+      path: /Audio/_Impstation/Voice/Decapoid/decapoid_yawn.ogg
+    Whistle:
+      collection: Whistles
+    Crying:
+      path: /Audio/_Impstation/Voice/Decapoid/decapoid_cry.ogg
+    Sigh:
+      path: /Audio/_Impstation/Voice/Decapoid/decapoid_sigh.ogg
+    Gasp:
+      path: /Audio/_Impstation/Voice/Decapoid/decapoid_gasp.ogg
+    Cough:
+      path: /Audio/_Impstation/Voice/Decapoid/decapoid_cough.ogg
+    DefaultDeathgasp:
+      path: /Audio/_Impstation/Voice/Decapoid/decapoid_deathgasp.ogg
+    Ungh:
+      collection: Ungh

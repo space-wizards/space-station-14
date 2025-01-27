@@ -29,6 +29,7 @@
           Quantity: 5
   - type: Tag
     tags:
+      - DroneUsable
       - PowerCell
   - type: Appearance
   - type: PowerCellVisuals
@@ -52,6 +53,7 @@
   - type: Tag
     tags:
       - PotatoBattery
+      - DroneUsable
   - type: Construction
     graph: PowerCellPotato
     node: potatobattery

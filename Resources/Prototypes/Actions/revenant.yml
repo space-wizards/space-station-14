@@ -13,6 +13,7 @@
   description: Costs 30 Essence.
   components:
   - type: InstantAction
+    itemIconStyle: NoItem
     icon: Interface/Actions/defile.png
     event: !type:RevenantDefileActionEvent
     useDelay: 15
@@ -23,6 +24,7 @@
   description: Costs 40 Essence.
   components:
   - type: InstantAction
+    itemIconStyle: NoItem
     icon: Interface/Actions/overloadlight.png
     event: !type:RevenantOverloadLightsActionEvent
     useDelay: 20
@@ -43,6 +45,7 @@
   description: Costs 60 Essence.
   components:
   - type: InstantAction
+    itemIconStyle: NoItem
     icon: Interface/Actions/malfunction.png
     event: !type:RevenantMalfunctionActionEvent
     useDelay: 20

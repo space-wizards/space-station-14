@@ -5,6 +5,7 @@
   id: BaseMobArachnid
   abstract: true
   components:
+  - type: Absorbable
   - type: Body
     prototype: Arachnid
     requiredLegs: 2 # It would be funny if arachnids could use their little back limbs to move around once they lose their legs, but just something to consider post-woundmed
@@ -66,8 +67,8 @@
     allowedEmotes: ['Click', 'Chitter']
   - type: Vocal
     sounds:
-      Male: UnisexArachnid
-      Female: UnisexArachnid
+      Male: MaleArachnid
+      Female: FemaleArachnid
       Unsexed: UnisexArachnid
   - type: TypingIndicator
     proto: spider
@@ -81,6 +82,8 @@
       - map: [ "enum.HumanoidVisualLayers.LArm" ]
       - map: [ "enum.HumanoidVisualLayers.RLeg" ]
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+      - map: [ "enum.HumanoidVisualLayers.Underwear" ]
+      - map: [ "enum.HumanoidVisualLayers.Undershirt" ]
       - map: ["jumpsuit"]
       - map: ["enum.HumanoidVisualLayers.LFoot"]
       - map: ["enum.HumanoidVisualLayers.RFoot"]

@@ -8,19 +8,18 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobChemist
-      time: 10800 #3 hrs
+      time: 21600 #6 hrs, imp. why tf was this so low?
     - !type:RoleTimeRequirement
       role: JobMedicalDoctor
       time: 21600 #6 hrs
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000 #10 hrs
+      time: 72000 #20 hrs, imp
     - !type:OverallPlaytimeRequirement
       time: 144000 #40 hrs
   weight: 10
   startingGear: CMOGear
   icon: "JobIconChiefMedicalOfficer"
-  requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
   access:
@@ -31,6 +30,7 @@
   - ChiefMedicalOfficer
   - Brig
   - Cryogenics
+  - External
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -42,7 +42,6 @@
   id: CMOGear
   equipment:
     id: CMOPDA
-    ears: ClothingHeadsetCMO
     belt: ClothingBeltMedicalFilled
   storage:
     back:

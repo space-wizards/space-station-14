@@ -349,6 +349,17 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of green marijuana seeds
+  description: "Taxable."
+  id: GreenMarijuanaSeeds
+  components:
+    - type: Seed
+      seedId: greenMarijuana
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/cannabis.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of rainbow cannabis seeds
   description: "These seeds grow into rainbow weed. Groovy... and also highly addictive."
   id: RainbowCannabisSeeds
@@ -502,7 +513,7 @@
       sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
 
 - type: entity
-  parent: [SeedBase, BaseSyndicateContraband]
+  parent: [SeedBase, Tier2Contraband]
   name: packet of gatfruit seeds
   description: "These are no peashooters."
   id: GatfruitSeeds
@@ -735,3 +746,24 @@
       seedId: anomalyBerry
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of lemo seeds
+  description: "Imported all the way from the distant planet Teo."
+  id: LemoSeeds
+  components:
+    - type: Seed
+      seedId: lemo
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/lemo.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of kisser tomato seeds
+  id: KisserTomatoSeeds
+  components:
+    - type: Seed
+      seedId: kisserTomato
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/tomatokisser.rsi

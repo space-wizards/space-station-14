@@ -1,0 +1,27 @@
+- type: entity
+  parent: BaseGameRule
+  id: Changeling
+  components:
+  - type: ChangelingRule
+  - type: GameRule
+    minPlayers: 15
+    delay:
+      min: 30
+      max: 60
+  - type: AntagObjectives
+    objectives:
+    - ChangelingStealDNAObjective
+    - EscapeIdentityObjective
+    - ChangelingSurviveObjective
+  - type: AntagSelection
+    agentName: changeling-roundend-name
+    definitions:
+    - prefRoles: [ Changeling ]
+      max: 6
+      playerRatio: 10
+      lateJoinAdditional: true
+      blacklist:
+        components:
+        - AntagImmune
+      mindRoles:
+      - MindRoleChangeling

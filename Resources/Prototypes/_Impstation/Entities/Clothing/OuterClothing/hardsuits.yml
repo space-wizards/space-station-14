@@ -1,0 +1,97 @@
+#Janitor Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseCivilianContraband]
+  id: ClothingOuterHardsuitJanitor
+  name: janitorial hardsuit
+  description: For your spill-cleaning, light-changing, and trash-picking needs in the vacuum of space!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/janitor.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/janitor.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Caustic: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 0.80
+    sprintModifier: 0.80
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitJanitor
+
+#Black mime Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitMime
+  id: ClothingOuterHardsuitMimeBlack
+  name: black mime hardsuit
+  description: A custom-made mime hardsuit.
+  components:
+  - type: Tag
+    tags:
+      - MimeHardsuit
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/mimeblack.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/mimeblack.rsi
+  - type: Construction
+    graph: BlackMimeHardsuit
+    node: blackmimeHardsuit
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitMimeBlack
+
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseCargoContraband]
+  id: ClothingOuterHardsuitCourier
+  name: courier hardsuit
+  description: For urgent deliveries, no matter the weather.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/courier.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/courier.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Cold: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitCourier
+
+# antag hardsuit
+
+- type: entity
+  parent: [ClothingOuterHardsuitBase, Tier3Contraband]
+  id: ClothingOuterHardsuitRepomen
+  name: cybersun repoman's hardsuit
+  description: A daunting hardsuit used by the infamous Cybersun Repomen. Its design allows for better maneuverability with insulation from hazardous environments.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/repoman.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/repoman.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.1
+        Radiation: 0.1
+        Heat: 0.25
+        Blunt: 0.9
+        Slash: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.95
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitRepomen

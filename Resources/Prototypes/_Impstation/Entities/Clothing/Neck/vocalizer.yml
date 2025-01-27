@@ -1,0 +1,18 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckSGD
+  name: speech generating device
+  description: An assistive device for people who are incapable of vocal communication, based on Decapoid technology. Translates data from neural implants into audiable speech.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Misc/sgd.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Misc/sgd.rsi
+  - type: SpeechSound
+    speechSounds: Borg
+    speechVerb: Robotic
+  - type: Tag
+    tags:
+      - SGD

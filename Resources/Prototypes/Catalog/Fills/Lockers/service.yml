@@ -21,6 +21,8 @@
         amount: 2
       - id: RagItem
         amount: 2
+      - id: DrinkAppleMartiniCrystalLiteBottleFull
+        prob: 0.2
 
 #- type: entity
 #  id: LockerFormalFilled
@@ -52,6 +54,10 @@
       - id: DrinkMilkCarton
         amount: 2
       - id: DrinkSoyMilkCarton
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: RandomIngredientBox
 
 - type: entity
   id: ClosetJanitorFilled
@@ -77,6 +83,7 @@
         amount: 2
       - id: Plunger
         amount: 2
+      - id: WeaponLauncherCleanerLake
 
 - type: entity
   id: ClosetLegalFilled

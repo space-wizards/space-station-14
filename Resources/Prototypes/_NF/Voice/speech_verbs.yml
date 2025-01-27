@@ -1,0 +1,9 @@
+- type: speechVerb
+  id: Goblin
+  name: chat-speech-verb-name-goblin
+  speechVerbStrings:
+  - chat-speech-verb-goblin-1
+  - chat-speech-verb-goblin-2
+  - chat-speech-verb-goblin-3
+  - chat-speech-verb-goblin-4
+  - chat-speech-verb-goblin-5

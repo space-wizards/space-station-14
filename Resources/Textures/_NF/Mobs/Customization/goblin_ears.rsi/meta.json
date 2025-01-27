@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "copyright": "Sprited by erhardsteinhauer (discord)",
+    "license": "CC-BY-SA-4.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "goblin_ears_default",
+            "directions": 4
+        },
+        {
+            "name": "goblin_ears_default_alt",
+            "directions": 4
+        },
+        {
+            "name": "goblin_ears_long_01",
+            "directions": 4
+        },
+        {
+            "name": "goblin_ears_long_02",
+            "directions": 4
+        }
+    ]
+}

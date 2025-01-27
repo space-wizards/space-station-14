@@ -1,0 +1,11 @@
+- type: entity
+  id: BaseMagicContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Magic
+    allowedDepartments: null
+
+- type: contrabandSeverity
+  id: Magic
+  examineText: contraband-examine-text-magic

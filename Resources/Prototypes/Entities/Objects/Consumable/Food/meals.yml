@@ -51,6 +51,16 @@
       - salty
   - type: Sprite
     state: fries
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: TableSalt
+          Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      Burger: SpaceFriesBurger
 # Tastes like fries, salt.
 
 - type: entity
@@ -66,6 +76,16 @@
       - cheesy
   - type: Sprite
     state: fries-cheesy
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: TableSalt
+          Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      Burger: CheesyFriesBurger
 # Tastes like fries, cheese.
 
 - type: entity
@@ -89,7 +109,12 @@
         maxVol: 26
         reagents:
         - ReagentId: JuiceCarrot
-          Quantity: 20
+          Quantity: 15
+        - ReagentId: TableSalt
+          Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      Burger: CarrotFriesBurger
 # Tastes like carrots, salt.
 
 - type: entity
@@ -98,11 +123,25 @@
   id: FoodMealNachos
   description: Chips from Space Mexico.
   components:
+  - type: Food
+    trash:
+    - FoodPlateSmall
   - type: FlavorProfile
     flavors:
       - nachos
   - type: Sprite
     state: nachos
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 11
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: TableSalt
+          Quantity: 1
 # Tastes like nachos.
 
 - type: entity
@@ -111,6 +150,9 @@
   id: FoodMealNachosCheesy
   description: The delicious combination of nachos and melting cheese.
   components:
+  - type: Food
+    trash:
+    - FoodPlateSmall
   - type: FlavorProfile
     flavors:
       - nachos
@@ -127,7 +169,7 @@
         - ReagentId: Vitamin
           Quantity: 3
         - ReagentId: TableSalt
-          Quantity: 1
+          Quantity: 4
 # Tastes like nachos, cheese.
 
 - type: entity
@@ -136,24 +178,27 @@
   id: FoodMealNachosCuban
   description: That's some dangerously spicy nachos.
   components:
+  - type: Food
+    trash:
+    - FoodPlateSmall
   - type: FlavorProfile
     flavors:
       - nachos
-      - cheesy
+      - tomato
       - spicy
   - type: Sprite
     state: nachos-cuban
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
-        - ReagentId: CapsaicinOil
           Quantity: 8
+        - ReagentId: CapsaicinOil
+          Quantity: 7
         - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 5
 # Tastes like nachos, hot pepper.
 
 - type: entity
@@ -171,9 +216,11 @@
     solutions:
       food:
         # Note that this acts as the limiter against injecting anything.
-        maxVol: 1
+        maxVol: 2
         reagents:
         - ReagentId: Nutriment
+          Quantity: 1
+        - ReagentId: TableSalt
           Quantity: 1
 # Tastes like parsnips, salt.
 
@@ -330,7 +377,7 @@
   description: BBQ ribs, slathered in a healthy coating of BBQ sauce. The least vegan thing to ever exist.
   components:
   - type: Food
-    trash: 
+    trash:
     - FoodKebabSkewer
   - type: FlavorProfile
     flavors:
@@ -352,6 +399,9 @@
   - type: Tag
     tags:
     - Meat
+  - type: FoodSequenceElement
+    entries:
+      Burger: RibsBurger
 # Tastes like meat, smokey sauce.
 
 - type: entity
@@ -426,12 +476,15 @@
         - ReagentId: Nutriment
           Quantity: 2
         - ReagentId: TableSalt
-          Quantity: 1
+          Quantity: 5
         - ReagentId: Blackpepper
           Quantity: 1
   - type: Tag
     tags:
     - Meat
+  - type: FoodSequenceElement
+    entries:
+      Burger: FriedEggBurger
 # Tastes like egg, salt, pepper.
 
 - type: entity
@@ -462,7 +515,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
@@ -502,6 +555,9 @@
         - cheesy
     - type: Sprite
       state: queso
+    - type: FoodSequenceElement
+      entries:
+        Burger: QuesoBurger
 # Its queso! Everyone loves queso... Right?.
 
 - type: entity
@@ -518,7 +574,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 18
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
           Quantity: 6
@@ -528,6 +584,34 @@
     tags:
     - Meat
 # tastes exotic
+
+- type: entity
+  name: finfin sashimi
+  parent: FoodMealBase
+  id: FoodMealFinfinSashimi
+  description: An unscrupulous delicacy. Japanese-Teoean fusion cuisine!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - fishy
+      - finfin
+  - type: Sprite
+    state: sashimi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 18
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: CarpoToxin
+          Quantity: 15
+  - type: Tag
+    tags:
+    - Meat
+  - type: FoodSequenceElement
+    entries:
+      Burger: FinfinSashimiBurger
 
 - type: entity
   name: enchiladas
@@ -543,7 +627,7 @@
     - type: SolutionContainerManager
       solutions:
         food:
-          maxVol: 10
+          maxVol: 15
           reagents:
           - ReagentId: Nutriment
             Quantity: 8
@@ -592,7 +676,7 @@
   description: Buttery.
   components:
   - type: Food
-    trash: 
+    trash:
     - FoodPlate
   - type: FlavorProfile
     flavors:
@@ -609,3 +693,4 @@
           Quantity: 4
         - ReagentId: Vitamin
           Quantity: 4
+

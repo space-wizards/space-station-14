@@ -5,10 +5,15 @@
         <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
             <BoxContainer Orientation="Vertical" Margin="8">
                 <CheckBox Name="ReducedMotionCheckBox" Text="{Loc 'ui-options-reduced-motion'}" />
+                <CheckBox Name="DisableSinguloWarpingCheckBox" Text="{Loc 'ui-options-disable-singulo-warp'}" />
                 <CheckBox Name="EnableColorNameCheckBox" Text="{Loc 'ui-options-enable-color-name'}" />
                 <CheckBox Name="ColorblindFriendlyCheckBox" Text="{Loc 'ui-options-colorblind-friendly'}" />
                 <ui:OptionSlider Name="ChatWindowOpacitySlider" Title="{Loc 'ui-options-chat-window-opacity'}" />
                 <ui:OptionSlider Name="ScreenShakeIntensitySlider" Title="{Loc 'ui-options-screen-shake-intensity'}" />
+                <CheckBox Name="AutoFillHighlightsCheckBox" Text="{Loc 'ui-options-auto-fill-highlights'}" />
+                <ui:OptionColorSlider Name="HighlightsColorSlider" 
+                    Title="{Loc 'ui-options-highlights-color'}" 
+                    Example="{Loc 'ui-options-highlights-color-example'}"/>
             </BoxContainer>
         </ScrollContainer>
         <ui:OptionsTabControlRow Name="Control" Access="Public" />

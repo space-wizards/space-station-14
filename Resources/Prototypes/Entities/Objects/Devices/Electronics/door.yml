@@ -9,6 +9,7 @@
       state: door_electronics
     - type: Tag
       tags:
+        - DroneUsable
         - DoorElectronics
     - type: DoorElectronics
     - type: StaticPrice

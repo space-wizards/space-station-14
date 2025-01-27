@@ -41,13 +41,79 @@
       - material: WebSilk
         amount: 12
         doAfter: 6
-        
+
     - to: boots
       steps:
       - material: WebSilk
         amount: 2
         doAfter: 4
-        
+
+    - to: shoes
+      steps:
+      - material: WebSilk
+        amount: 2
+        doAfter: 4
+
+    - to: cap
+      steps:
+      - material: WebSilk
+        amount: 2
+        doAfter: 4
+
+    - to: widehat
+      steps:
+      - material: WebSilk
+        amount: 2
+        doAfter: 4
+
+    - to: gloves
+      steps:
+      - material: WebSilk
+        amount: 2
+        doAfter: 4
+
+    - to: loungewear
+      steps:
+      - material: WebSilk
+        amount: 10
+        doAfter: 8
+
+    - to: turtledress
+      steps:
+      - material: WebSilk
+        amount: 15
+        doAfter: 20
+
+    - to: stripeddress
+      steps:
+      - material: WebSilk
+        amount: 15
+        doAfter: 20
+
+    - to: elegantdress
+      steps:
+      - material: WebSilk
+        amount: 15
+        doAfter: 20
+
+    - to: mantle
+      steps:
+      - material: WebSilk
+        amount: 6
+        doAfter: 20
+
+    - to: scarf
+      steps:
+      - material: WebSilk
+        amount: 5
+        doAfter: 15
+
+    - to: shortscarf
+      steps:
+      - material: WebSilk
+        amount: 3
+        doAfter: 10
+
   # Deconstruction
   - node: tile
     entity: FloorTileItemWeb
@@ -69,3 +135,36 @@
 
   - node: boots
     entity: ClothingShoesBootsWinterWeb
+
+  - node: shoes
+    entity: ClothingShoesColorWeb
+
+  - node: stripeddress
+    entity: ClothingUniformJumpskirtWebStripedDress
+
+  - node: turtledress
+    entity: ClothingUniformJumpskirtWebTurtleneckDress
+
+  - node: elegantdress
+    entity: ClothingUniformJumpskirtWebElegantDress
+
+  - node: loungewear
+    entity: ClothingUniformJumpsuitLoungewearWeb
+
+  - node: cap
+    entity: ClothingHeadHatWebsoft
+
+  - node: widehat
+    entity: ClothingHeadHatWebHat
+
+  - node: gloves
+    entity: ClothingHandsGlovesColorWeb
+
+  - node: scarf
+    entity: ClothingNeckScarfStripedWeb
+
+  - node: mantle
+    entity: ClothingNeckMantleWeb
+
+  - node: shortscarf
+    entity: ClothingNeckScarfStripedZebraWeb

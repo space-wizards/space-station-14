@@ -31,10 +31,10 @@
   id: FoodBreadBunBottom
   parent: FoodBreadSliceBase
   name: bottom bun
-  description: It's time to start building the burger tower. 
+  description: It's time to start building the burger tower.
   components:
   - type: Item
-    size: Normal #patch until there is an adequate resizing system in place 
+    size: Normal #patch until there is an adequate resizing system in place
   - type: Food
   - type: Sprite
     drawdepth: Mobs
@@ -45,7 +45,7 @@
     - map: ["foodSequenceLayers"]
   - type: FoodSequenceStartPoint
     key: Burger
-    maxLayers: 10
+    maxLayers: 30
     startPosition: 0, 0
     offset: 0, 0.07
     minLayerOffset: -0.05, 0
@@ -56,8 +56,8 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
-        canReact: false # Dont want cause reactions inside burgers after merging ingredients
+        maxVol: 15
+        canReact: true # fuck you wizden i need razorium burger assassination
         reagents:
         - ReagentId: Nutriment
           Quantity: 3.3 # 1/2 of a bun
@@ -83,7 +83,7 @@
   - type: FoodSequenceElement
     entries:
       Burger: BunTopBurger
-  
+
 # Base
 
 - type: entity
@@ -391,6 +391,38 @@
 # Tastes like bun, chicken.
 
 - type: entity
+  name: finfin sandwich
+  parent: FoodBurgerBase
+  id: FoodBurgerFinfin
+  description: Why
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - finfin
+      - chicken
+      - duck
+      - fishy
+  - type: Sprite
+    state: chicken
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Mayo
+          Quantity: 3
+  - type: Tag
+    tags:
+    - Meat
+
+- type: entity
   name: clown burger
   parent: FoodBurgerBase
   id: FoodBurgerClown
@@ -405,7 +437,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
           Quantity: 4
@@ -583,7 +615,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
           Quantity: 6
@@ -593,6 +625,9 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Meat
 
 # Tastes like bun, HEAT.
 
@@ -684,7 +719,7 @@
   description: An elusive rib shaped burger with limited availability across the galaxy. Not as good as you remember it.
   components:
   - type: Food
-    trash: 
+    trash:
     - FoodKebabSkewer
   - type: FlavorProfile
     flavors:
@@ -883,7 +918,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 55
+        maxVol: 90
         reagents:
         - ReagentId: Nutriment
           Quantity: 44
@@ -984,4 +1019,3 @@
   - type: Tag
     tags:
     - Meat
-    

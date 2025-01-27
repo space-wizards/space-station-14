@@ -8,7 +8,7 @@
   - type: Item
     storedRotation: -90
   - type: Food
-    trash: 
+    trash:
     - FoodBowlBig
     utensil: Spoon
   - type: SolutionContainerManager
@@ -83,7 +83,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
@@ -108,7 +108,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
           Quantity: 8
@@ -168,7 +168,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
           Quantity: 8
@@ -432,7 +432,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 40.5
         reagents:
         - ReagentId: Nutriment
           Quantity: 18
@@ -552,7 +552,7 @@
 
 - type: entity
   name: amanita jelly
-  parent: FoodInjectableBase
+  parent: [FoodInjectableBase, BaseMajorContraband]
   id: FoodJellyAmanita
   description: It's evil, don't touch it!
   components:
@@ -566,7 +566,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
           Quantity: 6
@@ -591,7 +591,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
           Quantity: 7
@@ -620,7 +620,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
           Quantity: 1
@@ -646,7 +646,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
@@ -676,7 +676,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 40
         reagents:
         - ReagentId: Protein
           Quantity: 9
@@ -684,6 +684,8 @@
           Quantity: 10
         - ReagentId: Vitamin
           Quantity: 7
+        - ReagentId: TableSalt
+          Quantity: 5
 
 - type: entity
   name: clown's tears
@@ -701,7 +703,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
@@ -727,7 +729,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -754,7 +756,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 30.5
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -797,7 +799,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 25
         reagents:
           - ReagentId: Nutriment
             Quantity: 8
@@ -858,7 +860,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 30
         reagents:
           - ReagentId: Nutriment
             Quantity: 6
@@ -868,6 +870,8 @@
             Quantity: 4
           - ReagentId: Allicin
             Quantity: 3
+          - ReagentId: TableSalt
+            Quantity: 5
   - type: Tag
     tags:
     - ChiliBowl
@@ -971,7 +975,7 @@
     flavors:
       - miso
   - type: Food
-    trash: 
+    trash:
     - FoodBowlFancy
   - type: Sprite
     layers:
@@ -989,6 +993,8 @@
             Quantity: 3
           - ReagentId: Water
             Quantity: 10
+          - ReagentId: TableSalt
+            Quantity: 5
   - type: Tag
     tags:
     - Meat
@@ -1083,7 +1089,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 25
         reagents:
           - ReagentId: Nutriment
             Quantity: 15
@@ -1137,7 +1143,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 15
         reagents:
           - ReagentId: Nutriment
             Quantity: 1
@@ -1214,7 +1220,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
           - ReagentId: Nutriment
             Quantity: 6

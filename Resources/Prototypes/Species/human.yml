@@ -7,6 +7,10 @@
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobHumanDummy
   skinColoration: HumanToned
+  sexes:
+  - Male
+  - Female
+  - Unsexed
 
 # The lack of a layer means that
 # this person cannot have round-start anything
@@ -22,6 +26,8 @@
     Hair: MobHumanoidAnyMarking
     FacialHair: MobHumanoidAnyMarking
     Snout: MobHumanoidAnyMarking
+    Underwear: MobHumanoidAnyMarking
+    Undershirt: MobHumanoidAnyMarking
     Chest: MobHumanTorso
     Eyes: MobHumanoidEyes
     HeadTop: MobHumanoidAnyMarking
@@ -56,13 +62,19 @@
       points: 1
       required: false
     Chest:
+      points: 4
+      required: false
+    Underwear:
+      points: 1
+      required: false
+    Undershirt:
       points: 1
       required: false
     Legs:
-      points: 2
+      points: 8 #impspecial
       required: false
     Arms:
-      points: 2
+      points: 8 #impspecial
       required: false
 
 - type: humanoidBaseSprite

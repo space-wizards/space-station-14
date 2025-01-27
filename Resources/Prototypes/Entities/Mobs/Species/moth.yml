@@ -5,6 +5,7 @@
   id: BaseMobMoth
   abstract: true
   components:
+  - type: Absorbable
   - type: HumanoidAppearance
     species: Moth
     hideLayersOnEquip:
@@ -44,8 +45,8 @@
   - type: MothAccent
   - type: Vocal
     sounds:
-      Male: UnisexMoth
-      Female: UnisexMoth
+      Male: MaleMoth
+      Female: FemaleMoth
       Unsexed: UnisexMoth
   - type: MovementSpeedModifier
     weightlessAcceleration: 1.5 # Move around more easily in space.
@@ -83,6 +84,8 @@
       - map: [ "enum.HumanoidVisualLayers.LArm" ]
       - map: [ "enum.HumanoidVisualLayers.RLeg" ]
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+      - map: [ "enum.HumanoidVisualLayers.Underwear" ]
+      - map: [ "enum.HumanoidVisualLayers.Undershirt" ]
       - map: [ "jumpsuit" ]
       - map: [ "enum.HumanoidVisualLayers.LHand" ]
       - map: [ "enum.HumanoidVisualLayers.RHand" ]

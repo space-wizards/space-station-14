@@ -1,0 +1,53 @@
+# Black
+- type: loadout
+  id: ScarfBlack
+  equipment:
+    neck: ClothingNeckScarfStripedBlack
+
+# Blue
+- type: loadout
+  id: ScarfBlue
+  equipment:
+    neck: ClothingNeckScarfStripedBlue
+
+# Brown
+- type: loadout
+  id: ScarfBrown
+  equipment:
+    neck: ClothingNeckScarfStripedBrown
+
+# Green
+- type: loadout
+  id: ScarfGreen
+  equipment:
+    neck: ClothingNeckScarfStripedGreen
+
+# Light blue
+- type: loadout
+  id: ScarfLightBlue
+  equipment:
+    neck: ClothingNeckScarfStripedLightBlue
+
+# Orange
+- type: loadout
+  id: ScarfOrange
+  equipment:
+    neck: ClothingNeckScarfStripedOrange
+
+# Purple
+- type: loadout
+  id: ScarfPurple
+  equipment:
+    neck: ClothingNeckScarfStripedPurple
+
+# Red
+- type: loadout
+  id: ScarfRed
+  equipment:
+    neck: ClothingNeckScarfStripedRed
+
+# Zebra
+- type: loadout
+  id: ScarfZebra
+  equipment:
+    neck: ClothingNeckScarfStripedZebra

@@ -104,6 +104,8 @@
 - type: entity
   name: Runtime Spawner
   id: SpawnMobCatRuntime
+  #suffix imp edit
+  suffix: CMO's pet, steal target
   parent: MarkerBase
   components:
   - type: Sprite
@@ -117,6 +119,8 @@
 - type: entity
   name: Exception Spawner
   id: SpawnMobCatException
+  #suffix imp edit
+  suffix: CMO's pet, steal target
   parent: MarkerBase
   components:
   - type: Sprite
@@ -143,6 +147,8 @@
 - type: entity
   name: Floppa Spawner
   id: SpawnMobCatFloppa
+  #suffix imp edit
+  suffix: CMO's pet, steal target
   parent: MarkerBase
   components:
   - type: Sprite
@@ -156,6 +162,8 @@
 - type: entity
   name: Bingus Spawner
   id: SpawnMobCatBingus
+  #suffix imp edit
+  suffix: CMO's pet, steal target
   parent: MarkerBase
   components:
   - type: Sprite
@@ -195,18 +203,24 @@
 - type: entity
   name: Cat Spawner
   id: SpawnMobCat
+  #suffix imp edit
+  suffix: CMO's pet, steal target
   parent: MarkerBase
   components:
   - type: Sprite
     layers:
       - state: green
       - state: ai
-  - type: ConditionalSpawner
+  - type: RandomSpawner
     prototypes:
       - MobCatRuntime
       - MobCatException
       - MobCatFloppa
       - MobBingus
+      - MobPipi
+    rarePrototypes:
+      - MobFinfin #imp edit
+    rareChance: 0.05
 
 - type: entity
   name: Generic Cat Spawner
@@ -225,6 +239,7 @@
       - MobCatKitten
     rarePrototypes:
       - MobCatSpace
+      - MobFinfin #imp edit
     rareChance: 0.05
 
 - type: entity
@@ -880,3 +895,46 @@
   - type: ConditionalSpawner
     prototypes:
     - MobHonkBot
+
+- type: entity
+  name: gingerbread man Spawner
+  id: SpawnMobGingerbreadAI
+  suffix: Ghostrole
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: full
+        sprite: Mobs/Species/Gingerbread/parts.rsi
+  - type: ConditionalSpawner
+    prototypes:
+      - MobGingerbreadAI
+
+- type: entity
+  name: Reindeer Buck Spawner
+  id: SpawnMobReindeerBuck
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: reindeer_buck_still
+      sprite: Mobs/Animals/reindeer_buck.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobReindeerBuck
+
+- type: entity
+  name: Reindeer Doe Spawner
+  id: SpawnMobReindeerDoe
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: reindeer_doe_still
+      sprite: Mobs/Animals/reindeer_doe.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobReindeerDoe

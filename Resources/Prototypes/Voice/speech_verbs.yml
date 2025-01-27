@@ -125,6 +125,22 @@
   - chat-speech-verb-small-mob-2
 
 - type: speechVerb
+  id: Raccoon
+  name: chat-speech-verb-name-raccoon
+  speechVerbStrings:
+  - chat-speech-verb-raccoon-1
+  - chat-speech-verb-raccoon-2
+  - chat-speech-verb-raccoon-3
+
+- type: speechVerb
+  id: Possum
+  name: chat-speech-verb-name-possum
+  speechVerbStrings:
+  - chat-speech-verb-possum-1
+  - chat-speech-verb-possum-2
+  - chat-speech-verb-possum-3
+
+- type: speechVerb
   id: Monkey
   name: chat-speech-verb-name-monkey
   speechVerbStrings:
@@ -164,3 +180,44 @@
   - chat-speech-verb-electricity-1
   - chat-speech-verb-electricity-2
   - chat-speech-verb-electricity-3
+
+- type: speechVerb
+  id: FinfinExclamation
+  name: chat-speech-verb-name-finfin-exclamation
+  speechVerbStrings:
+  - chat-speech-verb-finfin-exclamation-1
+  - chat-speech-verb-finfin-exclamation-2
+
+- type: speechVerb
+  id: FinfinExclamationStrong
+  name: chat-speech-verb-name-finfin-exclamation
+  bold: true
+  speechVerbStrings:
+  - chat-speech-verb-finfin-exclamation-1
+  - chat-speech-verb-finfin-exclamation-2
+
+- type: speechVerb
+  id: FinfinStutter
+  name: chat-speech-verb-name-finfin-stutter
+  speechVerbStrings:
+  - chat-speech-verb-finfin-stutter-1
+  - chat-speech-verb-finfin-stutter-2
+
+- type: speechVerb
+  id: FinfinMumble
+  name: chat-speech-verb-name-finfin-mumble
+  speechVerbStrings:
+  - chat-speech-verb-finfin-mumble-1
+
+- type: speechVerb
+  id: Finfin
+  name: chat-speech-verb-name-finfin
+  speechVerbStrings:
+  - chat-speech-verb-finfin-1
+  - chat-speech-verb-finfin-2
+
+- type: speechVerb
+  id: Bros
+  name: chat-speech-verb-name-bros
+  speechVerbStrings:
+  - chat-speech-verb-bros

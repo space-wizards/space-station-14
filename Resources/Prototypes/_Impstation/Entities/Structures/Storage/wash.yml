@@ -1,0 +1,51 @@
+- type: entity
+  parent: [ CrateBaseWeldable, BaseMachinePowered ]
+  id: WashingMachine
+  name: washing machine
+  components:
+  - type: Icon
+    sprite: _Impstation/Structures/Storage/Wash.rsi
+  - type: Sprite
+    sprite: _Impstation/Structures/Storage/Wash.rsi
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - map: ["enum.EntityHeaterVisuals.Setting"]
+      shader: unshaded
+      visible: false
+  - type: ApcPowerReceiver
+    powerDisabled: true
+  - type: WiredNetworkConnection
+  - type: PowerSwitch
+  - type: GenericVisualizer
+    visuals:
+      enum.EntityHeaterVisuals.Setting:
+        enum.EntityHeaterVisuals.Setting:
+          Off: { visible: true, state: washOff }
+          On: { visible: true, state: washOn }
+  - type: LitOnPowered
+  - type: PointLight
+    radius: 1.5
+    energy: 1.5
+    color: "#47bfff"
+  - type: AmbientSound
+    enabled: false
+    volume: -5
+    range: 5
+    sound:
+     path: /Audio/Ambience/Objects/portable_scrubber.ogg
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 10000
+        maxVol: 10000
+  - type: ExaminableSolution
+    solution: tank
+  - type: ReagentTank
+    transferAmount: 100
+  - type: Transform
+    anchored: true

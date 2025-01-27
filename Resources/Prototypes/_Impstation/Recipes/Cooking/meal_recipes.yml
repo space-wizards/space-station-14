@@ -1,0 +1,74 @@
+- type: microwaveMealRecipe
+  id: RecipeBigLollipop
+  name: big lollipop recipe
+  result: FoodMealBigLollipop
+  time: 5
+  reagents:
+     Sugar: 10
+  solids:
+     FoodKebabSkewer: 1 #it's healthy for microwaves
+
+- type: microwaveMealRecipe
+  id: RecipeClothLollipop
+  name: cloth lollipop recipe
+  result: FoodMealClothLollipop
+  time: 5
+  reagents:
+     Sugar: 10
+     Fiber: 10
+  solids:
+     FoodKebabSkewer: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFruitLollipop
+  name: fruit lollipop recipe
+  result: FoodMealFruitLollipop
+  time: 5
+  reagents:
+     Sugar: 10
+     Ice: 5 #i don't KNOW!!!
+     JuiceOrange: 5
+     JuiceApple: 5
+     JuiceWatermelon: 5
+  solids:
+     FoodKebabSkewer: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMeatLollipop
+  name: meat lollipop recipe
+  result: FoodMealMeatLollipop
+  time: 5
+  reagents:
+     Sugar: 10
+  solids:
+     FoodKebabSkewer: 1
+     FoodMeat: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCamelSoup
+  name: camel's soup recipe
+  result: FoodCamelSoup
+  time: 15
+  solids:
+     TearGasGrenade: 1
+     FoodBowlBig: 1
+     Cigarette: 8 # YUMMY!!!!!!!!!
+
+- type: microwaveMealRecipe
+  id: RecipeBananium
+  name: bananium recipe
+  result: MaterialBananium1
+  time: 30
+  solids:
+    BananiumOre1: 1
+
+- type: microwaveMealRecipe
+  id: RecipeToddlerRingsStew
+  name: toddler rings stew recipe
+  result: FoodToddlerRingsStew
+  time: 15
+  reagents:
+     JuiceTomato: 10
+  solids:
+     FoodBowlBig: 1
+     WhoopieCushion: 1

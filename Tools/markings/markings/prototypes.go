@@ -15,6 +15,7 @@ const (
 	HumanFacialHair = "HumanFacialHair"
 	VoxFacialHair   = "VoxFacialHair"
 	VoxHair         = "VoxHair"
+    ThavenHair       = "ThavenHair"
 )
 
 func init() {
@@ -23,6 +24,7 @@ func init() {
 	accessoryLayerMapping[HumanFacialHair] = FacialHair
 	accessoryLayerMapping[VoxFacialHair] = FacialHair
 	accessoryLayerMapping[VoxHair] = Hair
+    accessoryLayerMapping[ThavenHair] = Hair
 }
 
 type SpriteAccessoryPrototype struct {
@@ -68,6 +70,7 @@ type MarkingPrototype struct {
 	MarkingCategory    string            `yaml:"markingCategory"`
 	SpeciesRestriction []string          `yaml:"speciesRestriction,omitempty"`
 	Sprites            []SpriteSpecifier `yaml:"sprites"`
+	Shader             string?           `yaml:"shader"`
 }
 
 type SpriteSpecifier struct {

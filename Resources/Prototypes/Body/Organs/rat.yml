@@ -11,6 +11,17 @@
   parent: OrganAnimalStomach
   suffix: "rat"
   components:
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - Trash
+    additiveDiet: true
+  - type: Metabolizer
+    maxReagents: 3
+    metabolizerTypes: [ Animal, Rat ]
+    groups:
+    - id: Food
+    - id: Drink
   - type: SolutionContainerManager
     solutions:
       stomach:

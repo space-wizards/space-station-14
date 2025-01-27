@@ -21,6 +21,10 @@
       visible: false
   - type: MixableSolution
     solution: food
+  - type: Drink
+    solution: food
+    useSound:
+      path: /Audio/Items/drink.ogg
   - type: DamageOnLand
     damage:
       types:
@@ -58,6 +62,7 @@
         acts: [ "Destruction" ]
   - type: Tag
     tags:
+    - Bowl
     - Trash
 
 - type: entity
@@ -92,3 +97,6 @@
     - map: ["enum.SolutionContainerLayers.Fill"]
       state: fill-1
       visible: false
+  - type: Tag
+    tags:
+    - Bowl

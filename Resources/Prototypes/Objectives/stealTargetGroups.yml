@@ -186,12 +186,12 @@
     sprite: Objects/Misc/module.rsi
     state: medical
 
-- type: stealTargetGroup
-  id: ClothingHeadsetAltMedical
-  name: steal-target-groups-clothing-headset-alt-medical
-  sprite:
-    sprite: Clothing/Ears/Headsets/medical.rsi
-    state: icon_alt
+#- type: stealTargetGroup
+#  id: ClothingHeadsetAltMedical
+#  name: steal-target-groups-clothing-headset-alt-medical
+#  sprite:
+#    sprite: Clothing/Ears/Headsets/medical.rsi
+#    state: icon_alt
 
 - type: stealTargetGroup
   id: ResearchAndDevelopmentServerMachineCircuitboard
@@ -297,7 +297,7 @@
   id: FreezerHeater
   name: steal-target-groups-freezer-heater
   sprite:
-    sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+    sprite: _Impstation/Structures/Piping/Atmospherics/thermomachine.rsi
     state: heaterOff
 
 - type: stealTargetGroup

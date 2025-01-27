@@ -23,6 +23,13 @@ public sealed partial class GasMinerComponent : Component
     public float MaxExternalAmount = float.PositiveInfinity;
 
     /// <summary>
+    ///      ADMEME ONLY: If the miner can mine while unanchored
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
+    public bool MineWhileUnanchored = false;
+
+    /// <summary>
     ///      If the pressure (in kPA) of the external environment exceeds this number, no gas will be mined.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]

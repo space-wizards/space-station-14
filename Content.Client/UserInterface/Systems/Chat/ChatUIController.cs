@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Numerics;
+using Content.Client.CharacterInfo;
 using Content.Client.Administration.Managers;
 using Content.Client.Chat;
 using Content.Client.Chat.Managers;
@@ -15,6 +16,7 @@ using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
+using Content.Shared.CollectiveMind;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
@@ -39,11 +41,15 @@ using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
+using Robust.Shared.Toolshed.TypeParsers;
 using Robust.Shared.Utility;
+using static Content.Client.CharacterInfo.CharacterInfoSystem;
+using Content.Shared._Impstation.CCVar;
+
 
 namespace Content.Client.UserInterface.Systems.Chat;
 
-public sealed class ChatUIController : UIController
+public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterInfoSystem>
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IChatManager _manager = default!;
@@ -60,11 +66,13 @@ public sealed class ChatUIController : UIController
 
     [UISystemDependency] private readonly ExamineSystem? _examine = default;
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
+    [UISystemDependency] private readonly CollectiveMindSystem? _collectiveMind = default!;
     [UISystemDependency] private readonly TypingIndicatorSystem? _typingIndicator = default;
     [UISystemDependency] private readonly ChatSystem? _chatSys = default;
     [UISystemDependency] private readonly TransformSystem? _transform = default;
     [UISystemDependency] private readonly MindSystem? _mindSystem = default!;
     [UISystemDependency] private readonly RoleCodewordSystem? _roleCodewordSystem = default!;
+    [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
 
     [ValidatePrototypeId<ColorPalettePrototype>]
     private const string ChatNamePalette = "ChatNames";
@@ -84,7 +92,8 @@ public sealed class ChatUIController : UIController
         {SharedChatSystem.EmotesAltPrefix, ChatSelectChannel.Emotes},
         {SharedChatSystem.AdminPrefix, ChatSelectChannel.Admin},
         {SharedChatSystem.RadioCommonPrefix, ChatSelectChannel.Radio},
-        {SharedChatSystem.DeadPrefix, ChatSelectChannel.Dead}
+        {SharedChatSystem.DeadPrefix, ChatSelectChannel.Dead},
+        {SharedChatSystem.CollectiveMindPrefix, ChatSelectChannel.CollectiveMind},
     };
 
     public static readonly Dictionary<ChatSelectChannel, char> ChannelPrefixes = new()
@@ -97,7 +106,8 @@ public sealed class ChatUIController : UIController
         {ChatSelectChannel.Emotes, SharedChatSystem.EmotesPrefix},
         {ChatSelectChannel.Admin, SharedChatSystem.AdminPrefix},
         {ChatSelectChannel.Radio, SharedChatSystem.RadioCommonPrefix},
-        {ChatSelectChannel.Dead, SharedChatSystem.DeadPrefix}
+        {ChatSelectChannel.Dead, SharedChatSystem.DeadPrefix},
+        {ChatSelectChannel.CollectiveMind, SharedChatSystem.CollectiveMindPrefix}
     };
 
     /// <summary>
@@ -149,6 +159,23 @@ public sealed class ChatUIController : UIController
     /// </summary>
     private readonly Dictionary<ChatChannel, int> _unreadMessages = new();
 
+    /// <summary>
+    ///     A list of words to be highlighted in the chatbox.
+    /// </summary>
+    private List<string> _highlights = [];
+
+    /// <summary>
+    ///     The color (hex) in witch the words will be highlighted as.
+    /// </summary>
+    private string? _highlightsColor;
+
+    private bool _autoFillHighlightsEnabled;
+
+    /// <summary>
+    ///     A bool to keep track if the 'CharacterUpdated' event is a new player attaching or the opening of the character info panel.
+    /// </summary>
+    private bool _charInfoIsAttach = false;
+
     // TODO add a cap for this for non-replays
     public readonly List<(GameTick Tick, ChatMessage Msg)> History = new();
 
@@ -172,6 +199,7 @@ public sealed class ChatUIController : UIController
     public event Action<ChatSelectChannel>? SelectableChannelsChanged;
     public event Action<ChatChannel, int?>? UnreadMessageCountsUpdated;
     public event Action<ChatMessage>? MessageAdded;
+    public event Action<string>? HighlightsUpdated;
 
     public override void Initialize()
     {
@@ -227,6 +255,9 @@ public sealed class ChatUIController : UIController
         _input.SetInputCommand(ContentKeyFunctions.CycleChatChannelBackward,
             InputCmdHandler.FromDelegate(_ => CycleChatChannel(false)));
 
+        _input.SetInputCommand(ContentKeyFunctions.FocusCollectiveMindChat,
+            InputCmdHandler.FromDelegate(_ => FocusChannel(ChatSelectChannel.CollectiveMind)));
+
         var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
         gameplayStateLoad.OnScreenUnload += OnScreenUnload;
@@ -240,6 +271,19 @@ public sealed class ChatUIController : UIController
 
         _config.OnValueChanged(CCVars.ChatWindowOpacity, OnChatWindowOpacityChanged);
 
+        _config.OnValueChanged(ImpCCVars.ChatAutoFillHighlights, (value) => { _autoFillHighlightsEnabled = value; });
+        _autoFillHighlightsEnabled = _config.GetCVar(ImpCCVars.ChatAutoFillHighlights);
+
+        _config.OnValueChanged(ImpCCVars.ChatHighlightsColor, (value) => { _highlightsColor = value; });
+        _highlightsColor = _config.GetCVar(ImpCCVars.ChatHighlightsColor);
+
+        // Load highlights if any were saved.
+        string highlights = _config.GetCVar(ImpCCVars.ChatHighlights);
+
+        if (!string.IsNullOrEmpty(highlights))
+        {
+            UpdateHighlights(highlights);
+        }
     }
 
     public void OnScreenLoad()
@@ -257,9 +301,45 @@ public sealed class ChatUIController : UIController
         SetMainChat(false);
     }
 
+    public void OnSystemLoaded(CharacterInfoSystem system)
+    {
+        system.OnCharacterUpdate += CharacterUpdated;
+    }
+
+    public void OnSystemUnloaded(CharacterInfoSystem system)
+    {
+        system.OnCharacterUpdate -= CharacterUpdated;
+    }
+
     private void OnChatWindowOpacityChanged(float opacity)
     {
         SetChatWindowOpacity(opacity);
+    }
+
+    private void CharacterUpdated(CharacterData data)
+    {
+        // If the _charInfoIsAttach is false then the character panel created the event, dismiss.
+        if (!_charInfoIsAttach)
+            return;
+
+        var (_, job, _, _, entityName) = data;
+
+        // If the character has a normal name (eg. "Name Surname" and not "Name Initial Surname" or a particular species name)
+        // subdivide it so that the name and surname individually get highlighted.
+        if (entityName.Count(c => c == ' ') == 1)
+            entityName = entityName.Replace(' ', '\n');
+
+        string newHighlights = entityName;
+
+        // Convert the job title to kebab-case and use it as a key for the loc file.
+        string jobKey = job.Replace(' ', '-').ToLower();
+
+        if (Loc.TryGetString($"highlights-{jobKey}", out var jobMatches))
+            newHighlights += '\n' + jobMatches.Replace(", ", "\n");
+
+        UpdateHighlights(newHighlights);
+        HighlightsUpdated?.Invoke(newHighlights);
+        _charInfoIsAttach = false;
     }
 
     private void SetChatWindowOpacity(float opacity)
@@ -426,6 +506,12 @@ public sealed class ChatUIController : UIController
     private void OnAttachedChanged(EntityUid uid)
     {
         UpdateChannelPermissions();
+
+        if (_autoFillHighlightsEnabled)
+        {
+            _charInfoIsAttach = true;
+            _characterInfo.RequestCharacterInfo();
+        }
     }
 
     private void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType)
@@ -544,7 +630,7 @@ public sealed class ChatUIController : UIController
         }
 
         // Only ghosts and admins can send / see deadchat.
-        if (_admin.HasFlag(AdminFlags.Admin) || _ghost is {IsGhost: true})
+        if (_admin.HasFlag(AdminFlags.Admin) || _ghost is {IsGhost: true} || _ghost is {IsGhostBarPatron: true})
         {
             FilterableChannels |= ChatChannel.Dead;
             CanSendChannels |= ChatSelectChannel.Dead;
@@ -556,7 +642,15 @@ public sealed class ChatUIController : UIController
             FilterableChannels |= ChatChannel.Admin;
             FilterableChannels |= ChatChannel.AdminAlert;
             FilterableChannels |= ChatChannel.AdminChat;
+            FilterableChannels |= ChatChannel.CollectiveMind;
             CanSendChannels |= ChatSelectChannel.Admin;
+        }
+
+        // collective mind
+        if (_collectiveMind != null && _collectiveMind.IsCollectiveMind)
+        {
+            FilterableChannels |= ChatChannel.CollectiveMind;
+            CanSendChannels |= ChatSelectChannel.CollectiveMind;
         }
 
         SelectableChannels = CanSendChannels;
@@ -582,6 +676,31 @@ public sealed class ChatUIController : UIController
             _unreadMessages[channel] = 0;
             UnreadMessageCountsUpdated?.Invoke(channel, 0);
         }
+    }
+
+    public void UpdateHighlights(string highlights)
+    {
+        // Save the newly provided list of highlighs if different.
+        if (!_config.GetCVar(ImpCCVars.ChatHighlights).Equals(highlights, StringComparison.CurrentCultureIgnoreCase))
+        {
+            _config.SetCVar(ImpCCVars.ChatHighlights, highlights);
+            _config.SaveToFile();
+        }
+
+        // If the word is surrounded by "" we replace them with a whole-word regex tag.
+        highlights = highlights.Replace("\"", "\\b");
+
+        // Fill the array with the highlights separated by newlines, disregarding empty entries.
+        string[] arrHighlights = highlights.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        _highlights.Clear();
+        foreach (var keyword in arrHighlights)
+        {
+            _highlights.Add(keyword);
+        }
+
+        // Arrange the list in descending order so that when highlighting,
+        // the full word (eg. "Security") appears before the abbreviation (eg. "Sec").
+        _highlights.Sort((x, y) => y.Length.CompareTo(x.Length));
     }
 
     public override void FrameUpdate(FrameEventArgs delta)
@@ -688,21 +807,37 @@ public sealed class ChatUIController : UIController
            && _chatSys.TryProccessRadioMessage(uid, text, out _, out radioChannel, quiet: true);
     }
 
-    public void UpdateSelectedChannel(ChatBox box)
+    private bool TryGetCollectiveMind(string text, out CollectiveMindPrototype? collectiveMind)
     {
-        var (prefixChannel, _, radioChannel) = SplitInputContents(box.ChatInput.Input.Text.ToLower());
-
-        if (prefixChannel == ChatSelectChannel.None)
-            box.ChatInput.ChannelSelector.UpdateChannelSelectButton(box.SelectedChannel, null);
-        else
-            box.ChatInput.ChannelSelector.UpdateChannelSelectButton(prefixChannel, radioChannel);
+        collectiveMind = null;
+        return _player.LocalEntity is { Valid: true } uid
+               && _chatSys != null
+               && _chatSys.TryProccessCollectiveMindMessage(uid, text, out _, out collectiveMind, quiet: true);
     }
 
-    public (ChatSelectChannel chatChannel, string text, RadioChannelPrototype? radioChannel) SplitInputContents(string text)
+    public void UpdateSelectedChannel(ChatBox box)
+    {
+        var (prefixChannel, _, radioChannel, collectiveMind) = SplitInputContents(box.ChatInput.Input.Text.ToLower());
+
+        switch (prefixChannel)
+        {
+            case ChatSelectChannel.None:
+                box.ChatInput.ChannelSelector.UpdateChannelSelectButton(box.SelectedChannel, null, null);
+                break;
+            case ChatSelectChannel.CollectiveMind:
+                box.ChatInput.ChannelSelector.UpdateChannelSelectButton(prefixChannel, null, collectiveMind);
+                break;
+            default:
+                box.ChatInput.ChannelSelector.UpdateChannelSelectButton(prefixChannel, radioChannel, null);
+                break;
+        }
+    }
+
+    public (ChatSelectChannel chatChannel, string text, RadioChannelPrototype? radioChannel, CollectiveMindPrototype? collectiveMind) SplitInputContents(string text)
     {
         text = text.Trim();
         if (text.Length == 0)
-            return (ChatSelectChannel.None, text, null);
+            return (ChatSelectChannel.None, text, null, null);
 
         // We only cut off prefix only if it is not a radio or local channel, which both map to the same /say command
         // because ????????
@@ -714,20 +849,23 @@ public sealed class ChatUIController : UIController
             chatChannel = PrefixToChannel.GetValueOrDefault(text[0]);
 
         if ((CanSendChannels & chatChannel) == 0)
-            return (ChatSelectChannel.None, text, null);
+            return (ChatSelectChannel.None, text, null, null);
 
         if (chatChannel == ChatSelectChannel.Radio)
-            return (chatChannel, text, radioChannel);
+            return (chatChannel, text, radioChannel, null);
+
+        if (TryGetCollectiveMind(text, out var collectiveMind) && chatChannel == ChatSelectChannel.CollectiveMind)
+            return (chatChannel, text, radioChannel, collectiveMind);
 
         if (chatChannel == ChatSelectChannel.Local)
         {
             if (_ghost?.IsGhost != true)
-                return (chatChannel, text, null);
+                return (chatChannel, text, null, null);
             else
                 chatChannel = ChatSelectChannel.Dead;
         }
 
-        return (chatChannel, text[1..].TrimStart(), null);
+        return (chatChannel, text[1..].TrimStart(), null, null);
     }
 
     public void SendMessage(ChatBox box, ChatSelectChannel channel)
@@ -742,7 +880,7 @@ public sealed class ChatUIController : UIController
         if (string.IsNullOrWhiteSpace(text))
             return;
 
-        (var prefixChannel, text, var _) = SplitInputContents(text);
+        (var prefixChannel, text, var _, var _) = SplitInputContents(text);
 
         // Check if message is longer than the character limit
         if (text.Length > MaxMessageLength)
@@ -824,6 +962,12 @@ public sealed class ChatUIController : UIController
                 msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg, "Name", "color", GetNameColor(SharedChatSystem.GetStringInsideTag(msg, "Name")));
         }
 
+        // Color any words choosen by the client.
+        foreach (var highlight in _highlights)
+        {
+            msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, highlight, "color", _highlightsColor);
+        }
+
         // Color any codewords for minds that have roles that use them
         if (_player.LocalUser != null && _mindSystem != null && _roleCodewordSystem != null)
         {
@@ -870,7 +1014,7 @@ public sealed class ChatUIController : UIController
                 break;
 
             case ChatChannel.Dead:
-                if (_ghost is not {IsGhost: true})
+                if (_ghost is not {IsGhost: true } && _ghost is not {IsGhostBarPatron: true })
                     break;
 
                 AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);

@@ -1,0 +1,21 @@
+# Seclink
+- type: currency
+  id: BatonToken
+  displayName: store-currency-display-batontoken
+  cash:
+    1: BatonToken1
+  canWithdraw: true
+
+- type: currency
+  id: DisablerToken
+  displayName: store-currency-display-disablertoken
+  cash:
+    1: DisablerToken1
+  canWithdraw: true
+
+- type: currency
+  id: UtilityToken
+  displayName: store-currency-display-utilitytoken
+  cash:
+    1: UtilityToken1
+  canWithdraw: true

@@ -1,0 +1,19 @@
+- type: entity
+  id: TouchSpellMansus
+  name: mansus grasp
+  description: The power of the Old Gods, channeled through your grip.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Unremoveable
+  - type: Item
+  - type: MansusGrasp
+  - type: Sprite
+    sprite: _Goobstation/Heretic/mansus_grasp.rsi
+    state: icon
+  - type: Appearance
+  - type: UseDelay
+  - type: PointLight
+    enabled: true
+    radius: 1.4
+    energy: 1
+    color: "#329a00"

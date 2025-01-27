@@ -107,7 +107,7 @@
 #Empty black
 - type: entity
   id: JetpackBlack
-  parent: [BaseJetpack, BaseSyndicateContraband]
+  parent: [BaseJetpack, Tier1Contraband]
   name: jetpack
   suffix: Empty
   components:
@@ -187,13 +187,14 @@
   components:
     - type: Item
       sprite: Objects/Tanks/Jetpacks/mini.rsi
+      size: Large
     - type: Sprite
       sprite: Objects/Tanks/Jetpacks/mini.rsi
     - type: Clothing
       sprite: Objects/Tanks/Jetpacks/mini.rsi
       slots:
         - Back
-        - suitStorage
+        - SuitStorage
         - Belt
     - type: GasTank
       outputPressure: 42.6
@@ -216,6 +217,47 @@
       moles:
         - 0.307706858 # oxygen
         - 0.307706858 # nitrogen
+
+#Empty salvage
+- type: entity
+  id: JetpackSalvage
+  parent: BaseJetpack
+  name: salvage jetpack
+  description: It's a busted up jetpack. It should hold 1 L of gas, but only fills up halfway.
+  suffix: Empty
+  components:
+    - type: Item
+      sprite: Objects/Tanks/Jetpacks/salvage.rsi
+      size: Large
+    - type: Sprite
+      sprite: Objects/Tanks/Jetpacks/salvage.rsi
+    - type: Clothing
+      sprite: Objects/Tanks/Jetpacks/salvage.rsi
+      slots:
+        - Back
+        - suitStorage
+        - Belt
+    - type: GasTank
+      outputPressure: 42.6
+      air:
+        volume: .5
+
+# Filled salvage
+- type: entity
+  id: JetpackSalvageFilled
+  parent: JetpackSalvage
+  name: salvage jetpack
+  suffix: Filled
+  components:
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 1 minute of thrust
+      volume: .5
+      temperature: 293.15
+      moles:
+        - 0.102568952 # oxygen
+        - 0.102568952 # nitrogen
 
 #Empty security
 - type: entity
@@ -265,7 +307,7 @@
     sprite: Objects/Tanks/Jetpacks/void.rsi
     slots:
       - Back
-      - suitStorage
+      - SuitStorage
       - Belt
 
 # Filled void

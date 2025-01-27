@@ -21,6 +21,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
+using Content.Shared.Throwing;
 
 namespace Content.Server.Flash
 {
@@ -46,6 +47,7 @@ namespace Content.Server.Flash
             SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnFlashMeleeHit);
             // ran before toggling light for extra-bright lantern
             SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnFlashUseInHand, before: new[] { typeof(HandheldLightSystem) });
+            SubscribeLocalEvent<FlashComponent, ThrowDoHitEvent>(OnFlashThrowHitEvent);
             SubscribeLocalEvent<InventoryComponent, FlashAttemptEvent>(OnInventoryFlashAttempt);
             SubscribeLocalEvent<FlashImmunityComponent, FlashAttemptEvent>(OnFlashImmunityFlashAttempt);
             SubscribeLocalEvent<PermanentBlindnessComponent, FlashAttemptEvent>(OnPermanentBlindnessFlashAttempt);
@@ -56,10 +58,8 @@ namespace Content.Server.Flash
         {
             if (!args.IsHit ||
                 !args.HitEntities.Any() ||
-                !UseFlash(uid, comp, args.User))
-            {
+                !UseFlash(uid, comp))
                 return;
-            }
 
             args.Handled = true;
             foreach (var e in args.HitEntities)
@@ -70,14 +70,22 @@ namespace Content.Server.Flash
 
         private void OnFlashUseInHand(EntityUid uid, FlashComponent comp, UseInHandEvent args)
         {
-            if (args.Handled || !UseFlash(uid, comp, args.User))
+            if (args.Handled || !UseFlash(uid, comp))
                 return;
 
             args.Handled = true;
             FlashArea(uid, args.User, comp.Range, comp.AoeFlashDuration, comp.SlowTo, true, comp.Probability);
         }
 
-        private bool UseFlash(EntityUid uid, FlashComponent comp, EntityUid user)
+        private void OnFlashThrowHitEvent(EntityUid uid, FlashComponent comp, ThrowDoHitEvent args)
+        {
+            if (!UseFlash(uid, comp))
+                return;
+
+            FlashArea(uid, args.User, comp.Range, comp.AoeFlashDuration, comp.SlowTo, false, comp.Probability);
+        }
+
+        private bool UseFlash(EntityUid uid, FlashComponent comp)
         {
             if (comp.Flashing)
                 return false;
@@ -95,7 +103,7 @@ namespace Content.Server.Flash
             {
                 _appearance.SetData(uid, FlashVisuals.Burnt, true);
                 _tag.AddTag(uid, "Trash");
-                _popup.PopupEntity(Loc.GetString("flash-component-becomes-empty"), user);
+                _popup.PopupEntity(Loc.GetString("flash-component-becomes-empty"), uid);
             }
 
             uid.SpawnTimer(400, () =>

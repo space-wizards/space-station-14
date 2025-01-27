@@ -1,0 +1,46 @@
+- type: entityTable
+  id: LowpopAntagEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - !type:NestedSelector # DV
+      tableId: BasicAntagEventsTableDV
+    - id: ClosetSkeleton
+    - id: DragonSpawn
+    - id: KingRatMigration
+    - id: NinjaSpawn
+    - id: RevenantSpawn
+    - id: GoblinStowawaysEvent # imp
+
+- type: entity
+  id: ChangelingAwakening
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    earliestStart: 35
+    minimumPlayers: 30 # roundstart changeling is 15 which seems insane
+    weight: 2 # twice as common as zombies
+    duration: 1
+    occursDuringRoundEnd: false
+  - type: ChangelingRule
+  - type: AntagObjectives
+    objectives:
+    - ChangelingStealDNAObjective
+    - EscapeIdentityObjective
+    - ChangelingSurviveObjective
+  - type: AntagSelection
+    agentName: changeling-roundend-name
+    definitions:
+    - prefRoles: [ Changeling ]
+      max: 1
+      playerRatio: 30
+      blacklist:
+        components:
+        - AntagImmune
+      briefing:
+        text: changeling-midround-role-greeting
+        color: Yellow
+        sound: "/Audio/_Goobstation/Ambience/Antag/changeling_start.ogg"
+      components:
+      - type: Changeling
+      mindRoles:
+      - MindRoleChangeling

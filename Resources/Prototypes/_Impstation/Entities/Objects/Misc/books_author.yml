@@ -1,0 +1,150 @@
+- type: entity
+  parent: BookBase
+  id: BookAgony
+  name: the ritual of agony
+  description: The book's cover features a religious symbol and the handwritten title, "The Ritual of Agony - A Guide and Recounting"
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+      - state: paper
+      - state: cover_base
+        color: "#E0BF33"
+      - state: decor_wingette
+        color: "#E08474"
+      - state: icon_atmos
+        color: "#A63526"
+    - type: Paper
+      content: book-text-agony
+
+- type: entity
+  parent: BookBase
+  id: BookClownLaw
+  name: an outside perspective on clown law
+  description: The book is in good condition, with a tidy cover displaying only a title and a description. "An anthropological essay on rule of law in clown cultures."
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_strong
+      color: "#ca00ca"
+    - state: icon_law
+      color: "#ff2fff"
+  - type: Paper
+    content: book-text-clown-law
+
+- type: entity
+  parent: BookBase
+  id: BookTEGtorial
+  name: guide ta tha thermo-electric generator
+  description: The book is battered and beaten-up, with mysterious dark stains on the corners of the pages. It smells like welding fuel and chemical burns.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_old
+      color: "#FFB8AD"
+    - state: decor_spine
+      color: "#D48763"
+    - state: overlay_dirt
+      color: "#663929"
+    - state: detail_bookmark
+      color: "#95BE76"
+  - type: Paper
+    content: book-text-tegtorial
+
+- type: entity
+  parent: BookBase
+  id: BookGatsby
+  name: The Great Gatsby by F. Scott Fitzgerald
+  description: The book is worn and tattered, with a barcode visible embedded physically within the cover. It smells like high school.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_old
+      color: "#0E5672"
+    - state: icon_eye
+      color: "#8F823D"
+  - type: Paper
+    content: book-text-gatsby
+
+- type: entity
+  parent: BookBase
+  id: BookKeelBayWorn
+  name: Keel-Ree's guide to medical
+  description: This copy seems less than pristine, the margins are filled with illegible notes and some diagrams depicting medibot placements have been scratched out entirely.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#4d4d4d"
+    - state: decor_spine
+      color: "#c03F3F"
+    - state: icon_medical
+      color: "#c03F3F"
+  - type: Paper
+    content: book-text-keelbay
+
+- type: entity
+  parent: BookBase
+  id: BookKeelBay
+  name: Keel-Ree's guide to medical
+  description: This copy seems to be in pristine condition, lovingly cared for. There are little heart symbols etched into the spine and it smells faintly like a bakery.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#4d4d4d"
+    - state: decor_spine
+      color: "#c03F3F"
+    - state: icon_medical
+      color: "#c03F3F"
+  - type: Paper
+    content: book-text-keelbay
+
+- type: entity
+  parent: BookBase
+  id: BookCosmicCult
+  name: ancient treatise on cosmology
+  description: The book is an ancient synthleather-bound treatise with a bright, star-shaped mark on the cover. Though the pages seem to be dyed in odd hues, the ink appears clearly legible despite the book's apparent age. It's strangely well-preserved, and has clearly been stored away for a very long time.
+  components:
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Objects/book.rsi
+    layers:
+    - state: cosmiccultbook
+  - type: Paper
+    content: book-text-cosmiccult
+
+- type: entity
+  parent: BookBase
+  id: BookTenebraeConspiracy
+  name: the silence of tenebrae
+  description: The book is bound in faded leather, its surface embossed with intricate, faintly iridescent patterns resembling stellar gyroscopes and shifting constellations. Its pages are thick and rough-edged, exuding the faint scent of aged paper, with text that seems to shimmer subtly under dim light.
+  components:
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Objects/book.rsi
+    layers:
+    - state: tenebraeconspiracybook
+  - type: Paper
+    content: book-text-tenebraeconspiracy
+
+- type: entity
+  parent: BookBase
+  id: BookSMForDummies
+  name: the supermatter for dummies
+  description: A brand new book, with a holographic cover.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/book.rsi
+    layers:
+    - state: smfordummies
+  - type: Paper
+    content: book-text-smfordummies

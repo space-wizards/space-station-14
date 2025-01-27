@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made primarily editing the engineering hardsuit, galoshes, and rubber gloves. Edits made by DinnerCalzone. Engineering hardsuit taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e. Vox state made by Flareguy for SS14. Rubber gloves drawn by Ubaser. Galoshes taken from tgstation at commit https://github.com/tgstation/tgstation/commit/7e4e9d432d88981fb9bb463970c5b98ce85c0abe",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

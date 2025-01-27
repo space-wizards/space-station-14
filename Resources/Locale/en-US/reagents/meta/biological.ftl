@@ -30,3 +30,12 @@ reagent-desc-vomit = You can see a few chunks of someone's last meal in it.
 
 reagent-name-grey-matter = grey matter
 reagent-desc-grey-matter = Thought juice, the stuff that leaks out of your ears.
+
+reagent-name-mucin = mucin
+reagent-desc-mucin = A fascinating secretion capable of accelerating the movement of Gastropoids. It looks exploitable...
+
+reagent-name-testosterone = testosterone
+reagent-desc-testosterone = A fundamental bodily hormone, synthesized from plant matter for pharmaceutical distribution.
+
+reagent-name-estradiol = estradiol
+reagent-desc-estradiol = A fundamental bodily hormone, synthesized from cell matter for pharmaceutical distribution.

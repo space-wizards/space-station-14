@@ -813,6 +813,9 @@ public abstract class SharedActionsSystem : EntitySystem
         if (action.AttachedEntity != null)
             RemoveAction(action.AttachedEntity.Value, actionId, action: action);
 
+        if (action.StartDelay && action.UseDelay != null)
+            SetCooldown(actionId, action.UseDelay.Value);
+
         DebugTools.AssertOwner(performer, comp);
         comp ??= EnsureComp<ActionsComponent>(performer);
         action.AttachedEntity = performer;

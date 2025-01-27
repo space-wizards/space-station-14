@@ -163,3 +163,6 @@
       - id: DeathNettle
         amount: !type:RangeNumberSelector
           range: 1, 5
+      - id: FoodLemo
+        amount: !type:RangeNumberSelector
+          range: 1, 5
