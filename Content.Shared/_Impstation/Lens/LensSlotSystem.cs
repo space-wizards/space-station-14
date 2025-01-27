@@ -10,6 +10,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Lens;
 
+/// <summary>
+///     Relays <see cref="VisionCorrectionComponent"/> from an item slot.
+/// </summary>
 public sealed class LensSlotSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
@@ -21,12 +24,12 @@ public sealed class LensSlotSystem : EntitySystem
 
         SubscribeLocalEvent<LensSlotComponent, ExaminedEvent>(OnExamine);
 
-        SubscribeLocalEvent<LensSlotComponent, EntInsertedIntoContainerMessage>(OnLensInserted);
-        SubscribeLocalEvent<LensSlotComponent, EntRemovedFromContainerMessage>(OnLensRemoved);
-
         SubscribeLocalEvent<LensSlotComponent, GotEquippedEvent>(OnGlassesEquipped);
         SubscribeLocalEvent<LensSlotComponent, GotUnequippedEvent>(OnGlassesUnequipped);
         SubscribeLocalEvent<LensSlotComponent, LensChangedEvent>(OnLensChanged);
+
+        SubscribeLocalEvent<LensSlotComponent, EntInsertedIntoContainerMessage>(OnLensInserted);
+        SubscribeLocalEvent<LensSlotComponent, EntRemovedFromContainerMessage>(OnLensRemoved);
 
         SubscribeLocalEvent<LensSlotComponent, InventoryRelayedEvent<GetBlurEvent>>(OnGetBlurLens);
     }
@@ -49,7 +52,22 @@ public sealed class LensSlotSystem : EntitySystem
         args.PushMessage(msg);
     }
 
-        private void OnLensInserted(EntityUid glasses, LensSlotComponent component, EntInsertedIntoContainerMessage args)
+    private void OnGlassesEquipped(Entity<LensSlotComponent> glasses, ref GotEquippedEvent args)
+    {
+        _Blurry.UpdateBlurMagnitude(args.Equipee);
+    }
+
+    private void OnGlassesUnequipped(Entity<LensSlotComponent> glasses, ref GotUnequippedEvent args)
+    {
+        _Blurry.UpdateBlurMagnitude(args.Equipee);
+    }
+
+    private void OnLensChanged(Entity<LensSlotComponent> glasses, ref LensChangedEvent args)
+    {
+        _Blurry.UpdateBlurMagnitude(Transform(glasses.Owner).ParentUid);
+    }
+
+    private void OnLensInserted(EntityUid glasses, LensSlotComponent component, EntInsertedIntoContainerMessage args)
     {
         if (!component.Initialized)
             return;
@@ -68,21 +86,9 @@ public sealed class LensSlotSystem : EntitySystem
         RaiseLocalEvent(glasses, new LensChangedEvent(true));
     }
 
-    private void OnGlassesEquipped(Entity<LensSlotComponent> glasses, ref GotEquippedEvent args)
-    {
-        _Blurry.UpdateBlurMagnitude(args.Equipee);
-    }
-
-    private void OnGlassesUnequipped(Entity<LensSlotComponent> glasses, ref GotUnequippedEvent args)
-    {
-        _Blurry.UpdateBlurMagnitude(args.Equipee);
-    }
-
-    private void OnLensChanged(Entity<LensSlotComponent> glasses, ref LensChangedEvent args)
-    {
-        _Blurry.UpdateBlurMagnitude(Transform(glasses.Owner).ParentUid);
-    }
-
+    /// <summary>
+    ///     Effectively a copy of <see cref="BlurryVisionSystem.OnGetBlur"/>.
+    /// </summary>
     private void OnGetBlurLens(Entity<LensSlotComponent> glasses, ref InventoryRelayedEvent<GetBlurEvent> args)
     {
         if (!_itemSlots.TryGetSlot(glasses.Owner, glasses.Comp.LensSlotId, out var itemSlot))

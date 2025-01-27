@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Lens;
 
 /// <summary>
-///     This component is used alongside <see cref="ItemSlotsComponent"/> to find a specific container.
+///     Used alongside <see cref="ItemSlotsComponent"/> to find a specific container.
 ///     Enables clothing to change functionality based on items inside of it.
 /// </summary>
 [RegisterComponent]
