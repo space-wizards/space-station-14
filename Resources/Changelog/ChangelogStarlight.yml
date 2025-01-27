@@ -2709,4 +2709,26 @@ Entries:
   id: 378
   time: '2025-01-27T05:15:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/266
+- author: STARLIGHT TEAM
+  changes:
+  - message: Slimes can now be operated on.
+    type: Tweak
+  id: 379
+  time: '2025-01-27T14:06:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/267
+- author: STARLIGHT TEAM
+  changes:
+  - message: Now slimes have a heart.
+    type: Tweak
+  id: 380
+  time: '2025-01-27T14:06:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/267
+- author: STARLIGHT TEAM
+  changes:
+  - message: 'Now any surgeries needs an empty clothing slot(explanation: Torso operations
+      needs to empty Outher and Inner Clothing slots).'
+    type: Tweak
+  id: 381
+  time: '2025-01-27T14:06:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/267
 
