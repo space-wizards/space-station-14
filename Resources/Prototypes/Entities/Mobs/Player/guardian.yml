@@ -280,6 +280,7 @@
   name: Holocarp
   parent: MobGuardianBase
   id: MobHolocarpGuardian
+  suffix: Guardian
   description: What's better than a pet carp? A guardian holocarp that lives off your own life energy!
   components:
     - type: GhostRole
@@ -292,6 +293,10 @@
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
+    - type: NameIdentifier
+      group: Holoparasite
+    - type: Speech
+      speechVerb: LargeMob
     - type: Sprite
       sprite: Mobs/Aliens/Carps/holo.rsi
       layers:
@@ -317,8 +322,6 @@
     - type: Tag
       tags:
         - Carp
-    - type: Speech
-      speechVerb: LargeMob
     - type: InteractionPopup
       interactSuccessString: petting-success-holocarp
       interactFailureString: petting-failure-holocarp
