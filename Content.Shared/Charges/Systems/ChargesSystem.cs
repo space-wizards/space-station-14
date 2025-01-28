@@ -11,13 +11,13 @@ public sealed class ChargesSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    private EntityQuery<LimitedChargesComponent> _query;
+    /*
+     * Despite what a bunch of systems do you don't need to continuously tick linear number updates and can just derive it easily.
+     */
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _query = GetEntityQuery<LimitedChargesComponent>();
 
         SubscribeLocalEvent<LimitedChargesComponent, ExaminedEvent>(OnExamine);
 
