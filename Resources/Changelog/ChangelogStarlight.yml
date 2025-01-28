@@ -2738,4 +2738,33 @@ Entries:
   id: 382
   time: '2025-01-27T14:13:44.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/259
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added item surgery.
+    type: Add
+  id: 383
+  time: '2025-01-28T11:17:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/268
+- author: STARLIGHT TEAM
+  changes:
+  - message: Now head can be amputated.
+    type: Tweak
+  id: 384
+  time: '2025-01-28T11:17:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/268
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added Improvised Surgical Equipment, such as scalpel now can be replaced
+      with any knife.
+    type: Tweak
+  id: 385
+  time: '2025-01-28T11:17:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/268
+- author: STARLIGHT TEAM
+  changes:
+  - message: Now any activable item needs to be activated before doing surgery.
+    type: Tweak
+  id: 386
+  time: '2025-01-28T11:17:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/268
 
