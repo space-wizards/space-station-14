@@ -130,6 +130,7 @@ entities:
     - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
+    - type: LoadedMap
 - proto: AirlockShuttle
   entities:
   - uid: 2
@@ -248,12 +249,11 @@ entities:
           showEnts: False
           occludes: True
           ents:
+          - 8
+          - 9
+          - 7
           - 6
           - 37
-          - 36
-          - 7
-          - 9
-          - 8
 - proto: ClothingOuterSuitEmergency
   entities:
   - uid: 7
@@ -291,13 +291,6 @@ entities:
     - type: Transform
       pos: 0.5,0.5
       parent: 1
-- proto: Gyroscope
-  entities:
-  - uid: 32
-    components:
-    - type: Transform
-      pos: -0.5,-2.5
-      parent: 1
 - proto: HandheldGPSBasic
   entities:
   - uid: 8
@@ -307,15 +300,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: JawsOfLife
+- proto: MiniGyroscope
   entities:
-  - uid: 36
+  - uid: 30
     components:
     - type: Transform
-      parent: 5
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
+      pos: -0.5,-2.5
+      parent: 1
 - proto: NTVisitorSpawner
   entities:
   - uid: 20
@@ -359,6 +350,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,-2.5
       parent: 1
+  - uid: 31
+    components:
+    - type: Transform
+      pos: -0.5,0.5
+      parent: 1
 - proto: WallShuttle
   entities:
   - uid: 26
@@ -386,12 +382,7 @@ entities:
       parent: 1
 - proto: WallShuttleDiagonal
   entities:
-  - uid: 30
-    components:
-    - type: Transform
-      pos: -0.5,0.5
-      parent: 1
-  - uid: 31
+  - uid: 32
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
