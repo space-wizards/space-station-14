@@ -202,7 +202,7 @@ public sealed class ActionButton : Control, IEntityControl
         {
             var charges = _chargesSys.GetCurrentCharges((ActionId.Value, actionCharges, null));
 
-            var chargesText = FormattedMessage.FromMarkupPermissive(Loc.GetString($"Charges: {charges.ToString()}/{actionCharges.MaxCharges.ToString()}"));
+            var chargesText = FormattedMessage.FromMarkupPermissive(Loc.GetString($"Charges: {charges.ToString()}/{actionCharges.MaxCharges}"));
             return new ActionAlertTooltip(name, decr, charges: chargesText);
         }
 
