@@ -256,15 +256,15 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         if (!TryComp<EnsnareableComponent>(target, out var ensnareable))
             return false;
 
-        // Need to insert before free legs check.
-        Container.Insert(ensnare, ensnareable.Container);
 
         var legs = _body.GetBodyChildrenOfType(target, BodyPartType.Leg).Count();
-        var ensnaredLegs = (2 * ensnareable.Container.ContainedEntities.Count);
-        var freeLegs = legs - ensnaredLegs;
+        var ensnaredLegs = (ensnareable.Container.ContainedEntities.Count);
 
-        if (freeLegs > 0)
+        //If both legs are ensnared, don't let it ensnare more
+        if (legs == ensnaredLegs)
             return false;
+
+        Container.Insert(ensnare, ensnareable.Container);
 
         // Apply stamina damage to target if they weren't ensnared before.
         if (ensnareable.IsEnsnared != true)
