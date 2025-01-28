@@ -1771,6 +1771,7 @@
   - type: Tag
     tags:
     - Fruit # It's in the name
+    - ClothMade # For botanist moths 
   - type: FoodSequenceElement
     entries:
       Taco: Gatfruit
