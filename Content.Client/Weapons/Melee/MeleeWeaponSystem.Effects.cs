@@ -138,22 +138,13 @@ public sealed partial class MeleeWeaponSystem
         const float length = 0.15f;
         var startOffset = sprite.Rotation.RotateVec(new Vector2(0f, -distance / 5f));
         var endOffset = sprite.Rotation.RotateVec(new Vector2(0f, -distance));
-        var rotation = sprite.Rotation + spriteRotation;
+        sprite.Rotation += spriteRotation;
 
         return new Animation()
         {
             Length = TimeSpan.FromSeconds(length),
             AnimationTracks =
             {
-                new AnimationTrackComponentProperty()
-                {
-                    ComponentType = typeof(SpriteComponent),
-                    Property = nameof(SpriteComponent.Rotation),
-                    KeyFrames =
-                    {
-                        new AnimationTrackProperty.KeyFrame(rotation, 0f)
-                    }
-                },
                 new AnimationTrackComponentProperty()
                 {
                     ComponentType = typeof(SpriteComponent),
