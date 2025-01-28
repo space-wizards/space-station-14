@@ -6,7 +6,7 @@
     name: store-preset-name-uplink
     categories:
     - ShuttleUplinkEquipment
-    - BattlesUplinkWearablesResources
+    - ShuttleUplinkResources
     - ShuttleUplinkMedicine
     - ShuttleUplinkShipbuilding
     - ShuttleUplinkExtra
