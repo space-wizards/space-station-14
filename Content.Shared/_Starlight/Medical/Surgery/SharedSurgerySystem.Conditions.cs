@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Shared.Starlight.Medical.Surgery.Steps.Parts;
 using Content.Shared.Starlight.Medical.Surgery.Events;
 using Content.Shared.Starlight.Medical.Surgery.Effects.Step;
+using Content.Shared.Body.Systems;
 
 namespace Content.Shared.Starlight.Medical.Surgery;
 // Based on the RMC14.
@@ -24,7 +25,9 @@ public abstract partial class SharedSurgerySystem
         SubscribeLocalEvent<SurgeryOrganDontExistConditionComponent, SurgeryValidEvent>(OnOrganDontExistConditionValid);
         SubscribeLocalEvent<SurgeryAnyAccentConditionComponent, SurgeryValidEvent>(OnAnyAccentConditionValid);
         SubscribeLocalEvent<SurgeryAnyLimbSlotConditionComponent, SurgeryValidEvent>(OnAnyLimbSlotConditionValid);
+        SubscribeLocalEvent<SurgeryLimbSlotConditionComponent, SurgeryValidEvent>(OnLimbSlotConditionValid);
     }
+
     private void OnOrganDontExistConditionValid(Entity<SurgeryOrganDontExistConditionComponent> ent, ref SurgeryValidEvent args)
     {
         if (ent.Comp.Organ?.Count != 1) return;
@@ -41,7 +44,7 @@ public abstract partial class SharedSurgerySystem
     private void OnOrganExistConditionValid(Entity<SurgeryOrganExistConditionComponent> ent, ref SurgeryValidEvent args)
     {
         if (ent.Comp.Organ?.Count != 1) return;
-        
+
         if (TryComp<BodyPartComponent>(args.Body, out var itemPart))
         {
             var organs = _body.GetPartOrgans(args.Body, itemPart);
@@ -67,7 +70,7 @@ public abstract partial class SharedSurgerySystem
     {
         if (ent.Comp.Parts.Count == 0)
             return;
-        
+
         if (TryComp<BodyPartComponent>(args.Body, out var itemPart) && itemPart.PartType is BodyPartType item && !ent.Comp.Parts.Contains(item))
         {
             Logger.Warning("don't have part at part");
@@ -114,4 +117,7 @@ public abstract partial class SharedSurgerySystem
         else
             args.Cancelled = true;
     }
+    private void OnLimbSlotConditionValid(Entity<SurgeryLimbSlotConditionComponent> ent, ref SurgeryValidEvent args) 
+        => args.Cancelled = !(_containers.TryGetContainer(args.Part, SharedBodySystem.GetPartSlotContainerId(ent.Comp.Slot), out var container)
+            && container.ContainedEntities.Count == 0);
 }

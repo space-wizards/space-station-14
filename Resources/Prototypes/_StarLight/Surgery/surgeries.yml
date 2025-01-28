@@ -26,7 +26,8 @@
     priority: -100
     steps:
     - SurgeryStepOpenIncisionScalpel
-    - SurgeryStepRetractSkin
+    - SurgeryStepCoagulateJellyFlow
+    - SurgeryStepRetractMembrane
   - type: SurgerySpeciesCondition
     speciesBlacklist: []
     speciesWhitelist:
@@ -58,6 +59,7 @@
     - SurgeryOpenIncisionSlime
     priority: 100
     steps:
+    - SurgeryStepMendRibcage
     - SurgeryStepCloseIncision
   - type: SurgerySpeciesCondition
     speciesBlacklist: []
@@ -128,85 +130,7 @@
     sprite: Objects/Fun/Instruments/microphone.rsi
     state: icon
 
-- type: entity
-  parent: SurgeryBase
-  id: SurgeryAmputation
-  name: Amputation
-  description: Surgical removal of a limb.
-  components:
-  - type: Surgery
-    requirement:
-    - SurgeryOpenIncision
-    steps:
-    - SurgeryStepExposeNerves
-    - SurgeryStepExposeBloodVessels
-    - SurgeryAmputationStep
-  - type: SurgerySpeciesCondition
-    speciesBlacklist:
-    - SlimePerson
-  - type: SurgeryPartCondition
-    parts: 
-    - Head
-    - Arm
-    - Hand
-    - Leg
-    - Foot
-    - Tail
-  - type: Sprite
-    sprite: Objects/Specific/Medical/Surgery/saw.rsi
-    state: saw
-    
-- type: entity
-  parent: SurgeryAmputation
-  id: SurgeryAmputationSlime
-  components:
-  - type: Surgery
-    requirement:
-    - SurgeryOpenIncisionSlime
-    steps:
-    - SurgeryAmputationStep
-  - type: SurgerySpeciesCondition
-    speciesBlacklist: []
-    speciesWhitelist:
-    - SlimePerson
 
-- type: entity
-  parent: SurgeryBase
-  id: SurgeryLimbAttachment 
-  name: Limb Attachment
-  description: Surgical attachment of a limb.
-  components:
-  - type: Surgery
-    requirement:
-    - SurgeryOpenIncision
-    steps:
-    - SurgeryStepExposeNerves
-    - SurgeryStepExposeBloodVessels
-    - SurgeryLimbAttachmentStep
-    - SurgeryStepRejoinNerves
-    - SurgeryStepRejoinBloodVessels
-    - SurgeryStepRestoreCartilage
-  - type: SurgerySpeciesCondition
-    speciesBlacklist:
-    - SlimePerson
-  - type: SurgeryAnyLimbSlotCondition
-  - type: Sprite
-    sprite: Objects/Specific/Medical/medical.rsi
-    state: medicated-suture
-    
-- type: entity
-  parent: SurgeryLimbAttachment
-  id: SurgeryLimbAttachmentSlime
-  components:
-  - type: Surgery
-    requirement:
-    - SurgeryOpenIncisionSlime
-    steps:
-    - SurgeryLimbAttachmentStep
-  - type: SurgerySpeciesCondition
-    speciesBlacklist: []
-    speciesWhitelist:
-    - SlimePerson
 #organs
 
 - type: entity
