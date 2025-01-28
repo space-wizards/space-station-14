@@ -1,5 +1,5 @@
 - type: entity
-  name: mk 93
+  name: Mk 93
   parent: [ BaseWeaponPistol, BaseRestrictedContraband ]
   id: WeaponPistolMk93
   description: A cheap pistol built for fully automatic fire. Uses .22 auto ammo.
@@ -48,7 +48,7 @@
     node: convert-fullauto
 
 - type: entity
-  name: mk 92hb
+  name: Mk 92HB
   parent: [ BaseWeaponPistol, BaseRestrictedContraband ]
   id: WeaponPistolMk92HB
   description: Designed in an attempt to make the most of a small cartridge. Uses .22 auto ammo.
@@ -100,7 +100,7 @@
     node: convert-hyperburst
 
 - type: entity
-  name: zipper .22
+  name: Zipper .22
   parent: [ BaseWeaponPistol, BaseRestrictedContraband ]
   id: WeaponPistolZipper
   description: Better at delivering the killing blow to the business of its manufacturer than to its actual targets. Uses .22 auto ammo.

@@ -1,0 +1,170 @@
+#Bar
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyBar
+  suffix: Bar
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/bar.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyBarGlass
+  suffix: Bar, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/bar.rsi
+    state: "assembly"
+
+#Chapel
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyChapel
+  suffix: Chapel
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/chapel.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyChapelGlass
+  suffix: Chapel, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/chapel.rsi
+    state: "assembly"
+
+#Courier
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyCourier
+  suffix: Courier
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/courier.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyCourierGlass
+  suffix: Courier, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/courier.rsi
+    state: "assembly"
+
+#Janitor
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyJanitor
+  suffix: Janitor
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/janitor.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyJanitorGlass
+  suffix: Janitor, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/janitor.rsi
+    state: "assembly"
+
+#Kitchen
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyKitchen
+  suffix: Kitchen
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/kitchen.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyKitchenGlass
+  suffix: Kitchen, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/kitchen.rsi
+    state: "assembly"
+
+#Lawyer
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyLawyer
+  suffix: Lawyer
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/lawyer.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyLawyerGlass
+  suffix: Lawyer, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/lawyer.rsi
+    state: "assembly"
+
+#Salvage
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblySalvage
+  suffix: Salvage
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/salvage.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblySalvagerGlass
+  suffix: Salvage, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/salvage.rsi
+    state: "assembly"
+
+#Service
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyService
+  suffix: Service
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyServiceGlass
+  suffix: Service, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/basic.rsi
+    state: "assembly"
+
+#Theatre
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyTheatre
+  suffix: Theatre
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/theatre.rsi
+    state: "assembly"
+    
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblyTheatreGlass
+  suffix: Theatre, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/theatre.rsi
+    state: "assembly"

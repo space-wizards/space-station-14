@@ -6,3 +6,63 @@
   components:
   - type: Sprite
     state: atmos_h2o
+
+- type: entity
+  parent: BaseSign
+  id: SignMaterialsCommand
+  name: materials sign
+  suffix: Command
+  description: An omen to the juicy vault of steel, glass, and plastic that lays before you.
+  components:
+  - type: Sprite
+    state: mats_command
+
+- type: entity
+  parent: BaseSign
+  id: SignMaterialsMedical
+  name: materials sign
+  suffix: Medical
+  description: An omen to the juicy vault of steel, glass, and plastic that lays before you.
+  components:
+  - type: Sprite
+    state: mats_medical
+
+- type: entity
+  parent: BaseSign
+  id: SignMaterialsScience
+  name: materials sign
+  suffix: Science
+  description: An omen to the juicy vault of steel, glass, and plastic that lays before you.
+  components:
+  - type: Sprite
+    state: mats_sci
+
+- type: entity
+  parent: BaseSign
+  id: SignMaterialsSecurity
+  name: materials sign
+  suffix: Security
+  description: An omen to the juicy vault of steel, glass, and plastic that lays before you.
+  components:
+  - type: Sprite
+    state: mats_sec
+
+- type: entity
+  parent: BaseSign
+  id: SignMaterialsService
+  name: materials sign
+  suffix: Service
+  description: An omen to the juicy vault of steel, glass, and plastic that lays before you.
+  components:
+  - type: Sprite
+    state: mats_service
+
+- type: entity
+  parent: BaseSign
+  id: SignMaterialsSupply
+  name: materials sign
+  suffix: Cargo
+  description: An omen to the juicy vault of steel, glass, and plastic that lays before you.
+  components:
+  - type: Sprite
+    state: mats_supply

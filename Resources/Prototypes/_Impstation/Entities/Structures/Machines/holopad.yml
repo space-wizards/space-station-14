@@ -1,0 +1,35 @@
+# General
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralDocking
+  suffix: Docking Arm
+  components:
+  - type: Label
+    currentLabel: holopad-general-docking
+
+# Science
+- type: entity
+  parent: Holopad
+  id: HolopadScienceXenoarchaeology
+  suffix: Xenoarchaeology
+  components:
+  - type: Label
+    currentLabel: holopad-science-xenoarchaeology
+
+# Medical
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalPsychologist
+  suffix: Psychologist
+  components:
+  - type: Label
+    currentLabel: holopad-medical-psychologist
+    
+# Engineering
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringSupermatter
+  suffix: Supermatter
+  components:
+  - type: Label
+    currentLabel: holopad-engineering-supermatter

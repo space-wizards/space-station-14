@@ -653,7 +653,8 @@
   - ClownSkirt
   - JesterSuit
   - JesterAltSuit
-  - CirclusClownSuit #imp
+  - CircusClownSuit #imp
+  - JokesterSuit #imp
 
 #imp
 - type: loadoutGroup
@@ -686,6 +687,7 @@
   loadouts:
   - ClownRobes
   - ClownWintercoat
+  - JokesterOuterCoat
 
 - type: loadoutGroup
   id: ClownShoes
@@ -694,6 +696,7 @@
   - ClownShoes
   - JesterShoes
   - CircusClownShoes
+  - JokesterShoes
 
 - type: loadoutGroup
   id: SurvivalClown

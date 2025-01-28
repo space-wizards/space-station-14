@@ -10,17 +10,8 @@
     state: nullrod_base
   - type: Item
     size: Small
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Tag
     tags:
-    - Recyclable
     - NullRod
 
 - type: entity
@@ -31,7 +22,7 @@
   components:
   - type: ChaplainGearMenu
     possibleSets:
-    # - ChaplainGearRosary ## UNFINISHED!
+    # - ChaplainGearRosary ## UNFINISHED! SoonTM.
     - ChaplainGearGrail
     - ChaplainGearGlove
     - ChaplainGearBow
@@ -46,6 +37,7 @@
     damage:
       types:
         Blunt: 15
+        Holy: 15
     soundHit:
       collection: MetalThud
   - type: Clothing
@@ -94,19 +86,12 @@
     size: Small
     shape:
     - 0,0,1,1
-  - type: MeleeWeapon
-    wideAnimationRotation: -135
-    damage:
-      types:
-        Blunt: 5
-    soundHit:
-      collection: MetalThud
   - type: FitsInDispenser
     solution: grail
   - type: SolutionContainerManager
     solutions:
       grail:
-        maxVol: 150
+        maxVol: 200
   - type: MixableSolution
     solution: grail
   - type: RefillableSolution
@@ -157,7 +142,7 @@
   name: divine grasp
   id: NullRodGlove
   parent: [ NullRodBase, ClothingHandsInedibleBase]
-  description: The touch of god! Or goddess. It's up to you, really.
+  description: The touch of god! Or whatever you believe in, really. I don't think the gauntlet cares.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Misc/nullrod_glove.rsi
@@ -169,17 +154,21 @@
   - type: Clothing
     sprite: _Impstation/Objects/Misc/nullrod_glove.rsi
   - type: StaminaDamageOnHit
-    damage: 22
+    damage: 23
   - type: MeleeWeapon
     attackRate: 0.68
     damage:
       types:
-        Blunt: 10
+        Blunt: 14
+        Holy: 20
     soundHit:
       path: /Audio/_Impstation/Weapons/nullglove.ogg
       params:
         variation: 0.35
     mustBeEquippedToUse: true
+  - type: MeleeThrowOnHit
+    speed: 7
+    lifetime: 0.2
   - type: Reflect
     reflectProb: .22
     spread: 120
@@ -282,7 +271,7 @@
     - type: BallisticAmmoProvider
       proto: HolyArrow
       mayTransfer: true
-      capacity: 8
+      capacity: 7
       whitelist:
         tags:
         - HolyArrow

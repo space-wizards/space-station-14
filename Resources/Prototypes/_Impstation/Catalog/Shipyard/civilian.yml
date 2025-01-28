@@ -101,7 +101,7 @@
   id: Bargain Bin
   name: Bargain Bin
   description: Need a shuttle fast and cheap? We have something for you! All sales final.
-  price: 12500
+  price: 7000
   path:
   - /Maps/_Impstation/Shuttles/Shipyard/Lemons/hermes-jackpot.yml
   - /Maps/_Impstation/Shuttles/Shipyard/grinnebago.yml
@@ -126,3 +126,14 @@
   categories:
   - Small
   - Transport
+
+- type: vessel
+  id: Strugglebug
+  name: NT-Strugglebug
+  description: A small, bare-bones three-seater mining shuttle. EVA required.
+  price: 6000
+  path:
+  - /Maps/_Impstation/Shuttles/Shipyard/strugglebug.yml
+  categories:
+  - Small
+  - Mining

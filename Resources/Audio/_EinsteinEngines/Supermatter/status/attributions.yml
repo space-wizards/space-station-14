@@ -1,0 +1,14 @@
+- files: ["engine_alert1.ogg", "engine_alert2.ogg", "terminal_alert.ogg"]
+  copyright: "Taken from tgstation"
+  license: "CC-BY-SA-3.0"
+  source: "https://github.com/tgstation/tgstation/pull/87191"
+
+- files: ["ohfuck.ogg"]
+  copyright: "Created by AftrLite for Impstation"
+  license: "CC-BY-SA-3.0"
+  source: "https://github.com/impstation/imp-station-14/pull/1359"
+
+- files: ["empty.ogg"]
+  copyright: "Created by SadFrogMemer on Wikimedia Commons"
+  license: "CC0-1.0"
+  source: "https://upload.wikimedia.org/wikipedia/commons/8/81/Short_Silent%2C_Empty_Audio.ogg"

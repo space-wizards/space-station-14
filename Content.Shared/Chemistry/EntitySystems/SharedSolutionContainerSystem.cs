@@ -795,9 +795,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
         }
 
-        // IMP, luminosity must be at least 0.3
+        // IMP, luminosity must be at least 0.4 to provide contrast with the textbox.
         var colorHSL = Color.ToHsl(solution.GetColor(PrototypeManager));
-        colorHSL.Z = (float) Math.Max(colorHSL.Z, 0.4);
+        colorHSL.Z = RescaleLuminosity((float) colorHSL.Z);
 
         var colorHex = Color.FromHsl(colorHSL)
             .ToHexNoAlpha();
@@ -855,7 +855,11 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                     part = "examinable-solution-recognized-next";
                 }
 
-                msg.Append(Loc.GetString(part, ("color", reagent.SubstanceColor.ToHexNoAlpha()),
+                // IMP, luminosity must be at least 0.4 to provide contrast with the textbox.
+                var recognisedColorHSL = Color.ToHsl(reagent.SubstanceColor);
+                recognisedColorHSL.Z = RescaleLuminosity((float) recognisedColorHSL.Z);
+
+                msg.Append(Loc.GetString(part, ("color", Color.FromHsl(recognisedColorHSL).ToHexNoAlpha()),
                     ("chemical", reagent.LocalizedName)));
             }
 
@@ -868,7 +872,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     {
         if (!args.CanInteract || !args.CanAccess)
         {
-            if (!HasComp<GhostComponent>(args.User))
+            if (!HasComp<GhostComponent>(args.User)) //IMP: Ghosts can see solution contents
                 return;
         }
 
@@ -905,6 +909,20 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
+    /// <summary>
+    ///     # IMP Rescale luminosity value of a color to be at least 0.4.
+    //      Values less than 0.5 are scaled to be between 0.4 and 0.5, while values greater than 0.5 are kept the same.
+    //      Assumes all values are between 0 and 1.
+    /// </summary>
+    /// <param name="luminosity">Luminosity component of HSL</param>
+    private float RescaleLuminosity(float luminosity)
+    {
+        if (luminosity > 0.5){
+            return luminosity;
+        }
+        return (float) ((luminosity * 0.2) + 0.4);
+    }
+
     private FormattedMessage GetSolutionExamine(Solution solution)
     {
         var msg = new FormattedMessage();
@@ -926,9 +944,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         foreach (var (proto, quantity) in sortedReagentPrototypes)
         {
-            // IMP, luminosity must be at least 0.4
+            // IMP, luminosity must be at least 0.4 to provide contrast with the textbox.
             var colorHSL = Color.ToHsl(proto.SubstanceColor);
-            colorHSL.Z = (float) Math.Max(colorHSL.Z, 0.4);
+            colorHSL.Z = RescaleLuminosity((float) colorHSL.Z);
 
             msg.PushNewline();
             msg.AddMarkupOrThrow(Loc.GetString("scannable-solution-chemical"

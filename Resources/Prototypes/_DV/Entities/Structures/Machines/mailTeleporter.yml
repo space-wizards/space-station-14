@@ -5,6 +5,7 @@
   description: Teleports mail addressed to the crew of this station.
   components:
   - type: MailTeleporter
+  - type: MailinatorTarget
   - type: Fixtures
     fixtures:
       fix1:

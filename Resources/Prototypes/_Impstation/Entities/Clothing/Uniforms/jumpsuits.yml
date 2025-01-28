@@ -89,6 +89,17 @@
 
 - type: entity
   parent: [ClothingUniformBase]
+  id: ClothingUniformJokester
+  name: jokester's jumpsuit
+  description: Now 100% more tomato-proof!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/clown_jokester.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/clown_jokester.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
   id: ClothingUniformHitmanSuit
   name: contract killer suit
   description: The perfect outfit for blending in at any event, office, or space station.
@@ -198,7 +209,7 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/brosblazer.rsi
 
 - type: entity
-  parent: [ClothingUniformBase]
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
   id: ClothingUniformJumpsuitCourier
   name: courier jumpsuit
   description: A courier uniform, with blue accents.

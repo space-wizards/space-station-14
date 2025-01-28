@@ -85,8 +85,9 @@
   - type: MindRole
     exclusiveAntag: true
     antagPrototype: Nukeops
-    trackPurchases: false #imp edit
     getsNoSpendtext: true #imp edit
+    primaryCurrency: Telecrystal #imp edit
+    purchasePriority: 1 #imp edit
   - type: NukeopsRole
 
 - type: entity
@@ -97,8 +98,9 @@
   components:
   - type: MindRole
     antagPrototype: NukeopsMedic
-    trackPurchases: false #imp edit
     getsNoSpendtext: true #imp edit
+    primaryCurrency: Telecrystal #imp edit
+    purchasePriority: 2 #imp edit
 
 - type: entity
   parent: MindRoleNukeops
@@ -108,8 +110,9 @@
   components:
   - type: MindRole
     antagPrototype: NukeopsCommander
-    trackPurchases: false #imp edit
     getsNoSpendtext: true #imp edit
+    primaryCurrency: Telecrystal #imp edit
+    purchasePriority: 3 #imp edit
 
 # Revolutionaries
 - type: entity
@@ -154,6 +157,7 @@
     antagPrototype: Traitor
     exclusiveAntag: true
     getsNoSpendtext: true #imp edit
+    primaryCurrency: Telecrystal #imp edit
   - type: TraitorRole
 
 - type: entity
@@ -165,6 +169,7 @@
   - type: MindRole
     antagPrototype: TraitorSleeper
     getsNoSpendtext: true # imp edit
+    primaryCurrency: Telecrystal #imp edit
 
 # Zombie Squad
 - type: entity

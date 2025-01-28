@@ -26,6 +26,8 @@
         amount: 2
       - id: ClothingHeadsetWarden
       - id: ClothingOuterHardsuitBrigmedic
+      - id: BoxToken #imp
+      - id: BaseSeclinkRadio #imp
 
 - type: entity
   id: LockerWardenFilled
@@ -55,6 +57,8 @@
       - id: ClothingOuterHardsuitBrigmedic
       - id: ClothingHeadsetWarden
       - id: TicketPad #imp special
+      - id: BoxToken #imp
+      - id: BaseSeclinkRadio #imp
 
 - type: entity
   id: LockerSecurityFilled
@@ -65,7 +69,7 @@
     contents:
       - id: FlashlightSeclite
         prob: 0.8
-      - id: WeaponDisabler
+      #- id: WeaponDisabler  included in SecLink
       - id: ClothingUniformJumpsuitSecGrey
         prob: 0.3
       - id: ClothingHeadHelmetBasic
@@ -84,6 +88,7 @@
       - id: BookSpaceLaw
         prob: 0.5
       - id: TicketPad #imp special
+      - id: BaseSeclinkRadio #imp
 
 - type: entity
   id: LockerBrigmedicFilled
@@ -93,7 +98,7 @@
   - type: StorageFill
     contents:
       - id: ClothingEyesGlassesSecurity
-      - id: WeaponDisabler
+      #- id: WeaponDisabler  included in SecLink
       - id: TrackingImplanter
         amount: 2
       - id: ClothingOuterHardsuitBrigmedic
@@ -120,6 +125,7 @@
       - id: ClothingNeckCloakMoth #bzzz Moth-pocalypse
         prob: 0.15
       - id: TicketPad #imp special
+      - id: BaseSeclinkRadio #imp
 
 - type: entity
   id: LockerDetectiveFilled
@@ -144,6 +150,7 @@
       - id: HoloprojectorSecurity
       - id: BoxEvidenceMarkers
       - id: HandLabeler
+      - id: BaseSeclinkRadio # imp
       - id: BoxTapeRecorder # DeltaV
 
 - type: entity

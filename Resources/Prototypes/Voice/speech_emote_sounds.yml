@@ -417,7 +417,9 @@
     Sigh:
       collection: MaleSigh #placeholder
     Crying:
-      collection: MaleCry #placeholder
+      collection: VoxCry #Imp
+      params:
+        volume: -7
     Whistle:
       collection: Whistles
     Weh:
@@ -429,9 +431,23 @@
     Ungh:
       collection: Ungh
     Gasp:
-      collection: MaleGasp #placeholder
+      collection: VoxGasp #Imp
+      params:
+        volume: 10
     DefaultDeathgasp:
       collection: MaleDeathGasp #placeholder
+    Chitter:
+      collection: VoxChitter #Imp
+      params:
+        volume: -5
+    Coo:
+      collection: VoxCoo #Imp
+      params:
+        volume: -7
+    Hiss:
+      collection: VoxHiss #Imp
+      params:
+        volume: -5
   params:
     variation: 0.125
 
@@ -453,7 +469,9 @@
     Sigh:
       collection: FemaleSigh #placeholder
     Crying:
-      collection: FemaleCry #placeholder
+      collection: VoxCry #Imp
+      params:
+        volume: -7
     Whistle:
       collection: Whistles
     Weh:
@@ -463,9 +481,23 @@
     Ungh:
       collection: Ungh
     Gasp:
-      collection: FemaleGasp #placeholder
+      collection: VoxGasp #Imp
+      params:
+        volume: 10
     DefaultDeathgasp:
       collection: FemaleDeathGasp #placeholder
+    Chitter:
+      collection: VoxChitter #Imp
+      params:
+        volume: -5
+    Coo:
+      collection: VoxCoo #Imp
+      params:
+        volume: -7
+    Hiss:
+      collection: VoxHiss #Imp
+      params:
+        volume: -5
   params:
     variation: 0.125
 
@@ -487,7 +519,9 @@
     Sigh:
       collection: UnisexSigh #placeholder
     Crying:
-      collection: UnisexCry #placeholder
+      collection: VoxCry #Imp
+      params:
+        volume: -7
     Whistle:
       collection: Whistles
     Weh:
@@ -497,9 +531,23 @@
     Ungh:
       collection: Ungh
     Gasp:
-      collection: UnisexGasp #placeholder
+      collection: VoxGasp #Imp
+      params:
+        volume: 10
     DefaultDeathgasp:
-      collection: DeathGasp #placeholder
+      collection: UnisexDeathGasp #placeholder
+    Chitter:
+      collection: VoxChitter #Imp
+      params:
+        volume: -5
+    Coo:
+      collection: VoxCoo #Imp
+      params:
+        volume: -7
+    Hiss:
+      collection: VoxHiss #Imp
+      params:
+        volume: -5
   params:
     variation: 0.125
     # We need vox sounds for the other emotes

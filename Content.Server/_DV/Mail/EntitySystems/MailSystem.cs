@@ -18,6 +18,7 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Systems;
+using Content.Shared._DV.CCVars;
 using Content.Shared._DV.Mail;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
@@ -40,6 +41,7 @@ using Content.Shared.Storage;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -69,6 +71,7 @@ public sealed class MailSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
 
     [Dependency] private readonly LogisticStatsSystem _logisticsStatsSystem = default!;
 
@@ -96,7 +99,9 @@ public sealed class MailSystem : EntitySystem
     {
         base.Update(frameTime);
 
+        var interval = _config.GetCVar(DCCVars.MailTeleportIntervalInMinutes);
         var query = EntityQueryEnumerator<MailTeleporterComponent>();
+
         while (query.MoveNext(out var uid, out var mailTeleporter))
         {
             if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
@@ -104,10 +109,10 @@ public sealed class MailSystem : EntitySystem
 
             mailTeleporter.Accumulator += frameTime;
 
-            if (mailTeleporter.Accumulator < mailTeleporter.TeleportInterval.TotalSeconds)
+            if (mailTeleporter.Accumulator < TimeSpan.FromMinutes(interval).TotalSeconds)
                 continue;
 
-            mailTeleporter.Accumulator -= (float)mailTeleporter.TeleportInterval.TotalSeconds;
+            mailTeleporter.Accumulator -= (float)TimeSpan.FromMinutes(interval).TotalSeconds;
             SpawnMail(uid, mailTeleporter);
         }
     }
@@ -457,13 +462,13 @@ public sealed class MailSystem : EntitySystem
                 _sawmill.Error($"Can't insert {ToPrettyString(entity)} into new mail delivery {ToPrettyString(uid)}! Deleting it.");
                 QueueDel(entity);
             }
-            else if (!mailComp.IsFragile && IsEntityFragile(entity, component.FragileDamageThreshold))
+            else if (!mailComp.IsFragile && IsEntityFragile(entity, _config.GetCVar(DCCVars.MailFragileDamageThreshold)))
             {
                 mailComp.IsFragile = true;
             }
         }
 
-        if (_random.Prob(component.PriorityChance))
+        if (_random.Prob(_config.GetCVar(DCCVars.MailPriorityChances)))
             mailComp.IsPriority = true;
 
         // This needs to override both the random probability and the
@@ -474,31 +479,35 @@ public sealed class MailSystem : EntitySystem
         mailComp.RecipientJob = recipient.Job;
         mailComp.Recipient = recipient.Name;
 
+        // Imp: Set base bounty and penalty
+        mailComp.Bounty += _config.GetCVar(DCCVars.MailDefaultBounty);
+        mailComp.Penalty += _config.GetCVar(DCCVars.MailDefaultPenelty);
+
         // Frontier: Large mail bonus
         var mailEntityStrings = mailComp.IsLarge ? MailConstants.MailLarge : MailConstants.Mail;
         if (mailComp.IsLarge)
         {
-            mailComp.Bounty += component.LargeBonus;
-            mailComp.Penalty += component.LargeMalus;
+            mailComp.Bounty += _config.GetCVar(DCCVars.MailLargeBonus);
+            mailComp.Penalty += _config.GetCVar(DCCVars.MailLargeMalus);
         }
         // End Frontier
 
         if (mailComp.IsFragile)
         {
-            mailComp.Bounty += component.FragileBonus;
-            mailComp.Penalty += component.FragileMalus;
+            mailComp.Bounty += _config.GetCVar(DCCVars.MailFragileBonus);
+            mailComp.Penalty += _config.GetCVar(DCCVars.MailFragileMalus);
             _appearance.SetData(uid, MailVisuals.IsFragile, true);
         }
 
         if (mailComp.IsPriority)
         {
-            mailComp.Bounty += component.PriorityBonus;
-            mailComp.Penalty += component.PriorityMalus;
+            mailComp.Bounty +=  _config.GetCVar(DCCVars.MailPriorityBonus);
+            mailComp.Penalty += _config.GetCVar(DCCVars.MailPriorityMalus);
             _appearance.SetData(uid, MailVisuals.IsPriority, true);
 
             mailComp.PriorityCancelToken = new CancellationTokenSource();
 
-                Timer.Spawn((int) component.PriorityDuration.TotalMilliseconds,
+                Timer.Spawn((int) TimeSpan.FromMinutes(_config.GetCVar(DCCVars.MailPriorityDuration)).TotalMilliseconds,
                     () =>
                     {
                         // DeltaV - Expired mail recorded to logistic stats
@@ -509,7 +518,7 @@ public sealed class MailSystem : EntitySystem
                                 logisticStats,
                                 mailComp.IsProfitable ? mailComp.Penalty : 0);
                         });
-                    PenalizeStationFailedDelivery(uid!, "mail-penalty-expired");
+                    PenalizeStationFailedDelivery((uid, mailComp), "mail-penalty-expired");
                 },
                 mailComp.PriorityCancelToken.Token);
         }
@@ -635,7 +644,7 @@ public sealed class MailSystem : EntitySystem
             return;
         }
 
-        if (GetUndeliveredParcelCount(uid) >= component.MaximumUndeliveredParcels)
+        if (GetUndeliveredParcelCount(uid) >= _config.GetCVar(DCCVars.MailMaximumUndeliveredParcels))
             return;
 
         var candidateList = GetMailRecipientCandidates(uid);
@@ -652,7 +661,7 @@ public sealed class MailSystem : EntitySystem
             return;
         }
 
-        var deliveryCount = component.MinimumDeliveriesPerTeleport + candidateList.Count / component.CandidatesPerDelivery;
+        var deliveryCount = 1 + candidateList.Count / _config.GetCVar(DCCVars.MailCandidatesPerDelivery);
 
         for (var i = 0; i < deliveryCount; i++)
         {

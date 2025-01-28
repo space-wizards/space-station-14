@@ -387,11 +387,11 @@
       - MagazineBoxPistolUranium
       - MagazineBoxRifleIncendiary
       - MagazineBoxRifleUranium
-      - MagazineDMRIncendiary
-      - MagazineDMRUranium
+      - MagazineDMRIncendiary #imp
+      - MagazineDMRUranium #imp
       - MagazineGrenadeEmpty
-      - MagazineLPistolIncendiary
-      - MagazineLPistolUranium
+      - MagazineLPistolIncendiary #imp
+      - MagazineLPistolUranium #imp
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
       - MagazinePistolIncendiary
@@ -733,19 +733,19 @@
       - MagazineBoxLightRiflePractice
       - MagazineBoxMagnum
       - MagazineBoxMagnumPractice
-      - MagazineBoxLPistol
-      - MagazineBoxLPistolPractice
+      - MagazineBoxLPistol #imp
+      - MagazineBoxLPistolPractice #imp
       - MagazineBoxPistol
       - MagazineBoxPistolPractice
       - MagazineBoxRifle
       - MagazineBoxRiflePractice
-      - MagazineDMR
-      - MagazineDMREmpty
+      - MagazineDMR #imp
+      - MagazineDMREmpty #imp
       - MagazineLightRifle
       - MagazineLightRifleEmpty
-      - MagazineLPistol
-      - MagazineLPistolEmpty
-      - MagazineLPistolPractice
+      - MagazineLPistol #imp
+      - MagazineLPistolEmpty #imp
+      - MagazineLPistolPractice #imp
       - MagazinePistol
       - MagazinePistolEmpty
       - MagazinePistolSubMachineGun
@@ -784,21 +784,21 @@
       - HyperBurstConversionKit
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
-      - MagazineBoxLPistolIncendiary
-      - MagazineBoxLPistolUranium
+      - MagazineBoxLPistolIncendiary #imp
+      - MagazineBoxLPistolUranium #imp
       - MagazineBoxMagnumIncendiary
       - MagazineBoxMagnumUranium
       - MagazineBoxPistolIncendiary
       - MagazineBoxPistolUranium
       - MagazineBoxRifleIncendiary
       - MagazineBoxRifleUranium
-      - MagazineDMRIncendiary
-      - MagazineDMRUranium
+      - MagazineDMRIncendiary #imp
+      - MagazineDMRUranium #imp
       - MagazineGrenadeEmpty
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
-      - MagazineLPistolIncendiary
-      - MagazineLPistolUranium
+      - MagazineLPistolIncendiary #imp
+      - MagazineLPistolUranium #imp
       - MagazinePistolIncendiary
       - MagazinePistolUranium
       - MagazineRifleIncendiary
@@ -870,12 +870,12 @@
         - MagazineBoxMagnum
         - MagazineBoxPistol
         - MagazineBoxRifle
-        - MagazineDMR
-        - MagazineDMREmpty
+        - MagazineDMR #imp
+        - MagazineDMREmpty #imp
         - MagazineLightRifle
         - MagazineLightRifleEmpty
-        - MagazineLPistol
-        - MagazineLPistolEmpty
+        - MagazineLPistol #imp
+        - MagazineLPistolEmpty #imp
         - MagazinePistol
         - MagazinePistolEmpty
         - MagazineRifle

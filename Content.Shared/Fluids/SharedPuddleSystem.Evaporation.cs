@@ -10,7 +10,7 @@ public abstract partial class SharedPuddleSystem
 	
 	private const string Mucin = "Mucin"; /// imp special
 
-    public static readonly string[] EvaporationReagents = [ Water, Mucin ]; /// imp special. water-only by default
+    public static readonly string[] EvaporationReagents = [ Water ]; /// imp special. water-only by default
 
     public bool CanFullyEvaporate(Solution solution)
     {

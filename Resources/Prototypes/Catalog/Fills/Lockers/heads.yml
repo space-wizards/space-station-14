@@ -336,6 +336,7 @@
     - id: WantedListCartridge
     - id: ClothingNeckBronzeheart #imp
     - id: TicketPad #imp special
+    - id: BaseSeclinkRadio #imp
     - id: PillCanisterHOS #imp
 
 # Hardsuit table, used for suit storage as well
