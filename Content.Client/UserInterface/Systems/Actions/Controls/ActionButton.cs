@@ -4,8 +4,7 @@ using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Client.Stylesheets;
 using Content.Shared.Actions;
-using Content.Shared.Actions.Systems;
-using FastAccessors;
+using Content.Shared.Charges.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -24,7 +23,7 @@ public sealed class ActionButton : Control, IEntityControl
     private IEntityManager _entities;
     private SpriteSystem? _spriteSys;
     private ActionUIController? _controller;
-    private ActionChargesSystem _chargesSys;
+    private ChargesSystem _chargesSys;
     private bool _beingHovered;
     private bool _depressed;
     private bool _toggled;
@@ -68,7 +67,7 @@ public sealed class ActionButton : Control, IEntityControl
 
         _entities = entities;
         _spriteSys = spriteSys;
-        _chargesSys = _entities.System<ActionChargesSystem>();
+        _chargesSys = _entities.System<ChargesSystem>();
         _controller = controller;
 
         MouseFilter = MouseFilterMode.Pass;
@@ -199,15 +198,12 @@ public sealed class ActionButton : Control, IEntityControl
         var name = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityName));
         var decr = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityDescription));
 
-        if (_entities.TryGetComponent(ActionId, out ActionChargesComponent? actionCharges))
+        if (_entities.TryGetComponent(ActionId, out Shared.Charges.Components.LimitedChargesComponent? actionCharges))
         {
             var charges = _chargesSys.GetCurrentCharges((ActionId.Value, actionCharges, null));
 
-            if (charges != null)
-            {
-                var chargesText = FormattedMessage.FromMarkupPermissive(Loc.GetString($"Charges: {charges.Value.ToString()}/{actionCharges.MaxCharges.ToString()}"));
-                return new ActionAlertTooltip(name, decr, charges: chargesText);
-            }
+            var chargesText = FormattedMessage.FromMarkupPermissive(Loc.GetString($"Charges: {charges.ToString()}/{actionCharges.MaxCharges.ToString()}"));
+            return new ActionAlertTooltip(name, decr, charges: chargesText);
         }
 
         return new ActionAlertTooltip(name, decr);

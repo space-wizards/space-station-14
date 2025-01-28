@@ -1,5 +1,5 @@
 ﻿using Content.Shared.Actions;
-using Content.Shared.Actions.Systems;
+using Content.Shared.Charges.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Magic.Components;
@@ -10,7 +10,7 @@ namespace Content.Shared.Magic;
 
 public sealed class SpellbookSystem : EntitySystem
 {
-    [Dependency] private readonly ActionChargesSystem _charges = default!;
+    [Dependency] private readonly ChargesSystem _charges = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;

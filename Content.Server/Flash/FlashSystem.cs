@@ -28,7 +28,7 @@ namespace Content.Server.Flash
     {
         [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
-        [Dependency] private readonly SharedChargesSystem _charges = default!;
+        [Dependency] private readonly ChargesSystem _charges = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly ExamineSystemShared _examine = default!;
@@ -83,15 +83,15 @@ namespace Content.Server.Flash
                 return false;
 
             TryComp<LimitedChargesComponent>(uid, out var charges);
-            if (_charges.IsEmpty(uid, charges))
+            if (_charges.IsEmpty((uid, charges)))
                 return false;
 
-            _charges.UseCharge(uid, charges);
+            _charges.TryUseCharge((uid, charges));
             _audio.PlayPvs(comp.Sound, uid);
             comp.Flashing = true;
             _appearance.SetData(uid, FlashVisuals.Flashing, true);
 
-            if (_charges.IsEmpty(uid, charges))
+            if (_charges.IsEmpty((uid, charges)))
             {
                 _appearance.SetData(uid, FlashVisuals.Burnt, true);
                 _tag.AddTag(uid, "Trash");
