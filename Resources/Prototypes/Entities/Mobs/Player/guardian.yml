@@ -297,15 +297,15 @@
       group: Holoparasite
     - type: Speech
       speechVerb: LargeMob
+    - type: RandomSprite
+      available:
+        - enum.DamageStateVisualLayers.Base:
+            alive: ""
     - type: Sprite
       sprite: Mobs/Aliens/Carps/holo.rsi
       layers:
-      - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: alive
-    - type: RandomSprite
-      available:
-        - enum.DamageStateVisualLayers.BaseUnshaded:
-            magic_flare: Sixteen
+      - state: alive
+        map: [ "enum.DamageStateVisualLayers.Base" ]
     - type: MeleeWeapon
       hidden: false
       altDisarm: false
