@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Changed crawling and stand up speed to be slower overall.
-    type: Tweak
-  id: 515
-  time: '2024-11-14T23:02:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/711
 - author: hivehum
   changes:
   - message: Xeno and Barratry are now part of the map rotation.
@@ -4336,3 +4329,10 @@
   id: 1014
   time: '2025-01-27T22:13:12.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1502
+- author: AvianMaiden
+  changes:
+  - message: AI law boards can now be examined to see their laws!
+    type: Add
+  id: 1015
+  time: '2025-01-28T21:46:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1510
