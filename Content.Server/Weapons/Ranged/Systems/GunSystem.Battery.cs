@@ -40,9 +40,14 @@ public sealed partial class GunSystem
         UpdateShots(uid, component, args.Charge, args.MaxCharge);
     }
 
-    private void OnPowerCellChanged(EntityUid uid, BatteryAmmoProviderComponent component, ref PowerCellChangedEvent args)
+    private void OnPowerCellChanged(Entity<BatteryAmmoProviderComponent> entity, ref PowerCellChangedEvent args)
     {
-        UpdateShots(uid, component);
+        UpdateShots(entity);
+    }
+
+    private void UpdateShots(Entity<BatteryAmmoProviderComponent> entity)
+    {
+        UpdateShots(entity.Owner, entity.Comp);
     }
 
     private void UpdateShots(EntityUid uid, BatteryAmmoProviderComponent component)
@@ -55,7 +60,7 @@ public sealed partial class GunSystem
             maxCharge = battery.MaxCharge;
         }
         else if (TryComp<PowerCellSlotComponent>(uid, out var powerCellSlot) &&
-            _powerCellSystem.TryGetBatteryFromSlot(uid, out var powerCell, powerCellSlot))
+            _powerCell.TryGetBatteryFromSlot(uid, out var powerCell, powerCellSlot))
         {
             currentCharge = powerCell.CurrentCharge;
             maxCharge = powerCell.MaxCharge;
@@ -128,11 +133,11 @@ public sealed partial class GunSystem
         return null;
     }
 
-    protected override void TakeCharge(EntityUid uid, BatteryAmmoProviderComponent component)
+    protected override void TakeCharge(Entity<BatteryAmmoProviderComponent> entity)
     {
-        if (TryComp<BatteryComponent>(uid, out var battery))
-            _battery.UseCharge(uid, component.FireCost, battery);
-        else if (TryComp<PowerCellSlotComponent>(uid, out var powerCellSlot))
-            _powerCellSystem.TryUseCharge(uid, component.FireCost, powerCellSlot);
+        if (TryComp<BatteryComponent>(entity, out var battery))
+            _battery.UseCharge(entity, entity.Comp.FireCost, battery);
+        else if (TryComp<PowerCellSlotComponent>(entity, out var powerCellSlot))
+            _powerCell.TryUseCharge(entity, entity.Comp.FireCost, powerCellSlot);
     }
 }
