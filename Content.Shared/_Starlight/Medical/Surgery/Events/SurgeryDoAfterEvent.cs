@@ -10,10 +10,12 @@ public sealed partial class SurgeryDoAfterEvent : SimpleDoAfterEvent
 {
     public readonly EntProtoId Surgery;
     public readonly EntProtoId Step;
+    public readonly float SuccessRate;
 
-    public SurgeryDoAfterEvent(EntProtoId surgery, EntProtoId step)
+    public SurgeryDoAfterEvent(EntProtoId surgery, EntProtoId step, float successRate)
     {
         Surgery = surgery;
         Step = step;
+        SuccessRate = successRate;
     }
 }

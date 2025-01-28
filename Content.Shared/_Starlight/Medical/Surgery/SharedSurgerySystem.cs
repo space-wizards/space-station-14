@@ -13,6 +13,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Standing;
 using Robust.Shared.Audio.Systems;
@@ -125,6 +126,9 @@ public abstract partial class SharedSurgerySystem : EntitySystem
     public bool IsLyingDown(EntityUid entity)
     {
         if (_standing.IsDown(entity))
+            return true;
+        
+        if (HasComp<ItemComponent>(entity))
             return true;
 
         if (TryComp(entity, out BuckleComponent? buckle) &&

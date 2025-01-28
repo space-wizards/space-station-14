@@ -76,6 +76,13 @@
   - type: DeleteOnTrigger
   - type: StaticPrice
     price: 0
+  - type: Scalpel
+  - type: SurgeryTool
+    successRate: 0.6
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
 
 - type: entity
   parent: ShardBase

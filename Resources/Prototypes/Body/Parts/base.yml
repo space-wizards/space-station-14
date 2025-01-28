@@ -6,6 +6,7 @@
   name: "body part"
   abstract: true
   components:
+  - type: SurgeryTarget
   - type: BaseLayerId
   - type: Damageable
     damageContainer: Biological
@@ -20,6 +21,10 @@
   - type: Tag
     tags:
       - Trash
+  - type: UserInterface
+    interfaces:
+      enum.SurgeryUIKey.Key:
+        type: SurgeryBui
 
 - type: entity
   id: BaseTorso
