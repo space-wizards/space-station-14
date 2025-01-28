@@ -227,3 +227,16 @@
   icon:
     sprite: Objects/Tools/rolling_pin.rsi
     state: icon
+
+- type: construction
+  name: pet carrier
+  id: PetCarrier
+  graph: PetCarrier
+  startNode: start
+  targetNode: petCarrier
+  category: construction-category-misc
+  objectType: Item
+  description: Allows large animals to be carried comfortably.
+  icon:
+    sprite: Objects/Storage/petcarrier.rsi
+    state: icon
