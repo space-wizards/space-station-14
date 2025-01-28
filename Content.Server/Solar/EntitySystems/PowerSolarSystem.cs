@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.Solar.Components;
 using Content.Shared.GameTicking;
+using Content.Shared.Guidebook;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.Physics;
