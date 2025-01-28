@@ -1,3 +1,4 @@
+using Content.Shared.Charges.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -6,7 +7,7 @@ namespace Content.Shared.Charges.Components;
 /// <summary>
 /// Specifies the attached action has discrete charges, separate to a cooldown.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(ChargesSystem))]
 public sealed partial class LimitedChargesComponent : Component
 {
     [DataField, AutoNetworkedField]

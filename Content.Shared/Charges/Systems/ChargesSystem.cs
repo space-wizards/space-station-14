@@ -70,7 +70,17 @@ public sealed class ChargesSystem : EntitySystem
 
     private void OnChargesMapInit(Entity<LimitedChargesComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.LastCharges = ent.Comp.MaxCharges;
+        // If nothing specified use max.
+        if (ent.Comp.LastCharges == 0)
+        {
+            ent.Comp.LastCharges = ent.Comp.MaxCharges;
+        }
+        // If -1 used then we don't want any.
+        else if (ent.Comp.LastCharges < 0)
+        {
+            ent.Comp.LastCharges = 0;
+        }
+
         ent.Comp.LastUpdate = _timing.CurTime;
         Dirty(ent);
     }
@@ -188,14 +198,14 @@ public sealed class ChargesSystem : EntitySystem
             return 0;
         }
 
-        var updateRate = 0.0;
+        var calculated = 0;
 
-        if (Resolve(entity.Owner, ref entity.Comp2, false))
+        if (Resolve(entity.Owner, ref entity.Comp2, false) && entity.Comp2.RechargeDuration.TotalSeconds != 0.0)
         {
-            updateRate = entity.Comp2.RechargeDuration.TotalSeconds;
+            calculated = (int)((_timing.CurTime - entity.Comp1.LastUpdate).TotalSeconds / entity.Comp2.RechargeDuration.TotalSeconds);
         }
 
-        return Math.Clamp(entity.Comp1.LastCharges + (int) ((_timing.CurTime - entity.Comp1.LastUpdate).TotalSeconds / updateRate),
+        return Math.Clamp(entity.Comp1.LastCharges + calculated,
             0,
             entity.Comp1.MaxCharges);
     }

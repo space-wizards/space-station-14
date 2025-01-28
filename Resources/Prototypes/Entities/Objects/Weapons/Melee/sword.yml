@@ -89,7 +89,6 @@
   - type: DashAbility
   - type: LimitedCharges
     maxCharges: 3
-    charges: 3
   - type: AutoRecharge
     rechargeDuration: 20
   - type: Clothing
