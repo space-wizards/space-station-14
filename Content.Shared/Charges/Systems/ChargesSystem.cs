@@ -33,22 +33,21 @@ public sealed class ChargesSystem : EntitySystem
 
         var rechargeEnt = new Entity<LimitedChargesComponent?, AutoRechargeComponent?>(uid, comp, null);
         var charges = GetCurrentCharges(rechargeEnt);
+        using var _ = args.PushGroup(nameof(LimitedChargesComponent));
 
-        using (args.PushGroup(nameof(LimitedChargesComponent)))
+        args.PushMarkup(Loc.GetString("limited-charges-charges-remaining", ("charges", charges)));
+        if (GetCurrentCharges((uid, comp, null)) == comp.MaxCharges)
         {
-            args.PushMarkup(Loc.GetString("limited-charges-charges-remaining", ("charges", charges)));
-            if (GetCurrentCharges((uid, comp, null)) == comp.MaxCharges)
-            {
-                args.PushMarkup(Loc.GetString("limited-charges-max-charges"));
-            }
+            args.PushMarkup(Loc.GetString("limited-charges-max-charges"));
         }
 
         // only show the recharging info if it's not full
         if (!args.IsInDetailsRange || charges == comp.MaxCharges || !TryComp<Components.AutoRechargeComponent>(uid, out var recharge))
             return;
 
+        rechargeEnt.Comp2 = recharge;
         var timeRemaining = GetNextRechargeTime(rechargeEnt);
-        args.PushMarkup(Loc.GetString("limited-charges-recharging", ("seconds", timeRemaining)));
+        args.PushMarkup(Loc.GetString("limited-charges-recharging", ("seconds", timeRemaining.TotalSeconds.ToString("F1"))));
     }
 
     private void OnChargesAttempt(Entity<LimitedChargesComponent> ent, ref ActionAttemptEvent args)
@@ -169,7 +168,7 @@ public sealed class ChargesSystem : EntitySystem
         }
 
         // Okay so essentially we need to get recharge time to full, then modulus that by the recharge timer which should be the next tick.
-        var fullTime = (entity.Comp1.MaxCharges - entity.Comp1.LastCharges) * entity.Comp2.RechargeDuration;
+        var fullTime = ((entity.Comp1.MaxCharges - entity.Comp1.LastCharges) * entity.Comp2.RechargeDuration) + entity.Comp1.LastUpdate;
         var timeRemaining = fullTime - _timing.CurTime;
 
         if (timeRemaining < TimeSpan.Zero)
@@ -196,7 +195,7 @@ public sealed class ChargesSystem : EntitySystem
             updateRate = entity.Comp2.RechargeDuration.TotalSeconds;
         }
 
-        return Math.Clamp(entity.Comp1.LastCharges + (int) ((_timing.CurTime - entity.Comp1.LastUpdate).TotalSeconds * updateRate),
+        return Math.Clamp(entity.Comp1.LastCharges + (int) ((_timing.CurTime - entity.Comp1.LastUpdate).TotalSeconds / updateRate),
             0,
             entity.Comp1.MaxCharges);
     }
