@@ -76,7 +76,7 @@ public sealed partial class StationJobsSystem : EntitySystem
             x=> (int?)(x.Value[1] < 0 ? null : x.Value[1]));
 
         /// JobGroup logic
-        foreach (var (_, group) in stationJobs.JobGroups)
+        foreach (var group in stationJobs.JobGroups.Values)
         {
             foreach (var member in group.Members)
             {
