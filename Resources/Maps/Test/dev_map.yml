@@ -11142,8 +11142,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 88.5,13.5
       parent: 1
-    - type: Visibility
-      layer: 5
   - uid: 1724
     components:
     - type: Transform
@@ -11167,8 +11165,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 88.5,21.5
       parent: 1
-    - type: Visibility
-      layer: 5
   - uid: 1728
     components:
     - type: Transform
@@ -11375,8 +11371,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 43.5,60.5
       parent: 1
-    - type: Visibility
-      layer: 5
 - proto: PoweredlightCyan
   entities:
   - uid: 1030
