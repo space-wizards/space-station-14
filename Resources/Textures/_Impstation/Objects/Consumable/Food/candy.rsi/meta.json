@@ -1,0 +1,62 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sprites by Carousel for Impstation",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+        {
+            "name": "asinglegummyworm"
+        },
+        {
+            "name": "chalkheart"
+        },
+        {
+            "name": "chalkheartcolorable"
+        },
+        {
+            "name": "chalkheartpackage1"
+        },
+        {
+            "name": "chalkheartpackage2"
+        },
+        {
+            "name": "chocolateheart"
+        },
+        {
+            "name": "chocolateheartdark"
+        },
+        {
+            "name": "chocolateheartwhite"
+        },
+        {
+            "name": "heartbox-closed"
+        },
+        {
+            "name": "heartbox-open"
+        },
+        {
+            "name": "heartcarpaccio"
+        },
+        {
+            "name": "homemadechocolate"
+        },
+        {
+            "name": "macaronberry"
+        },
+        {
+            "name": "macaroncherry"
+        },
+        {
+            "name": "macaroncotton"
+        },
+        {
+            "name": "macaronlemon"
+        },
+        {
+            "name": "macaronmimana"
+        }
+    ]
+  }

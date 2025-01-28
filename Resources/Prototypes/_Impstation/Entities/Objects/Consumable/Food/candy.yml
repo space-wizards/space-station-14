@@ -1,0 +1,72 @@
+﻿- type: entity
+  name: one single gummy worm
+  parent: FoodMealBase
+  id: FoodGummyWorm
+  description: how did this get in here...
+  components:
+  - type: Tag
+    tags:
+    - FoodSnack
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/candy.rsi
+    state: asinglegummyworm
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 3
+
+- type: entity
+  name: conversation heart
+  parent: FoodMealBase
+  id: FoodConversationHeart
+  description: "You can barely make out the imprinted text: luv u"
+  components:
+  - type: Tag
+    tags:
+    - FoodSnack
+  - type: FlavorProfile
+    flavors:
+    - chalky
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/candy.rsi
+    layers:
+    - state: chalkheartcolorable
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        chalkheartcolorable: Pastel
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 1
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 1
+  - type: RandomMetadata
+    descriptionSegments: [ConversationHeartDescriptions]
+
+- type: entity
+  name: box of conversation hearts
+  parent: BoxCardboard
+  id: BoxConversationHeart
+  description:
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodConversationHeart
+      amount: 6
+  - type: Storage
+    grid:
+    - 0,0,6,0
+    maxItemSize: Tiny
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/candy.rsi
+    state: chalkheartpackage2
