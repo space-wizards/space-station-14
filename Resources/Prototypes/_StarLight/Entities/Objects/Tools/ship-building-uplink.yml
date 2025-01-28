@@ -1,0 +1,578 @@
+﻿#-------------------Categories for uplink---------------------
+
+- type: storeCategory
+  id: BattlesUplinkWearablesSpacesuit
+  name: Space equipment
+  priority: 1
+
+- type: storeCategory
+  id: BattlesUplinkWearablesResources
+  name: Materials
+  priority: 2
+
+- type: storeCategory
+  id: BattlesUplinkWearablesShipbuilding
+  name: Shuttle utilities
+  priority: 3
+
+- type: storeCategory
+  id: BattlesUplinkWearablesMedicine
+  name: Medical utilities
+  priority: 4
+
+- type: storeCategory
+  id: BattlesUplinkWearablesOther
+  name: Extra
+  priority: 5
+
+# The uplink
+- type: entity
+  id: StorePresetUplinkBattles
+  abstract: true
+  components:
+  - type: Store
+    name: store-preset-name-uplink
+    categories:
+    - BattlesUplinkWearablesSpacesuit
+    - BattlesUplinkWearablesResources
+    - BattlesUplinkWearablesMedicine
+    - BattlesUplinkWearablesShipbuilding
+    - BattlesUplinkWearablesOther
+    currencyWhitelist:
+    - BuildToken
+    balance:
+      BuildToken: 0
+
+#-------------------Uplink entity---------------------
+
+# Debug uplink 200 coins
+- type: entity
+  parent: [ BaseItem, StorePresetUplinkBattles ]
+  id: BattlesPhoneInstrument
+  name: Shuttle building uplink
+  description: Debug uplink for shuttle building
+  suffix: Debug
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    layers:
+    - state: old-radio
+  - type: Item
+    sprite: Objects/Devices/communication.rsi
+    heldPrefix: old-radio
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    balance:
+      BuildToken: 200
+
+- type: entity
+  parent: [ BaseItem, StorePresetUplinkBattles ]
+  id: BattlesPhoneInstrument0
+  name: Shuttle building uplink
+  description: Debug uplink for shuttle building
+  suffix: 0
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    layers:
+    - state: old-radio
+  - type: Item
+    sprite: Objects/Devices/communication.rsi
+    heldPrefix: old-radio
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    balance:
+      BuildToken: 0
+
+#-------------------Uplink currency---------------------
+
+- type: currency
+  id: BuildToken
+  displayName: "Currency"
+  cash:
+    1: BuildToken
+  canWithdraw: true
+
+- type: entity
+  name: Shuttle building Currency
+  parent: BaseItem
+  id: BuildToken
+  suffix: 1
+  description: Currency used for shuttle building uplink.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/stock_parts.rsi
+    state: ansible_crystal
+  - type: Item
+    sprite: Objects/Misc/stock_parts.rsi
+    heldPrefix: ansible_crystal
+  - type: StackPrice
+    price: 200
+  - type: Currency
+    price:
+      BuildToken: 1
+
+- type: entity
+  name: Shuttle building Currency
+  parent: BaseItem
+  id: BuildToken2
+  suffix: 20
+  description: Currency used for shuttle building uplink.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/stock_parts.rsi
+    state: ansible_crystal
+  - type: Item
+    sprite: Objects/Misc/stock_parts.rsi
+    heldPrefix: ansible_crystal
+  - type: StackPrice
+    price: 200
+  - type: Currency
+    price:
+      BuildToken: 20
+
+#-------------------Uplink items---------------------
+
+- type: listing
+  id: ClothingOuterHardsuitBasicSet
+  productEntity: ClothingOuterHardsuitBasic
+  cost:
+    BuildToken: 1
+  categories:
+  - BattlesUplinkWearablesSpacesuit
+
+- type: listing
+  id: ToySwordSetBotanySheetSteelSet
+  productEntity: SheetSteel
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesResources
+
+- type: listing
+  id: ToySwordSetBotanyPlasticSet
+  productEntity: SheetPlastic
+  cost:
+    BuildToken: 1
+  categories:
+  - BattlesUplinkWearablesResources
+
+- type: listing
+  id: ToySwordSetBotanyGlassSet
+  productEntity: SheetGlass
+  cost:
+    BuildToken: 1
+  categories:
+  - BattlesUplinkWearablesResources
+
+- type: listing
+  id: ToySwordSetBotanyPlasteelSet
+  productEntity: SheetPlasteel
+  cost:
+    BuildToken: 3
+  categories:
+  - BattlesUplinkWearablesResources
+
+- type: listing
+  id: ToySwordSetBotanyIngotGoldSet
+  productEntity: IngotGold
+  cost:
+    BuildToken: 4
+  categories:
+  - BattlesUplinkWearablesResources
+
+- type: listing
+  id: ToySwordSetBotanyIngotSilverSet
+  productEntity: IngotSilver
+  cost:
+    BuildToken: 4
+  categories:
+  - BattlesUplinkWearablesResources
+
+- type: listing
+  id: ToySwordSetBotanySheetPlasmaSet
+  productEntity: SheetPlasma
+  cost:
+    BuildToken: 4
+  categories:
+  - BattlesUplinkWearablesResources
+
+- type: listing
+  id: FoodPieBananaEngineeringSet
+  description: Utility belt filled with common tools.
+  productEntity: ClothingBeltUtilityEngineering
+  cost:
+    BuildToken: 5
+  categories:
+    - BattlesUplinkWearablesSpacesuit
+
+- type: listing
+  id: FoodPieBananaChiefEngineerFilledSet
+  description: CE belt filled with advanced tools.
+  productEntity: ClothingBeltChiefEngineerFilled
+  cost:
+    BuildToken: 10
+  categories:
+    - BattlesUplinkWearablesSpacesuit
+
+- type: listing
+  id: ChemDispenserEmptySet
+  productEntity: ChemDispenserEmpty
+  cost:
+    BuildToken: 1
+  categories:
+  - BattlesUplinkWearablesMedicine
+
+- type: listing
+  id: ChemMasterSet
+  productEntity: ChemMaster
+  cost:
+    BuildToken: 1
+  categories:
+  - BattlesUplinkWearablesMedicine
+
+- type: listing
+  id: VendingMachineChemicalsSet
+  productEntity: VendingMachineChemicals
+  cost:
+    BuildToken: 6
+  categories:
+  - BattlesUplinkWearablesMedicine
+
+- type: listing
+  id: HypospraySet
+  productEntity: Hypospray
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesMedicine
+
+- type: listing
+  id: CrateChemistrySuppliesSet
+  productEntity: CrateChemistrySupplies
+  cost:
+    BuildToken: 1
+  categories:
+  - BattlesUplinkWearablesMedicine
+
+- type: listing
+  id: ChemistryHotplateSet
+  productEntity: ChemistryHotplate
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesMedicine
+
+- type: listing
+  id: MachineElectrolysisUnitSet
+  productEntity: MachineElectrolysisUnit
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesMedicine
+
+- type: listing
+  id: KitchenReagentGrinderSet
+  productEntity: KitchenReagentGrinder
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesMedicine
+
+- type: listing
+  id: MachineCentrifugeSet
+  productEntity: MachineCentrifuge
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesMedicine
+
+- type: listing
+  id: VendingMachineRestockChemVendSet
+  productEntity: VendingMachineRestockChemVend
+  cost:
+    BuildToken: 5
+  categories:
+  - BattlesUplinkWearablesMedicine
+
+- type: listing
+  id: DefibrillatorSet
+  productEntity: Defibrillator
+  cost:
+    BuildToken: 1
+  categories:
+  - BattlesUplinkWearablesMedicine
+
+- type: listing
+  id: MedkitOxygenFilledSet
+  productEntity: MedkitOxygenFilled
+  cost:
+    BuildToken: 3
+  categories:
+  - BattlesUplinkWearablesMedicine
+
+- type: listing
+  id: ToySwordSetBotanyMedkitFilledSet
+  productEntity: MedkitFilled
+  cost:
+    BuildToken: 5
+  categories:
+  - BattlesUplinkWearablesMedicine
+
+- type: listing
+  id: ToySwordSetBotanyMedkitAdvancedFilledSet
+  productEntity: MedkitAdvancedFilled
+  cost:
+    BuildToken: 10
+  categories:
+  - BattlesUplinkWearablesMedicine
+
+- type: listing
+  id: ToySwordSetBotanyMedkitCombatFilledSet
+  productEntity: MedkitCombatFilled
+  cost:
+    BuildToken: 15
+  categories:
+  - BattlesUplinkWearablesMedicine
+
+- type: listing
+  id: SMESBasicSet
+  productEntity: SMESBasic
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesShipbuilding
+
+- type: listing
+  id: GravityGeneratorMiniSet
+  productEntity: GravityGeneratorMini
+  cost:
+    BuildToken: 1
+  categories:
+  - BattlesUplinkWearablesShipbuilding
+
+- type: listing
+  id: ThrusterSet
+  productEntity: Thruster
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesShipbuilding
+
+- type: listing
+  id: AutolatheSet
+  productEntity: Autolathe
+  cost:
+    BuildToken: 1
+  categories:
+  - BattlesUplinkWearablesShipbuilding
+
+- type: listing
+  id: ComputerRadarSet
+  productEntity: ComputerRadar
+  cost:
+    BuildToken: 1
+  categories:
+  - BattlesUplinkWearablesShipbuilding
+
+- type: listing
+  id: ComputerShuttleSet
+  productEntity: ComputerShuttle
+  cost:
+    BuildToken: 6
+  categories:
+  - BattlesUplinkWearablesShipbuilding
+
+- type: listing
+  id: GeneratorBasic15kWSet
+  productEntity: GeneratorBasic15kW
+  cost:
+    BuildToken: 4
+  categories:
+  - BattlesUplinkWearablesShipbuilding
+
+- type: listing
+  id: GyroscopeSet
+  productEntity: Gyroscope
+  cost:
+    BuildToken: 3
+  categories:
+  - BattlesUplinkWearablesShipbuilding
+
+- type: listing
+  id: SubstationBasicSet
+  productEntity: SubstationBasic
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesShipbuilding
+
+- type: listing
+  id: CrateEngineeringCableBulkSet
+  productEntity: CrateEngineeringCableBulk
+  cost:
+    BuildToken: 4
+  categories:
+  - BattlesUplinkWearablesShipbuilding
+
+- type: listing
+  id: DoorElectronicsSet
+  productEntity: DoorElectronics
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesShipbuilding
+
+- type: listing
+  id: APCElectronicsSet
+  productEntity: APCElectronics
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesShipbuilding
+
+- type: listing
+  id: ClothingHandsGlovesCombatSet
+  productEntity: ClothingHandsGlovesCombat
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesShipbuilding
+
+- type: listing
+  id: ClothingEyesGlassesMesonSet2
+  productEntity: ClothingEyesGlassesMeson
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesShipbuilding
+
+- type: listing
+  id: VendingMachineClothingSet
+  productEntity: VendingMachineClothing
+  cost:
+    BuildToken: 1
+  categories:
+  - BattlesUplinkWearablesOther
+
+- type: listing
+  id: FlashlightSecliteSet
+  productEntity: FlashlightSeclite
+  cost:
+    BuildToken: 1
+  categories:
+  - BattlesUplinkWearablesOther
+
+- type: listing
+  id: BoxFlareSet
+  productEntity: BoxFlare
+  cost:
+    BuildToken: 1
+  categories:
+  - BattlesUplinkWearablesOther
+
+- type: listing
+  id: BoxMRESet
+  productEntity: BoxMRE
+  cost:
+    BuildToken: 1
+  categories:
+  - BattlesUplinkWearablesOther
+
+- type: listing
+  id: OxygenCanisterSet
+  productEntity: OxygenCanister
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesOther
+
+- type: listing
+  id: AirCanisterSet
+  productEntity: AirCanister
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesOther
+
+- type: listing
+  id: NitrogenCanisterSet
+  productEntity: NitrogenCanister
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesOther
+
+- type: listing
+  id: DoubleEmergencyOxygenTankFilledSet
+  productEntity: DoubleEmergencyOxygenTankFilled
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesOther
+
+- type: listing
+  id: OxygenTankFilledSet
+  productEntity: OxygenTankFilled
+  cost:
+    BuildToken: 1
+  categories:
+  - BattlesUplinkWearablesOther
+
+- type: listing
+  id: ExtendedEmergencyOxygenTankFilledSet
+  productEntity: ExtendedEmergencyOxygenTankFilled
+  cost:
+    BuildToken: 1
+  categories:
+  - BattlesUplinkWearablesOther
+
+- type: listing
+  id: HandHeldMassScannerSet
+  productEntity: HandHeldMassScanner
+  cost:
+    BuildToken: 9
+  categories:
+  - BattlesUplinkWearablesOther
+
+- type: listing
+  id: JetpackVoidFilledSet
+  productEntity: JetpackVoidFilled
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesSpacesuit
+
+- type: listing
+  id: JetpackBlueFilledSet
+  productEntity: JetpackBlueFilled
+  cost:
+    BuildToken: 3
+  categories:
+  - BattlesUplinkWearablesSpacesuit
+
+- type: listing
+  id: ClothingShoesBootsMagSet
+  productEntity: ClothingShoesBootsMag
+  cost:
+    BuildToken: 2
+  categories:
+  - BattlesUplinkWearablesSpacesuit
+
+- type: listing
+  id: ClothingShoesBootsMagAdvSet
+  productEntity: ClothingShoesBootsMagAdv
+  cost:
+    BuildToken: 4
+  categories:
+  - BattlesUplinkWearablesSpacesuit
