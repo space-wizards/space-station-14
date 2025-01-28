@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Fixed medical PDAs sometimes toggling their lights while scanning
-    type: Fix
-  id: 7362
-  time: '2024-09-13T13:59:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32091
 - author: Gorox221
   changes:
   - message: Mech pilots receive a warning before they are ejected from the mech.
@@ -3885,3 +3878,11 @@
   id: 7861
   time: '2025-01-28T02:37:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34079
+- author: ArtisticRoomba
+  changes:
+  - message: Frezon prices have been tweaked to be much more worth it for new players
+      and elder atmosians alike.
+    type: Tweak
+  id: 7862
+  time: '2025-01-28T17:31:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34049
