@@ -738,15 +738,15 @@ entities:
       parent: 2
 - proto: BedsheetSpawner
   entities:
+  - uid: 1
+    components:
+    - type: Transform
+      pos: 7.5,-25.5
+      parent: 2
   - uid: 491
     components:
     - type: Transform
       pos: 7.5,-23.5
-      parent: 2
-  - uid: 492
-    components:
-    - type: Transform
-      pos: 7.5,-25.5
       parent: 2
 - proto: BlastDoor
   entities:
@@ -1942,9 +1942,9 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 386
-          - 385
+          - 269
           - 383
+          - 385
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -2037,18 +2037,6 @@ entities:
         actions: !type:Container
           ents:
           - 624
-- proto: EnergySword
-  entities:
-  - uid: 386
-    components:
-    - type: MetaData
-      desc: Someone clearly spent a lot to have this weapon custom made. the handle is engraved with snake iconography and the initials 'J.C.'
-      name: heirloom energy sword
-    - type: Transform
-      parent: 105
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: EphedrineChemistryBottle
   entities:
   - uid: 667
@@ -2134,12 +2122,12 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: FlippoEngravedLighter
+- proto: FlippoLighter
   entities:
-  - uid: 676
+  - uid: 270
     components:
     - type: Transform
-      pos: 0.67711425,-25.2992
+      pos: 0.6057625,-25.265987
       parent: 2
 - proto: FloorDrain
   entities:
@@ -2707,6 +2695,13 @@ entities:
     - type: Transform
       pos: 3.5,-17.5
       parent: 2
+- proto: LuxuryPen
+  entities:
+  - uid: 301
+    components:
+    - type: Transform
+      pos: 1.7685776,3.576183
+      parent: 2
 - proto: MachineFrame
   entities:
   - uid: 403
@@ -2890,7 +2885,7 @@ entities:
     - type: MetaData
       name: Captain's orders
     - type: Transform
-      pos: 0.43917072,4.723669
+      pos: -0.25811195,4.835703
       parent: 2
     - type: Paper
       content: >+
@@ -2933,13 +2928,6 @@ entities:
         The Sapling of Destruction - cell 3
 
         John C-
-- proto: PenCentcom
-  entities:
-  - uid: 269
-    components:
-    - type: Transform
-      pos: 1.7191923,3.651795
-      parent: 2
 - proto: PipeBombGunpowder
   entities:
   - uid: 274
@@ -3131,20 +3119,19 @@ entities:
     - type: Transform
       pos: 1.5,-29.5
       parent: 2
-- proto: RandomCommandCorpseSpawner
-  entities:
-  - uid: 270
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 0.5,4.5
-      parent: 2
 - proto: RandomEngineerCorpseSpawner
   entities:
   - uid: 295
     components:
     - type: Transform
       pos: -0.5,-29.5
+      parent: 2
+- proto: RandomMedicCorpseSpawner
+  entities:
+  - uid: 386
+    components:
+    - type: Transform
+      pos: 0.5,4.5
       parent: 2
 - proto: RandomPosterContraband
   entities:
@@ -3817,11 +3804,6 @@ entities:
     - type: Transform
       pos: -3.253438,-10.736731
       parent: 2
-  - uid: 411
-    components:
-    - type: Transform
-      pos: -4.206563,-8.939856
-      parent: 2
   - uid: 412
     components:
     - type: Transform
@@ -3959,13 +3941,6 @@ entities:
     components:
     - type: Transform
       pos: 1.5,-17.5
-      parent: 2
-- proto: SyndicateBusinessCard
-  entities:
-  - uid: 493
-    components:
-    - type: Transform
-      pos: 6.585578,-26.467888
       parent: 2
 - proto: SyringeBluespace
   entities:
@@ -4890,17 +4865,33 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: WeaponShotgunKammerer
+  entities:
+  - uid: 269
+    components:
+    - type: Transform
+      parent: 105
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: WeaponTurretHostile
   entities:
-  - uid: 301
+  - uid: 450
+    components:
+    - type: Transform
+      pos: 3.5,-20.5
+      parent: 2
+- proto: WeaponTurretSyndicateBroken
+  entities:
+  - uid: 401
     components:
     - type: Transform
       pos: -7.5,-16.5
       parent: 2
-  - uid: 401
+  - uid: 437
     components:
     - type: Transform
-      pos: 6.5,-28.5
+      pos: -5.5,-9.5
       parent: 2
   - uid: 444
     components:
@@ -4912,27 +4903,10 @@ entities:
     - type: Transform
       pos: 8.5,-16.5
       parent: 2
-  - uid: 450
+  - uid: 492
     components:
     - type: Transform
-      pos: 3.5,-20.5
-      parent: 2
-  - uid: 719
-    components:
-    - type: Transform
-      pos: 3.5,1.5
-      parent: 2
-  - uid: 720
-    components:
-    - type: Transform
-      pos: -2.5,1.5
-      parent: 2
-- proto: WeaponTurretSyndicateBroken
-  entities:
-  - uid: 437
-    components:
-    - type: Transform
-      pos: -5.5,-9.5
+      pos: 6.5,-28.5
       parent: 2
 - proto: WindoorSecure
   entities:
