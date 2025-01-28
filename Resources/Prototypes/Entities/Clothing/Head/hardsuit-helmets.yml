@@ -378,8 +378,9 @@
         Heat: 0.90
         Radiation: 0.75
   - type: PointLight
-    radius: 7
-    energy: 3
+    radius: 5
+    energy: 2
+    color: "#00ffff"
 
 
 #ANTAG HARDSUITS
