@@ -33,6 +33,7 @@ public sealed partial class SolutionContainerMixerComponent : Component
     [DataField, AutoNetworkedField]
     public SoundSpecifier? MixingSound;
 
+    [ViewVariables]
     public Entity<AudioComponent>? MixingSoundEntity;
 }
 

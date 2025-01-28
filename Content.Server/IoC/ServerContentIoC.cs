@@ -80,6 +80,8 @@ namespace Content.Server.IoC
             IoCManager.Register<PlayerRateLimitManager>();
             IoCManager.Register<SharedPlayerRateLimitManager, PlayerRateLimitManager>();
             IoCManager.Register<MappingManager>();
+            IoCManager.Register<IWatchlistWebhookManager, WatchlistWebhookManager>();
+            IoCManager.Register<ConnectionManager>();
             // 🌟Starlight🌟
             IoCManager.Register<ISharedPlayersRoleManager, PlayerRolesManager>(); 
             IoCManager.Register<IPlayerRolesManager, PlayerRolesManager>();     

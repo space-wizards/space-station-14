@@ -29,6 +29,7 @@ public sealed partial class ChemicalFuelGeneratorAdapterComponent : Component
     /// <summary>
     /// The solution on the <see cref="SolutionContainerManagerComponent"/> to use.
     /// </summary>
+    [ViewVariables]
     public Entity<SolutionComponent>? Solution = null;
 
     /// <summary>
