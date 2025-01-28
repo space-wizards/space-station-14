@@ -4049,9 +4049,11 @@ entities:
           -19,7:
             2: 3618
           -18,4:
-            0: 65327
+            0: 64303
+            7: 1024
           -18,5:
-            0: 65524
+            0: 63476
+            8: 2048
           -18,6:
             0: 4082
           -18,7:
@@ -5084,6 +5086,36 @@ entities:
           moles:
           - 21.824879
           - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.6852
+          - 81.57766
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14975
+          moles:
+          - 20.078888
+          - 75.53487
           - 0
           - 0
           - 0
@@ -7199,7 +7231,7 @@ entities:
       pos: -30.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -46417.484
+      secondsUntilStateChange: -46731.73
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -39722,12 +39754,6 @@ entities:
       parent: 2
 - proto: CigarCase
   entities:
-  - uid: 4945
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -40.453514,38.42126
-      parent: 2
   - uid: 5417
     components:
     - type: Transform
@@ -39753,6 +39779,11 @@ entities:
       parent: 2
 - proto: CigarGoldCase
   entities:
+  - uid: 4946
+    components:
+    - type: Transform
+      pos: -40.49395,38.58963
+      parent: 2
   - uid: 6138
     components:
     - type: Transform
@@ -40562,6 +40593,24 @@ entities:
     - type: Transform
       pos: -68.57034,22.27171
       parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
   - uid: 17174
     components:
     - type: Transform
@@ -40782,16 +40831,6 @@ entities:
     components:
     - type: Transform
       pos: -40.52346,17.380651
-      parent: 2
-  - uid: 5997
-    components:
-    - type: Transform
-      pos: 10.514629,65.73175
-      parent: 2
-  - uid: 6580
-    components:
-    - type: Transform
-      pos: -32.45865,38.48124
       parent: 2
 - proto: ClothingHandsGlovesColorYellowBudget
   entities:
@@ -41053,6 +41092,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: ClothingMaskBlushingMime
+  entities:
+  - uid: 4701
+    components:
+    - type: Transform
+      pos: -55.759308,65.51617
+      parent: 2
 - proto: ClothingMaskBreath
   entities:
   - uid: 5894
@@ -41127,13 +41173,6 @@ entities:
     components:
     - type: Transform
       pos: -55.415558,65.73492
-      parent: 2
-- proto: ClothingMaskSexyMime
-  entities:
-  - uid: 4701
-    components:
-    - type: Transform
-      pos: -55.759308,65.51617
       parent: 2
 - proto: ClothingNeckBling
   entities:
@@ -42979,8 +43018,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.7459903
-        - 6.568249
+        - 1.8856695
+        - 7.0937095
         - 0
         - 0
         - 0
@@ -42997,11 +43036,11 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 17180
-          - 17179
-          - 17178
-          - 17177
           - 17176
+          - 17177
+          - 17178
+          - 17179
+          - 17180
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -43281,7 +43320,7 @@ entities:
       pos: -9.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -294173.03
+      secondsUntilStateChange: -294487.28
       state: Opening
   - uid: 6747
     components:
@@ -43289,7 +43328,7 @@ entities:
       pos: -8.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -294173.75
+      secondsUntilStateChange: -294488
       state: Opening
   - uid: 6749
     components:
@@ -43297,7 +43336,7 @@ entities:
       pos: -6.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -294172.3
+      secondsUntilStateChange: -294486.56
       state: Opening
   - uid: 6750
     components:
@@ -43305,7 +43344,7 @@ entities:
       pos: -5.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -294171.7
+      secondsUntilStateChange: -294485.94
       state: Opening
 - proto: CyberPen
   entities:
@@ -52111,19 +52150,6 @@ entities:
           ents:
           - 6717
     - type: ActionsContainer
-- proto: FlippoEngravedLighter
-  entities:
-  - uid: 4946
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -40.31289,38.79626
-      parent: 2
-  - uid: 5418
-    components:
-    - type: Transform
-      pos: -2.1807637,39.543873
-      parent: 2
 - proto: Floodlight
   entities:
   - uid: 16953
@@ -78159,13 +78185,6 @@ entities:
     - type: Transform
       pos: 2.5573368,6.61458
       parent: 2
-- proto: PenCentcom
-  entities:
-  - uid: 7125
-    components:
-    - type: Transform
-      pos: -16.047073,68.645805
-      parent: 2
 - proto: PersonalAI
   entities:
   - uid: 4307
@@ -96708,6 +96727,11 @@ entities:
     components:
     - type: Transform
       pos: -2.4271321,27.577143
+      parent: 2
+  - uid: 4945
+    components:
+    - type: Transform
+      pos: -32.50167,38.605255
       parent: 2
   - uid: 5526
     components:
