@@ -37,9 +37,8 @@ public sealed partial class DragInsertContainerSystem : EntitySystem
         if (!_container.TryGetContainer(ent, comp.ContainerId, out var container))
             return;
 
-        if (comp.EntryDelay <= 0 ||
-            !comp.DelaySelfEntry && args.User == args.Dragged
-            )
+        if (comp.EntryDelay <= TimeSpan.Zero ||
+            !comp.DelaySelfEntry && args.User == args.Dragged)
         {
             //instant insertion
             args.Handled = Insert(args.Dragged, args.User, ent, container);

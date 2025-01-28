@@ -22,7 +22,7 @@ public sealed partial class DragInsertContainerComponent : Component
     /// The delay in seconds before a drag will be completed.
     /// </summary>
     [DataField]
-    public float EntryDelay;
+    public TimeSpan EntryDelay = TimeSpan.Zero;
 
     /// <summary>
     /// If entry delay isn't zero, this sets whether an entity dragging itself into the container should be delayed.
