@@ -95,10 +95,10 @@ reagent-name-ethylredoxrazine = ethylredoxrazine
 reagent-desc-ethylredoxrazine = Neutralises the effects of alcohol in the blood stream. Though it is commonly needed, it is rarely requested.
 
 reagent-name-cognizine = cognizine
-reagent-desc-cognizine = A mysterious chemical which is able to make any non-sentient creature sentient. Can not be used in cooking, unlike cognizine. Use with great caution.
+reagent-desc-cognizine = A mysterious chemical which is able to make any non-sentient creature sentient.
 
 reagent-name-emancizine = emancizine
-reagent-desc-emancizine = A derivative of cognizine, and is able to make any non-sentient creature sentient, with absolute free will.
+reagent-desc-emancizine = A derivative of cognizine, and is able to make any non-sentient creature sentient, with absolute free will. Can not be used in cooking, unlike cognizine. Use with great caution.
 
 reagent-name-ethyloxyephedrine = ethyloxyephedrine
 reagent-desc-ethyloxyephedrine = A mildly unstable medicine derived from desoxyephedrine, primarily used to combat narcolepsy.
