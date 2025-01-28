@@ -55,7 +55,7 @@
 - type: entity
   id: ShellShotgunFlare
   name: shell (.50 flare)
-  parent: [ BaseShellShotgun, BaseSecurityBartenderContraband ]
+  parent: BaseShellShotgun
   components:
   - type: Tag
     tags:
