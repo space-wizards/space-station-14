@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Eye.Blinding.Components;
@@ -15,6 +16,8 @@ namespace Content.Shared.Lens;
 /// </summary>
 public sealed class LensSlotSystem : EntitySystem
 {
+    /// TODO If this system is expanded outside of <see cref="BlurryVisionSystem"/>, then
+    /// the equipped events should find <see cref="VisionCorrectionComponent"/> before calling UpdateBlur.
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly BlurryVisionSystem _Blurry = default!;
 
@@ -54,11 +57,17 @@ public sealed class LensSlotSystem : EntitySystem
 
     private void OnGlassesEquipped(Entity<LensSlotComponent> glasses, ref GotEquippedEvent args)
     {
+        if (!TryGetLens(glasses, out var lens))
+            return;
+
         _Blurry.UpdateBlurMagnitude(args.Equipee);
     }
 
     private void OnGlassesUnequipped(Entity<LensSlotComponent> glasses, ref GotUnequippedEvent args)
     {
+        if (!TryGetLens(glasses, out var lens))
+            return;
+
         _Blurry.UpdateBlurMagnitude(args.Equipee);
     }
 
@@ -75,7 +84,7 @@ public sealed class LensSlotSystem : EntitySystem
         if (args.Container.ID != component.LensSlotId)
             return;
 
-        RaiseLocalEvent(glasses, new LensChangedEvent(false));
+        RaiseLocalEvent(glasses, new LensChangedEvent(false, args.Entity));
     }
 
     private void OnLensRemoved(EntityUid glasses, LensSlotComponent component, EntRemovedFromContainerMessage args)
@@ -83,7 +92,7 @@ public sealed class LensSlotSystem : EntitySystem
         if (args.Container.ID != component.LensSlotId)
             return;
 
-        RaiseLocalEvent(glasses, new LensChangedEvent(true));
+        RaiseLocalEvent(glasses, new LensChangedEvent(true, args.Entity));
     }
 
     /// <summary>
@@ -91,13 +100,26 @@ public sealed class LensSlotSystem : EntitySystem
     /// </summary>
     private void OnGetBlurLens(Entity<LensSlotComponent> glasses, ref InventoryRelayedEvent<GetBlurEvent> args)
     {
-        if (!_itemSlots.TryGetSlot(glasses.Owner, glasses.Comp.LensSlotId, out var itemSlot))
+        if (!TryGetLens(glasses, out var lens))
             return;
 
-        if (!TryComp<VisionCorrectionComponent>(itemSlot.Item, out var component))
+        if (!TryComp<VisionCorrectionComponent>(lens, out var component))
             return;
 
         args.Args.Blur += component.VisionBonus;
         args.Args.CorrectionPower *= component.CorrectionPower;
+    }
+
+    /// <summary>
+    ///     Attempt to get the lens from the lens slot.
+    /// </summary>
+    private bool TryGetLens(Entity<LensSlotComponent> glasses, [NotNullWhen(true)] out EntityUid? lens)
+    {
+        lens = _itemSlots.GetItemOrNull(glasses.Owner, glasses.Comp.LensSlotId);
+
+        if (lens == null)
+            return false;
+        else
+            return true;
     }
 }

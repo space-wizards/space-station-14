@@ -19,9 +19,11 @@ public sealed partial class LensSlotComponent : Component
 public sealed class LensChangedEvent : EntityEventArgs
 {
     public readonly bool Ejected;
+    public readonly EntityUid Lens;
 
-    public LensChangedEvent(bool ejected)
+    public LensChangedEvent(bool ejected, EntityUid lens)
     {
         Ejected = ejected;
+        Lens = lens;
     }
 }
