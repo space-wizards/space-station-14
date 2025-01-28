@@ -174,7 +174,7 @@ public sealed partial class StationJobsSystem : EntitySystem
             return true;
 
         //Adjustment logic for jobs that are in JobGroups
-        foreach (var (_, group) in stationJobs.JobGroups)
+        foreach (var group in stationJobs.JobGroups.Values)
         {
             if (group.Members.Contains(jobPrototypeId))
             {
