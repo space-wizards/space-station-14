@@ -40,9 +40,9 @@ public sealed partial class GunSystem
         UpdateShots(uid, component, args.Charge, args.MaxCharge);
     }
 
-    private void OnPowerCellChanged(Entity<BatteryAmmoProviderComponent> entity, ref PowerCellChangedEvent args)
+    private void OnPowerCellChanged(EntityUid uid, BatteryAmmoProviderComponent component, ref PowerCellChangedEvent args)
     {
-        UpdateShots(entity);
+        UpdateShots(uid, component);
     }
 
     private void UpdateShots(Entity<BatteryAmmoProviderComponent> entity)
