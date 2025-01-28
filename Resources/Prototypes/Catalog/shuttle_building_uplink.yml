@@ -1,147 +1,4 @@
-﻿#-------------------Categories for uplink---------------------
-
-- type: storeCategory
-  id: BattlesUplinkWearablesSpacesuit
-  name: Space equipment
-  priority: 1
-
-- type: storeCategory
-  id: BattlesUplinkWearablesResources
-  name: Materials
-  priority: 2
-
-- type: storeCategory
-  id: BattlesUplinkWearablesShipbuilding
-  name: Shuttle utilities
-  priority: 3
-
-- type: storeCategory
-  id: BattlesUplinkWearablesMedicine
-  name: Medical utilities
-  priority: 4
-
-- type: storeCategory
-  id: BattlesUplinkWearablesOther
-  name: Extra
-  priority: 5
-
-# The uplink
-- type: entity
-  id: StorePresetUplinkBattles
-  abstract: true
-  components:
-  - type: Store
-    name: store-preset-name-uplink
-    categories:
-    - BattlesUplinkWearablesSpacesuit
-    - BattlesUplinkWearablesResources
-    - BattlesUplinkWearablesMedicine
-    - BattlesUplinkWearablesShipbuilding
-    - BattlesUplinkWearablesOther
-    currencyWhitelist:
-    - BuildToken
-    balance:
-      BuildToken: 0
-
-#-------------------Uplink entity---------------------
-
-# Debug uplink 200 coins
-- type: entity
-  parent: [ BaseItem, StorePresetUplinkBattles ]
-  id: BattlesPhoneInstrument
-  name: Shuttle building uplink
-  description: Debug uplink for shuttle building
-  suffix: Debug
-  components:
-  - type: Sprite
-    sprite: Objects/Devices/communication.rsi
-    layers:
-    - state: old-radio
-  - type: Item
-    sprite: Objects/Devices/communication.rsi
-    heldPrefix: old-radio
-  - type: UserInterface
-    interfaces:
-      enum.StoreUiKey.Key:
-        type: StoreBoundUserInterface
-  - type: ActivatableUI
-    key: enum.StoreUiKey.Key
-  - type: Store
-    balance:
-      BuildToken: 200
-
-- type: entity
-  parent: [ BaseItem, StorePresetUplinkBattles ]
-  id: BattlesPhoneInstrument0
-  name: Shuttle building uplink
-  description: Debug uplink for shuttle building
-  suffix: 0
-  components:
-  - type: Sprite
-    sprite: Objects/Devices/communication.rsi
-    layers:
-    - state: old-radio
-  - type: Item
-    sprite: Objects/Devices/communication.rsi
-    heldPrefix: old-radio
-  - type: UserInterface
-    interfaces:
-      enum.StoreUiKey.Key:
-        type: StoreBoundUserInterface
-  - type: ActivatableUI
-    key: enum.StoreUiKey.Key
-  - type: Store
-    balance:
-      BuildToken: 0
-
-#-------------------Uplink currency---------------------
-
-- type: currency
-  id: BuildToken
-  displayName: "Currency"
-  cash:
-    1: BuildToken
-  canWithdraw: true
-
-- type: entity
-  name: Shuttle building Currency
-  parent: BaseItem
-  id: BuildToken
-  suffix: 1
-  description: Currency used for shuttle building uplink.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/stock_parts.rsi
-    state: ansible_crystal
-  - type: Item
-    sprite: Objects/Misc/stock_parts.rsi
-    heldPrefix: ansible_crystal
-  - type: StackPrice
-    price: 200
-  - type: Currency
-    price:
-      BuildToken: 1
-
-- type: entity
-  name: Shuttle building Currency
-  parent: BaseItem
-  id: BuildToken2
-  suffix: 20
-  description: Currency used for shuttle building uplink.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/stock_parts.rsi
-    state: ansible_crystal
-  - type: Item
-    sprite: Objects/Misc/stock_parts.rsi
-    heldPrefix: ansible_crystal
-  - type: StackPrice
-    price: 200
-  - type: Currency
-    price:
-      BuildToken: 20
-
-#-------------------Uplink items---------------------
+﻿# Non combat/safe listing
 
 - type: listing
   id: ClothingOuterHardsuitBasicSet
@@ -149,7 +6,7 @@
   cost:
     BuildToken: 1
   categories:
-  - BattlesUplinkWearablesSpacesuit
+  - ShuttleUplinkEquipment
 
 - type: listing
   id: ToySwordSetBotanySheetSteelSet
@@ -157,7 +14,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesResources
+  - ShuttleUplinkResources
 
 - type: listing
   id: ToySwordSetBotanyPlasticSet
@@ -165,7 +22,7 @@
   cost:
     BuildToken: 1
   categories:
-  - BattlesUplinkWearablesResources
+  - ShuttleUplinkResources
 
 - type: listing
   id: ToySwordSetBotanyGlassSet
@@ -173,7 +30,7 @@
   cost:
     BuildToken: 1
   categories:
-  - BattlesUplinkWearablesResources
+  - ShuttleUplinkResources
 
 - type: listing
   id: ToySwordSetBotanyPlasteelSet
@@ -181,7 +38,7 @@
   cost:
     BuildToken: 3
   categories:
-  - BattlesUplinkWearablesResources
+  - ShuttleUplinkResources
 
 - type: listing
   id: ToySwordSetBotanyIngotGoldSet
@@ -189,7 +46,7 @@
   cost:
     BuildToken: 4
   categories:
-  - BattlesUplinkWearablesResources
+  - ShuttleUplinkResources
 
 - type: listing
   id: ToySwordSetBotanyIngotSilverSet
@@ -197,7 +54,7 @@
   cost:
     BuildToken: 4
   categories:
-  - BattlesUplinkWearablesResources
+  - ShuttleUplinkResources
 
 - type: listing
   id: ToySwordSetBotanySheetPlasmaSet
@@ -205,7 +62,7 @@
   cost:
     BuildToken: 4
   categories:
-  - BattlesUplinkWearablesResources
+  - ShuttleUplinkResources
 
 - type: listing
   id: FoodPieBananaEngineeringSet
@@ -214,7 +71,7 @@
   cost:
     BuildToken: 5
   categories:
-    - BattlesUplinkWearablesSpacesuit
+    - ShuttleUplinkEquipment
 
 - type: listing
   id: FoodPieBananaChiefEngineerFilledSet
@@ -223,7 +80,7 @@
   cost:
     BuildToken: 10
   categories:
-    - BattlesUplinkWearablesSpacesuit
+    - ShuttleUplinkEquipment
 
 - type: listing
   id: ChemDispenserEmptySet
@@ -231,7 +88,7 @@
   cost:
     BuildToken: 1
   categories:
-  - BattlesUplinkWearablesMedicine
+  - ShuttleUplinkMedicine
 
 - type: listing
   id: ChemMasterSet
@@ -239,7 +96,7 @@
   cost:
     BuildToken: 1
   categories:
-  - BattlesUplinkWearablesMedicine
+  - ShuttleUplinkMedicine
 
 - type: listing
   id: VendingMachineChemicalsSet
@@ -247,15 +104,7 @@
   cost:
     BuildToken: 6
   categories:
-  - BattlesUplinkWearablesMedicine
-
-- type: listing
-  id: HypospraySet
-  productEntity: Hypospray
-  cost:
-    BuildToken: 2
-  categories:
-  - BattlesUplinkWearablesMedicine
+  - ShuttleUplinkMedicine
 
 - type: listing
   id: CrateChemistrySuppliesSet
@@ -263,7 +112,7 @@
   cost:
     BuildToken: 1
   categories:
-  - BattlesUplinkWearablesMedicine
+  - ShuttleUplinkMedicine
 
 - type: listing
   id: ChemistryHotplateSet
@@ -271,7 +120,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesMedicine
+  - ShuttleUplinkMedicine
 
 - type: listing
   id: MachineElectrolysisUnitSet
@@ -279,7 +128,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesMedicine
+  - ShuttleUplinkMedicine
 
 - type: listing
   id: KitchenReagentGrinderSet
@@ -287,7 +136,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesMedicine
+  - ShuttleUplinkMedicine
 
 - type: listing
   id: MachineCentrifugeSet
@@ -295,7 +144,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesMedicine
+  - ShuttleUplinkMedicine
 
 - type: listing
   id: VendingMachineRestockChemVendSet
@@ -303,7 +152,7 @@
   cost:
     BuildToken: 5
   categories:
-  - BattlesUplinkWearablesMedicine
+  - ShuttleUplinkMedicine
 
 - type: listing
   id: DefibrillatorSet
@@ -311,7 +160,7 @@
   cost:
     BuildToken: 1
   categories:
-  - BattlesUplinkWearablesMedicine
+  - ShuttleUplinkMedicine
 
 - type: listing
   id: MedkitOxygenFilledSet
@@ -319,7 +168,7 @@
   cost:
     BuildToken: 3
   categories:
-  - BattlesUplinkWearablesMedicine
+  - ShuttleUplinkMedicine
 
 - type: listing
   id: ToySwordSetBotanyMedkitFilledSet
@@ -327,7 +176,7 @@
   cost:
     BuildToken: 5
   categories:
-  - BattlesUplinkWearablesMedicine
+  - ShuttleUplinkMedicine
 
 - type: listing
   id: ToySwordSetBotanyMedkitAdvancedFilledSet
@@ -335,7 +184,7 @@
   cost:
     BuildToken: 10
   categories:
-  - BattlesUplinkWearablesMedicine
+  - ShuttleUplinkMedicine
 
 - type: listing
   id: ToySwordSetBotanyMedkitCombatFilledSet
@@ -343,7 +192,7 @@
   cost:
     BuildToken: 15
   categories:
-  - BattlesUplinkWearablesMedicine
+  - ShuttleUplinkMedicine
 
 - type: listing
   id: SMESBasicSet
@@ -351,7 +200,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesShipbuilding
+  - ShuttleUplinkShipbuilding
 
 - type: listing
   id: GravityGeneratorMiniSet
@@ -359,7 +208,7 @@
   cost:
     BuildToken: 1
   categories:
-  - BattlesUplinkWearablesShipbuilding
+  - ShuttleUplinkShipbuilding
 
 - type: listing
   id: ThrusterSet
@@ -367,7 +216,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesShipbuilding
+  - ShuttleUplinkShipbuilding
 
 - type: listing
   id: AutolatheSet
@@ -375,7 +224,7 @@
   cost:
     BuildToken: 1
   categories:
-  - BattlesUplinkWearablesShipbuilding
+  - ShuttleUplinkShipbuilding
 
 - type: listing
   id: ComputerRadarSet
@@ -383,7 +232,7 @@
   cost:
     BuildToken: 1
   categories:
-  - BattlesUplinkWearablesShipbuilding
+  - ShuttleUplinkShipbuilding
 
 - type: listing
   id: ComputerShuttleSet
@@ -391,7 +240,7 @@
   cost:
     BuildToken: 6
   categories:
-  - BattlesUplinkWearablesShipbuilding
+  - ShuttleUplinkShipbuilding
 
 - type: listing
   id: GeneratorBasic15kWSet
@@ -399,7 +248,7 @@
   cost:
     BuildToken: 4
   categories:
-  - BattlesUplinkWearablesShipbuilding
+  - ShuttleUplinkShipbuilding
 
 - type: listing
   id: GyroscopeSet
@@ -407,7 +256,7 @@
   cost:
     BuildToken: 3
   categories:
-  - BattlesUplinkWearablesShipbuilding
+  - ShuttleUplinkShipbuilding
 
 - type: listing
   id: SubstationBasicSet
@@ -415,7 +264,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesShipbuilding
+  - ShuttleUplinkShipbuilding
 
 - type: listing
   id: CrateEngineeringCableBulkSet
@@ -423,7 +272,7 @@
   cost:
     BuildToken: 4
   categories:
-  - BattlesUplinkWearablesShipbuilding
+  - ShuttleUplinkShipbuilding
 
 - type: listing
   id: DoorElectronicsSet
@@ -431,7 +280,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesShipbuilding
+  - ShuttleUplinkShipbuilding
 
 - type: listing
   id: APCElectronicsSet
@@ -439,7 +288,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesShipbuilding
+  - ShuttleUplinkShipbuilding
 
 - type: listing
   id: ClothingHandsGlovesCombatSet
@@ -447,7 +296,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesShipbuilding
+  - ShuttleUplinkEquipment
 
 - type: listing
   id: ClothingEyesGlassesMesonSet2
@@ -455,7 +304,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesShipbuilding
+  - ShuttleUplinkEquipment
 
 - type: listing
   id: VendingMachineClothingSet
@@ -463,7 +312,7 @@
   cost:
     BuildToken: 1
   categories:
-  - BattlesUplinkWearablesOther
+  - ShuttleUplinkExtra
 
 - type: listing
   id: FlashlightSecliteSet
@@ -471,7 +320,7 @@
   cost:
     BuildToken: 1
   categories:
-  - BattlesUplinkWearablesOther
+  - ShuttleUplinkExtra
 
 - type: listing
   id: BoxFlareSet
@@ -479,7 +328,7 @@
   cost:
     BuildToken: 1
   categories:
-  - BattlesUplinkWearablesOther
+  - ShuttleUplinkExtra
 
 - type: listing
   id: BoxMRESet
@@ -487,7 +336,7 @@
   cost:
     BuildToken: 1
   categories:
-  - BattlesUplinkWearablesOther
+  - ShuttleUplinkExtra
 
 - type: listing
   id: OxygenCanisterSet
@@ -495,7 +344,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesOther
+  - ShuttleUplinkExtra
 
 - type: listing
   id: AirCanisterSet
@@ -503,7 +352,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesOther
+  - ShuttleUplinkExtra
 
 - type: listing
   id: NitrogenCanisterSet
@@ -511,7 +360,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesOther
+  - ShuttleUplinkExtra
 
 - type: listing
   id: DoubleEmergencyOxygenTankFilledSet
@@ -519,7 +368,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesOther
+  - ShuttleUplinkExtra
 
 - type: listing
   id: OxygenTankFilledSet
@@ -527,7 +376,7 @@
   cost:
     BuildToken: 1
   categories:
-  - BattlesUplinkWearablesOther
+  - ShuttleUplinkExtra
 
 - type: listing
   id: ExtendedEmergencyOxygenTankFilledSet
@@ -535,7 +384,7 @@
   cost:
     BuildToken: 1
   categories:
-  - BattlesUplinkWearablesOther
+  - ShuttleUplinkExtra
 
 - type: listing
   id: HandHeldMassScannerSet
@@ -543,7 +392,7 @@
   cost:
     BuildToken: 9
   categories:
-  - BattlesUplinkWearablesOther
+  - ShuttleUplinkExtra
 
 - type: listing
   id: JetpackVoidFilledSet
@@ -551,7 +400,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesSpacesuit
+  - ShuttleUplinkEquipment
 
 - type: listing
   id: JetpackBlueFilledSet
@@ -559,7 +408,7 @@
   cost:
     BuildToken: 3
   categories:
-  - BattlesUplinkWearablesSpacesuit
+  - ShuttleUplinkEquipment
 
 - type: listing
   id: ClothingShoesBootsMagSet
@@ -567,7 +416,7 @@
   cost:
     BuildToken: 2
   categories:
-  - BattlesUplinkWearablesSpacesuit
+  - ShuttleUplinkEquipment
 
 - type: listing
   id: ClothingShoesBootsMagAdvSet
@@ -575,4 +424,4 @@
   cost:
     BuildToken: 4
   categories:
-  - BattlesUplinkWearablesSpacesuit
+  - ShuttleUplinkEquipment

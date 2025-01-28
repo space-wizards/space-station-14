@@ -29,3 +29,10 @@
   id: EvolutionPoint
   displayName: store-currency-display-evolutionpoints
   canWithdraw: false
+
+- type: currency
+  id: BuildToken
+  displayName: "Currency"
+  cash:
+    1: BuildToken
+  canWithdraw: true

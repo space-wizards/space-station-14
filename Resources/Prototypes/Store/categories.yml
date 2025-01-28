@@ -115,3 +115,30 @@
   id: ChangelingAbilityUtility
   name: store-ling-category-utility
   priority: 2
+
+# shuttle build uplink
+
+- type: storeCategory
+  id: ShuttleUplinkEquipment
+  name: Space equipment
+  priority: 0
+
+- type: storeCategory
+  id: ShuttleUplinkResources
+  name: Materials
+  priority: 1
+
+- type: storeCategory
+  id: ShuttleUplinkShipbuilding
+  name: Shuttle utilities
+  priority: 2
+
+- type: storeCategory
+  id: ShuttleUplinkMedicine
+  name: Medical utilities
+  priority: 3
+
+- type: storeCategory
+  id: ShuttleUplinkExtra
+  name: Extra
+  priority: 4

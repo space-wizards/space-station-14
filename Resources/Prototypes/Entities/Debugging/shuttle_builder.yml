@@ -1,0 +1,65 @@
+- type: entity
+  id: StorePresetShuttleBuilder
+  abstract: true
+  components:
+  - type: Store
+    name: store-preset-name-uplink
+    categories:
+    - ShuttleUplinkEquipment
+    - BattlesUplinkWearablesResources
+    - ShuttleUplinkMedicine
+    - ShuttleUplinkShipbuilding
+    - ShuttleUplinkExtra
+    currencyWhitelist:
+    - BuildToken
+    balance:
+      BuildToken: 0
+
+# Debug uplink 200 coins
+- type: entity
+  parent: [ BaseItem, StorePresetShuttleBuilder ]
+  id: ShuttleBuilderUplink
+  name: Shuttle building uplink
+  description: Debug uplink for shuttle building
+  suffix: Debug
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    layers:
+    - state: old-radio
+  - type: Item
+    sprite: Objects/Devices/communication.rsi
+    heldPrefix: old-radio
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    balance:
+      BuildToken: 200
+
+- type: entity
+  parent: [ BaseItem, StorePresetShuttleBuilder ]
+  id: ShuttleBuilderUplink0
+  name: Shuttle building uplink
+  description: Debug uplink for shuttle building
+  suffix: 0
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    layers:
+    - state: old-radio
+  - type: Item
+    sprite: Objects/Devices/communication.rsi
+    heldPrefix: old-radio
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    balance:
+      BuildToken: 0
