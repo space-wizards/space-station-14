@@ -50,10 +50,6 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     {
         if(!ent.Comp.ChangelingDevourActionEntity.HasValue)
             _actionsSystem.AddAction(ent, ref ent.Comp.ChangelingDevourActionEntity, ent.Comp.ChangelingDevourAction);
-
-        var identityStorage = EnsureComp<ChangelingIdentityComponent>(ent);
-
-        _changelingIdentitySystem.CloneLingStart((ent, identityStorage)); // Clone yourself so you can transform back.
     }
 
     private void OnConsumeAttemptTick(Entity<ChangelingDevourComponent> ent,

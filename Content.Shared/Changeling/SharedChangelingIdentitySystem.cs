@@ -23,23 +23,6 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
 
     private void OnMapInit(Entity<ChangelingIdentityComponent> ent, ref MapInitEvent args)
     {
-        if (!_mind.TryGetMind(ent, out var mindId, out _))
-            return;
-        if (_roles.MindHasRole<ChangelingRoleComponent>(mindId))
-            return;
-        _roles.MindAddRole(mindId, "MindRoleChangeling");
-    }
-
-    /// <summary>
-    /// Initialize the Starting ling entity in nullspace and set the ling as a View Subscriber to the Body to load the PVS
-    /// nullspace
-    /// </summary>
-    /// <param name="ent">The ling to startup</param>
-    public void CloneLingStart(Entity<ChangelingIdentityComponent> ent)
-    {
-        if (ent.Comp.ConsumedIdentities.Count > 0)
-            return;
-
         CloneToNullspace(ent, ent.Owner);
     }
 

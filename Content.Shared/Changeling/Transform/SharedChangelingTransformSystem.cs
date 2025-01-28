@@ -48,9 +48,6 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
         var userInterfaceComp = EnsureComp<UserInterfaceComponent>(ent);
         _uiSystem.SetUi((ent, userInterfaceComp), TransformUi.Key, new InterfaceData("ChangelingTransformBoundUserInterface"));
-
-        var identityStorage = EnsureComp<ChangelingIdentityComponent>(ent);
-        _changelingIdentitySystem.CloneLingStart((ent, identityStorage));
     }
 
     protected virtual void OnTransformAction(Entity<ChangelingTransformComponent> ent,
