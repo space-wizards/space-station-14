@@ -177,23 +177,23 @@ public sealed partial class StationJobsSystem : EntitySystem
         foreach (var (_, group) in stationJobs.JobGroups)
         {
             if (group.Members.Contains(jobPrototypeId))
-                {
-                    var newMidRound = group.MidRound + amount;
-                
-                    if (newMidRound < 0 && !clamp)
-                        return false;
+            {
+                var newMidRound = group.MidRound + amount;
+ 
+                if (newMidRound < 0 && !clamp)
+                    return false;
 
-                    group.MidRound = Math.Max(newMidRound, 0);
-                
-                    // Update all group members
-                    foreach (var member in group.Members)
-                    {
-                        stationJobs.JobList[member] = group.MidRound;
-                    }
-                
-                    UpdateJobsAvailable();
-                    return true;
+                group.MidRound = Math.Max(newMidRound, 0);
+
+                // Update all group members
+                foreach (var member in group.Members)
+                {
+                    stationJobs.JobList[member] = group.MidRound;
                 }
+
+                UpdateJobsAvailable();
+                return true;
+            }
         }
 
         switch (jobList.TryGetValue(jobPrototypeId, out var available))
