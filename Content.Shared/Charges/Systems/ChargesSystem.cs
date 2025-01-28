@@ -42,7 +42,7 @@ public sealed class ChargesSystem : EntitySystem
         }
 
         // only show the recharging info if it's not full
-        if (!args.IsInDetailsRange || charges == comp.MaxCharges || !TryComp<Components.AutoRechargeComponent>(uid, out var recharge))
+        if (!args.IsInDetailsRange || charges == comp.MaxCharges || !TryComp<AutoRechargeComponent>(uid, out var recharge))
             return;
 
         rechargeEnt.Comp2 = recharge;
@@ -63,12 +63,12 @@ public sealed class ChargesSystem : EntitySystem
         }
     }
 
-    private void OnChargesPerformed(Entity<Components.LimitedChargesComponent> ent, ref ActionPerformedEvent args)
+    private void OnChargesPerformed(Entity<LimitedChargesComponent> ent, ref ActionPerformedEvent args)
     {
         AddCharges((ent.Owner, ent.Comp), -1);
     }
 
-    private void OnChargesMapInit(Entity<Components.LimitedChargesComponent> ent, ref MapInitEvent args)
+    private void OnChargesMapInit(Entity<LimitedChargesComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.LastCharges = ent.Comp.MaxCharges;
         ent.Comp.LastUpdate = _timing.CurTime;
@@ -76,14 +76,14 @@ public sealed class ChargesSystem : EntitySystem
     }
 
     [Pure]
-    public bool HasCharges(Entity<Components.LimitedChargesComponent?> action, int charges)
+    public bool HasCharges(Entity<LimitedChargesComponent?> action, int charges)
     {
         var current = GetCurrentCharges(action);
 
         return current >= charges;
     }
 
-    public void AddCharges(Entity<Components.LimitedChargesComponent?> action, int addCharges)
+    public void AddCharges(Entity<LimitedChargesComponent?> action, int addCharges)
     {
         if (addCharges == 0)
             return;
@@ -143,9 +143,9 @@ public sealed class ChargesSystem : EntitySystem
         Dirty(action);
     }
 
-    public void SetCharges(Entity<Components.LimitedChargesComponent?> action, int value)
+    public void SetCharges(Entity<LimitedChargesComponent?> action, int value)
     {
-        action.Comp ??= EnsureComp<Components.LimitedChargesComponent>(action.Owner);
+        action.Comp ??= EnsureComp<LimitedChargesComponent>(action.Owner);
 
         var adjusted = Math.Clamp(value, 0, action.Comp.MaxCharges);
 
