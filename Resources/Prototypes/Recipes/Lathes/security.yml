@@ -614,6 +614,15 @@
 
 - type: latheRecipe
   parent: BaseWeaponRecipe
+  id: WeaponFlareGun
+  result: WeaponFlareGun
+  completetime: 6
+  materials:
+    Plastic: 400
+    Steel: 100
+
+- type: latheRecipe
+  parent: BaseWeaponRecipe
   id: WeaponDisabler
   result: WeaponDisabler
   completetime: 6
