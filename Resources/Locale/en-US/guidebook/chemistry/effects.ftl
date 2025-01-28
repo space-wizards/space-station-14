@@ -273,6 +273,12 @@ reagent-effect-guidebook-make-sentient =
         *[other] make
     } the metabolizer sentient
 
+reagent-effect-guidebook-make-sentient-freeagent =
+    { $chance ->
+        [1] Makes
+        *[other] make
+    } the metabolizer sentient as a Free Agent
+
 reagent-effect-guidebook-make-polymorph =
     { $chance ->
         [1] Polymorphs

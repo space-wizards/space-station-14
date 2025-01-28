@@ -105,6 +105,8 @@
         - proto: WeaponTeslaGun
           prob: 0.1
           cost: 2
+        - proto: EmancizineChemistryBottle
+          prob: 0.1
 
 # Mob loot table
 

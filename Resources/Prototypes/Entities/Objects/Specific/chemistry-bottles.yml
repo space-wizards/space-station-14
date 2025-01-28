@@ -358,6 +358,21 @@
           Quantity: 30
 
 - type: entity
+  parent: BaseChemistryBottleFilled
+  id: EmancizineChemistryBottle
+  suffix: emancizine
+  components:
+  - type: Label
+    currentLabel: reagent-name-emancizine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Emancizine
+          Quantity: 30
+
+- type: entity
   id: PaxChemistryBottle
   suffix: pax
   parent: BaseChemistryBottleFilled

@@ -381,6 +381,21 @@
     Cognizine: 1
 
 - type: reaction
+  id: Emancizine
+  impact: High
+  reactants:
+    Cognizine:
+      amount: 1
+    Vestine:
+      amount: 1
+    NorepinephricAcid:
+      amount: 1
+    MindbreakerToxin:
+      amount: 1
+  products:
+    Emancizine: 1
+
+- type: reaction
   id: Sigynate
   impact: Medium
   minTemp: 370
@@ -561,7 +576,7 @@
   id: Opporozidone
   minTemp: 400 #Maybe if a method of reducing reagent temp exists one day, this could be -50
   reactants:
-    Cognizine: 
+    Cognizine:
       amount: 1
     Plasma:
       amount: 2
