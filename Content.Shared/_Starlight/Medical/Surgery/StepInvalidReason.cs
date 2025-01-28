@@ -7,4 +7,5 @@ public enum StepInvalidReason
     NeedsOperatingTable,
     Armor,
     MissingTool,
+    DisabledTool,
 }

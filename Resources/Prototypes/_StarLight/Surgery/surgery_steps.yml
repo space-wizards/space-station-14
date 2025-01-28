@@ -41,20 +41,6 @@
 
 - type: entity
   parent: SurgeryStepBase
-  id: SurgeryStepRetractSkin
-  name: Retract the skin
-  components:
-  - type: SurgeryStep
-    tools:
-    - type: Retractor
-    add:
-    - type: SkinRetracted
-  - type: Sprite
-    sprite: Objects/Specific/Medical/Surgery/scissors.rsi
-    state: retractor
-
-- type: entity
-  parent: SurgeryStepBase
   id: SurgeryStepSawBones
   name: Saw through bones
   components:

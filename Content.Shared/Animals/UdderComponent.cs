@@ -28,6 +28,7 @@ public sealed partial class UdderComponent : Component
     /// <summary>
     ///     The solution to add reagent to.
     /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
     public Entity<SolutionComponent>? Solution = null;
 
     /// <summary>

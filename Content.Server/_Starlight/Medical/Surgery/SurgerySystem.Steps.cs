@@ -8,26 +8,16 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Speech.Muting;
-using NAudio.CoreAudioApi;
 using Robust.Shared.Prototypes;
 using Content.Shared.Humanoid;
 using Content.Shared.Starlight;
-using Content.Shared.Overlays;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Starlight.Antags.Abductor;
 using Content.Shared.VentCraw;
-using Content.Shared.Item;
 using Content.Shared.Interaction.Components;
-using Content.Shared.Silicons.Borgs.Components;
-using Robust.Shared.Map;
-using static Content.Server.Power.Pow3r.PowerState;
-using System.Reflection.Metadata;
-using Robust.Shared.Localization;
-using Robust.Shared.Utility;
 using Microsoft.CodeAnalysis;
 
 namespace Content.Server.Starlight.Medical.Surgery;
@@ -40,7 +30,7 @@ namespace Content.Server.Starlight.Medical.Surgery;
 public sealed partial class SurgerySystem : SharedSurgerySystem
 {
     [Dependency] private readonly IComponentFactory _compFactory = default!;
-    
+
     private readonly EntProtoId _virtual = "PartVirtual";
     public void InitializeSteps()
     {
@@ -63,8 +53,13 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
 
     private void OnStepAttachComplete(Entity<SurgeryStepAttachLimbEffectComponent> ent, ref SurgeryStepEvent args)
     {
-        OnStepAttachLimbComplete(ent, ref args);
-        OnStepAttachItemComplete(ent, ref args);
+        if (GetSingleton(args.SurgeryProto) is not { } surgery
+            || !TryComp<SurgeryLimbSlotConditionComponent>(surgery, out var slotComp))
+            return;
+
+        OnStepAttachLimbComplete(ent, slotComp.Slot, ref args);
+        if (slotComp.Slot != "head")
+            OnStepAttachItemComplete(ent, slotComp.Slot, ref args);
     }
 
     private void OnStepBleedComplete(Entity<SurgeryStepBleedEffectComponent> ent, ref SurgeryStepEvent args)
@@ -97,7 +92,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
             {
                 var ev = new SurgeryOrganInsertCompleted(body, part, organId);
                 RaiseLocalEvent(organId, ref ev);
-                
+
                 if (TryComp<OrganEyesComponent>(organId, out var organEyes)
                     && TryComp<BlindableComponent>(body, out var blindable))
                 {
@@ -132,7 +127,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
             {
                 var ev = new SurgeryOrganExtractCompleted(args.Body, args.Part, organ.Id);
                 RaiseLocalEvent(organ.Id, ref ev);
-                
+
                 if (_body.RemoveOrgan(organ.Id, organ.Component)
                     && TryComp<OrganDamageComponent>(organ.Id, out var damageRule)
                     && damageRule.Damage is not null
@@ -182,7 +177,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         if (TryComp(args.Body, out TransformComponent? xform))
             SpawnAtPosition(ent.Comp.Entity, xform.Coordinates);
     }
-    private void OnStepAttachLimbComplete(Entity<SurgeryStepAttachLimbEffectComponent> ent, ref SurgeryStepEvent args)
+    private void OnStepAttachLimbComplete(Entity<SurgeryStepAttachLimbEffectComponent> _, string slot, ref SurgeryStepEvent args)
     {
         if (args.Tools.Count == 0
             || !(args.Tools.FirstOrDefault() is var limbId)
@@ -193,14 +188,6 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         var part = args.Part;
         var body = args.Body;
 
-        var slot = limb.PartType switch
-        {
-            BodyPartType.Arm => limb.Symmetry == BodyPartSymmetry.Left ? "left arm" : "right arm",
-            BodyPartType.Hand => limb.Symmetry == BodyPartSymmetry.Left ? "left hand" : "right hand",
-            BodyPartType.Leg => limb.Symmetry == BodyPartSymmetry.Left ? "left leg" : "right leg",
-            BodyPartType.Foot => limb.Symmetry == BodyPartSymmetry.Left ? "left foot" : "right foot",
-            _ => "",
-        };
         if (!_body.AttachPart(part, slot, limbId, bodyPart, limb))
         {
             args.IsCancelled = true;
@@ -254,14 +241,13 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         }
     }
 
-    private void OnStepAttachItemComplete(Entity<SurgeryStepAttachLimbEffectComponent> ent, ref SurgeryStepEvent args)
+    private void OnStepAttachItemComplete(Entity<SurgeryStepAttachLimbEffectComponent> ent, string slot, ref SurgeryStepEvent args)
     {
         if (args.Tools.Count == 0
             || !(args.Tools.FirstOrDefault() is var itemId)
             || !TryComp<BodyPartComponent>(args.Part, out var bodyPart)
             || !TryComp(itemId, out MetaDataComponent? metada)
             || TryComp<BodyPartComponent>(itemId, out var _)
-            || !_body.TryGetFreePartSlot(args.Part, out var slotId, bodyPart)
             || Prototype(itemId) is not EntityPrototype prototype)
             return;
 
@@ -276,7 +262,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         marker.VirtualPart = virtualIteam;
         virtualCustomLimb.Item = itemId;
 
-        virtualBodyPart.PartType = slotId switch
+        virtualBodyPart.PartType = slot switch
         {
             "left arm" => BodyPartType.Arm,
             "right arm" => BodyPartType.Arm,
@@ -289,7 +275,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
             "tail" => BodyPartType.Tail,
             _ => BodyPartType.Other,
         };
-        if (!_body.AttachPart(args.Part, slotId, virtualIteam, bodyPart, virtualBodyPart))
+        if (!_body.AttachPart(args.Part, slot, virtualIteam, bodyPart, virtualBodyPart))
         {
             args.IsCancelled = true;
             QueueDel(virtualIteam);
@@ -298,7 +284,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
 
         if (TryComp<HumanoidAppearanceComponent>(args.Body, out var humanoid)) //todo move to system
         {
-            var layer = GetLayer(slotId);
+            var layer = GetLayer(slot);
             if (layer is null)
                 return;
 
@@ -307,7 +293,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
             Dirty(args.Body, vizualizer);
 
         }
-        AddItemHand(args.Body, itemId, BodySystem.GetPartSlotContainerId(slotId));
+        AddItemHand(args.Body, itemId, BodySystem.GetPartSlotContainerId(slot));
     }
 
     private void AddItemHand(EntityUid bodyId, EntityUid itemId, string handId)
@@ -341,7 +327,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
 
             if (_containers.Remove(args.Part, container, destination: xform.Coordinates))
             {
-                if (TryComp<CustomLimbComponent>(args.Part, out var virtualLimb) 
+                if (TryComp<CustomLimbComponent>(args.Part, out var virtualLimb)
                     && virtualLimb.Item.HasValue)
                 {
                     RemoveItemHand(args.Body, virtualLimb.Item.Value, BodySystem.GetPartSlotContainerId(slotId));

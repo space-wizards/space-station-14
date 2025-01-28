@@ -1,0 +1,78 @@
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryAmputation
+  name: Amputation
+  description: Surgical removal of a limb.
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenIncision
+    steps:
+    - SurgeryStepInciseCartilage
+    - SurgeryStepExposeNerves
+    - SurgeryStepExposeBloodVessels
+    - SurgeryAmputationStep
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
+  - type: SurgeryPartCondition
+    parts: 
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+    - Tail
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/saw.rsi
+    state: saw
+    
+- type: entity
+  parent: SurgeryAmputation
+  id: SurgeryAmputationHead
+  name: Amputation
+  description: Surgical removal of a head.
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenIncision
+    steps:
+    - SurgeryStepDeepIncision
+    - SurgeryStepExposeSkull
+    - SurgeryStepExposeNerves
+    - SurgeryStepExposeBloodVessels
+    - SurgeryStepSawSkull
+  - type: SurgeryPartCondition
+    parts: 
+    - Head
+
+- type: entity
+  parent: SurgeryAmputation
+  id: SurgeryAmputationSlime
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenIncisionSlime
+    steps:
+    - SurgeryStepDeepIncision
+    - SurgeryStepInciseCartilage
+    - SurgeryStepSawSkull
+  - type: SurgerySpeciesCondition
+    speciesBlacklist: []
+    speciesWhitelist:
+    - SlimePerson
+
+- type: entity
+  parent: SurgeryAmputationHead
+  id: SurgeryAmputationHeadSlime
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenIncisionSlime
+    steps:
+    - SurgeryStepDeepIncision
+    - SurgeryStepInciseCartilage
+    - SurgeryStepHeadFinalizeSeparation
+  - type: SurgerySpeciesCondition
+    speciesBlacklist: []
+    speciesWhitelist:
+    - SlimePerson
