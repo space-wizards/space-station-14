@@ -201,6 +201,8 @@
       - WetFloorSign
       - ClothingHeadHatCone
       - FreezerElectronics
+      - WeaponFlareGun
+      - BoxShotgunFlare
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - BoxLethalshot
@@ -226,6 +228,7 @@
       - RiotShield
       - SpeedLoaderMagnum
       - SpeedLoaderMagnumEmpty
+      - WeaponFlareGunSecurity
   - type: BlueprintReceiver
     whitelist:
       tags:
@@ -730,6 +733,7 @@
       - TargetHuman
       - TargetSyndicate
       - WeaponDisablerPractice
+      - WeaponFlareGun
       - WeaponFlareGunSecurity
       - WeaponLaserCarbinePractice
       - Zipties
