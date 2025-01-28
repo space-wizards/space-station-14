@@ -131,7 +131,7 @@
 - type: entity
   name: Holoparasite
   id: MobHoloparasiteGuardian
-  parent: MobGuardianBase
+  parent: [MobGuardianBase, BaseSyndicateContraband]
   description: A mesmerising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands proud, tuning into its owner's life to sustain itself.
   components:
     - type: GhostRole
@@ -163,7 +163,7 @@
 - type: entity
   name: HoloClown
   id: MobHoloClownGuardian
-  parent: [MobGuardianBase, InventoryBase]
+  parent: [MobGuardianBase, InventoryBase, BaseSyndicateContraband]
   description: A mesmerising whirl of hard-light patterns weaves a blue colored clown of dubious origin.
   components:
     - type: GhostRole
@@ -245,7 +245,7 @@
 # From Wizard deck of cards or magical lamp
 - type: entity
   name: Ifrit
-  parent: MobGuardianBase
+  parent: [MobGuardianBase, BaseMajorContraband]
   id: MobIfritGuardian
   description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into its owner's life to sustain itself.
   components:
@@ -278,7 +278,7 @@
 # From holocarp injector
 - type: entity
   name: Holocarp
-  parent: MobGuardianBase
+  parent: [MobGuardianBase, BaseMajorContraband]
   id: MobHolocarpGuardian
   suffix: Guardian
   description: What's better than a pet carp? A guardian holocarp that lives off your own life energy!

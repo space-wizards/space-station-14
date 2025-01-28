@@ -22,7 +22,7 @@
 - type: entity
   name: magical lamp
   id: MagicalLamp
-  parent: BaseItem
+  parent: [BaseItem, BaseMajorContraband]
   description: The wizard federation had to cut costs after the jinn merchandise scandal somehow.
   components:
   - type: Sprite
