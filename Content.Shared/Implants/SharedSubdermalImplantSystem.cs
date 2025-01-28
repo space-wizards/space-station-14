@@ -84,7 +84,6 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         {
             _transformSystem.DropNextTo(entity, uid);
         }
-
     }
 
     /// <summary>
