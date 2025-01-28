@@ -14,6 +14,9 @@ public sealed partial class FakeMindShieldComponent : Component
     [DataField, AutoNetworkedField]
     public bool IsEnabled { get; set; } = false;
 
+    /// <summary>
+    /// The Security status icon displayed to the security officer. Should be a duplicate of the one the mindshield uses since it's spoofing that
+    /// </summary>
     [DataField, AutoNetworkedField]
     public ProtoId<SecurityIconPrototype> MindShieldStatusIcon = "MindShieldIcon";
 }
