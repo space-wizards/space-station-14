@@ -1,12 +1,14 @@
-﻿using Content.Shared.Starlight.Medical.Surgery.Steps;
-using Content.Shared.Body.Part;
+﻿using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Inventory;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Popups;
-using Robust.Shared.Prototypes;
-using Content.Shared.Starlight.Medical.Surgery.Events;
 using Content.Shared.Starlight.Medical.Surgery.Effects.Step;
+using Content.Shared.Starlight.Medical.Surgery.Events;
+using Content.Shared.Starlight.Medical.Surgery.Steps;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using System.Linq;
 
 namespace Content.Shared.Starlight.Medical.Surgery;
@@ -14,6 +16,7 @@ namespace Content.Shared.Starlight.Medical.Surgery;
 // https://github.com/RMC-14/RMC-14
 public abstract partial class SharedSurgerySystem
 {
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     protected float _delayAccumulator = 0f;
     protected readonly Queue<Action> _delayQueue = new();
@@ -41,6 +44,13 @@ public abstract partial class SharedSurgerySystem
             Dirty(ent);
             if (args.Target.HasValue && TryComp<BodyPartComponent>(args.Target.Value, out var dirtyPart))
                 Dirty(args.Target.Value, dirtyPart, Comp<MetaDataComponent>(args.Target.Value));
+            return;
+        }
+        
+        if (!_random.Prob(args.SuccessRate))
+        {
+            if (_net.IsClient) return;
+            _popup.PopupEntity("Because of a careless tool, your hand shook. You need to start this step all over again!", args.User, PopupType.SmallCaution);
             return;
         }
 
@@ -177,6 +187,15 @@ public abstract partial class SharedSurgerySystem
 
                 return;
             }
+            else if (TryComp<ItemToggleComponent>(tool, out var togglable) && !togglable.Activated)
+            {
+                args.Invalid = StepInvalidReason.DisabledTool;
+
+                if (reg.Component is ISurgeryToolComponent toolComp)
+                    args.Popup = $"You need enable {toolComp.ToolName} to perform this step!";
+
+                return;
+            }
 
             args.ValidTools.Add(tool);
         }
@@ -204,18 +223,23 @@ public abstract partial class SharedSurgerySystem
         }
 
         var duration = stepComp.Duration;
+        
+        float SmallestSuccessRate = 1f;
 
         foreach (var tool in validTools)
             if (TryComp(tool, out SurgeryToolComponent? toolComp))
             {
                 duration *= toolComp.Speed;
                 if (toolComp.StartSound != null) _audio.PlayPvs(toolComp.StartSound, tool);
+                
+                if(toolComp.SuccessRate < SmallestSuccessRate)
+                    SmallestSuccessRate = toolComp.SuccessRate;
             }
 
         if (TryComp(body, out TransformComponent? xform))
             _rotateToFace.TryFaceCoordinates(user, _transform.GetMapCoordinates(body, xform).Position);
 
-        var ev = new SurgeryDoAfterEvent(args.Surgery, args.Step);
+        var ev = new SurgeryDoAfterEvent(args.Surgery, args.Step, SmallestSuccessRate);
         var doAfter = new DoAfterArgs(EntityManager, user, duration, ev, body, part)
         {
             BreakOnMove = true,

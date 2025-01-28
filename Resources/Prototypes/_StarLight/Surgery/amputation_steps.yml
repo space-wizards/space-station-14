@@ -16,3 +16,70 @@
       types:
         Slash: 10
   - type: SurgeryStepAmputationEffect
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepExposeSkull
+  name: Expose Skull
+  components:
+  - type: SurgeryStep
+    duration: 2
+    tools:
+    - type: BoneSaw
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/saw.rsi
+    state: saw
+  - type: SurgeryStepBleedEffect
+    damage:
+      types:
+        Slash: 5
+  - type: SurgeryStepEmoteEffect
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepLigateVessels
+  name: Ligate Vessels
+  components:
+    - type: SurgeryStep
+      duration: 3
+      tools:
+        - type: Hemostat
+    - type: Sprite
+      sprite: Objects/Specific/Medical/Surgery/scissors.rsi
+      state: hemostat
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepSawSkull
+  name: Saw Skull
+  components:
+    - type: SurgeryStep
+      duration: 20
+      tools:
+      - type: BoneSaw
+    - type: Sprite
+      sprite: Objects/Specific/Medical/Surgery/saw.rsi
+      state: saw
+    - type: SurgeryStepBleedEffect
+      damage:
+        types:
+          Slash: 15
+    - type: SurgeryStepAmputationEffect
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepInciseCartilage
+  name: Incise Cartilage
+  components:
+  - type: SurgeryStep
+    tools:
+      - type: Scalpel
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+
+
+- type: entity
+  parent: SurgeryStepSawSkull
+  id: SurgeryStepHeadFinalizeSeparation
+  name: Finalize Separation

@@ -1,33 +1,5 @@
 ﻿- type: entity
   parent: SurgeryStepBase
-  id: SurgeryStepExposeNerves
-  name: Expose Nerves
-  components:
-  - type: SurgeryStep
-    duration: 4
-    tools:
-    - type: Scalpel
-  - type: Sprite
-    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
-    state: scalpel
-  - type: SurgeryStepEmoteEffect
-
-- type: entity
-  parent: SurgeryStepBase
-  id: SurgeryStepExposeBloodVessels
-  name: Expose Blood Vessels
-  components:
-  - type: SurgeryStep
-    duration: 4
-    tools:
-    - type: Scalpel
-  - type: Sprite
-    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
-    state: scalpel
-  - type: SurgeryStepEmoteEffect
-
-- type: entity
-  parent: SurgeryStepBase
   id: SurgeryLimbAttachmentStep
   name: attach a limb
   components:

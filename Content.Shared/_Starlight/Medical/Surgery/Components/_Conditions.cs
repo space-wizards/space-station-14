@@ -11,6 +11,13 @@ namespace Content.Shared.Starlight.Medical.Surgery.Effects.Step;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))] public sealed partial class SurgeryOperatingTableConditionComponent : Component;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))]
+public sealed partial class SurgeryLimbSlotConditionComponent : Component
+{
+    [DataField]
+    public string Slot;
+}
+
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))]
 public sealed partial class SurgeryPartConditionComponent : Component
 {
     [DataField]
