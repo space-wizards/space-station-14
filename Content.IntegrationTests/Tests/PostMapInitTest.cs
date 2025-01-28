@@ -42,6 +42,11 @@ namespace Content.IntegrationTests.Tests
             "/Maps/Shuttles/infiltrator.yml",
         };
 
+        private static readonly string[] DoNotMapWhitelist =
+        {
+            "/Maps/centcomm.yml",
+        };
+
         private static readonly string[] GameMaps =
         {
             "Dev",
@@ -120,6 +125,7 @@ namespace Content.IntegrationTests.Tests
             var server = pair.Server;
 
             var resourceManager = server.ResolveDependency<IResourceManager>();
+            var protoManager = server.ResolveDependency<IPrototypeManager>();
             var mapFolder = new ResPath("/Maps");
             var maps = resourceManager
                 .ContentFindFiles(mapFolder)
@@ -151,6 +157,21 @@ namespace Content.IntegrationTests.Tests
                 var postMapInit = meta["postmapinit"].AsBool();
 
                 Assert.That(postMapInit, Is.False, $"Map {map.Filename} was saved postmapinit");
+
+                // testing that maps have nothing with the "DO NOT MAP" suffix
+                // I do it here because it's basically copy-paste code for the most part
+                var yamlEntities = root["entities"];
+                foreach (var yamlEntity in (YamlSequenceNode)yamlEntities)
+                {
+                    var protoId = yamlEntity["proto"].AsString();
+                    protoManager.TryIndex(protoId, out var proto, false);
+                    if (proto is null || proto.EditorSuffix is null)
+                        continue;
+                    if (proto.EditorSuffix.ToUpper().Contains("DO NOT MAP") && !DoNotMapWhitelist.Contains(map.ToString()))
+                    {
+                        Assert.Fail($"\nMap {map} has the DO NOT MAP prototype {proto}");
+                    }
+                }
             }
             await pair.CleanReturnAsync();
         }
