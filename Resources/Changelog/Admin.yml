@@ -544,5 +544,198 @@ Entries:
   id: 67
   time: '2024-09-15T01:55:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31654
+- author: ElectroJr
+  changes:
+  - message: The `menuvis all` once again makes all entities show up in the right-click
+      context menu.
+    type: Fix
+  id: 68
+  time: '2024-09-23T07:28:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32395
+- author: SlamBamActionman
+  changes:
+  - message: Added admin logging for generated codewords.
+    type: Add
+  id: 69
+  time: '2024-10-09T11:55:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32531
+- author: IProduceWidgets
+  changes:
+  - message: invokeverb should work with smite names now. Find the names in the smite
+      tab on mouse hover.
+    type: Fix
+  id: 70
+  time: '2024-10-16T22:24:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32844
+- author: BramvanZijp
+  changes:
+  - message: CC, ERT, Admin, and Deathsquad PDA's now have all departmental programs
+      pre-installed.
+    type: Tweak
+  id: 71
+  time: '2024-10-31T14:53:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32601
+- author: metalgearsloth
+  changes:
+  - message: Added on-call functionality for discord relay to get notified on unanswered
+      ahelps.
+    type: Add
+  id: 72
+  time: '2024-11-02T09:29:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30443
+- author: nikthechampiongr
+  changes:
+  - message: It is now possible to edit the AI's laws through its core and eye.
+    type: Fix
+  id: 73
+  time: '2024-11-02T13:21:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32461
+- author: Repo
+  changes:
+  - message: All role bans in a set are updated on edits now.
+    type: Fix
+  id: 74
+  time: '2024-11-12T21:03:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30659
+- author: Aquif
+  changes:
+  - message: tag:with toolshed command. It takes in a list of entities via pipe and
+      returns the entities from the list with the given tag.
+    type: Add
+  id: 75
+  time: '2024-11-13T23:27:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31751
+- author: Beck Thompson
+  changes:
+  - message: Notes now use duration instead of timestamps for note expiry times.
+    type: Tweak
+  id: 76
+  time: '2024-11-15T03:24:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33262
+- author: ScarKy0, GoldenCan
+  changes:
+  - message: Players that take over emagged/ion stormed borgs now correctly get assigned
+      the antag role.
+    type: Fix
+  id: 77
+  time: '2024-11-20T07:55:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33311
+- author: TokenStyle
+  changes:
+  - message: makeghostroleraffled admin command now works with few arguments!
+    type: Fix
+  id: 78
+  time: '2024-11-30T20:11:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31836
+- author: slarticodefast
+  changes:
+  - message: Health scanning a slime as an aghost will no longer insert the scanner
+      into their inventory.
+    type: Fix
+  id: 79
+  time: '2024-12-18T00:12:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33884
+- author: slarticodefast
+  changes:
+  - message: The panic bunker now only automatically disables when an admin with the
+      'Admin' permission is online instead of any permission.
+    type: Tweak
+  id: 80
+  time: '2024-12-18T13:15:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33879
+- author: ElectroJr
+  changes:
+  - message: Some toolshed command permissions have changed. The "emplace" and "iterate"
+      command no longer require QUER` permissions, they now match the "do" command
+      and only require DEBUG. Several previously unrestricted commands now require
+      the DEBUG flag.
+    type: Tweak
+  - message: Toolshed command parsing has changed. In particular, command substitution
+      (using the output of a command in place of another command's argument) now requires
+      that the command be wrapped in curly braces
+    type: Tweak
+  id: 81
+  time: '2024-12-21T07:02:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33980
+- author: lzk228
+  changes:
+  - message: Fixed spray painter using while being aghost.
+    type: Fix
+  id: 82
+  time: '2024-12-24T02:25:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34001
+- author: DylanWhittingham
+  changes:
+  - message: Players using the notekeeper PDA program is now logged.
+    type: Add
+  id: 83
+  time: '2025-01-02T16:16:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34118
+- author: c4llv07e
+  changes:
+  - message: adminwho doesn't leak stealthmins count now!
+    type: Fix
+  id: 84
+  time: '2025-01-08T15:23:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34122
+- author: Errant
+  changes:
+  - message: The Admin Menu and Admin Overlay now shows the specific role types of
+      players and antagonists, respectively. The old admin overlay can still be used
+      with cvar ui.admin_overlay_classic true
+    type: Tweak
+  id: 85
+  time: '2025-01-11T21:17:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33420
+- author: Myra
+  changes:
+  - message: Added IPIntel's API to the connection code. If enabled, this will automate
+      VPN/Proxy detection.
+    type: Add
+  id: 86
+  time: '2025-01-12T19:41:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33339
+- author: PJB3005
+  changes:
+  - message: Deadmin status is now synchronized to database, making it persistent
+      across server restarts and between multiple game servers.
+    type: Tweak
+  - message: Admins can now be suspended via the permissions panel. This effectively
+      removes their admin status without completely deleting their record.
+    type: Add
+  id: 87
+  time: '2025-01-14T23:46:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34048
+- author: Palladinium
+  changes:
+  - message: Added Discord relay notifications when a watchlisted player connects.
+    type: Add
+  id: 88
+  time: '2025-01-15T00:32:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33483
+- author: Myra
+  changes:
+  - message: Admins are by default now hidden from the reported player count on the
+      launcher.
+    type: Add
+  id: 89
+  time: '2025-01-15T21:10:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34406
+- author: c4llv07e
+  changes:
+  - message: Added an option to disable the bwoink sound!
+    type: Add
+  id: 90
+  time: '2025-01-17T07:24:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33782
+- author: PJB3005
+  changes:
+  - message: Introduced an option to automatically disconnect players from their current
+      server if they join another one within the same server community. Admins are
+      always exempt.
+    type: Add
+  id: 91
+  time: '2025-01-21T23:23:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34563
 Name: Admin
 Order: 1

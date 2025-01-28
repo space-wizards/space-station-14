@@ -231,7 +231,7 @@ namespace Content.Server.Atmos.EntitySystems
             tile.MapAtmosphere = false;
             atmos.MapTiles.Remove(tile);
             tile.Air = null;
-            Array.Clear(tile.MolesArchived);
+            tile.AirArchived = null;
             tile.ArchivedCycle = 0;
             tile.LastShare = 0f;
             tile.Space = false;
@@ -261,7 +261,7 @@ namespace Content.Server.Atmos.EntitySystems
                     return;
 
                 tile.Air = null;
-                Array.Clear(tile.MolesArchived);
+                tile.AirArchived = null;
                 tile.ArchivedCycle = 0;
                 tile.LastShare = 0f;
                 tile.Hotspot = new Hotspot();

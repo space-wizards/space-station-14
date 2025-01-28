@@ -24,6 +24,9 @@
   - type: Intercom
   - type: Speech
     speechVerb: Robotic
+  - type: VoiceOverride # This is for the wire that makes an electricity zapping noise.
+    speechVerbOverride: Electricity
+    enabled: false
   - type: ExtensionCableReceiver
   - type: Clickable
   - type: InteractionOutline
@@ -335,3 +338,16 @@
       key_slots:
       - EncryptionKeyCommon
       - EncryptionKeyStationMaster
+
+- type: entity
+  id: IntercomFreelance
+  parent: Intercom
+  suffix: Freelance
+  components:
+  - type: ContainerFill
+    containers:
+      board:
+      - IntercomElectronics
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyFreelance
