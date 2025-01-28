@@ -1,49 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Fixed forensic pad didn't care about target identity.
-    type: Fix
-  - message: Instead of name changing, forensic pad now will have a label with target's
-      name.
-    type: Tweak
-  id: 7358
-  time: '2024-09-12T00:52:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31842
-- author: lzk228
-  changes:
-  - message: Borgs and Station AI will not receive selected in preferences traits.
-    type: Tweak
-  id: 7359
-  time: '2024-09-12T10:36:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31990
-- author: MrRobDemo
-  changes:
-  - message: Added 5% chance to make killer tomatoes a ghost role.
-    type: Add
-  - message: Killer tomatoes can now heal from being splashed with water, blood or
-      RobustHarvest.
-    type: Add
-  - message: Killer tomatoes can now escape from inventory (only intelligent).
-    type: Tweak
-  id: 7360
-  time: '2024-09-12T12:51:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31932
-- author: ScarKy0
-  changes:
-  - message: Station AI now has a comms console ability.
-    type: Add
-  - message: Station AI abilities now have a default order.
-    type: Tweak
-  id: 7361
-  time: '2024-09-12T15:28:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31852
-- author: themias
-  changes:
-  - message: Fixed medical PDAs sometimes toggling their lights while scanning
-    type: Fix
-  id: 7362
-  time: '2024-09-13T13:59:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32091
 - author: Gorox221
   changes:
   - message: Mech pilots receive a warning before they are ejected from the mech.
@@ -3887,3 +3842,47 @@
   id: 7857
   time: '2025-01-27T12:44:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32369
+- author: august-sun
+  changes:
+  - message: Utility and CE belts can now hold the pAI and the handheld station map.
+    type: Tweak
+  id: 7858
+  time: '2025-01-27T18:48:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33048
+- author: ArtisticRoomba
+  changes:
+  - message: The Engineering Guidebook has been significantly revamped and is now
+      mostly up to date.
+    type: Add
+  - message: Most Atmospherics and Engineering-related devices and equipment now have
+      a link to their relevant guidebook entry upon examine.
+    type: Add
+  id: 7859
+  time: '2025-01-27T19:42:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33062
+- author: SlamBamActionman
+  changes:
+  - message: Hristov now provides an increased view range of 3 tiles when wielded.
+    type: Tweak
+  id: 7860
+  time: '2025-01-27T23:20:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31626
+- author: Kickguy223
+  changes:
+  - message: A new Syndicate and Thief togglable implant is available capable of Impersonating
+      a Mindshield
+    type: Add
+  - message: All implants will now inform you if an implant is already present after
+      the attempt instead of before
+    type: Tweak
+  id: 7861
+  time: '2025-01-28T02:37:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34079
+- author: ArtisticRoomba
+  changes:
+  - message: Frezon prices have been tweaked to be much more worth it for new players
+      and elder atmosians alike.
+    type: Tweak
+  id: 7862
+  time: '2025-01-28T17:31:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34049
