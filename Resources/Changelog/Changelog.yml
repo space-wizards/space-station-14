@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Station AI now has a comms console ability.
-    type: Add
-  - message: Station AI abilities now have a default order.
-    type: Tweak
-  id: 7361
-  time: '2024-09-12T15:28:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31852
 - author: themias
   changes:
   - message: Fixed medical PDAs sometimes toggling their lights while scanning
@@ -3883,3 +3874,14 @@
   id: 7860
   time: '2025-01-27T23:20:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31626
+- author: Kickguy223
+  changes:
+  - message: A new Syndicate and Thief togglable implant is available capable of Impersonating
+      a Mindshield
+    type: Add
+  - message: All implants will now inform you if an implant is already present after
+      the attempt instead of before
+    type: Tweak
+  id: 7861
+  time: '2025-01-28T02:37:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34079
