@@ -13,7 +13,9 @@ public sealed class SharedFakeMindShieldImplantSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<SubdermalImplantComponent, FakeMindShieldToggleEvent>(OnFakeMindShieldToggle);
         SubscribeLocalEvent<FakeMindShieldImplantComponent, ImplantImplantedEvent>(ImplantCheck);
+        SubscribeLocalEvent<FakeMindShieldImplantComponent, ImplantDrawnEvent>(ImplantDraw);
     }
+
     /// <summary>
     /// Raise the Action of a Implanted user toggling their implant to the FakeMindshieldComponent on their entity
     /// </summary>
@@ -32,5 +34,11 @@ public sealed class SharedFakeMindShieldImplantSystem : EntitySystem
     {
         if (ev.Implanted != null)
             EnsureComp<FakeMindShieldComponent>(ev.Implanted.Value);
+    }
+
+    private void ImplantDraw(Entity<FakeMindShieldImplantComponent> ent, ref ImplantDrawnEvent ev)
+    {
+        if (ev.ImplantDrawnFrom != null)
+            RemComp<FakeMindShieldComponent>(ev.ImplantDrawnFrom.Value);
     }
 }

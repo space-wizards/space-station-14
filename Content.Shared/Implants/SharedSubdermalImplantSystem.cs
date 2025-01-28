@@ -73,6 +73,8 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         if (component.ImplantAction != null)
             _actionsSystem.RemoveProvidedActions(component.ImplantedEntity.Value, uid);
 
+        var ev = new ImplantDrawnEvent(uid ,component.ImplantedEntity.Value);
+        RaiseLocalEvent(uid, ref ev);
         if (!_container.TryGetContainer(uid, BaseStorageId, out var storageImplant))
             return;
 
@@ -82,6 +84,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         {
             _transformSystem.DropNextTo(entity, uid);
         }
+
     }
 
     /// <summary>
@@ -215,5 +218,18 @@ public readonly struct ImplantImplantedEvent
     {
         Implant = implant;
         Implanted = implanted;
+    }
+}
+
+[ByRefEvent]
+public readonly struct ImplantDrawnEvent
+{
+    public readonly EntityUid Implant;
+    public readonly EntityUid? ImplantDrawnFrom;
+
+    public ImplantDrawnEvent(EntityUid implant, EntityUid? implantDrawnFrom)
+    {
+        Implant = implant;
+        ImplantDrawnFrom = implantDrawnFrom;
     }
 }
