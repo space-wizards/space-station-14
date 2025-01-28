@@ -148,7 +148,7 @@
       - LedLightTube
       - SodiumLightTube
       - ExteriorLightTube
-      - UvLightTube
+      - UvLightTube # imp
       - LightBulb
       - LedLightBulb
       - DimLightBulb
@@ -171,7 +171,7 @@
       - MopItem
       - Holoprojector
       - Mousetrap
-      - DeskBell
+      - DeskBell # imp
       - LightReplacer
       - TrashBag
       - PowerCellSmall
@@ -204,9 +204,8 @@
       - ClothingHeadHatCone
       - FreezerElectronics
       - Flare
-      # Delta-V ports
-      - TapeRecorder
-      - CassetteTape
+      - TapeRecorder # DV
+      - CassetteTape # DV
     dynamicRecipes:
       - Fulton
 
@@ -261,7 +260,7 @@
 
 - type: entity
   id: Protolathe
-  parent: [ BaseLatheLube, BaseScienceContraband ]
+  parent: [ BaseLatheLube, BaseScienceContraband ] # imp
   name: protolathe
   description: Converts raw materials into advanced items.
   components:
@@ -318,8 +317,8 @@
       - Implanter
       - PillCanister
       - ChemistryEmptyBottle01
-      - BaseChemistryEmptyVial
-      - Drone
+      - BaseChemistryEmptyVial # imp
+      - Drone # imp
       - AdvMopItem
       - WeaponSprayNozzle
       - ClothingBackpackWaterTank
@@ -373,12 +372,12 @@
       - BoxShotgunUranium
       - BoxShellTranquilizer
       - ExplosivePayload
-      - FullAutoConversionKit
+      - FullAutoConversionKit # imp
       - GrenadeBlast
       - GrenadeEMP
       - GrenadeFlash
       - HoloprojectorSecurity
-      - HyperBurstConversionKit
+      - HyperBurstConversionKit # imp
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
       - MagazineBoxMagnumIncendiary
@@ -427,7 +426,7 @@
 
 - type: entity
   id: CircuitImprinter
-  parent: [ BaseLatheLube, BaseScienceContraband ]
+  parent: [ BaseLatheLube, BaseScienceContraband ] # imp
   name: circuit imprinter
   description: Prints circuit boards for machines.
   components:
@@ -573,7 +572,7 @@
 
 - type: entity
   id: ExosuitFabricator
-  parent: [ BaseLatheLube, BaseScienceContraband ]
+  parent: [ BaseLatheLube, BaseScienceContraband ] # imp
   name: exosuit fabricator
   description: Creates parts for robotics and other mechanical needs.
   components:
@@ -696,7 +695,7 @@
 
 - type: entity
   id: SecurityTechFab
-  parent: [ BaseLatheLube, BaseSecurityContraband ]
+  parent: [ BaseLatheLube, BaseSecurityContraband ] # imp
   name: security techfab
   description: Prints equipment for use by security crew.
   components:
@@ -776,12 +775,12 @@
       - ClothingBackpackElectropack
       - ExplosivePayload
       - FlashPayload
-      - FullAutoConversionKit
+      - FullAutoConversionKit # imp
       - GrenadeBlast
       - GrenadeEMP
       - GrenadeFlash
       - HoloprojectorSecurity
-      - HyperBurstConversionKit
+      - HyperBurstConversionKit # imp
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
       - MagazineBoxLPistolIncendiary #imp
@@ -838,7 +837,7 @@
 
 - type: entity
   id: AmmoTechFab
-  parent: [ BaseLatheLube, BaseSecurityContraband ]
+  parent: [ BaseLatheLube, BaseSecurityContraband ] # imp
   name: ammo techfab
   description: Prints the bare minimum of bullets that any budget military or armory could need. Nothing fancy.
   components:
@@ -894,7 +893,7 @@
 
 - type: entity
   id: MedicalTechFab
-  parent: [ BaseLatheLube, BaseMedicalContraband ]
+  parent: [ BaseLatheLube, BaseMedicalContraband ] # imp
   name: medical techfab
   description: Prints equipment for use by the medbay.
   components:
@@ -936,7 +935,7 @@
       - PillCanister
       - BodyBag
       - ChemistryEmptyBottle01
-      - BaseChemistryEmptyVial
+      - BaseChemistryEmptyVial # imp
       - RollerBedSpawnFolded
       - CheapRollerBedSpawnFolded
       - EmergencyRollerBedSpawnFolded
