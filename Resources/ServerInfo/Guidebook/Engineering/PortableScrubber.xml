@@ -14,7 +14,7 @@
   It will stop scrubbing when unbolted (unwrenched) from the floor or when its internal volume is full. The scrubber has an internal capacity of [color=orange][protodata="PortableScrubber" comp="PortableScrubber" member="Volume"/] liters[/color].
 
   ## Dumping Waste and Storage
-  The scrubber's internal volume can be emptied by amchoring (wrenching) onto a [textlink="connector" link="GasCanisters"].
+  The scrubber's internal volume can be emptied by anchoring (wrenching) onto a [textlink="connector" link="GasCanisters"].
 
   Stations commonly have a dedicated emptying point to quickly transfer the waste from the scrubber to the station's wastenet.
 
