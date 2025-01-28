@@ -1805,6 +1805,7 @@
   - type: Tag
     tags:
     - Fruit
+    - ClothMade # For botanist moths
   - type: FoodSequenceElement
     entries:
       Taco: Capfruit
