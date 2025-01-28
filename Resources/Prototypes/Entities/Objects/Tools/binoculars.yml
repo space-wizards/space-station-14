@@ -14,8 +14,8 @@
     delay: 1.0
   - type: CursorOffsetRequiresWield
   - type: EyeCursorOffset
-    maxOffset: 3
-    pvsIncrease: 0.3
+    maxOffset: 5
+    pvsIncrease: 0.5
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
