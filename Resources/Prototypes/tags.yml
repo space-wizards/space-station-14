@@ -441,6 +441,9 @@
   id: Debug
 
 - type: Tag
+  id: Diagonal
+
+- type: Tag
   id: Dice
 
 - type: Tag
@@ -1329,6 +1332,12 @@
 
 - type: Tag
   id: WhitelistChameleon
+
+- type: Tag
+  id: WhitelistChameleonIdCard
+
+- type: Tag
+  id: WhitelistChameleonPDA
 
 - type: Tag
   id: Window

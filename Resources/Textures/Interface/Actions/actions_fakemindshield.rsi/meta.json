@@ -1,0 +1,17 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by Ubaser (Discord) for SS14, Modified for purpose by brassicaprime69 (Discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "icon-on"
+        }
+    ]
+}

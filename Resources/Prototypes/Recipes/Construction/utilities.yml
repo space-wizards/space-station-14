@@ -697,6 +697,20 @@
     sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
     state: heStraight
 
+- type: construction
+  id: HeatExchangerBend
+  name: radiator bend
+  description: Transfers heat between the pipe and its surroundings.
+  graph: GasBinary
+  startNode: start
+  targetNode: bendradiator
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
+    state: heBend
+
 # ATMOS TRINARY
 - type: construction
   id: GasFilter
@@ -771,7 +785,7 @@
 - type: construction
   id: PressureControlledValve
   name: pneumatic valve
-  description: Valve controlled by pressure.
+  description: A bidirectional valve controlled by pressure. Opens if the output pipe is lower than the pressure of the control pipe by 101.325 kPa.
   graph: GasTrinary
   startNode: start
   targetNode: pneumaticvalve
