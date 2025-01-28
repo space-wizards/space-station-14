@@ -256,12 +256,8 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         if (!TryComp<EnsnareableComponent>(target, out var ensnareable))
             return false;
 
-
-        var legs = _body.GetBodyChildrenOfType(target, BodyPartType.Leg).Count();
-        var ensnaredLegs = (ensnareable.Container.ContainedEntities.Count);
-
-        //If both legs are ensnared, don't let it ensnare more
-        if (legs == ensnaredLegs)
+        //Don't do anything if they are already ensnared
+        if (ensnareable.IsEnsnared)
             return false;
 
         Container.Insert(ensnare, ensnareable.Container);
