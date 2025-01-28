@@ -380,7 +380,7 @@ public sealed partial class StationJobsSystem : EntitySystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         /// Logic to update slots for jobs in JobGroups
-        foreach (var (_, group) in stationJobs.JobGroups)
+        foreach (var group in stationJobs.JobGroups.Values)
         {
             if (group.Members.Contains(jobPrototypeId))
             {
