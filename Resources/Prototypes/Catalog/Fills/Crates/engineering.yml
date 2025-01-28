@@ -58,7 +58,7 @@
   id: CrateEngineeringCableMV
   parent: CrateElectrical
   name: MV cable crate
-  description: 3 coils of LV cables.
+  description: 3 coils of MV cables.
   components:
   - type: StorageFill
     contents:
