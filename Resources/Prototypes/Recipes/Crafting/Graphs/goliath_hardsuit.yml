@@ -1,0 +1,15 @@
+﻿- type: constructionGraph
+  id: HardsuitGoliath
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: hardsuitGoliath
+      steps:
+      - entity: ClothingOuterHardsuitSpatio
+        amount: 1
+      - material: MaterialGoliathHide
+        amount: 30
+        doAfter: 10
+  - node: hardsuitGoliath
+    entity: ClothingOuterHardsuitGoliath
