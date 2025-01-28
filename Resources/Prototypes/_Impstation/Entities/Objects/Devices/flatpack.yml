@@ -21,3 +21,21 @@
   components:
   - type: Flatpack
     entity: ChemMaster
+
+- type: entity
+  parent: BaseFlatpack
+  id: BoozeDispenserFlatpack
+  name: booze dispenser flatpack
+  description: A flatpack used for constructing a booze dispenser.
+  components:
+  - type: Flatpack
+    entity: BoozeDispenser
+
+- type: entity
+  parent: BaseFlatpack
+  id: SodaDispenserFlatpack
+  name: soda dispenser flatpack
+  description: A flatpack used for constructing a soda dispenser.
+  components:
+  - type: Flatpack
+    entity: SodaDispenser

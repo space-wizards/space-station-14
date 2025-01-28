@@ -17,3 +17,13 @@
   cost: 5000
   category: cargoproduct-category-name-service
   group: market
+
+- type: cargoProduct
+  id: ServiceBarKit
+  icon:
+    sprite: Structures/smalldispensers.rsi
+    state: booze
+  product: CrateServiceMaintBarKit
+  cost: 4500
+  category: cargoproduct-category-name-service
+  group: market
