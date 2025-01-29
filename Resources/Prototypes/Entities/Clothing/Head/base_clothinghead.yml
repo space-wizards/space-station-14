@@ -260,7 +260,7 @@
     radiatingBehaviourId: radiating
   - type: LightBehaviour
     behaviours:
-      - !type:FadeBehaviour
+    - !type:FadeBehaviour
         id: radiating
         interpolate: Linear
         maxDuration: 2.0
@@ -268,7 +268,7 @@
         endValue: 2.0
         isLooped: true
         reverseWhenFinished: true
-      - !type:PulseBehaviour
+    - !type:PulseBehaviour
         id: blinking
         interpolate: Nearest
         maxDuration: 1.0

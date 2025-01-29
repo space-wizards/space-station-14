@@ -536,20 +536,6 @@
     containers:
       toggleable-clothing: !type:ContainerSlot {}
 
-- type: entity
-  id: ActionToggleParamedicSiren
-  name: Toggle Paramedic Siren
-  description: Toggles the paramedic siren on and off.
-  components:
-  - type: InstantAction 
-    icon:
-      sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
-      state: icon-siren
-    useDelay: 1
-    itemIconStyle: BigAction
-    event: !type:ToggleActionEvent
-
-
 #ANTAG HARDSUITS
 #Blood-red Hardsuit
 - type: entity
