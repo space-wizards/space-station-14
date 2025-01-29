@@ -16,6 +16,7 @@ using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Projectiles;
 
@@ -45,6 +46,10 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
     private void OnEmbedActivate(Entity<EmbeddableProjectileComponent> embeddable, ref ActivateInWorldEvent args)
     {
+        //Unremovable moment
+        if (embeddable.Comp.RemovalTime is null)
+            return;
+
         if (args.Handled || !args.Complex || !TryComp<PhysicsComponent>(embeddable, out var physics) || physics.BodyType != BodyType.Static)
             return;
 
@@ -59,7 +64,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager,
             args.User,
-            embeddable.Comp.RemovalTime,
+            embeddable.Comp.RemovalTime.Value,
             new RemoveEmbeddedProjectileEvent(),
             eventTarget: embeddable,
             target: embeddable));
@@ -122,8 +127,11 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         Dirty(uid, component);
 
         EnsureComp<EmbeddedContainerComponent>(target, out var embeddedContainer);
-        if (!embeddedContainer.EmbeddedObjects.Contains(uid))
-            embeddedContainer.EmbeddedObjects.Add(uid);
+
+        //Assert that this entity not embed
+        DebugTools.AssertEqual(embeddedContainer.EmbeddedObjects.Contains(uid), false);
+
+        embeddedContainer.EmbeddedObjects.Add(uid);
     }
 
     private void OnEmbeddableTermination(Entity<EmbeddedContainerComponent> container, ref EntityTerminatingEvent args)
@@ -159,8 +167,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
         if (embeddable.Comp.EmbeddedIntoUid is not null)
         {
-            EnsureComp<EmbeddedContainerComponent>(embeddable.Comp.EmbeddedIntoUid.Value, out var embeddedContainer);
-            if (embeddedContainer.EmbeddedObjects.Contains(embeddable))
+            if (TryComp<EmbeddedContainerComponent>(embeddable.Comp.EmbeddedIntoUid.Value, out var embeddedContainer))
                 embeddedContainer.EmbeddedObjects.Remove(embeddable);
         }
 
@@ -179,6 +186,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             projectile.DamagedEntity = false;
         }
 
+        Dirty(embeddable);
         _physics.WakeBody(embeddable);
     }
 
@@ -189,7 +197,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             if (!TryComp<EmbeddableProjectileComponent>(embedded, out var embeddedComp))
                 continue;
 
-            EmbedDetach((embedded.Value, embeddedComp));
+            EmbedDetach((embedded, embeddedComp));
         }
     }
 

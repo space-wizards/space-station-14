@@ -27,7 +27,7 @@ public sealed partial class EmbeddableProjectileComponent : Component
     /// How long it takes to remove the embedded object.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float RemovalTime = 3f;
+    public float? RemovalTime = 3f;
 
     /// <summary>
     ///     Whether this entity will embed when thrown, or only when shot as a projectile.
