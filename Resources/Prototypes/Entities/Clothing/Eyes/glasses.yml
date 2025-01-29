@@ -92,7 +92,7 @@
   parent: [ClothingEyesBase, BaseLensSlot] # BaseLensSlot from imp
   id: ClothingEyesGlasses
   name: glasses
-  description: A pair of spectacular spectacles with removable prescription lenses.
+  description: A pair of spectacular spectacles with removable prescription lenses. # imp
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/glasses.rsi

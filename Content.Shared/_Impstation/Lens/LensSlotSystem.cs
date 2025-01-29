@@ -45,11 +45,11 @@ public sealed class LensSlotSystem : EntitySystem
         var msg = new FormattedMessage();
 
         if (itemSlot.Item == null)
-            msg.AddMarkupOrThrow(Loc.GetString("lens-empty"));
+            msg.AddMarkupOrThrow(Loc.GetString("lens-slot-examine-empty"));
         else
         {
             var metadata = MetaData(itemSlot.Item.Value);
-            msg.AddMarkupOrThrow(Loc.GetString("lens-filled") + " [color=white]" + metadata.EntityName + "[/color].");
+            msg.AddMarkupOrThrow(Loc.GetString("lens-slot-examine-filled", ("lens", metadata.EntityName)));
         }
 
         args.PushMessage(msg);
