@@ -117,7 +117,6 @@
   priority: 2
 
 # shuttle build uplink
-
 - type: storeCategory
   id: ShuttleUplinkEquipment
   name: Space equipment
@@ -126,19 +125,37 @@
 - type: storeCategory
   id: ShuttleUplinkResources
   name: Materials
-  priority: 1
+  priority: 3
 
 - type: storeCategory
   id: ShuttleUplinkShipbuilding
   name: Shuttle utilities
-  priority: 2
+  priority: 4
 
 - type: storeCategory
   id: ShuttleUplinkMedicine
   name: Medical utilities
-  priority: 3
+  priority: 6
 
 - type: storeCategory
   id: ShuttleUplinkExtra
   name: Extra
-  priority: 4
+  priority: 7
+
+# menacing shuttle build uplink
+- type: storeCategory
+  id: MenacingShuttleUplinkEquipment
+  name: Syndicate equipment
+  priority: 1
+
+- type: storeCategory
+  id: MenacingShuttleUplinkWeapons
+  name: Weaponry
+  priority: 2
+
+- type: storeCategory
+  id: MenacingShuttleUplinkPirate
+  name: Pirate
+  priority: 5
+
+

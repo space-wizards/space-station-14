@@ -1,5 +1,5 @@
 - type: entity
-  id: StorePresetShuttleBuilder
+  id: MenacingStorePresetShuttleBuilder
   abstract: true
   components:
   - type: Store
@@ -10,6 +10,9 @@
     - ShuttleUplinkMedicine
     - ShuttleUplinkShipbuilding
     - ShuttleUplinkExtra
+    - MenacingShuttleUplinkEquipment
+    - MenacingShuttleUplinkWeapons
+    - MenacingShuttleUplinkPirate
     currencyWhitelist:
     - BuildToken
     balance:
@@ -17,9 +20,9 @@
 
 # Debug uplink 2000 coins
 - type: entity
-  parent: [ BaseItem, StorePresetShuttleBuilder ]
-  id: ShuttleBuilderUplink
-  name: Shuttle building uplink
+  parent: [ BaseItem, MenacingStorePresetShuttleBuilder ]
+  id: MenacingShuttleBuilderUplink
+  name: Menacing shuttle building uplink
   description: Debug uplink for shuttle building
   suffix: Debug
   components:
@@ -41,9 +44,9 @@
       BuildToken: 2000
 
 - type: entity
-  parent: [ BaseItem, StorePresetShuttleBuilder ]
-  id: ShuttleBuilderUplink0
-  name: Shuttle building uplink
+  parent: [ BaseItem, MenacingStorePresetShuttleBuilder ]
+  id: MenacingShuttleBuilderUplink0
+  name: Menacing shuttle building uplink
   description: Debug uplink for shuttle building
   suffix: 0
   components:
