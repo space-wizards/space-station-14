@@ -1,3 +1,4 @@
+using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cargo.BUI;
@@ -10,13 +11,15 @@ public sealed class CargoConsoleInterfaceState : BoundUserInterfaceState
     public int Capacity;
     public int Balance;
     public List<CargoOrderData> Orders;
+    public HashSet<CargoRestrictedData> RestrictedOrders;
 
-    public CargoConsoleInterfaceState(string name, int count, int capacity, int balance, List<CargoOrderData> orders)
+    public CargoConsoleInterfaceState(string name, int count, int capacity, int balance, List<CargoOrderData> orders, HashSet<CargoRestrictedData> restrictedOrders)
     {
         Name = name;
         Count = count;
         Capacity = capacity;
         Balance = balance;
         Orders = orders;
+        RestrictedOrders = restrictedOrders;
     }
 }

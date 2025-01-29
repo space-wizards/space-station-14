@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
 using Content.Server.Station.Components;
@@ -41,6 +42,7 @@ namespace Content.Server.Cargo.Systems
             SubscribeLocalEvent<CargoOrderConsoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<CargoOrderConsoleComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<CargoOrderConsoleComponent, BankBalanceUpdatedEvent>(OnOrderBalanceUpdated);
+            SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleRestrictProductMessage>(OnRestrictProductMessage);
             Reset();
         }
 
@@ -171,6 +173,17 @@ namespace Content.Server.Cargo.Systems
                 ConsolePopup(args.Actor, Loc.GetString("cargo-console-insufficient-funds", ("cost", cost)));
                 PlayDenySound(uid, component);
                 return;
+            }
+
+            // Order is restricted
+            if (orderDatabase.RestrictedOrders.Contains(new CargoRestrictedData(order.ProductId)))
+            {
+                if (!_accessReaderSystem.IsAllowed(player, uid, accessList: 0))
+                {
+                    ConsolePopup(args.Actor, Loc.GetString("cargo-console-restricted-order"));
+                    PlayDenySound(uid, component);
+                    return;
+                }
             }
 
             var ev = new FulfillCargoOrderEvent((station.Value, stationData), order, (uid, component));
@@ -311,6 +324,40 @@ namespace Content.Server.Cargo.Systems
 
         }
 
+        private void OnRestrictProductMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleRestrictProductMessage args)
+        {
+            if (args.Actor is not { Valid: true } player)
+                return;
+
+            var stationUid = _station.GetOwningStation(uid);
+
+            if (!_accessReaderSystem.IsAllowed(player, uid, accessList:0))
+            {
+                ConsolePopup(args.Actor, Loc.GetString("cargo-console-order-not-allowed"));
+                PlayDenySound(uid, component);
+                UpdateOrderState(uid, stationUid);
+                return;
+            }
+
+            if (!TryGetOrderDatabase(stationUid, out var orderDatabase))
+                return;
+
+            if (orderDatabase.RestrictedOrders.Contains(new CargoRestrictedData(args.Product)))
+            {
+                orderDatabase.RestrictedOrders.Remove(new CargoRestrictedData(args.Product));
+            }
+            else
+            {
+                orderDatabase.RestrictedOrders.Add(new CargoRestrictedData(args.Product));
+            }
+
+            UpdateOrderState(uid, stationUid);
+
+
+            // args.Product.Resticted = !args.Product.Resticted;
+
+        }
+
         private void OnOrderUIOpened(EntityUid uid, CargoOrderConsoleComponent component, BoundUIOpenedEvent args)
         {
             var station = _station.GetOwningStation(uid);
@@ -341,7 +388,8 @@ namespace Content.Server.Cargo.Systems
                     GetOutstandingOrderCount(orderDatabase),
                     orderDatabase.Capacity,
                     bankAccount.Balance,
-                    orderDatabase.Orders
+                    orderDatabase.Orders,
+                    orderDatabase.RestrictedOrders
                 ));
             }
         }

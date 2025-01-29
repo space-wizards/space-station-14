@@ -88,6 +88,7 @@ namespace Content.Client.Cargo.BUI
             };
             _menu.OnOrderApproved += ApproveOrder;
             _menu.OnOrderCanceled += RemoveOrder;
+            _menu.OnOrderRestricted += RestrictOrder;
             _orderMenu.SubmitButton.OnPressed += (_) =>
             {
                 if (AddOrder())
@@ -121,6 +122,7 @@ namespace Content.Client.Cargo.BUI
 
             AccountName = cState.Name;
 
+            _menu?.UpdateRestrictedData(cState.RestrictedOrders);
             Populate(cState.Orders);
             _menu?.UpdateCargoCapacity(OrderCount, OrderCapacity);
             _menu?.UpdateBankData(AccountName, BankBalance);
@@ -172,6 +174,14 @@ namespace Content.Client.Cargo.BUI
             SendMessage(new CargoConsoleApproveOrderMessage(row.Order.OrderId));
             // Most of the UI isn't predicted anyway so.
             // _menu?.UpdateCargoCapacity(OrderCount + row.Order.Amount, OrderCapacity);
+        }
+
+        private void RestrictOrder(ButtonEventArgs args)
+        {
+            if (args.Button.Parent!.Parent!.Parent is not CargoProductRow row || row.Product is null)
+                return;
+
+            SendMessage(new CargoConsoleRestrictProductMessage(row.Product.ID));
         }
     }
 }

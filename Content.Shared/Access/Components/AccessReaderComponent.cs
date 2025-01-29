@@ -34,6 +34,9 @@ public sealed partial class AccessReaderComponent : Component
     [DataField("access")] [ViewVariables(VVAccess.ReadWrite)]
     public List<HashSet<ProtoId<AccessLevelPrototype>>> AccessLists = new();
 
+    [DataField("additionalAccess")] [ViewVariables(VVAccess.ReadWrite)]
+    public List<List<HashSet<ProtoId<AccessLevelPrototype>>>> AdditionalAccessLists = new();
+
     /// <summary>
     /// A list of <see cref="StationRecordKey"/>s that grant access. Only a single matching key is required to gain
     /// access.
@@ -100,17 +103,20 @@ public sealed class AccessReaderComponentState : ComponentState
 
     public List<HashSet<ProtoId<AccessLevelPrototype>>> AccessLists;
 
+    public List<List<HashSet<ProtoId<AccessLevelPrototype>>>> AdditionalAccessLists;
+
     public List<(NetEntity, uint)> AccessKeys;
 
     public Queue<AccessRecord> AccessLog;
 
     public int AccessLogLimit;
 
-    public AccessReaderComponentState(bool enabled, HashSet<ProtoId<AccessLevelPrototype>> denyTags, List<HashSet<ProtoId<AccessLevelPrototype>>> accessLists, List<(NetEntity, uint)> accessKeys, Queue<AccessRecord> accessLog, int accessLogLimit)
+    public AccessReaderComponentState(bool enabled, HashSet<ProtoId<AccessLevelPrototype>> denyTags, List<HashSet<ProtoId<AccessLevelPrototype>>> accessLists, List<List<HashSet<ProtoId<AccessLevelPrototype>>>> additionalAccessLists, List<(NetEntity, uint)> accessKeys, Queue<AccessRecord> accessLog, int accessLogLimit)
     {
         Enabled = enabled;
         DenyTags = denyTags;
         AccessLists = accessLists;
+        AdditionalAccessLists = additionalAccessLists;
         AccessKeys = accessKeys;
         AccessLog = accessLog;
         AccessLogLimit = accessLogLimit;

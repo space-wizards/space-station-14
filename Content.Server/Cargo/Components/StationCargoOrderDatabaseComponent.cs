@@ -22,6 +22,9 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("orders")]
     public List<CargoOrderData> Orders = new();
 
+    [ViewVariables(VVAccess.ReadWrite), DataField("restricted")]
+    public HashSet<CargoRestrictedData> RestrictedOrders = new();
+
     /// <summary>
     /// Used to determine unique order IDs
     /// </summary>
