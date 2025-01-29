@@ -15,7 +15,6 @@ public sealed partial class ExplosionReactionEffect : EntityEffect
     ///     The type of explosion. Determines damage types and tile break chance scaling.
     /// </summary>
     [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<ExplosionPrototype>))]
-    [JsonIgnore]
     public string ExplosionType = default!;
 
     /// <summary>
@@ -23,14 +22,12 @@ public sealed partial class ExplosionReactionEffect : EntityEffect
     ///     chance.
     /// </summary>
     [DataField]
-    [JsonIgnore]
     public float MaxIntensity = 5;
 
     /// <summary>
     ///     How quickly intensity drops off as you move away from the epicenter
     /// </summary>
     [DataField]
-    [JsonIgnore]
     public float IntensitySlope = 1;
 
     /// <summary>
@@ -41,14 +38,12 @@ public sealed partial class ExplosionReactionEffect : EntityEffect
     ///     A slope of 1 and MaxTotalIntensity of 100 corresponds to a radius of around 4.5 tiles.
     /// </remarks>
     [DataField]
-    [JsonIgnore]
     public float MaxTotalIntensity = 100;
 
     /// <summary>
     ///     The intensity of the explosion per unit reaction.
     /// </summary>
     [DataField]
-    [JsonIgnore]
     public float IntensityPerUnit = 1;
 	
     /// <summary>
@@ -56,7 +51,6 @@ public sealed partial class ExplosionReactionEffect : EntityEffect
     ///     explosives that don't space tiles, without having to create a new explosion-type prototype.
     /// </summary>
     [DataField]
-    [JsonIgnore]
     public float TileBreakScale = 1f;
 
     public override bool ShouldLog => true;
