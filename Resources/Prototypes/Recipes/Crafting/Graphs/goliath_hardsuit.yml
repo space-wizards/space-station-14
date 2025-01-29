@@ -6,10 +6,14 @@
     edges:
     - to: hardsuitGoliath
       steps:
-      - entity: ClothingOuterHardsuitSpatio
-        amount: 1
-      - material: MaterialGoliathHide
-        amount: 30
+      - tag: HardsuitSpatio
+        icon:
+          sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
+          state: icon
+        name: spationaut hardsuit
+        doAfter: 10
+      - material: GoliathHide
+        amount: 12
         doAfter: 10
   - node: hardsuitGoliath
     entity: ClothingOuterHardsuitGoliath
