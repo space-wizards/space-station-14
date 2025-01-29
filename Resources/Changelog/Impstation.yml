@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Xeno and Barratry are now part of the map rotation.
-    type: Tweak
-  id: 516
-  time: '2024-11-15T13:15:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/700
 - author: kipdotnet
   changes:
   - message: Security tickets now taste bad.
@@ -4336,3 +4329,10 @@
   id: 1015
   time: '2025-01-28T21:46:12.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1510
+- author: kipdotnet
+  changes:
+  - message: Tck'tck's now have a multitool and salvage access.
+    type: Tweak
+  id: 1016
+  time: '2025-01-29T19:39:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1514
