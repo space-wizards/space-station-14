@@ -251,5 +251,5 @@
   objectType: Item
   description: A lightweight hardsuit, adorned with a patchwork of thick, chitinous goliath hide.
   icon:
-    sprite: Objects/Storage/petcarrier.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/goliath.rsi
     state: icon
