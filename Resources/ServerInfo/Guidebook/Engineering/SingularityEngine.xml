@@ -1,0 +1,108 @@
+﻿<Document>
+  # Singularity Engine
+  The Singularity Engine is a powerful generator that uses a contained singularity to produce energy for the station.
+
+  <Box>
+    <GuideEntityEmbed Entity="SingularityGenerator"/>
+    <GuideEntityEmbed Entity="Singularity"/>
+  </Box>
+
+  It generates power by collecting the radiation emitted by the singularity using Radiation Collectors and gaseous plasma.
+
+  ## Starting the Singularity Engine
+  To start the Singularity Engine, engineers must follow these steps:
+  - Place the Singularity Generator in the middle of the containment field. Some stations start with the generator already in place, while others require engineers to bring it from cold storage.
+  - Turn on the four Containment Field Generators.
+  - Turn on and lock the Emitters.
+  - Confirm that the Containment Field Generators have created a Containment Field around the Singularity.
+  - Turn on the Radiation Collectors. These require plasma to produce power. They might not come fueled, so be sure to refill them.
+  - Construct the Particle Accelerator.
+  - Turn on the Particle Accelerator Control Computer and set the power level to the desired power level.
+
+  Once these steps are complete, the Singularity Engine will start producing power for the station.
+  Be sure to monitor the singularity's power level and containment field to prevent it from escaping and destroying the station.
+  Check in to refill the collectors often, as they will run out of plasma over time.
+
+  ## Containment Field
+  To prevent the singularity from escaping and destroying the station, engineers must contain it within a Containment Field.
+
+  It is suggested to use a max size containment field for the singularity. Any smaller and the singularity may outgrow its field and escape.
+
+  Containment pylons should be arranged in a square, with 7 tiles of spacing between each pylon.
+
+  <Box>
+    <GuideEntityEmbed Entity="ContainmentFieldGenerator" Caption=""/>
+    <GuideEntityEmbed Entity="ContainmentField" Caption="" Rotation="90"/>
+    <GuideEntityEmbed Entity="ContainmentFieldGenerator" Caption=""/>
+  </Box>
+
+  ## Power Levels and Decay
+  Because singularities emit radiation, they decay, losing power over time.
+
+  To counter this decay, the Particle Accelerator emits particles that collide with the singularity, feeding and sustaining it.
+
+  Singularities have defined power levels, which determine their radiation output.
+  Engineers can increase or decrease the singularity's power level by adjusting the power level on the Particle Accelerator Control Computer.
+
+  Particle Accelerators normally operate between power levels 1 and 3, which translate to a power level of 1 to 3 on the singularity.
+
+  Power levels also determine how big the singularity is, with higher power levels sustaining larger singularities capable of producing more power.
+
+  ## Producing Power
+  The Singularity Engine produces power by capturing the radiation emitted by it using Radiation Collectors.
+  <Box>
+    <GuideEntityEmbed Entity="RadiationCollector"/>
+    <GuideEntityEmbed Entity="PlasmaTank"/>
+  </Box>
+  They require gaseous plasma to function. The plasma containers attached to the collectors must be filled with plasma to produce power.
+
+  You can turn on the collectors by interacting with them using [color=yellow][bold][keybind="Use"][/bold][/color].
+
+  You can also eject the tank by interacting with the collector using [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
+  From here, you can refill the tank with plasma using a plasma canister and reinsert it into the collector.
+
+  The maximum power the radiation collector can produce is determined by:
+  - The amount of radiation it is capturing (which is effectively the Singularity's power level),
+  - and the amount of plasma it has in its connected tank.
+
+  Over time, the collector will drain the tank of plasma, which reduces it's effective power output.
+  Eventually, the tank will be empty, and the collector will stop producing power. Be sure to refill the tank often!
+
+  ## Radiation Protection
+  The singularity emits a massive amount of radiation, which can kill crew members who are not wearing proper protection.
+  Be sure to wear a radiation suit or an engineering hardsuit when working near the singularity.
+  This won't completely negate the radiation, but it will reduce the damage you take.
+
+  <Box>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitEngineering"/>
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="ClosetRadiationSuit"/>
+    <GuideEntityEmbed Entity="ClothingOuterSuitRad"/>
+    <GuideEntityEmbed Entity="GeigerCounter"/>
+  </Box>
+
+  The Chief Engineer has a special hardsuit that negates all radiation damage, which allows them to work near the singularity without fear of accumulating radiation damage over time.
+
+  ## Singularity Properties
+  The Singularity has several properties, which both make it dangerous and useful for power generation:
+  - It has a strong gravitational pull that can suck in objects and crew members.
+  - It has an event horizon, which can permanently destroy any object that touches it, whether it be a crew member or station equipment. Any object swallowed by the singularity is lost forever, and feeds the singularity.
+  - It constantly emits radiation that can harm crew members who aren't wearing proper protection.
+  - The singularity can decay over time, losing power and radiation output.
+
+  ## Loosed Singularity (Singuloose)
+  If the singularity escapes its containment field, it will begin to consume the station, destroying everything in its path.
+  The more it consumes, the larger it grows, making it harder to potentially contain it again.
+
+  The singularity can be destroyed by firing antiparticles at it using a Portable Particle Decelerator, but this is a risky and dangerous operation that requires careful planning and execution.
+  Often multiple decelerators firing at once are needed to destroy a singularity.
+
+  Portable Particle Decelerators can be either researched and made by the Research Department, or they can be bought from Cargo.
+
+  <Box>
+    <GuideEntityEmbed Entity="WeaponParticleDecelerator"/>
+  </Box>
+
+</Document>

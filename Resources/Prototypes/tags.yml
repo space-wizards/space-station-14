@@ -444,6 +444,9 @@
   id: Debug
 
 - type: Tag
+  id: Diagonal
+
+- type: Tag
   id: Dice
 
 - type: Tag
