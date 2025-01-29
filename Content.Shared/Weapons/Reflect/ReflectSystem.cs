@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Shared._Starlight.Weapon;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Audio;

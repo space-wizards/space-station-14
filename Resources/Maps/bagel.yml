@@ -111904,7 +111904,7 @@ entities:
     - type: Transform
       pos: 4.5,-44.5
       parent: 60
-- proto: MagazineLightRifle
+- proto: MagazineLightRifleSP
   entities:
   - uid: 11282
     components:

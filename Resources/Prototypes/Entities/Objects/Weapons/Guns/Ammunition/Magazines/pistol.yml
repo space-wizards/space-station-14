@@ -107,7 +107,7 @@
       - MagazinePistolSubMachineGunTopMounted
   - type: BallisticAmmoProvider
     mayTransfer: true
-    proto: CartridgePistol
+    proto: CartridgePistolSP
     whitelist:
       tags:
       - CartridgePistol
@@ -136,19 +136,7 @@
   - type: BallisticAmmoProvider
     proto: null
 
-- type: entity
-  id: MagazinePistol
-  name: pistol magazine (.35 auto)
-  parent: BaseMagazinePistol
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistol
-  - type: Sprite
-    layers:
-    - state: red
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
+#########################################################
 
 - type: entity
   id: MagazinePistolEmpty
@@ -163,6 +151,76 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
 
+- type: entity
+  id: MagazinePistolSP
+  name: pistol magazine (.35 auto SP)
+  parent: BaseMagazinePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolSP
+  - type: Sprite
+    layers:
+    - state: sp
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+      
+- type: entity
+  id: MagazinePistolSP
+  name: pistol magazine (.35 auto SP)
+  parent: BaseMagazinePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolSP
+  - type: Sprite
+    layers:
+    - state: sp
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+            
+- type: entity
+  id: MagazinePistolHP
+  name: pistol magazine (.35 auto HP)
+  parent: BaseMagazinePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolHP
+  - type: Sprite
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+            
+- type: entity
+  id: MagazinePistolFMJ
+  name: pistol magazine (.35 auto FMJ)
+  parent: BaseMagazinePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolFMJ
+  - type: Sprite
+    layers:
+    - state: fmj
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+            
+- type: entity
+  id: MagazinePistolAP
+  name: pistol magazine (.35 auto AP)
+  parent: BaseMagazinePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolAP
+  - type: Sprite
+    layers:
+    - state: ap
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
 
 - type: entity
   id: MagazinePistolIncendiary
@@ -171,6 +229,12 @@
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolIncendiary
+  - type: Sprite
+    layers:
+    - state: incendiary
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazinePistolPractice
@@ -200,6 +264,8 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
 
+##########################################################
+
 - type: entity
   id: MagazinePistolHighCapacityEmpty
   name: machine pistol magazine (.35 auto any)
@@ -214,15 +280,57 @@
       map: ["enum.GunVisualLayers.Base"]
 
 - type: entity
-  id: MagazinePistolHighCapacity
-  name: machine pistol magazine (.35 auto)
+  id: MagazinePistolHighCapacitySP
+  name: machine pistol magazine (.35 auto SP)
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgePistol
+    proto: CartridgePistolSP
+  - type: Sprite
+    layers:
+    - state: sp
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistolHighCapacityHP
+  name: machine pistol magazine (.35 auto HP)
+  parent: BaseMagazinePistolHighCapacity
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolHP
   - type: Sprite
     layers:
     - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+      
+- type: entity
+  id: MagazinePistolHighCapacityFMJ
+  name: machine pistol magazine (.35 auto FMJ)
+  parent: BaseMagazinePistolHighCapacity
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolFMJ
+  - type: Sprite
+    layers:
+    - state: fmj
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+      
+- type: entity
+  id: MagazinePistolHighCapacityAP
+  name: machine pistol magazine (.35 auto AP)
+  parent: BaseMagazinePistolHighCapacity
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolAP
+  - type: Sprite
+    layers:
+    - state: ap
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
@@ -233,7 +341,7 @@
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgePistol
+    proto: CartridgePistolPractice
   - type: Sprite
     layers:
     - state: practice
@@ -247,13 +355,15 @@
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgePistol
+    proto: CartridgePistolRubber
   - type: Sprite
     layers:
     - state: rubber
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+
+##########################################################
 
 - type: entity
   id: MagazinePistolSubMachineGun

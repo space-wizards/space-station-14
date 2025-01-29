@@ -207,11 +207,15 @@
       - BoxLethalshot
       - BoxShotgunSlug
       - CombatKnife
-      - MagazineBoxLightRifle
+      - MagazineBoxLightRifleSP
+      - MagazineBoxLightRifleHP
+      - MagazineBoxLightRifleFMJ
       - MagazineBoxMagnum
       - MagazineBoxPistol
       - MagazineBoxRifle
-      - MagazineLightRifle
+      - MagazineLightRifleSP
+      - MagazineLightRifleHP
+      - MagazineLightRifleFMJ
       - MagazineLightRifleEmpty
       - MagazinePistol
       - MagazinePistolEmpty
@@ -219,7 +223,9 @@
       - MagazinePistolSubMachineGunEmpty
       - MagazinePistolSubMachineGunTopMounted
       - MagazinePistolSubMachineGunTopMountedEmpty
-      - MagazineRifle
+      - MagazineRifleSP
+      - MagazineRifleHP
+      - MagazineRifleFMJ
       - MagazineRifleEmpty
       - MagazineShotgun
       - MagazineShotgunEmpty
@@ -384,19 +390,23 @@
       - HoloprojectorSecurity
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
+      - MagazineBoxLightRifleAP
       - MagazineBoxMagnumIncendiary
       - MagazineBoxMagnumUranium
       - MagazineBoxPistolIncendiary
       - MagazineBoxPistolUranium
       - MagazineBoxRifleIncendiary
       - MagazineBoxRifleUranium
+      - MagazineBoxRifleAP
       - MagazineGrenadeEmpty
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
+      - MagazineLightRifleAP
       - MagazinePistolIncendiary
       - MagazinePistolUranium
       - MagazineRifleIncendiary
       - MagazineRifleUranium
+      - MagazineRifleAP
       - MagazineShotgunBeanbag
       - MagazineShotgunIncendiary
       - MagazineShotgunIncendiary
@@ -778,7 +788,9 @@
       - Flash
       - ForensicPad
       - Handcuffs
-      - MagazineBoxLightRifle
+      - MagazineBoxLightRifleSP
+      - MagazineBoxLightRifleHP
+      - MagazineBoxLightRifleFMJ
       - MagazineBoxLightRiflePractice
       - MagazineBoxMagnum
       - MagazineBoxMagnumPractice
@@ -786,7 +798,9 @@
       - MagazineBoxPistolPractice
       - MagazineBoxRifle
       - MagazineBoxRiflePractice
-      - MagazineLightRifle
+      - MagazineLightRifleSP
+      - MagazineLightRifleHP
+      - MagazineLightRifleFMJ
       - MagazineLightRifleEmpty
       - MagazinePistol
       - MagazinePistolEmpty
@@ -794,7 +808,9 @@
       - MagazinePistolSubMachineGunEmpty
       - MagazinePistolSubMachineGunTopMounted
       - MagazinePistolSubMachineGunTopMountedEmpty
-      - MagazineRifle
+      - MagazineRifleSP
+      - MagazineRifleHP
+      - MagazineRifleFMJ
       - MagazineRifleEmpty
       - MagazineShotgun
       - MagazineShotgunEmpty
@@ -824,19 +840,23 @@
       - HoloprojectorSecurity
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
+      - MagazineBoxLightRifleAP
       - MagazineBoxMagnumIncendiary
       - MagazineBoxMagnumUranium
       - MagazineBoxPistolIncendiary
       - MagazineBoxPistolUranium
       - MagazineBoxRifleIncendiary
       - MagazineBoxRifleUranium
+      - MagazineBoxRifleAP
       - MagazineGrenadeEmpty
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
+      - MagazineLightRifleAP
       - MagazinePistolIncendiary
       - MagazinePistolUranium
       - MagazineRifleIncendiary
       - MagazineRifleUranium
+      - MagazineRifleAP
       - MagazineShotgunBeanbag
       - MagazineShotgunIncendiary
       - PortableRecharger
@@ -905,15 +925,21 @@
         - BoxLethalshot
         - BoxShotgunSlug
         - BoxShellTranquilizer
-        - MagazineBoxLightRifle
+        - MagazineBoxLightRifleSP
+        - MagazineBoxLightRifleHP
+        - MagazineBoxLightRifleFMJ
         - MagazineBoxMagnum
         - MagazineBoxPistol
         - MagazineBoxRifle
-        - MagazineLightRifle
+        - MagazineLightRifleSP
+        - MagazineLightRifleHP
+        - MagazineLightRifleFMJ
         - MagazineLightRifleEmpty
         - MagazinePistol
         - MagazinePistolEmpty
-        - MagazineRifle
+        - MagazineRifleSP
+        - MagazineRifleHP
+        - MagazineRifleFMJ
         - MagazineRifleEmpty
         - MagazineShotgun
         - MagazineShotgunEmpty

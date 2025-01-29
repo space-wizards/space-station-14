@@ -35,7 +35,7 @@
     proto: CartridgeLightRifle
     whitelist:
       tags:
-      - CartridgeLightRifle
+      - CartridgeLightRifleSP
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container

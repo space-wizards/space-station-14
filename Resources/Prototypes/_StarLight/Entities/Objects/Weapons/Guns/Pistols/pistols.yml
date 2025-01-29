@@ -31,7 +31,7 @@
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
-        startingItem: CartridgePistol
+        startingItem: CartridgePistolSP
         priority: 1
         whitelist:
           tags:

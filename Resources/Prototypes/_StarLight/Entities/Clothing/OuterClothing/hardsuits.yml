@@ -14,6 +14,8 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:

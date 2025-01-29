@@ -100903,7 +100903,7 @@ entities:
     - type: Transform
       pos: 33.4726,-21.429783
       parent: 2
-- proto: MagazineLightRifle
+- proto: MagazineLightRifleFMJ
   entities:
   - uid: 14631
     components:

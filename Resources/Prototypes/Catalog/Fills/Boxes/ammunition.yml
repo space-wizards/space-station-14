@@ -42,9 +42,15 @@
   components:
   - type: StorageFill
     contents:
-      - id: MagazineLightRifle
-        amount: 4
-
+      - id: MagazineLightRifleSP
+        amount: 1
+      - id: MagazineLightRifleHP
+        amount: 1
+      - id: MagazineLightRifleFMJ
+        amount: 1
+      - id: MagazineLightRifleAP
+        amount: 1
+        
 - type: entity
   name: box of .30 rifle (practice) magazines
   parent: BoxMagazine
@@ -205,14 +211,20 @@
 - type: entity
   name: box of .20 rifle magazines
   parent: BoxMagazine
-  id: BoxMagazineRifle
+  id: BoxMagazineRifleSP
   description: A box full of .20 rifle magazines.
   components:
   - type: StorageFill
     contents:
-      - id: MagazineRifle
-        amount: 4
-
+      - id: MagazineRifleFMJ
+        amount: 2
+      - id: MagazineRifleSP
+        amount: 1
+      - id: MagazineRifleHP
+        amount: 1
+      - id: MagazineRifleAP
+        amount: 1
+        
 - type: entity
   name: box of .20 rifle (practice) magazines
   parent: BoxMagazine

@@ -29,6 +29,7 @@ research-technology-excavation = Mass Excavation
 research-technology-salvage-weapons = Salvage Weapons
 research-technology-draconic-munitions = Draconic Munitions
 research-technology-uranium-munitions = Uranium Munitions
+research-technology-armor-penetration = Armor penetration
 research-technology-explosive-technology = Explosive Technology
 research-technology-special-means = Special Means
 research-technology-weaponized-laser-manipulation = Weaponized Laser Manipulation

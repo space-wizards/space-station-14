@@ -514,7 +514,7 @@
   id: UplinkMosinAmmo
   name: uplink-mosin-ammo-name
   description: uplink-mosin-ammo-desc
-  productEntity: MagazineBoxLightRifle
+  productEntity: MagazineBoxLightRifleFMJ
   cost:
     Telecrystal: 1
   categories:

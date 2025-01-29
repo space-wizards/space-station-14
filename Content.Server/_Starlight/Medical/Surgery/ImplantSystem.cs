@@ -3,8 +3,6 @@ using Content.Shared.Starlight.Medical.Surgery.Steps.Parts;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Starlight.Medical.Surgery;
-// Based on the RMC14.
-// https://github.com/RMC-14/RMC-14
 public sealed partial class ImplantSystem : EntitySystem
 {
     [Dependency] private readonly IComponentFactory _compFactory = default!;

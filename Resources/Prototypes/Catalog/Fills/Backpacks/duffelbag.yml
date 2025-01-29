@@ -82,7 +82,7 @@
   - type: StorageFill
     contents:
       - id: WeaponLightMachineGunL6
-      - id: MagazineLightRifleBox
+      - id: MagazineLightRifleBoxSP
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -107,7 +107,7 @@
   - type: StorageFill
     contents:
       - id: WeaponRifleM90GrenadeLauncher
-      - id: MagazineRifle
+      - id: MagazineRifleFMJ
         amount: 2
       - id: GrenadeBlast
         amount: 2
@@ -120,7 +120,7 @@
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateAmmoFilled
   name: ammo bundle
-  description: "Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 2 ammo boxes for the L6 SAW."
+  description: "Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 3 ammo boxes for the L6 SAW."
   components:
   - type: StorageFill
     contents:
@@ -128,8 +128,12 @@
         amount: 4
       - id: MagazineShotgun
         amount: 4
-      - id: MagazineLightRifleBox
-        amount: 2
+      - id: MagazineLightRifleBoxSP
+        amount: 1
+      - id: MagazineLightRifleBoxHP
+        amount: 1
+      - id: MagazineLightRifleBoxFMJ
+        amount: 1
 
 - type: entity
   parent: ClothingBackpackDuffelClown

@@ -4781,7 +4781,7 @@ entities:
     - type: Transform
       pos: 28.5,18.5
       parent: 1
-- proto: CartridgeLightRifle
+- proto: CartridgeLightRifleSP
   entities:
   - uid: 77
     components:
@@ -6466,7 +6466,7 @@ entities:
     - type: Transform
       pos: 7.5,21.5
       parent: 1
-- proto: MagazineBoxLightRifle
+- proto: MagazineBoxLightRifleSP
   entities:
   - uid: 948
     components:

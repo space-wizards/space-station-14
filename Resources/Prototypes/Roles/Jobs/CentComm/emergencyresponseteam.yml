@@ -75,8 +75,8 @@
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityFilled
-    pocket1: MagazineRifle
-    pocket2: MagazineRifle
+    pocket1: MagazineRifleAP
+    pocket2: MagazineRifleIncendiary
   inhand:
   - WeaponRifleLecter
   storage:
@@ -319,8 +319,8 @@
     id: ERTSecurityPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityFilled
-    pocket1: MagazineRifle
-    pocket2: MagazineRifle
+    pocket1: MagazineRifleAP
+    pocket2: MagazineRifleIncendiary
   inhand:
     - WeaponRifleLecter
   storage:

@@ -14,6 +14,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
   - type: ExplosionResistance
     damageCoefficient: 0.9
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -49,6 +51,8 @@
     reduction: 0.8
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -80,6 +84,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -110,6 +116,8 @@
   - type: PressureProtection
     highPressureMultiplier: 0.7
     lowPressureMultiplier: 1000
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -141,6 +149,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.3
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -172,6 +182,8 @@
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -228,6 +240,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.4
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -258,6 +272,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.4
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -288,6 +304,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.4
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -318,6 +336,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -352,6 +372,8 @@
     reduction: 0.8
   - type: ExplosionResistance
     damageCoefficient: 0.2
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -382,6 +404,8 @@
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -407,6 +431,8 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
+  - type: Pierceable
+    level: Rock
   - type: Armor
     modifiers:
       coefficients:
@@ -453,6 +479,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.6
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -508,6 +536,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -542,6 +572,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -604,6 +636,8 @@
     damageCoefficient: 0.2
   - type: FireProtection
     reduction: 0.8
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -640,6 +674,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -674,6 +710,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.3
+  - type: Pierceable
+    level: Rock
   - type: Armor
     modifiers:
       coefficients:
@@ -708,6 +746,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  - type: Pierceable
+    level: Rock
   - type: Armor
     modifiers:
       coefficients:
@@ -740,6 +780,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.2
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -769,6 +811,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
   - type: ExplosionResistance
     damageCoefficient: 0.7
+  - type: Pierceable
+    level: Wood
   - type: Armor
     modifiers:
       coefficients:
@@ -802,6 +846,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.6
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -929,6 +975,8 @@
     damageCoefficient: 0.2
   - type: FireProtection
     reduction: 0.8
+  - type: Pierceable
+    level: Rock
   - type: Armor
     modifiers:
       coefficients:
@@ -966,6 +1014,8 @@
     coolingCoefficient: 0.001
   - type: ExplosionResistance
     damageCoefficient: 0.7
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -1002,6 +1052,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.9
+  - type: Pierceable
+    level: Wood
   - type: Armor
     modifiers:
       coefficients:
@@ -1054,6 +1106,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.85
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -1087,6 +1141,8 @@
     coolingCoefficient: 0.01
   - type: ExplosionResistance
     damageCoefficient: 0.2
+  - type: Pierceable
+    level: Flesh
   - type: Armor
     modifiers:
       coefficients:

@@ -183,8 +183,10 @@
     contents:
     - id: WeaponRifleLecter
       amount: 2
-    - id: MagazineRifle
-      amount: 4
+    - id: MagazineRifleHP
+      amount: 3
+    - id: MagazineRifleSP
+      amount: 3
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseRestrictedContraband]

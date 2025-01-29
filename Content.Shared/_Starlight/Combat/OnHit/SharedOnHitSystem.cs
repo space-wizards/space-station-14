@@ -18,7 +18,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
-namespace Content.Shared.Starlight.OnHit;
+namespace Content.Shared._Starlight.Combat.OnHit;
 
 public abstract class SharedOnHitSystem : EntitySystem
 {
@@ -83,11 +83,11 @@ public abstract class SharedOnHitSystem : EntitySystem
             if (_solutionContainers.TryGetInjectableSolution(target, out var targetSoln, out var targetSolution))
             {
                 var solution = new Solution(ent.Comp.Reagents);
-                
+
                 foreach (var reagent in ent.Comp.Reagents)
                     if (ent.Comp.ReagentLimit != null && _solutionContainers.GetTotalPrototypeQuantity(target, reagent.Reagent.ToString()) >= FixedPoint2.New(ent.Comp.ReagentLimit.Value))
                         return;
-                
+
                 _reactiveSystem.DoEntityReaction(target, solution, ReactionMethod.Injection);
                 _solutionContainers.TryAddSolution(targetSoln.Value, solution);
                 _color.RaiseEffect(Color.FromHex("#0000FF"), new List<EntityUid>(1) { target }, Filter.Pvs(target, entityManager: EntityManager));
