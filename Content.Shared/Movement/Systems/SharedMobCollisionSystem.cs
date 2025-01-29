@@ -65,7 +65,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
                 continue;
 
             comp.BufferAccumulator -= frameTime;
-            Dirty(uid, comp);
+            DirtyField(uid, comp, nameof(MobCollisionComponent.BufferAccumulator));
 
             if (comp.BufferAccumulator <= 0f)
             {
@@ -90,14 +90,14 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         if (value)
         {
             entity.Comp.BufferAccumulator = BufferTime;
-            Dirty(entity);
+            DirtyField(entity.Owner, entity.Comp, nameof(MobCollisionComponent.BufferAccumulator));
         }
 
         if (entity.Comp.Colliding == value)
             return;
 
         entity.Comp.Colliding = value;
-        Dirty(entity);
+        DirtyField(entity.Owner, entity.Comp, nameof(MobCollisionComponent.Colliding));
         _moveMod.RefreshMovementSpeedModifiers(entity.Owner);
     }
 
