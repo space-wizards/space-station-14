@@ -1,5 +1,6 @@
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Guidebook;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
@@ -51,4 +52,7 @@ public sealed partial class GasCanisterComponent : Component, IGasMixtureHolder
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool ReleaseValve = false;
+
+    [GuidebookData]
+    public float Volume => Air.Volume;
 }

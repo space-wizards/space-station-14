@@ -45,6 +45,11 @@ public abstract class SharedGasCanisterSystem : EntitySystem
         _appearance.SetData(uid, GasCanisterVisuals.TankInserted, args is EntInsertedIntoContainerMessage);
     }
 
+    private static string GetContainedGasesString(Entity<GasCanisterComponent> canister)
+    {
+        return string.Join(", ", canister.Comp.Air);
+    }
+
     private void OnHoldingTankEjectMessage(EntityUid uid, GasCanisterComponent canister, GasCanisterHoldingTankEjectMessage args)
     {
         if (canister.GasTankSlot.Item == null)
@@ -52,7 +57,15 @@ public abstract class SharedGasCanisterSystem : EntitySystem
 
         var item = canister.GasTankSlot.Item;
         _slots.TryEjectToHands(uid, canister.GasTankSlot, args.Actor, excludeUserAudio: true);
-        AdminLogger.Add(LogType.CanisterTankEjected, LogImpact.Medium, $"Player {ToPrettyString(args.Actor):player} ejected tank {ToPrettyString(item):tank} from {ToPrettyString(uid):canister}");
+
+        if (canister.ReleaseValve)
+        {
+            AdminLogger.Add(LogType.CanisterTankEjected, LogImpact.High, $"Player {ToPrettyString(args.Actor):player} ejected tank {ToPrettyString(item):tank} from {ToPrettyString(uid):canister} while the valve was open, releasing [{GetContainedGasesString((uid, canister))}] to atmosphere");
+        }
+        else
+        {
+            AdminLogger.Add(LogType.CanisterTankEjected, LogImpact.Medium, $"Player {ToPrettyString(args.Actor):player} ejected tank {ToPrettyString(item):tank} from {ToPrettyString(uid):canister}");
+        }
 
         if (UI.TryGetUiState<GasCanisterBoundUserInterfaceState>(uid, GasCanisterUiKey.Key, out var lastState))
         {

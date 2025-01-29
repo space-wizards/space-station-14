@@ -68,11 +68,6 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
             new GasCanisterBoundUserInterfaceState(canister.Air.Pressure, portStatus, tankPressure));
     }
 
-    private static string GetContainedGasesString(Entity<GasCanisterComponent> canister)
-    {
-        return string.Join(", ", canister.Comp.Air);
-    }
-
     private void OnCanisterUpdated(EntityUid uid, GasCanisterComponent canister, ref AtmosDeviceUpdateEvent args)
     {
         _atmos.React(canister.Air, canister);
