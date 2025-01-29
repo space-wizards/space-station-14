@@ -24,6 +24,14 @@
   equipment:
     head: ClothingHeadBandBrown
 
+- type: loadout
+  id: SeniorTechnicianBeretHarmony
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorTechnician
+  equipment:
+    head: ClothingHeadHatBeretSeniorTechnicianHarmony
+
 # Jumpsuits
 - type: loadout
   id: CargoOfficeSlacksJumpsuitHarmony
