@@ -52,9 +52,10 @@
   name: Fireball III
   description: The fastest fireball in the west!
   components:
+    - type: LimitedCharges
+    - type: AutoRecharge
+      rechargeDuration: 8
     - type: WorldTargetAction
-      useDelay: 8
-      renewCharges: true
       itemIconStyle: BigAction
       checkCanAccess: false
       raiseOnUser: true
