@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Fixed some powered machines working when unpowered if the panel is open.
-    type: Fix
-  id: 7367
-  time: '2024-09-13T23:58:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32135
-- author: qwerltaz
-  changes:
-  - message: The RCD can now place grilles and windows under shutters and cables under
-      doors.
-    type: Fix
-  id: 7368
-  time: '2024-09-14T01:53:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32102
-- author: SlamBamActionman
-  changes:
-  - message: Briefcases can now be used as melee weapons.
-    type: Add
-  id: 7369
-  time: '2024-09-14T13:09:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32063
 - author: Just_Art
   changes:
   - message: Added a head gauze to customization.
@@ -3883,3 +3861,30 @@
   id: 7866
   time: '2025-01-29T10:11:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34713
+- author: yuitop
+  changes:
+  - message: Sentient medibots can now properly inject.
+    type: Tweak
+  id: 7867
+  time: '2025-01-29T10:34:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32110
+- author: jamessimo
+  changes:
+  - message: Criminal Records computer got enhanced UX & UI.
+    type: Tweak
+  - message: Criminal Records computer can now filter its list against crew criminal
+      status.
+    type: Tweak
+  - message: Criminal Records computer will now announce the suspects Job next to
+      their name.
+    type: Tweak
+  id: 7868
+  time: '2025-01-29T10:34:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32352
+- author: Starbuckss14
+  changes:
+  - message: New borg names
+    type: Add
+  id: 7869
+  time: '2025-01-29T10:35:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32502
