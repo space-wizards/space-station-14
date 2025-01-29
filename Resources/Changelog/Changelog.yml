@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dezzzix
-  changes:
-  - message: Now you can wear a hood in void cloak
-    type: Add
-  id: 7366
-  time: '2024-09-13T15:02:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31061
 - author: PJB3005
   changes:
   - message: Fixed some powered machines working when unpowered if the panel is open.
@@ -3883,3 +3876,10 @@
   id: 7865
   time: '2025-01-29T09:04:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34734
+- author: themias
+  changes:
+  - message: Fixed precision attack animation for thrust weapons
+    type: Fix
+  id: 7866
+  time: '2025-01-29T10:11:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34713
