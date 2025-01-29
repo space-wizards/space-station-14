@@ -183,6 +183,19 @@ public class RadialMenu : BaseWindow
         return result;
     }
 
+    public bool TryToMoveToNewLayer(string targetLayerControlName)
+    {
+        foreach (var child in Children)
+        {
+            if (child.Name == targetLayerControlName && child is RadialContainer)
+            {
+                return TryToMoveToNewLayer(child);
+            }
+        }
+
+        return false;
+    }
+
     public void ReturnToPreviousLayer()
     {
         // Close the menu if the traversal path is empty
@@ -298,6 +311,12 @@ public class RadialMenuTextureButton : RadialMenuTextureButtonBase
     public Control? TargetLayer { get; set; }
 
     /// <summary>
+    /// Other way to set navigation to other container, as <see cref="TargetLayer"/>,
+    /// but using <see cref="Control.Name"/> property of target <see cref="RadialContainer"/>.
+    /// </summary>
+    public string? TargetLayerControlName { get; set; }
+
+    /// <summary>
     /// A simple texture button that can move the user to a different layer within a radial menu
     /// </summary>
     public RadialMenuTextureButton()
@@ -308,7 +327,7 @@ public class RadialMenuTextureButton : RadialMenuTextureButtonBase
 
     private void OnClicked(ButtonEventArgs args)
     {
-        if (TargetLayer == null)
+        if (TargetLayer == null && TargetLayerControlName == null)
             return;
 
         var parent = FindParentMultiLayerContainer(this);
@@ -316,7 +335,14 @@ public class RadialMenuTextureButton : RadialMenuTextureButtonBase
         if (parent == null)
             return;
 
-        parent.TryToMoveToNewLayer(TargetLayer);
+        if (TargetLayer != null)
+        {
+            parent.TryToMoveToNewLayer(TargetLayer);
+        }
+        else
+        {
+            parent.TryToMoveToNewLayer(TargetLayerControlName!);
+        }
     }
 
     private RadialMenu? FindParentMultiLayerContainer(Control control)

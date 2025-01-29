@@ -25,7 +25,7 @@ public partial class SimpleRadialMenu : RadialMenu
         // no-op
     }
 
-    public SimpleRadialMenu(IEnumerable<RadialMenuOption> models, EntityUid? attachMenuToEntity = null, int initialContainerRadius = 100)
+    public SimpleRadialMenu(IEnumerable<RadialMenuOption> models, EntityUid? attachMenuToEntity = null, SimpleRadialMenuSettings? settings = null)
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
@@ -33,21 +33,21 @@ public partial class SimpleRadialMenu : RadialMenu
         _attachMenuToEntity = attachMenuToEntity;
         var sprites = _entManager.System<SpriteSystem>();
 
-        Fill(models, sprites, Children, initialContainerRadius);
+        Fill(models, sprites, Children, settings ?? new SimpleRadialMenuSettings());
     }
 
     private void Fill(
         IEnumerable<RadialMenuOption> models,
         SpriteSystem sprites,
         ICollection<Control> rootControlChildren,
-        int initialContainerRadius
+        SimpleRadialMenuSettings settings
     )
     {
         var rootContainer = new RadialContainer
         {
             HorizontalExpand = true,
             VerticalExpand = true,
-            InitialRadius = initialContainerRadius,
+            InitialRadius = settings.DefaultContainerRadius,
             ReserveSpaceForHiddenChildren = false,
             Visible = true
         };
@@ -57,22 +57,23 @@ public partial class SimpleRadialMenu : RadialMenu
         {
             if (model is RadialMenuNestedLayerOption nestedMenuModel)
             {
-                var linkButton = RecursiveContainerExtraction(sprites, rootControlChildren, nestedMenuModel);
+                var linkButton = RecursiveContainerExtraction(sprites, rootControlChildren, nestedMenuModel, settings);
                 linkButton.Visible = true;
                 rootContainer.AddChild(linkButton);
             }
             else
             {
-                var rootButtons = ConvertToButton(model, sprites, false);
+                var rootButtons = ConvertToButton(model, sprites, settings, false);
                 rootContainer.AddChild(rootButtons);
             }
         }
     }
 
-    private RadialMenuTextureButtonWithSector RecursiveContainerExtraction(
+    private RadialMenuTextureButton RecursiveContainerExtraction(
         SpriteSystem sprites,
         ICollection<Control> rootControlChildren,
-        RadialMenuNestedLayerOption model
+        RadialMenuNestedLayerOption model,
+        SimpleRadialMenuSettings settings
     )
     {
         var container = new RadialContainer
@@ -87,36 +88,50 @@ public partial class SimpleRadialMenu : RadialMenu
         {
             if (nested is RadialMenuNestedLayerOption nestedMenuModel)
             {
-                var linkButton = RecursiveContainerExtraction(sprites, rootControlChildren, nestedMenuModel);
+                var linkButton = RecursiveContainerExtraction(sprites, rootControlChildren, nestedMenuModel, settings);
                 container.AddChild(linkButton);
             }
             else
             {
-                var button = ConvertToButton(nested, sprites, false);
+                var button = ConvertToButton(nested, sprites, settings, false);
                 container.AddChild(button);
             }
         }
         rootControlChildren.Add(container);
 
-        var thisLayerLinkButton = ConvertToButton(model, sprites, true);
+        var thisLayerLinkButton = ConvertToButton(model, sprites, settings, true);
         thisLayerLinkButton.TargetLayer = container;
         return thisLayerLinkButton;
     }
 
-    private RadialMenuTextureButtonWithSector ConvertToButton(
+    private RadialMenuTextureButton ConvertToButton(
         RadialMenuOption model,
         SpriteSystem sprites,
+        SimpleRadialMenuSettings settings,
         bool haveNested
     )
     {
-        var button = new RadialMenuTextureButtonWithSector
-        {
-            SetSize = new Vector2(64f, 64f),
-            ToolTip = model.ToolTip,
-        };
+        var button = settings.DisplaySectors
+            ? new RadialMenuTextureButtonWithSector
+            {
+                DrawSeparators = settings.DisplaySeparators,
+                DrawBackground = !settings.NoBackground
+            }
+            : new RadialMenuTextureButton();
+        button.SetSize = new Vector2(64f, 64f);
+        button.ToolTip = model.ToolTip;
         if (model.Sprite != null)
         {
-            button.TextureNormal = sprites.Frame0(model.Sprite);
+            var scale = Vector2.One;
+
+            var texture = sprites.Frame0(model.Sprite);
+            if (texture.Width <= 32)
+            {
+                scale *= 2;
+            }
+
+            button.TextureNormal = texture;
+            button.Scale = scale;
         }
 
         if (model is RadialMenuActionOption actionOption)
@@ -124,7 +139,7 @@ public partial class SimpleRadialMenu : RadialMenu
             button.OnPressed += _ =>
             {
                 actionOption.OnPressed?.Invoke();
-                if (!haveNested)
+                if(!haveNested)
                     Close();
             };
         }
@@ -174,10 +189,9 @@ public partial class SimpleRadialMenu : RadialMenu
 
 public abstract class RadialMenuOption
 {
-    public string? ToolTip;
+    public string? ToolTip { get; init; }
     
     public SpriteSpecifier? Sprite { get; init; }
-
 }
 
 public class RadialMenuActionOption(Action onPressed) : RadialMenuOption
@@ -188,15 +202,19 @@ public class RadialMenuActionOption(Action onPressed) : RadialMenuOption
 public class RadialMenuActionOption<T>(Action<T> onPressed, T data)
     : RadialMenuActionOption(onPressed: () => onPressed(data));
 
-public class RadialMenuNestedLayerOption : RadialMenuOption
+public class RadialMenuNestedLayerOption(IReadOnlyCollection<RadialMenuOption> nested, float containerRadius = 100)
+    : RadialMenuOption
 {
-    public RadialMenuNestedLayerOption(IReadOnlyCollection<RadialMenuOption> nested, float containerRadius = 100)
-    {
-        Nested = nested;
-        ContainerRadius = 100;
-    }
+    public float? ContainerRadius { get; } = containerRadius;
 
-    public float? ContainerRadius { get; }
-
-    public IReadOnlyCollection<RadialMenuOption> Nested { get; }
+    public IReadOnlyCollection<RadialMenuOption> Nested { get; } = nested;
 }
+
+public class SimpleRadialMenuSettings
+{
+    public int DefaultContainerRadius = 100;
+    public bool DisplaySectors = true;
+    public bool DisplaySeparators = true;
+    public bool NoBackground = false;
+}
+
