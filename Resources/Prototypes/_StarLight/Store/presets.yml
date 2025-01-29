@@ -1,0 +1,36 @@
+- type: entity
+  id: StorePresetShuttleBuilder
+  abstract: true
+  components:
+  - type: Store
+    name: store-preset-name-uplink
+    categories:
+    - ShuttleUplinkEquipment
+    - ShuttleUplinkResources
+    - ShuttleUplinkMedicine
+    - ShuttleUplinkShipbuilding
+    - ShuttleUplinkExtra
+    currencyWhitelist:
+    - BuildToken
+    balance:
+      BuildToken: 0
+
+- type: entity
+  id: StorePresetShuttleBuilderDangerous
+  abstract: true
+  components:
+  - type: Store
+    name: store-preset-name-uplink
+    categories:
+    - ShuttleUplinkEquipment
+    - ShuttleUplinkResources
+    - ShuttleUplinkMedicine
+    - ShuttleUplinkShipbuilding
+    - ShuttleUplinkExtra
+    - MenacingShuttleUplinkEquipment
+    - MenacingShuttleUplinkWeapons
+    - MenacingShuttleUplinkPirate
+    currencyWhitelist:
+    - BuildToken
+    balance:
+      BuildToken: 0

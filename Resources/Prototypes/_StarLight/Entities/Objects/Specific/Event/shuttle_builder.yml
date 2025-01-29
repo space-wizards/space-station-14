@@ -1,20 +1,3 @@
-- type: entity
-  id: StorePresetShuttleBuilder
-  abstract: true
-  components:
-  - type: Store
-    name: store-preset-name-uplink
-    categories:
-    - ShuttleUplinkEquipment
-    - ShuttleUplinkResources
-    - ShuttleUplinkMedicine
-    - ShuttleUplinkShipbuilding
-    - ShuttleUplinkExtra
-    currencyWhitelist:
-    - BuildToken
-    balance:
-      BuildToken: 0
-
 # Debug uplink 2000 coins
 - type: entity
   parent: [ BaseItem, StorePresetShuttleBuilder ]
