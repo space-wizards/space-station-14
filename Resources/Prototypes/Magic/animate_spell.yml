@@ -65,6 +65,8 @@
           - !type:PlaySoundBehavior
             sound:
               collection: MetalBreak
+      - type: Hands
+      - type: CanEscapeInventory
       removeComponents:
       - RequireProjectileTarget
       speech: action-speech-spell-animate
