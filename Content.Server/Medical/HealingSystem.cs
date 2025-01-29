@@ -74,7 +74,7 @@ public sealed class HealingSystem : EntitySystem
             {
                 var popup = (args.User == entity.Owner)
                     ? Loc.GetString("medical-item-stop-bleeding-self")
-                    : Loc.GetString("medical-item-stop-bleeding", ("target", entity.Owner));
+                    : Loc.GetString("medical-item-stop-bleeding", ("target", Identity.Entity(entity.Owner, EntityManager)));
                 _popupSystem.PopupEntity(popup, entity, args.User);
             }
         }
