@@ -4,6 +4,7 @@ using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
@@ -34,6 +35,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
+        SubscribeLocalEvent<EmbeddableProjectileComponent, PreventCollideEvent>(PreventCollision);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileHitEvent>(OnEmbedProjectileHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
@@ -135,11 +137,24 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         Dirty(uid, component);
     }
 
+    //Stop collision when the thing being collided with the projectile is either the shooter or the weapon
     private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
     {
         if (component.IgnoreShooter && (args.OtherEntity == component.Shooter || args.OtherEntity == component.Weapon))
         {
             args.Cancelled = true;
+        }
+    }
+
+    //Stops collision when the thing being collided with is dead/crit and the projectile has IgnoredDowned = True
+    private void PreventCollision(EntityUid uid, EmbeddableProjectileComponent component, ref PreventCollideEvent args)
+    {
+        if (component.IgnoreDowned && TryComp<MobStateComponent>(args.OtherEntity, out var mob))
+        {
+            if (!(mob.CurrentState == MobState.Alive))
+            {
+                args.Cancelled = true;
+            }
         }
     }
 

@@ -52,4 +52,10 @@ public sealed partial class EmbeddableProjectileComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? EmbeddedIntoUid;
+
+    /// <summary>
+    /// Whether this entity will ignore Corpses/Crit People when thrown
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool IgnoreDowned = true;
 }

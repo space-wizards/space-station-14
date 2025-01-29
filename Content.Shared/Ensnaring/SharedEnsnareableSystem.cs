@@ -9,6 +9,8 @@ using Content.Shared.DoAfter;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.StepTrigger.Systems;
@@ -255,6 +257,15 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         //Don't do anything if they don't have the ensnareable component.
         if (!TryComp<EnsnareableComponent>(target, out var ensnareable))
             return false;
+
+        //Don't do anything if the ensnaring weapon encounters someone who is dead/crit and the weapon is set to ignore dead/crit people
+        if (TryComp<EnsnaringComponent>(ensnare, out var ensnaringComponent) && ensnaringComponent.IgnoreDowned)
+        {
+            if (TryComp<MobStateComponent>(target, out var mob) && !(mob.CurrentState == MobState.Alive))
+            {
+                return false;
+            }
+        }
 
         //Don't do anything if they are already ensnared
         if (ensnareable.IsEnsnared)

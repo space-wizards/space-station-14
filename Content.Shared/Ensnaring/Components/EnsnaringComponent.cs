@@ -58,6 +58,12 @@ public sealed partial class EnsnaringComponent : Component
 
     [DataField]
     public SoundSpecifier? EnsnareSound = new SoundPathSpecifier("/Audio/Effects/snap.ogg");
+
+    /// <summary>
+    /// Whether this entity will ignore Corpses/Crit People when thrown
+    /// </summary>
+    [DataField]
+    public bool IgnoreDowned = true;
 }
 
 /// <summary>
