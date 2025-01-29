@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Extradimensional orange, holymelon, meatwheat and world peas plant mutations
-      have been added. Obtain them by mutating oranges, watermelons, wheat and laughin'
-      peas respectively.
-    type: Add
-  id: 7364
-  time: '2024-09-13T14:02:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27624
 - author: ShadowCommander
   changes:
   - message: Fixed PDA sometimes showing uplink and music buttons when the PDA was
@@ -3885,3 +3876,10 @@
   id: 7863
   time: '2025-01-28T18:55:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34693
+- author: Emisse
+  changes:
+  - message: Drozd sprites have been updated.
+    type: Tweak
+  id: 7864
+  time: '2025-01-29T08:41:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34574
