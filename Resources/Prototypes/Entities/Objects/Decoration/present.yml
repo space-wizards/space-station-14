@@ -242,8 +242,6 @@
         orGroup: GiftPool
       - id: Spear
         orGroup: GiftPool
-      - id: LidSalami
-        orGroup: GiftPool
       - id: Soap
         orGroup: GiftPool
       - id: SoapHomemade

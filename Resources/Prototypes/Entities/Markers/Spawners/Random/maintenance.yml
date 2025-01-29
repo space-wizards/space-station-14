@@ -291,8 +291,6 @@
       - id: PetCarrier
       - id: DrinkMopwataBottleRandom
       - id: SpectralLocator
-      - id: LidSalami
-        weight: 0.05
 
 - type: entity
   name: Maint Loot Spawner

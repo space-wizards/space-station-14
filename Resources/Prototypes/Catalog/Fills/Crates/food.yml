@@ -9,8 +9,6 @@
     - id: FoodBoxPizzaFilled
       amount: 3
     - id: FoodBoxPizzaCotton
-    - id: LidSalami
-      prob: 0.01
 
 - type: entity
   id: CrateFoodPizzaLarge
@@ -23,8 +21,6 @@
     - id: FoodBoxPizzaFilled
       amount: 15
     - id: FoodBoxPizzaCotton
-    - id: LidSalami
-      prob: 0.04
 
 - type: entity
   id: CrateFoodMRE
