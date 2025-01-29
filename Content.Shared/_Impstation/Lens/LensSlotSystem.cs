@@ -16,8 +16,6 @@ namespace Content.Shared.Lens;
 /// </summary>
 public sealed class LensSlotSystem : EntitySystem
 {
-    /// TODO If this system is expanded outside of <see cref="BlurryVisionSystem"/>, then
-    /// the equipped events should find <see cref="VisionCorrectionComponent"/> before calling UpdateBlur.
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly BlurryVisionSystem _Blurry = default!;
 
@@ -37,24 +35,20 @@ public sealed class LensSlotSystem : EntitySystem
         SubscribeLocalEvent<LensSlotComponent, InventoryRelayedEvent<GetBlurEvent>>(OnGetBlurLens);
     }
 
-    private void OnExamine(EntityUid glasses, LensSlotComponent component, ref ExaminedEvent args)
+    private void OnExamine(Entity<LensSlotComponent> glasses, ref ExaminedEvent args)
     {
-        if (!_itemSlots.TryGetSlot(glasses, component.LensSlotId, out var itemSlot))
-            return;
-
         var msg = new FormattedMessage();
 
-        if (itemSlot.Item == null)
-            msg.AddMarkupOrThrow(Loc.GetString("lens-slot-examine-empty"));
+        if (TryGetLens(glasses, out var lens))
+            msg.AddMarkupOrThrow(Loc.GetString("lens-slot-examine-filled", ("lens", MetaData(lens.Value).EntityName)));
         else
-        {
-            var metadata = MetaData(itemSlot.Item.Value);
-            msg.AddMarkupOrThrow(Loc.GetString("lens-slot-examine-filled", ("lens", metadata.EntityName)));
-        }
+            msg.AddMarkupOrThrow(Loc.GetString("lens-slot-examine-empty"));
 
         args.PushMessage(msg);
     }
 
+    /// TODO If this system is expanded outside of <see cref="BlurryVisionSystem"/>, then
+    /// the equipped events should find <see cref="VisionCorrectionComponent"/> before calling UpdateBlur.
     private void OnGlassesEquipped(Entity<LensSlotComponent> glasses, ref GotEquippedEvent args)
     {
         if (!TryGetLens(glasses, out var lens))
@@ -111,7 +105,7 @@ public sealed class LensSlotSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Attempt to get the lens from the lens slot.
+    ///     Attempt to get the lens from the lens slot. Returns true if a lens is found.
     /// </summary>
     private bool TryGetLens(Entity<LensSlotComponent> glasses, [NotNullWhen(true)] out EntityUid? lens)
     {
