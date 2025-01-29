@@ -161,15 +161,17 @@ namespace Content.IntegrationTests.Tests
                 // testing that maps have nothing with the "DO NOT MAP" suffix
                 // I do it here because it's basically copy-paste code for the most part
                 var yamlEntities = root["entities"];
+                if (!protoManager.TryIndex<EntityCategoryPrototype>("DoNotMap", out var dnmCategory))
+                    return;
                 foreach (var yamlEntity in (YamlSequenceNode)yamlEntities)
                 {
                     var protoId = yamlEntity["proto"].AsString();
                     protoManager.TryIndex(protoId, out var proto, false);
                     if (proto is null || proto.EditorSuffix is null)
                         continue;
-                    if (proto.EditorSuffix.ToUpper().Contains("DO NOT MAP") && !DoNotMapWhitelist.Contains(map.ToString()))
+                    if (proto.Categories.Contains(dnmCategory) && !DoNotMapWhitelist.Contains(map.ToString()))
                     {
-                        Assert.Fail($"\nMap {map} has the DO NOT MAP prototype {proto}");
+                        Assert.Fail($"\nMap {map} has the DO NOT MAP prototype {proto.Name}");
                     }
                 }
             }

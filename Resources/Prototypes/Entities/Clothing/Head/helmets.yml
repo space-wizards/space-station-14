@@ -137,7 +137,7 @@
   id: ClothingHeadHelmetJanitorBombSuit
   name: janitorial bombsuit helmet
   description: A heavy helmet designed to withstand explosions formed from reactions between chemicals.
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/janitor_bombsuit.rsi

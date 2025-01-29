@@ -1,6 +1,6 @@
 - type: entity
   name: handheld crew monitor
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   parent: [ BaseHandheldComputer, BaseGrandTheftContraband ]
   # CMO-only bud, don't add more.
   id: HandheldCrewMonitor
