@@ -2803,4 +2803,11 @@ Entries:
   id: 391
   time: '2025-01-29T18:22:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/269
+- author: Neccer
+  changes:
+  - message: Shuttle building uplink for events.
+    type: Add
+  id: 392
+  time: '2025-01-29T18:52:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/270
 
