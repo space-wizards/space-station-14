@@ -392,14 +392,14 @@
     JuiceThatMakesYouHew:
       amount: 1
   effects:
-    - !type:ExplosionReactionEffect
+  - !type:ExplosionReactionEffect
       explosionType: Default
       maxIntensity: 100
       intensityPerUnit: 1
       intensitySlope: 1
       maxTotalIntensity: 125
       tileBreakScale: 0.00001
-    - !type:ExplosionReactionEffect
+  - !type:ExplosionReactionEffect
       explosionType: Radioactive
       maxIntensity: 100
       intensityPerUnit: 1
