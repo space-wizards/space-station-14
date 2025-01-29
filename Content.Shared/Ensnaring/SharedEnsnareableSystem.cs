@@ -262,13 +262,10 @@ public abstract class SharedEnsnareableSystem : EntitySystem
 
         Container.Insert(ensnare, ensnareable.Container);
 
-        // Apply stamina damage to target if they weren't ensnared before.
-        if (ensnareable.IsEnsnared != true)
+        // Apply stamina damage to target
+        if (TryComp<StaminaComponent>(target, out var stamina))
         {
-            if (TryComp<StaminaComponent>(target, out var stamina))
-            {
-                _stamina.TakeStaminaDamage(target, component.StaminaDamage, with: ensnare, component: stamina);
-            }
+            _stamina.TakeStaminaDamage(target, component.StaminaDamage, with: ensnare, component: stamina);
         }
 
         component.Ensnared = target;
