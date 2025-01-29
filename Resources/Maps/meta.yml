@@ -6929,7 +6929,8 @@ entities:
             0: 52425
             1: 256
           -3,9:
-            0: 56797
+            0: 56789
+            2: 8
           -3,10:
             0: 56605
           -3,11:
@@ -6940,9 +6941,11 @@ entities:
           -2,9:
             0: 63351
           -2,10:
-            0: 30471
+            0: 30465
+            2: 6
           -2,11:
-            0: 1919
+            0: 895
+            8: 1024
           -2,12:
             1: 207
             0: 61696
@@ -8910,8 +8913,8 @@ entities:
           id: docking31405
           localAnchorB: 0.49999997,0
           localAnchorA: -62.5,39
-          damping: 77.55181
-          stiffness: 696.10345
+          damping: 77.5519
+          stiffness: 696.1043
   - uid: 28213
     components:
     - type: MetaData
@@ -14724,7 +14727,7 @@ entities:
       pos: -29.5,15.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -251447.56
+      secondsUntilStateChange: -251705.48
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14988,7 +14991,7 @@ entities:
       pos: -4.5,53.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -106101.32
+      secondsUntilStateChange: -106359.234
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -23273,13 +23276,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-  - uid: 15118
-    components:
-    - type: Transform
-      parent: 11588
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: BoxLightbulb
   entities:
   - uid: 3949
@@ -28603,6 +28599,11 @@ entities:
     components:
     - type: Transform
       pos: 9.5,47.5
+      parent: 5350
+  - uid: 7730
+    components:
+    - type: Transform
+      pos: -50.5,2.5
       parent: 5350
   - uid: 7731
     components:
@@ -67968,16 +67969,6 @@ entities:
     - type: Transform
       pos: -9.711378,40.37811
       parent: 5350
-  - uid: 4742
-    components:
-    - type: Transform
-      pos: -9.711378,40.326027
-      parent: 5350
-  - uid: 6511
-    components:
-    - type: Transform
-      pos: -9.711378,40.451027
-      parent: 5350
   - uid: 6778
     components:
     - type: Transform
@@ -84136,7 +84127,7 @@ entities:
       pos: 31.5,-33.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -28940.357
+      secondsUntilStateChange: -29198.273
       state: Closing
   - uid: 9615
     components:
@@ -128315,46 +128306,18 @@ entities:
       parent: 5350
 - proto: GunSafeDisabler
   entities:
-  - uid: 7730
-    components:
-    - type: MetaData
-      desc: Safe containing non-lethal disabler pistols.
-    - type: Transform
-      anchored: True
-      pos: -8.5,46.5
-      parent: 5350
-    - type: Physics
-      bodyType: Static
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-        - 1.7459903
-        - 6.568249
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-- proto: GunSafePistolMk58
-  entities:
   - uid: 6369
     components:
-    - type: MetaData
-      desc: Safe containing 4 Mk58 pistols.
     - type: Transform
-      anchored: True
+      pos: -8.5,46.5
+      parent: 5350
+- proto: GunSafePistolMk58
+  entities:
+  - uid: 6511
+    components:
+    - type: Transform
       pos: -9.5,46.5
       parent: 5350
-    - type: Physics
-      bodyType: Static
 - proto: GunSafeRifleLecter
   entities:
   - uid: 22966
@@ -128373,8 +128336,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.7459903
-        - 6.568249
+        - 1.8856695
+        - 7.0937095
         - 0
         - 0
         - 0
@@ -128391,9 +128354,9 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 28208
-          - 28446
           - 28209
+          - 28446
+          - 28208
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -128416,8 +128379,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.7459903
-        - 6.568249
+        - 1.8856695
+        - 7.0937095
         - 0
         - 0
         - 0
@@ -128434,10 +128397,8 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 3056
-          - 15205
-          - 15118
           - 3634
+          - 3056
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -128460,8 +128421,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.7459903
-        - 6.568249
+        - 1.8856695
+        - 7.0937095
         - 0
         - 0
         - 0
@@ -128478,9 +128439,9 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 28207
-          - 21468
           - 14878
+          - 21468
+          - 28207
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -130027,6 +129988,11 @@ entities:
       parent: 5350
 - proto: JetpackSecurityFilled
   entities:
+  - uid: 4742
+    components:
+    - type: Transform
+      pos: -9.58875,44.44667
+      parent: 5350
   - uid: 7291
     components:
     - type: Transform
@@ -153575,8 +153541,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.8856695
-        - 7.0937095
+        - 1.8968438
+        - 7.1357465
         - 0
         - 0
         - 0
@@ -153593,8 +153559,8 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 14110
           - 7539
+          - 14110
 - proto: SuitStorageWarden
   entities:
   - uid: 6687
@@ -179549,13 +179515,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-  - uid: 15205
-    components:
-    - type: Transform
-      parent: 11588
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: WeaponSubMachineGunDrozd
   entities:
   - uid: 28207
@@ -184877,7 +184836,7 @@ entities:
       pos: -28.5,-5.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -34652.26
+      secondsUntilStateChange: -34910.18
       state: Opening
   - uid: 17570
     components:
