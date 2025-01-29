@@ -59,7 +59,6 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
             var prototypes = _prototypeManager.EnumeratePrototypes<EmotePrototype>();
             var models = ConvertToButtons(prototypes);
 
-
             _menu = new SimpleRadialMenu(models);
             _menu.Open();
             _menu.OnClose += OnWindowClosed;
