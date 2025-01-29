@@ -12,6 +12,7 @@
     - CableMVStackLingering10
     - CableApcStackLingering10
     - trayScanner
+    - Multitool
     - MicroDrill
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
