@@ -13,7 +13,7 @@ public sealed partial class RadioImplantComponent : Component
     /// The radio channel(s) to grant access to.
     /// </summary>
     [DataField(required: true)]
-    public List<ProtoId<RadioChannelPrototype>> RadioChannels = new();
+    public HashSet<ProtoId<RadioChannelPrototype>> RadioChannels = new();
 
     /// <summary>
     /// The radio channels that have been added by the implant to a user's ActiveRadioComponent.
