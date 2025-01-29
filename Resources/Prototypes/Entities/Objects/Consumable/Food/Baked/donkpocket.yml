@@ -433,7 +433,3 @@
           Quantity: 5
         - ReagentId: Omnizine
           Quantity: 2
-  - type: Tag
-    tags:
-    - ClothMade
-    - DonkPocket
