@@ -1,37 +1,24 @@
 - type: entity
-  id: KitchenMicrowave
+  id: KitchenOven
   parent: [ BaseMachinePowered, SmallConstructibleMachine ]
-  name: microwave
-  description: It's magic.
+  name: Oven
+  description: It's magic, but more powerful!
   components:
   - type: Microwave
-    capacity: 10
+    capacity: 20
+    maxCookTime: 60
+  - type: MicrowaveButtons
+    numberOfButtons: 12
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.MicrowaveVisualState.Bloody:
-        bloody:
-          True: { visible: true }
-          False: { visible: false }
-        bloodyunshaded:
-          True: { visible: true }
-          False: { visible: false }
       enum.PowerDeviceVisuals.VisualState:
         enum.MicrowaveVisualizerLayers.Base:
-          Idle: { state: "mw" }
-          Broken: { state: "mwb" }
-          Cooking: { state: "mw" }
+          Idle: { state: "oven_off" }
+          Cooking: { state: "oven_on" }
         enum.MicrowaveVisualizerLayers.BaseUnlit:
-          Idle: { state: "mw_unlit" }
-          Broken: { state: "mw_unlit" }
-          Cooking: { state: "mw_running_unlit" }
-        bloodyunshaded:
-          Idle: { visible: false }
-          Broken: { visible: false }
-      enum.PowerDeviceVisuals.Powered:
-        enum.MicrowaveVisualizerLayers.BaseUnlit:
-          True: { visible: true }
-          False: { visible: false }
+          Idle: { state: "oven_lights" }
+          Cooking: { state: "oven_lights" }
   - type: ActivatableUI
     key: enum.MicrowaveUiKey.Key
   - type: DeviceLinkSink
@@ -59,27 +46,20 @@
         layer:
         - TabletopMachineLayer
   - type: Sprite
-    sprite: Structures/Machines/microwave.rsi
+    sprite: Structures/Machines/oven.rsi
     drawdepth: SmallObjects
     snapCardinals: true
     layers:
-    - state: mw0
+    - state: oven_off
       map: ["enum.MicrowaveVisualizerLayers.Base"]
-    - state: mw_unlit
+    - state: oven_lights
       shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
-    - state: mwbloody0
-      map: ["bloody"]
-      visible: false
-    - state: mwbloody1
-      shader: unshaded
-      map: ["bloodyunshaded"]
-      visible: false
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 200
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
@@ -106,25 +86,3 @@
     guides:
     - Chef
     - FoodRecipes
-
-- type: entity
-  id: SyndicateMicrowave
-  parent: KitchenMicrowave
-  name: donk co. microwave
-  description: So advanced, it can cook donk-pockets in a mere 2.5 seconds!
-  components:
-  - type: Microwave
-    cookTimeMultiplier: 0.5
-    capacity: 10
-    canMicrowaveIdsSafely: false
-    explosionChance: 0.3
-  - type: Sprite
-    sprite: Structures/Machines/microwave_syndie.rsi
-    drawdepth: SmallObjects
-    snapCardinals: true
-  - type: Machine
-    board: SyndicateMicrowaveMachineCircuitboard
-  - type: FoodRecipeProvider
-    providedRecipes:
-    - RecipeBaguetteSword
-    - RecipeThrowingCroissant
