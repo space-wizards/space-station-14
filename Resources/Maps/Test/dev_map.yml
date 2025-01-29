@@ -10384,7 +10384,7 @@ entities:
       parent: 1
     - type: MapText
       fontSize: 14
-      text: Polygon
+      text: Weapons
     - type: PointLight
       energy: 5
       color: '#FF0000FF'
@@ -10671,7 +10671,7 @@ entities:
   - uid: 76
     components:
     - type: MetaData
-      name: to polygon
+      name: to weapons
     - type: Transform
       pos: 33.5,24.5
       parent: 1
@@ -12933,6 +12933,62 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: SurveillanceCameraGeneral
+  entities:
+  - uid: 2674
+    components:
+    - type: Transform
+      pos: 46.5,52.5
+      parent: 1
+  - uid: 2676
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 37.5,18.5
+      parent: 1
+  - uid: 2677
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 26.5,25.5
+      parent: 1
+- proto: SurveillanceCameraMedical
+  entities:
+  - uid: 2673
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 56.5,41.5
+      parent: 1
+- proto: SurveillanceCameraRouterGeneral
+  entities:
+  - uid: 2670
+    components:
+    - type: Transform
+      pos: 50.5,65.5
+      parent: 1
+- proto: SurveillanceCameraRouterMedical
+  entities:
+  - uid: 2672
+    components:
+    - type: Transform
+      pos: 48.5,65.5
+      parent: 1
+- proto: SurveillanceCameraRouterScience
+  entities:
+  - uid: 2671
+    components:
+    - type: Transform
+      pos: 49.5,65.5
+      parent: 1
+- proto: SurveillanceCameraScience
+  entities:
+  - uid: 2675
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 58.5,24.5
+      parent: 1
 - proto: SyndicateComputerComms
   entities:
   - uid: 2641
