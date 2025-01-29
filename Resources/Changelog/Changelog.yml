@@ -1,66 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Fixed medical PDAs sometimes toggling their lights while scanning
-    type: Fix
-  id: 7362
-  time: '2024-09-13T13:59:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32091
-- author: Gorox221
-  changes:
-  - message: Mech pilots receive a warning before they are ejected from the mech.
-    type: Tweak
-  - message: Now, when removing the pilot of the mech, you need to not move.
-    type: Fix
-  id: 7363
-  time: '2024-09-13T14:01:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31649
-- author: slarticodefast
-  changes:
-  - message: Extradimensional orange, holymelon, meatwheat and world peas plant mutations
-      have been added. Obtain them by mutating oranges, watermelons, wheat and laughin'
-      peas respectively.
-    type: Add
-  id: 7364
-  time: '2024-09-13T14:02:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27624
-- author: ShadowCommander
-  changes:
-  - message: Fixed PDA sometimes showing uplink and music buttons when the PDA was
-      not able to use them.
-    type: Fix
-  id: 7365
-  time: '2024-09-13T14:19:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28373
-- author: Dezzzix
-  changes:
-  - message: Now you can wear a hood in void cloak
-    type: Add
-  id: 7366
-  time: '2024-09-13T15:02:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31061
-- author: PJB3005
-  changes:
-  - message: Fixed some powered machines working when unpowered if the panel is open.
-    type: Fix
-  id: 7367
-  time: '2024-09-13T23:58:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32135
-- author: qwerltaz
-  changes:
-  - message: The RCD can now place grilles and windows under shutters and cables under
-      doors.
-    type: Fix
-  id: 7368
-  time: '2024-09-14T01:53:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32102
-- author: SlamBamActionman
-  changes:
-  - message: Briefcases can now be used as melee weapons.
-    type: Add
-  id: 7369
-  time: '2024-09-14T13:09:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32063
 - author: Just_Art
   changes:
   - message: Added a head gauze to customization.
@@ -3885,3 +3823,68 @@
   id: 7861
   time: '2025-01-28T02:37:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34079
+- author: ArtisticRoomba
+  changes:
+  - message: Frezon prices have been tweaked to be much more worth it for new players
+      and elder atmosians alike.
+    type: Tweak
+  id: 7862
+  time: '2025-01-28T17:31:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34049
+- author: K-Dynamic
+  changes:
+  - message: Stun batons play thrusting instead of wide swing animation on precise
+      attacks (LMB).
+    type: Tweak
+  id: 7863
+  time: '2025-01-28T18:55:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34693
+- author: Emisse
+  changes:
+  - message: Drozd sprites have been updated.
+    type: Tweak
+  id: 7864
+  time: '2025-01-29T08:41:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34574
+- author: Southbridge
+  changes:
+  - message: The Nuke will now reset to a minimum countdown value when disarmed if
+      the countdown is below the minimum value.
+    type: Tweak
+  id: 7865
+  time: '2025-01-29T09:04:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34734
+- author: themias
+  changes:
+  - message: Fixed precision attack animation for thrust weapons
+    type: Fix
+  id: 7866
+  time: '2025-01-29T10:11:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34713
+- author: yuitop
+  changes:
+  - message: Sentient medibots can now properly inject.
+    type: Tweak
+  id: 7867
+  time: '2025-01-29T10:34:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32110
+- author: jamessimo
+  changes:
+  - message: Criminal Records computer got enhanced UX & UI.
+    type: Tweak
+  - message: Criminal Records computer can now filter its list against crew criminal
+      status.
+    type: Tweak
+  - message: Criminal Records computer will now announce the suspects Job next to
+      their name.
+    type: Tweak
+  id: 7868
+  time: '2025-01-29T10:34:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32352
+- author: Starbuckss14
+  changes:
+  - message: New borg names
+    type: Add
+  id: 7869
+  time: '2025-01-29T10:35:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32502
