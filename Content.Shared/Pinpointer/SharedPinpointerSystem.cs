@@ -144,6 +144,9 @@ public abstract class SharedPinpointerSystem : EntitySystem
         if (_emag.CheckFlag(uid, EmagType.Interaction))
             return;
 
+        if (component.CanRetarget)
+            return;
+
         args.Handled = true;
         component.CanRetarget = true;
     }
