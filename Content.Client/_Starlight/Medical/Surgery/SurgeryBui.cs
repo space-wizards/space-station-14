@@ -364,6 +364,9 @@ public sealed class SurgeryBui : BoundUserInterface
                         case StepInvalidReason.DisabledTool:
                             stepName.AddMarkupOrThrow(" [color=red](Disabled Tool)[/color]");
                             break;
+                        case StepInvalidReason.TooHigh:
+                            stepName.AddMarkupOrThrow(" [color=red](Item Too High)[/color]");
+                            break;
                     }
                 }
             }

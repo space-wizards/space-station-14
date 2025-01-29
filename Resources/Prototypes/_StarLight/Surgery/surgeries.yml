@@ -819,3 +819,53 @@
     sprite:  _Starlight/Interface/Actions/actions_spider.rsi
     layers:
       - state: egg
+#
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryExtractCavityItem
+  name: Extract Item
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenAbdomen
+    steps:
+    - SurgeryStepLocateItemCavity
+    - SurgeryStepRemoveItemCavity
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganExistCondition
+    organ:
+    - type: Item
+    container: cavity
+  - type: Sprite
+    sprite: Mobs/Species/Human/parts.rsi
+    state: torso_m
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryImplantCavityItem
+  name: Implant Item
+  components:
+  - type: Surgery
+    requirement:
+    - SurgeryOpenAbdomen
+    steps:
+    - SurgeryStepPrepareImplantSiteCavity
+    - SurgeryStepInsertItemCavity
+  - type: SurgerySpeciesCondition
+    speciesBlacklist:
+    - SlimePerson
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganDontExistCondition
+    organ:
+    - type: Item
+    container: cavity
+  - type: Sprite
+    sprite: Mobs/Species/Human/parts.rsi
+    state: torso_m

@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Body.Part;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Item;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 // Based on the RMC14.
@@ -15,6 +16,13 @@ public sealed partial class SurgeryLimbSlotConditionComponent : Component
 {
     [DataField]
     public string Slot;
+}
+
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))]
+public sealed partial class SurgeryItemSizeConditionComponent : Component
+{
+    [DataField]
+    public ProtoId<ItemSizePrototype> Size = "Small";
 }
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))]
@@ -37,6 +45,9 @@ public sealed partial class SurgeryOrganExistConditionComponent : Component
 {
     [DataField]
     public ComponentRegistry? Organ;
+    
+    [DataField]
+    public string? Container;
 }
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))]
 public sealed partial class SurgeryHasCompConditionComponent : Component
@@ -49,4 +60,7 @@ public sealed partial class SurgeryOrganDontExistConditionComponent : Component
 {
     [DataField]
     public ComponentRegistry? Organ;
+    
+    [DataField]
+    public string? Container;
 }
