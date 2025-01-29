@@ -29,8 +29,7 @@ namespace Content.Server.Nuke
         ///     If the nuke is disarmed, this sets the minimum amount of time the timer can have.
         ///     The remaining time will reset to this value if it is below it.
         /// </summary>
-        [DataField("minimumTime")]
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public int MinimumTime = 180;
 
         /// <summary>
