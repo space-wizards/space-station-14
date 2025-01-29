@@ -516,26 +516,4 @@
   products:
     Tazinide: 1
 
-- type: reaction
-  id: WehHewExplosion
-  impact: High
-  priority: 20
-  reactants:
-    JuiceThatMakesYouWeh:
-      amount: 1
-    JuiceThatMakesYouHew:
-      amount: 1
-  effects:
-    - !type:ExplosionReactionEffect
-      explosionType: Default
-      maxIntensity: 100
-      intensityPerUnit: 1
-      intensitySlope: 1
-      maxTotalIntensity: 125
-    - !type:ExplosionReactionEffect
-      explosionType: Radioactive
-      maxIntensity: 100
-      intensityPerUnit: 1
-      intensitySlope: 1
-      maxTotalIntensity: 125
 

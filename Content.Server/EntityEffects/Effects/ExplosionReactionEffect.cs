@@ -50,6 +50,14 @@ public sealed partial class ExplosionReactionEffect : EntityEffect
     [DataField]
     [JsonIgnore]
     public float IntensityPerUnit = 1;
+	
+    /// <summary>
+    ///     Factor used to scale the explosion intensity when calculating tile break chances. Allows for stronger
+    ///     explosives that don't space tiles, without having to create a new explosion-type prototype.
+    /// </summary>
+    [DataField]
+    [JsonIgnore]
+    public float TileBreakScale = 1f;
 
     public override bool ShouldLog => true;
 
@@ -72,6 +80,7 @@ public sealed partial class ExplosionReactionEffect : EntityEffect
             ExplosionType,
             intensity,
             IntensitySlope,
-            MaxIntensity);
+            MaxIntensity,
+			TileBreakScale);
     }
 }

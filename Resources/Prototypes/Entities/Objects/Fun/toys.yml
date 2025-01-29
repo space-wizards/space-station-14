@@ -437,7 +437,7 @@
         offset: "0, 0.03"
 
 - type: entity
-  parent: PlushieLizard
+  parent: [ PlushieLizard, BaseMajorContraband ]
   id: PlushieLizardInversed #Hew!
   name: drazil plushie
   description: An adorable stuffed toy that resembles a lizardperson from an inversed dimension. Hew!
