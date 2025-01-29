@@ -522,6 +522,12 @@ public sealed class NukeSystem : EntitySystem
         _sound.PlayGlobalOnStation(uid, _audio.GetSound(component.DisarmSound));
         _sound.StopStationEventMusic(uid, StationEventMusicType.Nuke);
 
+        // reset nuke remaining time to the minimum time if it is shorter than the minimum time.
+        if (component.RemainingTime < component.MinimumTime)
+        {
+            component.RemainingTime = component.MinimumTime;
+        }
+
         // disable sound and reset it
         component.PlayedAlertSound = false;
         component.AlertAudioStream = _audio.Stop(component.AlertAudioStream);
