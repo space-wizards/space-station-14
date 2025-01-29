@@ -74,3 +74,47 @@
     sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hopmesskit.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hopmesskit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCargoOfficeSlacksHarmony
+  name: cargo office slacks jumpsuit
+  description: For those who'd rather push pencils than crates.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/cargo_slacks.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/cargo_slacks.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCargoverallsHarmony
+  name: cargoveralls
+  description: Happy yellow overalls to give that warehouse feel.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/cargo_overalls.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/cargo_overalls.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSeniorTechnicianHarmony
+  name: senior technician jumpsuit
+  description: For the veteran freight movers, you've earned it.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/senior_technician.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/senior_technician.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCargoPantsHarmony
+  name: cargo pants
+  description: When collecting bounties, you need the extra pocketspace.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/cargo_pants.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/cargo_pants.rsi

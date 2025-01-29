@@ -656,6 +656,14 @@
   loadouts:
   - CargoTechnicianJumpsuit
   - CargoTechnicianJumpskirt
+# start of harmony change: adds new outfits to loadout
+  - CargoPantsHarmony
+  - CargoverallsHarmony
+  - CargoOfficeSlacksJumpsuitHarmony
+  - CargoOfficeSlacksJumpskirtHarmony
+  - SeniorTechnicianJumpsuitHarmony
+  - SeniorTechnicianJumpskirtHarmony
+# end of harmony change
 
 - type: loadoutGroup
   id: CargoTechnicianBackpack

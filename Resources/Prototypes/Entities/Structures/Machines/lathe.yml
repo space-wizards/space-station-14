@@ -963,6 +963,14 @@
       - ClothingUniformJumpsuitCaptainHawaiianHarmony # Harmony
       - ClothingUniformJumpsuitCargo
       - ClothingUniformJumpskirtCargo
+# start of harmony change: adds outfits to clothing printer
+      - ClothingUniformJumpsuitCargoPantsHarmony
+      - ClothingUniformJumpsuitCargoverallsHarmony
+      - ClothingUniformJumpsuitCargoOfficeSlacksHarmony
+      - ClothingUniformJumpskirtCargoOfficeSlacksHarmony
+      - ClothingUniformJumpsuitSeniorTechnicianHarmony
+      - ClothingUniformJumpskirtSeniorTechnicianHarmony
+# end of harmony change
       - ClothingUniformJumpsuitSalvageSpecialist
       - ClothingHeadHatBeretEngineering
       - ClothingHeadHatBeretChiefEngineerHarmony # Harmony
