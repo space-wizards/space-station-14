@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Gorox221
-  changes:
-  - message: Mech pilots receive a warning before they are ejected from the mech.
-    type: Tweak
-  - message: Now, when removing the pilot of the mech, you need to not move.
-    type: Fix
-  id: 7363
-  time: '2024-09-13T14:01:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31649
 - author: slarticodefast
   changes:
   - message: Extradimensional orange, holymelon, meatwheat and world peas plant mutations
@@ -3886,3 +3877,11 @@
   id: 7862
   time: '2025-01-28T17:31:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34049
+- author: K-Dynamic
+  changes:
+  - message: Stun batons play thrusting instead of wide swing animation on precise
+      attacks (LMB).
+    type: Tweak
+  id: 7863
+  time: '2025-01-28T18:55:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34693
