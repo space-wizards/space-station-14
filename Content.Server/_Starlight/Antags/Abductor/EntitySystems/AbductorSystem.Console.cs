@@ -44,7 +44,11 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
     private float AbductProgress(Entity<AbductConditionComponent> ent, int target)
     {
-        if (!TryComp<AbductorScientistComponent>(ent, out var scientistComp) && !TryComp<AbductorAgentComponent>(ent, out var agentComp))
+        AbductorScientistComponent? scientistComp = null;
+        AbductorAgentComponent? agentComp = null;
+        
+        if (TryComp<AbductorScientistComponent>(ent, out scientistComp) 
+            || TryComp<AbductorAgentComponent>(ent, out agentComp))
             if (scientistComp != null
                     && TryComp<MindContainerComponent>(scientistComp.Agent, out var agentMindContainer)
                     && agentMindContainer.Mind.HasValue
