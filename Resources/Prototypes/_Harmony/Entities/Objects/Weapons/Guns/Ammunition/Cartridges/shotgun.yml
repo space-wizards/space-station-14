@@ -1,0 +1,25 @@
+- type: entity
+  id: ShellHypo
+  name: shell (.50 hypo)
+  parent: [BaseSyndicateContraband, BaseShellShotgun]
+  components:
+  - type: Sprite
+    sprite: _Harmony/Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    layers:
+    - state: hypo
+      map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgunTranquilizer
+  - type: ChemicalAmmo
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        maxVol: 7
+  - type: RefillableSolution
+    solution: ammo
+  - type: InjectableSolution
+    solution: ammo
+  - type: SolutionTransfer
+    maxTransferAmount: 7
+  - type: SpentAmmoVisuals
+    state: "hypo"
