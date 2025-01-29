@@ -69,7 +69,7 @@ public sealed partial class RoleTimeRequirement : JobRequirement
             reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
                 "role-timer-role-too-high",
                 ("time", formattedRoleDiff),
-                ("job", Loc.GetString(indexedJob.Name)),
+                ("job", indexedJob.LocalizedName),
                 ("departmentColor", departmentColor.ToHex())));
             return false;
         }
