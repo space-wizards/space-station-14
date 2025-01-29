@@ -1,0 +1,11 @@
+- type: entity
+  name: security bola
+  parent: Bola
+  id: SecurityBola
+  description: Dedicated bolas made for use in Security operations.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Harmony/Objects/Weapons/Throwable/securitybola.rsi
+    state: icon

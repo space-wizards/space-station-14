@@ -490,6 +490,7 @@
         - DoorRemote
         - Whistle
         - BalloonPopper
+        - Ensnaring #Harmony Change: Allows Bolas into Security Belts, intended for Security Bolas.
   - type: ItemMapper
     mapLayers:
       flashbang:
