@@ -5,41 +5,19 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from goonstation at https://github.com/goonstation/goonstation/blob/1d933b65eea83630f24c7d0bd7164f38a81ddce2/icons/obj/kitchen.dmi",
+    "copyright": "Taken from Monkestation at https://github.com/Monkestation/Monkestation2.0/blob/0731de225143d0befd10c5aadf45b330b749bbb0/icons/obj/machines/kitchenmachines.dmi, edited by SG6732",
     "states": [
         {
-            "name": "oven_off",
-            "directions": 4
+            "name": "oven_off"
         },
         {
-            "name": "oven_on",
-            "directions": 4,
-            "delays": [
-                [
-                    0.5,
-                    0.5,
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5,
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5,
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5,
-                    0.5,
-                    0.5
-                ]
-            ]
+            "name": "oven_on"
+        },
+        {
+            "name": "oven_lights"
+        },
+        {
+            "name": "oven_unlit"
         }
       ]
     }

@@ -15,10 +15,14 @@
       enum.PowerDeviceVisuals.VisualState:
         enum.MicrowaveVisualizerLayers.Base:
           Idle: { state: "oven_off" }
-          Cooking: { state: "oven_on" }
+          Cooking: { state: "oven_off" }
         enum.MicrowaveVisualizerLayers.BaseUnlit:
-          Idle: { state: "oven_lights" }
+          Idle: { state: "oven_unlit" }
           Cooking: { state: "oven_lights" }
+      enum.PowerDeviceVisuals.Powered:
+        enum.MicrowaveVisualizerLayers.BaseUnlit:
+          True: { visible: true }
+          False: { visible: false }
   - type: ActivatableUI
     key: enum.MicrowaveUiKey.Key
   - type: DeviceLinkSink
@@ -52,7 +56,7 @@
     layers:
     - state: oven_off
       map: ["enum.MicrowaveVisualizerLayers.Base"]
-    - state: oven_lights
+    - state: oven_unlit
       shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
   - type: Destructible
