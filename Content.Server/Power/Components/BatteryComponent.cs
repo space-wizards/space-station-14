@@ -1,4 +1,5 @@
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Guidebook;
 
 namespace Content.Server.Power.Components
 {
@@ -16,6 +17,7 @@ namespace Content.Server.Power.Components
         /// Maximum charge of the battery in joules (ie. watt seconds)
         /// </summary>
         [DataField]
+        [GuidebookData]
         public float MaxCharge;
 
         /// <summary>
@@ -23,12 +25,6 @@ namespace Content.Server.Power.Components
         /// </summary>
         [DataField("startingCharge")]
         public float CurrentCharge;
-
-        /// <summary>
-        /// True if the battery is fully charged.
-        /// </summary>
-        [ViewVariables]
-        public bool IsFullyCharged => MathHelper.CloseToPercent(CurrentCharge, MaxCharge);
 
         /// <summary>
         /// The price per one joule. Default is 1 credit for 10kJ.
