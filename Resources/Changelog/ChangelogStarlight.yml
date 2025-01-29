@@ -2767,7 +2767,6 @@ Entries:
   id: 386
   time: '2025-01-28T11:17:38.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/268
-
 - author: Rinary
   changes:
   - message: 'Changed webvest prive from 3 to 5 TK(discount: 1->3)'
@@ -2790,3 +2789,18 @@ Entries:
   id: 389
   time: '2025-01-28T11:11:03.716939+00:00'
   url: 'null'
+- author: Conflee
+  changes:
+  - message: Fixed wiring on the Lance
+    type: Fix
+  id: 390
+  time: '2025-01-29T18:22:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/269
+- author: Conflee
+  changes:
+  - message: Fixed thruster setup on the Signaleer
+    type: Fix
+  id: 391
+  time: '2025-01-29T18:22:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/269
+
