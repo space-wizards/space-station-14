@@ -54,10 +54,10 @@
           ResearchAssistant: [ 4, 4 ]
           StationAi: [ 1, 1 ]
           Borg: [ 2, 4 ]
-          #security - 9-17
+          #security
           Warden: [ 1, 1 ]
-          SecurityOfficer: [ 6, 8 ]
-          Detective: [ 1, 2 ]
+          SecurityOfficer: [ 8, 10 ]
+          Detective: [ 1, 1 ]
           SecurityCadet: [ 4, 4 ]
           Lawyer: [ 1, 2 ]
           #supply - 8-10
