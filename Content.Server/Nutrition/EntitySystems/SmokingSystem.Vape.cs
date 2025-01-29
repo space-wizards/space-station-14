@@ -163,19 +163,6 @@ namespace Content.Server.Nutrition.EntitySystems
             }
         }
 
-        private void OnAttemptEmag(Entity<VapeComponent> entity, ref OnAttemptEmagEvent args)
-        {
-            if (args.Type != EmagType.Interaction)
-            {
-                args.Handled = true;
-                return;
-            }
-            if (_emag.CheckFlag(entity, EmagType.Interaction))
-            {
-                args.Handled = true;
-            }
-        }
-
         private void OnEmagged(Entity<VapeComponent> entity, ref GotEmaggedEvent args)
         {
             if (!_emag.CompareFlag(args.Type, EmagType.Interaction))

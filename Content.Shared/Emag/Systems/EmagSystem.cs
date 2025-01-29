@@ -137,11 +137,9 @@ public enum EmagType : byte
 /// Shows a popup to emag user (client side only!) and adds <see cref="EmaggedComponent"/> to the entity when handled
 /// </summary>
 /// <param name="UserUid">Emag user</param>
+/// <param name="Type">The emag type to use</param>
 /// <param name="Handled">Did the emagging succeed? Causes a user-only popup to show on client side</param>
 /// <param name="Repeatable">Can the entity be emagged more than once? Prevents adding of <see cref="EmaggedComponent"/></param>
 /// <remarks>Needs to be handled in shared/client, not just the server, to actually show the emagging popup</remarks>
 [ByRefEvent]
 public record struct GotEmaggedEvent(EntityUid UserUid, EmagType Type, bool Handled = false, bool Repeatable = false);
-
-[ByRefEvent]
-public record struct OnAttemptEmagEvent(EntityUid UserUid, EmagType Type, bool Handled = false);

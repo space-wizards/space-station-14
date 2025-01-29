@@ -154,21 +154,6 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         }
     }
 
-
-    protected void OnAttemptEmag(EntityUid uid, CryoPodComponent? cryoPodComponent, ref OnAttemptEmagEvent args)
-    {
-        if (args.Type != EmagType.Interaction)
-        {
-            args.Handled = true;
-            return;
-        }
-
-        if (_emag.CheckFlag(uid, EmagType.Interaction))
-        {
-            args.Handled = true;
-        }
-    }
-
     protected void OnEmagged(EntityUid uid, CryoPodComponent? cryoPodComponent, ref GotEmaggedEvent args)
     {
         if (!Resolve(uid, ref cryoPodComponent))

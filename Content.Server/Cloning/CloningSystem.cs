@@ -272,18 +272,6 @@ namespace Content.Server.Cloning
             }
         }
 
-        private void OnAttemptEmag(EntityUid uid, CloningPodComponent clonePod, ref OnAttemptEmagEvent args)
-        {
-            if (args.Type != EmagType.Interaction)
-            {
-                args.Handled = true;
-                return;
-            }
-
-            if (_emag.CheckFlag(uid, EmagType.Interaction))
-                args.Handled = true;
-        }
-
         /// <summary>
         /// On emag, spawns a failed clone when cloning process fails which attacks nearby crew.
         /// </summary>

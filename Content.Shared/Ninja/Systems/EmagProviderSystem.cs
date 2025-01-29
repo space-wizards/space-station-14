@@ -56,7 +56,7 @@ public sealed class EmagProviderSystem : EntitySystem
         _audio.PlayPredicted(comp.EmagSound, uid, uid);
 
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(uid):player} emagged {ToPrettyString(target):target} with flag(s): {ent.Comp.EmagType}");
-        var ev = new EmaggedSomething(target);
+        var ev = new EmaggedSomethingEvent(target);
         RaiseLocalEvent(uid, ref ev);
         args.Handled = true;
     }
@@ -66,4 +66,4 @@ public sealed class EmagProviderSystem : EntitySystem
 /// Raised on the player when access breaking something.
 /// </summary>
 [ByRefEvent]
-public record struct EmaggedSomething(EntityUid Target);
+public record struct EmaggedSomethingEvent(EntityUid Target);
