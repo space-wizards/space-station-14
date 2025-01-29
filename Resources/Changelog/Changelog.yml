@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ShadowCommander
-  changes:
-  - message: Fixed PDA sometimes showing uplink and music buttons when the PDA was
-      not able to use them.
-    type: Fix
-  id: 7365
-  time: '2024-09-13T14:19:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28373
 - author: Dezzzix
   changes:
   - message: Now you can wear a hood in void cloak
@@ -3883,3 +3875,11 @@
   id: 7864
   time: '2025-01-29T08:41:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34574
+- author: Southbridge
+  changes:
+  - message: The Nuke will now reset to a minimum countdown value when disarmed if
+      the countdown is below the minimum value.
+    type: Tweak
+  id: 7865
+  time: '2025-01-29T09:04:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34734
