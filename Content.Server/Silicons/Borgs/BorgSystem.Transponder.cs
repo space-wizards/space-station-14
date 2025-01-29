@@ -17,6 +17,7 @@ namespace Content.Server.Silicons.Borgs;
 public sealed partial class BorgSystem
 {
     [Dependency] private readonly EmagSystem _emag = default!;
+
     private void InitializeTransponder()
     {
         SubscribeLocalEvent<BorgTransponderComponent, DeviceNetworkPacketEvent>(OnPacketReceived);

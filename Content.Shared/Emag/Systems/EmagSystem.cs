@@ -46,28 +46,28 @@ public sealed class EmagSystem : EntitySystem
         if (!args.CanReach || args.Target is not { } target)
             return;
 
-        args.Handled = UseEmagEffect(uid, args.User, target, comp);
+        args.Handled = TryEmagEffect((uid, comp), args.User, target);
     }
 
     /// <summary>
     /// Does the emag effect on a specified entity
     /// </summary>
-    public bool UseEmagEffect(EntityUid uid, EntityUid user, EntityUid target, EmagComponent? comp = null)
+    public bool TryEmagEffect(Entity<EmagComponent?> ent, EntityUid user, EntityUid target)
     {
-        if (!Resolve(uid, ref comp, false))
+        if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        if (_tag.HasTag(target, comp.EmagImmuneTag))
+        if (_tag.HasTag(target, ent.Comp.EmagImmuneTag))
             return false;
 
-        TryComp<LimitedChargesComponent>(uid, out var charges);
-        if (_charges.IsEmpty(uid, charges))
+        TryComp<LimitedChargesComponent>(ent, out var charges);
+        if (_charges.IsEmpty(ent, charges))
         {
             _popup.PopupClient(Loc.GetString("emag-no-charges"), user, user);
             return false;
         }
 
-        var emaggedEvent = new GotEmaggedEvent(user, comp.EmagType);
+        var emaggedEvent = new GotEmaggedEvent(user, ent.Comp.EmagType);
         RaiseLocalEvent(target, ref emaggedEvent);
 
         if (!emaggedEvent.Handled)
@@ -75,18 +75,18 @@ public sealed class EmagSystem : EntitySystem
 
         _popup.PopupPredicted(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user, user, PopupType.Medium);
 
-        _audio.PlayPredicted(comp.EmagSound, uid, uid);
+        _audio.PlayPredicted(ent.Comp.EmagSound, ent, ent);
 
-        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} emagged {ToPrettyString(target):target} with flag(s): {comp.EmagType}");
+        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} emagged {ToPrettyString(target):target} with flag(s): {ent.Comp.EmagType}");
 
         if (charges != null  && emaggedEvent.Handled)
-            _charges.UseCharge(uid, charges);
+            _charges.UseCharge(ent, charges);
 
         if (!emaggedEvent.Repeatable)
         {
             EnsureComp<EmaggedComponent>(target, out var emaggedComp);
 
-            emaggedComp.EmagType |= comp.EmagType;
+            emaggedComp.EmagType |= ent.Comp.EmagType;
             Dirty(target, emaggedComp);
         }
 
