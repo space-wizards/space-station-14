@@ -474,7 +474,7 @@
     
 #Paramedic Voidsuit
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseMedicalContraband]
+  parent: [ClothingOuterEVASuitBase, BaseMedicalContraband] #Inherits from EVA clothing, since they offer less protection and are lighter - "Voidsuits are light hardsuits"
   id: ClothingOuterHardsuitVoidParamed
   name: paramedic void suit
   description: A void suit made for paramedics.
@@ -482,7 +482,7 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
     layers:
-      - state: icon
+    - state: icon
   - type: Appearance
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
@@ -507,10 +507,6 @@
     stealGroup: ClothingOuterHardsuitVoidParamed
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetVoidParamed
-  - type: Item
-    size: Huge
-    shape:
-    - 0,0,3,3 #4X4, Same size when parented off EVA suit.
   - type: ItemToggle
     onUse: false
     soundActivate:
@@ -521,7 +517,7 @@
     activeSound:
       path: /Audio/Effects/Vehicle/ambulancesiren.ogg
       params:
-        volume: -6
+        volume: -4
   - type: UseDelay
     delay: 1.0
   - type: ToggleClothing

@@ -344,7 +344,7 @@
 
 #Paramedic Void Helmet
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: ClothingHeadEVAHelmetWithLightBase
   id: ClothingHeadHelmetVoidParamed
   name: paramedic void helmet
   description: A void helmet made for paramedics.
