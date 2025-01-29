@@ -8,10 +8,13 @@
     itemIconStyle: BigAction
     whitelist:
       components:
-      - Animateable
+      - Animateable # Currently on: SeatBase, TableBase, ClosetBase, BaseMachine, ConstructibleMachine, BaseComputer, BaseItem, CrateGeneric, StorageTank, GasCanister
     blacklist:
       components:
       - MindContainer
+      - NukeDisk
+      - GravityGenerator
+      - AnomalyGenerator
     canTargetSelf: false
     interactOnMiss: false
     sound: !type:SoundPathSpecifier
@@ -58,7 +61,10 @@
             damage: 100
           behaviors:
           - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+            acts: ["Destruction"]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
       removeComponents:
       - RequireProjectileTarget
       speech: action-speech-spell-animate

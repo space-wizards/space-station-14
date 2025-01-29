@@ -58,6 +58,7 @@
   abstract: true
   id: ConstructibleMachine
   components:
+  - type: Animateable
   - type: Machine
   - type: ContainerContainer
     containers:
