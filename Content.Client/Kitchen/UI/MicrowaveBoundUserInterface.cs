@@ -29,6 +29,7 @@ namespace Content.Client.Kitchen.UI
         {
             base.Open();
             _menu = this.CreateWindow<MicrowaveMenu>();
+            _menu.SetOwner(Owner);
             _menu.StartButton.OnPressed += _ => SendPredictedMessage(new MicrowaveStartCookMessage());
             _menu.EjectButton.OnPressed += _ => SendPredictedMessage(new MicrowaveEjectMessage());
             _menu.IngredientsList.OnItemSelected += args =>

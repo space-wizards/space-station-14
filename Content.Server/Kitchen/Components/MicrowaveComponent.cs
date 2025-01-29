@@ -77,6 +77,8 @@ namespace Content.Server.Kitchen.Components
 
         public int CurrentCookTimeButtonIndex;
 
+        public int CookTimeButtons = 6;
+
         public Container Storage = default!;
 
         [DataField]

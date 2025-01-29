@@ -128,3 +128,20 @@
     providedRecipes:
     - RecipeBaguetteSword
     - RecipeThrowingCroissant
+
+
+- type: entity
+  id: Electric Range
+  parent: KitchenMicrowave
+  name: electric range
+  description: oven
+  components:
+  - type: Microwave
+    capacity: 20
+    maxCookTime: 60
+  - type: Sprite
+    sprite: Structures/Machines/microwave.rsi
+    drawdepth: SmallObjects
+    snapCardinals: true
+  - type: Machine
+    board: MicrowaveMachineCircuitboard
