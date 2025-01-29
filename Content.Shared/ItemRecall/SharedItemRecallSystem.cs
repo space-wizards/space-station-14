@@ -21,9 +21,16 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ItemRecallComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ItemRecallComponent, OnItemRecallActionEvent>(OnItemRecallActionUse);
 
         SubscribeLocalEvent<RecallMarkerComponent, ComponentShutdown>(OnRecallMarkerShutdown);
+    }
+
+    private void OnMapInit(Entity<ItemRecallComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.InitialName = Name(ent);
+        ent.Comp.InitialDescription = Description(ent);
     }
 
     private void OnItemRecallActionUse(Entity<ItemRecallComponent> ent, ref OnItemRecallActionEvent args)
@@ -103,15 +110,12 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
         if (!TryComp<InstantActionComponent>(action, out var instantAction))
             return;
 
-        var proto = Prototype(action);
-
-        if (proto == null)
-            return;
-
         if (action.Comp.MarkedEntity == null)
         {
-            _metaData.SetEntityName(action, proto.Name);
-            _metaData.SetEntityDescription(action, proto.Description);
+            if (action.Comp.InitialName != null)
+                _metaData.SetEntityName(action, action.Comp.InitialName);
+            if (action.Comp.InitialDescription != null)
+                _metaData.SetEntityDescription(action, action.Comp.InitialDescription);
             _actions.SetEntityIcon(action, null, instantAction);
         }
         else

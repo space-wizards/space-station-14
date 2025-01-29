@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.ItemRecall;
 
@@ -11,6 +10,12 @@ public sealed partial class ItemRecallComponent : Component
 
     [DataField]
     public LocId? WhileMarkedDescription = "item-recall-marked-description";
+
+    [DataField]
+    public string? InitialName;
+
+    [DataField]
+    public string? InitialDescription;
 
     /// <summary>
     /// The entity currently marked to be recalled by this action.
