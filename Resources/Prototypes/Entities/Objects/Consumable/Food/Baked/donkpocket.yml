@@ -419,10 +419,6 @@
   parent: FoodDonkpocketMoth
   id: FoodDonkpocketMothWarm
   components:
-  - type: FlavorProfile
-    flavors:
-    - cotton
-    - cheap
   - type: SolutionContainerManager
     solutions:
       food:
