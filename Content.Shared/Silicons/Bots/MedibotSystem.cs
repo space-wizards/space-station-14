@@ -20,6 +20,7 @@ namespace Content.Shared.Silicons.Bots;
 public sealed class MedibotSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -36,10 +37,14 @@ public sealed class MedibotSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, EmaggableMedibotComponent comp, ref GotEmaggedEvent args)
     {
-        if (!TryComp<MedibotComponent>(uid, out var medibot))
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
             return;
 
-        _audio.PlayPredicted(comp.SparkSound, uid, args.UserUid);
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            return;
+
+        if (!TryComp<MedibotComponent>(uid, out var medibot))
+            return;
 
         foreach (var (state, treatment) in comp.Replacements)
         {
