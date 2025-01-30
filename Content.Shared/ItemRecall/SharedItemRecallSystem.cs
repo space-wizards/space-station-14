@@ -110,7 +110,7 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
 
         AddToPVSOverride(item, actionOwner.Value);
 
-        EnsureComp<RecallMarkerComponent>(item, out var marker);
+        var marker = AddComp<RecallMarkerComponent>(item);
         ent.Comp.MarkedEntity = item;
         Dirty(ent);
 
