@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Lone Ops nukies now spawn with the appropriate species-specific survival
-      gear.
-    type: Fix
-  id: 7373
-  time: '2024-09-14T16:34:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31641
 - author: Plykiya
   changes:
   - message: The vent spawn event now has a chance to spawn snakes.
@@ -3898,3 +3890,13 @@
   id: 7872
   time: '2025-01-30T04:05:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34337
+- author: Southbridge
+  changes:
+  - message: Astro Asteroid Sand has been added as another type of faux tile.
+    type: Add
+  - message: Asteroid Astro Sand has also been added to the T2 civilian tech for the
+      faux astro tiles.
+    type: Add
+  id: 7873
+  time: '2025-01-30T04:41:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34463
