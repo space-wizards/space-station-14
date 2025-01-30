@@ -1,44 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: (Hummingbird) Added more directional signs around the station.
-    type: Add
-  id: 520
-  time: '2024-11-15T13:19:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/721
-- author: honeyed-lemons
-  changes:
-  - message: Random DNR no longer can be rerolled after failing
-    type: Fix
-  id: 521
-  time: '2024-11-15T19:45:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/716
-- author: hivehum
-  changes:
-  - message: Spy vs Spy now requires a significantly higher minimum player count.
-    type: Tweak
-  id: 522
-  time: '2024-11-15T19:45:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/726
-- author: EpicToast
-  changes:
-  - message: Added Union Station to the default map rotation!
-    type: Add
-  - message: 'Made some tweaks and fixes to Union Station, including:'
-    type: Tweak
-  - message: Added proper janitor spawns.
-    type: Tweak
-  - message: Added more station beacons to the map.
-    type: Tweak
-  - message: Added space heaters to atmos.
-    type: Tweak
-  - message: Added a notice from CentComm to disposals.
-    type: Tweak
-  - message: And much more.
-    type: Tweak
-  id: 523
-  time: '2024-11-15T19:46:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/725
 - author: kipdotnet
   changes:
   - message: Added the shittle powering pack. contains boards for a wallmount generator,
@@ -4334,3 +4294,38 @@
   id: 1019
   time: '2025-01-30T22:10:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1494
+- author: kipdotnet
+  changes:
+  - message: Added a new "Logistics" access group, given to Cargo Technicians and
+      the Quartermaster.
+    type: Add
+  - message: Operating the Cargo shuttle or orders console now requires Logistics
+      access.
+    type: Tweak
+  - message: Salvagers and Couriers will recieve Logistics access during lowpop/extended
+      access shifts.
+    type: Tweak
+  id: 1020
+  time: '2025-01-30T22:32:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1500
+- author: honeyed-lemons
+  changes:
+  - message: Updates Synthesis Ship to have missing equipment
+    type: Tweak
+  id: 1021
+  time: '2025-01-30T22:33:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1509
+- author: aada
+  changes:
+  - message: The blinding lens can now be found in the MedTech.
+    type: Add
+  id: 1022
+  time: '2025-01-30T22:31:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1505
+- author: DinnerCalzone
+  changes:
+  - message: Amber Station now features a tesla engine.
+    type: Tweak
+  id: 1023
+  time: '2025-01-30T22:33:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1507
