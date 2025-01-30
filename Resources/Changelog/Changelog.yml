@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: The vent spawn event now has a chance to spawn snakes.
-    type: Add
-  id: 7374
-  time: '2024-09-14T17:19:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32070
 - author: lzk228
   changes:
   - message: Command intercom now reinforced the same way as the security one.
@@ -3900,3 +3893,11 @@
   id: 7873
   time: '2025-01-30T04:41:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34463
+- author: august-sun
+  changes:
+  - message: Added the goliath hardsuit to the game and crafting menu. Adjusted goliath
+      hide drop rates to 3 hide per kill.
+    type: Add
+  id: 7874
+  time: '2025-01-30T04:45:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34721
