@@ -436,14 +436,14 @@
   name: pill canister
   parent: PillCanister
   id: PillCanisterHyronalin
-  suffix: Hyronalin 10u, 5
+  suffix: Hyronalin 10u, 7
   components:
   - type: Label
     currentLabel: hyronalin 10u
   - type: StorageFill
     contents:
     - id: PillHyronalin
-      amount: 5
+      amount: 7
 
 - type: entity
   name: pill
@@ -568,14 +568,14 @@
   name: pill canister
   parent: PillCanister
   id: PillCanisterKelotane
-  suffix: Kelotane 10u, 5
+  suffix: Kelotane 10u, 7
   components:
   - type: Label
     currentLabel: kelotane 10u
   - type: StorageFill
     contents:
     - id: PillKelotane
-      amount: 5
+      amount: 7
 
 - type: entity
   name: pill
@@ -647,14 +647,14 @@
   name: pill canister
   parent: PillCanister
   id: PillCanisterTricordrazine
-  suffix: Tricordrazine 10u, 5
+  suffix: Tricordrazine 10u, 7
   components:
   - type: Label
     currentLabel: tricordrazine 10u
   - type: StorageFill
     contents:
     - id: PillTricordrazine
-      amount: 5
+      amount: 7
 
 - type: entity
   name: pill
@@ -713,14 +713,14 @@
   name: pill canister
   parent: PillCanister
   id: PillCanisterInaprovaline
-  suffix: Inaprovaline 10u, 5
+  suffix: Inaprovaline 10u, 7
   components:
   - type: Label
     currentLabel: inaprovaline 10u
   - type: StorageFill
     contents:
     - id: PillInaprovaline
-      amount: 5
+      amount: 7
 
 - type: entity
   name: pill
