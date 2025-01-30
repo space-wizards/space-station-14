@@ -1,8 +1,5 @@
-using Content.Shared.Actions;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.ItemRecall;
-using Content.Shared.Popups;
-using Content.Shared.Projectiles;
+using Robust.Server.GameStates;
 
 namespace Content.Server.ItemRecall;
 
@@ -11,37 +8,23 @@ namespace Content.Server.ItemRecall;
 /// </summary>
 public sealed partial class ItemRecallSystem : SharedItemRecallSystem
 {
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedProjectileSystem _proj = default!;
-    [Dependency] private readonly SharedPopupSystem _popups = default!;
+    [Dependency] private readonly PvsOverrideSystem _pvs = default!;
 
-    public override void Initialize()
+    protected override void AddToPVSOverride(EntityUid uid, EntityUid user)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<RecallMarkerComponent, RecallItemEvent>(OnItemRecall);
-    }
-
-    private void OnItemRecall(Entity<RecallMarkerComponent> ent, ref RecallItemEvent args)
-    {
-        RecallItem(ent);
-    }
-
-    private void RecallItem(Entity<RecallMarkerComponent> ent)
-    {
-        if (!TryComp<InstantActionComponent>(ent.Comp.MarkedByAction, out var instantAction))
+        if (!_mind.TryGetMind(user, out var _, out var mind))
             return;
 
-        var actionOwner = instantAction.AttachedEntity;
+        if (mind.Session != null)
+            _pvs.AddSessionOverride(uid, mind.Session);
+    }
 
-        if (actionOwner == null)
+    protected override void RemoveFromPVSOverride(EntityUid uid, EntityUid user)
+    {
+        if (!_mind.TryGetMind(user, out var _, out var mind))
             return;
 
-        if (TryComp<EmbeddableProjectileComponent>(ent, out var projectile))
-            _proj.UnEmbed(ent, projectile, actionOwner.Value);
-
-        _popups.PopupEntity(Loc.GetString("item-recall-item-summon", ("item", ent)), actionOwner.Value, actionOwner.Value);
-
-        _hands.TryForcePickupAnyHand(actionOwner.Value, ent);
+        if (mind.Session != null)
+            _pvs.RemoveSessionOverride(uid, mind.Session);
     }
 }

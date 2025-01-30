@@ -1,9 +1,11 @@
 using Content.Shared.Actions;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 
 namespace Content.Shared.ItemRecall;
 
@@ -16,6 +18,9 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
+    [Dependency] private readonly SharedProjectileSystem _proj = default!;
+    [Dependency] protected readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -23,6 +28,7 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
 
         SubscribeLocalEvent<ItemRecallComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ItemRecallComponent, OnItemRecallActionEvent>(OnItemRecallActionUse);
+        SubscribeLocalEvent<RecallMarkerComponent, RecallItemEvent>(OnItemRecall);
 
         SubscribeLocalEvent<RecallMarkerComponent, ComponentShutdown>(OnRecallMarkerShutdown);
     }
@@ -64,6 +70,29 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
         args.Handled = true;
     }
 
+    private void OnItemRecall(Entity<RecallMarkerComponent> ent, ref RecallItemEvent args)
+    {
+        RecallItem(ent);
+    }
+
+    private void RecallItem(Entity<RecallMarkerComponent> ent)
+    {
+        if (!TryComp<InstantActionComponent>(ent.Comp.MarkedByAction, out var instantAction))
+            return;
+
+        var actionOwner = instantAction.AttachedEntity;
+
+        if (actionOwner == null)
+            return;
+
+        if (TryComp<EmbeddableProjectileComponent>(ent, out var projectile))
+            _proj.UnEmbed(ent, projectile, actionOwner.Value);
+
+        _popups.PopupPredicted(Loc.GetString("item-recall-item-summon", ("item", ent)), actionOwner.Value, actionOwner.Value);
+
+        _hands.TryForcePickupAnyHand(actionOwner.Value, ent);
+    }
+
     private void OnRecallMarkerShutdown(Entity<RecallMarkerComponent> ent, ref ComponentShutdown args)
     {
         TryUnmarkItem(ent);
@@ -71,6 +100,16 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
 
     private void TryMarkItem(Entity<ItemRecallComponent> ent, EntityUid item)
     {
+        if (!TryComp<InstantActionComponent>(ent, out var instantAction))
+            return;
+
+        var actionOwner = instantAction.AttachedEntity;
+
+        if (actionOwner == null)
+            return;
+
+        AddToPVSOverride(item, actionOwner.Value);
+
         EnsureComp<RecallMarkerComponent>(item, out var marker);
         ent.Comp.MarkedEntity = item;
         Dirty(ent);
@@ -95,7 +134,10 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
             // I don't have the heart to move this code to server because of this small thing.
             // This line will only do something once that is fixed.
             if (instantAction.AttachedEntity != null)
+            {
                 _popups.PopupClient(Loc.GetString("item-recall-item-unmark", ("item", item)), instantAction.AttachedEntity.Value, instantAction.AttachedEntity.Value, PopupType.MediumCaution);
+                RemoveFromPVSOverride(item, instantAction.AttachedEntity.Value);
+            }
 
             action.MarkedEntity = null;
             UpdateActionAppearance((marker.MarkedByAction.Value, action));
@@ -130,5 +172,15 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
 
             _actions.SetEntityIcon(action, action.Comp.MarkedEntity, instantAction);
         }
+    }
+
+    protected virtual void AddToPVSOverride(EntityUid uid, EntityUid user)
+    {
+
+    }
+
+    protected virtual void RemoveFromPVSOverride(EntityUid uid, EntityUid user)
+    {
+
     }
 }
