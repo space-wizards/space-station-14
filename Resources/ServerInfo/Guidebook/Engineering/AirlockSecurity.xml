@@ -27,15 +27,12 @@
   -	Close the maintenance panel using the screwdriver.
 
   ## High security airlocks
-  For airlocks leading to the more sensitive areas of the space station, the use of stronger deterrents are advised. High security airlocks have improved armor plating to protect its internal wiring, along with an electrified security grille.
+  For airlocks leading to the more sensitive areas of the space station, the use of stronger deterrents are advised. High security airlocks have improved armor plating to protect its internal wiring.
 
   To upgrade a medium security airlock to a high security airlock, you will require the following materials:
   <Box HorizontalAlignment="Stretch">
 	  <Box>
 		  <GuideEntityEmbed Entity="SheetPlasteel" Caption="2 plasteel sheets"/>
-	  </Box>
-	  <Box>
-		  <GuideEntityEmbed Entity="PartRodMetal" Caption="2 metal rods"/>
 	  </Box>
 	  <Box>
 		  <GuideEntityEmbed Entity="Screwdriver" Caption="Screwdriver"/>
@@ -49,17 +46,19 @@
   - Use the screwdriver to open the airlock maintenance panel.
   - Add the plasteel sheets to the airlock.
   - Weld the plasteel sheets into place.
-  - Add the metal rods to the airlock.
   - Close the maintenance panel using the screwdriver.
 
   ## Maximum security airlocks
-  You can optionally upgrade a high security airlock to a maximum security airlock. Maximum security airlocks possess an additional layer of plasteel plating on top of its other protections.
+  You can optionally upgrade a high security airlock to a maximum security airlock. Maximum security airlocks possess an additional layer of electrified wire mesh on top of its other protections, which can shock any unauthorized personnel attempting to tamper with the airlock.
 
   To upgrade a high security airlock to a maximum security airlock, you will require the following materials:
   <Box HorizontalAlignment="Stretch">
 	  <Box>
 		  <GuideEntityEmbed Entity="SheetPlasteel" Caption="2 plasteel sheets"/>
 	  </Box>
+    <Box>
+      <GuideEntityEmbed Entity="PartRodMetal" Caption="2 metal rods"/>
+    </Box>
 	  <Box>
 		  <GuideEntityEmbed Entity="Screwdriver" Caption="Screwdriver"/>
 	  </Box>
@@ -72,5 +71,6 @@
   -	Use the screwdriver to open the airlock maintenance panel.
   -	Add the plasteel sheets to the airlock.
   -	Weld the plasteel sheets into place.
+  - Add the metal rods to the airlock.
   -	Close the maintenance panel using the screwdriver.
 </Document>
