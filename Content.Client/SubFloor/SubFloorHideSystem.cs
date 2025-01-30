@@ -70,7 +70,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
             if (component.OriginalDrawDepth is not null)
                 return;
             component.OriginalDrawDepth = args.Sprite.DrawDepth;
-            var drawDepthDifference = Shared.DrawDepth.DrawDepth.ThickPipe - Shared.DrawDepth.DrawDepth.FloorObjects;
+            var drawDepthDifference = Shared.DrawDepth.DrawDepth.ThickPipe - Shared.DrawDepth.DrawDepth.Puddles;
             args.Sprite.DrawDepth -= drawDepthDifference - 1;
         }
         else if (component.OriginalDrawDepth.HasValue)
