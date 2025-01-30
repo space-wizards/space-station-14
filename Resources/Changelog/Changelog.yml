@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: BackeTako
-  changes:
-  - message: Added French and Spanish speech traits.
-    type: Add
-  id: 7379
-  time: '2024-09-15T20:03:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30966
 - author: Plykiya
   changes:
   - message: Meteors break through less walls now.
@@ -3902,3 +3895,16 @@
   id: 7878
   time: '2025-01-30T17:27:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33932
+- author: K-Dynamic
+  changes:
+  - message: The Kammerer now holds 7 shells but now fires slightly slower than other
+      shotguns.
+    type: Tweak
+  - message: The Double-Barreled Shotgun and its sawn-off counterpart now share the
+      same firerate.
+    type: Tweak
+  - message: Changed descriptions of the Kammerer, Enforcer and Bulldog.
+    type: Tweak
+  id: 7879
+  time: '2025-01-30T17:36:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33512
