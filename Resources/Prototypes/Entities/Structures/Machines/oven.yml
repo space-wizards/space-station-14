@@ -86,6 +86,13 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    totalIntensity: 5
+    intensitySlope: 5
+    canCreateVacuum: false
+    deleteAfterExplosion: false
   - type: ApcPowerReceiver
     powerLoad: 500
   - type: Machine
