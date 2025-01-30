@@ -60,3 +60,6 @@
 
 - files: ["prather.yml"]
   authors: Lemuria
+
+- files: ["convex.yml"]
+  authors: Spacemann

@@ -66,7 +66,8 @@ namespace Content.IntegrationTests.Tests
             "Loop",
             "Plasma",
             "Elkridge",
-            "Prather"
+            "Prather",
+	    "Convex"
         };
 
         /// <summary>
