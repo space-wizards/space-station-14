@@ -39,3 +39,12 @@
   components:
   - type: AccessReader
     access: [["Courier"]]
+
+#Logistics - basically the cargo shuttle and order console
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsLogistics
+  suffix: Logistics, Locked
+  components:
+  - type: AccessReader
+    access: [["Logistics"]]
