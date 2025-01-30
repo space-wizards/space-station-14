@@ -12,6 +12,9 @@
     size: Ginormous
   - type: StaticPrice
     price: 0
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 5
   - type: Tag
     tags:
     - LidSalami
