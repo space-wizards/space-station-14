@@ -147,3 +147,6 @@ reagent-desc-potassium-iodide = Will reduce the damaging effects of radiation by
 
 reagent-name-haloperidol = haloperidol
 reagent-desc-haloperidol = Removes most stimulating and hallucinogenic drugs. Reduces druggy effects and jitteriness. Causes drowsiness.
+
+reagent-name-radioxadone = radioxadone
+reagent-desc-radioxadone = Not stable cryogenics chemical, that can be used for treating the high radiation damage, even in dead corpses, but deal high brute damage.

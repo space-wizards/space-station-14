@@ -1169,7 +1169,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 12
-          
+
 - type: reagent
   id: Opporozidone #Name based of an altered version of the startreck chem "Opporozine"
   name: reagent-name-opporozidone
@@ -1384,3 +1384,25 @@
       - !type:AdjustReagent
         reagent: MindbreakerToxin
         amount: -3.0
+
+- type: reagent
+  id: Radioxadone
+  name: reagent-name-radioxadone
+  group: Medicine
+  desc: reagent-desc-radioxadone
+  physicalDesc: reagent-physical-desc-glowing
+  flavor: medicine
+  color: "#1FE229"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:HealthChange
+          conditions:
+          - !type:Temperature
+            max: 180.0
+          damage:
+            groups:
+              Brute: 10
+            types:
+            Radiation: -5
