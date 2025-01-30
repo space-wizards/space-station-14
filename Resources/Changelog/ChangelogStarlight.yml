@@ -2810,4 +2810,18 @@ Entries:
   id: 392
   time: '2025-01-29T18:52:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/270
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added a cavity into which Tiny and Small sized items can be sewn.
+    type: Add
+  id: 393
+  time: '2025-01-30T05:55:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/272
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed slime storage.
+    type: Fix
+  id: 394
+  time: '2025-01-30T05:55:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/272
 
