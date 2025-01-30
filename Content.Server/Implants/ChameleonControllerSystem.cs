@@ -26,12 +26,12 @@ public sealed class ChameleonControllerSystem : EntitySystem
         SubscribeLocalEvent<SubdermalImplantComponent, ChameleonControllerSelectedJobMessage>(OnSelected);
     }
 
-    private void OnSelected(EntityUid uid, SubdermalImplantComponent component, ChameleonControllerSelectedJobMessage args)
+    private void OnSelected(Entity<SubdermalImplantComponent> ent, ref ChameleonControllerSelectedJobMessage args)
     {
-        if (component.ImplantedEntity == null || !HasComp<ChameleonControllerImplantComponent>(uid))
+        if (ent.Comp.ImplantedEntity == null || !HasComp<ChameleonControllerImplantComponent>(ent))
             return;
 
-        ChangeChameleonClothingToJob(component.ImplantedEntity.Value, args.SelectedJob);
+        ChangeChameleonClothingToJob(ent.Comp.ImplantedEntity.Value, args.SelectedJob);
     }
 
     /// <summary>

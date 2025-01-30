@@ -347,6 +347,7 @@
   description: Change your entire outfit fast!
   components:
   - type: InstantAction
+    priority: -20
     icon: { sprite: Actions/Implants/implants.rsi, state: chameleon }
     itemIconStyle: BigAction
     event: !type:ChameleonControllerOpenMenuEvent

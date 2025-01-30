@@ -342,7 +342,7 @@
   parent: BaseSubdermalImplant
   id: ChameleonControllerImplant
   name: chameleon controller implant
-  description: This implant allows you to instantly change the look of all your chameleon clothing in an instant.
+  description: This implant allows you to instantly change the appearance of all worn chameleon clothing.
   components:
   - type: ChameleonControllerImplant
   - type: SubdermalImplant

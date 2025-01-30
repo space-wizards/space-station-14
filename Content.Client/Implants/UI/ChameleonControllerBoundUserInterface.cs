@@ -32,6 +32,7 @@ public sealed class ChameleonControllerBoundUserInterface : BoundUserInterface
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
+
         if (state is not ChameleonControllerBuiState)
             return;
 
@@ -47,7 +48,7 @@ public sealed class ChameleonControllerBoundUserInterface : BoundUserInterface
             validList.Add(job);
         }
 
-        _menu?.UpdateState(validList.AsEnumerable());
+        _menu?.UpdateState(validList);
     }
 
     private void OnIdSelected(ProtoId<JobPrototype> selectedJob)

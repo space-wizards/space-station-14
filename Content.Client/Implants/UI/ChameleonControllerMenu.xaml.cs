@@ -15,12 +15,13 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
-
     private readonly SpriteSystem _sprite;
+
+    private IEnumerable<JobPrototype> _jobPrototypes = [];
+
     public event Action<ProtoId<JobPrototype>>? OnIdSelected;
 
     // List of all the job protos that you can select!
-    private IEnumerable<JobPrototype> _jobPrototypes = [];
 
     public ChameleonControllerMenu()
     {
@@ -37,7 +38,7 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
 
     private void UpdateGrid()
     {
-        ClearGrid();
+        Grid.RemoveAllChildren();
 
         foreach (var job in _jobPrototypes)
         {
@@ -62,16 +63,13 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
                 Stretch = TextureRect.StretchMode.KeepCentered,
                 Margin = new Thickness(0, 0, 5, 0),
             };
+
             boxContainer.AddChild(jobIconTexture);
             boxContainer.AddChild(button);
 
             button.OnPressed += _ => OnIdSelected?.Invoke(job);
+
             Grid.AddChild(boxContainer);
         }
-    }
-
-    private void ClearGrid()
-    {
-        Grid.RemoveAllChildren();
     }
 }

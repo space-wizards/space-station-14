@@ -1,6 +1,6 @@
-﻿using Robust.Shared.GameStates;
-using Content.Shared.Actions;
+﻿using Content.Shared.Actions;
 using Content.Shared.Roles;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -10,10 +10,7 @@ namespace Content.Shared.Implants;
 ///     Will allow anyone implanted with the implant to have more control over their chameleon clothing and items.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ChameleonControllerImplantComponent : Component
-{
-
-}
+public sealed partial class ChameleonControllerImplantComponent : Component;
 
 /// <summary>
 ///     This is sent when someone clicks on the hud icon and will open the menu.
