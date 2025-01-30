@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Fixed security's helmets not having any protection.
-    type: Fix
-  id: 7371
-  time: '2024-09-14T15:56:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32152
 - author: eoineoineoin
   changes:
   - message: Ghosts can now read books.
@@ -3889,3 +3882,10 @@
   id: 7870
   time: '2025-01-30T00:14:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33533
+- author: Spessmann
+  changes:
+  - message: Added Convex recreational complex, a large service-oriented highpop map.
+    type: Add
+  id: 7871
+  time: '2025-01-30T02:44:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33346
