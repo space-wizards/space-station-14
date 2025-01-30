@@ -7,6 +7,7 @@
   - type: Microwave
     capacity: 20
     maxCookTime: 60
+    canMicrowaveIdsSafely: false
   - type: MicrowaveButtons
     numberOfButtons: 12
   - type: Appearance
