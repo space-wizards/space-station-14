@@ -1,16 +1,28 @@
-﻿using Robust.Shared.Serialization;
+﻿using Content.Shared.Cargo.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cargo;
 
+/// <summary>
+/// Used to carry data in the station cargo storage.
+/// Has a custom equatable for easier searching in the hashSet, might not be good policy, oh well
+/// </summary>
 [DataDefinition, NetSerializable, Serializable]
 public sealed partial class CargoRestrictedData : IEquatable<CargoRestrictedData>
 {
     [DataField]
     public string ProductId { get; private set; }
+    public string ProductProductId { get; private set; }
 
-    public CargoRestrictedData(string productId)
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="productId">The product id as given in <see cref="CargoProductPrototype"/></param>
+    /// <param name="productProductId">The products product id, which is required when checking against the orders product id as they can differ</param>
+    public CargoRestrictedData(string productId, string productProductId = "")
     {
         ProductId = productId;
+        ProductProductId = productProductId;
     }
 
     public bool Equals(CargoRestrictedData? other)

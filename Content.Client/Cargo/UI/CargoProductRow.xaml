@@ -16,12 +16,14 @@
             HorizontalExpand="True"
             Name="ProductName" />
         <PanelContainer StyleClasses="BackgroundDark">
-            <CheckBox Access="Public" Name="Restricted" />
-            <Label
-                Access="Public"
-                Align="Right"
-                MinSize="52 32"
-                Name="PointCost" />
+            <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
+                <CheckBox Access="Public" Name="Restricted" />
+                <Label
+                    Access="Public"
+                    Align="Right"
+                    MinSize="52 32"
+                    Name="PointCost" />
+            </BoxContainer>
         </PanelContainer>
     </BoxContainer>
 </PanelContainer>

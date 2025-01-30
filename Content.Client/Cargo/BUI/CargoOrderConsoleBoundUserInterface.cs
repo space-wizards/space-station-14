@@ -100,6 +100,10 @@ namespace Content.Client.Cargo.BUI
             _menu.OpenCentered();
         }
 
+        /// <summary>
+        /// Triggers the population of the dynamic elements of the cargo request UI
+        /// </summary>
+        /// <param name="orders">List of current cargo orders</param>
         private void Populate(List<CargoOrderData> orders)
         {
             if (_menu == null) return;
@@ -178,7 +182,8 @@ namespace Content.Client.Cargo.BUI
 
         private void RestrictOrder(ButtonEventArgs args)
         {
-            if (args.Button.Parent!.Parent!.Parent is not CargoProductRow row || row.Product is null)
+            // I can only apologise, if there is a better way I beg you implement it
+            if (args.Button.Parent!.Parent!.Parent!.Parent is not CargoProductRow row || row.Product is null)
                 return;
 
             SendMessage(new CargoConsoleRestrictProductMessage(row.Product.ID));

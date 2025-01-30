@@ -34,6 +34,10 @@ public sealed partial class AccessReaderComponent : Component
     [DataField("access")] [ViewVariables(VVAccess.ReadWrite)]
     public List<HashSet<ProtoId<AccessLevelPrototype>>> AccessLists = new();
 
+    /// <summary>
+    /// List of a list for the purpose of allowing additional access groups, it follows the same rules as AccessLists
+    /// only allowing more lists.
+    /// </summary>
     [DataField("additionalAccess")] [ViewVariables(VVAccess.ReadWrite)]
     public List<List<HashSet<ProtoId<AccessLevelPrototype>>>> AdditionalAccessLists = new();
 

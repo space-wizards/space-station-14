@@ -207,6 +207,7 @@ public sealed class AccessReaderSystem : EntitySystem
             return false;
         }
 
+        // For checking the additional access lists will fallback to general access if the given list is out of range
         if (accessList >= 0 && reader.AdditionalAccessLists.Count > accessList)
         {
             foreach (var set in reader.AdditionalAccessLists[accessList])
@@ -214,6 +215,8 @@ public sealed class AccessReaderSystem : EntitySystem
                 if (set.IsSubsetOf(accessTags))
                     return true;
             }
+
+            return false;
         }
 
         if (reader.AccessLists.Count == 0)
