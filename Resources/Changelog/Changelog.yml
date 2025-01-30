@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: notafet
-  changes:
-  - message: Pressure and volume pumps now require power to operate.
-    type: Tweak
-  id: 7377
-  time: '2024-09-15T01:58:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28995
 - author: deltanedas
   changes:
   - message: Holoparasites can no longer be summoned from inside containers.
@@ -3901,3 +3894,10 @@
   id: 7876
   time: '2025-01-30T12:06:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33454
+- author: sleepyyapril
+  changes:
+  - message: Fixed double muzzle flash for the user.
+    type: Fix
+  id: 7877
+  time: '2025-01-30T13:34:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33981
