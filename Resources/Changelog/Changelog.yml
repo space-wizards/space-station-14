@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Command intercom now reinforced the same way as the security one.
-    type: Tweak
-  id: 7375
-  time: '2024-09-14T20:40:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32169
 - author: de0rix
   changes:
   - message: Animals in critical state now all have proper sprites.
@@ -3901,3 +3894,10 @@
   id: 7874
   time: '2025-01-30T04:45:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34721
+- author: Velken
+  changes:
+  - message: Mixing opposite types of lizard juices now has explosive consequences.
+    type: Add
+  id: 7875
+  time: '2025-01-30T11:34:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34730
