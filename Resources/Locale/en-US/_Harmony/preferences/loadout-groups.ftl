@@ -5,4 +5,4 @@ loadout-group-hop-shoes-harmony = Head of Personnel shoes
 loadout-group-perma-prisoner-jumpsuit = Prisoner jumpsuit
 
 # Medical
-loadout-group-medical-doctor-neck = Medical doctor neck
+loadout-group-medical-doctor-neck = Medical Doctor neck
