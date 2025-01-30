@@ -234,14 +234,14 @@ public sealed class StationSystem : EntitySystem
                 !xformQuery.TryGetComponent(gridUid, out var gridXform))
                 continue;
 
-            var worldRotation = _transform.GetWorldRotation(gridXform, xformQuery);
+            var (worldPos, worldRot) = _transform.GetWorldPositionRotation(gridXform);
             var localBounds = grid.LocalAABB.Enlarged(range);
 
             // Create a rotated box using the grid's transform
             var rotatedBounds = new Box2Rotated(
                 localBounds,
-                worldRotation,
-                _transform.GetWorldPosition(gridXform, xformQuery));
+                worldRot,
+                worldPos);
 
             gridBounds.Add((rotatedBounds, gridXform.MapID));
         }
