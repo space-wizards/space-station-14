@@ -114,14 +114,12 @@ public sealed class DoorSystem : SharedDoorSystem
 
                 return;
             case DoorState.Opening:
-            {
                 if (entity.Comp.OpeningAnimationTime == 0.0)
                     return;
 
                 _animationSystem.Play(entity, (Animation)entity.Comp.OpeningAnimation, DoorComponent.AnimationKey);
 
                 return;
-            }
             case DoorState.Closing:
                 if (entity.Comp.ClosingAnimationTime == 0.0 || entity.Comp.CurrentlyCrushing.Count != 0)
                     return;
@@ -148,13 +146,6 @@ public sealed class DoorSystem : SharedDoorSystem
         if (res is null)
             return;
 
-        foreach (var layer in sprite.AllLayers)
-        {
-            if (!res.RSI.TryGetState(layer.RsiState, out _))
-                continue;
-
-            layer.Rsi = res.RSI;
-        }
+        sprite.BaseRSI = res.RSI;
     }
-
 }
