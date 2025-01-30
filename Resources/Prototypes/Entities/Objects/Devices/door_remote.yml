@@ -13,6 +13,13 @@
   - type: DoorRemote
   - type: StealTarget
     stealGroup: DoorRemote
+  - type: ActivatableUI
+    inHandsOnly: true
+    key: enum.DoorRemoteUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.DoorRemoteUiKey.Key:
+        type: DoorRemoteBoundUserInterface
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]

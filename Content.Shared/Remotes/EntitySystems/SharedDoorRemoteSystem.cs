@@ -1,6 +1,6 @@
 using Content.Shared.Popups;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Remotes.Components;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Remotes.EntitySystems;
 
@@ -10,35 +10,24 @@ public abstract class SharedDoorRemoteSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<DoorRemoteComponent, UseInHandEvent>(OnInHandActivation);
+        SubscribeLocalEvent<DoorRemoteComponent, DoorRemoteModeChangeMessage>(OnDoorRemoteModeChange);
     }
 
-    private void OnInHandActivation(Entity<DoorRemoteComponent> entity, ref UseInHandEvent args)
+    private void OnDoorRemoteModeChange(Entity<DoorRemoteComponent> ent, ref DoorRemoteModeChangeMessage args)
     {
-        string switchMessageId;
-        switch (entity.Comp.Mode)
-        {
-            case OperatingMode.OpenClose:
-                entity.Comp.Mode = OperatingMode.ToggleBolts;
-                switchMessageId = "door-remote-switch-state-toggle-bolts";
-                break;
-
-            // Skip toggle bolts mode and move on from there (to emergency access)
-            case OperatingMode.ToggleBolts:
-                entity.Comp.Mode = OperatingMode.ToggleEmergencyAccess;
-                switchMessageId = "door-remote-switch-state-toggle-emergency-access";
-                break;
-
-            // Skip ToggleEmergencyAccess mode and move on from there (to door toggle)
-            case OperatingMode.ToggleEmergencyAccess:
-                entity.Comp.Mode = OperatingMode.OpenClose;
-                switchMessageId = "door-remote-switch-state-open-close";
-                break;
-            default:
-                throw new InvalidOperationException(
-                    $"{nameof(DoorRemoteComponent)} had invalid mode {entity.Comp.Mode}");
-        }
-        Dirty(entity);
-        Popup.PopupClient(Loc.GetString(switchMessageId), entity, args.User);
+        ent.Comp.Mode = args.Mode;
+        Dirty(ent);
     }
+}
+
+[Serializable, NetSerializable]
+public sealed class DoorRemoteModeChangeMessage : BoundUserInterfaceMessage
+{
+    public OperatingMode Mode;
+}
+
+[Serializable, NetSerializable]
+public enum DoorRemoteUiKey : byte
+{
+    Key
 }

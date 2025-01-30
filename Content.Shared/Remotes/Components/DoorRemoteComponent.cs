@@ -14,6 +14,5 @@ public enum OperatingMode : byte
 {
     OpenClose,
     ToggleBolts,
-    ToggleEmergencyAccess,
-    placeholderForUiUpdates
+    ToggleEmergencyAccess
 }

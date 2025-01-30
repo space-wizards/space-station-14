@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Silicons.StationAi;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Silicons.StationAi;
 
@@ -11,6 +12,8 @@ public sealed class StationAiBoundUserInterface(EntityUid owner, Enum uiKey) : B
     protected override void Open()
     {
         base.Open();
+
+        this.CreateWindow<SimpleRadialMenu>();
 
         var ev = new GetStationAiRadialEvent();
         EntMan.EventBus.RaiseLocalEvent(Owner, ref ev);
