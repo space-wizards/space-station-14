@@ -98,14 +98,7 @@ public sealed partial class DoorSystem : SharedDoorSystem
 
         if (_appearance.TryGetData<string>(door, DoorVisuals.BaseRSI, out var baseRsi, args.Component))
         {
-            if (!_resourceCache.TryGetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / baseRsi,
-                    out var res))
-                Log.Error("Unable to load RSI '{0}'. Trace:\n{1}", baseRsi, Environment.StackTrace);
-
-            foreach (var layer in args.Sprite.AllLayers)
-            {
-                layer.Rsi = res?.RSI;
-            }
+            UpdateSpriteRSI(args, baseRsi);
         }
 
         if (!TryComp<AnimationPlayerComponent>(door, out var animPlayer))
@@ -168,6 +161,18 @@ public sealed partial class DoorSystem : SharedDoorSystem
 
                 return;
         }
+    }
+
+    private void UpdateSpriteRSI(SpriteComponent sprite, string baseRsi)
+    {
+        if (!_resourceCache.TryGetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / baseRsi,
+                out var res))
+            Log.Error("Unable to load RSI '{0}'. Trace:\n{1}", baseRsi, Environment.StackTrace);
+
+        if (res is null)
+            return;
+
+        sprite.BaseRSI = res.RSI;
     }
 
     private void PlayAnimationIfNotPlaying(Entity<AnimationPlayerComponent> animEntity, Animation animation, string key)
