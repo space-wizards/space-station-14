@@ -192,7 +192,7 @@ public sealed class MindSystem : SharedMindSystem
             {
                 // Happens when transferring to your currently visited entity.
                 if (!_players.TryGetSessionByEntity(entity.Value, out var session) ||
-                    mind.UserId == null || session.UserId != mind.UserId.Value)
+                    mind.UserId == null || actor.PlayerSession != session )
                 {
                     throw new ArgumentException("Visit target already has a session.", nameof(entity));
                 }
@@ -222,8 +222,11 @@ public sealed class MindSystem : SharedMindSystem
         {
             oldContainer.Mind = null;
             mind.OwnedEntity = null;
-            RaiseLocalEvent(oldEntity.Value, new MindRemovedMessage((mindId, mind), (oldEntity.Value, oldContainer)));
-            RaiseLocalEvent(mindId, new MindGotRemovedEvent((mindId, mind), (oldEntity.Value, oldContainer)));
+            Entity<MindComponent> mindEnt = (mindId, mind);
+            Entity<MindContainerComponent> containerEnt = (oldEntity.Value, oldContainer);
+            RaiseLocalEvent(oldEntity.Value, new MindRemovedMessage(mindEnt, containerEnt));
+            RaiseLocalEvent(mindId, new MindGotRemovedEvent(mindEnt, containerEnt));
+            Dirty(oldEntity.Value, oldContainer);
         }
 
         // Don't do the full deletion cleanup if we're transferring to our VisitingEntity
@@ -256,8 +259,10 @@ public sealed class MindSystem : SharedMindSystem
             component!.Mind = mindId;
             mind.OwnedEntity = entity;
             mind.OriginalOwnedEntity ??= GetNetEntity(mind.OwnedEntity);
-            RaiseLocalEvent(entity.Value, new MindAddedMessage((mindId, mind), (entity.Value, component)));
-            RaiseLocalEvent(mindId, new MindGotAddedEvent((mindId, mind), (entity.Value, component)));
+            Entity<MindComponent> mindEnt = (mindId, mind);
+            Entity<MindContainerComponent> containerEnt = (entity.Value, component);
+            RaiseLocalEvent(entity.Value, new MindAddedMessage(mindEnt, containerEnt));
+            RaiseLocalEvent(mindId, new MindGotAddedEvent(mindEnt, containerEnt));
             Dirty(entity.Value, component);
         }
     }
@@ -296,7 +301,6 @@ public sealed class MindSystem : SharedMindSystem
             if (_players.GetPlayerData(mind.UserId.Value).ContentData() is { } oldData)
                 oldData.Mind = null;
             mind.UserId = null;
-            Dirty(mindId, mind);
         }
 
         if (userId == null)
