@@ -8,10 +8,10 @@
     },
     "states": [
       {
-        "name": "small"
+        "name": "clear-small"
       },
       {
-        "name": "large"
+        "name": "clear-large"
       }
     ]
   }

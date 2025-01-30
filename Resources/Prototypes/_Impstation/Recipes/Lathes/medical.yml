@@ -12,3 +12,11 @@
   materials:
     Glass: 100
     Plasma: 50
+
+- type: latheRecipe
+  id: BlindingLens
+  result: BlindingLens
+  completetime: 1
+  materials:
+    Glass: 100
+    Plasma: 50
