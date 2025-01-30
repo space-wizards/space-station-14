@@ -100900,6 +100900,14 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#03FCD3FF'
+  - uid: 5579
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -7.5,42.5
+      parent: 2
+    - type: AtmosPipeColor
+      color: '#FF6600FF'
   - uid: 8314
     components:
     - type: Transform
@@ -104807,14 +104815,6 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#03FCD3FF'
-  - uid: 5579
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -7.5,42.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#FF6600FF'
   - uid: 6898
     components:
     - type: Transform
