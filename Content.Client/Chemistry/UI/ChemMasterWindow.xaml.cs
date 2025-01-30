@@ -265,22 +265,18 @@ namespace Content.Client.Chemistry.UI
             {
                 case ChemMasterSortingType.Alphabetical:
                     reagentList = reagentList.OrderBy(x => x.name).ToList();
-                    BufferSortButton.Text = Loc.GetString("chem-master-window-sort-type-alphabetical");
                     break;
 
                 case ChemMasterSortingType.Quantity:
                     reagentList = reagentList.OrderByDescending(x => x.quantity).ToList();
-                    BufferSortButton.Text = Loc.GetString("chem-master-window-sort-type-quantity");
                     break;
                 case ChemMasterSortingType.Latest:
                     reagentList = Enumerable.Reverse(reagentList).ToList();
-                    BufferSortButton.Text = Loc.GetString("chem-master-window-sort-type-latest");
                     break;
 
-                // This case is pointless but it is there for readability
                 case ChemMasterSortingType.None:
                 default:
-                    BufferSortButton.Text = Loc.GetString("chem-master-window-sort-type-none");
+                    // This case is pointless but it is there for readability
                     break;
             }
 
