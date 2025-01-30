@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Holoparasites can no longer be summoned from inside containers.
-    type: Tweak
-  id: 7378
-  time: '2024-09-15T19:04:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32068
 - author: BackeTako
   changes:
   - message: Added French and Spanish speech traits.
@@ -3901,3 +3894,11 @@
   id: 7877
   time: '2025-01-30T13:34:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33981
+- author: BarryNorfolk
+  changes:
+  - message: Added a history tab to the bounty computer, showing all past completed
+      and skipped orders (and who skipped them).
+    type: Add
+  id: 7878
+  time: '2025-01-30T17:27:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33932
