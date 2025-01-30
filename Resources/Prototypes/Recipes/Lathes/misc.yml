@@ -120,6 +120,20 @@
     Steel: 300
 
 - type: latheRecipe
+  id: DoubleEmergencyOxygenTank
+  result: DoubleEmergencyOxygenTank
+  completetime: 4
+  materials:
+    Steel: 250
+
+- type: latheRecipe
+  id: DoubleEmergencyNitrogenTank
+  result: DoubleEmergencyNitrogenTank
+  completetime: 4
+  materials:
+    Steel: 250
+
+- type: latheRecipe
   id: ClothingShoesBootsMagSci
   result: ClothingShoesBootsMagSci
   completetime: 10
@@ -175,6 +189,11 @@
   parent: BaseFauxTileRecipe
   id: FauxTileAstroSnow
   result: FloorTileItemAstroSnow
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileAstroAsteroidSand
+  result: FloorTileItemAstroAsteroidSand
 
 - type: latheRecipe
   id: FloorGreenCircuit
