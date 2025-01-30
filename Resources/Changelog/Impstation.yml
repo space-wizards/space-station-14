@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Added the shittle powering pack. contains boards for a wallmount generator,
-      wallmount substation, and APC.
-    type: Add
-  - message: added an inflatable door to the shittle starter pack.
-    type: Tweak
-  id: 524
-  time: '2024-11-15T19:47:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/717
 - author: Darkmajia
   changes:
   - message: The ursa minor plushie can now be found in plushie crates.
@@ -4329,3 +4319,13 @@
   id: 1023
   time: '2025-01-30T22:33:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1507
+- author: aada
+  changes:
+  - message: Grenade penguins properly ignore syndicates holding them.
+    type: Fix
+  - message: Grenade penguins now pick a target and don't change their mind. Pick
+      up and throw to change their mind.
+    type: Tweak
+  id: 1024
+  time: '2025-01-30T22:43:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1465
