@@ -122,6 +122,15 @@
   color: "#878F00"
 
 - type: reagent
+  id: LemonLimeCranberry
+  name: reagent-name-lemon-lime-cranberry
+  parent: BaseSoda
+  desc: reagent-desc-lemon-lime-cranberry
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: lemonlimecranberrysoda
+  color: "#803C53"
+
+- type: reagent
   id: PwrGame
   name: reagent-name-pwr-game
   parent: BaseSoda

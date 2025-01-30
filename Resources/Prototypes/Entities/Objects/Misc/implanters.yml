@@ -245,6 +245,14 @@
   - type: Implanter
     implant: DeathAcidifierImplant
 
+- type: entity
+  id: FakeMindShieldImplanter
+  suffix: fake mindshield
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: FakeMindShieldImplant
+
 # Security and Command implanters
 
 - type: entity
