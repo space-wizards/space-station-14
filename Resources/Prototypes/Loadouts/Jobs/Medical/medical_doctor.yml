@@ -89,16 +89,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtMedicalDoctor
 
-# Harmony - Add the Laissez Faire suit
-- type: loadout
-  id: LaissezFaireSuit
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorPhysician
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitLaissezFaire
-# End Harmony
-
 - type: loadout
   id: SeniorPhysicianJumpsuit
   effects:

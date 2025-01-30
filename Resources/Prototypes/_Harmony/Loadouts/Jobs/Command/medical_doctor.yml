@@ -1,0 +1,7 @@
+- type: loadout
+  id: LaissezFaireSuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorPhysician
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLaissezFaire
