@@ -104,7 +104,7 @@
   - type: RatKing
     hungerPerArmyUse: 25
     hungerPerDomainUse: 50
-  - type: Rummaging
+  - type: CanRummage
     rummageLoot: !type:NestedSelector
       tableId: RatKingLoot
   - type: MobsterAccent
