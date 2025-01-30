@@ -192,7 +192,7 @@
   copyright: "by AftrLite (Github). Uses audio from hypospray.ogg and hiss.ogg (Found in Resources/Audio/Items)"
   source: "https://github.com/space-wizards/space-station-14/pull/33097"
 
-- files: ["shutter"]
+- files: ["shutter.ogg"]
   license: "Custom"
   copyright: "CC-BY-3.0 and CC-BY-4.0, https://freesound.org/people/Tomlija/sounds/99565/ and https://freesound.org/people/FreqMan/sounds/31370/ combined by Themias (github)."
   source: "https://github.com/space-wizards/space-station-14/pull/34774"
