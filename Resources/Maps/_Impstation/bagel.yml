@@ -100902,6 +100902,8 @@ entities:
       color: '#03FCD3FF'
   - uid: 5579
     components:
+    - type: MetaData
+      name: input from atmos
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,42.5
@@ -101236,7 +101238,7 @@ entities:
   - uid: 15778
     components:
     - type: MetaData
-      name: Supermatter Input
+      name: supermatter input
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -29.5,38.5
