@@ -1,21 +1,14 @@
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Remotes.Components;
 using Content.Shared.Remotes.EntitySystems;
-using Robust.Client.Graphics;
-using Robust.Client.Input;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
+using Robust.Client.UserInterface;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Remotes.UI;
 
 public class DoorRemoteBoundUserInterface: BoundUserInterface
 {
-    private RadialMenu? _menu;
-
-    [Dependency] private readonly IClyde _displayManager = default!;
-    [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly IGameTiming _timing;
+    private SimpleRadialMenu? _menu;
 
     /// <inheritdoc />
     public DoorRemoteBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
@@ -27,26 +20,14 @@ public class DoorRemoteBoundUserInterface: BoundUserInterface
     {
         base.Open();
 
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         if (!EntMan.HasComponent<DoorRemoteComponent>(Owner))
             return;
 
-        if (_menu is { IsOpen: true })
-        {
-            _menu.Close();
-            return;
-        }
-
+        _menu = this.CreateWindow<SimpleRadialMenu>();
         var models = CreateButtons();
+        _menu.SetButtons(models);
 
-        _menu = new SimpleRadialMenu(models);
-        _menu.OnClose += Close;
-
-        // Open the menu, centered on the mouse
-        var vpSize = _displayManager.ScreenSize;
-        _menu.OpenCenteredAt(_inputManager.MouseScreenPosition.Position / vpSize);
+        _menu.OpenOverMouseScreenPosition();
     }
 
 
