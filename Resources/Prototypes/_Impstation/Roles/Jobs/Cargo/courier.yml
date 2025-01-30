@@ -12,6 +12,7 @@
   - Maintenance
   extendedAccess:
   - Logistics
+  - Salvage
 
 - type: startingGear
   id: CourierGear
