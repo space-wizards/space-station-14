@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: eoineoineoin
-  changes:
-  - message: Ghosts can now read books.
-    type: Add
-  id: 7372
-  time: '2024-09-14T16:28:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32151
 - author: Errant
   changes:
   - message: Lone Ops nukies now spawn with the appropriate species-specific survival
@@ -3889,3 +3882,19 @@
   id: 7871
   time: '2025-01-30T02:44:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33346
+- author: ScarKy0
+  changes:
+  - message: Added the Authentication Disruptor to the syndicate uplink for 5TC. It
+      removes access requirements from devices and forcefully opens airlocks and digital
+      locks.
+    type: Add
+  - message: The EMAG can no longer open airlocks or break locks.
+    type: Tweak
+  - message: Price of the EMAG lowered to 4TC.
+    type: Tweak
+  - message: '"Emagged" airlocks can now be fixed by unbolting and using the access
+      configurator. Locks and similiar can now be fixed by just using the access configurator.'
+    type: Tweak
+  id: 7872
+  time: '2025-01-30T04:05:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34337
