@@ -9,14 +9,14 @@
     state: firstaid
   - type: Item
     size: Large
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    heldPrefix: firstaid
     shape:
     - 0,0,3,2
   - type: Storage
     maxItemSize: Small
     grid:
     - 0,0,3,2
-    sprite: Objects/Specific/Medical/firstaidkits.rsi
-    heldPrefix: firstaid
   - type: PhysicalComposition
     materialComposition:
       Plastic: 150
