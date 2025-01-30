@@ -460,9 +460,6 @@
   metabolisms:
     Drink:
       effects:
-        - !type:GenericStatusEffect
-          key: GrayAccent
-          component: GrayAccent
         - !type:SatiateThirst
           factor: 2
         - !type:AdjustReagent
