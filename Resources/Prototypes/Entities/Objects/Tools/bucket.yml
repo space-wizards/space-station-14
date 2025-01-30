@@ -68,3 +68,7 @@
     materialComposition:
       Plastic: 50
   - type: DnaSubstanceTrace
+  - type: ScoopableSolution #gotta add this to more objects, but yknow only after making sure it workies well
+    solution: bucket
+    general: true
+

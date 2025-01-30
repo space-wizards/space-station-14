@@ -28,4 +28,10 @@ public sealed partial class ScoopableSolutionComponent : Component
     /// </summary>
     [DataField]
     public LocId Popup = "scoopable-component-popup";
+
+    /// <summary>
+    /// If true, use the general variant of it 
+    /// </summary>
+    [DataField]
+    public bool General = false;
 }
