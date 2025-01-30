@@ -24,6 +24,7 @@ public sealed partial class DisposalDoAfterEvent : SimpleDoAfterEvent
 public abstract class SharedDisposalUnitSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming GameTiming = default!;
+    [Dependency] protected readonly EmagSystem _emag = default!;
     [Dependency] protected readonly MetaDataSystem Metadata = default!;
     [Dependency] protected readonly SharedJointSystem Joints = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
@@ -102,6 +103,12 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     protected void OnEmagged(EntityUid uid, SharedDisposalUnitComponent component, ref GotEmaggedEvent args)
     {
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
+        if (component.DisablePressure == true)
+            return;
+
         component.DisablePressure = true;
         args.Handled = true;
     }

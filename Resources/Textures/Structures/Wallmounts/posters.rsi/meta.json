@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from  at commit https://github.com/tgstation/tgstation/commit/f01de25493e2bd2706ef9b0303cb0d7b5e3e471b.     poster52_contraband, poster53_contraband and poster54_contraband taken from https://github.com/vgstation-coders/vgstation13/blob/435ed5f2a7926e91cc31abac3a0d47d7e9ad7ed4/icons/obj/posters.dmi.     originmap, poster55_contraband, poster56_contraband, poster57_contraband and poster39_legit by discord brainfood#7460,     poster63_contraband by discord foboscheshir_,     poster52_legit by SlamBamActionman,     poster53_legit and the original version by @RCOI on discord.",
+  "copyright": "Taken from  at commit https://github.com/tgstation/tgstation/commit/f01de25493e2bd2706ef9b0303cb0d7b5e3e471b.     poster52_contraband, poster53_contraband and poster54_contraband taken from https://github.com/vgstation-coders/vgstation13/blob/435ed5f2a7926e91cc31abac3a0d47d7e9ad7ed4/icons/obj/posters.dmi.     originmap, poster55_contraband, poster56_contraband, poster57_contraband and poster39_legit by discord brainfood#7460,     poster63_contraband by discord foboscheshir_,     poster52_legit by SlamBamActionman,     poster53_legit and the original version by @RCOI on discord, modified by Spessmann.",
   "size": {
     "x": 32,
     "y": 32

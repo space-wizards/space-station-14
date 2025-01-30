@@ -3,6 +3,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using Robust.Shared;
+using Robust.Shared.Audio.Components;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -217,14 +218,17 @@ namespace Content.IntegrationTests.Tests
         /// generally not spawn unrelated / detached entities. Any entities that do get spawned should be parented to
         /// the spawned entity (e.g., in a container). If an entity needs to spawn an entity somewhere in null-space,
         /// it should delete that entity when it is no longer required. This test mainly exists to prevent "entity leak"
-        /// bugs, where spawning some entity starts spawning unrelated entities in null space.
+        /// bugs, where spawning some entity starts spawning unrelated entities in null space that stick around after
+        /// the original entity is gone.
+        ///
+        /// Note that this isn't really a strict requirement, and there are probably quite a few edge cases. Its a pretty
+        /// crude test to try catch issues like this, and possibly should just be disabled.
         /// </remarks>
         [Test]
         public async Task SpawnAndDeleteEntityCountTest()
         {
             var settings = new PoolSettings { Connected = true, Dirty = true };
             await using var pair = await PoolManager.GetServerClient(settings);
-            var mapManager = pair.Server.ResolveDependency<IMapManager>();
             var mapSys = pair.Server.System<SharedMapSystem>();
             var server = pair.Server;
             var client = pair.Client;
@@ -262,6 +266,10 @@ namespace Content.IntegrationTests.Tests
 
             await pair.RunTicksSync(3);
 
+            // We consider only non-audio entities, as some entities will just play sounds when they spawn.
+            int Count(IEntityManager ent) =>  ent.EntityCount - ent.Count<AudioComponent>();
+            IEnumerable<EntityUid> Entities(IEntityManager entMan) => entMan.GetEntities().Where(entMan.HasComponent<AudioComponent>);
+
             await Assert.MultipleAsync(async () =>
             {
                 foreach (var protoId in protoIds)
@@ -271,10 +279,10 @@ namespace Content.IntegrationTests.Tests
                     if (protoId == "MobHumanSpaceNinja")
                         continue;
 
-                    var count = server.EntMan.EntityCount;
-                    var clientCount = client.EntMan.EntityCount;
-                    var serverEntities = new HashSet<EntityUid>(server.EntMan.GetEntities());
-                    var clientEntities = new HashSet<EntityUid>(client.EntMan.GetEntities());
+                    var count = Count(server.EntMan);
+                    var clientCount = Count(client.EntMan);
+                    var serverEntities = new HashSet<EntityUid>(Entities(server.EntMan));
+                    var clientEntities = new HashSet<EntityUid>(Entities(client.EntMan));
                     EntityUid uid = default;
                     await server.WaitPost(() => uid = server.EntMan.SpawnEntity(protoId, coords));
                     await pair.RunTicksSync(3);
@@ -282,33 +290,33 @@ namespace Content.IntegrationTests.Tests
                     // If the entity deleted itself, check that it didn't spawn other entities
                     if (!server.EntMan.EntityExists(uid))
                     {
-                        Assert.That(server.EntMan.EntityCount, Is.EqualTo(count), $"Server prototype {protoId} failed on deleting itself\n" +
-                            BuildDiffString(serverEntities, server.EntMan.GetEntities(), server.EntMan));
-                        Assert.That(client.EntMan.EntityCount, Is.EqualTo(clientCount), $"Client prototype {protoId} failed on deleting itself\n" +
+                        Assert.That(Count(server.EntMan), Is.EqualTo(count), $"Server prototype {protoId} failed on deleting itself\n" +
+                            BuildDiffString(serverEntities, Entities(server.EntMan), server.EntMan));
+                        Assert.That(Count(client.EntMan), Is.EqualTo(clientCount), $"Client prototype {protoId} failed on deleting itself\n" +
                             $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
                             $"Server count was {count}.\n" +
-                            BuildDiffString(clientEntities, client.EntMan.GetEntities(), client.EntMan));
+                            BuildDiffString(clientEntities, Entities(client.EntMan), client.EntMan));
                         continue;
                     }
 
                     // Check that the number of entities has increased.
-                    Assert.That(server.EntMan.EntityCount, Is.GreaterThan(count), $"Server prototype {protoId} failed on spawning as entity count didn't increase\n" +
-                        BuildDiffString(serverEntities, server.EntMan.GetEntities(), server.EntMan));
-                    Assert.That(client.EntMan.EntityCount, Is.GreaterThan(clientCount), $"Client prototype {protoId} failed on spawning as entity count didn't increase\n" +
+                    Assert.That(Count(server.EntMan), Is.GreaterThan(count), $"Server prototype {protoId} failed on spawning as entity count didn't increase\n" +
+                        BuildDiffString(serverEntities, Entities(server.EntMan), server.EntMan));
+                    Assert.That(Count(client.EntMan), Is.GreaterThan(clientCount), $"Client prototype {protoId} failed on spawning as entity count didn't increase\n" +
                         $"Expected at least {clientCount} and found {client.EntMan.EntityCount}. " +
-                        $"Server count was {count}." +
-                        BuildDiffString(clientEntities, client.EntMan.GetEntities(), client.EntMan));
+                        $"Server count was {count}.\n" +
+                        BuildDiffString(clientEntities, Entities(client.EntMan), client.EntMan));
 
                     await server.WaitPost(() => server.EntMan.DeleteEntity(uid));
                     await pair.RunTicksSync(3);
 
                     // Check that the number of entities has gone back to the original value.
-                    Assert.That(server.EntMan.EntityCount, Is.EqualTo(count), $"Server prototype {protoId} failed on deletion: count didn't reset properly\n" +
-                        BuildDiffString(serverEntities, server.EntMan.GetEntities(), server.EntMan));
+                    Assert.That(Count(server.EntMan), Is.EqualTo(count), $"Server prototype {protoId} failed on deletion: count didn't reset properly\n" +
+                        BuildDiffString(serverEntities, Entities(server.EntMan), server.EntMan));
                     Assert.That(client.EntMan.EntityCount, Is.EqualTo(clientCount), $"Client prototype {protoId} failed on deletion: count didn't reset properly:\n" +
                         $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
                         $"Server count was {count}.\n" +
-                        BuildDiffString(clientEntities, client.EntMan.GetEntities(), client.EntMan));
+                        BuildDiffString(clientEntities, Entities(client.EntMan), client.EntMan));
                 }
             });
 

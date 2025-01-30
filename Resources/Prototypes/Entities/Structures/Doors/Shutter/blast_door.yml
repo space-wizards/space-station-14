@@ -5,6 +5,7 @@
   description: This one says 'BLAST DONGER'.
   components:
   - type: AccessReader
+    containerAccessProvider: board
   - type: Sprite
     sprite: Structures/Doors/Shutters/blastdoor.rsi
     layers:

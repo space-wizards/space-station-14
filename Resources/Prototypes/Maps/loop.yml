@@ -2,7 +2,7 @@
   id: Loop
   mapName: 'Loop Station'
   mapPath: /Maps/loop.yml
-  minPlayers: 30
+  minPlayers: 35
   maxPlayers: 70
   stations:
     Loop:
@@ -35,9 +35,10 @@
             TechnicalAssistant: [ 5, 5 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
-            Chemist: [ 2, 2 ]
+            Chemist: [ 3, 3 ]
             MedicalDoctor: [ 4, 5 ]
             Paramedic: [ 2, 2 ]
+            Psychologist: [ 1, 1 ]
             MedicalIntern: [ 4, 4 ]
             #science
             ResearchDirector: [ 1, 1 ]
