@@ -235,6 +235,60 @@
                   max: 2
 
 - type: entity
+  name: salami shield
+  parent: BaseShield
+  id: SalamiShield
+  description: A makeshift shield made with a salami container lid and cables.
+  components:
+    - type: Sprite
+      state: salami-icon
+    - type: Item
+      heldPrefix: salami
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.975
+          Heat: 0.975
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.95
+          Heat: 0.975
+        flatReductions:
+          Blunt: 1
+          Slash: 1
+          Piercing: 0.25
+          Heat: 0
+    - type: Construction
+      graph: SalamiShield
+      node: salamiShield
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 40
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 20 #Very weak shield
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetPlastic:
+                  min: 1
+                  max: 2
+
+- type: entity
   name: web shield
   parent: BaseShield
   id: WebShield

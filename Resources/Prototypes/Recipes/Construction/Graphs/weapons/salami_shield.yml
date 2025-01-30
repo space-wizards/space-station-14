@@ -1,0 +1,20 @@
+- type: constructionGraph
+  id: SalamiShield
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: salamiShield
+          steps:
+            - tag: LidSalami
+              name: salami lid
+              icon:
+                sprite: Objects/Decoration/lidsalami.rsi
+                state: icon
+              doAfter: 3
+            - material: Cable
+              amount: 5
+              doAfter: 2
+
+    - node: salamiShield
+      entity: SalamiShield
