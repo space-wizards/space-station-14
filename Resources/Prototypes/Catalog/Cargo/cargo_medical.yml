@@ -62,7 +62,7 @@
   id: EmergencyO2Kit
   icon:
     sprite: Objects/Specific/Medical/firstaidkits.rsi
-    state: o2kit
+    state: airlosskit
   product: CrateEmergencyO2Kit
   cost: 1000
   category: cargoproduct-category-name-medical
