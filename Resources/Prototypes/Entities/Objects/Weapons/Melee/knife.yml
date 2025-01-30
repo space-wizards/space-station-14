@@ -129,7 +129,7 @@
 
 - type: entity
   name: kukri knife
-  parent: [CombatKnife, BaseMinorContraband]
+  parent: [CombatKnife, BaseSecurityCargoContraband]
   id: KukriKnife
   description: Professionals have standards. Be polite. Be efficient. Have a plan to kill everyone you meet.
   components:

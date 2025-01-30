@@ -41,10 +41,8 @@
   - Ocean
   - Arctic
   - Sea
-  - Lake
   - Spring
   - Swamp
-  - River
   - Stream
   - Forest
   - Rainforest
@@ -92,6 +90,7 @@
   - Monsoon
   - Overcast
   - Storm
+
 - type: dataset
   id: DionaLast
   values:
@@ -202,7 +201,7 @@
   - Enervation
   - Fatigue
   - Noxiousness
-  - Convlution
+  - Convolution
   - Confusion
   - Agitation
   - Despair
