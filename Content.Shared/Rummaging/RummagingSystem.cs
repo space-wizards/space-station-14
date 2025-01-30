@@ -24,20 +24,14 @@ public sealed class RummagingSystem : EntitySystem
         SubscribeLocalEvent<RummageableComponent, RummageDoAfterEvent>(OnDoAfterComplete);
     }
 
-    /// <summary>
-    /// Runs on getting the verbs of a rummageable entity, raised on that entity.
-    /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="rummageable"></param>
-    /// <param name="args"></param>
     private void OnGetVerb(Entity<RummageableComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        // if the entity is relootable and the cooldown has passed, reset looted status.
-        if (entity.Comp.Relootable && entity.Comp.NextRelootable < _gameTiming.CurTime)
-            entity.Comp.Looted = false;
+        // if the ent is relootable but not currently lootable, skip adding verbs
+        if (!IsCurrentlyLootable(entity))
+            return;
 
-        // if the user can't rummage or the entity has already been rummaged, don't add the verb.
-        if (!TryComp<RummagingComponent>(args.User, out var rummaging) || entity.Comp.Looted)
+        // if the user can't rummage or the entity has already been rummaged, skip adding verbs
+        if (!TryComp<CanRummageComponent>(args.User, out var rummaging) || entity.Comp.Looted)
             return;
 
         // args.Verbs.Add complains if I use args.User directly
@@ -72,13 +66,12 @@ public sealed class RummagingSystem : EntitySystem
     private void OnDoAfterComplete(Entity<RummageableComponent> entity, ref RummageDoAfterEvent args)
     {
         // this is mostly here to grab the rummaging component.
-        if (!TryComp<RummagingComponent>(args.User, out var rummaging))
+        if (!TryComp<CanRummageComponent>(args.User, out var rummaging))
             return;
 
-        if (args.Cancelled || entity.Comp.Looted)
+        if (args.Cancelled || !IsCurrentlyLootable(entity))
             return;
 
-        entity.Comp.Looted = true;
         Dirty(entity.Owner, entity.Comp);
         _audio.PlayPredicted(entity.Comp.Sound, entity.Owner, args.User);
 
@@ -97,8 +90,23 @@ public sealed class RummagingSystem : EntitySystem
                 Spawn(spawn, Transform(entity.Owner).Coordinates);
         }
 
+        if (!entity.Comp.Looted)
+            entity.Comp.Looted = true;
+
         // and set the next refresh if the entity is relootable.
         if (entity.Comp.Relootable)
             entity.Comp.NextRelootable = _gameTiming.CurTime + entity.Comp.RelootableCooldown;
+    }
+
+    // checks Relootable status
+    public bool IsCurrentlyLootable(Entity<RummageableComponent> entity)
+    {
+        if (entity.Comp.Relootable)
+        {
+            if (entity.Comp.NextRelootable < _gameTiming.CurTime)
+                return true;
+            else return false;
+        }
+        else return true;
     }
 }

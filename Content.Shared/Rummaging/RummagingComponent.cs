@@ -9,15 +9,14 @@ namespace Content.Shared.Rummaging;
 /// This is used for entities that can rummage for loot.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(RummagingSystem))]
-[AutoGenerateComponentState]
-public sealed partial class RummagingComponent : Component
+public sealed partial class CanRummageComponent : Component
 {
     /// <summary>
     /// A weighted loot table.
     /// Defining this on the rummager so different things can get different stuff out of the same container type.
     /// Can be overridden on the entity with Rummageable. 
     /// </summary>
-    [DataField(required: true), AutoNetworkedField]
+    [DataField(required: true)]
     public EntityTableSelector? RummageLoot;
 
     /// <summary>
@@ -29,7 +28,7 @@ public sealed partial class RummagingComponent : Component
     /// <summary>
     /// Rummage speed multiplier.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float RummageModifier = 1f;
 }
 

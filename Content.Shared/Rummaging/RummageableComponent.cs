@@ -8,23 +8,21 @@ namespace Content.Shared.Rummaging;
 /// This is used for entities that can be
 /// rummaged through to get loot.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(RummagingSystem))]
-[AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, Access(typeof(RummagingSystem)), AutoGenerateComponentPause]
 public sealed partial class RummageableComponent : Component
 {
     /// <summary>
-    /// Whether or not this entity has been rummaged through already.
+    /// Tracks whether or not this particular object has been looted.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Looted;
+    public bool Looted = false;
 
     /// <summary>
     /// Whether or not this entity can be rummaged through multiple times.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public bool Relootable = false;
 
-    [DataField, AutoNetworkedField]
+    [DataField, AutoPausedField]
     public TimeSpan RelootableCooldown = TimeSpan.FromSeconds(60);
     public TimeSpan NextRelootable;
 
@@ -32,13 +30,13 @@ public sealed partial class RummageableComponent : Component
     /// A weighted loot table. 
     /// Overrides the same setting on RummagingComponent.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public EntityTableSelector? RummageLoot;
 
     /// <summary>
     /// How long it takes to rummage through a rummageable container.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float RummageDuration = 3f;
 
     /// <summary>
