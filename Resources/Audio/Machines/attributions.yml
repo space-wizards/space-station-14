@@ -193,6 +193,6 @@
   source: "https://github.com/space-wizards/space-station-14/pull/33097"
 
 - files: ["shutter"]
-  license: "CC-BY-4.0"
-  copyright: "https://freesound.org/people/Tomlija/sounds/99565/ and https://freesound.org/people/FreqMan/sounds/31370/ combined by Themias (github)."
+  license: "Custom"
+  copyright: "CC-BY-3.0 and CC-BY-4.0, https://freesound.org/people/Tomlija/sounds/99565/ and https://freesound.org/people/FreqMan/sounds/31370/ combined by Themias (github)."
   source: "https://github.com/space-wizards/space-station-14/pull/34774"
