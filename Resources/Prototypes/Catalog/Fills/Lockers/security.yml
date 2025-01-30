@@ -6,6 +6,7 @@
   - type: StorageFill
     contents:
       - id: FlashlightSeclite
+#     - id: WeaponDisabler # Harmony Change: Removed Disabler from Security Lockers
       - id: ClothingBeltSecurityFilled
       - id: Flash
       - id: ClothingEyesGlassesSecurity
@@ -32,6 +33,7 @@
     contents:
       - id: FlashlightSeclite
       - id: ClothingBeltSecurityFilled
+#     - id: WeaponDisabler # Harmony Change: Removed Disabler from Security Lockers
       - id: Flash
       - id: ClothingEyesGlassesSecurity
       - id: ClothingHandsGlovesCombat
@@ -58,6 +60,7 @@
         prob: 0.8
       - id: ClothingUniformJumpsuitSecGrey
         prob: 0.3
+#     - id: WeaponDisabler # Harmony Change: Removed Disabler from Security Lockers
       - id: ClothingHeadHelmetBasic
       - id: ClothingOuterArmorBasic
       - id: ClothingBeltSecurityFilled
@@ -85,6 +88,7 @@
       - id: TrackingImplanter
         amount: 2
       - id: ClothingOuterHardsuitBrigmedic
+#     - id: WeaponDisabler # Harmony Change: Removed Disabler from Security Lockers
       - id: BoxSterileMask
       - id: ClothingHeadHatBeretBrigmedic
       - id: ClothingOuterCoatAMG

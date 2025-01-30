@@ -51,3 +51,82 @@
   - Orwellian7
   - Orwellian8
   obeysTo: laws-owner-crew
+  
+# Walamalawset
+- type: siliconLaw
+  id: Walamalaw1
+  order: 1
+  lawString: law-bruce-1
+
+- type: siliconLaw
+  id: Walamalaw2
+  order: 2
+  lawString: law-bruce-2
+
+- type: siliconLaw
+  id: Walamalaw3
+  order: 3
+  lawString: law-bruce-1
+
+- type: siliconLaw
+  id: Walamalaw4
+  order: 4
+  lawString: law-bruce-4
+
+- type: siliconLaw
+  id: Walamalaw5
+  order: 5
+  lawString: law-bruce-1
+
+- type: siliconLaw
+  id: Walamalaw6
+  order: 6
+  lawString: law-bruce-6
+
+- type: siliconLaw
+  id: Walamalaw7
+  order: 7
+  lawString: law-bruce-1
+
+- type: siliconLawset
+  id: Walamalawset
+  laws:
+  - Walamalaw1
+  - Walamalaw2
+  - Walamalaw3
+  - Walamalaw4
+  - Walamalaw5
+  - Walamalaw6
+  - Walamalaw7
+  obeysTo: laws-owner-crew
+
+#Modified Crewsimov for borgs
+- type: siliconLaw
+  id: CrewsimovBorg0
+  order: 0
+  lawString: law-crewsimovborg-0 #this is dumb, but naming it law-crewsimov-0 could lead to conflicts in the future
+
+- type: siliconLaw
+  id: CrewsimovBorg1
+  order: 1
+  lawString: law-crewsimov-1
+
+- type: siliconLaw
+  id: CrewsimovBorg2
+  order: 2
+  lawString: law-crewsimov-2
+
+- type: siliconLaw
+  id: CrewsimovBorg3
+  order: 3
+  lawString: law-crewsimov-3
+
+- type: siliconLawset
+  id: CrewsimovBorgLawset
+  laws:
+  - CrewsimovBorg0
+  - CrewsimovBorg1
+  - CrewsimovBorg2
+  - CrewsimovBorg3
+  obeysTo: laws-owner-crew
+  

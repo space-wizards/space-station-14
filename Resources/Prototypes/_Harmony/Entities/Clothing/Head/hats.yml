@@ -121,3 +121,19 @@
     - ClothMade
     - HamsterWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretSeniorTechnicianHarmony
+  name: senior technician beret
+  description: A beret made for only the bestest of box movers.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Head/Hats/beret_technician_senior.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Head/Hats/beret_technician_senior.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon

@@ -12,7 +12,7 @@
     whitelist:
       tags:
         - CartridgePistol
-    capacity: 10
+    capacity: 15 # Harmony Change: Changes Pistol Magazine Capacity from 10 to 15
   - type: Item
     size: Small
   - type: ContainerContainer
