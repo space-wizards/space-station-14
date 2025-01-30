@@ -370,14 +370,14 @@
   name: pill canister
   parent: PillCanister
   id: PillCanisterDexalin
-  suffix: Dexalin 10u, 5
+  suffix: Dexalin 10u, 7
   components:
   - type: Label
     currentLabel: dexalin 10u
   - type: StorageFill
     contents:
     - id: PillDexalin
-      amount: 5
+      amount: 7
 
 - type: entity
   name: pill
@@ -1078,10 +1078,12 @@
             Quantity: 15
 
 - type: entity
-  suffix: Dexalin+ & Saline
+  suffix: Dexalin plus & Saline
   parent: PrefilledSyringe
   id: SyringeAirloss
   components:
+  - type: Label
+    currentLabel: dexalin plus & saline
   - type: SolutionContainerManager
     solutions:
       injector:
