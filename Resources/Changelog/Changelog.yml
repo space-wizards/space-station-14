@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Just_Art
-  changes:
-  - message: Added a head gauze to customization.
-    type: Add
-  id: 7370
-  time: '2024-09-14T14:55:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30852
 - author: deltanedas
   changes:
   - message: Fixed security's helmets not having any protection.
@@ -3888,3 +3881,11 @@
   id: 7869
   time: '2025-01-29T10:35:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32502
+- author: thetolbean
+  changes:
+  - message: Traitors now have access to a Syndicate Radio Implanter, allowing covert
+      communications on the Syndicate channel without a headset.
+    type: Add
+  id: 7870
+  time: '2025-01-30T00:14:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33533
