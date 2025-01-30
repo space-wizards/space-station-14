@@ -12,27 +12,27 @@ namespace Content.Client.UserInterface.Controls;
 [GenerateTypedNameReferences]
 public partial class SimpleRadialMenu : RadialMenu
 {
-    private readonly EntityUid? _attachMenuToEntity;
+    private EntityUid? _attachMenuToEntity;
 
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    /// <summary>
-    /// c-tor for codegen to work properly, is not used in runtime and should not be called in code.
-    /// </summary>
     public SimpleRadialMenu()
-    {
-        // no-op
-    }
-
-    public SimpleRadialMenu(IEnumerable<RadialMenuOption> models, EntityUid? attachMenuToEntity = null, SimpleRadialMenuSettings? settings = null)
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
+    }
 
-        _attachMenuToEntity = attachMenuToEntity;
+    public void Track(EntityUid owner)
+    {
+        _attachMenuToEntity = owner;
+    }
+
+    public void SetButtons(IEnumerable<RadialMenuOption> models, SimpleRadialMenuSettings? settings = null)
+    {
+        Children.Clear();
+
         var sprites = _entManager.System<SpriteSystem>();
-
         Fill(models, sprites, Children, settings ?? new SimpleRadialMenuSettings());
     }
 
@@ -184,6 +184,7 @@ public partial class SimpleRadialMenu : RadialMenu
     }
 
     #endregion
+
 }
 
 

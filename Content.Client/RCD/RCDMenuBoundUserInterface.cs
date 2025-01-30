@@ -4,8 +4,7 @@ using Content.Client.UserInterface.Controls;
 using Content.Shared.RCD;
 using Content.Shared.RCD.Components;
 using JetBrains.Annotations;
-using Robust.Client.Graphics;
-using Robust.Client.Input;
+using Robust.Client.UserInterface;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -15,12 +14,10 @@ namespace Content.Client.RCD;
 [UsedImplicitly]
 public sealed class RCDMenuBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly IClyde _displayManager = default!;
-    [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
 
-    private RadialMenu? _menu;
+    private SimpleRadialMenu? _menu;
 
     private static readonly Dictionary<string, (string Tooltip, SpriteSpecifier Sprite)> PrototypesGroupingInfo
         = new Dictionary<string, (string Tooltip, SpriteSpecifier Sprite)>
@@ -44,13 +41,12 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
         if (!EntMan.TryGetComponent<RCDComponent>(Owner, out var rcd))
             return;
 
+        _menu = this.CreateWindow<SimpleRadialMenu>();
+        _menu.Track(Owner);
         var models = ConvertToButtons(rcd.AvailablePrototypes);
+        _menu.SetButtons(models);
 
-        _menu = new SimpleRadialMenu(models, Owner);
-
-        // Open the menu, centered on the mouse
-        var vpSize = _displayManager.ScreenSize;
-        _menu.OpenCenteredAt(_inputManager.MouseScreenPosition.Position / vpSize);
+        _menu.Open();
     }
 
     private IEnumerable<RadialMenuNestedLayerOption> ConvertToButtons(HashSet<ProtoId<RCDPrototype>> prototypes)

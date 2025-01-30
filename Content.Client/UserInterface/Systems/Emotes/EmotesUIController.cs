@@ -28,7 +28,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     
     private MenuButton? EmotesButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EmotesButton;
-    private RadialMenu? _menu;
+    private SimpleRadialMenu? _menu;
 
     private static readonly Dictionary<EmoteCategory, (string Tooltip, SpriteSpecifier Sprite)> EmoteGroupingInfo
         = new Dictionary<EmoteCategory, (string Tooltip, SpriteSpecifier Sprite)>
@@ -59,8 +59,11 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
             var prototypes = _prototypeManager.EnumeratePrototypes<EmotePrototype>();
             var models = ConvertToButtons(prototypes);
 
-            _menu = new SimpleRadialMenu(models);
+            _menu = new SimpleRadialMenu();
+            _menu.SetButtons(models);
+
             _menu.Open();
+
             _menu.OnClose += OnWindowClosed;
             _menu.OnOpen += OnWindowOpen;
 

@@ -1,12 +1,13 @@
 using System.Linq;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Silicons.StationAi;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Silicons.StationAi;
 
 public sealed class StationAiBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    private RadialMenu? _menu;
+    private SimpleRadialMenu? _menu;
 
     protected override void Open()
     {
@@ -14,9 +15,12 @@ public sealed class StationAiBoundUserInterface(EntityUid owner, Enum uiKey) : B
 
         var ev = new GetStationAiRadialEvent();
         EntMan.EventBus.RaiseLocalEvent(Owner, ref ev);
-        var buttonModels = ConvertToButtons(ev.Actions);
 
-        _menu = new SimpleRadialMenu(buttonModels, Owner);
+        _menu = this.CreateWindow<SimpleRadialMenu>();
+        _menu.Track(Owner);
+        var buttonModels = ConvertToButtons(ev.Actions);
+        _menu.SetButtons(buttonModels);
+        
         _menu.Open();
     }
 
