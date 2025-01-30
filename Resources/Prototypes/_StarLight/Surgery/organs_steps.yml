@@ -1048,3 +1048,63 @@
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
     state: scalpel
   - type: SurgeryStepEmoteEffect
+  
+# Cavity
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepLocateItemCavity
+  name: Locate Item
+  components:
+  - type: SurgeryStep
+    duration: 3
+  - type: Sprite
+    sprite: Mobs/Species/Human/parts.rsi
+    state: torso_m
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRemoveItemCavity
+  name: Remove Item
+  components:
+  - type: SurgeryStep
+    duration: 6
+    tools:
+    - type: Scalpel
+  - type: Sprite
+    sprite: Mobs/Species/Human/parts.rsi
+    state: torso_m
+  - type: SurgeryStepEmoteEffect
+  - type: SurgeryStepOrganExtract
+    organ:
+    - type: Item
+    slot: cavity
+    
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepPrepareImplantSiteCavity
+  name: Prepare Implant Site
+  components:
+  - type: SurgeryStep
+    duration: 4
+    tools:
+    - type: Scalpel
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepInsertItemCavity
+  name: Insert Item
+  components:
+  - type: SurgeryStep
+    duration: 3
+    tools:
+    - type: Item
+  - type: Sprite
+    sprite: Mobs/Species/Human/parts.rsi
+    state: torso_m
+  - type: SurgeryItemSizeCondition
+  - type: SurgeryStepOrganInsert
+    slot: cavity

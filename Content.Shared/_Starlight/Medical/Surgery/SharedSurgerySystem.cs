@@ -46,6 +46,7 @@ public abstract partial class SharedSurgerySystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
 
     private readonly Dictionary<EntProtoId, EntityUid> _surgeries = new();
 

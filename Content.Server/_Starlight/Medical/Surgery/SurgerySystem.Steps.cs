@@ -7,6 +7,7 @@ using Content.Shared.Starlight.Medical.Surgery.Steps.Parts;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
+using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Hands.Components;
@@ -77,8 +78,18 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
     {
         if (args.Tools.Count == 0
             || !(args.Tools.FirstOrDefault() is var organId)
-            || !TryComp<BodyPartComponent>(args.Part, out var bodyPart)
-            || !TryComp<OrganComponent>(organId, out var organComp))
+            || !TryComp<BodyPartComponent>(args.Part, out var bodyPart))
+                return;
+                
+        var containerId = SharedBodySystem.GetOrganContainerId(ent.Comp.Slot);
+            
+        if (ent.Comp.Slot == "cavity" && _containers.TryGetContainer(args.Part, containerId, out var container))
+        {
+            _containers.Insert(organId, container);
+            return;
+        }
+        
+        if (!TryComp<OrganComponent>(organId, out var organComp))
             return;
 
         var part = args.Part;
@@ -119,8 +130,24 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
     private void OnStepOrganExtractComplete(Entity<SurgeryStepOrganExtractComponent> ent, ref SurgeryStepEvent args)
     {
         if (ent.Comp.Organ?.Count != 1) return;
-        var organs = _body.GetPartOrgans(args.Part, Comp<BodyPartComponent>(args.Part));
+        
         var type = ent.Comp.Organ.Values.First().Component.GetType();
+        
+        var containerId = SharedBodySystem.GetOrganContainerId(ent.Comp.Slot);
+        
+        if (ent.Comp.Slot != null && _containers.TryGetContainer(args.Part, containerId, out var container))
+        {
+            
+            foreach (var containedEnt in container.ContainedEntities)
+            {
+                if (HasComp(containedEnt, type))
+                    _containers.Remove(containedEnt, container);
+            }
+            
+            return;
+        }
+        
+        var organs = _body.GetPartOrgans(args.Part, Comp<BodyPartComponent>(args.Part));
         foreach (var organ in organs) // todo move to system
         {
             if (HasComp(organ.Id, type))

@@ -2,6 +2,7 @@
 using Content.Shared.Buckle.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Popups;
 using Content.Shared.Starlight.Medical.Surgery.Effects.Step;
@@ -194,6 +195,11 @@ public abstract partial class SharedSurgerySystem
                 if (reg.Component is ISurgeryToolComponent toolComp)
                     args.Popup = $"You need enable {toolComp.ToolName} to perform this step!";
 
+                return;
+            }
+            else if (TryComp<SurgeryItemSizeConditionComponent>(ent, out var itemSizeComp) && TryComp<ItemComponent>(tool, out var item) && _item.GetSizePrototype(item.Size) > _item.GetSizePrototype(itemSizeComp.Size))
+            {
+                args.Invalid = StepInvalidReason.TooHigh;
                 return;
             }
 
