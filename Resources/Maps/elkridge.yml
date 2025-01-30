@@ -9034,7 +9034,7 @@ entities:
             0: 65520
           10,-9:
             0: 17984
-            6: 1
+            4: 1
             2: 2444
           11,-8:
             0: 14336
@@ -9395,7 +9395,7 @@ entities:
             0: 4881
             2: 8226
             3: 8
-            4: 2048
+            5: 2048
           4,-13:
             0: 4369
             2: 17508
@@ -9404,7 +9404,7 @@ entities:
             0: 36096
           5,-10:
             3: 3
-            4: 768
+            5: 768
             2: 32904
             0: 2048
           5,-9:
@@ -9618,17 +9618,17 @@ entities:
             2: 4113
             0: 256
             3: 12
-            5: 3072
+            6: 3072
           9,-9:
             2: 1025
             0: 2832
-            6: 12
+            4: 12
           10,-11:
             2: 295
             0: 17920
           10,-10:
             3: 1
-            5: 256
+            6: 256
             2: 18508
             0: 1024
           10,-12:
@@ -10267,6 +10267,21 @@ entities:
           temperature: 293.15
           moles:
           - 0
+          - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
           - 0
           - 0
           - 6666.982
@@ -10283,21 +10298,6 @@ entities:
           moles:
           - 6666.982
           - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 6666.982
           - 0
           - 0
           - 0
@@ -13946,7 +13946,7 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -303715.84
+      secondsUntilStateChange: -303838.94
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -38897,6 +38897,16 @@ entities:
     - type: Transform
       pos: 38.5,-13.5
       parent: 2
+  - uid: 16437
+    components:
+    - type: Transform
+      pos: 13.5,-13.5
+      parent: 2
+  - uid: 16438
+    components:
+    - type: Transform
+      pos: 14.5,-13.5
+      parent: 2
 - proto: CableMVStack
   entities:
   - uid: 5135
@@ -55285,6 +55295,20 @@ entities:
     components:
     - type: Transform
       pos: 39.5,-39.5
+      parent: 2
+- proto: GasMinerNitrogenStation
+  entities:
+  - uid: 16435
+    components:
+    - type: Transform
+      pos: 39.5,-35.5
+      parent: 2
+- proto: GasMinerOxygenStation
+  entities:
+  - uid: 16436
+    components:
+    - type: Transform
+      pos: 39.5,-37.5
       parent: 2
 - proto: GasMinerWaterVapor
   entities:
@@ -96565,6 +96589,7 @@ entities:
       pos: -37.43985,-19.687504
       parent: 2
     - type: Contraband
+      allowedJobs: []
       allowedDepartments:
       - Security
       severity: Minor
