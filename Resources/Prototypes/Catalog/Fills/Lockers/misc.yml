@@ -27,8 +27,8 @@
       - id: OxygenTankFilled
     - id: ToolboxEmergencyFilled
       prob: 0.5
-    - id: MedkitOxygenFilled  # actually airloss med kit but easier to keep old ID than to migrate
-      prob: 0.1
+    - id: MedkitOxygenFilled
+      prob: 0.2
     - id: WeaponFlareGun
       prob: 0.1
     - id: BoxMRE
@@ -69,14 +69,6 @@
           children:
           - id: EmergencyNitrogenTankFilled
           - id: NitrogenTankFilled
-        - id: ToolboxEmergencyFilled
-          prob: 0.5
-        - id: MedkitOxygenFilled
-          prob: 0.1
-        - id: WeaponFlareGun
-          prob: 0.1
-        - id: BoxMRE
-          prob: 0.1
 
 - type: entityTable
   id: FillLockerFireStandard
