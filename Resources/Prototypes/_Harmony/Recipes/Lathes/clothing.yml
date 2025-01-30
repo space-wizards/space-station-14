@@ -130,8 +130,8 @@
 
 - type: latheRecipe
   parent: BaseJumpsuitRecipe
-  id: ClothingUniformJumpskirtCargoOfficeSlacksHarmony
-  result: ClothingUniformJumpskirtCargoOfficeSlacksHarmony
+  id: ClothingUniformJumpskirtCargoOfficeSkirtHarmony
+  result: ClothingUniformJumpskirtCargoOfficeSkirtHarmony
 
 - type: latheRecipe
   parent: BaseJumpsuitRecipe

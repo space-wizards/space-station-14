@@ -112,7 +112,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCargoPantsHarmony
   name: cargo pants
-  description: When collecting bounties, you need the extra pocketspace.
+  description: When collecting bounties, you need the extra pocket space.
   components:
   - type: Sprite
     sprite: _Harmony/Clothing/Uniforms/Jumpsuit/cargo_pants.rsi

@@ -44,14 +44,14 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpskirtCargoOfficeSlacksHarmony
-  name: cargo office slacks jumpskirt
+  id: ClothingUniformJumpskirtCargoOfficeSkirtHarmony
+  name: cargo office skirt
   description: For those who'd rather push pencils than crates.
   components:
   - type: Sprite
-    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/cargo_slacks.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/cargo_skirt.rsi
   - type: Clothing
-    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/cargo_slacks.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/cargo_skirt.rsi
 
 - type: entity
   parent: ClothingUniformBase

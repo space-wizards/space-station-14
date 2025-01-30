@@ -58,9 +58,9 @@
 
 # Jumpskirts
 - type: loadout
-  id: CargoOfficeSlacksJumpskirtHarmony
+  id: CargoOfficeSkirtJumpskirtHarmony
   equipment:
-    jumpskirt: ClothingUniformJumpskirtCargoOfficeSlacksHarmony
+    jumpskirt: ClothingUniformJumpskirtCargoOfficeSkirtHarmony
 
 - type: loadout
   id: SeniorTechnicianJumpskirtHarmony
