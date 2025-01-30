@@ -1058,3 +1058,19 @@ Entries:
     changes:
     - type: Add
       message: 'Added law 0 for borgs: obey AI.'
+  - id: 324
+    author: BoskiYourk
+    time: '2025-01-29T00:06:22.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/324
+    changes:
+    - type: Tweak
+      message: Increases the .35 pistol magazine from 10 to 15
+  - id: 318
+    author: thecopbennet
+    time: '2025-01-29T21:17:52.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/318
+    changes:
+    - type: Add
+      message: Adds a four telecrystal purchase for four hyposhells, shells that can
+        hold 7u of any reagent and inject upon impact, available for barkeepers and
+        zookeepers
