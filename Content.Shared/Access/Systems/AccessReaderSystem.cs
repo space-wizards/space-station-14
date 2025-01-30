@@ -232,28 +232,6 @@ public sealed class AccessReaderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Compares given tags with the readers additional list at index given, falls back to general access if the given index doesn't exist
-    /// </summary>
-    /// <param name="accessTags">A list of access tags</param>
-    /// <param name="reader">An access reader to check against</param>
-    /// <param name="accessList">Index of the additional access list</param>
-    /// <returns></returns>
-    public bool AreAdditionalAccessTagsAllowed(ICollection<ProtoId<AccessLevelPrototype>> accessTags,
-        AccessReaderComponent reader,
-        int accessList)
-    {
-        if (accessList < 0 && reader.AdditionalAccessLists.Count < accessList)
-            return AreAccessTagsAllowed(accessTags, reader);
-
-        foreach (var set in reader.AdditionalAccessLists[accessList])
-        {
-            if (set.IsSubsetOf(accessTags))
-                return true;
-        }
-        return false;
-    }
-
-    /// <summary>
     /// Compares the given stationrecordkeys with the accessreader to see if it is allowed.
     /// </summary>
     public bool AreStationRecordKeysAllowed(ICollection<StationRecordKey> keys, AccessReaderComponent reader)
