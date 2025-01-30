@@ -1,6 +1,6 @@
 ﻿<Document>
   # Thermomachines
-  Thermomachines are devices that manipulate the temperature of gases within a [textlink="pipe network" link="PipeNetworks"] or exposed atmosphere.
+  Thermomachines are devices that manipulate the temperature of gasses within a [textlink="pipe network" link="PipeNetworks"] or exposed atmosphere.
   <Box>
     <GuideEntityEmbed Entity="SpaceHeater" Caption=""/>
     <GuideEntityEmbed Entity="GasThermoMachineHeater" Caption=""/>
