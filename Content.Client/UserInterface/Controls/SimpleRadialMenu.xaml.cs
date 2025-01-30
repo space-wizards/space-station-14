@@ -6,6 +6,7 @@ using Robust.Shared.Utility;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
 using Robust.Client.UserInterface.XAML;
+using Robust.Client.Input;
 
 namespace Content.Client.UserInterface.Controls;
 
@@ -16,6 +17,7 @@ public partial class SimpleRadialMenu : RadialMenu
 
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IInputManager _inputManager = default!;
 
     public SimpleRadialMenu()
     {
@@ -30,10 +32,16 @@ public partial class SimpleRadialMenu : RadialMenu
 
     public void SetButtons(IEnumerable<RadialMenuOption> models, SimpleRadialMenuSettings? settings = null)
     {
-        Children.Clear();
+        ClearExistingChildrenRadialButtons();
 
         var sprites = _entManager.System<SpriteSystem>();
         Fill(models, sprites, Children, settings ?? new SimpleRadialMenuSettings());
+    }
+
+    public void OpenOverMouseScreenPosition()
+    {
+        var vpSize = _clyde.ScreenSize;
+        OpenCenteredAt(_inputManager.MouseScreenPosition.Position / vpSize);
     }
 
     private void Fill(
@@ -112,11 +120,7 @@ public partial class SimpleRadialMenu : RadialMenu
     )
     {
         var button = settings.DisplaySectors
-            ? new RadialMenuTextureButtonWithSector
-            {
-                DrawSeparators = settings.DisplaySeparators,
-                DrawBackground = !settings.NoBackground
-            }
+            ? ConvertToButtonWithSector(model, settings)
             : new RadialMenuTextureButton();
         button.SetSize = new Vector2(64f, 64f);
         button.ToolTip = model.ToolTip;
@@ -145,6 +149,43 @@ public partial class SimpleRadialMenu : RadialMenu
         }
         
         return button;
+    }
+
+    private static RadialMenuTextureButtonWithSector ConvertToButtonWithSector(RadialMenuOption model, SimpleRadialMenuSettings settings)
+    {
+        var button = new RadialMenuTextureButtonWithSector
+        {
+            DrawSeparators = settings.DisplaySeparators,
+            DrawBackground = !settings.NoBackground
+        };
+        if (model.BackgroundColor.HasValue)
+        {
+            button.BackgroundColor = model.BackgroundColor.Value;
+        }
+
+        if (model.HoverBackgroundColor.HasValue)
+        {
+            button.HoverBackgroundColor = model.HoverBackgroundColor.Value;
+        }
+
+        return button;
+    }
+
+    private void ClearExistingChildrenRadialButtons()
+    {
+        var toRemove = new List<Control>(ChildCount);
+        foreach (var child in Children)
+        {
+            if (child != ContextualButton && child != MenuOuterAreaButton)
+            {
+                toRemove.Add(child);
+            }
+        }
+
+        foreach (var control in toRemove)
+        {
+            Children.Remove(control);
+        }
     }
 
     #region target entity tracking
@@ -193,6 +234,8 @@ public abstract class RadialMenuOption
     public string? ToolTip { get; init; }
     
     public SpriteSpecifier? Sprite { get; init; }
+    public Color? BackgroundColor { get; set; }
+    public Color? HoverBackgroundColor { get; set; }
 }
 
 public class RadialMenuActionOption(Action onPressed) : RadialMenuOption
