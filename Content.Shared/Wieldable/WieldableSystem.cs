@@ -137,7 +137,7 @@ public sealed class WieldableSystem : EntitySystem
 
     private void OnRefreshSpeedWielded(EntityUid uid, SpeedModifiedOnWieldComponent component, ref HeldRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
     {
-        if (TryComp(uid, out WieldableComponent? wield) && wield.Wielded)
+        if (TryComp<WieldableComponent>(uid, out var wield) && wield.Wielded)
         {
             args.Args.ModifySpeed(component.WalkModifier, component.SprintModifier);
         }
@@ -145,7 +145,7 @@ public sealed class WieldableSystem : EntitySystem
 
     private void OnExamineRequires(Entity<GunRequiresWieldComponent> entity, ref ExaminedEvent args)
     {
-        if(entity.Comp.WieldRequiresExamineMessage != null)
+        if (entity.Comp.WieldRequiresExamineMessage != null)
             args.PushText(Loc.GetString(entity.Comp.WieldRequiresExamineMessage));
     }
 

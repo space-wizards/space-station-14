@@ -96,5 +96,6 @@ public sealed partial class ProjectileComponent : Component
     /// <summary>
     ///     Tracks the amount of damage dealt for penetration purposes.
     /// </summary>
+    [DataField]
     public FixedPoint2 PenetrationAmount = FixedPoint2.Zero;
 }
