@@ -61,6 +61,12 @@ public sealed class DamageExamineSystem : EntitySystem
         }
         else
         {
+            if (damageSpecifier.GetTotal() == FixedPoint2.Zero && !damageSpecifier.AnyPositive())
+            {
+                msg.AddMarkupOrThrow(Loc.GetString("damage-none"));
+                return msg;
+            }
+
             msg.AddMarkupOrThrow(Loc.GetString("damage-examine-type", ("type", type)));
         }
 

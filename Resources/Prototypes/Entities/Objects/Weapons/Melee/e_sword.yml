@@ -194,7 +194,6 @@
       doAfterDuration: 4.0
     - type: Contraband
       severity: Syndicate
-      allowedDepartments: null
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:
@@ -274,6 +273,7 @@
   components:
   - type: ItemToggle
     onUse: false # wielding events control it instead
+    onActivate: false # prevents the weapon from being able to be turned on when it is on the ground
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
       params:

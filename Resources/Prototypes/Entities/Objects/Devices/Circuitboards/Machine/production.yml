@@ -194,6 +194,23 @@
       Plasma: 5
 
 - type: entity
+  id: BiogeneratorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: biogenerator machine board
+  description: A machine printed circuit board for a biogenerator.
+  components:
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: Biogenerator
+    stackRequirements:
+      MatterBin: 2
+    tagRequirements:
+      GlassBeaker:
+        amount: 1
+        defaultPrototype: Beaker
+
+- type: entity
   id: UniformPrinterMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: uniform printer machine board
@@ -622,6 +639,25 @@
         PowerCell:
           amount: 4
           defaultPrototype: PowerCellSmall
+
+- type: entity
+  id: SMESAdvancedMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: advanced SMES machine board
+  description: A machine printed circuit board for an Advanced SMES.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: power_mod
+  - type: MachineBoard
+    prototype: SMESAdvancedEmpty
+    stackRequirements:
+      Capacitor: 2
+      CableHV: 20
+    componentRequirements:
+      PowerCell:
+        amount: 4
+        defaultPrototype: PowerCellMedium
 
 - type: entity
   id: CellRechargerCircuitboard
@@ -1191,6 +1227,8 @@
   name: salvage magnet machine board
   description: A machine printed circuit board for a salvage magnet.
   components:
+  - type: Sprite
+    state: supply
   - type: MachineBoard
     prototype: SalvageMagnet
     stackRequirements:

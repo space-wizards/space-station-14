@@ -1,0 +1,688 @@
+## See also ../settings.yml and ../spawners.yml
+
+### Visitors with Visitor ID
+
+# Command
+
+- type: entity
+  id: RandomHumanoidVisitorCaptain
+  name: visiting Captain ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: captain
+    - type: RandomHumanoidSpawner
+      settings: VisitorCaptain
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+- type: entity
+  id: RandomHumanoidVisitorCE
+  name: visiting CE ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: ce
+    - type: RandomHumanoidSpawner
+      settings: VisitorCE
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+- type: entity
+  id: RandomHumanoidVisitorCMO
+  name: visiting CMO ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: cmo
+    - type: RandomHumanoidSpawner
+      settings: VisitorCMO
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+- type: entity
+  id: RandomHumanoidVisitorHOP
+  name: visiting HOP ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: hop
+    - type: RandomHumanoidSpawner
+      settings: VisitorHOP
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+- type: entity
+  id: RandomHumanoidVisitorHOS
+  name: visiting HOS ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: hos
+    - type: RandomHumanoidSpawner
+      settings: VisitorHOS
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+- type: entity
+  id: RandomHumanoidVisitorRD
+  name: visiting RD ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: rd
+    - type: RandomHumanoidSpawner
+      settings: VisitorResearchDirector
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+- type: entity
+  id: RandomHumanoidVisitorQM
+  name: visiting QM ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: qm
+    - type: RandomHumanoidSpawner
+      settings: VisitorQM
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+# Security
+
+- type: entity
+  id: RandomHumanoidVisitorSecurityCadet
+  name: visiting security cadet role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: security_cadet
+    - type: RandomHumanoidSpawner
+      settings: VisitorSecurityCadet
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+- type: entity
+  id: RandomHumanoidVisitorSecurityOfficer
+  name: visiting security officer ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: security_officer
+    - type: RandomHumanoidSpawner
+      settings: VisitorSecurityOfficer
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+- type: entity
+  id: RandomHumanoidVisitorDetective
+  name: visiting detective role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: detective
+    - type: RandomHumanoidSpawner
+      settings: VisitorDetective
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+- type: entity
+  id: RandomHumanoidVisitorWarden
+  name: visiting warden ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: warden
+    - type: RandomHumanoidSpawner
+      settings: VisitorWarden
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+# Cargo
+
+- type: entity
+  id: RandomHumanoidVisitorCargoTechnician
+  name: visiting cargo technician ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: cargo_tech
+    - type: RandomHumanoidSpawner
+      settings: VisitorCargoTechnician
+
+- type: entity
+  id: RandomHumanoidVisitorSalvageSpecialist
+  name: visiting salvage specialist ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: salvagespecialist
+    - type: RandomHumanoidSpawner
+      settings: VisitorSalvageSpecialist
+
+# Engineering
+
+- type: entity
+  id: RandomHumanoidVisitorAtmosTech
+  name: visiting atmospheric technician ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: atmospherics
+    - type: RandomHumanoidSpawner
+      settings: VisitorAtmosTech
+
+- type: entity
+  id: RandomHumanoidVisitorTechnicalAssistant
+  name: visiting technical assistant ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: technicalassistant
+    - type: RandomHumanoidSpawner
+      settings: VisitorTechnicalAssistant
+
+- type: entity
+  id: RandomHumanoidVisitorEngineer
+  name: visiting engineer ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: engineer
+    - type: RandomHumanoidSpawner
+      settings: VisitorEngineer
+
+# Medical
+
+- type: entity
+  id: RandomHumanoidVisitorMedicalIntern
+  name: visiting medical intern ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: medicalintern
+    - type: RandomHumanoidSpawner
+      settings: VisitorMedicalIntern
+
+- type: entity
+  id: RandomHumanoidVisitorMedicalDoctor
+  name: visiting medical doctor ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: doctor
+    - type: RandomHumanoidSpawner
+      settings: VisitorMedicalDoctor
+
+- type: entity
+  id: RandomHumanoidVisitorParamedic
+  name: visiting paramedic ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: paramedic
+    - type: RandomHumanoidSpawner
+      settings: VisitorParamedic
+
+- type: entity
+  id: RandomHumanoidVisitorPsychologist
+  name: visiting psychologist ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: psychologist
+    - type: RandomHumanoidSpawner
+      settings: VisitorPsychologist
+
+- type: entity
+  id: RandomHumanoidVisitorChemist
+  name: visiting chemist ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: chemist
+    - type: RandomHumanoidSpawner
+      settings: VisitorChemist
+
+- type: entity
+  id: RandomHumanoidVisitorVirologist
+  name: visiting virologist ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: virologist
+    - type: RandomHumanoidSpawner
+      settings: VisitorVirologist
+
+- type: entity
+  id: RandomHumanoidVisitorGeneticist
+  name: visiting geneticist ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: geneticist
+    - type: RandomHumanoidSpawner
+      settings: VisitorGeneticist
+
+- type: entity
+  id: RandomHumanoidVisitorDentist
+  name: visiting dentist ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: seniorphysician
+    - type: RandomHumanoidSpawner
+      settings: VisitorDentist
+
+# Science
+
+- type: entity
+  id: RandomHumanoidVisitorResearchAssistant
+  name: visiting research assistant ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: researchassistant
+    - type: RandomHumanoidSpawner
+      settings: VisitorResearchAssistant
+
+- type: entity
+  id: RandomHumanoidVisitorScientist
+  name: visiting scientist ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: scientist
+    - type: RandomHumanoidSpawner
+      settings: VisitorScientist
+
+# Civilian
+
+- type: entity
+  id: RandomHumanoidVisitorBartender
+  name: visiting bartender ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: bartender
+    - type: RandomHumanoidSpawner
+      settings: VisitorBartender
+
+- type: entity
+  id: RandomHumanoidVisitorBotanist
+  name: visiting botanist ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: botanist
+    - type: RandomHumanoidSpawner
+      settings: VisitorBotanist
+
+- type: entity
+  id: RandomHumanoidVisitorBoxer
+  name: visiting boxer ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: boxer
+    - type: RandomHumanoidSpawner
+      settings: VisitorBoxer
+
+- type: entity
+  id: RandomHumanoidVisitorChaplain
+  name: visiting chaplain ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: chaplain
+    - type: RandomHumanoidSpawner
+      settings: VisitorChaplain
+
+- type: entity
+  id: RandomHumanoidVisitorChef
+  name: visiting chef ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: chef
+    - type: RandomHumanoidSpawner
+      settings: VisitorChef
+
+- type: entity
+  id: RandomHumanoidVisitorClown
+  name: visiting clown ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: clown
+    - type: RandomHumanoidSpawner
+      settings: VisitorClown
+
+- type: entity
+  id: RandomHumanoidVisitorJanitor
+  name: visiting janitor ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: janitor
+    - type: RandomHumanoidSpawner
+      settings: VisitorJanitor
+
+- type: entity
+  id: RandomHumanoidVisitorLawyer
+  name: visiting lawyer ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: lawyer
+    - type: RandomHumanoidSpawner
+      settings: VisitorLawyer
+
+- type: entity
+  id: RandomHumanoidVisitorLawyerCentcom
+  name: visiting centcom lawyer ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: lawyer
+    - type: RandomHumanoidSpawner
+      settings: VisitorLawyerCentcom
+
+- type: entity
+  id: RandomHumanoidVisitorLibrarian
+  name: visiting librarian ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: librarian
+    - type: RandomHumanoidSpawner
+      settings: VisitorLibrarian
+
+- type: entity
+  id: RandomHumanoidVisitorMusician
+  name: visiting musician ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: musician
+    - type: RandomHumanoidSpawner
+      settings: VisitorMusician
+
+- type: entity
+  id: RandomHumanoidVisitorMusicianFancy
+  name: visiting fancy musician ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: musician
+    - type: RandomHumanoidSpawner
+      settings: VisitorMusicianFancy
+
+- type: entity
+  id: RandomHumanoidVisitorMusicianRelaxed
+  name: visiting relaxed musician ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: musician
+    - type: RandomHumanoidSpawner
+      settings: VisitorMusicianRelaxed
+
+- type: entity
+  id: RandomHumanoidVisitorMime
+  name: visiting mime ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: mime
+    - type: RandomHumanoidSpawner
+      settings: VisitorMime
+
+- type: entity
+  id: RandomHumanoidVisitorReporter
+  name: visiting reporter ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: reporter
+    - type: RandomHumanoidSpawner
+      settings: VisitorReporter
+
+- type: entity
+  id: RandomHumanoidVisitorServiceWorker
+  name: visiting service worker ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: serviceworker
+    - type: RandomHumanoidSpawner
+      settings: VisitorServiceWorker
+
+- type: entity
+  id: RandomHumanoidVisitorZookeeper
+  name: visiting zookeeper ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: zookeeper
+    - type: RandomHumanoidSpawner
+      settings: VisitorZookeeper
+
+# Misc
+
+- type: entity
+  id: RandomHumanoidClownTroupeBanana
+  name: banana clown troupe
+  parent: RandomHumanoidVisitorClown
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ClownTroupeBanana
+
+### Visitors missing equipment for challenges
+
+# Command
+
+- type: entity
+  id: RandomHumanoidChallengeVictimCaptain
+  name: disaster victim Captain ghost role
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Skeleton/parts.rsi
+      state: skull_icon
+    - type: RandomHumanoidSpawner
+      settings: ChallengeVictimCaptain
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+- type: entity
+  id: RandomHumanoidChallengeVictimCE
+  parent: RandomHumanoidChallengeVictimCaptain
+  name: disaster victim CE ghost role
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ChallengeVictimChiefEngineer
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+- type: entity
+  id: RandomHumanoidChallengeVictimCMO
+  parent: RandomHumanoidChallengeVictimCaptain
+  name: disaster victim CMO ghost role
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ChallengeVictimCMO
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+- type: entity
+  id: RandomHumanoidChallengeVictimHOP
+  parent: RandomHumanoidChallengeVictimCaptain
+  name: disaster victim HOP ghost role
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ChallengeVictimHeadOfPersonnel
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+- type: entity
+  id: RandomHumanoidChallengeVictimHOS
+  parent: RandomHumanoidChallengeVictimCaptain
+  name: disaster victim HOS ghost role
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ChallengeVictimHeadOfSecurity
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+- type: entity
+  id: RandomHumanoidChallengeVictimRD
+  parent: RandomHumanoidChallengeVictimCaptain
+  name: disaster victim RD ghost role
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ChallengeVictimResearchDirector
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+- type: entity
+  id: RandomHumanoidChallengeVictimQM
+  parent: RandomHumanoidChallengeVictimCaptain
+  name: disaster victim QM ghost role
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ChallengeVictimQuartermaster
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+
+# Security
+
+# Cargo
+
+- type: entity
+  id: RandomHumanoidChallengeCargoTechnician
+  parent: RandomHumanoidChallengeVictimCaptain
+  name: disaster cargo technician ghost role
+  suffix: CHALLENGE
+  # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ChallengeCargoTechnician
+
+# Engineering
+
+# Medical
+
+# Science
+
+# Civilian
+
+# Misc
+
+### Syndicate & Hostiles
+
+- type: entity
+  id: RandomHumanoidSyndieSoldierTeamLeader
+  name: syndicate team leader ghost role
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/banner.rsi
+      state: banner_syndicate
+    - type: RandomHumanoidSpawner
+      settings: SyndieSoldierTeamLeader
+
+- type: entity
+  id: RandomHumanoidSyndieSoldier
+  name: syndicate soldier ghost role
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/banner.rsi
+      state: banner_syndicate
+    - type: RandomHumanoidSpawner
+      settings: SyndieSoldier
+
+- type: entity
+  id: RandomHumanoidSyndieVisitor
+  name: syndie disaster victim ghost role
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/banner.rsi
+      state: banner_syndicate
+    - type: RandomHumanoidSpawner
+      settings: SyndieVisitor
+
+- type: entity
+  id: RandomHumanoidPirateScooner
+  name: pirate crewman ghost role
+  suffix: scooner
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/banner.rsi
+      state: banner-red
+    - type: RandomHumanoidSpawner
+      settings: PirateScooner
+
+- type: entity
+  id: RandomHumanoidPirateCaptainScooner
+  name: pirate captain ghost role
+  suffix: scooner
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/banner.rsi
+      state: banner-red
+    - type: RandomHumanoidSpawner
+      settings: PirateCaptainScooner
+
+### Other
+
+- type: entity
+  id: RandomHumanoidVisitorBlackmarketeer
+  name: visiting blackmarketeer ghost role
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/banner.rsi
+      state: banner-yellow
+    - type: RandomHumanoidSpawner
+      settings: VisitorBlackmarketeer
+
+
+- type: entity
+  id: RandomHumanoidCossack
+  name: cossack ghost role
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/banner.rsi
+      state: banner-yellow
+    - type: RandomHumanoidSpawner
+      settings: Cossack

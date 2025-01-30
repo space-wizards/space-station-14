@@ -270,6 +270,20 @@
     - id: FoodPizzaDonkpocket
       prob: 0.10
       orGroup: Pizza
+    - id: FoodPizzaCotton
+      prob: 0.10
+      orGroup: Pizza
+    - id: KnifePlastic
+  
+- type: entity
+  name: pizza box
+  parent: FoodBoxPizzaFilled
+  id: FoodBoxPizzaCotton
+  suffix: Cotton Pizza
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodPizzaCotton
     - id: KnifePlastic
 
 # Nugget
@@ -691,6 +705,8 @@
         orGroup: DrinkPool
       - id: DrinkLemonLimeCan
         orGroup: DrinkPool
+      - id: DrinkLemonLimeCranberryCan
+        orGroup: DrinkPool
       - id: DrinkIcedTeaCan
         orGroup: DrinkPool
       - id: ToyMouse
@@ -753,3 +769,25 @@
       - id: GoldenBikeHorn
         prob: 0.1
         orGroup: GiftPool
+
+- type: entity
+  parent: BoxCardboard
+  id: FoodBoxCloth
+  name: box of FlutterSoft-brand cloth
+  description: Fiber is the most important moth meal of the day! Don't skip it or use bottom-of-the-locker junk, buy high-quality FlutterSoft-brand cloth instead.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/ingredients.rsi
+    state: cloth-box
+  - type: Storage
+    grid:
+    - 0,0,1,1
+    maxItemSize: Normal
+    whitelist:
+      tags:
+      - ClothMade
+  - type: Item
+    size: Normal
+  - type: StorageFill
+    contents:
+    - id: MaterialCloth10

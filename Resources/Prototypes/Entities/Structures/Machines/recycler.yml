@@ -85,6 +85,7 @@
         volume: -3
     cutOffSound: false
   - type: MaterialStorage
+    insertOnInteract: false
   - type: Conveyor
   - type: Rotatable
   - type: Repairable
@@ -107,3 +108,10 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Items/drill_hit.ogg
+  - type: SpookySpeaker
+    speakChance: 0.1
+    cooldown: 120
+    messageSet: SpookySpeakerMessagesRecycler
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: SyndieBorg

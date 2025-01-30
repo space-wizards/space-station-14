@@ -5,10 +5,11 @@ using Content.Shared.Explosion.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+
 namespace Content.Server.Explosion.EntitySystems;
 
 // This part of the system handled send visual / overlay data to clients.
-public sealed partial class ExplosionSystem : SharedExplosionSystem
+public sealed partial class ExplosionSystem
 {
     public void InitVisuals()
     {

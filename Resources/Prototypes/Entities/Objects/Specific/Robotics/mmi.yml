@@ -49,6 +49,10 @@
     guides:
     - Cyborgs
     - Robotics
+  - type: ChangeVoiceInContainer
+    whitelist:
+      components:
+      - SecretStash
 
 - type: entity
   parent: MMI
@@ -85,6 +89,8 @@
       roleName: positronic-brain-role-name
       roleDescription: positronic-brain-role-description
       roleRules: ghost-role-information-silicon-rules
+      mindRoles:
+      - MindRoleGhostRoleSilicon
       wipeVerbText: positronic-brain-wipe-device-verb-text
       wipeVerbPopup: positronic-brain-wiped-device
       stopSearchVerbText: positronic-brain-stop-searching-verb-text
@@ -127,3 +133,7 @@
       guides:
       - Cyborgs
       - Robotics
+    - type: ChangeVoiceInContainer
+      whitelist:
+        components:
+        - SecretStash

@@ -241,7 +241,7 @@ public sealed class BloodstreamSystem : EntitySystem
         }
 
         // Heat damage will cauterize, causing the bleed rate to be reduced.
-        else if (totalFloat < 0 && oldBleedAmount > 0)
+        else if (totalFloat <= ent.Comp.BloodHealedSoundThreshold && oldBleedAmount > 0)
         {
             // Magically, this damage has healed some bleeding, likely
             // because it's burn damage that cauterized their wounds.
@@ -472,7 +472,7 @@ public sealed class BloodstreamSystem : EntitySystem
             return;
         }
 
-        var currentVolume = bloodSolution.RemoveReagent(component.BloodReagent, bloodSolution.Volume);
+        var currentVolume = bloodSolution.RemoveReagent(component.BloodReagent, bloodSolution.Volume, ignoreReagentData: true);
 
         component.BloodReagent = reagent;
 

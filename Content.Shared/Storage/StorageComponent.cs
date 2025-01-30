@@ -65,8 +65,18 @@ namespace Content.Shared.Storage
         [DataField]
         public TimeSpan OpenUiCooldown = TimeSpan.Zero;
 
+        /// <summary>
+        /// Can insert stuff by clicking the storage entity with it.
+        /// </summary>
         [DataField]
-        public bool ClickInsert = true; // Can insert stuff by clicking the storage entity with it
+        public bool ClickInsert = true;
+
+        /// <summary>
+        /// Open the storage window when pressing E.
+        /// When false you can still open the inventory using verbs.
+        /// </summary>
+        [DataField]
+        public bool OpenOnActivate = true;
 
         /// <summary>
         /// How many entities area pickup can pickup at once.
@@ -139,6 +149,19 @@ namespace Content.Shared.Storage
     }
 
     [Serializable, NetSerializable]
+    public sealed class OpenNestedStorageEvent : EntityEventArgs
+    {
+        public readonly NetEntity InteractedItemUid;
+        public readonly NetEntity StorageUid;
+
+        public OpenNestedStorageEvent(NetEntity interactedItemUid, NetEntity storageUid)
+        {
+            InteractedItemUid = interactedItemUid;
+            StorageUid = storageUid;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public sealed class StorageInteractWithItemEvent : EntityEventArgs
     {
         public readonly NetEntity InteractedItemUid;
@@ -170,16 +193,22 @@ namespace Content.Shared.Storage
     }
 
     [Serializable, NetSerializable]
-    public sealed class StorageRemoveItemEvent : EntityEventArgs
+    public sealed class StorageTransferItemEvent : EntityEventArgs
     {
         public readonly NetEntity ItemEnt;
 
+        /// <summary>
+        /// Target storage to receive the transfer.
+        /// </summary>
         public readonly NetEntity StorageEnt;
 
-        public StorageRemoveItemEvent(NetEntity itemEnt, NetEntity storageEnt)
+        public readonly ItemStorageLocation Location;
+
+        public StorageTransferItemEvent(NetEntity itemEnt, NetEntity storageEnt, ItemStorageLocation location)
         {
             ItemEnt = itemEnt;
             StorageEnt = storageEnt;
+            Location = location;
         }
     }
 
@@ -237,6 +266,9 @@ namespace Content.Shared.Storage
 
     [ByRefEvent]
     public record struct StorageInteractAttemptEvent(bool Silent, bool Cancelled = false);
+
+    [ByRefEvent]
+    public record struct StorageInteractUsingAttemptEvent(bool Cancelled = false);
 
     [NetSerializable]
     [Serializable]

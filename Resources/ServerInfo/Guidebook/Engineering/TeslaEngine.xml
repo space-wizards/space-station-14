@@ -1,0 +1,104 @@
+﻿<Document>
+  # Tesla Engine
+  The Tesla Engine is a powerful generator that uses a contained ball of lightning to produce energy for the station.
+  <Box>
+    <GuideEntityEmbed Entity="TeslaGenerator"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="TeslaEnergyBall"/>
+  </Box>
+
+  It generates power by harnessing the lightning strikes produced by the lightning ball using Tesla Coils.
+
+  ## Containment Field
+  The Tesla Engine requires a containment field to prevent the lightning ball from escaping and destroying the station.
+
+  It is suggested to use the minimum size containment field for the lightning ball.
+  Larger containment fields allow the lightning ball to reach closer to sensitive equipment and potentially strike it, ignoring placed grounding rods and tesla coils.
+
+  <Box>
+    <GuideEntityEmbed Entity="ContainmentFieldGenerator" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="ContainmentField" Caption="" Rotation="90" Margin="0"/>
+    <GuideEntityEmbed Entity="ContainmentFieldGenerator" Caption="" Margin="0"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="ContainmentField" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="TeslaGenerator" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="ContainmentField" Caption="" Margin="0"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="ContainmentFieldGenerator" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="ContainmentField" Caption="" Rotation="90" Margin="0"/>
+    <GuideEntityEmbed Entity="ContainmentFieldGenerator" Caption="" Margin="0"/>
+  </Box>
+
+  ## Lightning Strikes
+  When the Tesla Engine is active, the lightning ball will periodically strike objects surrounding it.
+
+  The Tesla prefers to strike some objects more than others, such as Tesla Coils and Grounding Rods.
+
+  <Box HorizontalAlignment="Stretch">
+    <Box>
+      <GuideEntityEmbed Entity="TeslaCoil"/>
+    </Box>
+
+    <Box>
+      <GuideEntityEmbed Entity="TeslaGroundingRod"/>
+    </Box>
+  </Box>
+
+  Because of this, strategically placing Tesla Coils and Grounding Rods around the lightning ball can help protect sensitive equipment from being struck, and prevent a loosed tesla (tesloose).
+
+  If the tesla can't find any Tesla Coils or Grounding Rods to strike first, it will strike almost any station object capable of being powered, such as Substations, APCs, and general machinery.
+
+  Certain objects aren't struck by the tesla, such as batteries, lights, PDAs, and other handheld items.
+
+  It will also strike mobs and crew members, shocking them. Make sure to wear insulated gloves before approaching it.
+
+  Note that only placing Tesla Coils won't be enough to prevent the tesla from striking sensitive equipment.
+  Grounding Rods should also be placed to help protect nearby Emitters from being struck.
+
+  Engineers can also use grounding rods to protect sensitive equipment from lightning strikes, such as the Emitters powering the containment field generators.
+
+  ## Power Generation
+  Lightning strikes can be harnessed using Tesla Coils, which convert the lightning strikes into power for the station.
+
+  <Box>
+    <GuideEntityEmbed Entity="TeslaCoil" Caption=""/>
+    <GuideEntityEmbed Entity="TeslaCoil"/>
+    <GuideEntityEmbed Entity="TeslaCoil" Caption=""/>
+  </Box>
+
+  Tesla Coils should be placed around the lightning ball to capture the lightning strikes, as well as to prevent the lightning from striking sensitive equipment further away.
+
+  Tesla Coils take damage every time they are struck by lightning, and will eventually break if not repaired.
+  Be sure to monitor the condition of the Tesla Coils and repair them as needed.
+
+  Grounding rods, in contrast, do not take damage from lightning strikes.
+
+  When lightning strikes Tesla Coils, they fill an internal battery, which is rapidly discharged to the grid.
+  It will discharge this power even if there is no consumer to take it, so it's a good idea to have an SMES nearby to store the power and discharge it smoothly.
+
+  ## Loosed Tesla (Tesloose)
+  If the lightning ball escapes the containment field, it is referred to as a loosed tesla, or tesloose.
+
+  An escaped tesla will randomly walk around the station, attracted to objects that can be powered, such as APCs, Substations, and machinery.
+  It will also gladly strike crew members and mobs, shocking them.
+
+  Wearing insulated gloves will protect you from being shocked by the tesla, but it won't prevent the tesla from striking you.
+
+  <Box>
+    <GuideEntityEmbed Entity="ClothingHandsGlovesColorYellow"/>
+  </Box>
+
+  The tesla can be destroyed by firing antiparticles at it using a Portable Particle Decelerator, however, the Tesla is much more powerful than the Singularity, and it will take a lot of antiparticles to destroy it.
+  A group of people using decelerators is recommended to destroy a tesloose.
+
+  Portable Particle Decelerators can be either researched and made by the Research Department, or they can be bought from Cargo.
+
+  <Box>
+    <GuideEntityEmbed Entity="WeaponParticleDecelerator"/>
+  </Box>
+
+
+</Document>

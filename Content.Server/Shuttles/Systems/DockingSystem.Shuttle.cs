@@ -17,7 +17,7 @@ public sealed partial class DockingSystem
 
     private const int DockRoundingDigits = 2;
 
-    public Angle GetAngle(EntityUid uid, TransformComponent xform, EntityUid targetUid, TransformComponent targetXform, EntityQuery<TransformComponent> xformQuery)
+    public Angle GetAngle(EntityUid uid, TransformComponent xform, EntityUid targetUid, TransformComponent targetXform)
     {
         var (shuttlePos, shuttleRot) = _transform.GetWorldPositionRotation(xform);
         var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform);
@@ -288,9 +288,7 @@ public sealed partial class DockingSystem
 
         // Prioritise by priority docks, then by maximum connected ports, then by most similar angle.
         validDockConfigs = validDockConfigs
-           .OrderByDescending(x => x.Docks.Any(docks =>
-               TryComp<PriorityDockComponent>(docks.DockBUid, out var priority) &&
-               priority.Tag?.Equals(priorityTag) == true))
+           .OrderByDescending(x => IsConfigPriority(x, priorityTag))
            .ThenByDescending(x => x.Docks.Count)
            .ThenBy(x => Math.Abs(Angle.ShortestDistance(x.Angle.Reduced(), targetGridAngle).Theta)).ToList();
 
@@ -299,6 +297,13 @@ public sealed partial class DockingSystem
         // TODO: Ideally do a hyperspace warpin, just have it run on like a 10 second timer.
 
         return location;
+    }
+
+    public bool IsConfigPriority(DockingConfig config, string? priorityTag)
+    {
+        return config.Docks.Any(docks =>
+            TryComp<PriorityDockComponent>(docks.DockBUid, out var priority)
+            && priority.Tag?.Equals(priorityTag) == true);
     }
 
     /// <summary>

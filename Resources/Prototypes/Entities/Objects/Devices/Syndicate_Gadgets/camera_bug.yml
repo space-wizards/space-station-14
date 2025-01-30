@@ -1,0 +1,25 @@
+- type: entity
+  id: CameraBug
+  parent: [ BaseItem, BaseSyndicateContraband ]
+  name: camera bug
+  description: An illegal syndicate device that allows you to hack into the station's camera network.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/camera_bug.rsi
+    layers:
+    - state: camera_bug
+  - type: Item
+  - type: ActivatableUI
+    requireActiveHand: false
+    inHandsOnly: true
+    key: enum.SurveillanceCameraMonitorUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        type: SurveillanceCameraMonitorBoundUserInterface
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+  - type: WiredNetworkConnection
+  - type: SurveillanceCameraMonitor
