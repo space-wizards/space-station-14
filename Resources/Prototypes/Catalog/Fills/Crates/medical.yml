@@ -2,7 +2,7 @@
   id: CrateMedicalSupplies
   parent: CrateMedical
   name: medical supplies crate
-  description: Basic medical supplies. Includes two first aid kits.
+  description: Basic medical supplies. Includes two first aid med kits.
   components:
   - type: StorageFill
     contents:
