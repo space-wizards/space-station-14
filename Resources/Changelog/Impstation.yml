@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Security tickets now taste bad.
-    type: Add
-  id: 517
-  time: '2024-11-15T13:16:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/718
-- author: AftrLite
-  changes:
-  - message: A new book! It's got lore.
-    type: Add
-  id: 518
-  time: '2024-11-15T13:16:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/724
 - author: mqole
   changes:
   - message: Heretic metashield for all you rules perverts
@@ -4336,3 +4322,17 @@
   id: 1016
   time: '2025-01-29T19:39:40.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1514
+- author: honeyed-lemons
+  changes:
+  - message: Fixed vent crawling through gas pipe sensors
+    type: Fix
+  id: 1017
+  time: '2025-01-30T19:31:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1519
+- author: kipdotnet
+  changes:
+  - message: Removed the Flagship wreck.
+    type: Remove
+  id: 1018
+  time: '2025-01-30T19:56:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1518
