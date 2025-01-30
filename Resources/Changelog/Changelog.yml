@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Meteors break through less walls now.
-    type: Tweak
-  id: 7380
-  time: '2024-09-15T20:04:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32109
 - author: drakewill-CRL
   changes:
   - message: Produce harvested from sentient plants are no longer sentient themselves.
@@ -3908,3 +3901,10 @@
   id: 7879
   time: '2025-01-30T17:36:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33512
+- author: beck-thompson
+  changes:
+  - message: Ore rocks now drop the correct amount of ore when mined.
+    type: Fix
+  id: 7880
+  time: '2025-01-30T17:48:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34557
