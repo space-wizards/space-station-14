@@ -445,6 +445,7 @@
     - FloorBlueCircuit
     - FloorRedCircuit
     - MicrowaveMachineCircuitboard
+    - KitchenOvenMachineCircuitboard
     - ReagentGrinderMachineCircuitboard
     - ElectricGrillMachineCircuitboard
     - BoozeDispenserMachineCircuitboard

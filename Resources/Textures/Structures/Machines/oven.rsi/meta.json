@@ -18,6 +18,9 @@
         },
         {
             "name": "oven_unlit"
+        },
+        {
+            "name": "oven_broken"
         }
       ]
     }

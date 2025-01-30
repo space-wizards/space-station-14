@@ -1058,6 +1058,20 @@
         Cable: 2
 
 - type: entity
+  id: KitchenOvenMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: kitchen oven machine board
+  components:
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: KitchenOven
+    stackRequirements:
+      Capacitor: 2
+      Glass: 1
+      Cable: 1
+
+- type: entity
   id: FatExtractorMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: lipid extractor machine board

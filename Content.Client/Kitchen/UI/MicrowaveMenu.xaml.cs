@@ -35,7 +35,6 @@ namespace Content.Client.Kitchen.UI
             };
         }
 
-
         private EntityUid _owner;
         public void SetOwner(EntityUid ent)
         {
@@ -48,6 +47,17 @@ namespace Content.Client.Kitchen.UI
             _entityManager.TryGetComponent<MicrowaveButtonsComponent>(_owner, out var buttons);
 
             var numberButtons = (buttons != null ? buttons.NumberOfButtons : 6);
+
+            if (numberButtons == 12)
+            {
+                Title = Loc.GetString("microwave-menu-title",
+                        ("title", "Oven"));
+            }
+            else
+            {
+                Title = Loc.GetString("microwave-menu-title",
+                        ("title", "Microwave"));
+            }
 
             for (var i = 1; i <= numberButtons; i++)
             {

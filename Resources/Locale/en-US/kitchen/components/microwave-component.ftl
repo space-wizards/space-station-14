@@ -19,7 +19,7 @@ microwave-bound-user-interface-cook-time-label = COOK TIME: {$time}
 
 ## UI
 
-microwave-menu-title = Microwave
+microwave-menu-title = {$title}
 microwave-menu-start-button = Start
 microwave-menu-eject-all-text = Eject All Contents
 microwave-menu-eject-all-tooltip = This vaporizes all reagents, but ejects any solids.

@@ -15,9 +15,11 @@
       enum.PowerDeviceVisuals.VisualState:
         enum.MicrowaveVisualizerLayers.Base:
           Idle: { state: "oven_off" }
+          Broken: { state: "oven_broken" }
           Cooking: { state: "oven_off" }
         enum.MicrowaveVisualizerLayers.BaseUnlit:
           Idle: { state: "oven_unlit" }
+          Broken: { state: "oven_unlit" }
           Cooking: { state: "oven_lights" }
       enum.PowerDeviceVisuals.Powered:
         enum.MicrowaveVisualizerLayers.BaseUnlit:
@@ -43,12 +45,12 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.3,-0.16,0.3,0.16"
-        density: 190
+          bounds: "-0.45,-0.45,0.45,0.45"
         mask:
-        - TabletopMachineMask
+        - MachineMask
         layer:
-        - TabletopMachineLayer
+        - MachineLayer
+        density: 200
   - type: Sprite
     sprite: Structures/Machines/oven.rsi
     drawdepth: SmallObjects
@@ -63,21 +65,31 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 150
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
-  - type: Explosive
-    explosionType: Default
-    maxIntensity: 10
-    totalIntensity: 5
-    intensitySlope: 5
-    canCreateVacuum: false
-    deleteAfterExplosion: false
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: ApcPowerReceiver
-    powerLoad: 400
+    powerLoad: 500
   - type: Machine
-    board: MicrowaveMachineCircuitboard
+    board: KitchenOvenMachineCircuitboard
   - type: ContainerContainer
     containers:
       microwave_entity_container: !type:Container

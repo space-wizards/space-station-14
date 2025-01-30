@@ -441,6 +441,11 @@
 
 - type: latheRecipe
   parent: BaseCircuitboardRecipe
+  id: KitchenOvenMachineCircuitboard
+  result: KitchenOvenMachineCircuitboard
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
   id: ElectricGrillMachineCircuitboard
   result: ElectricGrillMachineCircuitboard
 
