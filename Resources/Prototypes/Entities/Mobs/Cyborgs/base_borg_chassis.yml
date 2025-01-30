@@ -167,7 +167,6 @@
     - cell_slot
   - type: Lock
     locked: true
-    breakOnEmag: false
     unlockOnClick: false
   - type: ActivatableUIRequiresLock
   - type: LockedWiresPanel
