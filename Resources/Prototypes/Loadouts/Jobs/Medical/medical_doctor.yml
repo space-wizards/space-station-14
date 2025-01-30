@@ -72,12 +72,6 @@
   equipment:
     head: ClothingHeadNurseHat
 
-# Neck - Harmony
-- type: loadout
-  id: Stethoscope
-  equipment:
-    neck: ClothingNeckStethoscope
-
 # Jumpsuit
 - type: loadout
   id: MedicalDoctorJumpsuit

@@ -5,3 +5,8 @@
     proto: SeniorPhysician
   equipment:
     jumpsuit: ClothingUniformJumpsuitLaissezFaire
+
+- type: loadout
+  id: Stethoscope
+  equipment:
+    neck: ClothingNeckStethoscope
