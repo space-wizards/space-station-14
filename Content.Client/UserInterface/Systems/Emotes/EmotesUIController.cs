@@ -7,8 +7,6 @@ using Content.Shared.Input;
 using Content.Shared.Speech;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
-using Robust.Client.Graphics;
-using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
@@ -22,13 +20,11 @@ namespace Content.Client.UserInterface.Systems.Emotes;
 public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayState>
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IClyde _displayManager = default!;
-    [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     
     private MenuButton? EmotesButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EmotesButton;
-    private RadialMenu? _menu;
+    private SimpleRadialMenu? _menu;
 
     private static readonly Dictionary<EmoteCategory, (string Tooltip, SpriteSpecifier Sprite)> EmoteGroupingInfo
         = new Dictionary<EmoteCategory, (string Tooltip, SpriteSpecifier Sprite)>
@@ -59,8 +55,11 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
             var prototypes = _prototypeManager.EnumeratePrototypes<EmotePrototype>();
             var models = ConvertToButtons(prototypes);
 
-            _menu = new SimpleRadialMenu(models);
+            _menu = new SimpleRadialMenu();
+            _menu.SetButtons(models);
+
             _menu.Open();
+
             _menu.OnClose += OnWindowClosed;
             _menu.OnOpen += OnWindowOpen;
 
@@ -73,9 +72,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
             }
             else
             {
-                // Open the menu, centered on the mouse
-                var vpSize = _displayManager.ScreenSize;
-                _menu.OpenCenteredAt(_inputManager.MouseScreenPosition.Position / vpSize);
+                _menu.OpenOverMouseScreenPosition();
             }
         }
         else
