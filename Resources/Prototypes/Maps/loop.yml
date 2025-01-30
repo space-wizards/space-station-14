@@ -38,6 +38,7 @@
             Chemist: [ 3, 3 ]
             MedicalDoctor: [ 0, 0 ] # Handled in its own jobgroup
             Paramedic: [ 2, 2 ]
+            Psychologist: [ 1, 1 ]
             MedicalIntern: [ 0, 0 ] # Handled in its own jobgroup
             #science
             ResearchDirector: [ 1, 1 ]
