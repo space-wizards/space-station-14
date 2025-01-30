@@ -257,6 +257,8 @@
   suffix: Dexalin+ & Saline
   parent: BaseChemistryBottleFilled
   components:
+  - type: Label
+    currentLabel: dexalin plus & saline
   - type: SolutionContainerManager
     solutions:
       drink:
