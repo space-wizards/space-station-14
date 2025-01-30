@@ -139,6 +139,7 @@
     - RandomHumanoidVisitorSecurityOfficer
     - RandomHumanoidVisitorSecurityCadet
     - RandomHumanoidVisitorDetective
+    - RandomHumanoidVisitorBrigmedic # imp
     rarePrototypes:
     - RandomHumanoidVisitorWarden
     - RandomHumanoidVisitorHOS
@@ -216,6 +217,7 @@
     prototypes:
     - RandomHumanoidVisitorCargoTechnician
     - RandomHumanoidVisitorSalvageSpecialist
+    - RandomHumanoidVisitorCourier # imp
     rarePrototypes:
     - RandomHumanoidVisitorQM
     rareChance: 0.05
@@ -465,6 +467,7 @@
     prototypes:
     - RandomHumanoidVisitorResearchAssistant
     - RandomHumanoidVisitorScientist
+    - RandomHumanoidVisitorRoboticist # imp
     rarePrototypes:
     - RandomHumanoidVisitorRD
     rareChance: 0.05
@@ -848,9 +851,11 @@
     - RandomHumanoidVisitorSecurityCadet
     - RandomHumanoidVisitorSecurityOfficer
     - RandomHumanoidVisitorDetective
+    - RandomHumanoidVisitorBrigmedic # imp
     - RandomHumanoidVisitorWarden
     - RandomHumanoidVisitorCargoTechnician
     - RandomHumanoidVisitorSalvageSpecialist
+    - RandomHumanoidVisitorCourier # imp
     - RandomHumanoidVisitorAtmosTech
     - RandomHumanoidVisitorTechnicalAssistant
     - RandomHumanoidVisitorEngineer
@@ -864,6 +869,7 @@
     - RandomHumanoidVisitorDentist
     - RandomHumanoidVisitorResearchAssistant
     - RandomHumanoidVisitorScientist
+    - RandomHumanoidVisitorRoboticist # imp
     - RandomHumanoidVisitorBartender
     - RandomHumanoidVisitorBotanist
     - RandomHumanoidVisitorBoxer

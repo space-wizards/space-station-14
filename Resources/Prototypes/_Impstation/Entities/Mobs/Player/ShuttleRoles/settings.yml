@@ -1,0 +1,36 @@
+- type: randomHumanoidSettings
+  id: VisitorBrigmedic
+  parent: VisitorSecurity
+  components:
+    - type: GhostRole
+      name: job-name-brigmedic
+      requirements:
+        - !type:DepartmentTimeRequirement
+          department: Security
+          time: 36000 #10 hrs
+        - !type:DepartmentTimeRequirement
+          department: Medical
+          time: 14400 #4 hrs
+    - type: Loadout
+      prototypes: [ VisitorBrigmedic, VisitorBrigmedicAlt ]
+      roleLoadout: [ RoleSurvivalSecurity ]
+      
+- type: randomHumanoidSettings
+  id: VisitorCourier
+  parent: VisitorCargonian
+  components:
+    - type: GhostRole
+      name: job-name-courier
+    - type: Loadout
+      prototypes: [ VisitorCourier, VisitorCourierAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorRoboticist
+  parent: VisitorScience
+  components:
+    - type: GhostRole
+      name: job-name-roboticist
+    - type: Loadout
+      prototypes: [ VisitorRoboticist, VisitorRoboticistAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]

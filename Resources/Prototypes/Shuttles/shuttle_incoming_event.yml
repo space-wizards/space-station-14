@@ -10,7 +10,7 @@
 
 - type: preloadedGrid
   id: DisasterEvacPod
-  path: /Maps/Shuttles/ShuttleEvent/disaster_evacpod.yml
+  path: /Maps/_Impstation/Shuttles/ShuttleEvent/disaster_evacpod.yml # imp
   copies: 3
 
 # The power of 3 clowns has proved too strong for the players and may need to be 1984ed.

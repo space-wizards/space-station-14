@@ -23,8 +23,27 @@
     - type: GhostRole
       name: job-name-captain
       description: ghost-role-information-command-description
+      requirements: # imp
+        - !type:DepartmentTimeRequirement
+          department: Engineering
+          time: 54000 # 15 hours
+        - !type:DepartmentTimeRequirement
+          department: Medical
+          time: 54000 # 15 hours
+        - !type:DepartmentTimeRequirement
+          department: Security
+          time: 54000 # 15 hours
+        - !type:DepartmentTimeRequirement #imp
+          department: Cargo
+          time: 54000 # 15 hours
+        - !type:DepartmentTimeRequirement #imp
+          department: Science
+          time: 54000 # 15 hours
+        - !type:DepartmentTimeRequirement
+          department: Command
+          time: 72000 # 20 hours, imp
     - type: Loadout
-      prototypes: [ VisitorCaptain, VisitorCaptainAlt ]
+      prototypes: [ VisitorCaptain, VisitorCaptainAlt, VisitorCaptainAltA, VisitorCaptainAltB ] # imp
       roleLoadout: [ RoleSurvivalStandard ]
 
 - type: randomHumanoidSettings
@@ -34,6 +53,18 @@
     - type: GhostRole
       name: job-name-ce
       description: ghost-role-information-command-description
+      requirements: # imp
+        - !type:RoleTimeRequirement
+          role: JobAtmosphericTechnician
+          time: 21600 #6 hrs
+        - !type:RoleTimeRequirement
+          role: JobStationEngineer
+          time: 21600 #6 hrs
+        - !type:DepartmentTimeRequirement
+          department: Engineering
+          time: 72000 #20 hrs, imp
+        - !type:OverallPlaytimeRequirement
+          time: 144000 #40 hrs
     - type: Loadout
       prototypes: [ VisitorCE, VisitorCEAlt ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -45,8 +76,20 @@
     - type: GhostRole
       name: job-name-cmo
       description: ghost-role-information-command-description
+      requirements: # imp
+        - !type:RoleTimeRequirement
+          role: JobChemist
+          time: 21600 #6 hrs, imp. why tf was this so low?
+        - !type:RoleTimeRequirement
+          role: JobMedicalDoctor
+          time: 21600 #6 hrs
+        - !type:DepartmentTimeRequirement
+          department: Medical
+          time: 72000 #20 hrs, imp
+        - !type:OverallPlaytimeRequirement
+          time: 144000 #40 hrs
     - type: Loadout
-      prototypes: [ VisitorCMO, VisitorCMOAlt ]
+      prototypes: [ VisitorCMO, VisitorCMOAlt, VisitorCMOAltA ] # imp
       roleLoadout: [ RoleSurvivalMedical ]
 
 - type: randomHumanoidSettings
@@ -56,6 +99,25 @@
     - type: GhostRole
       name: job-name-hop
       description: ghost-role-information-command-description
+      requirements: # imp
+        - !type:DepartmentTimeRequirement
+          department: Engineering
+          time: 36000 # 10 hours
+        - !type:DepartmentTimeRequirement
+          department: Medical
+          time: 36000 # 10 hours
+        - !type:DepartmentTimeRequirement
+          department: Security
+          time: 36000 # 10 hrs
+        - !type:DepartmentTimeRequirement #imp
+          department: Cargo
+          time: 36000 # 10 hrs
+        - !type:DepartmentTimeRequirement #imp
+          department: Science
+          time: 36000 # 10 hrs
+        - !type:DepartmentTimeRequirement
+          department: Command
+          time: 36000 # 10 hours
     - type: Loadout
       prototypes: [ VisitorHOP, VisitorHOPAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -67,8 +129,20 @@
     - type: GhostRole
       name: job-name-hos
       description: ghost-role-information-command-description
+      requirements: # imp
+        - !type:RoleTimeRequirement
+          role: JobWarden
+          time: 10800 #3 hrs
+        - !type:RoleTimeRequirement
+          role: JobSecurityOfficer
+          time: 36000 #10 hrs
+        - !type:DepartmentTimeRequirement
+          department: Security
+          time: 324000 # 90 hrs
+        - !type:OverallPlaytimeRequirement
+          time: 144000 #40 hrs
     - type: Loadout
-      prototypes: [ VisitorHOS, VisitorHOSAlt ]
+      prototypes: [ VisitorHOS, VisitorHOSAlt, VisitorHOSAltA, VisitorHOSAltB ] # imp
       roleLoadout: [ RoleSurvivalSecurity ]
 
 - type: randomHumanoidSettings
@@ -78,6 +152,12 @@
     - type: GhostRole
       name: job-name-rd
       description: ghost-role-information-command-description
+      requirements: # imp
+        - !type:DepartmentTimeRequirement
+          department: Science
+          time: 72000 #20 hrs, imp
+        - !type:OverallPlaytimeRequirement
+          time: 144000 #40 hrs
     - type: Loadout
       prototypes: [ VisitorRD, VisitorRDAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -89,6 +169,18 @@
     - type: GhostRole
       name: job-name-qm
       description: ghost-role-information-command-description
+      requirements: # imp
+        - !type:RoleTimeRequirement
+          role: JobCargoTechnician
+          time: 21600 #6 hrs
+        - !type:RoleTimeRequirement
+          role: JobSalvageSpecialist
+          time: 10800 #3 hrs (too popular)
+        - !type:DepartmentTimeRequirement
+          department: Cargo
+          time: 72000 #20 hours, imp
+        - !type:OverallPlaytimeRequirement
+          time: 144000 #40 hrs
     - type: Loadout
       prototypes: [ VisitorQM, VisitorQMAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -113,6 +205,9 @@
   components:
     - type: GhostRole
       name: job-name-cadet
+      requirements: # imp
+        - !type:OverallPlaytimeRequirement
+          time: 36000 #10 hrs
     - type: Loadout
       prototypes: [ VisitorSecurityCadet, VisitorSecurityCadetAlt ]
       roleLoadout: [ RoleSurvivalSecurity ]
@@ -123,8 +218,11 @@
   components:
     - type: GhostRole
       name: job-name-security
+      requirements: # imp
+        - !type:OverallPlaytimeRequirement
+          time: 36000 #10 hrs
     - type: Loadout
-      prototypes: [ VisitorSecurityOfficer, VisitorSecurityOfficerAlt ]
+      prototypes: [ VisitorSecurityOfficer, VisitorSecurityOfficerAlt, VisitorSecurityOfficerAltA ] # imp
       roleLoadout: [ RoleSurvivalSecurity ]
 
 - type: randomHumanoidSettings
@@ -133,8 +231,12 @@
   components:
     - type: GhostRole
       name: job-name-detective
+      requirements: # imp
+        - !type:DepartmentTimeRequirement
+          department: Security
+          time: 54000 # 15 hours
     - type: Loadout
-      prototypes: [ VisitorDetective, VisitorDetectiveAlt ]
+      prototypes: [ VisitorDetective, VisitorDetectiveAlt, VisitorDetectiveAltA, VisitorDetectiveAltB ] # imp
       roleLoadout: [ RoleSurvivalSecurity ]
 
 - type: randomHumanoidSettings
@@ -143,6 +245,10 @@
   components:
     - type: GhostRole
       name: job-name-warden
+      requirements: # imp
+        - !type:RoleTimeRequirement
+          role: JobSecurityOfficer
+          time: 36000 #10 hrs
     - type: Loadout
       prototypes: [ VisitorWarden, VisitorWardenAlt ]
       roleLoadout: [ RoleSurvivalSecurity ]
@@ -176,6 +282,12 @@
   components:
     - type: GhostRole
       name: job-name-salvagespec
+      requirements: # imp
+        - !type:DepartmentTimeRequirement
+          department: Cargo
+          time: 10800 # 3 hrs
+        - !type:OverallPlaytimeRequirement
+          time: 36000 #10 hrs
     - type: Loadout
       prototypes: [ VisitorSalvageSpecialist, VisitorSalvageSpecialistAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -199,6 +311,10 @@
   components:
     - type: GhostRole
       name: job-name-atmostech
+      requirements: # imp
+        - !type:DepartmentTimeRequirement
+          department: Engineering
+          time: 54000 # 15 hrs
     - type: Loadout
       prototypes: [ VisitorAtmosTech, VisitorAtmosTechAlt ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -209,6 +325,9 @@
   components:
     - type: GhostRole
       name: job-name-technical-assistant
+      requirements: # imp
+        - !type:OverallPlaytimeRequirement
+          time: 3600 #1 hr
     - type: Loadout
       prototypes: [ VisitorTechnicalAssistant, VisitorTechnicalAssistantAlt ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -219,6 +338,9 @@
   components:
     - type: GhostRole
       name: job-name-engineer
+      requirements: # imp
+        - !type:OverallPlaytimeRequirement
+          time: 3600 #1 hr
     - type: Loadout
       prototypes: [ VisitorEngineer, VisitorEngineerAlt ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -262,6 +384,12 @@
   components:
     - type: GhostRole
       name: job-name-paramedic
+      requirements: # imp
+        - !type:RoleTimeRequirement
+          role: JobMedicalDoctor
+          time: 14400 #4 hrs
+        - !type:OverallPlaytimeRequirement
+          time: 54000 # 15 hrs
     - type: Loadout
       prototypes: [ VisitorParamedic, VisitorParamedicAlt ]
       roleLoadout: [ RoleSurvivalMedical ]
@@ -302,8 +430,12 @@
   components:
     - type: GhostRole
       name: job-name-chemist
+      requirements: # imp
+        - !type:DepartmentTimeRequirement
+          department: Medical
+          time: 14400 #4 hrs
     - type: Loadout
-      prototypes: [ VisitorChemist, VisitorChemistAlt ]
+      prototypes: [ VisitorChemist, VisitorChemistAlt, VisitorChemistAltA ] # imp
       roleLoadout: [ RoleSurvivalMedical ]
 
 - type: randomHumanoidSettings
@@ -368,8 +500,12 @@
   components:
     - type: GhostRole
       name: job-name-bartender
+      requirements: # imp
+        - !type:DepartmentTimeRequirement
+          department: Civilian
+          time: 1800
     - type: Loadout
-      prototypes: [ VisitorBartender, VisitorBartenderAlt ]
+      prototypes: [ VisitorBartender, VisitorBartenderAlt, VisitorBartenderAltA, VisitorBartenderAltB ] # imp
       roleLoadout: [ RoleSurvivalStandard ]
 
 - type: randomHumanoidSettings
@@ -409,6 +545,10 @@
   components:
     - type: GhostRole
       name: job-name-chef
+      requirements: # imp
+        - !type:DepartmentTimeRequirement
+          department: Civilian
+          time: 1800
     - type: Loadout
       prototypes: [ VisitorChef, VisitorChefAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -421,7 +561,7 @@
     - type: GhostRole
       name: job-name-clown
     - type: Loadout
-      prototypes: [ VisitorClown ]
+      prototypes: [ VisitorClown, VisitorClownAltA, VisitorClownAltB ] # imp
       roleLoadout: [ RoleSurvivalClown ]
     - type: RandomMetadata
       nameSegments:
@@ -443,6 +583,9 @@
   components:
     - type: GhostRole
       name: job-name-lawyer
+      requirements: # imp
+        - !type:OverallPlaytimeRequirement
+          time: 36000 # 10 hrs
     - type: Loadout
       prototypes: [ VisitorLawyerAltA, VisitorLawyerAltB, VisitorLawyerAltC, VisitorLawyerAltD, VisitorLawyerAltE ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -505,6 +648,9 @@
     - type: MimePowers
     - type: GhostRole
       name: job-name-mime
+      requirements: # imp
+        - !type:OverallPlaytimeRequirement
+          time: 14400 #4 hrs
     - type: Loadout
       prototypes: [ VisitorMime, VisitorMimeAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -516,7 +662,7 @@
     - type: GhostRole
       name: job-name-reporter
     - type: Loadout
-      prototypes: [ VisitorReporter, VisitorReporterAlt ]
+      prototypes: [ VisitorReporter, VisitorReporterAlt, VisitorReporterAltA ]
       roleLoadout: [ RoleSurvivalStandard ]
 
 - type: randomHumanoidSettings
