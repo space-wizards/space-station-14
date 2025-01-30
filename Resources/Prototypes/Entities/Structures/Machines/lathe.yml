@@ -152,6 +152,7 @@
       - LightBulb
       - LedLightBulb
       - DimLightBulb
+      - WarmLightBulb
       - Bucket
       - DrinkMug
       - DrinkMugMetal
@@ -470,7 +471,6 @@
     - SodaDispenserMachineCircuitboard
     - SpaceHeaterMachineCircuitBoard
     - CutterMachineCircuitboard
-    - StationAnchorCircuitboard
     - SalvageMagnetMachineCircuitboard
     - ShipyardComputerCircuitboard
     - ServiceTechFabCircuitboard #imp addition
@@ -1156,8 +1156,28 @@
       - ClothingNeckCloakEnby
       - ClothingNeckCloakPan
       - ClothingNeckCloakBear
+      # Bedsheets
+      - BedsheetBlack
+      - BedsheetBlue
+      - BedsheetBrown
+      - BedsheetGreen
+      - BedsheetGrey
+      - BedsheetOrange
+      - BedsheetPurple
+      - BedsheetRed
+      - BedsheetWhite
+      - BedsheetYellow
+      - BedsheetClown
+      - BedsheetCosmos
+      - BedsheetIan
+      - BedsheetMedical
+      - BedsheetMime
+      - BedsheetNT
+      - BedsheetRainbow
+      - BedsheetBrigmedic
   - type: EmagLatheRecipes
     emagStaticRecipes:
+      # Clothing
       - ClothingHeadHatCentcomcap
       - ClothingHeadHatCentcom
       - ClothingUniformJumpsuitCentcomAgent
@@ -1181,6 +1201,8 @@
       - ClothingOuterWinterSyndie
       - ClothingOuterWinterSyndieCap
       - ClothingNeckCloakStraight
+      # Bedsheets
+      - BedsheetSyndie
   - type: MaterialStorage
     whitelist:
       tags:

@@ -40,13 +40,6 @@
 
 - type: latheRecipe
   abstract: true
-  id: BaseCarpetRecipe
-  completetime: 1
-  materials:
-    Cloth: 100
-
-- type: latheRecipe
-  abstract: true
   parent: BaseHatRecipe
   id: BaseCommandHatRecipe
   materials:

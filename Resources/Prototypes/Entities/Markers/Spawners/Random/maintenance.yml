@@ -153,6 +153,7 @@
         - id: ClothingNeckLesbianPin
         - id: ClothingNeckNonBinaryPin
         - id: ClothingNeckPansexualPin
+        - id: ClothingNeckOmnisexualPin
         - id: ClothingNeckTransPin
         - id: ClothingNeckAutismPin
         - id: ClothingNeckGoldAutismPin
@@ -516,6 +517,34 @@
       offset: 0.0
 
 - type: entityTable
+  id: InsulsTable
+  table: !type:GroupSelector
+    children:
+    - id: ClothingHandsGlovesColorYellowBudget # budget insuls
+      weight: 85
+    - id: ClothingHandsGlovesColorYellow # true insuls
+      weight: 10
+    - id: ClothingHandsGlovesFingerlessInsulated # fingerless
+      weight: 4
+    - id: ClothingHandsGlovesConducting # conducting
+      weight: 1
+
+- type: entity
+  name: Maint Loot Spawner
+  id: MaintenanceInsulsSpawner
+  suffix: Insuls, safe
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Clothing/Hands/Gloves/Color/yellow.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: InsulsTable
+
+- type: entityTable
   id: MaintEnemyTable
   table: !type:GroupSelector
     children:
@@ -549,3 +578,4 @@
     table: !type:NestedSelector
       tableId: MaintEnemyTable
       prob: 0.6
+
