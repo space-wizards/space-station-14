@@ -1201,7 +1201,7 @@
 # Harmony - Add stethoscope to loadouts
 - type: loadoutGroup
   id: MedicalDoctorNeck
-  name: Medical doctor neck
+  name: loadout-group-medical-doctor-neck
   minLimit: 0
   loadouts:
   - Stethoscope
