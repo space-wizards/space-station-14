@@ -40,6 +40,7 @@
       - Janitor
       - Kitchen
       - Lawyer
+      - Logistics #Imp
       - Maintenance
       - Medical
       - Quartermaster
@@ -109,6 +110,7 @@
     - Janitor
     - Kitchen
     - Lawyer
+    - Logistics #Imp
     - Maintenance
     - Medical
     - Quartermaster
