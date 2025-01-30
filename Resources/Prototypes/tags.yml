@@ -663,6 +663,9 @@
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
 
 - type: Tag
+  id: HardsuitSpatio
+
+- type: Tag
   id: Haunted
 
 - type: Tag
