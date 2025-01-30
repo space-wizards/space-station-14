@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: The ursa minor plushie can now be found in plushie crates.
-    type: Add
-  id: 525
-  time: '2024-11-15T20:33:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/727
 - author: hivehum
   changes:
   - message: "government regulatory agencies don\u2019t want you to know this but\
@@ -4329,3 +4322,18 @@
   id: 1024
   time: '2025-01-30T22:43:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1465
+- author: EpicToast
+  changes:
+  - message: Add visitor ghost roles for couriers, brigmedics and roboticists.
+    type: Add
+  - message: Visitor ghost roles now spawn with their respective job access.
+    type: Tweak
+  - message: Some visitor ghost roles (command, security, and others) now come with
+      playtime requirements.
+    type: Tweak
+  - message: Visitor ghost roles can now spawn with new cosmetics, such as the BROS
+      blazer or the circus clown outfit.
+    type: Tweak
+  id: 1025
+  time: '2025-01-30T23:42:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1499
