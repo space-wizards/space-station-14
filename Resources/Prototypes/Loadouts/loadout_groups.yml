@@ -1198,12 +1198,22 @@
   - PurpleSurgeryCap
   - NurseHat
 
+# Harmony - Add stethoscope to loadouts
+- type: loadoutGroup
+  id: MedicalDoctorNeck
+  name: Medical doctor neck
+  minLimit: 0
+  loadouts:
+  - Stethoscope
+# End Harmony
+
 - type: loadoutGroup
   id: MedicalDoctorJumpsuit
   name: loadout-group-medical-doctor-jumpsuit
   loadouts:
   - MedicalDoctorJumpsuit
   - MedicalDoctorJumpskirt
+  - LaissezFaireSuit # Harmony
   - SeniorPhysicianJumpsuit
   - SeniorPhysicianJumpskirt
   - MedicalBlueScrubs
@@ -1232,6 +1242,7 @@
   name: loadout-group-medical-doctor-shoes
   loadouts:
   - WhiteShoes
+  - BlackShoes # Harmony
   - MedicalWinterBoots
 
 - type: loadoutGroup

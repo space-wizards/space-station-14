@@ -74,3 +74,14 @@
     sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hopmesskit.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hopmesskit.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformJumpsuitLaissezFaire
+  name: laissez-faire suit
+  description: A suit to show just how much you don't care.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/laissez_faire.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/laissez_faire.rsi
