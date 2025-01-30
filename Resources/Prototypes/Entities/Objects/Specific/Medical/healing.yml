@@ -469,14 +469,14 @@
   name: pill canister
   parent: PillCanister
   id: PillCanisterPotassiumIodide
-  suffix: Potassium iodide 10u, 5
+  suffix: Potassium iodide 10u, 7
   components:
   - type: Label
     currentLabel: potassium iodide 10u
   - type: StorageFill
     contents:
     - id: PillPotassiumIodide
-      amount: 5
+      amount: 7
 
 - type: entity
   name: pill
