@@ -139,7 +139,7 @@
 - type: entity
   id: CrateEmergencyAdvancedKit
   parent: CrateMedical
-  name: advanced med kit
+  name: advanced first aid med kit
   description: Crate filled with an advanced med kit.
   components:
   - type: StorageFill
