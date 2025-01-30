@@ -78,7 +78,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCargoOfficeSlacksHarmony
-  name: cargo office slacks jumpsuit
+  name: cargo office slacks
   description: For those who'd rather push pencils than crates.
   components:
   - type: Sprite
