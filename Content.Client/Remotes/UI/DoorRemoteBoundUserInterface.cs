@@ -30,14 +30,13 @@ public class DoorRemoteBoundUserInterface: BoundUserInterface
         _menu.OpenOverMouseScreenPosition();
     }
 
-
     private IEnumerable<RadialMenuOption> CreateButtons()
     {
         return new[]
         {
             new RadialMenuActionOption<OperatingMode>(HandleRadialMenuClick, OperatingMode.OpenClose)
             {
-                Sprite = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/actions_ai.rsi"), "unbolt_door"),
+                Sprite = new SpriteSpecifier.Rsi(new ResPath("/Textures/Structures/Doors/Airlocks/Standard/basic.rsi"), "assembly"),
                 ToolTip = "open/close"
             },
             new RadialMenuActionOption<OperatingMode>(HandleRadialMenuClick, OperatingMode.ToggleBolts)
