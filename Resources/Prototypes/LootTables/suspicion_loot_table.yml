@@ -147,7 +147,11 @@
     maxAmount: 15
   - id: MagazineShotgun
     maxAmount: 15
-  - id: MagazinePistol
+  - id: MagazinePistolSP
+    maxAmount: 15
+  - id: MagazinePistolHP
+    maxAmount: 15
+  - id: MagazinePistolFMJ
     maxAmount: 15
   - id: MagazinePistolHighCapacity
     maxAmount: 15

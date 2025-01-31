@@ -171,8 +171,12 @@
     contents:
     - id: WeaponPistolMk58
       amount: 4
-    - id: MagazinePistol
-      amount: 8
+    - id: MagazinePistolSP
+      amount: 4
+    - id: MagazinePistolHP
+      amount: 2
+    - id: MagazinePistolFMJ
+      amount: 2
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseRestrictedContraband]

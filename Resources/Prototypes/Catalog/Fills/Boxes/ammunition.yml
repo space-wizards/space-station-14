@@ -104,8 +104,12 @@
   components:
   - type: StorageFill
     contents:
-      - id: MagazinePistol
-        amount: 4
+      - id: MagazinePistolSP
+        amount: 2
+      - id: MagazinePistolHP
+        amount: 1
+      - id: MagazinePistolFMJ
+        amount: 1
 
 - type: entity
   name: box of pistol .35 auto (practice) magazines

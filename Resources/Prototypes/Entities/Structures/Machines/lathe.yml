@@ -207,32 +207,52 @@
       - BoxLethalshot
       - BoxShotgunSlug
       - CombatKnife
+######################BOX#######################
+# Light Rifle
       - MagazineBoxLightRifleSP
       - MagazineBoxLightRifleHP
       - MagazineBoxLightRifleFMJ
+# Magnum
       - MagazineBoxMagnum
-      - MagazineBoxPistol
-      - MagazineBoxRifle
+# Pistol
+      - MagazineBoxPistolSP
+      - MagazineBoxPistolHP
+      - MagazineBoxPistolFMJ
+# Rifle
+      - MagazineBoxRifleSP
+      - MagazineBoxRifleHP
+      - MagazineBoxRifleFMJ
+#####################MAGAZINE#######################
+# Light Rifle
       - MagazineLightRifleSP
       - MagazineLightRifleHP
       - MagazineLightRifleFMJ
       - MagazineLightRifleEmpty
-      - MagazinePistol
+# Magnum
+      - SpeedLoaderMagnum
+      - SpeedLoaderMagnumEmpty
+# Pistol
+      - MagazinePistolSP
+      - MagazinePistolHP
+      - MagazinePistolFMJ
       - MagazinePistolEmpty
+# SMG
       - MagazinePistolSubMachineGun
       - MagazinePistolSubMachineGunEmpty
       - MagazinePistolSubMachineGunTopMounted
       - MagazinePistolSubMachineGunTopMountedEmpty
+# Rifle
       - MagazineRifleSP
       - MagazineRifleHP
       - MagazineRifleFMJ
       - MagazineRifleEmpty
+# Shotgun
       - MagazineShotgun
       - MagazineShotgunEmpty
       - MagazineShotgunSlug
+####################################################
       - RiotShield
-      - SpeedLoaderMagnum
-      - SpeedLoaderMagnumEmpty
+
   - type: BlueprintReceiver
     whitelist:
       tags:
@@ -388,34 +408,50 @@
       - GrenadeEMP
       - GrenadeFlash
       - HoloprojectorSecurity
+#####################BOX#######################
+# Light Rifle
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
       - MagazineBoxLightRifleAP
+# Magnum
       - MagazineBoxMagnumIncendiary
       - MagazineBoxMagnumUranium
+# Pistol
       - MagazineBoxPistolIncendiary
       - MagazineBoxPistolUranium
+      - MagazineBoxPistolAP
+# Rifle
       - MagazineBoxRifleIncendiary
       - MagazineBoxRifleUranium
       - MagazineBoxRifleAP
-      - MagazineGrenadeEmpty
+#####################MAGAZINE#######################
+# Light Rifle
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
       - MagazineLightRifleAP
+# Magnum
+      - SpeedLoaderMagnumIncendiary
+      - SpeedLoaderMagnumUranium
+# Pistol
       - MagazinePistolIncendiary
       - MagazinePistolUranium
+      - MagazinePistolAP
+# Rifle
       - MagazineRifleIncendiary
       - MagazineRifleUranium
       - MagazineRifleAP
+# Shotgun
       - MagazineShotgunBeanbag
       - MagazineShotgunIncendiary
       - MagazineShotgunIncendiary
+# Grenade
+      - MagazineGrenadeEmpty
+####################################################
       - PortableRecharger
       - PowerCageHigh
       - PowerCageMedium
       - PowerCageSmall
-      - SpeedLoaderMagnumIncendiary
-      - SpeedLoaderMagnumUranium
+
       - TelescopicShield
       - Truncheon
       - WeaponAdvancedLaser
@@ -788,36 +824,56 @@
       - Flash
       - ForensicPad
       - Handcuffs
+#####################BOX#######################
+# Light Rifle
       - MagazineBoxLightRifleSP
       - MagazineBoxLightRifleHP
       - MagazineBoxLightRifleFMJ
       - MagazineBoxLightRiflePractice
+# Magnum
       - MagazineBoxMagnum
       - MagazineBoxMagnumPractice
-      - MagazineBoxPistol
+# Pistol
+      - MagazineBoxPistolSP
+      - MagazineBoxPistolHP
+      - MagazineBoxPistolFMJ
       - MagazineBoxPistolPractice
-      - MagazineBoxRifle
+# Rifle
+      - MagazineBoxRifleSP
+      - MagazineBoxRifleHP
+      - MagazineBoxRifleFMJ
       - MagazineBoxRiflePractice
+
+#####################MAGAZINE#######################
+# Light Rifle
       - MagazineLightRifleSP
       - MagazineLightRifleHP
       - MagazineLightRifleFMJ
       - MagazineLightRifleEmpty
-      - MagazinePistol
+# Magnum
+      - SpeedLoaderMagnum
+      - SpeedLoaderMagnumEmpty
+# Pistol
+      - MagazinePistolSP
+      - MagazinePistolHP
+      - MagazinePistolFMJ
       - MagazinePistolEmpty
+# SMG
       - MagazinePistolSubMachineGun
       - MagazinePistolSubMachineGunEmpty
       - MagazinePistolSubMachineGunTopMounted
       - MagazinePistolSubMachineGunTopMountedEmpty
+# Rifle
       - MagazineRifleSP
       - MagazineRifleHP
       - MagazineRifleFMJ
       - MagazineRifleEmpty
+# Shotgun
       - MagazineShotgun
       - MagazineShotgunEmpty
       - MagazineShotgunSlug
+####################################################
       - RiotShield
-      - SpeedLoaderMagnum
-      - SpeedLoaderMagnumEmpty
       - Stunbaton
       - TargetClown
       - TargetHuman
@@ -838,27 +894,46 @@
       - GrenadeEMP
       - GrenadeFlash
       - HoloprojectorSecurity
+#####################BOX#######################
+# Light Rifle
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
       - MagazineBoxLightRifleAP
+# Magnum
       - MagazineBoxMagnumIncendiary
       - MagazineBoxMagnumUranium
+# Pistol
       - MagazineBoxPistolIncendiary
       - MagazineBoxPistolUranium
+      - MagazineBoxPistolAP
+# Rifle
       - MagazineBoxRifleIncendiary
       - MagazineBoxRifleUranium
       - MagazineBoxRifleAP
-      - MagazineGrenadeEmpty
+#####################MAGAZINE#######################
+# Light Rifle
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
       - MagazineLightRifleAP
+# Magnum
+      - SpeedLoaderMagnumIncendiary
+      - SpeedLoaderMagnumUranium
+# Pistol
       - MagazinePistolIncendiary
       - MagazinePistolUranium
+      - MagazinePistolAP
+# Rifle
       - MagazineRifleIncendiary
       - MagazineRifleUranium
       - MagazineRifleAP
+# Shotgun
       - MagazineShotgunBeanbag
       - MagazineShotgunIncendiary
+      - MagazineShotgunIncendiary
+# Grenade
+      - MagazineGrenadeEmpty
+####################################################
+
       - PortableRecharger
       - PowerCageHigh
       - PowerCageMedium
@@ -925,27 +1000,45 @@
         - BoxLethalshot
         - BoxShotgunSlug
         - BoxShellTranquilizer
+#####################BOX#######################
+# Light Rifle
         - MagazineBoxLightRifleSP
         - MagazineBoxLightRifleHP
         - MagazineBoxLightRifleFMJ
+# Magnum
         - MagazineBoxMagnum
-        - MagazineBoxPistol
-        - MagazineBoxRifle
+# Pistol
+        - MagazineBoxPistolSP
+        - MagazineBoxPistolHP
+        - MagazineBoxPistolFMJ
+        - MagazineBoxPistolPractice
+# Rifle
+        - MagazineBoxRifleSP
+#####################MAGAZINE#######################
+# Light Rifle
         - MagazineLightRifleSP
         - MagazineLightRifleHP
         - MagazineLightRifleFMJ
         - MagazineLightRifleEmpty
-        - MagazinePistol
+# Magnum
+        - SpeedLoaderMagnum
+        - SpeedLoaderMagnumEmpty
+# Pistol
+        - MagazinePistolSP
+        - MagazinePistolHP
+        - MagazinePistolFMJ
         - MagazinePistolEmpty
+# SMG
+# Rifle
         - MagazineRifleSP
         - MagazineRifleHP
         - MagazineRifleFMJ
         - MagazineRifleEmpty
+# Shotgun
         - MagazineShotgun
         - MagazineShotgunEmpty
         - MagazineShotgunSlug
-        - SpeedLoaderMagnum
-        - SpeedLoaderMagnumEmpty
+####################################################
     - type: MaterialStorage
       whitelist:
         tags:

@@ -5416,7 +5416,7 @@ entities:
       parent: 818
     - type: Physics
       canCollide: False
-- proto: MagazinePistol
+- proto: MagazinePistolSP
   entities:
   - uid: 416
     components:

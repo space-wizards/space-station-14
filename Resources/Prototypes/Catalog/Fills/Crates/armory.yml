@@ -69,8 +69,12 @@
     contents:
     - id: WeaponPistolMk58
       amount: 2
-    - id: MagazinePistol
-      amount: 4
+    - id: MagazinePistolSP
+      amount: 2
+    - id: MagazinePistolHP
+      amount: 1
+    - id: MagazinePistolFMJ
+      amount: 1
 
 - type: entity
   id: CrateSecurityRiot

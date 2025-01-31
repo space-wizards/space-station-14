@@ -142,7 +142,7 @@
   id: MagazinePistolEmpty
   name: pistol magazine (.35 auto any)
   suffix: empty
-  parent: MagazinePistol
+  parent: MagazinePistolSP
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -221,11 +221,10 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
 
-
 - type: entity
   id: MagazinePistolIncendiary
   name: pistol magazine (.35 auto incendiary)
-  parent: MagazinePistol
+  parent: MagazinePistolSP
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolIncendiary

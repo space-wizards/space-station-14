@@ -46,7 +46,7 @@
 
 - type: entity
   parent: BaseMagazineBoxRifle
-  id: MagazineBoxRifle
+  id: MagazineBoxRifleSP
   name: ammunition box (.20 rifle SP)
   components:
   - type: BallisticAmmoProvider
