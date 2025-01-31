@@ -204,12 +204,12 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             args.Cancelled = true;
     }
 
-    public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null, bool doAfterInsert = true)
+    public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid? user, SharedDisposalUnitComponent? disposal = null, bool doContainerInsert = false, bool doAfterInsert = true)
     {
         if (!ResolveDisposals(uid, ref disposal))
             return;
 
-        if (!DoInsert(uid, disposal, toInsert, user))
+        if (!DoInsert(uid, disposal, toInsert, user, doContainerInsert))
             return;
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(uid)}");
@@ -304,7 +304,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         }
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Used)} into {ToPrettyString(uid)}");
-        AfterInsert(uid, component, args.Used, args.User);
+        DoInsertDisposalUnit(uid, args.Used, args.User, component);
         args.Handled = true;
     }
 
@@ -492,7 +492,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         if (delay <= 0 || userId == null)
         {
-            AfterInsert(unitId, unit, toInsertId, userId, doInsert: true);
+            DoInsertDisposalUnit(unitId, toInsertId, userId, doContainerInsert: true, doAfterInsert: true);
             return true;
         }
 
@@ -781,9 +781,10 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     public bool DoInsert(EntityUid uid,
         SharedDisposalUnitComponent component,
         EntityUid inserted,
-        EntityUid? user = null)
+        EntityUid? user = null,
+        bool doContainerInsert = false)
     {
-        if (!_containerSystem.Insert(inserted, component.Container))
+        if (doContainerInsert && !_containerSystem.Insert(inserted, component.Container))
             return false;
 
         if (user != inserted && user != null)

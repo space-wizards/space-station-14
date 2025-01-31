@@ -156,7 +156,7 @@ public sealed class DumpableSystem : EntitySystem
                 var dumpEntity = dumpQueue.Dequeue();
                 var last = dumpQueue.Count == 0;
 
-                _disposalUnitSystem.DoInsertDisposalUnit(args.Args.Target.Value, dumpEntity, args.Args.User, doAfterInsert: last);
+                _disposalUnitSystem.DoInsertDisposalUnit(args.Args.Target.Value, dumpEntity, args.Args.User, doContainerInsert: true, doAfterInsert: last);
             }
         }
         else if (HasComp<PlaceableSurfaceComponent>(args.Args.Target))
