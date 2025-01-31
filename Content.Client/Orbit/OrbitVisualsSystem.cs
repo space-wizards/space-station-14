@@ -4,6 +4,7 @@ using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Orbit;
 
@@ -11,6 +12,7 @@ public sealed class OrbitVisualsSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly AnimationPlayerSystem _animations = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     private readonly string _orbitAnimationKey = "orbiting";
     private readonly string _orbitStopKey = "orbiting_stop";
@@ -26,6 +28,7 @@ public sealed class OrbitVisualsSystem : EntitySystem
 
     private void OnComponentInit(EntityUid uid, OrbitVisualsComponent component, ComponentInit args)
     {
+        _robustRandom.SetSeed((int)_timing.CurTime.TotalMilliseconds);
         component.OrbitDistance =
             _robustRandom.NextFloat(0.75f * component.OrbitDistance, 1.25f * component.OrbitDistance);
 
