@@ -1,23 +1,4 @@
 ﻿Entries:
-- author: smpletan
-  changes:
-  - message: Added the Desperado Hardsuit for Prospectors, currently inaccessible
-      outside of admin intervention.
-    type: Add
-  id: 528
-  time: '2024-11-16T11:57:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/705
-- author: Darkmajia
-  changes:
-  - message: New folders are available in the trinkets loadout with consistent paper
-      and cute themes!
-    type: Add
-  - message: The black folder is no longer in the trinkets loadout. Pick a new one
-      out!
-    type: Remove
-  id: 529
-  time: '2024-11-16T15:10:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/697
 - author: widgetbeck
   changes:
   - message: Updated the Gray guidebook entry to be more in-line with that of other
@@ -4334,3 +4315,19 @@
   id: 1027
   time: '2025-01-31T07:58:23.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1527
+- author: DinnerCalzone
+  changes:
+  - message: Oasis has been updated to feature the supermatter engine, a service breakroom,
+      and a vox box.
+    type: Add
+  id: 1028
+  time: '2025-01-31T15:59:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1523
+- author: DinnerCalzone
+  changes:
+  - message: Origin's armory has gotten more stuff added to it along with some other
+      fixes.
+    type: Tweak
+  id: 1029
+  time: '2025-01-31T15:59:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1524
