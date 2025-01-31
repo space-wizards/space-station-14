@@ -64,6 +64,20 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+# Taking an Eldritch spell, good proof of concept and a way to celebrate everything magic.
+- type: listing
+  id: SpellbookVoidApplause
+  name: spellbook-voidapplause-name
+  description: spellbook-voidapplause-desc
+  productAction: ActionVoidApplause
+  cost:
+    WizCoin: 1
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 - type: listing
   id: SpellbookCharge
   name: spellbook-charge-name
@@ -83,6 +97,19 @@
   description: spellbook-ethereal-jaunt-description
   productAction: ActionPolymorphJaunt
   productUpgradeId: SpellbookJauntUpgrade
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookMindSwap
+  name: spellbook-mind-swap-name
+  description: spellbook-mind-swap-description
+  productAction: ActionMindSwap
   cost:
     WizCoin: 2
   categories:

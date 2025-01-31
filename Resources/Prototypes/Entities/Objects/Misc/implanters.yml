@@ -180,6 +180,14 @@
       implant: FreedomImplant
 
 - type: entity
+  id: RadioImplanter
+  suffix: radio Syndicate
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: RadioImplant
+
+- type: entity
   id: UplinkImplanter
   suffix: uplink
   parent: BaseImplantOnlyImplanterSyndi
@@ -245,6 +253,14 @@
   - type: Implanter
     implant: DeathAcidifierImplant
 
+- type: entity
+  id: FakeMindShieldImplanter
+  suffix: fake mindshield
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: FakeMindShieldImplant
+
 # Security and Command implanters
 
 - type: entity
@@ -254,3 +270,13 @@
   components:
     - type: Implanter
       implant: MindShieldImplant
+
+# Centcomm implanters
+
+- type: entity
+  id: RadioImplanterCentcomm
+  suffix: radio Centcomm
+  parent: BaseImplantOnlyImplanter
+  components:
+  - type: Implanter
+    implant: RadioImplantCentcomm

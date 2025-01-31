@@ -13,18 +13,11 @@
           map: [ "enum.ToggleVisuals.Layer" ]
           visible: false
           shader: unshaded
-        - state: ready
-          map: ["enum.PowerDeviceVisualLayers.Powered"]
-          shader: unshaded
     - type: Appearance
     - type: GenericVisualizer
       visuals:
         enum.ToggleVisuals.Toggled:
           enum.ToggleVisuals.Layer:
-            True: { visible: true }
-            False: { visible: false }
-        enum.DefibrillatorVisuals.Ready:
-          enum.PowerDeviceVisualLayers.Powered:
             True: { visible: true }
             False: { visible: false }
     - type: Item
