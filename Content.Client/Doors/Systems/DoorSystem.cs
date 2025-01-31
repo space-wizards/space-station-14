@@ -98,7 +98,7 @@ public sealed partial class DoorSystem : SharedDoorSystem
 
         if (_appearance.TryGetData<string>(door, DoorVisuals.BaseRSI, out var baseRsi, args.Component))
         {
-            UpdateSpriteRSI(args, baseRsi);
+            UpdateSpriteRSI(args.Sprite, baseRsi);
         }
 
         if (!TryComp<AnimationPlayerComponent>(door, out var animPlayer))
