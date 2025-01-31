@@ -1989,6 +1989,7 @@
     sprite: Objects/Consumable/Drinks/bloodredbooze.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   metabolisms:
     Drink:
