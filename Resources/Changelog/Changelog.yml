@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fixed examine sometimes flickering and closing until you examine something
-      around you.
-    type: Fix
-  id: 7382
-  time: '2024-09-16T08:51:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32205
 - author: ArtisticRoomba
   changes:
   - message: The Bruise-O-Mat alcohol vendor has been added to the nukie outpost,
@@ -3909,3 +3901,10 @@
   id: 7881
   time: '2025-01-31T00:10:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34591
+- author: Nox38
+  changes:
+  - message: Rebalanced Box's armory and increased its max security officers to 7.
+    type: Tweak
+  id: 7882
+  time: '2025-01-31T07:23:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34750
