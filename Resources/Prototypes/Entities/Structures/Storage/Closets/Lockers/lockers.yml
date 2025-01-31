@@ -421,6 +421,7 @@
   parent: LockerSyndicatePersonal
   description: Advanced locker technology.
   components:
+    - type: ArrivalsBlacklist
     - type: BluespaceLocker
       minBluespaceLinks: 1
       behaviorProperties:

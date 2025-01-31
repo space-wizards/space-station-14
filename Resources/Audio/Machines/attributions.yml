@@ -35,7 +35,7 @@
 
 - files: ["vessel_warning.ogg"]
   license: "CC-BY-4.0"
-  copyright: "Created by AUDACITIER (freesound), converted to MONO and .ogg and edited by EmoGarbage404 (github)."
+  copyright: "Created by AUDACITIER (freesound), converted to MONO and .ogg and edited by EmoGarbage404 (github). Removed click at beginning/end with fade in/out (Pancake)."
   source: "https://freesound.org/people/AUDACITIER/sounds/629196/"
 
 - files: ["quickbeep.ogg"]
