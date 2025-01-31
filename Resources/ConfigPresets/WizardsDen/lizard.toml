@@ -12,5 +12,3 @@ panic_bunker.custom_reason = ""
 [hub]
 tags = "lang:en,region:am_n_w,rp:low"
 
-[worldgen]
-enabled = true
