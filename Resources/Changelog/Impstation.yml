@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Added medals and the reason they were awarded to the end screen! Use
-      a medal to edit it's reason for being awarded, then pin it to the recipient's
-      neck slot!
-    type: Add
-  id: 527
-  time: '2024-11-16T11:04:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/714
 - author: smpletan
   changes:
   - message: Added the Desperado Hardsuit for Prospectors, currently inaccessible
@@ -4335,3 +4326,11 @@
   id: 1026
   time: '2025-01-31T02:54:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1521
+- author: formlessnameless
+  changes:
+  - message: Space ticks and carp will no longer be sleeping in every single maint
+      locker.
+    type: Fix
+  id: 1027
+  time: '2025-01-31T07:58:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1527
