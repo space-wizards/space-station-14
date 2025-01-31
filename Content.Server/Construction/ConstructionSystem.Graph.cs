@@ -371,33 +371,10 @@ namespace Content.Server.Construction
             {
                 // Ensure the new entity has a container manager. Also for resolve goodness.
                 var newContainerManager = EntityManager.EnsureComponent<ContainerManagerComponent>(newUid);
-				var oldContainerManager = EntityManager.EnsureComponent<ContainerManagerComponent>(uid);
+                var oldContainerManager = EntityManager.EnsureComponent<ContainerManagerComponent>(uid);
 
-				// Transfer all containers owned by the previous entity to the new one.
-				foreach (string container in new List<string>(oldContainerManager.Containers.Keys))
-				{					
-					if (!_container.TryGetContainer(uid, container, out var ourContainer, containerManager))
-                        continue;
-
-					if (!_container.TryGetContainer(newUid, container, out var otherContainer, newContainerManager))
-                    {
-						// NOTE: Only Container is supported by Construction!
-                        // todo: one day, the ensured container should be the same type as ourContainer
-						if (oldContainerManager.Containers[container].GetType() != typeof(Container))
-							continue;
-                        otherContainer = _container.EnsureContainer<Container>(newUid, container, newContainerManager);
-                    }
-
-					for (var i = ourContainer.ContainedEntities.Count - 1; i >= 0; i--)
-                    {
-                        var entity = ourContainer.ContainedEntities[i];
-                        _container.Remove(entity, ourContainer, reparent: false, force: true);
-                        _container.Insert(entity, otherContainer);
-                    }
-				}
-
-                // Transfer all construction-owned containers from the old entity to the new one.
-                foreach (var container in construction.Containers)
+                // Transfer all containers owned by the previous entity to the new one.
+                foreach (string container in new List<string>(oldContainerManager.Containers.Keys))
                 {
                     if (!_container.TryGetContainer(uid, container, out var ourContainer, containerManager))
                         continue;
@@ -406,6 +383,8 @@ namespace Content.Server.Construction
                     {
                         // NOTE: Only Container is supported by Construction!
                         // todo: one day, the ensured container should be the same type as ourContainer
+                        if (oldContainerManager.Containers[container].GetType() != typeof(Container))
+                            continue;
                         otherContainer = _container.EnsureContainer<Container>(newUid, container, newContainerManager);
                     }
 
