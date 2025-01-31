@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: The binary translator key in the syndie uplink is now correctly marked
-      as syndicate contraband.
-    type: Tweak
-  id: 7384
-  time: '2024-09-16T10:01:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32193
 - author: MissKay1994
   changes:
   - message: Lizards are now poisoned by hot chocolate
@@ -3907,3 +3899,10 @@
   id: 7883
   time: '2025-01-31T11:59:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34764
+- author: themias
+  changes:
+  - message: Updated sound effects for shutters
+    type: Tweak
+  id: 7884
+  time: '2025-01-31T17:41:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34774
