@@ -77,7 +77,8 @@ public sealed class OrbitVisualsSystem : EntitySystem
 
         foreach (var (orbit, sprite) in EntityManager.EntityQuery<OrbitVisualsComponent, SpriteComponent>())
         {
-            var angle = new Angle(Math.PI * 2 * orbit.Orbit);
+            var progress = (float)(_timing.CurTime.TotalSeconds / orbit.OrbitLength) % 1;
+            var angle = new Angle(Math.PI * 2 * progress);
             var vec = angle.RotateVec(new Vector2(orbit.OrbitDistance, 0));
 
             sprite.Rotation = angle;
