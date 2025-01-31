@@ -104,10 +104,10 @@
           Heat: 1
 
 - type: entity
-  name: riot bullet shield
+  name: ballistic shield
   parent: [ BaseShield, BaseRestrictedContraband ]
   id: RiotBulletShield
-  description: A ballistic riot shield built for withstanding bullets, but not much else.
+  description: A ballistic shield built for protecting against firearms.
   components:
     - type: Sprite
       state: riot_bullet-icon
