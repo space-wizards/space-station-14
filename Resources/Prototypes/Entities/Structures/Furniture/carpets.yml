@@ -14,7 +14,9 @@
     key: full
     base: carpet_
   - type: Tag
-    tags: [ Carpet ]
+    tags:
+    - Carpet
+    - ForceFixRotations
   - type: Physics
     canCollide: false
   - type: Fixtures
@@ -22,12 +24,12 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
         behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: Butcherable
     butcheringType: Knife
     butcherDelay: 2
