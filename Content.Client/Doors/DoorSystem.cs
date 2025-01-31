@@ -141,10 +141,10 @@ public sealed class DoorSystem : SharedDoorSystem
     private void UpdateSpriteLayers(SpriteComponent sprite, string baseRsi)
     {
         if (!_resourceCache.TryGetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / baseRsi, out var res))
+        {
             Log.Error("Unable to load RSI '{0}'. Trace:\n{1}", baseRsi, Environment.StackTrace);
-
-        if (res is null)
             return;
+        }
 
         sprite.BaseRSI = res.RSI;
     }
