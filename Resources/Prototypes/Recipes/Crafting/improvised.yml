@@ -268,6 +268,19 @@
     state: icon
 
 - type: construction
+  name: pet carrier
+  id: PetCarrier
+  graph: PetCarrier
+  startNode: start
+  targetNode: petCarrier
+  category: construction-category-misc
+  objectType: Item
+  description: Allows large animals to be carried comfortably.
+  icon:
+    sprite: Objects/Storage/petcarrier.rsi
+    state: icon
+
+- type: construction
   name: yarn noodles
   id: yarnnoodles
   graph: YarnNoodles
@@ -292,7 +305,7 @@
   icon:
     sprite: Objects/Fun/toys.rsi
     state: fabric-scrap-salad
-    
+
 - type: construction
   name: improvised pistol
   id: improvisedpistol

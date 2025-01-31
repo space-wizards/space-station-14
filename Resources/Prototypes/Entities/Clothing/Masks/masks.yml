@@ -425,8 +425,7 @@
     unequipDelay: 3
   - type: IngestionBlocker
   - type: AddAccentClothing
-    accent: ReplacementAccent
-    replacement: mumble
+    accent: MumbleAccent
   - type: Construction
     graph: Muzzle
     node: muzzle

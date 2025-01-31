@@ -39,7 +39,7 @@
     size: Small
     heldPrefix: stomach
   - type: Stomach
-    updateInterval: 1.5
+    digestionDelay: 30
   - type: SolutionContainerManager
     solutions:
       stomach:
