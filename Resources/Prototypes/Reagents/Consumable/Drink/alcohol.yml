@@ -1985,7 +1985,7 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: bloodredbooze
   color: "#d73827"
-  metamorphic sprite:
+  metamorphicSprite:
     sprite: Objects/Consumable/Drinks/bloodredbooze.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 4
