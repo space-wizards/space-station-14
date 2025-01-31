@@ -133,7 +133,6 @@
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
-
 - type: entity
   name: Enforcer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
@@ -183,8 +182,6 @@
   parent: [ BaseWeaponShotgun, BaseSecurityBartenderContraband ]
   id: WeaponShotgunSawn
   description: A classic break-action double-barrel shotgun with a hand-shortened barrel. Easier to conceal but far less accurate. Fits two 12 gauge shells.
-  components:
-  description: Groovy! Uses .50 shotgun shells.
   components: # needs to be super inaccurate because you don't need to wield it
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
