@@ -5,6 +5,9 @@ spellbook-fireball-desc = Get most crew exploding with rage when they see this f
 spellbook-blink-name = Blink
 spellbook-blink-desc = Don't blink or you'll miss yourself teleporting away.
 
+spellbook-voidapplause-name = Void Applause
+spellbook-voidapplause-desc = Swap places with the target, doesn't it make you want to do the boogie?
+
 spellbook-force-wall-name = Force Wall
 spellbook-force-wall-desc = Make three walls of pure force that you can pass through, but other's can't.
 

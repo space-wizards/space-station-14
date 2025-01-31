@@ -98,10 +98,10 @@
     stateLocked: cursed_door
     stateUnlocked: decursed_door
   - type: Lock
-    breakOnEmag: false
+    breakOnAccessBreaker: false
   - type: AccessReader
     access: [["Wizard"]]
-    breakOnEmag: false
+    breakOnAccessBreaker: false
   - type: Projectile
     deleteOnCollide: false
     onlyCollideWhenShot: true

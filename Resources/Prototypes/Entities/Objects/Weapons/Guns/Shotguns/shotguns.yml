@@ -116,7 +116,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun_inhands_64x.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
-    fireRate: 2
+    fireRate: 3
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
@@ -139,8 +139,6 @@
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunEnforcer
   description: The Enforcer was designed as a modern remake of the Kammerer design, featuring new polymer furniture and an extended magazine tube.
-
-  components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Clothing
@@ -163,7 +161,7 @@
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunKammerer
   description: A popular shotgun found on many worlds. While its technology is wildly outdated by modern standards, the utility and simplicity of its design have kept it in service to this day.
-  components:
+  components: # intend for Kammerer to have tighter choke for slower fire rate and/or manual cycling
   - type: Item
     size: Normal
     shape:
@@ -174,8 +172,8 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
-  - type: BallisticAmmoProvider
-    capacity: 4
+  - type: Gun
+    fireRate: 1
   - type: Tag
     tags:
     - WeaponShotgunKammerer
@@ -186,6 +184,8 @@
   id: WeaponShotgunSawn
   description: A classic break-action double-barrel shotgun with a hand-shortened barrel. Easier to conceal but far less accurate. Fits two 12 gauge shells.
   components:
+  description: Groovy! Uses .50 shotgun shells.
+  components: # needs to be super inaccurate because you don't need to wield it
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Clothing
@@ -194,7 +194,7 @@
     size: Small
     sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
   - type: Gun
-    fireRate: 4
+    fireRate: 3
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
