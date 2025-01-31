@@ -429,7 +429,7 @@
 
 - type: entity
   parent: DrinkGlass
-  id: BloodRedBooze
+  id: DrinkBloodRedBooze
   suffix: blood red booze
   components:
   - type: SolutionContainerManager
