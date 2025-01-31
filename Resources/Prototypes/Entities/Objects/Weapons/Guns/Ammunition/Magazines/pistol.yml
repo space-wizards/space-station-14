@@ -372,7 +372,7 @@
   components:
   - type: BallisticAmmoProvider
     capacity: 30
-    proto: CartridgePistol
+    proto: CartridgePistolSP
     whitelist:
       tags:
         - CartridgePistol
