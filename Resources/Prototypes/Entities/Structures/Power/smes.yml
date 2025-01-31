@@ -92,6 +92,11 @@
       sendBroadcastAttemptEvent: true
       examinableAddress: true
     - type: WiredNetworkConnection
+    - type: GuideHelp
+      guides:
+      - PowerStorage
+      - VoltageNetworks
+      - Power
 
 # SMES' in use
 
@@ -107,6 +112,51 @@
 - type: entity
   parent: SMESBasic
   id: SMESBasicEmpty
+  suffix: Empty
+  components:
+  - type: Battery
+    startingCharge: 0
+
+- type: entity
+  parent: BaseSMES
+  id: SMESAdvanced
+  suffix: Advanced, 16MJ
+  name: advanced SMES
+  description: An even-higher-capacity superconducting magnetic energy storage (SMES) unit.
+  components:
+  - type: Sprite
+    sprite: Structures/Power/smes.rsi
+    snapCardinals: true
+    layers:
+    - state: advancedsmes
+    - map: [ "enum.SmesVisualLayers.Charge" ]
+      state: "smes-og1" # -og0 does not exist
+      shader: unshaded
+      visible: false
+    - map: [ "enum.SmesVisualLayers.Input" ]
+      state: "smes-oc0"
+      shader: unshaded
+    - map: [ "enum.SmesVisualLayers.Output" ]
+      state: "smes-op1"
+      shader: unshaded
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      state: advancedsmes-open
+  - type: Machine
+    board: SMESAdvancedMachineCircuitboard
+  - type: Battery
+    maxCharge: 16000000
+    startingCharge: 16000000
+  - type: PowerMonitoringDevice
+    group: SMES
+    sourceNode: input
+    loadNode: output
+    collectionName: smes
+    sprite: Structures/Power/smes.rsi
+    state: advancedsmes-static
+
+- type: entity
+  parent: SMESAdvanced
+  id: SMESAdvancedEmpty
   suffix: Empty
   components:
   - type: Battery

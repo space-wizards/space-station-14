@@ -235,7 +235,7 @@ public sealed class NukeSystem : EntitySystem
 
     private void OnClearButtonPressed(EntityUid uid, NukeComponent component, NukeKeypadClearMessage args)
     {
-        _audio.PlayEntity(component.KeypadPressSound, Filter.Pvs(uid), uid, true);
+        _audio.PlayPvs(component.KeypadPressSound, uid);
 
         if (component.Status != NukeStatus.AWAIT_CODE)
             return;
@@ -351,12 +351,12 @@ public sealed class NukeSystem : EntitySystem
                 {
                     component.Status = NukeStatus.AWAIT_ARM;
                     component.RemainingTime = component.Timer;
-                    _audio.PlayEntity(component.AccessGrantedSound, Filter.Pvs(uid), uid, true);
+                    _audio.PlayPvs(component.AccessGrantedSound, uid);
                 }
                 else
                 {
                     component.EnteredCode = "";
-                    _audio.PlayEntity(component.AccessDeniedSound, Filter.Pvs(uid), uid, true);
+                    _audio.PlayPvs(component.AccessDeniedSound, uid);
                 }
 
                 break;
@@ -425,7 +425,9 @@ public sealed class NukeSystem : EntitySystem
         // Don't double-dip on the octave shifting
         component.LastPlayedKeypadSemitones = number == 0 ? component.LastPlayedKeypadSemitones : semitoneShift;
 
-        _audio.PlayEntity(component.KeypadPressSound, Filter.Pvs(uid), uid, true, AudioHelpers.ShiftSemitone(semitoneShift).WithVolume(-5f));
+        var opts = component.KeypadPressSound.Params;
+        opts = AudioHelpers.ShiftSemitone(opts, semitoneShift).AddVolume(-5f);
+        _audio.PlayPvs(component.KeypadPressSound, uid, opts);
     }
 
     public string GenerateRandomNumberString(int length)
@@ -519,6 +521,9 @@ public sealed class NukeSystem : EntitySystem
         component.PlayedNukeSong = false;
         _sound.PlayGlobalOnStation(uid, _audio.GetSound(component.DisarmSound));
         _sound.StopStationEventMusic(uid, StationEventMusicType.Nuke);
+
+        // reset nuke remaining time to either itself or the minimum time, whichever is higher
+        component.RemainingTime = Math.Max(component.RemainingTime, component.MinimumTime);
 
         // disable sound and reset it
         component.PlayedAlertSound = false;

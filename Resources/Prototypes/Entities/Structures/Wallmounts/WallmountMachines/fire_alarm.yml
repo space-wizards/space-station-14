@@ -84,6 +84,9 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: GuideHelp
+    guides:
+    - Networking
   - type: Destructible
     thresholds:
       - trigger:
