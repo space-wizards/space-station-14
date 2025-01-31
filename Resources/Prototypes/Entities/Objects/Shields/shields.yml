@@ -84,10 +84,10 @@
           Slash: 1
 
 - type: entity
-  name: riot laser shield
+  name: ablative shield
   parent: [ BaseShield, BaseRestrictedContraband ]
   id: RiotLaserShield
-  description: A riot shield built for withstanding lasers, but not much else.
+  description: A ablative shield built for absorbing lasers.
   components:
     - type: Sprite
       state: riot_laser-icon
