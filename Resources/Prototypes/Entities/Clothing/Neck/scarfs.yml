@@ -163,7 +163,6 @@
   - type: Clothing
     sprite: Clothing/Neck/Scarfs/zebra.rsi
 
-=======
 # Pride Scarves
 - type: entity
   parent: ClothingScarfBase
