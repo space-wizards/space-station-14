@@ -145,11 +145,8 @@
     contents:
       - id: ClothingHeadHelmetBombSuit
       - id: ClothingOuterSuitBomb
-      # NT is cheap, what can you do...
       - id: Wirecutter
-        prob: 0.9
       - id: Screwdriver
-        prob: 0.9
       - id: Multitool
         prob: 0.5
 
