@@ -216,7 +216,8 @@ namespace Content.Client.Chemistry.UI
 
             // This has to happen here due to people possibly
             // setting sorting before putting any chemicals
-            BufferSortButton.Text = state.SortingType switch {
+            BufferSortButton.Text = state.SortingType switch
+            {
                 ChemMasterSortingType.Alphabetical => Loc.GetString("chem-master-window-sort-type-alphabetical"),
                 ChemMasterSortingType.Quantity => Loc.GetString("chem-master-window-sort-type-quantity"),
                 ChemMasterSortingType.Latest => Loc.GetString("chem-master-window-sort-type-latest"),

@@ -94,12 +94,11 @@ namespace Content.Server.Chemistry.EntitySystems
             ClickSound(chemMaster);
         }
 
-        // The message is currently empty. However It is planned to later on be filled for future additions
-        private void OnCycleSortingTypeMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterSortingTypeCycleMessage message){
+        private void OnCycleSortingTypeMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterSortingTypeCycleMessage message)
+        {
             chemMaster.Comp.SortingType++;
-            if (chemMaster.Comp.SortingType > ChemMasterSortingType.Latest){
+            if (chemMaster.Comp.SortingType > ChemMasterSortingType.Latest)
                 chemMaster.Comp.SortingType = ChemMasterSortingType.None;
-            }
             UpdateUiState(chemMaster);
             ClickSound(chemMaster);
         }

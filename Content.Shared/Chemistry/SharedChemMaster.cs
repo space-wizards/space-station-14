@@ -89,7 +89,7 @@ namespace Content.Shared.Chemistry
         Discard,
     }
 
-    public enum ChemMasterSortingType
+    public enum ChemMasterSortingType : byte
     {
         None = 0,
         Alphabetical = 1,
@@ -98,14 +98,8 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ChemMasterSortingTypeCycleMessage : BoundUserInterfaceMessage
-    {
+    public sealed class ChemMasterSortingTypeCycleMessage : BoundUserInterfaceMessage;
 
-        public ChemMasterSortingTypeCycleMessage()
-        {
-
-        }
-    }
 
     public enum ChemMasterReagentAmount
     {
