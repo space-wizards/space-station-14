@@ -1963,8 +1963,8 @@
   flavor: zombiecocktail
   color: "#d17844"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/zombiecocktail.rsi
-    state: icon_empty
+   sprite: Objects/Consumable/Drinks/zombiecocktail.rsi
+   state: icon_empty
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
@@ -1988,21 +1988,18 @@
   metamorphic sprite:
     sprite: Objects/Consumable/Drinks/bloodredbooze.rsi
     state: icon_empty
-    metamorphicMaxFillLevels: 4
-    metamorphicChangeColor: false
-    metabolisms:
-      Drink:
-        effects:
-        - !type:SatiateThirst
-          factor: 1
-        - !type:AdjustReagent
+  metamorphicMaxFillLevels: 4
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
+      - !type:AdjustReagent
             reagent: Ethanol
             amount: 0.15
-        - !type:AdjustReagent
-              reagent: Theobromine
-              amount: 0.05
-        - !type:GenericStatusEffect
+      - !type:GenericStatusEffect
                key: Drowsiness
                time: 1.0
                type: Remove
-        fizziness: 0.6
+  fizziness: 0.6
