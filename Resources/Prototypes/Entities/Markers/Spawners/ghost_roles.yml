@@ -200,6 +200,8 @@
     name: ghost-role-information-derelict-cyborg-name
     description: ghost-role-information-derelict-cyborg-description
     rules: ghost-role-information-silicon-rules
+    mindRoles: #imp
+    - MindRoleGhostRoleFreeAgent
     raffle:
       settings: default
   - type: Sprite

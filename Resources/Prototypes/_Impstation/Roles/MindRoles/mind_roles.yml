@@ -1,0 +1,8 @@
+﻿- type: entity # for goblins
+  parent: BaseMindRole
+  id: MindRoleGhostRoleTeamFreeAgent
+  name: Ghost Role (Team Free Agent)
+  components:
+  - type: MindRole
+    roleType: FreeAgent
+  - type: GhostRoleMarkerRole

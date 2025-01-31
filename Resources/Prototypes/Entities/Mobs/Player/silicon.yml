@@ -124,7 +124,7 @@
 # Boards
 - type: entity # imp. there is no base lawboard by default
   abstract: true
-  id: BaseLawBoard 
+  id: BaseLawBoard
   parent: BaseElectronics
   components:
   - type: StealTarget
@@ -674,6 +674,8 @@
       rules: ghost-role-information-silicon-rules
       raffle:
         settings: default
+      mindRoles: # imp edit but this seems to be an upstream mistake
+      - MindRoleGhostRoleSiliconAntagonist
     - type: GhostTakeoverAvailable
 
 - type: entity
@@ -707,6 +709,8 @@
       rules: ghost-role-information-silicon-rules
       raffle:
         settings: default
+      mindRoles: # imp edit
+      - MindRoleGhostRoleSiliconAntagonist
     - type: GhostTakeoverAvailable
 
 - type: entity
@@ -757,6 +761,8 @@
       rules: ghost-role-information-silicon-rules
       raffle:
         settings: default
+      mindRoles: # imp edit once again this is upstream forgetting borgs exist
+      - MindRoleGhostRoleSilicon
     - type: GhostTakeoverAvailable
 
   # Drones and OneStar mech
@@ -895,6 +901,8 @@
      1. You may not interfere with the affairs of any being except another drone, regardless of intent or circumstance.
      2. Your goal is to maintain or improve the station to the best of your ability.
      3. You may not take any action which causes damage or harm to the station or its inhabitants.
+    mindRoles: # imp. this whole prototype needs to be pulled out of upstream
+    - MindRoleGhostRoleSilicon
   - type: GhostTakeoverAvailable
   - type: SiliconLawBound
   - type: SiliconLawProvider
@@ -1001,6 +1009,8 @@
     name: ghost-role-information-onestar-mecha-name
     description: ghost-role-information-onestar-mecha-description
     rules: ghost-role-information-antagonist-rules
+    mindRoles: # imp. if it matters.
+    - MindRoleGhostRoleSiliconAntagonist
   - type: GhostTakeoverAvailable
   - type: MovementSpeedModifier
     baseWalkSpeed : 3

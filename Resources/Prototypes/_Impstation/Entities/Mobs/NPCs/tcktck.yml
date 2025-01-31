@@ -285,6 +285,8 @@
     name: Tck'Tck
     description: Charge APCs, help with power, and keep everyone's batteries topped up.
     rules: ghost-role-information-silicon-rules
+    mindRoles:
+    - MindRoleGhostRoleSilicon
   - type: GhostTakeoverAvailable
   - type: GenericVisualizer
     visuals:
