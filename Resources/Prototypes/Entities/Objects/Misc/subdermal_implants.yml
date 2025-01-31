@@ -143,6 +143,18 @@
         - Cuffable # useless if you cant be cuffed
 
 - type: entity
+  parent: BaseSubdermalImplant
+  id: RadioImplant
+  name: radio implant
+  description: This implant grants access to the Syndicate channel without a headset.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: RadioImplant
+    radioChannels:
+    - Syndicate
+
+- type: entity
   parent: [ BaseSubdermalImplant, StorePresetUplink ]
   id: UplinkImplant
   name: uplink implant
@@ -201,6 +213,21 @@
       whitelist:
         components:
         - HumanoidAppearance # syndies cant turn hamlet into a human
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseSubdermalImplant
+  id: ChameleonControllerImplant
+  name: chameleon controller implant
+  description: This implant allows you to instantly change the appearance of all worn chameleon clothing.
+  components:
+  - type: ChameleonControllerImplant
+  - type: SubdermalImplant
+    implantAction: ActionChameleonController
+  - type: UserInterface
+    interfaces:
+      enum.ChameleonControllerKey.Key:
+        type: ChameleonControllerBoundUserInterface
 
 #Nuclear Operative/Special Exclusive implants
 
@@ -337,17 +364,16 @@
      tags:
        - MindShield
 
+# Centcomm implants
+
 - type: entity
-  categories: [ HideSpawnMenu, Spawner ]
   parent: BaseSubdermalImplant
-  id: ChameleonControllerImplant
-  name: chameleon controller implant
-  description: This implant allows you to instantly change the appearance of all worn chameleon clothing.
+  id: RadioImplantCentcomm
+  name: radio implant
+  description: This implant grants access to the Centcomm channel without a headset. Only authorized for Centcomm employees.
+  categories: [ HideSpawnMenu ]
   components:
-  - type: ChameleonControllerImplant
   - type: SubdermalImplant
-    implantAction: ActionChameleonController
-  - type: UserInterface
-    interfaces:
-      enum.ChameleonControllerKey.Key:
-        type: ChameleonControllerBoundUserInterface
+  - type: RadioImplant
+    radioChannels:
+    - CentCom
