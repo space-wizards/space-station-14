@@ -105,9 +105,29 @@ public sealed class ClientClothingSystem : ClothingSystem
 
         List<PrototypeLayerData>? layers = null;
 
-        // first attempt to get species specific data.
-        if (inventory.SpeciesId != null)
-            item.ClothingVisuals.TryGetValue($"{args.Slot}-{inventory.SpeciesId}", out layers);
+        //Attempt to populate custom clothingVisuals, and check for species specific visuals
+        //item.ClothingVisuals.TryGetValue(args.Slot, out layers);
+        if (inventory.SpeciesId != null && item.ClothingVisuals.TryGetValue(args.Slot, out layers))
+        {
+            //Probably want to move this to a generic find RSI function
+            RSI? rsi = null;
+            
+            if (item.RsiPath != null)
+                rsi = _cache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / item.RsiPath).RSI;
+            else if (TryComp(uid, out SpriteComponent? sprite))
+                rsi = sprite.BaseRSI;
+
+            if (rsi == null)
+                return;
+        
+            foreach (var layer in layers) 
+            {
+                if (rsi.TryGetState($"{layer.State}-{inventory.SpeciesId}", out _))
+                    layer.State = $"{layer.State}-{inventory.SpeciesId}";
+                else 
+                    continue;
+            }
+        }
 
         // if that returned nothing, attempt to find generic data
         if (layers == null && !item.ClothingVisuals.TryGetValue(args.Slot, out layers))
@@ -288,7 +308,7 @@ public sealed class ClientClothingSystem : ClothingSystem
                     break;
             }
         }
-
+        // should probably check for racial specific layers before this step
         // add the new layers
         foreach (var (key, layerData) in ev.Layers)
         {
@@ -328,8 +348,10 @@ public sealed class ClientClothingSystem : ClothingSystem
             sprite.LayerSetData(index, layerData);
             layer.Offset += slotDef.Offset;
 
+            //This code nulls out sprite components like being unshaded 
             if (displacementData is not null)
             {
+                //YOU ABSOLUTELY HAVE TO CHECK FOR RACE SPECIFIC SPRITES BEFORE THIS STEP OR MANY THINGS BREAK
                 //Checking that the state is not tied to the current race. In this case we don't need to use the displacement maps.
                 if (layerData.State is not null && inventory.SpeciesId is not null && layerData.State.EndsWith(inventory.SpeciesId))
                     continue;

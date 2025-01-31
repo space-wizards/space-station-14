@@ -306,3 +306,5 @@ Resources/MapImages
 
 # Direnv stuff
 .direnv/
+RobustToolbox
+.gitignore
