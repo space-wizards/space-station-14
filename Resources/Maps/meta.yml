@@ -6941,7 +6941,8 @@ entities:
           -2,9:
             0: 63351
           -2,10:
-            0: 30465
+            0: 29953
+            3: 512
             2: 6
           -2,11:
             0: 895
@@ -9000,13 +9001,6 @@ entities:
     - type: InstantAction
       originalIconColor: '#FFFFFFFF'
       container: 4777
-  - uid: 6527
-    components:
-    - type: Transform
-      parent: 6512
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 6512
   - uid: 7201
     components:
     - type: Transform
@@ -9014,20 +9008,6 @@ entities:
     - type: InstantAction
       originalIconColor: '#FFFFFFFF'
       container: 7614
-  - uid: 7206
-    components:
-    - type: Transform
-      parent: 6645
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 6645
-  - uid: 7540
-    components:
-    - type: Transform
-      parent: 7539
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 7539
   - uid: 9404
     components:
     - type: Transform
@@ -14727,7 +14707,7 @@ entities:
       pos: -29.5,15.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -251705.48
+      secondsUntilStateChange: -252063.2
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14991,7 +14971,7 @@ entities:
       pos: -4.5,53.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -106359.234
+      secondsUntilStateChange: -106716.95
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -22828,6 +22808,13 @@ entities:
     components:
     - type: Transform
       pos: -26.5,-13.5
+      parent: 5350
+- proto: BookSpaceLaw
+  entities:
+  - uid: 1376
+    components:
+    - type: Transform
+      pos: -3.484253,37.5611
       parent: 5350
 - proto: BoozeDispenser
   entities:
@@ -68103,36 +68090,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: ClothingOuterHardsuitSecurity
-  entities:
-  - uid: 14074
-    components:
-    - type: Transform
-      parent: 5663
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 14095
-    components:
-    - type: Transform
-      parent: 5776
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 14107
-    components:
-    - type: Transform
-      parent: 10975
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 14110
-    components:
-    - type: Transform
-      parent: 17674
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: ClothingOuterHoodieBlack
   entities:
   - uid: 24527
@@ -81770,6 +81727,13 @@ entities:
       parent: 5350
     - type: FaxMachine
       name: Law Office
+  - uid: 7539
+    components:
+    - type: Transform
+      pos: -18.5,-5.5
+      parent: 5350
+    - type: FaxMachine
+      name: Main Corridor
   - uid: 7750
     components:
     - type: Transform
@@ -84127,7 +84091,7 @@ entities:
       pos: 31.5,-33.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -29198.273
+      secondsUntilStateChange: -29555.99
       state: Closing
   - uid: 9615
     components:
@@ -132715,58 +132679,6 @@ entities:
     - type: Transform
       pos: -36.68396,-36.29682
       parent: 5350
-  - uid: 6512
-    components:
-    - type: Transform
-      parent: 5663
-    - type: GasTank
-      toggleActionEntity: 6527
-    - type: Physics
-      canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 6527
-    - type: InsideEntityStorage
-  - uid: 6645
-    components:
-    - type: Transform
-      parent: 5776
-    - type: GasTank
-      toggleActionEntity: 7206
-    - type: Physics
-      canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 7206
-    - type: InsideEntityStorage
-  - uid: 7537
-    components:
-    - type: Transform
-      parent: 10975
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 7539
-    components:
-    - type: Transform
-      parent: 17674
-    - type: GasTank
-      toggleActionEntity: 7540
-    - type: Physics
-      canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 7540
-    - type: InsideEntityStorage
   - uid: 12668
     components:
     - type: Transform
@@ -138769,10 +138681,40 @@ entities:
       parent: 5350
 - proto: PoweredlightExterior
   entities:
+  - uid: 6527
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 13.5,49.5
+      parent: 5350
+  - uid: 7537
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,69.5
+      parent: 5350
+  - uid: 10668
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 3.5,63.5
+      parent: 5350
+  - uid: 10975
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -13.5,63.5
+      parent: 5350
   - uid: 11238
     components:
     - type: Transform
       pos: 76.5,-43.5
+      parent: 5350
+  - uid: 14074
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -25.5,50.5
       parent: 5350
   - uid: 23141
     components:
@@ -153427,43 +153369,16 @@ entities:
   entities:
   - uid: 5663
     components:
-    - type: MetaData
-      desc: Contains two security hardsuits.
-      name: Security hardsuit storage
+    - type: Transform
+      pos: -5.5,46.5
+      parent: 5350
+  - uid: 5776
+    components:
     - type: Transform
       pos: -5.5,42.5
       parent: 5350
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-        - 1.8856695
-        - 7.0937095
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 6512
-          - 14074
-  - uid: 5776
+  - uid: 6512
     components:
-    - type: MetaData
-      desc: Contains two security hardsuits.
-      name: Security hardsuit storage
     - type: Transform
       pos: -6.5,42.5
       parent: 5350
@@ -153473,8 +153388,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.8856695
-        - 7.0937095
+        - 1.7459903
+        - 6.568249
         - 0
         - 0
         - 0
@@ -153485,82 +153400,11 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 14095
-          - 6645
-  - uid: 10975
+  - uid: 7540
     components:
-    - type: MetaData
-      desc: Contains two security hardsuits.
-      name: Security hardsuit storage
     - type: Transform
       pos: -6.5,46.5
       parent: 5350
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-        - 1.8856695
-        - 7.0937095
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 7537
-          - 14107
-  - uid: 17674
-    components:
-    - type: MetaData
-      desc: Contains two security hardsuits.
-      name: Security hardsuit storage
-    - type: Transform
-      pos: -5.5,46.5
-      parent: 5350
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-        - 1.8968438
-        - 7.1357465
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 7539
-          - 14110
 - proto: SuitStorageWarden
   entities:
   - uid: 6687
@@ -155527,6 +155371,17 @@ entities:
       - SurveillanceCameraSecurity
       nameSet: True
       id: Shuttle Dock
+  - uid: 14095
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -13.5,63.5
+      parent: 5350
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Security Exterior 2
   - uid: 17398
     components:
     - type: Transform
@@ -155656,17 +155511,6 @@ entities:
       - SurveillanceCameraSecurity
       nameSet: True
       id: Security External 4
-  - uid: 22621
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -13.5,63.5
-      parent: 5350
-    - type: SurveillanceCamera
-      setupAvailableNetworks:
-      - SurveillanceCameraSecurity
-      nameSet: True
-      id: Security External 2
   - uid: 23058
     components:
     - type: Transform
@@ -156485,6 +156329,11 @@ entities:
     components:
     - type: Transform
       pos: -0.5,44.5
+      parent: 5350
+  - uid: 6645
+    components:
+    - type: Transform
+      pos: -18.5,-5.5
       parent: 5350
   - uid: 6663
     components:
@@ -160953,13 +160802,6 @@ entities:
       parent: 5350
 - proto: VendingMachineCoffee
   entities:
-  - uid: 1376
-    components:
-    - type: MetaData
-      name: Hot drinks machine
-    - type: Transform
-      pos: -18.5,-5.5
-      parent: 5350
   - uid: 4325
     components:
     - type: Transform
@@ -179971,6 +179813,17 @@ entities:
         - DoorStatus: Close
 - proto: WindoorSecure
   entities:
+  - uid: 7206
+    components:
+    - type: Transform
+      pos: -12.5,-4.5
+      parent: 5350
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        987:
+        - DoorStatus: Close
   - uid: 15701
     components:
     - type: Transform
@@ -180218,21 +180071,10 @@ entities:
       pos: -12.5,-4.5
       parent: 5350
     - type: DeviceLinkSink
-      invokeCounter: 2
+      invokeCounter: 3
     - type: DeviceLinkSource
       linkedPorts:
-        10668:
-        - DoorStatus: Close
-  - uid: 10668
-    components:
-    - type: Transform
-      pos: -12.5,-4.5
-      parent: 5350
-    - type: DeviceLinkSink
-      invokeCounter: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        987:
+        7206:
         - DoorStatus: Close
 - proto: WindoorSecureMedicalLocked
   entities:
@@ -184836,7 +184678,7 @@ entities:
       pos: -28.5,-5.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -34910.18
+      secondsUntilStateChange: -35267.9
       state: Opening
   - uid: 17570
     components:
