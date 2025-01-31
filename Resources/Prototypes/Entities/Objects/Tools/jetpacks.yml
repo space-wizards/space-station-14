@@ -268,12 +268,14 @@
   components:
   - type: Item
     sprite: Objects/Tanks/Jetpacks/security.rsi
+    size: Normal
   - type: Sprite
     sprite: Objects/Tanks/Jetpacks/security.rsi
   - type: Clothing
     sprite: Objects/Tanks/Jetpacks/security.rsi
     slots:
       - Back
+      - SuitStorage
 
 #Filled security
 - type: entity
