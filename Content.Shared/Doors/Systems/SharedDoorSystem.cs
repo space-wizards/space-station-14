@@ -30,6 +30,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -68,7 +69,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
         SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<DoorComponent, GetPryTimeModifierEvent>(OnPryTimeModifier);
-        SubscribeLocalEvent<DoorComponent, OnAttemptEmagEvent>(OnAttemptEmag);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
 
         InitializeCollision();
@@ -138,22 +138,19 @@ public abstract partial class SharedDoorSystem : EntitySystem
         _activeDoors.Remove(door);
     }
 
-    private void OnAttemptEmag(Entity<DoorComponent> door, ref OnAttemptEmagEvent args)
+    private void OnEmagged(Entity<DoorComponent> entity, ref GotEmaggedEvent args)
     {
-        if (TryComp<AirlockComponent>(door, out var airlock)
-            && !IsBolted(door) && airlock.Powered
-            && door.Comp.State is DoorState.Closed)
+        if (!_emag.CompareFlag(args.Type, EmagType.Access))
             return;
 
-        args.Handled = true;
-    }
-
-    private void OnEmagged(Entity<DoorComponent> door, ref GotEmaggedEvent args)
-    {
-        if (!SetState(door, DoorState.Emagging))
+        if (!TryComp<AirlockComponent>(entity, out var airlock)
+            || IsBolted(entity)
+            || !airlock.Powered
+            || entity.Comp.State is not DoorState.Closed
+            || !SetState(entity, DoorState.Emagging))
             return;
 
-        _audio.PlayPredicted(door.Comp.SparkSound, door, args.UserUid, AudioParams.Default.WithVolume(8));
+        args.Repeatable = true;
         args.Handled = true;
     }
 
