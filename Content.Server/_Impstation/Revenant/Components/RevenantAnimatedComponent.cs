@@ -13,7 +13,7 @@ public sealed partial class RevenantAnimatedComponent : Component
     /// <summary>
     /// The revenant that animated this item. Used for initialization.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables(VVAccess.ReadOnly)]
     public Entity<RevenantComponent>? Revenant;
 
     /// <summary>
