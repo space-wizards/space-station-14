@@ -1,0 +1,26 @@
+﻿<Document>
+  # Radiators
+  Radiators are a device that enables the exchange of heat energy between a [textlink="pipenet" link="PipeNetworks"] and the environment.
+
+  <Box>
+    <GuideEntityEmbed Entity="HeatExchanger"/>
+  </Box>
+
+  Radiators are completely passive: they do not require power to function.
+  They will always equalize the temperature of the gas in the [textlink="pipenet" link="PipeNetworks"] with the environment.
+
+  Radiators have two methods of transferring heat: convection and radiation.
+  - Convection is the transfer of heat through the movement of gas.
+  - Radiation is the transfer of heat through electromagnetic waves.
+
+  If a radiator is in a vacuum, it will only be able to transfer heat through radiation.
+  If it is in an atmosphere, it will be able to transfer heat through both convection and radiation.
+
+  Under convection, you can only get as cold or as hot as the atmosphere or [textlink="pipenet" link="PipeNetworks"] you're exchanging heat with (given the temperature of the gas in the [textlink="pipenet" link="PipeNetworks"] or atmosphere stays the same).
+
+  If you're exchanging heat with space, you can only get as cold as space.
+  To increase the efficiency of radiation, you can build radiators on lattice, which will allow the radiator to radiate more heat, compared to being directly attached to hull tile.
+
+  Increasing the flow rate of gas through the radiator will increase the rate of heat exchange.
+
+  </Document>
