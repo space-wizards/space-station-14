@@ -177,7 +177,7 @@
     damageThreshold: 50
   - type: RadiationReceiver
     components:
-  - type: Reactive
+  - type: Reactive # IMP: Allow radioactive chems to trigger this
     groups:
       Acidic: [ Touch ]
     reactions:
