@@ -139,6 +139,7 @@
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunEnforcer
   description: Premium semi-automatic combat shotgun, the pride of Nanotrasen security.
+  Components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Clothing
