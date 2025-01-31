@@ -140,6 +140,7 @@
     - ViroDrobeInventory
     - WinterDrobeInventory
     - CuraDrobeInventory
+    - CourierDrobeInventory # imp
   - type: Sprite
     layers:
     - state: base
