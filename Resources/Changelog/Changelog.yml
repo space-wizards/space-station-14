@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: drakewill-CRL
-  changes:
-  - message: Produce harvested from sentient plants are no longer sentient themselves.
-    type: Fix
-  id: 7381
-  time: '2024-09-16T00:04:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32192
 - author: DrSmugleaf
   changes:
   - message: Fixed examine sometimes flickering and closing until you examine something
@@ -3908,3 +3901,11 @@
   id: 7880
   time: '2025-01-30T17:48:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34557
+- author: keronshb
+  changes:
+  - message: Added Void's Applause! A Wizard Spell that switches your location with
+      the target.
+    type: Add
+  id: 7881
+  time: '2025-01-31T00:10:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34591
