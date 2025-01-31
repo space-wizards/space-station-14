@@ -87,7 +87,7 @@
   name: ablative shield
   parent: [ BaseShield, BaseRestrictedContraband ]
   id: RiotLaserShield
-  description: A ablative shield built for absorbing lasers.
+  description: A ablative shield built for withstanding lasers, but not much else.
   components:
     - type: Sprite
       state: riot_laser-icon
@@ -107,7 +107,7 @@
   name: ballistic shield
   parent: [ BaseShield, BaseRestrictedContraband ]
   id: RiotBulletShield
-  description: A ballistic shield built for protecting against firearms.
+  description: A ballistic shield built for protecting against firearms, but not much else.
   components:
     - type: Sprite
       state: riot_bullet-icon
