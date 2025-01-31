@@ -224,7 +224,7 @@ public sealed class FollowerSystem : EntitySystem
         if (!Resolve(target, ref followed, false))
             return;
 
-        if (!HasComp<FollowerComponent>(uid))
+        if (!TryComp<FollowerComponent>(uid, out var followerComp) || followerComp.Following != target)
             return;
 
         followed.Following.Remove(uid);
