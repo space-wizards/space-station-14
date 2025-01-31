@@ -188,6 +188,7 @@
      # Enemy "Loot"
     - !type:NestedSelector
       tableId: MaintEnemyTable
+      prob: 0.01
 
 - type: entity
   id: ClosetMaintenanceFilledRandom
