@@ -20,9 +20,9 @@
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             Bartender: [ 2, 2 ]
-            Botanist: [ 2, 3 ]
+            Botanist: [ 3, 3 ]
             Chef: [ 2, 2 ]
-            Janitor: [ 2, 3 ]
+            Janitor: [ 3, 3 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 2 ]
@@ -34,10 +34,10 @@
             TechnicalAssistant: [ 0, 0 ] # Handled in its own jobgroup
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
-            Chemist: [ 2, 3 ]
+            Chemist: [ 2, 2 ]
             MedicalDoctor: [ 0, 0 ] # Handled in its own jobgroup
             MedicalIntern: [ 0, 0 ] # Handled in its own jobgroup
-            Paramedic: [ 1, 2 ]
+            Paramedic: [ 2, 2 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 0, 0 ] # Handled in its own jobgroup
@@ -52,7 +52,7 @@
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
-            CargoTechnician: [ 3, 5 ]
+            CargoTechnician: [ 6, 6 ]
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]
@@ -63,26 +63,26 @@
             Borg: [ 4, 4 ]
           jobGroups:
             EngineeringTeam:
-              roundStart: 12
-              midRound: 16
+              roundStart: 9
+              midRound: 9
               members:
                 - StationEngineer
                 - TechnicalAssistant
             MedicalTeam:
               roundStart: 8
-              midRound: 12
+              midRound: 8
               members:
                 - MedicalIntern
                 - MedicalDoctor
             ResearchTeam:
               roundStart: 8
-              midRound: 13
+              midRound: 8
               members:
                 - Scientist
                 - ResearchAssistant
             SecurityTeam:
-              roundStart: 10
-              midRound: 10
+              roundStart: 7
+              midRound: 7
               members:
                 - SecurityOfficer
                 - SecurityCadet

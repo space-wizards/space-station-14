@@ -82,8 +82,8 @@
                 - Scientist
                 - ResearchAssistant
             SecurityTeam:
-              roundStart: 9
-              midRound: 9
+              roundStart: 7
+              midRound: 7
               members:
                 - SecurityOfficer
                 - SecurityCadet
