@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Buckle.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Movement.Components;
 using Robust.Shared;
@@ -108,6 +109,12 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         if (!MobQuery.TryComp(player, out var comp))
             return;
 
+        var xform = Transform(player.Value);
+
+        // If not parented directly to a grid then fail it.
+        if (xform.ParentUid != xform.GridUid && xform.ParentUid != xform.MapUid)
+            return;
+
         var direction = msg.Direction;
 
         if (direction.Length() > _pushingCap)
@@ -115,15 +122,14 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             direction = direction.Normalized() * _pushingCap;
         }
 
-        MoveMob((player.Value, comp), direction);
+        MoveMob((player.Value, comp, xform), direction);
     }
 
-    protected void MoveMob(Entity<MobCollisionComponent> entity, Vector2 direction)
+    protected void MoveMob(Entity<MobCollisionComponent, TransformComponent> entity, Vector2 direction)
     {
-        var xform = Transform(entity.Owner);
-
         // Wake it so we don't clip into a wall.
         Physics.WakeBody(entity.Owner);
+        var xform = entity.Comp2;
 
         // Alternative though needs tweaks to mob movement code.
         // Physics.ApplyLinearImpulse(entity.Owner, direction);
@@ -148,6 +154,10 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             return false;
 
         var xform = Transform(entity.Owner);
+
+        if (xform.ParentUid != xform.GridUid && xform.ParentUid != xform.MapUid)
+            return false;
+
         var (worldPos, worldRot) = _xformSystem.GetWorldPositionRotation(xform);
         var ourTransform = new Transform(worldPos, worldRot);
         var contacts = Physics.GetContacts(entity.Owner);
