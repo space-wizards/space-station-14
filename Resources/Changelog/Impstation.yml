@@ -1,17 +1,6 @@
 ﻿Entries:
 - author: widgetbeck
   changes:
-  - message: Updated the Gray guidebook entry to be more in-line with that of other
-      species, while preserving the original Transmission.
-    type: Tweak
-  - message: Updated Gray naming conventions. Please take a look at their Guidebook
-      entry before naming your Gray "Kanye West."
-    type: Tweak
-  id: 530
-  time: '2024-11-16T15:36:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/731
-- author: widgetbeck
-  changes:
   - message: Added several new Thaven moods.
     type: Add
   - message: Tweaked the wording of several Thaven moods, and fixed several typos.
@@ -4331,3 +4320,10 @@
   id: 1029
   time: '2025-01-31T15:59:00.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1524
+- author: DinnerCalzone
+  changes:
+  - message: Amber has been updated to incorporate its latest upstream changes.
+    type: Tweak
+  id: 1030
+  time: '2025-01-31T18:35:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1526
