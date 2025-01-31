@@ -43,6 +43,7 @@
     damage:
       types:
         Piercing: 10
+        Structural: 15
 
 
 - type: entity
