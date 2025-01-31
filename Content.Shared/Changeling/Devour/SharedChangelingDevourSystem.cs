@@ -12,6 +12,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
+using Content.Shared.Traits.Assorted;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -201,6 +202,10 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player}  successfully devoured {ToPrettyString(args.Target):player}'s identity");
             _changelingIdentitySystem.CloneToNullspace((ent, identityStorage), target.Value);
             EnsureComp<ChangelingHuskedCorpseComponent>(target.Value);
+
+            var unrevivable = EnsureComp<UnrevivableComponent>(target.Value);
+            unrevivable.Analyzable = false; // Remove the analyser text
+            unrevivable.ReasonMessage = "changeling-defibrillator-failure";
 
             foreach (var organ in _bodySystem.GetBodyOrgans(target, body))
             {
