@@ -1,0 +1,67 @@
+- type: gameMap
+  id: Plasma
+  mapName: 'Plasma'
+  mapPath: /Maps/plasma.yml
+  minPlayers: 30
+  maxPlayers: 80
+  stations:
+    Plasma:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Plasma {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_plasma.yml
+        - type: StationCargoShuttle
+          path: /Maps/Shuttles/cargo_plasma.yml
+        - type: StationJobs
+          availableJobs: #Total of 66 jobs roundstart, max of 93 inc. latejoins and trainees.
+            #command - 7
+            Captain: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            ChiefEngineer: [ 1, 1 ]
+            ChiefMedicalOfficer: [ 1, 1 ]
+            ResearchDirector: [ 1, 1 ]
+            HeadOfSecurity: [ 1, 1 ]
+            Quartermaster: [ 1, 1 ]
+            #service - 18-21
+            Bartender: [ 2, 2 ]
+            Botanist: [ 2, 3 ]
+            Chef: [ 2, 2 ]
+            Janitor: [ 3, 3 ]
+            Chaplain: [ 1, 1 ]
+            Librarian: [ 1, 1 ]
+            ServiceWorker: [ 2, 2 ]
+            Reporter: [ 2, 3 ]
+            Clown: [ 1, 2 ] # This might be fun
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 1 ]
+            #engineering - 8-12
+            AtmosphericTechnician: [ 4, 4 ]
+            StationEngineer: [ 4, 4 ]
+            TechnicalAssistant: [ 4, 4 ]
+            #medical - 9-13
+            Chemist: [ 2, 2 ]
+            MedicalDoctor: [ 4, 4 ]
+            Paramedic: [ 2, 2 ]
+            MedicalIntern: [ 4, 4 ]
+            Psychologist: [ 1, 1 ]
+            #science - 7-13
+            Scientist: [ 4, 4 ]
+            ResearchAssistant: [ 4, 4 ]
+            StationAi: [ 1, 1 ]
+            Borg: [ 2, 4 ]
+            #security - 9-17
+            Warden: [ 1, 1 ]
+            SecurityOfficer: [ 6, 8 ]
+            Detective: [ 1, 2 ]
+            SecurityCadet: [ 4, 4 ]
+            Lawyer: [ 1, 2 ]
+            #supply - 8-10
+            SalvageSpecialist: [ 4, 4 ]
+            CargoTechnician: [ 4, 6 ]
+            #civilian - the tiders yearn for the mines
+            Passenger: [ -1, -1 ]
