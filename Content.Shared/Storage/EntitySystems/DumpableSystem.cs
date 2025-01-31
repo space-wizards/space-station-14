@@ -155,7 +155,7 @@ public sealed class DumpableSystem : EntitySystem
             {
                 var dumpEntity = dumpQueue.Dequeue();
                 var last = dumpQueue.Count == 0;
-                Log.Debug(dumpQueue.Count.ToString());
+
                 _disposalUnitSystem.DoInsertDisposalUnit(args.Args.Target.Value, dumpEntity, args.Args.User, doAfterInsert: last);
             }
         }
