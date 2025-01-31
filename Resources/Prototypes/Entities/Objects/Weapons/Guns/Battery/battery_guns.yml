@@ -769,3 +769,36 @@
     autoRechargeRate: 24
     autoRechargePause: true
     autoRechargePauseTime: 30
+    
+- type: entity
+  name: Miniature Energy Gun
+  parent: BaseWeaponBatterySmall
+  id: WeaponMiniatureEnergyGun
+  description: Miniature gun for safe life
+  components:
+  - type: Tag
+    tags:
+    - Sidearm
+  - type: Sprite
+    sprite: /Uploaded/minipistol.rsi
+    layers:
+    - state: icon
+  - type: Item
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Belt
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletMiniatureEnergyGun
+    fireCost: 50
+  - type: MagazineVisuals
+    magState: mag
+    steps: 20
+    zeroVisible: true
+  - type: Appearance
+  - type: Battery 
+    maxCharge: 1000
+    startCharge: 1000
