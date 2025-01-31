@@ -206,7 +206,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null)
     {
-        if (disposal == null)
+        if (!ResolveDisposals(uid, ref disposal))
             return;
 
         if (!DoInsert(uid, disposal, toInsert, user))
