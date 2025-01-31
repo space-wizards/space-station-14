@@ -87,7 +87,7 @@
   name: ablative shield
   parent: [ BaseShield, BaseRestrictedContraband ]
   id: RiotLaserShield
-  description: A ablative shield built for withstanding lasers, but not much else.
+  description: An ablative shield built for withstanding lasers, but not much else.
   components:
     - type: Sprite
       state: riot_laser-icon
