@@ -14,7 +14,7 @@ public sealed partial class SurgeryStepOrganExtractComponent : Component
     public ComponentRegistry? Organ;
     
     [DataField]
-    public string Slot;
+    public string? Slot;
 }
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))]
