@@ -694,8 +694,6 @@
   - type: BreathMask
   - type: IdentityBlocker
 
-=======
-
 - type: entity
   parent: ClothingMaskGas
   id: ClothingMaskWeldingGas
