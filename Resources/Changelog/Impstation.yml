@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: "government regulatory agencies don\u2019t want you to know this but\
-      \ you can cook a bunch of cigarettes into a soup to get some extra bang for\
-      \ your buck"
-    type: Add
-  id: 526
-  time: '2024-11-16T11:03:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/728
 - author: AirFryerBuyOneGetOneFree
   changes:
   - message: Added medals and the reason they were awarded to the end screen! Use
@@ -4337,3 +4328,10 @@
   id: 1025
   time: '2025-01-30T23:42:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1499
+- author: mqole
+  changes:
+  - message: A minor addition to the examples of antag rule 4. Peruse keb pages.
+    type: Tweak
+  id: 1026
+  time: '2025-01-31T02:54:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1521
