@@ -3,7 +3,6 @@ using Content.Shared.Interaction;
 using Content.Shared.RCD;
 using Content.Shared.RCD.Components;
 using Content.Shared.RCD.Systems;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Robust.Client.Placement;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
