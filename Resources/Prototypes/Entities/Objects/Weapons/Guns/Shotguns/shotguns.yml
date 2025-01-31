@@ -48,7 +48,7 @@
   # Don't parent to BaseWeaponShotgun because it differs significantly
   parent: [BaseItem, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponShotgunBulldog
-  description: It's a magazine-fed shotgun designed for close quarters combat. Uses .50 shotgun shells.
+  description: An automatic magazine-fed shotgun for close-quarters combat. Kicks like a mule on steroids. Uses .50 shotgun shells.
   components:
   - type: Item
     size: Large
@@ -118,7 +118,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun_inhands_64x.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
-    fireRate: 2
+    fireRate: 3
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
@@ -140,8 +140,8 @@
   name: Enforcer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunEnforcer
-  description: A premium combat shotgun based on the Kammerer design, featuring an upgraded clip capacity. .50 shotgun shells.
-  components:
+  description: A premium semi-automatic shotgun, and the pride of all security forces. Uses .50 shotgun shells.
+  components: # intend for Enforcer to have wider choke for semi-auto function
   - type: Item
     size: Normal
     shape:
@@ -166,8 +166,8 @@
   name: Kammerer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunKammerer
-  description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds. Uses .50 shotgun shells.
-  components:
+  description: An old yet faithful design, and a favorite among irregular forces of many worlds. Uses .50 shotgun shells.
+  components: # intend for Kammerer to have tighter choke for slower fire rate and/or manual cycling
   - type: Item
     size: Normal
     shape:
@@ -178,8 +178,8 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
-  - type: BallisticAmmoProvider
-    capacity: 4
+  - type: Gun
+    fireRate: 1
   - type: Tag
     tags:
     - WeaponShotgunKammerer
@@ -189,18 +189,19 @@
   parent: [ BaseWeaponShotgun, BaseSecurityBartenderContraband ]
   id: WeaponShotgunSawn
   description: Groovy! Uses .50 shotgun shells.
-  components:
+  components: # needs to be super inaccurate because you don't need to wield it
   - type: Item
     size: Small
     shape:
     - 0,0,2,0
     sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Gun
-    fireRate: 4
+    fireRate: 3
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
