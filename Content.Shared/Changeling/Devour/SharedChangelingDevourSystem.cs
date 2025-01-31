@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Armor;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
@@ -46,6 +47,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourConsumeDoAfterEvent>(OnDevourConsume);
         SubscribeLocalEvent<ChangelingDevourComponent, DoAfterAttemptEvent<ChangelingDevourConsumeDoAfterEvent>>(OnConsumeAttemptTick);
     }
+
     private void OnMapInit(Entity<ChangelingDevourComponent> ent, ref MapInitEvent args)
     {
         if(!ent.Comp.ChangelingDevourActionEntity.HasValue)
@@ -79,6 +81,19 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         }
     }
 
+    private bool TargetIsProtected(EntityUid target, Entity<ChangelingDevourComponent> ent)
+    {
+        var ev = new CoeffientQueryEvent(SlotFlags.OUTERCLOTHING);
+
+        RaiseLocalEvent(target, ev, true);
+
+        var slash = ev.DamageModifiers.Coefficients.ContainsKey("Slash") && ev.DamageModifiers.Coefficients["Slash"] < 1f - ent.Comp.DevourPreventionPercentageThreshold;
+        var blunt =  ev.DamageModifiers.Coefficients.ContainsKey("Blunt") && ev.DamageModifiers.Coefficients["Blunt"] < 1f - ent.Comp.DevourPreventionPercentageThreshold;
+        var pierce = ev.DamageModifiers.Coefficients.ContainsKey("Piercing") && ev.DamageModifiers.Coefficients["Piercing"] < 1f - ent.Comp.DevourPreventionPercentageThreshold;
+
+        return  slash || blunt || pierce;
+    }
+
 
     private void OnDevourAction(Entity<ChangelingDevourComponent> ent, ref ChangelingDevourActionEvent args)
     {
@@ -100,11 +115,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             return;
         }
 
-        var ev = new ChangelingDevourAttemptEvent(ent.Comp.DevourPreventionPercentageThreshold, SlotFlags.OUTERCLOTHING); // Check the Targets outerclothes for Mitigation coefficents
-
-        RaiseLocalEvent(target, ev, true);
-
-        if (ev.Protection)
+        if (TargetIsProtected(target, ent))
         {
             _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-protected"), ent, ent, PopupType.Medium);
             return;

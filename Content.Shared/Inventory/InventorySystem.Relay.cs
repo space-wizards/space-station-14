@@ -1,3 +1,4 @@
+using Content.Shared.Armor;
 using Content.Shared.Changeling.Devour;
 using Content.Shared.Chat;
 using Content.Shared.Chemistry;
@@ -41,7 +42,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, TargetBeforeHyposprayInjectsEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SelfBeforeGunShotEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SelfBeforeClimbEvent>(RelayInventoryEvent);
-        SubscribeLocalEvent<InventoryComponent, ChangelingDevourAttemptEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, CoeffientQueryEvent>(RelayInventoryEvent);
 
 
         // by-ref events

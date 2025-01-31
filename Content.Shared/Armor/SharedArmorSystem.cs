@@ -21,23 +21,27 @@ public abstract class SharedArmorSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
-        SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<ChangelingDevourAttemptEvent>>(OnChangelingDevourAttempt);
+        SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<CoeffientQueryEvent>>(OnCoeffientQuery);
         SubscribeLocalEvent<ArmorComponent, BorgModuleRelayedEvent<DamageModifyEvent>>(OnBorgDamageModify);
         SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
+    }
+
+    /// <summary>
+    /// Get the total Damage reduction value of all equipment caught by the relay.
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <param name="args"></param>
+    private void OnCoeffientQuery(Entity<ArmorComponent> ent, ref InventoryRelayedEvent<CoeffientQueryEvent> args)
+    {
+        foreach (var a in ent.Comp.Modifiers.Coefficients)
+        {
+             args.Args.DamageModifiers.Coefficients[a.Key] = args.Args.DamageModifiers.Coefficients.TryGetValue(a.Key, out var coefficient) ? coefficient * a.Value : a.Value;
+        }
     }
 
     private void OnDamageModify(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<DamageModifyEvent> args)
     {
         args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
-    }
-
-    private void OnChangelingDevourAttempt(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<ChangelingDevourAttemptEvent> args)
-    {
-        var slash = component.Modifiers.Coefficients.ContainsKey("Slash") && component.Modifiers.Coefficients["Slash"] < 1f - args.Args.ProtectionThreshold;
-        var blunt = component.Modifiers.Coefficients.ContainsKey("Blunt") && component.Modifiers.Coefficients["Blunt"] < 1f - args.Args.ProtectionThreshold;
-        var pierce = component.Modifiers.Coefficients.ContainsKey("Piercing") && component.Modifiers.Coefficients["Piercing"] < 1f - args.Args.ProtectionThreshold;
-
-        args.Args.Protection = slash || blunt ||  pierce;
     }
 
     private void OnBorgDamageModify(EntityUid uid, ArmorComponent component,
@@ -89,5 +93,18 @@ public abstract class SharedArmorSystem : EntitySystem
         }
 
         return msg;
+    }
+}
+
+public sealed class CoeffientQueryEvent : EntityEventArgs, IInventoryRelayEvent
+{
+    public SlotFlags TargetSlots { get; set; }
+
+    public DamageModifierSet DamageModifiers { get; set; } = new DamageModifierSet();
+
+    public CoeffientQueryEvent(SlotFlags slots)
+    {
+        TargetSlots = slots;
+
     }
 }
