@@ -374,7 +374,7 @@ namespace Content.Server.Construction
                 var oldContainerManager = EntityManager.EnsureComponent<ContainerManagerComponent>(uid);
 
                 // Transfer all containers owned by the previous entity to the new one.
-                foreach (string container in new List<string>(oldContainerManager.Containers.Keys))
+                foreach (string container in oldContainerManager.Containers.Keys)
                 {
                     if (!_container.TryGetContainer(uid, container, out var ourContainer, containerManager))
                         continue;
