@@ -43,22 +43,22 @@
       head:
         sizeMaps:
           32:
-            sprite: Mobs/Pets/corgi/displacement.rsi
+            sprite: Mobs/Pets/corgi/corgi_displacement.rsi
             state: head
       mask:
         sizeMaps:
           32:
-            sprite: Mobs/Pets/corgi/displacement.rsi
+            sprite: Mobs/Pets/corgi/corgi_displacement.rsi
             state: mask
       eyes:
         sizeMaps:
           32:
-            sprite: Mobs/Pets/corgi/displacement.rsi
+            sprite: Mobs/Pets/corgi/corgi_displacement.rsi
             state: eyes
       neck:
         sizeMaps:
           32:
-            sprite: Mobs/Pets/corgi/displacement.rsi
+            sprite: Mobs/Pets/corgi/corgi_displacement.rsi
             state: neck
 
 - type: entity
