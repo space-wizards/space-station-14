@@ -164,13 +164,6 @@
   - type: ArtifactPressureTrigger
     minPressureThreshold: 50
 
-- type: artifactTrigger
-  id: TriggerHighDamage
-  targetDepth: 3
-  triggerHint: artifact-trigger-hint-physical
-  components:
-  - type: ArtifactDamageTrigger
-    damageThreshold: 500 #make it go boom or w/e
 
 - type: artifactTrigger
   id: TriggerRadiation
@@ -183,6 +176,15 @@
     - Radiation
     damageThreshold: 50
   - type: RadiationReceiver
+    components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Uranium, Tritium, Radium, UnstableMutagen, Phalanximine ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
 
 - type: artifactTrigger
   id: TriggerHighPressure
