@@ -133,9 +133,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         
         var type = ent.Comp.Organ.Values.First().Component.GetType();
         
-        var containerId = SharedBodySystem.GetOrganContainerId(ent.Comp.Slot);
-        
-        if (ent.Comp.Slot != null && _containers.TryGetContainer(args.Part, containerId, out var container))
+        if (ent.Comp.Slot != null && _containers.TryGetContainer(args.Part, SharedBodySystem.GetOrganContainerId(ent.Comp.Slot), out var container))
         {
             
             foreach (var containedEnt in container.ContainedEntities)
