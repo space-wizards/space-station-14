@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: ArtisticRoomba
   changes:
-  - message: The Bruise-O-Mat alcohol vendor has been added to the nukie outpost,
-      for all your pre-op drinking needs. Seems to have developed a witty personality,
-      too...
-    type: Add
-  id: 7383
-  time: '2024-09-16T08:59:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32107
-- author: ArtisticRoomba
-  changes:
   - message: The binary translator key in the syndie uplink is now correctly marked
       as syndicate contraband.
     type: Tweak
@@ -3908,3 +3899,11 @@
   id: 7882
   time: '2025-01-31T07:23:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34750
+- author: SlamBamActionman
+  changes:
+  - message: Forcefeeding pills now takes 2 seconds (was 1 second), while eating them
+      takes 0.6 seconds (was 1 second).
+    type: Tweak
+  id: 7883
+  time: '2025-01-31T11:59:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34764
