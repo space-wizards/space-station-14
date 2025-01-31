@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MissKay1994
-  changes:
-  - message: Lizards are now poisoned by hot chocolate
-    type: Fix
-  id: 7385
-  time: '2024-09-16T12:45:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32147
 - author: Alice Liddel
   changes:
   - message: Crayon charges increased from 15 to 25
@@ -3906,3 +3899,12 @@
   id: 7884
   time: '2025-01-31T17:41:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34774
+- author: Nox38
+  changes:
+  - message: Renamed riot bullet shield to ballistic shield
+    type: Tweak
+  - message: Renamed riot laser shield to ablative shield
+    type: Tweak
+  id: 7885
+  time: '2025-01-31T23:39:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34794
