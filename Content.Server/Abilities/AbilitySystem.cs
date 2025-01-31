@@ -240,7 +240,8 @@ public sealed class AbilitySystem : EntitySystem
                 _whitelist.IsBlacklistPass(ability.Comp.MalfunctionBlacklist, foundEnt))
                 continue;
 
-            _emag.DoEmagEffect(user, foundEnt);
+            var ev = new GotEmaggedEvent(user, EmagType.Interaction | EmagType.Access);
+            RaiseLocalEvent(foundEnt, ref ev);
         }
     }
 }
