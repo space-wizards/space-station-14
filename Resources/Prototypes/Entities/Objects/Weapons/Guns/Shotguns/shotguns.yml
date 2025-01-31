@@ -48,7 +48,7 @@
   # Don't parent to BaseWeaponShotgun because it differs significantly
   parent: [BaseItem, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponShotgunBulldog
-  description: Drum-fed fully automatic shotgun designed by Frozen Star. Adopted by the Gorlex Marauders, who use it in close-quarters combat. Feeds from 12 gauge 8-round drum magazines.
+  description: Drum-fed fully automatic shotgun designed by Frozen Star and adopted by the Gorlex Marauders, who use it in close-quarters combat. Feeds from 12 gauge 8-round drum magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
@@ -105,7 +105,7 @@
   name: double-barreled shotgun
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityBartenderContraband]
   id: WeaponShotgunDoubleBarreled
-  description: A classic break-action double-barrel shotgun. This particular gun is worn and stained, with the distinct smell of alcohol. Fits two 12 gauge shells. 
+  description: A classic break-action double-barrel shotgun. Worn and stained, with the distinct smell of alcohol. Loads two 12 gauge shells. 
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
@@ -139,7 +139,7 @@
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunEnforcer
   description: Premium semi-automatic combat shotgun, the pride of Nanotrasen security.
-  Components:
+  components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Clothing
