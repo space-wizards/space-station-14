@@ -5,60 +5,65 @@
   description: A strange alien device.
   abstract: true
   components:
-    - type: Sprite
-      drawdepth: SmallObjects
-      sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
-      noRot: true
-      layers:
-      - state: ano30
-        map: [ "enum.ArtifactsVisualLayers.Base" ]
-      - state: ano30_on
-        map: [ "enum.ArtifactsVisualLayers.Effect" ]
-        visible: false
-    - type: Damageable
-    - type: Physics
-      bodyType: Dynamic
-    - type: Transform
-      noRot: true
-    - type: UserInterface #needs to be here for certain effects
-      interfaces:
-        enum.StorageUiKey.Key:
-          type: StorageBoundUserInterface
-        enum.TransferAmountUiKey.Key:
-          type: TransferAmountBoundUserInterface
-        enum.InstrumentUiKey.Key:
-          type: InstrumentBoundUserInterface
-        enum.IntercomUiKey.Key:
-          type: IntercomBoundUserInterface
-    - type: Reactive
-      groups:
-        Acidic: [Touch]
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeCircle
-            radius: 0.45
-          density: 75
-          layer: # doesn't collide with artifact storage
-          - Opaque
-          mask:
-          - MachineMask
-    - type: InteractionOutline
-    - type: Artifact
-    - type: RandomArtifactSprite
-      maxSprite: 36
-    - type: RandomSprite
-      available:
-      - enum.ArtifactsVisualLayers.Effect:
-          ano01_on: Rainbow
-    - type: Appearance
-    - type: Actions
-    - type: GuideHelp
-      guides:
-      - Xenoarchaeology
-    - type: StealTarget
-      stealGroup: XenoArtifact
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    noRot: true
+    layers:
+    - state: ano30
+      map: [ "enum.ArtifactsVisualLayers.Base" ]
+    - state: ano30_on
+      map: [ "enum.ArtifactsVisualLayers.Effect" ]
+      visible: false
+  - type: Damageable
+  - type: Physics
+    bodyType: Dynamic
+  - type: Transform
+    noRot: true
+  - type: UserInterface #needs to be here for certain effects
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+      enum.InstrumentUiKey.Key:
+        type: InstrumentBoundUserInterface
+      enum.IntercomUiKey.Key:
+        type: IntercomBoundUserInterface
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 75
+        layer: # doesn't collide with artifact storage
+        - Opaque
+        mask:
+        - MachineMask
+  - type: InteractionOutline
+  - type: Artifact
+  - type: RandomArtifactSprite
+    maxSprite: 36
+  - type: RandomSprite
+    available:
+    - enum.ArtifactsVisualLayers.Effect:
+        ano01_on: Rainbow
+  - type: Appearance
+  - type: Actions
+  - type: GuideHelp
+    guides:
+    - Xenoarchaeology
+  - type: StealTarget
+    stealGroup: XenoArtifact
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container # needed for the EffectStorage artifactEffect
+        ents: [ ]
+      revolver-ammo: !type:Container # needed for the EffectBigIron artifactEffect
 
 - type: entity
   parent: BaseXenoArtifact

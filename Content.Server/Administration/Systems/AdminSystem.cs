@@ -17,7 +17,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.PDA;
-using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
@@ -32,6 +31,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Systems;
 
@@ -48,6 +48,7 @@ public sealed class AdminSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly PlayTimeTrackingManager _playTime = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedRoleSystem _role = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -63,7 +64,6 @@ public sealed class AdminSystem : EntitySystem
 
     private readonly HashSet<NetUserId> _roundActivePlayers = new();
     public readonly PanicBunkerStatus PanicBunker = new();
-    public readonly BabyJailStatus BabyJail = new();
 
     public override void Initialize()
     {
@@ -82,23 +82,14 @@ public sealed class AdminSystem : EntitySystem
         Subs.CVar(_config, CCVars.PanicBunkerMinAccountAge, OnPanicBunkerMinAccountAgeChanged, true);
         Subs.CVar(_config, CCVars.PanicBunkerMinOverallMinutes, OnPanicBunkerMinOverallMinutesChanged, true);
 
-        /*
-         * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
-         */
-
-        // Baby Jail Settings
-        Subs.CVar(_config, CCVars.BabyJailEnabled, OnBabyJailChanged, true);
-        Subs.CVar(_config, CCVars.BabyJailShowReason, OnBabyJailShowReasonChanged, true);
-        Subs.CVar(_config, CCVars.BabyJailMaxAccountAge, OnBabyJailMaxAccountAgeChanged, true);
-        Subs.CVar(_config, CCVars.BabyJailMaxOverallMinutes, OnBabyJailMaxOverallMinutesChanged, true);
-
-        SubscribeLocalEvent<IdentityChangedEvent>(OnIdentityChanged);
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<RoleAddedEvent>(OnRoleEvent);
         SubscribeLocalEvent<RoleRemovedEvent>(OnRoleEvent);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
+
         SubscribeLocalEvent<ActorComponent, EntityRenamedEvent>(OnPlayerRenamed);
+        SubscribeLocalEvent<ActorComponent, IdentityChangedEvent>(OnIdentityChanged);
     }
 
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
@@ -154,18 +145,16 @@ public sealed class AdminSystem : EntitySystem
         return value ?? null;
     }
 
-    private void OnIdentityChanged(ref IdentityChangedEvent ev)
+    private void OnIdentityChanged(Entity<ActorComponent> ent, ref IdentityChangedEvent ev)
     {
-        if (!TryComp<ActorComponent>(ev.CharacterEntity, out var actor))
-            return;
-
-        UpdatePlayerList(actor.PlayerSession);
+        UpdatePlayerList(ent.Comp.PlayerSession);
     }
 
     private void OnRoleEvent(RoleEvent ev)
     {
         var session = _minds.GetSession(ev.Mind);
-        if (!ev.Antagonist || session == null)
+
+        if (!ev.RoleTypeUpdate || session == null)
             return;
 
         UpdatePlayerList(session);
@@ -239,9 +228,16 @@ public sealed class AdminSystem : EntitySystem
         }
 
         var antag = false;
+
+        RoleTypePrototype roleType = new();
         var startingRole = string.Empty;
-        if (_minds.TryGetMind(session, out var mindId, out _))
+        if (_minds.TryGetMind(session, out var mindId, out var mindComp))
         {
+            if (_proto.TryIndex(mindComp.RoleType, out var role))
+                roleType = role;
+            else
+                Log.Error($"{ToPrettyString(mindId)} has invalid Role Type '{mindComp.RoleType}'. Displaying '{Loc.GetString(roleType.Name)}' instead");
+
             antag = _role.MindIsAntagonist(mindId);
             startingRole = _jobs.MindTryGetJobName(mindId);
         }
@@ -255,7 +251,7 @@ public sealed class AdminSystem : EntitySystem
             overallPlaytime = playTime;
         }
 
-        return new PlayerInfo(name, entityName, identityName, startingRole, antag, GetNetEntity(session?.AttachedEntity), data.UserId,
+        return new PlayerInfo(name, entityName, identityName, startingRole, antag, roleType, GetNetEntity(session?.AttachedEntity), data.UserId,
             connected, _roundActivePlayers.Contains(data.UserId), overallPlaytime);
     }
 
@@ -268,17 +264,6 @@ public sealed class AdminSystem : EntitySystem
         ));
 
         SendPanicBunkerStatusAll();
-    }
-
-    private void OnBabyJailChanged(bool enabled)
-    {
-        BabyJail.Enabled = enabled;
-        _chat.SendAdminAlert(Loc.GetString(enabled
-            ? "admin-ui-baby-jail-enabled-admin-alert"
-            : "admin-ui-baby-jail-disabled-admin-alert"
-        ));
-
-        SendBabyJailStatusAll();
     }
 
     private void OnPanicBunkerDisableWithAdminsChanged(bool enabled)
@@ -305,22 +290,10 @@ public sealed class AdminSystem : EntitySystem
         SendPanicBunkerStatusAll();
     }
 
-    private void OnBabyJailShowReasonChanged(bool enabled)
-    {
-        BabyJail.ShowReason = enabled;
-        SendBabyJailStatusAll();
-    }
-
     private void OnPanicBunkerMinAccountAgeChanged(int minutes)
     {
         PanicBunker.MinAccountAgeMinutes = minutes;
         SendPanicBunkerStatusAll();
-    }
-
-    private void OnBabyJailMaxAccountAgeChanged(int minutes)
-    {
-        BabyJail.MaxAccountAgeMinutes = minutes;
-        SendBabyJailStatusAll();
     }
 
     private void OnPanicBunkerMinOverallMinutesChanged(int minutes)
@@ -329,18 +302,17 @@ public sealed class AdminSystem : EntitySystem
         SendPanicBunkerStatusAll();
     }
 
-    private void OnBabyJailMaxOverallMinutesChanged(int minutes)
-    {
-        BabyJail.MaxOverallMinutes = minutes;
-        SendBabyJailStatusAll();
-    }
-
     private void UpdatePanicBunker()
     {
-        var admins = PanicBunker.CountDeadminnedAdmins
-            ? _adminManager.AllAdmins
-            : _adminManager.ActiveAdmins;
-        var hasAdmins = admins.Any();
+        var hasAdmins = false;
+        foreach (var admin in _adminManager.AllAdmins)
+        {
+            if (_adminManager.HasAdminFlag(admin, AdminFlags.Admin, includeDeAdmin: PanicBunker.CountDeadminnedAdmins))
+            {
+                hasAdmins = true;
+                break;
+            }
+        }
 
         // TODO Fix order dependent Cvars
         // Please for the sake of my sanity don't make cvars & order dependent.
@@ -370,15 +342,6 @@ public sealed class AdminSystem : EntitySystem
     private void SendPanicBunkerStatusAll()
     {
         var ev = new PanicBunkerChangedEvent(PanicBunker);
-        foreach (var admin in _adminManager.AllAdmins)
-        {
-            RaiseNetworkEvent(ev, admin);
-        }
-    }
-
-    private void SendBabyJailStatusAll()
-    {
-        var ev = new BabyJailChangedEvent(BabyJail);
         foreach (var admin in _adminManager.AllAdmins)
         {
             RaiseNetworkEvent(ev, admin);

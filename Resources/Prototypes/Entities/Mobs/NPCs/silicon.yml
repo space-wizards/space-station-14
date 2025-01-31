@@ -166,6 +166,8 @@
     maxInterval: 12
     sound:
       collection: BikeHorn
+      params:
+        variation: 0.125
   - type: Sprite
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: honkbot
@@ -202,6 +204,8 @@
     name: ghost-role-information-honkbot-name
     description: ghost-role-information-honkbot-description
     rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -210,6 +214,8 @@
     interactFailureString: petting-failure-honkbot
     interactSuccessSound:
       path: /Audio/Items/bikehorn.ogg
+      params:
+        variation: 0.125
 
 - type: entity
   parent: MobHonkBot
@@ -220,6 +226,8 @@
   - type: SpamEmitSound
     sound:
       collection: CluwneHorn
+      params:
+        variation: 0.125
   - type: Sprite
     state: jonkbot
   - type: Construction
@@ -230,11 +238,15 @@
     name: ghost-role-information-jonkbot-name
     description: ghost-role-information-jonkbot-description
     rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
     raffle:
       settings: default
   - type: InteractionPopup
     interactSuccessSound:
       path: /Audio/Items/brokenbikehorn.ogg
+      params:
+        variation: 0.125
   - type: Vocal
     sounds:
       Unsexed: Cluwne
@@ -339,6 +351,7 @@
     pack: MedibotAds
   - type: Inventory
     templateId: medibot
+  - type: DoAfter
 
 - type: entity
   parent:
@@ -362,6 +375,8 @@
     name: ghost-role-information-mimebot-name
     description: ghost-role-information-mimebot-description
     rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
     raffle:
       settings: default
   - type: GhostTakeoverAvailable

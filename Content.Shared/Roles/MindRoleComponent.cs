@@ -1,5 +1,4 @@
 using Content.Shared.Mind;
-using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -17,6 +16,12 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     /// </summary>
     [DataField]
     public bool Antag { get; set; } = false;
+
+    /// <summary>
+    ///     The mind's current antagonist/special role, or lack thereof;
+    /// </summary>
+    [DataField]
+    public ProtoId<RoleTypePrototype>? RoleType;
 
     /// <summary>
     ///     True if this mindrole is an exclusive antagonist. Antag setting is not checked if this is True.
@@ -43,6 +48,7 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
 }
 
 // Why does this base component actually exist? It does make auto-categorization easy, but before that it was useless?
+// I used it for easy organisation/bookkeeping of what components are for mindroles
 [EntityCategory("Roles")]
 public abstract partial class BaseMindRoleComponent : Component
 {
