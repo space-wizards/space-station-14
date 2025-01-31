@@ -1963,8 +1963,8 @@
   flavor: zombiecocktail
   color: "#d17844"
   metamorphicSprite:
-   sprite: Objects/Consumable/Drinks/zombiecocktail.rsi
-   state: icon_empty
+    sprite: Objects/Consumable/Drinks/zombiecocktail.rsi
+    state: icon_empty
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
