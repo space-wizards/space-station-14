@@ -34,15 +34,6 @@ public sealed partial class RCDComponent : Component
     public ProtoId<RCDPrototype> ProtoId { get; set; } = "Invalid";
 
     /// <summary>
-    /// A cached copy of currently selected RCD prototype
-    /// </summary>
-    /// <remarks>
-    /// If the ProtoId is changed, make sure to update the CachedPrototype as well
-    /// </remarks>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public RCDPrototype CachedPrototype { get; set; } = default!;
-
-    /// <summary>
     /// The direction constructed entities will face upon spawning
     /// </summary>
     [DataField, AutoNetworkedField]
