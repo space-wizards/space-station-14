@@ -22,7 +22,7 @@
   - type: StationAiVision
   - type: Sprite
     sprite: Structures/Machines/holopad.rsi
-    drawdepth: FloorObjects
+    drawdepth: HighFloorObjects
     snapCardinals: true
     layers:
     - state: base

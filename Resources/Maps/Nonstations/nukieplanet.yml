@@ -1661,6 +1661,15 @@ entities:
         - 0
         - 0
     - type: LoadedMap
+- proto: ActionStethoscope
+  entities:
+  - uid: 1739
+    components:
+    - type: Transform
+      parent: 1336
+    - type: EntityTargetAction
+      originalIconColor: '#FFFFFFFF'
+      container: 1336
 - proto: AirlockExternalGlassNukeopLocked
   entities:
   - uid: 49
@@ -6576,12 +6585,12 @@ entities:
   - uid: 2031
     components:
     - type: Transform
-      pos: 4.0109396,-12.223828
+      pos: 3.3130646,-11.479682
       parent: 104
   - uid: 2095
     components:
     - type: Transform
-      pos: 4.017678,-12.520861
+      pos: 3.6099396,-11.479682
       parent: 104
 - proto: Bed
   entities:
@@ -6656,7 +6665,7 @@ entities:
   - uid: 2114
     components:
     - type: Transform
-      pos: 5.539936,-12.489611
+      pos: 7.223599,-12.19286
       parent: 104
 - proto: BoxFolderBlack
   entities:
@@ -6684,7 +6693,7 @@ entities:
   - uid: 1844
     components:
     - type: Transform
-      pos: 5.430561,-12.364611
+      pos: 7.629849,-12.44286
       parent: 104
 - proto: BoxShotgunPractice
   entities:
@@ -10191,6 +10200,13 @@ entities:
     - type: Transform
       pos: -0.5,-1.5
       parent: 104
+- proto: ChemDispenser
+  entities:
+  - uid: 2539
+    components:
+    - type: Transform
+      pos: 5.5,-12.5
+      parent: 104
 - proto: ChemicalPayload
   entities:
   - uid: 2380
@@ -10285,7 +10301,7 @@ entities:
   - uid: 1738
     components:
     - type: Transform
-      pos: 3.5009227,-11.519134
+      pos: 3.5005646,-10.854682
       parent: 104
 - proto: ClothingNeckScarfStripedRed
   entities:
@@ -10299,8 +10315,16 @@ entities:
   - uid: 1336
     components:
     - type: Transform
-      pos: 7.5027137,-12.301802
+      pos: -2.327716,-12.470306
       parent: 104
+    - type: Stethoscope
+      actionEntity: 1739
+    - type: ActionsContainer
+    - type: ContainerContainer
+      containers:
+        actions: !type:Container
+          ents:
+          - 1739
 - proto: ClothingShoesBootsSalvage
   entities:
   - uid: 542
@@ -10509,15 +10533,18 @@ entities:
       parent: 104
     - type: Fixtures
       fixtures: {}
-- proto: FloraRockSolid01
+- proto: FloraRockSolid
   entities:
+  - uid: 1706
+    components:
+    - type: Transform
+      pos: 13.550529,12.489372
+      parent: 104
   - uid: 1707
     components:
     - type: Transform
       pos: 5.5565968,16.377468
       parent: 104
-- proto: FloraRockSolid02
-  entities:
   - uid: 1708
     components:
     - type: Transform
@@ -10528,46 +10555,7 @@ entities:
     - type: Transform
       pos: -1.3676796,16.13784
       parent: 104
-- proto: FloraRockSolid03
-  entities:
-  - uid: 1706
-    components:
-    - type: Transform
-      pos: 13.550529,12.489372
-      parent: 104
-- proto: FloraTreeConifer01
-  entities:
-  - uid: 261
-    components:
-    - type: Transform
-      pos: 7.7892694,4.987089
-      parent: 104
-  - uid: 275
-    components:
-    - type: Transform
-      pos: -3.80645,4.798395
-      parent: 104
-  - uid: 281
-    components:
-    - type: Transform
-      pos: -1.0279694,6.890992
-      parent: 104
-  - uid: 1619
-    components:
-    - type: Transform
-      pos: 16.10984,7.3249645
-      parent: 104
-  - uid: 1622
-    components:
-    - type: Transform
-      pos: 7.42463,16.597832
-      parent: 104
-  - uid: 1626
-    components:
-    - type: Transform
-      pos: 11.605486,16.944057
-      parent: 104
-- proto: FloraTreeConifer02
+- proto: FloraTreeConifer
   entities:
   - uid: 219
     components:
@@ -10579,6 +10567,11 @@ entities:
     - type: Transform
       pos: 7.7267694,7.536619
       parent: 104
+  - uid: 261
+    components:
+    - type: Transform
+      pos: 7.7892694,4.987089
+      parent: 104
   - uid: 267
     components:
     - type: Transform
@@ -10589,20 +10582,45 @@ entities:
     - type: Transform
       pos: -0.17814255,7.5043383
       parent: 104
+  - uid: 271
+    components:
+    - type: Transform
+      pos: -1.1000175,4.26659
+      parent: 104
   - uid: 273
     components:
     - type: Transform
       pos: -2.591959,2.9214401
+      parent: 104
+  - uid: 275
+    components:
+    - type: Transform
+      pos: -3.80645,4.798395
       parent: 104
   - uid: 280
     components:
     - type: Transform
       pos: 1.5111885,4.4898434
       parent: 104
+  - uid: 281
+    components:
+    - type: Transform
+      pos: -1.0279694,6.890992
+      parent: 104
+  - uid: 1035
+    components:
+    - type: Transform
+      pos: 0.74747276,19.424063
+      parent: 104
   - uid: 1618
     components:
     - type: Transform
       pos: 11.32859,10.093473
+      parent: 104
+  - uid: 1619
+    components:
+    - type: Transform
+      pos: 16.10984,7.3249645
       parent: 104
   - uid: 1620
     components:
@@ -10614,17 +10632,15 @@ entities:
     - type: Transform
       pos: 14.582346,17.286049
       parent: 104
-- proto: FloraTreeConifer03
-  entities:
-  - uid: 271
+  - uid: 1622
     components:
     - type: Transform
-      pos: -1.1000175,4.26659
+      pos: 7.42463,16.597832
       parent: 104
-  - uid: 1035
+  - uid: 1626
     components:
     - type: Transform
-      pos: 0.74747276,19.424063
+      pos: 11.605486,16.944057
       parent: 104
   - uid: 1673
     components:
@@ -10636,43 +10652,32 @@ entities:
     - type: Transform
       pos: 8.497473,19.862019
       parent: 104
-- proto: FloraTreeSnow01
+- proto: FloraTreeSnow
   entities:
   - uid: 262
     components:
     - type: Transform
       pos: 9.630766,6.7434845
       parent: 104
-- proto: FloraTreeSnow02
-  entities:
+  - uid: 265
+    components:
+    - type: Transform
+      pos: 0.24603653,5.7335367
+      parent: 104
+  - uid: 269
+    components:
+    - type: Transform
+      pos: 0.30623245,3.9068413
+      parent: 104
   - uid: 270
     components:
     - type: Transform
       pos: -2.3114033,5.0917635
       parent: 104
-  - uid: 1630
-    components:
-    - type: Transform
-      pos: 4.558771,16.696045
-      parent: 104
-- proto: FloraTreeSnow03
-  entities:
   - uid: 274
     components:
     - type: Transform
       pos: -3.3325882,6.8936405
-      parent: 104
-  - uid: 1629
-    components:
-    - type: Transform
-      pos: 9.924105,15.382175
-      parent: 104
-- proto: FloraTreeSnow04
-  entities:
-  - uid: 265
-    components:
-    - type: Transform
-      pos: 0.24603653,5.7335367
       parent: 104
   - uid: 276
     components:
@@ -10684,13 +10689,6 @@ entities:
     - type: Transform
       pos: -3.1344147,13.722986
       parent: 104
-- proto: FloraTreeSnow05
-  entities:
-  - uid: 269
-    components:
-    - type: Transform
-      pos: 0.30623245,3.9068413
-      parent: 104
   - uid: 1627
     components:
     - type: Transform
@@ -10700,6 +10698,16 @@ entities:
     components:
     - type: Transform
       pos: 15.066191,11.052429
+      parent: 104
+  - uid: 1629
+    components:
+    - type: Transform
+      pos: 9.924105,15.382175
+      parent: 104
+  - uid: 1630
+    components:
+    - type: Transform
+      pos: 4.558771,16.696045
       parent: 104
   - uid: 1631
     components:
@@ -10780,8 +10788,6 @@ entities:
     - type: Transform
       pos: 22.5,-15.5
       parent: 104
-    - type: GravityGenerator
-      charge: 100
     - type: PointLight
       radius: 175.75
 - proto: GrenadeFlashBang
@@ -10998,7 +11004,7 @@ entities:
   - uid: 1826
     components:
     - type: Transform
-      pos: 3.4542694,-10.616036
+      pos: 3.5161896,-10.573432
       parent: 104
 - proto: KitchenKnife
   entities:
@@ -11019,7 +11025,7 @@ entities:
   - uid: 2021
     components:
     - type: Transform
-      pos: 5.039936,-12.489611
+      pos: 3.9919167,-12.28661
       parent: 104
 - proto: LightPostSmall
   entities:
@@ -12826,7 +12832,7 @@ entities:
     - type: Transform
       pos: 2.5,-12.5
       parent: 104
-- proto: SignToxins2
+- proto: SignToxins
   entities:
   - uid: 1318
     components:
@@ -13265,7 +13271,7 @@ entities:
   - uid: 1151
     components:
     - type: Transform
-      pos: -2.530845,-12.414692
+      pos: -2.702716,-12.314056
       parent: 104
 - proto: Table
   entities:
@@ -13478,11 +13484,6 @@ entities:
     components:
     - type: Transform
       pos: 3.5,-15.5
-      parent: 104
-  - uid: 1739
-    components:
-    - type: Transform
-      pos: 5.5,-12.5
       parent: 104
   - uid: 2016
     components:

@@ -16,3 +16,28 @@
       sprite: Objects/Magic/magicactions.rsi
       state: blink
     event: !type:TeleportSpellEvent
+
+# TODO: Second level upgrade sometime that allows swapping with all objects
+- type: entity
+  id: ActionVoidApplause
+  name: Void Applause
+  description: Clap your hands and swap places with the target.
+  components:
+  - type: EntityTargetAction
+    useDelay: 15
+    range: 16
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/Eldritch/voidblink.ogg
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    checkCanAccess: false
+    repeat: false
+    icon:
+      sprite: Objects/Magic/Eldritch/eldritch_actions.rsi
+      state: voidblink
+    event: !type:VoidApplauseSpellEvent
+      effect: EffectVoidBlink
