@@ -276,6 +276,7 @@
     slots:
       - Back
       - SuitStorage
+      - Belt
 
 #Filled security
 - type: entity
