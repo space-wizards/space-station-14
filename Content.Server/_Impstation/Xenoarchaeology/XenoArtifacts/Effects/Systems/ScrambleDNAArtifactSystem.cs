@@ -7,6 +7,7 @@ using Robust.Shared.Random;
 using Content.Shared.Humanoid;
 using Content.Shared.Forensics;
 using Content.Server.Forensics;
+using Content.Server.IdentityManagement;
 
 
 
@@ -19,6 +20,7 @@ public sealed class ScrambleDNAArtifactSystem : EntitySystem
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
+    [Dependency] private readonly IdentitySystem _identity = default!;
 
 
 
