@@ -133,11 +133,12 @@
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
+
 - type: entity
   name: Enforcer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunEnforcer
-  description: The Enforcer was designed as a modern remake of the Kammerer design, featuring new polymer furniture and an extended magazine tube.
+  description: Premium semi-automatic combat shotgun, the pride of Nanotrasen security.
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Clothing
