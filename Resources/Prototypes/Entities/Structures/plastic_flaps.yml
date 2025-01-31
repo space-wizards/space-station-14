@@ -1,6 +1,8 @@
 - type: entity
   id: PlasticFlapsBase
   parent: BaseStructureDynamic
+  name: plastic flaps
+  description: Heavy duty, plastic flaps. Definitely can't get past those. No way.
   abstract: true
   placement:
     mode: SnapgridCenter
@@ -44,9 +46,7 @@
 - type: entity
   id: PlasticFlapsClear
   parent: PlasticFlapsBase
-  name: plastic flaps
   suffix: Clear
-  description: Heavy duty, plastic flaps. Definitely can't get past those. No way.
   components:
   - type: Construction
     graph: PlasticFlapsGraph
@@ -55,9 +55,7 @@
 - type: entity
   id: PlasticFlapsOpaque
   parent: PlasticFlapsBase
-  name: plastic flaps
   suffix: Opaque
-  description: Heavy duty, plastic flaps. Definitely can't get past those. No way.
   components:
   - type: Fixtures
     fixtures:
