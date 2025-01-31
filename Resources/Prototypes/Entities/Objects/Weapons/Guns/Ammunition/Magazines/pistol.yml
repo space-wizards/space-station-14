@@ -107,7 +107,7 @@
       - MagazinePistolSubMachineGunTopMounted
   - type: BallisticAmmoProvider
     mayTransfer: true
-    proto: CartridgePistolSP
+    proto: CartridgePistolFMJ
     whitelist:
       tags:
       - CartridgePistol
@@ -363,27 +363,35 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
 
-##########################################################
-
 - type: entity
-  id: MagazinePistolSubMachineGun
-  name: SMG magazine (.35 auto)
-  parent: BaseMagazinePistolSubMachineGun
+  id: MagazinePistolHighCapacityIncendiary
+  name: machine pistol magazine (.35 auto incendiary)
+  parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
-    capacity: 30
-    proto: CartridgePistolSP
-    whitelist:
-      tags:
-        - CartridgePistol
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+    proto: CartridgePistolIncendiary
   - type: Sprite
     layers:
-    - state: red
+    - state: incendiary
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistolHighCapacityUranium
+  name: machine pistol magazine (.35 auto uranium)
+  parent: BaseMagazinePistolHighCapacity
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolUranium
+  - type: Sprite
+    layers:
+    - state: uranium
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+##########################################################
 
 - type: entity
   id: MagazinePistolSubMachineGunEmpty
@@ -397,6 +405,86 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+
+- type: entity
+  id: MagazinePistolSubMachineGunSP
+  name: SMG magazine (.35 auto SP)
+  parent: BaseMagazinePistolSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 30
+    proto: CartridgePistolSP
+    whitelist:
+      tags:
+        - CartridgePistol
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+  - type: Sprite
+    layers:
+    - state: sp
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistolSubMachineGunHP
+  name: SMG magazine (.35 auto HP)
+  parent: BaseMagazinePistolSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 30
+    proto: CartridgePistolHP
+    whitelist:
+      tags:
+        - CartridgePistol
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+  - type: Sprite
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+      
+- type: entity
+  id: MagazinePistolSubMachineGunFMJ
+  name: SMG magazine (.35 auto FMJ)
+  parent: BaseMagazinePistolSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 30
+    proto: CartridgePistolFMJ
+    whitelist:
+      tags:
+        - CartridgePistol
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+  - type: Sprite
+    layers:
+    - state: fmj
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+      
+- type: entity
+  id: MagazinePistolSubMachineGunAP
+  name: SMG magazine (.35 auto AP)
+  parent: BaseMagazinePistolSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 30
+    proto: CartridgePistolAP
+    whitelist:
+      tags:
+        - CartridgePistol
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+  - type: Sprite
+    layers:
+    - state: ap
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazinePistolSubMachineGunPractice
@@ -422,6 +510,20 @@
   - type: Sprite
     layers:
     - state: uranium
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+      
+- type: entity
+  id: MagazinePistolSubMachineGunIncendiary
+  name: SMG magazine (.35 auto incendiary)
+  parent: BaseMagazinePistolSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolIncendiary
+  - type: Sprite
+    layers:
+    - state: incendiary
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
