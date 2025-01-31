@@ -1,100 +1,4 @@
 ﻿Entries:
-- author: eoineoineoin
-  changes:
-  - message: Ghosts can now read books.
-    type: Add
-  id: 7372
-  time: '2024-09-14T16:28:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32151
-- author: Errant
-  changes:
-  - message: Lone Ops nukies now spawn with the appropriate species-specific survival
-      gear.
-    type: Fix
-  id: 7373
-  time: '2024-09-14T16:34:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31641
-- author: Plykiya
-  changes:
-  - message: The vent spawn event now has a chance to spawn snakes.
-    type: Add
-  id: 7374
-  time: '2024-09-14T17:19:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32070
-- author: lzk228
-  changes:
-  - message: Command intercom now reinforced the same way as the security one.
-    type: Tweak
-  id: 7375
-  time: '2024-09-14T20:40:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32169
-- author: de0rix
-  changes:
-  - message: Animals in critical state now all have proper sprites.
-    type: Fix
-  id: 7376
-  time: '2024-09-15T01:53:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32175
-- author: notafet
-  changes:
-  - message: Pressure and volume pumps now require power to operate.
-    type: Tweak
-  id: 7377
-  time: '2024-09-15T01:58:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28995
-- author: deltanedas
-  changes:
-  - message: Holoparasites can no longer be summoned from inside containers.
-    type: Tweak
-  id: 7378
-  time: '2024-09-15T19:04:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32068
-- author: BackeTako
-  changes:
-  - message: Added French and Spanish speech traits.
-    type: Add
-  id: 7379
-  time: '2024-09-15T20:03:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30966
-- author: Plykiya
-  changes:
-  - message: Meteors break through less walls now.
-    type: Tweak
-  id: 7380
-  time: '2024-09-15T20:04:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32109
-- author: drakewill-CRL
-  changes:
-  - message: Produce harvested from sentient plants are no longer sentient themselves.
-    type: Fix
-  id: 7381
-  time: '2024-09-16T00:04:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32192
-- author: DrSmugleaf
-  changes:
-  - message: Fixed examine sometimes flickering and closing until you examine something
-      around you.
-    type: Fix
-  id: 7382
-  time: '2024-09-16T08:51:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32205
-- author: ArtisticRoomba
-  changes:
-  - message: The Bruise-O-Mat alcohol vendor has been added to the nukie outpost,
-      for all your pre-op drinking needs. Seems to have developed a witty personality,
-      too...
-    type: Add
-  id: 7383
-  time: '2024-09-16T08:59:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32107
-- author: ArtisticRoomba
-  changes:
-  - message: The binary translator key in the syndie uplink is now correctly marked
-      as syndicate contraband.
-    type: Tweak
-  id: 7384
-  time: '2024-09-16T10:01:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32193
 - author: MissKay1994
   changes:
   - message: Lizards are now poisoned by hot chocolate
@@ -3889,3 +3793,116 @@
   id: 7871
   time: '2025-01-30T02:44:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33346
+- author: ScarKy0
+  changes:
+  - message: Added the Authentication Disruptor to the syndicate uplink for 5TC. It
+      removes access requirements from devices and forcefully opens airlocks and digital
+      locks.
+    type: Add
+  - message: The EMAG can no longer open airlocks or break locks.
+    type: Tweak
+  - message: Price of the EMAG lowered to 4TC.
+    type: Tweak
+  - message: '"Emagged" airlocks can now be fixed by unbolting and using the access
+      configurator. Locks and similiar can now be fixed by just using the access configurator.'
+    type: Tweak
+  id: 7872
+  time: '2025-01-30T04:05:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34337
+- author: Southbridge
+  changes:
+  - message: Astro Asteroid Sand has been added as another type of faux tile.
+    type: Add
+  - message: Asteroid Astro Sand has also been added to the T2 civilian tech for the
+      faux astro tiles.
+    type: Add
+  id: 7873
+  time: '2025-01-30T04:41:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34463
+- author: august-sun
+  changes:
+  - message: Added the goliath hardsuit to the game and crafting menu. Adjusted goliath
+      hide drop rates to 3 hide per kill.
+    type: Add
+  id: 7874
+  time: '2025-01-30T04:45:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34721
+- author: Velken
+  changes:
+  - message: Mixing opposite types of lizard juices now has explosive consequences.
+    type: Add
+  id: 7875
+  time: '2025-01-30T11:34:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34730
+- author: SpaceRox1244
+  changes:
+  - message: Massive scrap can now fit in bags of holding.
+    type: Tweak
+  id: 7876
+  time: '2025-01-30T12:06:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33454
+- author: sleepyyapril
+  changes:
+  - message: Fixed double muzzle flash for the user.
+    type: Fix
+  id: 7877
+  time: '2025-01-30T13:34:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33981
+- author: BarryNorfolk
+  changes:
+  - message: Added a history tab to the bounty computer, showing all past completed
+      and skipped orders (and who skipped them).
+    type: Add
+  id: 7878
+  time: '2025-01-30T17:27:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33932
+- author: K-Dynamic
+  changes:
+  - message: The Kammerer now holds 7 shells but now fires slightly slower than other
+      shotguns.
+    type: Tweak
+  - message: The Double-Barreled Shotgun and its sawn-off counterpart now share the
+      same firerate.
+    type: Tweak
+  - message: Changed descriptions of the Kammerer, Enforcer and Bulldog.
+    type: Tweak
+  id: 7879
+  time: '2025-01-30T17:36:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33512
+- author: beck-thompson
+  changes:
+  - message: Ore rocks now drop the correct amount of ore when mined.
+    type: Fix
+  id: 7880
+  time: '2025-01-30T17:48:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34557
+- author: keronshb
+  changes:
+  - message: Added Void's Applause! A Wizard Spell that switches your location with
+      the target.
+    type: Add
+  id: 7881
+  time: '2025-01-31T00:10:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34591
+- author: Nox38
+  changes:
+  - message: Rebalanced Box's armory and increased its max security officers to 7.
+    type: Tweak
+  id: 7882
+  time: '2025-01-31T07:23:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34750
+- author: SlamBamActionman
+  changes:
+  - message: Forcefeeding pills now takes 2 seconds (was 1 second), while eating them
+      takes 0.6 seconds (was 1 second).
+    type: Tweak
+  id: 7883
+  time: '2025-01-31T11:59:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34764
+- author: themias
+  changes:
+  - message: Updated sound effects for shutters
+    type: Tweak
+  id: 7884
+  time: '2025-01-31T17:41:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34774
