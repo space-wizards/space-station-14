@@ -27,6 +27,46 @@
     - Recyclable
 
 - type: entity
+  parent: BaseStructure
+  id: BaseScrapLarge
+  abstract: true
+  name: scrap
+  description: Worthless junk. You could probably get some materials out of it though.
+  suffix: Scrap
+  components:
+  - type: InteractionOutline
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: FlimsyMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Recyclable
+  - type: Transform
+    anchored: False
+    noRot: true
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.40,-0.40,0.40,0.40"
+        density: 200
+        mask:
+          - MachineMask
+        layer:
+          - MachineLayer
+
+- type: entity
   parent: BaseScrap
   id: ScrapSteel
   name: blasted steel pile
@@ -404,5 +444,118 @@
       Glass: 500 # 5 sheets
       Plastic: 100 # 1 sheet
 
+- type: entity
+  parent: BaseScrapLarge
+  id: ScrapGeneratorPlasmaLeaking
+  name: leaking P.A.C.M.A.N. generator
+  description: An old looking P.A.C.M.A.N. generator whos plasma tanks started leaking.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/Scrap/generator.rsi
+    snapCardinals: true
+    layers:
+      - state: old_generator_plasma
+      - state: old_generator_plasma_fuel_leak
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 4000 # 40 sheets
+      Plasma: 2500 # 25 sheets
+      Plastic: 500 # 5 sheets
 
+- type: entity
+  parent: BaseScrapLarge
+  id: ScrapGeneratorPlasma
+  name: old P.A.C.M.A.N. generator
+  description: An old looking P.A.C.M.A.N. generator. It's in very poor condition and non functional.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/Scrap/generator.rsi
+    layers:
+      - state: old_generator_plasma
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 4000 # 40 sheets
+      Plasma: 1000 # 10 sheets
+      Plastic: 500 # 5 sheets
 
+- type: entity
+  parent: BaseScrapLarge
+  id: ScrapGeneratorUraniumLeaking
+  name: leaking S.U.P.E.R.P.A.C.M.A.N. generator
+  description: A S.U.P.E.R.P.A.C.M.A.N. generator that appears to have had some kind of catastrophic failure. Its leaking uranium.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/Scrap/generator.rsi
+    layers:
+      - state: uranium_generator
+      - map: [ "extra" ]
+      - state: rad_dripping
+        shader: unshaded
+      - state: rad_outline
+        shader: unshaded
+  - type: RandomSprite
+    available:
+    - extra:
+        red_x: ""
+        nothing: ""
+  - type: MultiHandedItem
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 4000 # 40 sheets
+      Uranium: 2500 # 25 sheets
+      Plastic: 500 # 5 sheets
+  - type: RadiationSource
+    intensity: 1.0
+
+- type: entity
+  parent: BaseScrapLarge
+  id: ScrapGeneratorUranium
+  name: destroyed S.U.P.E.R.P.A.C.M.A.N. generator
+  description: A S.U.P.E.R.P.A.C.M.A.N. generator that appears to have had some kind of catastrophic failure.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/Scrap/generator.rsi
+    layers:
+      - state: uranium_generator
+      - map: [ "extra" ]
+  - type: RandomSprite
+    available:
+    - extra:
+        red_x: ""
+        nothing: ""
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 4000 # 40 sheets
+      Uranium: 1000 # 10 sheets
+      Plastic: 500 # 5 sheets
+  - type: RadiationSource
+    intensity: 0.5
+
+- type: entity
+  parent: BaseScrapLarge
+  id: ScrapGeneratorFrame
+  name: generator frame
+  description: A frame of a P.A.C.M.A.N. or S.U.P.E.R.P.A.C.M.A.N. type generator. Where is the rest of it?
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/Scrap/generator.rsi
+    layers:
+      - state: generator_frame
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 1500 # 15 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapGeneratorFuelTank
+  name: fuel tank
+  description: A fuel tank from a S.U.P.E.R.P.A.C.M.A.N. type generator. The gauge indicates its got a little fuel left.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/Scrap/generator.rsi
+    layers:
+      - state: uranium_generator_fuel_tank
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 200 # 2 sheets
+      Uranium: 500 # 5 sheets

@@ -28,7 +28,7 @@
     back:
     - ClothingNeckHeadphones
 
-# Plushies
+# Toys
 - type: loadout
   id: PlushieLizard
   storage:
@@ -40,6 +40,15 @@
   storage:
     back:
     - PlushieSpaceLizard
+
+- type: loadout
+  id: ThreeCandles
+  dummyEntity: LoadoutDummyCandles
+  storage:
+    back:
+    - CandleRed
+    - CandleBlue
+    - CandleGreenSmall
 
 # Smokeables
 - type: loadout
@@ -144,6 +153,12 @@
   storage:
     back:
     - ClothingNeckPansexualPin
+
+- type: loadout
+  id: ClothingNeckOmnisexualPin
+  storage:
+    back:
+    - ClothingNeckOmnisexualPin
 
 - type: loadout
   id: ClothingNeckTransPin
