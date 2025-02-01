@@ -434,7 +434,6 @@
   damage:
     types:
       Piercing: 22 #+ 30%
-  pierceLevel: Wood
   armorPenetration: -0.5
   pierceChance: 0.03
   ricochetChance: 0.15
