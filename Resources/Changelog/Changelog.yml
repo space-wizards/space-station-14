@@ -1,58 +1,4 @@
 ﻿Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fixed examine sometimes flickering and closing until you examine something
-      around you.
-    type: Fix
-  id: 7382
-  time: '2024-09-16T08:51:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32205
-- author: ArtisticRoomba
-  changes:
-  - message: The Bruise-O-Mat alcohol vendor has been added to the nukie outpost,
-      for all your pre-op drinking needs. Seems to have developed a witty personality,
-      too...
-    type: Add
-  id: 7383
-  time: '2024-09-16T08:59:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32107
-- author: ArtisticRoomba
-  changes:
-  - message: The binary translator key in the syndie uplink is now correctly marked
-      as syndicate contraband.
-    type: Tweak
-  id: 7384
-  time: '2024-09-16T10:01:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32193
-- author: MissKay1994
-  changes:
-  - message: Lizards are now poisoned by hot chocolate
-    type: Fix
-  id: 7385
-  time: '2024-09-16T12:45:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32147
-- author: Alice Liddel
-  changes:
-  - message: Crayon charges increased from 15 to 25
-    type: Add
-  id: 7386
-  time: '2024-09-17T00:35:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32061
-- author: TheShuEd
-  changes:
-  - message: Anomalous infections added! People can now be infected by anomalies!
-      This allows you to use abnormal abilities, but can easily kill the host. To
-      cure them, bombard them with containment particles, because if the anomaly inside
-      them explodes, their bodies will be gibbed....
-    type: Add
-  - message: Flesh anomaly resprite
-    type: Tweak
-  - message: anomalies now disconnect from the anomaly synchronizer if they are too
-      far away from it.
-    type: Fix
-  id: 7387
-  time: '2024-09-17T09:49:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31876
 - author: TheShuEd
   changes:
   - message: fix Tech anomaly loud sounds and superfast flickering
@@ -3909,3 +3855,50 @@
   id: 7881
   time: '2025-01-31T00:10:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34591
+- author: Nox38
+  changes:
+  - message: Rebalanced Box's armory and increased its max security officers to 7.
+    type: Tweak
+  id: 7882
+  time: '2025-01-31T07:23:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34750
+- author: SlamBamActionman
+  changes:
+  - message: Forcefeeding pills now takes 2 seconds (was 1 second), while eating them
+      takes 0.6 seconds (was 1 second).
+    type: Tweak
+  id: 7883
+  time: '2025-01-31T11:59:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34764
+- author: themias
+  changes:
+  - message: Updated sound effects for shutters
+    type: Tweak
+  id: 7884
+  time: '2025-01-31T17:41:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34774
+- author: Nox38
+  changes:
+  - message: Renamed riot bullet shield to ballistic shield
+    type: Tweak
+  - message: Renamed riot laser shield to ablative shield
+    type: Tweak
+  id: 7885
+  time: '2025-01-31T23:39:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34794
+- author: Nox38
+  changes:
+  - message: Set Marathon's max secoffs to 8.
+    type: Tweak
+  - message: Restocked Marathon's armory.
+    type: Tweak
+  id: 7886
+  time: '2025-02-01T06:32:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34798
+- author: ToxicSonicFan04
+  changes:
+  - message: Added Sink to Chemistry on Box Station!
+    type: Add
+  id: 7887
+  time: '2025-02-01T06:35:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34803
