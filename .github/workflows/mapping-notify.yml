@@ -20,14 +20,13 @@ jobs:
             } else {
               core.setOutput("send_notification", "false");
             }
-
       - name: Send Discord Notification
         if: steps.check-label.outputs.send_notification == 'true'
         run: |
           JSON_PAYLOAD=$(jq -n --arg title "🗺️ New PR with map changes!" \
               --arg url "${{ github.event.pull_request.html_url }}" \
               --arg pr_title "${{ github.event.pull_request.title }}" \
-              --arg pr_desc "${{ github.event.pull_request.body || "No description provided" }}" \
+              --arg pr_desc "${{ github.event.pull_request.body && github.event.pull_request.body || 'No description provided' }}" \
               --arg author "${{ github.event.pull_request.user.login }}" \
               --arg repo "${{ github.repository }}" \
               --arg pr_number "#${{ github.event.pull_request.number }}" \
