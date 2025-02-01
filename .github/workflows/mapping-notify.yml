@@ -3,6 +3,7 @@ name: Notify Discord on Map PR
 on:
   pull_request:
     types: [opened, labeled]
+
 jobs:
   notify_discord:
     runs-on: ubuntu-latest
@@ -17,7 +18,6 @@ jobs:
               core.setFailed("No pull_request data found!");
               return;
             }
-
             const labels = pr.labels.map(label => label.name);
             if (labels.includes("Changes: Map")) {
               core.setOutput("send_notification", "true");
@@ -27,49 +27,62 @@ jobs:
 
       - name: Send Discord Notification
         if: steps.check-label.outputs.send_notification == 'true'
+        uses: actions/github-script@v7
         env:
-          PR_TITLE: ${{ github.event.pull_request.title }}
-          PR_BODY: ${{ github.event.pull_request.body }}
-          PR_USER: ${{ github.event.pull_request.user.login }}
-          PR_HTML_URL: ${{ github.event.pull_request.html_url }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          PR_REPO: ${{ github.repository }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_MAPPING_WEBHOOK_URL }}
-        run: |
-          DESC=${PR_BODY:-No description provided}
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const desc = pr.body || "No description provided";
 
-          JSON_PAYLOAD=$(jq -n \
-            --arg title "New PR with map changes!" \
-            --arg url "$PR_HTML_URL" \
-            --arg pr_title "$PR_TITLE" \
-            --arg pr_desc "$DESC" \
-            --arg author "$PR_USER" \
-            --arg repo "$PR_REPO" \
-            --arg pr_number "#$PR_NUMBER" \
-            '{
-              "embeds": [{
-                "title": $title,
-                "description": $pr_title,
-                "url": $url,
-                "color": 16776960,
-                "fields": [
-                  { "name": "Description", "value": $pr_desc, "inline": false },
-                  { "name": "Author", "value": $author, "inline": true },
-                  { "name": "Repository", "value": $repo, "inline": true },
-                  { "name": "PR Number", "value": $pr_number, "inline": true }
-                ],
-                "footer": {
-                  "text": "GitHub Actions",
-                  "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-                },
-                "timestamp": now
-              }]
-            }'
-          )
+            const payload = {
+              embeds: [
+                {
+                  title: "New PR with map changes!",
+                  description: pr.title,
+                  url: pr.html_url,
+                  color: 16776960,
+                  fields: [
+                    {
+                      name: "Description",
+                      value: desc,
+                      inline: false
+                    },
+                    {
+                      name: "Author",
+                      value: pr.user.login,
+                      inline: true
+                    },
+                    {
+                      name: "Repository",
+                      value: process.env.GITHUB_REPOSITORY,
+                      inline: true
+                    },
+                    {
+                      name: "PR Number",
+                      value: `#${pr.number}`,
+                      inline: true
+                    }
+                  ],
+                  footer: {
+                    text: "GitHub Actions",
+                    icon_url: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                  },
+                  timestamp: new Date().toISOString()
+                }
+              ]
+            };
 
-          echo "Debug payload: $JSON_PAYLOAD"
+            const fetch = require('node-fetch');
+            const res = await fetch(process.env.DISCORD_WEBHOOK, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+            });
 
-          curl -H "Content-Type: application/json" \
-               -X POST \
-               -d "$JSON_PAYLOAD" \
-               "$DISCORD_WEBHOOK"
+            if (!res.ok) {
+              const text = await res.text();
+              core.setFailed(`Discord webhook returned ${res.status} ${res.statusText}: ${text}`);
+            } else {
+              core.info("Successfully sent notification to Discord.");
+            }
