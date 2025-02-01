@@ -1074,3 +1074,10 @@ Entries:
       message: Adds a four telecrystal purchase for four hyposhells, shells that can
         hold 7u of any reagent and inject upon impact, available for barkeepers and
         zookeepers
+  - id: 331
+    author: DieselMohawk
+    time: '2025-02-01T13:07:17.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/331
+    changes:
+    - type: Fix
+      message: Made Bolas immune to explosions.
