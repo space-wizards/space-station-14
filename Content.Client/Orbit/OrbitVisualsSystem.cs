@@ -41,7 +41,7 @@ public sealed class OrbitVisualsSystem : EntitySystem
         var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);
         if (_animations.HasRunningAnimation(uid, animationPlayer, _orbitStopKey))
         {
-            _animations.Stop(uid, animationPlayer, _orbitStopKey);
+            _animations.Stop((uid, animationPlayer), _orbitStopKey);
         }
     }
 
@@ -55,7 +55,7 @@ public sealed class OrbitVisualsSystem : EntitySystem
         var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);
         if (!_animations.HasRunningAnimation(uid, animationPlayer, _orbitStopKey))
         {
-            _animations.Play(uid, animationPlayer, GetStopAnimation(component, sprite), _orbitStopKey);
+            _animations.Play((uid, animationPlayer), GetStopAnimation(component, sprite), _orbitStopKey);
         }
     }
 
