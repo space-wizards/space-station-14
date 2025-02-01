@@ -8,7 +8,7 @@ jobs:
   notify_discord:
     runs-on: ubuntu-latest
     steps:
-      - name: Check for 'Changes: Map' label
+      - name: Check for label
         id: check-label
         uses: actions/github-script@v7
         with:
