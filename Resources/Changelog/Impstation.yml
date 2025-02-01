@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: EpicToast
-  changes:
-  - message: 'Made updates to Union Station, including:'
-    type: Tweak
-  - message: Gave atmos their own substation.
-    type: Add
-  - message: Gave engineering an additional cable crate.
-    type: Add
-  - message: Gave maintenance airlocks their proper access locks.
-    type: Fix
-  - message: Removed the cryo pod that was causing the captain to not spawn in the
-      conference room.
-    type: Fix
-  - message: Fixed some unpowered lights and vending machines.
-    type: Fix
-  id: 535
-  time: '2024-11-17T21:39:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/741
 - author: formlessnameless
   changes:
   - message: Root Beer can be used to make bombs
@@ -4311,3 +4293,11 @@
   id: 1034
   time: '2025-01-31T22:49:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1522
+- author: TheGrimbeeper
+  changes:
+  - message: clownspiders no longer throw an error every frame, should very very very
+      slightly improve performance
+    type: Fix
+  id: 1035
+  time: '2025-02-01T00:52:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1537
