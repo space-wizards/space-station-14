@@ -1,21 +1,6 @@
 ﻿Entries:
 - author: TheShuEd
   changes:
-  - message: Anomalous infections added! People can now be infected by anomalies!
-      This allows you to use abnormal abilities, but can easily kill the host. To
-      cure them, bombard them with containment particles, because if the anomaly inside
-      them explodes, their bodies will be gibbed....
-    type: Add
-  - message: Flesh anomaly resprite
-    type: Tweak
-  - message: anomalies now disconnect from the anomaly synchronizer if they are too
-      far away from it.
-    type: Fix
-  id: 7387
-  time: '2024-09-17T09:49:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31876
-- author: TheShuEd
-  changes:
   - message: fix Tech anomaly loud sounds and superfast flickering
     type: Fix
   id: 7388
@@ -3910,3 +3895,10 @@
   id: 7886
   time: '2025-02-01T06:32:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34798
+- author: ToxicSonicFan04
+  changes:
+  - message: Added Sink to Chemistry on Box Station!
+    type: Add
+  id: 7887
+  time: '2025-02-01T06:35:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34803
