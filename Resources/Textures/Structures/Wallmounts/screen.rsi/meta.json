@@ -9,6 +9,15 @@
     "states": [
       {
         "name": "screen"
+      },
+      {
+        "name": "screen_frame0"
+      },
+      {
+        "name": "screen_frame1"
+      },
+      {
+        "name": "screen_frame2"
       }
     ]
 }
