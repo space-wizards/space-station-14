@@ -69,7 +69,7 @@ public sealed class RCDSystem : EntitySystem
     private void OnMapInit(EntityUid uid, RCDComponent component, MapInitEvent args)
     {
         // On init, set the RCD to its first available recipe
-        if (component.AvailablePrototypes.Count() > 0)
+        if (component.AvailablePrototypes.Count > 0)
         {
             component.ProtoId = component.AvailablePrototypes.ElementAt(0);
             Dirty(uid, component);
@@ -351,7 +351,7 @@ public sealed class RCDSystem : EntitySystem
         {
             case RcdMode.ConstructTile: return IsConstructionLocationValid(uid, component, gridUid, mapGrid, tile, position, user, popMsgs);
             case RcdMode.ConstructObject: return IsConstructionLocationValid(uid, component, gridUid, mapGrid, tile, position, user, popMsgs);
-            case RcdMode.Deconstruct: return IsDeconstructionStillValid(uid, component, gridUid, mapGrid, tile, position, target, user, popMsgs);
+            case RcdMode.Deconstruct: return IsDeconstructionStillValid(uid, tile, target, user, popMsgs);
         }
 
         return false;
@@ -460,7 +460,7 @@ public sealed class RCDSystem : EntitySystem
         return true;
     }
 
-    private bool IsDeconstructionStillValid(EntityUid uid, RCDComponent component, EntityUid gridUid, MapGridComponent mapGrid, TileRef tile, Vector2i position, EntityUid? target, EntityUid user, bool popMsgs = true)
+    private bool IsDeconstructionStillValid(EntityUid uid, TileRef tile, EntityUid? target, EntityUid user, bool popMsgs = true)
     {
         // Attempt to deconstruct a floor tile
         if (target == null)
@@ -517,7 +517,7 @@ public sealed class RCDSystem : EntitySystem
 
     private void FinalizeRCDOperation(EntityUid uid, RCDComponent component, EntityUid gridUid, MapGridComponent mapGrid, TileRef tile, Vector2i position, Direction direction, EntityUid? target, EntityUid user)
     {
-        if (!_net.IsServer) // maybe guard prediction here idk
+        if (!_net.IsServer)
             return;
 
         var prototype = _protoManager.Index(component.ProtoId);
@@ -590,13 +590,13 @@ public sealed class RCDSystem : EntitySystem
 public sealed partial class RCDDoAfterEvent : DoAfterEvent
 {
     [DataField(required: true)]
-    public NetCoordinates Location { get; private set; } = default!;
+    public NetCoordinates Location { get; private set; }
 
     [DataField]
-    public Direction Direction { get; private set; } = default!;
+    public Direction Direction { get; private set; }
 
     [DataField]
-    public ProtoId<RCDPrototype> StartingProtoId { get; private set; } = default!;
+    public ProtoId<RCDPrototype> StartingProtoId { get; private set; }
 
     [DataField]
     public int Cost { get; private set; } = 1;

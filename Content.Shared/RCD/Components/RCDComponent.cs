@@ -39,10 +39,7 @@ public sealed partial class RCDComponent : Component
     [DataField, AutoNetworkedField]
     public Direction ConstructionDirection
     {
-        get
-        {
-            return _constructionDirection;
-        }
+        get => _constructionDirection;
         set
         {
             _constructionDirection = value;
@@ -59,5 +56,5 @@ public sealed partial class RCDComponent : Component
     /// Contains no position data
     /// </remarks>
     [ViewVariables(VVAccess.ReadOnly)]
-    public Transform ConstructionTransform { get; private set; } = default!;
+    public Transform ConstructionTransform { get; private set; }
 }
