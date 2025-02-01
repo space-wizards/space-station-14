@@ -21,6 +21,17 @@
   objectType: Item
 
 - type: construction
+  name: yellow light tube
+  id: YellowLight
+  graph: YellowLight
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  description: A high powered light tube containing a yellow crystal
+  icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
+  objectType: Item
+
+- type: construction
   name: pink light tube
   id: PinkLight
   graph: PinkLight
@@ -39,6 +50,17 @@
   targetNode: icon
   category: construction-category-utilities
   description: A high powered light tube containing an orange crystal
+  icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
+  objectType: Item
+
+- type: construction
+  name: black light tube
+  id: BlackLight
+  graph: BlackLight
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  description: A high powered light tube containing a black crystal
   icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
   objectType: Item
 
