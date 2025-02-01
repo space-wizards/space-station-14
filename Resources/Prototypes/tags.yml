@@ -417,10 +417,10 @@
   id: Cryobeaker
 
 - type: Tag
-  id: CrystalBlue
+  id: CrystalBlack
 
 - type: Tag
-  id: CrystalYellow
+  id: CrystalBlue
 
 - type: Tag
   id: CrystalCyan
@@ -432,13 +432,13 @@
   id: CrystalOrange
 
 - type: Tag
-  id: CrystalBlack
-
-- type: Tag
   id: CrystalPink
 
 - type: Tag
   id: CrystalRed
+
+- type: Tag
+  id: CrystalYellow
 
 - type: Tag
   id: CubanCarp
