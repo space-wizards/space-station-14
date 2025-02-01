@@ -25,7 +25,7 @@
     state: screen
     noRot: true
   - type: Construction
-    graph: Timer
+    graph: Screen
     node: screen
   - type: ApcPowerReceiver
     powerLoad: 100
@@ -37,6 +37,43 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: ShuttleTimer
+  - type: ContainerFill
+    containers:
+      board: [ ScreenCircuitboard ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+
+- type: entity
+  id: ScreenAssembly
+  name: screen assembly
+  description: A screen assembly
+  components:
+  - type: WallMount
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Wallmounts/screen.rsi
+    layers:
+    - state: screen_frame1
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          assembly: { state: screen_frame0 }
+          wired: { state: screen_frame1 }
+          electronics: { state: screen_frame2 }
+  - type: Construction
+    graph: Screen
+    node: assembly
+  - type: Transform
+    anchored: true
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
 
 - type: entity
   id: ArrivalsShuttleTimer
