@@ -141,6 +141,34 @@
                   max: 2
 
 - type: entity
+  id: CrystalBlack
+  parent: CrystalGreen
+  suffix: black
+  components:
+    - type: Sprite
+      color: "#363636"
+    - type: PointLight
+      radius: 3
+      energy: 3
+      color: "#363636"
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 20
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                ShardCrystalBlack:
+                  min: 1
+                  max: 2
+
+- type: entity
   id: CrystalBlue
   parent: CrystalGreen
   suffix: blue
@@ -165,6 +193,34 @@
             - !type:SpawnEntitiesBehavior
               spawn:
                 ShardCrystalBlue:
+                  min: 1
+                  max: 2
+
+- type: entity
+  id: CrystalYellow
+  parent: CrystalGreen
+  suffix: yellow
+  components:
+    - type: Sprite
+      color: "#ffde46"
+    - type: PointLight
+      radius: 3
+      energy: 3
+      color: "#ffde46"
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 20
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                ShardCrystalYellow:
                   min: 1
                   max: 2
 

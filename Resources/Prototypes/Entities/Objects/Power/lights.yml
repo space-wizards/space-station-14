@@ -346,6 +346,26 @@
 
 - type: entity
   parent: LightTubeCrystalCyan
+  name: yellow crystal light tube
+  id: LightTubeCrystalYellow
+  components:
+  - type: LightBulb
+    color: "#ffde46"
+    lightEnergy: 3
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: YellowLight
+    node: icon
+  - type: ToolRefinable
+    refineResult:
+    - id: SheetGlass1
+    - id: ShardCrystalYellow
+
+- type: entity
+  parent: LightTubeCrystalCyan
   name: pink crystal light tube
   id: LightTubeCrystalPink
   components:
@@ -383,6 +403,27 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalOrange
+
+- type: entity
+  parent: LightTubeCrystalCyan
+  name: black crystal light tube
+  description: A high power high energy bulb which has a small colored crystal inside. It seems quite dim.
+  id: LightTubeCrystalBlack
+  components:
+  - type: LightBulb
+    color: "#363636"
+    lightEnergy: 1
+    lightRadius: 8
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 60
+  - type: Construction
+    graph: BlackLight
+    node: icon
+  - type: ToolRefinable
+    refineResult:
+    - id: SheetGlass1
+    - id: ShardCrystalBlack
 
 - type: entity
   parent: LightTubeCrystalCyan

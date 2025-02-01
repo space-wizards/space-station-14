@@ -420,6 +420,9 @@
   id: CrystalBlue
 
 - type: Tag
+  id: CrystalYellow
+
+- type: Tag
   id: CrystalCyan
 
 - type: Tag
@@ -427,6 +430,9 @@
 
 - type: Tag
   id: CrystalOrange
+
+- type: Tag
+  id: CrystalBlack
 
 - type: Tag
   id: CrystalPink
