@@ -2,55 +2,74 @@ name: Notify Discord on Map PR
 
 on:
   pull_request:
-    types: [labeled]
-
+    types: [opened, labeled]
 jobs:
   notify_discord:
     runs-on: ubuntu-latest
     steps:
-      - name: Check PR Labels
+      - name: Check PR labels
         id: check-label
         uses: actions/github-script@v7
         with:
           script: |
             const pr = context.payload.pull_request;
+            if (!pr) {
+              core.setFailed("No pull_request data found!");
+              return;
+            }
+
             const labels = pr.labels.map(label => label.name);
             if (labels.includes("Changes: Map")) {
               core.setOutput("send_notification", "true");
             } else {
               core.setOutput("send_notification", "false");
             }
+
       - name: Send Discord Notification
         if: steps.check-label.outputs.send_notification == 'true'
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_USER: ${{ github.event.pull_request.user.login }}
+          PR_HTML_URL: ${{ github.event.pull_request.html_url }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_REPO: ${{ github.repository }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_MAPPING_WEBHOOK_URL }}
         run: |
-          JSON_PAYLOAD=$(jq -n --arg title "🗺️ New PR with map changes!" \
-              --arg url "${{ github.event.pull_request.html_url }}" \
-              --arg pr_title "${{ github.event.pull_request.title }}" \
-              --arg pr_desc "${{ github.event.pull_request.body && github.event.pull_request.body || 'No description provided' }}" \
-              --arg author "${{ github.event.pull_request.user.login }}" \
-              --arg repo "${{ github.repository }}" \
-              --arg pr_number "#${{ github.event.pull_request.number }}" \
-              '{
-                "embeds": [{
-                  "title": $title,
-                  "description": $pr_title,
-                  "url": $url,
-                  "color": 16776960,
-                  "fields": [
-                    {"name": "📝 Description", "value": $pr_desc, "inline": false},
-                    {"name": "👤 Author", "value": $author, "inline": true},
-                    {"name": "📂 Repository", "value": $repo, "inline": true},
-                    {"name": "🔢 PR Number", "value": $pr_number, "inline": true}
-                  ],
-                  "footer": {
-                    "text": "GitHub Actions - Space Station 14",
-                    "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-                  },
-                  "timestamp": "${{ github.event.pull_request.created_at }}"
-                }]
-              }')
+          DESC=${PR_BODY:-No description provided}
+
+          JSON_PAYLOAD=$(jq -n \
+            --arg title "New PR with map changes!" \
+            --arg url "$PR_HTML_URL" \
+            --arg pr_title "$PR_TITLE" \
+            --arg pr_desc "$DESC" \
+            --arg author "$PR_USER" \
+            --arg repo "$PR_REPO" \
+            --arg pr_number "#$PR_NUMBER" \
+            '{
+              "embeds": [{
+                "title": $title,
+                "description": $pr_title,
+                "url": $url,
+                "color": 16776960,
+                "fields": [
+                  { "name": "Description", "value": $pr_desc, "inline": false },
+                  { "name": "Author", "value": $author, "inline": true },
+                  { "name": "Repository", "value": $repo, "inline": true },
+                  { "name": "PR Number", "value": $pr_number, "inline": true }
+                ],
+                "footer": {
+                  "text": "GitHub Actions",
+                  "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                },
+                "timestamp": now
+              }]
+            }'
+          )
+
+          echo "Debug payload: $JSON_PAYLOAD"
 
           curl -H "Content-Type: application/json" \
                -X POST \
                -d "$JSON_PAYLOAD" \
-               ${{ secrets.DISCORD_MAPPING_WEBHOOK_URL }}
+               "$DISCORD_WEBHOOK"
