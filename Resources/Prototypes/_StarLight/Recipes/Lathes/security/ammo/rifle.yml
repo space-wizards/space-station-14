@@ -68,8 +68,9 @@
   id: MagazineRifleAP
   result: MagazineRifleAP
   materials:
-    Steel: 375
-    Uranium: 375
+    Plastic: 100
+    Steel: 300
+    Uranium: 300
 
 ############ BOXES ############
 

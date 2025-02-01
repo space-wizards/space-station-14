@@ -10,10 +10,8 @@
     layers:
       - state: base
         map: [ "enum.GunVisualLayers.Base" ]
-      - state: rubber-6
+      - state: base-6
         map: [ "enum.GunVisualLayers.Mag" ]
-  - type: MagazineVisuals
-    magState: rubber
-    steps: 7
-    zeroVisible: false
-  - type: Appearance
+      - state: base-tip-6
+        map: [ "enum.GunVisualLayers.Tip" ]
+        color: "#00C1B8"

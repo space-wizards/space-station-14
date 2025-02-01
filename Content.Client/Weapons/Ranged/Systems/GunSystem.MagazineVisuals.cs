@@ -3,6 +3,7 @@ using Content.Shared.Rounding;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Client.GameObjects;
+using static Linguini.Bundle.Builder.LinguiniBuilder;
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
@@ -121,6 +122,11 @@ public sealed partial class GunSystem
             if (sprite.LayerMapTryGet(GunVisualLayers.MagUnshaded, out _))
             {
                 sprite.LayerSetVisible(GunVisualLayers.MagUnshaded, false);
+            }
+
+            if (sprite.LayerMapTryGet(GunVisualLayers.Tip, out _)) //🌟Starlight🌟
+            {
+                sprite.LayerSetVisible(GunVisualLayers.Tip, false);
             }
         }
     }

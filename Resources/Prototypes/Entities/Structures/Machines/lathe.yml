@@ -213,7 +213,9 @@
       - MagazineBoxLightRifleHP
       - MagazineBoxLightRifleFMJ
 # Magnum
-      - MagazineBoxMagnum
+      - MagazineBoxMagnumSP
+      - MagazineBoxMagnumHP
+      - MagazineBoxMagnumFMJ
 # Pistol
       - MagazineBoxPistolSP
       - MagazineBoxPistolHP
@@ -230,6 +232,8 @@
       - MagazineLightRifleEmpty
 # Magnum
       - SpeedLoaderMagnumSP
+      - SpeedLoaderMagnumHP
+      - SpeedLoaderMagnumFMJ
       - SpeedLoaderMagnumEmpty
 # Pistol
       - MagazinePistolSP
@@ -416,6 +420,7 @@
 # Magnum
       - MagazineBoxMagnumIncendiary
       - MagazineBoxMagnumUranium
+      - MagazineBoxMagnumAP
 # Pistol
       - MagazineBoxPistolIncendiary
       - MagazineBoxPistolUranium
@@ -432,6 +437,7 @@
 # Magnum
       - SpeedLoaderMagnumIncendiary
       - SpeedLoaderMagnumUranium
+      - SpeedLoaderMagnumAP
 # Pistol
       - MagazinePistolIncendiary
       - MagazinePistolUranium
@@ -447,6 +453,7 @@
 # Grenade
       - MagazineGrenadeEmpty
 ####################################################
+
       - PortableRecharger
       - PowerCageHigh
       - PowerCageMedium
@@ -831,7 +838,9 @@
       - MagazineBoxLightRifleFMJ
       - MagazineBoxLightRiflePractice
 # Magnum
-      - MagazineBoxMagnum
+      - MagazineBoxMagnumSP
+      - MagazineBoxMagnumHP
+      - MagazineBoxMagnumFMJ
       - MagazineBoxMagnumPractice
 # Pistol
       - MagazineBoxPistolSP
@@ -852,6 +861,8 @@
       - MagazineLightRifleEmpty
 # Magnum
       - SpeedLoaderMagnumSP
+      - SpeedLoaderMagnumHP
+      - SpeedLoaderMagnumFMJ
       - SpeedLoaderMagnumEmpty
 # Pistol
       - MagazinePistolSP
@@ -902,6 +913,7 @@
 # Magnum
       - MagazineBoxMagnumIncendiary
       - MagazineBoxMagnumUranium
+      - MagazineBoxMagnumAP
 # Pistol
       - MagazineBoxPistolIncendiary
       - MagazineBoxPistolUranium
@@ -918,6 +930,7 @@
 # Magnum
       - SpeedLoaderMagnumIncendiary
       - SpeedLoaderMagnumUranium
+      - SpeedLoaderMagnumAP
 # Pistol
       - MagazinePistolIncendiary
       - MagazinePistolUranium
@@ -1006,7 +1019,9 @@
         - MagazineBoxLightRifleHP
         - MagazineBoxLightRifleFMJ
 # Magnum
-        - MagazineBoxMagnum
+        - MagazineBoxMagnumSP
+        - MagazineBoxMagnumHP
+        - MagazineBoxMagnumFMJ
 # Pistol
         - MagazineBoxPistolSP
         - MagazineBoxPistolHP
@@ -1022,6 +1037,8 @@
         - MagazineLightRifleEmpty
 # Magnum
         - SpeedLoaderMagnumSP
+        - SpeedLoaderMagnumHP
+        - SpeedLoaderMagnumFMJ
         - SpeedLoaderMagnumEmpty
 # Pistol
         - MagazinePistolSP

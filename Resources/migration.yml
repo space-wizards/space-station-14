@@ -52,7 +52,7 @@ CartridgePistolHighVelocity: CartridgePistolFMJ
 CartridgeRifleHighVelocity: CartridgeRifleFMJ
 MagazineBoxCaselessRifleHighVelocity: MagazineBoxCaselessRifle
 MagazineBoxLightRifleHighVelocity: MagazineBoxLightRifleFMJ
-MagazineBoxMagnumHighVelocity: MagazineBoxMagnum
+MagazineBoxMagnumHighVelocity: MagazineBoxMagnumSP
 MagazineBoxPistolHighVelocity: MagazineBoxPistolFMJ
 MagazineBoxRifleHighVelocity: MagazineBoxRifleFMJ
 MagazineCaselessRifleHighVelocity: MagazineCaselessRifle
@@ -306,7 +306,7 @@ MagazineCaselessRifleRubber: MagazineCaselessRifle
 MagazineCaselessRifleShortRubber: MagazineCaselessRifleShort
 SpeedLoaderPistolRubber: SpeedLoaderPistol
 # RIP box of magnum rubbers 202X to 2024
-MagazineBoxMagnumRubber: MagazineBoxMagnum
+MagazineBoxMagnumRubber: MagazineBoxMagnumSP
 MagazineBoxRifleRubber: MagazineBoxRifleSP
 MagazineBoxRifleBigRubber: MagazineBoxRifleBig
 MagazineBoxCaselessRifleRubber: MagazineBoxCaselessRifle
