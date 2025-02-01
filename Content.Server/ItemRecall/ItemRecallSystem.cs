@@ -1,5 +1,6 @@
 using Content.Shared.ItemRecall;
 using Robust.Server.GameStates;
+using Robust.Server.Player;
 
 namespace Content.Server.ItemRecall;
 
@@ -9,22 +10,21 @@ namespace Content.Server.ItemRecall;
 public sealed partial class ItemRecallSystem : SharedItemRecallSystem
 {
     [Dependency] private readonly PvsOverrideSystem _pvs = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
     protected override void AddToPVSOverride(EntityUid uid, EntityUid user)
     {
-        if (!_mind.TryGetMind(user, out var _, out var mind))
+        if (!_player.TryGetSessionByEntity(user, out var mindSession))
             return;
 
-        if (mind.Session != null)
-            _pvs.AddSessionOverride(uid, mind.Session);
+        _pvs.AddSessionOverride(uid, mindSession);
     }
 
     protected override void RemoveFromPVSOverride(EntityUid uid, EntityUid user)
     {
-        if (!_mind.TryGetMind(user, out var _, out var mind))
+        if (!_player.TryGetSessionByEntity(user, out var mindSession))
             return;
 
-        if (mind.Session != null)
-            _pvs.RemoveSessionOverride(uid, mind.Session);
+        _pvs.RemoveSessionOverride(uid, mindSession);
     }
 }

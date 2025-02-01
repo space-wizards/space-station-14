@@ -19,8 +19,6 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly SharedProjectileSystem _proj = default!;
-    [Dependency] protected readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
     {
