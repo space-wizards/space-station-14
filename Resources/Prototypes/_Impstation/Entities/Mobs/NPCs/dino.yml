@@ -94,6 +94,8 @@
     name: ghost-role-information-dino-name
     description: ghost-role-information-dino-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
   - type: GhostTakeoverAvailable
   - type: Barotrauma
     damage:
@@ -111,7 +113,7 @@
     heatDamage:
       types:
         Heat : 1.5 #per second, scales with temperature & other constants
-  - type: TemperatureSpeed 
+  - type: TemperatureSpeed
     thresholds:
       301: 0.8
       295: 0.6
@@ -257,6 +259,8 @@
     name: ghost-role-information-dino-compy-name
     description: ghost-role-information-dino-compy-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   parent: BaseMobDinosaurSmall
@@ -327,6 +331,8 @@
     name: ghost-role-information-dino-dilo-name
     description: ghost-role-information-dino-dilo-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   parent: BaseMobDinosaurSmall
@@ -395,6 +401,8 @@
     name: ghost-role-information-dino-raptor-name
     description: ghost-role-information-dino-raptor-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 # Large Dinosaurs
 
@@ -444,6 +452,8 @@
     name: ghost-role-information-dino-anki-name
     description: ghost-role-information-dino-anki-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   parent: BaseMobDinosaur
@@ -493,6 +503,8 @@
     name: ghost-role-information-dino-kentro-name
     description: ghost-role-information-dino-kentro-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   parent: BaseMobDinosaur
@@ -550,6 +562,8 @@
     name: ghost-role-information-dino-para-name
     description: ghost-role-information-dino-para-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   parent: BaseMobDinosaurCarnivore
@@ -599,6 +613,8 @@
     name: ghost-role-information-dino-spino-name
     description: ghost-role-information-dino-spino-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   parent: BaseMobDinosaur
@@ -661,6 +677,8 @@
     name: ghost-role-information-dino-stego-name
     description: ghost-role-information-dino-stego-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   parent: BaseMobDinosaurCarnivore
@@ -710,6 +728,8 @@
     name: ghost-role-information-dino-trex-name
     description: ghost-role-information-dino-trex-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   parent: BaseMobDinosaur
@@ -770,3 +790,5 @@
     name: ghost-role-information-dino-trike-name
     description: ghost-role-information-dino-trike-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist

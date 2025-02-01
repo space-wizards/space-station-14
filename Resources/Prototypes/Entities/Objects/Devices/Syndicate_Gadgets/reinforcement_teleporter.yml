@@ -93,6 +93,7 @@
     rules: ghost-role-information-syndicate-reinforcement-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    - MindRoleGhostRoleFamiliar # imp
     raffle:
       settings: default
   - type: GhostRoleMobSpawner

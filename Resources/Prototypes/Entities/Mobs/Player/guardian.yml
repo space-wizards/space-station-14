@@ -129,6 +129,8 @@
       rules: ghost-role-information-familiar-rules
       raffle:
         settings: default
+      mindRoles: # imp. somebody upstream forgot how inheritance worked
+      - MindRoleGhostRoleFamiliar
     - type: GhostTakeoverAvailable
     - type: NameIdentifier
       group: Holoparasite
@@ -162,6 +164,8 @@
       rules: ghost-role-information-familiar-rules
       raffle:
         settings: default
+      mindRoles: # imp
+      - MindRoleGhostRoleFamiliar
     - type: GhostTakeoverAvailable
     - type: RandomSprite
       available:
@@ -191,6 +195,8 @@
       rules: ghost-role-information-familiar-rules
       raffle:
         settings: default
+      mindRoles: # imp
+      - MindRoleGhostRoleFamiliar
     - type: GhostTakeoverAvailable
     - type: NameIdentifier
       group: Holoparasite

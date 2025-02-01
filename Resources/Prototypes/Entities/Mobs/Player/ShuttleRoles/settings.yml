@@ -566,7 +566,7 @@
     - type: RandomMetadata
       nameSegments:
       - names_clown
-      
+
 - type: randomHumanoidSettings
   id: VisitorJanitor
   parent: VisitorCivilian
@@ -888,6 +888,8 @@
       rules: ghost-role-information-rules-team-antagonist
       raffle:
         settings: default
+      mindRoles: # imp
+      - MindRoleGhostRoleTeamAntagonist
     - type: Loadout
       prototypes: [ SyndicateFootsoldierTeamLeaderGear ]
       roleLoadout: [ RoleSurvivalSyndicate ]
@@ -906,6 +908,8 @@
       rules: ghost-role-information-rules-team-antagonist
       raffle:
         settings: default
+      mindRoles: # imp
+      - MindRoleGhostRoleTeamAntagonist
     - type: Loadout
       prototypes: [ SyndicateFootsoldierGear ]
       roleLoadout: [ RoleSurvivalSyndicate ]
@@ -923,6 +927,8 @@
       rules: ghost-role-information-freeagent-rules
       raffle:
         settings: short
+      mindRoles: # imp
+      - MindRoleGhostRoleFreeAgent
     - type: Loadout
       prototypes: [ SyndicateOperativeGearCivilian ]
       roleLoadout: [ RoleSurvivalSyndicate ]
@@ -940,6 +946,8 @@
       rules: ghost-role-information-rules-team-antagonist
       raffle:
         settings: default
+      mindRoles: # imp
+      - MindRoleGhostRoleTeamAntagonist
     - type: Loadout
       prototypes: [ PirateScoonerAltA, PirateScoonerAltB, PirateScoonerAltC, PirateScoonerAltD ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -957,6 +965,8 @@
       rules: ghost-role-information-rules-team-antagonist
       raffle:
         settings: default
+      mindRoles: # imp
+      - MindRoleGhostRoleTeamAntagonist
     - type: Loadout
       prototypes: [ PirateCaptainScooner ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -973,6 +983,8 @@
       rules: ghost-role-information-freeagent-rules
       raffle:
         settings: default
+      mindRoles: # imp
+      - MindRoleGhostRoleFreeAgent
     - type: Loadout
       prototypes: [ VisitorBlackmarketeer, VisitorBlackmarketeer ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -991,6 +1003,8 @@
       rules: ghost-role-information-freeagent-rules
       raffle:
         settings: default
+      mindRoles: # imp
+      - MindRoleGhostRoleFreeAgent
     - type: Loadout
       prototypes: [ CossackGear ]
       roleLoadout: [ RoleSurvivalEVA ]

@@ -1,80 +1,4 @@
 ﻿Entries:
-- author: smpletan
-  changes:
-  - message: Added the Desperado Hardsuit for Prospectors, currently inaccessible
-      outside of admin intervention.
-    type: Add
-  id: 528
-  time: '2024-11-16T11:57:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/705
-- author: Darkmajia
-  changes:
-  - message: New folders are available in the trinkets loadout with consistent paper
-      and cute themes!
-    type: Add
-  - message: The black folder is no longer in the trinkets loadout. Pick a new one
-      out!
-    type: Remove
-  id: 529
-  time: '2024-11-16T15:10:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/697
-- author: widgetbeck
-  changes:
-  - message: Updated the Gray guidebook entry to be more in-line with that of other
-      species, while preserving the original Transmission.
-    type: Tweak
-  - message: Updated Gray naming conventions. Please take a look at their Guidebook
-      entry before naming your Gray "Kanye West."
-    type: Tweak
-  id: 530
-  time: '2024-11-16T15:36:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/731
-- author: widgetbeck
-  changes:
-  - message: Added several new Thaven moods.
-    type: Add
-  - message: Tweaked the wording of several Thaven moods, and fixed several typos.
-    type: Tweak
-  - message: Fixed Thaven damage numbers being wrong - Thaven are no longer buff,
-      and their damageModifierSet is now accurate to the Guidebook.
-    type: Fix
-  - message: Thaven Die A Glorious Death rare EMAG mood should now roll correctly.
-    type: Fix
-  id: 531
-  time: '2024-11-16T16:57:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/730
-- author: Darkmajia
-  changes:
-  - message: Random unrevivable is so fixed for real this time and it's not even funny
-      how fixed it is. For real this time.
-    type: Fix
-  id: 532
-  time: '2024-11-16T20:15:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/734
-- author: Darkmajia
-  changes:
-  - message: Saltern's bridge APC is now properly connected at roundstart.
-    type: Fix
-  id: 533
-  time: '2024-11-17T21:39:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/740
-- author: Sha-Seng
-  changes:
-  - message: Brigmedic Cap is now obtainable at spawn or from the secdrobe for ballcap
-      enjoyers
-    type: Add
-  - message: Brigmedics now spawn with the paramed belt since it doesn't look horrible
-      with their uniform
-    type: Tweak
-  - message: MedSec HUD no longer requires a radio to craft since it has no communication
-      functionality
-    type: Tweak
-  - message: MedSec HUD lens opacity increased so odd skin/eyes don't ruin the good
-      look
-    type: Tweak
-  id: 534
-  time: '2024-11-17T21:40:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/692
 - author: EpicToast
   changes:
   - message: 'Made updates to Union Station, including:'
@@ -4334,3 +4258,56 @@
   id: 1027
   time: '2025-01-31T07:58:23.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1527
+- author: DinnerCalzone
+  changes:
+  - message: Oasis has been updated to feature the supermatter engine, a service breakroom,
+      and a vox box.
+    type: Add
+  id: 1028
+  time: '2025-01-31T15:59:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1523
+- author: DinnerCalzone
+  changes:
+  - message: Origin's armory has gotten more stuff added to it along with some other
+      fixes.
+    type: Tweak
+  id: 1029
+  time: '2025-01-31T15:59:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1524
+- author: DinnerCalzone
+  changes:
+  - message: Amber has been updated to incorporate its latest upstream changes.
+    type: Tweak
+  id: 1030
+  time: '2025-01-31T18:35:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1526
+- author: TheGrimbeeper
+  changes:
+  - message: rarest artifact effect that tweaks your doll will now not update the
+      records computer
+    type: Tweak
+  id: 1031
+  time: '2025-01-31T22:46:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1528
+- author: hivehum
+  changes:
+  - message: You can now properly restock the CourierDrobe.
+    type: Tweak
+  id: 1032
+  time: '2025-01-31T22:45:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1533
+- author: hivehum
+  changes:
+  - message: The Head of Personnel can now grant Courier access.
+    type: Tweak
+  id: 1033
+  time: '2025-01-31T22:45:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1532
+- author: Pinkbat5
+  changes:
+  - message: Security jetpacks are now smaller in the inventory, and can be equipped
+      in the tank slot.
+    type: Tweak
+  id: 1034
+  time: '2025-01-31T22:49:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1522
