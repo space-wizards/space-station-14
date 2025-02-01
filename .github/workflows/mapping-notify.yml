@@ -33,8 +33,12 @@ jobs:
         with:
           script: |
             const pr = context.payload.pull_request;
-            const desc = pr.body || "No description provided";
+            if (!pr) {
+              core.setFailed("No pull_request data found!");
+              return;
+            }
 
+            const desc = pr.body || "No description provided";
             const payload = {
               embeds: [
                 {
@@ -73,16 +77,45 @@ jobs:
               ]
             };
 
-            const fetch = require('node-fetch');
-            const res = await fetch(process.env.DISCORD_WEBHOOK, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload),
+            // Built-in HTTPS module (no extra dependencies needed).
+            const https = require("https");
+
+            const url = process.env.DISCORD_WEBHOOK;
+            if (!url) {
+              core.setFailed("DISCORD_WEBHOOK environment variable is not set.");
+              return;
+            }
+
+            // Parse the webhook URL so we can post via https.request.
+            const urlObj = new URL(url);
+            const data = JSON.stringify(payload);
+
+            const options = {
+              hostname: urlObj.hostname,
+              path: urlObj.pathname + (urlObj.search || ""),
+              protocol: urlObj.protocol,
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Content-Length": data.length
+              }
+            };
+
+            const req = https.request(options, res => {
+              let body = "";
+              res.on("data", chunk => (body += chunk));
+              res.on("end", () => {
+                if (res.statusCode < 200 || res.statusCode >= 300) {
+                  core.setFailed(`Discord webhook returned ${res.statusCode}: ${body}`);
+                } else {
+                  core.info("Successfully sent notification to Discord.");
+                }
+              });
             });
 
-            if (!res.ok) {
-              const text = await res.text();
-              core.setFailed(`Discord webhook returned ${res.status} ${res.statusText}: ${text}`);
-            } else {
-              core.info("Successfully sent notification to Discord.");
-            }
+            req.on("error", e => {
+              core.setFailed(`Failed to send message: ${e.message}`);
+            });
+
+            req.write(data);
+            req.end();
