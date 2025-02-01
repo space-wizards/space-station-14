@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Moomoobeef
-  changes:
-  - message: Added more names to the pool of names the AI can have.
-    type: Add
-  id: 7390
-  time: '2024-09-17T22:09:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31951
 - author: Calecute
   changes:
   - message: Corrected cake batter recipe in guidebook
@@ -3906,3 +3899,10 @@
   id: 7889
   time: '2025-02-01T15:20:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34458
+- author: Toxic, Nox
+  changes:
+  - message: Changed Packed armory.
+    type: Tweak
+  id: 7890
+  time: '2025-02-01T21:19:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34808
