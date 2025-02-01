@@ -98,15 +98,10 @@ public sealed class RummagingSystem : EntitySystem
             entity.Comp.NextRelootable = _gameTiming.CurTime + entity.Comp.RelootableCooldown;
     }
 
-    // checks Relootable status
-    public bool IsCurrentlyLootable(Entity<RummageableComponent> entity)
+    /// Checks if the entity is currently lootable - Does not check if the entity has been looted. 
+    private bool IsCurrentlyLootable(Entity<RummageableComponent> entity)
     {
-        if (entity.Comp.Relootable)
-        {
-            if (entity.Comp.NextRelootable < _gameTiming.CurTime)
-                return true;
-            else return false;
-        }
-        else return true;
+        // if the entity doesn't have relootable, return true. if the entity's relootable cooldown is up, return true. else return false
+        return !entity.Comp.Relootable || entity.Comp.NextRelootable < _gameTiming.CurTime;
     }
 }
