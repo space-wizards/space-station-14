@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: fix Tech anomaly loud sounds and superfast flickering
-    type: Fix
-  id: 7388
-  time: '2024-09-17T16:05:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32245
 - author: drakewill-CRL
   changes:
   - message: Fixed plant mutations carrying over to other plants and future rounds.
@@ -3902,3 +3895,10 @@
   id: 7887
   time: '2025-02-01T06:35:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34803
+- author: NazrinNya
+  changes:
+  - message: Flesh Kudzu now contains razorium, making it unsafe to eat.
+    type: Tweak
+  id: 7888
+  time: '2025-02-01T12:10:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32821
