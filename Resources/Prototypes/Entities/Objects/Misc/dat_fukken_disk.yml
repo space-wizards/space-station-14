@@ -2,6 +2,7 @@
   name: nuclear authentication disk
   parent: [BaseItem, BaseGrandTheftContraband]
   id: NukeDisk
+  suffix: DO NOT MAP
   description: A nuclear auth disk, capable of arming a nuke if used along with a code. Note from nanotrasen reads "THIS IS YOUR MOST IMPORTANT POSESSION, SECURE DAT FUKKEN DISK!"
   components:
   - type: NukeDisk
@@ -27,7 +28,7 @@
   name: nuclear authentication disk
   parent: [BaseItem, BaseGrandTheftContraband]
   id: NukeDiskFake
-  suffix: Fake
+  suffix: Fake, DO NOT MAP
   description: A nuclear auth disk, capable of arming a nuke if used along with a code. Note from nanotrasen reads "THIS IS YOUR MOST IMPORTANT POSESSION, SECURE DAT FUKKEN DISK!"
   components:
   - type: Sprite
@@ -38,3 +39,16 @@
   - type: Tag
     tags:
     - FakeNukeDisk
+
+ # The obvious fake is intended for map makers - to prevent incidents where a real-fake disk is used and it causes a mass panic.
+- type: entity
+  name: nuclear authentication disk
+  parent: BaseItem
+  id: NukeDiskFakeObvious
+  suffix: Obvious Fake
+  # It's encouraged to give your own custom description if your map includes a fake disk!
+  description: A cheap plastic replica of the nuclear authentication disk - with a small syndicate logo stamped onto it. Who could possibly fall for such an obvious fake?
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/nukedisk.rsi
+    state: icon
