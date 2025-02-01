@@ -1,4 +1,4 @@
-using Content.Client.Weapons.Ranged.Components;
+﻿using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Rounding;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameObjects;
@@ -38,6 +38,12 @@ public sealed partial class GunSystem
         {
             sprite.LayerSetState(GunVisualLayers.Mag, $"{component.MagState}-{component.MagSteps - 1}");
             sprite.LayerSetVisible(GunVisualLayers.Mag, false);
+        }
+
+        if (sprite.LayerMapTryGet(GunVisualLayers.Tip, out _)) //🌟Starlight🌟
+        {
+            sprite.LayerSetState(GunVisualLayers.Tip, $"{component.MagState}-tip-{component.MagSteps - 1}");
+            sprite.LayerSetVisible(GunVisualLayers.Tip, false);
         }
 
         if (sprite.LayerMapTryGet(GunVisualLayers.MagUnshaded, out _))
@@ -97,6 +103,12 @@ public sealed partial class GunSystem
             {
                 sprite.LayerSetVisible(GunVisualLayers.MagUnshaded, true);
                 sprite.LayerSetState(GunVisualLayers.MagUnshaded, $"{component.MagState}-unshaded-{step}");
+            }
+
+            if (sprite.LayerMapTryGet(GunVisualLayers.Tip, out _)) //🌟Starlight🌟
+            {
+                sprite.LayerSetVisible(GunVisualLayers.Tip, true);
+                sprite.LayerSetState(GunVisualLayers.Tip, $"{component.MagState}-tip-{step}");
             }
         }
         else

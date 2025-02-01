@@ -8,7 +8,7 @@
     whitelist:
       tags:
         - CartridgeMagnum
-    proto: CartridgeMagnum
+    proto: CartridgeMagnumSP
     capacity: 12
   - type: Item
     size: Small
@@ -30,7 +30,7 @@
   name: ammunition box (.45 magnum)
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeMagnum
+    proto: CartridgeMagnumSP
   - type: Sprite
     layers:
     - state: base

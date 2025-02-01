@@ -27,7 +27,7 @@
         whitelist:
           tags:
             - MagazinePistol
-            - MagazinePistolHighCapacity
+            - MagazinePistolHighCapacitySP
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber

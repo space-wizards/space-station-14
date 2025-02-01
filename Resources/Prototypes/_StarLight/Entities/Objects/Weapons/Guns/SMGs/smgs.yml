@@ -15,7 +15,7 @@
           priority: 2
           whitelist:
             tags:
-              - MagazinePistolSubMachineGun
+              - MagazinePistolSubMachineGunSP
         gun_chamber:
           name: Chamber
           startingItem: CartridgePistolRubber

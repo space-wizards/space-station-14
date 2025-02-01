@@ -57,7 +57,7 @@
   - type: StorageFill
     contents:
       - id: WeaponSubMachineGunC20r
-      - id: MagazinePistolSubMachineGun
+      - id: MagazinePistolSubMachineGunSP
         amount: 2
 #     - id: SMGSuppressor
 
@@ -124,7 +124,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: MagazinePistolSubMachineGun
+      - id: MagazinePistolSubMachineGunSP
         amount: 4
       - id: MagazineShotgun
         amount: 4

@@ -112,7 +112,6 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
 
-
 - type: entity
   id: MagazineLightRifleAP
   name: "magazine (.30 rifle AP)"

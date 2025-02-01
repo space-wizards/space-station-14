@@ -55,6 +55,13 @@
   components:
   - type: HitScanCartridgeAmmo
     hitscan: BulletPistolTraceFMJ
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#B68F0E"
         
 - type: entity
   id: CartridgePistolAP

@@ -39,7 +39,7 @@
   components:
   - type: Tag
     tags:
-      - MagazinePistolHighCapacity
+      - MagazinePistolHighCapacitySP
   - type: BallisticAmmoProvider
     mayTransfer: true
     whitelist:
@@ -72,7 +72,7 @@
   components:
   - type: Tag
     tags:
-      - MagazinePistolSubMachineGun
+      - MagazinePistolSubMachineGunSP
   - type: BallisticAmmoProvider
     mayTransfer: true
     whitelist:
@@ -151,20 +151,6 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
 
-- type: entity
-  id: MagazinePistolSP
-  name: pistol magazine (.35 auto SP)
-  parent: BaseMagazinePistol
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistolSP
-  - type: Sprite
-    layers:
-    - state: sp
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-      
 - type: entity
   id: MagazinePistolSP
   name: pistol magazine (.35 auto SP)

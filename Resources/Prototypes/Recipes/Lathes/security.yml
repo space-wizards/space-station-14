@@ -202,8 +202,8 @@
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
-  id: MagazinePistolSubMachineGun
-  result: MagazinePistolSubMachineGun
+  id: MagazinePistolSubMachineGunSP
+  result: MagazinePistolSubMachineGunSP
   materials:
     Steel: 300
 
@@ -261,8 +261,8 @@
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
-  id: SpeedLoaderMagnum
-  result: SpeedLoaderMagnum
+  id: SpeedLoaderMagnumSP
+  result: SpeedLoaderMagnumSP
   materials:
     Steel: 190
 

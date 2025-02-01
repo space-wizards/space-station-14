@@ -229,7 +229,7 @@
       - MagazineLightRifleFMJ
       - MagazineLightRifleEmpty
 # Magnum
-      - SpeedLoaderMagnum
+      - SpeedLoaderMagnumSP
       - SpeedLoaderMagnumEmpty
 # Pistol
       - MagazinePistolSP
@@ -237,7 +237,7 @@
       - MagazinePistolFMJ
       - MagazinePistolEmpty
 # SMG
-      - MagazinePistolSubMachineGun
+      - MagazinePistolSubMachineGunSP
       - MagazinePistolSubMachineGunEmpty
       - MagazinePistolSubMachineGunTopMounted
       - MagazinePistolSubMachineGunTopMountedEmpty
@@ -851,7 +851,7 @@
       - MagazineLightRifleFMJ
       - MagazineLightRifleEmpty
 # Magnum
-      - SpeedLoaderMagnum
+      - SpeedLoaderMagnumSP
       - SpeedLoaderMagnumEmpty
 # Pistol
       - MagazinePistolSP
@@ -859,7 +859,7 @@
       - MagazinePistolFMJ
       - MagazinePistolEmpty
 # SMG
-      - MagazinePistolSubMachineGun
+      - MagazinePistolSubMachineGunSP
       - MagazinePistolSubMachineGunEmpty
       - MagazinePistolSubMachineGunTopMounted
       - MagazinePistolSubMachineGunTopMountedEmpty
@@ -1021,7 +1021,7 @@
         - MagazineLightRifleFMJ
         - MagazineLightRifleEmpty
 # Magnum
-        - SpeedLoaderMagnum
+        - SpeedLoaderMagnumSP
         - SpeedLoaderMagnumEmpty
 # Pistol
         - MagazinePistolSP

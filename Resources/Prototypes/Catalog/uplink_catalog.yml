@@ -463,7 +463,7 @@
 # Ammo
 
 - type: listing
-  id: UplinkPistol9mmMagazine
+  id: UplinkPistol9mmMagazineSP
   name: uplink-pistol-magazine-name
   description: uplink-pistol-magazine-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi, state: red-icon }
@@ -474,7 +474,7 @@
   - UplinkAmmo
 
 - type: listing
-  id: UplinkPistol9mmMagazine
+  id: UplinkPistol9mmMagazineHP
   name: uplink-pistol-magazine-name
   description: uplink-pistol-magazine-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi, state: sp }
@@ -485,7 +485,7 @@
   - UplinkAmmo
 
 - type: listing
-  id: UplinkPistol9mmMagazine
+  id: UplinkPistol9mmMagazineFMJ
   name: uplink-pistol-magazine-name
   description: uplink-pistol-magazine-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi, state: fmj }
@@ -501,7 +501,7 @@
   name: uplink-pistol-magazine-c20r-name
   description: uplink-pistol-magazine-c20r-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag.rsi, state: red-icon }
-  productEntity: MagazinePistolSubMachineGun
+  productEntity: MagazinePistolSubMachineGunSP
   cost:
     Telecrystal: 2
   categories:

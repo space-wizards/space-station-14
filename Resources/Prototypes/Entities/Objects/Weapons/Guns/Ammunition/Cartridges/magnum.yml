@@ -9,7 +9,7 @@
       - Cartridge
       - CartridgeMagnum
   - type: HitScanCartridgeAmmo
-    hitscan: BulletMagnumTrace
+    hitscan: BulletMagnumTraceSP
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
@@ -19,12 +19,64 @@
   - type: SpentAmmoVisuals
 
 - type: entity
-  id: CartridgeMagnum
-  name: cartridge (.45 magnum)
+  id: CartridgeMagnumSP
+  name: cartridge (.45 magnum SP)
   parent: BaseCartridgeMagnum
   components:
   - type: HitScanCartridgeAmmo
-    hitscan: BulletMagnumTrace
+    hitscan: BulletMagnumTraceSP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#3F47DB"
+
+- type: entity
+  id: CartridgeMagnumHP
+  name: cartridge (.45 magnum HP)
+  parent: BaseCartridgeMagnum
+  components:
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletMagnumTraceHP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#000000"
+
+- type: entity
+  id: CartridgeMagnumFMJ
+  name: cartridge (.45 magnum FMJ)
+  parent: BaseCartridgeMagnum
+  components:
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletMagnumTraceFMJ
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#B68F0E"
+
+- type: entity
+  id: CartridgeMagnumAP
+  name: cartridge (.45 magnum AP)
+  parent: BaseCartridgeMagnum
+  components:
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletMagnumTraceAP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#1A8C1A"
 
 - type: entity
   id: CartridgeMagnumPractice
@@ -39,7 +91,7 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#dbdbdb"
+        color: "#D86E2C"
 
 - type: entity
   id: CartridgeMagnumIncendiary
@@ -54,22 +106,7 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#ff6e52"
-
-- type: entity
-  id: CartridgeMagnumAP
-  name: cartridge (.45 magnum armor-piercing)
-  parent: BaseCartridgeMagnum
-  components:
-  - type: HitScanCartridgeAmmo
-    hitscan: BulletMagnumAPTrace
-  - type: Sprite
-    layers:
-      - state: base
-        map: [ "enum.AmmoVisualLayers.Base" ]
-      - state: tip
-        map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#0a0a0a"
+        color: "#BFC8CA"
 
 - type: entity
   id: CartridgeMagnumUranium

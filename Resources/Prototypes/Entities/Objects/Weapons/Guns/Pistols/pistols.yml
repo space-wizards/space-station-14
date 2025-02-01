@@ -92,7 +92,7 @@
         whitelist:
           tags:
             - MagazinePistol
-            - MagazinePistolHighCapacity
+            - MagazinePistolHighCapacitySP
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
@@ -251,7 +251,7 @@
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeMagnum
+        startingItem: CartridgeMagnumSP
         priority: 1
         whitelist:
           tags:

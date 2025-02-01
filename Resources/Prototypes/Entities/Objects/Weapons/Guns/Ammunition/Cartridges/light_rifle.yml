@@ -1,5 +1,5 @@
 - type: entity
-  id: BaseCartridgeLightRifle
+  id: BaseCartridgeLightRifleSP
   name: cartridge (.30 rifle SP)
   parent: [ BaseCartridge, BaseRestrictedContraband ]
   abstract: true
@@ -21,7 +21,7 @@
 - type: entity
   id: CartridgeLightRifleSP
   name: cartridge (.30 rifle SP)
-  parent: BaseCartridgeLightRifle
+  parent: BaseCartridgeLightRifleSP
   components:
   - type: HitScanCartridgeAmmo
     hitscan: BulletLightRifleTraceSP
@@ -36,11 +36,11 @@
 - type: entity
   id: CartridgeLightRifleHP
   name: cartridge (.30 rifle HP)
-  parent: BaseCartridgeLightRifle
+  parent: BaseCartridgeLightRifleSP
   components:
   - type: HitScanCartridgeAmmo
     hitscan: BulletLightRifleTraceHP
-   - type: Sprite
+  - type: Sprite
     layers:
       - state: base
         map: [ "enum.AmmoVisualLayers.Base" ]
@@ -51,15 +51,22 @@
 - type: entity
   id: CartridgeLightRifleFMJ
   name: cartridge (.30 rifle FMJ)
-  parent: BaseCartridgeLightRifle
+  parent: BaseCartridgeLightRifleSP
   components:
   - type: HitScanCartridgeAmmo
     hitscan: BulletLightRifleTraceFMJ
-    
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#B68F0E"
+
 - type: entity
   id: CartridgeLightRifleAP
   name: cartridge (.30 rifle AP)
-  parent: BaseCartridgeLightRifle
+  parent: BaseCartridgeLightRifleSP
   components:
   - type: HitScanCartridgeAmmo
     hitscan: BulletLightRifleTraceAP
@@ -74,7 +81,7 @@
 - type: entity
   id: CartridgeLightRiflePractice
   name: cartridge (.30 rifle practice)
-  parent: BaseCartridgeLightRifle
+  parent: BaseCartridgeLightRifleSP
   components:
   - type: HitScanCartridgeAmmo
     hitscan: BulletLightRifleTracePractice
@@ -89,7 +96,7 @@
 - type: entity
   id: CartridgeLightRifleIncendiary
   name: cartridge (.30 rifle incendiary)
-  parent: BaseCartridgeLightRifle
+  parent: BaseCartridgeLightRifleSP
   components:
   - type: HitScanCartridgeAmmo
     hitscan: BulletLightRifleTraceIncendiary
@@ -104,7 +111,7 @@
 - type: entity
   id: CartridgeLightRifleUranium
   name: cartridge (.30 rifle uranium)
-  parent: BaseCartridgeLightRifle
+  parent: BaseCartridgeLightRifleSP
   components:
   - type: HitScanCartridgeAmmo
     hitscan: BulletLightRifleTraceUranium

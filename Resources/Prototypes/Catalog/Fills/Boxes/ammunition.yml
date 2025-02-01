@@ -130,7 +130,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: MagazinePistolHighCapacity
+      - id: MagazinePistolHighCapacitySP
         amount: 4
 
 - type: entity
@@ -152,7 +152,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: MagazinePistolSubMachineGun
+      - id: MagazinePistolSubMachineGunSP
         amount: 3
 
 - type: entity

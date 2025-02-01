@@ -150,8 +150,10 @@
   tier: 2
   cost: 11500
   recipeUnlocks:
+  - MagazinePistolAP
   - MagazineRifleAP
   - MagazineLightRifleAP
+  - MagazineBoxPistolAP
   - MagazineBoxRifleAP
   - MagazineBoxLightRifleAP
 
