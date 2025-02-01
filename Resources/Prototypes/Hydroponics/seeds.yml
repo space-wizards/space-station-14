@@ -1136,7 +1136,7 @@
   idealLight: 9
   idealHeat: 298
   chemicals:
-    Frostoil:
+    FrostOil:
       Min: 1
       Max: 10
       PotencyDivisor: 10
