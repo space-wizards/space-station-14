@@ -24,41 +24,34 @@ jobs:
       - name: Send Discord Notification
         if: steps.check-label.outputs.send_notification == 'true'
         run: |
+          JSON_PAYLOAD=$(jq -n --arg title "🗺️ New PR with map changes!" \
+              --arg url "${{ github.event.pull_request.html_url }}" \
+              --arg pr_title "${{ github.event.pull_request.title }}" \
+              --arg pr_desc "${{ github.event.pull_request.body || "No description provided" }}" \
+              --arg author "${{ github.event.pull_request.user.login }}" \
+              --arg repo "${{ github.repository }}" \
+              --arg pr_number "#${{ github.event.pull_request.number }}" \
+              '{
+                "embeds": [{
+                  "title": $title,
+                  "description": $pr_title,
+                  "url": $url,
+                  "color": 16776960,
+                  "fields": [
+                    {"name": "📝 Description", "value": $pr_desc, "inline": false},
+                    {"name": "👤 Author", "value": $author, "inline": true},
+                    {"name": "📂 Repository", "value": $repo, "inline": true},
+                    {"name": "🔢 PR Number", "value": $pr_number, "inline": true}
+                  ],
+                  "footer": {
+                    "text": "GitHub Actions - Space Station 14",
+                    "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                  },
+                  "timestamp": "${{ github.event.pull_request.created_at }}"
+                }]
+              }')
+
           curl -H "Content-Type: application/json" \
                -X POST \
-               -d '{
-                 "embeds": [{
-                   "title": "🗺️ New PR with map changes!",
-                   "description": "${{ github.event.pull_request.title }}",
-                   "url": "${{ github.event.pull_request.html_url }}",
-                   "color": 16776960,
-                   "fields": [
-                     {
-                       "name": "📝 Description",
-                       "value": "${{ github.event.pull_request.body || 'No description provided' }}",
-                       "inline": false
-                     },
-                     {
-                       "name": "👤 Author",
-                       "value": "${{ github.event.pull_request.user.login }}",
-                       "inline": true
-                     },
-                     {
-                       "name": "📂 Repository",
-                       "value": "${{ github.repository }}",
-                       "inline": true
-                     },
-                     {
-                       "name": "🔢 PR Number",
-                       "value": "#${{ github.event.pull_request.number }}",
-                       "inline": true
-                     }
-                   ],
-                   "footer": {
-                     "text": "🌟Starlight🌟",
-                     "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-                   },
-                   "timestamp": "${{ github.event.pull_request.created_at }}"
-                 }]
-               }' \
+               -d "$JSON_PAYLOAD" \
                ${{ secrets.DISCORD_MAPPING_WEBHOOK_URL }}
