@@ -2,31 +2,31 @@ name: Notify Discord on Map PR
 
 on:
   pull_request:
-    types: [opened, labeled]
+    types: [opened, labeled, synchronize]
 
 jobs:
   notify_discord:
     runs-on: ubuntu-latest
     steps:
-      - name: Check PR labels
+      - name: Check for 'Changes: Map' label
         id: check-label
         uses: actions/github-script@v7
         with:
           script: |
             const pr = context.payload.pull_request;
             if (!pr) {
-              core.setFailed("No pull_request data found!");
+              core.setFailed("No PR data found!");
               return;
             }
-            const labels = pr.labels.map(label => label.name);
+            const labels = pr.labels.map(l => l.name);
             if (labels.includes("Changes: Map")) {
-              core.setOutput("send_notification", "true");
+              core.setOutput("notify", "true");
             } else {
-              core.setOutput("send_notification", "false");
+              core.setOutput("notify", "false");
             }
 
-      - name: Send Discord Notification
-        if: steps.check-label.outputs.send_notification == 'true'
+      - name: Send to Discord
+        if: steps.check-label.outputs.notify == 'true'
         uses: actions/github-script@v7
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_MAPPING_WEBHOOK_URL }}
@@ -34,59 +34,90 @@ jobs:
           script: |
             const pr = context.payload.pull_request;
             if (!pr) {
-              core.setFailed("No pull_request data found!");
+              core.setFailed("No PR data found!");
               return;
             }
 
-            const desc = pr.body || "No description provided";
-            const payload = {
-              embeds: [
-                {
-                  title: "New PR with map changes!",
-                  description: pr.title,
-                  url: pr.html_url,
-                  color: 16776960,
-                  fields: [
-                    {
-                      name: "Description",
-                      value: desc,
-                      inline: false
-                    },
-                    {
-                      name: "Author",
-                      value: pr.user.login,
-                      inline: true
-                    },
-                    {
-                      name: "Repository",
-                      value: process.env.GITHUB_REPOSITORY,
-                      inline: true
-                    },
-                    {
-                      name: "PR Number",
-                      value: `#${pr.number}`,
-                      inline: true
-                    }
-                  ],
-                  footer: {
-                    text: "GitHub Actions",
-                    icon_url: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-                  },
-                  timestamp: new Date().toISOString()
-                }
-              ]
-            };
-
-            // Built-in HTTPS module (no extra dependencies needed).
             const https = require("https");
-
+            const { URL } = require("url");
             const url = process.env.DISCORD_WEBHOOK;
             if (!url) {
-              core.setFailed("DISCORD_WEBHOOK environment variable is not set.");
+              core.setFailed("No Discord webhook provided.");
               return;
             }
 
-            // Parse the webhook URL so we can post via https.request.
+            // Prepare a single embed object
+            const embed = {
+              title: "New PR with map changes!",
+              description: pr.title || "Untitled PR",
+              url: pr.html_url,
+              color: 16776960,
+              fields: [],
+              footer: {
+                text: "GitHub Actions",
+                icon_url: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+              },
+              timestamp: new Date().toISOString(),
+            };
+
+            // Function to split a string into chunks of given size
+            function chunkString(str, size) {
+              const chunks = [];
+              let i = 0;
+              while (i < str.length) {
+                chunks.push(str.slice(i, i + size));
+                i += size;
+              }
+              return chunks;
+            }
+
+            // Split the PR body to avoid Discord's 1024-char field limit
+            const prBody = pr.body || "No description provided";
+            const bodyChunks = chunkString(prBody, 1024);
+
+            // Add each chunk as a separate field (up to 25 fields total)
+            if (bodyChunks.length === 1) {
+              embed.fields.push({
+                name: "Description",
+                value: bodyChunks[0],
+                inline: false
+              });
+            } else {
+              for (let i = 0; i < bodyChunks.length && i < 25; i++) {
+                embed.fields.push({
+                  name: `Description (part ${i+1}/${bodyChunks.length})`,
+                  value: bodyChunks[i],
+                  inline: false
+                });
+              }
+            }
+
+            // Add other PR info as separate fields
+            embed.fields.push(
+              {
+                name: "Author",
+                value: pr.user.login,
+                inline: true
+              },
+              {
+                name: "Repository",
+                value: process.env.GITHUB_REPOSITORY,
+                inline: true
+              },
+              {
+                name: "PR Number",
+                value: `#${pr.number}`,
+                inline: true
+              }
+            );
+
+            // Final payload
+            const payload = { embeds: [embed] };
+
+            // Log it for debugging
+            core.info("Discord payload: " + JSON.stringify(payload));
+
+            // Prepare https request
             const urlObj = new URL(url);
             const data = JSON.stringify(payload);
 
@@ -97,13 +128,13 @@ jobs:
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                "Content-Length": data.length
+                "Content-Length": Buffer.byteLength(data)
               }
             };
 
             const req = https.request(options, res => {
               let body = "";
-              res.on("data", chunk => (body += chunk));
+              res.on("data", chunk => body += chunk);
               res.on("end", () => {
                 if (res.statusCode < 200 || res.statusCode >= 300) {
                   core.setFailed(`Discord webhook returned ${res.statusCode}: ${body}`);
@@ -113,8 +144,8 @@ jobs:
               });
             });
 
-            req.on("error", e => {
-              core.setFailed(`Failed to send message: ${e.message}`);
+            req.on("error", err => {
+              core.setFailed(`Failed to send message: ${err.message}`);
             });
 
             req.write(data);
