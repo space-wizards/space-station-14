@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Alice Liddel
-  changes:
-  - message: Crayon charges increased from 15 to 25
-    type: Add
-  id: 7386
-  time: '2024-09-17T00:35:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32061
 - author: TheShuEd
   changes:
   - message: Anomalous infections added! People can now be infected by anomalies!
@@ -3908,3 +3901,12 @@
   id: 7885
   time: '2025-01-31T23:39:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34794
+- author: Nox38
+  changes:
+  - message: Set Marathon's max secoffs to 8.
+    type: Tweak
+  - message: Restocked Marathon's armory.
+    type: Tweak
+  id: 7886
+  time: '2025-02-01T06:32:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34798
