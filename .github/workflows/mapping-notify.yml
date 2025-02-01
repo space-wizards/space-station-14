@@ -1,0 +1,64 @@
+name: Notify Discord on Map PR
+
+on:
+  pull_request:
+    types: [opened, labeled]
+
+jobs:
+  notify_discord:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR Labels
+        id: check-label
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const labels = pr.labels.map(label => label.name);
+            if (labels.includes("Changes: Map")) {
+              core.setOutput("send_notification", "true");
+            } else {
+              core.setOutput("send_notification", "false");
+            }
+
+      - name: Send Discord Notification
+        if: steps.check-label.outputs.send_notification == 'true'
+        run: |
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d '{
+                 "embeds": [{
+                   "title": "🗺️ New PR with map changes!",
+                   "description": "${{ github.event.pull_request.title }}",
+                   "url": "${{ github.event.pull_request.html_url }}",
+                   "color": 16776960,
+                   "fields": [
+                     {
+                       "name": "📝 Description",
+                       "value": "${{ github.event.pull_request.body || 'No description provided' }}",
+                       "inline": false
+                     },
+                     {
+                       "name": "👤 Author",
+                       "value": "${{ github.event.pull_request.user.login }}",
+                       "inline": true
+                     },
+                     {
+                       "name": "📂 Repository",
+                       "value": "${{ github.repository }}",
+                       "inline": true
+                     },
+                     {
+                       "name": "🔢 PR Number",
+                       "value": "#${{ github.event.pull_request.number }}",
+                       "inline": true
+                     }
+                   ],
+                   "footer": {
+                     "text": "🌟Starlight🌟",
+                     "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                   },
+                   "timestamp": "${{ github.event.pull_request.created_at }}"
+                 }]
+               }' \
+               ${{ secrets.DISCORD_MAPPING_WEBHOOK_URL }}
