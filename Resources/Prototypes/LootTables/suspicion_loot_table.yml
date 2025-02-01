@@ -127,7 +127,11 @@
 
 
     # Spawn a bunch of ammo around!
-  - id: MagazineRifle
+  - id: MagazineRifleSP
+    maxAmount: 15
+  - id: MagazineRifleHP
+    maxAmount: 15
+  - id: MagazineRifleFMJ
     maxAmount: 15
   - id: MagazineCaselessRifle
     maxAmount: 15
@@ -135,15 +139,23 @@
     maxAmount: 15
   - id: MagazinePistolCaselessRifle
     maxAmount: 15
-  - id: MagazineLightRifle
+  - id: MagazineLightRifleSP
+    maxAmount: 15
+  - id: MagazineLightRifleHP
+    maxAmount: 15
+  - id: MagazineLightRifleFMJ
     maxAmount: 15
   - id: MagazineShotgun
     maxAmount: 15
-  - id: MagazinePistol
+  - id: MagazinePistolSP
     maxAmount: 15
-  - id: MagazinePistolHighCapacity
+  - id: MagazinePistolHP
     maxAmount: 15
-  - id: MagazinePistolSubMachineGun
+  - id: MagazinePistolFMJ
+    maxAmount: 15
+  - id: MagazinePistolHighCapacitySP
+    maxAmount: 15
+  - id: MagazinePistolSubMachineGunSP
     maxAmount: 15
   - id: CartridgeRocket
     maxAmount: 15

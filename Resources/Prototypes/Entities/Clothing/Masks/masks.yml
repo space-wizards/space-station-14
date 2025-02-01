@@ -32,6 +32,8 @@
     sprite: Clothing/Mask/gassecurity.rsi
   - type: Clothing
     sprite: Clothing/Mask/gassecurity.rsi
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -52,6 +54,8 @@
     sprite: Clothing/Mask/gassyndicate.rsi
   - type: FlashImmunity
   - type: EyeProtection
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -150,6 +154,8 @@
     sprite: Clothing/Mask/medicalsecurity.rsi
   - type: Clothing
     sprite: Clothing/Mask/medicalsecurity.rsi
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -375,6 +381,8 @@
     - Hair
     - Snout
     hideOnToggle: true
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -393,6 +401,8 @@
     sprite: Clothing/Mask/merc.rsi
   - type: Clothing
     sprite: Clothing/Mask/merc.rsi
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -421,6 +431,8 @@
     hideOnToggle: true
   - type: FlashImmunity
   - type: EyeProtection
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -439,6 +451,8 @@
     sprite: Clothing/Mask/squadron.rsi
   - type: Clothing
     sprite: Clothing/Mask/squadron.rsi
+  - type: Pierceable
+    level: Rock
   - type: Armor
     modifiers:
       coefficients:

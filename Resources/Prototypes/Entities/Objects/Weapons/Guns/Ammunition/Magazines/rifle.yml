@@ -34,12 +34,26 @@
 
 # Magazines
 - type: entity
-  id: MagazineRifle
-  name: "magazine (.20 rifle)"
+  id: MagazineRifleSP
+  name: "magazine (.20 rifle SP)"
   parent: BaseMagazineRifle
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeRifle
+    proto: CartridgeRifleSP
+  - type: Sprite
+    layers:
+    - state: sp
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineRifleHP
+  name: "magazine (.20 rifle HP)"
+  parent: BaseMagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleHP
   - type: Sprite
     layers:
     - state: red
@@ -48,10 +62,38 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
+  id: MagazineRifleFMJ
+  name: "magazine (.20 rifle FMJ)"
+  parent: BaseMagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleFMJ
+  - type: Sprite
+    layers:
+    - state: fmj
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineRifleAP
+  name: "magazine (.20 rifle AP)"
+  parent: BaseMagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleAP
+  - type: Sprite
+    layers:
+    - state: ap
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
   id: MagazineRifleEmpty
   name: "magazine (.20 rifle any)"
   suffix: empty
-  parent: MagazineRifle
+  parent: MagazineRifleSP
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -63,10 +105,14 @@
 - type: entity
   id: MagazineRifleIncendiary
   name: "magazine (.20 rifle incendiary)"
-  parent: MagazineRifle
+  parent: MagazineRifleSP
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRifleIncendiary
+  - type: Sprite
+    layers:
+    - state: incendiary
+      map: ["enum.GunVisualLayers.Base"]
 
 - type: entity
   id: MagazineRiflePractice

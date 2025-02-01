@@ -32,7 +32,10 @@
   - type: Physics
     bodyType: Static
   - type: Reflect
+    reflects: Energy
     reflectProb: 1
+  - type: Ricochetable
+    chance: 1
   - type: Pullable
   - type: Airtight
     noAirWhenFullyAirBlocked: false
@@ -81,5 +84,5 @@
     key: walls
     base: state
   - type: Appearance
-  - type: Reflect
-    reflectProb: 1
+  - type: Ricochetable
+    chance: 1

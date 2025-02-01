@@ -171,8 +171,12 @@
     contents:
     - id: WeaponPistolMk58
       amount: 4
-    - id: MagazinePistol
-      amount: 8
+    - id: MagazinePistolSP
+      amount: 4
+    - id: MagazinePistolHP
+      amount: 2
+    - id: MagazinePistolFMJ
+      amount: 2
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseRestrictedContraband]
@@ -183,8 +187,10 @@
     contents:
     - id: WeaponRifleLecter
       amount: 2
-    - id: MagazineRifle
-      amount: 4
+    - id: MagazineRifleHP
+      amount: 3
+    - id: MagazineRifleSP
+      amount: 3
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseRestrictedContraband]
@@ -195,7 +201,7 @@
     contents:
     - id: WeaponSubMachineGunDrozd
       amount: 2
-    - id: MagazinePistolSubMachineGun
+    - id: MagazinePistolSubMachineGunSP
       amount: 4
 
 - type: entity

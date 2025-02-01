@@ -8907,7 +8907,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: MagazinePistol
+- proto: MagazinePistolSP
   entities:
   - uid: 1641
     components:

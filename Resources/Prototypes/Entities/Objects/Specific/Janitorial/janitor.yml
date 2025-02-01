@@ -123,6 +123,8 @@
   - type: Item
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
     size: Normal
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:

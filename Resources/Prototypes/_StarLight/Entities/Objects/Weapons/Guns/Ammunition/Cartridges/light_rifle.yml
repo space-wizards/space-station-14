@@ -1,7 +1,7 @@
 - type: entity
   id: CartridgeLightRifleRubber
   name: cartridge (.30 rifle rubber)
-  parent: BaseCartridgeLightRifle
+  parent: BaseCartridgeLightRifleSP
   components:
   - type: HitScanCartridgeAmmo
     hitscan: RubberBulletTrace

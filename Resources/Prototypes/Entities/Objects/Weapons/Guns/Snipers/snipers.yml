@@ -32,7 +32,7 @@
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: BallisticAmmoProvider
     capacity: 10
-    proto: CartridgeLightRifle
+    proto: CartridgeLightRifleFMJ
     whitelist:
       tags:
       - CartridgeLightRifle

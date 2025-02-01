@@ -26,7 +26,7 @@
   parent: BaseSpeedLoaderPistol
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgePistol
+    proto: CartridgePistolSP
   - type: Sprite
     layers:
     - state: base

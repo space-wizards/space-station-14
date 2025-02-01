@@ -18,14 +18,36 @@
           prob: 0.1
           cost: 50
 
-        - proto: CartridgePistol
-          prob: 0.2
-          cost: 1
         - proto: MagazineLightRifleEmpty
           prob: 0.2
           cost: 3
 
-        - proto: MagazineBoxLightRifle
+        - proto: MagazineBoxPistolSP
+          prob: 0.2
+          cost: 10
+        - proto: MagazineBoxPistolHP
+          prob: 0.2
+          cost: 10
+        - proto: MagazineBoxPistolFMJ
+          prob: 0.2
+          cost: 10
+        - proto: MagazineBoxPistolUranium
+          prob: 0.1
+          cost: 20
+        - proto: MagazineBoxPistolIncendiary
+          prob: 0.1
+          cost: 20
+        - proto: MagazineBoxPistolAP
+          prob: 0.05
+          cost: 40
+
+        - proto: MagazineBoxLightRifleSP
+          prob: 0.2
+          cost: 10
+        - proto: MagazineBoxLightRifleHP
+          prob: 0.2
+          cost: 10
+        - proto: MagazineBoxLightRifleFMJ
           prob: 0.2
           cost: 10
         - proto: MagazineBoxLightRifleUranium
@@ -34,6 +56,9 @@
         - proto: MagazineBoxLightRifleIncendiary
           prob: 0.1
           cost: 20
+        - proto: MagazineBoxLightRifleAP
+          prob: 0.05
+          cost: 40
         - proto: GrenadeIncendiary
           prob: 0.3
           cost: 10

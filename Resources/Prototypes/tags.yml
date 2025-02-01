@@ -896,7 +896,7 @@
   id: MagazinePistolCaselessRifle
 
 - type: Tag
-  id: MagazinePistolHighCapacity
+  id: MagazinePistolHighCapacitySP
 
 - type: Tag
   id: MagazinePistolSubMachineGunTopMounted
@@ -911,7 +911,7 @@
   id: MagazineMagnumSubMachineGun
 
 - type: Tag
-  id: MagazinePistolSubMachineGun
+  id: MagazinePistolSubMachineGunSP
 
 - type: Tag
   id: MagazineGrenade

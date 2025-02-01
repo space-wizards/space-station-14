@@ -93232,7 +93232,7 @@ entities:
     - type: Transform
       pos: -9.260321,-11.764748
       parent: 2
-- proto: MagazinePistol
+- proto: MagazinePistolSP
   entities:
   - uid: 13758
     components:
