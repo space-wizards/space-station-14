@@ -89,3 +89,67 @@
     walkModifier: 0.85
     sprintModifier: 0.85
   - type: HeldSpeedModifier
+
+#Paramedic Voidsuit
+- type: entity
+  parent: [ClothingOuterEVASuitBase, BaseMedicalContraband] #Despit "Voidsuits are light hardsuits", since it parents of EVA Suits, it goes with the other softsuits
+  id: ClothingOuterHardsuitVoidParamed
+  name: paramedic void suit
+  description: A void suit made for paramedics.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+    layers:
+    - state: icon
+  - type: Appearance
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: TemperatureProtection
+    heatingCoefficient: 0.1
+    coolingCoefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.90
+        Radiation: 0.75
+        Caustic: 0.5
+  - type: GroupExamine
+  - type: StealTarget
+    stealGroup: ClothingOuterHardsuitVoidParamed
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetVoidParamed
+  - type: ItemToggle
+    onUse: false
+    soundActivate:
+      path: /Audio/Items/flashlight_on.ogg
+    soundDeactivate:
+      path: /Audio/Items/flashlight_off.ogg
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Effects/Vehicle/ambulancesiren.ogg #not the best sound, but after looking through all of current freesound regarding sirens and ambulance, this was the best compromise
+      params:
+        volume: -4
+  - type: UseDelay
+    delay: 1.0
+  - type: ToggleClothing
+    action: ActionToggleParamedicSiren
+  - type: ItemTogglePointLight
+  - type: PointLight
+    enabled: false
+    radius: 2
+    energy: 2
+    color: blue
+    netsync: false
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    speed: 360
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}

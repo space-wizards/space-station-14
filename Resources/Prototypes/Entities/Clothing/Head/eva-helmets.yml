@@ -61,3 +61,43 @@
     sprite: Clothing/Head/Helmets/ancientvoidsuit.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ancientvoidsuit.rsi
+
+#Paramedic Void Helmet
+- type: entity
+  parent: [ ClothingHeadSuitWithLightBase, ClothingHeadEVAHelmetBase ] #Despite acting like a hardsuit helmet, since it inherits from EVA Helmet, it goes here.
+  id: ClothingHeadHelmetVoidParamed
+  name: paramedic void helmet
+  description: A void helmet made for paramedics.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/paramedhelm.rsi
+    layers:
+    - state: icon
+      shader: unshaded
+    - state: light-overlay
+      visible: false
+      shader: unshaded
+      map: [ "light" ]
+  - type: HandheldLight
+    addPrefix: false
+  - type: ToggleableLightVisuals
+    spriteLayer: light
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+  - type: TemperatureProtection
+    heatingCoefficient: 0.1
+    coolingCoefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.90
+        Radiation: 0.75
+  - type: PointLight
+    radius: 5
+    energy: 2
+    color: "#00ffff"
