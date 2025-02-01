@@ -2,7 +2,7 @@ name: Notify Discord on Map PR
 
 on:
   pull_request:
-    types: [opened, labeled]
+    types: [labeled]
 
 jobs:
   notify_discord:
