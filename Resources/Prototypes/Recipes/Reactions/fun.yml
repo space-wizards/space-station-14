@@ -222,7 +222,7 @@
   reactants:
     Silver:
       amount: 10
-    Frostoil:
+    FrostOil:
       amount: 5
   effects:
   - !type:CreateEntityReactionEffect
