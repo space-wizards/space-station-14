@@ -31,7 +31,7 @@
   name: ammunition box (.35 auto SP)
   components:
   - type: BallisticAmmoProvider
-    proto: SP
+    proto: CartridgePistolSP
   - type: Sprite
     layers:
     - state: base

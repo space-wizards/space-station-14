@@ -280,7 +280,7 @@
     - RegenerativeMesh
     - BoxZiptie
     - CrowbarRed
-    - MagazinePistol
+    - MagazinePistolSP
 
 - type: startingGear
   id: ERTSecurityGearEVA
@@ -304,7 +304,7 @@
     - RegenerativeMesh
     - BoxZiptie
     - CrowbarRed
-    - MagazinePistol
+    - MagazinePistolSP
 
 - type: startingGear
   id: ERTSecurityGearEVALecter
@@ -330,7 +330,7 @@
     - RegenerativeMesh
     - BoxZiptie
     - CrowbarRed
-    - MagazinePistol
+    - MagazinePistolSP
 
 # Medical
 - type: job

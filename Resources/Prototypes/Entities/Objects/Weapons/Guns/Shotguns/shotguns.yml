@@ -73,6 +73,7 @@
   - type: AmmoCounter
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
+    spread: 15
     fireRate: 2
     selectedMode: FullAuto
     availableModes:
@@ -121,6 +122,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun_inhands_64x.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
+    spread: 10
     fireRate: 2
   - type: BallisticAmmoProvider
     capacity: 2
@@ -145,6 +147,8 @@
   id: WeaponShotgunEnforcer
   description: A premium combat shotgun based on the Kammerer design, featuring an upgraded clip capacity. .50 shotgun shells.
   components:
+  - type: Gun
+    spread: 5
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Clothing
@@ -173,6 +177,8 @@
     shape:
     - 0,0,4,0
     sprite: Objects/Weapons/Guns/Shotguns/pump_inhands_64x.rsi
+  - type: Gun
+    spread: 15
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: Clothing
@@ -198,6 +204,7 @@
     size: Small
     sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
   - type: Gun
+    spread: 40
     fireRate: 4
   - type: BallisticAmmoProvider
     capacity: 2
@@ -234,6 +241,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
   - type: Gun
+    spread: 51
     fireRate: 4
   - type: BallisticAmmoProvider
     capacity: 1
@@ -259,6 +267,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/blunderbuss.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
+    spread: 15
     fireRate: 2
   - type: BallisticAmmoProvider
     capacity: 1
@@ -282,6 +291,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun_inhands_64x.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
+    spread: 30
     fireRate: 4 #No reason to stifle the firerate since you have to manually reload every time anyways.
   - type: BallisticAmmoProvider
     capacity: 1

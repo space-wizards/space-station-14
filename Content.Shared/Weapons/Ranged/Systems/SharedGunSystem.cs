@@ -645,7 +645,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     public sealed class HitscanEvent : EntityEventArgs
     {
         public ProtoId<HitscanPrototype> Hitscan;
-        public Effect[] Effects = Array.Empty<Effect>();
+        public required Effect[][] Effects { get; init; }
     }
     [Serializable, NetSerializable]
     public struct Effect

@@ -159,24 +159,24 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         if (hitscanPrototype.Count > 1)
                         {
-                            var spreadEvent = new GunGetAmmoSpreadEvent(hitscanPrototype.Spread);
+                            var spread = (hitscanPrototype.Spread + gun.Spread) / 2;
+                            var spreadEvent = new GunGetAmmoSpreadEvent(spread);
                             RaiseLocalEvent(gunUid, ref spreadEvent);
 
                             var angles = LinearSpreadWithRandom(mapAngle - (spreadEvent.Spread / 2),
                                 mapAngle + (spreadEvent.Spread / 2), hitscanPrototype.Count,
                                 3f);
 
-                            IEnumerable<(EntityCoordinates, float, Angle, EntityUid?)> hits = [];
-                            for (var i = 1; i < hitscanPrototype.Count; i++)
-                                hits = hits.Concat(Hitscan(gunUid, gun, fromCoordinates, user, fromMap, pointerLength, angles[i].ToVec(), hitscanPrototype));
+                            List<List<(EntityCoordinates, float, Angle, EntityUid?)>> hits = new(hitscanPrototype.Count);
+                            for (var i = 0; i < hitscanPrototype.Count; i++)
+                                hits.Add(Hitscan(gunUid, gun, fromCoordinates, user, fromMap, pointerLength, angles[i].ToVec(), hitscanPrototype));
 
                             FireEffects(hits.ToList(), hitscanPrototype);
                         }
                         else
                         {
                             var hits = Hitscan(gunUid, gun, fromCoordinates, user, fromMap, pointerLength, mapDirection, hitscanPrototype);
-                            FireEffects(hits, hitscanPrototype);
-
+                            FireEffects([hits], hitscanPrototype);
                         }
 
                         RaiseLocalEvent(ent!.Value, new AmmoShotEvent()
@@ -365,7 +365,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         effects.Add((fromEffect, hitscan.MaxLength, dir.ToAngle(), null));
                     }
 
-                    FireEffects(effects, hitscan);
+                    FireEffects([effects], hitscan);
 
                     Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
                     break;
@@ -683,77 +683,86 @@ public sealed partial class GunSystem : SharedGunSystem
     // TODO: Pseudo RNG so the client can predict these.
     #region Hitscan effects
     // 🌟Starlight🌟
-    private void FireEffects(List<(EntityCoordinates fromCoordinates, float distance, Angle mapDirection, EntityUid? hitEntity)> hits, HitscanPrototype hitscan)
+    private void FireEffects(List<List<(EntityCoordinates fromCoordinates, float distance, Angle mapDirection, EntityUid? hitEntity)>> hits, HitscanPrototype hitscan)
     {
         if (hits.Count == 0) return;
         var hitscanEvent = new HitscanEvent
         {
             Hitscan = hitscan.ID,
-            Effects = new Effect[hits.Count]
+            Effects = new Effect[hits.Count][]
         };
-        var index = -1;
+        var spreadIndex = -1;
         HashSet<EntityCoordinates> pvs = [];
 
-        foreach (var (fromCoordinatesOrig, distance, mapDirection, hitEntity) in hits)
+        foreach (var hit in hits)
         {
-            var fromCoordinates = fromCoordinatesOrig;
-            var gridUid = _transform.GetGrid(fromCoordinates);
-            var angle = mapDirection;
+            spreadIndex++;
+            var index = -1;
 
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            if (xformQuery.TryGetComponent(gridUid, out var gridXform))
+            hitscanEvent.Effects[spreadIndex] = new Effect[hit.Count];
+            ref var effects = ref hitscanEvent.Effects[spreadIndex];
+
+            foreach (var (fromCoordinatesOrig, distance, mapDirection, hitEntity) in hit)
             {
-                var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform, xformQuery);
+                var fromCoordinates = fromCoordinatesOrig;
+                var gridUid = _transform.GetGrid(fromCoordinates);
+                var angle = mapDirection;
 
-                fromCoordinates = new EntityCoordinates(gridUid.Value,
-                    Vector2.Transform(_transform.ToMapCoordinates(fromCoordinates).Position, gridInvMatrix));
-
-                // Use the fallback angle I guess?
-                angle -= gridRot;
-            }
-
-            index++;
-            hitscanEvent.Effects[index] = new Effect
-            {
-                Angle = angle,
-                Distance = distance,
-            };
-            ref var effect = ref hitscanEvent.Effects[index];
-
-            if (distance >= 1f)
-            {
-                var muzzleCoords = fromCoordinates.Offset(angle.ToVec().Normalized() / 2);
-                var travelCoords = fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2);
-                effect.MuzzleCoordinates = GetNetCoordinates(muzzleCoords);
-                effect.TravelCoordinates = GetNetCoordinates(travelCoords);
-            }
-            var impactCoords = fromCoordinates.Offset(angle.ToVec() * distance);
-            effect.ImpactCoordinates = GetNetCoordinates(impactCoords);
-
-            if (hitEntity is not null)
-            {
-
-                if (hitscan.Reflective == ReflectType.NonEnergy)
+                var xformQuery = GetEntityQuery<TransformComponent>();
+                if (xformQuery.TryGetComponent(gridUid, out var gridXform))
                 {
-                    if (TryComp<BloodstreamComponent>(hitEntity, out var bloodstream))
+                    var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform, xformQuery);
+
+                    fromCoordinates = new EntityCoordinates(gridUid.Value,
+                        Vector2.Transform(_transform.ToMapCoordinates(fromCoordinates).Position, gridInvMatrix));
+
+                    // Use the fallback angle I guess?
+                    angle -= gridRot;
+                }
+
+                index++;
+                effects[index] = new Effect
+                {
+                    Angle = angle,
+                    Distance = distance,
+                };
+                ref var effect = ref effects[index];
+
+                if (distance >= 1f)
+                {
+                    var muzzleCoords = fromCoordinates.Offset(angle.ToVec().Normalized() / 2);
+                    var travelCoords = fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2);
+                    effect.MuzzleCoordinates = GetNetCoordinates(muzzleCoords);
+                    effect.TravelCoordinates = GetNetCoordinates(travelCoords);
+                }
+                var impactCoords = fromCoordinates.Offset(angle.ToVec() * distance);
+                effect.ImpactCoordinates = GetNetCoordinates(impactCoords);
+
+                if (hitEntity is not null)
+                {
+                    if (hitscan.Reflective == ReflectType.NonEnergy)
                     {
-                        Timer.Spawn(200, () =>
+                        if (TryComp<BloodstreamComponent>(hitEntity, out var bloodstream))
                         {
-                            var color = _proto.Index(bloodstream.BloodReagent).SubstanceColor;
-                            // A flash of the neuralyzer, then a man in a black suit says that you didn’t see any “vector crutch” here, and if you did—read it again.
-                            var coords = fromCoordinates.Offset((angle.ToVec() * (distance + 1.3f)) + new Vector2(-0.5f, -0.5f));
-                            _decals.TryAddDecal(_rand.Pick(_bloodDecals), coords, out _, color, angle + Angle.FromDegrees(-45), cleanable: true);
-                        });
-                    }
-                    else
-                    {
-                        effect.ImpactEnt = GetNetEntity(hitEntity.Value);
+                            Timer.Spawn(200, () =>
+                            {
+                                var color = _proto.Index(bloodstream.BloodReagent).SubstanceColor;
+                                // A flash of the neuralyzer, then a man in a black suit says that you didn’t see any “vector crutch” here, and if you did—read it again.
+                                var coords = fromCoordinates.Offset((angle.ToVec() * (distance + 1.3f)) + new Vector2(-0.5f, -0.5f));
+                                _decals.TryAddDecal(_rand.Pick(_bloodDecals), coords, out _, color, angle + Angle.FromDegrees(-45), cleanable: true);
+                            });
+                        }
+                        else
+                        {
+                            effect.ImpactEnt = GetNetEntity(hitEntity.Value);
+                        }
                     }
                 }
-            }
 
-            pvs.Add(fromCoordinates);
+                pvs.Add(fromCoordinates);
+            }
         }
+
 
         if (pvs.Count > 0)
         {

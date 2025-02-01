@@ -107,19 +107,19 @@
         - proto: MagazineBoxPistolSP
           prob: 0.2
           cost: 1
-        - proto: MagazineBoxHP
+        - proto: MagazineBoxPistolHP
           prob: 0.2
           cost: 1
-        - proto: MagazineBoxFMJ
+        - proto: MagazineBoxPistolFMJ
           prob: 0.2
           cost: 1
-        - proto: MagazineBoxUranium
+        - proto: MagazineBoxPistolUranium
           prob: 0.1
           cost: 2
-        - proto: MagazineBoxIncendiary
+        - proto: MagazineBoxPistolIncendiary
           prob: 0.1
           cost: 2
-        - proto: MagazineBoxAP
+        - proto: MagazineBoxPistolAP
           prob: 0.05
           cost: 4
 

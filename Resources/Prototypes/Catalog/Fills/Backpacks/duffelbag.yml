@@ -82,7 +82,7 @@
   - type: StorageFill
     contents:
       - id: WeaponLightMachineGunL6
-      - id: MagazineLightRifleBoxSP
+      - id: MagazineBoxLightRifleSP
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -128,11 +128,11 @@
         amount: 4
       - id: MagazineShotgun
         amount: 4
-      - id: MagazineLightRifleBoxSP
+      - id: MagazineBoxLightRifleSP
         amount: 1
-      - id: MagazineLightRifleBoxHP
+      - id: MagazineBoxLightRifleHP
         amount: 1
-      - id: MagazineLightRifleBoxFMJ
+      - id: MagazineBoxLightRifleFMJ
         amount: 1
 
 - type: entity

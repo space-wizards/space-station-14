@@ -40,6 +40,7 @@ using Content.Shared.Starlight.CCVar;
 using Content.Shared.Starlight.TextToSpeech;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Log;
+using System.Linq;
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
@@ -138,34 +139,41 @@ public sealed partial class GunSystem : SharedGunSystem
         var hitscan = _proto.Index(ev.Hitscan);
         //The real bullet speed is so high that the bullet isn’t visible at all. So, let's slow it down 5x.
         var bulletSpeed = hitscan.Speed / 5000;
-        var delay = 0f;
-        foreach (var effect in ev.Effects)
+        foreach (var effects in ev.Effects)
         {
-            var length = effect.Distance / bulletSpeed;
-            if (effect.MuzzleCoordinates is { } muzzleCoordinates)
-            {
-                if (hitscan.MuzzleFlash is { } mozzle && (_tracesEnabled || hitscan.Bullet is null))
-                    RenderFlash(muzzleCoordinates, effect.Angle, mozzle, 1f, false, false, length, delay);
-
-                if (hitscan.Bullet is { } bullet)
-                    RenderBullet(muzzleCoordinates, effect.Angle, bullet, effect.Distance - 1.5f, length, delay);
-            }
-            if (hitscan.TravelFlash is { } travel && effect.TravelCoordinates is { } travelCoordinates && (_tracesEnabled || hitscan.Bullet is null))
-                RenderFlash(travelCoordinates, effect.Angle, travel, effect.Distance - 1.5f, true, false, length, delay);
-
-            delay += length;
-
-            if ((hitscan.ImpactFlash is not null || effect.ImpactEnt is not null) && (_tracesEnabled || hitscan.Bullet is null))
-                Timer.Spawn((int)delay, () =>
-                {
-                    if (hitscan.ImpactFlash is { } impact)
-                        RenderFlash(effect.ImpactCoordinates, effect.Angle, impact, 1f, false, true, length, delay);
-
-                    if (effect.ImpactEnt is { } netEnt && GetEntity(netEnt) is EntityUid ent)
-                        RenderDisplacementImpact(GetCoordinates(effect.ImpactCoordinates), effect.Angle, ent);
-                });
+            var delay = 0f;
+            foreach (var effect in effects)
+                delay = FireEffect(hitscan, bulletSpeed, delay, effect);
         }
     }
+
+    private float FireEffect(HitscanPrototype hitscan, float bulletSpeed, float delay, Effect effect)
+    {
+        var length = effect.Distance / bulletSpeed;
+        if (effect.MuzzleCoordinates is { } muzzleCoordinates)
+        {
+            if (hitscan.MuzzleFlash is { } mozzle && (_tracesEnabled || hitscan.Bullet is null))
+                RenderFlash(muzzleCoordinates, effect.Angle, mozzle, 1f, false, false, length, delay);
+
+            if (hitscan.Bullet is { } bullet)
+                RenderBullet(muzzleCoordinates, effect.Angle, bullet, effect.Distance - 1.5f, length, delay);
+        }
+        if (hitscan.TravelFlash is { } travel && effect.TravelCoordinates is { } travelCoordinates && (_tracesEnabled || hitscan.Bullet is null))
+            RenderFlash(travelCoordinates, effect.Angle, travel, effect.Distance - 1.5f, true, false, length, delay);
+        delay += length;
+
+        if ((hitscan.ImpactFlash is not null || effect.ImpactEnt is not null) && (_tracesEnabled || hitscan.Bullet is null))
+            Timer.Spawn((int)delay, () =>
+            {
+                if (hitscan.ImpactFlash is { } impact)
+                    RenderFlash(effect.ImpactCoordinates, effect.Angle, impact, 1f, false, true, length, delay);
+
+                if (effect.ImpactEnt is { } netEnt && GetEntity(netEnt) is EntityUid ent)
+                    RenderDisplacementImpact(GetCoordinates(effect.ImpactCoordinates), effect.Angle, ent);
+            });
+        return delay;
+    }
+
     private void RenderDisplacementImpact(EntityCoordinates coords, Angle angle, EntityUid target)
     {
         if (!TryComp<SpriteComponent>(target, out var sprite))

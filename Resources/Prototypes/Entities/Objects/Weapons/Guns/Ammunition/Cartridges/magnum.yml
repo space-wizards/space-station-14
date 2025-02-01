@@ -84,7 +84,7 @@
   parent: BaseCartridgeMagnum
   components:
   - type: HitScanCartridgeAmmo
-    hitscan: BulletMagnumPracticePracticeTrace
+    hitscan: BulletMagnumTracePractice
   - type: Sprite
     layers:
       - state: base
@@ -99,7 +99,7 @@
   parent: BaseCartridgeMagnum
   components:
   - type: HitScanCartridgeAmmo
-    hitscan: BulletMagnumIncendiaryTrace
+    hitscan: BulletMagnumTraceIncendiary
   - type: Sprite
     layers:
       - state: base
@@ -114,7 +114,7 @@
   parent: BaseCartridgeMagnum
   components:
   - type: HitScanCartridgeAmmo
-    hitscan: BulletMagnumUraniumTrace
+    hitscan: BulletMagnumTraceUranium
   - type: Sprite
     layers:
       - state: base

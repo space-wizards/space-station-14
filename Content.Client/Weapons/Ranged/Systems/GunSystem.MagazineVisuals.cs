@@ -3,7 +3,6 @@ using Content.Shared.Rounding;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Client.GameObjects;
-using static Linguini.Bundle.Builder.LinguiniBuilder;
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
