@@ -87,6 +87,9 @@ public sealed class SlipperySystem : EntitySystem
 
         var slipComp = EnsureComp<SlipperyComponent>(ent.Owner);
 
+        if (!CanSlip(ent.Owner, args.OtherEntity))
+            return;
+
         TrySlip(ent.Owner, slipComp, args.OtherEntity);
     }
 
