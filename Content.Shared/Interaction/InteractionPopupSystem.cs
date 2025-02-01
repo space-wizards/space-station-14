@@ -5,7 +5,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
@@ -69,7 +68,7 @@ public sealed class InteractionPopupSystem : EntitySystem
         {
             return;
         }
-        if (HasComp<StationAiCoreComponent>(Transform(user).ParentUid))
+        if (Prototype(Transform(user).ParentUid)?.ID == "PlayerStationAi")
             return;
 
         args.Handled = true;
