@@ -164,7 +164,6 @@
   - type: ArtifactPressureTrigger
     minPressureThreshold: 50
 
-
 - type: artifactTrigger
   id: TriggerRadiation
   targetDepth: 3
@@ -176,7 +175,6 @@
     - Radiation
     damageThreshold: 50
   - type: RadiationReceiver
-    components:
   - type: Reactive # IMP: Allow radioactive chems to trigger this
     groups:
       Acidic: [ Touch ]
