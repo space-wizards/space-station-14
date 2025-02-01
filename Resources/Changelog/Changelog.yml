@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: fix Tech anomaly loud sounds and superfast flickering
-    type: Fix
-  id: 7388
-  time: '2024-09-17T16:05:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32245
-- author: drakewill-CRL
-  changes:
-  - message: Fixed plant mutations carrying over to other plants and future rounds.
-    type: Fix
-  id: 7389
-  time: '2024-09-17T19:45:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32257
 - author: Moomoobeef
   changes:
   - message: Added more names to the pool of names the AI can have.
@@ -3902,3 +3888,21 @@
   id: 7887
   time: '2025-02-01T06:35:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34803
+- author: NazrinNya
+  changes:
+  - message: Flesh Kudzu now contains razorium, making it unsafe to eat.
+    type: Tweak
+  id: 7888
+  time: '2025-02-01T12:10:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32821
+- author: Boaz1111
+  changes:
+  - message: 'New Reagent: Coldsauce! It can be made using the Frost Oil from Chilly
+      Peppers, similar to Hotsauce from Capsaicin Oil!'
+    type: Add
+  - message: Coldsauce packets and bottles now contain Coldsauce, instead of Frost
+      Oil.
+    type: Tweak
+  id: 7889
+  time: '2025-02-01T15:20:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34458
