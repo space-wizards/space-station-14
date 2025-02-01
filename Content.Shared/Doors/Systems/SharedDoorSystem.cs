@@ -545,6 +545,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         // queue the door to open so that the player is no longer stunned once it has FINISHED opening.
         door.NextStateChange = GameTiming.CurTime + door.DoorStunTime;
         door.Partial = false;
+        Dirty(uid, door);
     }
 
     /// <summary>
@@ -713,7 +714,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
         }
 
         door.NextStateChange = GameTiming.CurTime + delay.Value;
-
         _activeDoors.Add((uid, door));
     }
 
@@ -769,6 +769,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     {
         var door = ent.Comp;
         door.NextStateChange = null;
+        Dirty(ent);
 
         if (door.CurrentlyCrushing.Count > 0)
             // This is a closed door that is crushing people and needs to auto-open. Note that we don't check "can open"
