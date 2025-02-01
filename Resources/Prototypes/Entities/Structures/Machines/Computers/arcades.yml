@@ -36,6 +36,9 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Vending
+  - type: SpookySpeaker
+    messageSet: SpookySpeakerMessagesGeneric
+    speakChance: 0.2
   - type: Anchorable
   - type: Pullable
   - type: StaticPrice
@@ -72,6 +75,59 @@
     rewardMinAmount: 0
     rewardMaxAmount: 0
     possibleRewards:
+    - Basketball
+    - BalloonNT
+    - BalloonCorgi
+    - BoxDonkSoftBox
+    - BoxCartridgeCap
+    - BeachBall
+    - CandyBucket
+    - CrayonBox
+    - ClothingHeadHatCowboyRed
+    - FoamCrossbow
+    - FoamBlade
+    - FoamCutlass
+    - Football
+    - GlowstickBase #green
+    - GlowstickBlue
+    - GlowstickYellow
+    - GlowstickPurple
+    - GlowstickRed
+    - HarmonicaInstrument
+    - OcarinaInstrument
+    - RecorderInstrument
+    - GunpetInstrument
+    - BirdToyInstrument
+    - MysteryFigureBox
+    - PlushieHampter
+    - PlushieLizard
+    - PlushieRainbowLizard
+    - PlushieAtmosian
+    - PlushieSpaceLizard
+    - PlushieNuke
+    - PlushieCarp
+    - PlushieMagicarp
+    - PlushieHolocarp
+    - PlushieRainbowCarp
+    - PlushieRatvar
+    - PlushieNar
+    - PlushieSnake
+    - PlushieArachind
+    - PlushieMoth
+    - PlushieHampter
+    - PlushiePenguin
+    - PlushieHuman
+    - PlushieRouny
+    - PlushieBee
+    - PlushieSlime
+    - PlushieGhost
+    - PlushieDiona
+    - PlushieSharkBlue
+    - PlushieVox
+    - PlushieXeno
+    - PlasticBanana
+    - RevolverCapGun
+    - SnapPopBox
     - ToyMouse
     - ToyAi
     - ToyNuke
@@ -91,44 +147,12 @@
     - ToySeraph
     - ToyDurand
     - ToySkeleton
-    - FoamCrossbow
-    - RevolverCapGun
-    - PlushieHampter
-    - PlushieLizard
-    - PlushieAtmosian
-    - PlushieSpaceLizard
-    - PlushieNuke
-    - PlushieCarp
-    - PlushieMagicarp
-    - PlushieHolocarp
-    - PlushieRainbowCarp
-    - PlushieRatvar
-    - PlushieNar
-    - PlushieSnake
-    - PlushieArachind
-    - Basketball
-    - Football
-    - PlushieRouny
-    - PlushieBee
-    - PlushieSlime
-    - BalloonNT
-    - BalloonCorgi
     - ToySword
-    - CrayonBox
-    - BoxDonkSoftBox
-    - BoxCartridgeCap
-    - HarmonicaInstrument
-    - OcarinaInstrument
-    - RecorderInstrument
-    - GunpetInstrument
-    - BirdToyInstrument
-    - PlushieXeno
-    - BeachBall
-    - PlushieMoth
-    - PlushieHampter
-    - PlushiePenguin
-    - PlushieHuman
-    - ClothingHeadHatCowboyRed
+    - ToyAmongPequeno
+    - ToyRubberDuck
+    - ToyHammer
+    - WeaponWaterPistol
+    - WhoopieCushion
     - Whistle
   - type: WiresPanel
   - type: Wires

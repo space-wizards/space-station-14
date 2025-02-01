@@ -19,7 +19,7 @@ public sealed partial class PathfindingSystem
         public List<Vector2i> Points = new();
 
         public List<Vector2i> Path = new();
-        public Dictionary<Vector2i, Vector2i> CameFrom;
+        public Dictionary<Vector2i, Vector2i>? CameFrom;
     }
 
     public record struct SplinePathArgs(SimplePathArgs Args)

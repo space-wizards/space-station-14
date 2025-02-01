@@ -97,35 +97,38 @@ public sealed class PaperSystem : EntitySystem
         }
     }
 
+    private bool IsWritingTool(EntityUid writingTool)
+    {
+        return _tagSystem.HasTag(writingTool, "Write");
+    }
+
     private bool IsEditable(Entity<PaperComponent> entity, EntityUid writingTool)
     {
-        return _tagSystem.HasTag(writingTool, "Write")
+        return IsWritingTool(writingTool)
             // only allow editing if there are no stamps or when using a cyberpen
             && (entity.Comp.StampedBy.Count == 0 || _tagSystem.HasTag(writingTool, "WriteIgnoreStamps"));
     }
 
     private void OnInteractUsing(Entity<PaperComponent> entity, ref InteractUsingEvent args)
     {
-        if (IsEditable(entity, args.Used))
+        if (IsWritingTool(args.Used))
         {
-            if (entity.Comp.EditingDisabled)
+            if (IsEditable(entity, args.Used))
             {
-                var paperEditingDisabledMessage = Loc.GetString("paper-tamper-proof-modified-message");
-                _popupSystem.PopupEntity(paperEditingDisabledMessage, entity, args.User);
+                var writeEvent = new PaperWriteEvent(entity, args.User);
+                RaiseLocalEvent(args.Used, ref writeEvent);
 
-                args.Handled = true;
-                return;
+                _uiSystem.OpenUi(entity.Owner, PaperUiKey.Key, args.User);
+                UpdateUserInterface(entity);
+                if (_net.IsServer)
+                {
+                    var toolNetEnt = EntityManager.GetNetEntity(args.Used);
+                    _uiSystem.ServerSendUiMessage(entity.Owner, PaperUiKey.Key, new PaperBeginEditMessage(toolNetEnt), args.User);
+                }
             }
-            var writeEvent = new PaperWriteEvent(entity, args.User);
-            RaiseLocalEvent(args.Used, ref writeEvent);
 
-            _uiSystem.OpenUi(entity.Owner, PaperUiKey.Key, args.User);
-            UpdateUserInterface(entity);
-            if (_net.IsServer)
-            {
-                var toolNetEnt = EntityManager.GetNetEntity(args.Used);
-                _uiSystem.ServerSendUiMessage(entity.Owner, PaperUiKey.Key, new PaperBeginEditMessage(toolNetEnt), args.User);
-            }
+            // Handle the event even if we attempted to use a writing tool, but couldn't write on
+            // the paper. This prevents crayons from losing durability, etc.
             args.Handled = true;
             return;
         }

@@ -92,4 +92,18 @@ public sealed class BorgSystem : SharedBorgSystem
             sprite.LayerSetState(MMIVisualLayers.Base, state);
         }
     }
+
+    /// <summary>
+    /// Sets the sprite states used for the borg "is there a mind or not" indication.
+    /// </summary>
+    /// <param name="borg">The entity and component to modify.</param>
+    /// <param name="hasMindState">The state to use if the borg has a mind.</param>
+    /// <param name="noMindState">The state to use if the borg has no mind.</param>
+    /// <seealso cref="BorgChassisComponent.HasMindState"/>
+    /// <seealso cref="BorgChassisComponent.NoMindState"/>
+    public void SetMindStates(Entity<BorgChassisComponent> borg, string hasMindState, string noMindState)
+    {
+        borg.Comp.HasMindState = hasMindState;
+        borg.Comp.NoMindState = noMindState;
+    }
 }

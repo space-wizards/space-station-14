@@ -1060,6 +1060,25 @@
     - type: Sprite
       state: poster51_legit
 
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyMothSSD
+  name: "Safety Moth - Space Sleep Disorder"
+  description: "This informational poster uses Safety Moth™ to tell the viewer about Space Sleep Disorder (SSD), a condition where the person stops reacting to things. \"Treat SSD crew with care! They might wake up at any time!\""
+  components:
+  - type: Sprite
+    state: poster52_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitOppenhopper
+  name: "Oppenhopper"
+  description: "A poster for a long-forgotten movie. It follows a group of tenacious greenhorns from the Grasshopper Sector as they defend against onslaughts of the infamous Nuclear Operatives. The tagline reads: \"Nuke Ops will continue until robustness improves.\""
+  components:
+  - type: Sprite
+    state: poster53_legit
+
+
 #maps
 
 - type: entity

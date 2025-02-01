@@ -21,6 +21,22 @@ public sealed class HandheldLightSystem : SharedHandheldLightSystem
         SubscribeLocalEvent<HandheldLightComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
+    /// <remarks>
+    ///     TODO: Not properly predicted yet. Don't call this function if you want a the actual return value!
+    /// </remarks>
+    public override bool TurnOff(Entity<HandheldLightComponent> ent, bool makeNoise = true)
+    {
+        return true;
+    }
+
+    /// <remarks>
+    ///     TODO: Not properly predicted yet. Don't call this function if you want a the actual return value!
+    /// </remarks>
+    public override bool TurnOn(EntityUid user, Entity<HandheldLightComponent> uid)
+    {
+        return true;
+    }
+
     private void OnAppearanceChange(EntityUid uid, HandheldLightComponent? component, ref AppearanceChangeEvent args)
     {
         if (!Resolve(uid, ref component))

@@ -13,6 +13,8 @@
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: 'VG'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_crimson.yml
         - type: StationJobs
           availableJobs:
             #service
