@@ -54,6 +54,9 @@
     attributes:
       proper: true
       gender: male
+  - type: CanRummage
+    rummageLoot: !type:NestedSelector
+      tableId: GoblinKnightLoot
   - type: RandomHumanoidAppearance
     randomizeName: false
     hair: GoblinHairA
@@ -75,3 +78,28 @@
   - type: Loadout
     prototypes: [GoblinOSPEVA]
   - type: RandomHumanoidAppearance
+
+- type: entityTable
+  id: GoblinKnightLoot
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector # garbage weight
+      weight: 50
+      children:
+      - id: RandomSpawner100 
+    - !type:GroupSelector # funny weight
+      weight: 15
+      children:
+      - id: ToyHammer
+      - id: ToySword 
+      - !type:GroupSelector # foam swords
+        children:
+        - id: FoamBlade
+        - id: FoamCutlass
+    - !type:GroupSelector # rare weight
+      weight: 2
+      children:
+      - id: UtilitySword
+      - id: Claymore 
+      - id: EnergySword
+        weight: 0.2

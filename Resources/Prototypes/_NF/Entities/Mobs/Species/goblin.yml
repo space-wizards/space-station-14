@@ -103,6 +103,9 @@
         emote: Scream
         probability: 0.2
   - type: CanEscapeInventory
+  - type: CanRummage
+    rummageLoot: !type:NestedSelector
+      tableId: BaseGoblinLoot
   - type: Inventory
     speciesId: goblin
     displacements:
@@ -237,3 +240,50 @@
   components:
   - type: HumanoidAppearance
     species: Goblin
+
+- type: entityTable
+  id: BaseGoblinLoot
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector # GARBAGE WEIGHT
+      weight: 66
+      children:
+      - id: RandomSpawner100 # this spawns literal trash
+        weight: 2
+      - !type:GroupSelector # general materials
+        weight: 2
+        children:
+        - id: MaterialCloth # 30 cloth
+          weight: 0.5
+        - id: SheetSteel10 # 10 steel
+          weight: 1.5
+        - id: SheetGlass10 # 10 glass
+      - !type:NestedSelector
+        tableId: SalvageScrapLarge # this spawns large scrap, e.g. broken airlocks & mop buckets
+        weight: 0.5 # ... at half weight
+      - !type:NestedSelector
+        tableId: SalvageScrapLowValue # this spawns broken cameras, shards of glass, etc
+      - !type:NestedSelector
+        tableId: MaintFluffTable # spawns maints fluff - clothing, skub, cigarettes, etc
+        weight: 0.3
+    - !type:GroupSelector # CONSTRUCTION MATERIALS WEIGHT
+      weight: 28
+      children:
+      - id: GobtoolsSpawner # spawns a random Gobtool
+      - !type:NestedSelector
+        tableId: SalvageScrapHighValue # this spawns useful trash - slag, small quantities of materials, and very rarely an artifact fragment
+        weight: 2
+      - id: MaintenanceInsulsSpawner # this spawns true insuls ~10% of the time, and budget/fingerless ~90% of the time
+        weight: 0.5
+    - !type:GroupSelector # REAL TOOLS WEIGHT
+      weight: 15
+      children:
+      - id: ClothingBeltUtilityBlackFilled # a full toolbelt. no multitool
+        weight: 0.2
+      - id: MaintenanceToolSpawner # this is the "tools" pool from maints lockers. rare chance to get anything particularly useful out of it.
+      - id: ToySpawner # touys
+    - !type:GroupSelector # RARE WEIGHT
+      weight: 5
+      children:
+      - id: IngotGold1 
+      - id: MaintenanceWeaponSpawner # machetes, baseball bats, spears, etc
