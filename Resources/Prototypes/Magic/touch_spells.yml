@@ -78,6 +78,6 @@
       toAdd:
       - type: Slippery
       - type: StepTrigger
-      - type: SlipOnCollide
+        requiredTriggeredSpeed: -1
   - type: Magic
     requiresClothes: true
