@@ -2900,4 +2900,11 @@ Entries:
   id: 403
   time: '2025-02-01T21:46:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/278
+- author: PubliclyExecutedPig
+  changes:
+  - message: Fixed Lobster Station
+    type: Fix
+  id: 404
+  time: '2025-02-02T09:38:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/280
 
