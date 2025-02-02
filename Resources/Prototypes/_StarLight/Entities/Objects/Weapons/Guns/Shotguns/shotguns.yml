@@ -36,6 +36,7 @@
     sprite: _Starlight/Objects/Weapons/Guns/Shotguns/riot_sawn_inhands_64x.rsi
   - type: Gun
     spread: 30
+    pump: true
   - type: GunRequiresWield
   - type: BallisticAmmoProvider
     capacity: 4
