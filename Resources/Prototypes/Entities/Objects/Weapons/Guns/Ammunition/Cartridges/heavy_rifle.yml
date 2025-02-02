@@ -1,6 +1,6 @@
 - type: entity
   id: BaseCartridgeHeavyRifle
-  name: cartridge (7.62x54mm rifle)
+  name: cartridge (7.62mm rifle)
   parent: [ BaseCartridge, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -22,10 +22,9 @@
 
 - type: entity
   id: CartridgeHeavyRifle
-  name: cartridge (7.62x54mm rifle)
+  name: cartridge (7.62mm rifle)
   parent: [ BaseCartridgeHeavyRifle, BaseRestrictedContraband ]
-  description: 0.325x2.12 inches. Full-power cartridge used by marksman rifles and medium machine guns. Its improved range over intermediate cartridges is generally less useful aboard cramped spacecraft, so it is most often found in surface combat or ancient weapons.
-  components:
+  description: 7.62x54 millimeters. Full-power cartridge used by marksman rifles and medium machine guns. It sports higher stopping power, accuracy, and range than intermediate calibers, but the rounds are heavy and difficult to control.
   - type: Tag
   - type: CartridgeAmmo
     proto: BulletHeavyRifle

@@ -1,6 +1,6 @@
 - type: entity
   id: BulletHeavyRifle
-  name: bullet (7.62x54mm rifle)
+  name: bullet (7.62mm rifle)
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
