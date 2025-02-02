@@ -84,7 +84,7 @@
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     state: advkit
   product: CrateEmergencyAdvancedKit
-  cost: 1750
+  cost: 2000
   category: cargoproduct-category-name-medical
   group: market
 
