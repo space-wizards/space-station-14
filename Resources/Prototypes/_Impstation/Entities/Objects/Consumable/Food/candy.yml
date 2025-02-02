@@ -2,7 +2,7 @@
   name: one single gummy worm
   parent: FoodMealBase
   id: FoodGummyWorm
-  description: how did this get in here...
+  description: How did this get in here...
   components:
   - type: Tag
     tags:
@@ -57,16 +57,98 @@
   name: box of conversation hearts
   parent: BoxCardboard
   id: BoxConversationHeart
-  description:
+  description: A little container full of chalky treats to give to your honey. Or eat all on your own like some kind of weirdo.
   components:
   - type: StorageFill
     contents:
     - id: FoodConversationHeart
-      amount: 6
+      amount: 5
+    - id: FoodGummyWorm
+      prob: 0.01
   - type: Storage
     grid:
-    - 0,0,6,0
+    - 0,0,2,1
     maxItemSize: Tiny
   - type: Sprite
     sprite: _Impstation/Objects/Consumable/Food/candy.rsi
     state: chalkheartpackage2
+
+- type: entity
+  name: chocolate heart
+  parent: FoodMealBase
+  id: FoodChocolateHeart
+  description: A mass-produced chocolate heart. How sweet.
+  components:
+  - type: Tag
+    tags:
+    - FoodSnack
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/candy.rsi
+    layers:
+    - state: chocolateheart
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 2
+        - ReagentId: CocoaPowder # no chocolate i guess LOL
+          Quantity: 2
+        - ReagentId: Theobromine # cocoa powder doesnt metabolize into theobromine so i have to add it manually
+          Quantity: 1
+
+- type: entity
+  name: chocolate heart
+  suffix: dark
+  parent: FoodChocolateHeart
+  id: FoodChocolateHeartDark
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/candy.rsi
+    layers:
+    - state: chocolateheartdark
+
+- type: entity
+  name: chocolate heart
+  suffix: white
+  parent: FoodChocolateHeart
+  id: FoodChocolateHeartWhite
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/candy.rsi
+    layers:
+    - state: chocolateheartwhite
+
+- type: entity
+  name: heart-shaped box
+  parent: BoxCardboard
+  id: BoxChocolateHearts
+  description:
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/candy.rsi
+    layers:
+    - map: [ base ]
+      state: heartbox-closed
+  - type: StorageFill
+    contents:
+    - id: FoodChocolateHeart
+      amount: 2
+    - id: FoodChocolateHeartDark
+      amount: 2
+    - id: FoodChocolateHeartWhite
+      amount: 2
+  - type: Storage
+    grid:
+    - 0,0,2,1
+    maxItemSize: Tiny
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        base:
+          True: { state: heartbox-open }
+          False: { state: heartbox-closed }
+  - type: Appearance
