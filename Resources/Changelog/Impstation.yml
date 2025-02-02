@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Admins can now make things with GasMinerComponent work while unanchored
-    type: Tweak
-  id: 538
-  time: '2024-11-18T10:01:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/751
 - author: kipdotnet, AftrLite
   changes:
   - message: Added the S-Cargo Duffel Bundle to the cargo shop, for all fashion-forward
@@ -4297,3 +4290,10 @@
   id: 1037
   time: '2025-02-02T17:00:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1544
+- author: honeyed-lemons
+  changes:
+  - message: Gray sprites Slightly
+    type: Tweak
+  id: 1038
+  time: '2025-02-02T17:01:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1540
