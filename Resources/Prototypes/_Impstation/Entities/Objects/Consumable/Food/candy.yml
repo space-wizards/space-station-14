@@ -126,7 +126,7 @@
   name: heart-shaped box
   parent: BoxCardboard
   id: BoxChocolateHearts
-  description:
+  description: A box of romantic treats, brought to you by your friends at GetMore Chocolate Corp!
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Consumable/Food/candy.rsi
@@ -152,3 +152,25 @@
           True: { state: heartbox-open }
           False: { state: heartbox-closed }
   - type: Appearance
+
+- type: entity
+  name: homemade chocolate heart
+  parent: FoodChocolateHeart
+  id: FoodHomemadeChocolateHeart
+  description: A chocolate heart, made with love and a microwave.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/candy.rsi
+    layers:
+    - state: homemadechocolate
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15 # extra space for poison purposes
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 2
+        - ReagentId: CocoaPowder
+          Quantity: 2
+        - ReagentId: Theobromine
+          Quantity: 1

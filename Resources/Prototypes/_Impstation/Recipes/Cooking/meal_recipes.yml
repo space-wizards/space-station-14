@@ -72,3 +72,13 @@
   solids:
      FoodBowlBig: 1
      WhoopieCushion: 1
+
+- type: microwaveMealRecipe
+  id: RecipeChocolateHeart
+  name: homemade chocolate heart recipe
+  result: FoodHomemadeChocolateHeart
+  time: 5
+  reagents:
+    Sugar: 2
+    CocoaPowder: 2
+    Milk: 2 # being lactose safe is the least of this recipe's worries
