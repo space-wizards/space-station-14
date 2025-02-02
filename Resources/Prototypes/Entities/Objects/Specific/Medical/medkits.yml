@@ -11,9 +11,25 @@
     size: Large
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     heldPrefix: firstaid
-    shape:
-    - 0,0,3,2
   - type: Storage
+    whitelist:
+      tags:
+        - Bottle
+        - Brutepack
+        - Bloodpack
+        - Gauze
+        - Ointment
+        - PillCanister
+        - DiscreteHealthAnalyzer
+        - SurgeryTool
+        - Dropper
+        - GasTank
+      components:
+        - Hypospray
+        - Injector
+        - Pill
+        - Mask
+        - Geiger
     maxItemSize: Small
     grid:
     - 0,0,3,2
@@ -45,12 +61,6 @@
     state: toxinkit
   - type: Item
     heldPrefix: toxinkit
-    shape:
-    - 0,0,3,1
-  - type: Storage
-    maxItemSize: Small
-    grid:
-    - 0,0,3,1
 
 - type: entity
   name: airloss med kit
@@ -95,12 +105,6 @@
     state: radkit
   - type: Item
     heldPrefix: radkit
-    shape:
-    - 0,0,3,1
-  - type: Storage
-    maxItemSize: Small
-    grid:
-    - 0,0,3,1
 
 - type: entity
   name: combat med kit
@@ -119,4 +123,3 @@
     maxItemSize: Small
     grid:
     - 0,0,3,1
-
