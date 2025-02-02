@@ -349,9 +349,11 @@ public sealed class RCDSystem : EntitySystem
         // Return whether the operation location is valid
         switch (prototype.Mode)
         {
-            case RcdMode.ConstructTile: return IsConstructionLocationValid(uid, component, gridUid, mapGrid, tile, position, user, popMsgs);
-            case RcdMode.ConstructObject: return IsConstructionLocationValid(uid, component, gridUid, mapGrid, tile, position, user, popMsgs);
-            case RcdMode.Deconstruct: return IsDeconstructionStillValid(uid, tile, target, user, popMsgs);
+            case RcdMode.ConstructTile:
+            case RcdMode.ConstructObject:
+                return IsConstructionLocationValid(uid, component, gridUid, mapGrid, tile, position, user, popMsgs);
+            case RcdMode.Deconstruct:
+                return IsDeconstructionStillValid(uid, tile, target, user, popMsgs);
         }
 
         return false;
@@ -602,7 +604,7 @@ public sealed partial class RCDDoAfterEvent : DoAfterEvent
     public int Cost { get; private set; } = 1;
 
     [DataField("fx")]
-    public NetEntity? Effect { get; private set; } = null;
+    public NetEntity? Effect { get; private set; }
 
     private RCDDoAfterEvent() { }
 
@@ -615,5 +617,8 @@ public sealed partial class RCDDoAfterEvent : DoAfterEvent
         Effect = effect;
     }
 
-    public override DoAfterEvent Clone() => this;
+    public override DoAfterEvent Clone()
+    {
+        return this;
+    }
 }

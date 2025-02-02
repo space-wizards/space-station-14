@@ -42,7 +42,7 @@ public sealed class RCDPrototype : IPrototype
     /// The entity prototype that will be constructed (mode dependent)
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public string? Prototype { get; private set; } = string.Empty;
+    public EntProtoId? Prototype { get; private set; } = string.Empty;
 
     /// <summary>
     /// Number of charges consumed when the operation is completed
