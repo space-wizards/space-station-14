@@ -3,6 +3,7 @@ using Content.Shared._Harmony.Clothing.Gloves.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Popups;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Harmony.Clothing.Gloves.Systems;
 
@@ -15,6 +16,7 @@ public abstract class SharedMantisGlovesSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly ClothingSystem _clothing = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -45,19 +47,32 @@ public abstract class SharedMantisGlovesSystem : EntitySystem
 
     /// <summary>
     /// Updates the metadata (name and description) of mantis gloves based on their activation state.
+    /// When activated, uses the localization keys from the component
+    /// When deactivated, uses the prototype values but wraps them in Loc.GetString
     /// </summary>
     private void UpdateMantisGlovesState(EntityUid uid, bool activated, MantisGlovesComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
-        var name = activated ? component.ActivatedName : component.DeactivatedName;
-        var description = activated ? component.ActivatedDescription : component.DeactivatedDescription;
+        var meta = MetaData(uid);
+        var protoId = meta.EntityPrototype?.ID;
 
-        if (name != null)
-            _metaData.SetEntityName(uid, Loc.GetString(name));
+        if (protoId == null)
+            return;
 
-        if (description != null)
-            _metaData.SetEntityDescription(uid, Loc.GetString(description));
+        if (!_prototypeManager.TryIndex<EntityPrototype>(protoId, out var prototype))
+            return;
+
+        string name = activated
+            ? Loc.GetString(component.ActivatedName!)
+            : prototype.Name;
+
+        string description = activated
+            ? Loc.GetString(component.ActivatedDescription!)
+            : prototype.Description;
+
+        _metaData.SetEntityName(uid, name);
+        _metaData.SetEntityDescription(uid, description);
     }
 }
