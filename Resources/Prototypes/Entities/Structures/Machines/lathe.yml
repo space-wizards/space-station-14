@@ -187,6 +187,7 @@
       - DoorElectronics
       - AirAlarmElectronics
       - StationMapElectronics
+      - ScreenElectronics
       - FireAlarmElectronics
       - MailingUnitElectronics
       - SignalTimerElectronics
