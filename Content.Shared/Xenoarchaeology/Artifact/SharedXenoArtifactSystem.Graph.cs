@@ -102,8 +102,8 @@ public abstract partial class SharedXenoArtifactSystem
     {
         foreach (var netNode in ent.Comp.NodeVertices)
         {
-            if (GetEntity(netNode) is { } node)
-                yield return (node, XenoArtifactNode(node));
+            if (TryGetEntity(netNode, out var node))
+                yield return (node.Value, XenoArtifactNode(node.Value));
         }
     }
 
