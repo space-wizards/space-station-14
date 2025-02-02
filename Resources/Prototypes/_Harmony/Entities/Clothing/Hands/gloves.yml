@@ -1,8 +1,6 @@
 - type: entity
   parent: ClothingHandsGlovesLatex
   id: ClothingHandsGlovesMantis
-  name: latex gloves
-  description: Thin sterile latex gloves. Basic PPE for any doctor.
   suffix: Mantis
   components:
   - type: Sprite
@@ -23,9 +21,6 @@
           False:
             sprite: _Harmony/Clothing/Hands/Gloves/mantis.rsi
             state: icon
-  - type: Fiber
-    fiberMaterial: fibers-latex
-  - type: FingerprintMask
   - type: ItemToggle
     onUse: false
     onActivate: false
