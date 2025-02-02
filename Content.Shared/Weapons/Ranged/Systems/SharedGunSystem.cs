@@ -447,8 +447,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             DirtyField(uid, cartridge, nameof(CartridgeAmmoComponent.Spent));
 
         cartridge.Spent = spent;
-        if (spent) // Setting Appearance AmmoVisuals.Spent to false causes issue #34510
-            Appearance.SetData(uid, AmmoVisuals.Spent, spent);
+        Appearance.SetData(uid, AmmoVisuals.Spent, spent);
     }
 
     /// <summary>
@@ -457,7 +456,8 @@ public abstract partial class SharedGunSystem : EntitySystem
     protected void EjectCartridge(
         EntityUid entity,
         Angle? angle = null,
-        bool playSound = true)
+        bool playSound = true,
+        EntityUid? user = null)
     {
         // This method is shared, so lets ensure random values are consistent for prediction.
         // We have to use netEntity here because the regular entity id can be different between client and server.
@@ -482,13 +482,16 @@ public abstract partial class SharedGunSystem : EntitySystem
             ejectAngle += 3.7f; // 212 degrees; casings should eject slightly to the right and behind a gun
             ThrowingSystem.TryThrow(entity, ejectAngle.ToVec().Normalized() / 100, 5f);
         }
-        if (playSound && TryComp<CartridgeAmmoComponent>(entity, out var cartridge) && !_netManager.IsClient)
+        if (playSound && TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
         {
-            Audio.PlayPvs(
+            Audio.PlayPredicted(
                 cartridge.EjectSound,
                 entity,
-                AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(-1f).WithPlayOffset(Random.NextFloat(1f))
-            );
+                user,
+                AudioParams.Default
+                    .WithVariation(SharedContentAudioSystem.DefaultVariation)
+                    .WithVolume(-1f)
+                    .WithPlayOffset(Random.NextFloat(1f)));
         }
     }
 

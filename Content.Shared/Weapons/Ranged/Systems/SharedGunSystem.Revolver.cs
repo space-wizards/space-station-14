@@ -303,8 +303,8 @@ public partial class SharedGunSystem
                 EnsureShootable(slot.Value);
 
                 // We may be spawning a spent cartridge in this weapon, so lets check for that and set it appropriately.
-                if (TryComp<CartridgeAmmoComponent>(slot, out var cartridge))
-                    SetCartridgeSpent(slot.Value, cartridge, !chamber.Value);
+                if (TryComp<CartridgeAmmoComponent>(slot, out var cartridge) && !chamber.Value);
+                    SetCartridgeSpent(slot.Value, cartridge, !chamber.Value)
 
                 // Insert it into the container to ensure container behaviour is consistent
                 Containers.Insert(slot.Value, component.AmmoContainer);
@@ -314,7 +314,7 @@ public partial class SharedGunSystem
             {
                 // Any rounds that have been inserted into the revolver need to be removed from the internal container
                 Containers.Remove(slot.Value, component.AmmoContainer);
-                EjectCartridge(slot.Value);
+                EjectCartridge(slot.Value, user=user);
             }
 
             // Clear the ammo slot and the chamber since the round is now out of the gun.

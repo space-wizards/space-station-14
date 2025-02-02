@@ -32,19 +32,20 @@ public sealed partial class GunSystem
         {
             ent = component.Entities[^1];
             component.Entities.RemoveAt(component.Entities.Count - 1);
-
-            Containers.Remove(ent.Value, component.Container);
-            EnsureShootable(ent.Value);
         }
         else if (component.UnspawnedCount > 0)
         {
             component.UnspawnedCount--;
             ent = Spawn(component.Proto, coordinates);
-            EnsureShootable(ent.Value);
+            Containers.Insert(ent.Value, component.Container);
         }
 
-        if (ent != null && IsClientSide(ent.Value))
-            QueueDel(ent.Value);
+        if (ent != null
+        {
+            Containers.Remove(ent.Value, component.Container);
+            if (IsClientSide(ent.Value))
+                QueueDel(ent.Value);
+        }
 
         var cycledEvent = new GunCycledEvent();
         RaiseLocalEvent(uid, ref cycledEvent);

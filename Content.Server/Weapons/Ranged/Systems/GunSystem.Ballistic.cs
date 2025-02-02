@@ -16,20 +16,21 @@ public sealed partial class GunSystem
             ent = component.Entities[^1];
             component.Entities.RemoveAt(component.Entities.Count - 1);
             DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.Entities));
-
-            Containers.Remove(ent.Value, component.Container);
-            EnsureShootable(ent.Value);
         }
         else if (component.UnspawnedCount > 0)
         {
             component.UnspawnedCount--;
             DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.UnspawnedCount));
             ent = Spawn(component.Proto, coordinates);
-            EnsureShootable(ent.Value);
+            Containers.Insert(ent.Value, component.Container);
         }
 
         if (ent != null)
+        {
+            Containers.Remove(ent.Value, component.Container);
+            EnsureShootable(ent.Value);
             EjectCartridge(ent.Value);
+        }
 
         var cycledEvent = new GunCycledEvent();
         RaiseLocalEvent(uid, ref cycledEvent);
