@@ -1,6 +1,7 @@
 using Content.Shared.EntityTable.EntitySelectors;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Shared.Rummaging;
 
@@ -37,7 +38,7 @@ public sealed partial class RummageableComponent : Component
     /// How long it takes to rummage through a rummageable container.
     /// </summary>
     [DataField]
-    public float RummageDuration = 3f;
+    public TimeSpan RummageDuration = TimeSpan.FromSeconds(3);
 
     /// <summary>
     /// Sound played on rummage completion.
