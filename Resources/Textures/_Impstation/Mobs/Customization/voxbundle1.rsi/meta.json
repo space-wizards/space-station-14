@@ -1,0 +1,183 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "copyright": "sprites by carousel for impstation",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+        {
+            "name": "featheredlegl",
+            "directions": 4
+        },
+        {
+            "name": "featheredlegr",
+            "directions": 4
+        },
+        {
+            "name": "spotsarml",
+            "directions": 4
+        },
+        {
+            "name": "spotsarmr",
+            "directions": 4
+        },
+        {
+            "name": "spotschest1",
+            "directions": 4
+        },
+        {
+            "name": "spotschest2",
+            "directions": 4
+        },
+        {
+            "name": "spotstail",
+            "directions": 4
+        },
+        {
+            "name": "streamers1",
+            "directions": 4
+        },
+        {
+            "name": "streamers2",
+            "directions": 4
+        },
+        {
+            "name": "streamers3",
+            "directions": 4
+        },
+        {
+            "name": "vchest1",
+            "directions": 4
+        },
+        {
+            "name": "vchest2",
+            "directions": 4
+        },
+        {
+            "name": "vchest3",
+            "directions": 4
+        },
+        {
+            "name": "balding",
+            "directions": 4
+        },
+        {
+            "name": "beardlargewattle",
+            "directions": 4
+        },
+        {
+            "name": "beardpadovana",
+            "directions": 4
+        },
+        {
+            "name": "beardsmallwattle",
+            "directions": 4
+        },
+        {
+            "name": "earhole",
+            "directions": 4
+        },
+        {
+            "name": "friendsfeather1",
+            "directions": 4
+        },
+        {
+            "name": "friendsfeather2",
+            "directions": 4
+        },
+        {
+            "name": "hairemover",
+            "directions": 4
+        },
+        {
+            "name": "hairpadovana",
+            "directions": 4
+        },
+        {
+            "name": "hairpolish",
+            "directions": 4
+        },
+        {
+            "name": "hairwindswept",
+            "directions": 4
+        },
+        {
+            "name": "largecomb",
+            "directions": 4
+        },
+        {
+            "name": "neckband",
+            "directions": 4
+        },
+        {
+            "name": "scarheadblasted",
+            "directions": 4
+        },
+        {
+            "name": "scarincision",
+            "directions": 4
+        },
+        {
+            "name": "scarmangled",
+            "directions": 4
+        },
+        {
+            "name": "scarspinal",
+            "directions": 4
+        },
+        {
+            "name": "sidequills1",
+            "directions": 4
+        },
+        {
+            "name": "sidequills2",
+            "directions": 4
+        },
+        {
+            "name": "sidequills3",
+            "directions": 4
+        },
+        {
+            "name": "tailbloom1",
+            "directions": 4
+        },
+        {
+            "name": "tailbloom2",
+            "directions": 4
+        },
+        {
+            "name": "tailbloom3",
+            "directions": 4
+        },
+        {
+            "name": "understrappy1",
+            "directions": 4
+        },
+        {
+            "name": "understrappy2",
+            "directions": 4
+        },
+        {
+            "name": "understrappy3",
+            "directions": 4
+        },
+        {
+            "name": "underwearhighwaisted",
+            "directions": 4
+        },
+        {
+            "name": "underwearbriefs",
+            "directions": 4
+        },
+        {
+            "name": "underwearixixspecial1",
+            "directions": 4
+        },
+        {
+            "name": "underwearixixspecial2",
+            "directions": 4
+        }
+    ]
+}
