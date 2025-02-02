@@ -19,6 +19,7 @@ using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Dependency = Robust.Shared.IoC.DependencyAttribute;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -78,6 +79,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         SubscribeLocalEvent<SolutionComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<SolutionComponent, ComponentStartup>(OnSolutionStartup);
         SubscribeLocalEvent<SolutionComponent, ComponentShutdown>(OnSolutionShutdown);
+        SubscribeLocalEvent<SolutionComponent, ComponentGetState>(OnSolutionGetState);
+        SubscribeLocalEvent<SolutionComponent, ComponentHandleState>(OnSolutionHandleState);
         SubscribeLocalEvent<SolutionContainerManagerComponent, ComponentInit>(OnContainerManagerInit);
         SubscribeLocalEvent<ExaminableSolutionComponent, ExaminedEvent>(OnExamineSolution);
         SubscribeLocalEvent<ExaminableSolutionComponent, GetVerbsEvent<ExamineVerb>>(OnSolutionExaminableVerb);
@@ -755,6 +758,19 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     private void OnSolutionShutdown(Entity<SolutionComponent> entity, ref ComponentShutdown args)
     {
         RemoveAllSolution(entity);
+    }
+
+    private void OnSolutionGetState(Entity<SolutionComponent> entity, ref ComponentGetState args)
+    {
+        args.State = new SolutionComponentState(entity.Comp.Solution);
+    }
+
+    private void OnSolutionHandleState(Entity<SolutionComponent> entity, ref ComponentHandleState args)
+    {
+        if (args.Current is not SolutionComponentState cast)
+            return;
+
+        entity.Comp.Solution = cast.Solution.Clone();
     }
 
     private void OnContainerManagerInit(Entity<SolutionContainerManagerComponent> entity, ref ComponentInit args)

@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Materials;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Components;
 
@@ -11,12 +12,18 @@ namespace Content.Shared.Chemistry.Components;
 /// <remarks>
 /// <para>Once reagents and materials have been merged this component should be depricated in favor of using a combination of <see cref="PhysicalCompositionComponent"/> and <see cref="Content.Server.Temperature.Components.TemperatureComponent"/>. May require minor reworks to both.</para>
 /// </remarks>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class SolutionComponent : Component
 {
     /// <summary>
     /// <para>The reagents the entity is composed of and their temperature.</para>
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public Solution Solution = new();
+}
+
+[Serializable, NetSerializable]
+public sealed class SolutionComponentState(Solution solution) : ComponentState
+{
+    public Solution Solution { get; } = solution;
 }
