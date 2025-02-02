@@ -1,0 +1,18 @@
+- type: entity
+  name: Riot
+  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
+  id: WeaponShotgunRiot
+  description: A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control.
+  components:
+  - type: Item
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/riot_inhands_64x.rsi
+  - type: Gun
+    spread: 20
+    pump: true
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/riot.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/riot.rsi
+  - type: GunRequiresWield
+  - type: BallisticAmmoProvider
+    capacity: 7

@@ -142,25 +142,26 @@
     proto: ShellShotgunBeanbag
 
 - type: entity
-  name: Enforcer
+  name: Sentiel
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
-  id: WeaponShotgunEnforcer
+  id: WeaponShotgunSentiel
   description: A premium combat shotgun based on the Kammerer design, featuring an upgraded clip capacity. .50 shotgun shells.
   components:
   - type: Gun
     spread: 5
+    pump: true
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/sentiel.rsi
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/sentiel.rsi
   - type: Item
-    sprite: Objects/Weapons/Guns/Shotguns/enforcer_inhands_64x.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/sentiel_inhands_64x.rsi
   - type: BallisticAmmoProvider
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
 
 - type: entity
-  parent: WeaponShotgunEnforcer
-  id: WeaponShotgunEnforcerRubber
+  parent: WeaponShotgunSentiel
+  id: WeaponShotgunSentielRubber
   suffix: Non-Lethal
   components:
   - type: BallisticAmmoProvider
@@ -179,6 +180,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/pump_inhands_64x.rsi
   - type: Gun
     spread: 15
+    pump: true
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: Clothing
