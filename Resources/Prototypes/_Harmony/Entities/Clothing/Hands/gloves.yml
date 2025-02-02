@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesLatex
   id: ClothingHandsGlovesMantis
   name: latex gloves
   description: Thin sterile latex gloves. Basic PPE for any doctor.
@@ -28,6 +28,7 @@
   - type: FingerprintMask
   - type: ItemToggle
     onUse: false
+    onActivate: false
     soundActivate:
       path: /Audio/_Harmony/Weapons/mantison.wav
       params:
