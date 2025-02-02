@@ -10,7 +10,7 @@
         amount: 2
       - id: Ointment
         amount: 2
-      - id: Gauze
+      - id: PillCanisterTricordrazine
       - id: SyringeEpinephrine
       - id: EpinephrineChemistryBottle
       # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
