@@ -9,7 +9,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
-using System.Linq;
 
 namespace Content.Server.Projectiles;
 
