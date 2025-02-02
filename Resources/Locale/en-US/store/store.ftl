@@ -6,7 +6,7 @@ store-ui-discount-display-with-currency =  {$amount} off on {$currency}
 store-ui-discount-display =  ({$amount} off!)
 store-ui-traitor-flavor = Copyright (C) NT -30643
 store-ui-traitor-warning = Operatives must lock their uplinks after use to avoid detection.
-store-ui-spawn-space-blocked = The spawning location is blocked.
+store-ui-spawn-space-blocked = Purchase failed, the area in front of you is blocked.
 
 
 store-withdraw-button-ui = Withdraw {$currency}

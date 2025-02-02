@@ -199,7 +199,7 @@ public sealed partial class StoreSystem
 
                     if (_turf.IsTileBlocked(tile.Value, CollisionGroup.Impassable | CollisionGroup.Opaque))
                     {
-                        _popup.PopupCursor(Loc.GetString("store-ui-spawn-space-blocked"));
+                        _popup.PopupEntity(Loc.GetString("store-ui-spawn-space-blocked"), buyer, buyer);
                         return;
                     }
 
