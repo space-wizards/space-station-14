@@ -32,7 +32,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     {
         // This is so entities that shouldn't get a collision are ignored.
         if (args.OurFixtureId != ProjectileFixture || !args.OtherFixture.Hard
-            || component.DamagedEntity || component is { Weapon: null, OnlyCollideWhenShot: true })
+            || component.ProjectileSpent || component is { Weapon: null, OnlyCollideWhenShot: true })
             return;
 
         var target = args.OtherEntity;
@@ -50,12 +50,12 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         var otherName = ToPrettyString(target);
         var damageRequired = _destructibleSystem.DestroyedAt(target);
-        if (TryComp(target, out DamageableComponent? damageableComponent))
+        if (TryComp<DamageableComponent>(target, out var damageableComponent))
         {
             damageRequired -= damageableComponent.TotalDamage;
             damageRequired = FixedPoint2.Max(damageRequired, FixedPoint2.Zero);
         }
-        var modifiedDamage = _damageableSystem.TryChangeDamage(target, ev.Damage, component.IgnoreResistances, origin: component.Shooter);
+        var modifiedDamage = _damageableSystem.TryChangeDamage(target, ev.Damage, component.IgnoreResistances, damageable: damageableComponent, origin: component.Shooter);
         var deleted = Deleted(target);
 
         if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
@@ -70,33 +70,44 @@ public sealed class ProjectileSystem : SharedProjectileSystem
                 $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {modifiedDamage.GetTotal():damage} damage");
         }
 
+        // If penetration is to be considered, we need to do some checks to see if the projectile should stop.
         if (modifiedDamage is not null && component.PenetrationThreshold != 0)
         {
-            if (component.PenetrationDamageTypeRequirement.Count != 0)
+            // If a damage type is required, stop the bullet if the hit entity doesn't have that type.
+            if (component.PenetrationDamageTypeRequirement != null)
             {
-                if (!component.PenetrationDamageTypeRequirement.Any(x => modifiedDamage.DamageDict.Keys.ToList().Any(y => y == x)))
+                var stopPenetration = false;
+                foreach (var requiredDamageType in component.PenetrationDamageTypeRequirement)
                 {
-                    component.DamagedEntity = true;
+                    if (!modifiedDamage.DamageDict.Keys.Contains(requiredDamageType))
+                    {
+                        stopPenetration = true;
+                        break;
+                    }
                 }
+                if (stopPenetration)
+                    component.ProjectileSpent = true;
             }
 
+            // If the object won't be destroyed, it "tanks" the penetration hit.
             if (modifiedDamage.GetTotal() < damageRequired)
             {
-                component.DamagedEntity = true;
+                component.ProjectileSpent = true;
             }
 
-            if (!component.DamagedEntity)
+            if (!component.ProjectileSpent)
             {
-                component.PenetrationAmount += FixedPoint2.Min(damageRequired, modifiedDamage.GetTotal());
+                component.PenetrationAmount += damageRequired;
+                // The projectile has dealt enough damage to be spent.
                 if (component.PenetrationAmount >= component.PenetrationThreshold)
                 {
-                    component.DamagedEntity = true;
+                    component.ProjectileSpent = true;
                 }
             }
         }
         else
         {
-            component.DamagedEntity = true;
+            component.ProjectileSpent = true;
         }
 
         if (!deleted)
@@ -107,7 +118,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
                 _sharedCameraRecoil.KickCamera(target, args.OurBody.LinearVelocity.Normalized());
         }
 
-        if (component.DeleteOnCollide && component.DamagedEntity)
+        if (component.DeleteOnCollide && component.ProjectileSpent)
             QueueDel(uid);
 
         if (component.ImpactEffect != null && TryComp(uid, out TransformComponent? xform))

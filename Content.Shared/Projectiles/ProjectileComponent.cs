@@ -76,10 +76,10 @@ public sealed partial class ProjectileComponent : Component
     public bool OnlyCollideWhenShot = false;
 
     /// <summary>
-    ///     Whether this projectile has already damaged an entity.
+    ///     If true, the projectile has hit enough targets and should no longer interact with further collisions pending deletion.
     /// </summary>
     [DataField]
-    public bool DamagedEntity;
+    public bool ProjectileSpent;
 
     /// <summary>
     ///     When a projectile has this threshold set, it will continue to penetrate entities until the damage dealt reaches this threshold.
@@ -91,7 +91,7 @@ public sealed partial class ProjectileComponent : Component
     ///     If set, the projectile will not penetrate objects that lack the ability to take these damage types.
     /// </summary>
     [DataField]
-    public List<string> PenetrationDamageTypeRequirement = new List<string>();
+    public List<string>? PenetrationDamageTypeRequirement;
 
     /// <summary>
     ///     Tracks the amount of damage dealt for penetration purposes.
