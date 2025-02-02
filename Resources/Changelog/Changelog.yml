@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Recycler no longer allows basic materials to be inserted into it.
-    type: Fix
-  id: 7392
-  time: '2024-09-18T21:58:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32144
 - author: deltanedas
   changes:
   - message: Epinephrine now adds Adrenaline, because it is.
@@ -3906,3 +3899,10 @@
   id: 7891
   time: '2025-02-02T01:00:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33239
+- author: Tayrtahn
+  changes:
+  - message: Ghosts and anomaly cores no longer jitter when starting to follow a target.
+    type: Fix
+  id: 7892
+  time: '2025-02-02T01:38:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34797
