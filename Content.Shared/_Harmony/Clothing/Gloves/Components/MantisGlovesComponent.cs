@@ -15,4 +15,10 @@ public sealed partial class MantisGlovesComponent : Component
 
     [DataField, AutoNetworkedField]
     public string? ActivatedDescription = "mantis-gloves-desc-active";
+
+    [DataField, AutoNetworkedField]
+    public string? ActivatedPopUp = "mantis-gloves-activated";
+
+    [DataField, AutoNetworkedField]
+    public string? DeactivatedPopUp = "mantis-gloves-deactivated";
 }

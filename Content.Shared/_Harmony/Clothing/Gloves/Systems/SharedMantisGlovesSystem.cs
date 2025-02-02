@@ -40,9 +40,10 @@ public abstract class SharedMantisGlovesSystem : EntitySystem
 
         if (args.User != null)
         {
-            var message = args.Activated ? Loc.GetString("mantis-gloves-activated") : Loc.GetString("mantis-gloves-deactivated");
+            var message = args.Activated ? Loc.GetString(component.ActivatedPopUp!) : Loc.GetString(component.DeactivatedPopUp!);
             _popup.PopupClient(message, uid, args.User.Value);
         }
+
     }
 
     /// <summary>
