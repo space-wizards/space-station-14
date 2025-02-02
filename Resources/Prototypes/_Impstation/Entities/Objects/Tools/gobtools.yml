@@ -68,3 +68,29 @@
   - type: Item
     size: Small
     sprite: _Impstation/Objects/Tools/Gobtools/welder.rsi
+
+- type: entity
+  name: Random Gobtools Spawner
+  id: GobtoolsSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: _Impstation/Objects/Tools/Gobtools/wrench.rsi
+        state: wronch
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: GobToolsTable
+
+- type: entityTable
+  id: GobToolsTable
+  table: !type:GroupSelector
+    weight: 100
+    children:
+    - id: GoblinWirecutters
+    - id: GoblinScrewdriver
+    - id: GoblinWrench
+    - id: GoblinCrowbar
+    - id: GoblinMultitool
+    - id: GoblinWelder
