@@ -2907,4 +2907,12 @@ Entries:
   id: 404
   time: '2025-02-02T09:38:22.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/280
+- author: STARLIGHT TEAM
+  changes:
+  - message: Armor penetration of HP rounds has been reduced, while FMJ rounds have
+      been increased.
+    type: Tweak
+  id: 405
+  time: '2025-02-02T13:14:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/281
 
