@@ -43,7 +43,6 @@ public abstract class SharedMantisGlovesSystem : EntitySystem
             var message = args.Activated ? Loc.GetString(component.ActivatedPopUp!) : Loc.GetString(component.DeactivatedPopUp!);
             _popup.PopupClient(message, uid, args.User.Value);
         }
-
     }
 
     /// <summary>
