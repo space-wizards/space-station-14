@@ -82955,23 +82955,9 @@ entities:
   entities:
   - uid: 20467
     components:
-    - type: MetaData
-      desc: A single portion of pow- why do i feel sick?
-      name: supermatter shard
     - type: Transform
       pos: -112.51823,36.525185
       parent: 2
-    - type: Item
-      size: Huge
-    - type: RadiationSource
-    missingComponents:
-    - SolutionContainerManager
-    - Food
-    - FoodSequenceElement
-    - FlavorProfile
-    - InjectableSolution
-    - RefillableSolution
-    - SpaceGarbage
 - proto: FoodCartCold
   entities:
   - uid: 3449
