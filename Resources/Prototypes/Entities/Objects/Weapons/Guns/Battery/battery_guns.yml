@@ -106,7 +106,7 @@
   name: svalinn laser pistol
   parent: [ BaseWeaponPowerCellSmall, BaseRestrictedContraband ]
   id: WeaponLaserSvalinn
-  description: A cheap and widely used laser pistol.
+  description: A cheap and widely used laser pistol, the Svalinn feeds from standard power cells, allowing for quick battery changes.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
@@ -202,7 +202,7 @@
   name: practice laser carbine
   parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponLaserCarbinePractice
-  description: This modified laser rifle fires nearly harmless beams in the 40-watt range, for target practice.
+  description: Modeled off of the popular laser carbine, fires non-harmful low-energy beams for target practice.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
@@ -228,7 +228,7 @@
   name: laser carbine
   parent: [WeaponLaserCarbinePractice, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponLaserCarbine
-  description: Favoured by Nanotrasen Security for being cheap and easy to use.
+  description: A reliable laser weapon designed and manufactured by Nanotrasen's experimental armaments division. The internal battery will only last 16 shots, but it can be refilled at any Nanotrasen brand recharging station.
   components:
   - type: StaticPrice
     price: 420
@@ -269,7 +269,7 @@
   name: pulse carbine
   parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
   id: WeaponPulseCarbine
-  description: A high tech energy carbine favoured by the NT-ERT operatives.
+  description: The next step in weaponized laser technology, pulse weapons offer far more destructive potential, but are very expensive to manufacture. These carbines are primarily issued to NT's most elite forces.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi

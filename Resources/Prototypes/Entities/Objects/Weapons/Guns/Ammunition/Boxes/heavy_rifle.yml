@@ -2,7 +2,7 @@
   abstract: true
   parent: BaseItem
   id: BaseMagazineBoxHeavyRifle
-  name: ammunition box (.325 rifle)
+  name: ammunition box (7.62x54mm rifle)
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
@@ -29,8 +29,8 @@
 - type: entity
   parent: BaseMagazineBoxHeavyRifle
   id: MagazineBoxHeavyRifle
-  name: ammunition box (.325 rifle)
-  description: Cardboard box full of .235x2.12 full-power rifle rounds. Commonly found in sniper rifles and MMGs.
+  name: ammunition box (7.62x54mm rifle)
+  description: Cardboard box full of 7.62x54mm full-power rifle rounds. Dated but still widely used by marksman rifles and medium machine guns.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeHeavyRifle

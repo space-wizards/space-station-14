@@ -136,7 +136,7 @@
       - state: uranium
 
 - type: entity
-  name: shell box (12 gauge practice)
+  name: shell box (12G practice)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunPractice
   description: A cardboard box full of 12 gauge training rounds, with tiny, non-harmful projectiles.
@@ -152,7 +152,7 @@
       - state: practice
 
 - type: entity
-  name: shell box (12 gauge tranquilizer)
+  name: shell box (12G tranquilizer)
   parent: AmmoProviderShotgunShell
   id: BoxShellTranquilizer
   description: A cardboard box full of special 12 gauge tranquilizer slugs. These rounds are very low velocity and contain an auto-injecting syringe preloaded with chloral hydrate for knocking out animals.
