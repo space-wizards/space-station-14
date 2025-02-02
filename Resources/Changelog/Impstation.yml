@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: kipdotnet, AftrLite
-  changes:
-  - message: Added the S-Cargo Duffel Bundle to the cargo shop, for all fashion-forward
-      Gastropoids to enjoy.
-    type: Add
-  id: 539
-  time: '2024-11-18T10:06:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/750
 - author: widgetbeck
   changes:
   - message: Added the Greycloak, a 100-hr Passenger prestige item.
@@ -4297,3 +4289,10 @@
   id: 1038
   time: '2025-02-02T17:01:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1540
+- author: widgetbeck
+  changes:
+  - message: Goblins can now rummage through the trash. I wonder what they'll find.
+    type: Add
+  id: 1039
+  time: '2025-02-02T17:09:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1538
