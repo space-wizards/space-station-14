@@ -15,13 +15,6 @@
     state: scanner
 
 - type: stealTargetGroup
-  id: ClothingOuterHardsuitRd
-  name: steal-target-groups-clothing-outer-hardsuit-rd
-  sprite:
-    sprite: Clothing/OuterClothing/Hardsuits/rd.rsi
-    state: icon
-
-- type: stealTargetGroup
   id: HandTeleporter
   name: steal-target-groups-hand-teleporter
   sprite:
