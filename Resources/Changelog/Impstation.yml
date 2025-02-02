@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Holoparasites and holoclowns can now experience some joy and whimsy in
-      their short, miserable lives.
-    type: Add
-  id: 542
-  time: '2024-11-19T03:09:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/757
 - author: Sha-Seng
   changes:
   - message: enforcer and beanbag enforcer have altered stocks with pistol grips now
@@ -4301,3 +4293,11 @@
   id: 1041
   time: '2025-02-02T17:12:45.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1541
+- author: crocodilecarousel
+  changes:
+  - message: Arachnids have all been sent to the dry cleaners and are now substantially
+      more vibrant and colorful.
+    type: Add
+  id: 1042
+  time: '2025-02-02T17:15:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1545
