@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: widgetbeck
   changes:
-  - message: Added the Greycloak, a 100-hr Passenger prestige item.
-    type: Add
-  id: 540
-  time: '2024-11-19T02:31:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/749
-- author: widgetbeck
-  changes:
   - message: Thaven speech quirk moods are now (as a group) as likely to roll as any
       other single mood, which should make Thaven moods more interesting on average,
       and make it easier to play a consistent character.
@@ -4296,3 +4289,13 @@
   id: 1039
   time: '2025-02-02T17:09:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1538
+- author: TheGrimbeeper
+  changes:
+  - message: Artifacts can now get their radiation fix from splashed chems
+    type: Tweak
+  - message: Artifacts should be slightly less masochistic (removed duplicate damage
+      trigger)
+    type: Tweak
+  id: 1040
+  time: '2025-02-02T17:10:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1535
