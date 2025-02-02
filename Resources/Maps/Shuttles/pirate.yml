@@ -3067,7 +3067,7 @@ entities:
     - type: Transform
       pos: -4.7390633,3.4536512
       parent: 1
-- proto: MagazineBoxMagnum
+- proto: MagazineBoxMagnumSP
   entities:
   - uid: 465
     components:

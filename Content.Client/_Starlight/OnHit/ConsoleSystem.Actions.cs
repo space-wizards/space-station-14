@@ -1,4 +1,4 @@
-using Content.Shared.Starlight.OnHit;
+using Content.Shared._Starlight.Combat.OnHit;
 
 namespace Content.Client._Starlight.OnHit;
 

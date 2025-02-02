@@ -8,6 +8,8 @@
     sprite: _Starlight/Clothing/OuterClothing/Armor/blueshield.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/OuterClothing/Armor/blueshield.rsi
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -43,6 +45,8 @@
           sprite: _Starlight/Clothing/OuterClothing/Armor/abductor.rsi
           state: icon
         components:
+        - type: Pierceable
+          level: Metal
         - type: Armor
           modifiers:
             coefficients:
@@ -63,6 +67,8 @@
           sprite: _Starlight/Clothing/OuterClothing/Armor/abductor.rsi
           state: combat-icon
         components:
+        - type: Pierceable
+          level: Metal
         - type: Armor
           modifiers:
             coefficients:

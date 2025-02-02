@@ -1,0 +1,41 @@
+## Weapons
+
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
+  id: WeaponIonRifle
+  result: WeaponIonRifle
+  materials:
+    Steel: 2000
+    Glass: 1000
+    Gold: 1000
+    Silver: 500
+    
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
+  id: WeaponIonCarbine
+  result: WeaponIonCarbine
+  materials:
+    Steel: 1500
+    Gold: 1000
+    Silver: 1000
+    
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
+  id: WeaponLaserImmolator
+  result: WeaponLaserImmolator
+  materials:
+    Steel: 2000
+    Plasma: 1000
+    Silver: 1000
+    
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
+  id: WeaponDecloner
+  result: WeaponDecloner
+  materials:
+    Steel: 2500
+    Glass: 2500
+    Plasma: 2500
+    Silver: 2500
+    Gold: 1000
+    Diamond: 1000

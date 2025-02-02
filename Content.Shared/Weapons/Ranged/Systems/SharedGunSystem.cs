@@ -644,11 +644,19 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Serializable, NetSerializable]
     public sealed class HitscanEvent : EntityEventArgs
     {
-        public (NetCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)? MuzzleFlash; // 🌟Starlight🌟
-        public (NetCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)? TravelFlash; // 🌟Starlight🌟
-        public (NetCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)? ImpactFlash; // 🌟Starlight🌟
-        public (NetCoordinates coordinates, Angle angle, ExtendedSpriteSpecifier Sprite, float Distance)? Bullet; // 🌟Starlight🌟
-        public (NetCoordinates coordinates, Angle angle, NetEntity target)? Impact; // 🌟Starlight🌟
+        public ProtoId<HitscanPrototype> Hitscan;
+        public required Effect[][] Effects { get; init; }
+    }
+    [Serializable, NetSerializable]
+    public struct Effect
+    {
+        public Angle Angle;
+        public float Distance;
+
+        public NetCoordinates? MuzzleCoordinates;
+        public NetCoordinates? TravelCoordinates;
+        public NetCoordinates ImpactCoordinates;
+        public NetEntity? ImpactEnt;
 
     }
 }

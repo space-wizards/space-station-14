@@ -104,8 +104,24 @@
           prob: 0.3
           cost: 15
                               
-        - proto: CartridgePistol
+        - proto: MagazineBoxPistolSP
+          prob: 0.2
           cost: 1
+        - proto: MagazineBoxPistolHP
+          prob: 0.2
+          cost: 1
+        - proto: MagazineBoxPistolFMJ
+          prob: 0.2
+          cost: 1
+        - proto: MagazineBoxPistolUranium
+          prob: 0.1
+          cost: 2
+        - proto: MagazineBoxPistolIncendiary
+          prob: 0.1
+          cost: 2
+        - proto: MagazineBoxPistolAP
+          prob: 0.05
+          cost: 4
 
         - proto: GrenadeBaton
           prob: 0.3

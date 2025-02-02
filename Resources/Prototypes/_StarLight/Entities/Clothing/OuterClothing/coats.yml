@@ -8,6 +8,8 @@
     sprite: _Starlight/Clothing/OuterClothing/Coats/ntrep.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/OuterClothing/Coats/ntrep.rsi
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:

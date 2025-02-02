@@ -49123,7 +49123,7 @@ entities:
     - type: Transform
       pos: -3.5,-43.5
       parent: 31
-- proto: MagazinePistol
+- proto: MagazinePistolSP
   entities:
   - uid: 4977
     components:

@@ -2824,4 +2824,87 @@ Entries:
   id: 394
   time: '2025-01-30T05:55:45.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/272
+- author: STARLIGHT TEAM
+  changes:
+  - message: Bullets now have a constant flight speed of 1/5 of the real speed (I
+      tried to make it realistic, but it flies too fast, you can't even see it).
+    type: Fix
+  id: 395
+  time: '2025-02-01T21:46:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/278
+- author: STARLIGHT TEAM
+  changes:
+  - message: Bullets now have chance of ricochet, as new types of bullets have different
+      ricochet chances. Objects you can hit also have different ricochet chances.
+      Additionally, ricochet depends on the angle of impact—bullets hitting perpendicularly
+      won’t ricochet, while those hitting at shallow angles (closer to parallel) will
+      have a very high chance of ricocheting.
+    type: Add
+  id: 396
+  time: '2025-02-01T21:46:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/278
+- author: STARLIGHT TEAM
+  changes:
+  - message: Objects now have a property of penetrability and several levels of material
+      "durability."
+    type: Add
+  id: 397
+  time: '2025-02-01T21:46:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/278
+- author: STARLIGHT TEAM
+  changes:
+  - message: Bullets now have a chance to pass through the target.
+    type: Add
+  id: 398
+  time: '2025-02-01T21:46:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/278
+- author: STARLIGHT TEAM
+  changes:
+  - message: The bullet trace can now be disabled in the graphics settings to improve
+      performance.
+    type: Add
+  id: 399
+  time: '2025-02-01T21:46:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/278
+- author: STARLIGHT TEAM
+  changes:
+  - message: All shotgun shells with spread now have double the number of pellets,
+      and the damage has been reduced by the same amount.
+    type: Tweak
+  id: 400
+  time: '2025-02-01T21:46:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/278
+- author: STARLIGHT TEAM
+  changes:
+  - message: The PVS for hit scan events has been recalculated, taking into account
+      distant ricochet.
+    type: Tweak
+  id: 401
+  time: '2025-02-01T21:46:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/278
+- author: STARLIGHT TEAM
+  changes:
+  - message: A bullet armor penetration percentage has been added.
+    type: Add
+  id: 402
+  time: '2025-02-01T21:46:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/278
+- author: STARLIGHT TEAM
+  changes:
+  - message: Standard bullets are now SP. Added HP bullets with negative penetration,
+      low ricochet, and through-shot, but with higher damage. AP bullets have increased
+      penetration, ricochet, and through-shot, but with lower damage. FMJ bullets
+      have the highest chance of ricochet, deal moderate damage, and penetrate armor
+      slightly.
+    type: Add
+  id: 403
+  time: '2025-02-01T21:46:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/278
+- author: PubliclyExecutedPig
+  changes:
+  - message: Fixed Lobster Station
+    type: Fix
+  id: 404
+  time: '2025-02-02T09:38:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/280
 

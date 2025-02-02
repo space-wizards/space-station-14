@@ -21,6 +21,7 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Temperature;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared._Starlight.Weapon;
 
 namespace Content.Shared.Inventory;
 
@@ -28,6 +29,7 @@ public partial class InventorySystem
 {
     public void InitializeRelay()
     {
+        SubscribeLocalEvent<InventoryComponent, HitScanPierceAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, DamageModifyEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, StaminaModifyEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, BeforeKnockdownEvent>(RelayInventoryEvent);

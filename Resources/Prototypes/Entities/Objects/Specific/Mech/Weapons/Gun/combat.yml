@@ -229,7 +229,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: BulletLightRifleTrace
+    proto: BulletLightRifleTraceSP
     fireCost: 20
   - type: Appearance
   - type: AmmoCounter

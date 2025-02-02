@@ -34,11 +34,19 @@ using Robust.Shared.Utility;
 using static Content.Shared.Fax.AdminFaxEuiMsg;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
+using Content.Shared.Pinpointer;
+using Robust.Shared.Configuration;
+using Content.Shared.Starlight.CCVar;
+using Content.Shared.Starlight.TextToSpeech;
+using Robust.Shared.ContentPack;
+using Robust.Shared.Log;
+using System.Linq;
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem : SharedGunSystem
 {
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
@@ -55,6 +63,14 @@ public sealed partial class GunSystem : SharedGunSystem
     public const string HitscanProto = "HitscanEffect";
     public const string ImpactProto = "ImpactEffect";
     private DisplacementEffect _displacementEffect = null!;
+    private bool _tracesEnabled = true;
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _cfg.UnsubValueChanged(StarlightCCVars.TracesEnabled, OnTracesEnabledChanged);
+    }
+    private void OnTracesEnabledChanged(bool tracesEnabled)
+        => _tracesEnabled = tracesEnabled;
 
     public bool SpreadOverlay
     {
@@ -90,6 +106,8 @@ public sealed partial class GunSystem : SharedGunSystem
     public override void Initialize()
     {
         base.Initialize();
+        _cfg.OnValueChanged(StarlightCCVars.TracesEnabled, OnTracesEnabledChanged, true);
+
         UpdatesOutsidePrediction = true;
         SubscribeLocalEvent<AmmoCounterComponent, ItemStatusCollectMessage>(OnAmmoCounterCollect);
         SubscribeLocalEvent<AmmoCounterComponent, UpdateClientAmmoEvent>(OnUpdateClientAmmo);
@@ -118,21 +136,44 @@ public sealed partial class GunSystem : SharedGunSystem
 
     private void OnHitscan(HitscanEvent ev)
     {
-        if (ev.MuzzleFlash is not null)
-            RenderFlash(ev.MuzzleFlash.Value.coordinates, ev.MuzzleFlash.Value.angle, ev.MuzzleFlash.Value.Sprite, ev.MuzzleFlash.Value.Distance, false, false);
-        if (ev.Bullet is not null)
-            RenderBullet(ev.Bullet.Value.coordinates, ev.Bullet.Value.angle, ev.Bullet.Value.Sprite, ev.Bullet.Value.Distance);
-        if (ev.TravelFlash is not null)
-            RenderFlash(ev.TravelFlash.Value.coordinates, ev.TravelFlash.Value.angle, ev.TravelFlash.Value.Sprite, ev.TravelFlash.Value.Distance, true, false);
-        if (ev.ImpactFlash is not null || ev.Impact is not null)
-            Timer.Spawn(100, () =>
-            {
-                if (ev.ImpactFlash is not null)
-                    RenderFlash(ev.ImpactFlash.Value.coordinates, ev.ImpactFlash.Value.angle, ev.ImpactFlash.Value.Sprite, ev.ImpactFlash.Value.Distance, false, true);
-                if (ev.Impact is not null && GetEntity(ev.Impact.Value.target) is EntityUid target)
-                    RenderDisplacementImpact(GetCoordinates(ev.Impact.Value.coordinates), ev.Impact.Value.angle, target);
-            });
+        var hitscan = _proto.Index(ev.Hitscan);
+        //The real bullet speed is so high that the bullet isn’t visible at all. So, let's slow it down 5x.
+        var bulletSpeed = hitscan.Speed / 5000;
+        foreach (var effects in ev.Effects)
+        {
+            var delay = 0f;
+            foreach (var effect in effects)
+                delay = FireEffect(hitscan, bulletSpeed, delay, effect);
+        }
     }
+
+    private float FireEffect(HitscanPrototype hitscan, float bulletSpeed, float delay, Effect effect)
+    {
+        var length = effect.Distance / bulletSpeed;
+        if (effect.MuzzleCoordinates is { } muzzleCoordinates)
+        {
+            if (hitscan.MuzzleFlash is { } mozzle && (_tracesEnabled || hitscan.Bullet is null))
+                RenderFlash(muzzleCoordinates, effect.Angle, mozzle, 1f, false, false, length, delay);
+
+            if (hitscan.Bullet is { } bullet)
+                RenderBullet(muzzleCoordinates, effect.Angle, bullet, effect.Distance - 1.5f, length, delay);
+        }
+        if (hitscan.TravelFlash is { } travel && effect.TravelCoordinates is { } travelCoordinates && (_tracesEnabled || hitscan.Bullet is null))
+            RenderFlash(travelCoordinates, effect.Angle, travel, effect.Distance - 1.5f, true, false, length, delay);
+        delay += length;
+
+        if ((hitscan.ImpactFlash is not null || effect.ImpactEnt is not null) && (_tracesEnabled || hitscan.Bullet is null))
+            Timer.Spawn((int)delay, () =>
+            {
+                if (hitscan.ImpactFlash is { } impact)
+                    RenderFlash(effect.ImpactCoordinates, effect.Angle, impact, 1f, false, true, length, delay);
+
+                if (effect.ImpactEnt is { } netEnt && GetEntity(netEnt) is EntityUid ent)
+                    RenderDisplacementImpact(GetCoordinates(effect.ImpactCoordinates), effect.Angle, ent);
+            });
+        return delay;
+    }
+
     private void RenderDisplacementImpact(EntityCoordinates coords, Angle angle, EntityUid target)
     {
         if (!TryComp<SpriteComponent>(target, out var sprite))
@@ -156,7 +197,7 @@ public sealed partial class GunSystem : SharedGunSystem
         spriteComp["unshaded"].Visible = true;
         _displacement.TryAddDisplacement(_displacementEffect.Displacement, spriteComp, 0, "unshaded", new HashSet<string>());
     }
-    private void RenderBullet(NetCoordinates coordinates, Angle angle, ExtendedSpriteSpecifier sprite, float distance)
+    private void RenderBullet(NetCoordinates coordinates, Angle angle, ExtendedSpriteSpecifier sprite, float distance, float length, float delay)
     {
         if (sprite.Sprite is not SpriteSpecifier.Rsi rsi)
         {
@@ -180,10 +221,29 @@ public sealed partial class GunSystem : SharedGunSystem
         spriteComp.Rotation = 1.5708f;
         spriteComp[EffectLayers.Unshaded].Visible = true;
         spriteComp.Color = sprite.SpriteColor;
+        spriteComp.Visible = delay == 0;
+
+        var time = delay + length;
+
+        var despawn = Comp<TimedDespawnComponent>(ent);
+        despawn.Lifetime = (time / 1000) + 1000;
+
+        if (delay != 0)
+            Timer.Spawn((int)delay, () =>
+            {
+                if (TryComp(ent, out spriteComp))
+                    spriteComp.Visible = true;
+            });
+
+        Timer.Spawn((int)time, () =>
+        {
+            if (TryComp(ent, out spriteComp))
+                spriteComp.Visible = false;
+        });
 
         var anim = new Animation()
         {
-            Length = TimeSpan.FromSeconds(0.15f),
+            Length = TimeSpan.FromMilliseconds(time),
             AnimationTracks =
                 {
                     new AnimationTrackComponentProperty()
@@ -192,18 +252,22 @@ public sealed partial class GunSystem : SharedGunSystem
                         Property = nameof(SpriteComponent.Offset),
                         KeyFrames =
                         {
-                            new AnimationTrackProperty.KeyFrame(new Vector2(1f, 0f), 0),
-                            new AnimationTrackProperty.KeyFrame(new Vector2(distance + 1.0f, 0f), 0.09f),
+                            new AnimationTrackProperty.KeyFrame(new Vector2(1f, 0f), delay / 1000),
+                            new AnimationTrackProperty.KeyFrame(new Vector2(distance + 1.0f, 0f), time / 1000),
+                            new AnimationTrackProperty.KeyFrame(new Vector2(distance + 1.0f, 0f), (time + 1000) / 1000),
                         },
-                        InterpolationMode = AnimationInterpolationMode.Cubic
+                        InterpolationMode = AnimationInterpolationMode.Linear
                     }
                 }
         };
 
         _animPlayer.Play(ent, anim, "hitscan-effect");
     }
-    private void RenderFlash(NetCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float distance, bool travel, bool end)
+    private void RenderFlash(NetCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float distance, bool travel, bool end, float length, float delay)
     {
+        if (end) length = 0;
+        var time = delay + length + 100;
+
         if (sprite is not SpriteSpecifier.Rsi rsi)
             return;
 
@@ -229,10 +293,21 @@ public sealed partial class GunSystem : SharedGunSystem
 
         spriteComp[EffectLayers.Unshaded].Visible = true;
 
+        var despawn = Comp<TimedDespawnComponent>(ent);
+        despawn.Lifetime = (time / 1000) + 1000;
+
+        if (delay != 0)
+            Timer.Spawn((int)delay, () => spriteComp.Visible = true);
+
+        Timer.Spawn((int)time, () =>
+        {
+            if (!Deleted(ent))
+                spriteComp.Visible = false;
+        });
+
         var anim = new Animation()
         {
-            Length = end ? TimeSpan.FromSeconds(0.05f)
-            : TimeSpan.FromSeconds(0.15f),
+            Length = TimeSpan.FromMilliseconds(time),
             AnimationTracks =
                 {
                     new AnimationTrackSpriteFlick()
@@ -240,7 +315,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         LayerKey = EffectLayers.Unshaded,
                         KeyFrames =
                         {
-                            new AnimationTrackSpriteFlick.KeyFrame(rsi.RsiState, end? 0f: 0.10f),
+                            new AnimationTrackSpriteFlick.KeyFrame(rsi.RsiState, (time - 100) / 1000),
                         }
                     }
                 }
@@ -254,9 +329,9 @@ public sealed partial class GunSystem : SharedGunSystem
                 Property = nameof(SpriteComponent.Scale),
                 KeyFrames =
                         {
-                            new AnimationTrackProperty.KeyFrame(new Vector2(0.05f, 0.5f), 0),
-                            new AnimationTrackProperty.KeyFrame(new Vector2(distance, 0.5f), 0.10f),
-                            new AnimationTrackProperty.KeyFrame(new Vector2(distance, 0.5f), 0.15f),
+                            new AnimationTrackProperty.KeyFrame(new Vector2(0.05f, 0.5f), delay / 1000),
+                            new AnimationTrackProperty.KeyFrame(new Vector2(distance, 0.5f), (time - 100) / 1000),
+                            new AnimationTrackProperty.KeyFrame(new Vector2(distance, 0.5f), time / 1000),
                         },
                 InterpolationMode = AnimationInterpolationMode.Cubic
             });
@@ -266,9 +341,9 @@ public sealed partial class GunSystem : SharedGunSystem
                 Property = nameof(SpriteComponent.Offset),
                 KeyFrames =
                         {
-                            new AnimationTrackProperty.KeyFrame(new Vector2(distance * -0.5f, 0f), 0),
-                            new AnimationTrackProperty.KeyFrame(new Vector2(0, 0f), 0.10f),
-                            new AnimationTrackProperty.KeyFrame(new Vector2(0, 0f), 0.15f),
+                            new AnimationTrackProperty.KeyFrame(new Vector2(distance * -0.5f, 0f), delay / 1000),
+                            new AnimationTrackProperty.KeyFrame(new Vector2(0, 0f), (time - 100) / 1000),
+                            new AnimationTrackProperty.KeyFrame(new Vector2(0, 0f), time / 1000),
                         },
                 InterpolationMode = AnimationInterpolationMode.Cubic
             });
@@ -379,7 +454,6 @@ public sealed partial class GunSystem : SharedGunSystem
                         userImpulse = false;
                         Audio.PlayPredicted(gun.SoundEmpty, gunUid, user);
                     }
-
 
                     if (IsClientSide(ent!.Value))
                         Del(ent.Value);

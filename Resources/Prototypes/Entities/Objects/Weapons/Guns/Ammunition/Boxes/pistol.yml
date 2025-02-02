@@ -9,7 +9,7 @@
     whitelist:
       tags:
         - CartridgePistol
-    proto: CartridgePistol
+    proto: CartridgePistolSP
     capacity: 60
   - type: Item
     size: Small
@@ -27,17 +27,62 @@
 # Boxes
 - type: entity
   parent: BaseMagazineBoxPistol
-  id: MagazineBoxPistol
-  name: ammunition box (.35 auto)
+  id: MagazineBoxPistolSP
+  name: ammunition box (.35 auto SP)
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgePistol
+    proto: CartridgePistolSP
   - type: Sprite
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+    - state: sp
+
+- type: entity
+  parent: BaseMagazineBoxPistol
+  id: MagazineBoxPistolHP
+  name: ammunition box (.35 auto HP)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolHP
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+      
+- type: entity
+  parent: BaseMagazineBoxPistol
+  id: MagazineBoxPistolFMJ
+  name: ammunition box (.35 auto FMJ)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolFMJ
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: fmj
+      
+- type: entity
+  parent: BaseMagazineBoxPistol
+  id: MagazineBoxPistolAP
+  name: ammunition box (.35 auto AP)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolAP
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: ap
 
 - type: entity
   parent: BaseMagazineBoxPistol
@@ -55,8 +100,8 @@
     - state: practice
 
 - type: entity
-  id: MagazineBoxPistolIncendiary
   parent: BaseMagazineBoxPistol
+  id: MagazineBoxPistolIncendiary
   name: ammunition box (.35 auto incendiary)
   components:
   - type: BallisticAmmoProvider
@@ -70,8 +115,8 @@
     - state: incendiary
 
 - type: entity
-  id: MagazineBoxPistolUranium
   parent: BaseMagazineBoxPistol
+  id: MagazineBoxPistolUranium
   name: ammunition box (.35 auto uranium)
   components:
   - type: BallisticAmmoProvider

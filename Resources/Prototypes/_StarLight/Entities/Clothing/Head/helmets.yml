@@ -4,6 +4,8 @@
   id: ClothingHeadHelmetAbductor
   name: helmet
   components:
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:

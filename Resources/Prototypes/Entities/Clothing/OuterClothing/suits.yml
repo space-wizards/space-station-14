@@ -11,6 +11,8 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -57,6 +59,8 @@
     coolingCoefficient: 0.05
   - type: FireProtection
     reduction: 0.65 # doesnt have a full seal so not as good
+  - type: Pierceable
+    level: Wood
   - type: Armor
     modifiers:
       coefficients:
@@ -89,6 +93,8 @@
     coolingCoefficient: 0.05
   - type: FireProtection
     reduction: 0.8 # atmos firesuit offers best protection, hardsuits are a little vulnerable
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -111,6 +117,8 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/rad.rsi
+  - type: Pierceable
+    level: Metal
   - type: Armor
     modifiers:
       coefficients:
@@ -145,6 +153,8 @@
   - type: TemperatureProtection
     heatingCoefficient: 0.01
     coolingCoefficient: 0.01
+  - type: Pierceable
+    level: Rock
   - type: Armor
     modifiers:
       coefficients:

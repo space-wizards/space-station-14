@@ -57,7 +57,7 @@
   - type: StorageFill
     contents:
       - id: WeaponSubMachineGunC20r
-      - id: MagazinePistolSubMachineGun
+      - id: MagazinePistolSubMachineGunSP
         amount: 2
 #     - id: SMGSuppressor
 
@@ -82,7 +82,7 @@
   - type: StorageFill
     contents:
       - id: WeaponLightMachineGunL6
-      - id: MagazineLightRifleBox
+      - id: MagazineBoxLightRifleSP
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -107,7 +107,7 @@
   - type: StorageFill
     contents:
       - id: WeaponRifleM90GrenadeLauncher
-      - id: MagazineRifle
+      - id: MagazineRifleFMJ
         amount: 2
       - id: GrenadeBlast
         amount: 2
@@ -120,16 +120,20 @@
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateAmmoFilled
   name: ammo bundle
-  description: "Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 2 ammo boxes for the L6 SAW."
+  description: "Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 3 ammo boxes for the L6 SAW."
   components:
   - type: StorageFill
     contents:
-      - id: MagazinePistolSubMachineGun
+      - id: MagazinePistolSubMachineGunSP
         amount: 4
       - id: MagazineShotgun
         amount: 4
-      - id: MagazineLightRifleBox
-        amount: 2
+      - id: MagazineBoxLightRifleSP
+        amount: 1
+      - id: MagazineBoxLightRifleHP
+        amount: 1
+      - id: MagazineBoxLightRifleFMJ
+        amount: 1
 
 - type: entity
   parent: ClothingBackpackDuffelClown

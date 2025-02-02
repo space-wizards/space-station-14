@@ -8,6 +8,8 @@
     snap:
     - Window
   components:
+  - type: Ricochetable
+    chance: 0.7
   - type: MeleeSound
     soundGroups:
       Brute:

@@ -126857,7 +126857,7 @@ entities:
     - type: Transform
       pos: -110.5,36.5
       parent: 2
-- proto: MagazinePistol
+- proto: MagazinePistolSP
   entities:
   - uid: 4573
     components:

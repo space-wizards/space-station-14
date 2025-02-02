@@ -232,6 +232,8 @@
   - type: Construction
     graph: BananaClownJumpsuit
     node: jumpsuit
+  - type: Pierceable
+    level: Flesh
   - type: Armor
     modifiers:
       coefficients:

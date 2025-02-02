@@ -9,7 +9,7 @@
       - Cartridge
       - CartridgePistol
   - type: HitScanCartridgeAmmo
-    hitscan: BulletPistolTrace
+    hitscan: BulletPistolTraceSP
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
@@ -19,12 +19,64 @@
   - type: SpentAmmoVisuals
 
 - type: entity
-  id: CartridgePistol
-  name: cartridge (.35 auto)
+  id: CartridgePistolSP
+  name: cartridge (.35 auto SP)
   parent: BaseCartridgePistol
   components:
   - type: HitScanCartridgeAmmo
-    hitscan: BulletPistolTrace
+    hitscan: BulletPistolTraceSP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#3F47DB"
+
+- type: entity
+  id: CartridgePistolHP
+  name: cartridge (.35 auto HP)
+  parent: BaseCartridgePistol
+  components:
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletPistolTraceHP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#000000"
+        
+- type: entity
+  id: CartridgePistolFMJ
+  name: cartridge (.35 auto FMJ)
+  parent: BaseCartridgePistol
+  components:
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletPistolTraceFMJ
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#B68F0E"
+        
+- type: entity
+  id: CartridgePistolAP
+  name: cartridge (.35 auto AP)
+  parent: BaseCartridgePistol
+  components:
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletPistolTraceAP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#1A8C1A"
 
 - type: entity
   id: CartridgePistolPractice
@@ -32,14 +84,14 @@
   parent: BaseCartridgePistol
   components:
   - type: HitScanCartridgeAmmo
-    hitscan: BulletPistolPracticeTrace
+    hitscan: BulletPistolTracePractice
   -  type: Sprite
      layers:
        - state: base
          map: [ "enum.AmmoVisualLayers.Base" ]
        - state: tip
          map: [ "enum.AmmoVisualLayers.Tip" ]
-         color: "#dbdbdb"
+         color: "#D86E2C"
 
 - type: entity
   id: CartridgePistolIncendiary
@@ -47,14 +99,14 @@
   parent: BaseCartridgePistol
   components:
   - type: HitScanCartridgeAmmo
-    hitscan: BulletPistolIncendiaryTrace
+    hitscan: BulletPistolTraceIncendiary
   - type: Sprite
     layers:
       - state: base
         map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#ff6e52"
+        color: "#BFC8CA"
 
 - type: entity
   id: CartridgePistolUranium
@@ -62,7 +114,7 @@
   parent: BaseCartridgePistol
   components:
   - type: HitScanCartridgeAmmo
-    hitscan: BulletPistolUraniumTrace
+    hitscan: BulletPistolTraceUranium
   - type: Sprite
     layers:
       - state: base

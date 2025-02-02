@@ -1,4 +1,4 @@
-using Content.Client.Weapons.Ranged.Systems;
+﻿using Content.Client.Weapons.Ranged.Systems;
 
 namespace Content.Client.Weapons.Ranged.Components;
 
@@ -30,4 +30,5 @@ public enum GunVisualLayers : byte
     BaseUnshaded,
     Mag,
     MagUnshaded,
+    Tip, // 🌟Starlight🌟
 }
