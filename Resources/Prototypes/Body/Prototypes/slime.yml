@@ -22,6 +22,7 @@
         heart: OrganSlimeHeart
         core: SentientSlimeCore
         lungs: OrganSlimeLungs
+        cavity: null
     right arm:
       part: RightArmSlime
       connections:
