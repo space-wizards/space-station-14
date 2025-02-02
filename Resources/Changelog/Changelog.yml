@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Calecute
-  changes:
-  - message: Corrected cake batter recipe in guidebook
-    type: Fix
-  id: 7391
-  time: '2024-09-18T15:15:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32276
 - author: Beck Thompson
   changes:
   - message: Recycler no longer allows basic materials to be inserted into it.
@@ -3906,3 +3899,10 @@
   id: 7890
   time: '2025-02-01T21:19:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34808
+- author: Minty642
+  changes:
+  - message: Added Gold and Silver Solidification, just mix with frost oil.
+    type: Add
+  id: 7891
+  time: '2025-02-02T01:00:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33239
