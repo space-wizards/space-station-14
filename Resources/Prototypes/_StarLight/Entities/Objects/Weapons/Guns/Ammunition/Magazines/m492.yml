@@ -1,0 +1,122 @@
+- type: entity
+  id: UniversalMagazineBase
+  name: ".30 Universal Magazine Box"
+  parent: BaseMagazineLightRifle
+  components:
+  - type: Tag
+    tags:
+      - UniversalMagazine
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleSP
+    capacity: 80
+  - type: Item
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/universalmag30.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: UniversalMagazineIncendiary
+  name: "Universal Magazine Box (.30 rifle incendiary)"
+  parent: UniversalMagazineBase
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleIncendiary
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/universalmag30incendiary.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: UniversalMagazineEmpty
+  name: "Universal Magazine Box (.30 rifle any)"
+  suffix: empty
+  parent: UniversalMagazineBase
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+
+- type: entity
+  id: UniversalMagazineUranium
+  name: "Universal Magazine Box (.30 rifle uranium)"
+  parent: UniversalMagazineBase
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleUranium
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/universalmag30uranium.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: UniversalMagazineSP
+  name: "Universal Magazine Box (.30 rifle SP)"
+  parent: UniversalMagazineBase
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleSP
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/universalmag30sp.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: UniversalMagazineAP
+  name: "Universal Magazine Box (.30 rifle AP)"
+  parent: UniversalMagazineBase
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleAP
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/universalmag30ap.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: UniversalMagazineFMJ
+  name: "Universal Magazine Box (.30 rifle FMJ)"
+  parent: UniversalMagazineBase
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleFMJ
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/universalmag30fmj.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: UniversalMagazineHP
+  name: "Universal Magazine Box (.30 rifle HP)"
+  parent: UniversalMagazineBase
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleHP
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/universalmag30hp.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
+  - type: Appearance

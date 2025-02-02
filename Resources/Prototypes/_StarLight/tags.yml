@@ -44,3 +44,6 @@
   
 - type: Tag
   id: ShowWires
+  
+- type: Tag
+  id: UniversalMagazine
