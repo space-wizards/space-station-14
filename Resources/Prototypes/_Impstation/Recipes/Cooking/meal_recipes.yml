@@ -82,3 +82,15 @@
     Sugar: 2
     CocoaPowder: 2
     Milk: 2 # being lactose safe is the least of this recipe's worries
+
+- type: microwaveMealRecipe
+  id: RecipeHeartCarpaccio
+  name: heart carpaccio recipe
+  result: MealHeartCarpaccio
+  time: 5 # warming it as a formality
+  solids:
+    OrganAnimalHeart: 1 # use the whole mouse. whatever
+    OrganAnimalLiver: 1
+    OrganAnimalLungs: 1
+    OrganAnimalKidneys: 1
+

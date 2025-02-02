@@ -38,7 +38,14 @@
             "name": "heartbox-open"
         },
         {
-            "name": "heartcarpaccio"
+            "name": "heartcarpaccio",
+            "delays": [
+                [
+                    0.8,
+                    0.1,
+                    0.1
+                ]
+            ]
         },
         {
             "name": "homemadechocolate"
