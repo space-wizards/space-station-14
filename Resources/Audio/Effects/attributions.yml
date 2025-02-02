@@ -236,3 +236,8 @@
   copyright: 'created by waveplaySFX on Freesound'
   license: "CC0-1.0"
   source: https://freesound.org/people/waveplaySFX/sounds/553744/
+
+- files: [paperdoor_openclose.ogg]
+  copyright: 'Based on sounds from zvukipro.com edited by Chaboricks'
+  license: "CC0-1.0"
+  source: https://github.com/space-wizards/space-station-14/commit/0516e312ee4c0ff658a396440324756ee974a531
