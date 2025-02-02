@@ -13,7 +13,7 @@
       - SemiAuto
       - FullAuto
     soundGunshot:
-      path: /Audio/_Impstation/Weapons/Guns/Gunshots/zipper.ogg
+      path: /Audio/Weapons/Guns/Gunshots/smg.ogg
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Pistols/tckpistol.rsi
     layers:
