@@ -28,7 +28,7 @@
         - to: icon
           steps:
             - material: Glass
-              amount: 2
+              amount: 1
               doAfter: 1
             - tag: CrystalBlue
               name: construction-graph-tag-blue-crystal-shard
@@ -48,7 +48,7 @@
         - to: icon
           steps:
             - material: Glass
-              amount: 2
+              amount: 1
               doAfter: 1
             - tag: CrystalPink
               name: construction-graph-tag-pink-crystal-shard
@@ -68,7 +68,7 @@
         - to: icon
           steps:
             - material: Glass
-              amount: 2
+              amount: 1
               doAfter: 1
             - tag: CrystalOrange
               name: construction-graph-tag-orange-crystal-shard
@@ -88,7 +88,7 @@
         - to: icon
           steps:
             - material: Glass
-              amount: 2
+              amount: 1
               doAfter: 1
             - tag: CrystalRed
               name: construction-graph-tag-red-crystal-shard
@@ -108,7 +108,7 @@
         - to: icon
           steps:
             - material: Glass
-              amount: 2
+              amount: 1
               doAfter: 1
             - tag: CrystalGreen
               name: construction-graph-tag-green-crystal-shard

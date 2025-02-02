@@ -75,10 +75,10 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-# here
+
 - type: construction
   id: WoodWall
-  graph: Girder
+  graph: Barricade
   startNode: start
   targetNode: woodWall
   category: construction-category-structures
@@ -1044,6 +1044,19 @@
   canBuildInImpassable: false
   conditions:
   # Same here. - 20kdc
+    - !type:TileNotBlocked
+
+- type: construction
+  id: EmergencyLightFixture
+  graph: LightFixture
+  startNode: start
+  targetNode: emergencyLight
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
     - !type:TileNotBlocked
 
 - type: construction

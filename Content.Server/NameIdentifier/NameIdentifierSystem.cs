@@ -14,6 +14,7 @@ public sealed class NameIdentifierSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
 
     /// <summary>
     /// Free IDs available per <see cref="NameIdentifierGroupPrototype"/>.
@@ -118,23 +119,39 @@ public sealed class NameIdentifierSystem : EntitySystem
 
     private void InitialSetupPrototypes()
     {
-        foreach (var proto in _prototypeManager.EnumeratePrototypes<NameIdentifierGroupPrototype>())
-        {
-            AddGroup(proto);
-        }
+        EnsureIds();
     }
 
-    private void AddGroup(NameIdentifierGroupPrototype proto)
+    private void FillGroup(NameIdentifierGroupPrototype proto, List<int> values)
     {
-        var values = new List<int>(proto.MaxValue - proto.MinValue);
-
+        values.Clear();
         for (var i = proto.MinValue; i < proto.MaxValue; i++)
         {
             values.Add(i);
         }
 
         _robustRandom.Shuffle(values);
-        CurrentIds.Add(proto.ID, values);
+    }
+
+    private List<int> GetOrCreateIdList(NameIdentifierGroupPrototype proto)
+    {
+        if (!CurrentIds.TryGetValue(proto.ID, out var ids))
+        {
+            ids = new List<int>(proto.MaxValue - proto.MinValue);
+            CurrentIds.Add(proto.ID, ids);
+        }
+
+        return ids;
+    }
+
+    private void EnsureIds()
+    {
+        foreach (var proto in _prototypeManager.EnumeratePrototypes<NameIdentifierGroupPrototype>())
+        {
+            var ids = GetOrCreateIdList(proto);
+
+            FillGroup(proto, ids);
+        }
     }
 
     private void OnReloadPrototypes(PrototypesReloadedEventArgs ev)
@@ -159,19 +176,20 @@ public sealed class NameIdentifierSystem : EntitySystem
 
         foreach (var proto in set.Modified.Values)
         {
+            var name_proto = (NameIdentifierGroupPrototype) proto;
+
             // Only bother adding new ones.
             if (CurrentIds.ContainsKey(proto.ID))
                 continue;
 
-            AddGroup((NameIdentifierGroupPrototype) proto);
+            var ids  = GetOrCreateIdList(name_proto);
+            FillGroup(name_proto, ids);
         }
     }
 
+
     private void CleanupIds(RoundRestartCleanupEvent ev)
     {
-        foreach (var values in CurrentIds.Values)
-        {
-            _robustRandom.Shuffle(values);
-        }
+        EnsureIds();
     }
 }

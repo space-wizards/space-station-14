@@ -1,5 +1,4 @@
 using Content.Server.DoAfter;
-using Content.Server.Fluids.Components;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Audio;
@@ -13,9 +12,7 @@ using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -32,17 +29,25 @@ public sealed class DrainSystem : SharedDrainSystem
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    private readonly HashSet<Entity<PuddleComponent>> _puddles = new();
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<DrainComponent, MapInitEvent>(OnDrainMapInit);
         SubscribeLocalEvent<DrainComponent, GetVerbsEvent<Verb>>(AddEmptyVerb);
         SubscribeLocalEvent<DrainComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<DrainComponent, AfterInteractUsingEvent>(OnInteract);
         SubscribeLocalEvent<DrainComponent, DrainDoAfterEvent>(OnDoAfter);
+    }
+
+    private void OnDrainMapInit(Entity<DrainComponent> ent, ref MapInitEvent args)
+    {
+        // Randomise puddle drains so roundstart ones don't all dump at the same time.
+        ent.Comp.Accumulator = _random.NextFloat(ent.Comp.DrainFrequency);
     }
 
     private void AddEmptyVerb(Entity<DrainComponent> entity, ref GetVerbsEvent<Verb> args)
@@ -118,9 +123,6 @@ public sealed class DrainSystem : SharedDrainSystem
     {
         base.Update(frameTime);
         var managerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var puddleQuery = GetEntityQuery<PuddleComponent>();
-        var puddles = new ValueList<(Entity<PuddleComponent> Entity, string Solution)>();
 
         var query = EntityQueryEnumerator<DrainComponent>();
         while (query.MoveNext(out var uid, out var drain))
@@ -131,13 +133,6 @@ public sealed class DrainSystem : SharedDrainSystem
                 continue;
             }
             drain.Accumulator -= drain.DrainFrequency;
-
-            // Disable ambient sound from emptying manually
-            if (!drain.AutoDrain)
-            {
-                _ambientSoundSystem.SetAmbience(uid, false);
-                continue;
-            }
 
             if (!managerQuery.TryGetComponent(uid, out var manager))
                 continue;
@@ -158,53 +153,44 @@ public sealed class DrainSystem : SharedDrainSystem
             // This will ensure that UnitsPerSecond is per second...
             var amount = drain.UnitsPerSecond * drain.DrainFrequency;
 
-            if (!xformQuery.TryGetComponent(uid, out var xform))
-                continue;
-
-            puddles.Clear();
-
-            foreach (var entity in _lookup.GetEntitiesInRange(_transform.GetMapCoordinates(uid, xform), drain.Range))
+            if (drain.AutoDrain)
             {
-                // No InRangeUnobstructed because there's no collision group that fits right now
-                // and these are placed by mappers and not buildable/movable so shouldnt really be a problem...
-                if (puddleQuery.TryGetComponent(entity, out var puddle))
+                _puddles.Clear();
+                _lookup.GetEntitiesInRange(Transform(uid).Coordinates, drain.Range, _puddles);
+
+                if (_puddles.Count == 0)
                 {
-                    puddles.Add(((entity, puddle), puddle.SolutionName));
-                }
-            }
-
-            if (puddles.Count == 0)
-            {
-                _ambientSoundSystem.SetAmbience(uid, false);
-                continue;
-            }
-
-            _ambientSoundSystem.SetAmbience(uid, true);
-
-            amount /= puddles.Count;
-
-            foreach (var (puddle, solution) in puddles)
-            {
-                // Queue the solution deletion if it's empty. EvaporationSystem might also do this
-                // but queuedelete should be pretty safe.
-                if (!_solutionContainerSystem.ResolveSolution(puddle.Owner, solution, ref puddle.Comp.Solution, out var puddleSolution))
-                {
-                    EntityManager.QueueDeleteEntity(puddle);
+                    _ambientSoundSystem.SetAmbience(uid, false);
                     continue;
                 }
 
-                // Removes the lowest of:
-                // the drain component's units per second adjusted for # of puddles
-                // the puddle's remaining volume (making it cleanly zero)
-                // the drain's remaining volume in its buffer.
-                var transferSolution = _solutionContainerSystem.SplitSolution(puddle.Comp.Solution.Value,
-                    FixedPoint2.Min(FixedPoint2.New(amount), puddleSolution.Volume, drainSolution.AvailableVolume));
+                _ambientSoundSystem.SetAmbience(uid, true);
 
-                drainSolution.AddSolution(transferSolution, _prototypeManager);
+                amount /= _puddles.Count;
 
-                if (puddleSolution.Volume <= 0)
+                foreach (var puddle in _puddles)
                 {
-                    QueueDel(puddle);
+                    // Queue the solution deletion if it's empty. EvaporationSystem might also do this
+                    // but queuedelete should be pretty safe.
+                    if (!_solutionContainerSystem.ResolveSolution(puddle.Owner, puddle.Comp.SolutionName, ref puddle.Comp.Solution, out var puddleSolution))
+                    {
+                        EntityManager.QueueDeleteEntity(puddle);
+                        continue;
+                    }
+
+                    // Removes the lowest of:
+                    // the drain component's units per second adjusted for # of puddles
+                    // the puddle's remaining volume (making it cleanly zero)
+                    // the drain's remaining volume in its buffer.
+                    var transferSolution = _solutionContainerSystem.SplitSolution(puddle.Comp.Solution.Value,
+                        FixedPoint2.Min(FixedPoint2.New(amount), puddleSolution.Volume, drainSolution.AvailableVolume));
+
+                    drainSolution.AddSolution(transferSolution, _prototypeManager);
+
+                    if (puddleSolution.Volume <= 0)
+                    {
+                        QueueDel(puddle);
+                    }
                 }
             }
 

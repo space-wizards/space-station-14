@@ -246,6 +246,16 @@
   objectType: Structure
   canRotate: true
 
+- type: construction
+  id: GasPipeSensor
+  graph: GasPipeSensor
+  startNode: start
+  targetNode: sensor
+  category: construction-category-structures
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canRotate: true
+
 # ATMOS PIPES
 - type: construction
   id: GasPipeHalf
@@ -418,6 +428,15 @@
   graph: GasBinary
   startNode: start
   targetNode: radiator
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  id: HeatExchangerBend
+  graph: GasBinary
+  startNode: start
+  targetNode: bendradiator
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false

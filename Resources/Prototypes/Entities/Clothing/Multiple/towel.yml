@@ -1,0 +1,766 @@
+- type: entity
+  id: BaseTowel
+  name: base towel
+  abstract: true
+  description: If you want to survive out here, you gotta know where your towel is.
+  parent: [ UnsensoredClothingUniformBase, ClothingHeadBase, ClothingBeltBase ]
+  components:
+  - type: Sprite
+    sprite: Clothing/Multiple/towel.rsi
+  - type: Clothing
+    sprite: Clothing/Multiple/towel.rsi
+    slots: 
+    - BELT
+    - INNERCLOTHING
+    - HEAD
+    femaleMask: UniformTop
+    equipSound: 
+    unequipSound: 
+  - type: Spillable
+    solution: absorbed
+  - type: Absorbent
+    pickupAmount: 15
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 30
+      absorbed:
+        maxVol: 30
+  - type: UseDelay
+    delay: 1
+  - type: Fiber
+    fiberColor: fibers-white
+  - type: DnaSubstanceTrace
+  - type: Item
+    size: Small
+
+- type: entity
+  id: TowelColorWhite
+  name: white towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#EAE8E8"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#EAE8E8"
+      right:
+      - state: inhand-right
+        color: "#EAE8E8"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#EAE8E8"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#EAE8E8"
+      belt:
+      - state: equipped-BELT
+        color: "#EAE8E8"
+  - type: Fiber
+    fiberColor: fibers-white
+
+- type: entity
+  id: TowelColorPurple
+  name: purple towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#9C0DE1"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#9C0DE1"
+      right:
+      - state: inhand-right
+        color: "#9C0DE1"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#9C0DE1"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#9C0DE1"
+      belt:
+      - state: equipped-BELT
+        color: "#9C0DE1"
+  - type: Fiber
+    fiberColor: fibers-purple
+
+- type: entity
+  id: TowelColorRed
+  name: red towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#940000"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#940000"
+      right:
+      - state: inhand-right
+        color: "#940000"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#940000"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#940000"
+      belt:
+      - state: equipped-BELT
+        color: "#940000"
+  - type: Fiber
+    fiberColor: fibers-red
+
+- type: entity
+  id: TowelColorBlue
+  name: blue towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#0089EF"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#0089EF"
+      right:
+      - state: inhand-right
+        color: "#0089EF"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#0089EF"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#0089EF"
+      belt:
+      - state: equipped-BELT
+        color: "#0089EF"
+  - type: Fiber
+    fiberColor: fibers-blue
+    
+- type: entity
+  id: TowelColorDarkBlue
+  name: dark blue towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#3285ba"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#3285ba"
+      right:
+      - state: inhand-right
+        color: "#3285ba"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#3285ba"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#3285ba"
+      belt:
+      - state: equipped-BELT
+        color: "#3285ba"
+  - type: Fiber
+    fiberColor: fibers-blue
+
+- type: entity
+  id: TowelColorLightBlue
+  name: light blue towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#58abcc"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#58abcc"
+      right:
+      - state: inhand-right
+        color: "#58abcc"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#58abcc"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#58abcc"
+      belt:
+      - state: equipped-BELT
+        color: "#58abcc"
+  - type: Fiber
+    fiberColor: fibers-blue
+
+- type: entity
+  id: TowelColorTeal
+  name: teal towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#3CB57C"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#3CB57C"
+      right:
+      - state: inhand-right
+        color: "#3CB57C"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#3CB57C"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#3CB57C"
+      belt:
+      - state: equipped-BELT
+        color: "#3CB57C"
+  - type: Fiber
+    fiberColor: fibers-teal
+
+- type: entity
+  id: TowelColorBrown
+  name: brown towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#723A02"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#723A02"
+      right:
+      - state: inhand-right
+        color: "#723A02"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#723A02"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#723A02"
+      belt:
+      - state: equipped-BELT
+        color: "#723A02"
+  - type: Fiber
+    fiberColor: fibers-brown
+
+- type: entity
+  id: TowelColorLightBrown
+  name: light brown towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#c59431"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#c59431"
+      right:
+      - state: inhand-right
+        color: "#c59431"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#c59431"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#c59431"
+      belt:
+      - state: equipped-BELT
+        color: "#c59431"
+  - type: Fiber
+    fiberColor: fibers-brown
+
+- type: entity
+  id: TowelColorGray
+  name: gray towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#999999"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#999999"
+      right:
+      - state: inhand-right
+        color: "#999999"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#999999"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#999999"
+      belt:
+      - state: equipped-BELT
+        color: "#999999"
+  - type: Fiber
+    fiberColor: fibers-grey
+
+- type: entity
+  id: TowelColorGreen
+  name: green towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#5ABF2F"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#5ABF2F"
+      right:
+      - state: inhand-right
+        color: "#5ABF2F"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#5ABF2F"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#5ABF2F"
+      belt:
+      - state: equipped-BELT
+        color: "#5ABF2F"
+  - type: Fiber
+    fiberColor: fibers-green
+
+- type: entity
+  id: TowelColorDarkGreen
+  name: dark green towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#79CC26"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#79CC26"
+      right:
+      - state: inhand-right
+        color: "#79CC26"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#79CC26"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#79CC26"
+      belt:
+      - state: equipped-BELT
+        color: "#79CC26"
+  - type: Fiber
+    fiberColor: fibers-green
+
+- type: entity
+  id: TowelColorGold
+  name: gold towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#F7C430"
+    - state: iconstripe
+      color: "#535353"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#F7C430"
+      right:
+      - state: inhand-right
+        color: "#F7C430"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#F7C430"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#F7C430"
+      belt:
+      - state: equipped-BELT
+        color: "#F7C430"
+  - type: Fiber
+    fiberColor: fibers-gold
+
+- type: entity
+  id: TowelColorOrange
+  name: orange towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#EF8100"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#EF8100"
+      right:
+      - state: inhand-right
+        color: "#EF8100"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#EF8100"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#EF8100"
+      belt:
+      - state: equipped-BELT
+        color: "#EF8100"
+  - type: Fiber
+    fiberColor: fibers-orange
+
+- type: entity
+  id: TowelColorBlack
+  name: black towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#535353"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#535353"
+      right:
+      - state: inhand-right
+        color: "#535353"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#535353"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#535353"
+      belt:
+      - state: equipped-BELT
+        color: "#535353"
+  - type: Fiber
+    fiberColor: fibers-black
+
+- type: entity
+  id: TowelColorPink
+  name: pink towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#ffa69b"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#ffa69b"
+      right:
+      - state: inhand-right
+        color: "#ffa69b"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#ffa69b"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#ffa69b"
+      belt:
+      - state: equipped-BELT
+        color: "#ffa69b"
+  - type: Fiber
+    fiberColor: fibers-pink
+
+- type: entity
+  id: TowelColorYellow
+  name: yellow towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#ffe14d"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#ffe14d"
+      right:
+      - state: inhand-right
+        color: "#ffe14d"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#ffe14d"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#ffe14d"
+      belt:
+      - state: equipped-BELT
+        color: "#ffe14d"
+  - type: Fiber
+    fiberColor: fibers-yellow
+
+- type: entity
+  id: TowelColorMaroon
+  name: maroon towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#cc295f"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#cc295f"
+      right:
+      - state: inhand-right
+        color: "#cc295f"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#cc295f"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#cc295f"
+      belt:
+      - state: equipped-BELT
+        color: "#cc295f"
+  - type: Fiber
+    fiberColor: fibers-maroon
+
+- type: entity
+  id: TowelColorSilver
+  name: silver towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#d0d0d0"
+    - state: iconstripe
+      color: "#F7C430"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#d0d0d0"
+      right:
+      - state: inhand-right
+        color: "#d0d0d0"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#d0d0d0"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#d0d0d0"
+      belt:
+      - state: equipped-BELT
+        color: "#d0d0d0"
+  - type: Fiber
+    fiberColor: fibers-silver
+
+- type: entity
+  id: TowelColorMime
+  name: silent towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#EAE8E8"
+    - state: iconstripe
+      color: "#535353"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#EAE8E8"
+      right:
+      - state: inhand-right
+        color: "#EAE8E8"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#EAE8E8"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#EAE8E8"
+      belt:
+      - state: equipped-BELT
+        color: "#EAE8E8"
+  - type: Fiber
+    fiberColor: fibers-white
+
+- type: entity
+  id: TowelColorNT
+  name: NanoTrasen brand towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#004787"
+    - state: iconstripe
+      color: "#EAE8E8"
+    - state: NTmono
+      color: "#EAE8E8"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#004787"
+      right:
+      - state: inhand-right
+        color: "#004787"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#004787"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#004787"
+      belt:
+      - state: equipped-BELT
+        color: "#004787"
+  - type: Fiber
+    fiberColor: fibers-regal-blue
+
+- type: entity
+  id: TowelColorCentcom
+  name: centcom towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#29722e"
+    - state: iconstripe
+      color: "#F7C430"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#29722e"
+      right:
+      - state: inhand-right
+        color: "#29722e"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#29722e"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#29722e"
+      belt:
+      - state: equipped-BELT
+        color: "#29722e"
+  - type: Fiber
+    fiberColor: fibers-green
+
+- type: entity
+  id: TowelColorSyndicate
+  name: syndicate towel
+  parent: [ BaseTowel, BaseSyndicateContraband ]
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#535353"
+    - state: iconstripe
+      color: "#940000"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#535353"
+      right:
+      - state: inhand-right
+        color: "#535353"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#535353"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#535353"
+      belt:
+      - state: equipped-BELT
+        color: "#535353"
+  - type: Fiber
+    fiberColor: fibers-black
+    

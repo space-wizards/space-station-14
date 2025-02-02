@@ -26,7 +26,7 @@
   copyright: "Taken from /tg/station at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae."
   source: "https://github.com/tgstation/tgstation/"
 
-- files: ["blue_circuit.png", "cropped_parallax.png", "eighties.png", "gold.png", "grass.png", "ironsand1.png", "ironsand2.png", "ironsand3.png", "ironsand4.png", "junglegrass.png", "lattice.png", "reinforced.png", "silver.png", "snow.png", "wood.png"]
+- files: ["blue_circuit.png", "cropped_parallax.png", "eighties.png", "gold.png", "grass.png", "ironsand1.png", "ironsand2.png", "ironsand3.png", "ironsand4.png", "junglegrass.png", "lattice.png", "red_circuit.png", "reinforced.png", "silver.png", "snow.png", "wood.png"]
   license: "CC-BY-SA-3.0"
   copyright: "tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49, cropped_parallax modified from parallax."
   source: "https://github.com/tgstation/tgstation/"

@@ -141,3 +141,19 @@
   targetNode: rollingpin
   category: construction-category-tools
   objectType: Item
+
+- type: construction
+  id: PetCarrier
+  graph: PetCarrier
+  startNode: start
+  targetNode: petCarrier
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: HardsuitGoliath
+  graph: HardsuitGoliath
+  startNode: start
+  targetNode: hardsuitGoliath
+  category: construction-category-clothing
+  objectType: Item

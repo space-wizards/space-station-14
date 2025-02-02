@@ -51,6 +51,8 @@
           sprite: Objects/Misc/stock_parts.rsi
           state: capacitor
         name: construction-graph-tag-capacitor
+      - material: Capacitor
+        amount: 1
       - material: Cable
         amount: 2
         doAfter: 1

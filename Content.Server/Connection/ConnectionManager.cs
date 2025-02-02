@@ -2,7 +2,9 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
+using Content.Server.Connection.IPIntel;
 using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
@@ -39,6 +41,8 @@ namespace Content.Server.Connection
         /// <param name="user">The user to give a temporary bypass.</param>
         /// <param name="duration">How long the bypass should last for.</param>
         void AddTemporaryConnectBypass(NetUserId user, TimeSpan duration);
+
+        void Update();
     }
 
     /// <summary>
@@ -46,7 +50,6 @@ namespace Content.Server.Connection
     /// </summary>
     public sealed partial class ConnectionManager : IConnectionManager
     {
-        [Dependency] private readonly IServerDbManager _dbManager = default!;
         [Dependency] private readonly IPlayerManager _plyMgr = default!;
         [Dependency] private readonly IServerNetManager _netMgr = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
@@ -57,14 +60,23 @@ namespace Content.Server.Connection
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IHttpClientHolder _http = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
 
         private ISawmill _sawmill = default!;
         private readonly Dictionary<NetUserId, TimeSpan> _temporaryBypasses = [];
+        private IPIntel.IPIntel _ipintel = default!;
 
+        public void PostInit()
+        {
+            InitializeWhitelist();
+        }
 
         public void Initialize()
         {
             _sawmill = _logManager.GetSawmill("connections");
+
+            _ipintel = new IPIntel.IPIntel(new IPIntelApi(_http, _cfg), _db, _cfg, _logManager, _chatManager, _gameTiming);
 
             _netMgr.Connecting += NetMgrOnConnecting;
             _netMgr.AssignUserIdCallback = AssignUserIdCallback;
@@ -80,6 +92,18 @@ namespace Content.Server.Connection
             // Make sure we only update the time if we wouldn't shrink it.
             if (newTime > time)
                 time = newTime;
+        }
+
+        public async void Update()
+        {
+            try
+            {
+                await _ipintel.Update();
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error("IPIntel update failed:" + e);
+            }
         }
 
         /*
@@ -112,11 +136,14 @@ namespace Content.Server.Connection
 
             var serverId = (await _serverDbEntry.ServerEntity).Id;
 
+            var hwid = e.UserData.GetModernHwid();
+            var trust = e.UserData.Trust;
+
             if (deny != null)
             {
                 var (reason, msg, banHits) = deny.Value;
 
-                var id = await _db.AddConnectionLogAsync(userId, e.UserName, addr, e.UserData.HWId, reason, serverId);
+                var id = await _db.AddConnectionLogAsync(userId, e.UserName, addr, hwid, trust, reason, serverId);
                 if (banHits is { Count: > 0 })
                     await _db.AddServerBanHitsAsync(id, banHits);
 
@@ -128,12 +155,12 @@ namespace Content.Server.Connection
             }
             else
             {
-                await _db.AddConnectionLogAsync(userId, e.UserName, addr, e.UserData.HWId, null, serverId);
+                await _db.AddConnectionLogAsync(userId, e.UserName, addr, hwid, trust, null, serverId);
 
                 if (!ServerPreferencesManager.ShouldStorePrefs(e.AuthType))
                     return;
 
-                await _db.UpdatePlayerRecordAsync(userId, e.UserName, addr, e.UserData.HWId);
+                await _db.UpdatePlayerRecordAsync(userId, e.UserName, addr, hwid);
             }
         }
 
@@ -191,7 +218,9 @@ namespace Content.Server.Connection
                 hwId = null;
             }
 
-            var bans = await _db.GetServerBansAsync(addr, userId, hwId, includeUnbanned: false);
+            var modernHwid = e.UserData.ModernHWIds;
+
+            var bans = await _db.GetServerBansAsync(addr, userId, hwId, modernHwid, includeUnbanned: false);
             if (bans.Count > 0)
             {
                 var firstBan = bans[0];
@@ -205,7 +234,7 @@ namespace Content.Server.Connection
                 return null;
             }
 
-            var adminData = await _dbManager.GetAdminDataForAsync(e.UserId);
+            var adminData = await _db.GetAdminDataForAsync(e.UserId);
 
             if (_cfg.GetCVar(CCVars.PanicBunkerEnabled) && adminData == null)
             {
@@ -213,7 +242,7 @@ namespace Content.Server.Connection
                 var customReason = _cfg.GetCVar(CCVars.PanicBunkerCustomReason);
 
                 var minMinutesAge = _cfg.GetCVar(CCVars.PanicBunkerMinAccountAge);
-                var record = await _dbManager.GetPlayerRecordByUserId(userId);
+                var record = await _db.GetPlayerRecordByUserId(userId);
                 var validAccountAge = record != null &&
                                       record.FirstSeenTime.CompareTo(DateTimeOffset.UtcNow - TimeSpan.FromMinutes(minMinutesAge)) <= 0;
                 var bypassAllowed = _cfg.GetCVar(CCVars.BypassBunkerWhitelist) && await _db.GetWhitelistStatusAsync(userId);
@@ -254,19 +283,18 @@ namespace Content.Server.Connection
                 }
             }
 
-            if (_cfg.GetCVar(CCVars.BabyJailEnabled) && adminData == null)
-            {
-                var result = await IsInvalidConnectionDueToBabyJail(userId, e);
-
-                if (result.IsInvalid)
-                    return (ConnectionDenyReason.BabyJail, result.Reason, null);
-            }
-
             var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) &&
                             ticker.PlayerGameStatuses.TryGetValue(userId, out var status) &&
                             status == PlayerGameStatus.JoinedGame;
             var adminBypass = _cfg.GetCVar(CCVars.AdminBypassMaxPlayers) && adminData != null;
-            if ((_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && !adminBypass) && !wasInGame)
+            var softPlayerCount = _plyMgr.PlayerCount;
+
+            if (!_cfg.GetCVar(CCVars.AdminsCountForMaxPlayers))
+            {
+                softPlayerCount -= _adminManager.ActiveAdmins.Count();
+            }
+
+            if ((softPlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && !adminBypass) && !wasInGame)
             {
                 return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);
             }
@@ -278,12 +306,12 @@ namespace Content.Server.Connection
                 {
                     _sawmill.Error("Whitelist enabled but no whitelists loaded.");
                     // Misconfigured, deny everyone.
-                    return (ConnectionDenyReason.Whitelist, Loc.GetString("whitelist-misconfigured"), null);
+                    return (ConnectionDenyReason.Whitelist, Loc.GetString("generic-misconfigured"), null);
                 }
 
                 foreach (var whitelist in _whitelists)
                 {
-                    if (!IsValid(whitelist, _plyMgr.PlayerCount))
+                    if (!IsValid(whitelist, softPlayerCount))
                     {
                         // Not valid for current player count.
                         continue;
@@ -301,73 +329,16 @@ namespace Content.Server.Connection
                 }
             }
 
+            // ALWAYS keep this at the end, to preserve the API limit.
+            if (_cfg.GetCVar(CCVars.GameIPIntelEnabled) && adminData == null)
+            {
+                var result = await _ipintel.IsVpnOrProxy(e);
+
+                if (result.IsBad)
+                    return (ConnectionDenyReason.IPChecks, result.Reason, null);
+            }
+
             return null;
-        }
-
-        private async Task<(bool IsInvalid, string Reason)> IsInvalidConnectionDueToBabyJail(NetUserId userId, NetConnectingArgs e)
-        {
-            // If you're whitelisted then bypass this whole thing
-            if (await _db.GetWhitelistStatusAsync(userId))
-                return (false, "");
-
-            // Initial cvar retrieval
-            var showReason = _cfg.GetCVar(CCVars.BabyJailShowReason);
-            var reason = _cfg.GetCVar(CCVars.BabyJailCustomReason);
-            var maxAccountAgeMinutes = _cfg.GetCVar(CCVars.BabyJailMaxAccountAge);
-            var maxPlaytimeMinutes = _cfg.GetCVar(CCVars.BabyJailMaxOverallMinutes);
-
-            // Wait some time to lookup data
-            var record = await _dbManager.GetPlayerRecordByUserId(userId);
-
-            // No player record = new account or the DB is having a skill issue
-            if (record == null)
-                return (false, "");
-
-            var isAccountAgeInvalid = record.FirstSeenTime.CompareTo(DateTimeOffset.UtcNow - TimeSpan.FromMinutes(maxAccountAgeMinutes)) <= 0;
-
-            if (isAccountAgeInvalid)
-            {
-                _sawmill.Debug($"Baby jail will deny {userId} for account age {record.FirstSeenTime}"); // Remove on or after 2024-09
-            }
-
-            if (isAccountAgeInvalid && showReason)
-            {
-                var locAccountReason = reason != string.Empty
-                    ? reason
-                    : Loc.GetString("baby-jail-account-denied-reason",
-                        ("reason",
-                            Loc.GetString(
-                                "baby-jail-account-reason-account",
-                                ("minutes", maxAccountAgeMinutes))));
-
-                return (true, locAccountReason);
-            }
-
-            var overallTime = ( await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
-            var isTotalPlaytimeInvalid = overallTime != null && overallTime.TimeSpent.TotalMinutes >= maxPlaytimeMinutes;
-
-            if (isTotalPlaytimeInvalid)
-            {
-                _sawmill.Debug($"Baby jail will deny {userId} for playtime {overallTime!.TimeSpent}"); // Remove on or after 2024-09
-            }
-
-            if (isTotalPlaytimeInvalid && showReason)
-            {
-                var locPlaytimeReason = reason != string.Empty
-                    ? reason
-                    : Loc.GetString("baby-jail-account-denied-reason",
-                        ("reason",
-                            Loc.GetString(
-                                "baby-jail-account-reason-overall",
-                                ("minutes", maxPlaytimeMinutes))));
-
-                return (true, locPlaytimeReason);
-            }
-
-            if (!showReason && isTotalPlaytimeInvalid || isAccountAgeInvalid)
-                return (true, Loc.GetString("baby-jail-account-denied"));
-
-            return (false, "");
         }
 
         private bool HasTemporaryBypass(NetUserId user)

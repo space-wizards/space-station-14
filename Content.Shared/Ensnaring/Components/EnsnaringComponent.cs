@@ -1,4 +1,4 @@
-﻿using System.Threading;
+﻿using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Ensnaring.Components;
@@ -11,59 +11,53 @@ public sealed partial class EnsnaringComponent : Component
     /// <summary>
     /// How long it should take to free someone else.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("freeTime")]
+    [DataField]
     public float FreeTime = 3.5f;
 
     /// <summary>
     /// How long it should take for an entity to free themselves.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("breakoutTime")]
+    [DataField]
     public float BreakoutTime = 30.0f;
 
     /// <summary>
     /// How much should this slow down the entities walk?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("walkSpeed")]
+    [DataField]
     public float WalkSpeed = 0.9f;
 
     /// <summary>
     /// How much should this slow down the entities sprint?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("sprintSpeed")]
+    [DataField]
     public float SprintSpeed = 0.9f;
 
     /// <summary>
     /// How much stamina does the ensnare sap
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("staminaDamage")]
+    [DataField]
     public float StaminaDamage = 55f;
 
     /// <summary>
     /// Should this ensnare someone when thrown?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("canThrowTrigger")]
+    [DataField]
     public bool CanThrowTrigger;
 
     /// <summary>
     /// What is ensnared?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("ensnared")]
+    [DataField]
     public EntityUid? Ensnared;
 
     /// <summary>
     /// Should breaking out be possible when moving?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("canMoveBreakout")]
+    [DataField]
     public bool CanMoveBreakout;
 
+    [DataField]
+    public SoundSpecifier? EnsnareSound = new SoundPathSpecifier("/Audio/Effects/snap.ogg");
 }
 
 /// <summary>
@@ -93,31 +87,5 @@ public sealed class EnsnareRemoveEvent : CancellableEntityEventArgs
     {
         WalkSpeed = walkSpeed;
         SprintSpeed = sprintSpeed;
-    }
-}
-
-/// <summary>
-/// Used for the do after event to free the entity that owns the <see cref="EnsnareableComponent"/>
-/// </summary>
-public sealed class FreeEnsnareDoAfterComplete : EntityEventArgs
-{
-    public readonly EntityUid EnsnaringEntity;
-
-    public FreeEnsnareDoAfterComplete(EntityUid ensnaringEntity)
-    {
-        EnsnaringEntity = ensnaringEntity;
-    }
-}
-
-/// <summary>
-/// Used for the do after event when it fails to free the entity that owns the <see cref="EnsnareableComponent"/>
-/// </summary>
-public sealed class FreeEnsnareDoAfterCancel : EntityEventArgs
-{
-    public readonly EntityUid EnsnaringEntity;
-
-    public FreeEnsnareDoAfterCancel(EntityUid ensnaringEntity)
-    {
-        EnsnaringEntity = ensnaringEntity;
     }
 }

@@ -7,6 +7,14 @@
   objectType: Item
 
 - type: construction
+  id: firebot
+  graph: FireBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
   id: honkbot
   graph: HonkBot
   startNode: start
