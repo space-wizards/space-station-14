@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Thaven speech quirk moods are now (as a group) as likely to roll as any
-      other single mood, which should make Thaven moods more interesting on average,
-      and make it easier to play a consistent character.
-    type: Tweak
-  id: 541
-  time: '2024-11-19T02:53:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/752
 - author: hivehum
   changes:
   - message: Holoparasites and holoclowns can now experience some joy and whimsy in
@@ -4299,3 +4290,14 @@
   id: 1040
   time: '2025-02-02T17:10:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1535
+- author: crocodilecarousel
+  changes:
+  - message: Added over two dozen new markings for Vox, including underwear! Go be
+      a weird emo bird. Try on the Ixix Special.
+    type: Add
+  - message: Vox may notice that their limbs seem a little... saturated. They may
+      have to take a trip to the customization menu.
+    type: Tweak
+  id: 1041
+  time: '2025-02-02T17:12:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1541
