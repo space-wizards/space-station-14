@@ -28,6 +28,6 @@
     state: airalarm_electronics
   - type: Tag
     tags:
-    - ScreenElectronics
+      - ScreenElectronics
   - type: StaticPrice
     price: 30
