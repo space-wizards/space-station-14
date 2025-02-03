@@ -9,6 +9,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Item;
 using Content.Shared.Storage;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -190,6 +191,26 @@ public sealed class StorageWindow : BaseWindow
         BuildGridRepresentation();
     }
 
+    private void CloseParent()
+    {
+        if (StorageEntity == null)
+            return;
+
+        var containerSystem = _entity.System<SharedContainerSystem>();
+        var uiSystem = _entity.System<UserInterfaceSystem>();
+
+        if (containerSystem.TryGetContainingContainer(StorageEntity.Value, out var container) &&
+            _entity.TryGetComponent(container.Owner, out StorageComponent? storage) &&
+            storage.Container.Contains(StorageEntity.Value) &&
+            uiSystem
+                .TryGetOpenUi<StorageBoundUserInterface>(container.Owner,
+                    StorageComponent.StorageUiKey.Key,
+                    out var parentBui))
+        {
+            parentBui.CloseWindow(Position);
+        }
+    }
+
     private void BuildGridRepresentation()
     {
         if (!_entity.TryGetComponent<StorageComponent>(StorageEntity, out var comp) || comp.Grid.Count == 0)
@@ -212,7 +233,9 @@ public sealed class StorageWindow : BaseWindow
         };
         exitButton.OnPressed += _ =>
         {
+            // Close ourselves and all parent BUIs.
             Close();
+            CloseParent();
         };
         exitButton.OnKeyBindDown += args =>
         {
@@ -220,6 +243,7 @@ public sealed class StorageWindow : BaseWindow
             if (!args.Handled && args.Function == ContentKeyFunctions.ActivateItemInWorld)
             {
                 Close();
+                CloseParent();
                 args.Handle();
             }
         };
@@ -258,7 +282,8 @@ public sealed class StorageWindow : BaseWindow
                 var containerSystem = _entity.System<SharedContainerSystem>();
 
                 if (containerSystem.TryGetContainingContainer(StorageEntity.Value, out var container) &&
-                    _entity.TryGetComponent(container.Owner, out StorageComponent? storage))
+                    _entity.TryGetComponent(container.Owner, out StorageComponent? storage) &&
+                    storage.Container.Contains(StorageEntity.Value))
                 {
                     Close();
 
@@ -267,7 +292,7 @@ public sealed class StorageWindow : BaseWindow
                             StorageComponent.StorageUiKey.Key,
                             out var parentBui))
                     {
-                        parentBui.Show();
+                        parentBui.Show(Position);
                     }
                 }
             };
@@ -493,8 +518,9 @@ public sealed class StorageWindow : BaseWindow
         {
             if (StorageEntity != null && _entity.System<StorageSystem>().NestedStorage)
             {
+                // If parent container nests us then show back button
                 if (containerSystem.TryGetContainingContainer(StorageEntity.Value, out var container) &&
-                    _entity.HasComponent<StorageComponent>(container.Owner))
+                    _entity.TryGetComponent(container.Owner, out StorageComponent? storageComp) && storageComp.Container.Contains(StorageEntity.Value))
                 {
                     _backButton.Visible = true;
                 }
