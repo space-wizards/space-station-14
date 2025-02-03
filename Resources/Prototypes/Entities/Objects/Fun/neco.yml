@@ -1,0 +1,24 @@
+- type: entity
+  parent: BasePlushie
+  id: PlushieNeco
+  name: Neco Arc
+  description: Plyshi boy!
+  components:
+  - type: Sprite
+    state: plushiearc
+    sprite: /Textures/Objects/Fun/neko.rsi
+  - type: Item
+  - type: EmitSoundOnUse
+    sound:
+      collection: Ark
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/kavooo.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      collection: Ark
+  - type: MeleeWeapon
+    soundHit:
+      collection: Ark
+  - type: UseDelay
+    delay: 2.5
