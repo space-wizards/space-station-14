@@ -66,7 +66,7 @@
   name: riot shield
   parent: [ BaseShield, BaseRestrictedContraband ]
   id: RiotShield
-  description: A shield built for protecting against melee attacks.
+  description: A large tower shield. Good for controlling crowds.
   components:
     - type: StaticPrice
       price: 90
@@ -87,7 +87,7 @@
   name: laser shield
   parent: [ BaseShield, BaseRestrictedContraband ]
   id: RiotLaserShield
-  description: A shield built for withstanding lasers.
+  description: A shield built for withstanding lasers, but not much else.
   components:
     - type: Sprite
       state: riot_laser-icon
@@ -107,7 +107,7 @@
   name: ballistic shield
   parent: [ BaseShield, BaseRestrictedContraband ]
   id: RiotBulletShield
-  description: A shield built for protecting against ballistics.
+  description: A shield built for protecting against ballistics, but not much else.
   components:
     - type: Sprite
       state: riot_bullet-icon
