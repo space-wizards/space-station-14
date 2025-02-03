@@ -3035,4 +3035,11 @@ Entries:
   id: 422
   time: '2025-02-03T20:16:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/279
+- author: PubliclyExecutedHotel
+  changes:
+  - message: Made Hotel's AI Core actually good
+    type: Tweak
+  id: 423
+  time: '2025-02-03T20:17:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/287
 
