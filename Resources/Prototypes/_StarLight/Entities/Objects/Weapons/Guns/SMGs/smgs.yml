@@ -63,6 +63,11 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunWieldBonus
+    minAngle: -19
+    maxAngle: -16
   - type: Gun
     fireRate: 10
     soundGunshot:
@@ -72,3 +77,5 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+  - type: ChamberMagazineAmmoProvider
+    autoEject: true
