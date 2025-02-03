@@ -283,13 +283,13 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitBlueShield
+  id: ClothingUniformJumpsuitFormalBlueShield
   name: formal blueshield officer suit
   description: A textile jumpsuit, reinforced with thick leather in some areas.
   components:
   - type: Sprite
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/blueshield.rsi
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/formal_blueshield.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/blueshield.rsi
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/formal_blueshield.rsi
 
 # Fashion-O-Mat END

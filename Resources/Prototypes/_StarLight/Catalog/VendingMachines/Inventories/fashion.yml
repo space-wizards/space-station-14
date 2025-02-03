@@ -483,8 +483,8 @@
     stock: 1
 
 - type: listing
-  id: ClothingUniformJumpsuitBlueShield
-  productEntity: ClothingUniformJumpsuitBlueShield
+  id: ClothingUniformJumpsuitFormalBlueShield
+  productEntity: ClothingUniformJumpsuitFormalBlueShield
   cost:
     NTCredit: 2345
   categories:
@@ -492,7 +492,6 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-
 
 - type: listing
   id: ClothingNeckCloakCentcomBlack
