@@ -32,7 +32,7 @@ public sealed partial class SliceableComponent : Component
     /// The amount of seconds it takes to complete the slicing do-after
     /// </summary>
     [DataField]
-    public TimeSpan DoafterTime = TimeSpan.FromSeconds(1f);
+    public TimeSpan DoafterTime = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// The min distance the sliced pieces should move from the original space

@@ -7,6 +7,4 @@ namespace Content.Shared.Tools;
 /// is called after a successful attempt at slicing food.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class SliceableDoafterEvent : SimpleDoAfterEvent
-{
-}
+public sealed partial class SliceableDoafterEvent : SimpleDoAfterEvent;
