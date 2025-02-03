@@ -35,7 +35,7 @@
   - MagazineBoxMagnumIncendiary
   - MagazineBoxLightRifleIncendiary
   - MagazineBoxRifleIncendiary
-  - UniversalMagazineIncendiary
+  - LightRifleHeavyMagazineIncendiary
 
 - type: technology
   id: WeaponizedLaserManipulation
@@ -93,7 +93,7 @@
   - MagazineBoxLightRifleUranium
   - MagazineBoxRifleUranium
   - BoxShotgunUranium
-  - UniversalMagazineUranium
+  - LightRifleHeavyMagazineUranium
 
 - type: technology
   id: AdvancedRiotControl
@@ -160,7 +160,7 @@
   - MagazineBoxPistolAP
   - MagazineBoxRifleAP
   - MagazineBoxLightRifleAP
-  - UniversalMagazineAP
+  - LightRifleHeavyMagazineAP
 
 - type: technology
   id: ConcentratedLaserWeaponry

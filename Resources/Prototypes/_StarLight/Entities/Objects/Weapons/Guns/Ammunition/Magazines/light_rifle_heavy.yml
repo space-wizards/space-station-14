@@ -1,17 +1,17 @@
 - type: entity
-  id: UniversalMagazineBase
-  name: ".30 Universal Magazine Box"
-  parent: BaseMagazineLightRifle
+  id: LightRifleHeavyBase
+  name: ".30 Magazine Box"
+  parent: LightRifleHeavyBase
   components:
   - type: Tag
     tags:
-      - UniversalMagazine
+      - LightRifleHeavy
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleSP
     capacity: 80
   - type: Item
   - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/universalmag30.rsi
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/lightrifleheavy.rsi
   - type: MagazineVisuals
     magState: mag
     steps: 8
@@ -19,14 +19,14 @@
   - type: Appearance
 
 - type: entity
-  id: UniversalMagazineIncendiary
-  name: "Universal Magazine Box (.30 rifle incendiary)"
-  parent: UniversalMagazineBase
+  id: LightRifleHeavyMagazineIncendiary
+  name: "Magazine Box (.30 rifle incendiary)"
+  parent: LightRifleHeavyBase
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleIncendiary
   - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/universalmag30incendiary.rsi
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/lightrifleheavyincendiary.rsi
   - type: MagazineVisuals
     magState: mag
     steps: 8
@@ -34,10 +34,10 @@
   - type: Appearance
 
 - type: entity
-  id: UniversalMagazineEmpty
-  name: "Universal Magazine Box (.30 rifle any)"
+  id: LightRifleHeavyMagazineEmpty
+  name: "Magazine Box (.30 rifle any)"
   suffix: empty
-  parent: UniversalMagazineBase
+  parent: LightRifleHeavyBase
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -47,14 +47,14 @@
       map: ["enum.GunVisualLayers.Base"]
 
 - type: entity
-  id: UniversalMagazineUranium
-  name: "Universal Magazine Box (.30 rifle uranium)"
-  parent: UniversalMagazineBase
+  id: LightRifleHeavyMagazineUranium
+  name: "Magazine Box (.30 rifle uranium)"
+  parent: LightRifleHeavyBase
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleUranium
   - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/universalmag30uranium.rsi
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/lightrifleheavyuranium.rsi
   - type: MagazineVisuals
     magState: mag
     steps: 8
@@ -62,14 +62,14 @@
   - type: Appearance
 
 - type: entity
-  id: UniversalMagazineSP
-  name: "Universal Magazine Box (.30 rifle SP)"
-  parent: UniversalMagazineBase
+  id: LightRifleHeavyMagazineSP
+  name: "Magazine Box (.30 rifle SP)"
+  parent: LightRifleHeavyBase
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleSP
   - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/universalmag30sp.rsi
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/lightrifleheavysp.rsi
   - type: MagazineVisuals
     magState: mag
     steps: 8
@@ -77,14 +77,14 @@
   - type: Appearance
 
 - type: entity
-  id: UniversalMagazineAP
-  name: "Universal Magazine Box (.30 rifle AP)"
-  parent: UniversalMagazineBase
+  id: LightRifleHeavyMagazineAP
+  name: "Magazine Box (.30 rifle AP)"
+  parent: LightRifleHeavyBase
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleAP
   - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/universalmag30ap.rsi
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/lightrifleheavyap.rsi
   - type: MagazineVisuals
     magState: mag
     steps: 8
@@ -92,14 +92,14 @@
   - type: Appearance
 
 - type: entity
-  id: UniversalMagazineFMJ
-  name: "Universal Magazine Box (.30 rifle FMJ)"
-  parent: UniversalMagazineBase
+  id: LightRifleHeavyMagazineFMJ
+  name: "Magazine Box (.30 rifle FMJ)"
+  parent: LightRifleHeavyBase
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleFMJ
   - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/universalmag30fmj.rsi
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/lightrifleheavyfmj.rsi
   - type: MagazineVisuals
     magState: mag
     steps: 8
@@ -107,14 +107,14 @@
   - type: Appearance
 
 - type: entity
-  id: UniversalMagazineHP
-  name: "Universal Magazine Box (.30 rifle HP)"
-  parent: UniversalMagazineBase
+  id: LightRifleHeavyMagazineHP
+  name: "Magazine Box (.30 rifle HP)"
+  parent: LightRifleHeavyBase
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleHP
   - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/universalmag30hp.rsi
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/lightrifleheavyhp.rsi
   - type: MagazineVisuals
     magState: mag
     steps: 8

@@ -26,10 +26,10 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: UniversalMagazineBase
+        startingItem: LightRifleHeavyMagazineSP
         whitelist:
           tags:
-            - UniversalMagazine
+            - LightRifleHeavy
       gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifleSP

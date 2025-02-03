@@ -195,9 +195,9 @@
       amount: 3
     - id: WeaponLightMachineGunM492
       amount: 1
-    - id: UniversalMagazineSP
+    - id: LightRifleHeavyMagazineSP
       amount: 1
-    - id: UniversalMagazineHP
+    - id: LightRifleHeavyMagazineHP
       amount: 1
 
 - type: entity

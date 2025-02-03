@@ -73,36 +73,36 @@
 
 - type: latheRecipe
   parent: BaseEmptyAmmoRecipe
-  id: UniversalMagazineEmpty
-  result: UniversalMagazineEmpty
+  id: LightRifleHeavyMagazineEmpty
+  result: LightRifleHeavyMagazineEmpty
   materials:
     Steel: 25
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
-  id: UniversalMagazineSP
-  result: UniversalMagazineSP
+  id: LightRifleHeavyMagazineSP
+  result: LightRifleHeavyMagazineSP
   materials:
     Steel: 1412
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
-  id: UniversalMagazineHP
-  result: UniversalMagazineHP
+  id: LightRifleHeavyMagazineHP
+  result: LightRifleHeavyMagazineHP
   materials:
     Steel: 1412
     
 - type: latheRecipe
   parent: BaseAmmoRecipe
-  id: UniversalMagazineFMJ
-  result: UniversalMagazineFMJ
+  id: LightRifleHeavyMagazineFMJ
+  result: LightRifleHeavyMagazineFMJ
   materials:
     Steel: 1412
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
-  id: UniversalMagazineUranium
-  result: UniversalMagazineUranium
+  id: LightRifleHeavyMagazineUranium
+  result: LightRifleHeavyMagazineUranium
   materials:
     Steel: 25
     Plastic: 1080
@@ -110,16 +110,16 @@
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
-  id: UniversalMagazineIncendiary
-  result: UniversalMagazineIncendiary
+  id: LightRifleHeavyMagazineIncendiary
+  result: LightRifleHeavyMagazineIncendiary
   materials:
     Steel: 25
     Plastic: 1350
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
-  id: UniversalMagazineAP
-  result: UniversalMagazineAP
+  id: LightRifleHeavyMagazineAP
+  result: LightRifleHeavyMagazineAP
   materials:
     Steel: 1312
     Uranium: 1312
