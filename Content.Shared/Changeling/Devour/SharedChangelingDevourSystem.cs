@@ -227,23 +227,6 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     protected virtual void RipClothing(EntityUid uid, EntityUid item, ButcherableComponent butcherable) { }
 
 }
-/// <summary>
-/// Raised to check if Changelings devour attempt should be blocked, based on if the value is over the protectionThreshold
-/// </summary>
-public sealed class ChangelingDevourAttemptEvent : EntityEventArgs, IInventoryRelayEvent
-{
-    public SlotFlags TargetSlots { get; }
-
-    public readonly double ProtectionThreshold;
-    public bool Protection;
-
-    public ChangelingDevourAttemptEvent(double protectionThreshold, SlotFlags slots = ~SlotFlags.POCKET)
-    {
-        TargetSlots = slots;
-        ProtectionThreshold = protectionThreshold;
-    }
-
-}
 
 public sealed partial class ChangelingDevourActionEvent : EntityTargetActionEvent
 {

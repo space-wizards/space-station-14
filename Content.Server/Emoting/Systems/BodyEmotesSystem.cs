@@ -20,9 +20,7 @@ public sealed class BodyEmotesSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, BodyEmotesComponent component, ComponentStartup args)
     {
-        if (component.SoundsId == null)
-            return;
-        _proto.TryIndex(component.SoundsId, out component.Sounds);
+        LoadSounds(uid, component);
     }
 
     private void OnEmote(EntityUid uid, BodyEmotesComponent component, ref EmoteEvent args)
@@ -46,15 +44,10 @@ public sealed class BodyEmotesSystem : EntitySystem
         return _chat.TryPlayEmoteSound(uid, component.Sounds, emote);
     }
 
-    /// <summary>
-    /// Clone another body Emotes Component, useful for assuming someone elses identity or otherwise changing your
-    /// species
-    /// </summary>
-    /// <param name="component">The original BodyEmotesComponent</param>
-    /// <param name="clone">The Target BodyEmotesComponent state</param>
-    public static void Replace(BodyEmotesComponent component, BodyEmotesComponent clone)
+    public void LoadSounds(EntityUid uid, BodyEmotesComponent component)
     {
-        component.Sounds = clone.Sounds;
-        component.SoundsId = clone.SoundsId;
+        if (component.SoundsId == null)
+            return;
+        _proto.TryIndex(component.SoundsId, out component.Sounds);
     }
 }

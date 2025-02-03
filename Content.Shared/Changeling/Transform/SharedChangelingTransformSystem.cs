@@ -18,6 +18,7 @@ using Content.Shared.Wagging;
 using Robust.Shared.Audio;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.Manager;
 
 
@@ -145,8 +146,9 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         // Use the serialization manager to do the copying.
         _serializationManager.CopyTo(source.Comp, ref destination, notNullableOverride: true);
 
-        // Mark the destination as dirty so it's serialized.
-        Dirty(target, destination);
+        // Mark the destination as dirty so it's serialized.. if it's even networked
+        if(Attribute.GetCustomAttribute(typeof(T), typeof(NetworkedComponentAttribute)) != null)
+            Dirty(target, destination);
 
         return true;
     }
@@ -162,7 +164,6 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
         if (!TryComp<VocalComponent>(ent, out var currentVocals)
            || !TryComp<DnaComponent>(ent, out var currentDna)
-           || !TryComp<TypingIndicatorComponent>(ent, out var currentTypingIndicator)
            || !HasComp<GrammarComponent>(ent))
             return;
 
@@ -174,6 +175,10 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
             return;
 
         //Handle species with the ability to wag their tail
+        // Why is wagging like this, i can't query the prototype because what if there's things we don't want
+        // wagging isn't special, it's just a component, i can't check for special things like this... it's not an emote
+        //
+        // pukeko: DAMNATION!!!
         if (TryComp<WaggingComponent>(ent, out var waggingComp))
         {
             _actionsSystem.RemoveAction(ent, waggingComp.ActionEntity);
@@ -187,7 +192,6 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         }
 
         _humanoidAppearanceSystem.CloneAppearance(targetIdentity, args.User);
-
         TransformBodyEmotes(ent, targetIdentity);
 
         currentDna.DNA = targetConsumedDna.DNA;
@@ -205,7 +209,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
         // Make sure the target Identity has a Typing indicator, if the identity is human or dwarf and never had a mind it'll never have a typingIndicatorComponent
         EnsureComp<TypingIndicatorComponent>(targetIdentity, out var targetTypingIndicator);
-        SharedTypingIndicatorSystem.Replace(currentTypingIndicator, targetTypingIndicator);
+        CopyComp<TypingIndicatorComponent>((targetIdentity, targetTypingIndicator), ent, out _);
 
         //TODO: While it would be splendid to be able to provide the original owning player who was playing the targetIdentity, it's not exactly feasible to do
         _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player}  successfully transformed into \"{Name(targetIdentity)}\"");

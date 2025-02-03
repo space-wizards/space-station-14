@@ -1,15 +1,8 @@
-using Content.Server.Actions;
 using Content.Server.Emoting.Components;
 using Content.Server.Emoting.Systems;
 using Content.Server.IdentityManagement;
-using Content.Shared.Changeling.Devour;
 using Content.Shared.Changeling.Transform;
-using Content.Shared.Forensics;
-using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement.Components;
-using Content.Shared.Prototypes;
-using Content.Shared.Speech.Components;
-using Content.Shared.Wagging;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Enums;
@@ -22,7 +15,7 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
     [Dependency] private readonly GrammarSystem _grammarSystem = default!;
     [Dependency] private readonly IdentitySystem _identitySystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-
+    [Dependency] private readonly BodyEmotesSystem _bodyEmotesSystem = default!;
     public override void TransformGrammarSet(EntityUid uid, Gender gender)
     {
         //How to stop quantum gender, a bug where the Examine pronoun will mispredict 100% of the time. Need to SPECIFICALLY
@@ -43,12 +36,11 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
 
     protected override void TransformBodyEmotes(EntityUid uid, EntityUid target)
     {
-        if (!TryComp<BodyEmotesComponent>(target, out var targetBodyEmotes)
-            || !TryComp<BodyEmotesComponent>(uid, out var existingBodyEmotes))
+        if (!TryComp<BodyEmotesComponent>(target, out var targetBodyEmotes))
             return;
-
-        BodyEmotesSystem.Replace(existingBodyEmotes, targetBodyEmotes);
-
+        if(!CopyComp<BodyEmotesComponent>((target, targetBodyEmotes), uid, out var bodyEmotes))
+            return;
+        _bodyEmotesSystem.LoadSounds(target, bodyEmotes);
     }
     protected override void StartSound(Entity<ChangelingTransformComponent> ent, SoundSpecifier? sound)
     {
