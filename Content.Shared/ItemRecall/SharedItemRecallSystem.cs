@@ -1,10 +1,9 @@
 using Content.Shared.Actions;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
-using Robust.Shared.Network;
+using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 
 namespace Content.Shared.ItemRecall;
@@ -14,6 +13,8 @@ namespace Content.Shared.ItemRecall;
 /// </summary>
 public abstract partial class SharedItemRecallSystem : EntitySystem
 {
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly SharedPvsOverrideSystem _pvs = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
@@ -102,7 +103,7 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
         if (actionOwner == null)
             return;
 
-        AddToPVSOverride(item, actionOwner.Value);
+        AddToPvsOverride(item, actionOwner.Value);
 
         var marker = AddComp<RecallMarkerComponent>(item);
         ent.Comp.MarkedEntity = item;
@@ -130,7 +131,7 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
             if (instantAction.AttachedEntity != null)
             {
                 _popups.PopupClient(Loc.GetString("item-recall-item-unmark", ("item", item)), instantAction.AttachedEntity.Value, instantAction.AttachedEntity.Value, PopupType.MediumCaution);
-                RemoveFromPVSOverride(item, instantAction.AttachedEntity.Value);
+                RemoveFromPvsOverride(item, instantAction.AttachedEntity.Value);
             }
 
             action.MarkedEntity = null;
@@ -168,13 +169,19 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
         }
     }
 
-    protected virtual void AddToPVSOverride(EntityUid uid, EntityUid user)
+    private void AddToPvsOverride(EntityUid uid, EntityUid user)
     {
+        if (!_player.TryGetSessionByEntity(user, out var mindSession))
+            return;
 
+        _pvs.AddSessionOverride(uid, mindSession);
     }
 
-    protected virtual void RemoveFromPVSOverride(EntityUid uid, EntityUid user)
+    private void RemoveFromPvsOverride(EntityUid uid, EntityUid user)
     {
+        if (!_player.TryGetSessionByEntity(user, out var mindSession))
+            return;
 
+        _pvs.RemoveSessionOverride(uid, mindSession);
     }
 }
