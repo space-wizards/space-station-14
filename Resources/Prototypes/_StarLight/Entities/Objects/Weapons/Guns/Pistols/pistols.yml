@@ -91,3 +91,42 @@
         whitelist:
           tags:
             - CartridgeMagnum
+            
+- type: entity
+  name: golden mk 58
+  parent: [WeaponPistolMk58, BaseRestrictedContraband]
+  id: WeaponPistolGoldenMk58
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/golden_mk58.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/golden_mk58.rsi
+    
+- type: entity
+  name: enforcer
+  parent: [BaseWeaponPistol, BaseRestrictedContraband]
+  id: WeaponPistolEnforcer
+  description: A pistol of modern design.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/enforcer.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    fireRate: 6
+    availableModes:
+    - SemiAuto
+  - type: ChamberMagazineAmmoProvider
+    availablePrefixes:
+    - ""
+    - redgrip
+    - red
+    - tangrip
+    - green
+    - black
+    - tan
+    - grey
+    - greengrip

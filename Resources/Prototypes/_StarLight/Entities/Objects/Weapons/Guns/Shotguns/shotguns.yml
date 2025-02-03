@@ -121,9 +121,11 @@
   - type: GunRequiresWield
   - type: Gun
     spread: 15
-    fireRate: 2
-    selectedMode: FullAuto
+    fireRate: 3
+    selectedMode: Burst
+    shotsPerBurst: 3
     availableModes:
+    - Burst
     - FullAuto
   - type: ItemSlots
     slots:
