@@ -220,6 +220,11 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
+  - type: OxygenCylinder  # ANC
+      maxOxygen: 100
+      currentOxygen: 100
+      oxygenUseRate: 0.1
+  - type: OxygenBarDisplay  # ANC
 
 # Used for mobs that have a bloodstream
 - type: entity

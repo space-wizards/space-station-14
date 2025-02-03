@@ -1,0 +1,5 @@
+<Control xmlns="https://schemas.robust.net/controls">
+    <BoxContainer Name="OxygenBarContainer" VerticalAlignment="Top" HorizontalAlignment="Center">
+        <ProgressBar Name="OxygenBar" MinValue="0" MaxValue="100" Value="100" Width="100" Height="10"/>
+    </BoxContainer>
+</Control>
