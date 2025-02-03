@@ -138,7 +138,7 @@
 - type: entity
   name: Sentiel
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
-  id: WeaponShotgunSentiel
+  id: WeaponShotgunEnforcer
   description: A premium combat shotgun based on the Kammerer design, featuring an upgraded clip capacity. .50 shotgun shells.
   components:
   - type: Gun
