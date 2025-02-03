@@ -26,7 +26,6 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
 
         SubscribeLocalEvent<ItemRecallComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ItemRecallComponent, OnItemRecallActionEvent>(OnItemRecallActionUse);
-        SubscribeLocalEvent<RecallMarkerComponent, RecallItemEvent>(OnItemRecall);
 
         SubscribeLocalEvent<RecallMarkerComponent, ComponentShutdown>(OnRecallMarkerShutdown);
     }
@@ -63,18 +62,15 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
             return;
         }
 
-        var ev = new RecallItemEvent();
-        RaiseLocalEvent(ent.Comp.MarkedEntity.Value, ref ev);
+        RecallItem(ent.Comp.MarkedEntity.Value);
         args.Handled = true;
     }
 
-    private void OnItemRecall(Entity<RecallMarkerComponent> ent, ref RecallItemEvent args)
+    private void RecallItem(Entity<RecallMarkerComponent?> ent)
     {
-        RecallItem(ent);
-    }
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return;
 
-    private void RecallItem(Entity<RecallMarkerComponent> ent)
-    {
         if (!TryComp<InstantActionComponent>(ent.Comp.MarkedByAction, out var instantAction))
             return;
 
