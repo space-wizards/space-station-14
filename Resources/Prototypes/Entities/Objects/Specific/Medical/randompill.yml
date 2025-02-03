@@ -17,7 +17,7 @@
       reagents:
       - Cognizine
     - quantity: 10
-      weight: 1   #It goes over the hundred limit for simplicity sake
+      weight: 1
       reagents:
       - Vestine
   # Good - weight: 25
