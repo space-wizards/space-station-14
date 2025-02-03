@@ -1036,7 +1036,7 @@
   id: SyringeStimulants
   components:
   - type: Label
-    currentLabel: reagent-name-hyperzine
+    currentLabel: reagent-name-stimulants
   - type: SolutionContainerManager
     solutions:
       injector:

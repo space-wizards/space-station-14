@@ -7,6 +7,7 @@
 - type: stack
   id: Capacitor
   name: capacitor
+  icon: { sprite: /Textures/Objects/Misc/stock_parts.rsi, state: capacitor }
   spawn: CapacitorStockPart
   maxCount: 10
 

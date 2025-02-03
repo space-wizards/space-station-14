@@ -61,8 +61,6 @@
   materials:
     Steel: 1500
 
-# Generic
-
 - type: latheRecipe
   parent: BaseBorgLimbRecipe
   id: LeftArmBorg
@@ -92,162 +90,6 @@
   parent: BaseBorgLimbRecipe
   id: TorsoBorg
   result: TorsoBorg
-
-# Engineer
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: LeftArmBorgEngineer
-  result: LeftArmBorgEngineer
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: RightArmBorgEngineer
-  result: RightArmBorgEngineer
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: LeftLegBorgEngineer
-  result: LeftLegBorgEngineer
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: RightLegBorgEngineer
-  result: RightLegBorgEngineer
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: HeadBorgEngineer
-  result: HeadBorgEngineer
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: TorsoBorgEngineer
-  result: TorsoBorgEngineer
-
-# Medical
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: LeftArmBorgMedical
-  result: LeftArmBorgMedical
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: RightArmBorgMedical
-  result: RightArmBorgMedical
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: LeftLegBorgMedical
-  result: LeftLegBorgMedical
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: RightLegBorgMedical
-  result: RightLegBorgMedical
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: HeadBorgMedical
-  result: HeadBorgMedical
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: TorsoBorgMedical
-  result: TorsoBorgMedical
-
-# Mining
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: LeftArmBorgMining
-  result: LeftArmBorgMining
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: RightArmBorgMining
-  result: RightArmBorgMining
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: LeftLegBorgMining
-  result: LeftLegBorgMining
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: RightLegBorgMining
-  result: RightLegBorgMining
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: HeadBorgMining
-  result: HeadBorgMining
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: TorsoBorgMining
-  result: TorsoBorgMining
-
-# Service
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: LeftArmBorgService
-  result: LeftArmBorgService
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: RightArmBorgService
-  result: RightArmBorgService
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: LeftLegBorgService
-  result: LeftLegBorgService
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: RightLegBorgService
-  result: RightLegBorgService
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: HeadBorgService
-  result: HeadBorgService
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: TorsoBorgService
-  result: TorsoBorgService
-
-# Janitor
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: LeftLegBorgJanitor
-  result: LeftLegBorgJanitor
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: RightLegBorgJanitor
-  result: RightLegBorgJanitor
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: HeadBorgJanitor
-  result: HeadBorgJanitor
-  materials:
-    Steel: 500
-    Glass: 200
-
-- type: latheRecipe
-  parent: BaseBorgLimbRecipe
-  id: TorsoBorgJanitor
-  result: TorsoBorgJanitor
-  materials:
-    Steel: 500
-    Glass: 200
 
 # Parts
 
@@ -304,23 +146,6 @@
   id: BorgModuleTool
   result: BorgModuleTool
 
-# Mining Modules
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleAppraisal
-  result: BorgModuleAppraisal
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleMining
-  result: BorgModuleMining
-
-- type: latheRecipe
-  parent: BaseGoldBorgModuleRecipe
-  id: BorgModuleGrapplingGun
-  result: BorgModuleGrapplingGun
-
 # Engineering Modules
 
 - type: latheRecipe
@@ -328,27 +153,7 @@
   id: BorgModuleAdvancedTool
   result: BorgModuleAdvancedTool
 
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleConstruction
-  result: BorgModuleConstruction
-
-- type: latheRecipe
-  parent: BaseGoldBorgModuleRecipe
-  id: BorgModuleRCD
-  result: BorgModuleRCD
-
 # Janitor Modules
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleLightReplacer
-  result: BorgModuleLightReplacer
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleCleaning
-  result: BorgModuleCleaning
 
 - type: latheRecipe
   parent: BaseGoldBorgModuleRecipe
@@ -356,16 +161,6 @@
   result: BorgModuleAdvancedCleaning
 
 # Medical Modules
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleDiagnosis
-  result: BorgModuleDiagnosis
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleTreatment
-  result: BorgModuleTreatment
 
 - type: latheRecipe
   parent: BaseGoldBorgModuleRecipe
@@ -393,16 +188,6 @@
 
 - type: latheRecipe
   parent: BaseBorgModuleRecipe
-  id: BorgModuleService
-  result: BorgModuleService
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleMusique
-  result: BorgModuleMusique
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
   id: BorgModuleGardening
   result: BorgModuleGardening
 
@@ -410,8 +195,3 @@
   parent: BaseBorgModuleRecipe
   id: BorgModuleHarvesting
   result: BorgModuleHarvesting
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleClowning
-  result: BorgModuleClowning
