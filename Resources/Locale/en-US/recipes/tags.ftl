@@ -68,6 +68,7 @@ construction-graph-tag-match-stick = match stick
 construction-graph-tag-potato = a potato
 construction-graph-tag-wheat-bushel = wheat bushel
 construction-graph-tag-corgi-hide = corgi hide
+construction-graph-tag-flash = flash
 
 # toys
 construction-graph-tag-rubber-ducky = a rubber ducky

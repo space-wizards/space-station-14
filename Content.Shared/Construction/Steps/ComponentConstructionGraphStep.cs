@@ -26,7 +26,7 @@ namespace Content.Shared.Construction.Steps
                     ("componentName", Component))// Terrible.
                 : Loc.GetString(
                     "construction-insert-exact-entity",
-                    ("entityName", Name)));
+                    ("entityName", Loc.GetString(Name))));
         }
     }
 }
