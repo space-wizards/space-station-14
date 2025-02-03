@@ -144,6 +144,7 @@
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
   - type: ChamberMagazineAmmoProvider
+    autoEject: true
   - type: MagazineVisuals
     magState: mag
     steps: 1
