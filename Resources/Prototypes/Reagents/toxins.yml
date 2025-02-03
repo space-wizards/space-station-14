@@ -73,7 +73,7 @@
         conditions:
         - !type:ReagentThreshold
           reagent: ChloralHydrate
-          min: 25
+          min: 26
         key: ForcedSleep
         component: ForcedSleeping
         refresh: false
