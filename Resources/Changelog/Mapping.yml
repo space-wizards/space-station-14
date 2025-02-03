@@ -1,0 +1,7 @@
+﻿Order: 1
+Entries:
+  - author: ArtisticRoomba
+    changes:
+      - {message: 'The mapping changelog has been added! This primarily serves as a way to make players aware of large changes that fix broken maps, revamp sections, or disrupt previous gameplay.', type: Add}
+    id: 1
+    time: '2025-02-03T01:29:24.112Z'
