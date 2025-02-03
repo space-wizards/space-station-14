@@ -215,7 +215,7 @@
   components:
   - type: StorageFill
     contents:
-    - id: WeaponShotgunSentiel
+    - id: WeaponShotgunEnforcer
       amount: 2
     - id: WeaponShotgunRiot
       amount: 1

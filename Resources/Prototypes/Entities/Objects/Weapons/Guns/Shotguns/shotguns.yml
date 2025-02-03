@@ -154,7 +154,7 @@
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
 
 - type: entity
-  parent: WeaponShotgunSentiel
+  parent: WeaponShotgunEnforcer
   id: WeaponShotgunSentielRubber
   suffix: Non-Lethal
   components:
