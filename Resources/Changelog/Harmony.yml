@@ -1081,3 +1081,11 @@ Entries:
     changes:
     - type: Fix
       message: Made Bolas immune to explosions.
+  - id: 338
+    author: NakataRin
+    time: '2025-02-01T23:24:10.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/338
+    changes:
+    - type: Add
+      message: Added mantis gloves. They look like normal latex gloves, but hide deadly
+        blades inside
