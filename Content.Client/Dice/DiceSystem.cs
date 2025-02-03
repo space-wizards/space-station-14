@@ -5,9 +5,9 @@ namespace Content.Client.Dice;
 
 public sealed class DiceSystem : SharedDiceSystem
 {
-    protected override void UpdateVisuals(EntityUid uid, DiceComponent? die = null)
+    protected override void UpdateVisuals(Entity<DiceComponent> entity)
     {
-        if (!Resolve(uid, ref die) || !TryComp(uid, out SpriteComponent? sprite))
+        if (!TryComp(entity, out SpriteComponent? sprite))
             return;
 
         // TODO maybe just move each diue to its own RSI?
@@ -16,6 +16,6 @@ public sealed class DiceSystem : SharedDiceSystem
             return;
 
         var prefix = state.Substring(0, state.IndexOf('_'));
-        sprite.LayerSetState(0, $"{prefix}_{die.CurrentValue}");
+        sprite.LayerSetState(0, $"{prefix}_{entity.Comp.CurrentValue}");
     }
 }
