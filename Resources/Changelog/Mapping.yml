@@ -30,7 +30,7 @@ Entries:
     type: Fix
   id: 5
   time: '2025-01-26T12:00:00Z'
-- author: southbridge-fur
+- author: Southbridge
   changes:
   - message: On many stations, uncleanable dirt decals have been made cleanable.
     type: Fix
