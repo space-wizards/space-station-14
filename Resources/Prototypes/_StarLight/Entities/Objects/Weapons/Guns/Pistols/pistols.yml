@@ -110,11 +110,6 @@
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Pistols/enforcer.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 6
     availableModes:
@@ -139,11 +134,6 @@
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Pistols/sp8.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
     fireRate: 5
     availableModes:
@@ -177,3 +167,32 @@
         whitelist:
           tags:
             - CartridgePistolSP8
+            
+- type: entity
+  name: sp-8t
+  parent: WeaponPistolSP8
+  id: WeaponPistolSP8T
+  components:
+  - type: Gun
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/sp8t.ogg
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/sp8t.rsi
+  - type: ChamberMagazineAmmoProvider
+    availablePrefixes:
+    - ""
+    - dust
+    
+- type: entity
+  name: sp-8ar
+  parent: WeaponPistolSP8
+  id: WeaponPistolSP8AR
+  components:
+  - type: Gun
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/sp8ar.ogg
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/sp8ar.rsi
+  - type: ChamberMagazineAmmoProvider
+    availablePrefixes:
+    - ""
