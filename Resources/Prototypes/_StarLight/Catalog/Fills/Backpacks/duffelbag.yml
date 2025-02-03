@@ -13,3 +13,29 @@
       - id: ScalpelAbductor
       - id: BoneGelAbductor
       - id: BoneSetterAbductor
+      
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledMinotaurShotgun
+  name: Minotaur bundle
+  description: "Lean and mean: Contains smooth, powerful, highly illegal Shotgun, a 5 12g buckshot drums."
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponShotgunMinotaur
+      - id: MagazineShotgun
+      - id: MagazineShotgun
+      - id: MagazineShotgun
+      - id: MagazineShotgun
+      
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledDeagle
+  name: Desert Eagle bundle
+  description: "Contains high damage Desert Eagle, a 3 magnum magazines."
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponPistolDeagle
+      - id: MagazineShotgun
+      - id: MagazineShotgun

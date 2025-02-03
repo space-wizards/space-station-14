@@ -34,6 +34,9 @@
     eyes: ClothingEyesGlassesSecurity
     id: WardenPDA
     ears: ClothingHeadsetSecurity
+    pocket1: WeaponPistolSP8
   storage:
     back:
     - Flash
+    - MagazinePistol40Nr
+    - MagazinePistol40Nr

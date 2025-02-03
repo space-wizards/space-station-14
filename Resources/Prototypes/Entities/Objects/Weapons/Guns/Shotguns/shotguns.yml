@@ -1,7 +1,7 @@
 - type: entity
   name: BaseWeaponShotgun
   parent: BaseItem
-  id: BaseWeaponShotgun
+  id: BaseWeaponShotgunAny
   description: A rooty tooty point and shooty.
   abstract: true
   components:
@@ -33,6 +33,18 @@
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: StaticPrice
+    price: 500
+    
+- type: entity
+  parent: BaseWeaponShotgunAny
+  id: BaseWeaponShotgun
+  abstract: true
+  components:
   - type: BallisticAmmoProvider
     whitelist:
       tags:
@@ -41,17 +53,10 @@
     proto: ShellShotgun
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
-  - type: StaticPrice
-    price: 500
 
 - type: entity
   name: Bulldog
-  # Don't parent to BaseWeaponShotgun because it differs significantly
-  parent: [BaseItem, BaseGunWieldable, BaseSyndicateContraband]
+  parent: [BaseWeaponShotgunAny, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponShotgunBulldog
   description: It's a magazine-fed shotgun designed for close quarters combat. Uses .50 shotgun shells.
   components:
@@ -63,25 +68,16 @@
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: Large
+    sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
-    quickEquip: false
-    slots:
-    - Back
-    - suitStorage
-  - type: AmmoCounter
-  - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
+  - type: GunRequiresWield
   - type: Gun
     spread: 15
     fireRate: 2
     selectedMode: FullAuto
     availableModes:
     - FullAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -98,14 +94,12 @@
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
-  - type: MagazineAmmoProvider
+  - type: ChamberMagazineAmmoProvider
   - type: MagazineVisuals
     magState: mag
     steps: 1
     zeroVisible: true
   - type: Appearance
-  - type: StaticPrice
-    price: 500
 
 - type: entity
   name: double-barreled shotgun
@@ -142,25 +136,26 @@
     proto: ShellShotgunBeanbag
 
 - type: entity
-  name: Enforcer
+  name: Sentiel
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
-  id: WeaponShotgunEnforcer
+  id: WeaponShotgunSentiel
   description: A premium combat shotgun based on the Kammerer design, featuring an upgraded clip capacity. .50 shotgun shells.
   components:
   - type: Gun
     spread: 5
+    pump: true
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/sentiel.rsi
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/sentiel.rsi
   - type: Item
-    sprite: Objects/Weapons/Guns/Shotguns/enforcer_inhands_64x.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/sentiel_inhands_64x.rsi
   - type: BallisticAmmoProvider
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
 
 - type: entity
-  parent: WeaponShotgunEnforcer
-  id: WeaponShotgunEnforcerRubber
+  parent: WeaponShotgunSentiel
+  id: WeaponShotgunSentielRubber
   suffix: Non-Lethal
   components:
   - type: BallisticAmmoProvider
@@ -179,6 +174,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/pump_inhands_64x.rsi
   - type: Gun
     spread: 15
+    pump: true
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: Clothing

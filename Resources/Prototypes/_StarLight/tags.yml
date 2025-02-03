@@ -44,3 +44,9 @@
   
 - type: Tag
   id: ShowWires
+  
+- type: Tag
+  id: CartridgePistolSP8
+  
+- type: Tag
+  id: MagazinePistolSP8

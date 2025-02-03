@@ -276,6 +276,20 @@
     sprite:
       sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
       state: ap
+      
+- type: hitscan
+  id: BulletPistolTrace40Nr
+  parent: BulletTrace
+  staminaDamage: 20
+  damage:
+    types:
+      Blunt: 25
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: practice
+  pierceChance: 0.1
+  ricochetChance: 0.2
 
 ### caseless rifle <<<<<<<<<<<<<<<
 
