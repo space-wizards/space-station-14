@@ -196,3 +196,16 @@
   - type: ChamberMagazineAmmoProvider
     availablePrefixes:
     - ""
+    
+- type: entity
+  name: stechkin pistol
+  parent: [WeaponPistolMk58, BaseRestrictedContraband]
+  id: WeaponPistolStechkin
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/stechkin.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/stechkin.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/1suppres.ogg
