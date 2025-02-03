@@ -13,11 +13,11 @@
       - Ichor
       - Necrosol
     - quantity: 5
-      weight: 5
+      weight: 4
       reagents:
       - Cognizine
     - quantity: 10
-      weight: 0.1   #It goes over the hundred limit for simplicity sake
+      weight: 1   #It goes over the hundred limit for simplicity sake
       reagents:
       - Vestine
   # Good - weight: 25
@@ -68,7 +68,6 @@
       - Razorium
       - Potassium
       - Phlogiston
-      - GreyMatter
     - quantity: 5
       weight: 4
       reagents:
