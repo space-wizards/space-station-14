@@ -128,9 +128,10 @@
   - type: SolutionContainerManager
   - type: Produce
     seedId: papercane
-  - type: Log
-    spawnedPrototype: SheetPaper1
-    spawnCount: 2
+  - type: Sliceable
+    spawnedEntities:
+    - id: SheetPaper1
+      amount: 2
 
 - type: entity
   parent: FoodProduceBase
@@ -180,7 +181,10 @@
         Blunt: 10
   - type: Produce
     seedId: towercap
-  - type: Log
+  - type: Sliceable
+    spawnedEntities:
+    - id: MaterialWoodPlank1
+      amount: 2
 
 - type: entity
   name: steel-cap log
@@ -197,9 +201,10 @@
         Blunt: 12
   - type: Produce
     seedId: steelcap
-  - type: Log
-    spawnedPrototype: SheetSteel1
-    spawnCount: 1
+  - type: Sliceable
+    spawnedEntities:
+    - id: SheetSteel1
+      amount: 1
 
 - type: entity
   name: nettle
@@ -2448,9 +2453,10 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
-  - type: Log
-    spawnedPrototype: MaterialCotton1
-    spawnCount: 2
+  - type: Sliceable
+    spawnedEntities:
+    - id: MaterialCotton1
+      amount: 2
   - type: Produce
     seedId: cotton
   - type: Tag
@@ -2479,9 +2485,10 @@
           Quantity: 5
         - ReagentId: Phlogiston
           Quantity: 5
-  - type: Log
-    spawnedPrototype: MaterialPyrotton1
-    spawnCount: 2
+  - type: Sliceable
+    spawnedEntities:
+    - id: MaterialPyrotton1
+      amount: 2
   - type: Produce
     seedId: pyrotton
   - type: Tag

@@ -123,7 +123,9 @@
   - type: Grammar
     attributes:
       gender: male
-  - type: Sharp
+  - type: Tool
+    qualities:
+    - Slicing
 
 - type: entity
   id: MobRatKingBuff

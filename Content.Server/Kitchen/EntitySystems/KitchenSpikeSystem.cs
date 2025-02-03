@@ -17,6 +17,8 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
+using Content.Shared.Tools.Components;
+using Content.Shared.Tools.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -38,6 +40,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
         [Dependency] private readonly SharedSuicideSystem _suicide = default!;
+        [Dependency] private readonly SharedToolSystem _toolSystem = default!;
 
         public override void Initialize()
         {
@@ -169,13 +172,13 @@ namespace Content.Server.Kitchen.EntitySystems
         }
 
         private bool TryGetPiece(EntityUid uid, EntityUid user, EntityUid used,
-            KitchenSpikeComponent? component = null, SharpComponent? sharp = null)
+            KitchenSpikeComponent? component = null, ToolComponent? tool = null)
         {
             if (!Resolve(uid, ref component) || component.PrototypesToSpawn == null || component.PrototypesToSpawn.Count == 0)
                 return false;
 
             // Is using knife
-            if (!Resolve(used, ref sharp, false) )
+            if (!Resolve(used, ref tool, false) || !_toolSystem.HasQuality(used, "Slicing"))
             {
                 return false;
             }

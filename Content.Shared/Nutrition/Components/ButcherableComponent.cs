@@ -1,5 +1,7 @@
 using Content.Shared.Storage;
+using Content.Shared.Tools;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.Components
 {
@@ -9,6 +11,12 @@ namespace Content.Shared.Nutrition.Components
     [RegisterComponent, NetworkedComponent]
     public sealed partial class ButcherableComponent : Component
     {
+        /// <summary>
+        /// The quality required to butcher the entity in question
+        /// </summary>
+        [DataField]
+        public ProtoId<ToolQualityPrototype> ToolQuality = "Slicing";
+
         [DataField("spawned", required: true)]
         public List<EntitySpawnEntry> SpawnedEntities = new();
 

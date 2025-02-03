@@ -7,7 +7,6 @@
   - type: Tag
     tags:
     - FireAxe
-  - type: Sharp
   - type: Execution
     doAfterDuration: 4.0
   - type: Sprite
@@ -41,6 +40,7 @@
   - type: Tool
     qualities:
       - Prying
+      - Slicing
   - type: ToolTileCompatible
   - type: Prying
   - type: UseDelay

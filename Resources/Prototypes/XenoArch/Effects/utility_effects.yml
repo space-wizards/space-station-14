@@ -132,7 +132,9 @@
         Blunt: 4
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
-  - type: Sharp
+  - type: Tool
+    qualities:
+    - Slicing
 
 - type: artifactEffect
   id: EffectPowerGen20K

@@ -32,7 +32,9 @@
   id: CaneBlade
   description: A sharp blade with a cane shaped hilt.
   components:
-  - type: Sharp
+  - type: Tool
+    qualities:
+    - Slicing
   - type: Sprite
     sprite: Objects/Weapons/Melee/cane_blade.rsi
     state: icon

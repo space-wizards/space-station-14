@@ -16,6 +16,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Random;
 using Content.Shared.Tag;
+using Content.Shared.Tools.Components;
+using Content.Shared.Tools.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -39,7 +41,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-
+    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
 
     public const float HydroponicsSpeedMultiplier = 1f;
     public const float HydroponicsConsumptionMultiplier = 2f;
@@ -287,7 +289,8 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (HasComp<SharpComponent>(args.Used))
+        if (TryComp<ToolComponent>(args.Used, out var toolComponent) &&
+            _toolSystem.HasQuality(args.Used, "Slicing", toolComponent))
         {
             args.Handled = true;
             DoHarvest(uid, args.User, component);

@@ -3,6 +3,7 @@ using Content.Server.Botany.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.EntityEffects;
 using Content.Shared.Random;
+using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -194,6 +195,9 @@ public partial class SeedData
     ///     If true, a sharp tool is required to harvest this plant.
     /// </summary>
     [DataField] public bool Ligneous;
+
+    [DataField] public ProtoId<ToolQualityPrototype> LigneousToolQuality = "Slicing";
+
 
     // No, I'm not removing these.
     // if you re-add these, make sure that they get cloned.
