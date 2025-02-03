@@ -18,8 +18,8 @@
     agentName: heretic-roundend-name
     definitions:
     - prefRoles: [ Heretic ]
-      max: 5
-      playerRatio: 20
+      max: 6
+      playerRatio: 12 # little less than syndicates. maxes to 6 at >60 pop, previously 4 
       lateJoinAdditional: true
       blacklist:
         components:
