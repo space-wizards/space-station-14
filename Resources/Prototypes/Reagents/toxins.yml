@@ -69,19 +69,11 @@
         time: 4
         type: Add
         refresh: false
-      - !type:HealthChange
-        conditions:
-        - !type:ReagentThreshold
-          reagent: ChloralHydrate
-          min: 30
-        damage:
-          types:
-            Poison: 1.5
       - !type:GenericStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: ChloralHydrate
-          min: 30
+          min: 25
         key: ForcedSleep
         component: ForcedSleeping
         refresh: false
