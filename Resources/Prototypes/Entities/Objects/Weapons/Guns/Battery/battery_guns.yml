@@ -276,63 +276,63 @@
 #    maxCharge: 2000
 #    startingCharge: 2000
 
-- type: entity
-  name: pulse carbine
-  parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
-  id: WeaponPulseCarbine
-  description: A high tech energy carbine favoured by the NT-ERT operatives.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-unshaded-4
-      map: ["enum.GunVisualLayers.MagUnshaded"]
-      shader: unshaded
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
-  - type: Gun
-    selectedMode: SemiAuto
-    fireRate: 3
-    availableModes:
-      - SemiAuto
-      - FullAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-  - type: HitscanBatteryAmmoProvider
-    proto: Pulse
-    fireCost: 200
-  - type: Battery
-    maxCharge: 5000
-    startingCharge: 5000
+#- type: entity
+#  name: pulse carbine
+#  parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
+#  id: WeaponPulseCarbine
+#  description: A high tech energy carbine favoured by the NT-ERT operatives.
+#  components:
+#  - type: Sprite
+#    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+#    layers:
+#    - state: base
+#      map: ["enum.GunVisualLayers.Base"]
+#    - state: mag-unshaded-4
+#      map: ["enum.GunVisualLayers.MagUnshaded"]
+#      shader: unshaded
+#  - type: Clothing
+#    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+#  - type: Gun
+#    selectedMode: SemiAuto
+#    fireRate: 3
+#    availableModes:
+#      - SemiAuto
+#      - FullAuto
+#    soundGunshot:
+#      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+#  - type: HitscanBatteryAmmoProvider
+#    proto: Pulse
+#    fireCost: 200
+#  - type: Battery
+#    maxCharge: 5000
+#    startingCharge: 5000
 
-- type: entity
-  name: pulse rifle
-  parent: [BaseWeaponBattery, BaseGunWieldable]
-  id: WeaponPulseRifle
-  description: A weapon that is almost as infamous as its users.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-unshaded-4
-      map: ["enum.GunVisualLayers.MagUnshaded"]
-      shader: unshaded
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
-  - type: Gun
-    fireRate: 1.5
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
-  - type: HitscanBatteryAmmoProvider
-    proto: Pulse
-    fireCost: 100
-  - type: Battery
-    maxCharge: 40000
-    startingCharge: 40000
+#- type: entity
+#  name: pulse rifle
+#  parent: [BaseWeaponBattery, BaseGunWieldable]
+#  id: WeaponPulseRifle
+#  description: A weapon that is almost as infamous as its users.
+#  components:
+#  - type: Sprite
+#    sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
+#    layers:
+#    - state: base
+#      map: ["enum.GunVisualLayers.Base"]
+#    - state: mag-unshaded-4
+#      map: ["enum.GunVisualLayers.MagUnshaded"]
+#      shader: unshaded
+#  - type: Clothing
+#    sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
+#  - type: Gun
+#    fireRate: 1.5
+#    soundGunshot:
+#      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+#  - type: HitscanBatteryAmmoProvider
+#    proto: Pulse
+#    fireCost: 100
+#  - type: Battery
+#    maxCharge: 40000
+#    startingCharge: 40000
 
 - type: entity
   name: laser cannon

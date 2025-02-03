@@ -46,4 +46,10 @@
   id: ShowWires
   
 - type: Tag
-  id: UniversalMagazine
+  id: CartridgePistolSP8
+
+- type: Tag
+  id: MagazinePistolSP8
+
+- type: Tag
+   id: UniversalMagazine

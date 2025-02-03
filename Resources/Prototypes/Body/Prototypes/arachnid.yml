@@ -25,6 +25,7 @@
         stomach: OrganArachnidStomach
         liver: OrganArachnidLiver
         kidneys: OrganArachnidKidneys
+        cavity: null
     right arm:
       part: RightArmArachnid
       connections:

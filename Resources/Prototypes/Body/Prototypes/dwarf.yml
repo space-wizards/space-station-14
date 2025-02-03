@@ -25,6 +25,7 @@
         stomach: OrganDwarfStomach
         liver: OrganDwarfLiver
         kidneys: OrganHumanKidneys
+        cavity: null
     right arm:
       part: RightArmHuman
       connections:

@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "license": "CC-BY-NC-4.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/ at commit fb2d71495bfe81446159ef528534193d09dd8d34, sprites edited from db_shotgun.rsi by Flareguy",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "bolt-open"
+        },
+        {
+            "name": "equipped-BACKPACK",
+            "directions": 4
+        },
+		{
+            "name": "equipped-SUITSTORAGE",
+            "directions": 4
+        }
+    ]
+}

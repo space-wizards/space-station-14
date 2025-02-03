@@ -7,11 +7,14 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Containers;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem
 {
+    [Dependency] private readonly IRobustRandom _random = default!;
+    
     protected const string ChamberSlot = "gun_chamber";
 
     protected virtual void InitializeChamberMagazine()
@@ -39,6 +42,12 @@ public abstract partial class SharedGunSystem
 
     private void OnChamberStartup(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ComponentStartup args)
     {
+        if (component.SelectedPrefix == null && component.AvailablePrefixes.Count > 1)
+        {
+            component.SelectedPrefix = _random.Pick(component.AvailablePrefixes);
+            Dirty(uid, component);
+        }
+        
         // Appearance data doesn't get serialized and want to make sure this is correct on spawn (regardless of MapInit) so.
         if (component.BoltClosed != null)
         {

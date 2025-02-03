@@ -12,7 +12,7 @@
           mapNameTemplate: '{0} Lobster Station {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'NT'
+            prefixCreator: 'LS'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_hotel.yml
         - type: StationJobs
@@ -64,7 +64,7 @@
             Borg: [ 3, 6 ]
             #law
             Magistrate: [ 1, 1 ]
-            IAA: [ 1, 1 ]
+            IAA: [ 2, 2 ]
             #Representives
             BlueShield: [ 1, 1 ]
             NanoTrasenRepresentative: [ 1, 1 ]

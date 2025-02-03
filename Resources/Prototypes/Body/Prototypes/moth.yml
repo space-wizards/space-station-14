@@ -25,6 +25,7 @@
         stomach: OrganMothStomach
         liver: OrganAnimalLiver
         kidneys: OrganHumanKidneys
+        cavity: null
     right arm:
       part: RightArmMoth
       connections:
