@@ -2929,4 +2929,103 @@ Entries:
   id: 407
   time: '2025-02-03T15:45:17.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/282
+- author: Rinary
+  changes:
+  - message: Reworked pulse rifle, now it has 3 fire modes.
+    type: Tweak
+  id: 408
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Reworked pulse carbine, now it has 3 fire modes.
+    type: Tweak
+  id: 409
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added ANNIHILATOR(a better version of pulse carbine, admeme only).
+    type: Add
+  id: 410
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Rnforcer shotgun renamed to sentiel
+    type: Tweak
+  id: 411
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Now all pump shotguns are real pump shotgun(manual cycling)
+    type: Tweak
+  id: 412
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added riot shotgun, as better version of sentiel and kammrer for security>
+    type: Add
+  id: 413
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added combat shotgun, as better version of riot shotgun(automatical),
+      cargo buy only.
+    type: Add
+  id: 414
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added cycler shotgun(currently admeme only).
+    type: Add
+  id: 415
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added minotaur, as better version of bulldog, nukeops only.
+    type: Add
+  id: 416
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added enforcer pistol as a second security pistol(first MK58).
+    type: Add
+  id: 417
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added SP8 for warden. SP8T for ERT, SP8AR for CentComm officer.
+    type: Add
+  id: 418
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added SP-91-RC as new security smg with autoeject,
+    type: Add
+  id: 419
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added stechkin pistol as new silent pistol for syndicate agents.
+    type: Add
+  id: 420
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added Deagle as new high damage weapon for syndicate agents/Nukeops.
+    type: Add
+  id: 421
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
 
