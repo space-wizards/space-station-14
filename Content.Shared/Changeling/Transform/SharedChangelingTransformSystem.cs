@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
@@ -12,10 +13,12 @@ using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.Speech;
+using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Wagging;
 using Robust.Shared.Audio;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
+using Robust.Shared.Serialization.Manager;
 
 
 namespace Content.Shared.Changeling.Transform;
@@ -28,10 +31,9 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearanceSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentitySystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-
-
+    [Dependency] private readonly ISerializationManager _serializationManager = default!;
+    [Dependency] private readonly SharedVocalSystem _vocalSystem = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -118,6 +120,37 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
             DuplicateCondition = DuplicateConditions.None,
         });
     }
+
+    /// <summary>
+    /// Copy a component from the source entity/prototype to the target entity, using a serialization manager.
+    /// </summary>
+    /// TODO: This is where i would put the call to the RT variant of this... IF I HAD ONE
+    protected bool CopyComp<T>(
+        Entity<T?> source,
+        EntityUid target,
+        [NotNullWhen(true)] out T? destination
+    ) where T: Component, new()
+    {
+        destination = null;
+
+        if (source.Comp == null)
+            return false;
+
+        // Remove the component, if it exists, from the target first to prevent state pollution.
+        RemComp<T>(target);
+
+        // Add the component to the target. This is now a clean, default component we can copy to.
+        destination = AddComp<T>(target);
+
+        // Use the serialization manager to do the copying.
+        _serializationManager.CopyTo(source.Comp, ref destination, notNullableOverride: true);
+
+        // Mark the destination as dirty so it's serialized.
+        Dirty(target, destination);
+
+        return true;
+    }
+
     private void OnSuccessfulTransform(Entity<ChangelingTransformComponent> ent,
        ref ChangelingTransformWindupDoAfterEvent args)
     {
@@ -127,9 +160,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (!TryComp<HumanoidAppearanceComponent>(ent, out var currentAppearance)
-           || !TryComp<VocalComponent>(ent, out var currentVocals)
-           || !TryComp<SpeechComponent>(ent, out var currentSpeech)
+        if (!TryComp<VocalComponent>(ent, out var currentVocals)
            || !TryComp<DnaComponent>(ent, out var currentDna)
            || !TryComp<TypingIndicatorComponent>(ent, out var currentTypingIndicator)
            || !HasComp<GrammarComponent>(ent))
@@ -148,6 +179,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
             _actionsSystem.RemoveAction(ent, waggingComp.ActionEntity);
             RemComp<WaggingComponent>(ent);
         }
+
         if (HasComp<WaggingComponent>(targetIdentity)
             && !HasComp<WaggingComponent>(ent))
         {
@@ -159,31 +191,29 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         TransformBodyEmotes(ent, targetIdentity);
 
         currentDna.DNA = targetConsumedDna.DNA;
-        currentVocals.EmoteSounds = targetConsumedVocals.EmoteSounds;
-        currentVocals.Sounds = targetConsumedVocals.Sounds;
-        currentVocals.ScreamAction = targetConsumedVocals.ScreamAction;
-        currentVocals.ScreamId = targetConsumedVocals.ScreamId;
-        currentVocals.Wilhelm = targetConsumedVocals.Wilhelm;
-        currentVocals.WilhelmProbability = targetConsumedVocals.WilhelmProbability;
 
-        currentSpeech.SpeechSounds = targetConsumedSpeech.SpeechSounds;
-        currentSpeech.SpeechVerb = targetConsumedSpeech.SpeechVerb;
-        currentSpeech.SuffixSpeechVerbs = targetConsumedSpeech.SuffixSpeechVerbs;
-        currentSpeech.AllowedEmotes = targetConsumedSpeech.AllowedEmotes;
-        currentSpeech.AudioParams = targetConsumedSpeech.AudioParams;
+        // Dealing with the VocalComponent being full cloned with incorrect Action attachment
+        var stashScreamEntity = currentVocals.ScreamActionEntity;
+        if (CopyComp<VocalComponent>((targetIdentity, targetConsumedVocals), ent, out var vocalComp))
+        {
+            vocalComp.ScreamActionEntity = stashScreamEntity;
+            //ProtoId's don't get copied (as far as we can tell), So we reinitialize em
+            _vocalSystem.LoadSounds(ent, vocalComp);
+        }
+
+        CopyComp<SpeechComponent>((targetIdentity, targetConsumedSpeech), ent, out _ );
 
         // Make sure the target Identity has a Typing indicator, if the identity is human or dwarf and never had a mind it'll never have a typingIndicatorComponent
         EnsureComp<TypingIndicatorComponent>(targetIdentity, out var targetTypingIndicator);
         SharedTypingIndicatorSystem.Replace(currentTypingIndicator, targetTypingIndicator);
 
+        //TODO: While it would be splendid to be able to provide the original owning player who was playing the targetIdentity, it's not exactly feasible to do
         _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player}  successfully transformed into \"{Name(targetIdentity)}\"");
         _metaSystem.SetEntityName(ent, Name(targetIdentity), raiseEvents: false);
         _metaSystem.SetEntityDescription(ent, MetaData(targetIdentity).EntityDescription);
         TransformGrammarSet(ent, targetConsumedHumanoid.Gender);
 
-        Dirty(ent, currentAppearance);
-        Dirty(ent, currentVocals);
-        Dirty(ent, currentSpeech);
+        Dirty(ent);
     }
 
     protected virtual void TransformBodyEmotes(EntityUid uid, EntityUid target) { }

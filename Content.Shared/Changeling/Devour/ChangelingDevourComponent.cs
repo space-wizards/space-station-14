@@ -35,6 +35,10 @@ public sealed partial class ChangelingDevourComponent : Component
     [DataField, AutoNetworkedField]
     public SoundSpecifier? DevourWindupNoise = new SoundCollectionSpecifier("ChangelingDevourWindup");
 
+    /// <summary>
+    /// The time between damage ticks
+    /// </summary>
+    public TimeSpan DamageTimeBetweenTicks = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// The windup time before the changeling begins to engage in devouring the identity of a target
@@ -67,8 +71,10 @@ public sealed partial class ChangelingDevourComponent : Component
             { "Blunt", 5 },
         },
     };
+
     [DataField, AutoNetworkedField]
     public TimeSpan NextTick;
+
     /// <summary>
     /// The percentage of ANY brute damage resistance that will prevent devouring
     /// </summary>

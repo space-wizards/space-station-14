@@ -15,5 +15,6 @@ public sealed partial class UnrevivableComponent : Component
     /// <summary>
     /// The loc string used to provide a reason for being unrevivable
     /// </summary>
+    [DataField]
     public string ReasonMessage = "changeling-defibrillator-failure";
 }

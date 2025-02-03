@@ -65,7 +65,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
 
         ConsumeDamageTick(eventData.Event.Target, ent.Comp, eventData.Event.User);
 
-        ent.Comp.NextTick += TimeSpan.FromSeconds(1f);
+        ent.Comp.NextTick += ent.Comp.DamageTimeBetweenTicks; //TODO: Add this to the component
     }
 
     private void ConsumeDamageTick(EntityUid? target, ChangelingDevourComponent comp, EntityUid? user)
@@ -204,7 +204,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             EnsureComp<ChangelingHuskedCorpseComponent>(target.Value);
 
             var unrevivable = EnsureComp<UnrevivableComponent>(target.Value);
-            unrevivable.Analyzable = false; // Remove the analyser text
+            unrevivable.Analyzable = false;
             unrevivable.ReasonMessage = "changeling-defibrillator-failure";
 
             foreach (var organ in _bodySystem.GetBodyOrgans(target, body))
