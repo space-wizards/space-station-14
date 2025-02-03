@@ -77,7 +77,7 @@ public sealed class SliceableSystem : EntitySystem
                 // small movement animation makes it look fancier
                 if (!_container.IsEntityOrParentInContainer(sliceUid))
                 {
-                    var randVect = _random.NextVector2(2.0f, 2.5f);
+                    var randVect = _random.NextVector2(entity.Comp.MinSpawnOffset, entity.Comp.MaxSpawnOffset);
                     if (TryComp<PhysicsComponent>(sliceUid, out var physics))
                         _physics.SetLinearVelocity(sliceUid, randVect, body: physics);
                 }

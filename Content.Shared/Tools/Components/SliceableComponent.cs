@@ -35,8 +35,14 @@ public sealed partial class SliceableComponent : Component
     public TimeSpan DoafterTime = TimeSpan.FromSeconds(1f);
 
     /// <summary>
-    /// How far the sliced pieces should spawn from the original entity
+    /// The min distance the sliced pieces should move from the original space
     /// </summary>
     [DataField]
-    public float SpawnOffset = 0.5f;
+    public float MinSpawnOffset = 2f;
+
+    /// <summary>
+    /// The max distance the sliced pieces should move from the original space
+    /// </summary>
+    [DataField]
+    public float MaxSpawnOffset = 2.5f;
 }
