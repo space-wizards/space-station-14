@@ -27,3 +27,15 @@
       - id: MagazineShotgun
       - id: MagazineShotgun
       - id: MagazineShotgun
+      
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledDeagle
+  name: Desert Eagle bundle
+  description: "Contains high damage Desert Eagle, a 3 magnum magazines."
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponPistolDeagle
+      - id: MagazineShotgun
+      - id: MagazineShotgun

@@ -201,6 +201,7 @@
   name: stechkin pistol
   parent: [WeaponPistolMk58, BaseRestrictedContraband]
   id: WeaponPistolStechkin
+  description: A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors.
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Pistols/stechkin.rsi
@@ -214,6 +215,7 @@
   name: desert eagle
   parent: WeaponPistolN1984
   id: WeaponPistolDeagle
+  description: A robust magnum handgun.
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Pistols/deagle.rsi

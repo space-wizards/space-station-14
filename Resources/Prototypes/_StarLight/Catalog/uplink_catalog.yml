@@ -15,6 +15,8 @@
     whitelist:
     - AtmosphericTechnician
     
+# Weapons
+    
 - type: listing
   id: uplinkWeaponMiniEnergyCrossbow
   name: uplink-mini-energy-crossbow-name
@@ -36,10 +38,11 @@
           - NukeOpsUplink
           
 - type: listing
-  id: uplinkWeaponMinotaur
+  id: uplinkWeaponShotgunMinotaur
   name: uplink-minotaur-name
   description: uplink-minotaur-desc
   productEntity: ClothingBackpackDuffelSyndicateFilledMinotaurShotgun
+  icon: { sprite: /Textures/_Starlight/Objects/Weapons/Guns/Shotguns/minotaur.rsi, state: icon }
   discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 15
@@ -48,9 +51,46 @@
   categories:
   - UplinkWeaponry
   conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
     - !type:StoreWhitelistCondition
       whitelist:
         tags:
           - NukeOpsUplink
+          
+- type: listing
+  id: uplinkWeaponPistolDeagle
+  name: uplink-deagle-name
+  description: uplink-deagle-desc
+  productEntity: WeaponPistolDeagle
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 5
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkWeaponry
+  
+- type: listing
+  id: uplinkWeaponPistolStechkin
+  name: uplink-stechkin-name
+  description: uplink-stechkin-desc
+  productEntity: WeaponPistolStechkin
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkWeaponry
+  
+# Ammo
+
+- type: listing
+  id: UplinkPistolMagnumMagazine
+  name: uplink-pistol-magnum-magazine-name
+  description: uplink-pistol-magnum-magazine-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi, state: sp }
+  productEntity: MagazineMagnum
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkAmmo
