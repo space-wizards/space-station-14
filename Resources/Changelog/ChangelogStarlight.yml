@@ -2922,4 +2922,11 @@ Entries:
   id: 406
   time: '2025-02-03T15:22:51.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/285
+- author: PubliclyExecutedPig
+  changes:
+  - message: Made Lobster Station a bit better
+    type: Tweak
+  id: 407
+  time: '2025-02-03T15:45:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/282
 
