@@ -99,6 +99,8 @@ namespace Content.Client.Sandbox
                 if (_placement.Eraser)
                     _placement.ToggleEraser();
 
+                _placement.Direction = Transform(uid).WorldRotation.GetCardinalDir();
+
                 _placement.BeginPlacing(new()
                 {
                     EntityType = comp.EntityPrototype.ID,
@@ -116,6 +118,9 @@ namespace Content.Client.Sandbox
 
             if (_placement.Eraser)
                 _placement.ToggleEraser();
+
+            _placement.Direction = (Direction)(tileRef.Tile.Rotation * 2);
+            _placement.Mirrored = tileRef.Tile.Mirrored;
 
             _placement.BeginPlacing(new()
             {
