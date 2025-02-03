@@ -132,3 +132,10 @@ construction-graph-tag-green-crystal-shard = green crystal shard
 # unknown
 construction-graph-tag-weapon-pistol-chimp-upgrade-kit = pistol CHIMP upgrade kit
 construction-graph-tag-torch = torch
+
+# atmos
+construction-graph-tag-fire-extinguisher = fire extinguisher
+construction-graph-tag-fire-helmet = fire helmet
+
+# salvage
+construction-graph-tag-spationaut-hardsuit = spationaut hardsuit

@@ -540,7 +540,7 @@
 
 - type: stack
   id: FloorTileRCircuit
-  name: red-circuit floor
+  name: stack-red-circuit-floor
   spawn: FloorTileItemRCircuit
   maxCount: 30
 
@@ -625,7 +625,7 @@
 
 - type: stack
   id: FloorTileAstroAsteroidSand
-  name: asteroid astro-sand floor
+  name: stack-asteroid-astro-sand-floor
   spawn: FloorTileItemAstroAsteroidSand
   maxCount: 30
 
