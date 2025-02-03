@@ -30,6 +30,7 @@
       - Tricordrazine
       - Vitamin
       - PolypyryliumOligomers
+      - Charcoal
   # Neutral - weight: 20
     - quantity: 20
       weight: 17.5
@@ -47,7 +48,6 @@
       - MindbreakerToxin
       - Mustard
       - HorseradishSauce
-      - Charcoal
     - quantity: 5
       weight: 2.5
       reagents:
