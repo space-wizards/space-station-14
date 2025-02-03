@@ -206,7 +206,7 @@
   description: bounty-description-knife
   entries:
   - name: bounty-item-knife
-    amount: 5
+    amount: 18
     whitelist:
       tags:
       - Knife
