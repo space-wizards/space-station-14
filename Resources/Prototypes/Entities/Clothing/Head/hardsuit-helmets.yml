@@ -36,8 +36,6 @@
     - state: icon
     - state: icon-unshaded
       shader: unshaded
-    - state: icon-flash
-      visible: false
     - state: light-overlay
       visible: false
       shader: unshaded
@@ -80,6 +78,7 @@
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/engineering.rsi
   - type: PointLight
@@ -101,8 +100,6 @@
     - state: icon
     - state: icon-unshaded
       shader: unshaded
-    - state: icon-flash
-      visible: false
     - state: light-overlay
       visible: false
       shader: unshaded
@@ -139,6 +136,7 @@
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/salvage.rsi
   - type: PressureProtection
@@ -160,8 +158,6 @@
     - state: icon
     - state: icon-unshaded
       shader: unshaded
-    - state: icon-flash
-      visible: false
     - state: light-overlay
       visible: false
       shader: unshaded
@@ -220,6 +216,7 @@
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/security.rsi
   - type: PointLight
@@ -248,6 +245,7 @@
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/brigmedic.rsi
   - type: PointLight
@@ -278,6 +276,7 @@
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/security-warden.rsi
   - type: PointLight
@@ -306,6 +305,7 @@
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/capspace.rsi
   - type: PressureProtection
@@ -325,6 +325,7 @@
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/engineering-white.rsi
   - type: PointLight
@@ -348,6 +349,7 @@
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/medical.rsi
   - type: PointLight
@@ -386,6 +388,7 @@
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/security-red.rsi
   - type: PointLight
@@ -414,6 +417,7 @@
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/luxury.rsi
   - type: PressureProtection
@@ -437,6 +441,7 @@
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/syndicate.rsi
   - type: PointLight
@@ -465,6 +470,7 @@
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/syndiemedic.rsi
   - type: PointLight
@@ -493,6 +499,7 @@
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/syndieelite.rsi
   - type: PointLight
@@ -526,6 +533,7 @@
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
   - type: PointLight
@@ -576,6 +584,7 @@
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/wizard.rsi
   - type: PointLight
@@ -755,8 +764,6 @@
     sprite: Clothing/Head/Hardsuits/cburn.rsi
     layers:
     - state: icon
-    - state: icon-flash
-      visible: false
     - state: icon-unshaded
       shader: unshaded
     - state: light-overlay

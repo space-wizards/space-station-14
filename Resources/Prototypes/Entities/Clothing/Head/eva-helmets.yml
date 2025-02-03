@@ -68,6 +68,7 @@
   id: ClothingHeadHelmetVoidParamed
   name: paramedic void helmet
   description: A void helmet made for paramedics.
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/paramedhelm.rsi

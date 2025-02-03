@@ -186,6 +186,12 @@
   name: base hardsuit helmet with light
   categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: icon-flash
+      visible: false
+      map: [ "light" ]
   - type: Clothing
     equippedPrefix: off
   - type: ToggleableLightVisuals
