@@ -25,7 +25,7 @@ public sealed partial class ChamberMagazineAmmoProviderComponent : MagazineAmmoP
     [ViewVariables(VVAccess.ReadWrite), DataField("availablePrefixes")]
     public List<string> AvailablePrefixes = new();
     
-    [ViewVariables(VVAccess.ReadOnly), DataField("selectedPrefix")]
+    [ViewVariables(VVAccess.ReadOnly), DataField("selectedPrefix"), AutoNetworkedField]
     public string? SelectedPrefix = null;
 
     /// <summary>

@@ -42,7 +42,7 @@ public abstract partial class SharedGunSystem
 
     private void OnChamberStartup(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ComponentStartup args)
     {
-        if (component.SelectedPrefix == null && component.AvailablePrefixes.Count > 1 && _netManager.IsClient)
+        if (component.SelectedPrefix == null && component.AvailablePrefixes.Count > 1)
         {
             component.SelectedPrefix = _random.Pick(component.AvailablePrefixes);
             Dirty(uid, component);

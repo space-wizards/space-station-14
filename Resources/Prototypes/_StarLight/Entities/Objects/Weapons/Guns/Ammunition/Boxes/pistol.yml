@@ -12,3 +12,16 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
     - state: rubber
+    
+- type: entity
+  parent: BaseMagazineBoxPistol
+  id: MagazineBoxPistol40Nr
+  name: ammunition box (40 NR)
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgePistolSP8
+    proto: CartridgePistol40Nr
+    capacity: 60

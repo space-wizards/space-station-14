@@ -130,3 +130,50 @@
     - tan
     - grey
     - greengrip
+    
+- type: entity
+  name: sp-8
+  parent: [BaseWeaponPistol, BaseRestrictedContraband]
+  id: WeaponPistolSP8
+  description: Cool pistol for defense.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/sp8.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    fireRate: 5
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/sp8.ogg
+  - type: ChamberMagazineAmmoProvider
+    availablePrefixes:
+    - ""
+    - black
+    - green
+    - olive
+    - red
+    - yellow
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistol40Nr
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistolSP8
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistol40Nr
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistolSP8

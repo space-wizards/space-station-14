@@ -127,6 +127,8 @@
     availableModes:
     - Burst
     - FullAuto
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/minotaur.ogg
   - type: ItemSlots
     slots:
       gun_magazine:
