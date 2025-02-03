@@ -17,3 +17,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from RU Paradise Station"
   source: "https://github.com/ss220-space/Paradise/commit/d600c49dd51aef587fd448d69553ba1015999395"
+  
+- files: ["1sp_91.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from RU Paradise Station"
+  source: "https://github.com/ss220-space/Paradise/commit/7fb130eac5c2c645fc841769c69f7b7a50dfe854"
