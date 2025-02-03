@@ -2915,4 +2915,11 @@ Entries:
   id: 405
   time: '2025-02-02T13:14:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/281
+- author: Zylo
+  changes:
+  - message: Updated guidebook with more SOP entries.
+    type: Tweak
+  id: 406
+  time: '2025-02-03T15:22:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/285
 
