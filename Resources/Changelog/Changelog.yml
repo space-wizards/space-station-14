@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Epinephrine now adds Adrenaline, because it is.
-    type: Tweak
-  id: 7393
-  time: '2024-09-18T23:00:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32076
 - author: ShadowCommander
   changes:
   - message: Fixed clicking on chairs and beds with an entity buckled to them not
@@ -3906,3 +3899,12 @@
   id: 7892
   time: '2025-02-02T01:38:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34797
+- author: DieselMohawk
+  changes:
+  - message: Renamed ablative shield to laser shield
+    type: Tweak
+  - message: Changed description for laser shield & ballistic shield
+    type: Tweak
+  id: 7893
+  time: '2025-02-03T01:04:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34841
