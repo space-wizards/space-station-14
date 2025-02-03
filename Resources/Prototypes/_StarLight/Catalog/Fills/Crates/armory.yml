@@ -21,3 +21,16 @@
     contents:
       - id: MagazineBatteryLr30
         amount: 6
+        
+- type: entity
+  id: CrateArmoryCombatShotgun
+  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  name: combat shotgun's  crate
+  description: Contains two automatic combat shotguns, with two additional ammo boxes. Requires Armory access to open.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponShotgunCombat
+        amount: 2
+      - id: BoxLethalshot
+        amount: 2

@@ -13,3 +13,17 @@
       - id: ScalpelAbductor
       - id: BoneGelAbductor
       - id: BoneSetterAbductor
+      
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledMinotaurShotgun
+  name: Minotaur bundle
+  description: "Lean and mean: Contains smooth, powerful, highly illegal Shotgun, a 5 12g buckshot drums."
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponShotgunMinotaur
+      - id: MagazineShotgun
+      - id: MagazineShotgun
+      - id: MagazineShotgun
+      - id: MagazineShotgun

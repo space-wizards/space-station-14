@@ -34,3 +34,23 @@
       blacklist:
         tags:
           - NukeOpsUplink
+          
+- type: listing
+  id: uplinkWeaponMinotaur
+  name: uplink-minotaur-name
+  description: uplink-minotaur-desc
+  productEntity: ClothingBackpackDuffelSyndicateFilledMinotaurShotgun
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 15
+  cost:
+    Telecrystal: 20
+  categories:
+  - UplinkWeaponry
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
