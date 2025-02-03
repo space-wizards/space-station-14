@@ -6,6 +6,7 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
@@ -182,11 +183,19 @@ namespace Content.Client.Cargo.BUI
 
         private void RestrictOrder(ButtonEventArgs args)
         {
-            // I can only apologise, if there is a better way I beg you implement it
-            if (args.Button.Parent!.Parent!.Parent!.Parent is not CargoProductRow row || row.Product is null)
-                return;
+            // Better implementation courtesy of gusxyz
+            Control control = args.Button;
 
-            SendMessage(new CargoConsoleRestrictProductMessage(row.Product.ID));
+            while (control.Parent != null)
+            {
+                if (control.Parent is CargoProductRow { Product: not null } row)
+                {
+                    SendMessage(new CargoConsoleRestrictProductMessage(row.Product.ID));
+                    return;
+                }
+
+                control = control.Parent;
+            }
         }
     }
 }

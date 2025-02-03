@@ -191,13 +191,18 @@ namespace Content.Server.Cargo.Systems
             }
 
             // Order is restricted
-            if (orderDatabase.RestrictedOrders.Any(restricted => restricted.ProductProductId == order.ProductId))
+            foreach (var restricted in orderDatabase.RestrictedOrders)
             {
-                if (!_accessReaderSystem.IsAllowed(player, uid, accessList: 0))
+                if (restricted.ProductProductId == order.ProductId)
                 {
-                    ConsolePopup(args.Actor, Loc.GetString("cargo-console-restricted-order"));
-                    PlayDenySound(uid, component);
-                    return;
+                    if (!_accessReaderSystem.IsAllowed(player, uid, accessList: 0))
+                    {
+                        ConsolePopup(args.Actor, Loc.GetString("cargo-console-restricted-order"));
+                        PlayDenySound(uid, component);
+                        return;
+                    }
+
+                    break;
                 }
             }
 
