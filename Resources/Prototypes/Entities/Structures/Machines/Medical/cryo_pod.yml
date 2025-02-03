@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: [BaseStructure, ConstructibleMachine] # Not a BaseMachinePowered since we don't want the anchorable component
   id: CryoPod
   name: cryo pod
@@ -42,6 +42,8 @@
         !type:ContainerSlot
         showEnts: true
       beakerSlot: !type:ContainerSlot {}
+      machine_board: !type:Container
+      machine_parts: !type:Container
   - type: AtmosDevice
   - type: Appearance
   - type: Machine
