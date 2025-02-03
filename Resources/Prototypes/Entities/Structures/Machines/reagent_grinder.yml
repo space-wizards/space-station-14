@@ -5,8 +5,6 @@
   description: From BlenderTech. Will It Blend? Let's find out!
   suffix: grinder/juicer
   components:
-  - type: Transform
-    anchored: true
   - type: ReagentGrinder
   - type: ActivatableUI
     key: enum.ReagentGrinderUiKey.Key
@@ -54,8 +52,6 @@
     containers:
       beakerSlot: !type:ContainerSlot
       inputContainer: !type:Container
-      machine_board: !type:Container
-      machine_parts: !type:Container
 
 - type: entity
   parent: Recycler #too different so different parent
