@@ -52,6 +52,8 @@
     containers:
       beakerSlot: !type:ContainerSlot
       inputContainer: !type:Container
+      machine_board: !type:Container
+      machine_parts: !type:Container
 
 - type: entity
   parent: Recycler #too different so different parent
