@@ -1,34 +1,34 @@
 - type: weightedRandomFillSolution
   id: RandomFillStrangePill
   fills:
-  # 5 groups for a total weight of 1000
-  # Very Good - weight: 150
+  # 5 groups for a total weight of 100
+  # Very Good - weight: 15
     - quantity: 15
-      weight: 50
+      weight: 5
       reagents:
       - Stimulants
     - quantity: 10
-      weight: 50
+      weight: 5
       reagents:
       - Ichor
     - quantity: 5
-      weight: 50
+      weight: 5
       reagents:
       - Cognizine
-  # Good - weight: 250
+  # Good - weight: 25
     - quantity: 20
-      weight: 250
+      weight: 25
       reagents:
       - Desoxyephedrine
       - Ephedrine
       - Omnizine
       - Tricordrazine
       - Vitamin
-  # Neutral - weight: 200
+  # Neutral - weight: 20
     - quantity: 20
-      weight: 175
+      weight: 17.5
       reagents:
-      - Ipecac
+      - Ipecac 
       - SodiumPolyacrylate
       - SpaceDrugs
       - SpaceGlue
@@ -36,58 +36,42 @@
       - JuiceThatMakesYouWeh
       - Lipozine
     - quantity: 5
-      weight: 25
+      weight: 2.5
       reagents:
-      - Honk
-  # Bad - weight: 250
+      - Honk 
+  # Bad - weight: 25
     - quantity: 20
-      weight: 105
+      weight: 10.5
       reagents:
       - MuteToxin
       - Pax
       - Fresium
     - quantity: 10
-      weight: 105
+      weight: 10.5
       reagents:
       - Uranium
       - Licoxide
       - Razorium
     - quantity: 5
-      weight: 40
+      weight: 4
       reagents:
       - Toxin
-  # Very Bad - weight: 150
+  # Very Bad - weight: 15
+    - quantity: 20
+      weight: 2.5
+      reagents:
+      - ChloralHydrate
     - quantity: 10
-      weight: 80
+      weight: 10
       reagents:
       - Bleach
       - CarpoToxin
       - BuzzochloricBees
       - Amatoxin
-    - quantity: 20
-      weight: 25
-      reagents:
-      - Nocturine
     - quantity: 5
-      weight: 21
+      weight: 2.5
       reagents:
       - Lexorin
-    - quantity: 10
-      weight: 20
-      reagents:
-      - Tazinide
-    - quantity: 20
-      weight: 3
-      reagents:
-      - Potassium
-    - quantity: 15
-      weight: 1
-      reagents:
-      - Romerol
-    - quantity: 10
-      weight: 1
-      reagents:
-      - Vestine
 
 - type: entity
   name: strange pill
