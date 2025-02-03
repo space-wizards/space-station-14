@@ -1142,7 +1142,7 @@
   productEntity: ReinforcementRadioSyndicateNukeops
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-nukeop }
   cost:
-    Telecrystal: 25
+    Telecrystal: 30
   categories:
   - UplinkAllies
   conditions:
