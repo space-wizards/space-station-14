@@ -854,6 +854,11 @@
       - MagazineBoxRiflePractice
 
 #####################MAGAZINE#######################
+# LMG
+      - UniversalMagazineSP
+      - UniversalMagazineHP
+      - UniversalMagazineFMJ
+      - UniversalMagazineEmpty
 # Light Rifle
       - MagazineLightRifleSP
       - MagazineLightRifleHP
@@ -923,6 +928,10 @@
       - MagazineBoxRifleUranium
       - MagazineBoxRifleAP
 #####################MAGAZINE#######################
+# LMG
+      - UniversalMagazineIncendiary
+      - UniversalMagazineUranium
+      - UniversalMagazineAP
 # Light Rifle
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
