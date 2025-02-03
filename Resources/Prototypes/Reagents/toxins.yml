@@ -73,10 +73,19 @@
         conditions:
         - !type:ReagentThreshold
           reagent: ChloralHydrate
-          min: 20
+          min: 30
         damage:
           types:
             Poison: 1.5
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: ChloralHydrate
+          min: 30
+        key: ForcedSleep
+        component: ForcedSleeping
+        refresh: false
+        type: Add
 
 - type: reagent
   id: GastroToxin
