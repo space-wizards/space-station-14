@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: Now fire leaves burn marks on the tiles that were affected by it.
-    type: Add
-  id: 7395
-  time: '2024-09-19T00:23:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31939
 - author: ArchRBX
   changes:
   - message: Mass scanners and shuttle consoles now display coordinates beneath IFF
@@ -3909,3 +3902,11 @@
   id: 7894
   time: '2025-02-03T21:22:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32414
+- author: AgentSmithRadio
+  changes:
+  - message: Added manager wire hacking menus to nearly all vending machines. Get
+      hacking and see what's hidden!
+    type: Add
+  id: 7895
+  time: '2025-02-03T23:33:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32934
