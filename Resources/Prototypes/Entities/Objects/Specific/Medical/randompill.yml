@@ -68,6 +68,7 @@
       - Razorium
       - Potassium
       - Phlogiston
+      - GreyMatter
     - quantity: 5
       weight: 4
       reagents:
@@ -85,12 +86,11 @@
       - BuzzochloricBees
       - Amatoxin
       - Tazinide
-      - GreyMatter
+      - Lead
     - quantity: 5
       weight: 2.5
       reagents:
       - Lexorin
-      - Lead
 
 - type: entity
   name: strange pill
