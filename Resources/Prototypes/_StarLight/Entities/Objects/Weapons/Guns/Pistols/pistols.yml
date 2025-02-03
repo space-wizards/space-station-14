@@ -209,3 +209,21 @@
   - type: Gun
     soundGunshot:
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/1suppres.ogg
+      
+- type: entity
+  name: desert eagle
+  parent: WeaponPistolN1984
+  id: WeaponPistolDeagle
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/deagle.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/deagle.rsi
+  - type: Gun
+    minAngle: 1
+    maxAngle: 15
+    angleIncrease: 6
+    angleDecay: 7
+    fireRate: 5
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/deagle.ogg
