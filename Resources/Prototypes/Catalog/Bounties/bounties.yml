@@ -208,8 +208,8 @@
   - name: bounty-item-knife
     amount: 5
     whitelist:
-      components:
-        - Sharp
+      tags:
+      - Knife
 
 - type: cargoBounty
   id: BountyLemon
