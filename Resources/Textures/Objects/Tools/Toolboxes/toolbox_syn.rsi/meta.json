@@ -2,6 +2,7 @@
   "version": 1,
   "license": "CC-BY-SA-3.0",
   "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/000286d446f40d3897816bc4776a7c754aa93d7d, held sprites redone by Alekshhh, modified further by ps3moira (github)",  "size": {
+  "size": {
     "x": 32,
     "y": 32
   },
