@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Adjustments have been made to ghost role rules text across the board.
-    type: Tweak
-  - message: Free agents have a warning in their rules text about excessive destruction.
-    type: Tweak
-  - message: Fixed broken ghost role texts.
-    type: Fix
-  id: 545
-  time: '2024-11-19T03:12:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/754
 - author: DinnerCalzone
   changes:
   - message: (Hummingbird) Added Christmas! Visit the tree in front of the bar for
@@ -4301,3 +4290,10 @@
   id: 1044
   time: '2025-02-04T02:12:33.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1553
+- author: formlessnameless
+  changes:
+  - message: Whale is better now.
+    type: Fix
+  id: 1045
+  time: '2025-02-04T03:32:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1558
