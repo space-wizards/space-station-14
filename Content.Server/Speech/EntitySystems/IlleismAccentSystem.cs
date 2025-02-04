@@ -1,12 +1,17 @@
 using System.Text.RegularExpressions;
-using System.Text;
+using Content.Server.Actions;
 using Content.Server.Speech.Components;
+using Content.Shared.Actions;
+using Content.Shared.Toggleable;
 
 namespace Content.Server.Speech.EntitySystems;
 
 public sealed class IlleismAccentSystem : EntitySystem
 {
-    // I am going to Sec -> NAME is going to Sec
+    [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+
+    // I am going -> NAME is going
     private static readonly Regex RegexIAmUpper = new(@"\bI\s*AM\b|\bI'?M\b");
     private static readonly Regex RegexIAmLower = new(@"\bi\s*am\b|\bI'?m\b", RegexOptions.IgnoreCase);
 
@@ -31,21 +36,28 @@ public sealed class IlleismAccentSystem : EntitySystem
     private static readonly Regex RegexMeLower = new(@"\bme\b", RegexOptions.IgnoreCase);
 
     // My crowbar -> NAME's crowbar
-    // That's mine! -> That's NAME's
+    // That's mine! -> That's NAME's!
     private static readonly Regex RegexMyUpper = new(@"\bMY\b|\bMINE\b");
     private static readonly Regex RegexMyLower = new(@"\bmy\b|\bmine\b", RegexOptions.IgnoreCase);
 
-    // I'll do it -> NAME'll do it
+    // I'll do it -> NAME will do it
     private static readonly Regex RegexIllUpper = new(@"\bI'LL\b");
     private static readonly Regex RegexIllLower = new(@"\bi'll\b", RegexOptions.IgnoreCase);
-
-
-    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<IlleismAccentComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<IlleismAccentComponent, AccentGetEvent>(OnAccent);
+        SubscribeLocalEvent<IlleismAccentComponent, ToggleActionEvent>(OnToggleAction);
+
+    }
+
+    private void OnMapInit(Entity<IlleismAccentComponent> ent, ref MapInitEvent args)
+    {
+        var component = ent.Comp;
+        _actionContainer.EnsureAction(ent, ref component.ToggleActionEntity, component.ToggleAction);
+        _actions.AddAction(ent, ref component.SelfToggleActionEntity, component.ToggleAction);
     }
 
     private bool MostlyUppercase(string message)
@@ -72,10 +84,18 @@ public sealed class IlleismAccentSystem : EntitySystem
         return uppercaseLetters > totalLetters / 2;
     }
 
+    private void OnToggleAction(Entity<IlleismAccentComponent> ent, ref ToggleActionEvent args)
+    {
+        // TODO: Add popup when cycling states
+        if (args.Handled)
+            return;
+        ent.Comp.IllesimStateIndex = (ent.Comp.IllesimStateIndex + 1) % 3;
+        args.Handled = true;
+    }
     private void OnAccent(EntityUid uid, IlleismAccentComponent component, AccentGetEvent args)
     {
         var message = args.Message;
-        var name = Name(uid).Split(' ')[0];
+        var name = component.IllesimStateIndex == 2 ? Name(uid) : Name(uid).Split(component.IllesimStrings[component.IllesimStateIndex])[0];
         var upperName = name.ToUpper();
 
         // I am going to Sec -> NAME is going to Sec
