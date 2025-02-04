@@ -25,6 +25,12 @@
   - type: Tag
     tags:
     - Toolbox
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        base:
+          True: { state: icon-open }
+          False: { state: icon }
   - type: Appearance
 
 - type: entity
