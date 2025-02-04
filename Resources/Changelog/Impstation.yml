@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: MedSec Hud craft now requires security glasses instead of a radio
-    type: Tweak
-  - message: MedSec Hud is now flashproof
-    type: Tweak
-  id: 548
-  time: '2024-11-19T23:20:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/703
-- author: kipdotnet
-  changes:
-  - message: The S-Cargo Duffel bundle now comes in an exceptionally fancy crate.
-    type: Tweak
-  id: 549
-  time: '2024-11-20T06:52:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/764
 - author: EpicToast
   changes:
   - message: (Union Station) Fixed issues with the southwestern escape pods.
@@ -4294,3 +4278,18 @@
   id: 1047
   time: '2025-02-04T21:54:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1561
+- author: crocodilecarousel
+  changes:
+  - message: Vox hair now correctly hides under helmets.
+    type: Fix
+  id: 1048
+  time: '2025-02-04T21:56:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1563
+- author: hivehum
+  changes:
+  - message: Christmas is OVER. Go supercrit a reagent anomaly if you want presents
+      that bad.
+    type: Remove
+  id: 1049
+  time: '2025-02-04T21:56:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1564
