@@ -126,13 +126,6 @@
   components:
   - type: Sprite
     sprite: _Starlight/Structures/Machines/VendingMachines/fashionmat.rsi
-    snapCardinals: true
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: normal-unshaded
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
   - type: Store
     name: Fashion-o-Mat
     categories:
