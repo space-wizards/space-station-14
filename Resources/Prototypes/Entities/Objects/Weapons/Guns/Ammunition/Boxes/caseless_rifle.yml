@@ -27,47 +27,6 @@
 # Boxes
 - type: entity
   parent: BaseMagazineBoxCaselessRifle
-  id: MagazineBoxCaselessRifle10x24
-  name: ammunition box (.20 caseless)
-  components:
-  - type: BallisticAmmoProvider
-    capacity: 200
-    proto: CartridgeCaselessRifle
-  - type: Sprite
-    layers:
-    - state: base-10x24
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag10-1
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: mag10
-    steps: 4
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
-  parent: BaseMagazineBoxCaselessRifle
-  id: MagazineBoxCaselessRifleBig
-  name: large ammunition box (.20 caseless)
-  description: A large metal box full of .20x0.34 caseless rounds, which omit the brass casing of standard munitions in favor of hardened propellent.
-  components:
-  - type: BallisticAmmoProvider
-    capacity: 200
-    proto: CartridgeCaselessRifle
-  - type: Sprite
-    layers:
-    - state: base-b
-      map: ["enum.GunVisualLayers.Base"]
-    - state: magb-1
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: magb
-    steps: 4
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
-  parent: BaseMagazineBoxCaselessRifle
   id: MagazineBoxCaselessRifle
   name: ammunition box (.20 caseless)
   description: A cardboard box full of .20x0.34 caseless rounds, which omit the brass casing of standard munitions in favor of hardened propellent.
@@ -85,7 +44,7 @@
   parent: BaseMagazineBoxCaselessRifle
   id: MagazineBoxCaselessRiflePractice
   name: ammunition box (.20 caseless practice)
-  description: A cardboard box full of 0.20x0.34 caseless rounds, which omit the brass casing of standard munitions in favor of hardened propellent. This variant contains non-harmful rubber training rounds.
+  description: A cardboard box full of 0.20x0.34 caseless rounds. This version contains non-harmful training ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRiflePractice

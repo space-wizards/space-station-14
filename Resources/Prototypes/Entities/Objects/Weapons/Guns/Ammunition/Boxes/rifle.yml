@@ -2,7 +2,6 @@
   abstract: true
   parent: BaseItem
   id: BaseMagazineBoxRifle
-  name: ammunition box (.223 rifle)
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
@@ -36,12 +35,12 @@
     proto: CartridgeRifle
   - type: Sprite
     layers:
-    - state: base-b
+    - state: base-big
       map: ["enum.GunVisualLayers.Base"]
-    - state: magb-1
+    - state: mag-big-1
       map: ["enum.GunVisualLayers.Mag"]
   - type: MagazineVisuals
-    magState: magb
+    magState: mag-big
     steps: 4
     zeroVisible: false
   - type: Appearance
@@ -65,7 +64,7 @@
   parent: BaseMagazineBoxRifle
   id: MagazineBoxRiflePractice
   name: ammunition box (.223 rifle practice)
-  description: A box of .223x1.78 cartridges in standard NT packaging. This box contains practice rounds for firing exercises and trials.
+  description: A box of .223x1.78 cartridges in standard NT packaging. This box contains practice rounds for firing exercises and training.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRiflePractice

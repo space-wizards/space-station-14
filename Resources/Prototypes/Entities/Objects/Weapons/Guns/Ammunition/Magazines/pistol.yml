@@ -167,10 +167,12 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
 
+
 - type: entity
   id: MagazinePistolIncendiary
   name: pistol magazine (.38 auto incendiary)
   parent: MagazinePistol
+  description: Universal 10-round pistol magazine containing self-igniting incendiary rounds.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolIncendiary
@@ -179,7 +181,7 @@
   id: MagazinePistolPractice
   name: pistol magazine (.38 auto practice)
   parent: BaseMagazinePistol
-  description: Universal 10-round pistol magazine, used by both Nanotrasen and the Syndicate. This version contains non-harmful rubber ammo for training.
+  description: Universal 10-round pistol magazine containing non-harmful training rounds.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice
@@ -194,6 +196,7 @@
   id: MagazinePistolUranium
   name: pistol magazine (.38 auto uranium)
   parent: BaseMagazinePistol
+  description: Universal 10-round pistol magazine containing exotic uranium-core ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolUranium
@@ -241,20 +244,6 @@
   - type: Sprite
     layers:
     - state: practice
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazinePistolHighCapacityRubber
-  name: machine pistol magazine (.38 auto rubber)
-  parent: BaseMagazinePistolHighCapacity
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistol
-  - type: Sprite
-    layers:
-    - state: rubber
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
@@ -313,6 +302,7 @@
   id: MagazinePistolSubMachineGunUranium
   name: SMG magazine (.38 auto uranium)
   parent: BaseMagazinePistolSubMachineGun
+  description: 30-round magazine for submachine guns. Contains exotic uranium-core ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolUranium
