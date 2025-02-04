@@ -9,7 +9,6 @@ using Content.Shared.Resist;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Jittering;
 
 namespace Content.Server.Resist;
 
@@ -21,7 +20,6 @@ public sealed class ResistLockerSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly WeldableSystem _weldable = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly SharedJitteringSystem _jitteringSystem = default!;
 
     public override void Initialize()
     {
@@ -34,24 +32,24 @@ public sealed class ResistLockerSystem : EntitySystem
         });
     }
 
-    private void OnRelayMovement(EntityUid uid, ResistLockerComponent component, ref ContainerRelayMovementEntityEvent args)
+    private void OnRelayMovement(Entity<ResistLockerComponent> entity, ref ContainerRelayMovementEntityEvent args)
     {
-        if (!TryComp(uid, out EntityStorageComponent? storageComponent))
+        if (!TryComp(entity, out EntityStorageComponent? storageComponent))
             return;
 
         if (!_actionBlocker.CanMove(args.Entity))
             return;
 
-        if (TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked || _weldable.IsWelded(uid))
-            AttemptResist(args.Entity, uid, storageComponent, component);
+        if (TryComp<LockComponent>(entity, out var lockComponent) && lockComponent.Locked || _weldable.IsWelded(entity))
+            AttemptResist(entity, args.Entity, storageComponent);
     }
 
-    private void AttemptResist(EntityUid user, EntityUid target, EntityStorageComponent? storageComponent = null, ResistLockerComponent? resistLockerComponent = null)
+    private void AttemptResist(Entity<ResistLockerComponent> entity, EntityUid user, EntityStorageComponent? storageComponent = null)
     {
-        if (!Resolve(target, ref storageComponent, ref resistLockerComponent))
+        if (!Resolve(entity, ref storageComponent))
             return;
 
-        var doAfterEventArgs = new DoAfterArgs(EntityManager, user, resistLockerComponent.ResistTime, new ResistLockerDoAfterEvent(), target, target)
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, user, entity.Comp.ResistTime, new ResistLockerDoAfterEvent(), entity, entity)
         {
             BreakOnMove = true,
             BreakOnDamage = true,
