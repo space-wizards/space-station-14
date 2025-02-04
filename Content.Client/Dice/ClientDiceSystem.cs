@@ -3,9 +3,16 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Dice;
 
-public sealed class DiceSystem : SharedDiceSystem
+public sealed class ClientDiceSystem : EntitySystem
 {
-    protected override void UpdateVisuals(Entity<DiceComponent> entity)
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<DiceComponent, AfterAutoHandleStateEvent>(OnDiceAfterHandleState);
+    }
+
+    private void OnDiceAfterHandleState(Entity<DiceComponent> entity, ref AfterAutoHandleStateEvent args)
     {
         if (!TryComp(entity, out SpriteComponent? sprite))
             return;

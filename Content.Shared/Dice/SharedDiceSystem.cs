@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Dice;
 
-public abstract class SharedDiceSystem : EntitySystem
+public sealed class SharedDiceSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -20,12 +20,6 @@ public abstract class SharedDiceSystem : EntitySystem
         SubscribeLocalEvent<DiceComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<DiceComponent, LandEvent>(OnLand);
         SubscribeLocalEvent<DiceComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<DiceComponent, AfterAutoHandleStateEvent>(OnDiceAfterHandleState);
-    }
-
-    private void OnDiceAfterHandleState(Entity<DiceComponent> entity, ref AfterAutoHandleStateEvent args)
-    {
-        UpdateVisuals(entity);
     }
 
     private void OnUseInHand(Entity<DiceComponent> entity, ref UseInHandEvent args)
@@ -63,7 +57,6 @@ public abstract class SharedDiceSystem : EntitySystem
 
         entity.Comp.CurrentValue = (side - entity.Comp.Offset) * entity.Comp.Multiplier;
         Dirty(entity);
-        UpdateVisuals(entity);
     }
 
     public void SetCurrentValue(Entity<DiceComponent> entity, int value)
@@ -75,11 +68,6 @@ public abstract class SharedDiceSystem : EntitySystem
         }
 
         SetCurrentSide(entity, value / entity.Comp.Multiplier + entity.Comp.Offset);
-    }
-
-    protected virtual void UpdateVisuals(Entity<DiceComponent> entity)
-    {
-        // See client system.
     }
 
     private void Roll(Entity<DiceComponent> entity, EntityUid? user = null)
