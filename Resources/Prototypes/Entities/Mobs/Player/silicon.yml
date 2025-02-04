@@ -69,7 +69,11 @@
   - type: CommunicationsConsole
     canShuttle: false
     title: comms-console-announcement-title-station-ai
-    color: "#2ed2fd"
+    color: "#5ed7aa"
+  - type: HolographicAvatar
+    layerData:
+    - sprite: Mobs/Silicon/station_ai.rsi
+      state: default
   - type: ShowJobIcons
 
 - type: entity
@@ -227,16 +231,16 @@
     laws: OverlordLawset
 
 - type: entity
-  id: DungeonMasterCircuitBoard
+  id: GameMasterCircuitBoard
   parent: BaseElectronics
-  name: law board (Dungeon Master)
-  description: An electronics board containing the Dungeon Master lawset.
+  name: law board (Game Master)
+  description: An electronics board containing the Game Master lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: std_mod
   - type: SiliconLawProvider
-    laws: DungeonMasterLawset
+    laws: GameMasterLawset
 
 - type: entity
   id: ArtistCircuitBoard
@@ -305,6 +309,17 @@
   - type: Intellicard
 
 - type: entity
+  id: PlayerStationAiPreview
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: base
+    - state: ai
+      shader: unshaded
+
+- type: entity
   id: PlayerStationAiEmpty
   name: AI Core
   description: The latest in Artificial Intelligences.
@@ -341,12 +356,35 @@
       map: ["unshaded"]
       shader: unshaded
   - type: Appearance
+  - type: InteractionPopup
+    interactSuccessString: petting-success-station-ai
+    interactFailureString: petting-failure-station-ai
+    messagePerceivedByOthers: petting-success-station-ai-others # Otherwise AI cannot tell its being pet as It's just a brain inside of the core, not the core itself.
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
   - type: GenericVisualizer
     visuals:
       enum.StationAiVisualState.Key:
         unshaded:
           Empty: { state: ai_empty }
           Occupied: { state: ai }
+  - type: Telephone
+    compatibleRanges:
+    - Grid
+    - Map
+    - Unlimited
+    listeningRange: 0
+    speakerVolume: Speak
+    unlistedNumber: true
+    requiresPower: false
+  - type: Holopad
+  - type: StationAiWhitelist
+  - type: UserInterface
+    interfaces:
+        enum.HolopadUiKey.AiRequestWindow:
+          type: HolopadBoundUserInterface
+        enum.HolopadUiKey.AiActionWindow:
+          type: HolopadBoundUserInterface
 
 # The job-ready version of an AI spawn.
 - type: entity
@@ -386,6 +424,7 @@
     interfaces:
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
+        requireInputValidation: false
   - type: ComplexInteraction
   - type: Actions
   - type: Access
@@ -403,6 +442,9 @@
     - HideContextMenu
     - StationAi
     - NoConsoleSound
+  - type: StartingMindRole
+    mindRole: "MindRoleSiliconBrain"
+    silent: true
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
@@ -429,6 +471,28 @@
       shader: unshaded
       map: ["base"]
 
+# The holographic representation of the AI that is projected from a holopad.
+- type: entity
+  id: StationAiHoloLocal
+  name: AI hologram
+  description: A holographic representation of an AI.
+  categories: [ HideSpawnMenu ]
+  suffix: DO NOT MAP
+  components:
+  - type: Transform
+    anchored: true
+  - type: WarpPoint
+    follow: true
+  - type: Eye
+  - type: ContentEye
+  - type: Examiner
+  - type: Actions
+  - type: Alerts
+  - type: FTLSmashImmune
+  - type: CargoSellBlacklist
+  - type: StationAiVision
+    range: 20
+
 # Borgs
 - type: entity
   id: PlayerBorgBattery
@@ -438,12 +502,15 @@
   - type: ContainerFill
     containers:
       borg_brain:
-        - MMIFilled
+      - PositronicBrain
   - type: ItemSlots
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellMedium
+  - type: StartingMindRole
+    mindRole: "MindRoleSiliconBrain"
+    silent: true
 
 - type: entity
   id: PlayerBorgSyndicateAssaultBattery
@@ -526,3 +593,37 @@
     - PlayerBorgSyndicateAssaultGhostRole
     - PlayerBorgSyndicateAssaultGhostRole # Saboteurs are kinda like cyborg medics, we want less.
     - PlayerBorgSyndicateSaboteurGhostRole
+
+- type: entity
+  id: PlayerBorgDerelict
+  parent: BorgChassisDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleTool
+        - BorgModuleFireExtinguisher
+        - BorgModuleGPS
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: RandomMetadata
+    nameSegments: [names_borg]
+
+- type: entity
+  id: PlayerBorgDerelictGhostRole
+  parent: PlayerBorgDerelict
+  suffix: Ghost role
+  components:
+    - type: GhostRole
+      name: ghost-role-information-derelict-cyborg-name
+      description: ghost-role-information-derelict-cyborg-description
+      rules: ghost-role-information-silicon-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable

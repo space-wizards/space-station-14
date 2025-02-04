@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: SpookySpeakerMessagesGeneric
+  values:
+    prefix: spooky-speaker-generic-
+    count: 14
+
+- type: localizedDataset
+  id: SpookySpeakerMessagesRecycler
+  values:
+    prefix: spooky-speaker-recycler-
+    count: 3

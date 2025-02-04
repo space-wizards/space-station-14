@@ -26,6 +26,45 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookSmite
+  name: spellbook-smite-name
+  description: spellbook-smite-desc
+  productAction: ActionSmite
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookOffensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookCluwne
+  name: spellbook-cluwne-name
+  description: spellbook-cluwne-desc
+  productAction: ActionCluwne
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookOffensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookSlip
+  name: spellbook-slip-name
+  description: spellbook-slip-desc
+  productAction: ActionSlippery
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookOffensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Defensive
 - type: listing
   id: SpellbookForceWall
@@ -64,6 +103,20 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+# Taking an Eldritch spell, good proof of concept and a way to celebrate everything magic.
+- type: listing
+  id: SpellbookVoidApplause
+  name: spellbook-voidapplause-name
+  description: spellbook-voidapplause-desc
+  productAction: ActionVoidApplause
+  cost:
+    WizCoin: 1
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 - type: listing
   id: SpellbookCharge
   name: spellbook-charge-name
@@ -91,6 +144,19 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookMindSwap
+  name: spellbook-mind-swap-name
+  description: spellbook-mind-swap-description
+  productAction: ActionMindSwap
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Equipment
 - type: listing
   id: SpellbookWandDoor
@@ -110,6 +176,19 @@
   name: spellbook-wand-polymorph-carp-name
   description: spellbook-wand-polymorph-carp-description
   productEntity: WeaponWandPolymorphCarp
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookWandLocker
+  name: spellbook-wand-locker-name
+  description: spellbook-wand-locker-description
+  productEntity: WeaponWandLocker
   cost:
     WizCoin: 3
   categories:
