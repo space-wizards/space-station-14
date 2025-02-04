@@ -10,7 +10,8 @@
     icon:
       sprite: Interface/Actions/actions_ai.rsi
       state: ai_core
-    event: !type:JumpToCoreEvent
+    events:
+    - !type:JumpToCoreEvent
 
 - type: entity
   id: ActionSurvCameraLights
@@ -23,7 +24,8 @@
     icon:
       sprite: Interface/Actions/actions_ai.rsi
       state: camera_light
-    event: !type:RelayedActionComponentChangeEvent
+    events:
+    - !type:RelayedActionComponentChangeEvent
       components:
       - type: LightOnCollideCollider
       - type: FixturesChange
@@ -51,5 +53,6 @@
     icon:
       sprite: Interface/Actions/actions_ai.rsi
       state: state_laws
-    event: !type:ToggleLawsScreenEvent
+    events:
+    - !type:ToggleLawsScreenEvent
     useDelay: 0.5

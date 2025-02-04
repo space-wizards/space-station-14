@@ -142,6 +142,7 @@ public sealed class DecalPlacementSystem : EntitySystem
         if (_decalId == null || !_protoMan.TryIndex<DecalPrototype>(_decalId, out var decalProto))
             return;
 
+        var worldTargetActionEventList = new List<WorldTargetActionEvent>();
         var actionEvent = new PlaceDecalActionEvent()
         {
             DecalId = _decalId,
@@ -151,20 +152,22 @@ public sealed class DecalPlacementSystem : EntitySystem
             ZIndex = _zIndex,
             Cleanable = _cleanable,
         };
+        worldTargetActionEventList.Add(actionEvent);
 
         var actionId = Spawn(null);
-        AddComp(actionId, new WorldTargetActionComponent
-        {
-            // non-unique actions may be considered duplicates when saving/loading.
-            Icon = decalProto.Sprite,
-            Repeat = true,
-            ClientExclusive = true,
-            CheckCanAccess = false,
-            CheckCanInteract = false,
-            Range = -1,
-            Event = actionEvent,
-            IconColor = _decalColor,
-        });
+        AddComp(actionId,
+            new WorldTargetActionComponent
+            {
+                // non-unique actions may be considered duplicates when saving/loading.
+                Icon = decalProto.Sprite,
+                Repeat = true,
+                ClientExclusive = true,
+                CheckCanAccess = false,
+                CheckCanInteract = false,
+                Range = -1,
+                Events = worldTargetActionEventList,
+                IconColor = _decalColor,
+            });
 
         _metaData.SetEntityName(actionId, $"{_decalId} ({_decalColor.ToHex()}, {(int) _decalAngle.Degrees})");
 

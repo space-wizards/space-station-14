@@ -71,7 +71,8 @@
       sprite: Objects/Tanks/Jetpacks/blue.rsi
       state: icon-on
     useDelay: 1.0
-    event: !type:ToggleJetpackEvent
+    events:
+    - !type:ToggleJetpackEvent
 
 #Empty blue
 - type: entity

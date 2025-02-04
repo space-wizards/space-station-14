@@ -5,7 +5,8 @@
   components:
   - type: InstantAction
     icon: Interface/Actions/web.png
-    event: !type:SpiderWebActionEvent
+    events:
+    - !type:SpiderWebActionEvent
     useDelay: 25
 
 - type: entity
@@ -15,5 +16,6 @@
   components:
   - type: InstantAction
     icon: Interface/Actions/web.png
-    event: !type:SericultureActionEvent
+    events:
+    - !type:SericultureActionEvent
     useDelay: 1

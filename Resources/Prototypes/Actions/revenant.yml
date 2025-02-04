@@ -5,7 +5,8 @@
   components:
   - type: InstantAction
     icon: Interface/Actions/shop.png
-    event: !type:RevenantShopActionEvent
+    events:
+    - !type:RevenantShopActionEvent
 
 - type: entity
   id: ActionRevenantDefile
@@ -14,7 +15,8 @@
   components:
   - type: InstantAction
     icon: Interface/Actions/defile.png
-    event: !type:RevenantDefileActionEvent
+    events:
+    - !type:RevenantDefileActionEvent
     useDelay: 15
 
 - type: entity
@@ -24,7 +26,8 @@
   components:
   - type: InstantAction
     icon: Interface/Actions/overloadlight.png
-    event: !type:RevenantOverloadLightsActionEvent
+    events:
+    - !type:RevenantOverloadLightsActionEvent
     useDelay: 20
 
 #- type: entity
@@ -44,5 +47,6 @@
   components:
   - type: InstantAction
     icon: Interface/Actions/malfunction.png
-    event: !type:RevenantMalfunctionActionEvent
+    events:
+    - !type:RevenantMalfunctionActionEvent
     useDelay: 20

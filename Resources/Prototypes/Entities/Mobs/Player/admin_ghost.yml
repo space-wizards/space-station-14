@@ -104,7 +104,8 @@
     iconOn: Structures/Machines/parts.rsi/box_2.png
     keywords: [ "AI", "console", "interface" ]
     priority: -10
-    event: !type:ToggleIntrinsicUIEvent { key: enum.SolarControlConsoleUiKey.Key }
+    events:
+    - !type:ToggleIntrinsicUIEvent { key: enum.SolarControlConsoleUiKey.Key }
 
 - type: entity
   id: ActionAGhostShowCommunications
@@ -116,7 +117,8 @@
     iconOn: Interface/Actions/actions_ai.rsi/comms_console.png
     keywords: [ "AI", "console", "interface" ]
     priority: -4
-    event: !type:ToggleIntrinsicUIEvent { key: enum.CommunicationsConsoleUiKey.Key }
+    events:
+    - !type:ToggleIntrinsicUIEvent { key: enum.CommunicationsConsoleUiKey.Key }
 
 - type: entity
   id: ActionAGhostShowRadar
@@ -128,7 +130,8 @@
     iconOn: Interface/Actions/actions_ai.rsi/mass_scanner.png
     keywords: [ "AI", "console", "interface" ]
     priority: -6
-    event: !type:ToggleIntrinsicUIEvent { key: enum.RadarConsoleUiKey.Key }
+    events:
+    - !type:ToggleIntrinsicUIEvent { key: enum.RadarConsoleUiKey.Key }
 
 - type: entity
   id: ActionAGhostShowCargo
@@ -140,7 +143,8 @@
     iconOn: Structures/Machines/parts.rsi/box_2.png
     keywords: [ "AI", "console", "interface" ]
     priority: -10
-    event: !type:ToggleIntrinsicUIEvent { key: enum.CargoConsoleUiKey.Orders }
+    events:
+    - !type:ToggleIntrinsicUIEvent { key: enum.CargoConsoleUiKey.Orders }
 
 - type: entity
   id: ActionAGhostShowCrewMonitoring
@@ -152,7 +156,8 @@
     iconOn: Interface/Actions/actions_ai.rsi/crew_monitor.png
     keywords: [ "AI", "console", "interface" ]
     priority: -8
-    event: !type:ToggleIntrinsicUIEvent { key: enum.CrewMonitoringUIKey.Key }
+    events:
+    - !type:ToggleIntrinsicUIEvent { key: enum.CrewMonitoringUIKey.Key }
 
 - type: entity
   id: ActionAGhostShowStationRecords
@@ -164,4 +169,5 @@
     iconOn: Interface/Actions/actions_ai.rsi/station_records.png
     keywords: [ "AI", "console", "interface" ]
     priority: -7
-    event: !type:ToggleIntrinsicUIEvent { key: enum.GeneralStationRecordConsoleKey.Key }
+    events:
+    - !type:ToggleIntrinsicUIEvent { key: enum.GeneralStationRecordConsoleKey.Key }

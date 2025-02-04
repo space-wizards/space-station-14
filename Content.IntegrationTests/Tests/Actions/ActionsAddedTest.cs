@@ -47,9 +47,9 @@ public sealed class ActionsAddedTest
         var evType = typeof(ToggleCombatActionEvent);
 
         var sActions = sActionSystem.GetActions(serverEnt).Where(
-            x => x.Comp is InstantActionComponent act && act.Event?.GetType() == evType).ToArray();
+            x => x.Comp is InstantActionComponent act && act.Events?[0].GetType() == evType).ToArray();
         var cActions = cActionSystem.GetActions(clientEnt).Where(
-            x => x.Comp is InstantActionComponent act && act.Event?.GetType() == evType).ToArray();
+            x => x.Comp is InstantActionComponent act && act.Events?[0].GetType() == evType).ToArray();
 
         Assert.That(sActions.Length, Is.EqualTo(1));
         Assert.That(cActions.Length, Is.EqualTo(1));
@@ -63,7 +63,7 @@ public sealed class ActionsAddedTest
         // Finally, these two actions are not the same object
         // required, because integration tests do not respect the [NonSerialized] attribute and will simply events by reference.
         Assert.That(ReferenceEquals(sAct, cAct), Is.False);
-        Assert.That(ReferenceEquals(sAct.BaseEvent, cAct.BaseEvent), Is.False);
+        Assert.That(ReferenceEquals(sAct.BaseEvents, cAct.BaseEvents), Is.False);
 
         await pair.CleanReturnAsync();
     }

@@ -8,7 +8,8 @@
     icon:
       sprite: Interface/Actions/actions_mecha.rsi
       state: mech_cycle_equip_on
-    event: !type:MechToggleEquipmentEvent
+    events:
+    - !type:MechToggleEquipmentEvent
     useDelay: 0.5
 
 - type: entity
@@ -21,7 +22,8 @@
     icon:
       sprite: Interface/Actions/actions_mecha.rsi
       state: mech_view_stats
-    event: !type:MechOpenUiEvent
+    events:
+    - !type:MechOpenUiEvent
     useDelay: 1
 
 - type: entity
@@ -34,4 +36,5 @@
     icon:
       sprite: Interface/Actions/actions_mecha.rsi
       state: mech_eject
-    event: !type:MechEjectPilotEvent
+    events:
+    - !type:MechEjectPilotEvent

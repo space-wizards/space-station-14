@@ -150,7 +150,8 @@
     checkCanInteract: false
     checkConsciousness: false
     icon: Interface/Actions/pai-midi.png
-    event: !type:OpenUiActionEvent
+    events:
+    - !type:OpenUiActionEvent
       key: enum.InstrumentUiKey.Key
 
 - type: entity
@@ -162,5 +163,6 @@
       checkCanInteract: false
       checkConsciousness: false
       icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
-      event: !type:OpenUiActionEvent
+      events:
+    - !type:OpenUiActionEvent
         key: enum.StationMapUiKey.Key

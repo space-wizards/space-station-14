@@ -4,13 +4,15 @@
   description: Revert back into your original form.
   components:
   - type: InstantAction
-    event: !type:RevertPolymorphActionEvent
+    events:
+    - !type:RevertPolymorphActionEvent
 
 - type: entity
   id: ActionPolymorph
   components:
   - type: InstantAction
-    event: !type:PolymorphActionEvent
+    events:
+    - !type:PolymorphActionEvent
     itemIconStyle: NoItem
 
 - type: entity
@@ -20,7 +22,8 @@
   components:
   - type: InstantAction
     useDelay: 60
-    event: !type:PolymorphActionEvent
+    events:
+    - !type:PolymorphActionEvent
       protoId: WizardSpider
     itemIconStyle: NoItem
     icon:
@@ -34,7 +37,8 @@
   components:
   - type: InstantAction
     useDelay: 60
-    event: !type:PolymorphActionEvent
+    events:
+    - !type:PolymorphActionEvent
       protoId: WizardRod
     itemIconStyle: NoItem
     icon:
@@ -49,7 +53,8 @@
   - type: Magic
   - type: InstantAction
     useDelay: 30
-    event: !type:PolymorphActionEvent
+    events:
+    - !type:PolymorphActionEvent
       protoId: Jaunt
     itemIconStyle: NoItem
     icon:
@@ -69,7 +74,8 @@
   components:
   - type: InstantAction
     useDelay: 25
-    event: !type:PolymorphActionEvent
+    events:
+    - !type:PolymorphActionEvent
       protoId: Jaunt
     itemIconStyle: NoItem
     icon:
@@ -84,7 +90,8 @@
   components:
   - type: InstantAction
     useDelay: 20
-    event: !type:PolymorphActionEvent
+    events:
+    - !type:PolymorphActionEvent
       protoId: Jaunt
     itemIconStyle: NoItem
     icon:

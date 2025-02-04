@@ -267,7 +267,8 @@
   components:
   - type: InstantAction
     icon: Interface/Actions/manifest.png
-    event: !type:GuardianToggleActionEvent
+    events:
+    - !type:GuardianToggleActionEvent
     useDelay: 2
     checkCanInteract: false
     checkConsciousness: false

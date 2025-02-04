@@ -6,7 +6,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: AlignTileAny
       tileId: Space
   assignments:
@@ -20,7 +21,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       eraser: True
   assignments:
   - 0: 9
@@ -33,7 +35,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: AlignTileAny
       tileId: Plating
   assignments:
@@ -48,7 +51,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Grille
   assignments:
@@ -63,7 +67,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: WallSolid
   assignments:
@@ -78,7 +83,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Window
   assignments:
@@ -93,7 +99,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: WallReinforced
   assignments:
@@ -108,7 +115,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: ReinforcedWindow
   assignments:
@@ -123,7 +131,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Firelock
   assignments:
@@ -138,7 +147,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasPipeStraight
   assignments:
@@ -153,7 +163,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasPipeBend
   assignments:
@@ -168,7 +179,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasPipeTJunction
   assignments:
@@ -183,7 +195,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasPipeFourway
   assignments:
@@ -198,7 +211,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasVentScrubber
   assignments:
@@ -213,7 +227,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: GasVentPump
   assignments:
@@ -228,7 +243,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirAlarm
   assignments:
@@ -243,7 +259,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: FireAlarm
   assignments:
@@ -258,7 +275,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: APCBasic
   assignments:
@@ -273,7 +291,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: CableApcExtension
   assignments:
@@ -288,7 +307,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: CableMV
   assignments:
@@ -303,7 +323,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: CableHV
   assignments:
@@ -318,7 +339,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: SubstationBasic
   assignments:
@@ -333,7 +355,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Poweredlight
   assignments:
@@ -348,7 +371,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: PlaceFree
       entityType: EmergencyLight
   assignments:
@@ -363,7 +387,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: SMESBasic
   assignments:
@@ -378,7 +403,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: TableWood
   assignments:
@@ -393,7 +419,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Table
   assignments:
@@ -408,7 +435,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: ChairWood
   assignments:
@@ -423,7 +451,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Chair
   assignments:
@@ -438,7 +467,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: ChairOfficeLight
   assignments:
@@ -453,7 +483,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: StoolBar
   assignments:
@@ -468,7 +499,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Stool
   assignments:
@@ -483,7 +515,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Rack
   assignments:
@@ -498,7 +531,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: ChairOfficeDark
   assignments:
@@ -513,7 +547,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: PlaceFree
       entityType: LampGold
   assignments:
@@ -528,7 +563,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalPipe
   assignments:
@@ -543,7 +579,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalBend
   assignments:
@@ -558,7 +595,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalJunction
   assignments:
@@ -573,7 +611,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalJunctionFlipped
   assignments:
@@ -588,7 +627,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalRouter
   assignments:
@@ -603,7 +643,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalRouterFlipped
   assignments:
@@ -618,7 +659,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalUnit
   assignments:
@@ -633,7 +675,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: DisposalTrunk
   assignments:
@@ -648,7 +691,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: SignDisposalSpace
   assignments:
@@ -663,7 +707,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Windoor
   assignments:
@@ -678,7 +723,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: WindowDirectional
   assignments:
@@ -693,7 +739,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: WindowReinforcedDirectional
   assignments:
@@ -708,7 +755,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: PlasmaWindowDirectional
   assignments:
@@ -723,7 +771,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: Railing
   assignments:
@@ -738,7 +787,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: RailingCorner
   assignments:
@@ -753,7 +803,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: RailingCornerSmall
   assignments:
@@ -769,7 +820,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: RailingRound
   assignments:
@@ -783,7 +835,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockMaintLocked
   assignments:
@@ -798,7 +851,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockGlass
   assignments:
@@ -813,7 +867,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockServiceLocked
   assignments:
@@ -828,7 +883,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockSecurityLocked
   assignments:
@@ -843,7 +899,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockCommand
   assignments:
@@ -858,7 +915,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockScience
   assignments:
@@ -873,7 +931,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockMedical
   assignments:
@@ -888,7 +947,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockEngineering
   assignments:
@@ -903,7 +963,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
       entityType: AirlockCargo
   assignments:
@@ -923,7 +984,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:PlaceDecalActionEvent
+    events:
+    - !type:PlaceDecalActionEvent
       snap: True
       color: '#EFB34196'
       decalId: BotLeft
@@ -944,7 +1006,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:PlaceDecalActionEvent
+    events:
+    - !type:PlaceDecalActionEvent
       snap: True
       color: '#EFB34196'
       decalId: Delivery
@@ -965,7 +1028,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:PlaceDecalActionEvent
+    events:
+    - !type:PlaceDecalActionEvent
       snap: True
       color: '#EFB34196'
       decalId: WarnFull
@@ -986,7 +1050,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:PlaceDecalActionEvent
+    events:
+    - !type:PlaceDecalActionEvent
       snap: True
       color: '#EFB34196'
       decalId: HalfTileOverlayGreyscale
@@ -1007,7 +1072,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:PlaceDecalActionEvent
+    events:
+    - !type:PlaceDecalActionEvent
       snap: True
       color: '#334E6DC8'
       decalId: HalfTileOverlayGreyscale
@@ -1028,7 +1094,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:PlaceDecalActionEvent
+    events:
+    - !type:PlaceDecalActionEvent
       snap: True
       color: '#52B4E996'
       decalId: HalfTileOverlayGreyscale
@@ -1049,7 +1116,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:PlaceDecalActionEvent
+    events:
+    - !type:PlaceDecalActionEvent
       snap: True
       color: '#9FED5896'
       decalId: HalfTileOverlayGreyscale
@@ -1070,7 +1138,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:PlaceDecalActionEvent
+    events:
+    - !type:PlaceDecalActionEvent
       snap: True
       color: '#DE3A3A96'
       decalId: HalfTileOverlayGreyscale
@@ -1091,7 +1160,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:PlaceDecalActionEvent
+    events:
+    - !type:PlaceDecalActionEvent
       snap: True
       color: '#D381C996'
       decalId: HalfTileOverlayGreyscale
@@ -1112,7 +1182,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:PlaceDecalActionEvent
+    events:
+    - !type:PlaceDecalActionEvent
       snap: True
       color: '#A4610696'
       decalId: HalfTileOverlayGreyscale
@@ -1127,7 +1198,8 @@
     clientExclusive: True
     autoPopulate: False
     temporary: True
-    event: !type:StartPlacementActionEvent
+    events:
+    - !type:StartPlacementActionEvent
       placementOption: AlignTileAny
       tileId: FloorSteel
   assignments:

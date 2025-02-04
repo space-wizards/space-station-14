@@ -107,7 +107,8 @@
       state: goliath_tentacle_wiggle
     sound:
       path: "/Audio/Weapons/slash.ogg"
-    event: !type:GoliathSummonTentacleAction
+    events:
+    - !type:GoliathSummonTentacleAction
     useDelay: 8
     range: 10
 

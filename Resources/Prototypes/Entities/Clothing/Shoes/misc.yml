@@ -129,7 +129,8 @@
   components:
   - type: InstantAction
     itemIconStyle: BigItem
-    event: !type:ToggleActionEvent
+    events:
+    - !type:ToggleActionEvent
 
 - type: entity
   parent: ClothingShoesBase

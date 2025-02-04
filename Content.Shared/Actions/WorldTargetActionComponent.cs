@@ -9,14 +9,26 @@ namespace Content.Shared.Actions;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class WorldTargetActionComponent : BaseTargetActionComponent
 {
-    public override BaseActionEvent? BaseEvent => Event;
+    public override List<BaseActionEvent> BaseEvents
+    {
+        get
+        {
+            var list = new List<BaseActionEvent>();
+            foreach (var ev in Events)
+            {
+                list.Add(ev);
+            }
+
+            return list;
+        }
+    }
 
     /// <summary>
     ///     The local-event to raise when this action is performed.
     /// </summary>
-    [DataField("event")]
+    [DataField]
     [NonSerialized]
-    public WorldTargetActionEvent? Event;
+    public List<WorldTargetActionEvent> Events;
 }
 
 [Serializable, NetSerializable]

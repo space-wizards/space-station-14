@@ -75,7 +75,8 @@
     icon:
       sprite: Clothing/Neck/Misc/stethoscope.rsi
       state: icon
-    event: !type:StethoscopeActionEvent
+    events:
+    - !type:StethoscopeActionEvent
     checkCanInteract: false
     priority: -1
 

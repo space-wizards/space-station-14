@@ -11,7 +11,8 @@
     icon:
       sprite: Mobs/Ghosts/ghost_human.rsi
       state: icon
-    event: !type:CritSuccumbEvent
+    events:
+    - !type:CritSuccumbEvent
     startDelay: true
     useDelay: 10
 
@@ -27,7 +28,8 @@
     icon:
       sprite: Interface/Actions/actions_crit.rsi
       state: fakedeath
-    event: !type:CritFakeDeathEvent
+    events:
+    - !type:CritFakeDeathEvent
     useDelay: 30
 
 - type: entity
@@ -42,6 +44,7 @@
     icon:
       sprite: Interface/Actions/actions_crit.rsi
       state: lastwords
-    event: !type:CritLastWordsEvent
+    events:
+    - !type:CritLastWordsEvent
     startDelay: true
     useDelay: 10

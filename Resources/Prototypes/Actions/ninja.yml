@@ -6,7 +6,8 @@
   components:
   - type: InstantAction
     priority: -13
-    event: !type:ToggleActionEvent {}
+    events:
+    - !type:ToggleActionEvent {}
 
 # suit
 - type: entity
@@ -21,7 +22,8 @@
       state: icon
     itemIconStyle: NoItem
     priority: -10
-    event: !type:CreateItemEvent {}
+    events:
+    - !type:CreateItemEvent {}
 
 - type: entity
   id: ActionRecallKatana
@@ -35,7 +37,8 @@
       state: icon
     itemIconStyle: NoItem
     priority: -11
-    event: !type:RecallKatanaEvent {}
+    events:
+    - !type:RecallKatanaEvent {}
 
 - type: entity
   id: ActionNinjaEmp
@@ -48,7 +51,8 @@
       state: icon
     itemIconStyle: BigAction
     priority: -13
-    event: !type:NinjaEmpEvent {}
+    events:
+    - !type:NinjaEmpEvent {}
 
 - type: entity
   id: ActionTogglePhaseCloak
@@ -59,7 +63,8 @@
     # have to plan (un)cloaking ahead of time
     useDelay: 5
     priority: -9
-    event: !type:ToggleActionEvent
+    events:
+    - !type:ToggleActionEvent
 
 # katana
 - type: entity
@@ -77,6 +82,7 @@
       params:
         volume: 5
     priority: -12
-    event: !type:DashEvent
+    events:
+    - !type:DashEvent
     checkCanAccess: false
     range: 0

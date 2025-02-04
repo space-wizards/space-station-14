@@ -34,18 +34,12 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         if (!_actions.ValidAction(action))
             return false;
 
-        if (action.Event != null)
+        foreach (var entityWorldTargetActionEvent in action.Events)
         {
-            action.Event.Coords = Transform(target).Coordinates;
+            entityWorldTargetActionEvent.Coords = Transform(target).Coordinates;
         }
 
-        _actions.PerformAction(user,
-            null,
-            user.Comp.ActionEnt.Value,
-            action,
-            action.BaseEvent,
-            _timing.CurTime,
-            false);
+        _actions.PerformAction(user, null, user.Comp.ActionEnt.Value, action, action.BaseEvents, _timing.CurTime, false);
         return true;
     }
 

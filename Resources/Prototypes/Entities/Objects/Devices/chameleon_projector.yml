@@ -12,7 +12,7 @@
       components:
       - Anchorable
       - Item
-      tags: 
+      tags:
       - Bot # for funny bot moments
     blacklist:
       components:
@@ -46,7 +46,8 @@
   - type: InstantAction
     icon: Interface/VerbIcons/refresh.svg.192dpi.png
     itemIconStyle: BigAction
-    event: !type:DisguiseToggleNoRotEvent
+    events:
+    - !type:DisguiseToggleNoRotEvent
 
 - type: entity
   id: ActionDisguiseAnchor
@@ -58,4 +59,5 @@
       sprite: Objects/Tools/wrench.rsi
       state: icon
     itemIconStyle: BigAction
-    event: !type:DisguiseToggleAnchoredEvent
+    events:
+    - !type:DisguiseToggleAnchoredEvent

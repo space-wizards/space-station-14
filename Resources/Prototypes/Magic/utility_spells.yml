@@ -9,6 +9,7 @@
     icon:
       sprite: Objects/Weapons/Guns/Basic/wands.rsi
       state: nothing
-    event: !type:ChargeSpellEvent
+    events:
+    - !type:ChargeSpellEvent
       charge: 1
       speech: DI'RI CEL!

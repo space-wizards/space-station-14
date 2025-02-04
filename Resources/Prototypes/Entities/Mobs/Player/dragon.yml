@@ -224,7 +224,8 @@
     icon:
       sprite: Interface/Actions/carp_rift.rsi
       state: icon
-    event: !type:DragonSpawnRiftActionEvent
+    events:
+    - !type:DragonSpawnRiftActionEvent
     useDelay: 1
     priority: 3
 
@@ -236,7 +237,8 @@
   - type: EntityTargetAction
     icon: { sprite : Interface/Actions/devour.rsi, state: icon }
     iconOn: { sprite : Interface/Actions/devour.rsi, state: icon-on }
-    event: !type:DevourActionEvent
+    events:
+    - !type:DevourActionEvent
     priority: 1
 
 - type: entity
@@ -247,7 +249,8 @@
   - type: WorldTargetAction
     # TODO: actual sprite
     icon: { sprite : Objects/Weapons/Guns/Projectiles/magic.rsi, state: fireball }
-    event: !type:ActionGunShootEvent
+    events:
+    - !type:ActionGunShootEvent
     priority: 2
     checkCanAccess: false
     range: 0

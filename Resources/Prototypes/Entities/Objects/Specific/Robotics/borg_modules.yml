@@ -39,7 +39,8 @@
   - type: InstantAction
     itemIconStyle: BigAction
     useDelay: 0.5
-    event: !type:BorgModuleActionSelectedEvent
+    events:
+    - !type:BorgModuleActionSelectedEvent
 
 - type: entity
   id: BaseBorgModuleCargo

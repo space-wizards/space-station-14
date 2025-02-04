@@ -7,4 +7,5 @@
     itemIconStyle: BigItem
     priority: -20
     useDelay: 1
-    event: !type:MeleeSpeechConfigureActionEvent
+    events:
+    - !type:MeleeSpeechConfigureActionEvent

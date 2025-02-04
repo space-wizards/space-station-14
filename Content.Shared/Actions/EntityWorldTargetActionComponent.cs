@@ -10,14 +10,26 @@ namespace Content.Shared.Actions;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class EntityWorldTargetActionComponent : BaseTargetActionComponent
 {
-    public override BaseActionEvent? BaseEvent => Event;
+    public override List<BaseActionEvent> BaseEvents
+    {
+        get
+        {
+            var list = new List<BaseActionEvent>();
+            foreach (var ev in Events)
+            {
+                list.Add(ev);
+            }
+
+            return list;
+        }
+    }
 
     /// <summary>
     ///     The local-event to raise when this action is performed.
     /// </summary>
     [DataField]
     [NonSerialized]
-    public EntityWorldTargetActionEvent? Event;
+    public List<EntityWorldTargetActionEvent> Events;
 
     /// <summary>
     /// Determines which entities are valid targets for this action.

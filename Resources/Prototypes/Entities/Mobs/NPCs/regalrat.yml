@@ -312,7 +312,8 @@
     icon:
       sprite: Interface/Actions/actions_rat_king.rsi
       state: ratKingArmy
-    event: !type:RatKingRaiseArmyActionEvent
+    events:
+    - !type:RatKingRaiseArmyActionEvent
 
 - type: entity
   id: ActionRatKingDomain
@@ -324,7 +325,8 @@
     icon:
       sprite: Interface/Actions/actions_rat_king.rsi
       state: ratKingDomain
-    event: !type:RatKingDomainActionEvent
+    events:
+    - !type:RatKingDomainActionEvent
 
 - type: entity
   id: ActionRatKingOrderStay

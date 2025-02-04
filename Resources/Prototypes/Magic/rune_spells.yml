@@ -9,7 +9,8 @@
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: spell_default
-    event: !type:InstantSpawnSpellEvent
+    events:
+    - !type:InstantSpawnSpellEvent
       prototype: FlashRune
 
 - type: entity
@@ -23,7 +24,8 @@
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: spell_default
-    event: !type:InstantSpawnSpellEvent
+    events:
+    - !type:InstantSpawnSpellEvent
       prototype: ExplosionRune
 
 - type: entity
@@ -37,7 +39,8 @@
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: spell_default
-    event: !type:InstantSpawnSpellEvent
+    events:
+    - !type:InstantSpawnSpellEvent
       prototype: IgniteRune
 
 - type: entity
@@ -51,5 +54,6 @@
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: spell_default
-    event: !type:InstantSpawnSpellEvent
+    events:
+    - !type:InstantSpawnSpellEvent
       prototype: StunRune

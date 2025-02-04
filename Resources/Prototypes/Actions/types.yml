@@ -17,7 +17,8 @@
   - type: InstantAction
     useDelay: 10
     icon: Interface/Actions/scream.png
-    event: !type:ScreamActionEvent
+    events:
+    - !type:ScreamActionEvent
     checkCanInteract: false
 
 - type: entity
@@ -29,7 +30,8 @@
     checkCanInteract: false
     checkConsciousness: false
     icon: Interface/Actions/zombie-turn.png
-    event: !type:ZombifySelfActionEvent
+    events:
+    - !type:ZombifySelfActionEvent
 
 - type: entity
   id: ActionToggleLight
@@ -40,7 +42,8 @@
     useDelay: 1
     icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
     iconOn: { sprite: Objects/Tools/flashlight.rsi, state: flashlight-on }
-    event: !type:ToggleActionEvent
+    events:
+    - !type:ToggleActionEvent
 
 - type: entity
   id: ActionOpenStorageImplant
@@ -53,7 +56,8 @@
     icon:
       sprite: Clothing/Back/Backpacks/backpack.rsi
       state: icon
-    event: !type:OpenStorageImplantEvent
+    events:
+    - !type:OpenStorageImplantEvent
     useDelay: 1
 
 - type: entity
@@ -70,7 +74,8 @@
     icon:
       sprite: Actions/Implants/implants.rsi
       state: explosive
-    event: !type:ActivateImplantEvent
+    events:
+    - !type:ActivateImplantEvent
 
 - type: entity
   parent: BaseSuicideAction
@@ -86,7 +91,8 @@
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: gib
-    event: !type:ActivateImplantEvent
+    events:
+    - !type:ActivateImplantEvent
 
 - type: entity
   id: ActionActivateFreedomImplant
@@ -101,7 +107,8 @@
     icon:
       sprite: Actions/Implants/implants.rsi
       state: freedom
-    event: !type:UseFreedomImplantEvent
+    events:
+    - !type:UseFreedomImplantEvent
 
 - type: entity
   id: ActionOpenUplinkImplant
@@ -114,7 +121,8 @@
     icon:
       sprite: Objects/Devices/communication.rsi
       state: old-radio
-    event: !type:OpenUplinkImplantEvent
+    events:
+    - !type:OpenUplinkImplantEvent
 
 - type: entity
   id: ActionActivateEmpImplant
@@ -130,7 +138,8 @@
     icon:
       sprite: Objects/Weapons/Grenades/empgrenade.rsi
       state: icon
-    event: !type:ActivateImplantEvent
+    events:
+    - !type:ActivateImplantEvent
 
 - type: entity
   id: ActionActivateScramImplant
@@ -146,7 +155,8 @@
     icon:
       sprite: Structures/Specific/anomaly.rsi
       state: anom4
-    event: !type:UseScramImplantEvent
+    events:
+    - !type:UseScramImplantEvent
 
 - type: entity
   id: ActionActivateDnaScramblerImplant
@@ -160,7 +170,8 @@
     icon:
       sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
       state: icon
-    event: !type:UseDnaScramblerImplantEvent
+    events:
+    - !type:UseDnaScramblerImplantEvent
 
 - type: entity
   id: ActionToggleSuitPiece
@@ -170,7 +181,8 @@
   - type: InstantAction
     itemIconStyle: BigItem
     useDelay: 1 # equip noise spam.
-    event: !type:ToggleClothingEvent
+    events:
+    - !type:ToggleClothingEvent
 
 - type: entity
   id: ActionCombatModeToggle
@@ -182,7 +194,8 @@
     checkConsciousness: false
     icon: Interface/Actions/harmOff.png
     iconOn: Interface/Actions/harm.png
-    event: !type:ToggleCombatActionEvent
+    events:
+    - !type:ToggleCombatActionEvent
     priority: -100
 
 - type: entity
@@ -203,7 +216,8 @@
   components:
   - type: InstantAction
     icon: { sprite: Interface/Actions/voice-mask.rsi, state: icon }
-    event: !type:VoiceMaskSetNameEvent
+    events:
+    - !type:VoiceMaskSetNameEvent
 
 - type: entity
   id: ActionVendingThrow
@@ -212,7 +226,8 @@
   components:
   - type: InstantAction
     useDelay: 30
-    event: !type:VendingMachineSelfDispenseEvent
+    events:
+    - !type:VendingMachineSelfDispenseEvent
 
 - type: entity
   id: ActionArtifactActivate
@@ -224,7 +239,8 @@
       sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
       state: ano01
     useDelay: 60
-    event: !type:ArtifactSelfActivateEvent
+    events:
+    - !type:ArtifactSelfActivateEvent
 
 - type: entity
   id: ActionToggleBlock
@@ -234,7 +250,8 @@
   - type: InstantAction
     icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-icon }
     iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
-    event: !type:ToggleActionEvent
+    events:
+    - !type:ToggleActionEvent
 
 - type: entity
   id: ActionClearNetworkLinkOverlays
@@ -247,7 +264,8 @@
     checkConsciousness: false
     temporary: true
     icon: { sprite: Objects/Tools/multitool.rsi, state: icon }
-    event: !type:ClearAllOverlaysEvent
+    events:
+    - !type:ClearAllOverlaysEvent
 
 - type: entity
   id: ActionAnimalLayEgg
@@ -257,7 +275,8 @@
   - type: InstantAction
     icon: { sprite: Objects/Consumable/Food/egg.rsi, state: icon }
     useDelay: 60
-    event: !type:EggLayInstantActionEvent
+    events:
+    - !type:EggLayInstantActionEvent
 
 - type: entity
   id: ActionSleep
@@ -268,7 +287,8 @@
     checkCanInteract: false
     checkConsciousness: false
     icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
-    event: !type:SleepActionEvent
+    events:
+    - !type:SleepActionEvent
 
 - type: entity
   id: ActionWake
@@ -279,7 +299,8 @@
     icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
     checkCanInteract: false
     checkConsciousness: false
-    event: !type:WakeActionEvent
+    events:
+    - !type:WakeActionEvent
     startDelay: true
     useDelay: 2
 
@@ -290,7 +311,8 @@
   components:
   - type: InstantAction
     icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
-    event: !type:ActivateImplantEvent
+    events:
+    - !type:ActivateImplantEvent
     useDelay: 1
 
 - type: entity
@@ -302,7 +324,8 @@
     priority: -1
     useDelay: 30
     icon: Interface/Actions/firestarter.png
-    event: !type:FireStarterActionEvent
+    events:
+    - !type:FireStarterActionEvent
 
 - type: entity
   id: ActionToggleEyes
@@ -312,7 +335,8 @@
   - type: InstantAction
     icon: Interface/Actions/eyeopen.png
     iconOn: Interface/Actions/eyeclose.png
-    event: !type:ToggleEyesActionEvent
+    events:
+    - !type:ToggleEyesActionEvent
     useDelay: 1 # so u cant give yourself and observers eyestrain by rapidly spamming the action
     checkCanInteract: false
     checkConsciousness: false
@@ -327,7 +351,8 @@
       iconOn: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
       itemIconStyle: NoItem
       useDelay: 1 # emote spam
-      event: !type:ToggleActionEvent
+      events:
+    - !type:ToggleActionEvent
 
 - type: entity
   id: FakeMindShieldToggleAction
@@ -339,4 +364,5 @@
     iconOn: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon-on }
     itemIconStyle: NoItem
     useDelay: 1
-    event: !type:FakeMindShieldToggleEvent
+    events:
+    - !type:FakeMindShieldToggleEvent

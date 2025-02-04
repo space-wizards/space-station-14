@@ -15,7 +15,8 @@
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: blink
-    event: !type:TeleportSpellEvent
+    events:
+    - !type:TeleportSpellEvent
 
 # TODO: Second level upgrade sometime that allows swapping with all objects
 - type: entity
@@ -39,5 +40,6 @@
     icon:
       sprite: Objects/Magic/Eldritch/eldritch_actions.rsi
       state: voidblink
-    event: !type:VoidApplauseSpellEvent
+    events:
+    - !type:VoidApplauseSpellEvent
       effect: EffectVoidBlink

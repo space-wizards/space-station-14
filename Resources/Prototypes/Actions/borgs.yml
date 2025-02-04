@@ -10,7 +10,8 @@
     icon:
       sprite: Interface/Actions/actions_borg.rsi
       state: state-laws
-    event: !type:ToggleLawsScreenEvent
+    events:
+    - !type:ToggleLawsScreenEvent
     useDelay: 0.5
 
 - type: entity
@@ -22,5 +23,6 @@
     icon:
       sprite: Interface/Actions/actions_borg.rsi
       state: select-type
-    event: !type:BorgToggleSelectTypeEvent
+    events:
+    - !type:BorgToggleSelectTypeEvent
     useDelay: 0.5

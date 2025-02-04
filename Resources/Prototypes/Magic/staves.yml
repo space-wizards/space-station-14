@@ -39,6 +39,7 @@
     whitelist: { components: [ PointLight ] }
     charges: 25
     sound: /Audio/Magic/blink.ogg
-    event: !type:ChangeComponentsSpellEvent
+    events:
+    - !type:ChangeComponentsSpellEvent
       toAdd:
       - type: RgbLightController

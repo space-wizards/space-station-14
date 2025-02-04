@@ -216,12 +216,12 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         if (action.ClientExclusive)
         {
-            if (action.Event != null)
+            foreach (var worldTargetActionEvent in action.Events)
             {
-                action.Event.Target = coords;
+                worldTargetActionEvent.Target = coords;
             }
 
-            _actionsSystem.PerformAction(user, actionComp, actionId, action, action.Event, _timing.CurTime);
+            _actionsSystem.PerformAction(user, actionComp, actionId, action, action.BaseEvents, _timing.CurTime);
         }
         else
             EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(EntityManager.GetNetEntity(actionId), EntityManager.GetNetCoordinates(coords)));
@@ -249,12 +249,12 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         if (action.ClientExclusive)
         {
-            if (action.Event != null)
+            foreach (var entityTargetActionEvent in action.Events)
             {
-                action.Event.Target = entity;
+                entityTargetActionEvent.Target = entity;
             }
 
-            _actionsSystem.PerformAction(user, actionComp, actionId, action, action.Event, _timing.CurTime);
+            _actionsSystem.PerformAction(user, actionComp, actionId, action, action.BaseEvents, _timing.CurTime);
         }
         else
             EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(EntityManager.GetNetEntity(actionId), EntityManager.GetNetEntity(args.EntityUid)));
@@ -287,13 +287,13 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         if (action.ClientExclusive)
         {
-            if (action.Event != null)
+            foreach (var entityWorldTargetActionEvent in action.Events)
             {
-                action.Event.Entity = entity;
-                action.Event.Coords = coords;
+                entityWorldTargetActionEvent.Entity = entity;
+                entityWorldTargetActionEvent.Coords = coords;
             }
 
-            _actionsSystem.PerformAction(user, actionComp, actionId, action, action.Event, _timing.CurTime);
+            _actionsSystem.PerformAction(user, actionComp, actionId, action, action.BaseEvents, _timing.CurTime);
         }
         else
             EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(EntityManager.GetNetEntity(actionId), EntityManager.GetNetEntity(args.EntityUid), EntityManager.GetNetCoordinates(coords)));

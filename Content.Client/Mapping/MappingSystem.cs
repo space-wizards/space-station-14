@@ -46,6 +46,7 @@ public sealed partial class MappingSystem : EntitySystem
         if (ev.Action != null)
             return;
 
+        var instantActionEventList = new List<InstantActionEvent>();
         var actionEvent = new StartPlacementActionEvent();
         ITileDefinition? tileDef = null;
 
@@ -67,6 +68,7 @@ public sealed partial class MappingSystem : EntitySystem
         else
             return;
 
+        instantActionEventList.Add(actionEvent);
         InstantActionComponent action;
         string name;
 
@@ -79,11 +81,12 @@ public sealed partial class MappingSystem : EntitySystem
                 ? _spaceIcon
                 : new Texture(contentTileDef.Sprite!.Value);
 
+
             action = new InstantActionComponent
             {
                 ClientExclusive = true,
                 CheckCanInteract = false,
-                Event = actionEvent,
+                Events = instantActionEventList,
                 Icon = tileIcon
             };
 
@@ -95,7 +98,7 @@ public sealed partial class MappingSystem : EntitySystem
             {
                 ClientExclusive = true,
                 CheckCanInteract = false,
-                Event = actionEvent,
+                Events = instantActionEventList,
                 Icon = _deleteIcon,
             };
 
@@ -110,7 +113,7 @@ public sealed partial class MappingSystem : EntitySystem
             {
                 ClientExclusive = true,
                 CheckCanInteract = false,
-                Event = actionEvent,
+                Events = instantActionEventList,
                 Icon = new EntityPrototype(actionEvent.EntityType),
             };
 

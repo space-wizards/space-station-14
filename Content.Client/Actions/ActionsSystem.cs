@@ -286,7 +286,7 @@ namespace Content.Client.Actions
 
             if (action.ClientExclusive)
             {
-                PerformAction(user, actions, actionId, instantAction, instantAction.Event, GameTiming.CurTime);
+                PerformAction(user, actions, actionId, instantAction, instantAction.BaseEvents, GameTiming.CurTime);
             }
             else
             {

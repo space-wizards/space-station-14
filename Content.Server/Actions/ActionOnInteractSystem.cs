@@ -55,7 +55,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
             return;
 
         var (actId, act) = _random.Pick(options);
-        _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
+        _actions.PerformAction(args.User, null, actId, act, act.BaseEvents, _timing.CurTime, false);
         args.Handled = true;
     }
 
@@ -86,12 +86,12 @@ public sealed class ActionOnInteractSystem : EntitySystem
             if (entOptions.Count > 0)
             {
                 var (entActId, entAct) = _random.Pick(entOptions);
-                if (entAct.Event != null)
+                foreach (var instantActionEvent in entAct.Events)
                 {
-                    entAct.Event.Target = args.Target.Value;
+                    instantActionEvent.Target = args.Target.Value;
                 }
 
-                _actions.PerformAction(args.User, null, entActId, entAct, entAct.Event, _timing.CurTime, false);
+                _actions.PerformAction(args.User, null, entActId, entAct, entAct.BaseEvents, _timing.CurTime, false);
                 args.Handled = true;
                 return;
             }
@@ -109,13 +109,13 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (entWorldOptions.Count > 0)
         {
             var (entActId, entAct) = _random.Pick(entWorldOptions);
-            if (entAct.Event != null)
+            foreach (var entityWorldTargetActionEvent in entAct.Events)
             {
-                entAct.Event.Entity = args.Target;
-                entAct.Event.Coords = args.ClickLocation;
+                entityWorldTargetActionEvent.Entity = args.Target;
+                entityWorldTargetActionEvent.Coords = args.ClickLocation;
             }
 
-            _actions.PerformAction(args.User, null, entActId, entAct, entAct.Event, _timing.CurTime, false);
+            _actions.PerformAction(args.User, null, entActId, entAct, entAct.BaseEvents, _timing.CurTime, false);
             args.Handled = true;
             return;
         }
@@ -133,12 +133,12 @@ public sealed class ActionOnInteractSystem : EntitySystem
             return;
 
         var (actId, act) = _random.Pick(options);
-        if (act.Event != null)
+        foreach (var worldTargetAction in act.Events)
         {
-            act.Event.Target = args.ClickLocation;
+            worldTargetAction.Target = args.ClickLocation;
         }
 
-        _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
+        _actions.PerformAction(args.User, null, actId, act, act.BaseEvents, _timing.CurTime, false);
         args.Handled = true;
     }
 

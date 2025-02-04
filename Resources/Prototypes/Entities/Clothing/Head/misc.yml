@@ -215,7 +215,8 @@
   description: "*notices your killsign* owo whats this"
   components:
   - type: InstantAction
-    event: !type:ToggleActionEvent
+    events:
+    - !type:ToggleActionEvent
 
 - type: entity
   parent: ClothingHeadBase

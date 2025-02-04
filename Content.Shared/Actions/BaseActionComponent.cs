@@ -13,7 +13,7 @@ namespace Content.Shared.Actions;
 [EntityCategory("Actions")]
 public abstract partial class BaseActionComponent : Component
 {
-    public abstract BaseActionEvent? BaseEvent { get; }
+    public abstract List<BaseActionEvent> BaseEvents { get; }
 
     /// <summary>
     ///     Icon representing this action in the UI.

@@ -10,5 +10,6 @@
     iconOn:
       sprite: Interface/Alerts/internals.rsi
       state: internal1
-    event: !type:ToggleActionEvent
+    events:
+    - !type:ToggleActionEvent
     useDelay: 1

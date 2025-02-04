@@ -5,5 +5,6 @@
   components:
   - type: InstantAction
     icon: Structures/Specific/anomaly.rsi/anom1.png
-    event: !type:ActionAnomalyPulseEvent
+    events:
+    - !type:ActionAnomalyPulseEvent
     useDelay: 30

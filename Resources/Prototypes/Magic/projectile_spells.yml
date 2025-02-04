@@ -15,7 +15,8 @@
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: fireball
-    event: !type:ProjectileSpellEvent
+    events:
+    - !type:ProjectileSpellEvent
       prototype: ProjectileFireball
       speech: action-speech-spell-fireball
   - type: ActionUpgrade
@@ -41,7 +42,8 @@
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: fireball
-    event: !type:ProjectileSpellEvent
+    events:
+    - !type:ProjectileSpellEvent
       prototype: ProjectileFireball
       speech: action-speech-spell-fireball
 
@@ -63,6 +65,7 @@
       icon:
         sprite: Objects/Magic/magicactions.rsi
         state: fireball
-      event: !type:ProjectileSpellEvent
+      events:
+      - !type:ProjectileSpellEvent
         prototype: ProjectileFireball
         speech: action-speech-spell-fireball
