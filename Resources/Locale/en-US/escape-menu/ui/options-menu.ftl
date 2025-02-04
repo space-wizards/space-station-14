@@ -44,6 +44,7 @@ ui-options-volume-label = Volume
 
 ui-options-display-label = Display
 ui-options-quality-label = Quality
+ui-options-lighting-label = Lighting
 ui-options-misc-label = Misc
 ui-options-interface-label = Interface
 
@@ -57,11 +58,14 @@ ui-options-fancy-speech = Show names in speech bubbles
 ui-options-fancy-name-background = Add background to speech bubble names
 ui-options-vsync = VSync
 ui-options-fullscreen = Fullscreen
-ui-options-lighting-label = Lighting Quality:
-ui-options-lighting-very-low = Very Low
-ui-options-lighting-low = Low
-ui-options-lighting-medium = Medium
-ui-options-lighting-high = High
+ui-options-lighting-quality-label = Quality:
+ui-options-lighting-quality-very-low = Very Low
+ui-options-lighting-quality-low = Low
+ui-options-lighting-quality-medium = Medium
+ui-options-lighting-quality-high = High
+ui-options-lighting-soft-shadows = Soft Shadows
+ui-options-lighting-blur = Blur lights
+ui-options-lighting-blur-factor = Blur factor
 ui-options-scale-label = UI Scale:
 ui-options-scale-auto = Automatic ({ TOSTRING($scale, "P0") })
 ui-options-scale-75 = 75%

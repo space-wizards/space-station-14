@@ -22,6 +22,17 @@ public sealed partial class GraphicsTab : Control
         Control.AddOptionCheckBox(CVars.DisplayVSync, VSyncCheckBox);
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));
+        Control.AddOptionCheckBox(CVars.LightSoftShadows, LightingSoftShadowsCheckBox);
+        var lBlur = Control.AddOptionCheckBox(CVars.LightBlur, LightingBlurCheckBox);
+
+        lBlur.ImmediateValueChanged += _ => UpdateViewportSettingsVisibility();
+
+        Control.AddOptionPercentSlider(
+            CCVars.LightBlurFactor,
+            LightingBlurFactorSlider,
+            0f,
+            1f,
+            0.003f);
 
         Control.AddOptionDropDown(
             CVars.DisplayUIScale,
@@ -72,6 +83,7 @@ public sealed partial class GraphicsTab : Control
 
     private void UpdateViewportSettingsVisibility()
     {
+        LightingBlurFactorSlider.Visible = LightingBlurCheckBox.Pressed;
         ViewportScaleSlider.Visible = !ViewportStretchCheckBox.Pressed;
         IntegerScalingCheckBox.Visible = ViewportStretchCheckBox.Pressed;
         ViewportVerticalFitCheckBox.Visible = ViewportStretchCheckBox.Pressed;
@@ -104,10 +116,10 @@ public sealed partial class GraphicsTab : Control
             _cfg = cfg;
             _dropDown = dropDown;
             var button = dropDown.Button;
-            button.AddItem(Loc.GetString("ui-options-lighting-very-low"), QualityVeryLow);
-            button.AddItem(Loc.GetString("ui-options-lighting-low"), QualityLow);
-            button.AddItem(Loc.GetString("ui-options-lighting-medium"), QualityMedium);
-            button.AddItem(Loc.GetString("ui-options-lighting-high"), QualityHigh);
+            button.AddItem(Loc.GetString("ui-options-lighting-quality-very-low"), QualityVeryLow);
+            button.AddItem(Loc.GetString("ui-options-lighting-quality-low"), QualityLow);
+            button.AddItem(Loc.GetString("ui-options-lighting-quality-medium"), QualityMedium);
+            button.AddItem(Loc.GetString("ui-options-lighting-quality-high"), QualityHigh);
             button.OnItemSelected += OnOptionSelected;
         }
 
@@ -132,7 +144,7 @@ public sealed partial class GraphicsTab : Control
                     _cfg.SetCVar(CVars.LightBlur, false);
                     break;
                 case QualityLow:
-                    _cfg.SetCVar(CVars.LightResolutionScale, 0.5f);
+                    _cfg.SetCVar(CVars.LightResolutionScale, 0.25f);
                     _cfg.SetCVar(CVars.LightSoftShadows, false);
                     _cfg.SetCVar(CVars.LightBlur, true);
                     break;
@@ -171,7 +183,7 @@ public sealed partial class GraphicsTab : Control
             if (val <= 0.125)
                 return QualityVeryLow;
 
-            if ((val <= 0.5) && !soft)
+            if (val <= 0.25)
                 return QualityLow;
 
             if (val <= 0.5)
