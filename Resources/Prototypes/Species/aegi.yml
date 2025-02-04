@@ -6,6 +6,9 @@
   sprites: MobAegiSprites
   markingLimits: MobAegiMarkingLimits
   dollPrototype: MobAegiDummy
+  maleFirstNames: names_aegi_male
+  femaleFirstNames: names_aegi_female
+  naming: First
   skinColoration: HumanToned
 
 - type: speciesBaseSprites
