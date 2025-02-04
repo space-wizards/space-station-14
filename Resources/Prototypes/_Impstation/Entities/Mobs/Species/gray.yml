@@ -58,8 +58,6 @@
         color: "#00ff04"
   - type: Bloodstream
     bloodReagent: Radium
-  - type: ReplacementAccent
-    accent: gray
   - type: Inventory
     speciesId: gray
     templateId: gray
