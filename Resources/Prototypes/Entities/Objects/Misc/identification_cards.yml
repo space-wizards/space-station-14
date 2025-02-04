@@ -22,6 +22,7 @@
     tags:
     - DoorBumpOpener
     - WhitelistChameleon
+    - WhitelistChameleonIdCard
   - type: StealTarget
     stealGroup: IDCard
 
@@ -116,6 +117,7 @@
     tags:
     - DoorBumpOpener
     - WhitelistChameleon
+    - WhitelistChameleonIdCard
     - HighRiskItem
   - type: StealTarget
     stealGroup: CaptainIDCard
@@ -324,6 +326,9 @@
     - type: PresetIdCard
       job: Bartender
       name: Pun Pun
+    - type: Tag #  Ignore Chameleon tags
+      tags:
+      - DoorBumpOpener
 
 - type: entity
   parent: IDCardStandard
@@ -609,6 +614,7 @@
   - type: ChameleonClothing
     slot: [idcard]
     default: PassengerIDCard
+    requireTag: WhitelistChameleonIdCard
   - type: UserInterface
     interfaces:
       enum.AgentIDCardUiKey.Key:
@@ -820,3 +826,7 @@
     - CentralCommand
     - NuclearOperative
     - SyndicateAgent
+    - Wizard
+  - type: Tag #  Ignore Chameleon tags
+    tags:
+    - DoorBumpOpener
