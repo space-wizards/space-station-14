@@ -6,10 +6,15 @@ desc             = "Official English Space Station 14 servers. Vanilla, roleplay
 lobbyenabled     = true
 soft_max_players = 80
 panic_bunker.enabled = true
+panic_bunker.min_overall_minutes = 120
 panic_bunker.disable_with_admins = true
 panic_bunker.enable_without_admins = true
 panic_bunker.show_reason = true
 panic_bunker.custom_reason = "You have not played on a Wizard's Den server long enough to connect to this server. Please play on Wizard's Den Lizard until you have more playtime."
+
+# IPIntel stuff
+ipintel_enabled = true
+ipintel_contact_email = "telecommunications@spacestation14.com"
 
 [infolinks]
 bug_report = "https://github.com/space-wizards/space-station-14/issues/new/choose"
@@ -38,6 +43,12 @@ see_own_notes = true
 deadmin_on_join = true
 new_player_threshold = 600
 alert.min_players_sharing_connection = 2
+allow_multi_server_play = false
 
 [atmos]
 max_explosion_range = 5
+
+[status]
+privacy_policy_link = "https://spacestation14.com/about/privacy/#game-server-privacy-policy"
+privacy_policy_identifier = "wizden"
+privacy_policy_version = "2025-01-19"
