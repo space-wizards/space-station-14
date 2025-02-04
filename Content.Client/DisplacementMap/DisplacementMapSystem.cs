@@ -12,7 +12,17 @@ public sealed class DisplacementMapSystem : EntitySystem
     public bool TryAddDisplacement(DisplacementData data, SpriteComponent sprite, int index, string key, HashSet<string> revealedLayers)
     {
         if (data.ShaderOverride != null)
-            sprite.LayerSetShader(index, data.ShaderOverride);
+        {
+            if (sprite[index] is SpriteComponent.Layer layer && layer.ShaderPrototype!.Equals("unshaded")) //feels like a hack? want to know if there's a better way of doing this.
+            {
+                sprite.LayerSetShader(index, data.ShaderOverrideUnshaded);
+            }
+            else
+            {
+                sprite.LayerSetShader(index, data.ShaderOverride);
+            }
+        }
+
 
         var displacementKey = $"{key}-displacement";
         if (!revealedLayers.Add(displacementKey))
