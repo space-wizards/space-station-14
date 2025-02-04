@@ -1,37 +1,4 @@
 ﻿Entries:
-- author: ShadowCommander
-  changes:
-  - message: Fixed clicking on chairs and beds with an entity buckled to them not
-      unbuckling them.
-    type: Fix
-  id: 7394
-  time: '2024-09-18T23:55:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29998
-- author: Winkarst-cpu
-  changes:
-  - message: Now fire leaves burn marks on the tiles that were affected by it.
-    type: Add
-  id: 7395
-  time: '2024-09-19T00:23:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31939
-- author: ArchRBX
-  changes:
-  - message: Mass scanners and shuttle consoles now display coordinates beneath IFF
-      labels
-    type: Add
-  - message: IFF labels that are beyond the viewport extents maintain their heading
-      and don't hug corners
-    type: Fix
-  id: 7396
-  time: '2024-09-19T01:25:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31501
-- author: coffeeware
-  changes:
-  - message: a powered TEG won't produce infinite power when destroyed
-    type: Fix
-  id: 7397
-  time: '2024-09-19T02:15:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29972
 - author: Boaz1111
   changes:
   - message: Added plasma and uranium arrows.
@@ -3908,3 +3875,34 @@
   id: 7893
   time: '2025-02-03T01:04:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34841
+- author: keronshb
+  changes:
+  - message: The Hypereutactic Blade has been added to the game as an alternative
+      to the double bladed energy sword. It's a massive sword with high attack power,
+      100% reflect chance, but slow movement and use speed.
+    type: Add
+  id: 7894
+  time: '2025-02-03T21:22:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32414
+- author: AgentSmithRadio
+  changes:
+  - message: Added manager wire hacking menus to nearly all vending machines. Get
+      hacking and see what's hidden!
+    type: Add
+  id: 7895
+  time: '2025-02-03T23:33:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32934
+- author: ps3moira
+  changes:
+  - message: Changed 3D item sprites to cabinet perspective
+    type: Tweak
+  id: 7896
+  time: '2025-02-04T07:52:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34293
+- author: impubbi
+  changes:
+  - message: Bolas will now only be applied once.
+    type: Fix
+  id: 7897
+  time: '2025-02-04T16:11:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34723

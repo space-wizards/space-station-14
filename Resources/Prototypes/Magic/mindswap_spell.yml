@@ -10,6 +10,7 @@
       components:
       - MindContainer
       - Body
+      - MindContainer
     canTargetSelf: false
     interactOnMiss: false
     sound: !type:SoundPathSpecifier
