@@ -18,6 +18,7 @@ public abstract class SharedLatheSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
 
     public readonly Dictionary<string, List<LatheRecipePrototype>> InverseRecipes = new();
 
@@ -66,6 +67,12 @@ public abstract class SharedLatheSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, EmagLatheRecipesComponent component, ref GotEmaggedEvent args)
     {
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            return;
+
         args.Handled = true;
     }
 
