@@ -18,7 +18,7 @@ entities:
       name: NT Evac Log
     - type: Transform
       pos: -0.42093527,-0.86894274
-      parent: 637
+      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -804,18 +804,6 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
-  - uid: 637
-    components:
-    - type: MetaData
-      name: Map Entity
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: PhysicsMap
-    - type: GridTree
-    - type: MovedGrids
-    - type: Broadphase
-    - type: OccluderTree
 - proto: AirAlarm
   entities:
   - uid: 577
