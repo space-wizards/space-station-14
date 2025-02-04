@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: Added plasma and uranium arrows.
-    type: Add
-  id: 7398
-  time: '2024-09-19T08:41:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31241
 - author: Ertanic
   changes:
   - message: Wanted list program and its cartridge.
@@ -3906,3 +3899,10 @@
   id: 7897
   time: '2025-02-04T16:11:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34723
+- author: slarticodefast
+  changes:
+  - message: Added binoculars. You can find them in maints loot and the warden's locker.
+    type: Add
+  id: 7898
+  time: '2025-02-04T21:46:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34687
