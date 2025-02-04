@@ -256,11 +256,10 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         if (!TryComp<EnsnareableComponent>(target, out var ensnareable))
             return false;
 
-        var legs = _body.GetBodyChildrenOfType(target, BodyPartType.Leg).Count();
-        var ensnaredLegs = ensnareable.Container.ContainedEntities.Count;
+        var numEnsnares = ensnareable.Container.ContainedEntities.Count;
 
-        //Don't do anything if all legs are ensnared
-        if (ensnaredLegs >= legs)
+        //Don't do anything if the maximum number of ensnares is applied.
+        if (numEnsnares >= component.MaxEnsnares)
             return false;
 
         Container.Insert(ensnare, ensnareable.Container);
