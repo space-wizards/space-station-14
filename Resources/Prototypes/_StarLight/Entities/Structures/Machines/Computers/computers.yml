@@ -73,10 +73,28 @@
   description: Use this to annoy captains of all stations at once.
   components:
     - type: AccessReader
-      access: [[ "Command" ]]
+      access: [[ "CentralCommand" ]]
+    - type: Sprite
+      layers:
+      - map: ["computerLayerBody"]
+        state: computer
+      - map: ["computerLayerKeyboard"]
+        state: generic_keyboard
+      - map: ["computerLayerScreen"]
+        state: comm_sectoral
+      - map: ["computerLayerKeys"]
+        state: generic_keys
+      - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+        state: generic_panel_open
     - type: CommunicationsConsole
       title: comms-console-announcement-title-centcom
       global: true
+    - type: PointLight
+      enabled: true
+      radius: 1.5
+      energy: 1.6
+      color: "#90EE90"
+
 
 - type: entity
   parent: BaseComputer

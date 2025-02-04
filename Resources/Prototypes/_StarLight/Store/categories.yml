@@ -34,6 +34,18 @@
   id: SLBrigmedic
   name: Medical
 
+- type: storeCategory
+  id: SLFahsionSkirt
+  name: Luxury dresses 
+
+- type: storeCategory
+  id: SLFahsionSuit
+  name: Elegant suits
+
+- type: storeCategory
+  id: SLFahsionOther
+  name: Other
+
 # shuttle build uplink
 - type: storeCategory
   id: ShuttleUplinkEquipment
