@@ -62,6 +62,7 @@
   parent: [BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponSniperHristov
   description: A powerful anti-material rifle developed by Donk Co. after asking the question "how can we shoot a bigger bullet?". Features a integrated scope and a folding barrel which allows it to be disassembled into a remarkably small package. Chambered in .60 anti-materiel.
+  components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: Clothing
