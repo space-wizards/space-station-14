@@ -34,7 +34,6 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
-    [Dependency] private readonly SharedVocalSystem _vocalSystem = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -122,36 +121,6 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         });
     }
 
-    /// <summary>
-    /// Copy a component from the source entity/prototype to the target entity, using a serialization manager.
-    /// </summary>
-    /// TODO: This is where i would put the call to the RT variant of this... IF I HAD ONE
-    protected bool CopyComp<T>(
-        Entity<T?> source,
-        EntityUid target,
-        [NotNullWhen(true)] out T? destination
-    ) where T: Component, new()
-    {
-        destination = null;
-
-        if (source.Comp == null)
-            return false;
-
-        // Remove the component, if it exists, from the target first to prevent state pollution.
-        RemComp<T>(target);
-
-        // Add the component to the target. This is now a clean, default component we can copy to.
-        destination = AddComp<T>(target);
-
-        // Use the serialization manager to do the copying.
-        _serializationManager.CopyTo(source.Comp, ref destination, notNullableOverride: true);
-
-        // Mark the destination as dirty so it's serialized.. if it's even networked
-        if(Attribute.GetCustomAttribute(typeof(T), typeof(NetworkedComponentAttribute)) != null)
-            Dirty(target, destination);
-
-        return true;
-    }
 
     private void OnSuccessfulTransform(Entity<ChangelingTransformComponent> ent,
        ref ChangelingTransformWindupDoAfterEvent args)
@@ -197,19 +166,20 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         currentDna.DNA = targetConsumedDna.DNA;
 
         // Dealing with the VocalComponent being full cloned with incorrect Action attachment
-        var stashScreamEntity = currentVocals.ScreamActionEntity;
-        if (CopyComp<VocalComponent>((targetIdentity, targetConsumedVocals), ent, out var vocalComp))
-        {
-            vocalComp.ScreamActionEntity = stashScreamEntity;
-            //ProtoId's don't get copied (as far as we can tell), So we reinitialize em
-            _vocalSystem.LoadSounds(ent, vocalComp);
-        }
-
-        CopyComp<SpeechComponent>((targetIdentity, targetConsumedSpeech), ent, out _ );
+        // var stashScreamEntity = currentVocals.ScreamActionEntity;
+        // if (CopyComp<VocalComponent>((targetIdentity, targetConsumedVocals), ent, out var vocalComp))
+        // {
+        //     vocalComp.ScreamActionEntity = stashScreamEntity;
+        //     //ProtoId's don't get copied (as far as we can tell), So we reinitialize em
+        //     _vocalSystem.LoadSounds(ent, vocalComp);
+        // }
+        // CopyComp<VocalComponent>(targetIdentity, ent, out var vocalComp);
+        // CopyComp<SpeechComponent>(targetIdentity, ent, out _ );
+        CopyComps(targetIdentity, ent, null,  typeof(VocalComponent), typeof(SpeechComponent));
 
         // Make sure the target Identity has a Typing indicator, if the identity is human or dwarf and never had a mind it'll never have a typingIndicatorComponent
         EnsureComp<TypingIndicatorComponent>(targetIdentity, out var targetTypingIndicator);
-        CopyComp<TypingIndicatorComponent>((targetIdentity, targetTypingIndicator), ent, out _);
+        CopyComp<TypingIndicatorComponent>(targetIdentity, ent, out _);
 
         //TODO: While it would be splendid to be able to provide the original owning player who was playing the targetIdentity, it's not exactly feasible to do
         _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player}  successfully transformed into \"{Name(targetIdentity)}\"");

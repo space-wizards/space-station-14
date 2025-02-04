@@ -20,7 +20,9 @@ public sealed class BodyEmotesSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, BodyEmotesComponent component, ComponentStartup args)
     {
-        LoadSounds(uid, component);
+        if (component.SoundsId == null)
+            return;
+        _proto.TryIndex(component.SoundsId, out component.Sounds);
     }
 
     private void OnEmote(EntityUid uid, BodyEmotesComponent component, ref EmoteEvent args)
@@ -42,12 +44,5 @@ public sealed class BodyEmotesSystem : EntitySystem
             return false;
 
         return _chat.TryPlayEmoteSound(uid, component.Sounds, emote);
-    }
-
-    public void LoadSounds(EntityUid uid, BodyEmotesComponent component)
-    {
-        if (component.SoundsId == null)
-            return;
-        _proto.TryIndex(component.SoundsId, out component.Sounds);
     }
 }

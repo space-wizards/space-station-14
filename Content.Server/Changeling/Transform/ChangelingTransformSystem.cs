@@ -38,9 +38,7 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
     {
         if (!TryComp<BodyEmotesComponent>(target, out var targetBodyEmotes))
             return;
-        if(!CopyComp<BodyEmotesComponent>((target, targetBodyEmotes), uid, out var bodyEmotes))
-            return;
-        _bodyEmotesSystem.LoadSounds(target, bodyEmotes);
+        CopyComp<BodyEmotesComponent>((target, targetBodyEmotes), uid, out var bodyEmotes);
     }
     protected override void StartSound(Entity<ChangelingTransformComponent> ent, SoundSpecifier? sound)
     {
