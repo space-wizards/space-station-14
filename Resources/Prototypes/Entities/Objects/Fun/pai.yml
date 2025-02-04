@@ -159,10 +159,10 @@
   name: Open Map
   description: Open your map interface and guide your owner.
   components:
-    - type: InstantAction
-      checkCanInteract: false
-      checkConsciousness: false
-      icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
-      events:
-      - !type:OpenUiActionEvent
-        key: enum.StationMapUiKey.Key
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
+    events:
+    - !type:OpenUiActionEvent
+      key: enum.StationMapUiKey.Key
