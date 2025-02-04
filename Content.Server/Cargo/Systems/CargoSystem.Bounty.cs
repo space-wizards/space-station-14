@@ -352,7 +352,7 @@ public sealed partial class CargoSystem
         return true;
     }
 
-    private HashSet<EntityUid> GetBountyEntities(EntityUid uid)
+    public HashSet<EntityUid> GetBountyEntities(EntityUid uid)
     {
         var entities = new HashSet<EntityUid>
         {
