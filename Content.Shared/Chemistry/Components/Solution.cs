@@ -15,7 +15,7 @@ namespace Content.Shared.Chemistry.Components
     /// </summary>
     [Serializable, NetSerializable]
     [DataDefinition]
-    public sealed partial class Solution : IEnumerable<ReagentQuantity>, ISerializationHooks
+    public sealed partial class Solution : IEnumerable<ReagentQuantity>, ISerializationHooks, ICloneable
     {
         // This is a list because it is actually faster to add and remove reagents from
         // a list than a dictionary, though contains-reagent checks are slightly slower,
@@ -180,7 +180,12 @@ namespace Content.Shared.Chemistry.Components
             ValidateSolution();
         }
 
-        public Solution Clone()
+        public Solution CloneSolution()
+        {
+            return new Solution(this);
+        }
+
+        public object Clone()
         {
             return new Solution(this);
         }
@@ -648,7 +653,7 @@ namespace Content.Shared.Chemistry.Components
 
             if (toTake >= Volume)
             {
-                newSolution = Clone();
+                newSolution = CloneSolution();
                 RemoveAllSolution();
                 return newSolution;
             }

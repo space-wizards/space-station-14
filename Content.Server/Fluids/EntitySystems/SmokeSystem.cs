@@ -149,7 +149,7 @@ public sealed class SmokeSystem : EntitySystem
             var spreadAmount = Math.Max(0, smokePerSpread);
             entity.Comp.SpreadAmount -= args.NeighborFreeTiles.Count;
 
-            StartSmoke(ent, solution.Clone(), timer?.Lifetime ?? entity.Comp.Duration, spreadAmount);
+            StartSmoke(ent, solution.CloneSolution(), timer?.Lifetime ?? entity.Comp.Duration, spreadAmount);
 
             if (entity.Comp.SpreadAmount == 0)
             {
@@ -269,7 +269,7 @@ public sealed class SmokeSystem : EntitySystem
 
         var blockIngestion = _internals.AreInternalsWorking(entity);
 
-        var cloneSolution = solution.Clone();
+        var cloneSolution = solution.CloneSolution();
         var availableTransfer = FixedPoint2.Min(cloneSolution.Volume, component.TransferRate);
         var transferAmount = FixedPoint2.Min(availableTransfer, chemSolution.AvailableVolume);
         var transferSolution = cloneSolution.SplitSolution(transferAmount);
