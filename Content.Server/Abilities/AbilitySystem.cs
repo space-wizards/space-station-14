@@ -16,6 +16,7 @@ using Content.Shared.Maps;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Physics;
+using Content.Shared.Revenant;
 using Content.Shared.Revenant.Components;
 using Content.Shared.Revenant.Systems;
 using Content.Shared.Tag;
@@ -38,7 +39,6 @@ public sealed class AbilitySystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
@@ -52,6 +52,81 @@ public sealed class AbilitySystem : EntitySystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly TileSystem _tile = default!;
+
+    public override void Initialize()
+    {
+        // TODO: Ideally these would be by-ref when action events allow for it
+        SubscribeLocalEvent<RevenantDefileActionEvent>(OnDefileAction);
+        SubscribeLocalEvent<RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
+        SubscribeLocalEvent<RevenantMalfunctionActionEvent>(OnMalfunctionAction);
+        SubscribeLocalEvent<RevenantColdSnapActionEvent>(OnColdSnapAction);
+        SubscribeLocalEvent<RevenantEnergyDrainActionEvent>(OnEnergyDrainAction);
+    }
+
+    private void OnDefileAction(RevenantDefileActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp<DefileActionComponent>(args.Action, out var defileAction))
+            return;
+
+        args.Handled = true;
+
+        Defile(args.Performer, (args.Action, defileAction));
+    }
+
+    private void OnOverloadLightsAction(RevenantOverloadLightsActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp<OverloadLightsActionComponent>(args.Action, out var overloadAction))
+            return;
+
+        args.Handled = true;
+
+        OverloadLights(args.Performer, (args.Action, overloadAction));
+    }
+
+    private void OnMalfunctionAction(RevenantMalfunctionActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp<MalfunctionActionComponent>(args.Action, out var malfunctionAction))
+            return;
+
+        args.Handled = true;
+
+        Malfunction(args.Performer, (args.Action, malfunctionAction));
+    }
+
+    private void OnColdSnapAction(RevenantColdSnapActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp<ColdSnapActionComponent>(args.Action, out var coldSnapAction))
+            return;
+
+        args.Handled = true;
+
+        ColdSnap(args.Performer, (args.Action, coldSnapAction));
+    }
+
+    private void OnEnergyDrainAction(RevenantEnergyDrainActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp<EnergyDrainActionComponent>(args.Action, out var energyDrainAction))
+            return;
+
+        args.Handled = true;
+
+        EnergyDrain(args.Performer, (args.Action, energyDrainAction));
+    }
 
     /// <summary>
     ///     Defiles an area around the user, breaking tiles and causing chaos.

@@ -2,6 +2,7 @@ using Content.Server.Abilities;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.Revenant.Components;
+using Content.Shared.Actions;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
@@ -21,7 +22,6 @@ namespace Content.Server.Revenant.Systems;
 
 public sealed partial class RevenantSystem
 {
-    [Dependency] private readonly AbilitySystem _ability = default!;
     [Dependency] private readonly GhostSystem _ghost = default!;
     [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
 
@@ -31,11 +31,26 @@ public sealed partial class RevenantSystem
         SubscribeLocalEvent<RevenantComponent, SoulEvent>(OnSoulSearch);
         SubscribeLocalEvent<RevenantComponent, HarvestEvent>(OnHarvest);
 
-        SubscribeLocalEvent<RevenantComponent, RevenantDefileActionEvent>(OnDefileAction);
-        SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
-        SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(OnMalfunctionAction);
-        SubscribeLocalEvent<RevenantComponent, RevenantColdSnapActionEvent>(OnColdSnapAction);
-        SubscribeLocalEvent<RevenantComponent, RevenantEnergyDrainActionEvent>(OnEnergyDrainAction);
+        // We need to catch these before the AbilitySystem so we can handle it
+        SubscribeLocalEvent<RevenantComponent, RevenantDefileActionEvent>(HandleRevenantAction, before: [typeof(AbilitySystem)]);
+        SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(HandleRevenantAction, before: [typeof(AbilitySystem)]);
+        SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(HandleRevenantAction, before: [typeof(AbilitySystem)]);
+        SubscribeLocalEvent<RevenantComponent, RevenantColdSnapActionEvent>(HandleRevenantAction, before: [typeof(AbilitySystem)]);
+        SubscribeLocalEvent<RevenantComponent, RevenantEnergyDrainActionEvent>(HandleRevenantAction, before: [typeof(AbilitySystem)]);
+    }
+
+    private void HandleRevenantAction<T>(Entity<RevenantComponent> ent, ref T args) where T : InstantActionEvent
+    {
+        if (args.Handled)
+            return;
+
+        // If we can't find the component, assume it was intentionally removed, and don't block the action
+        if (!TryComp<RevenantActionComponent>(args.Action, out var revenantAction))
+            return;
+
+        // If we can't use the ability, mark it as handled so that the AbilitySystem doesn't perform it
+        if (!TryUseAbility(ent, revenantAction))
+            args.Handled = true;
     }
 
     private void OnInteract(Entity<RevenantComponent> ent, ref  UserActivateInWorldEvent args)
@@ -203,100 +218,5 @@ public sealed partial class RevenantSystem
         _damage.TryChangeDamage(args.Args.Target, dspec, true, origin: ent);
 
         args.Handled = true;
-    }
-
-    private void OnDefileAction(Entity<RevenantComponent> ent, ref RevenantDefileActionEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!TryComp<RevenantActionComponent>(args.Action, out var revenantAction))
-            return;
-
-        if (!TryComp<DefileActionComponent>(args.Action, out var defileAction))
-            return;
-
-        if (!TryUseAbility(ent, revenantAction))
-            return;
-
-        args.Handled = true;
-
-        _ability.Defile(ent, (args.Action, defileAction));
-    }
-
-    private void OnOverloadLightsAction(Entity<RevenantComponent> ent, ref RevenantOverloadLightsActionEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!TryComp<RevenantActionComponent>(args.Action, out var revenantAction))
-            return;
-
-        if (!TryComp<OverloadLightsActionComponent>(args.Action, out var overloadAction))
-            return;
-
-        if (!TryUseAbility(ent, revenantAction))
-            return;
-
-        args.Handled = true;
-
-        _ability.OverloadLights(ent, (args.Action, overloadAction));
-    }
-
-    private void OnMalfunctionAction(Entity<RevenantComponent> ent, ref RevenantMalfunctionActionEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!TryComp<RevenantActionComponent>(args.Action, out var revenantAction))
-            return;
-
-        if (!TryComp<MalfunctionActionComponent>(args.Action, out var malfunctionAction))
-            return;
-
-        if (!TryUseAbility(ent, revenantAction))
-            return;
-
-        args.Handled = true;
-
-        _ability.Malfunction(ent, (args.Action, malfunctionAction));
-    }
-
-    private void OnColdSnapAction(Entity<RevenantComponent> ent, ref RevenantColdSnapActionEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!TryComp<RevenantActionComponent>(args.Action, out var revenantAction))
-            return;
-
-        if (!TryComp<ColdSnapActionComponent>(args.Action, out var coldSnapAction))
-            return;
-
-        if (!TryUseAbility(ent, revenantAction))
-            return;
-
-        args.Handled = true;
-
-        _ability.ColdSnap(ent, (args.Action, coldSnapAction));
-    }
-
-    private void OnEnergyDrainAction(Entity<RevenantComponent> ent, ref RevenantEnergyDrainActionEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!TryComp<RevenantActionComponent>(args.Action, out var revenantAction))
-            return;
-
-        if (!TryComp<EnergyDrainActionComponent>(args.Action, out var energyDrainAction))
-            return;
-
-        if (!TryUseAbility(ent, revenantAction))
-            return;
-
-        args.Handled = true;
-
-        _ability.EnergyDrain(ent, (args.Action, energyDrainAction));
     }
 }
