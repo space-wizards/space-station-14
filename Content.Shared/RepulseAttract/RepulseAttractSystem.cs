@@ -22,7 +22,7 @@ public sealed class RepulseAttractSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<RepulseAttractComponent, GettingPickedUpAttemptEvent>(OnPickupAttempt);
         SubscribeLocalEvent<RepulseAttractComponent, DroppedEvent>(OnDrop);
-        SubscribeLocalEvent<RepulseAttractComponent, AttemptMeleeEvent>(OnMeleeAttempt, after: [typeof(WieldableSystem)]);
+        SubscribeLocalEvent<RepulseAttractComponent, AttemptMeleeEvent>(OnMeleeAttempt, after: [typeof(SharedWieldableSystem)]);
     }
 
     private void OnPickupAttempt(Entity<RepulseAttractComponent> ent, ref GettingPickedUpAttemptEvent args)
