@@ -385,6 +385,23 @@
   priority: 10
   text: "/ServerInfo/Guidebook/ServerRules/SiliconRules/RuleS10OrderConflicts.xml"
 
+
+- type: guideEntry
+  id: MRPRules
+  name: guide-entry-rules-mrp-m0
+  ruleEntry: true
+  priority: 60
+  text: "/ServerInfo/Guidebook/ServerRules/MRPRules/RuleM0.xml"
+  children:
+  - RuleM1
+
+- type: guideEntry
+  id: RuleM1
+  name: guide-entry-rules-m1
+  ruleEntry: true
+  priority: 10
+  text: "/ServerInfo/Guidebook/ServerRules/MRPRules/RuleM1DoNotPowergame.xml"
+
 - type: guideEntry
   id: SpaceLaw
   name: guide-entry-rules-space-law

@@ -153,7 +153,7 @@ public partial struct AntagSelectionDefinition()
     /// List of Mind Role Prototypes to be added to the player's mind.
     /// </summary>
     [DataField]
-    public List<ProtoId<EntityPrototype>>? MindRoles;
+    public List<EntProtoId>? MindRoles;
 
     /// <summary>
     /// A set of starting gear that's equipped to the player.
