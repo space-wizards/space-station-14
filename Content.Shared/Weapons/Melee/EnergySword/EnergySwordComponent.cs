@@ -6,13 +6,16 @@ namespace Content.Shared.Weapons.Melee.EnergySword;
 [AutoGenerateComponentState]
 public sealed partial class EnergySwordComponent : Component
 {
+    /// <summary>
+    /// What color the blade will be when activated.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public Color ActivatedColor = Color.DodgerBlue;
 
     /// <summary>
     ///     A color option list for the random color picker.
     /// </summary>
-    [DataField("colorOptions")]
+    [DataField]
     public List<Color> ColorOptions = new()
     {
         Color.Tomato,
@@ -22,11 +25,16 @@ public sealed partial class EnergySwordComponent : Component
         Color.MediumOrchid
     };
 
+    /// <summary>
+    /// Whether the energy sword has been pulsed by a multitool,
+    /// causing the blade to cycle RGB colors.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool Hacked = false;
+
     /// <summary>
     ///     RGB cycle rate for hacked e-swords.
     /// </summary>
-    [DataField("cycleRate")]
+    [DataField]
     public float CycleRate = 1f;
 }

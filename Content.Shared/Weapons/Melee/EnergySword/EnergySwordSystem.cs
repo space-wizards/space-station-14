@@ -25,7 +25,10 @@ public sealed class EnergySwordSystem : EntitySystem
     private void OnMapInit(Entity<EnergySwordComponent> entity, ref MapInitEvent args)
     {
         if (entity.Comp.ColorOptions.Count != 0)
+        {
             entity.Comp.ActivatedColor = _random.Pick(entity.Comp.ColorOptions);
+            Dirty(entity, entity.Comp);
+        }
 
         if (!TryComp(entity, out AppearanceComponent? appearanceComponent))
             return;
