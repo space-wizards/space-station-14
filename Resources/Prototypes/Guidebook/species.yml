@@ -7,6 +7,7 @@
     - Diona
     - Dwarf
     - Human
+    - Aegi
     - Moth
     - Reptilian
     - SlimePerson
@@ -31,6 +32,12 @@
   id: Human
   name: species-name-human
   text: "/ServerInfo/Guidebook/Mobs/Human.xml"
+
+- type: guideEntry
+  id: Aegi
+  name: species-name-aegi
+  text: "/ServerInfo/Guidebook/Mobs/Aegi.xml"
+
 
 - type: guideEntry
   id: Moth

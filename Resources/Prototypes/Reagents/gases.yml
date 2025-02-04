@@ -26,6 +26,27 @@
         conditions:
         - !type:OrganType
           type: Plant
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Aegi
+      # Oxygen Not Included
+      - !type:ModifyLungGas
+        conditions:
+        - !type:OrganType
+          type: Aegi
+        ratios:
+          CarbonDioxide: 1.15
+          Oxygen: -2.0
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Aegi
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Asphyxiation: -1.5
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:

@@ -1,0 +1,25 @@
+<Document>
+  # Aegi
+
+  <Box>
+    <GuideEntityEmbed Entity="MobAegiDummy" Caption=""/>
+  </Box>
+
+  Descendants of mankind, the Aegi now reside on planet Elithia.
+  They lead the Elithian Alliance - an interstellar federation of alien nations - and make for incredible diplomats, engineers and scientists.
+
+  ## Biology
+
+  The Aegi are a species of humanoids descended from the Humans of Earth. They appear largely similar to Humans, but have a few key differences.
+
+  They take [color=#1e90ff]10% less Cold damage and 5% less Heat damage[/color], but [color=#ffa500]the tubular structure of bones and thin skin increases 5% Blunt damage and 5% Pearcing damage[/color].
+
+  Improved muscles, as well as increased oxygen consumption, [color=#1e90ff]allow them to move 5% faster, and they also have 20% more stamina[/color].
+
+  Due to the special structure of petal lungs, [color=#ffa500]they require much more oxygen than ordinary races[/color], however, [color=#1e90ff]with an excess of oxygen in the atmosphere, the body is saturated many times faster[/color].
+
+  All Aeginian races feature larger ears with pointier tips. The length of the ears is one of the most identifying features of the various races.
+  The ears are also more mobile than those of Humans: they can be raised, lowered, and pointed in a specific direction to better locate sounds. The pointed shape of the ears was a side-effect of these changes, and was never intentional.
+  Many found it fitting, however, and no efforts were ever made to eliminate this side-effect.
+
+</Document>

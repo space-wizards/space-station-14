@@ -1,0 +1,50 @@
+﻿- type: body
+  id: Aegi
+  name: "aegi"
+  root: torso
+  slots:
+    head:
+      part: HeadAegi
+      connections:
+      - torso
+      organs:
+        brain: OrganAegiBrain
+        eyes: OrganAegiEyes
+    torso:
+      part: TorsoAegi
+      connections:
+      - right_arm
+      - left_arm
+      - right_leg
+      - left_leg
+      organs:
+        heart: OrganAegiHeart
+        lungs: OrganAegiLungs
+        stomach: OrganAegiStomach
+        liver: OrganAegiLiver
+        kidneys: OrganAegiKidneys
+        ears: OrganAegiEars
+    right_arm:
+      part: RightArmAegi
+      connections:
+      - right_hand
+    left_arm:
+      part: LeftArmAegi
+      connections:
+      - left_hand
+    right_hand:
+      part: RightHandAegi
+    left_hand:
+      part: LeftHandAegi
+    right_leg:
+      part: RightLegAegi
+      connections:
+      - right_foot
+    left_leg:
+      part: LeftLegAegi
+      connections:
+      - left_foot
+    right_foot:
+      part: RightFootAegi
+    left_foot:
+      part: LeftFootAegi

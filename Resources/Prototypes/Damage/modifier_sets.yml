@@ -189,6 +189,14 @@
     Shock: 1.2
 
 - type: damageModifierSet
+  id: Aegi
+  coefficients:
+    Blunt: 1.05
+    Piercing: 1.05
+    Heat: 0.95
+    Cold: 0.9
+
+- type: damageModifierSet
   id: Moth # Slightly worse at everything but cold
   coefficients:
     Cold: 0.7

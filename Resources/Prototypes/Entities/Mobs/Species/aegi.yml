@@ -1,0 +1,64 @@
+- type: entity # I'll destroy you if you start saying that these are just human with long ears. Look at the dwarves and think again.
+  save: false
+  name: Urist McHands The Aegi
+  parent: BaseMobSpeciesOrganic
+  id: BaseMobAegi
+  abstract: true
+  components:
+  - type: Hunger
+  - type: Thirst
+  - type: Icon
+    sprite: Mobs/Species/Aegi/parts.rsi
+    state: full
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 2.5
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+    scale: 1, 1.1
+  - type: Body
+    prototype: Aegi
+    requiredLegs: 2
+  - type: Stamina
+    critThreshold: 120
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatHuman
+      amount: 5
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Aegi
+  - type: HumanoidAppearance
+    species: Aegi
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+    - HeadTop
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobAegiDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HumanoidAppearance
+    species: Aegi
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
