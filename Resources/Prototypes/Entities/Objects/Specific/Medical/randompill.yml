@@ -85,11 +85,11 @@
       - BuzzochloricBees
       - Amatoxin
       - Tazinide
-      - Lead
     - quantity: 5
       weight: 2.5
       reagents:
       - Lexorin
+      - Lead
 
 - type: entity
   name: strange pill
