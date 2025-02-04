@@ -14,6 +14,9 @@
     requiredLegs: 2
   - type:  HumanoidAppearance
     species: Vox
+    hideLayersOnEquip: #imp
+    - HeadSide
+    - Hair
     #- type: VoxAccent # Not yet coded
   - type: Speech
     speechVerb: Vox
@@ -73,6 +76,7 @@
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
     - map: [ "enum.HumanoidVisualLayers.RLeg" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+    - map: [ "enum.HumanoidVisualLayers.Underwear" ] #imp
     - map: [ "jumpsuit" ]
     - map: [ "enum.HumanoidVisualLayers.LFoot" ]
     - map: [ "enum.HumanoidVisualLayers.RFoot" ]

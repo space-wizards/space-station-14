@@ -143,6 +143,8 @@
 
 - type: reaction
   id: KingSoda
+  requiredMixerCategories:
+    - Stir
   reactants:
     CoconutWater:
       amount: 1
@@ -183,6 +185,8 @@
 
 - type: reaction
   id: JungleJuice
+  requiredMixerCategories:
+    - Shake
   reactants:
     Beer:
       amount: 0.5

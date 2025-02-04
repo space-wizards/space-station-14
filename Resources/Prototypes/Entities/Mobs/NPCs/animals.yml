@@ -2546,9 +2546,16 @@
     - type: Sprite
       drawdepth: Mobs
       layers:
-      - map: ["enum.DamageStateVisualLayers.Base"]
+      - map: ["enum.DamageStateVisualLayers.Base", "movement"]
         state: clown
         sprite: Mobs/Animals/clownspider.rsi
+    - type: SpriteMovement
+      movementLayers:
+        movement:
+          state: clown
+      noMovementLayers:
+        movement:
+          state: clown
     - type: Butcherable
       spawned:
         - id: MaterialBananium1
