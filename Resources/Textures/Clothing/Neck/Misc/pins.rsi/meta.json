@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "PixelTK leaves his mark on upstream, BackeTako made the gay, autism pins by Terraspark",
+  "copyright": "PixelTK leaves his mark on upstream, BackeTako made the gay, autism pins by Terraspark, omnisexual pin by juliangiebel",
   "size": {
     "x": 32,
     "y": 32
@@ -89,6 +89,13 @@
         },
         {
             "name": "trans-equipped-NECK",
+            "directions": 4
+        },
+        {
+            "name": "omni"
+        },
+        {
+            "name": "omni-equipped-NECK",
             "directions": 4
         }
     ]

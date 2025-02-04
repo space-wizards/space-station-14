@@ -1,54 +1,39 @@
 - type: latheRecipe
+  parent: BasePartRecipe
   id: TimerTrigger
   result: TimerTrigger
-  category: Parts
-  completetime: 2
-  materials:
-    Steel: 300
-    Plastic: 200
 
 - type: latheRecipe
+  parent: BasePartRecipe
   id: SignalTrigger
   result: SignalTrigger
-  category: Parts
-  completetime: 2
-  materials:
-    Steel: 300
-    Plastic: 200
 
 - type: latheRecipe
+  parent: BasePartRecipe
   id: VoiceTrigger
   result: VoiceTrigger
-  category: Parts
-  completetime: 2
-  materials:
-    Steel: 300
-    Plastic: 200
 
 - type: latheRecipe
+  parent: BasePartRecipe
   id: Igniter
   result: Igniter
-  category: Parts
-  completetime: 2
   materials:
     Steel: 300
     Plastic: 100
     Glass: 100
 
 - type: latheRecipe
+  parent: BaseWeaponRecipe
   id: ChemicalPayload
   result: ChemicalPayload
-  category: Weapons
-  completetime: 2
   materials:
     Steel: 200
     Plastic: 300
 
 - type: latheRecipe
+  parent: BaseWeaponRecipe
   id: FlashPayload
   result: FlashPayload
-  category: Weapons
-  completetime: 2
   materials:
     Steel: 50
     Plastic: 100
@@ -68,20 +53,18 @@
     Silver: 50
 
 - type: latheRecipe
+  parent: BasePartRecipe
   id: Signaller
   result: RemoteSignaller
-  category: Parts
-  completetime: 2
   materials:
     Steel: 100
     Plastic: 200
     Glass: 100
 
 - type: latheRecipe
+  parent: BasePartRecipe
   id: SignallerAdvanced
   result: RemoteSignallerAdvanced
-  category: Parts
-  completetime: 2
   materials:
     Steel: 100
     Plastic: 200
@@ -106,10 +89,9 @@
     Glass: 100
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: AnomalyScanner
   result: AnomalyScanner
-  category: Tools
-  completetime: 2
   materials:
     Plastic: 200
     Glass: 150
@@ -146,34 +128,19 @@
     Uranium: 150
 
 - type: latheRecipe
+  parent: ClothingBackpackHolding
   id: ClothingBackpackSatchelHolding
   result: ClothingBackpackSatchelHolding
-  completetime: 5
-  materials:
-    Steel: 2000
-    Silver: 750
-    Plasma: 1500
-    Uranium: 150
 
 - type: latheRecipe
+  parent: ClothingBackpackHolding
   id: ClothingBackpackDuffelHolding
   result: ClothingBackpackDuffelHolding
-  completetime: 5
-  materials:
-    Steel: 2000
-    Silver: 750
-    Plasma: 1500
-    Uranium: 150
 
 - type: latheRecipe
+  parent: ClothingBackpackHolding
   id: OreBagOfHolding
   result: OreBagOfHolding
-  completetime: 5
-  materials:
-    Steel: 2000
-    Silver: 750
-    Plasma: 1500
-    Uranium: 150
 
 - type: latheRecipe
   id: ClothingMaskWeldingGas
