@@ -341,8 +341,8 @@
     iconOn:
       sprite: Interface/Actions/actions_rat_king.rsi
       state: stay
-    event:
-      !type:RatKingOrderActionEvent
+    events:
+    - !type:RatKingOrderActionEvent
         type: Stay
     priority: 5
 
@@ -359,8 +359,8 @@
     iconOn:
       sprite: Interface/Actions/actions_rat_king.rsi
       state: follow
-    event:
-      !type:RatKingOrderActionEvent
+    events:
+    - !type:RatKingOrderActionEvent
       type: Follow
     priority: 6
 
@@ -377,8 +377,8 @@
     iconOn:
       sprite: Interface/Actions/actions_rat_king.rsi
       state: attack
-    event:
-      !type:RatKingOrderActionEvent
+    events:
+    - !type:RatKingOrderActionEvent
       type: CheeseEm
     priority: 7
 
@@ -395,7 +395,7 @@
     iconOn:
       sprite: Interface/Actions/actions_rat_king.rsi
       state: loose
-    event:
-      !type:RatKingOrderActionEvent
+    events:
+    - !type:RatKingOrderActionEvent
       type: Loose
     priority: 8
