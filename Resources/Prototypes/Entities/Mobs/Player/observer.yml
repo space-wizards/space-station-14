@@ -88,8 +88,8 @@
 
 - type: entity
   id: ActionToggleLighting
-  name: Toggle All Lighting
-  description: Toggle all light rendering to better observe dark areas.
+  name: Toggle Lighting
+  description: Toggle light rendering to better observe dark areas.
   components:
   - type: InstantAction
     icon: Interface/VerbIcons/light.svg.192dpi.png
@@ -131,14 +131,3 @@
       state: icon
     iconOn: Interface/Actions/ghostHearingToggled.png
     event: !type:ToggleGhostHearingActionEvent
-
-- type: entity
-  id: ActionTogglePersonalLight
-  name: Toggle Personal Light
-  description: Toggle your personal light.
-  components:
-  - type: InstantAction
-    icon: { sprite: Objects/Power/light_bulb.rsi, state: normal }
-    clientExclusive: true
-    checkCanInteract: false
-    event: !type:TogglePersonalLightActionEvent

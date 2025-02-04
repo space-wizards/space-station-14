@@ -67,7 +67,6 @@ namespace Content.Client.Ghost
             SubscribeLocalEvent<EyeComponent, ToggleLightingActionEvent>(OnToggleLighting);
             SubscribeLocalEvent<EyeComponent, ToggleFoVActionEvent>(OnToggleFoV);
             SubscribeLocalEvent<GhostComponent, ToggleGhostsActionEvent>(OnToggleGhosts);
-            SubscribeLocalEvent<GhostComponent, TogglePersonalLightActionEvent>(OnTogglePersonalLight);
         }
 
         private void OnStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
@@ -76,25 +75,32 @@ namespace Content.Client.Ghost
                 sprite.Visible = GhostVisibility || uid == _playerManager.LocalEntity;
         }
 
-        private void OnTogglePersonalLight(Entity<GhostComponent> ent, ref TogglePersonalLightActionEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            if (TryComp<PointLightComponent>(ent, out var pointLight))
-                _pointLightSystem.SetEnabled(ent, !pointLight.Enabled);
-
-            Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-personal-light-popup"), args.Performer);
-            args.Handled = true;
-        }
-
         private void OnToggleLighting(EntityUid uid, EyeComponent component, ToggleLightingActionEvent args)
         {
             if (args.Handled)
                 return;
 
-            Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup"), args.Performer);
-            _contentEye.RequestToggleLight(uid, component);
+            TryComp<PointLightComponent>(uid, out var light);
+
+            if (!component.DrawLight)
+            {
+                // normal lighting
+                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-normal"), args.Performer);
+                _contentEye.RequestEye(component.DrawFov, true);
+            }
+            else if (!light?.Enabled ?? false) // skip this option if we have no PointLightComponent
+            {
+                // enable personal light
+                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-personal-light"), args.Performer);
+                _pointLightSystem.SetEnabled(uid, true, light);
+            }
+            else
+            {
+                // fullbright mode
+                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-fullbright"), args.Performer);
+                _contentEye.RequestEye(component.DrawFov, false);
+                _pointLightSystem.SetEnabled(uid, false, light);
+            }
             args.Handled = true;
         }
 
@@ -127,7 +133,6 @@ namespace Content.Client.Ghost
             _actions.RemoveAction(uid, component.ToggleFoVActionEntity);
             _actions.RemoveAction(uid, component.ToggleGhostsActionEntity);
             _actions.RemoveAction(uid, component.ToggleGhostHearingActionEntity);
-            _actions.RemoveAction(uid, component.TogglePersonalLightActionEntity);
 
             if (uid != _playerManager.LocalEntity)
                 return;
