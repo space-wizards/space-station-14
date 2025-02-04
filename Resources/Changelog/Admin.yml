@@ -737,5 +737,12 @@ Entries:
   id: 91
   time: '2025-01-21T23:23:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34563
+- author: ScarKy0
+  changes:
+  - message: Added the omni-accent smite. It adds most accents onto the target.
+    type: Add
+  id: 92
+  time: '2025-02-02T20:00:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34824
 Name: Admin
 Order: 1

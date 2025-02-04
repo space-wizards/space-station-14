@@ -33,6 +33,7 @@
         - GPS
         - WeldingMask
       components:
+        - StationMap
         - SprayPainter
         - NetworkConfigurator
         - RCD
@@ -112,6 +113,7 @@
         - Multitool
         - AppraisalTool
       components:
+        - StationMap
         - SprayPainter
         - NetworkConfigurator
         - RCD

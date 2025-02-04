@@ -1,4 +1,4 @@
-﻿- type: vendingMachineInventory
+- type: vendingMachineInventory
   id: SalvageEquipmentInventory
   startingInventory:
     ClothingBackpackSalvage: 3 # GreyStation
@@ -17,3 +17,5 @@
     RadioHandheld: 2
     WeaponGrapplingGun: 4
     WeaponProtoKineticAccelerator: 4
+  contrabandInventory:
+    PlushieCarp: 1

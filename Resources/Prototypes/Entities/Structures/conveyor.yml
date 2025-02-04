@@ -14,7 +14,7 @@
   - type: Sprite
     sprite: GreyStation/Structures/conveyor.rsi # GreyStation - Resprite
     state: conveyor_started_cw
-    drawdepth: FloorObjects
+    drawdepth: HighFloorObjects
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Physics

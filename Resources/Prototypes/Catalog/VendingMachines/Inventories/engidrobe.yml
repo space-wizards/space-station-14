@@ -18,3 +18,6 @@
     ClothingOuterWinterEngi: 2
     ClothingNeckScarfStripedOrange: 3
     ClothingShoesBootsWinterEngi: 2
+  contrabandInventory:
+#    ToyFigurineEngineer: 1 # GreyStation - Remove bloat
+#    ToyFigurineChiefEngineer: 1 # GreyStation - Remove bloat

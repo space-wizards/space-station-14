@@ -8,13 +8,17 @@
     CigPackMixed: 2
     CigarCase: 1
     SmokingPipeFilledTobacco: 1
-    #Vape: 1 # GreyStation - Quitting starts now
+#    Vape: 1 # GreyStation - Only pussies use this
     Matchbox: 5
     PackPaperRollingFilters: 3
     CheapLighter: 4
     Lighter: 2
-    FlippoLighter: 2 # GreyStation - More!!
+    FlippoLighter: 2
     FlippoSkullLighter: 1 # GreyStation - Addition
+  contrabandInventory:
+    GroundTobacco: 3
+    CigarGold: 2
+    Igniter: 1
   emaggedInventory:
     FlippoSyndicateLighter: 1 # GreyStation - Addition
     CigPackSyndicate: 1
