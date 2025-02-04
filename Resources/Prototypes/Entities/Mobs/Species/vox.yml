@@ -14,8 +14,9 @@
     requiredLegs: 2
   - type:  HumanoidAppearance
     species: Vox
-    hideLayersOnEquip:
-    - HeadSide #imp
+    hideLayersOnEquip: #imp
+    - HeadSide
+    - Hair
     #- type: VoxAccent # Not yet coded
   - type: Speech
     speechVerb: Vox

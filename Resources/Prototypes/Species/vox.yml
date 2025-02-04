@@ -80,8 +80,8 @@
       required: false
     Tail:
       points: 1
-      required: false #imp
-      #defaultMarkings: [ VoxTail ]
+      required: true
+      defaultMarkings: [ VoxTailBack ]
 
 - type: humanoidBaseSprite
   id: MobVoxEyes
