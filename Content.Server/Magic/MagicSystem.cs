@@ -1,7 +1,4 @@
 using Content.Server.Chat.Systems;
-using Content.Server.Mind.Commands;
-using Content.Server.NPC.Components;
-using Content.Server.NPC.HTN;
 using Content.Shared.Magic;
 using Content.Shared.Magic.Events;
 

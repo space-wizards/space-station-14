@@ -86,6 +86,7 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<RandomGlobalSpawnSpellEvent>(OnRandomGlobalSpawnSpell);
         SubscribeLocalEvent<MindSwapSpellEvent>(OnMindSwapSpell);
         SubscribeLocalEvent<VoidApplauseSpellEvent>(OnVoidApplause);
+        SubscribeLocalEvent<AnimateSpellEvent>(OnAnimateSpell);
     }
 
     private void OnBeforeCastSpell(Entity<MagicComponent> ent, ref BeforeCastSpellEvent args)
@@ -544,8 +545,6 @@ public abstract class SharedMagicSystem : EntitySystem
         RemoveComponents(ev.Target, ev.RemoveComponents);
         AddComponents(ev.Target, ev.AddComponents);
 
-        AnimateSpellHelper(ev);
-
         var xform = Transform(ev.Target);
         var fixture = fixtures.Fixtures.First();
 
@@ -557,9 +556,6 @@ public abstract class SharedMagicSystem : EntitySystem
         _physics.SetBodyStatus(ev.Target, physics, BodyStatus.InAir, true);
         _physics.SetFixedRotation(ev.Target, false, true, fixtures, physics);
     }
-
-    // Server-only components/functions
-    protected virtual void AnimateSpellHelper(AnimateSpellEvent ev) { }
 
     #endregion
     // End Spells
