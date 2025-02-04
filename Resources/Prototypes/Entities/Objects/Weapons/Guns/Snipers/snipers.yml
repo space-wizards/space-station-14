@@ -42,7 +42,7 @@
   name: Kardashev-Mosin
   parent: [BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponSniperMosin
-  description: A true relic, the Kardashev-Mosin is now 670 years old, and still sees widespread use. While its bolt-action design is best described as 'primative', its seen every war in recent memory, and is more than ready for another one. Chambered in 7.62x54mm.
+  description: A true relic, the Kardashev-Mosin is now 670 years old, and still sees widespread use. While its bolt-action design is best described as 'primitive', its seen every war in recent memory, and is more than ready for another one. Chambered in .325 rifle.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
@@ -61,8 +61,7 @@
   name: Hristov
   parent: [BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponSniperHristov
-  description: A powerful Donk Co. anti-material rifle firing .60 cartridges. This bad boy will devastate anything you hit, people included.
-  components:
+  description: A powerful anti-material rifle developed by Donk Co. after asking the question "how can we shoot a bigger bullet?". Features a integrated scope and a folding barrel which allows it to be disassembled into a remarkably small package. Chambered in .60 anti-materiel.
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: Clothing

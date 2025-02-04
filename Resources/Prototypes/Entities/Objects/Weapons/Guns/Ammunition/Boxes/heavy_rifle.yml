@@ -2,7 +2,6 @@
   abstract: true
   parent: BaseItem
   id: BaseMagazineBoxHeavyRifle
-  name: ammunition box (7.62mm rifle)
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
@@ -29,8 +28,8 @@
 - type: entity
   parent: BaseMagazineBoxHeavyRifle
   id: MagazineBoxHeavyRifle
-  name: ammunition box (7.62mm rifle)
-  description: Cardboard box full of 7.62x54mm full-power rifle rounds. Dated, but still widely used by marksman rifles and medium machine guns.
+  name: ammunition box (.325 rifle)
+  description: Cardboard box full of .325x2 full-power rifle rounds. Dated, but still widely used by marksman rifles and medium machine guns.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeHeavyRifle

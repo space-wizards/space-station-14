@@ -1,6 +1,5 @@
 - type: entity
   id: BaseCartridgeHeavyRifle
-  name: cartridge (7.62mm rifle)
   parent: [ BaseCartridge, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -22,9 +21,9 @@
 
 - type: entity
   id: CartridgeHeavyRifle
-  name: cartridge (7.62mm rifle)
+  name: cartridge (.325 rifle)
   parent: [ BaseCartridgeHeavyRifle, BaseRestrictedContraband ]
-  description: 7.62x54 millimeters. Full-power cartridge used by marksman rifles and medium machine guns.
+  description: 0.325x2 inches. Full-power cartridge used by marksman rifles and medium machine guns.
   components:
   - type: Tag
   - type: CartridgeAmmo

@@ -123,7 +123,7 @@
   name: Drozd
   parent: [BaseWeaponSubMachineGun, BaseRestrictedContraband]
   id: WeaponSubMachineGunDrozd
-  description: An excellent fully automatic Heavy SMG.
+  description: A versatile SMG designed by Fenrir Arms and widely used by Nanotrasen forces. Select fire with a special hyperburst mode designed to get the most lead downrange in the smallest timeframe. Feeds from .38 30-round magazines.
   components:
     - type: Sprite
       sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
@@ -177,7 +177,7 @@
       zeroVisible: true
     - type: Appearance
 
-- type: entity # deprecated, replaced by Drozd SMG.
+- type: entity
   name: Vector
   parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunVector
@@ -229,7 +229,7 @@
   name: WT550
   parent: [ BaseWeaponSubMachineGun, BaseRestrictedContraband ]
   id: WeaponSubMachineGunWt550
-  description: A truly unique firearm, the WT550 was created by NanoTrasen's Small Arms Division as an SMG fully controllable with one hand. Feeds from special 30-round top-mounted .38 magazines.
+  description: A truly unique firearm, the WT550 was created by NanoTrasen's Small Arms Division as an SMG fully controllable with one hand. Feeds from special top-mounted .38 magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi

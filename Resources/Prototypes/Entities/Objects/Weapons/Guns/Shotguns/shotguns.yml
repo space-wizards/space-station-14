@@ -128,7 +128,7 @@
   name: double-barreled shotgun
   parent: WeaponShotgunDoubleBarreled
   id: WeaponShotgunDoubleBarreledRubber
-  description: A classic break-action double-barrel shotgun. This particular gun is worn and stained, with the distinct smell of alcohol. Fits two 12 gauge shells. 
+  description: A classic break-action double-barrel shotgun. This particular gun is worn and stained, with the distinct smell of alcohol. Loads two 12 gauge shells. 
   suffix: Non-Lethal
   components:
   - type: BallisticAmmoProvider
@@ -138,7 +138,7 @@
   name: Enforcer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunEnforcer
-  description: Premium semi-automatic combat shotgun, the pride of Nanotrasen security.
+  description: Premium semi-automatic combat shotgun, the pride of Nanotrasen security. Loads seven 12 gauge shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
@@ -161,7 +161,7 @@
   name: Kammerer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunKammerer
-  description: A popular shotgun found on many worlds. While its technology is wildly outdated by modern standards, the utility and simplicity of its design have kept it in service to this day.
+  description: A popular shotgun found on many worlds. While its technology is wildly outdated by modern standards, the utility and simplicity of its design have kept it in service to this day. Loads seven 12 gauge shells.
   components: # intend for Kammerer to have tighter choke for slower fire rate and/or manual cycling
   - type: Item
     size: Normal
@@ -183,7 +183,7 @@
   name: sawn-off shotgun
   parent: [ BaseWeaponShotgun, BaseSecurityBartenderContraband ]
   id: WeaponShotgunSawn
-  description: A classic break-action double-barrel shotgun with a hand-shortened barrel. Easier to conceal but far less accurate. Fits two 12 gauge shells.
+  description: A classic break-action double-barrel shotgun with a hand-shortened barrel. Easier to conceal but far less accurate. Loads two 12 gauge shells.
   components: # needs to be super inaccurate because you don't need to wield it
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
@@ -218,7 +218,7 @@
   name: handmade pistol
   parent: [BaseWeaponShotgun, BaseMinorContraband]
   id: WeaponShotgunHandmade
-  description: Looks unreliable. Uses 12 gauge shotgun shells.
+  description: Looks unreliable. Loads 12 gauge shells.
   components:
   - type: Item
     size: Small

@@ -72,7 +72,7 @@
   name: viper
   parent: [BaseWeaponPistol, BaseSyndicateContraband]
   id: WeaponPistolViper
-  description: Bought in bulk by Donk Co. and upgraded with fully automatic receivers, this is a common sidearm for any soldier who fights under the three serpents. Feeds from .38 10-round magazines.
+  description: Bought in bulk by Donk Co. and upgraded with fully automatic receivers, this is a common sidearm for any soldier who fights under the three serpents. Feeds from standard .38 pistol magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
@@ -105,7 +105,7 @@
   name: echis
   parent: [ BaseItem, BaseSyndicateContraband ]
   id: WeaponPistolEchis
-  description: Modified Viper for silicon use. Slowly fabricates .38 auto ammunition using a internal fabricator.
+  description: Modified Viper for silicon use. Slowly loads .38 auto rounds from an internal fabricator.
   components:
   - type: Gun
     fireRate: 5
@@ -140,7 +140,7 @@
   name: cobra
   parent: [ BaseWeaponPistol, BaseSyndicateContraband ]
   id: WeaponPistolCobra
-  description: A unique integrally suppressed pistol using a proprietary caseless cartridge developed by Waffle Corp. Favored by Syndicate agents who like to keep things quiet. Feeds from .20 10-round magazines.
+  description: A unique integrally suppressed pistol using a proprietary caseless cartridge developed by Waffle Corp. Favored by Syndicate agents who like to keep things quiet. Feeds from .20 pistol magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
@@ -189,7 +189,7 @@
   name: mk 58
   parent: [BaseWeaponPistol, BaseRestrictedContraband]
   id: WeaponPistolMk58
-  description: Produced by the NT subsidiary Fenrir Arms, the Mk58 is widely used by station security teams. Accurate and reliable, it feeds from .38 10-round magazines.
+  description: Produced by the NT subsidiary Fenrir Arms, the Mk58 is widely used by station security teams. Accurate and reliable, it feeds from .38 pistol magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
@@ -211,7 +211,7 @@
   name: N1984
   parent: [BaseWeaponPistol, BaseRestrictedContraband]
   id: WeaponPistolN1984
-  description: The sidearm of any self respecting officer. Comes in .44 magnum, the lord's caliber.
+  description: The sidearm of any self respecting officer. Chambered in .44 magnum, the lord's caliber. Feeds from .44 pistol magazines.
   # Reference to '.45 ACP strong' memes
   components:
   - type: Sprite

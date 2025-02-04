@@ -1,8 +1,8 @@
 - type: entity
   id: SpeedLoaderHeavyRifle
-  name: "speed loader (7.62x54mm rifle)"
+  name: "speed loader (.325 rifle)"
   parent: [ BaseItem, BaseRestrictedContraband ]
-  description: 5-round 'stripper clip' for the Kardashev-Mosin.
+  description: 5-round 'stripper clip' for the Kardashev-Mosin. Holds five .325x2 rifle cartridges.
   components:
   - type: Tag
     tags:
