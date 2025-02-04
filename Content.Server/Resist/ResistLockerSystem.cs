@@ -9,6 +9,7 @@ using Content.Shared.Resist;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Jittering;
 
 namespace Content.Server.Resist;
 
@@ -20,19 +21,21 @@ public sealed class ResistLockerSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly WeldableSystem _weldable = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly SharedJitteringSystem _jitteringSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<ResistLockerComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
-        SubscribeLocalEvent<ResistLockerComponent, ResistLockerDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<ResistLockerComponent, ResistLockerDoAfterEvent>(OnResistLockerDoafter);
+        SubscribeLocalEvent<ResistLockerComponent, DoAfterAttemptEvent<ResistLockerDoAfterEvent>>((uid, comp, ev) =>
+        {
+            ResistDoafterEarlyCancel((uid, comp), ev.Event, ev);
+        });
     }
 
     private void OnRelayMovement(EntityUid uid, ResistLockerComponent component, ref ContainerRelayMovementEntityEvent args)
     {
-        if (component.IsResisting)
-            return;
-
         if (!TryComp(uid, out EntityStorageComponent? storageComponent))
             return;
 
@@ -40,9 +43,7 @@ public sealed class ResistLockerSystem : EntitySystem
             return;
 
         if (TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked || _weldable.IsWelded(uid))
-        {
             AttemptResist(args.Entity, uid, storageComponent, component);
-        }
     }
 
     private void AttemptResist(EntityUid user, EntityUid target, EntityStorageComponent? storageComponent = null, ResistLockerComponent? resistLockerComponent = null)
@@ -50,42 +51,57 @@ public sealed class ResistLockerSystem : EntitySystem
         if (!Resolve(target, ref storageComponent, ref resistLockerComponent))
             return;
 
-        var doAfterEventArgs = new DoAfterArgs(EntityManager, user, resistLockerComponent.ResistTime, new ResistLockerDoAfterEvent(), target, target: target)
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, user, resistLockerComponent.ResistTime, new ResistLockerDoAfterEvent(), target, target)
         {
             BreakOnMove = true,
             BreakOnDamage = true,
-            NeedHand = false, //No hands 'cause we be kickin'
+            CancelDuplicate = false,
+            AttemptFrequency = AttemptFrequency.EveryTick,
         };
 
-        resistLockerComponent.IsResisting = true;
-        _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-start-resisting"), user, user, PopupType.Large);
-        _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
+        if (_doAfterSystem.TryStartDoAfter(doAfterEventArgs))
+            _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-start-resisting"), user, user, PopupType.Large);
     }
 
-    private void OnDoAfter(EntityUid uid, ResistLockerComponent component, DoAfterEvent args)
+    private void ResistDoafterEarlyCancel(Entity<ResistLockerComponent> entity,
+        ResistLockerDoAfterEvent args,
+        CancellableEntityEventArgs ev)
     {
-        if (args.Cancelled)
+        if (args.Target == null)
         {
-            component.IsResisting = false;
+            ev.Cancel();
             _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-resist-interrupted"), args.Args.User, args.Args.User, PopupType.Medium);
             return;
         }
 
-        if (args.Handled || args.Args.Target == null)
+        if (TryComp<WeldableComponent>(entity, out var weldableComponent) &&
+            _weldable.IsWelded(entity, weldableComponent))
             return;
 
-        component.IsResisting = false;
+        if (TryComp<LockComponent>(entity, out var lockComponent) &&
+            _lockSystem.IsLocked((entity, lockComponent)))
+            return;
 
-        if (HasComp<EntityStorageComponent>(uid))
+        ev.Cancel();
+        _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-resist-interrupted"), args.Args.User, args.Args.User, PopupType.Medium);
+        _entityStorage.TryOpenStorage(args.User, entity);
+    }
+
+    private void OnResistLockerDoafter(Entity<ResistLockerComponent> entity, ref ResistLockerDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled || args.Args.Target == null)
+            return;
+
+        if (HasComp<EntityStorageComponent>(entity))
         {
             WeldableComponent? weldable = null;
-            if (_weldable.IsWelded(uid, weldable))
-                _weldable.SetWeldedState(uid, false, weldable);
+            if (_weldable.IsWelded(entity, weldable))
+                _weldable.SetWeldedState(entity, false, weldable);
 
             if (TryComp<LockComponent>(args.Args.Target.Value, out var lockComponent))
-                _lockSystem.Unlock(uid, args.Args.User, lockComponent);
+                _lockSystem.Unlock(entity, args.Args.User, lockComponent);
 
-            _entityStorage.TryOpenStorage(args.Args.User, uid);
+            _entityStorage.TryOpenStorage(args.Args.User, entity);
         }
 
         args.Handled = true;
