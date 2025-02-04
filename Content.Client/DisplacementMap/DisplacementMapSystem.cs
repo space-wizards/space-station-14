@@ -15,14 +15,11 @@ public sealed class DisplacementMapSystem : EntitySystem
         {
             //imp edit start
             //if the layer is unshaded by default, use the unshaded displacement shader
-            if (sprite[index] is SpriteComponent.Layer { ShaderPrototype: "unshaded" }) //little hack to force-check if something is using the unshaded "shader" (in quotes because this thing seems to not fucking exist????)
-            {
-                sprite.LayerSetShader(index, "DisplacedStencilDrawUnshaded");
-            }
-            else //else, continue as normal
-            {
-                sprite.LayerSetShader(index, data.ShaderOverride);
-            }
+            sprite.LayerSetShader(index,
+                sprite[index] is SpriteComponent.Layer { ShaderPrototype: "unshaded" } //little hack to force-check if something is using the unshaded "shader" (in quotes because this thing seems to not fucking exist????)
+                    ? data.ShaderOverrideUnshaded
+                    //else, continue as normal
+                    : data.ShaderOverride);
             //imp edit end
         }
 
