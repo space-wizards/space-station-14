@@ -8,7 +8,6 @@
     itemIconStyle: BigAction
     whitelist:
       components:
-      - MindContainer
       - Body
     canTargetSelf: false
     interactOnMiss: false
