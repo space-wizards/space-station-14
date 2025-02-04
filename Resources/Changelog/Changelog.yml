@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: coffeeware
-  changes:
-  - message: a powered TEG won't produce infinite power when destroyed
-    type: Fix
-  id: 7397
-  time: '2024-09-19T02:15:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29972
 - author: Boaz1111
   changes:
   - message: Added plasma and uranium arrows.
@@ -3906,3 +3899,10 @@
   id: 7896
   time: '2025-02-04T07:52:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34293
+- author: impubbi
+  changes:
+  - message: Bolas will now only be applied once.
+    type: Fix
+  id: 7897
+  time: '2025-02-04T16:11:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34723
