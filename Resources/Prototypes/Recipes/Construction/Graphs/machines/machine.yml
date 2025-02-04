@@ -96,8 +96,7 @@
         - to: machineFrame
           completed:
             - !type:RaiseEvent
-              events:
-              - !type:MachineDeconstructedEvent
+              event: !type:MachineDeconstructedEvent
               broadcast: false
           conditions:
             - !type:EntityAnchored
