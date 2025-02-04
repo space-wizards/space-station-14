@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Added a tank slot to bio suits and bomb suits.
-    type: Add
-  id: 547
-  time: '2024-11-19T23:19:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/759
 - author: Sha-Seng
   changes:
   - message: MedSec Hud craft now requires security glasses instead of a radio
@@ -4292,3 +4285,12 @@
   id: 1046
   time: '2025-02-04T06:26:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1559
+- author: Darkmajia
+  changes:
+  - message: U.A.P. works properly. Mo blaagh yim speak like cheego.
+    type: Add
+  - message: The Gray language has been slightly adjusted for consistency and capitalization.
+    type: Tweak
+  id: 1047
+  time: '2025-02-04T21:54:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1561
