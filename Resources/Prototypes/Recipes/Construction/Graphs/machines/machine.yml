@@ -97,7 +97,7 @@
           completed:
             - !type:RaiseEvent
               events:
-    - !type:MachineDeconstructedEvent
+              - !type:MachineDeconstructedEvent
               broadcast: false
           conditions:
             - !type:EntityAnchored
