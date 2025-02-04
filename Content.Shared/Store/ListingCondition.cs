@@ -1,4 +1,3 @@
-using Content.Shared.Mind;
 using JetBrains.Annotations;
 using Robust.Shared.Serialization;
 
