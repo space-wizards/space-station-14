@@ -768,7 +768,11 @@
   components:
   - type: Pda
     id: PrisonerIDCard
-    state: pda-prisoner
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-prisoner
   - type: PdaBorderColor
     borderColor: "#333333"
   - type: Icon
