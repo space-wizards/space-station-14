@@ -226,7 +226,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTEngineer
     back: ClothingBackpackERTEngineer
-    shoes: ClothingShoesBootsMagSci
+    shoes: ClothingShoesBootsMag
     mask: ClothingMaskGasERT
     head: ClothingHeadHelmetERTEngineer
     eyes: ClothingEyesGlassesMeson
@@ -266,7 +266,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTEngineer
     back: ClothingBackpackERTEngineer
-    shoes: ClothingShoesBootsMagSci
+    shoes: ClothingShoesBootsMag
     mask: ClothingMaskGasERT
     eyes: ClothingEyesGlassesMeson
     gloves: ClothingHandsGlovesCombat
