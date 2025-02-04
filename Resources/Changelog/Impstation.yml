@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: enforcer and beanbag enforcer have altered stocks with pistol grips now
-    type: Tweak
-  - message: fixed a few pixels on the beanbag kammerer too
-    type: Fix
-  id: 543
-  time: '2024-11-19T03:10:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/756
 - author: hivehum
   changes:
   - message: You can no longer receive Antimov law boards and singularity beacons
@@ -4301,3 +4292,13 @@
   id: 1042
   time: '2025-02-02T17:15:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1545
+- author: kipdotnet
+  changes:
+  - message: Reworked the tck'tck gun to be a unique, lower caliber weapon instead
+      of a renamed Echis.
+    type: Tweak
+  - message: Increased the volume of the tck'tck footsteps.
+    type: Tweak
+  id: 1043
+  time: '2025-02-03T22:29:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1542
