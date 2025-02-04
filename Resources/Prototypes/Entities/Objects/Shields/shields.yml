@@ -238,7 +238,7 @@
   parent: BaseShield
   id: SalamiShield
   name: salami lid shield
-  description: A makeshift shield made with a salami lid and cables.
+  description: Ain't gon' hit, Won't hit.
   components:
   - type: Sprite
     state: salami-icon
