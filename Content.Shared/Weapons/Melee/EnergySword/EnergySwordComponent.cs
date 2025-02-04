@@ -1,9 +1,12 @@
-namespace Content.Server.Weapons.Melee.EnergySword;
+using Robust.Shared.GameStates;
 
-[RegisterComponent]
-internal sealed partial class EnergySwordComponent : Component
+namespace Content.Shared.Weapons.Melee.EnergySword;
+
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState]
+public sealed partial class EnergySwordComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField("activatedColor"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public Color ActivatedColor = Color.DodgerBlue;
 
     /// <summary>
@@ -19,6 +22,7 @@ internal sealed partial class EnergySwordComponent : Component
         Color.MediumOrchid
     };
 
+    [DataField, AutoNetworkedField]
     public bool Hacked = false;
     /// <summary>
     ///     RGB cycle rate for hacked e-swords.
