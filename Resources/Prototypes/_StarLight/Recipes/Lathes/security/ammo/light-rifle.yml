@@ -44,7 +44,6 @@
   materials:
     Steel: 205
 
-
 - type: latheRecipe
   parent: BaseAmmoRecipe
   id: MagazineLightRifleUranium
@@ -69,6 +68,61 @@
   materials:
     Steel: 525
     Uranium: 525
+
+############ LMG Mags ############
+
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: LightRifleHeavyMagazineEmpty
+  result: LightRifleHeavyMagazineEmpty
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: LightRifleHeavyMagazineSP
+  result: LightRifleHeavyMagazineSP
+  materials:
+    Steel: 1412
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: LightRifleHeavyMagazineHP
+  result: LightRifleHeavyMagazineHP
+  materials:
+    Steel: 1412
+    
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: LightRifleHeavyMagazineFMJ
+  result: LightRifleHeavyMagazineFMJ
+  materials:
+    Steel: 1412
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: LightRifleHeavyMagazineUranium
+  result: LightRifleHeavyMagazineUranium
+  materials:
+    Steel: 25
+    Plastic: 1080
+    Uranium: 1080
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: LightRifleHeavyMagazineIncendiary
+  result: LightRifleHeavyMagazineIncendiary
+  materials:
+    Steel: 25
+    Plastic: 1350
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: LightRifleHeavyMagazineAP
+  result: LightRifleHeavyMagazineAP
+  materials:
+    Steel: 1312
+    Uranium: 1312
 
 ############ BOXES ############
 

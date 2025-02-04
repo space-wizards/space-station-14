@@ -145,9 +145,9 @@
     spread: 5
     pump: true
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Shotguns/sentiel.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/sentiel.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/sentiel_inhands_64x.rsi
   - type: BallisticAmmoProvider

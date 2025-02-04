@@ -5,6 +5,15 @@
   description: Just add capitalism!
   abstract: true
   components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/VendingMachines/plushiemat.rsi
+    snapCardinals: true
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: normal-unshaded
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
   - type: StationAiWhitelist
   - type: AmbientOnPowered
   - type: AmbientSound
@@ -15,19 +24,17 @@
       path: /Audio/Ambience/Objects/vending_machine_hum.ogg
   - type: Physics
     bodyType: Static
-  - type: Transform
-    noRot: true
   - type: Fixtures
     fixtures:
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.25,-0.45,0.25,0.45"
+          bounds: "-0.3,-0.16,0.3,0.40"
         mask:
         - MachineMask
         layer:
         - MachineLayer
-        density: 200
+        density: 190
   - type: Destructible
     thresholds:
     - trigger:
@@ -79,7 +86,7 @@
   - type: WiresVisuals
   - type: Store
     name: store-preset-name-spellbook
-    categories:
+    categories: []
     currencyWhitelist:
     - NTCredit
     
@@ -90,33 +97,11 @@
   components:
   - type: Sprite
     sprite: _Starlight/Structures/Machines/VendingMachines/plushiemat.rsi
-    snapCardinals: true
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: normal-unshaded
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
   - type: Store
     name: vendor-hug-dispenser
     categories:
     - SLPlushies
     - SLSpecies
-    currencyWhitelist:
-    - NTCredit
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.16,0.3,0.40"
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
-        density: 190
-  - type: Transform
-    noRot: false
 
 - type: entity
   parent: SLVendingMachine
@@ -142,34 +127,12 @@
     access: [["Medical"]]
   - type: Sprite
     sprite: _Starlight/Structures/Machines/VendingMachines/medical.rsi
-    snapCardinals: true
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: normal-unshaded
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
   - type: Store
     name: vendor-medical-dispenser
     categories:
     - SLChemistry
     - SLMedical
     - SLSurgery
-    currencyWhitelist:
-    - NTCredit
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.16,0.3,0.40"
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
-        density: 190
-  - type: Transform
-    noRot: false
             
 - type: entity
   parent: SLVendingMachine
@@ -180,32 +143,10 @@
     access: [["Engineering"]]
   - type: Sprite
     sprite: _Starlight/Structures/Machines/VendingMachines/engi.rsi
-    snapCardinals: true
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: normal-unshaded
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
   - type: Store
     name: vendor-engineering-dispenser
     categories:
     - SLEnginery
-    currencyWhitelist:
-    - NTCredit
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.16,0.3,0.40"
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
-        density: 190
-  - type: Transform
-    noRot: false
     
 - type: entity
   parent: SLVendingMachine
@@ -219,27 +160,8 @@
     name: vendor-clown-dispenser
     categories:
     - SLClown
-    currencyWhitelist:
-    - NTCredit
   - type: Sprite
     sprite: _Starlight/Structures/Machines/VendingMachines/hohohonkers.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: normal-unshaded
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.16,0.3,0.40"
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
-        density: 190
         
 - type: entity
   parent: SLVendingMachine
@@ -250,30 +172,8 @@
     access: [["Security"]]
   - type: Sprite
     sprite: _Starlight/Structures/Machines/VendingMachines/security.rsi
-    snapCardinals: true
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: normal-unshaded
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
   - type: Store
     name: vendor-security-dispenser
     categories:
     - SLSecurity
     - SLBrigmedic
-    currencyWhitelist:
-    - NTCredit
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.16,0.3,0.40"
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
-        density: 190
-  - type: Transform
-    noRot: false

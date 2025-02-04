@@ -3028,4 +3028,18 @@ Entries:
   id: 421
   time: '2025-02-03T15:46:25.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Killer Tamashi
+  changes:
+  - message: Added M492 LMG as a security weapon
+    type: Add
+  id: 422
+  time: '2025-02-03T20:16:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/279
+- author: PubliclyExecutedHotel
+  changes:
+  - message: Made Hotel's AI Core actually good
+    type: Tweak
+  id: 423
+  time: '2025-02-03T20:17:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/287
 
