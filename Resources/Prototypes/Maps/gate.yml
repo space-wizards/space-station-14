@@ -1,7 +1,7 @@
 - type: gameMap
   id: Gate
   mapName: 'Gate Station'
-  mapPath: _Impstation/Maps/gate.yml # Imp
+  mapPath: /Maps/_Impstation/gate.yml # Imp
   minPlayers: 60 # Imp
   stations:
     Gate:
