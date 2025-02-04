@@ -2,3 +2,14 @@
   id: AccessibleFullStealth
   kind: source
   path: "/Textures/_Impstation/Shaders/accessible_full_stealth.swsl"
+
+- type: shader
+  id: DisplacedStencilDrawUnshaded
+  kind: source
+  path: "/Textures/_Impstation/Shaders/displacement_unshaded.swsl"
+  stencil:
+    ref: 1
+    op: Keep
+    func: NotEqual
+  params:
+    displacementSize: 127

@@ -12,7 +12,19 @@ public sealed class DisplacementMapSystem : EntitySystem
     public bool TryAddDisplacement(DisplacementData data, SpriteComponent sprite, int index, string key, HashSet<string> revealedLayers)
     {
         if (data.ShaderOverride != null)
-            sprite.LayerSetShader(index, data.ShaderOverride);
+        {
+            //imp edit start
+            //if the layer is unshaded, use the unshaded displacement shader
+            if (sprite[index] is SpriteComponent.Layer layer && layer.ShaderPrototype!.Equals("unshaded")) //little hack to force-check if something is using the unshaded "shader" (in quotes because this thing seems to not fucking exist????)
+            {
+                sprite.LayerSetShader(index, "DisplacedStencilDrawUnshaded");
+            }
+            else //else, continue as normal
+            {
+                sprite.LayerSetShader(index, data.ShaderOverride);
+            }
+            //imp edit end
+        }
 
         var displacementKey = $"{key}-displacement";
         if (!revealedLayers.Add(displacementKey))
