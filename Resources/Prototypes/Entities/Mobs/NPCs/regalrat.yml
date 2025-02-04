@@ -343,7 +343,7 @@
       state: stay
     events:
     - !type:RatKingOrderActionEvent
-        type: Stay
+      type: Stay
     priority: 5
 
 - type: entity
