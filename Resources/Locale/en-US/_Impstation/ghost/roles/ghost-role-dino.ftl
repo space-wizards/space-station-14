@@ -30,3 +30,6 @@ ghost-role-information-dino-trex-description = The apex of the Dino Wars.
 
 ghost-role-information-dino-trike-name = Triceratops
 ghost-role-information-dino-trike-description = A durable mesozoic soldier, ready to live or die for the Dino Wars.
+
+ghost-role-information-dino-commander-name = Dinosaur Commander
+ghost-role-information-dino-commander-description = A mesozoic leader, champion of the Dino Wars.
