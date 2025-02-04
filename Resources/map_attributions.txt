@@ -57,3 +57,6 @@
 
 - files: ["cog.yml"]
   authors: Spacemann
+
+- files: ["convex.yml"]
+  authors: Spacemann
