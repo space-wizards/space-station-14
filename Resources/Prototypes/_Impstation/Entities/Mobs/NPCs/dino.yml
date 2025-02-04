@@ -240,7 +240,7 @@
     animation: WeaponArcClaw
     wideAnimation: WeaponArcClaw
     altDisarm: false
-    angle: 30
+    angle: 45
     range: 1
     soundHit:
       collection: AlienClaw
@@ -294,7 +294,7 @@
   - type: MeleeWeapon
     animation: WeaponArcClaw
     wideAnimation: WeaponArcClaw
-    angle: 30
+    angle: 45
     range: 1
     soundHit:
       collection: AlienClaw
@@ -382,7 +382,7 @@
     animation: WeaponArcClaw
     wideAnimation: WeaponArcClaw
     altDisarm: false
-    angle: 30
+    angle: 45
     soundHit:
       collection: AlienClaw
     damage:
@@ -433,7 +433,7 @@
     animation: WeaponArcSmash
     wideAnimation: WeaponArcSmash
     altDisarm: false
-    angle: 30
+    angle: 45
     soundHit:
       collection: MetalThud
     damage:
@@ -482,7 +482,7 @@
     animation: WeaponArcThrust
     wideAnimation: WeaponArcThrust
     altDisarm: false
-    angle: 30
+    angle: 45
     range: 1.75
     soundHit:
       collection: AlienClaw
@@ -544,7 +544,7 @@
     animation: WeaponArcClaw
     wideAnimation: WeaponArcClaw
     altDisarm: false
-    angle: 30
+    angle: 45
     soundHit:
       collection: AlienClaw
     damage:
@@ -592,7 +592,7 @@
     animation: WeaponArcBite
     wideAnimation: WeaponArcBite
     altDisarm: false
-    angle: 30
+    angle: 45
     range: 2
     soundHit:
       collection: AlienClaw
@@ -656,7 +656,7 @@
     animation: WeaponArcSmash
     wideAnimation: WeaponArcSmash
     altDisarm: false
-    angle: 30
+    angle: 45
     range: 1.75
     soundHit:
       collection: MetalThud
@@ -707,7 +707,7 @@
     animation: WeaponArcBite
     wideAnimation: WeaponArcBite
     altDisarm: false
-    angle: 30
+    angle: 45
     range: 2.25
     soundHit:
       collection: AlienClaw
@@ -769,7 +769,7 @@
     animation: WeaponArcThrust
     wideAnimation: WeaponArcThrust
     altDisarm: false
-    angle: 30
+    angle: 45
     range: 1.75
     soundHit:
       collection: AlienClaw
@@ -800,13 +800,13 @@
   description: A mesozoic leader, champion of the Dino Wars.
   components:
   - type: Sprite
-    scale: 2, 2
+    scale: 1.5, 1.5
   - type: Fixtures
     fixtures: # TODO: This needs a second fixture just for mob collisions.
       fix1:
         shape:
           !type:PhysShapeCircle
-          radius: 0.7
+          radius: 0.53
         density: 185
         restitution: 0.0
         mask:
@@ -825,6 +825,29 @@
   - type: NpcFactionMember
     factions:
     - Dino
+  - type: MeleeWeapon
+    animation: WeaponArcClaw
+    wideAnimation: WeaponArcClaw
+    altDisarm: false
+    angle: 45
+    range: 1
+    soundHit:
+      collection: AlienClaw
+    damage:
+      types:
+        Slash: 6
+        Structural: 6
+  - type: Devourer
+    foodPreference: Humanoid
+    shouldStoreDevoured: true
+    chemical: DinoBlood
+    healRate: 15.0
+    whitelist:
+      components:
+      - MobState
+      - Door
+      tags:
+      - Wall
   - type: FlashImmunity
   - type: GhostRole
     allowMovement: true
