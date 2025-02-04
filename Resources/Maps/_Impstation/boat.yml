@@ -12337,28 +12337,6 @@ entities:
     - type: Transform
       pos: 7.551519,86.42501
       parent: 2
-- proto: AntiPrescriptionLens
-  entities:
-  - uid: 5868
-    components:
-    - type: Transform
-      pos: 25.369358,-26.96318
-      parent: 2
-  - uid: 5883
-    components:
-    - type: Transform
-      pos: 1.6456109,5.390049
-      parent: 2
-  - uid: 5885
-    components:
-    - type: Transform
-      pos: 14.651323,-5.7622604
-      parent: 2
-  - uid: 5886
-    components:
-    - type: Transform
-      pos: 6.331545,0.006720543
-      parent: 2
 - proto: APCBasic
   entities:
   - uid: 609
