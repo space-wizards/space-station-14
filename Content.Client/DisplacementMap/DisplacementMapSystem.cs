@@ -13,14 +13,10 @@ public sealed class DisplacementMapSystem : EntitySystem
     {
         if (data.ShaderOverride != null)
         {
-            if (sprite[index] is SpriteComponent.Layer layer && layer.ShaderPrototype!.Equals("unshaded")) //feels like a hack? want to know if there's a better way of doing this.
-            {
-                sprite.LayerSetShader(index, data.ShaderOverrideUnshaded);
-            }
-            else
-            {
-                sprite.LayerSetShader(index, data.ShaderOverride);
-            }
+            sprite.LayerSetShader(index,
+                sprite[index] is SpriteComponent.Layer { ShaderPrototype: "unshaded" } //feels like a hack? want to know if there's a better way of doing this.
+                    ? data.ShaderOverrideUnshaded
+                    : data.ShaderOverride);
         }
 
 
