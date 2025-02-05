@@ -1,0 +1,59 @@
+- type: localizedDataset
+  id: FigurinesCBURN
+  values:
+    prefix: figurines-cburn-
+    count: 10
+
+- type: localizedDataset
+  id: FigurinesCentcomm
+  values:
+    prefix: figurines-centcomm-
+    count: 8
+
+- type: localizedDataset
+  id: FigurinesChronoAgent
+  values:
+    prefix: figurines-chronoagent-
+    count: 10
+
+- type: localizedDataset
+  id: FigurinesDeathsquad
+  values:
+    prefix: figurines-deathsquad-
+    count: 10
+
+- type: localizedDataset
+  id: FigurinesERTChaplain
+  values:
+    prefix: figurines-ertchaplain-
+    count: 8
+
+- type: localizedDataset
+  id: FigurinesERTEngineer
+  values:
+    prefix: figurines-ertengineer-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesERTJanitor
+  values:
+    prefix: figurines-ertjanitor-
+    count: 10
+
+- type: localizedDataset
+  id: FigurinesERTLeader
+  values:
+    prefix: figurines-ertleader-
+    count: 10
+
+- type: localizedDataset
+  id: FigurinesERTMedic
+  values:
+    prefix: figurines-ertmedic-
+    count: 10
+
+- type: localizedDataset
+  id: FigurinesERTSecurity
+  values:
+    prefix: figurines-ertsecurity-
+    count: 10
