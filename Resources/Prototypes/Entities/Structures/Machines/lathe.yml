@@ -586,8 +586,6 @@
     - BorgModuleAdvancedTool
     - BorgModuleAdvancedChemical
     - BorgModuleAdvancedMining
-    - BorgModuleGardening
-    - BorgModuleHarvesting
     - RipleyHarness
     - RipleyLArm
     - RipleyRArm
