@@ -1132,7 +1132,7 @@
   - type: ProjectileSpread
     proto: BulletLaser
     count: 5 #65 heat damage if you hit all your shots, but wide spread
-    spread: 20
+    spread: 25
 
 - type: entity
   name: narrow laser barrage
@@ -1143,7 +1143,7 @@
   - type: ProjectileSpread
     proto: BulletLaser
     count: 4 #52 heat damage if you hit all your shots, but narrower spread
-    spread: 8
+    spread: 9
 
 - type: entity
   name: disabling laser barrage
@@ -1154,4 +1154,4 @@
   - type: ProjectileSpread
     proto: BulletDisablerSmg
     count: 3 #bit stronger than a disabler if you hit your shots you goober, still not a 2 hit stun though
-    spread: 6
+    spread: 7
