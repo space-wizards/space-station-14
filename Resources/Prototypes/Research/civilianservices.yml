@@ -10,8 +10,6 @@
   tier: 1
   cost: 5000
   recipeUnlocks:
-  - BorgModuleGardening
-  - BorgModuleHarvesting
   - SeedExtractorMachineCircuitboard
   - HydroponicsTrayMachineCircuitboard
   - ReagentGrinderIndustrialMachineCircuitboard
@@ -118,7 +116,7 @@
   - CryostasisBeaker
   - SyringeCryostasis
 
-- type: technology # merge with other T2 medical tech if possible.
+- type: technology # Merge with other T2 medical research if possible!
   id: MechanizedTreatment
   name: research-technology-mechanized-treatment
   icon:

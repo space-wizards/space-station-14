@@ -208,6 +208,8 @@
   - BorgModuleMusique
   - BorgModuleService
   - BorgModuleClowning
+  - BorgModuleGardening
+  - BorgModuleHarvesting
 
   radioChannels:
   - Science

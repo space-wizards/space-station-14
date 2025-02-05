@@ -116,10 +116,9 @@
     - state: icon-cables
   - type: ItemBorgModule
     items:
-    - CableApcStackLingering10
-    - CableMVStackLingering10
-    - CableHVStackLingering10
-    - Wirecutter
+    - CableApcStackLingering0
+    - CableMVStackLingering0
+    - CableHVStackLingering0
     - trayScanner
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
@@ -137,32 +136,16 @@
   - type: ItemBorgModule
     items:
     - BorgFireExtinguisher
-  - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: extinguisher-module }
-
-- type: entity
-  id: BorgModuleGPS
-  parent: [ BaseBorgModule, BaseProviderBorgModule ]
-  name: GPS cyborg module
-  description: For cyborgs that keep getting lost.
-  components:
-  - type: Sprite
-    layers:
-    - state: generic
-    - state: icon-gps
-  - type: ItemBorgModule
-    items:
     - HandheldGPSBasic
     - HandHeldMassScannerBorg
-    - HandheldStationMapUnpowered
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: gps-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: extinguisher-module }
 
 - type: entity
   id: BorgModuleTool
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
   name: tool cyborg module
-  description: A essential part of every Cyborg's loadout, this module contains all the basic tools for repairing the station.
+  description: A essential part of every Cyborg's loadout, this module contains all the basic tools for maintaining the station.
   components:
   - type: Sprite
     layers:
@@ -171,11 +154,11 @@
   - type: ItemBorgModule
     items:
     - Crowbar
-    - PowerDrill
+    - Wrench
+    - Scrwedriver
     - Wirecutter
     - WelderIndustrial
     - Multitool
-    - RemoteSignaller
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: tool-module }
 
@@ -192,7 +175,10 @@
   - type: ItemBorgModule
     items:
     - AppraisalTool
+    - Pen
     - HandLabeler
+    - RubberStampApproved
+    - RubberStampDenied
     - RadioHandheld
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: appraisal-module }
@@ -245,7 +231,7 @@
   - type: ItemBorgModule
     items:
     - WeaponGrapplingGun
-    - FireExtinguisher
+    - BorgFireExtinguisher
     - HandheldGPSBasic
     - HandHeldMassScannerBorg
   - type: BorgModuleIcon
@@ -267,7 +253,6 @@
     - PowerDrill
     - WelderExperimental
     - Multitool
-    - GasAnalyzer
     - RemoteSignallerAdvanced
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-tools-module }
@@ -309,9 +294,9 @@
     - RCDRecharging
     - BorgFireExtinguisher
     - HandheldGPSBasic
+    - GasAnalyzer
     - HolofanProjectorBorg
     - GeigerCounter
-
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: rcd-module }
 
@@ -439,9 +424,9 @@
     - HandheldHealthAnalyzerUnpowered
     - Syringe
     - Syringe
-    - BaseChemistryEmptyVial
-    - BaseChemistryEmptyVial
-    - BaseChemistryEmptyVial
+    - BorgVial
+    - BorgVial
+    - BorgVial
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: chem-module }
 
@@ -459,9 +444,9 @@
     - HandheldHealthAnalyzerUnpowered
     - BorgHypo
     - BorgDropper
-    - Beaker
-    - Beaker
-    - Beaker
+    - BorgBeaker
+    - BorgBeaker
+    - BorgBeaker
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-chem-module }
 
@@ -482,7 +467,7 @@
     - FireExtinguisherMini
     - GasAnalyzer
     - BorgDropper
-    - BaseChemistryEmptyVial
+    - BorgVial
     - GeigerCounter
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: node-scanner-module }
@@ -520,11 +505,12 @@
   - type: ItemBorgModule
     items:
     - Pen
-    - BooksBag
+    #- BooksBag (Add back when hand whitelisting exists, at the moment they can only use it like a orebag.)
     - HandLabeler
     - Lighter
-    - DrinkShaker
     - BorgDropper
+    - RubberStampApproved
+    - RubberStampDenied
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: service-module }
 
@@ -539,9 +525,7 @@
     - state: icon-musique
   - type: ItemBorgModule
     items:
-    - SynthesizerInstrument
-    - ElectricGuitarInstrument
-    - SaxophoneInstrument
+    - SuperSynthesizerInstrument
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: musical-module }
 
@@ -556,10 +540,10 @@
     - state: icon-gardening
   - type: ItemBorgModule
     items:
-    - HydroponicsToolMiniHoe
     - HydroponicsToolSpade
     - HydroponicsToolClippers
     - Bucket
+    - BorgDropper
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: gardening-module }
 
@@ -574,7 +558,7 @@
     - state: icon-harvesting
   - type: ItemBorgModule
     items:
-    - HydroponicsToolScythe
+    - HydroponicsToolMiniHoe
     - HydroponicsToolHatchet
     - PlantBag
   - type: BorgModuleIcon

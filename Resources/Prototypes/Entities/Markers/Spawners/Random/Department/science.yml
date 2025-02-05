@@ -115,6 +115,5 @@
     prototypes:
     - BorgModuleCable
     - BorgModuleFireExtinguisher
-    - BorgModuleGPS
     chance: 0.9
     offset: 0.2

@@ -104,6 +104,62 @@
   - type: DnaSubstanceTrace
 
 - type: entity
+  name: vial
+  parent: BaseItem
+  id: BorgVial
+  description: A internal liquid compartment built into a cyborg.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/vial.rsi
+    layers:
+      - state: vial-1
+      - state: vial-1-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: vial-1-
+    inHandsMaxFillLevels: 4
+    inHandsFillBaseName: -fill-
+  - type: Drink
+    solution: beaker
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+  - type: MixableSolution
+    solution: beaker
+  - type: RefillableSolution
+    solution: beaker
+  - type: DrainableSolution
+    solution: beaker
+  - type: ExaminableSolution
+    solution: beaker
+  - type: DrawableSolution
+    solution: beaker
+  - type: SolutionTransfer
+    maxTransferAmount: 30
+    canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: beaker
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: Item
+    size: Tiny
+    sprite: Objects/Specific/Chemistry/vial.rsi
+    shape:
+    - 0,0,0,0
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
+
+- type: entity
   id: VestineChemistryVial
   parent: BaseChemistryEmptyVial
   suffix: vestine

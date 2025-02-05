@@ -131,11 +131,6 @@
   id: BorgModuleFireExtinguisher
   result: BorgModuleFireExtinguisher
 
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleGPS
-  result: BorgModuleGPS
-
 # Cargo Modules
 
 - type: latheRecipe
@@ -167,13 +162,3 @@
 # Science Modules (if we add a advanced sci module that requires crafting)
 
 # Service Modules
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleGardening
-  result: BorgModuleGardening
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleHarvesting
-  result: BorgModuleHarvesting
