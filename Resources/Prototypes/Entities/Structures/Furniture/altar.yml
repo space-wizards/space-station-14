@@ -64,7 +64,24 @@
         acts: [ "Destruction" ]
   - type: StealTarget
     stealGroup: AltarNanotrasen
-    
+  - type: Construction
+    graph: ConvertibleAltarGraph
+    node: undevoted
+    containers:
+    - devoter-slot
+
+- type: entity
+  id: AltarUndevoted
+  parent: BaseConvertibleAltar
+  name: undevoted altar
+  description: An altar which isn't devoted to any god. Altar of atheism?
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: druid
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: druid
 
 - type: entity
   id: AltarNanotrasen
@@ -77,6 +94,8 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: nanotrasen
+  - type: Construction
+    node: nanotrasen
 
 - type: entity
   id: AltarChaos
