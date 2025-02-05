@@ -72,16 +72,16 @@ figurines-ertleader-5 = It's bad in here.
 figurines-ertleader-6 = Wow, you're bad at this.
 
 figurines-ertmedic-1 = Ephedrine...
-figurines-ertmedic-1 = CLEAR!!
-figurines-ertmedic-1 = I need a syringe.
-figurines-ertmedic-1 = Epi in!
-figurines-ertmedic-1 = Wow, you're bad at this.
+figurines-ertmedic-2 = CLEAR!!
+figurines-ertmedic-3 = I need a syringe.
+figurines-ertmedic-4 = Epi in!
+figurines-ertmedic-5 = Wow, you're bad at this.
 
 figurines-ertsecurity-1 = My brother in christ...
-figurines-ertsecurity-1 = Cover fire!
-figurines-ertsecurity-1 = Secure, contain, protect.
-figurines-ertsecurity-1 = I'm not a redshirt...
-figurines-ertsecurity-1 = Wow, you're bad at this.
+figurines-ertsecurity-2 = Cover fire!
+figurines-ertsecurity-3 = Secure, contain, protect.
+figurines-ertsecurity-4 = I'm not a redshirt...
+figurines-ertsecurity-5 = Wow, you're bad at this.
 
 figurines-brigmedic-1 = No, you can't shoot the clown.
 figurines-brigmedic-2 = Quit moving.
@@ -109,7 +109,7 @@ figurines-nukieagent-5 = Quit whining.
 figurines-nukieagent-6 = Interdyne represent!
 
 figurines-nukiejuggernaut-1 = Who sent all these babies to fight?
-figurines-nukiejuggernaut-1 = You can't kill me. I can't be killed!
-figurines-nukiejuggernaut-1 = Run! RUN!!
-figurines-nukiejuggernaut-1 = Fucking disablers.
-figurines-nukiejuggernaut-1 = Does this suit make me look fat?
+figurines-nukiejuggernaut-2 = You can't kill me. I can't be killed!
+figurines-nukiejuggernaut-3 = Run! RUN!!
+figurines-nukiejuggernaut-4 = Fucking disablers.
+figurines-nukiejuggernaut-5 = Does this suit make me look fat?
