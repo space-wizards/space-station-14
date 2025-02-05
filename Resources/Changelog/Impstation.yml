@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Hopefully the gilded space passenger jumpsuit works now??
-    type: Fix
-  id: 552
-  time: '2024-11-23T07:15:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/775
 - author: EpicToast
   changes:
   - message: (Union Station) Freezer should now be properly set up.
@@ -4289,3 +4282,11 @@
   id: 1051
   time: '2025-02-05T00:11:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1565
+- author: 12rabbits
+  changes:
+  - message: Mobs will no longer automatically unbuckle themselves after recovering
+      from a critical state.
+    type: Fix
+  id: 1052
+  time: '2025-02-05T09:15:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1569
