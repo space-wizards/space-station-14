@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: Patty
+  start: start
+  graph:
+  - node: start
+    entity: FoodMeatMeatball
+    edges:
+    - to: meat patty
+      steps:
+      - tool: Rolling
+        doAfter: 1
+  - node: meat patty
+    entity: FoodMeatPatty
