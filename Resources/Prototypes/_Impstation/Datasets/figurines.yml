@@ -38,25 +38,25 @@
   id: FigurinesERTJanitor
   values:
     prefix: figurines-ertjanitor-
-    count: 10
+    count: 7
 
 - type: localizedDataset
   id: FigurinesERTLeader
   values:
     prefix: figurines-ertleader-
-    count: 10
+    count: 6
 
 - type: localizedDataset
   id: FigurinesERTMedic
   values:
     prefix: figurines-ertmedic-
-    count: 10
+    count: 5
 
 - type: localizedDataset
   id: FigurinesERTSecurity
   values:
     prefix: figurines-ertsecurity-
-    count: 10
+    count: 7
 
 - type: localizedDataset
   id: FigurinesBrigmedic
