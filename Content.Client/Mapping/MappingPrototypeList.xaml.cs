@@ -74,7 +74,8 @@ public sealed partial class MappingPrototypeList : Control
 
         foreach (var prototype in prototypes)
         {
-            Insert(PrototypeList, prototype, true, false).FavoriteButton.Visible = false;
+            var insertedButton = Insert(PrototypeList, prototype, true, false);
+            insertedButton.FavoriteButton.Visible = false;
         }
     }
 
@@ -212,7 +213,7 @@ public sealed partial class MappingPrototypeList : Control
             button.Collapse();
         }
 
-        ScrollContainer.SetScrollValue(new Vector2(0, 0));
+        ScrollContainer.SetScrollValue(Vector2.Zero);
     }
 
     public void ToggleCollapse(MappingSpawnButton button)
@@ -264,8 +265,7 @@ public sealed partial class MappingPrototypeList : Control
 
     private void OnFavoriteToggle(MappingSpawnButton button)
     {
-        if (button.Prototype is not { } prototype ||
-            _favoriteList == null)
+        if (button.Prototype is not { } prototype || _favoriteList == null)
             return;
 
         FavoritesPrototype.Children ??= [];
@@ -280,10 +280,12 @@ public sealed partial class MappingPrototypeList : Control
             if (_favoriteList.CollapseButton.Pressed)
             {
                 prototype.Favorite = true;
-                if (prototype.Children == null && Gallery)
-                    Insert(_favoriteList.ChildrenPrototypesGallery, prototype, false, true).ToggleFavorite(true);
-                else
-                    Insert(_favoriteList.ChildrenPrototypes, prototype, true, false).ToggleFavorite(true);
+                var insertedButton =
+                    prototype.Children == null && Gallery
+                        ? Insert(_favoriteList.ChildrenPrototypesGallery, prototype, false, true)
+                        : Insert(_favoriteList.ChildrenPrototypes, prototype, true, false);
+
+                insertedButton.ToggleFavorite(true);
             }
         }
         else
@@ -294,7 +296,7 @@ public sealed partial class MappingPrototypeList : Control
             FavoritesPrototype.Children.Remove(prototype);
             if (_favoriteList.CollapseButton.Pressed)
             {
-                var lists = new List<Container>([_favoriteList.ChildrenPrototypes, _favoriteList.ChildrenPrototypesGallery]);
+                var lists = new List<Container> { _favoriteList.ChildrenPrototypes, _favoriteList.ChildrenPrototypesGallery };
                 foreach (var list in lists)
                 {
                     foreach (var child in list.Children)

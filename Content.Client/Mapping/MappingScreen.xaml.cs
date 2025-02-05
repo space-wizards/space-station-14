@@ -103,6 +103,11 @@ public sealed partial class MappingScreen : InGameScreen
         Pick.Texture.TexturePath = "/Textures/Interface/eyedropper.svg.png";
         Flip.Texture.TexturePath = "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
         Flip.OnPressed += _ => FlipSides();
+
+        var eraseGroup = new ButtonGroup();
+        EraseDecalButton.Group = eraseGroup;
+        EraseTileButton.Group = eraseGroup;
+        EraseEntityButton.Group = eraseGroup;
     }
 
     private void FlipSides()

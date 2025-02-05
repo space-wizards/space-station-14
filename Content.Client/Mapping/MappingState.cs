@@ -257,15 +257,15 @@ public sealed class MappingState : GameplayStateBase
         mappings.Clear();
 
         Screen.Entities.UpdateVisible(
-            new ([entities]),
+            [entities],
             _allPrototypes.GetOrNew(typeof(EntityPrototype)));
 
         Screen.Tiles.UpdateVisible(
-            new ([tiles]),
+            [tiles],
             _allPrototypes.GetOrNew(typeof(ContentTileDefinition)));
 
         Screen.Decals.UpdateVisible(
-            new ([decals]),
+            [decals],
             _allPrototypes.GetOrNew(typeof(DecalPrototype)));
     }
 
@@ -454,9 +454,6 @@ public sealed class MappingState : GameplayStateBase
         Deselect();
         _placement.Clear();
         _placement.ToggleEraser();
-
-        if (Screen.EraseDecalButton.Pressed)
-            Screen.EraseDecalButton.Pressed = false;
 
         Screen.UnPressActionsExcept(Screen.EraseEntityButton);
         Screen.EntityPlacementMode.Disabled = true;
