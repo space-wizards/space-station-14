@@ -159,6 +159,7 @@
   id: ToyFigurineNukieJuggernaut
   name: syndicate juggernaut figure
   description: A figurine depicting someone in a seemingly impenetrable blood-red hardsuit, similar to what someone on a nuclear operative team might wear.
+  components:
   - type: Sprite
     sprite: _Impstation/Objects/Fun/figurines.rsi
     state: nukie_juggernaut
