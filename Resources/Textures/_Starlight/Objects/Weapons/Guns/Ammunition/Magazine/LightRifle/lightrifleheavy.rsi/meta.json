@@ -30,6 +30,24 @@
         },
         {
             "name": "mag-7"
+        },
+        {
+            "name": "sp"
+        },
+        {
+            "name": "ap"
+        },
+        {
+            "name": "hp"
+        },
+        {
+            "name": "fmj"
+        },
+        {
+            "name": "incendiary"
+        },
+        {
+            "name": "uranium"
         }
     ]
 }

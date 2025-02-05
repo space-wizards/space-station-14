@@ -1,7 +1,7 @@
 - type: entity
   id: LightRifleHeavyBase
   name: ".30 Magazine Box"
-  parent: LightRifleHeavyBase
+  parent: BaseMagazineBoxLightRifle
   components:
   - type: Tag
     tags:
@@ -12,21 +12,11 @@
   - type: Item
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/lightrifleheavy.rsi
-  - type: MagazineVisuals
-    magState: mag
-    steps: 8
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
-  id: LightRifleHeavyMagazineIncendiary
-  name: "Magazine Box (.30 rifle incendiary)"
-  parent: LightRifleHeavyBase
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeLightRifleIncendiary
-  - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/lightrifleheavyincendiary.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
   - type: MagazineVisuals
     magState: mag
     steps: 8
@@ -45,16 +35,6 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-
-- type: entity
-  id: LightRifleHeavyMagazineUranium
-  name: "Magazine Box (.30 rifle uranium)"
-  parent: LightRifleHeavyBase
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeLightRifleUranium
-  - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/lightrifleheavyuranium.rsi
   - type: MagazineVisuals
     magState: mag
     steps: 8
@@ -69,37 +49,12 @@
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleSP
   - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/lightrifleheavysp.rsi
-  - type: MagazineVisuals
-    magState: mag
-    steps: 8
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
-  id: LightRifleHeavyMagazineAP
-  name: "Magazine Box (.30 rifle AP)"
-  parent: LightRifleHeavyBase
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeLightRifleAP
-  - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/lightrifleheavyap.rsi
-  - type: MagazineVisuals
-    magState: mag
-    steps: 8
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
-  id: LightRifleHeavyMagazineFMJ
-  name: "Magazine Box (.30 rifle FMJ)"
-  parent: LightRifleHeavyBase
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeLightRifleFMJ
-  - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/lightrifleheavyfmj.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: sp
   - type: MagazineVisuals
     magState: mag
     steps: 8
@@ -114,7 +69,92 @@
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleHP
   - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/lightrifleheavyhp.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: hp
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: LightRifleHeavyMagazineFMJ
+  name: "Magazine Box (.30 rifle FMJ)"
+  parent: LightRifleHeavyBase
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleFMJ
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: fmj
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: LightRifleHeavyMagazineIncendiary
+  name: "Magazine Box (.30 rifle incendiary)"
+  parent: LightRifleHeavyBase
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleIncendiary
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: incendiary
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: LightRifleHeavyMagazineUranium
+  name: "Magazine Box (.30 rifle uranium)"
+  parent: LightRifleHeavyBase
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleUranium
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: uranium
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: LightRifleHeavyMagazineAP
+  name: "Magazine Box (.30 rifle AP)"
+  parent: LightRifleHeavyBase
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleAP
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: ap
   - type: MagazineVisuals
     magState: mag
     steps: 8
