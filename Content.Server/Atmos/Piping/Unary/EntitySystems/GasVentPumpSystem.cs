@@ -208,9 +208,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnPowerChanged(EntityUid uid, GasVentPumpComponent component, ref PowerChangedEvent args)
         {
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var power))
-                power.Powered = args.Powered;
-
             UpdateState(uid, component);
         }
 
