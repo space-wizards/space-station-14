@@ -15,8 +15,7 @@
   description: Alternate between splitting on hyphens, spaces, or saying your full name.
   components:
   - type: InstantAction
-    icon: Interface/Actions/eyeopen.png # TO BE CHANGED, PLACEHOLDER
-    iconOn: Interface/Actions/eyeclose.png # TO BE CHANGED, PLACEHOLDER
+    icon: Interface/Actions/illeismtoggle.png # Potentially changed?
     event: !type:ToggleActionEvent
     useDelay: 0.2
     checkCanInteract: false

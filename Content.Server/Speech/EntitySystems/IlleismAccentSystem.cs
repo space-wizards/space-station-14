@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using Content.Server.Actions;
+using Content.Server.Popups;
 using Content.Server.Speech.Components;
 using Content.Shared.Actions;
 using Content.Shared.Toggleable;
@@ -10,6 +11,7 @@ public sealed class IlleismAccentSystem : EntitySystem
 {
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     // I am going -> NAME is going
     private static readonly Regex RegexIAmUpper = new(@"\bI\s*AM\b|\bI'?M\b");
@@ -86,10 +88,10 @@ public sealed class IlleismAccentSystem : EntitySystem
 
     private void OnToggleAction(Entity<IlleismAccentComponent> ent, ref ToggleActionEvent args)
     {
-        // TODO: Add popup when cycling states
         if (args.Handled)
             return;
         ent.Comp.IllesimStateIndex = (ent.Comp.IllesimStateIndex + 1) % 3;
+        _popup.PopupEntity(Loc.GetString("trait-illeism-adjust"), ent.Owner, ent.Owner);
         args.Handled = true;
     }
     private void OnAccent(EntityUid uid, IlleismAccentComponent component, AccentGetEvent args)
