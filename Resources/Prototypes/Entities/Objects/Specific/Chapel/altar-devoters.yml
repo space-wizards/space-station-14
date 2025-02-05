@@ -21,3 +21,99 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: nanotrasen
+
+- type: entity
+  parent: BaseAltarDevoter
+  id: AlterDevoterChaos
+  name: chaos altar devoter
+  description: Used to devote an undevoted altar to Chaos.
+  components:
+  - type: Tag
+    tags:
+    - DevoterChaos
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: chaos
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: chaos
+
+- type: entity
+  parent: BaseAltarDevoter
+  id: AlterDevoterDruid
+  name: druid altar devoter
+  description: Used to devote an undevoted altar to the druidic gods.
+  components:
+  - type: Tag
+    tags:
+    - DevoterDruid
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: druid
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: druid
+
+- type: entity
+  parent: BaseAltarDevoter
+  id: AlterDevoterToolbox
+  name: toolbox altar devoter
+  description: Used to devote an undevoted altar to the Holy Toolbox.
+  components:
+  - type: Tag
+    tags:
+    - DevoterToolbox
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: toolbox
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: toolbox
+
+- type: entity
+  parent: BaseAltarDevoter
+  id: AlterDevoterSpaceChristian
+  name: space christian altar devoter
+  description: Used to devote an undevoted altar to Space Jesus.
+  components:
+  - type: Tag
+    tags:
+    - DevoterSpaceChristian
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: space-christian
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: space-christian
+
+- type: entity
+  parent: BaseAltarDevoter
+  id: AlterDevoterSatana
+  name: satana altar devoter
+  description: Used to devote an undevoted altar to Satana.
+  components:
+  - type: Tag
+    tags:
+    - DevoterSatana
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: satana
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: satana
+
+- type: entity
+  parent: BaseAltarDevoter
+  id: AlterDevoterTechnology
+  name: technology altar devoter
+  description: Used to devote an undevoted altar to technology.
+  components:
+  - type: Tag
+    tags:
+    - DevoterTechnology
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: technology
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: technology
