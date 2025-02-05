@@ -12,7 +12,7 @@
 
 - type: entity
   parent: BaseFigurine
-  id: ToyFigurineCentcomm
+  id: ToyFigurineCentComm
   name: centcomm official figure
   description: A figurine depicting a CentComm official, who you should not be happy to see.
   components:
