@@ -44,6 +44,7 @@ namespace Content.Client.Construction
             base.Initialize();
 
             SubscribeNetworkEvent<ResponseConstructionRecipes>(OnResponseConstructionRecipes);
+            RaiseNetworkEvent(new RequestConstructionRecipes());
 
             UpdatesOutsidePrediction = true;
             SubscribeLocalEvent<LocalPlayerAttachedEvent>(HandlePlayerAttached);
@@ -174,10 +175,6 @@ namespace Content.Client.Construction
         {
             if (args.State == BoundKeyState.Down)
                 ToggleCraftingWindow?.Invoke(this, EventArgs.Empty);
-
-            if (!IsRecipesCacheWarmed)
-                RaiseNetworkEvent(new RequestConstructionRecipes());
-
             return true;
         }
 
