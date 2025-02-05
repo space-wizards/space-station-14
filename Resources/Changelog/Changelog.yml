@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SaphireLattice
-  changes:
-  - message: Fland now has public glass airlocks sectioning the hallway.
-    type: Fix
-  id: 7405
-  time: '2024-09-19T19:17:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32264
 - author: Plykiya
   changes:
   - message: Cockroaches and mothroaches can no longer damage things with their bites.
@@ -3902,3 +3895,10 @@
   id: 7904
   time: '2025-02-05T14:46:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34619
+- author: hyperDelegate
+  changes:
+  - message: The Nuclear Operative Reinforcement Teleporter now costs 30TC (was 35).
+    type: Tweak
+  id: 7905
+  time: '2025-02-05T14:54:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34675
