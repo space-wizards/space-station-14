@@ -86314,8 +86314,6 @@ entities:
       pos: -19.5,-11.5
       parent: 8364
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 8013
       - 22620
@@ -115653,8 +115651,6 @@ entities:
       pos: -20.5,-11.5
       parent: 8364
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 8013
     - type: AtmosPipeColor
