@@ -50,6 +50,9 @@
 
 - type: Tag
   id: MagazinePistolSP8
+  
+- type: Tag
+  id: MagazineSMGUzi
 
 - type: Tag
   id: LightRifleHeavy

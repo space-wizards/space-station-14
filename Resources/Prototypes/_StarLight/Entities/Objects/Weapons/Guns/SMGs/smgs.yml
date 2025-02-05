@@ -52,7 +52,7 @@
             
 - type: entity
   name: SP-91-RC
-  parent: [BaseWeaponSubMachineGun, BaseMajorContraband]
+  parent: [BaseWeaponSubMachineGun, BaseRestrictedContraband]
   id: WeaponSubMachineGunSP91RC
   description: Compact submachine gun designed for riot control.
   components:
@@ -79,3 +79,53 @@
   - type: Appearance
   - type: ChamberMagazineAmmoProvider
     autoEject: true
+    
+- type: entity
+  name: Type U3 Uzi
+  parent: [BaseWeaponSubMachineGun, BaseMajorContraband]
+  id: WeaponSubMachineGunUzi
+  description: Lightweight submachine gun with a 32-round magazine that has single or 4 round firing modes.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/SMGs/uzi.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    fireRate: 12
+    selectedMode: FullAuto
+    shotsPerBurst: 4
+    availableModes:
+    - SemiAuto
+    - Burst
+    - FullAuto
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/1sp_91.ogg
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+  - type: ChamberMagazineAmmoProvider
+    autoEject: true
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolSubMachineGunUzi
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineSMGUzi
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistolSP
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
