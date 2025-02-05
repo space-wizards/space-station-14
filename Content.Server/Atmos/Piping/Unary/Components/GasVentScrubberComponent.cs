@@ -10,9 +10,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
     public sealed partial class GasVentScrubberComponent : Component
     {
         [DataField]
-        public bool Powered { get; set; } = false;
-
-        [DataField]
         public bool Enabled { get; set; } = true;
 
         [DataField]
