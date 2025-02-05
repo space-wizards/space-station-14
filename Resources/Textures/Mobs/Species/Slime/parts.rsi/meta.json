@@ -12,51 +12,63 @@
     },
     {
       "name": "head_f",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "head_m",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "l_arm",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "l_foot",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "l_hand",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "l_leg",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "r_arm",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "r_foot",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "r_hand",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "r_leg",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "torso_f",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     },
     {
       "name": "torso_m",
-      "directions": 4
+      "directions": 4,
+      "bump": "bump"
     }
   ]
 }
