@@ -1,6 +1,6 @@
 - type: entity
   id: BaseMagazineMagnum
-  name: pistol magazine (.44 magnum)
+  name: pistol magazine (.45 magnum)
   parent: [ BaseMagazinePistol, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -16,7 +16,7 @@
 
 - type: entity
   id: BaseMagazineMagnumSubMachineGun
-  name: "Vector magazine (.44 magnum)"
+  name: "SMG magazine (.44 magnum)"
   parent: BaseItem
   abstract: true
   components:
@@ -116,9 +116,9 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
 
-- type: entity # used by depreciated vector
+- type: entity
   id: MagazineMagnumSubMachineGunEmpty
-  name: "Vector magazine (.44 magnum any)"
+  name: "SMG magazine (.44 magnum any)"
   suffix: empty
   parent: BaseMagazineMagnumSubMachineGun
   components:
@@ -129,9 +129,9 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
 
-- type: entity # used by depreciated vector
+- type: entity
   id: MagazineMagnumSubMachineGun
-  name: "Vector magazine (.44 magnum)"
+  name: "SMG magazine (.44 magnum)"
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -143,9 +143,9 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
 
-- type: entity # used by depreciated vector
+- type: entity
   id: MagazineMagnumSubMachineGunPractice
-  name: "Vector magazine (.44 magnum practice)"
+  name: "SMG magazine (.44 magnum practice)"
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -157,9 +157,9 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
 
-- type: entity # used by depreciated vector
+- type: entity
   id: MagazineMagnumSubMachineGunUranium
-  name: "Vector magazine (.44 magnum uranium)"
+  name: "SMG magazine (.44 magnum uranium)"
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -171,9 +171,9 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
 
-- type: entity # used by depreciated vector
+- type: entity
   id: MagazineMagnumSubMachineGunPiercing
-  name: "Vector magazine (.44 magnum armor-piercing)"
+  name: "SMG magazine (.44 magnum armor-piercing)"
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
