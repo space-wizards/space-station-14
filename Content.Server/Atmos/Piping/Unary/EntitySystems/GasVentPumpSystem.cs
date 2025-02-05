@@ -9,6 +9,7 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
+using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Components;
@@ -73,9 +74,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 VentPumpDirection.Siphoning => vent.Outlet,
                 _ => throw new ArgumentOutOfRangeException()
             };
-
-            if (!vent.Powered)
-                return;
 
             if (!vent.Enabled || !_nodeContainer.TryGetNode(uid, nodeName, out PipeNode? pipe))
             {
@@ -210,7 +208,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnPowerChanged(EntityUid uid, GasVentPumpComponent component, ref PowerChangedEvent args)
         {
-            component.Powered = args.Powered;
+            if (TryComp<ApcPowerReceiverComponent>(uid, out var power))
+                power.Powered = args.Powered;
+
             UpdateState(uid, component);
         }
 
@@ -280,7 +280,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 _ambientSoundSystem.SetAmbience(uid, false);
                 _appearance.SetData(uid, VentPumpVisuals.State, VentPumpState.Welded, appearance);
             }
-            else if (!vent.Enabled || !vent.Powered)
+            else if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered || !vent.Enabled)
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 _appearance.SetData(uid, VentPumpVisuals.State, VentPumpState.Off, appearance);
