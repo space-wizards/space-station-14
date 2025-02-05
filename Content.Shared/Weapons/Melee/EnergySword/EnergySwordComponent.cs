@@ -30,7 +30,7 @@ public sealed partial class EnergySwordComponent : Component
     /// causing the blade to cycle RGB colors.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool Hacked = false;
+    public bool Hacked;
 
     /// <summary>
     ///     RGB cycle rate for hacked e-swords.
