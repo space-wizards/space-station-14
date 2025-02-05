@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e07ed47d68c2f562334b6b5f478aea6110eece53. Rad, toxin, o2, fire and adv by peptide. peptide's o2 renamed to airloss and modified by K-Dynamic.",
+    "copyright": "Taken from bigfatbananacyclops (github) at /tg/station 13 at https://github.com/tgstation/tgstation/commit/e07ed47d68c2f562334b6b5f478aea6110eece53. burnkit, airlosskit, radkit, toxinkit and advkit modified by peptide (github). firstaid, brutekit, burnkit, airlosskit, radkit, toxinkit and advkit modified by ps3moira (github)",
 	"size": {
 		"x": 32,
 		"y": 32
@@ -71,17 +71,6 @@
     },
     {
       "name": "toxinkit-inhand-left",
-      "directions": 4
-    },
-    {
-			"name": "purplekit"
-		},
-		{
-      "name": "purplekit-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "purplekit-inhand-left",
       "directions": 4
     },
     {

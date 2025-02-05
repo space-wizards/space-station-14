@@ -3,7 +3,7 @@
   id: EmagUnlimited
   suffix: Unlimited
   name: cryptographic sequencer
-  description: The all-in-one hacking solution. The thinking man's lockpick. The iconic EMAG.
+  description: The all-in-one hacking solution. Friend of any syndicate. The iconic EMAG.
   components:
   - type: Emag
   - type: Sprite

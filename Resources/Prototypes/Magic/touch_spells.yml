@@ -1,0 +1,83 @@
+﻿- type: entity
+  id: ActionSmite
+  name: Smite
+  description: Instantly gibs a target.
+  components:
+  - type: EntityTargetAction
+    useDelay: 90
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/disintegrate.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: gib
+    event: !type:SmiteSpellEvent
+      speech: action-speech-spell-smite
+  - type: Magic
+    requiresClothes: true
+
+# For the Snail
+- type: entity
+  id: ActionSmiteNoReq
+  parent: ActionSmite
+  name: Smite
+  description: Instantly gibs a target.
+  components:
+  - type: Magic
+
+- type: entity
+  id: ActionCluwne
+  name: Cluwne's Curse
+  description: Turns someone into a Cluwne!
+  components:
+  - type: EntityTargetAction
+    useDelay: 120
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Items/brokenbikehorn.ogg
+    icon:
+      sprite: Clothing/Mask/cluwne.rsi
+      state: icon
+    event: !type:ChangeComponentsSpellEvent
+      speech: action-speech-spell-cluwne
+      toAdd:
+      - type: Cluwne
+  - type: Magic
+    requiresClothes: true
+
+- type: entity
+  id: ActionSlippery
+  name: Slippery Slope
+  description: Make someone slippery.
+  components:
+  - type: EntityTargetAction
+    useDelay: 60
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/slip.ogg
+    icon:
+      sprite: Objects/Specific/Janitorial/soap.rsi
+      state: omega-4
+    event: !type:ChangeComponentsSpellEvent
+      speech: action-speech-spell-slip
+      toAdd:
+      - type: Slippery
+      - type: StepTrigger
+        requiredTriggeredSpeed: -1
+  - type: Magic
+    requiresClothes: true
