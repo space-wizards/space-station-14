@@ -116,3 +116,18 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+  
+- type: entity
+  name: ARG
+  parent: WeaponRifleLecter
+  id: WeaponRifleARG
+  description: A robust assault rile used by Nanotrasen fighting forces.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Rifles/arg.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Rifles/arg.rsi
+  - type: Gun
+    fireRate: 7
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/m90.ogg
