@@ -29,16 +29,14 @@
   - type: Clickable
 
 - type: entity
-  id: AltarNanotrasen
+  abstract: true
   parent: AltarBase
-  name: nanotrasen altar
+  id: BaseConvertibleAltar
   components:
-  - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
-    state: nanotrasen
-  - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
-    state: nanotrasen
+  - type: ContainerContainer
+    containers: 
+      devoter-slot: !type:Container
+        ents: []
   - type: Destructible
     thresholds:
     - trigger:
@@ -66,10 +64,23 @@
         acts: [ "Destruction" ]
   - type: StealTarget
     stealGroup: AltarNanotrasen
+    
+
+- type: entity
+  id: AltarNanotrasen
+  parent: BaseConvertibleAltar
+  name: nanotrasen altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: nanotrasen
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: nanotrasen
 
 - type: entity
   id: AltarChaos
-  parent: AltarNanotrasen
+  parent: BaseConvertibleAltar
   name: chaos altar
   components:
   - type: Sprite
@@ -81,7 +92,7 @@
 
 - type: entity
   id: AltarDruid
-  parent: AltarNanotrasen
+  parent: BaseConvertibleAltar
   name: druid altar
   components:
   - type: Sprite
@@ -93,7 +104,7 @@
 
 - type: entity
   id: AltarToolbox
-  parent: AltarNanotrasen
+  parent: BaseConvertibleAltar
   name: toolbox altar
   components:
   - type: Sprite
@@ -105,7 +116,7 @@
 
 - type: entity
   id: AltarSpaceChristian
-  parent: AltarNanotrasen
+  parent: BaseConvertibleAltar
   name: space-Christian altar
   components:
   - type: Sprite
@@ -124,7 +135,7 @@
 
 - type: entity
   id: AltarSatana
-  parent: AltarNanotrasen
+  parent: BaseConvertibleAltar
   name: satanic altar
   components:
   - type: Sprite
@@ -143,7 +154,7 @@
 
 - type: entity
   id: AltarTechnology
-  parent: AltarNanotrasen
+  parent: BaseConvertibleAltar
   name: technology altar
   components:
   - type: Sprite
