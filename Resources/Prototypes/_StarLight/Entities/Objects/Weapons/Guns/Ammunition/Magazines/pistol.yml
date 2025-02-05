@@ -32,7 +32,7 @@
   parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgePistol
+    proto: CartridgePistolSP
     capacity: 32
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/SMGs/uzi.rsi
