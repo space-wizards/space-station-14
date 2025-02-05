@@ -23,7 +23,7 @@ public sealed partial class DragInsertContainerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<DragInsertContainerComponent, DragDropTargetEvent>(OnDragDropOn, before: new []{ typeof(ClimbSystem)});
-        SubscribeLocalEvent<DragInsertContainerComponent, DragInsertContainerInsertFinished>(OnDragFinished);
+        SubscribeLocalEvent<DragInsertContainerComponent, DragInsertContainerDoAfterEvent>(OnDragFinished);
         SubscribeLocalEvent<DragInsertContainerComponent, CanDropTargetEvent>(OnCanDragDropOn);
         SubscribeLocalEvent<DragInsertContainerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerb);
     }
@@ -46,7 +46,7 @@ public sealed partial class DragInsertContainerSystem : EntitySystem
         }
 
         //delayed insertion
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, comp.EntryDelay, new DragInsertContainerInsertFinished(), ent, args.Dragged, ent)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, comp.EntryDelay, new DragInsertContainerDoAfterEvent(), ent, args.Dragged, ent)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -56,7 +56,7 @@ public sealed partial class DragInsertContainerSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnDragFinished(Entity<DragInsertContainerComponent> ent, ref DragInsertContainerInsertFinished args)
+    private void OnDragFinished(Entity<DragInsertContainerComponent> ent, ref DragInsertContainerDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Args.Target == null)
             return;
@@ -150,7 +150,7 @@ public sealed partial class DragInsertContainerSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class DragInsertContainerInsertFinished : SimpleDoAfterEvent
+    public sealed partial class DragInsertContainerDoAfterEvent : SimpleDoAfterEvent
     {
     }
 }
