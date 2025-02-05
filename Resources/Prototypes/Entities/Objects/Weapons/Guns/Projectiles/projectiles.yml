@@ -1035,13 +1035,13 @@
 
 - type: entity
   name: narrow laser barrage
-  id: BulletLaserHeavySpread #imp revert
+  id: BulletLaserSpreadNarrow
   categories: [ HideSpawnMenu ]
   parent: BulletLaser
   components:
   - type: ProjectileSpread
     proto: BulletLaserHeavy
-    count: 4 #60 heat damage if you hit all your shots, but narrower spread
+    count: 4 #52 heat damage if you hit all your shots, but narrower spread
     spread: 10
 
 - type: entity
