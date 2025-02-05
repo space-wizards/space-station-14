@@ -11,7 +11,7 @@
     capacity: 80
   - type: Item
   - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/lightrifleheavy.rsi
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_heavy.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
