@@ -39,7 +39,7 @@ public sealed partial class GunSystem
 
             if (!p.Damage.Empty)
             {
-                return p.Damage;
+                return p.Damage * Damageable.UniversalProjectileDamageModifier;
             }
         }
 

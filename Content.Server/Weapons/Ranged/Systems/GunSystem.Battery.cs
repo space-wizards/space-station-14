@@ -87,7 +87,7 @@ public sealed partial class GunSystem
 
                 if (!p.Damage.Empty)
                 {
-                    return p.Damage;
+                    return p.Damage * Damageable.UniversalProjectileDamageModifier;
                 }
             }
 
@@ -96,7 +96,8 @@ public sealed partial class GunSystem
 
         if (component is HitscanBatteryAmmoProviderComponent hitscan)
         {
-            return ProtoManager.Index<HitscanPrototype>(hitscan.Prototype).Damage;
+            var dmg = ProtoManager.Index<HitscanPrototype>(hitscan.Prototype).Damage;
+            return dmg == null ? dmg : dmg * Damageable.UniversalHitscanDamageModifier;
         }
 
         return null;
