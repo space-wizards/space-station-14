@@ -13,6 +13,7 @@ namespace Content.Client.Ghost
         [Dependency] private readonly IClientConsoleHost _console = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
+        [Dependency] private readonly PointLightSystem _pointLightSystem = default!;
         [Dependency] private readonly ContentEyeSystem _contentEye = default!;
 
         public int AvailableGhostRoleCount { get; private set; }
@@ -79,8 +80,27 @@ namespace Content.Client.Ghost
             if (args.Handled)
                 return;
 
-            Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup"), args.Performer);
-            _contentEye.RequestToggleLight(uid, component);
+            TryComp<PointLightComponent>(uid, out var light);
+
+            if (!component.DrawLight)
+            {
+                // normal lighting
+                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-normal"), args.Performer);
+                _contentEye.RequestEye(component.DrawFov, true);
+            }
+            else if (!light?.Enabled ?? false) // skip this option if we have no PointLightComponent
+            {
+                // enable personal light
+                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-personal-light"), args.Performer);
+                _pointLightSystem.SetEnabled(uid, true, light);
+            }
+            else
+            {
+                // fullbright mode
+                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-fullbright"), args.Performer);
+                _contentEye.RequestEye(component.DrawFov, false);
+                _pointLightSystem.SetEnabled(uid, false, light);
+            }
             args.Handled = true;
         }
 
