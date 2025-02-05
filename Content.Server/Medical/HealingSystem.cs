@@ -69,10 +69,13 @@ public sealed class HealingSystem : EntitySystem
             if (!TryComp<BloodstreamComponent>(entity, out var bloodstream))
                 return;
             var isBleeding = bloodstream.BleedAmount > 0;
-            _bloodstreamSystem.TryModifyBleedAmount(entity, healing.BloodlossModifier);
+            _bloodstreamSystem.TryModifyBleedAmount(entity.Owner, healing.BloodlossModifier);
             if (isBleeding != bloodstream.BleedAmount > 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("medical-item-stop-bleeding"), entity, args.User);
+                var popup = (args.User == entity.Owner)
+                    ? Loc.GetString("medical-item-stop-bleeding-self")
+                    : Loc.GetString("medical-item-stop-bleeding", ("target", Identity.Entity(entity.Owner, EntityManager)));
+                _popupSystem.PopupEntity(popup, entity, args.User);
             }
         }
 
