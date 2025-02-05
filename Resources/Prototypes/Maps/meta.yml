@@ -2,7 +2,7 @@
   id: Meta
   mapName: 'Meta Station'
   mapPath: /Maps/meta.yml
-  minPlayers: 40
+  minPlayers: 40 # Harmony, originally 50
   maxPlayers: 80
   stations:
     Meta:
