@@ -433,8 +433,8 @@
   - type: StaticPrice
     price: 100
   - type: Gun
-    fireRate: 3
-    projectileSpeed: 35
+    fireRate: 2.5
+    projectileSpeed: 35 # any higher and this causes issues in lag
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: ProjectileBatteryAmmoProvider
@@ -494,7 +494,7 @@
         shader: unshaded
   - type: Gun
     selectedMode: FullAuto
-    fireRate: 6
+    fireRate: 4.5
     availableModes:
       - SemiAuto
       - FullAuto
