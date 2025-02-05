@@ -1089,3 +1089,28 @@ Entries:
     - type: Add
       message: Added mantis gloves. They look like normal latex gloves, but hide deadly
         blades inside
+  - id: 306
+    author: DieselMohawk
+    time: '2025-02-05T16:44:07.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/306
+    changes:
+    - type: Tweak
+      message: Sawn-Off shotgun designated as major contraband
+  - id: 356
+    author: youtissoum
+    time: '2025-02-05T16:47:19.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/356
+    changes:
+    - type: Tweak
+      message: Removed the ghost role raffle from slimes.
+    - type: Tweak
+      message: Removed the ghost role raffle from spiders.
+    - type: Tweak
+      message: Removed the ghost role raffle from the dragon's carps.
+  - id: 220
+    author: DieselMohawk
+    time: '2025-02-05T16:46:53.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/220
+    changes:
+    - type: Tweak
+      message: Ninja Stun Reduced to fit Flash stun time.
