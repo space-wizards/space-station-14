@@ -2190,7 +2190,7 @@
   - type: MobMover
   - type: HTN
     rootTask:
-      task: SimpleHostileCompound
+      task: GrenadePenguinCompound
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -2236,7 +2236,7 @@
     beepInterval: 1
   - type: Explosive
     explosionType: Default
-    maxIntensity: 20
+    maxIntensity: 10
     intensitySlope: 20
     totalIntensity: 225
   - type: ExplodeOnTrigger
