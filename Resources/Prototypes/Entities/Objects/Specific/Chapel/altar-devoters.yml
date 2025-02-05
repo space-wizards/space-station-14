@@ -1,0 +1,23 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseAltarDevoter
+  components:
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: BaseAltarDevoter
+  id: AlterDevoterNanotrasen
+  name: nanotrasen altar devoter
+  description: Used to devote an undevoted altar to Nanotrasen.
+  components:
+  - type: Tag
+    tags:
+    - DevoterNanotrasen
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: nanotrasen
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: nanotrasen
