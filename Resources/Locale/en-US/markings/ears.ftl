@@ -1,4 +1,4 @@
-marking-LongEarsStandard = Long Ears Standard
+marking-HumanLongEars = Long Ears Standard
 marking-LongEarsWide = Long Ears Wide
 marking-LongEarsSmall = Long Ears Small
 marking-LongEarsUpwards = Long Ears Upwards
