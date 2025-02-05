@@ -25,5 +25,8 @@
         layer:
         - Opaque
   - type: Anchorable
-  #- type: GuideHelp # TODO - add Tesla Guide
+  - type: GuideHelp
+    guides:
+    - TeslaEngine
+    - Power
 

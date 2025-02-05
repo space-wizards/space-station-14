@@ -1,6 +1,5 @@
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Shared.Lathe.Prototypes;
