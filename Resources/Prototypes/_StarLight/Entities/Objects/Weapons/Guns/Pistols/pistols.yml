@@ -212,6 +212,25 @@
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/1suppres.ogg
       
 - type: entity
+  name: stechkin APS pistol
+  parent: [WeaponPistolMk58, BaseRestrictedContraband]
+  id: WeaponPistolAPS
+  description: The original russian version of a widely used Syndicate sidearm. Uses 9mm ammo.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/aps.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/aps.rsi
+  - type: Gun
+    selectedMode: Burst
+    shotsPerBurst: 3
+    availableModes:
+    - Burst
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/1suppres.ogg
+      
+- type: entity
   name: desert eagle
   parent: WeaponPistolN1984
   id: WeaponPistolDeagle
