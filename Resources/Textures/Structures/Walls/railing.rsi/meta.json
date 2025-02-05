@@ -1,6 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
+    "flatNormal": true,
     "copyright": "tgstation at cf5fa29c1458b50fa2811169534b9e4f7f9f3252",
     "size": {
       "x": 32,

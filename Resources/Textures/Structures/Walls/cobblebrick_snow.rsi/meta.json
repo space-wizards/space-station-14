@@ -1,6 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
+    "flatNormal": true,
     "copyright": "Created by TheShuEd for Space Station 14",
     "size": {
       "x": 32,

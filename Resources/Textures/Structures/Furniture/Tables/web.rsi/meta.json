@@ -6,6 +6,7 @@
   },
   "license": "CC-BY-SA-3.0",
   "copyright": "Made by PixelTheKermit (github) for SS14",
+  "flatNormal": true,
   "states": [
     {
       "name": "full",
