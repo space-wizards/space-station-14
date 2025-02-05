@@ -1,0 +1,6 @@
+- type: shader
+  id: CycloriteShader
+  kind: source
+  path: "/Textures/_Starlight/Shaders/cyclorite.swsl"
+  params:
+    ShiftIntensity: 1.0
