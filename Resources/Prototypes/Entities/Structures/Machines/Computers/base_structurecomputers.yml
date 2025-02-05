@@ -62,6 +62,9 @@
         volume: -1
         variation: 0.10
         pitch: 1.10  # low pitch keyboard sounds feel kinda weird
+    blacklist:
+      tags:
+      - NoConsoleSound
   - type: ContainerContainer
     containers:
       board: !type:Container

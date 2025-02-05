@@ -12,6 +12,7 @@
     - CanPilot
     - BypassInteractionRangeChecks
     - BypassDropChecks
+    - NoConsoleSound
   - type: Input
     context: "aghost"
   - type: Ghost
@@ -126,7 +127,7 @@
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: mass_scanner }
     iconOn: Interface/Actions/actions_ai.rsi/mass_scanner.png
     keywords: [ "AI", "console", "interface" ]
-    priority: -7
+    priority: -6
     event: !type:ToggleIntrinsicUIEvent { key: enum.RadarConsoleUiKey.Key }
 
 - type: entity
@@ -150,7 +151,7 @@
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: crew_monitor }
     iconOn: Interface/Actions/actions_ai.rsi/crew_monitor.png
     keywords: [ "AI", "console", "interface" ]
-    priority: -9
+    priority: -8
     event: !type:ToggleIntrinsicUIEvent { key: enum.CrewMonitoringUIKey.Key }
 
 - type: entity
@@ -162,5 +163,5 @@
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: station_records }
     iconOn: Interface/Actions/actions_ai.rsi/station_records.png
     keywords: [ "AI", "console", "interface" ]
-    priority: -8
+    priority: -7
     event: !type:ToggleIntrinsicUIEvent { key: enum.GeneralStationRecordConsoleKey.Key }

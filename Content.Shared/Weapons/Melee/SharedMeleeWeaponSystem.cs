@@ -670,6 +670,12 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
             if (damageResult != null && damageResult.GetTotal() > FixedPoint2.Zero)
             {
+                // If the target has stamina and is taking blunt damage, they should also take stamina damage based on their blunt to stamina factor
+                if (damageResult.DamageDict.TryGetValue("Blunt", out var bluntDamage))
+                {
+                    _stamina.TakeStaminaDamage(entity, (bluntDamage * component.BluntStaminaDamageFactor).Float(), visual: false, source: user, with: meleeUid == user ? null : meleeUid);
+                }
+
                 appliedDamage += damageResult;
 
                 if (meleeUid == user)

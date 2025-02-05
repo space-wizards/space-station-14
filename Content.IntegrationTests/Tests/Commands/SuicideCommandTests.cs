@@ -168,7 +168,7 @@ public sealed class SuicideCommandTests
         await pair.CleanReturnAsync();
     }
 
-        /// <summary>
+    /// <summary>
     /// Run the suicide command in the console
     /// Should only ghost the player but not kill them
     /// </summary>
@@ -241,6 +241,7 @@ public sealed class SuicideCommandTests
         var mindSystem = entManager.System<SharedMindSystem>();
         var mobStateSystem = entManager.System<MobStateSystem>();
         var transformSystem = entManager.System<TransformSystem>();
+        var damageableSystem = entManager.System<DamageableSystem>();
 
         // We need to know the player and whether they can be hurt, killed, and whether they have a mind
         var player = playerMan.Sessions.First().AttachedEntity!.Value;
@@ -276,6 +277,8 @@ public sealed class SuicideCommandTests
         // and that all the damage is concentrated in the Slash category
         await server.WaitAssertion(() =>
         {
+            // Heal all damage first (possible low pressure damage taken)
+            damageableSystem.SetAllDamage(player, damageableComp, 0);
             consoleHost.GetSessionShell(playerMan.Sessions.First()).ExecuteCommand("suicide");
             var lethalDamageThreshold = mobThresholdsComp.Thresholds.Keys.Last();
 
@@ -313,6 +316,7 @@ public sealed class SuicideCommandTests
         var mindSystem = entManager.System<SharedMindSystem>();
         var mobStateSystem = entManager.System<MobStateSystem>();
         var transformSystem = entManager.System<TransformSystem>();
+        var damageableSystem = entManager.System<DamageableSystem>();
 
         // We need to know the player and whether they can be hurt, killed, and whether they have a mind
         var player = playerMan.Sessions.First().AttachedEntity!.Value;
@@ -348,6 +352,8 @@ public sealed class SuicideCommandTests
         // and that slash damage is split in half
         await server.WaitAssertion(() =>
         {
+            // Heal all damage first (possible low pressure damage taken)
+            damageableSystem.SetAllDamage(player, damageableComp, 0);
             consoleHost.GetSessionShell(playerMan.Sessions.First()).ExecuteCommand("suicide");
             var lethalDamageThreshold = mobThresholdsComp.Thresholds.Keys.Last();
 

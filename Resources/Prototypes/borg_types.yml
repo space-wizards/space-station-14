@@ -1,0 +1,218 @@
+﻿# Generic borg
+- type: borgType
+  id: generic
+
+  # Description
+  dummyPrototype: BorgChassisGeneric
+
+  # Functional
+  extraModuleCount: 5
+  moduleWhitelist:
+    tags:
+    - BorgModuleGeneric
+
+  defaultModules:
+  - BorgModuleTool
+
+  radioChannels:
+  - Science
+
+  # Visual
+  inventoryTemplateId: borgShort
+  spriteBodyState: robot
+  spriteHasMindState: robot_e
+  spriteNoMindState: robot_e_r
+  spriteToggleLightState: robot_l
+
+  # Pet
+  petSuccessString: petting-success-generic-cyborg
+  petFailureString: petting-failure-generic-cyborg
+
+
+# Engineering borg
+- type: borgType
+  id: engineering
+
+  # Description
+  dummyPrototype: BorgChassisEngineer
+
+  # Functional
+  extraModuleCount: 3
+  moduleWhitelist:
+    tags:
+    - BorgModuleGeneric
+    - BorgModuleEngineering
+
+  defaultModules:
+  - BorgModuleTool
+  - BorgModuleConstruction
+  - BorgModuleRCD
+  - BorgModuleCable
+
+  radioChannels:
+  - Engineering
+  - Science
+
+  # Visual
+  inventoryTemplateId: borgShort
+  spriteBodyState: engineer
+  spriteHasMindState: engineer_e
+  spriteNoMindState: engineer_e_r
+  spriteToggleLightState: engineer_l
+
+  # Pet
+  petSuccessString: petting-success-engineer-cyborg
+  petFailureString: petting-failure-engineer-cyborg
+
+
+# Salvage borg
+- type: borgType
+  id: mining
+
+  # Description
+  dummyPrototype: BorgChassisMining
+
+  # Functional
+  extraModuleCount: 3
+  moduleWhitelist:
+    tags:
+    - BorgModuleGeneric
+    - BorgModuleCargo
+
+  defaultModules:
+  - BorgModuleGrapplingGun
+  - BorgModuleMining
+  - BorgModuleAppraisal
+
+  radioChannels:
+  - Supply
+  - Science
+
+  # Visual
+  inventoryTemplateId: borgTall
+  spriteBodyState: miner
+  spriteBodyMovementState: miner_moving
+  spriteHasMindState: miner_e
+  spriteNoMindState: miner_e_r
+  spriteToggleLightState: miner_l
+
+  # Pet
+  petSuccessString: petting-success-salvage-cyborg
+  petFailureString: petting-failure-salvage-cyborg
+
+
+# Janitor borg
+- type: borgType
+  id: janitor
+
+  # Description
+  dummyPrototype: BorgChassisJanitor
+
+  # Functional
+  extraModuleCount: 3
+  moduleWhitelist:
+    tags:
+    - BorgModuleGeneric
+    - BorgModuleJanitor
+
+  defaultModules:
+  - BorgModuleLightReplacer
+  - BorgModuleCleaning
+
+  radioChannels:
+  - Science
+  - Service
+
+  # Visual
+  inventoryTemplateId: borgShort
+  spriteBodyState: janitor
+  spriteBodyMovementState: janitor_moving
+  spriteHasMindState: janitor_e
+  spriteNoMindState: janitor_e_r
+  spriteToggleLightState: janitor_l
+
+  # Pet
+  petSuccessString: petting-success-janitor-cyborg
+  petFailureString: petting-failure-janitor-cyborg
+
+
+# Medical borg
+- type: borgType
+  id: medical
+
+  # Description
+  dummyPrototype: BorgChassisMedical
+
+  # Functional
+  extraModuleCount: 3
+  moduleWhitelist:
+    tags:
+    - BorgModuleGeneric
+    - BorgModuleMedical
+
+  defaultModules:
+  - BorgModuleTreatment
+
+  radioChannels:
+  - Science
+  - Medical
+
+  addComponents:
+  - type: SolutionScanner
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
+
+  # Visual
+  inventoryTemplateId: borgDutch
+  spriteBodyState: medical
+  spriteBodyMovementState: medical_moving
+  spriteHasMindState: medical_e
+  spriteNoMindState: medical_e_r
+  spriteToggleLightState: medical_l
+
+  # Pet
+  petSuccessString: petting-success-medical-cyborg
+  petFailureString: petting-failure-medical-cyborg
+
+  # Sounds
+  footstepCollection:
+    collection: FootstepHoverBorg
+
+
+# Service borg
+- type: borgType
+  id: service
+
+  # Description
+  dummyPrototype: BorgChassisService
+
+  # Functional
+  extraModuleCount: 3
+  moduleWhitelist:
+    tags:
+    - BorgModuleGeneric
+    - BorgModuleService
+
+  defaultModules:
+  - BorgModuleMusique
+  - BorgModuleService
+  - BorgModuleClowning
+
+  radioChannels:
+  - Science
+  - Service
+
+  # Visual
+  inventoryTemplateId: borgTall
+  spriteBodyState: service
+  spriteHasMindState: service_e
+  spriteNoMindState: service_e_r
+  spriteToggleLightState: service_l
+
+  # Pet
+  petSuccessString: petting-success-service-cyborg
+  petFailureString: petting-failure-service-cyborg
