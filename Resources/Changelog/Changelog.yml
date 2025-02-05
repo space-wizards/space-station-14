@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: deltanedas
   changes:
-  - message: Removed the flare blueprint from salvage, it's now unlocked roundstart
-      in autolathes.
-    type: Remove
-  id: 7401
-  time: '2024-09-19T13:45:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32303
-- author: deltanedas
-  changes:
   - message: Increased the thieving beacon's range to 2 tiles.
     type: Tweak
   id: 7402
@@ -3903,3 +3895,10 @@
   id: 7900
   time: '2025-02-04T23:26:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33607
+- author: whatston3
+  changes:
+  - message: Healing items that reduce bleeding can now be applied to undamaged mobs.
+    type: Tweak
+  id: 7901
+  time: '2025-02-05T03:23:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33526
