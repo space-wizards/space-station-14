@@ -5,7 +5,7 @@
     count: 10
 
 - type: localizedDataset
-  id: FigurinesCentComm
+  id: FigurinesCentCommOfficial
   values:
     prefix: figurines-centcomm-
     count: 8
@@ -57,3 +57,27 @@
   values:
     prefix: figurines-ertsecurity-
     count: 10
+
+- type: localizedDataset
+  id: FigurinesBrigmedic
+  values:
+    prefix: figurines-brigmedic-
+    count: 7
+
+- type: localizedDataset
+  id: FigurinesCourier
+  values:
+    prefix: figurines-courier-
+    count: 9
+
+- type: localizedDataset
+  id: FigurinesNukieAgent
+  values:
+    prefix: figurines-nukieagent-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesNukieJuggernaut
+  values:
+    prefix: figurines-nukiejuggernaut-
+    count: 5

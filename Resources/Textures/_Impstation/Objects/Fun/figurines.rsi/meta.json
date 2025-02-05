@@ -36,6 +36,27 @@
         },
         {
             "name": "ertsecurity"
+        },
+        {
+            "name": "courier"
+        },
+        {
+            "name": "brigmedic"
+        },
+        {
+            "name": "nukie"
+        },
+        {
+            "name": "nukie_commander"
+        },
+        {
+            "name": "nukie_elite"
+        },
+        {
+            "name": "nukie_agent"
+        },
+        {
+            "name": "nukie_juggernaut"
         }
     ]
 }

@@ -82,3 +82,34 @@ figurines-ertsecurity-1 = Cover fire!
 figurines-ertsecurity-1 = Secure, contain, protect.
 figurines-ertsecurity-1 = I'm not a redshirt...
 figurines-ertsecurity-1 = Wow, you're bad at this.
+
+figurines-brigmedic-1 = No, you can't shoot the clown.
+figurines-brigmedic-2 = Quit moving.
+figurines-brigmedic-3 = Fall back!
+figurines-brigmedic-4 = That burning you feel? It is shame.
+figurines-brigmedic-5 = Stop bleeding.
+figurines-brigmedic-6 = Where did they even GET a glass shard?
+figurines-brigmedic-7 = I don't need a scalpel, I have a knife.
+
+figurines-courier-1 = Here's the mail, it never fails!
+figurines-courier-2 = Liberty. Reason. Justice. Civility. Edification. Perfection. MAIL.
+figurines-courier-3 = Open up!
+figurines-courier-4 = Package for a... Commander Delta?
+figurines-courier-5 = No take-backs.
+figurines-courier-6 = External access, please!
+figurines-courier-7 = I'll never hit quota at this rate...
+figurines-courier-8 = Fuck, my calves hurt.
+figurines-courier-9 = Wheeeeee-- *splat*
+
+figurines-nukieagent-1 = Hold still, please.
+figurines-nukieagent-2 = Lexorin in.
+figurines-nukieagent-3 = I'm getting romerol.
+figurines-nukieagent-4 = Stop BLEEDING.
+figurines-nukieagent-5 = Quit whining.
+figurines-nukieagent-6 = Interdyne represent!
+
+figurines-nukiejuggernaut-1 = Who sent all these babies to fight?
+figurines-nukiejuggernaut-1 = You can't kill me. I can't be killed!
+figurines-nukiejuggernaut-1 = Run! RUN!!
+figurines-nukiejuggernaut-1 = Fucking disablers.
+figurines-nukiejuggernaut-1 = Does this suit make me look fat?
