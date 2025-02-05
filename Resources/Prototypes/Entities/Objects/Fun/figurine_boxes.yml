@@ -144,10 +144,10 @@
       - id: ToyFigurineCentCommOfficial
         prob: 0.50
         orGroup: SpacemenFig
-      - id: ToyFigurineChronoAgent
+      - id: ToyFigurineChronologyAgent
         prob: 0.50
         orGroup: SpacemenFig
-      - id: ToyFigurineCentDeathsquad
+      - id: ToyFigurineDeathsquadAgent
         prob: 0.50
         orGroup: SpacemenFig
       - id: ToyFigurineERTChaplain
