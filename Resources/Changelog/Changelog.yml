@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You can now transfer someone from a rollerbed to a bed directly.
-    type: Tweak
-  id: 7404
-  time: '2024-09-19T14:08:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32089
 - author: SaphireLattice
   changes:
   - message: Fland now has public glass airlocks sectioning the hallway.
@@ -3901,3 +3894,11 @@
   id: 7903
   time: '2025-02-05T13:08:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34277
+- author: Booblesnoot42
+  changes:
+  - message: Inserting another person into a cryogenic sleeping unit is no longer
+      instant.
+    type: Tweak
+  id: 7904
+  time: '2025-02-05T14:46:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34619
