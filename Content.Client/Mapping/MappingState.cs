@@ -257,15 +257,15 @@ public sealed class MappingState : GameplayStateBase
         mappings.Clear();
 
         Screen.Entities.UpdateVisible(
-            [entities],
+            new List<MappingPrototype> { entities },
             _allPrototypes.GetOrNew(typeof(EntityPrototype)));
 
         Screen.Tiles.UpdateVisible(
-            [tiles],
+            new List<MappingPrototype> { tiles },
             _allPrototypes.GetOrNew(typeof(ContentTileDefinition)));
 
         Screen.Decals.UpdateVisible(
-            [decals],
+            new List<MappingPrototype> { decals },
             _allPrototypes.GetOrNew(typeof(DecalPrototype)));
     }
 
