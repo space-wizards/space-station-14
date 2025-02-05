@@ -116,9 +116,9 @@
     - state: icon-cables
   - type: ItemBorgModule
     items:
-    - CableApcStackLingering0
-    - CableMVStackLingering0
-    - CableHVStackLingering0
+    - CableApcStackLingering10
+    - CableMVStackLingering10
+    - CableHVStackLingering10
     - Wirecutter
     - trayScanner
   - type: BorgModuleIcon
@@ -397,10 +397,10 @@
     - state: icon-treatment
   - type: ItemBorgModule
     items:
-    - Gauze0Lingering
-    - Brutepack0Lingering
-    - Ointment0Lingering
-    - Bloodpack0Lingering
+    - Gauze10Lingering
+    - Brutepack10Lingering
+    - Ointment10Lingering
+    - Bloodpack10Lingering
     - RegenerativeMesh0Lingering
     - MedicatedSuture0Lingering
   - type: BorgModuleIcon

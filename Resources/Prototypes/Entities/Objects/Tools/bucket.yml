@@ -78,4 +78,4 @@
   - type: SolutionContainerManager
     solutions:
       bucket:
-        maxVol: 600
+        maxVol: 500

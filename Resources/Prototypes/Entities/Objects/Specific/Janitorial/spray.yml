@@ -105,6 +105,7 @@
   description: A pressurized bottle for spraying reagents.
   id: BorgSprayBottle
   parent: SprayBottle
+  suffix: Filled
   components:
   - type: SolutionContainerManager
     solutions:
@@ -118,7 +119,7 @@
   name: cyborg mega spray bottle
   id: BorgMegaSprayBottle
   parent: SprayBottle
-  suffix: Empty
+  suffix: Filled
   description: A high capacity, high pressure spray bottle, for cleaning even the biggest of spills.
   components:
   - type: SolutionContainerManager
