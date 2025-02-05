@@ -65,6 +65,9 @@
       amount: 5
     - id: FoodGummyWorm
       prob: 0.01
+      orGroup: SometimesWorm
+    - id: FoodConversationHeart
+      orGroup: SometimesWorm
   - type: Storage
     grid:
     - 0,0,2,1
@@ -174,3 +177,191 @@
           Quantity: 2
         - ReagentId: Theobromine
           Quantity: 1
+
+- type: entity
+  name: berry macaron
+  parent: FoodMealBase
+  id: FoodMacaronBerry
+  description: Complex to make, beautiful to look at, underwhelming to eat. A perfect romantic treat.
+  components:
+  - type: Tag
+    tags:
+    - FoodSnack
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/candy.rsi
+    state: macaronberry
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 3
+        - ReagentId: JuiceBerry
+          Quantity: 2
+
+- type: entity
+  name: cherry macaron
+  parent: FoodMacaronBerry
+  id: FoodMacaronCherry
+  components:
+  - type: Sprite
+    state: macaroncherry
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 3
+        - ReagentId: JuiceCherry
+          Quantity: 2
+
+- type: entity
+  name: cotton macaron
+  parent: FoodMacaronBerry
+  id: FoodMacaronCotton
+  description: Hey, wait! This isn't a macaron! It's a doily!
+  components:
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: Tag
+    tags:
+    - FoodSnack
+    - ClothMade
+  - type: Sprite
+    state: macaroncotton
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 3
+        - ReagentId: Fiber
+          Quantity: 2
+
+- type: entity
+  name: lemon macaron
+  parent: FoodMacaronBerry
+  id: FoodMacaronLemon
+  components:
+  - type: Sprite
+    state: macaronlemon
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 3
+        - ReagentId: JuiceLemon
+          Quantity: 2
+
+- type: entity
+  name: mimana macaron
+  parent: FoodMacaronBerry
+  id: FoodMacaronMimana
+  description: Complex to make, beautiful to look at, underwhelming to eat. This one feels like nothing.
+  components:
+  - type: Sprite
+    state: macaronmimana
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 3
+        - ReagentId: MuteToxin
+          Quantity: 2
+
+- type: entity
+  name: box of macarons
+  parent: BoxCardboard
+  id: BoxMacarons
+  description: We don't need collectable figurines or trading cards. We need collectable macarons.
+  components:
+  - type: StorageFill # good god there has to be a better way to to this
+    contents:
+    - id: FoodMacaronBerry
+      prob: 0.25
+      orGroup: Macaron1
+    - id: FoodMacaronCherry
+      prob: 0.25
+      orGroup: Macaron1
+    - id: FoodMacaronLemon
+      prob: 0.25
+      orGroup: Macaron1
+    - id: FoodMacaronCotton
+      prob: 0.2
+      orGroup: Macaron1
+    - id: FoodMacaronMimana
+      prob: 0.04
+      orGroup: Macaron1
+    - id: FoodGummyWorm
+      prob: 0.01
+      orGroup: Macaron1
+    - id: FoodMacaronBerry
+      prob: 0.25
+      orGroup: Macaron2
+    - id: FoodMacaronCherry
+      prob: 0.25
+      orGroup: Macaron2
+    - id: FoodMacaronLemon
+      prob: 0.25
+      orGroup: Macaron2
+    - id: FoodMacaronCotton
+      prob: 0.2
+      orGroup: Macaron2
+    - id: FoodMacaronMimana
+      prob: 0.04
+      orGroup: Macaron2
+    - id: FoodGummyWorm
+      prob: 0.01
+      orGroup: Macaron2
+    - id: FoodMacaronBerry
+      prob: 0.25
+      orGroup: Macaron3
+    - id: FoodMacaronCherry
+      prob: 0.25
+      orGroup: Macaron3
+    - id: FoodMacaronLemon
+      prob: 0.25
+      orGroup: Macaron3
+    - id: FoodMacaronCotton
+      prob: 0.2
+      orGroup: Macaron3
+    - id: FoodMacaronMimana
+      prob: 0.04
+      orGroup: Macaron3
+    - id: FoodGummyWorm
+      prob: 0.01
+      orGroup: Macaron3
+    - id: FoodMacaronBerry
+      prob: 0.25
+      orGroup: Macaron4
+    - id: FoodMacaronCherry
+      prob: 0.25
+      orGroup: Macaron4
+    - id: FoodMacaronLemon
+      prob: 0.25
+      orGroup: Macaron4
+    - id: FoodMacaronCotton
+      prob: 0.2
+      orGroup: Macaron4
+    - id: FoodMacaronMimana
+      prob: 0.04
+      orGroup: Macaron4
+    - id: FoodGummyWorm
+      prob: 0.01
+      orGroup: Macaron4
+  - type: Storage
+    grid:
+    - 0,0,1,1
+    maxItemSize: Tiny
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/candy.rsi
+    state: chalkheartpackage1
