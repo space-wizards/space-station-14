@@ -245,3 +245,25 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepExplosion
+
+- type: entity
+  id: ItemBouquet
+  parent: BaseItem
+  name: bouquet
+  description: That's flowers alright.
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Fun/bouquet.rsi
+      state: bouquet
+    - type: Item
+      size: Normal
+      sprite: _Impstation/Objects/Fun/bouquet.rsi
+      state: icon
+      inhandVisuals:
+        left:
+        - state: bouquet-inhand-left
+        right:
+        - state: bouquet-inhand-right
+    - type: Construction
+      graph: Bouquet
+      node: bouquet
