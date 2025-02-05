@@ -11,3 +11,19 @@
         doAfter: 1
   - node: meat patty
     entity: FoodMeatPatty
+
+# cooked meat patty
+- type: constructionGraph
+  id: CookedPatty
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: cooked meat patty
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 335
+  - node: cooked meat patty
+    entity: FoodMeatPattyCooked
