@@ -21,6 +21,7 @@ using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
+using Content.Server.EntityEffects.Effects;
 
 namespace Content.Server.Medical;
 
@@ -129,7 +130,26 @@ public sealed class HealingSystem : EntitySystem
         if (!TryComp<DamageableComponent>(targetEntityUid, out var damageableComponent))
             return false;
 
-        var thereIsDamageThatCanBeHealed = false;
+        if (TryComp<BloodstreamComponent>(targetEntityUid, out var bloodstreamComponent) &&
+            _solutionContainerSystem.ResolveSolution(targetEntityUid, bloodstreamComponent.BloodSolutionName, ref bloodstreamComponent.BloodSolution, out var bloodSolution))
+        { // This is blood having target
+
+            if (healingComponent.ModifyBloodLevel > 0 && // blood restoring componment is being used
+                bloodSolution.Volume < bloodSolution.MaxVolume) // there is blood to restore
+            {
+                if (healingComponent.BloodReagentWhitelist.Count != 0) // There is a whitelist
+                {
+                    return healingComponent.BloodReagentWhitelist.Contains(bloodstreamComponent.BloodReagent); // is blood type is whitelisted
+                }
+
+                return true;
+            }
+            // Is ent bleeding and can we stop it?
+            if (healingComponent.BloodlossModifier < 0 && bloodstreamComponent.BleedAmount > 0)
+            {
+                return true;
+            }
+        }
 
         var damageableDict = damageableComponent.Damage.DamageDict;
         var healingDict = healingComponent.Damage.DamageDict;
@@ -137,27 +157,11 @@ public sealed class HealingSystem : EntitySystem
         {
             if (damageableDict[type.Key].Value > 0)
             {
-                thereIsDamageThatCanBeHealed = true;
+                return true;
             }
         }
 
-        if (healingComponent.ModifyBloodLevel > 0) // blood replenishing HealingComponent
-        {
-            if (!TryComp<BloodstreamComponent>(targetEntityUid, out var bloodstream))
-                return false;
-
-            if (!_solutionContainerSystem.ResolveSolution(targetEntityUid, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
-                return false;
-
-            var validBloodType = healingComponent.BloodReagentWhitelist.Contains(bloodstream.BloodReagent) // blood type is whitelisted
-                               || healingComponent.BloodReagentWhitelist.Count == 0; // there is no whitelist defined
-
-            var isThereSpaceForMoreBlood = bloodSolution.Volume < bloodSolution.MaxVolume;
-
-            return validBloodType && (thereIsDamageThatCanBeHealed || isThereSpaceForMoreBlood);
-        }
-
-        return thereIsDamageThatCanBeHealed;
+        return false;
     }
 
     private void OnHealingUse(Entity<HealingComponent> entity, ref UseInHandEvent args)
