@@ -2,7 +2,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Weapons.Melee.EnergySword;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(EnergySwordSystem))]
 [AutoGenerateComponentState]
 public sealed partial class EnergySwordComponent : Component
 {
