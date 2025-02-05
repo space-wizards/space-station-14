@@ -383,3 +383,19 @@
       amount: 1
   products:
     CleverGirl: 5
+
+- type: reaction
+  id: LovePotion
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    SodaWater:
+      amount: 1
+    Sugar:
+      amount: 1
+    JuiceLemon:
+      amount: 1
+    JuiceBerry:
+      amount: 1
+  products:
+    LovePotion: 4

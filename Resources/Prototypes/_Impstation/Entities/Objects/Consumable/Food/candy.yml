@@ -284,7 +284,7 @@
   id: BoxMacarons
   description: We don't need collectable figurines or trading cards. We need collectable macarons.
   components:
-  - type: StorageFill # good god there has to be a better way to to this
+  - type: StorageFill # good god there has to be a better way to do this
     contents:
     - id: FoodMacaronBerry
       prob: 0.25
