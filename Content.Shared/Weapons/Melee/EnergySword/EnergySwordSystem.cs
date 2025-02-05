@@ -27,7 +27,7 @@ public sealed class EnergySwordSystem : EntitySystem
         if (entity.Comp.ColorOptions.Count != 0)
         {
             entity.Comp.ActivatedColor = _random.Pick(entity.Comp.ColorOptions);
-            Dirty(entity, entity.Comp);
+            Dirty(entity);
         }
 
         if (!TryComp(entity, out AppearanceComponent? appearanceComponent))
@@ -56,6 +56,6 @@ public sealed class EnergySwordSystem : EntitySystem
         else
             RemComp<RgbLightControllerComponent>(entity);
 
-        Dirty(entity, entity.Comp);
+        Dirty(entity);
     }
 }
