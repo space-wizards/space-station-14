@@ -1,73 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: Added plasma and uranium arrows.
-    type: Add
-  id: 7398
-  time: '2024-09-19T08:41:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31241
-- author: Ertanic
-  changes:
-  - message: Wanted list program and its cartridge.
-    type: Add
-  - message: The cartridge has been added to the HOS locker.
-    type: Add
-  - message: Added target to thief on wanted list cartridge.
-    type: Add
-  id: 7399
-  time: '2024-09-19T10:22:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31223
-- author: Errant
-  changes:
-  - message: Crew monitor list can now be filtered by name and job.
-    type: Add
-  id: 7400
-  time: '2024-09-19T10:23:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31659
-- author: deltanedas
-  changes:
-  - message: Removed the flare blueprint from salvage, it's now unlocked roundstart
-      in autolathes.
-    type: Remove
-  id: 7401
-  time: '2024-09-19T13:45:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32303
-- author: deltanedas
-  changes:
-  - message: Increased the thieving beacon's range to 2 tiles.
-    type: Tweak
-  id: 7402
-  time: '2024-09-19T13:55:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31340
-- author: Winkarst-cpu
-  changes:
-  - message: The first editable line in the dialog window now grabs the keyboard focus
-      once it's open.
-    type: Fix
-  id: 7403
-  time: '2024-09-19T14:01:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31294
-- author: Plykiya
-  changes:
-  - message: You can now transfer someone from a rollerbed to a bed directly.
-    type: Tweak
-  id: 7404
-  time: '2024-09-19T14:08:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32089
-- author: SaphireLattice
-  changes:
-  - message: Fland now has public glass airlocks sectioning the hallway.
-    type: Fix
-  id: 7405
-  time: '2024-09-19T19:17:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32264
-- author: Plykiya
-  changes:
-  - message: Cockroaches and mothroaches can no longer damage things with their bites.
-    type: Tweak
-  id: 7406
-  time: '2024-09-19T22:15:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32221
 - author: PopGamer46
   changes:
   - message: The rat king's rats now follow you instead of idling when there is no
@@ -3906,3 +3837,70 @@
   id: 7897
   time: '2025-02-04T16:11:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34723
+- author: slarticodefast
+  changes:
+  - message: Added binoculars. You can find them in maints loot and the warden's locker.
+    type: Add
+  id: 7898
+  time: '2025-02-04T21:46:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34687
+- author: Spacemann
+  changes:
+  - message: Added 4 randomized maintenance rooms to in Convex station. These will
+      change every round with a different layout.
+    type: Add
+  id: 7899
+  time: '2025-02-04T22:58:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34866
+- author: Winkarst-cpu
+  changes:
+  - message: Observers now have a personal point light and can toggle it.
+    type: Add
+  id: 7900
+  time: '2025-02-04T23:26:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33607
+- author: whatston3
+  changes:
+  - message: Healing items that reduce bleeding can now be applied to undamaged mobs.
+    type: Tweak
+  id: 7901
+  time: '2025-02-05T03:23:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33526
+- author: DuckManZach
+  changes:
+  - message: Floor pills have some new interesting surprises!
+    type: Add
+  id: 7902
+  time: '2025-02-05T08:42:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34843
+- author: Gavin-TC
+  changes:
+  - message: Changed common utensil sprites to appear smaller and more proportionate.
+    type: Tweak
+  id: 7903
+  time: '2025-02-05T13:08:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34277
+- author: Booblesnoot42
+  changes:
+  - message: Inserting another person into a cryogenic sleeping unit is no longer
+      instant.
+    type: Tweak
+  id: 7904
+  time: '2025-02-05T14:46:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34619
+- author: hyperDelegate
+  changes:
+  - message: The Nuclear Operative Reinforcement Teleporter now costs 30TC (was 35).
+    type: Tweak
+  id: 7905
+  time: '2025-02-05T14:54:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34675
+- author: Farrellka
+  changes:
+  - message: Removed the old long ears for human!
+    type: Remove
+  - message: Added more long (elf) ears for human!
+    type: Add
+  id: 7906
+  time: '2025-02-05T16:49:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33572
