@@ -20,7 +20,7 @@
   verbText: mixing-verb-default-juice
   icon:
     sprite: Structures/Machines/grinder.rsi
-    state: grinder_empty
+    state: grinder_beaker_attached
 
 - type: mixingCategory
   id: DummyCondense
