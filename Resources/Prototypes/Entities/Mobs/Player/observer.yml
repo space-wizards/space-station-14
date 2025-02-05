@@ -63,6 +63,9 @@
   - type: Tag
     tags:
     - BypassInteractionRangeChecks
+  - type: PointLight
+    radius: 6
+    enabled: false
 
 # proto for player ghosts specifically
 - type: entity
@@ -85,8 +88,8 @@
 
 - type: entity
   id: ActionToggleLighting
-  name: Toggle All Lighting
-  description: Toggle all light rendering to better observe dark areas.
+  name: Toggle Lighting
+  description: Toggle light rendering to better observe dark areas.
   components:
   - type: InstantAction
     icon: Interface/VerbIcons/light.svg.192dpi.png

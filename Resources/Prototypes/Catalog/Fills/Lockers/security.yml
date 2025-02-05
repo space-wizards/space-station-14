@@ -48,6 +48,7 @@
         amount: 2
       - id: RemoteSignaller
         amount: 2
+      - id: Binoculars
 
 - type: entity
   id: LockerSecurityFilled
