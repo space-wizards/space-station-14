@@ -6,6 +6,8 @@ using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Localizations;
+using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -26,6 +28,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         SubscribeLocalEvent<HandsComponent, GetUsedEntityEvent>(OnGetUsedEntity);
         SubscribeLocalEvent<HandsComponent, ExaminedEvent>(HandleExamined);
+        SubscribeLocalEvent<HandsComponent, MeleeAttackEvent>(OnMeleeAttack);
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.UseItemInHand, InputCmdHandler.FromDelegate(HandleUseItem, handle: false, outsidePrediction: false))
@@ -212,5 +215,21 @@ public abstract partial class SharedHandsSystem : EntitySystem
         {
             args.PushMarkup(Loc.GetString(locKey, locUser, locItems));
         }
+    }
+
+    /// <summary>
+    /// Fires when a melee weapon is swung and delays the throw timer.
+    /// Makes an exception for when the entity is the weapon itself, i.e. unarmed attacks.
+    /// </summary>
+    private void OnMeleeAttack(Entity<HandsComponent> ent, ref MeleeAttackEvent args)
+    {
+        if (ent.Owner == args.Weapon)
+            return;
+
+        if (!TryComp<MeleeWeaponComponent>(args.Weapon, out var melee))
+            return;
+
+        if (ent.Comp.NextThrowTime < melee.NextAttack)
+            ent.Comp.NextThrowTime = melee.NextAttack;
     }
 }

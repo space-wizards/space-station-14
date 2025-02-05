@@ -16,8 +16,6 @@ using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Stacks;
 using Content.Shared.Throwing;
-using Content.Shared.Weapons.Melee;
-using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
@@ -54,8 +52,6 @@ namespace Content.Server.Hands.Systems
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
 
             SubscribeLocalEvent<HandsComponent, BeforeExplodeEvent>(OnExploded);
-
-            SubscribeLocalEvent<HandsComponent, MeleeAttackEvent>(OnMeleeAttack);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
@@ -230,22 +226,6 @@ namespace Content.Server.Hands.Systems
             _throwingSystem.TryThrow(ev.ItemUid, ev.Direction, ev.ThrowSpeed, ev.PlayerUid, compensateFriction: !HasComp<LandAtCursorComponent>(ev.ItemUid));
 
             return true;
-        }
-
-        /// <summary>
-        /// Fires when a melee weapon is swung and delays the throw timer.
-        /// Makes an exception for when the entity is the weapon itself, i.e. unarmed attacks.
-        /// </summary>
-        private void OnMeleeAttack(Entity<HandsComponent> ent, ref MeleeAttackEvent args)
-        {
-            if (ent.Owner == args.Weapon)
-                return;
-
-            if (!TryComp<MeleeWeaponComponent>(args.Weapon, out var melee))
-                return;
-
-            if (ent.Comp.NextThrowTime < melee.NextAttack)
-                ent.Comp.NextThrowTime = melee.NextAttack;
         }
 
         #endregion
