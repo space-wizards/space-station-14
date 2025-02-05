@@ -16,6 +16,7 @@ using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Stacks;
 using Content.Shared.Throwing;
+using Content.Shared.Weapons.Melee;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
@@ -189,6 +190,13 @@ namespace Content.Server.Hands.Systems
 
             if (_timing.CurTime < hands.NextThrowTime)
                 return false;
+
+            if (TryComp<MeleeWeaponComponent>(throwEnt, out var weaponComp))
+            {
+                if (_timing.CurTime < weaponComp.NextAttack)
+                    return false;
+            }
+
             hands.NextThrowTime = _timing.CurTime + hands.ThrowCooldown;
 
             if (EntityManager.TryGetComponent(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
