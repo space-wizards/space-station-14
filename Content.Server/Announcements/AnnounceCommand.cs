@@ -33,7 +33,7 @@ public sealed class AnnounceCommand : IConsoleCommand
         }
 
         var message = args[0];
-        var sender = "Central Command";
+        var sender = Loc.GetString("cmd-announce-sender");
         var color = Color.Gold;
         var sound = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
 
