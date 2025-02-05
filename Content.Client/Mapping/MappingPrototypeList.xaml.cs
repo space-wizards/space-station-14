@@ -46,11 +46,7 @@ public sealed partial class MappingPrototypeList : Control
         ScrollContainer.OnScrolled += UpdateSearch;
         CollapseAllButton.OnPressed += OnCollapseAll;
         SearchBar.OnTextChanged += OnSearch;
-        ClearSearchButton.OnPressed += _ =>
-        {
-            SearchBar.Text = string.Empty;
-            OnSearch(new LineEdit.LineEditEventArgs(SearchBar, string.Empty));
-        };
+        ClearSearchButton.OnPressed += _ => SearchBar.SetText(string.Empty, true);
         OnResized += UpdateSearch;
 
         CollapseAllButton.Texture.TexturePath = "/Textures/Interface/VerbIcons/collapse.svg.192dpi.png";
