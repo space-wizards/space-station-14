@@ -22,15 +22,15 @@ namespace Content.Server.Botany.Systems;
 
 public sealed partial class BotanySystem : EntitySystem
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
-    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedToolSystem _tool = default!;
 
     public override void Initialize()
     {
@@ -186,7 +186,7 @@ public sealed partial class BotanySystem : EntitySystem
     public bool CanHarvest(SeedData proto, EntityUid? held = null)
     {
         return !proto.Ligneous || proto.Ligneous && held != null && TryComp<ToolComponent>(held, out var toolComponent)
-               && _toolSystem.HasQuality(held.Value, proto.LigneousToolQuality, toolComponent);
+               && _tool.HasQuality(held.Value, proto.LigneousToolQuality, toolComponent);
     }
 
     #endregion

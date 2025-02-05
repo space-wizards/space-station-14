@@ -24,13 +24,13 @@ public sealed class ButcherableSystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly SharedBodySystem _bodySystem = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly SharedDestructibleSystem _destructibleSystem = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedBodySystem _body = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedDestructibleSystem _destructible = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
@@ -45,7 +45,7 @@ public sealed class ButcherableSystem : EntitySystem
     // Handles interactions with an object in hand, such as using a knife to butcher an animal
     private void OnInteractUsing(Entity<ButcherableComponent> entity, ref InteractUsingEvent args)
     {
-        if (args.Handled || !_interactionSystem.InRangeUnobstructed(entity.Owner, args.User))
+        if (args.Handled || !_interaction.InRangeUnobstructed(entity.Owner, args.User))
             return;
 
         if (TryStartButcherDoafter(entity, args.User, args.Used))
@@ -54,18 +54,18 @@ public sealed class ButcherableSystem : EntitySystem
 
     private bool TryStartButcherDoafter(Entity<ButcherableComponent> entity, EntityUid user, EntityUid used)
     {
-        if (TryComp<MobStateComponent>(entity, out var mobState) && !_mobStateSystem.IsDead(entity, mobState))
+        if (TryComp<MobStateComponent>(entity, out var mobState) && !_mobState.IsDead(entity, mobState))
             return false;
 
         if (!TryComp<ToolComponent>(used, out var usedToolComponent))
             return false;
 
-        if (!_toolSystem.HasQuality(used, entity.Comp.ToolQuality, usedToolComponent))
+        if (!_tool.HasQuality(used, entity.Comp.ToolQuality, usedToolComponent))
             return false;
 
-        _popupSystem.PopupClient(Loc.GetString("butcherable-knife-butcher-start", ("target", entity)), user, user);
+        _popup.PopupClient(Loc.GetString("butcherable-knife-butcher-start", ("target", entity)), user, user);
 
-        if (!_toolSystem.UseTool(used, user, entity, usedToolComponent.SpeedModifier * entity.Comp.ButcherDelay, entity.Comp.ToolQuality, new ButcherDoafterEvent()))
+        if (!_tool.UseTool(used, user, entity, usedToolComponent.SpeedModifier * entity.Comp.ButcherDelay, entity.Comp.ToolQuality, new ButcherDoafterEvent()))
             return false;
 
         return true;
@@ -76,7 +76,7 @@ public sealed class ButcherableSystem : EntitySystem
         if (args.Handled || args.Cancelled)
             return;
 
-        if (_containerSystem.IsEntityInContainer(entity))
+        if (_container.IsEntityInContainer(entity))
         {
             args.Handled = true;
             return;
@@ -96,9 +96,9 @@ public sealed class ButcherableSystem : EntitySystem
             }
 
             if (hasBody)
-                _bodySystem.GibBody(entity, body: body);
+                _body.GibBody(entity, body: body);
 
-            _destructibleSystem.DestroyEntity(entity);
+            _destructible.DestroyEntity(entity);
         }
 
         // only show a big popup when butchering living things.
@@ -106,7 +106,7 @@ public sealed class ButcherableSystem : EntitySystem
 
         if (args.Used != null)
         {
-            _popupSystem.PopupClient(
+            _popup.PopupClient(
                 Loc.GetString("butcherable-knife-butchered-success", ("target", entity), ("knife", args.Used)),
                 entityCoords,
                 args.User,
@@ -123,20 +123,20 @@ public sealed class ButcherableSystem : EntitySystem
 
     private void OnGetInteractionVerbs(EntityUid entityUid, ButcherableComponent component, GetVerbsEvent<InteractionVerb> args)
     {
-        if (!_interactionSystem.InRangeUnobstructed(entityUid, args.User))
+        if (!_interaction.InRangeUnobstructed(entityUid, args.User))
             return;
 
         var disabled = false;
         string? message = null;
 
         // entities with no hands and no butchering tool quality don't even get the privilege of seeing the butcher option
-        if (!TryComp<ToolComponent>(args.User, out var userToolComp) && !_toolSystem.HasQuality(args.User, component.ToolQuality, userToolComp) && args.Hands == null)
+        if (!TryComp<ToolComponent>(args.User, out var userToolComp) && !_tool.HasQuality(args.User, component.ToolQuality, userToolComp) && args.Hands == null)
             return;
 
         // entities with hands holding non-butchering items get a disabled butcher option
         if (!TryComp<ToolComponent>(args.Using, out var usingToolComp) && args.Hands != null)
         {
-            if (args.Using == null || !_toolSystem.HasQuality(args.Using.Value, component.ToolQuality, usingToolComp))
+            if (args.Using == null || !_tool.HasQuality(args.Using.Value, component.ToolQuality, usingToolComp))
             {
                 disabled = true;
                 message = Loc.GetString("butcherable-need-knife",
@@ -145,14 +145,14 @@ public sealed class ButcherableSystem : EntitySystem
         }
         // we don't like butchering things when the entity is inside a container for some reason??
         // I haven't investigated if this is even necessary, but it's been around for a while
-        else if (_containerSystem.IsEntityInContainer(entityUid))
+        else if (_container.IsEntityInContainer(entityUid))
         {
             disabled = true;
             message = Loc.GetString("butcherable-not-in-container",
                 ("target", entityUid));
         }
         // we don't want to butcher something that's alive
-        else if (TryComp<MobStateComponent>(entityUid, out var state) && !_mobStateSystem.IsDead(entityUid, state))
+        else if (TryComp<MobStateComponent>(entityUid, out var state) && !_mobState.IsDead(entityUid, state))
         {
             disabled = true;
             message = Loc.GetString("butcherable-mob-isnt-dead");

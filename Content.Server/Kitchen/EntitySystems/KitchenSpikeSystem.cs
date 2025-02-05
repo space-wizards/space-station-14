@@ -29,18 +29,18 @@ namespace Content.Server.Kitchen.EntitySystems
 {
     public sealed class KitchenSpikeSystem : SharedKitchenSpikeSystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-        [Dependency] private readonly IAdminLogManager _logger = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly TransformSystem _transform = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
+        [Dependency] private readonly IAdminLogManager _logger = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
         [Dependency] private readonly SharedSuicideSystem _suicide = default!;
-        [Dependency] private readonly SharedToolSystem _toolSystem = default!;
+        [Dependency] private readonly SharedToolSystem _tool = default!;
+        [Dependency] private readonly TransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -178,7 +178,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 return false;
 
             // Is using knife
-            if (!Resolve(used, ref tool, false) || !_toolSystem.HasQuality(used, "Slicing"))
+            if (!Resolve(used, ref tool, false) || !_tool.HasQuality(used, "Slicing"))
             {
                 return false;
             }

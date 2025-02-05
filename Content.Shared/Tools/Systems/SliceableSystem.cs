@@ -20,7 +20,7 @@ public sealed class SliceableSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
@@ -39,7 +39,7 @@ public sealed class SliceableSystem : EntitySystem
         if (entity.Comp.SpawnedEntities.Count == 0)
             return;
 
-        if (!_toolSystem.UseTool(args.Used, args.User, entity,  entity.Comp.DoafterTime.Seconds, entity.Comp.SlicingQuality, new SliceableDoafterEvent()))
+        if (!_tool.UseTool(args.Used, args.User, entity,  entity.Comp.DoafterTime.Seconds, entity.Comp.SlicingQuality, new SliceableDoafterEvent()))
             return;
 
         args.Handled = true;
