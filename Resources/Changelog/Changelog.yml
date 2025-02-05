@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: PopGamer46
-  changes:
-  - message: The rat king's rats now follow you instead of idling when there is no
-      one to attack during the CheeseEm order
-    type: Tweak
-  id: 7407
-  time: '2024-09-19T23:27:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32181
 - author: JIPDawg
   changes:
   - message: Small Hydraulic clamp now correctly consumes 2% battery instead of recharging
@@ -3904,3 +3896,12 @@
   id: 7906
   time: '2025-02-05T16:49:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33572
+- author: keronshb
+  changes:
+  - message: Disabler - decreased fire cost, increased projectile speed.
+    type: Tweak
+  - message: Disabler SMG - decreased fire cost, increased fire rate.
+    type: Tweak
+  id: 7907
+  time: '2025-02-05T23:12:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34890
