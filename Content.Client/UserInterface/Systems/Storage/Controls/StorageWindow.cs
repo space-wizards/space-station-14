@@ -201,8 +201,7 @@ public sealed class StorageWindow : BaseWindow
 
         #region Sidebar
         _sidebar.Children.Clear();
-        var rows = boundingGrid.Height + 1;
-        _sidebar.Rows = rows;
+        _sidebar.Rows = boundingGrid.Height + 1;
 
         var exitButton = new TextureButton
         {
@@ -244,10 +243,12 @@ public sealed class StorageWindow : BaseWindow
         };
 
         _sidebar.AddChild(exitContainer);
-        var offset = 2;
+        var offset = 1;
 
-        if (_entity.System<StorageSystem>().NestedStorage && rows > 0)
+        if (_entity.System<StorageSystem>().NestedStorage && boundingGrid.Height > 0)
         {
+            offset += 1;
+
             _backButton = new TextureButton
             {
                 TextureNormal = _backTexture,
@@ -279,7 +280,7 @@ public sealed class StorageWindow : BaseWindow
                 {
                     new TextureRect
                     {
-                        Texture = rows > 2 ? _sidebarMiddleTexture : _sidebarBottomTexture,
+                        Texture = boundingGrid.Height > 2 ? _sidebarMiddleTexture : _sidebarBottomTexture,
                         TextureScale = new Vector2(2, 2),
                         Children =
                         {
@@ -292,13 +293,22 @@ public sealed class StorageWindow : BaseWindow
             _sidebar.AddChild(backContainer);
         }
 
-        var fillerRows = rows - offset;
+        var rows = boundingGrid.Height - offset;
 
-        for (var i = 0; i < fillerRows; i++)
+        for (var i = 0; i < rows; i++)
         {
             _sidebar.AddChild(new TextureRect
             {
-                Texture = i != (fillerRows - 1) ? _sidebarMiddleTexture : _sidebarBottomTexture,
+                Texture = _sidebarMiddleTexture,
+                TextureScale = new Vector2(2, 2),
+            });
+        }
+
+        if (rows > 0)
+        {
+            _sidebar.AddChild(new TextureRect
+            {
+                Texture = _sidebarBottomTexture,
                 TextureScale = new Vector2(2, 2),
             });
         }
