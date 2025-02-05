@@ -193,7 +193,6 @@ namespace Content.Server.Hands.Systems
 
             if (_timing.CurTime < hands.NextThrowTime)
                 return false;
-
             hands.NextThrowTime = _timing.CurTime + hands.ThrowCooldown;
 
             if (EntityManager.TryGetComponent(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
