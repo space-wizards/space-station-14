@@ -77,7 +77,7 @@ public sealed partial class LightBulbComponent : Component
     /// The sound produced when the lightbulb falls on the ground and doesn't break.
     /// </summary>
     [DataField]
-    public SoundSpecifier DropSound = new SoundCollectionSpecifier("GlassCrack", AudioParams.Default.WithVolume(-6f));
+    public SoundSpecifier DropSound = new SoundCollectionSpecifier("GlassCrack", AudioParams.Default.WithVolume(-6f).WithPitchScale(0.8f));
 
     #region Appearance
 

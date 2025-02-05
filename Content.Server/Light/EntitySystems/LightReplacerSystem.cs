@@ -26,6 +26,8 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
+    private float _ejectOffset = 0.4f;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -255,6 +257,13 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
         return insertedBulbs > 0;
     }
 
+    /// <summary>
+    ///     Tries to eject the a bulb from storage and onto the floor.
+    /// </summary>
+    /// <returns>
+    ///     Returns true if storage contained at least one light bulb and was able to eject it.
+    ///     False otherwise.
+    /// </returns>
     private bool TryEjectBulb(
         EntityUid replacerUid,
         LightReplacerComponent? replacer = null,
@@ -283,7 +292,7 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
         _container.Remove(bulbUid, replacer.InsertedBulbs);
 
         // eject the bulb on the ground
-        var offsetPos = _random.NextVector2(0.4f);
+        var offsetPos = _random.NextVector2(_ejectOffset);
         var xform = Transform(bulbUid);
 
         var coordinates = xform.Coordinates;
@@ -297,7 +306,7 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
         {
             var audioParams = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(-3);
             _audio.PlayPvs(replacer.CycleSound, replacerUid, audioParams);
-            _audio.PlayPvs(bulb.DropSound, bulbUid, audioParams.WithPitchScale(0.8f)); // pitch the sound down so it sounds less like a shard of glass
+            _audio.PlayPvs(bulb.DropSound, bulbUid);
         }
 
         // show the tooltip
