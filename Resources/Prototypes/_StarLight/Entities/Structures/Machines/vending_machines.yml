@@ -103,6 +103,20 @@
     - SLPlushies
     - SLSpecies
 
+- type: entity
+  parent: SLVendingMachine
+  id: SLVendingMachineFashion
+  name: Fashion-o-Mat
+  description: Happiness should be expensive.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/VendingMachines/fashionmat.rsi
+  - type: Store
+    name: Fashion-o-Mat
+    categories:
+    - SLFahsionSkirt
+    - SLFahsionSuit
+    - SLFahsionOther
         
 - type: entity
   parent: SLVendingMachine

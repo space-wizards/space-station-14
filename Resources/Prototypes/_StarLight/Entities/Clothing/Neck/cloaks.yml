@@ -153,3 +153,47 @@
     color: "#84BEF4"
   - type: StaticPrice
     price: 2000    
+
+# Fashion-O-Mat, not obtainable any other way, unless mapped
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakCentcomBlack
+  name: special operations officer cloak
+  description: The NanoTrasen logo embroidered in gold speaks for itself.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/centcom_officer_black.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakCentcomAdmiral
+  name: admiral's cape
+  description: A vibrant green cape with gold stitching, worn by Nanotrasen Navy Admirals.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/admiral.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleERTLeader
+  name: ERT leader's mantle
+  description: Extraordinary decorative drape over the shoulders.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Mantles/ERTmantle.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Neck/Mantles/ERTmantle.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckHorrific
+  name: horrific necktie
+  description: The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Ties/disco.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Neck/Ties/disco.rsi
+
+# Fashion-O-Mat-END

@@ -3042,4 +3042,32 @@ Entries:
   id: 423
   time: '2025-02-03T20:17:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/287
+- author: Miracula
+  changes:
+  - message: Added over 10 new parallaxes (admin only)
+    type: Add
+  id: 424
+  time: '2025-02-04T15:55:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/288
+- author: Miracula
+  changes:
+  - message: Added Fashion-o-Mat
+    type: Add
+  id: 425
+  time: '2025-02-04T15:55:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/288
+- author: Miracula
+  changes:
+  - message: Sectoral console now has sprite and is mapped at CentComm.
+    type: Tweak
+  id: 426
+  time: '2025-02-04T15:55:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/288
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added night vision for Cyclorite and its color-shift shader.
+    type: Add
+  id: 427
+  time: '2025-02-05T04:01:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/293
 
