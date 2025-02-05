@@ -1,7 +1,9 @@
 using System.Linq;
 using Content.Server.Light.Components;
+using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.Light.Components;
 using Content.Shared.Popups;
@@ -10,6 +12,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Random;
 
 namespace Content.Server.Light.EntitySystems;
 
@@ -20,6 +23,8 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     public override void Initialize()
     {
@@ -30,6 +35,7 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
         SubscribeLocalEvent<LightReplacerComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<LightReplacerComponent, InteractUsingEvent>(HandleInteract);
         SubscribeLocalEvent<LightReplacerComponent, AfterInteractEvent>(HandleAfterInteract);
+        SubscribeLocalEvent<LightReplacerComponent, UseInHandEvent>(HandleUseInHand);
     }
 
     private void OnExamined(EntityUid uid, LightReplacerComponent component, ExaminedEvent args)
@@ -72,6 +78,15 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
     {
         replacer.InsertedBulbs = _container.EnsureContainer<Container>(uid, "light_replacer_storage");
     }
+
+    private void HandleUseInHand(EntityUid uid, LightReplacerComponent component, UseInHandEvent eventArgs)
+    {
+        if (eventArgs.Handled)
+            return;
+
+        eventArgs.Handled = TryEjectBulb(uid, component, eventArgs.User, true, true);
+    }
+
 
     private void HandleAfterInteract(EntityUid uid, LightReplacerComponent component, AfterInteractEvent eventArgs)
     {
@@ -238,5 +253,59 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
         }
 
         return insertedBulbs > 0;
+    }
+
+    private bool TryEjectBulb(
+        EntityUid replacerUid,
+        LightReplacerComponent? replacer = null,
+        EntityUid? userUid = null,
+        bool showTooltip = true,
+        bool playSound = true)
+    {
+        if (!Resolve(replacerUid, ref replacer))
+            return false;
+
+        if (replacer.InsertedBulbs.Count <= 0)
+        {
+            if (showTooltip && userUid != null)
+            {
+                var msg = Loc.GetString("comp-light-replacer-missing-light", ("light-replacer", replacerUid));
+                _popupSystem.PopupEntity(msg, replacerUid, userUid.Value, PopupType.Medium);
+            }
+            return false;
+        }
+
+        // take the bulb out of the container
+        var bulbUid = replacer.InsertedBulbs.ContainedEntities.First();
+        if (!TryComp<LightBulbComponent>(bulbUid, out var bulb))
+            return false;
+
+        _container.Remove(bulbUid, replacer.InsertedBulbs);
+
+        // eject the bulb on the ground
+        var offsetPos = _random.NextVector2(0.4f);
+        var xform = Transform(bulbUid);
+
+        var coordinates = xform.Coordinates;
+        coordinates = coordinates.Offset(offsetPos);
+
+        _transformSystem.SetLocalRotation(xform, _random.NextAngle());
+        _transformSystem.SetCoordinates(bulbUid, xform, coordinates);
+
+        // play the sound
+        if (playSound)
+        {
+            var audioParams = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(-3);
+            _audio.PlayPvs(replacer.CycleSound, replacerUid, audioParams);
+            _audio.PlayPvs(bulb.DropSound, bulbUid, audioParams.WithPitchScale(0.8f)); // pitch the sound down so it sounds less like a shard of glass
+        }
+
+        // show the tooltip
+        if (showTooltip && userUid != null)
+        {
+            var msg = Loc.GetString("comp-light-replacer-eject-light", ("bulb", bulbUid));
+            _popupSystem.PopupEntity(msg, replacerUid, userUid.Value, PopupType.Medium);
+        }
+        return true;
     }
 }
