@@ -64,7 +64,7 @@
   - FauxTileJungleAstroGrass
   - FauxTileAstroIce
   - FauxTileAstroSnow
-  - FauxTileAsteroidSand
+  - FauxTileAstroAsteroidSand
 
 # Only contains parts for making basic modular grenades, no actual explosives
 - type: latheRecipePack
