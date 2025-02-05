@@ -302,7 +302,7 @@
   bullet:
     sprite:
       sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-      state: hp
+      state: bullet
   armorPenetration: -1
   pierceChance: 0.02
   ricochetChance: 0.10
