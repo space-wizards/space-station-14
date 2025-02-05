@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Cockroaches and mothroaches can no longer damage things with their bites.
-    type: Tweak
-  id: 7406
-  time: '2024-09-19T22:15:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32221
 - author: PopGamer46
   changes:
   - message: The rat king's rats now follow you instead of idling when there is no
@@ -3902,3 +3895,12 @@
   id: 7905
   time: '2025-02-05T14:54:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34675
+- author: Farrellka
+  changes:
+  - message: Removed the old long ears for human!
+    type: Remove
+  - message: Added more long (elf) ears for human!
+    type: Add
+  id: 7906
+  time: '2025-02-05T16:49:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33572
