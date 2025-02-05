@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: EpicToast
-  changes:
-  - message: (Union Station) Fixed issues with the southwestern escape pods.
-    type: Fix
-  - message: (Union Station) Christmastime is here! Enjoy complimentary presents in
-      your lockers, along with other festive updates.
-    type: Tweak
-  id: 550
-  time: '2024-11-21T13:15:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/767
-- author: DinnerCalzone
-  changes:
-  - message: Female Moths and Diona will now use human female sounds for their placeholder
-      vocal emotes.
-    type: Tweak
-  id: 551
-  time: '2024-11-21T13:18:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/748
 - author: honeyed-lemons
   changes:
   - message: Hopefully the gilded space passenger jumpsuit works now??
@@ -4293,3 +4275,17 @@
   id: 1049
   time: '2025-02-04T21:56:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1564
+- author: TheGrimbeeper
+  changes:
+  - message: UAP foam from artifacts
+    type: Add
+  id: 1050
+  time: '2025-02-05T00:10:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1566
+- author: Darkmajia
+  changes:
+  - message: 'DINO WARS: FINAL REMIX'
+    type: Add
+  id: 1051
+  time: '2025-02-05T00:11:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1565
