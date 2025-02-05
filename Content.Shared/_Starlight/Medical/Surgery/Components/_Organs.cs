@@ -11,14 +11,14 @@ namespace Content.Shared.Starlight.Medical.Surgery.Steps.Parts;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))] public sealed partial class OrganStomachComponent : Component;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))] public sealed partial class OrganLiverComponent : Component;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))] public sealed partial class OrganKidneysComponent : Component;
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))] 
+[RegisterComponent, NetworkedComponent] 
 public sealed partial class OrganTongueComponent : Component
 {
     [DataField]
     public bool IsMuted;
 }
 
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))] 
+[RegisterComponent, NetworkedComponent] 
 public sealed partial class OrganEyesComponent : Component
 {
     [DataField]
@@ -34,7 +34,7 @@ public sealed partial class OrganImplantComponent : Component
     public ComponentRegistry? AddComp;
 }
 
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class OrganDamageComponent : Component
 {
     [DataField]
