@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: EpicToast
-  changes:
-  - message: (Union Station) Freezer should now be properly set up.
-    type: Fix
-  - message: (Union Station) Botany now has a backroom and a new layout.
-    type: Tweak
-  - message: (Union Station) Science now has a bigger main room.
-    type: Tweak
-  id: 553
-  time: '2024-11-23T07:14:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/776
 - author: hivehum
   changes:
   - message: 'A new map: The NCS Aspid, a Nanotrasen research and transport ship.'
@@ -4290,3 +4279,11 @@
   id: 1052
   time: '2025-02-05T09:15:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1569
+- author: formlessnameless
+  changes:
+  - message: Dead changelings will now automatically go into stasis if they have enough
+      biomass left.
+    type: Fix
+  id: 1053
+  time: '2025-02-05T09:40:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1557
