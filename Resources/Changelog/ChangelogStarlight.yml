@@ -2915,4 +2915,159 @@ Entries:
   id: 405
   time: '2025-02-02T13:14:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/281
+- author: Zylo
+  changes:
+  - message: Updated guidebook with more SOP entries.
+    type: Tweak
+  id: 406
+  time: '2025-02-03T15:22:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/285
+- author: PubliclyExecutedPig
+  changes:
+  - message: Made Lobster Station a bit better
+    type: Tweak
+  id: 407
+  time: '2025-02-03T15:45:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/282
+- author: Rinary
+  changes:
+  - message: Reworked pulse rifle, now it has 3 fire modes.
+    type: Tweak
+  id: 408
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Reworked pulse carbine, now it has 3 fire modes.
+    type: Tweak
+  id: 409
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added ANNIHILATOR(a better version of pulse carbine, admeme only).
+    type: Add
+  id: 410
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Rnforcer shotgun renamed to sentiel
+    type: Tweak
+  id: 411
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Now all pump shotguns are real pump shotgun(manual cycling)
+    type: Tweak
+  id: 412
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added riot shotgun, as better version of sentiel and kammrer for security>
+    type: Add
+  id: 413
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added combat shotgun, as better version of riot shotgun(automatical),
+      cargo buy only.
+    type: Add
+  id: 414
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added cycler shotgun(currently admeme only).
+    type: Add
+  id: 415
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added minotaur, as better version of bulldog, nukeops only.
+    type: Add
+  id: 416
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added enforcer pistol as a second security pistol(first MK58).
+    type: Add
+  id: 417
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added SP8 for warden. SP8T for ERT, SP8AR for CentComm officer.
+    type: Add
+  id: 418
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added SP-91-RC as new security smg with autoeject,
+    type: Add
+  id: 419
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added stechkin pistol as new silent pistol for syndicate agents.
+    type: Add
+  id: 420
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Rinary
+  changes:
+  - message: Added Deagle as new high damage weapon for syndicate agents/Nukeops.
+    type: Add
+  id: 421
+  time: '2025-02-03T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/276
+- author: Killer Tamashi
+  changes:
+  - message: Added M492 LMG as a security weapon
+    type: Add
+  id: 422
+  time: '2025-02-03T20:16:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/279
+- author: PubliclyExecutedHotel
+  changes:
+  - message: Made Hotel's AI Core actually good
+    type: Tweak
+  id: 423
+  time: '2025-02-03T20:17:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/287
+- author: Miracula
+  changes:
+  - message: Added over 10 new parallaxes (admin only)
+    type: Add
+  id: 424
+  time: '2025-02-04T15:55:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/288
+- author: Miracula
+  changes:
+  - message: Added Fashion-o-Mat
+    type: Add
+  id: 425
+  time: '2025-02-04T15:55:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/288
+- author: Miracula
+  changes:
+  - message: Sectoral console now has sprite and is mapped at CentComm.
+    type: Tweak
+  id: 426
+  time: '2025-02-04T15:55:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/288
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added night vision for Cyclorite and its color-shift shader.
+    type: Add
+  id: 427
+  time: '2025-02-05T04:01:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/293
 

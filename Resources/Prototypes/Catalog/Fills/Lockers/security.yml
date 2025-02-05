@@ -170,7 +170,9 @@
   - type: StorageFill
     contents:
     - id: WeaponPistolMk58
-      amount: 4
+      amount: 2
+    - id: WeaponPistolEnforcer
+      amount: 2
     - id: MagazinePistolSP
       amount: 4
     - id: MagazinePistolHP
@@ -191,6 +193,12 @@
       amount: 3
     - id: MagazineRifleSP
       amount: 3
+    - id: WeaponLightMachineGunM492
+      amount: 1
+    - id: LightRifleHeavyMagazineSP
+      amount: 1
+    - id: LightRifleHeavyMagazineHP
+      amount: 1
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseRestrictedContraband]
@@ -200,6 +208,8 @@
   - type: StorageFill
     contents:
     - id: WeaponSubMachineGunDrozd
+      amount: 1
+    - id: WeaponSubMachineGunSP91RC
       amount: 2
     - id: MagazinePistolSubMachineGunSP
       amount: 4
@@ -213,6 +223,8 @@
     contents:
     - id: WeaponShotgunEnforcer
       amount: 2
+    - id: WeaponShotgunRiot
+      amount: 1
     - id: BoxLethalshot
       amount: 4
 
@@ -225,6 +237,8 @@
     contents:
     - id: WeaponShotgunKammerer
       amount: 2
+    - id: WeaponShotgunRiot
+      amount: 1
     - id: BoxLethalshot
       amount: 2
 

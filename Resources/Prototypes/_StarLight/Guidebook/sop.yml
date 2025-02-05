@@ -3,12 +3,28 @@
   name: guide-entry-sl-sop-intro
   text: "/ServerInfo/Guidebook/StarlightSOP/sop-intro.xml"
   children:
-  - alert-levels
+    - general-sop
+    - command-sop
+
+- type: guideEntry
+  id: general-sop
+  name: guide-entry-sl-general-sop-intro
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/general-sop-intro.xml"
+  priority: 1
+  children:
+    - alert-levels
+    - emergency-sops
+    - miscellaneous-clarifications
+    - non-crew-policies
+    - nanotrasen-staff-handling-policies
+
+
 
 - type: guideEntry
   id: alert-levels
   name: guide-entry-sl-alert-levels
-  text: "/ServerInfo/Guidebook/StarlightSOP/Alerts/alert-levels.xml"
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/Alerts/alert-levels.xml"
+  priority: 1
   children:
     - code-green
     - code-blue
@@ -21,41 +37,184 @@
 - type: guideEntry
   id: code-green
   name: guide-entry-sl-code-green
-  text: "/ServerInfo/Guidebook/StarlightSOP/Alerts/code-green.xml"
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/Alerts/code-green.xml"
   priority: 1
   
 - type: guideEntry
   id: code-blue
   name: guide-entry-sl-code-blue
-  text: "/ServerInfo/Guidebook/StarlightSOP/Alerts/code-blue.xml"
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/Alerts/code-blue.xml"
   priority: 2
 
 - type: guideEntry
   id: code-red
   name: guide-entry-sl-code-red
-  text: "/ServerInfo/Guidebook/StarlightSOP/Alerts/code-red.xml"
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/Alerts/code-red.xml"
   priority: 3
 
 - type: guideEntry
   id: code-gamma
   name: guide-entry-sl-code-gamma
-  text: "/ServerInfo/Guidebook/StarlightSOP/Alerts/code-gamma.xml"
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/Alerts/code-gamma.xml"
   priority: 4
 
 - type: guideEntry
   id: code-delta
   name: guide-entry-sl-code-delta
-  text: "/ServerInfo/Guidebook/StarlightSOP/Alerts/code-delta.xml"
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/Alerts/code-delta.xml"
   priority: 5
   
 - type: guideEntry
   id: code-yellow
   name: guide-entry-sl-code-yellow
-  text: "/ServerInfo/Guidebook/StarlightSOP/Alerts/code-yellow.xml"
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/Alerts/code-yellow.xml"
   priority: 6
   
 - type: guideEntry
   id: code-violet
   name: guide-entry-sl-code-violet
-  text: "/ServerInfo/Guidebook/StarlightSOP/Alerts/code-violet.xml"
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/Alerts/code-violet.xml"
   priority: 7
+
+
+
+- type: guideEntry
+  id: emergency-sops
+  name: guide-entry-sl-emergency-sops
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/EmergencySOPs/emergency-sops.xml"
+  priority: 5
+  children:
+    - emergency-response-teams
+    - emergency-shuttle
+
+- type: guideEntry
+  id: emergency-response-teams
+  name: guide-entry-sl-emergency-response-teams
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/EmergencySOPs/emergency-response-teams.xml"
+  priority: 1
+
+- type: guideEntry
+  id: emergency-shuttle
+  name: guide-entry-sl-emergency-shuttle
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/EmergencySOPs/emergency-shuttle.xml"
+  priority: 2
+
+
+
+- type: guideEntry
+  id: command-sop
+  name: guide-entry-sl-command-sop-intro
+  text: "/ServerInfo/Guidebook/StarlightSOP/CommandSOP/command-sop-intro.xml"
+  priority: 2
+  children:
+    - captain
+    - ai
+    - general-command-staff
+
+- type: guideEntry
+  id: general-command-staff
+  name: guide-entry-sl-general-command-staff
+  text: "/ServerInfo/Guidebook/StarlightSOP/CommandSOP/general-command-staff.xml"
+  priority: 1
+
+- type: guideEntry
+  id: captain
+  name: guide-entry-sl-captain
+  text: "/ServerInfo/Guidebook/StarlightSOP/CommandSOP/captain.xml"
+  priority: 2
+
+- type: guideEntry
+  id: ai
+  name: guide-entry-sl-ai
+  text: "/ServerInfo/Guidebook/StarlightSOP/CommandSOP/ai.xml"
+  priority: 3
+
+
+
+- type: guideEntry
+  id: miscellaneous-clarifications
+  name: guide-entry-sl-miscellaneous-clarifications
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/MiscellaneousClarifications/miscellaneous-clarifications.xml"
+  priority: 2
+  children:
+    - line-of-succesion
+    - command-clarifications
+
+- type: guideEntry
+  id: line-of-succesion
+  name: guide-entry-sl-line-of-succesion
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/MiscellaneousClarifications/line-of-succesion.xml"
+  priority: 1
+
+- type: guideEntry
+  id: command-clarifications
+  name: guide-entry-sl-command-clarifications
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/MiscellaneousClarifications/command-clarifications.xml"
+  priority: 2
+
+
+
+- type: guideEntry
+  id: non-crew-policies
+  name: guide-entry-sl-non-crew-policies
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/NonCrewPolicies/non-crew-policies.xml"
+  priority: 3
+  children:
+    - docking-and-visitors
+    - vessels
+
+- type: guideEntry
+  id: docking-and-visitors
+  name: guide-entry-sl-docking-and-visitors
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/NonCrewPolicies/docking-and-visitors.xml"
+  priority: 1
+
+- type: guideEntry
+  id: vessels
+  name: guide-entry-sl-vessels
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/NonCrewPolicies/vessels.xml"
+  priority: 2
+
+
+
+- type: guideEntry
+  id: nanotrasen-staff-handling-policies
+  name: guide-entry-sl-nanotrasen-staff-handling-policies
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/NanotrasenStaffHandlingPolicies/nanotrasen-staff-handling-policies.xml"
+  priority: 4
+  children:
+    - cause-for-demotion
+    - firing-demotion-policies
+    - hiring-transfer-policies
+    - money-accounts-and-space-credits
+    - vote-of-no-confidence
+
+- type: guideEntry
+  id: hiring-transfer-policies
+  name: guide-entry-sl-hiring-transfer-policies
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/NanotrasenStaffHandlingPolicies/hiring-transfer-policies.xml"
+  priority: 1
+
+- type: guideEntry
+  id: firing-demotion-policies
+  name: guide-entry-sl-firing-demotion-policies
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/NanotrasenStaffHandlingPolicies/firing-demotion-policies.xml"
+  priority: 2
+
+- type: guideEntry
+  id: cause-for-demotion
+  name: guide-entry-sl-cause-for-demotion
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/NanotrasenStaffHandlingPolicies/cause-for-demotion.xml"
+  priority: 3
+
+- type: guideEntry
+  id: vote-of-no-confidence
+  name: guide-entry-sl-vote-of-no-confidence
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/NanotrasenStaffHandlingPolicies/vote-of-no-confidence.xml"
+  priority: 4
+
+- type: guideEntry
+  id: money-accounts-and-space-credits
+  name: guide-entry-sl-money-accounts-and-space-credits
+  text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/NanotrasenStaffHandlingPolicies/money-accounts-and-space-credits.xml"
+  priority: 5

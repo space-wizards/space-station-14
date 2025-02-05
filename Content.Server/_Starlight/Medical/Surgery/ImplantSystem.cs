@@ -11,12 +11,12 @@ public sealed partial class ImplantSystem : EntitySystem
     {
         base.Initialize();
         
-        SubscribeLocalEvent<OrganImplantComponent, SurgeryOrganInsertCompleted>(OnOrganInsertComplete);
+        SubscribeLocalEvent<OrganImplantComponent, SurgeryOrganImplantationCompleted>(OnOrganInsertComplete);
         
         SubscribeLocalEvent<OrganImplantComponent, SurgeryOrganExtractCompleted>(OnOrganExtractComplete);
     }
     
-    private void OnOrganInsertComplete(Entity<OrganImplantComponent> ent, ref SurgeryOrganInsertCompleted args)
+    private void OnOrganInsertComplete(Entity<OrganImplantComponent> ent, ref SurgeryOrganImplantationCompleted args)
     {
         foreach (var comp in (ent.Comp.AddComp ?? []).Values)
         {

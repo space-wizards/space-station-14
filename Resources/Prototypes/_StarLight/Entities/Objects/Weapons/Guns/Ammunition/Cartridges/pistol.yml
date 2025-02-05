@@ -12,3 +12,46 @@
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
         color: "#43c4f7"
+        
+- type: entity
+  id: CartridgePistol40NrSP
+  name: cartridge (40 NR SP)
+  parent: BaseCartridgePistol
+  components:
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletPistolTrace40NrSP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#326ec8"
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgePistolSP8
+      
+- type: entity
+  id: CartridgePistol40NrHP
+  name: cartridge (40 NR HP)
+  parent: CartridgePistol40NrSP
+  components:
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletPistolTrace40NrHP
+    
+- type: entity
+  id: CartridgePistol40NrFMJ
+  name: cartridge (40 NR FMJ)
+  parent: CartridgePistol40NrSP
+  components:
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletPistolTrace40NrFMJ
+    
+- type: entity
+  id: CartridgePistol40NrAP
+  name: cartridge (40 NR AP)
+  parent: CartridgePistol40NrSP
+  components:
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletPistolTrace40NrAP

@@ -91,3 +91,141 @@
         whitelist:
           tags:
             - CartridgeMagnum
+            
+- type: entity
+  name: golden mk 58
+  parent: [WeaponPistolMk58, BaseRestrictedContraband]
+  id: WeaponPistolGoldenMk58
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/golden_mk58.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/golden_mk58.rsi
+    
+- type: entity
+  name: enforcer
+  parent: [BaseWeaponPistol, BaseRestrictedContraband]
+  id: WeaponPistolEnforcer
+  description: A pistol of modern design.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/enforcer.rsi
+  - type: Gun
+    fireRate: 6
+    availableModes:
+    - SemiAuto
+  - type: ChamberMagazineAmmoProvider
+    availablePrefixes:
+    - ""
+    - redgrip
+    - red
+    - tangrip
+    - green
+    - black
+    - tan
+    - grey
+    - greengrip
+    
+- type: entity
+  name: sp-8
+  parent: [BaseWeaponPistol, BaseRestrictedContraband]
+  id: WeaponPistolSP8
+  description: Cool pistol for defense.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/sp8.rsi
+  - type: Gun
+    fireRate: 5
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/sp8.ogg
+  - type: ChamberMagazineAmmoProvider
+    availablePrefixes:
+    - ""
+    - black
+    - green
+    - olive
+    - red
+    - yellow
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistol40Nr
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistolSP8
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistol40Nr
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistolSP8
+            
+- type: entity
+  name: sp-8t
+  parent: WeaponPistolSP8
+  id: WeaponPistolSP8T
+  components:
+  - type: Gun
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/sp8t.ogg
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/sp8t.rsi
+  - type: ChamberMagazineAmmoProvider
+    availablePrefixes:
+    - ""
+    - dust
+    
+- type: entity
+  name: sp-8ar
+  parent: WeaponPistolSP8
+  id: WeaponPistolSP8AR
+  components:
+  - type: Gun
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/sp8ar.ogg
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/sp8ar.rsi
+  - type: ChamberMagazineAmmoProvider
+    availablePrefixes:
+    - ""
+    
+- type: entity
+  name: stechkin pistol
+  parent: [WeaponPistolMk58, BaseRestrictedContraband]
+  id: WeaponPistolStechkin
+  description: A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/stechkin.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/stechkin.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/1suppres.ogg
+      
+- type: entity
+  name: desert eagle
+  parent: WeaponPistolN1984
+  id: WeaponPistolDeagle
+  description: A robust magnum handgun.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/deagle.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/deagle.rsi
+  - type: Gun
+    minAngle: 1
+    maxAngle: 15
+    angleIncrease: 6
+    angleDecay: 7
+    fireRate: 5
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/deagle.ogg

@@ -353,7 +353,7 @@
     price: 300
     
 - type: entity
-  parent: BaseWeaponBattery
+  parent: BaseWeaponBatterySmall
   id: WeaponDecloner
   name: decloner
   components:
@@ -436,9 +436,6 @@
     size: Small
     shape:
     - 0, 0, 1, 1
-  - type: BatterySelfRecharger
-    autoRecharge: true
-    autoRechargeRate: 40
   - type: MagazineVisuals
     magState: stun
     steps: 5
@@ -484,9 +481,6 @@
     size: Small
     shape:
     - 0, 0, 1, 1
-  - type: BatterySelfRecharger
-    autoRecharge: true
-    autoRechargeRate: 200
   - type: MagazineVisuals
     magState: disable
     steps: 5
@@ -509,7 +503,7 @@
     startingCharge: 1500
     
 - type: entity
-  parent: BaseWeaponBattery
+  parent: BaseWeaponBatterySmall
   id: WeaponAlien
   name: alien pistol
   components:
@@ -571,3 +565,145 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+
+- type: entity
+  name: pulse carbine
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
+  id: WeaponPulseCarbine
+  description: A high tech energy carbine favoured by the NT-ERT operatives.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: stun
+      map: ["enum.FireModesLayers.FireMode"]
+    - state: stun-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+  - type: Item
+    size: Normal
+    shape:
+    - 0, 0, 3, 1
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 3
+    availableModes:
+      - SemiAuto
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: MagazineVisuals
+    magState: stun
+    steps: 5
+    zeroVisible: true
+  - type: HitscanBatteryAmmoProvider
+    proto: TaserBolt
+    fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: TaserBolt
+      fireCost: 100
+      magState: stun
+      visualState: stun
+    - proto: LaserBolt
+      fireCost: 50
+      magState: kill
+      visualState: kill
+    - proto: DestroyBolt
+      fireCost: 100
+      magState: destroy
+      visualState: destroy
+  - type: Battery
+    maxCharge: 3300
+    startingCharge: 3300
+    
+- type: entity
+  name: pulse rifle
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
+  id: WeaponPulseRifle
+  description: A weapon that is almost as infamous as its users.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/pulse.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: stun
+      map: ["enum.FireModesLayers.FireMode"]
+    - state: stun-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/pulse.rsi
+  - type: Item
+    size: Ginormous
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 1.5
+    availableModes:
+      - SemiAuto
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: MagazineVisuals
+    magState: stun
+    steps: 5
+    zeroVisible: true
+  - type: HitscanBatteryAmmoProvider
+    proto: TaserBolt
+    fireCost: 10
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: TaserBolt
+      fireCost: 10
+      magState: stun
+      visualState: stun
+    - proto: LaserBolt
+      fireCost: 5
+      magState: kill
+      visualState: kill
+    - proto: DestroyBolt
+      fireCost: 10
+      magState: destroy
+      visualState: destroy
+  - type: Battery
+    maxCharge: 2640
+    startingCharge: 2640
+    
+- type: entity
+  name: ANNIHILATOR
+  parent: WeaponPulseCarbine
+  id: WeaponANNIHILATOR
+  description: A weapon that is almost as infamous as its users.
+  components:
+  - type: Gun
+    selectedMode: Burst
+    fireRate: 3
+    shotsPerBurst: 5
+    availableModes:
+      - Burst
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: MagazineVisuals
+    magState: destroy
+    steps: 5
+    zeroVisible: true
+  - type: HitscanBatteryAmmoProvider
+    proto: DestroyBolt
+    fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: DestroyBolt
+      fireCost: 100
+      magState: destroy
+      visualState: destroy
+  - type: Battery
+    maxCharge: 2000
+    startingCharge: 2000
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 500

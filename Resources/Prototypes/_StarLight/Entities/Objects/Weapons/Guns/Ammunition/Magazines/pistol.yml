@@ -25,3 +25,25 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+      
+- type: entity
+  id: MagazinePistol40Nr
+  name: pistol magazine (40 NR)
+  parent: BaseMagazinePistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol40Nr
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgePistolSP8
+    capacity: 10
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/40nr.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: false
+  - type: Tag
+    tags:
+      - MagazinePistolSP8
