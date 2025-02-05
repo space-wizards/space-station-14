@@ -22,6 +22,25 @@
 # Noodles
 
 - type: entity
+  name: raw spaghetti
+  parent: FoodNoodlesBase
+  id: FoodNoodlesRaw
+  description: A raw bundle of noodles, this needs to be cooked first.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - pasta
+  - type: Sprite
+    state: raw
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+
+- type: entity
   name: boiled spaghetti
   parent: FoodNoodlesBase
   id: FoodNoodlesBoiled
