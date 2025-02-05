@@ -170,8 +170,10 @@
       name: ghost-role-information-sentient-carp-name
       description: ghost-role-information-sentient-carp-description
       rules: ghost-role-information-space-dragon-summoned-carp-rules
-      raffle:
-        settings: short
+      # harmony start: remove ghost role raffle from carps
+      # raffle:
+      #   settings: short
+      # harmony end
     - type: GhostTakeoverAvailable
     - type: HTN
       rootTask:

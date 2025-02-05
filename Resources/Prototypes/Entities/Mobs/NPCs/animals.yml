@@ -2389,8 +2389,10 @@
     name: ghost-role-information-giant-spider-name
     description: ghost-role-information-giant-spider-description
     rules: ghost-role-information-giant-spider-rules
-    raffle:
-      settings: short
+    # harmony start: remove ghost role raffle from spiders
+    # raffle:
+    #   settings: short
+    # harmony end
   - type: GhostTakeoverAvailable
 
 - type: entity
