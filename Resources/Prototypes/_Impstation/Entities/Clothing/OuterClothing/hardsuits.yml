@@ -65,3 +65,81 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCourier
+
+# antag hardsuit
+
+- type: entity
+  parent: [ClothingOuterHardsuitBase, Tier3Contraband]
+  id: ClothingOuterHardsuitRepomen
+  name: cybersun repoman's hardsuit
+  description: A daunting hardsuit used by the infamous Cybersun Repomen. Its design allows for better maneuverability with insulation from hazardous environments.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/repoman.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/repoman.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.1
+        Radiation: 0.1
+        Heat: 0.25
+        Blunt: 0.9
+        Slash: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.95
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitRepomen
+
+# Dinosaur Commander Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitBase, TierXContraband]
+  id: ClothingOuterHardsuitDino
+  name: dinosaur commander's hardsuit
+  description: Risen from the ashes of prehistory, forged in the temporal flux of one second in the past, this hardsuit embodies the true warrior spirit of the Dino Wars.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/dinosuit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/dinosuit.rsi
+  # deathsquad hardsuit stats. fuck it
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+  - type: FireProtection
+    reduction: 0.8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.1
+        Slash: 0.1
+        Piercing: 0.1
+        Heat: 0.1
+        Caustic: 0.1
+        Radiation: 0.1
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepThud
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitDino
+
+- type: entity
+  parent: ClothingOuterHardsuitDino
+  id: ClothingOuterHardsuitDinoUnremoveable
+  suffix: Unremoveable
+  components:
+  - type: Unremoveable

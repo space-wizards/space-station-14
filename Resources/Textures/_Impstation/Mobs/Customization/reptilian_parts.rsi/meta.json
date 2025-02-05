@@ -1,0 +1,31 @@
+{
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "copyright": "horns_nubby by pinkbat5, all other markings by starlighthowls",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+      {
+        "name": "fangs",
+        "directions": 4
+      },
+      {
+        "name": "horns_kobold_ears_piercings",
+        "directions": 4
+      },
+      {
+        "name": "horns_kobold_ears",
+        "directions": 4
+      },
+      {
+        "name": "horns_nubby",
+        "directions": 4
+      },
+      {
+        "name": "piercings1",
+        "directions": 4
+      }
+    ]
+  }

@@ -1,0 +1,22 @@
+- type: entity
+  id: CigaretteVoid
+  suffix: barozine
+  parent: Cigarette
+  name: cigarette
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 50
+        reagents:
+          - ReagentId: Barozine
+            Quantity: 30
+          - ReagentId: Leporazine
+            Quantity: 20
+      food:
+        maxVol: 50
+        reagents:
+          - ReagentId: Barozine
+            Quantity: 30
+          - ReagentId: Leporazine
+            Quantity: 20

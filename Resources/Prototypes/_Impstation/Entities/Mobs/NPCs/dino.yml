@@ -94,12 +94,14 @@
     name: ghost-role-information-dino-name
     description: ghost-role-information-dino-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
   - type: GhostTakeoverAvailable
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.50
-        Heat: 0.1
+        Blunt: 0.1
+        Heat: 0.02
   - type: Temperature # temperature values taken from reptilian species
     heatDamageThreshold: 400
     coldDamageThreshold: 285
@@ -111,11 +113,9 @@
     heatDamage:
       types:
         Heat : 1.5 #per second, scales with temperature & other constants
-  - type: TemperatureSpeed 
+  - type: TemperatureSpeed
     thresholds:
-      301: 0.8
-      295: 0.6
-      285: 0.4
+      285: 0.8
   - type: Respirator
     damage:
       types:
@@ -240,7 +240,7 @@
     animation: WeaponArcClaw
     wideAnimation: WeaponArcClaw
     altDisarm: false
-    angle: 30
+    angle: 45
     range: 1
     soundHit:
       collection: AlienClaw
@@ -257,6 +257,8 @@
     name: ghost-role-information-dino-compy-name
     description: ghost-role-information-dino-compy-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   parent: BaseMobDinosaurSmall
@@ -292,7 +294,7 @@
   - type: MeleeWeapon
     animation: WeaponArcClaw
     wideAnimation: WeaponArcClaw
-    angle: 30
+    angle: 45
     range: 1
     soundHit:
       collection: AlienClaw
@@ -327,6 +329,8 @@
     name: ghost-role-information-dino-dilo-name
     description: ghost-role-information-dino-dilo-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   parent: BaseMobDinosaurSmall
@@ -378,7 +382,7 @@
     animation: WeaponArcClaw
     wideAnimation: WeaponArcClaw
     altDisarm: false
-    angle: 30
+    angle: 45
     soundHit:
       collection: AlienClaw
     damage:
@@ -395,6 +399,8 @@
     name: ghost-role-information-dino-raptor-name
     description: ghost-role-information-dino-raptor-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 # Large Dinosaurs
 
@@ -427,7 +433,7 @@
     animation: WeaponArcSmash
     wideAnimation: WeaponArcSmash
     altDisarm: false
-    angle: 30
+    angle: 45
     soundHit:
       collection: MetalThud
     damage:
@@ -444,6 +450,8 @@
     name: ghost-role-information-dino-anki-name
     description: ghost-role-information-dino-anki-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   parent: BaseMobDinosaur
@@ -474,7 +482,7 @@
     animation: WeaponArcThrust
     wideAnimation: WeaponArcThrust
     altDisarm: false
-    angle: 30
+    angle: 45
     range: 1.75
     soundHit:
       collection: AlienClaw
@@ -493,6 +501,8 @@
     name: ghost-role-information-dino-kentro-name
     description: ghost-role-information-dino-kentro-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   parent: BaseMobDinosaur
@@ -534,7 +544,7 @@
     animation: WeaponArcClaw
     wideAnimation: WeaponArcClaw
     altDisarm: false
-    angle: 30
+    angle: 45
     soundHit:
       collection: AlienClaw
     damage:
@@ -550,6 +560,8 @@
     name: ghost-role-information-dino-para-name
     description: ghost-role-information-dino-para-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   parent: BaseMobDinosaurCarnivore
@@ -580,7 +592,7 @@
     animation: WeaponArcBite
     wideAnimation: WeaponArcBite
     altDisarm: false
-    angle: 30
+    angle: 45
     range: 2
     soundHit:
       collection: AlienClaw
@@ -599,6 +611,8 @@
     name: ghost-role-information-dino-spino-name
     description: ghost-role-information-dino-spino-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   parent: BaseMobDinosaur
@@ -642,7 +656,7 @@
     animation: WeaponArcSmash
     wideAnimation: WeaponArcSmash
     altDisarm: false
-    angle: 30
+    angle: 45
     range: 1.75
     soundHit:
       collection: MetalThud
@@ -661,6 +675,8 @@
     name: ghost-role-information-dino-stego-name
     description: ghost-role-information-dino-stego-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   parent: BaseMobDinosaurCarnivore
@@ -691,7 +707,7 @@
     animation: WeaponArcBite
     wideAnimation: WeaponArcBite
     altDisarm: false
-    angle: 30
+    angle: 45
     range: 2.25
     soundHit:
       collection: AlienClaw
@@ -710,6 +726,8 @@
     name: ghost-role-information-dino-trex-name
     description: ghost-role-information-dino-trex-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   parent: BaseMobDinosaur
@@ -751,7 +769,7 @@
     animation: WeaponArcThrust
     wideAnimation: WeaponArcThrust
     altDisarm: false
-    angle: 30
+    angle: 45
     range: 1.75
     soundHit:
       collection: AlienClaw
@@ -770,3 +788,72 @@
     name: ghost-role-information-dino-trike-name
     description: ghost-role-information-dino-trike-description
     rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+
+# Special
+
+- type: entity
+  parent: MobHuman
+  id: MobDinoCommander
+  name: dinosaur commander
+  description: A mesozoic leader, champion of the Dino Wars.
+  components:
+  - type: Sprite
+    scale: 1.5, 1.5
+  - type: Fixtures
+    fixtures: # TODO: This needs a second fixture just for mob collisions.
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.53
+        density: 185
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+  - type: RandomMetadata
+    nameSegments:
+    - dino_commander_first
+    - dino_commander_last
+  - type: Loadout
+    prototypes:
+    - DinoCommanderGear
+  - type: NpcFactionMember
+    factions:
+    - Dino
+  - type: MeleeWeapon
+    animation: WeaponArcClaw
+    wideAnimation: WeaponArcClaw
+    altDisarm: false
+    angle: 45
+    range: 1
+    soundHit:
+      collection: AlienClaw
+    damage:
+      types:
+        Slash: 6
+        Structural: 6
+  - type: Devourer
+    foodPreference: Humanoid
+    shouldStoreDevoured: true
+    chemical: DinoBlood
+    healRate: 15.0
+    whitelist:
+      components:
+      - MobState
+      - Door
+      tags:
+      - Wall
+  - type: FlashImmunity
+  - type: GhostRole
+    allowMovement: true
+    makeSentient: true
+    name: ghost-role-information-dino-commander-name
+    description: ghost-role-information-dino-commander-description
+    rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist

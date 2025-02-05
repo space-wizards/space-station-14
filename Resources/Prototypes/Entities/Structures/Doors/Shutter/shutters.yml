@@ -130,7 +130,7 @@
   id: ShuttersRadiation
   parent: BaseShutter
   name: radiation shutters
-  description: A relatively fragile set of shutters, made of radiation blocking lead plates.
+  description: Why did they make these shutters radioactive?
   components:
   - type: Sprite
     sprite: Structures/Doors/Shutters/shutters_radiation.rsi
@@ -145,7 +145,7 @@
     - board
   - type: RadiationBlocker
     resistance: 4
-  - type: Destructible
+  - type: Destructible # imp
     thresholds:
     - trigger:
         !type:DamageTrigger

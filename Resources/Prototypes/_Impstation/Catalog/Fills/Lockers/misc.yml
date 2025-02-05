@@ -1,0 +1,24 @@
+- type: entity
+  id: LockerSyndicateChemistryFilled
+  suffix: Filled
+  name: interdyne chemical locker
+  parent: LockerSyndicatePersonal
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: BoxSyringe
+        - id: BoxBeaker
+        - id: BoxBeaker
+          prob: 0.3
+        - id: BoxPillCanister
+        - id: BoxBottle
+        - id: BoxVial
+        - id: ChemBag
+        - id: ClothingHandsGlovesLatex
+        - id: ClothingMaskSterile
+        - id: HandLabeler
+          prob: 0.5
+  - type: AccessReader
+    access: [["SyndicateAgent"]]

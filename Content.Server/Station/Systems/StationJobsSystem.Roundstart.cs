@@ -295,6 +295,7 @@ public sealed partial class StationJobsSystem
             if (profile.PreferenceUnavailable != PreferenceUnavailableMode.SpawnAsOverflow)
             {
                 assignedJobs.Add(player, (null, EntityUid.Invalid));
+                _antag.QueuedAntags.Remove(player); // imp edit
                 continue;
             }
 

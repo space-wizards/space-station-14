@@ -23,7 +23,8 @@
       collection: Punch
     damage:
       types:
-        Holy: 25
+        Holy: 10 #imp edit. Get rebalanced lol
+        # Holy: 25 #imp edit. 25 Holy? WE HAVE A NULL ROD FOR THAT.
         Blunt: 1
   - type: Prayable
     bibleUserOnly: true

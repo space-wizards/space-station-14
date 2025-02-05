@@ -46,7 +46,6 @@
           False: { visible: true }
   - type: SupermatterConsole
   - type: ActivatableUI
-    singleUser: true
     key: enum.SupermatterConsoleUiKey.Key
   - type: UserInterface
     interfaces:

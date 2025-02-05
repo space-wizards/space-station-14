@@ -140,6 +140,7 @@
     - ViroDrobeInventory
     - WinterDrobeInventory
     - CuraDrobeInventory
+    - CourierDrobeInventory # imp
   - type: Sprite
     layers:
     - state: base
@@ -487,6 +488,7 @@
     canRestock:
     - ChemVendInventory
     - ChemVendInventorySyndicate # DeltaV: Let it restock synthesis/nukie vendor
+    - ChemVendInventoryInterdyne # Imp: let it restock Interdyne ChemVend
   - type: Sprite
     layers:
     - state: base

@@ -144,6 +144,12 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
 
+        [DataField]
+        public bool ImpEvaporates = false;
+
+        [DataField]
+        public float ImpEvaporationAmount = 0.3f;
+
         /// <summary>
         /// Is this reagent considered contraband? And how severe is it?
         /// </summary> Also, this is an imp edit

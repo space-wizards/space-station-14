@@ -1,0 +1,79 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "WIP",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+      "states": [
+          {
+              "name": "inhand-left",
+              "directions": 4
+          },
+          {
+              "name": "inhand-right",
+              "directions": 4
+          },
+          {
+              "name": "sb_box"
+          },
+          {
+              "name": "sb_box_unfolded"
+          },
+          {
+              "name": "redorange"
+          },
+          {
+              "name": "blue"
+          },
+          {
+              "name": "pizza"
+          },
+          {
+              "name": "singularity"
+          },
+          {
+              "name": "weh"
+          },
+          {
+              "name": "clown"
+          },
+          {
+              "name": "goldblue"
+          },
+          {
+              "name": "eyeball"
+          },
+          {
+              "name": "tesla"
+          },
+          {
+              "name": "frontier"
+          },
+          {
+              "name": "check"
+          },
+          {
+              "name": "contraband"
+          },
+          {
+              "name": "secblade"
+          },
+          {
+              "name": "moff"
+          },
+          {
+              "name": "mail"
+          },
+          {
+              "name": "rune"
+          },
+          {
+              "name": "blade"
+          },
+          {
+              "name": "mcblade"
+          }
+      ]
+  }

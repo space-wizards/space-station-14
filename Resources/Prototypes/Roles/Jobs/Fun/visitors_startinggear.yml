@@ -11,7 +11,7 @@
     gloves: ClothingHandsGlovesCaptain
     head: ClothingHeadHatCaptain
     neck: ClothingNeckCloakCap
-    id: VisitorPDA
+    id: CaptainPDA # imp
     belt: WeaponDisabler
     back: ClothingBackpackCaptain
     ears: ClothingHeadsetAltCommand
@@ -22,12 +22,12 @@
   id: VisitorCaptainAlt
   equipment:
     jumpsuit: ClothingUniformJumpsuitCapFormal
-    shoes: ClothingShoesBootsLaceup
+    shoes: ClothingShoesLeather # imp
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesCaptain
     head: ClothingHeadHatCapcap
     neck: ClothingNeckMantleCap
-    id: VisitorPDA
+    id: CaptainPDA # imp
     belt: WeaponDisabler
     back: ClothingBackpackSatchelCaptain
     ears: ClothingHeadsetAltCommand
@@ -41,7 +41,7 @@
     shoes: ClothingShoesColorWhite
     head: ClothingHeadHatBeretEngineering
     neck: ClothingNeckCloakCe
-    id: VisitorPDA
+    id: CEPDA # imp
     belt: ClothingBeltChiefEngineerFilled
     back: ClothingBackpackDuffelEngineering
     ears: ClothingHeadsetCE
@@ -55,7 +55,7 @@
     shoes: ClothingShoesColorWhite
     head: ClothingHeadHatBeretEngineering
     neck: ClothingNeckMantleCE
-    id: VisitorPDA
+    id: CEPDA # imp
     belt: ClothingBeltChiefEngineerFilled
     back: ClothingBackpackSatchelEngineering
     ears: ClothingHeadsetCE
@@ -70,7 +70,7 @@
     gloves: ClothingHandsGlovesLatex
     head: ClothingHeadMirror
     neck: ClothingCloakCmo
-    id: VisitorPDA
+    id: CMOPDA # imp
     back: ClothingBackpackMedical
     ears: ClothingHeadsetCMO
     belt: ClothingBeltMedicalFilled
@@ -81,15 +81,15 @@
   id: VisitorCMOAlt
   equipment:
     jumpsuit: ClothingUniformJumpsuitCMOTurtle
-    shoes: ClothingShoesColorBrown
+    shoes: ClothingShoesBootsWinterMed # imp
     gloves: ClothingHandsGlovesNitrile
     head: ClothingHeadHatBeretCmo
     neck: ClothingNeckMantleCMO
-    id: VisitorPDA
+    id: CMOPDA # imp
     back: ClothingBackpackSatchelMedical
     ears: ClothingHeadsetCMO
     belt: ClothingBeltMedicalFilled
-    outerClothing: ClothingOuterCoatLabCmo
+    outerClothing: ClothingOuterWinterCMO # imp
     pocket1: WeaponDisabler
 
 - type: startingGear
@@ -99,7 +99,7 @@
     shoes: ClothingShoesLeather
     head: ClothingHeadHatHopcap
     neck: ClothingNeckCloakHop
-    id: VisitorPDA
+    id: HoPPDA # imp
     belt: WeaponDisabler
     back: ClothingBackpackDebug
     ears: ClothingHeadsetAltCommand
@@ -113,7 +113,7 @@
     shoes: ClothingShoesLeather
     head: ClothingHeadHatHopcap
     neck: ClothingNeckMantleHOP
-    id: VisitorPDA
+    id: HoPPDA # imp
     belt: WeaponDisabler
     back: ClothingBackpackSatchelLeather
     ears: ClothingHeadsetAltCommand
@@ -128,7 +128,7 @@
     gloves: ClothingHandsGlovesCombat
     head: ClothingHeadHatHoshat
     neck: ClothingNeckCloakHos
-    id: VisitorPDA
+    id: HoSPDA # imp
     belt: ClothingBeltSecurityFilled
     back: ClothingBackpackSatchelSecurity
     ears: ClothingHeadsetAltSecurity
@@ -144,10 +144,10 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitHosFormal
     shoes: ClothingShoesBootsCowboyFancyFilled
-    gloves: ClothingHandsGlovesColorWhite
+    gloves: ClothingHandsGlovesCombat # imp
     head: ClothingHeadHatCowboyWhite
     neck: SecurityWhistle
-    id: VisitorPDA
+    id: HoSPDA # imp
     belt: ClothingBeltSecurityFilled
     back: ClothingBackpackSatchelLeather
     ears: ClothingHeadsetAltSecurity
@@ -165,7 +165,7 @@
     gloves: ClothingHandsGlovesLatex
     head: ClothingHeadHatBeretRND
     neck: ClothingNeckCloakRd
-    id: VisitorPDA
+    id: RnDPDA # imp
     back: ClothingBackpackScience
     ears: ClothingHeadsetRD
     outerClothing: ClothingOuterCoatRD
@@ -179,7 +179,7 @@
     gloves: ClothingHandsGlovesNitrile
     head: ClothingHeadHatBeretRND
     neck: ClothingNeckMantleRD
-    id: VisitorPDA
+    id: RnDPDA # imp
     back: ClothingBackpackSatchelScience
     ears: ClothingHeadsetRD
     outerClothing: ClothingOuterCoatRD
@@ -191,8 +191,8 @@
     jumpsuit: ClothingUniformJumpsuitQMTurtleneck
     shoes: ClothingShoesColorBrown
     head: ClothingHeadHatQMsoft
-    neck: ClothingNeckCloakQm
-    id: VisitorPDA
+    neck: ClothingNeckCloakQmgreatcoat # imp
+    id: QuartermasterPDA # imp
     back: ClothingBackpackCargo
     ears: ClothingHeadsetRD
     outerClothing: ClothingOuterWinterQM
@@ -206,7 +206,7 @@
     shoes: ClothingShoesColorBrown
     head: ClothingHeadHatBeretQM
     neck: ClothingNeckMantleQM
-    id: VisitorPDA
+    id: QuartermasterPDA # imp
     back: ClothingBackpackSatchelCargo
     ears: ClothingHeadsetQM
     outerClothing: ClothingOuterWinterQM
@@ -221,7 +221,7 @@
     jumpsuit: ClothingUniformJumpsuitSec
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHelmetBasic
-    id: VisitorPDA
+    id: SecurityCadetPDA # imp
     belt: ClothingBeltSecurityFilled
     back: ClothingBackpackSecurity
     ears: ClothingHeadsetSecurity
@@ -235,11 +235,11 @@
 - type: startingGear
   id: VisitorSecurityCadetAlt
   equipment:
-    jumpsuit: ClothingUniformJumpsuitSecGrey
+    jumpsuit: ClothingUniformSecurityTrooper # imp
     shoes: ClothingShoesBootsCombatFilled
-    head: ClothingHeadHelmetBasic
+    head: ClothingHeadHelmetJustice # imp
     neck: SecurityWhistle
-    id: VisitorPDA
+    id: SecurityCadetPDA # imp
     belt: ClothingBeltSecurityFilled
     back: ClothingBackpackSatchelSecurity
     ears: ClothingHeadsetSecurity
@@ -256,7 +256,7 @@
     jumpsuit: ClothingUniformJumpsuitSec
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHelmetBasic
-    id: VisitorPDA
+    id: SecurityPDA # imp
     belt: ClothingBeltSecurityWebbingFilled
     back: ClothingBackpackSecurity
     ears: ClothingHeadsetSecurity
@@ -270,11 +270,11 @@
 - type: startingGear
   id: VisitorSecurityOfficerAlt
   equipment:
-    jumpsuit: ClothingUniformJumpsuitSecGrey
+    jumpsuit: ClothingUniformSecurityTrooper # imp
     shoes: ClothingShoesBootsCombatFilled
-    head: ClothingHeadHatCorpsoft
+    head: ClothingHeadHatSecurityTrooper # imp
     neck: SecurityWhistle
-    id: VisitorPDA
+    id: SecurityPDA # imp
     belt: ClothingBeltSecurityFilled
     back: ClothingBackpackSatchelSecurity
     ears: ClothingHeadsetSecurity
@@ -292,7 +292,7 @@
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatFedoraBrown
     neck: ClothingNeckTieDet
-    id: VisitorPDA
+    id: DetectivePDA # imp
     belt: ClothingBeltHolsterFilled
     back: ClothingBackpackSecurity
     ears: ClothingHeadsetSecurity
@@ -311,7 +311,7 @@
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatFedoraGrey
     neck: ClothingNeckTieDet
-    id: VisitorPDA
+    id: DetectivePDA # imp
     belt: ClothingBeltHolsterFilled
     back: ClothingBackpackSatchelSecurity
     ears: ClothingHeadsetSecurity
@@ -331,7 +331,7 @@
     gloves: ClothingHandsGlovesCombat
     head: ClothingHeadHatBeretWarden
     neck: SecurityWhistle
-    id: VisitorPDA
+    id: WardenPDA # imp
     belt: ClothingBeltSecurityWebbingFilled
     back: ClothingBackpackSecurity
     ears: ClothingHeadsetSecurity
@@ -350,7 +350,7 @@
     shoes: ClothingShoesBootsCombatFilled
     gloves: ClothingHandsGlovesCombat
     head: ClothingHeadHatWarden
-    id: VisitorPDA
+    id: WardenPDA # imp
     belt: ClothingBeltSecurityFilled
     back: ClothingBackpackSatchelSecurity
     ears: ClothingHeadsetSecurity
@@ -370,7 +370,7 @@
     jumpsuit: ClothingUniformJumpsuitCargo
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatCargosoft
-    id: VisitorPDA
+    id: CargoPDA # imp
     back: ClothingBackpackCargo
     ears: ClothingHeadsetCargo
     pocket1: AppraisalTool
@@ -384,7 +384,7 @@
     jumpsuit: ClothingUniformJumpsuitCargo
     shoes: ClothingShoesBootsWinterCargo
     head: ClothingHeadHatCargosoft
-    id: VisitorPDA
+    id: CargoPDA # imp
     back: ClothingBackpackDuffelCargo
     ears: ClothingHeadsetCargo
     pocket1: AppraisalTool
@@ -400,7 +400,7 @@
     jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
     shoes: ClothingShoesBootsSalvage
     head: ClothingHeadHatCargosoftFlipped
-    id: VisitorPDA
+    id: SalvagePDA # imp
     belt: ClothingBeltSalvageWebbing
     back: ClothingBackpackSalvage
     ears: ClothingHeadsetCargo
@@ -415,7 +415,7 @@
     jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
     shoes: ClothingShoesBootsSalvage
     head: ClothingHeadHatBrownFlatcap
-    id: VisitorPDA
+    id: SalvagePDA # imp
     belt: ClothingBeltSalvageWebbing
     back: ClothingBackpackDuffelSalvage
     ears: ClothingHeadsetCargo
@@ -434,7 +434,7 @@
     shoes: ClothingShoesColorWhite
     gloves: ClothingHandsGlovesFingerlessInsulated
     head: ClothingHeadHelmetFire
-    id: VisitorPDA
+    id: AtmosPDA # imp
     back: ClothingBackpackDuffelAtmospherics
     ears: ClothingHeadsetEngineering
     eyes: ClothingEyesGlassesMeson
@@ -452,7 +452,7 @@
     gloves: ClothingHandsGlovesColorYellow
     head: ClothingHeadHatHardhatYellow
     neck: ClothingNeckScarfStripedLightBlue
-    id: VisitorPDA
+    id: AtmosPDA # imp
     belt: DoubleEmergencyOxygenTankFilled
     back: ClothingBackpackSatchelAtmospherics
     ears: ClothingHeadsetEngineering
@@ -470,7 +470,7 @@
     shoes: ClothingShoesBootsWork
     gloves: ClothingHandsGlovesColorYellowBudget
     head: ClothingHeadHatWelding
-    id: VisitorPDA
+    id: TechnicalAssistantPDA # imp
     back: ClothingBackpackEngineering
     ears: ClothingHeadsetEngineering
     eyes: ClothingEyesGlassesMeson
@@ -486,7 +486,7 @@
     shoes: ClothingShoesColorBlack
     gloves: ClothingHandsGlovesColorYellowBudget
     head: ClothingHeadHatCone
-    id: VisitorPDA
+    id: TechnicalAssistantPDA # imp
     belt: ClothingBeltUtility
     back: ClothingBackpackSatchelEngineering
     ears: ClothingHeadsetEngineering
@@ -504,7 +504,7 @@
     shoes: ClothingShoesBootsWork
     gloves: ClothingHandsGlovesColorYellow
     head: ClothingHeadHatHardhatYellow
-    id: VisitorPDA
+    id: EngineerPDA # imp
     belt: ClothingBeltUtilityEngineering
     back: ClothingBackpackEngineering
     ears: ClothingHeadsetEngineering
@@ -523,7 +523,7 @@
     shoes: ClothingShoesBootsWork
     gloves: ClothingHandsGlovesColorYellow
     head: ClothingHeadHatBeretEngineering
-    id: VisitorPDA
+    id: EngineerPDA # imp
     belt: ClothingBeltUtilityEngineering
     back: ClothingBackpackDuffelEngineering
     ears: ClothingHeadsetEngineering
@@ -542,7 +542,7 @@
     jumpsuit: ClothingUniformJumpsuitChemistry
     shoes: ClothingShoesColorOrange
     gloves: ClothingHandsGlovesLatex
-    id: VisitorPDA
+    id: ChemistryPDA # imp
     belt: ChemBag
     back: ClothingBackpackChemistry
     ears: ClothingHeadsetMedical
@@ -557,10 +557,11 @@
 - type: startingGear
   id: VisitorChemistAlt
   equipment:
-    jumpsuit: ClothingUniformJumpsuitChemistry
+    jumpsuit: ClothingUniformSpaceJumpsuitChemist
     shoes: ClothingShoesColorOrange
-    head: ClothingHeadHatPaper
-    id: VisitorPDA
+    gloves: ClothingHandsGlovesNitrile # imp
+    head: ClothingHeadHatBeretSeniorPhysician # imp
+    id: ChemistryPDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackSatchelChemistry
     ears: ClothingHeadsetMedical
@@ -579,7 +580,7 @@
     shoes: ClothingShoesColorBlue
     gloves: ClothingHandsGlovesNitrile
     head: ClothingHeadBandGrey
-    id: VisitorPDA
+    id: MedicalPDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackGenetics
     ears: ClothingHeadsetMedical
@@ -597,7 +598,7 @@
     shoes: ClothingShoesColorBlue
     gloves: ClothingHandsGlovesLatex
     head: ClothingHeadHatBeretBrigmedic
-    id: VisitorPDA
+    id: MedicalPDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackSatchelGenetics
     ears: ClothingHeadsetMedical
@@ -615,7 +616,7 @@
     shoes: ClothingShoesColorGreen
     gloves: ClothingHandsGlovesLatex
     head: ClothingHeadMirror
-    id: VisitorPDA
+    id: MedicalPDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackVirology
     ears: ClothingHeadsetMedical
@@ -634,7 +635,7 @@
     gloves: ClothingHandsGlovesNitrile
     head: ClothingHeadHatBeretSeniorPhysician
     neck: ClothingNeckStethoscope
-    id: VisitorPDA
+    id: MedicalPDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackSatchelVirology
     ears: ClothingHeadsetMedical
@@ -653,7 +654,7 @@
     gloves: ClothingHandsGlovesNitrile
     head: ClothingHeadHatCorpsoft
     neck: ClothingNeckStethoscope
-    id: VisitorPDA
+    id: MedicalPDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackMedical
     ears: ClothingHeadsetMedical
@@ -672,7 +673,7 @@
     gloves: ClothingHandsGlovesLatex
     head: ClothingHeadHatBeretMedic
     neck: ClothingNeckStethoscope
-    id: VisitorPDA
+    id: MedicalPDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackSatchelMedical
     ears: ClothingHeadsetMedical
@@ -691,7 +692,7 @@
     gloves: ClothingHandsGlovesLatex
     head: ClothingHeadHatSurgcapBlue
 #    mask: ClothingMaskBreathMedical # right now this is broken for vox, but maybe some day.
-    id: VisitorPDA
+    id: MedicalPDA # imp
     belt: ClothingBeltStorageWaistbag
     back: NitrousOxideTankFilled
     ears: ClothingHeadsetMedical
@@ -709,7 +710,7 @@
     shoes: ClothingShoesLeather
     head: ClothingHeadHatMagician
     neck: ClothingNeckTieRed
-    id: VisitorPDA
+    id: PsychologistPDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackSatchelLeather
     ears: ClothingHeadsetMedical
@@ -726,7 +727,7 @@
     jumpsuit: ClothingUniformJumpsuitPsychologist
     shoes: ClothingShoesLeather
     head: ClothingHeadHatAnimalCat
-    id: VisitorPDA
+    id: PsychologistPDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackSatchelLeather
     ears: ClothingHeadsetMedical
@@ -745,7 +746,7 @@
     gloves: ClothingHandsGlovesLatex
     head: ClothingHeadHatParamedicsoft
     neck: ClothingNeckStethoscope
-    id: VisitorPDA
+    id: ParamedicPDA # imp
     belt: ClothingBeltMedicalEMTFilled
     back: ClothingBackpackDuffelGenetics
     ears: ClothingHeadsetMedical
@@ -765,7 +766,7 @@
     gloves: ClothingHandsGlovesNitrile
     head: ClothingHeadHatParamedicsoftFlipped
     neck: ClothingNeckStethoscope
-    id: VisitorPDA
+    id: ParamedicPDA # imp
     belt: ClothingBeltMedicalEMTFilled
     back: ClothingBackpackDuffelGenetics
     ears: ClothingHeadsetMedical
@@ -783,7 +784,7 @@
     jumpsuit: ClothingUniformJumpsuitColorWhite
     shoes: ClothingShoesColorWhite
     head: ClothingHeadBandGreen
-    id: VisitorPDA
+    id: MedicalInternPDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackDuffelMedical
     ears: ClothingHeadsetMedical
@@ -800,7 +801,7 @@
     jumpsuit: ClothingUniformJumpsuitColorWhite
     shoes: ClothingShoesColorWhite
     head: ClothingHeadBandBlue
-    id: VisitorPDA
+    id: MedicalInternPDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackDuffelMedical
     ears: ClothingHeadsetMedical
@@ -818,7 +819,7 @@
     shoes: ClothingShoesColorRed
     gloves: ClothingHandsGlovesLatex
     head: ClothingHeadHatSurgcapPurple
-    id: VisitorPDA
+    id: MedicalPDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackSatchelMedical
     ears: ClothingHeadsetMedical
@@ -836,7 +837,7 @@
     shoes: ClothingShoesColorGreen
     gloves: ClothingHandsGlovesLatex
     head: ClothingHeadHatSurgcapGreen
-    id: VisitorPDA
+    id: MedicalPDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackSatchelMedical
     ears: ClothingHeadsetMedical
@@ -854,7 +855,7 @@
     shoes: ClothingShoesColorBlue
     gloves: ClothingHandsGlovesNitrile
     head: ClothingHeadHatSurgcapBlue
-    id: VisitorPDA
+    id: MedicalPDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackSatchelMedical
     ears: ClothingHeadsetMedical
@@ -873,7 +874,7 @@
     jumpsuit: ClothingUniformJumpsuitColorPurple
     shoes: ClothingShoesColorBlack
     head: ClothingHeadPaperSack
-    id: VisitorPDA
+    id: ResearchAssistantPDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackScience
     ears: ClothingHeadsetScience
@@ -887,7 +888,7 @@
     jumpsuit: ClothingUniformJumpsuitCasualPurple
     shoes: ClothingShoesColorBlack
     neck: ClothingNeckTieSci
-    id: VisitorPDA
+    id: ResearchAssistantPDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackSatchelScience
     ears: ClothingHeadsetScience
@@ -901,7 +902,7 @@
     jumpsuit: ClothingUniformJumpsuitScientistFormal
     shoes: ClothingShoesColorPurple
     head: ClothingHeadHatBeretRND
-    id: VisitorPDA
+    id: SciencePDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackScience
     ears: ClothingHeadsetScience
@@ -916,7 +917,7 @@
     shoes: ClothingShoesBootsWinterSci
     head: ClothingHeadHatPurplesoft
     neck: ClothingNeckTieSci
-    id: VisitorPDA
+    id: SciencePDA # imp
     belt: ClothingBeltMedicalFilled
     back: ClothingBackpackSatchelScience
     ears: ClothingHeadsetScience
@@ -932,7 +933,7 @@
     jumpsuit: ClothingUniformJumpsuitBartender
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatTophat
-    id: VisitorPDA
+    id: BartenderPDA # imp
     back: ClothingBackpack
     suitstorage: WeaponShotgunDoubleBarreledRubber
     ears: ClothingHeadsetService
@@ -948,7 +949,7 @@
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatBowlerHat
     neck: ClothingNeckTieSci
-    id: VisitorPDA
+    id: BartenderPDA # imp
     back: ClothingBackpackSatchel
     ears: ClothingHeadsetService
     eyes: ClothingEyesHudBeer
@@ -962,12 +963,11 @@
     jumpsuit: ClothingUniformJumpsuitHydroponics
     shoes: ClothingShoesColorGreen
     head: ClothingHeadBandGreen
-    id: VisitorPDA
+    id: BotanistPDA # imp
     back: ClothingBackpackDuffelHydroponics
     ears: ClothingHeadsetService
   inhand:
   - HydroponicsToolScythe
-
 
 - type: startingGear
   id: VisitorBotanistAlt
@@ -975,7 +975,7 @@
     jumpsuit: ClothingUniformJumpsuitHydroponics
     shoes: ClothingShoesColorGreen
     head: Bucket
-    id: VisitorPDA
+    id: BotanistPDA # imp
     back: ClothingBackpackHydroponics
     ears: ClothingHeadsetService
     pocket1: HydroponicsToolMiniHoe
@@ -988,7 +988,7 @@
     shoes: ClothingShoesColorBlack
     gloves: ClothingHandsGlovesBoxingBlue
     head: ClothingHeadPaperSackSmile
-    id: VisitorPDA
+    id: BoxerPDA # imp
     ears: ClothingHeadsetService
     pocket1: DrinkVodkaBottleFull
     pocket2: SoapDeluxe
@@ -1000,7 +1000,7 @@
     shoes: ClothingShoesColorBlack
     gloves: ClothingHandsGlovesBoxingRed
     head: ClothingHeadHatSkub
-    id: VisitorPDA
+    id: BoxerPDA # imp
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterSkub
     pocket1: Skub
@@ -1013,7 +1013,7 @@
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatPlaguedoctor
     mask: ClothingMaskPlague
-    id: VisitorPDA
+    id: ChaplainPDA # imp
     belt: Bible
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterPlagueSuit
@@ -1026,7 +1026,7 @@
     jumpsuit: ClothingUniformJumpsuitChaplain
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatHoodNunHood
-    id: VisitorPDA
+    id: ChaplainPDA # imp
     belt: Bible
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterNunRobe
@@ -1040,7 +1040,7 @@
     shoes: ClothingShoesChef
     head: ClothingHeadHatChef
 #    mask: ClothingMaskItalianMoustache # right now this is broken for vox, so its inhand.
-    id: VisitorPDA
+    id: ChefPDA # imp
     back: ClothingBackpackSatchel
     belt: ClothingBeltChefFilled
     ears: ClothingHeadsetService
@@ -1058,7 +1058,7 @@
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatChef
 #    mask: ClothingMaskItalianMoustache # right now this is broken for vox, so its inhand.
-    id: VisitorPDA
+    id: ChefPDA # imp
     back: ClothingBackpack
     belt: ClothingBeltChefFilled
     ears: ClothingHeadsetService
@@ -1074,7 +1074,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitClown
     shoes: ClothingShoesClown
-    id: VisitorPDA
+    id: ClownPDA # imp
     back: ClothingBackpackClown
     ears: ClothingHeadsetService
     mask: ClothingMaskClown
@@ -1088,7 +1088,7 @@
     shoes: ClothingShoesGaloshes
     gloves: ClothingHandsGlovesJanitor
     head: ClothingHeadFishCap
-    id: VisitorPDA
+    id: JanitorPDA # imp
     back: ClothingBackpackSatchel
     belt: ClothingBeltJanitorFilled
     ears: ClothingHeadsetService
@@ -1104,7 +1104,7 @@
     shoes: ClothingShoesGaloshes
     gloves: ClothingHandsGlovesJanitor
     head: ClothingHeadHatHoodBioJanitor
-    id: VisitorPDA
+    id: JanitorPDA # imp
     back: ClothingBackpack
     belt: ClothingBeltJanitorFilled
     ears: ClothingHeadsetService
@@ -1120,7 +1120,7 @@
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatFedoraGrey
     neck: ClothingNeckLawyerbadge
-    id: VisitorPDA
+    id: LawyerPDA # imp
     back: ClothingBackpackSatchelLeather
     ears: ClothingHeadsetSecurity
     pocket1: RubberStampLawyer
@@ -1135,7 +1135,7 @@
     shoes: ClothingShoesLeather
     head: ClothingHeadHatFedoraBrown
     neck: ClothingNeckLawyerbadge
-    id: VisitorPDA
+    id: LawyerPDA # imp
     back: ClothingBackpackSatchelLeather
     ears: ClothingHeadsetSecurity
     pocket1: RubberStampLawyer
@@ -1150,7 +1150,7 @@
     shoes: ClothingShoesColorRed
     head: ClothingHeadHatCowboyBrown
     neck: ClothingNeckLawyerbadge
-    id: VisitorPDA
+    id: LawyerPDA # imp
     back: ClothingBackpackSatchelLeather
     belt: ClothingBeltStorageWaistbag
     ears: ClothingHeadsetSecurity
@@ -1168,7 +1168,7 @@
     head: ClothingHeadHatBeaverHat
     neck: ClothingNeckLawyerbadge
     mask: CigarGold
-    id: VisitorPDA
+    id: LawyerPDA # imp
     back: ClothingBackpackSatchelLeather
     ears: ClothingHeadsetSecurity
     outerClothing: ClothingOuterCoatExpensive
@@ -1184,7 +1184,7 @@
     shoes: ClothingShoesLeather
     head: ClothingHeadHatCorpsoft
     neck: ClothingNeckLawyerbadge
-    id: VisitorPDA
+    id: LawyerPDA # imp
     back: ClothingBackpackSatchelLeather
     belt: ClothingBeltStorageWaistbag
     ears: ClothingHeadsetSecurity
@@ -1201,7 +1201,7 @@
     gloves: ClothingHandsGlovesLeather
     head: BladedFlatcapBrown
     neck: ClothingNeckLawyerbadge
-    id: VisitorLawyerPDA
+    id: CentcomPDA # imp
     back: ClothingBackpackSatchelLeather
     belt: ClothingBeltStorageWaistbag
     eyes: ClothingEyesGlassesSunglasses
@@ -1217,7 +1217,7 @@
     jumpsuit: ClothingUniformJumpsuitLibrarian
     shoes: ClothingShoesBootsLaceup
     neck: ClothingNeckScarfStripedGreen
-    id: VisitorLibrarianPDA
+    id: LibrarianPDA # imp
     back: ClothingBackpackSatchelLeather
     belt: ClothingBeltStorageWaistbag
     eyes: ClothingEyesGlassesJamjar
@@ -1233,7 +1233,7 @@
     jumpsuit: ClothingUniformJumpsuitCurator
     shoes: ClothingShoesBootsLaceup
     head: ClothingHeadHatGreyFlatcap
-    id: VisitorPDA
+    id: LibrarianPDA # imp
     back: ClothingBackpackSatchelLeather
     belt: ClothingBeltStorageWaistbag
     eyes: ClothingEyesGlasses
@@ -1248,7 +1248,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitMusician
     shoes: ClothingShoesBootsLaceup
-    id: VisitorPDA
+    id: MusicianPDA # imp
     back: ClothingBackpackSatchelLeather
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
@@ -1262,7 +1262,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitMusician
     shoes: ClothingShoesBootsLaceup
-    id: VisitorPDA
+    id: MusicianPDA # imp
     back: ClothingBackpackSatchelLeather
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
@@ -1276,7 +1276,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitMusician
     shoes: ClothingShoesBootsLaceup
-    id: VisitorPDA
+    id: MusicianPDA # imp
     back: ClothingBackpackSatchelLeather
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
@@ -1290,7 +1290,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitMusician
     shoes: ClothingShoesBootsLaceup
-    id: VisitorPDA
+    id: MusicianPDA # imp
     back: ClothingBackpackSatchelLeather
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
@@ -1304,7 +1304,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitMusician
     shoes: ClothingShoesBootsLaceup
-    id: VisitorPDA
+    id: MusicianPDA # imp
     back: ClothingBackpackSatchelLeather
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
@@ -1318,7 +1318,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitMusician
     shoes: ClothingShoesBootsLaceup
-    id: VisitorPDA
+    id: MusicianPDA # imp
     back: ClothingBackpackSatchelLeather
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
@@ -1332,7 +1332,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitMusician
     shoes: ClothingShoesBootsLaceup
-    id: VisitorPDA
+    id: MusicianPDA # imp
     back: ClothingBackpackSatchelLeather
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
@@ -1346,7 +1346,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitMusician
     shoes: ClothingShoesBootsLaceup
-    id: VisitorPDA
+    id: MusicianPDA # imp
     back: ClothingBackpackSatchelLeather
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
@@ -1360,7 +1360,7 @@
   equipment:
     jumpsuit: ClothingUniformRandomShirt
     shoes: ClothingShoesColorBrown
-    id: VisitorPDA
+    id: MusicianPDA # imp
     back: ClothingBackpackDuffel
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
@@ -1374,7 +1374,7 @@
   equipment:
     jumpsuit: ClothingUniformRandomShirt
     shoes: ClothingShoesColorBlack
-    id: VisitorPDA
+    id: MusicianPDA # imp
     back: ClothingBackpackSatchel
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
@@ -1388,7 +1388,7 @@
   equipment:
     jumpsuit: ClothingUniformRandomShirt
     shoes: ClothingShoesColorBlack
-    id: VisitorPDA
+    id: MusicianPDA # imp
     back: ClothingBackpack
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
@@ -1402,7 +1402,7 @@
   equipment:
     jumpsuit: ClothingUniformRandomShirt
     shoes: ClothingShoesColorBrown
-    id: VisitorPDA
+    id: MusicianPDA # imp
     back: ClothingBackpackDuffel
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
@@ -1416,7 +1416,7 @@
   equipment:
     jumpsuit: ClothingUniformRandomShirt
     shoes: ClothingShoesColorBlack
-    id: VisitorPDA
+    id: MusicianPDA # imp
     back: ClothingBackpackDuffel
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
@@ -1430,7 +1430,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitMusician
     shoes: ClothingShoesBootsLaceup
-    id: VisitorPDA
+    id: MusicianPDA # imp
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
     pocket1: BluntRainbow
@@ -1444,7 +1444,7 @@
     jumpsuit: ClothingUniformRandomShirt
     shoes: ClothingShoesWizard
     head: ClothingHeadRastaHat
-    id: VisitorPDA
+    id: MusicianPDA # imp
     back: ClothingBackpackSatchel
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
@@ -1459,7 +1459,7 @@
     jumpsuit: ClothingUniformJumpsuitColorTeal
     shoes: ClothingShoesColorBrown
     head: ClothingHeadHatSombrero
-    id: VisitorPDA
+    id: MusicianPDA # imp
     back: ClothingBackpackSatchel
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
@@ -1477,7 +1477,7 @@
     gloves: ClothingHandsGlovesColorWhite
     head: ClothingHeadBandBlack
     mask: ClothingMaskMime
-    id: VisitorPDA
+    id: MimePDA # imp
     back: ClothingBackpackMime
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
@@ -1492,7 +1492,7 @@
     gloves: ClothingHandsGlovesColorWhite
     head: ClothingHeadHatAnimalCatBlack
     mask: ClothingMaskMime
-    id: VisitorPDA
+    id: MimePDA # imp
     back: ClothingBackpackMime
     eyes: ClothingEyesGlassesCheapSunglasses
     ears: ClothingHeadsetService
@@ -1507,22 +1507,22 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitReporter
     shoes: ClothingShoesLeather
-    id: VisitorPDA
+    id: ReporterPDA # imp
     back: ClothingBackpackSatchel
     ears: ClothingHeadsetService
     pocket1: MicrophoneInstrument
-    pocket2: BoxFolderClipboard
+    pocket2: TapeRecorderFilled # imp
 
 - type: startingGear
   id: VisitorReporterAlt
   equipment:
     jumpsuit: ClothingUniformJumpsuitJournalist
     shoes: ClothingShoesColorBrown
-    id: VisitorPDA
+    id: ReporterPDA # imp
     back: ClothingBackpackSatchel
     ears: ClothingHeadsetService
     pocket1: MicrophoneInstrument
-    pocket2: BoxFolderClipboard
+    pocket2: TapeRecorderFilled # imp
 
 - type: startingGear
   id: VisitorServiceWorker
@@ -1530,7 +1530,7 @@
     jumpsuit: ClothingUniformJumpsuitBartender
     shoes: ClothingShoesColorBlack
     head: ClothingHeadBandBlue
-    id: VisitorPDA
+    id: ServiceWorkerPDA # imp
     back: ClothingBackpack
     ears: ClothingHeadsetService
     pocket1: Fork
@@ -1542,7 +1542,7 @@
     jumpsuit: ClothingUniformJumpsuitColorBlack
     shoes: ClothingShoesColorBlack
     head: ClothingHeadBandBlack
-    id: VisitorPDA
+    id: ServiceWorkerPDA # imp
     back: ClothingBackpack
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterApronBar
@@ -1555,7 +1555,7 @@
     jumpsuit: ClothingUniformJumpsuitSafari
     shoes: ClothingShoesBootsSalvage
     head: ClothingHeadSafari
-    id: VisitorPDA
+    id: ZookeeperPDA # imp
     belt: ClothingBeltUtility
     back: ClothingBackpackDuffel
     ears: ClothingHeadsetService
@@ -1568,7 +1568,7 @@
     jumpsuit: ClothingUniformJumpsuitSafari
     shoes: ClothingShoesBootsWork
     head: ClothingHeadSafari
-    id: VisitorPDA
+    id: ZookeeperPDA # imp
     belt: ClothingBeltStorageWaistbag
     back: WeaponShotgunDoubleBarreledRubber
     ears: ClothingHeadsetService

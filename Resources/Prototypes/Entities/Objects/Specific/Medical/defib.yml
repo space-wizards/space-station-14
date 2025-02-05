@@ -76,10 +76,10 @@
   id: DefibrillatorCompact # This should be a research item at some point
   parent: [ BaseDefibrillator, PowerCellSlotMediumItem ]
   name: compact defibrillator
-  description: Now in fun size!
+  description: A smaller one handed defibrillator initially designed by interdyne # Imp description
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/defibsmall.rsi
+    sprite: _Impstation/Objects/Specific/Medical/defibinterdyne.rsi # Imp
     layers:
       - state: icon
       - state: screen
@@ -104,12 +104,12 @@
 
 - type: entity
   id: DefibrillatorSyndicate
-  parent: DefibrillatorCompact
-  name: interdyne defibrillator
+  parent: [DefibrillatorCompact, Tier3Contraband] # Imp, make syndicate contraband
+  name: syndicate defibrillator # Imp rename
   description: Doubles as a self-defense weapon against war-crime inclined tiders.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/defibsyndi.rsi
+    sprite: _Impstation/Objects/Specific/Medical/defibsyndi.rsi # Imp
     layers:
       - state: icon
       - state: screen

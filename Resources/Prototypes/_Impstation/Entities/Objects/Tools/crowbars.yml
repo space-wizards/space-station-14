@@ -1,0 +1,24 @@
+- type: entity
+  name: PRIbar
+  parent: BaseCrowbar
+  id: Pribar
+  description: A purpose built crowbar for prying open firelocks. Collapses to fit in a pocket.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tools/pribar.rsi
+    state: icon
+  - type: Item
+    sprite: _Impstation/Objects/Tools/pribar.rsi
+    size: Small
+    storedSprite:
+      sprite: _Impstation/Objects/Tools/pribar.rsi
+      state: storage
+  - type: Prying
+    speedModifier: 1.25
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Piercing: 8
+    soundHit:
+      path: "/Audio/Weapons/bladeslice.ogg"

@@ -16,6 +16,11 @@
   - /Audio/_Impstation/Effects/Footsteps/highheels5.ogg
 
 - type: soundCollection
+  id: FootstepGondal
+  files:
+  - /Audio/_Impstation/Effects/gon.ogg
+  
+- type: soundCollection
   id: FootstepExplosion
   files:
   - /Audio/Effects/explosionfar.ogg

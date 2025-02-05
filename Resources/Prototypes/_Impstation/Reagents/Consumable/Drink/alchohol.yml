@@ -461,7 +461,7 @@
     Drink:
       effects:
         - !type:GenericStatusEffect
-          key: GrayAccent
+          key: GrayLanguage
           component: GrayAccent
         - !type:SatiateThirst
           factor: 2

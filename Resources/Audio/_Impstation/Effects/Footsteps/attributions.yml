@@ -36,3 +36,9 @@
   license: "CC-BY-SA-3.0"
   copyright: "Edit of original quack sound (unattributed), modified by DinnerCalzone (github)"
   source: "https://github.com/impstation/imp-station-14/pull/1310"
+
+- files:
+  - tcktckstep.ogg
+  license: "CC0-1.0"
+  copyright: "Made by DexD73 freesound.org, modified by Sha-Seng (github) and kipdotnet (github)"
+  source: "https://freesound.org/s/583715/"

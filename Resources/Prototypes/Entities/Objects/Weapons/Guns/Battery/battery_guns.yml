@@ -476,7 +476,7 @@
   name: disabler SMG
   parent: [ BaseWeaponBattery, BaseRestrictedContraband ]
   id: WeaponDisablerSMG
-  description: Advanced weapon that exhausts organic targets, weakening them until they collapse.
+  description: An advanced weapon that exhausts organic targets, weakening them until they collapse. #imp
   components:
   - type: Item
     size: Large
@@ -549,7 +549,7 @@
   name: antique laser pistol
   parent: [BaseWeaponBatterySmall, BaseGrandTheftContraband]
   id: WeaponAntiqueLaser
-  description: All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
+  description: All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi

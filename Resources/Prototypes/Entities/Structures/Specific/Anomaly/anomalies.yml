@@ -28,9 +28,9 @@
           radius: 0.35
         density: 50
         mask:
-        - MobMask
+        - FlyingMobMask
         layer:
-        - MobLayer
+        - FlyingMobLayer
   - type: Sprite
     noRot: true
     drawdepth: Effects #it needs to draw over stuff.

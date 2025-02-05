@@ -25,6 +25,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared._EinsteinEngines.Supermatter.Components;
 
 namespace Content.Shared.Projectiles;
 
@@ -220,8 +221,13 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         _audio.PlayPredicted(component.Sound, uid, null);
         component.EmbeddedIntoUid = target;
 
-        var ev = new EmbedEvent(user, target);
-        RaiseLocalEvent(uid, ref ev);
+        // Imp edits, though this whole thing was changed in an EE port anyway
+        var embedEv = new EmbedEvent(user, target);
+        RaiseLocalEvent(uid, ref embedEv);
+
+        var embeddedEv = new EmbeddedEvent(user, uid);
+        RaiseLocalEvent(target, ref embeddedEv);
+        // End imp edits
 
         if (component.AutoRemoveDuration != 0)
             component.AutoRemoveTime = _timing.CurTime + TimeSpan.FromSeconds(component.AutoRemoveDuration);

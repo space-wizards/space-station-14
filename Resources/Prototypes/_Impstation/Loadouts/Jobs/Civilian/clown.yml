@@ -17,15 +17,31 @@
 
 #Jumpsuit
 - type: loadout
-  id: CirclusClownSuit
+  id: CircusClownSuit
   equipment:
     jumpsuit: ClothingUniformCircusClown
+
+- type: loadout
+  id: JokesterSuit
+  equipment:
+    jumpsuit: ClothingUniformJokester
+
+#OuterClothing
+- type: loadout
+  id: JokesterOuterCoat
+  equipment:
+    outerClothing: ClothingOuterCoatJokester
 
 # Shoes
 - type: loadout
   id: CircusClownShoes
   equipment:
     shoes: ClothingShoesCircus
+
+- type: loadout
+  id: JokesterShoes
+  equipment:
+    shoes: ClothingShoesJokester
 
 #Neck
 - type: loadout

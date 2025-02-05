@@ -55,7 +55,7 @@
   name: AKMS
   parent: [BaseWeaponRifle, BaseRestrictedContraband]
   id: WeaponRifleAk
-  description: An iconic weapon of war. Simple and effective; favored by revolutionaries everywhere. Uses .30 rifle ammo.
+  description: An iconic weapon of war. Simple and effective; favored by revolutionaries everywhere. Uses .30 rifle ammo. #imp
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Rifles/ak.rsi
@@ -65,11 +65,11 @@
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
-    minAngle: 22
-    maxAngle: 42
-    angleIncrease: 3
-    angleDecay: 18
-    fireRate: 3.75
+    minAngle: 22 #imp
+    maxAngle: 42 #imp
+    angleIncrease: 3 #imp
+    angleDecay: 18 #imp
+    fireRate: 3.75 #imp
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
   - type: ChamberMagazineAmmoProvider
@@ -152,7 +152,7 @@
   name: Lecter
   parent: [BaseWeaponRifle, BaseRestrictedContraband]
   id: WeaponRifleLecter
-  description: A modern short-barreled assault rifle fielded by militaries and law enforcement throughout many worlds, complete with familiar controls and ergonomics. Uses .20 rifle ammo.
+  description: A modern short-barreled assault rifle fielded by militaries and law enforcement throughout many worlds, complete with familiar controls and ergonomics. Uses .20 rifle ammo. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
@@ -164,11 +164,11 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
   - type: Gun
-    fireRate: 4.5
+    fireRate: 4.5 #imp
     selectedMode: FullAuto
     availableModes:
       - FullAuto
-      - SemiAuto
+      - SemiAuto #imp
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
   - type: ItemSlots
@@ -204,7 +204,7 @@
   name: Foam Force Astro Ace
   parent: [BaseWeaponShotgun, BaseGunWieldable]
   id: WeaponRifleFoam
-  description: A premium foam rifle of the highest quality. Its plastic feels rugged, and its mechanisms sturdy. The body crackles when you squeeze too tightly.
+  description: A premium foam rifle of the highest quality. Its plastic feels rugged, and its mechanisms sturdy. The body crackles when you squeeze too tightly. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/foam_rifle.rsi

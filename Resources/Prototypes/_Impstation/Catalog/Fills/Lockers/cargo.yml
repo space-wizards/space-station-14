@@ -12,6 +12,7 @@
         - id: BoxMailCapsulePrimed
         - id: HandLabeler
         - id: ClothingHeadsetCargo
+        - id: HoloBellProjector
 
 - type: entity
   id: LockerCourierFilledHardsuit
@@ -27,5 +28,6 @@
         - id: BoxMailCapsulePrimed
         - id: HandLabeler
         - id: ClothingHeadsetCargo
+        - id: HoloBellProjector
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitCourier

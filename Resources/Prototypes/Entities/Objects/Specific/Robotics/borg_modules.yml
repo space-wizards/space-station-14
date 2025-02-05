@@ -620,6 +620,9 @@
         - PinpointerSyndicateNuclear
     - type: BorgModuleIcon
       icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-l6c-module }
+    - type: Tag #imp edit - let crew borgs use the l6 if salvagers find one or an assault borg is killed.
+      tags:
+      - BorgModuleGeneric
 
 - type: entity
   id: BorgModuleMartyr

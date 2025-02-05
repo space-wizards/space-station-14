@@ -78,12 +78,12 @@
   cost: 7500
   recipeUnlocks:
   - MagazineRifleUranium
-  - MagazineLPistolUranium
+  - MagazineLPistolUranium #imp
   - MagazinePistolUranium
   - MagazineDMRUranium
   - MagazineLightRifleUranium
   - SpeedLoaderMagnumUranium
-  - MagazineBoxLPistolUranium
+  - MagazineBoxLPistolUranium #imp
   - MagazineBoxPistolUranium
   - MagazineBoxMagnumUranium
   - MagazineBoxLightRifleUranium

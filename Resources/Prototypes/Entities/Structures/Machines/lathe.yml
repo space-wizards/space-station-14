@@ -148,10 +148,11 @@
       - LedLightTube
       - SodiumLightTube
       - ExteriorLightTube
-      - UvLightTube
+      - UvLightTube # imp
       - LightBulb
       - LedLightBulb
       - DimLightBulb
+      - WarmLightBulb
       - Bucket
       - DrinkMug
       - DrinkMugMetal
@@ -171,7 +172,7 @@
       - MopItem
       - Holoprojector
       - Mousetrap
-      - DeskBell
+      - DeskBell # imp
       - LightReplacer
       - TrashBag
       - PowerCellSmall
@@ -204,9 +205,8 @@
       - ClothingHeadHatCone
       - FreezerElectronics
       - Flare
-      # Delta-V ports
-      - TapeRecorder
-      - CassetteTape
+      - TapeRecorder # DV
+      - CassetteTape # DV
     dynamicRecipes:
       - Fulton
 
@@ -261,7 +261,7 @@
 
 - type: entity
   id: Protolathe
-  parent: [ BaseLatheLube, BaseScienceContraband ]
+  parent: [ BaseLatheLube, BaseScienceContraband ] # imp
   name: protolathe
   description: Converts raw materials into advanced items.
   components:
@@ -318,8 +318,8 @@
       - Implanter
       - PillCanister
       - ChemistryEmptyBottle01
-      - BaseChemistryEmptyVial
-      - Drone
+      - BaseChemistryEmptyVial # imp
+      - Drone # imp
       - AdvMopItem
       - WeaponSprayNozzle
       - ClothingBackpackWaterTank
@@ -373,12 +373,12 @@
       - BoxShotgunUranium
       - BoxShellTranquilizer
       - ExplosivePayload
-      - FullAutoConversionKit
+      - FullAutoConversionKit # imp
       - GrenadeBlast
       - GrenadeEMP
       - GrenadeFlash
       - HoloprojectorSecurity
-      - HyperBurstConversionKit
+      - HyperBurstConversionKit # imp
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
       - MagazineBoxMagnumIncendiary
@@ -387,11 +387,11 @@
       - MagazineBoxPistolUranium
       - MagazineBoxRifleIncendiary
       - MagazineBoxRifleUranium
-      - MagazineDMRIncendiary
-      - MagazineDMRUranium
+      - MagazineDMRIncendiary #imp
+      - MagazineDMRUranium #imp
       - MagazineGrenadeEmpty
-      - MagazineLPistolIncendiary
-      - MagazineLPistolUranium
+      - MagazineLPistolIncendiary #imp
+      - MagazineLPistolUranium #imp
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
       - MagazinePistolIncendiary
@@ -427,7 +427,7 @@
 
 - type: entity
   id: CircuitImprinter
-  parent: [ BaseLatheLube, BaseScienceContraband ]
+  parent: [ BaseLatheLube, BaseScienceContraband ] # imp
   name: circuit imprinter
   description: Prints circuit boards for machines.
   components:
@@ -471,7 +471,6 @@
     - SodaDispenserMachineCircuitboard
     - SpaceHeaterMachineCircuitBoard
     - CutterMachineCircuitboard
-    - StationAnchorCircuitboard
     - SalvageMagnetMachineCircuitboard
     - ShipyardComputerCircuitboard
     - ServiceTechFabCircuitboard #imp addition
@@ -573,7 +572,7 @@
 
 - type: entity
   id: ExosuitFabricator
-  parent: [ BaseLatheLube, BaseScienceContraband ]
+  parent: [ BaseLatheLube, BaseScienceContraband ] # imp
   name: exosuit fabricator
   description: Creates parts for robotics and other mechanical needs.
   components:
@@ -696,7 +695,7 @@
 
 - type: entity
   id: SecurityTechFab
-  parent: [ BaseLatheLube, BaseSecurityContraband ]
+  parent: [ BaseLatheLube, BaseSecurityContraband ] # imp
   name: security techfab
   description: Prints equipment for use by security crew.
   components:
@@ -733,19 +732,19 @@
       - MagazineBoxLightRiflePractice
       - MagazineBoxMagnum
       - MagazineBoxMagnumPractice
-      - MagazineBoxLPistol
-      - MagazineBoxLPistolPractice
+      - MagazineBoxLPistol #imp
+      - MagazineBoxLPistolPractice #imp
       - MagazineBoxPistol
       - MagazineBoxPistolPractice
       - MagazineBoxRifle
       - MagazineBoxRiflePractice
-      - MagazineDMR
-      - MagazineDMREmpty
+      - MagazineDMR #imp
+      - MagazineDMREmpty #imp
       - MagazineLightRifle
       - MagazineLightRifleEmpty
-      - MagazineLPistol
-      - MagazineLPistolEmpty
-      - MagazineLPistolPractice
+      - MagazineLPistol #imp
+      - MagazineLPistolEmpty #imp
+      - MagazineLPistolPractice #imp
       - MagazinePistol
       - MagazinePistolEmpty
       - MagazinePistolSubMachineGun
@@ -776,29 +775,29 @@
       - ClothingBackpackElectropack
       - ExplosivePayload
       - FlashPayload
-      - FullAutoConversionKit
+      - FullAutoConversionKit # imp
       - GrenadeBlast
       - GrenadeEMP
       - GrenadeFlash
       - HoloprojectorSecurity
-      - HyperBurstConversionKit
+      - HyperBurstConversionKit # imp
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
-      - MagazineBoxLPistolIncendiary
-      - MagazineBoxLPistolUranium
+      - MagazineBoxLPistolIncendiary #imp
+      - MagazineBoxLPistolUranium #imp
       - MagazineBoxMagnumIncendiary
       - MagazineBoxMagnumUranium
       - MagazineBoxPistolIncendiary
       - MagazineBoxPistolUranium
       - MagazineBoxRifleIncendiary
       - MagazineBoxRifleUranium
-      - MagazineDMRIncendiary
-      - MagazineDMRUranium
+      - MagazineDMRIncendiary #imp
+      - MagazineDMRUranium #imp
       - MagazineGrenadeEmpty
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
-      - MagazineLPistolIncendiary
-      - MagazineLPistolUranium
+      - MagazineLPistolIncendiary #imp
+      - MagazineLPistolUranium #imp
       - MagazinePistolIncendiary
       - MagazinePistolUranium
       - MagazineRifleIncendiary
@@ -838,7 +837,7 @@
 
 - type: entity
   id: AmmoTechFab
-  parent: [ BaseLatheLube, BaseSecurityContraband ]
+  parent: [ BaseLatheLube, BaseSecurityContraband ] # imp
   name: ammo techfab
   description: Prints the bare minimum of bullets that any budget military or armory could need. Nothing fancy.
   components:
@@ -870,12 +869,12 @@
         - MagazineBoxMagnum
         - MagazineBoxPistol
         - MagazineBoxRifle
-        - MagazineDMR
-        - MagazineDMREmpty
+        - MagazineDMR #imp
+        - MagazineDMREmpty #imp
         - MagazineLightRifle
         - MagazineLightRifleEmpty
-        - MagazineLPistol
-        - MagazineLPistolEmpty
+        - MagazineLPistol #imp
+        - MagazineLPistolEmpty #imp
         - MagazinePistol
         - MagazinePistolEmpty
         - MagazineRifle
@@ -894,7 +893,7 @@
 
 - type: entity
   id: MedicalTechFab
-  parent: [ BaseLatheLube, BaseMedicalContraband ]
+  parent: [ BaseLatheLube, BaseMedicalContraband ] # imp
   name: medical techfab
   description: Prints equipment for use by the medbay.
   components:
@@ -936,7 +935,7 @@
       - PillCanister
       - BodyBag
       - ChemistryEmptyBottle01
-      - BaseChemistryEmptyVial
+      - BaseChemistryEmptyVial # imp
       - RollerBedSpawnFolded
       - CheapRollerBedSpawnFolded
       - EmergencyRollerBedSpawnFolded
@@ -958,6 +957,7 @@
       - WhiteCane
       - PrescriptionLens # imp
       - PrescriptionLensStrong # imp
+      - BlindingLens # imp
     dynamicRecipes:
       - ChemicalPayload
       - CryostasisBeaker
@@ -1157,8 +1157,28 @@
       - ClothingNeckCloakEnby
       - ClothingNeckCloakPan
       - ClothingNeckCloakBear
+      # Bedsheets
+      - BedsheetBlack
+      - BedsheetBlue
+      - BedsheetBrown
+      - BedsheetGreen
+      - BedsheetGrey
+      - BedsheetOrange
+      - BedsheetPurple
+      - BedsheetRed
+      - BedsheetWhite
+      - BedsheetYellow
+      - BedsheetClown
+      - BedsheetCosmos
+      - BedsheetIan
+      - BedsheetMedical
+      - BedsheetMime
+      - BedsheetNT
+      - BedsheetRainbow
+      - BedsheetBrigmedic
   - type: EmagLatheRecipes
     emagStaticRecipes:
+      # Clothing
       - ClothingHeadHatCentcomcap
       - ClothingHeadHatCentcom
       - ClothingUniformJumpsuitCentcomAgent
@@ -1182,6 +1202,8 @@
       - ClothingOuterWinterSyndie
       - ClothingOuterWinterSyndieCap
       - ClothingNeckCloakStraight
+      # Bedsheets
+      - BedsheetSyndie
   - type: MaterialStorage
     whitelist:
       tags:

@@ -11,6 +11,9 @@
     ClothingNeckRuffle: 2 #imp
     ClothingUniformCircusClown: 1 #imp
     ClothingShoesCircus: 2 #imp
+    ClothingUniformJokester: 1 #imp
+    ClothingOuterCoatJokester: 1 #imp
+    ClothingShoesJokester: 2 #imp
     ClothingOuterWinterClown: 1
     ClothingOuterWinterMime: 1
     ClothingOuterWinterMusician: 1

@@ -11,6 +11,9 @@
     allowMovement: true
     name: ghost-role-information-nukie-mouse-name
     description: ghost-role-information-nukie-mouse-description
+    mindRoles: # imp
+    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleGhostRoleFamiliar
   - type: GhostTakeoverAvailable
   - type: RandomMetadata
     nameSegments: [names_mouse_death_commando]

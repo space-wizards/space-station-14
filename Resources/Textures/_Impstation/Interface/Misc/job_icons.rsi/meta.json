@@ -1,12 +1,42 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Courier by Honeyed_Lemons_ from the impstation discord",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi, Courier by Honeyed_Lemons_ from the impstation discord, CBURN, Deathsquadron icons by RosySaturniidae (github), Admin, ERT, and NT icon edits also by RosySaturniidae (github)",
     "size": {
         "x": 8,
         "y": 8
     },
     "states": [
+        {
+            "name": "Admin"
+        },
+        {
+            "name": "Nanotrasen"
+        },
+        {
+            "name": "CBURN"
+        },
+        {
+            "name": "Deathsquad"
+        },
+        {
+            "name": "ERTLeader"
+        },
+        {
+            "name": "ERTSecurity"
+        },
+        {
+            "name": "ERTMedical"
+        },
+        {
+            "name": "ERTEngineer"
+        },
+        {
+            "name": "ERTJanitor"
+        },
+        {
+            "name": "ERTChaplain"
+        },
         {
             "name": "Courier"
         }

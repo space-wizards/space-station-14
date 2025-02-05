@@ -12,6 +12,7 @@
     - CableMVStackLingering10
     - CableApcStackLingering10
     - trayScanner
+    - Multitool
     - MicroDrill
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
@@ -31,6 +32,7 @@
   - type: ItemBorgModule
     items:
     - WeaponGrapplingGunTckTck
+    - FireExtinguisher
     - HandHeldMassScannerBorg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: grappling-module }

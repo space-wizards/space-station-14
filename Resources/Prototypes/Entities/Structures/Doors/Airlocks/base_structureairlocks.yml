@@ -12,7 +12,7 @@
           "/Audio/Weapons/smash.ogg"
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/public.rsi #imp edit
     snapCardinals: true
     layers:
     - state: closed

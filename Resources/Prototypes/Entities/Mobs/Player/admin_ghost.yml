@@ -92,8 +92,8 @@
     templateId: aghost
   - type: Loadout
     prototypes: [ MobAghostGear ]
-  - type: SupermatterImmune
   - type: BypassInteractionChecks
+  - type: SupermatterImmune # imp
 
 - type: entity
   id: ActionAGhostShowSolar

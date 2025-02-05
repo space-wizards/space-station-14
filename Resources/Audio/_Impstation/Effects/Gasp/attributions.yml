@@ -1,0 +1,26 @@
+- files:
+  - s_deathgasp_1.ogg
+  - s_deathgasp_2.ogg
+  - s_female_deathgasp_1.ogg
+  - s_female_deathgasp_2.ogg
+  - s_female_deathgasp_3.ogg
+  - s_female_deathgasp_4.ogg
+  - s_female_deathgasp_5.ogg
+  - s_male_deathgasp_1.ogg
+  - s_male_deathgasp_2.ogg
+  - s_male_deathgasp_3.ogg
+  - s_male_deathgasp_4.ogg
+  - s_male_deathgasp_5.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/commit/4397f13c72998aa7e6ce192215c9f77b9d62eee2. Original modified by harpy and fiend."
+  source: "https://github.com/ParadiseSS13/Paradise/tree/4397f13c72998aa7e6ce192215c9f77b9d62eee2/sound/goonstation/voice"
+
+- files:
+  - s_gasp_female_1.ogg
+  - s_gasp_female_2.ogg
+  - s_gasp_female_3.ogg
+  - s_gasp_male_1.ogg
+  - s_gasp_male_2.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation at https://github.com/tgstation/tgstation/commit/f7a49c4068f1277e6857baf0892d355f1c055974. Original modified by harpy and fiend."
+  source: "https://github.com/tgstation/tgstation/tree/f7a49c4068f1277e6857baf0892d355f1c055974/sound/voice/human"

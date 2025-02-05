@@ -82,6 +82,7 @@
     - NotekeeperCartridge
     - NewsReaderCartridge
     - NanoChatCartridge # DV
+    - SOSCartridge # Imp
     cartridgeSlot:
       priority: -1
       name: device-pda-slot-component-slot-name-cartridge
@@ -138,6 +139,7 @@
     - NewsReaderCartridge
     - WantedListCartridge
     - NanoChatCartridge # DV
+    - SOSCartridge # Imp
 - type: entity
   parent: BasePDA
   id: BaseMedicalPDA
@@ -151,6 +153,7 @@
     - NewsReaderCartridge
     - MedTekCartridge
     - NanoChatCartridge # DV
+    - SOSCartridge # Imp
 
 - type: entity
   parent: BasePDA
@@ -376,11 +379,35 @@
   components:
   - type: Pda
     id: MimeIDCard
-    idSlot: #  rewrite without sound because mime
-      name: ID Card
+    paiSlot:
+      priority: -2
+      ejectSound: null
+      insertSound: null
+      whitelist:
+        components:
+        - PAI
+    idSlot:
+      name: access-id-card-component-default
+      ejectSound: null # mime is silent
+      insertSound: null
       whitelist:
         components:
         - IdCard
+    penSlot:
+      startingItem: Pen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+      ejectSound: null
+      insertSound: null
+  - type: CartridgeLoader
+    cartridgeSlot:
+      ejectSound: null
+      insertSound: null
+      whitelist:
+        components:
+        - Cartridge
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -448,6 +475,7 @@
       - NanoChatCartridge # DV
       - MailMetricsCartridge  # DV
       - StockTradingCartridge # DeltaV
+      - SOSCartridge # Imp
 
 - type: entity
   parent: BasePDA
@@ -473,6 +501,7 @@
       - NewsReaderCartridge
       - StockTradingCartridge # DeltaV
       - NanoChatCartridge # DeltaV
+      - SOSCartridge # Imp
 
 - type: entity
   parent: BasePDA
@@ -500,6 +529,7 @@
     - NewsReaderCartridge
     - AstroNavCartridge
     - NanoChatCartridge # DV
+    - SOSCartridge # Imp
 
 - type: entity
   parent: BasePDA
@@ -850,6 +880,7 @@
     - WantedListCartridge
     - LogProbeCartridge
     - NanoChatCartridge # DV
+    - SOSCartridge # Imp
 
 - type: entity
   parent: BaseSecurityPDA
@@ -922,6 +953,7 @@
     - AstroNavCartridge
     - NanoChatCartridge # DV
     - StockTradingCartridge # DV
+    - SOSCartridge # Imp
 
 - type: entity
   parent: CentcomPDA
@@ -948,20 +980,34 @@
     - AstroNavCartridge
     - NanoChatCartridge # DV
     - StockTradingCartridge # DV
+    - SOSCartridge # Imp
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
 
-- type: entity
+- type: entity # imp
   parent: CentcomPDA
   id: DeathsquadPDA
   suffix: Death Squad
+  name: death squad PDA
+  description: The red helps to mask the blood. 
   components:
   - type: Pda
-    id: CentcomIDCardDeathsquad
+    id:   CentcomIDCardDeathsquad
+  - type: Appearance 
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-deathsquadron
+  - type: Icon
+    state: pda-deathsquadron
+  - type: PdaBorderColor 
+    borderColor: "#640202"
+    accentHColor: "#06064B"
+    accentVColor: "#06064B"
   - type: Tag #  Ignore Chameleon tags
     tags:
-    - DoorBumpOpener
+    - DoorBumpOpener # /imp
 
 - type: entity
   parent: BasePDA
@@ -1098,6 +1144,7 @@
     - LogProbeCartridge
     - AstroNavCartridge
     - NanoChatCartridge # DV
+    - SOSCartridge # Imp
 
 - type: entity
   parent: ERTLeaderPDA
@@ -1157,10 +1204,17 @@
   components:
   - type: Pda
     id: CBURNIDcard
-  - type: PdaBorderColor
+  - type: Appearance #imp
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-cburn
+  - type: Icon
+    state: pda-cburn
+  - type: PdaBorderColor #imp
     borderColor: "#A32D26"
-    accentHColor: "#447987"
-    accentVColor: "#447987"
+    accentHColor: "#D0B01A"
+    accentVColor: "#D0B01A"
 
 - type: entity
   parent: BasePDA
@@ -1267,6 +1321,7 @@
     - WantedListCartridge
     - LogProbeCartridge
     - NanoChatCartridge # DV
+    - SOSCartridge # Imp
 
 - type: entity
   parent: BaseMedicalPDA
@@ -1295,6 +1350,7 @@
     - WantedListCartridge
     - MedTekCartridge
     - NanoChatCartridge # DV
+    - SOSCartridge # Imp
 
 - type: entity
   parent: BasePDA

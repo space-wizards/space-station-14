@@ -182,7 +182,10 @@
     - !type:NestedSelector
       tableId: SyndieMaintLoot
       prob: 0.05
-    # Enemy "Loot"
+    # Recursive
+    - id: ClosetMaintenanceFilledRandom
+      prob: 0.01
+     # Enemy "Loot"
     - !type:NestedSelector
       tableId: MaintEnemyTable
       prob: 0.01

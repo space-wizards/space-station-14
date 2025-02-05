@@ -3,7 +3,7 @@
   mapName: 'Meta Station'
   mapPath: /Maps/_Impstation/meta.yml
   minPlayers: 35
-  maxPlayers: 70
+  maxPlayers: 80
   stations:
     Meta:
       stationProto: StandardNanotrasenStation

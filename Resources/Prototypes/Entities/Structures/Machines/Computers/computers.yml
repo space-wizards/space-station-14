@@ -856,7 +856,7 @@
     energy: 1.6
     color: "#b89f25"
   - type: AccessReader
-    access: [["Cargo"]]
+    access: [["Logistics"]] #Imp
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice

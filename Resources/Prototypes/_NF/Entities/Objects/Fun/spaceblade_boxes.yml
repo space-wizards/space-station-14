@@ -1,0 +1,62 @@
+- type: entity
+  id: SpaceBladeBoxTrash
+  parent: MysteryFigureBoxTrash
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Fun/spaceblade.rsi
+    state: sb_box_unfolded
+
+- type: entity
+  parent: MysteryFigureBox
+  id: MysterySpaceBladeBox
+  name: mystery space blade box
+  description: A box containing a mystery space blade. The side of the box depicts a few blacked-out 'rare' space blades.
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Fun/spaceblade.rsi
+    scale: 0.65, 0.65
+    layers:
+      - state: sb_box
+  - type: StaticPrice
+    price: 160
+  - type: SpawnItemsOnUse
+    items:
+      - id: SpaceBladeBoxTrash
+      - id: SpaceBladeRedOrange
+        orGroup: SB
+      - id: SpaceBladeBlue
+        orGroup: SB
+      - id: SpaceBladeFrontier
+        orGroup: SB
+      - id: SpaceBladeGoldBlue
+        orGroup: SB
+      - id: SpaceBladeMail
+        orGroup: SB
+      - id: SpaceBladeEyeball
+        orGroup: SB
+      - id: SpaceBladeBlade
+        orGroup: SB
+      - id: SpaceBladeCheck
+        orGroup: SB
+        prob: 0.20
+      - id: SpaceBladeRune
+        orGroup: SB
+        prob: 0.20
+      - id: SpaceBladeMoff
+        orGroup: SB
+        prob: 0.20
+      - id: SpaceBladePizza
+        orGroup: SB
+        prob: 0.20
+      - id: SpaceBladeWeh
+        orGroup: SB
+        prob: 0.20
+      - id: SpaceBladeClown
+        orGroup: SB
+        prob: 0.10
+      - id: SpaceBladeTesla
+        orGroup: SB
+        prob: 0.10
+      - id: SpaceBladeSingularity
+        orGroup: SB
+        prob: 0.10

@@ -1,0 +1,4 @@
+- files: ["calm.ogg", "charge.ogg", "delamming.ogg", "emitter2.ogg", "marauder.ogg", "supermatter.ogg"]
+  copyright: "Taken from tgstation"
+  license: "CC-BY-SA-3.0"
+  source: "https://github.com/tgstation/tgstation/pull/87191"

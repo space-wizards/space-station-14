@@ -1,4 +1,4 @@
-#HoS happy pills & pillbottle
+# HoS happy pills & pillbottle
 - type: entity
   name: pill
   suffix: Psicodine 18u Happiness 2u
@@ -45,3 +45,38 @@
       - state: pill_canister-hos-inhand-right
   - type: StealTarget
     stealGroup: SecPillCanister
+
+# Pure happy pills & pillbottle
+
+- type: entity
+  name: pill
+  suffix: Happiness 10u
+  parent: Pill
+  id: PillHappiness
+  components:
+  - type: Pill
+    pillType: 21
+  - type: Sprite
+    state: pill22
+  - type: Label
+    currentLabel: happiness 10u
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Happiness
+          Quantity: 10
+
+- type: entity
+  name: pill canister
+  parent: PillCanister
+  id: PillCanisterHappiness
+  suffix: Happiness 10u, 5
+  components:
+  - type: Label
+    currentLabel: happiness 10u
+  - type: StorageFill
+    contents:
+    - id: PillHappiness
+      amount: 5

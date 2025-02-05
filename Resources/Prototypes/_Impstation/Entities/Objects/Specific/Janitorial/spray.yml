@@ -1,0 +1,16 @@
+- type: entity
+  name: spray bottle
+  id: SprayBottleCarpetium
+  suffix: Filled, Carpetium
+  parent: SprayBottle
+  components:
+  - type: Tag
+    tags:
+    - Spray
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
+        reagents:
+        - ReagentId: Carpetium
+          Quantity: 100
