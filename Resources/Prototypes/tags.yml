@@ -471,6 +471,9 @@
   id: DockEmergency # Used bv EmergencyShuttleSystem for finding a priority FTL destination.
 
 - type: Tag
+  id: DevoterNanotrasen
+
+- type: Tag
   id: Document # A superset of Paper tag. Represents a paper-like entity with writing on it, but is not necessarily writeable itself. Storage whitelist: MailCart
 
 - type: Tag
