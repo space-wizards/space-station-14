@@ -11,8 +11,11 @@ namespace Content.Server.Atmos.Piping.Unary.Components
     [RegisterComponent]
     public sealed partial class GasVentPumpComponent : Component
     {
+        [DataField]
+        public bool Powered { get; set; } = false;
+
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Enabled { get; set; } = false;
+        public bool Enabled { get; set; } = true;
 
         [ViewVariables]
         public bool IsDirty { get; set; } = false;
