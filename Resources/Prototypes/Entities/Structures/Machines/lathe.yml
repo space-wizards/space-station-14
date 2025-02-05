@@ -985,7 +985,10 @@
       - ClothingUniformJumpskirtCMOTurtle
       - ClothingUniformJumpsuitDetective
       - ClothingUniformJumpskirtDetective
+      - ClothingUniformJumpsuitDetectiveGrey # Harmony
+      - ClothingUniformJumpskirtDetectiveGrey # Harmony
       - ClothingUniformJumpsuitDetectiveBlueHarmony # Harmony
+      - ClothingUniformJumpskirtDetectiveBlueHarmony # Harmony
       - ClothingUniformJumpsuitEngineering
       - ClothingUniformJumpskirtEngineering
       - ClothingUniformJumpsuitSeniorEngineer

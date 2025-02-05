@@ -93,6 +93,20 @@
   id: ClothingUniformJumpsuitDetectiveBlueHarmony
   result: ClothingUniformJumpsuitDetectiveBlueHarmony
 
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtDetectiveBlueHarmony
+  result: ClothingUniformJumpskirtDetectiveBlueHarmony
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitDetectiveGrey
+  result: ClothingUniformJumpsuitDetectiveGrey
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtDetectiveGrey
+  result: ClothingUniformJumpskirtDetectiveGrey
 
 ## Warden
 - type: latheRecipe

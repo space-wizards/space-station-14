@@ -41,3 +41,14 @@
     sprite: _Harmony/Clothing/Uniforms/Jumpskirt/hos_turtle.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/Uniforms/Jumpskirt/hos_turtle.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  id: ClothingUniformJumpskirtDetectiveBlueHarmony
+  name: detective's blue suitskirt
+  description: For when the time calls for you to find the clues, which happen to be blue.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/det_blue.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/det_blue.rsi
