@@ -74,6 +74,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 _ => throw new ArgumentOutOfRangeException()
             };
 
+            if (!vent.Powered)
+                return;
+
             if (!vent.Enabled || !_nodeContainer.TryGetNode(uid, nodeName, out PipeNode? pipe))
             {
                 return;
@@ -207,7 +210,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnPowerChanged(EntityUid uid, GasVentPumpComponent component, ref PowerChangedEvent args)
         {
-            component.Enabled = args.Powered;
+            component.Powered = args.Powered;
             UpdateState(uid, component);
         }
 
@@ -277,7 +280,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 _ambientSoundSystem.SetAmbience(uid, false);
                 _appearance.SetData(uid, VentPumpVisuals.State, VentPumpState.Welded, appearance);
             }
-            else if (!vent.Enabled)
+            else if (!vent.Enabled || !vent.Powered)
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 _appearance.SetData(uid, VentPumpVisuals.State, VentPumpState.Off, appearance);

@@ -55,6 +55,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             var timeDelta = args.dt;
 
+            if (!scrubber.Powered)
+                return;
+
             if (!scrubber.Enabled || !_nodeContainer.TryGetNode(uid, scrubber.OutletName, out PipeNode? outlet))
                 return;
 
@@ -138,7 +141,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnPowerChanged(EntityUid uid, GasVentScrubberComponent component, ref PowerChangedEvent args)
         {
-            component.Enabled = args.Powered;
+            component.Powered = args.Powered;
             UpdateState(uid, component);
         }
 
@@ -185,7 +188,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 _ambientSoundSystem.SetAmbience(uid, false);
                 _appearance.SetData(uid, ScrubberVisuals.State, ScrubberState.Welded, appearance);
             }
-            else if (!scrubber.Enabled)
+            else if (!scrubber.Powered || !scrubber.Enabled)
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 _appearance.SetData(uid, ScrubberVisuals.State, ScrubberState.Off, appearance);
