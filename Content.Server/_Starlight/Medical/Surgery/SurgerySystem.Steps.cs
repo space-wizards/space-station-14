@@ -123,7 +123,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         {
             if (!HasComp(organ.Id, type) || !_body.RemoveOrgan(organ.Id, organ.Component)) continue;
 
-            var ev = new SurgeryOrganExtractCompleted(args.Body, args.Part, organ.Id);
+            var ev = new SurgeryOrganExtracted(args.Body, args.Part, organ.Id);
             RaiseLocalEvent(organ.Id, ref ev);
 
             return;

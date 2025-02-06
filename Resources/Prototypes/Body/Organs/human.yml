@@ -88,6 +88,9 @@
   - type: Item
     size: Small
     heldPrefix: eyeballs
+  - type: OrganVisualization
+    layer: Eyes
+    prototype: MobHumanoidEyes
 
 - type: entity
   id: OrganHumanTongue

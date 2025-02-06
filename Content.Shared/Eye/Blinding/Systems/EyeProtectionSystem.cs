@@ -1,4 +1,4 @@
-using Content.Shared.StatusEffect;
+﻿using Content.Shared.StatusEffect;
 using Content.Shared.Inventory;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Tools.Components;
@@ -19,7 +19,22 @@ namespace Content.Shared.Eye.Blinding.Systems
 
             SubscribeLocalEvent<EyeProtectionComponent, GetEyeProtectionEvent>(OnGetProtection);
             SubscribeLocalEvent<EyeProtectionComponent, InventoryRelayedEvent<GetEyeProtectionEvent>>(OnGetRelayedProtection);
+
+            //🌟Starlight🌟 start
+            SubscribeLocalEvent<NightVisionComponent, GetEyeProtectionEvent>(OnGetProtection); 
+            SubscribeLocalEvent<ThermalVisionComponent, GetEyeProtectionEvent>(OnGetProtection);
+            SubscribeLocalEvent<CycloritesVisionComponent, GetEyeProtectionEvent>(OnGetProtection);
+            //🌟Starlight🌟 end
         }
+
+        //🌟Starlight🌟 start
+        private void OnGetProtection(Entity<NightVisionComponent> ent, ref GetEyeProtectionEvent args)
+            => args.Protection -= TimeSpan.FromSeconds(9);  //We'll need to put this constant somewhere in the prototypes...later...
+        private void OnGetProtection(Entity<ThermalVisionComponent> ent, ref GetEyeProtectionEvent args)
+            => args.Protection -= TimeSpan.FromSeconds(12);
+        private void OnGetProtection(Entity<CycloritesVisionComponent> ent, ref GetEyeProtectionEvent args)
+            => args.Protection -= TimeSpan.FromSeconds(6);
+        //🌟Starlight🌟 end
 
         private void OnGetRelayedProtection(EntityUid uid, EyeProtectionComponent component,
             InventoryRelayedEvent<GetEyeProtectionEvent> args)
@@ -43,7 +58,7 @@ namespace Content.Shared.Eye.Blinding.Systems
             var ev = new GetEyeProtectionEvent();
             RaiseLocalEvent(args.User, ev);
 
-            var time = (float) (component.StatusEffectTime - ev.Protection).TotalSeconds;
+            var time = (float)(component.StatusEffectTime - ev.Protection).TotalSeconds;
             if (time <= 0)
                 return;
 

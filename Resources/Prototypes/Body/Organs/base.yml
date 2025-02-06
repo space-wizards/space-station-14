@@ -19,7 +19,10 @@
         Caustic: 10
   - type: Damageable
     damageContainer: Biological
-    
+  - type: OrganVisualization
+    layer: Eyes
+    prototype: MobHumanoidEyes
+
 - type: entity
   id: BaseOrganTongue
   abstract: true

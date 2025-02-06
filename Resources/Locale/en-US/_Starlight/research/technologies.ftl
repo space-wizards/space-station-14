@@ -8,5 +8,8 @@ research-technology-advanced-cyberlimbs = Advanced cyberorgans
 
 research-technology-basic-eye-implants = Basic Eye Implants
 
+research-technology-nightvision-eyes = Night Vision Cyber Eyes
+research-technology-thermalvision-eyes = Thermal Vision Cyber Eyes
+
 research-technology-ion-weaponry = Ion Weaponry
 research-technology-declone-technology = Declone Technology

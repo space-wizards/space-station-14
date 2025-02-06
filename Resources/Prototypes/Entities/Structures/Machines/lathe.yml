@@ -855,10 +855,10 @@
 
 #####################MAGAZINE#######################
 # LMG
-      - UniversalMagazineSP
-      - UniversalMagazineHP
-      - UniversalMagazineFMJ
-      - UniversalMagazineEmpty
+      - LightRifleHeavyMagazineSP
+      - LightRifleHeavyMagazineHP
+      - LightRifleHeavyMagazineFMJ
+      - LightRifleHeavyMagazineEmpty
 # Light Rifle
       - MagazineLightRifleSP
       - MagazineLightRifleHP
@@ -929,9 +929,9 @@
       - MagazineBoxRifleAP
 #####################MAGAZINE#######################
 # LMG
-      - UniversalMagazineIncendiary
-      - UniversalMagazineUranium
-      - UniversalMagazineAP
+      - LightRifleHeavyMagazineIncendiary
+      - LightRifleHeavyMagazineUranium
+      - LightRifleHeavyMagazineAP
 # Light Rifle
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
@@ -1158,6 +1158,8 @@
       - EyeImplantWelding
       - EyeImplantMedical
       - EyeImplantSecurity
+      - EyeImplantNightVision
+      - EyeImplantThermal
   - type: Machine
     board: MedicalTechFabCircuitboard
   - type: StealTarget
