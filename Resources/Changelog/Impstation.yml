@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Added new possible names for Syndicate Recruiters, Ninjas and Revenants.
-    type: Add
-  - message: Added a few new Syndicate codewords.
-    type: Add
-  id: 566
-  time: '2024-11-24T22:56:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/780
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Added Space Wind!
-    type: Add
-  id: 567
-  time: '2024-11-24T23:23:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/761
 - author: Sha-Seng
   changes:
   - message: The Silence of Tenebrae has been added to the station's library
@@ -4285,3 +4269,17 @@
   id: 1065
   time: '2025-02-06T19:45:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1593
+- author: AvianMaiden
+  changes:
+  - message: Syndicate Fujoshi.
+    type: Add
+  id: 1066
+  time: '2025-02-06T19:57:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1591
+- author: AvianMaiden
+  changes:
+  - message: Updated vox plushie sounds!
+    type: Add
+  id: 1067
+  time: '2025-02-06T19:57:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1590
