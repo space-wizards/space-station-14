@@ -52,7 +52,7 @@ public sealed partial class RandomHumanoidAppearanceComponent : Component
     /// Will overwrite all randomized markings, if there are any. 
     /// Defined in YML as, for example:
     /// markings:
-    ///   ArachnidTorsoFiddleback: "#daf7da"
+    ///   ArachnidTorsoFiddleback: [ "#daf7da" ]
     /// </summary>
     [DataField] public Dictionary<string, List<Color>>? Markings = null;
 }
