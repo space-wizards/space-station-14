@@ -9,6 +9,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Movement.Components;
@@ -20,7 +21,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
-using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Shared.Mech.EntitySystems;
