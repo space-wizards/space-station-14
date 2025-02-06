@@ -112,7 +112,7 @@
   - type: Sprite
     sprite: _Starlight/Structures/Machines/VendingMachines/fashionmat.rsi
   - type: Store
-    name: Fashion-o-Mat
+    name: vendor-fashion-o-mat
     categories:
     - SLFahsionSkirt
     - SLFahsionSuit

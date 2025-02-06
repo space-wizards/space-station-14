@@ -117,7 +117,7 @@
     - 0,0,1,0
     - 0,1,0,1
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/ga12.rsi
     quickEquip: false
     slots:
     - suitStorage
@@ -128,8 +128,6 @@
   - type: Gun
     spread: 30
   - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/ga12.rsi
-  - type: Clothing
     sprite: _Starlight/Objects/Weapons/Guns/Shotguns/ga12.rsi
   - type: GunRequiresWield
   - type: BallisticAmmoProvider
