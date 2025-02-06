@@ -649,7 +649,6 @@ entities:
             5275: -9,40
             5289: -10,46
             5290: -9,46
-            5320: -4,46
             5321: -3,46
             5322: -2,46
             5323: -1,46
@@ -688,6 +687,7 @@ entities:
             6492: 49,11
             6493: -4,42
             6516: 74,3
+            6558: -4,46
         - node:
             zIndex: 1
             color: '#FFFFFFFF'
@@ -6934,7 +6934,8 @@ entities:
           -3,10:
             0: 56605
           -3,11:
-            0: 7645
+            0: 5597
+            3: 2048
           -3,12:
             1: 12
             0: 64784
@@ -8981,12 +8982,6 @@ entities:
     - type: Transform
       pos: 43.586433,9.186928
       parent: 5350
-  - uid: 12703
-    components:
-    - type: Transform
-      parent: 1021
-    - type: Physics
-      canCollide: False
   - uid: 16506
     components:
     - type: Transform
@@ -14707,7 +14702,7 @@ entities:
       pos: -29.5,15.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -252063.2
+      secondsUntilStateChange: -252474.3
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14971,7 +14966,7 @@ entities:
       pos: -4.5,53.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -106716.95
+      secondsUntilStateChange: -107128.04
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -22809,13 +22804,6 @@ entities:
     - type: Transform
       pos: -26.5,-13.5
       parent: 5350
-- proto: BookSpaceLaw
-  entities:
-  - uid: 1376
-    components:
-    - type: Transform
-      pos: -3.484253,37.5611
-      parent: 5350
 - proto: BoozeDispenser
   entities:
   - uid: 2445
@@ -23049,6 +23037,13 @@ entities:
     - type: Transform
       pos: -46.366432,-30.56493
       parent: 5350
+- proto: BoxFlashbang
+  entities:
+  - uid: 7543
+    components:
+    - type: Transform
+      pos: -0.5550375,44.6134
+      parent: 5350
 - proto: BoxFolderBase
   entities:
   - uid: 14348
@@ -23263,6 +23258,11 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+  - uid: 12703
+    components:
+    - type: Transform
+      pos: -3.442955,37.628872
+      parent: 5350
 - proto: BoxLightbulb
   entities:
   - uid: 3949
@@ -23293,6 +23293,18 @@ entities:
     components:
     - type: Transform
       pos: -45.725807,-31.611805
+      parent: 5350
+- proto: BoxMagazinePistol
+  entities:
+  - uid: 1376
+    components:
+    - type: Transform
+      pos: -8.353387,44.624264
+      parent: 5350
+  - uid: 7032
+    components:
+    - type: Transform
+      pos: -8.603387,44.468014
       parent: 5350
 - proto: BoxPillCanister
   entities:
@@ -67545,25 +67557,25 @@ entities:
       parent: 5350
 - proto: ClothingHeadHelmetBasic
   entities:
+  - uid: 4235
+    components:
+    - type: Transform
+      pos: -3.6913068,42.629025
+      parent: 5350
   - uid: 6490
     components:
     - type: Transform
-      pos: -8.654011,44.395737
+      pos: -3.6913068,42.722775
       parent: 5350
-  - uid: 7368
+  - uid: 6651
     components:
     - type: Transform
-      pos: -8.654011,44.614487
+      pos: -3.6913068,42.535275
       parent: 5350
-  - uid: 7377
+  - uid: 6866
     components:
     - type: Transform
-      pos: -8.664427,44.718655
-      parent: 5350
-  - uid: 7517
-    components:
-    - type: Transform
-      pos: -8.654011,44.510323
+      pos: -3.6913068,42.431107
       parent: 5350
 - proto: ClothingHeadHelmetEVA
   entities:
@@ -67907,25 +67919,25 @@ entities:
       parent: 5350
 - proto: ClothingOuterArmorBasic
   entities:
-  - uid: 1174
+  - uid: 6656
     components:
     - type: Transform
-      pos: -8.268594,44.541573
+      pos: -3.2954736,42.587357
       parent: 5350
-  - uid: 2149
+  - uid: 6783
     components:
     - type: Transform
-      pos: -8.268594,44.624905
+      pos: -3.30589,42.701942
       parent: 5350
-  - uid: 4235
+  - uid: 14107
     components:
     - type: Transform
-      pos: -8.279011,44.718655
+      pos: -3.2954736,42.472775
       parent: 5350
-  - uid: 7380
+  - uid: 14110
     components:
     - type: Transform
-      pos: -8.268594,44.437405
+      pos: -3.2850568,42.368607
       parent: 5350
 - proto: ClothingOuterArmorBulletproof
   entities:
@@ -80586,7 +80598,7 @@ entities:
         6607:
           position: 6,3
           _rotation: South
-        12703:
+        1174:
           position: 0,0
           _rotation: South
     - type: ContainerContainer
@@ -80596,7 +80608,7 @@ entities:
           occludes: True
           ents:
           - 6607
-          - 12703
+          - 1174
 - proto: DrinkBeerglass
   entities:
   - uid: 28509
@@ -84091,7 +84103,7 @@ entities:
       pos: 31.5,-33.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -29555.99
+      secondsUntilStateChange: -29967.08
       state: Closing
   - uid: 9615
     components:
@@ -128272,22 +128284,50 @@ entities:
   entities:
   - uid: 6369
     components:
+    - type: MetaData
+      desc: A standard-issue Nanotrasen storage unit, containing 5 Disabler pistols.
     - type: Transform
+      anchored: True
       pos: -8.5,46.5
       parent: 5350
+    - type: Physics
+      bodyType: Static
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
 - proto: GunSafePistolMk58
   entities:
   - uid: 6511
     components:
+    - type: MetaData
+      desc: A standard-issue Nanotrasen storage unit, containing 4 Mk58 pistols.
     - type: Transform
+      anchored: True
       pos: -9.5,46.5
       parent: 5350
+    - type: Physics
+      bodyType: Static
 - proto: GunSafeRifleLecter
   entities:
   - uid: 22966
     components:
     - type: MetaData
-      desc: Safe containing 3 Lecter combat rifles.
+      desc: A standard-issue Nanotrasen storage unit, containing 3 Lecter combat rifles.
     - type: Transform
       anchored: True
       pos: -6.5,40.5
@@ -128318,9 +128358,9 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 28209
-          - 28446
           - 28208
+          - 28446
+          - 28209
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -128330,7 +128370,7 @@ entities:
   - uid: 11588
     components:
     - type: MetaData
-      desc: Safe containing 4 Kammerer shotguns.
+      desc: A standard-issue Nanotrasen storage unit, containing 3 Kammerer shotguns.
     - type: Transform
       anchored: True
       pos: -8.5,36.5
@@ -128372,7 +128412,7 @@ entities:
   - uid: 13851
     components:
     - type: MetaData
-      desc: Safe containing 3 Drozd submachine guns.
+      desc: A standard-issue Nanotrasen storage unit, containing 3 Drozd submachine guns.
     - type: Transform
       anchored: True
       pos: -5.5,40.5
@@ -128403,9 +128443,9 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 14878
-          - 21468
           - 28207
+          - 21468
+          - 14878
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -128511,6 +128551,14 @@ entities:
     - type: Transform
       pos: -34.34041,3.3560352
       parent: 5350
+- proto: HarmonicaInstrument
+  entities:
+  - uid: 1174
+    components:
+    - type: Transform
+      parent: 1021
+    - type: Physics
+      canCollide: False
 - proto: HeatExchanger
   entities:
   - uid: 27166
@@ -131209,14 +131257,6 @@ entities:
       parent: 5350
 - proto: LockerSecurityFilled
   entities:
-  - uid: 7671
-    components:
-    - type: Transform
-      anchored: True
-      pos: -3.5,46.5
-      parent: 5350
-    - type: Physics
-      bodyType: Static
   - uid: 7672
     components:
     - type: Transform
@@ -131270,14 +131310,6 @@ entities:
     - type: Transform
       anchored: True
       pos: 0.5,37.5
-      parent: 5350
-    - type: Physics
-      bodyType: Static
-  - uid: 7743
-    components:
-    - type: Transform
-      anchored: True
-      pos: 0.5,36.5
       parent: 5350
     - type: Physics
       bodyType: Static
@@ -140335,6 +140367,11 @@ entities:
     components:
     - type: Transform
       pos: 4.5,28.5
+      parent: 5350
+  - uid: 7515
+    components:
+    - type: Transform
+      pos: -3.5,42.5
       parent: 5350
   - uid: 7518
     components:
@@ -151827,25 +151864,25 @@ entities:
       parent: 5350
 - proto: SpawnPointSecurityCadet
   entities:
-  - uid: 6866
+  - uid: 2149
     components:
     - type: Transform
-      pos: 1.5,36.5
+      pos: 5.5,38.5
       parent: 5350
   - uid: 7029
     components:
     - type: Transform
-      pos: 1.5,37.5
+      pos: 6.5,36.5
       parent: 5350
-  - uid: 7032
+  - uid: 7517
     components:
     - type: Transform
-      pos: 1.5,38.5
+      pos: 7.5,36.5
       parent: 5350
-  - uid: 7040
+  - uid: 7671
     components:
     - type: Transform
-      pos: 1.5,39.5
+      pos: 8.5,36.5
       parent: 5350
 - proto: SpawnPointSecurityOfficer
   entities:
@@ -151859,10 +151896,10 @@ entities:
     - type: Transform
       pos: 0.5,45.5
       parent: 5350
-  - uid: 6783
+  - uid: 7058
     components:
     - type: Transform
-      pos: -3.5,45.5
+      pos: 1.5,37.5
       parent: 5350
   - uid: 7171
     components:
@@ -151873,6 +151910,16 @@ entities:
     components:
     - type: Transform
       pos: -2.5,45.5
+      parent: 5350
+  - uid: 7368
+    components:
+    - type: Transform
+      pos: 1.5,38.5
+      parent: 5350
+  - uid: 7377
+    components:
+    - type: Transform
+      pos: 1.5,39.5
       parent: 5350
 - proto: SpawnPointServiceWorker
   entities:
@@ -161050,10 +161097,10 @@ entities:
       parent: 5350
 - proto: VendingMachineSec
   entities:
-  - uid: 7058
+  - uid: 7380
     components:
     - type: Transform
-      pos: -3.5,42.5
+      pos: -3.5,46.5
       parent: 5350
   - uid: 8518
     components:
@@ -161062,10 +161109,10 @@ entities:
       parent: 5350
 - proto: VendingMachineSecDrobe
   entities:
-  - uid: 7515
+  - uid: 7040
     components:
     - type: Transform
-      pos: 2.5,36.5
+      pos: 0.5,36.5
       parent: 5350
 - proto: VendingMachineSeeds
   entities:
@@ -179234,16 +179281,6 @@ entities:
     - type: Transform
       pos: 9.465627,24.685179
       parent: 5350
-  - uid: 6651
-    components:
-    - type: Transform
-      pos: -0.56818223,44.415676
-      parent: 5350
-  - uid: 6656
-    components:
-    - type: Transform
-      pos: -0.80255723,44.790676
-      parent: 5350
   - uid: 7224
     components:
     - type: Transform
@@ -179251,11 +179288,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-  - uid: 7543
-    components:
-    - type: Transform
-      pos: -0.69318223,44.6188
-      parent: 5350
 - proto: WeaponDisablerPractice
   entities:
   - uid: 22293
@@ -179348,6 +179380,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: WeaponShotgunEnforcer
+  entities:
+  - uid: 7743
+    components:
+    - type: Transform
+      pos: -3.48983,38.175747
+      parent: 5350
 - proto: WeaponShotgunKammerer
   entities:
   - uid: 3634
@@ -184678,7 +184717,7 @@ entities:
       pos: -28.5,-5.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -35267.9
+      secondsUntilStateChange: -35678.99
       state: Opening
   - uid: 17570
     components:
