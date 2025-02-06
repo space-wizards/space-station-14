@@ -494,19 +494,23 @@
     },
     {
       "name": "snout_round",
-      "directions": 4
+      "directions": 4,
+      "bump": "snout_bump_round"
     },
     {
       "name": "snout_roundlight",
-      "directions": 4
+      "directions": 4,
+      "bump": "snout_bump_roundlight"
     },
     {
       "name": "snout_sharp",
-      "directions": 4
+      "directions": 4,
+      "bump": "snout_bump_sharp"
     },
     {
       "name": "snout_sharplight",
-      "directions": 4
+      "directions": 4,
+      "bump": "snout_bump_sharplight"
     },
     {
       "name": "horns_simple",
@@ -626,11 +630,13 @@
     },
     {
       "name": "snout_splotch_primary",
-      "directions": 4
+      "directions": 4,
+      "bump": "snout_bump_splotch"
     },
     {
       "name": "snout_splotch_secondary",
-      "directions": 4
+      "directions": 4,
+      "bump": "snout_bump_splotch"
     },
     {
       "name": "frills_neckfull",
