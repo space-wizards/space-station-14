@@ -17129,6 +17129,13 @@ entities:
     - type: Transform
       pos: 0.43422604,17.607504
       parent: 60
+- proto: BoxMagazinePistol
+  entities:
+  - uid: 6546
+    components:
+    - type: Transform
+      pos: -30.317034,-20.534887
+      parent: 60
 - proto: BoxMouthSwab
   entities:
   - uid: 8886
@@ -17188,12 +17195,12 @@ entities:
   - uid: 13148
     components:
     - type: Transform
-      pos: -30.92134,-20.595226
+      pos: -30.915613,-20.534887
       parent: 60
   - uid: 21067
     components:
     - type: Transform
-      pos: -27.615358,-9.430985
+      pos: -22.375732,-20.563042
       parent: 60
 - proto: BrbSign
   entities:
@@ -60047,13 +60054,6 @@ entities:
     - type: Transform
       pos: -12.506187,-1.5083885
       parent: 7536
-- proto: ClothingBeltSecurityFilled
-  entities:
-  - uid: 6546
-    components:
-    - type: Transform
-      pos: -30.497168,-20.40541
-      parent: 60
 - proto: ClothingBeltUtilityEngineering
   entities:
   - uid: 14118
@@ -126776,6 +126776,8 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -27.502918,-9.625589
       parent: 60
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         1638:
@@ -126795,6 +126797,8 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -25.502918,-9.625589
       parent: 60
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         1293:
@@ -126814,6 +126818,8 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -25.502918,-9.222812
       parent: 60
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         1354:
@@ -126833,6 +126839,8 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -27.502918,-9.222812
       parent: 60
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         1653:
@@ -126940,6 +126948,8 @@ entities:
       rot: 3.141592653589793 rad
       pos: -20.5,-2.5
       parent: 60
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         1681:
@@ -127235,6 +127245,8 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -17.5,-15.5
       parent: 60
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         16425:
