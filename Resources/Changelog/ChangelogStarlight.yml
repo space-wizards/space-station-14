@@ -3123,4 +3123,12 @@ Entries:
   id: 434
   time: '2025-02-06T04:15:17.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/299
+- author: STARLIGHT TEAM
+  changes:
+  - message: The Reach map has returned to the pool for the beta server. The map has
+      also been remapped, adding CE, BSO, NTREP, RD, AI, and vending machines.
+    type: Tweak
+  id: 435
+  time: '2025-02-06T05:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/300
 
