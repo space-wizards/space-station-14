@@ -929,9 +929,9 @@
       - MagazineBoxRifleAP
 #####################MAGAZINE#######################
 # LMG
-      - UniversalMagazineIncendiary
-      - UniversalMagazineUranium
-      - UniversalMagazineAP
+      - LightRifleHeavyMagazineIncendiary
+      - LightRifleHeavyMagazineUranium
+      - LightRifleHeavyMagazineAP
 # Light Rifle
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
