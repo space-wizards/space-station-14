@@ -28,8 +28,11 @@
     - ShellShotgunLight
   - type: Sprite
     layers:
-      - state: beanbag
+      - state: base
         map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#149A1E"
   - type: HitScanCartridgeAmmo
     soundEject:
       collection: ShellEject
@@ -46,6 +49,9 @@
     layers:
       - state: slug
         map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#252525"
   - type: HitScanCartridgeAmmo
     soundEject:
       collection: ShellEject
@@ -83,6 +89,9 @@
     layers:
       - state: base
         map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#F4001F"
   - type: HitScanCartridgeAmmo
     soundEject:
       collection: ShellEject
@@ -132,8 +141,11 @@
     - ShellShotgunLight
   - type: Sprite
     layers:
-      - state: tranquilizer
+      - state: base
         map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#49CECE"
   - type: CartridgeAmmo
     proto: PelletShotgunTranquilizer
   - type: ChemicalAmmo
@@ -163,6 +175,9 @@
     layers:
       - state: improvised
         map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#555555"
   - type: Construction
     graph: ImprovisedShotgunShellGraph
     node: shell

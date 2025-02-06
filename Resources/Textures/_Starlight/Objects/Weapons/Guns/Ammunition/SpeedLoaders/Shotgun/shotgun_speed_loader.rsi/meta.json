@@ -1,0 +1,59 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taked from RU Paradise Station, tip by Rinary",
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "icon"
+        },
+        {
+            "name": "base-1"
+        },
+        {
+            "name": "base-2"
+        },
+        {
+            "name": "base-3"
+        },
+        {
+            "name": "base-4"
+        },
+        {
+            "name": "base-5"
+        },
+        {
+            "name": "base-6"
+        },
+        {
+            "name": "base-7"
+        },
+        {
+            "name": "base-tip-1"
+        },
+        {
+            "name": "base-tip-2"
+        },
+        {
+            "name": "base-tip-3"
+        },
+        {
+            "name": "base-tip-4"
+        },
+        {
+            "name": "base-tip-5"
+        },
+        {
+            "name": "base-tip-6"
+        },
+        {
+            "name": "base-tip-7"
+        }
+    ]
+}

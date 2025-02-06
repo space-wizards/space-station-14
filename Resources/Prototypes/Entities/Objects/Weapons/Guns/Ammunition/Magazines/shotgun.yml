@@ -8,7 +8,6 @@
     tags:
     - MagazineShotgun
   - type: BallisticAmmoProvider
-    mayTransfer: true
     whitelist:
       tags:
         - ShellShotgun

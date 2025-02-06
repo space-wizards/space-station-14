@@ -14,10 +14,7 @@
             "name": "base-spent"
         },
         {
-            "name": "beanbag"
-        },
-        {
-            "name": "beanbag-spent"
+            "name": "tip"
         },
         {
             "name": "blank"
@@ -60,12 +57,6 @@
         },
         {
             "name": "depleted-uranium-spent"
-        },
-        {
-            "name": "tranquilizer"
-        },
-        {
-            "name": "tranquilizer-spent"
         }
     ]
 }

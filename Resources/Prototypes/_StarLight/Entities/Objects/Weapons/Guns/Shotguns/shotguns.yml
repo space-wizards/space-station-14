@@ -96,6 +96,7 @@
     whitelist:
       tags:
       - ShellShotgun
+      - SpeedLoaderShotgun
     proto: ShellShotgun
     capacity: 9
     chambers: [ True, True, True, True, True, True, True, True, True ]
@@ -120,8 +121,10 @@
     sprite: _Starlight/Objects/Weapons/Guns/Shotguns/minotaur.rsi
   - type: GunRequiresWield
   - type: Gun
-    spread: 15
-    fireRate: 3
+    spread: 20
+    fireRate: 2
+    burstFireRate: 3
+    burstCooldown: 1
     selectedMode: Burst
     shotsPerBurst: 3
     availableModes:
