@@ -23,7 +23,6 @@
           state: produce
       - tag: Paper
         name: 1x paper # i dont want to do this right
-        amount: 1
         icon:
           sprite: Objects/Misc/bureaucracy.rsi
           state: paper

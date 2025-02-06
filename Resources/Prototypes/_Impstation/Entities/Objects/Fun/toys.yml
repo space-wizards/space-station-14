@@ -258,7 +258,6 @@
     - type: Item
       size: Normal
       sprite: _Impstation/Objects/Fun/bouquet.rsi
-      state: icon
       inhandVisuals:
         left:
         - state: bouquet-inhand-left
