@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Thirty year olds are no longer considered middle aged.
-    type: Tweak
-  - message: You can now be as old as you want.
-    type: Add
-  id: 564
-  time: '2024-11-24T22:52:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/769
 - author: Sha-Seng
   changes:
   - message: Head of Security's Professional Jumpsuit/Jumpskirt
@@ -4290,3 +4281,17 @@
   id: 1063
   time: '2025-02-06T11:39:00.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1588
+- author: hivehum, crocodilecarousel
+  changes:
+  - message: Added a ton of festive treats and toys for Valentine's Day! Order a crate
+      from cargo and enjoy!
+    type: Add
+  - message: You can engrave flippos.
+    type: Tweak
+  - message: Moths can no longer eat metal necklaces.
+    type: Fix
+  - message: Heart lockets have a secret compartment.
+    type: Tweak
+  id: 1064
+  time: '2025-02-06T19:38:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1580
