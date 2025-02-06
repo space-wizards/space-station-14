@@ -1,28 +1,11 @@
 - type: entity
-  parent: BaseItem
+  parent: BedsheetBase
   id: BedsheetBaseStarlight
-  name: BedsheetBaseStarlight
   abstract: true
-  description: A surprisingly soft linen bedsheet.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Bed
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Misc/bedsheets.rsi
     noRot: true
-  - type: Item
-    size: Small
-  - type: Clothing
-    quickEquip: true
-    slots:
-    - neck
-  - type: StaticPrice
-    price: 100
-  - type: Tag
-    tags:
-    - Bedsheet
 
 - type: entity
   id: BedsheetBrigmedicStrange
