@@ -6,8 +6,8 @@
   },
   "license": "CC-BY-SA-3.0",
   "copyright": "Taken from https://github.com/tgstation/tgstation/blob/HEAD/icons/obj/structures.dmi",
-  "states": [
   "flatNormal": true,
+  "states": [
     {
       "name": "full",
       "delays": [
