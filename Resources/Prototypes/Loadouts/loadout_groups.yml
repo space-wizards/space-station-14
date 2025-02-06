@@ -392,6 +392,15 @@
   - LizardPlushieLawyer
 
 - type: loadoutGroup
+  id: ChaplainDevoter
+  name: loadout-group-chaplain-devoter
+  minLimit: 0
+  loadouts:
+  - AltarDevoterNanotrasen
+  - AltarDevoterChaos
+  - AltarDevoterDruid
+
+- type: loadoutGroup
   id: ChaplainHead
   name: loadout-group-chaplain-head
   minLimit: 0
