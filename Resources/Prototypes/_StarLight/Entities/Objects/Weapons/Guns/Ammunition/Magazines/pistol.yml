@@ -32,7 +32,7 @@
   parent: BaseMagazinePistol
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgePistol40Nr
+    proto: CartridgePistol40NrSP
     mayTransfer: true
     whitelist:
       tags:
