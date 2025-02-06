@@ -31,21 +31,21 @@ public sealed partial class InFriendlyContainerPrecondition : HTNPrecondition
         if (!_container.TryGetContainingContainer(owner, out var container))
             return !IsInFriendlyContainer;
 
-        return IsInFriendlyContainer == IsContainerOrParentFriendly(owner, container);
+        return IsInFriendlyContainer == IsContainerOrParentFriendly(owner, container.Owner);
     }
 
     /// <summary>
     /// Recursively check if a container or any parent container is friendly.
     /// </summary>
     /// <returns>True if any container is friendly.</returns>
-    private bool IsContainerOrParentFriendly(EntityUid owner, BaseContainer container)
+    private bool IsContainerOrParentFriendly(EntityUid owner, EntityUid containerOwner)
     {
-        if (_npcFaction.IsEntityFriendly(owner, container.Owner))
+        if (_npcFaction.IsEntityFriendly(owner, containerOwner))
             return true;
 
-        if (!_container.TryGetContainingContainer(container.Owner, out var nextContainer))
+        if (!_container.TryGetContainingContainer(containerOwner, out var nextContainer))
             return false;
 
-        return IsContainerOrParentFriendly(owner, nextContainer);
+        return IsContainerOrParentFriendly(owner, nextContainer.Owner);
     }
 }
