@@ -205,7 +205,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             _solutionContainerSystem.ResolveSolution(target, bloodstream.BloodSolutionName,
                 ref bloodstream.BloodSolution, out var bloodSolution))
         {
-            bloodAmount = _bloodstreamSystem.GetBloodLevelPercentage(target, bloodstream);
+            bloodAmount = _bloodstreamSystem.GetBloodLevel(target, bloodstream);
             bleeding = bloodstream.BleedAmount > 0;
         }
 

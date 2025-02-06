@@ -120,9 +120,9 @@ public sealed class BloodstreamSystem : EntitySystem
             if (!_solutionContainerSystem.ResolveSolution(uid, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
                 continue;
 
-            var bloodPercentage = GetBloodLevelPercentage(uid, bloodstream);
+            var bloodLevel = GetBloodLevel(uid, bloodstream);
             // Adds blood to their blood level if it is below the reference; Blood regeneration. Must be alive.
-            if (bloodPercentage < 1 && !_mobStateSystem.IsDead(uid))
+            if (bloodLevel < 1 && !_mobStateSystem.IsDead(uid))
             {
                 TryModifyBloodLevel(uid, bloodstream.BloodRefreshAmount, bloodstream);
             }
@@ -138,10 +138,10 @@ public sealed class BloodstreamSystem : EntitySystem
             }
 
             // deal bloodloss damage if their blood level is below a threshold.
-            if (bloodPercentage < bloodstream.BloodlossThreshold && !_mobStateSystem.IsDead(uid))
+            if (bloodLevel < bloodstream.BloodlossThreshold && !_mobStateSystem.IsDead(uid))
             {
                 // bloodloss damage is based on the base value, and modified by how low your blood level is.
-                var amt = bloodstream.BloodlossDamage * (1 - bloodPercentage) * 10;
+                var amt = bloodstream.BloodlossDamage * (1 - bloodLevel) * 10;
 
                 _damageableSystem.TryChangeDamage(uid, amt,
                     ignoreResistances: false, interruptsDoAfters: false);
@@ -158,10 +158,10 @@ public sealed class BloodstreamSystem : EntitySystem
                 // storing the drunk and stutter time so we can remove it independently from other effects additions
                 bloodstream.StatusTime += bloodstream.UpdateInterval * 2;
             }
-            else if (bloodPercentage > bloodstream.HypervolemiaThreshold && !_mobStateSystem.IsDead(uid))
+            else if (bloodLevel > bloodstream.HypervolemiaThreshold && !_mobStateSystem.IsDead(uid))
             {
                 // hypervolemia damage is based on the base value, and modified by how high your blood level is
-                var amt = bloodstream.HypervolemiaDamage * (bloodPercentage - 1) * 10;
+                var amt = bloodstream.HypervolemiaDamage * (bloodLevel - 1) * 10;
 
                 _damageableSystem.TryChangeDamage(uid, amt,
                     ignoreResistances: false, interruptsDoAfters: false);
@@ -182,7 +182,7 @@ public sealed class BloodstreamSystem : EntitySystem
                 // If they're healthy, we'll try and heal some bloodloss instead.
                 _damageableSystem.TryChangeDamage(
                     uid,
-                    bloodstream.BloodlossHealDamage * bloodPercentage,
+                    bloodstream.BloodlossHealDamage * bloodLevel,
                     ignoreResistances: true, interruptsDoAfters: false);
 
                 // Remove the drunk effect when healthy. Should only remove the amount of drunk and stutter added by low blood level
@@ -290,7 +290,7 @@ public sealed class BloodstreamSystem : EntitySystem
         }
 
         // If the mob's blood level is below the damage threshhold, the pale message is added.
-        if (GetBloodLevelPercentage(ent, ent) < ent.Comp.BloodlossThreshold)
+        if (GetBloodLevel(ent, ent) < ent.Comp.BloodlossThreshold)
         {
             args.Message.PushNewline();
             args.Message.AddMarkupOrThrow(Loc.GetString("bloodstream-component-looks-pale", ("target", ent.Owner)));
@@ -325,10 +325,10 @@ public sealed class BloodstreamSystem : EntitySystem
             _solutionContainerSystem.RemoveAllSolution(entity.Comp.ChemicalSolution.Value);
 
         if (_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution))
+        {
             _solutionContainerSystem.RemoveAllSolution(entity.Comp.BloodSolution.Value);
-
-        if (_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution, out var bloodSolution))
             TryModifyBloodLevel(entity.Owner, entity.Comp.BloodReferenceVolume, entity.Comp);
+        }
     }
 
     /// <summary>
@@ -360,9 +360,9 @@ public sealed class BloodstreamSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Gets a percentage in [0.0, 2.0] interval, where 1.0 is normal blood level.
+    ///     Gets a bloodstream's fluid volume in [0.0, 2.0] interval, where 1.0 is normal.
     /// </summary>
-    public float GetBloodLevelPercentage(EntityUid uid, BloodstreamComponent? component = null)
+    public float GetBloodLevel(EntityUid uid, BloodstreamComponent? component = null)
     {
         if (!Resolve(uid, ref component)
             || !_solutionContainerSystem.ResolveSolution(uid, component.BloodSolutionName, ref component.BloodSolution, out var bloodSolution))
@@ -378,20 +378,20 @@ public sealed class BloodstreamSystem : EntitySystem
         return bloodSolution.Volume.Float() / component.BloodReferenceVolume.Float();
     }
 
-    public void SetBloodLossThreshold(EntityUid uid, float threshold, BloodstreamComponent? comp = null)
+    public void SetBloodLossThreshold(Entity<BloodstreamComponent?> ent, float threshold)
     {
-        if (!Resolve(uid, ref comp))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
-        comp.BloodlossThreshold = threshold;
+        ent.Comp.BloodlossThreshold = threshold;
     }
 
-    public void SetHypervolemiaThreshold(EntityUid uid, float threshold, BloodstreamComponent? comp = null)
+    public void SetHypervolemiaThreshold(Entity<BloodstreamComponent?> ent, float threshold)
     {
-        if (!Resolve(uid, ref comp))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
-        comp.HypervolemiaThreshold = threshold;
+        ent.Comp.HypervolemiaThreshold = threshold;
     }
 
     /// <summary>

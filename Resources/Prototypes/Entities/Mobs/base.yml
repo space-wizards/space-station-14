@@ -237,7 +237,7 @@
     hypervolemiaDamage:
       types:
         Slash: 0.1
-        Asphyxiation: 1.90
+        Asphyxiation: 1.9
     bloodlossHealDamage:
       types:
         Bloodloss: -1

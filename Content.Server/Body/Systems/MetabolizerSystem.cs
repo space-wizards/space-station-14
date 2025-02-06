@@ -168,10 +168,10 @@ namespace Content.Server.Body.Systems
                     return;
 
                 // skips the blood reagent from metabolising
-                if (TryComp<BloodstreamComponent>(solutionEntityUid.Value, out var bloodstream))
+                if (TryComp<BloodstreamComponent>(solutionEntityUid.Value, out var bloodstream)
+                    && reagent.Prototype == bloodstream.BloodReagent.Id)
                 {
-                    if (reagent.Prototype == bloodstream.BloodReagent.Id)
-                        continue;
+                    continue;
                 }
 
                 // loop over all our groups and see which ones apply

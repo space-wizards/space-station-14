@@ -62,7 +62,7 @@ namespace Content.Server.Body.Components
         [DataField]
         public float BloodlossThreshold = 0.9f;
 
-                /// <summary>
+        /// <summary>
         ///     What percentage of current blood is necessary to avoid dealing hypervolemia damage?
         /// </summary>
         [DataField]
