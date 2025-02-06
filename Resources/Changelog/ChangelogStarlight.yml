@@ -3138,4 +3138,60 @@ Entries:
   id: 436
   time: '2025-02-06T15:54:40.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/302
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added Type U3 Uzi as new syndie gun.
+    type: Add
+  id: 437
+  time: '2025-02-06T16:03:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/303
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added APS pistol for USSP.
+    type: Add
+  id: 438
+  time: '2025-02-06T16:03:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/303
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added M1911 ammo variant for Nanotrasen.
+    type: Add
+  id: 439
+  time: '2025-02-06T16:03:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/303
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added ARG as new rifle for Nanotrasen.
+    type: Add
+  id: 440
+  time: '2025-02-06T16:03:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/303
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added Aussec Armory M-52 as new rifle for Nanotrasen.
+    type: Add
+  id: 441
+  time: '2025-02-06T16:03:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/303
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added Tkach Ya-Sui Ga 12 as new revolver type shotgun.
+    type: Add
+  id: 442
+  time: '2025-02-06T16:03:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/303
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added shotgun speedloader.
+    type: Add
+  id: 443
+  time: '2025-02-06T16:03:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/303
+- author: STARLIGHT TEAM
+  changes:
+  - message: Nerfed AS-12
+    type: Tweak
+  id: 444
+  time: '2025-02-06T16:03:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/303
 
