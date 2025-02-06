@@ -6,6 +6,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.DV.Paper;
 
@@ -15,6 +16,7 @@ public sealed class SignatureSystem : SharedSignatureSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly PaperSystem _paper = default!;
     [Dependency] private readonly IResourceManager _resourceManager = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public override void Initialize()
     {
@@ -36,15 +38,12 @@ public sealed class SignatureSystem : SharedSignatureSystem
 
         var signatureName = DetermineEntitySignature(signer);
         var signatureColor = signatureComp.Color;
-        var signatureFont = "/Fonts/NotoSans/NotoSans-Regular.ttf"; // Noto Sans as fallback
+        var signatureFont = "Default"; // Noto Sans as fallback
 
         if (signatureComp.Font is { } penFont)
             signatureFont = penFont;
         else if (TryComp<SignatureFontComponent>(signer, out var signerComp) && signerComp.Font is { } signerFont)
             signatureFont = signerFont;
-
-        if (!_resourceManager.TryContentFileRead(signatureFont, out _))
-            signatureFont = "/Fonts/NotoSans/NotoSans-Regular.ttf"; // The font failed to read, so reset to Noto Sans
 
         if (TryComp<CrayonComponent>(pen, out var crayon))
             signatureColor = crayon.Color;
