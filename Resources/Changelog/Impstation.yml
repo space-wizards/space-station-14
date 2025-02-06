@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Ported Goblins from New Frontiers for ghostrole purposes.
-    type: Add
-  - message: New ghostrole, the Goblin Stowaways. Build Goblinhome.
-    type: Add
-  - message: New ghostrole, Sir Gollylad, a noble Goblin Knight.
-    type: Add
-  id: 560
-  time: '2024-11-24T04:54:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/772
 - author: Sha-Seng
   changes:
   - message: Neck gaiters are breathable now since bandanas already are
@@ -4289,3 +4278,12 @@
   id: 1059
   time: '2025-02-06T11:14:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1585
+- author: Darkmajia
+  changes:
+  - message: The energy shotgun now has a 30 second delay before recharging, and can
+      fire more wide and disabler shots before emptying its battery. The amount of
+      narrow shots before emptying has been reduced.
+    type: Tweak
+  id: 1060
+  time: '2025-02-06T11:21:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1574
