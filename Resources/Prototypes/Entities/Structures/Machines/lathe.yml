@@ -855,10 +855,10 @@
 
 #####################MAGAZINE#######################
 # LMG
-      - UniversalMagazineSP
-      - UniversalMagazineHP
-      - UniversalMagazineFMJ
-      - UniversalMagazineEmpty
+      - LightRifleHeavyMagazineSP
+      - LightRifleHeavyMagazineHP
+      - LightRifleHeavyMagazineFMJ
+      - LightRifleHeavyMagazineEmpty
 # Light Rifle
       - MagazineLightRifleSP
       - MagazineLightRifleHP

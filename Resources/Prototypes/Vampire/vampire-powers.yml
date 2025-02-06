@@ -75,7 +75,7 @@
 - type: vampirePassive
   id: DeathsEmbrace 
   catalogEntry: VampireDeathsEmbrace # Must match the catalog id
-  comps:
+  compsToAdd:
   - type: VampireDeathsEmbrace
     cost: 100
     coffinHealing:
