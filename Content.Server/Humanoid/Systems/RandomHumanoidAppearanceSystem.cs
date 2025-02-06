@@ -1,8 +1,9 @@
+using System.Linq;
 using Content.Server.CharacterAppearance.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Preferences;
-using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
+using Robust.Shared.Random;
 
 namespace Content.Server.Humanoid.Systems;
 
@@ -10,6 +11,7 @@ public sealed class RandomHumanoidAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -65,9 +67,29 @@ public sealed class RandomHumanoidAppearanceSystem : EntitySystem
     private List<Marking> MarkingsToAdd(Dictionary<string, List<Color>> dict)
     {
         List<Marking> output = [];
+        var randomizeColor = new Color(
+        _random.NextFloat(1),
+        _random.NextFloat(1),
+        _random.NextFloat(1));
+
         foreach (var keyValuePair in dict)
         {
-            var toAdd = new Marking(keyValuePair.Key, keyValuePair.Value);
+            List<Color> markingColors = [];
+            var coolVar = keyValuePair.Value;
+            // if the list<color> has no members, set it to our random color. otherwise, set it to the color in the list.
+            if (keyValuePair.Value.Count <= 0)
+            {
+                markingColors.Add(randomizeColor);
+            }
+            else
+            {
+                foreach (var colors in keyValuePair.Value)
+                {
+                    markingColors.Add(colors);
+                }
+            }
+
+            var toAdd = new Marking(keyValuePair.Key, markingColors);
             output.Add(toAdd);
         }
         return output;

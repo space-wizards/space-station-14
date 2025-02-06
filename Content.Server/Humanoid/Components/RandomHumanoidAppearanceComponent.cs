@@ -53,6 +53,7 @@ public sealed partial class RandomHumanoidAppearanceComponent : Component
     /// Defined in YML as, for example:
     /// markings:
     ///   ArachnidTorsoFiddleback: [ "#daf7da" ]
+    /// If the square brackets are empty (i.e. if the List<Color> has no members,) the color of that marking will be randomized.
     /// </summary>
     [DataField] public Dictionary<string, List<Color>>? Markings = null;
 }

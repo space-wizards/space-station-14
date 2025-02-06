@@ -108,12 +108,3 @@
       - id: Claymore 
       - id: EnergySword
         weight: 0.2
-
-- type: entity
-  id: RHATest
-  name: this guy should have markings lol
-  parent: MobArachnid
-  components:
-  - type: RandomHumanoidAppearance
-    markings:
-      ArachnidTorsoFiddleback: [ "#daf7da" ]
