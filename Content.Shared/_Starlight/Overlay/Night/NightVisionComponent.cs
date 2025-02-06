@@ -5,6 +5,6 @@ namespace Content.Shared.Eye.Blinding.Components;
 
 [RegisterComponent]
 [NetworkedComponent]
-public sealed partial class CycloritesVisionComponent : Component
+public sealed partial class NightVisionComponent : Component
 {
 }

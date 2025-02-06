@@ -157,7 +157,11 @@
       ]
     },
     {
-      "name": "eyes",
+      "name": "eyes_thermal",
+      "directions": 4
+    },
+    {
+      "name": "eyes_night",
       "directions": 4
     }
   ]

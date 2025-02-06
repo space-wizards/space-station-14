@@ -5,6 +5,7 @@
   parent: SimpleSpaceMobBase
   description: They mostly come at night. Mostly.
   components:
+  - type: ThermalVision
   - type: Insulated
   - type: CombatMode
   - type: InputMover

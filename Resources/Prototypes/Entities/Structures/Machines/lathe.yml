@@ -1158,6 +1158,8 @@
       - EyeImplantWelding
       - EyeImplantMedical
       - EyeImplantSecurity
+      - EyeImplantNightVision
+      - EyeImplantThermal
   - type: Machine
     board: MedicalTechFabCircuitboard
   - type: StealTarget

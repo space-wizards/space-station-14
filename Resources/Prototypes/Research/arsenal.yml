@@ -143,26 +143,6 @@
 # Tier 2
 
 - type: technology
-  id: ArmorPenetrationMunitions
-  name: research-technology-armor-penetration
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag.rsi
-    state: ap
-  discipline: Arsenal
-  tier: 2
-  cost: 11500
-  recipeUnlocks:
-  - SpeedLoaderMagnumAP
-  - MagazinePistolAP
-  - MagazineRifleAP
-  - MagazineLightRifleAP
-  - MagazineBoxMagnumAP
-  - MagazineBoxPistolAP
-  - MagazineBoxRifleAP
-  - MagazineBoxLightRifleAP
-  - LightRifleHeavyMagazineAP
-
-- type: technology
   id: ConcentratedLaserWeaponry
   name: research-technology-concentrated-laser-weaponry
   icon:
