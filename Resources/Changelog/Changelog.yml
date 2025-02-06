@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: saga3152
-  changes:
-  - message: You can now make vodka and soda water.
-    type: Add
-  id: 7410
-  time: '2024-09-20T22:27:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32252
 - author: goet
   changes:
   - message: Hides character sprite in health analyzer window if the scan becomes
@@ -3904,3 +3897,10 @@
   id: 7909
   time: '2025-02-06T11:45:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34904
+- author: deltanedas
+  changes:
+  - message: Fixed huds showing for chameleon projector users.
+    type: Fix
+  id: 7910
+  time: '2025-02-06T13:45:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34825
