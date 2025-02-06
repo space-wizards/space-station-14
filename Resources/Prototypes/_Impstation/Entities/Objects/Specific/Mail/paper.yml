@@ -23,22 +23,33 @@
 
 - type: entity
   id: PaperMailTckTck
-  categories: [ HideSpawnMenu ]
+  #categories: [ HideSpawnMenu ]
   suffix: "tck'tck note"
   parent: Paper
   components:
   - type: Paper
-    stampedBy:
-    - stampedColor: '#333333FF'
-      stampedName: T'ckr'tk, Fourth
-#      stampType: Signature # DeltaV - Not compatible with our signatures code stuff apparently
     content: |2
-      [head=3]U'uat kck,[/head]
+      [color=#1b67a5]█▄ █ ▀█▀    [head=3]Priority Mail[/head]
+      █ ▀█     █        From: [ERR: ROMANIZATION FAILED]
+                             To: NANOTRASEN SALVAGE DEPARTMENT
+                             Subject: GIFT[/color]
+      ──────────────────────────────────────────
       R'chtr k'ck t'ckr ut't uuo,
 
       Tr' ck't'rck U'uta ut'ck, "Nanotrasen" tk'rt u'out'ck ta.
       Uot'a "Tck'tck", ot'rq t'u'ta "Salvage Department".
 
+                                    ░░░████████░░░
+                                    ░░░█░░░░░░█░░░
+                                    ░░░█░░░░░░█░░░
+                                    ░░░█░░░░░░█░░░
+                                    ░░░█░█░░█░█░░░
+                                    ░█░█░░░░░░█░█░
+                                    █░██████████░█
+                                    █░░░█░░░░█░░░█
+
       U'tu'uo, "Tck'tck" r'tua.
 
-            T'ckr'tk, Fourth, O'ckt'rt "Outriggers".
+      ──────────────────────────────────────────
+      Sincerely, T'ckr'tk, Fourth.
+      O'ckt'rt "Outriggers"
