@@ -23,7 +23,7 @@
 
 - type: entity
   id: PaperMailTckTck
-  #categories: [ HideSpawnMenu ]
+  categories: [ HideSpawnMenu ]
   suffix: "tck'tck note"
   parent: Paper
   components:
