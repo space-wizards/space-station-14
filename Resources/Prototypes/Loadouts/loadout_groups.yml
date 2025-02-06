@@ -318,6 +318,10 @@
   - AltarDevoterNanotrasen
   - AltarDevoterChaos
   - AltarDevoterDruid
+  - AltarDevoterToolbox
+  - AltarDevoterSpaceChristian
+  - AltarDevoterSatana
+  - AltarDevoterTechnology
 
 - type: loadoutGroup
   id: ChaplainHead
