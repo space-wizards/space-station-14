@@ -378,20 +378,20 @@ public sealed class BloodstreamSystem : EntitySystem
         return bloodSolution.Volume.Float() / component.BloodReferenceVolume.Float();
     }
 
-    public void SetBloodLossThreshold(Entity<BloodstreamComponent?> ent, float threshold)
+    public void SetBloodLossThreshold(Entity<BloodstreamComponent?> entity, float threshold)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(entity, ref entity.Comp))
             return;
 
-        ent.Comp.BloodlossThreshold = threshold;
+        entity.Comp.BloodlossThreshold = threshold;
     }
 
-    public void SetHypervolemiaThreshold(Entity<BloodstreamComponent?> ent, float threshold)
+    public void SetHypervolemiaThreshold(Entity<BloodstreamComponent?> entity, float threshold)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(entity, ref entity.Comp))
             return;
 
-        ent.Comp.HypervolemiaThreshold = threshold;
+        entity.Comp.HypervolemiaThreshold = threshold;
     }
 
     /// <summary>
