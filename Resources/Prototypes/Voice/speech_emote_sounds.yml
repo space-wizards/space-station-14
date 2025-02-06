@@ -1094,6 +1094,8 @@
       collection: Cracks
     Blink: # Imp addition
       collection: Blinks
+      params:
+        volume: -3
 
 - type: emoteSounds
   id: DionaBodyEmotes
