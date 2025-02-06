@@ -189,6 +189,29 @@ public abstract class SharedNanoChatSystem : EntitySystem
     }
 
     /// <summary>
+    ///     Gets whether NanoChat number is listed.
+    /// </summary>
+    public bool GetListNumber(Entity<NanoChatCardComponent?> card)
+    {
+        if (!Resolve(card, ref card.Comp))
+            return false;
+
+        return card.Comp.ListNumber;
+    }
+
+    /// <summary>
+    ///     Sets whether NanoChat number is listed.
+    /// </summary>
+    public void SetListNumber(Entity<NanoChatCardComponent?> card, bool listNumber)
+    {
+        if (!Resolve(card, ref card.Comp) || card.Comp.ListNumber == listNumber)
+            return;
+
+        card.Comp.ListNumber = listNumber;
+        Dirty(card);
+    }
+
+    /// <summary>
     ///     Gets the time of the last message.
     /// </summary>
     public TimeSpan? GetLastMessageTime(Entity<NanoChatCardComponent?> card)

@@ -71,11 +71,33 @@
                         Margin="0 0 4 0"
                         StyleClasses="OpenBoth"
                         ToolTip="{Loc nano-chat-new-chat}" />
+                <Button Name="LookupButton"
+                        MaxSize="32 32"
+                        StyleClasses="OpenBoth"
+                        Margin="0 0 4 0"
+                        ToolTip="{Loc nano-chat-look-up}">
+                    <TextureRect StyleClasses="ButtonSquare"
+                                 TexturePath="/Textures/Interface/VerbIcons/examine.svg.192dpi.png"
+                                 Stretch="KeepAspectCentered"
+                                 MinSize="18 18" />
+                </Button>
+                <Button Name="ListNumberButton"
+                        MaxSize="32 32"
+                        StyleClasses="OpenBoth"
+                        Margin="0 0 4 0"
+                        ToolTip="{Loc nano-chat-list-number}"
+                        ToggleMode="True">
+                    <TextureRect StyleClasses="ButtonSquare"
+                                 TexturePath="/Textures/_DV/Interface/VerbIcons/hamburger_icon.svg.png"
+                                 Stretch="KeepAspectCentered"
+                                 MinSize="18 18" />
+                </Button>
             </BoxContainer>
         </controls:StripeBack>
 
         <!-- Main content split -->
-        <BoxContainer Orientation="Horizontal"
+        <BoxContainer Name="ChatView"
+                      Orientation="Horizontal"
                       VerticalExpand="True"
                       HorizontalExpand="True"
                       Margin="0 5 0 0">
@@ -163,5 +185,7 @@
                 </BoxContainer>
             </PanelContainer>
         </BoxContainer>
+        <cartridges:NanoChatLookupView Name="LookupView"
+                                       Visible="False" />
     </BoxContainer>
 </cartridges:NanoChatUiFragment>

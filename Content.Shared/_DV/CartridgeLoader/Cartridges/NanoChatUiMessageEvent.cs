@@ -54,6 +54,7 @@ public enum NanoChatUiMessageType : byte
     SendMessage,
     DeleteChat,
     ToggleMute,
+    ToggleListNumber,
 }
 
 // putting this here because i can

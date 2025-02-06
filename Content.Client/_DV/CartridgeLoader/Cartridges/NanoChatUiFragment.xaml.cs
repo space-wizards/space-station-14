@@ -21,6 +21,7 @@ public sealed partial class NanoChatUiFragment : BoxContainer
     private uint? _pendingChat;
     private uint _ownNumber;
     private bool _notificationsMuted;
+    private bool _listNumber = true;
     private Dictionary<uint, NanoChatRecipient> _recipients = new();
     private Dictionary<uint, List<NanoChatMessage>> _messages = new();
 
@@ -75,8 +76,32 @@ public sealed partial class NanoChatUiFragment : BoxContainer
             }
         };
 
+        LookupButton.OnPressed += _ => ToggleView();
+        LookupView.OnStartChat += contact =>
+        {
+            if (OnMessageSent is { } handler)
+            {
+                handler(NanoChatUiMessageType.NewChat, contact.Number, contact.Name, contact.JobTitle);
+                SelectChat(contact.Number);
+                ToggleView();
+            }
+        };
+        ListNumberButton.OnPressed += _ =>
+        {
+            _listNumber = !_listNumber;
+            UpdateListNumber();
+            OnMessageSent?.Invoke(NanoChatUiMessageType.ToggleListNumber, null, null, null);
+        };
+
         SendButton.OnPressed += _ => SendMessage();
         DeleteChatButton.OnPressed += _ => DeleteCurrentChat();
+    }
+
+    private void ToggleView()
+    {
+        ChatView.Visible = !ChatView.Visible;
+        LookupView.Visible = !ChatView.Visible;
+        LookupButton.Pressed = LookupView.Visible;
     }
 
     private void SendMessage()
@@ -220,12 +245,20 @@ public sealed partial class NanoChatUiFragment : BoxContainer
             BellMutedIcon.Visible = _notificationsMuted;
     }
 
+    private void UpdateListNumber()
+    {
+        if (ListNumberButton != null)
+            ListNumberButton.Pressed = _listNumber;
+    }
+
     public void UpdateState(NanoChatUiState state)
     {
         _ownNumber = state.OwnNumber;
         _notificationsMuted = state.NotificationsMuted;
+        _listNumber = state.ListNumber;
         OwnNumberLabel.Text = $"#{state.OwnNumber:D4}";
         UpdateMuteButton();
+        UpdateListNumber();
 
         // Update new chat button state based on recipient limit
         var atLimit = state.Recipients.Count >= state.MaxRecipients;
@@ -250,5 +283,6 @@ public sealed partial class NanoChatUiFragment : BoxContainer
         UpdateCurrentChat();
         UpdateChatList(state.Recipients);
         UpdateMessages(state.Messages);
+        LookupView.UpdateContactList(state);
     }
 }
