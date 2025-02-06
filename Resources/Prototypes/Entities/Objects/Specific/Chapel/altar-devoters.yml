@@ -73,7 +73,7 @@
 - type: entity
   parent: BaseAltarDevoter
   id: AltarDevoterSpaceChristian
-  name: space christian altar devoter
+  name: space-Christian altar devoter
   description: Used to devote an undevoted altar to Space Jesus.
   components:
   - type: Tag
@@ -89,8 +89,8 @@
 - type: entity
   parent: BaseAltarDevoter
   id: AltarDevoterSatana
-  name: satana altar devoter
-  description: Used to devote an undevoted altar to Satana.
+  name: satanic altar devoter
+  description: Used to devote an undevoted altar to the Infernal gods.
   components:
   - type: Tag
     tags:

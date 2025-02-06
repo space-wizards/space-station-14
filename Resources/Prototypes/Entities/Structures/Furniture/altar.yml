@@ -112,6 +112,8 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: chaos
+  - type: Construction
+    node: chaos
   - type: ContainerFill
     containers:
       devoter-slot:
@@ -128,6 +130,8 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: druid
+  - type: Construction
+    node: druid
   - type: ContainerFill
     containers:
       devoter-slot:
@@ -144,6 +148,8 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: toolbox
+  - type: Construction
+    node: toolbox
   - type: ContainerFill
     containers:
       devoter-slot:
@@ -167,6 +173,8 @@
     radius: 1.5
     energy: 1
     color: "#fbceb1"
+  - type: Construction
+    node: spaceChristian
   - type: ContainerFill
     containers:
       devoter-slot:
@@ -190,6 +198,8 @@
     radius: 1.5
     energy: 1
     color: "#ff6347"
+  - type: Construction
+    node: satana
   - type: ContainerFill
     containers:
       devoter-slot:
@@ -213,6 +223,8 @@
     radius: 1.5
     energy: 1
     color: "#e0ffff"
+  - type: Construction
+    node: technology
   - type: ContainerFill
     containers:
       devoter-slot:
