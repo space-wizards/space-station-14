@@ -1,10 +1,40 @@
 # ALPHABETIZE
   
 - type: Tag
+  id: Arachnid
+  
+- type: Tag
   id: CantInteract
   
 - type: Tag
+  id: CartridgeBattery
+  
+- type: Tag
+  id: CartridgePistolSP8
+  
+- type: Tag
+  id: Diona
+  
+- type: Tag
+  id: DockGamma
+  
+- type: Tag
   id: ElderArena
+  
+- type: Tag
+  id: LightRifleHeavy
+
+- type: Tag
+  id: MagazineBattery
+  
+- type: Tag
+  id: MagazinePistolSP8
+  
+- type: Tag
+  id: MagazineRifleM52
+  
+- type: Tag
+  id: MagazineSMGUzi
   
 - type: Tag
   id: MedCyberEyes
@@ -13,43 +43,22 @@
   id: OmniCyberEyes
   
 - type: Tag
-  id: SecCyberEyes
+  id: PowerCellTiny
   
+- type: Tag
+  id: SecCyberEyes
+
 - type: Tag
   id: ShipWreck
   
 - type: Tag
+  id: ShowWires
+
+- type: Tag
   id: SovietDungeon
   
 - type: Tag
+  id: SpeedLoaderShotgun
+  
+- type: Tag
   id: SyndieDungeon
-
-- type: Tag
-  id: Arachnid
-  
-- type: Tag
-  id: Diona
-  
-- type: Tag
-  id: PowerCellTiny
-  
-- type: Tag
-  id: CartridgeBattery
-  
-- type: Tag
-  id: MagazineBattery
-  
-- type: Tag
-  id: DockGamma
-  
-- type: Tag
-  id: ShowWires
-  
-- type: Tag
-  id: CartridgePistolSP8
-
-- type: Tag
-  id: MagazinePistolSP8
-
-- type: Tag
-  id: LightRifleHeavy

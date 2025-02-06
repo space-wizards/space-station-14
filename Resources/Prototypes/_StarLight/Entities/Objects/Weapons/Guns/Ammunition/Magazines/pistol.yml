@@ -27,6 +27,25 @@
       map: ["enum.GunVisualLayers.Mag"]
       
 - type: entity
+  id: MagazinePistolSubMachineGunUzi
+  name: Uzi magazine (.35 auto rubber)
+  parent: BaseMagazinePistolSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolSP
+    capacity: 32
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/SMGs/uzi.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Tag
+    tags:
+      - MagazineSMGUzi
+      
+- type: entity
   id: MagazinePistol40Nr
   name: pistol magazine (40 NR)
   parent: BaseMagazinePistol
