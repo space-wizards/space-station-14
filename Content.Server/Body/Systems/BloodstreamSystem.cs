@@ -96,7 +96,6 @@ public sealed class BloodstreamSystem : EntitySystem
     private void OnReactionAttempt(Entity<BloodstreamComponent> entity, ref SolutionRelayEvent<ReactionAttemptEvent> args)
     {
         if (args.Name != entity.Comp.BloodSolutionName
-            && args.Name != entity.Comp.ChemicalSolutionName
             && args.Name != entity.Comp.BloodTemporarySolutionName)
         {
             return;
@@ -203,9 +202,6 @@ public sealed class BloodstreamSystem : EntitySystem
     private void OnComponentInit(Entity<BloodstreamComponent> entity, ref ComponentInit args)
     {
         if (!_solutionContainerSystem.EnsureSolution(entity.Owner,
-                entity.Comp.ChemicalSolutionName,
-                out var chemicalSolution) ||
-            !_solutionContainerSystem.EnsureSolution(entity.Owner,
                 entity.Comp.BloodSolutionName,
                 out var bloodSolution) ||
             !_solutionContainerSystem.EnsureSolution(entity.Owner,
@@ -213,7 +209,6 @@ public sealed class BloodstreamSystem : EntitySystem
                 out var tempSolution))
             return;
 
-        chemicalSolution.MaxVolume = entity.Comp.ChemicalMaxVolume;
         bloodSolution.MaxVolume = entity.Comp.BloodReferenceVolume * entity.Comp.BloodMaxVolumeFactor;
         tempSolution.MaxVolume = entity.Comp.BleedPuddleThreshold * 4; // give some leeway, for chemstream as well
 
@@ -327,9 +322,6 @@ public sealed class BloodstreamSystem : EntitySystem
     {
         TryModifyBleedAmount(entity.Owner, -entity.Comp.BleedAmount, entity.Comp);
 
-        if (_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.ChemicalSolutionName, ref entity.Comp.ChemicalSolution))
-            _solutionContainerSystem.RemoveAllSolution(entity.Comp.ChemicalSolution.Value);
-
         if (_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution))
         {
             _solutionContainerSystem.RemoveAllSolution(entity.Comp.BloodSolution.Value);
@@ -426,13 +418,6 @@ public sealed class BloodstreamSystem : EntitySystem
 
         if (tempSolution.Volume > component.BleedPuddleThreshold)
         {
-            // Pass some of the chemstream into the spilled blood.
-            if (_solutionContainerSystem.ResolveSolution(uid, component.ChemicalSolutionName, ref component.ChemicalSolution))
-            {
-                var temp = _solutionContainerSystem.SplitSolution(component.ChemicalSolution.Value, tempSolution.Volume / 10);
-                tempSolution.AddSolution(temp, _prototypeManager);
-            }
-
             _puddleSystem.TrySpillAt(uid, tempSolution, out var puddleUid, sound: false);
 
             tempSolution.RemoveAllSolution();
@@ -480,13 +465,6 @@ public sealed class BloodstreamSystem : EntitySystem
             tempSol.MaxVolume += bloodSolution.MaxVolume;
             tempSol.AddSolution(bloodSolution, _prototypeManager);
             _solutionContainerSystem.RemoveAllSolution(component.BloodSolution.Value);
-        }
-
-        if (_solutionContainerSystem.ResolveSolution(uid, component.ChemicalSolutionName, ref component.ChemicalSolution, out var chemSolution))
-        {
-            tempSol.MaxVolume += chemSolution.MaxVolume;
-            tempSol.AddSolution(chemSolution, _prototypeManager);
-            _solutionContainerSystem.RemoveAllSolution(component.ChemicalSolution.Value);
         }
 
         if (_solutionContainerSystem.ResolveSolution(uid, component.BloodTemporarySolutionName, ref component.TemporarySolution, out var tempSolution))
