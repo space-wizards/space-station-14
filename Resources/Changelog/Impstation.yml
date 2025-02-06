@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: The VILE SHITPIG will now receive insults instead of pets.
-    type: Add
-  id: 558
-  time: '2024-11-24T04:22:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/783
-- author: Pinkbat5
-  changes:
-  - message: 'New emotes: Lizards can hiss, slimes can bubble and pop, and everyone
-      can crack their knuckles.'
-    type: Add
-  id: 559
-  time: '2024-11-24T04:23:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/781
 - author: widgetbeck
   changes:
   - message: Ported Goblins from New Frontiers for ghostrole purposes.
@@ -4289,3 +4274,18 @@
   id: 1057
   time: '2025-02-06T10:46:07.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1576
+- author: Sha-Seng
+  changes:
+  - message: Greatcoats (Cap, HoS, QM) can now be worn as outerwear if you want to
+      put your arms through the sleeves
+    type: Tweak
+  id: 1058
+  time: '2025-02-06T11:13:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1584
+- author: mqole
+  changes:
+  - message: Minor rules changes regarding how free agents engage with antagonism.
+    type: Tweak
+  id: 1059
+  time: '2025-02-06T11:14:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1585
