@@ -151,14 +151,14 @@
   description: A high end military grade assault rifle. Uses .20 rifle ammo.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
+    sprite: GreyStation/Objects/Weapons/Guns/Rifles/lecter.rsi # GreyStation - Resprite
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
+    sprite: GreyStation/Objects/Weapons/Guns/Rifles/lecter.rsi # GreyStation - Resprite
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
