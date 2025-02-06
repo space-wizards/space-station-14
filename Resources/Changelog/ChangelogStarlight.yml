@@ -3070,4 +3070,50 @@ Entries:
   id: 427
   time: '2025-02-05T04:01:50.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/293
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added night-vision and thermal-vision.
+    type: Add
+  id: 428
+  time: '2025-02-06T03:53:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/298
+- author: STARLIGHT TEAM
+  changes:
+  - message: Cyber eyes, available for agents in the uplink, but require surgical
+      installation.
+    type: Add
+  id: 429
+  time: '2025-02-06T03:53:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/298
+- author: STARLIGHT TEAM
+  changes:
+  - message: The station can research both eyes as Tier 3 biomedical technology.
+    type: Add
+  id: 430
+  time: '2025-02-06T03:53:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/298
+- author: STARLIGHT TEAM
+  changes:
+  - message: Cyclorites now have night vision from round start as described in their
+      species, and have lost sensitivity to the color red.
+    type: Add
+  id: 431
+  time: '2025-02-06T03:53:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/298
+- author: STARLIGHT TEAM
+  changes:
+  - message: Thermal vision at round start has been given to ninjas, terror spiders,
+      the Rat King, Xeno, and the dragon.
+    type: Add
+  id: 432
+  time: '2025-02-06T03:53:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/298
+- author: STARLIGHT TEAM
+  changes:
+  - message: Night vision has been given to all flying creatures, including the chaplain's
+      bat, carps, and bihonkers.
+    type: Add
+  id: 433
+  time: '2025-02-06T03:53:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/298
 
