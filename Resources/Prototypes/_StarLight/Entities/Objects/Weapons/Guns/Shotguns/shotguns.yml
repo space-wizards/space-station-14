@@ -111,7 +111,20 @@
   description: An outdated sidearm rarely seen in use by certain PMCs that operate throughout the frontier systems, featuring a three-shell cylinder. Thats right, shell, this one shoots twelve gauge.
   components:
   - type: Item
-    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/cycler.rsi
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/ga12.rsi
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
+  - type: Tag
+    tags:
+    - Sidearm
   - type: Gun
     spread: 30
   - type: Sprite
