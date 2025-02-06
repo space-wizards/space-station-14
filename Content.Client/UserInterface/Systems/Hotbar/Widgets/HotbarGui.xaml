@@ -1,6 +1,7 @@
 ﻿<widgets:HotbarGui
     xmlns="https://spacestation14.io"
     xmlns:inventory="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Controls"
+    xmlns:storage="clr-namespace:Content.Client.UserInterface.Systems.Storage.Controls"
     xmlns:hands="clr-namespace:Content.Client.UserInterface.Systems.Hands.Controls"
     xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Hotbar.Widgets"
     Name="HotbarInterface"
@@ -12,8 +13,10 @@
         <BoxContainer Name="StorageContainer"
                       Access="Public"
                       HorizontalAlignment="Center"
-                      HorizontalExpand="True"
                       Margin="10">
+            <storage:StorageContainer
+                Name="StoragePanel"
+                Visible="False"/>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" Name="Hotbar" HorizontalAlignment="Center">
             <inventory:ItemSlotButtonContainer
