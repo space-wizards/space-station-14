@@ -124,7 +124,13 @@ public sealed class BloodstreamSystem : EntitySystem
             // Adds blood to their blood level if it is below the reference; Blood regeneration. Must be alive.
             if (bloodLevel < 1 && !_mobStateSystem.IsDead(uid))
             {
-                TryModifyBloodLevel(uid, bloodstream.BloodRefreshAmount, bloodstream);
+                var bloodDelta = bloodstream.BloodReferenceVolume - bloodSolution.Volume;
+                var bloodRefreshAmount = bloodstream.BloodRefreshAmount;
+
+                if (bloodDelta < bloodRefreshAmount)
+                    bloodRefreshAmount = bloodDelta;
+
+                TryModifyBloodLevel(uid, bloodRefreshAmount, bloodstream);
             }
 
             // Removes blood from the bloodstream based on bleed amount (bleed rate)
