@@ -69,6 +69,7 @@
     node: undevoted
     containers:
     - devoter-slot
+    deconstructionTarget: undevoted
 
 - type: entity
   id: AltarUndevoted
