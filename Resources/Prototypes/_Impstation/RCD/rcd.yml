@@ -7,7 +7,7 @@
   cost: 5
   delay: 4
   rotation: User
-  fx: EffectRCDConstruct0
+  fx: EffectRCDConstruct4
 
 - type: rcd
   id: TwoWayLever
@@ -18,7 +18,7 @@
   cost: 5
   delay: 4
   rotation: User
-  fx: EffectRCDConstruct0
+  fx: EffectRCDConstruct4
 
 - type: rcd
   id: ClothingHeadHatCone
@@ -29,7 +29,7 @@
   cost: 2
   delay: 1
   rotation: Fixed
-  fx: EffectRCDConstruct0
+  fx: EffectRCDConstruct1
 
 - type: rcd
   id: PowerCellSmall
@@ -40,4 +40,4 @@
   cost: 5
   delay: 3
   rotation: Fixed
-  fx: EffectRCDConstruct0
+  fx: EffectRCDConstruct3
