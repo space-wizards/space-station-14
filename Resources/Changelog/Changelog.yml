@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: goet
-  changes:
-  - message: Hides character sprite in health analyzer window if the scan becomes
-      inactive.
-    type: Fix
-  id: 7411
-  time: '2024-09-21T05:54:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31879
 - author: TGRCDev
   changes:
   - message: Station maps now have a directory for finding specific departments and
@@ -3904,3 +3896,11 @@
   id: 7910
   time: '2025-02-06T13:45:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34825
+- author: 12rabbits
+  changes:
+  - message: Activating a DNA scrambler implant no longer retains the previous identity's
+      description.
+    type: Fix
+  id: 7911
+  time: '2025-02-06T19:09:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34920
