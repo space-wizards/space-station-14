@@ -1927,9 +1927,9 @@
   productEntity: BibleNecronomicon
   discountCategory: usualDiscounts
   discountDownTo:
-    Telecrystal: 2
+    Telecrystal: 1
   cost:
-    Telecrystal: 4
+    Telecrystal: 2
   categories:
   - UplinkJob
   conditions:
