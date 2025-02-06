@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: kipdotnet, AftrLite
-  changes:
-  - message: Added the S-cargo satchel bundle to the cargo catalog. comes with a fancy
-      breath mask and an integrated N2 tank!
-    type: Add
-  id: 557
-  time: '2024-11-24T02:42:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/782
 - author: DinnerCalzone
   changes:
   - message: The VILE SHITPIG will now receive insults instead of pets.
@@ -4290,3 +4282,10 @@
   id: 1056
   time: '2025-02-06T10:43:19.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1575
+- author: honeyed-lemons
+  changes:
+  - message: Human and Thaven sprite Slightly
+    type: Tweak
+  id: 1057
+  time: '2025-02-06T10:46:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1576
