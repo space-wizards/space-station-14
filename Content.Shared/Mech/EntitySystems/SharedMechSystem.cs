@@ -20,6 +20,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Content.Shared.Inventory.VirtualItem;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Shared.Mech.EntitySystems;
 
@@ -39,6 +41,8 @@ public abstract class SharedMechSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly SharedVirtualItemSystem _virtualItem = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -129,6 +133,11 @@ public abstract class SharedMechSystem : EntitySystem
         if (_net.IsClient)
             return;
 
+        foreach (var hand in _hands.EnumerateHands(pilot))
+        {
+            _virtualItem.TrySpawnVirtualItemInHand(mech, pilot, true);
+        }
+
         _actions.AddAction(pilot, ref component.MechCycleActionEntity, component.MechCycleAction, mech);
         _actions.AddAction(pilot, ref component.MechUiActionEntity, component.MechUiAction, mech);
         _actions.AddAction(pilot, ref component.MechEjectActionEntity, component.MechEjectAction, mech);
@@ -142,6 +151,7 @@ public abstract class SharedMechSystem : EntitySystem
         RemComp<InteractionRelayComponent>(pilot);
 
         _actions.RemoveProvidedActions(pilot, mech);
+        _virtualItem.DeleteInHandsMatching(pilot, mech);
     }
 
     /// <summary>
