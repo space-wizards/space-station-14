@@ -41,7 +41,7 @@
     entries:
       Burger: CrayonBurger
   - type: SignatureWriter # imp
-    font: /Fonts/_DV/ComicNeue/ComicNeue-Bold.ttf
+    font: /Fonts/ComicNeue/ComicNeue-Bold.ttf
 
 - type: entity
   parent: Crayon
