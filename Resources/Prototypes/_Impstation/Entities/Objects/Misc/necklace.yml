@@ -12,3 +12,7 @@
     sprite: _Impstation/Objects/Misc/heartlocket.rsi
   - type: Appearance
   - type: Engraveable
+  - type: Storage
+    grid:
+    - 0,0,1,0
+    maxItemSize: Tiny
