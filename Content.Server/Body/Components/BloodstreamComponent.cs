@@ -148,6 +148,13 @@ namespace Content.Server.Body.Components
         public FixedPoint2 BloodReferenceVolume = FixedPoint2.New(300);
 
         /// <summary>
+        ///     A factor which constraints maximum fluid
+        ///     volume relative to reference volume.
+        /// </summary>
+        [DataField]
+        public float BloodMaxVolumeFactor = 2f;
+
+        /// <summary>
         ///     Which reagent is considered this entities 'blood'?
         /// </summary>
         /// <remarks>

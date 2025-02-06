@@ -208,7 +208,7 @@ public sealed class BloodstreamSystem : EntitySystem
             return;
 
         chemicalSolution.MaxVolume = entity.Comp.ChemicalMaxVolume;
-        bloodSolution.MaxVolume = entity.Comp.BloodReferenceVolume * 2; // enables high fluid volume
+        bloodSolution.MaxVolume = entity.Comp.BloodReferenceVolume * entity.Comp.BloodMaxVolumeFactor;
         tempSolution.MaxVolume = entity.Comp.BleedPuddleThreshold * 4; // give some leeway, for chemstream as well
 
         // Ensure blood that should have DNA has it; must be run here, in case DnaComponent has not yet been initialized
