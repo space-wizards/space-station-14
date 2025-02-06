@@ -3131,4 +3131,11 @@ Entries:
   id: 435
   time: '2025-02-06T05:13:02.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/300
+- author: Killer Tamashi
+  changes:
+  - message: Changed Sec LMG sprites
+    type: Tweak
+  id: 436
+  time: '2025-02-06T15:54:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/302
 
