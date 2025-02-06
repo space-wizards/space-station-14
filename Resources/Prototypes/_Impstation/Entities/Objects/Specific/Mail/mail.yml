@@ -124,7 +124,7 @@
     contents:
     - id: MobTckTck
     - id: BorgModuleTckTckGun
-      prob: 0.09
+      prob: 0.05 #9% was too much power
     - id: PaperMailTckTck
 
 - type: entity
