@@ -67,25 +67,10 @@ namespace Content.Server.Medical
                     _solutionContainer.UpdateChemicals(stomach.Comp1.Solution.Value);
                 }
             }
-            // Adds a tiny amount of the chem stream from earlier along with vomit
+            // Adds vomit
             if (TryComp<BloodstreamComponent>(uid, out var bloodStream))
             {
-                const float chemMultiplier = 0.1f;
-
-                var vomitAmount = solutionSize;
-
-                // Takes 10% of the chemicals removed from the chem stream
-                if (_solutionContainer.ResolveSolution(uid, bloodStream.BloodSolutionName, ref bloodStream.BloodSolution))
-                {
-                    var vomitChemstreamAmount = _solutionContainer.SplitSolution(bloodStream.BloodSolution.Value, vomitAmount);
-                    vomitChemstreamAmount.ScaleSolution(chemMultiplier);
-                    solution.AddSolution(vomitChemstreamAmount, _proto);
-
-                    vomitAmount -= (float)vomitChemstreamAmount.Volume;
-                }
-
-                // Makes a vomit solution the size of 90% of the chemicals removed from the chemstream
-                solution.AddReagent(new ReagentId("Vomit", _bloodstream.GetEntityBloodData(uid)), vomitAmount); // TODO: Dehardcode vomit prototype
+                solution.AddReagent(new ReagentId("Vomit", _bloodstream.GetEntityBloodData(uid)), solutionSize); // TODO: Dehardcode vomit prototype
             }
 
             if (_puddle.TrySpillAt(uid, solution, out var puddle, false))
