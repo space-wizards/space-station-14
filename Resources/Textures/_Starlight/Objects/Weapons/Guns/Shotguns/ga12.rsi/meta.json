@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from Paradise Station",
+    "copyright": "Taken from RU Paradise Station",
     "size": {
         "x": 32,
         "y": 32
@@ -11,13 +11,7 @@
             "name": "icon"
         },
         {
-            "name": "base"
-        },
-        {
             "name": "bolt-open"
-        },
-        {
-          "name": "mag-0"
         },
         {
             "name": "inhand-left",
@@ -28,11 +22,7 @@
             "directions": 4
         },
         {
-            "name": "wielded-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "wielded-inhand-right",
+            "name": "equipped-BELT",
             "directions": 4
         }
     ]

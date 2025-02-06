@@ -102,11 +102,11 @@
     - Burst
     - FullAuto
     soundGunshot:
-      path: /Audio/_Starlight/Weapons/Guns/Gunshots/1sp_91.ogg
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/uzi.ogg
   - type: MagazineVisuals
     magState: mag
-    steps: 2
-    zeroVisible: false
+    steps: 1
+    zeroVisible: true
   - type: Appearance
   - type: ChamberMagazineAmmoProvider
     autoEject: true
