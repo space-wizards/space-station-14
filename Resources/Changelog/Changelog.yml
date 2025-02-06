@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Cores from floral anomalies are now seeds for hydroponics!
-    type: Add
-  id: 7413
-  time: '2024-09-21T19:54:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31987
 - author: Plykiya
   changes:
   - message: The rat king is now capable of butchering things, like animals.
@@ -3903,3 +3896,11 @@
   id: 7912
   time: '2025-02-06T19:16:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34914
+- author: themias
+  changes:
+  - message: Combat bakery kit price is reduced from 6TC to 4TC, increased baguette
+      sword attack speed, throwing croissants ignore armor
+    type: Tweak
+  id: 7913
+  time: '2025-02-06T23:07:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34927
