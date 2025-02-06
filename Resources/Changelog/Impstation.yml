@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: The Luggage can now spawn on its own, rarely.
-    type: Add
-  id: 556
-  time: '2024-11-24T02:32:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/770
 - author: kipdotnet, AftrLite
   changes:
   - message: Added the S-cargo satchel bundle to the cargo catalog. comes with a fancy
@@ -4287,3 +4280,13 @@
   id: 1055
   time: '2025-02-06T10:42:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1570
+- author: honeyed-lemons
+  changes:
+  - message: Adds the reporter to Box
+    type: Add
+  - message: Lots of box rooms have been altered slightly, and things fixed.. box
+      lovers rejoice
+    type: Tweak
+  id: 1056
+  time: '2025-02-06T10:43:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1575
