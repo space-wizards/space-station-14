@@ -9,10 +9,9 @@
     - state: icon-cables
   - type: ItemBorgModule
     items:
-    - CableMVStackLingering10
-    - CableApcStackLingering10
     - trayScanner
     - Multitool
+    - RCDRechargingTckTck
     - MicroDrill
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
