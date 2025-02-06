@@ -1,0 +1,47 @@
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckCloakCaptaingreatcoat
+  name: captain's greatcoat
+  description: "A long blue coat with an ornate trim, worn as a cape thanks to the gold aguilettes holding it around your neck. It carries a powerful aura of leadership. You can put your arms through the sleeves if you really want."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Multiple/captaingreatcoat.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Multiple/captaingreatcoat.rsi
+    slots:
+    - OUTERCLOTHING
+    - NECK
+  - type: StealTarget
+    stealGroup: HeadCloak
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckCloakQmgreatcoat
+  name: quartermaster's greatcoat
+  description: "A heavy brown greatcoat with a Cargonian C on the back, worn as a cape thanks to the leather belts holding it around your neck. You can put your arms through the sleeves if you really want."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Multiple/qmgreatcoat.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Multiple/qmgreatcoat.rsi
+    slots:
+    - OUTERCLOTHING
+    - NECK
+  - type: StealTarget
+    stealGroup: HeadCloak
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckCloakHosgreatcoat
+  name: head of security's greatcoat
+  description: "A ruffled and flared coat with an ornate trim, worn as a cape thanks to the gold aguilettes holding it around your neck. Designed specifically to complement your dress uniform. You can put your arms through the sleeves if you really want."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Multiple/hosgreatcoat.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Multiple/hosgreatcoat.rsi
+    slots:
+    - OUTERCLOTHING
+    - NECK
+  - type: StealTarget
+    stealGroup: HeadCloak
