@@ -662,7 +662,6 @@
     Egg: 6
     OilOlive: 5
 
-
 - type: microwaveMealRecipe
   id: RecipePastaTomato
   name: pasta tomato recipe
