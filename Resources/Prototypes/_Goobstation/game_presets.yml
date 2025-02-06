@@ -9,6 +9,7 @@
   rules:
     - Heretic
     - SubGamemodesRule
+    - BasicStationEventScheduler
     - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
