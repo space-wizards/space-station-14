@@ -59,7 +59,7 @@ public sealed class ItemGridPiece : Control, IEntityControl
         Location = location;
 
         Visible = true;
-        MouseFilter = MouseFilterMode.Stop;
+        MouseFilter = MouseFilterMode.Pass;
 
         TooltipSupplier = SupplyTooltip;
 
@@ -105,11 +105,8 @@ public sealed class ItemGridPiece : Control, IEntityControl
             return;
         }
 
-        if (_storageController.IsDragging && _storageController.DraggingGhost?.Entity == Entity &&
-            _storageController.DraggingGhost != this)
-        {
+        if (_storageController.IsDragging && _storageController.DraggingGhost?.Entity == Entity && _storageController.DraggingGhost != this)
             return;
-        }
 
         var adjustedShape = _entityManager.System<ItemSystem>().GetAdjustedItemShape((Entity, itemComponent), Location.Rotation, Vector2i.Zero);
         var boundingGrid = adjustedShape.GetBoundingBox();

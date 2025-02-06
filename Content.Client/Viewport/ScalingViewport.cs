@@ -137,7 +137,7 @@ namespace Content.Client.Viewport
             _inputManager.ViewportKeyEvent(this, args);
         }
 
-        protected override void Draw(IRenderHandle handle)
+        protected override void Draw(DrawingHandleScreen handle)
         {
             var viewport = EnsureViewportCreated();
 
@@ -161,7 +161,7 @@ namespace Content.Client.Viewport
             var drawBox = GetDrawBox();
             var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);
             viewport.RenderScreenOverlaysBelow(handle, this, drawBoxGlobal);
-            handle.DrawingHandleScreen.DrawTextureRect(viewport.RenderTarget.Texture, drawBox);
+            handle.DrawTextureRect(viewport.RenderTarget.Texture, drawBox);
             viewport.RenderScreenOverlaysAbove(handle, this, drawBoxGlobal);
         }
 

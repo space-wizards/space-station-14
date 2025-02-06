@@ -7204,7 +7204,7 @@ entities:
       pos: -30.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -48765.125
+      secondsUntilStateChange: -48828.195
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11628,10 +11628,9 @@ entities:
       parent: 2
 - proto: BlockGameArcade
   entities:
-  - uid: 5097
+  - uid: 6618
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -4.5,50.5
       parent: 2
 - proto: Bloodpack
@@ -43410,7 +43409,7 @@ entities:
       pos: -9.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -296520.7
+      secondsUntilStateChange: -296583.75
       state: Opening
   - uid: 6747
     components:
@@ -43418,7 +43417,7 @@ entities:
       pos: -8.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -296521.4
+      secondsUntilStateChange: -296584.47
       state: Opening
   - uid: 6749
     components:
@@ -43426,7 +43425,7 @@ entities:
       pos: -6.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -296519.97
+      secondsUntilStateChange: -296583.03
       state: Opening
   - uid: 6750
     components:
@@ -43434,7 +43433,7 @@ entities:
       pos: -5.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -296519.34
+      secondsUntilStateChange: -296582.4
       state: Opening
   - uid: 9721
     components:
@@ -49170,13 +49169,6 @@ entities:
       parent: 2
     - type: FaxMachine
       name: Library
-  - uid: 6618
-    components:
-    - type: Transform
-      pos: -12.5,70.5
-      parent: 2
-    - type: FaxMachine
-      name: Captain's Office
   - uid: 6677
     components:
     - type: Transform
@@ -49226,6 +49218,13 @@ entities:
       parent: 2
     - type: FaxMachine
       name: CE's Office
+- proto: FaxMachineCaptain
+  entities:
+  - uid: 5098
+    components:
+    - type: Transform
+      pos: -12.5,70.5
+      parent: 2
 - proto: filingCabinetDrawerRandom
   entities:
   - uid: 3640
@@ -76059,6 +76058,11 @@ entities:
     - type: Transform
       pos: -63.448486,-5.236081
       parent: 2
+  - uid: 17720
+    components:
+    - type: Transform
+      pos: -7.3975163,48.7118
+      parent: 2
 - proto: LauncherCreamPie
   entities:
   - uid: 4712
@@ -91568,12 +91572,11 @@ entities:
     - type: Transform
       pos: -8.43362,72.6124
       parent: 2
-- proto: SpaceVillainArcadeFilled
+- proto: SpaceVillainArcade
   entities:
-  - uid: 5098
+  - uid: 5097
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -3.5,50.5
       parent: 2
 - proto: SpawnMechRipley
@@ -97547,6 +97550,13 @@ entities:
     components:
     - type: Transform
       pos: -33.5,50.5
+      parent: 2
+- proto: VendingMachineCondiments
+  entities:
+  - uid: 17719
+    components:
+    - type: Transform
+      pos: -51.5,49.5
       parent: 2
 - proto: VendingMachineCuraDrobe
   entities:
