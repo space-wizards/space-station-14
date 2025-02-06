@@ -1,0 +1,167 @@
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineCBURNQuarantineOfficer
+  name: CBURN quarantine officer figure
+  description: A figurine depicting a CBURN quarantine officer. Smells like ammonia and soot.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    state: cburn
+  - type: SpeakOnTrigger
+    pack: FigurinesCBURN
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineCentCommOfficial
+  name: centcomm official figure
+  description: A figurine depicting a CentComm official, who you should not be happy to see.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    state: centcomm
+  - type: SpeakOnTrigger
+    pack: FigurinesCentCommOfficial
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineChronologyAgent
+  name: chronology agent figure
+  description: A figurine depicting the high-tech suit of a Chronology Agent. Party like its 2XXX.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    state: chrono
+  - type: SpeakOnTrigger
+    pack: FigurinesChronoAgent
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineDeathsquadAgent
+  name: asset protection agent figure
+  description: A figurine depicting one of Nanotrasen's elite Asset Protection Agents. Uh oh.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    state: deathsquad
+  - type: SpeakOnTrigger
+    pack: FigurinesDeathsquad
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineERTChaplain
+  name: ert chaplain figure
+  description: A figurine depicting an Emergency Response Chaplain. For when ghosts and ghouls are afoot.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    state: ertchaplain
+  - type: SpeakOnTrigger
+    pack: FigurinesERTChaplain
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineERTEngineer
+  name: ert engineer figure
+  description: A figurine depicting an Emergency Response Engineer. For when the hull just doesn't want to stay together.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    state: ertengineer
+  - type: SpeakOnTrigger
+    pack: FigurinesERTEngineer
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineERTJanitor
+  name: ert janitor figure
+  description: A figurine depicting an Emergency Response Janitor. For when the station is more trashed than a frat house.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    state: ertjanitor
+  - type: SpeakOnTrigger
+    pack: FigurinesERTJanitor
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineERTLeader
+  name: ert leader figure
+  description: A figurine depicting the leader of an Emergency Response Team. To take charge in the face of rampant bullshit.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    state: ertleader
+  - type: SpeakOnTrigger
+    pack: FigurinesERTLeader
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineERTMedic
+  name: ert medic figure
+  description: A figurine depicting an Emergency Response Medic. For when the medbay has been bombed for the 8th time this shift.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    state: ertmedic
+  - type: SpeakOnTrigger
+    pack: FigurinesERTMedic
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineERTSecurity
+  name: ert security figure
+  description: A figurine depicting an Emergency Response Security Officer. For when things get far too hot to handle.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    state: ertsecurity
+  - type: SpeakOnTrigger
+    pack: FigurinesERTSecurity
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineBrigmedic
+  name: brigmedic figure
+  description: A figurine depicting the station's brigmedic. The ointment makes it feel slimey.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    state: brigmedic
+  - type: SpeakOnTrigger
+    pack: FigurinesBrigmedic
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineCourier
+  name: courier figure
+  description: A figurine depicting a courier. The ringing noise never stops.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    state: courier
+  - type: SpeakOnTrigger
+    pack: FigurinesCourier
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineNukieAgent
+  name: syndicate operative agent figure
+  description: A figurine depicting someone in a blood-red hardsuit with white markings, similar to what the medic of a nuclear operative team might wear.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    state: nukie_agent
+  - type: SpeakOnTrigger
+    pack: FigurinesNukieAgent
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineNukieJuggernaut
+  name: syndicate juggernaut figure
+  description: A figurine depicting someone in a seemingly impenetrable blood-red hardsuit, similar to what someone on a nuclear operative team might wear.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    state: nukie_juggernaut
+  - type: SpeakOnTrigger
+    pack: FigurinesNukieJuggernaut
