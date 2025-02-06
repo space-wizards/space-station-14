@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Head of Security's Professional Jumpsuit/Jumpskirt
-    type: Add
-  - message: Head of Security's Patrol Cap
-    type: Add
-  - message: Head of Security's Shoulder Holster
-    type: Add
-  - message: Breath mask option removed from HoS loadout (no need)
-    type: Remove
-  - message: Breath mask moved to HoS locker (SWAT one still in suit locker)
-    type: Add
-  - message: Very minor adjustments to other Security gloves/boots for visual consistency
-    type: Tweak
-  id: 565
-  time: '2024-11-24T22:55:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/736
 - author: hivehum
   changes:
   - message: Added new possible names for Syndicate Recruiters, Ninjas and Revenants.
@@ -4295,3 +4278,10 @@
   id: 1064
   time: '2025-02-06T19:38:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1580
+- author: Darkmajia
+  changes:
+  - message: Signature fonts should, hopefully, well and truly, finally be fixed.
+    type: Fix
+  id: 1065
+  time: '2025-02-06T19:45:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1593
