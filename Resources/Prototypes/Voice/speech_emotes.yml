@@ -164,7 +164,7 @@
    - chitter
    - chitters
    - chittered
-   
+
 - type: emote #imp
   id: Coo
   name: chat-emote-name-coo
@@ -236,6 +236,17 @@
     - claps
     - clapping
     - clapped
+
+- type: emote
+  id: Blink
+  name: chat-emote-name-blink
+  category: General
+  icon: _Impstation/Interface/Emotes/blink.png #imp
+  chatMessages: ["chat-emote-msg-blink"]
+  chatTriggers:
+    - blink
+    - blinks
+    - blinked
 
 - type: emote
   id: Snap

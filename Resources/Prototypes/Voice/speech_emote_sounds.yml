@@ -1092,6 +1092,8 @@
       collection: Salutes
     Crack: # Imp addition
       collection: Cracks
+    Blink: # Imp addition
+      collection: Blinks
 
 - type: emoteSounds
   id: DionaBodyEmotes
@@ -1106,6 +1108,8 @@
        volume: -5
     Crack:
       collection: Cracks
+    Blink: # Imp addition
+      collection: Blinks
 
 
 - type: emoteSounds
@@ -1125,6 +1129,8 @@
       collection: Salutes
     Crack: # Imp addition
       collection: Cracks
+    Blink: # Imp addition
+      collection: Blinks
 
 - type: emoteSounds
   id: MaleThaven
