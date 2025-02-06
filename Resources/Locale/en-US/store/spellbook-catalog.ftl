@@ -1,9 +1,12 @@
 # Spells
 spellbook-fireball-name = Fireball
-spellbook-fireball-desc = Get most crew exploding with rage when they see this fireball heading toward them!
+spellbook-fireball-desc = Get most crew exploding with rage when they see this fireball heading toward them! Upgradeable.
 
 spellbook-blink-name = Blink
 spellbook-blink-desc = Don't blink or you'll miss yourself teleporting away.
+
+spellbook-voidapplause-name = Void Applause
+spellbook-voidapplause-desc = Swap places with the target, doesn't it make you want to do the boogie?
 
 spellbook-force-wall-name = Force Wall
 spellbook-force-wall-desc = Make three walls of pure force that you can pass through, but other's can't.
@@ -22,6 +25,15 @@ spellbook-ethereal-jaunt-description = Slip into the ethereal plane to slip away
 
 spellbook-mind-swap-name = Mind Swap
 spellbook-mind-swap-description = Exchange bodies with another person!
+
+spellbook-smite-name = Smite
+spellbook-smite-desc = Don't like them? EXPLODE them into giblets! Requires Wizard Robe & Hat.
+
+spellbook-cluwne-name = Cluwne's Curse
+spellbook-cluwne-desc = For when you really hate someone and Smite isn't enough. Requires Wizard Robe & Hat.
+
+spellbook-slip-name = Slippery Slope
+spellbook-slip-desc = Learn the ancient ways of the Janitor and curse your target to be slippery. Requires Wizard Robe & Hat.
 
 # Equipment
 
