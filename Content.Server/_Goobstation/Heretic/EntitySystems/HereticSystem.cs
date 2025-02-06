@@ -147,7 +147,7 @@ public sealed partial class HereticSystem : EntitySystem
         }
 
         // add whatever more until satisfied
-        while (ent.Comp.MaxTargets - pickedTargets.Count > 0)
+        while (ent.Comp.MaxTargets > pickedTargets.Count)
         {
             if (eligibleTargets.Count <= 0)
                 break;
