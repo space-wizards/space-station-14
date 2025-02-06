@@ -60,7 +60,7 @@
 - type: loadout
   id: CargoOfficeSkirtJumpskirtHarmony
   equipment:
-    jumpskirt: ClothingUniformJumpskirtCargoOfficeSkirtHarmony
+    jumpsuit: ClothingUniformJumpskirtCargoOfficeSkirtHarmony
 
 - type: loadout
   id: SeniorTechnicianJumpskirtHarmony
@@ -68,4 +68,4 @@
   - !type:GroupLoadoutEffect
     proto: SeniorTechnician
   equipment:
-    jumpskirt: ClothingUniformJumpskirtSeniorTechnicianHarmony
+    jumpsuit: ClothingUniformJumpskirtSeniorTechnicianHarmony
