@@ -144,7 +144,6 @@
   - type: Bloodstream
     bloodReagent: JuiceTomato
     bloodReferenceVolume: 50
-    chemicalMaxVolume: 30
   - type: DamageStateVisuals
     states:
       Alive:
