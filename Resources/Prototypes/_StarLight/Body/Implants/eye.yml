@@ -19,8 +19,8 @@
   components:
   - type: Sprite
     state: eye_implant_welding
-  - type: OrganImplant
-    compsToAdd: 
+  - type: FunctionalOrgan
+    comps: 
     - type: EyeProtection
     
 # needs arguments system
@@ -32,8 +32,8 @@
 #  components:
 #  - type: Sprite
 #    state: eye_implant_diagnostic
-#  - type: OrganImplant
-#    compsToAdd: 
+#  - type: FunctionalOrgan
+#    comps: 
 #    - type: ShowHealthBars
 #      damageContainers:
 #      - Inorganic
@@ -47,8 +47,8 @@
   components:
   - type: Sprite
     state: eye_implant_medical
-  - type: OrganImplant
-    compsToAdd: 
+  - type: FunctionalOrgan
+    comps: 
     - type: ShowHealthBars
     - type: ShowHealthIcons
     
@@ -60,12 +60,12 @@
   components:
   - type: Sprite
     state: eye_implant_security
-  - type: OrganImplant
-    compsToAdd: 
+  - type: FunctionalOrgan
+    comps: 
     - type: ShowJobIcons
     - type: ShowMindShieldIcons
     - type: ShowCriminalRecordIcons
-    
+
 - type: entity
   id: EyeImplantSyndie
   name: Syndie Implant
@@ -74,8 +74,8 @@
   components:
   - type: Sprite
     state: eye_implant_syndicate
-  - type: OrganImplant
-    compsToAdd: 
+  - type: FunctionalOrgan
+    comps: 
     - type: ShowHealthBars
     - type: ShowHealthIcons
     - type: ShowJobIcons

@@ -81,6 +81,9 @@
   - type: Sprite
     layers:
       - state: eyeballs
+  - type: OrganVisualization
+    layer: Eyes
+    prototype: MobAbductorEyes
 
 - type: entity
   id: OrganAbductorEars

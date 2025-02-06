@@ -3070,4 +3070,128 @@ Entries:
   id: 427
   time: '2025-02-05T04:01:50.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/293
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added night-vision and thermal-vision.
+    type: Add
+  id: 428
+  time: '2025-02-06T03:53:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/298
+- author: STARLIGHT TEAM
+  changes:
+  - message: Cyber eyes, available for agents in the uplink, but require surgical
+      installation.
+    type: Add
+  id: 429
+  time: '2025-02-06T03:53:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/298
+- author: STARLIGHT TEAM
+  changes:
+  - message: The station can research both eyes as Tier 3 biomedical technology.
+    type: Add
+  id: 430
+  time: '2025-02-06T03:53:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/298
+- author: STARLIGHT TEAM
+  changes:
+  - message: Cyclorites now have night vision from round start as described in their
+      species, and have lost sensitivity to the color red.
+    type: Add
+  id: 431
+  time: '2025-02-06T03:53:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/298
+- author: STARLIGHT TEAM
+  changes:
+  - message: Thermal vision at round start has been given to ninjas, terror spiders,
+      the Rat King, Xeno, and the dragon.
+    type: Add
+  id: 432
+  time: '2025-02-06T03:53:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/298
+- author: STARLIGHT TEAM
+  changes:
+  - message: Night vision has been given to all flying creatures, including the chaplain's
+      bat, carps, and bihonkers.
+    type: Add
+  id: 433
+  time: '2025-02-06T03:53:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/298
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added thermal-vision to revenants
+    type: Add
+  id: 434
+  time: '2025-02-06T04:15:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/299
+- author: STARLIGHT TEAM
+  changes:
+  - message: The Reach map has returned to the pool for the beta server. The map has
+      also been remapped, adding CE, BSO, NTREP, RD, AI, and vending machines.
+    type: Tweak
+  id: 435
+  time: '2025-02-06T05:13:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/300
+- author: Killer Tamashi
+  changes:
+  - message: Changed Sec LMG sprites
+    type: Tweak
+  id: 436
+  time: '2025-02-06T15:54:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/302
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added Type U3 Uzi as new syndie gun.
+    type: Add
+  id: 437
+  time: '2025-02-06T16:03:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/303
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added APS pistol for USSP.
+    type: Add
+  id: 438
+  time: '2025-02-06T16:03:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/303
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added M1911 ammo variant for Nanotrasen.
+    type: Add
+  id: 439
+  time: '2025-02-06T16:03:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/303
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added ARG as new rifle for Nanotrasen.
+    type: Add
+  id: 440
+  time: '2025-02-06T16:03:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/303
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added Aussec Armory M-52 as new rifle for Nanotrasen.
+    type: Add
+  id: 441
+  time: '2025-02-06T16:03:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/303
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added Tkach Ya-Sui Ga 12 as new revolver type shotgun.
+    type: Add
+  id: 442
+  time: '2025-02-06T16:03:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/303
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added shotgun speedloader.
+    type: Add
+  id: 443
+  time: '2025-02-06T16:03:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/303
+- author: STARLIGHT TEAM
+  changes:
+  - message: Nerfed AS-12
+    type: Tweak
+  id: 444
+  time: '2025-02-06T16:03:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/303
 

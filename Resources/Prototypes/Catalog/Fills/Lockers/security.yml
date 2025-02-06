@@ -97,7 +97,7 @@
       - id: ClothingUniformJumpskirtBrigmedic
       - id: ClothingUniformJumpskirtOfLife
       - id: ClothingShoesBootsMagSec
-        prob: 0.1
+      - id: BedsheetBrigmedicStrange
       - id: MedkitFilled
       - id: MedkitCombatFilled
         prob: 0.6
@@ -221,6 +221,8 @@
   components:
   - type: StorageFill
     contents:
+    - id: SpeedLoaderMagnumBasic
+      amount: 2
     - id: WeaponShotgunEnforcer
       amount: 2
     - id: WeaponShotgunRiot
@@ -235,6 +237,8 @@
   components:
   - type: StorageFill
     contents:
+    - id: SpeedLoaderMagnumBasic
+      amount: 2
     - id: WeaponShotgunKammerer
       amount: 2
     - id: WeaponShotgunRiot

@@ -2,6 +2,6 @@
   id: BaseImplant
   abstract: true
   components:
-  - type: OrganImplant
+  - type: FunctionalOrgan
   - type: Damageable
     damageContainer: Inorganic

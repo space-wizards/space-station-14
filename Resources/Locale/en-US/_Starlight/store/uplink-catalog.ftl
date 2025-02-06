@@ -10,3 +10,8 @@ uplink-stechkin-name = Stechkin pistol
 uplink-stechkin-desc = A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors.
 uplink-pistol-magnum-magazine-name = Pistol Magazine (.45 magnum)
 uplink-pistol-magnum-magazine-desc = Pistol magazine with 10 cartridges. Compatible with the Desert Eagle.
+
+uplink-nightvision-eyes = Night Vision Cyber Eyes
+uplink-nightvision-eyes-desc = Allows you to see in the dark but makes you more vulnerable to flashes. (Warning: You will need a surgical assistant for the procedure.)
+uplink-thermalvision-eyes = Thermal Vision Cyber Eyes
+uplink-thermalvision-eyes-desc = Allows you to see in the dark and detect creatures through walls but makes you more vulnerable to flashes. (Warning: You will need a surgical assistant for the procedure.)
