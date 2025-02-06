@@ -96,6 +96,10 @@
     state: nanotrasen
   - type: Construction
     node: nanotrasen
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterNanotrasen
 
 - type: entity
   id: AltarChaos
@@ -108,6 +112,10 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: chaos
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterChaos
 
 - type: entity
   id: AltarDruid
@@ -120,6 +128,10 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: druid
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterDruid
 
 - type: entity
   id: AltarToolbox
@@ -132,6 +144,10 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: toolbox
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterToolbox
 
 - type: entity
   id: AltarSpaceChristian
@@ -151,6 +167,10 @@
     radius: 1.5
     energy: 1
     color: "#fbceb1"
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterSpaceChristian
 
 - type: entity
   id: AltarSatana
@@ -170,6 +190,10 @@
     radius: 1.5
     energy: 1
     color: "#ff6347"
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterSatana
 
 - type: entity
   id: AltarTechnology
@@ -189,6 +213,10 @@
     radius: 1.5
     energy: 1
     color: "#e0ffff"
+  - type: ContainerFill
+    containers:
+      devoter-slot:
+      - AltarDevoterTechnology
 
 - type: entity
   id: AltarConvertFestival

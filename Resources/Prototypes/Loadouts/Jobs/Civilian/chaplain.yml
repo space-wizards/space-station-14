@@ -1,3 +1,22 @@
+# Devoter
+- type: loadout
+  id: AltarDevoterNanotrasen
+  storage:
+    back:
+    - AltarDevoterNanotrasen
+
+- type: loadout
+  id: AltarDevoterChaos
+  storage:
+    back:
+    - AltarDevoterChaos
+
+- type: loadout
+  id: AltarDevoterDruid
+  storage:
+    back:
+    - AltarDevoterDruid
+
 # Head
 - type: loadout
   id: ChaplainHead

@@ -81,7 +81,6 @@
     - to: undevoted
       completed:
       - !type:EmptyAllContainers
-        pickup: true
       steps:
       - tool: Prying
         doAfter: 1
@@ -92,7 +91,6 @@
     - to: undevoted
       completed:
       - !type:EmptyAllContainers
-        pickup: true
       steps:
       - tool: Prying
         doAfter: 1
@@ -103,7 +101,6 @@
     - to: undevoted
       completed:
       - !type:EmptyAllContainers
-        pickup: true
       steps:
       - tool: Prying
         doAfter: 1
@@ -114,7 +111,6 @@
     - to: undevoted
       completed:
       - !type:EmptyAllContainers
-        pickup: true
       steps:
       - tool: Prying
         doAfter: 1
@@ -125,7 +121,6 @@
     - to: undevoted
       completed:
       - !type:EmptyAllContainers
-        pickup: true
       steps:
       - tool: Prying
         doAfter: 1

@@ -53,6 +53,7 @@ loadout-group-librarian-jumpsuit = Librarian jumpsuit
 loadout-group-lawyer-jumpsuit = Lawyer jumpsuit
 loadout-group-lawyer-neck = Lawyer neck
 
+loadout-group-chaplain-devoter = Chaplain devoter
 loadout-group-chaplain-head = Chaplain head
 loadout-group-chaplain-mask = Chaplain mask
 loadout-group-chaplain-jumpsuit = Chaplain jumpsuit
