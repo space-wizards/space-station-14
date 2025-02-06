@@ -306,9 +306,9 @@
 
 - type: entity
   parent: BasePlushie
-  id: PlushieThaven
+  id: PlushieCaptain
   name: model captain plushie
-  description: The only 'union' you should join is the 'union' of holy matrimony.
+  description: "A soft toy representative of Nanotrasen's workplace relationship initiative. Remember: the only 'union' you should join is the 'union' of holy matrimony."
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Fun/toys.rsi
@@ -333,7 +333,7 @@
   parent: BasePlushie
   id: PlushieHeadofPersonnel
   name: model head of personnel plushie
-  description: Do not separate them, or you might risk a Code Pink.
+  description: "A soft toy representative of Nanotrasen's workplace relationship initiative. Remember: the only Code Pink you should see is the Hex Code in your NanoChat!"
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Fun/toys.rsi

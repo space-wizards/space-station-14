@@ -652,7 +652,7 @@
       orGroup: Plushie
     - id: PlushieHeadofPersonnel
       orGroup: Plushie
-    - id: PlushieThaven
+    - id: PlushieCaptain
       orGroup: Plushie
     - id: PlushieGiantBear
       prob: 0.1

@@ -46,7 +46,7 @@
     contents:
     - id: ItemBouquet
     - id: PlushieHeadofPersonnel
-    - id: PlushieThaven
+    - id: PlushieCaptain
     - id: PlushieGiantBear
     - id: BoxMacarons
       amount: 3
