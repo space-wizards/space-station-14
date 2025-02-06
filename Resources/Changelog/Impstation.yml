@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Neck gaiters can now be pulled down like other masks
-    type: Tweak
-  id: 562
-  time: '2024-11-24T22:48:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/790
-- author: TheGrimbeeper
-  changes:
-  - message: Artifacts now demand a little comedy
-    type: Add
-  id: 563
-  time: '2024-11-24T22:50:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/778
 - author: hivehum
   changes:
   - message: Thirty year olds are no longer considered middle aged.
@@ -4287,3 +4273,20 @@
   id: 1061
   time: '2025-02-06T11:30:35.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1577
+- author: TheGrimbeeper
+  changes:
+  - message: Fix heretic target adding function double counting targets, should now
+      have the correct number of targets in the heart.
+    type: Fix
+  id: 1062
+  time: '2025-02-06T11:39:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1582
+- author: kipdotnet
+  changes:
+  - message: Added a special Micro RCD for the tck'tck, replacing its wire coils.
+    type: Add
+  - message: Greatly reduced the chance of the tck'tck having a Gun
+    type: Tweak
+  id: 1063
+  time: '2025-02-06T11:39:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1588
