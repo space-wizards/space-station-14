@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: clinux
-  changes:
-  - message: Added the psychologist's stamp. Prescribe treatments for your less mentally
-      sane crew!
-    type: Add
-  id: 7409
-  time: '2024-09-20T14:42:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31881
 - author: saga3152
   changes:
   - message: You can now make vodka and soda water.
@@ -3904,3 +3896,11 @@
   id: 7908
   time: '2025-02-06T05:49:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34561
+- author: SG6732
+  changes:
+  - message: Swapped the stick of butter with 5 u of olive oil in the boiled spaghetti
+      recipe.
+    type: Tweak
+  id: 7909
+  time: '2025-02-06T11:45:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34904
