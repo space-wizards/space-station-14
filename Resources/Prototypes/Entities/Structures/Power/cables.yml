@@ -113,11 +113,9 @@
   description: A medium voltage power cable.
   components:
   - type: Sprite
-    color: Yellow
     sprite: Structures/Power/Cables/mv_cable.rsi
     state: mvcable_0
   - type: Icon
-    color: Yellow
     sprite: Structures/Power/Cables/mv_cable.rsi
     state: mvcable_4
   - type: NodeContainer
