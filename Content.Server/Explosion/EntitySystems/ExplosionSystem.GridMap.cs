@@ -72,7 +72,7 @@ public sealed partial class ExplosionSystem
             var targetGrid = Comp<MapGridComponent>(referenceGrid.Value);
             var xform = Transform(referenceGrid.Value);
             targetAngle = xform.WorldRotation;
-            targetMatrix = xform.InvWorldMatrix;
+            targetMatrix = _transformSystem.GetInvWorldMatrix(xform);
             tileSize = targetGrid.TileSize;
         }
 
