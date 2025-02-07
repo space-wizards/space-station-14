@@ -117,7 +117,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
             return;
         }
 
-        var localToWorld = Vector2.Transform(_localPosition, xform.WorldMatrix);
+        var localToWorld = Vector2.Transform(_localPosition, _transformSystem.GetWorldMatrix(xform));
 
         if (localToWorld.EqualsApprox(mousePos.Position, 0.01f)) return;
 
