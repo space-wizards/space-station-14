@@ -10,7 +10,7 @@
                 <PanelContainer StyleClasses="ButtonSquare">
                     <LineEdit Name="NumberInput"
                               PlaceHolder="{Loc nano-chat-number-placeholder}"
-                              Editable="False"/>
+                              Editable="False" />
                 </PanelContainer>
             </BoxContainer>
 
