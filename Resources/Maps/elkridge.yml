@@ -13975,7 +13975,7 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -311854.06
+      secondsUntilStateChange: -311983
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -97105,6 +97105,11 @@ entities:
     - type: Transform
       pos: -20.5,-6.5
       parent: 2
+  - uid: 13514
+    components:
+    - type: Transform
+      pos: -23.5,-17.5
+      parent: 2
 - proto: VendingMachineClothing
   entities:
   - uid: 4174
@@ -97234,13 +97239,6 @@ entities:
     components:
     - type: Transform
       pos: -9.5,-46.5
-      parent: 2
-- proto: VendingMachinePride
-  entities:
-  - uid: 13514
-    components:
-    - type: Transform
-      pos: -23.5,-17.5
       parent: 2
 - proto: VendingMachineRoboDrobe
   entities:
