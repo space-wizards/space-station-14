@@ -21,7 +21,7 @@
 - type: entity
   id: ShellShotgunBeanbag
   name: shell (.50 beanbag)
-  parent: BaseShellShotgun
+  parent: [ BaseShellShotgun, BaseSecurityBartenderContraband ]
   components:
   - type: Tag
     tags:
@@ -66,7 +66,7 @@
 - type: entity
   id: ShellShotgunFlare
   name: shell (.50 flare)
-  parent: BaseShellShotgun
+  parent: [ BaseShellShotgun, BaseSecurityBartenderContraband ]
   components:
   - type: Tag
     tags:

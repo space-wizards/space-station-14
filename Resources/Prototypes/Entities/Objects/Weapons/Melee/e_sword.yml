@@ -202,7 +202,6 @@
       malus: 0.4
     - type: Contraband
       severity: Syndicate
-      allowedDepartments: null
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:

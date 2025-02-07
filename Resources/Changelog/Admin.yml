@@ -721,5 +721,21 @@ Entries:
   id: 89
   time: '2025-01-15T21:10:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34406
+- author: c4llv07e
+  changes:
+  - message: Added an option to disable the bwoink sound!
+    type: Add
+  id: 90
+  time: '2025-01-17T07:24:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33782
+- author: PJB3005
+  changes:
+  - message: Introduced an option to automatically disconnect players from their current
+      server if they join another one within the same server community. Admins are
+      always exempt.
+    type: Add
+  id: 91
+  time: '2025-01-21T23:23:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34563
 Name: Admin
 Order: 1
