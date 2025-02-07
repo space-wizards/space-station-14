@@ -59,7 +59,7 @@
     MailNFCritter: 1
     MailNFFigurineBulk: 1
     MailNFPlushie: 1
-    MailSpaceBlade: 1
+    MailImpSpaceBlade: 1
     MailNFBuildABuddy: 0.2
     MailNFBikeHorn: 0.5
     MailImpBee: 0.4
@@ -71,7 +71,7 @@
 
   # Department and job-specific mail can have slightly higher weights,
   # since they'll be merged with the everyone pool.
-  departments: #add to 36.9
+  departments: #add to 37.9
     Medical: #adds to 15 including MailMedicalSpaceacillin
       MailMedicalBasicSupplies: 2
       MailMedicalChemistrySupplement: 2
@@ -81,12 +81,13 @@
       # MailMedicalSpaceacillin: 1
       MailMedicalStabilizers: 2
       MailNFMedkit: 2
-    Engineering: #adds to 12
+    Engineering: #adds to 13
       MailEngineeringCables: 2
       MailEngineeringKudzuDeterrent: 2
       MailEngineeringSheetGlass: 2
       MailEngineeringWelderReplacement: 2
       MailNFCircuitboardIndustrial: 2
+      MailImpEngineeringCompressedMatter: 2
       MailNFCircuitboardService: 1
       MailNFPowerTool: 1
     Security: #adds to 9
@@ -136,4 +137,4 @@
     Warden:
       MailWardenCrowdControl: 2
     SalvageSpecialist:
-      MailTckTck: 2
+      MailImpTckTck: 2

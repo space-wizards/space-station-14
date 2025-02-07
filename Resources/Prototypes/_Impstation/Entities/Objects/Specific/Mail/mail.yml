@@ -1,13 +1,6 @@
 # Impstation Mail
 
-- type: entity
-  parent: BaseMailLarge
-  id: MailImpGoblin
-  suffix: a whole goblin
-  components:
-  - type: Mail
-    contents:
-    - id: MobGoblinStowaway
+# Everyone
 
 - type: entity
   parent: BaseMailLarge
@@ -116,8 +109,43 @@
     - id: PaperMailNTBedsheetsAd
 
 - type: entity
+  parent: BaseMail
+  id: MailImpSpaceBlade
+  suffix: SpaceBlade
+  components:
+  - type: Mail
+    contents:
+    - id: MysterySpaceBladeBox
+
+# Department-specific mail:
+# Engineering
+
+- type: entity
+  parent: BaseMail
+  id: MailImpEngineeringCompressedMatter
+  suffix: compressed matter
+  components:
+  - type: Mail
+    contents:
+    - id: RCDAmmo
+
+# Job-specific mail:
+# Passenger
+
+- type: entity
   parent: BaseMailLarge
-  id: MailTckTck #for salvagers. also because I want to
+  id: MailImpGoblin
+  suffix: a whole goblin
+  components:
+  - type: Mail
+    contents:
+    - id: MobGoblinStowaway
+
+# Salvage Specialist
+
+- type: entity
+  parent: BaseMailLarge
+  id: MailImpTckTck #for salvagers. also because I want to
   suffix: Tck'tck
   components:
   - type: Mail
@@ -126,12 +154,13 @@
     - id: BorgModuleTckTckGun
       prob: 0.05 #9% was too much power
     - id: PaperMailTckTck
+# Chef
 
 - type: entity
-  parent: BaseMail
-  id: MailSpaceBlade
-  suffix: SpaceBlade
+  parent: BaseMailLarge
+  id: MailImpChefConveyor
+  suffix: chef conveyors
   components:
   - type: Mail
     contents:
-    - id: MysterySpaceBladeBox
+    - id: ConveyorBeltAssembly
