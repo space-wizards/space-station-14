@@ -145,7 +145,7 @@ public sealed class GuidebookSystem : EntitySystem
     private void OnGuidebookControlsTestActivateInWorld(EntityUid uid, GuidebookControlsTestComponent component, ActivateInWorldEvent args)
     {
         var xform = Transform(uid);
-        _transformSystem.SetLocalRotation(uid, xform.LocalRotation + Angle.FromDegrees(90), xform);
+        _transformSystem.SetLocalRotationNoLerp(uid, xform.LocalRotation + Angle.FromDegrees(90), xform);
     }
 
     private void OnGuidebookControlsTestInteractHand(EntityUid uid, GuidebookControlsTestComponent component, InteractHandEvent args)
