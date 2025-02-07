@@ -4,4 +4,3 @@
   components:
   - type: Contraband
     severity: Soviet
-    allowedDepartments: null
