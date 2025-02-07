@@ -572,6 +572,9 @@ public sealed partial class SupermatterSystem
     /// <param name="global">If true, sends the message to the common radio</param>
     public void SendSupermatterAnnouncement(EntityUid uid, SupermatterComponent sm, string message, bool global = false)
     {
+        if (sm.SuppressAnnouncements)
+            return;
+
         if (message == String.Empty)
             return;
 
@@ -741,7 +744,7 @@ public sealed partial class SupermatterSystem
     }
 
     /// <summary>
-    /// Checks for 
+    /// Checks for
     /// </summary>
     private void HandleVision(EntityUid uid, SupermatterComponent sm)
     {

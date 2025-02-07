@@ -1,0 +1,13 @@
+- type: entity
+  id: SupermatterNoAnnouncementSpawner
+  categories: [ HideSpawnMenu ]
+  name: Supermatter (No announcement) spawner
+  components:
+  - type: Sprite
+    sprite: /Textures/Objects/Fun/goldbikehorn.rsi
+    visible: false
+    state: icon
+  - type: TimedDespawn
+    lifetime: 1
+  - type: SpawnOnDespawn
+    prototype: SupermatterNoAnnouncement
