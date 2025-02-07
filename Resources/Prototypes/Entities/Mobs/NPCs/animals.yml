@@ -2407,8 +2407,10 @@
     rules: ghost-role-information-giant-spider-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
-    raffle:
-      settings: short
+    # harmony start: remove ghost role raffle from spiders
+    # raffle:
+    #   settings: short
+    # harmony end
   - type: GhostTakeoverAvailable
 
 - type: entity

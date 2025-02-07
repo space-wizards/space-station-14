@@ -181,7 +181,7 @@
 
 - type: entity
   name: sawn-off shotgun
-  parent: [ BaseWeaponShotgun, BaseSecurityBartenderContraband ]
+  parent: [BaseWeaponShotgun, BaseMajorContraband] #Harmony Change: Space ATF -- Adds Major Contraband tag to Sawn-Off
   id: WeaponShotgunSawn
   description: Groovy! Uses .50 shotgun shells.
   components: # needs to be super inaccurate because you don't need to wield it
