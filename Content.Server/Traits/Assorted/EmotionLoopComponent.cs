@@ -28,6 +28,7 @@ public sealed partial class EmotionLoopComponent : Component
     [DataField]
     public List<ProtoId<EmotePrototype>> Emotes = new();
 
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan NextIncidentTime;
 }

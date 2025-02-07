@@ -31,12 +31,9 @@ public sealed class EmotionLoopSystem : EntitySystem
             if (emotionLoop.Emotes.Count == 0)
                 return;
 
-            emotionLoop.NextIncidentTime = TimeSpan.FromSeconds((float)emotionLoop.NextIncidentTime.TotalSeconds - frameTime);
-
-            if (emotionLoop.NextIncidentTime >= TimeSpan.Zero)
+            if (_timing.CurTime < emotionLoop.NextIncidentTime)
                 continue;
 
-            // Set the updated time.
             emotionLoop.NextIncidentTime += _random.Next(emotionLoop.MinTimeBetweenEmotions, emotionLoop.MaxTimeBetweenEmotions);
 
             // Play the emotion by random index.
