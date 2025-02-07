@@ -8,6 +8,9 @@ namespace Content.Client._DV.CartridgeLoader.Cartridges;
 [GenerateTypedNameReferences]
 public sealed partial class NanoChatEntry : BoxContainer
 {
+    private const int MaxNameLength = 14;
+    private const int MaxJobLength = 20;
+
     public event Action<uint>? OnPressed;
     private uint _number;
     private Action<EventArgs>? _pressHandler;
@@ -29,11 +32,19 @@ public sealed partial class NanoChatEntry : BoxContainer
         _pressHandler = _ => OnPressed?.Invoke(_number);
         ChatButton.OnPressed += _pressHandler;
 
-        NameLabel.Text = recipient.Name;
-        JobLabel.Text = recipient.JobTitle ?? "";
+        NameLabel.Text = Truncate(recipient.Name, MaxNameLength);
+        JobLabel.Text = Truncate(recipient.JobTitle ?? "", MaxJobLength);
         JobLabel.Visible = !string.IsNullOrEmpty(recipient.JobTitle);
         UnreadIndicator.Visible = recipient.HasUnread;
 
         ChatButton.ModulateSelfOverride = isSelected ? NanoChatMessageBubble.OwnMessageColor : null;
     }
+
+    /// <summary>
+    ///     Truncates a string to a maximum length.
+    /// </summary>
+    private static string Truncate(string text, int maxLength) =>
+        text.Length <= maxLength
+            ? text
+            : text[..(maxLength - 3)] + "...";
 }

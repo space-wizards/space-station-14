@@ -7,11 +7,13 @@ nano-chat-no-chats = No active chats
 nano-chat-select-chat = Select a chat to begin
 nano-chat-message-placeholder = Type a message...
 nano-chat-send = Send
+nano-chat-edit = Edit
 nano-chat-delete = Delete
 nano-chat-loading = Loading...
 nano-chat-message-too-long = Message too long ({$current}/{$max} characters)
 nano-chat-max-recipients = Maximum number of chats reached
 nano-chat-new-message-title = Message from {$sender}
+nano-chat-new-message-title-recipient = {$sender} ({$jobTitle})
 nano-chat-new-message-body = {$message}
 nano-chat-toggle-mute = Mute notifications
 nano-chat-delivery-failed = Failed to deliver
@@ -21,6 +23,7 @@ nano-chat-list-number = List number
 
 # Create chat popup
 nano-chat-new-title = Add a new chat
+nano-chat-edit-title = Edit a contact
 nano-chat-number-label = Number
 nano-chat-name-label = Name
 nano-chat-job-label = Job title
@@ -29,6 +32,10 @@ nano-chat-name-placeholder = Enter a name
 nano-chat-job-placeholder = Enter a job title (optional)
 nano-chat-cancel = Cancel
 nano-chat-create = Create
+
+# Edit chat popup
+nano-chat-edit-title = Edit a contact
+nano-chat-confirm = Confirm
 
 # LogProbe additions
 log-probe-scan-nanochat = Scanned {$card}'s NanoChat logs

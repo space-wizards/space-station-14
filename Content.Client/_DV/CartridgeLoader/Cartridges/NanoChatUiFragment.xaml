@@ -34,6 +34,17 @@
                        StyleClasses="LabelSubText"
                        VerticalAlignment="Center"
                        Margin="0 0 8 0" />
+                <Button Name="EditChatButton"
+                        MaxSize="32 32"
+                        Visible="False"
+                        StyleClasses="OpenBoth"
+                        Margin="0 0 4 0"
+                        ToolTip="{Loc nano-chat-edit}">
+                    <TextureRect StyleClasses="ButtonSquare"
+                                 TexturePath="/Textures/Interface/VerbIcons/edit.svg.png"
+                                 Stretch="KeepAspectCentered"
+                                 MinSize="18 18" />
+                </Button>
                 <Button Name="DeleteChatButton"
                         MaxSize="32 32"
                         Visible="False"

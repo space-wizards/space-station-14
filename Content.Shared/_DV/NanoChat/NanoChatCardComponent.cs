@@ -62,4 +62,10 @@ public sealed partial class NanoChatCardComponent : Component
     /// </summary>
     [DataField]
     public bool ListNumber = true;
+
+    /// <summary>
+    ///     The PDA that this card is currently inserted to.
+    /// </summary>
+    [DataField]
+    public EntityUid? PdaUid = null;
 }
