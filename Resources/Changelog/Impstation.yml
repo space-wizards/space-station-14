@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: SWAT Shoes are now in the ClothesMate's hacked inventory to match the
-      jumpsuits
-    type: Add
-  id: 570
-  time: '2024-11-25T06:15:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/784
 - author: mqole
   changes:
   - message: GOBLINS R NOW GOBLIN-ER
@@ -4280,3 +4272,11 @@
   id: 1069
   time: '2025-02-07T14:08:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1600
+- author: widgetbeck
+  changes:
+  - message: Sir Gollylad now has a consistent appearance. He's still genderfluid,
+      but now it's on purpose.
+    type: Tweak
+  id: 1070
+  time: '2025-02-07T14:41:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1592
