@@ -115,17 +115,13 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
         var group = Proto.Index(ent.Comp.Group);
 
-        // idk why it's necessary, but let it be.
-        if (!group.Duplicates && painter.DoAfters.TryGetValue(group.Category, out _))
-            return;
-
         if (!Targets.ContainsKey(group.Category))
             return;
 
         var target = Targets[group.Category];
         var selected = painter.Indexes.GetValueOrDefault(group.Category, 0);
         var style = target.Styles[selected];
-        if (!group.StylePaths.TryGetValue(style, out var proto))
+        if (!group.Styles.TryGetValue(style, out var proto))
         {
             var msg = Loc.GetString("spray-painter-style-not-available");
             _popup.PopupClient(msg, args.User, args.User);
@@ -179,7 +175,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
                 : new();
 
             groups.Add(proto);
-            foreach (var style in proto.StylePaths.Keys)
+            foreach (var style in proto.Styles.Keys)
             {
                 styles.Add(style);
             }

@@ -84,16 +84,8 @@ public sealed class DoorSystem : SharedDoorSystem
         if (!AppearanceSystem.TryGetData<DoorState>(entity, DoorVisuals.State, out var state, args.Component))
             state = DoorState.Closed;
 
-        if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.BaseRSI, out var prototype, args.Component))
-        {
-            var proto = Spawn(prototype);
-
-            if (TryComp<SpriteComponent>(proto, out var sprite))
-                foreach (var layer in args.Sprite.AllLayers)
-                    layer.Rsi = sprite.BaseRSI;
-
-            Del(proto);
-        }
+        if (AppearanceSystem.TryGetData<string>(entity, PaintableVisuals.BaseRSI, out var prototype, args.Component))
+            UpdateSpriteLayers(args.Sprite, prototype);
 
         if (_animationSystem.HasRunningAnimation(entity, DoorComponent.AnimationKey))
             _animationSystem.Stop(entity.Owner, DoorComponent.AnimationKey);
@@ -146,14 +138,15 @@ public sealed class DoorSystem : SharedDoorSystem
         }
     }
 
-    private void UpdateSpriteLayers(SpriteComponent sprite, string baseRsi)
+    private void UpdateSpriteLayers(SpriteComponent old, string prototype)
     {
-        if (!_resourceCache.TryGetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / baseRsi, out var res))
-        {
-            Log.Error("Unable to load RSI '{0}'. Trace:\n{1}", baseRsi, Environment.StackTrace);
-            return;
-        }
+        // and why did I replace it with an essence spawn? I wish I could remember....
+        var proto = Spawn(prototype);
 
-        sprite.BaseRSI = res.RSI;
+        if (TryComp<SpriteComponent>(proto, out var sprite))
+            foreach (var layer in old.AllLayers)
+                layer.Rsi = sprite.BaseRSI;
+
+        Del(proto);
     }
 }

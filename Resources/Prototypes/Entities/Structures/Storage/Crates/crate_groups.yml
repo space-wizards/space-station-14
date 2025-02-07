@@ -3,7 +3,7 @@
   id: CrateSteel
   iconPriority: 100
   state: icon
-  stylePaths:
+  styles:
     basic:       CrateGenericSteel
     electrical:  CrateElectrical
     radiation:   CrateRadiation
@@ -16,7 +16,7 @@
   id: CratePlastic
   iconPriority: 90
   state: icon
-  stylePaths:
+  styles:
     basic:       CratePlastic
     hydroponics: CrateHydroponics
     medical:     CrateMedical
@@ -27,7 +27,7 @@
   id: CrateSteelSec
   iconPriority: 80
   state: icon
-  stylePaths:
+  styles:
     basic:       CrateSecure
     secgear:     CrateSecgear
     engineering: CrateEngineeringSecure
@@ -39,15 +39,3 @@
     hydroponics: CrateHydroSecure
     weapon:      CrateWeaponSecure
     command:     CrateCommandSecure
-
-# - type: PaintableGroup
-#   category: crates
-#   id: PlasticSec
-#   iconPriority: 70
-#   state: icon
-#   stylePaths:
-#     basic:       [ "Structures/Storage/Crates/plastic.rsi" ]
-#     medical:     [ "Structures/Storage/Crates/medicrate_secure.rsi" ]
-#     chemistry:   [ "Structures/Storage/Crates/chemcrate_secure.rsi" ]
-#     science:     [ "Structures/Storage/Crates/scicrate_secure.rsi" ]
-#     hydroponics: [ "Structures/Storage/Crates/hydro_secure.rsi" ]

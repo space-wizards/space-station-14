@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.SprayPainter.Prototypes;
 
-[Prototype("paintableGroup")]
+[Prototype]
 public sealed partial class PaintableGroupPrototype : IPrototype
 {
     [IdDataField]
@@ -22,10 +22,7 @@ public sealed partial class PaintableGroupPrototype : IPrototype
     public float Time = 2.0f;
 
     [DataField(required: true)]
-    public Dictionary<string, EntProtoId> StylePaths = new();
-
-    [DataField]
-    public bool Duplicates = false;
+    public Dictionary<string, EntProtoId> Styles = new();
 
     // The priority determines, which sprite is used when showing
     // the icon for a style in the SprayPainter UI. The highest priority

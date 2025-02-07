@@ -1,4 +1,3 @@
-using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
@@ -24,7 +23,4 @@ public sealed partial class SprayPainterComponent : Component
 
     [DataField, AutoNetworkedField]
     public Dictionary<string, int> Indexes = new();
-
-    [DataField]
-    public Dictionary<string, DoAfterId> DoAfters = new();
 }

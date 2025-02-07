@@ -3,7 +3,7 @@
   id: LockerLockless
   iconPriority: 100
   visuals: LockerRSI
-  stylePaths:
+  styles:
     basic:          ClosetCursed
 
 - type: paintableGroup
@@ -11,7 +11,7 @@
   id: LockerSecure
   iconPriority: 90
   visuals: LockerRSI
-  stylePaths:
+  styles:
     basic:          LockerSteel
     quartermaster:  LockerQuarterMaster
     captain:        LockerCaptain

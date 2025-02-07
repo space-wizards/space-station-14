@@ -4,7 +4,7 @@
   iconPriority: 100
   time: 3.0
   state: closed
-  stylePaths:
+  styles:
     atmospherics: AirlockAtmospherics
     basic:        Airlock
     cargo:        AirlockCargo
@@ -24,7 +24,7 @@
   iconPriority: 90
   time: 3.0
   state: closed
-  stylePaths:
+  styles:
     atmospherics: AirlockAtmosphericsGlass
     basic:        AirlockGlass
     command:      AirlockCommandGlass
