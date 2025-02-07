@@ -58,6 +58,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: GunRequiresWield
+    wieldDelay: 2.5
   - type: Gun
     fireRate: 0.4
     selectedMode: SemiAuto

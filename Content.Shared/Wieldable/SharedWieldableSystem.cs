@@ -40,6 +40,8 @@ public abstract class SharedWieldableSystem : EntitySystem
     [Dependency] private readonly SharedVirtualItemSystem _virtualItem = default!;
     [Dependency] private readonly UseDelaySystem _delay = default!;
 
+    protected const string GunWieldDelayExamineColor = "yellow";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -148,6 +150,9 @@ public abstract class SharedWieldableSystem : EntitySystem
     {
         if (entity.Comp.WieldRequiresExamineMessage != null)
             args.PushText(Loc.GetString(entity.Comp.WieldRequiresExamineMessage));
+
+        if (entity.Comp.WieldDelay > 0 && entity.Comp.WieldDelayExamineMessage != null)
+            args.PushMarkup(Loc.GetString(entity.Comp.WieldDelayExamineMessage, ("color", GunWieldDelayExamineColor), ("delay", entity.Comp.WieldDelay)));
     }
 
     private void OnExamine(EntityUid uid, GunWieldBonusComponent component, ref ExaminedEvent args)
