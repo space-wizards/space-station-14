@@ -86,7 +86,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
                 box.AddChild(spriteList);
                 Tabs.AddChild(box);
 
-                var tabLocalization = Loc.GetString("spray-painter-tabs-" + category);
+                var tabLocalization = Loc.GetString("spray-painter-tabs-" + category.ToLower());
                 TabContainer.SetTabTitle(box, tabLocalization);
             }
         }

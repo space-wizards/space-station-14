@@ -18,13 +18,13 @@ namespace Content.Shared.SprayPainter;
 public abstract class SharedSprayPainterSystem : EntitySystem
 {
     [Dependency] protected readonly IPrototypeManager Proto = default!;
-    [Dependency] private   readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
-    [Dependency] private   readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-    public Dictionary<string, PaintableTargets> Targets { get; private set; } = new();
+    public Dictionary<ProtoId<PaintableGroupCategoryPrototype>, PaintableTargets> Targets { get; private set; } = new();
 
     public override void Initialize()
     {

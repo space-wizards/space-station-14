@@ -10,7 +10,7 @@ public sealed partial class PaintableGroupPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     [DataField(required: true)]
-    public string Category = String.Empty;
+    public ProtoId<PaintableGroupCategoryPrototype> Category;
 
     [DataField]
     public PaintableVisuals Visuals = PaintableVisuals.BaseRSI;

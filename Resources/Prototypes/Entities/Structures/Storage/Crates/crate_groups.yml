@@ -1,5 +1,8 @@
+- type: paintableGroupCategory
+  id: Crates
+
 - type: paintableGroup
-  category: crates
+  category: Crates
   id: CrateSteel
   iconPriority: 100
   state: icon
@@ -12,7 +15,7 @@
     surgery:     CrateSurgery
 
 - type: paintableGroup
-  category: crates
+  category: Crates
   id: CratePlastic
   iconPriority: 90
   state: icon
@@ -23,7 +26,7 @@
     oxygen:      CrateInternals
 
 - type: paintableGroup
-  category: crates
+  category: Crates
   id: CrateSteelSec
   iconPriority: 80
   state: icon

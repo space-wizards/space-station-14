@@ -1,5 +1,8 @@
+- type: paintableGroupCategory
+  id: Airlocks
+
 - type: paintableGroup
-  category: airlocks
+  category: Airlocks
   id: AirlockStandard
   iconPriority: 100
   time: 3.0
@@ -19,7 +22,7 @@
     virology:     AirlockVirology
 
 - type: paintableGroup
-  category: airlocks
+  category: Airlocks
   id: AirlockGlass
   iconPriority: 90
   time: 3.0

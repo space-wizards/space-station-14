@@ -1,5 +1,8 @@
+- type: paintableGroupCategory
+  id: Lockers
+
 - type: paintableGroup
-  category: lockers
+  category: Lockers
   id: LockerLockless
   iconPriority: 100
   visuals: LockerRSI
@@ -7,7 +10,7 @@
     basic:          ClosetCursed
 
 - type: paintableGroup
-  category: lockers
+  category: Lockers
   id: LockerSecure
   iconPriority: 90
   visuals: LockerRSI
