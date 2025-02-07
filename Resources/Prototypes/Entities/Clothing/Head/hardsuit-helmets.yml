@@ -628,6 +628,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: FireProtection
+    reduction: 0.2
 
 #ERT Medical Hardsuit
 - type: entity
