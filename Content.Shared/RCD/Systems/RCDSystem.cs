@@ -46,6 +46,7 @@ public class RCDSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     private readonly int _instantConstructionDelay = 0;
     private readonly EntProtoId _instantConstructionFx = "EffectRCDConstruct0";
@@ -520,13 +521,13 @@ public class RCDSystem : EntitySystem
                 switch (component.CachedPrototype.Rotation)
                 {
                     case RcdRotation.Fixed:
-                        Transform(ent).LocalRotation = Angle.Zero;
+                        _transformSystem.SetLocalRotationNoLerp(ent, Angle.Zero);
                         break;
                     case RcdRotation.Camera:
-                        Transform(ent).LocalRotation = Transform(uid).LocalRotation;
+                        _transformSystem.SetLocalRotationNoLerp(ent, Transform(uid).LocalRotation);
                         break;
                     case RcdRotation.User:
-                        Transform(ent).LocalRotation = direction.ToAngle();
+                        _transformSystem.SetLocalRotationNoLerp(ent, direction.ToAngle());
                         break;
                 }
 
