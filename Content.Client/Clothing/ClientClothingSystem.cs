@@ -126,7 +126,7 @@ public sealed class ClientClothingSystem : ClothingSystem
                     layer.State = $"{layer.State}-{inventory.SpeciesId}";
                 else 
                     continue;
-            }
+            } 
         }
 
         // if that returned nothing, attempt to find generic data
