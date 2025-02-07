@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: suyo
-  changes:
-  - message: Added three new tracks total for lobby and jukebox
-    type: Add
-  - message: Volume and length adjustment for expedition music along with converting
-      it to mono
-    type: Tweak
-  - message: Fixed an attribution for a certain lobby track (again)
-    type: Fix
-  id: 569
-  time: '2024-11-25T06:06:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/792
 - author: Sha-Seng
   changes:
   - message: SWAT Shoes are now in the ClothesMate's hacked inventory to match the
@@ -4284,3 +4272,11 @@
   id: 1068
   time: '2025-02-07T11:20:31.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1599
+- author: widgetbeck
+  changes:
+  - message: Randomized characters, including some ghostroles, will now have random
+      markings. Play around with it in the character creator!
+    type: Add
+  id: 1069
+  time: '2025-02-07T14:08:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1600
