@@ -67,7 +67,10 @@ public abstract partial class SharedGunSystem
             return;
 
         args.Handled = true;
-        UseChambered(uid, component, args.User);
+        if (component.CanRack)
+            UseChambered(uid, component, args.User);
+        else
+            ToggleBolt(uid, component, args.User);
     }
 
     /// <summary>
@@ -75,7 +78,7 @@ public abstract partial class SharedGunSystem
     /// </summary>
     private void OnChamberActivationVerb(EntityUid uid, ChamberMagazineAmmoProviderComponent component, GetVerbsEvent<ActivationVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || component.BoltClosed == null)
+        if (!args.CanAccess || !args.CanInteract || component.BoltClosed == null || !component.CanRack)
             return;
 
         args.Verbs.Add(new ActivationVerb()

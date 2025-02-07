@@ -118,6 +118,20 @@
       - !type:ActivateArtifact
 
 - type: artifactTrigger
+  id: TriggerMedical
+  targetDepth: 2
+  triggerHint: artifact-trigger-hint-medical
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Dylovene, Diphenhydramine, Arithrazine, Bicaridine, Dermaline, Dexalin, DexalinPlus, Tricordrazine, Leporazine, Bruizine, Lacerinol, Puncturase, Pyrazine, Insuzine, Kelotane, Hyronalin, Inaprovaline, Epinephrine ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
   id: TriggerGas
   targetDepth: 2
   triggerHint: artifact-trigger-hint-regular-gases

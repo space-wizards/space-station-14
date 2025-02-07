@@ -60,8 +60,6 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
     private void OnPaintableDoAfter(Entity<SprayPainterComponent> ent, ref SprayPainterDoAfterEvent args)
     {
-        ent.Comp.DoAfters.Remove(args.Category);
-
         if (args.Handled || args.Cancelled)
             return;
 
@@ -150,9 +148,6 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         if (!DoAfter.TryStartDoAfter(doAfterEventArgs, out var id))
             return;
 
-        // since we are now spraying an airlock prevent spraying more at the same time
-        // pipes ignore this
-        painter.DoAfters[group.Category] = (DoAfterId)id;
         args.Handled = true;
 
         // Log the attempt

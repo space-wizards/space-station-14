@@ -13,6 +13,9 @@ public sealed partial class SprayPainterComponent : Component
     [DataField]
     public TimeSpan PipeSprayTime = TimeSpan.FromSeconds(1);
 
+    /// <summary>
+    /// Pipe color chosen to spray with.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public string? PickedColor;
 

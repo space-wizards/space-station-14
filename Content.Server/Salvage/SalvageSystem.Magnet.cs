@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Server.Salvage.Magnet;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Procedural;
 using Content.Shared.Radio;
 using Content.Shared.Salvage.Magnet;
 using Robust.Server.Maps;
@@ -269,6 +270,11 @@ public sealed partial class SalvageSystem
                 var grid = _mapManager.CreateGridEntity(salvMap);
                 await _dungeon.GenerateDungeonAsync(asteroid.DungeonConfig, grid.Owner, grid.Comp, Vector2i.Zero, seed);
                 break;
+            case DebrisOffering debris:
+                var debrisProto = _prototypeManager.Index<DungeonConfigPrototype>(debris.Id);
+                var debrisGrid = _mapManager.CreateGridEntity(salvMap);
+                await _dungeon.GenerateDungeonAsync(debrisProto, debrisGrid.Owner, debrisGrid.Comp, Vector2i.Zero, seed);
+                break;
             case SalvageOffering wreck:
                 var salvageProto = wreck.SalvageMap;
 
@@ -309,7 +315,7 @@ public sealed partial class SalvageSystem
             bounds = bounds?.Union(childAABB) ?? childAABB;
 
             // Update mass scanner names as relevant.
-            if (offering is AsteroidOffering)
+            if (offering is AsteroidOffering or DebrisOffering)
             {
                 _metaData.SetEntityName(mapChild, Loc.GetString("salvage-asteroid-name"));
                 _gravity.EnableGravity(mapChild);

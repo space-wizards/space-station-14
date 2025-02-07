@@ -30,6 +30,8 @@
       state: generic
     - map: ["computerLayerKeys"]
       state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -40,6 +42,10 @@
         computerLayerKeys:
           True: { visible: true, shader: unshaded }
           False: { visible: true, shader: shaded }
+      enum.WiresVisuals.MaintenancePanelState:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: false }
+          False: { visible: true }
   - type: LitOnPowered
   - type: PointLight
     radius: 1.5
@@ -54,6 +60,11 @@
       collection: Keyboard
       params:
         volume: -1
+        variation: 0.10
+        pitch: 1.10  # low pitch keyboard sounds feel kinda weird
+    blacklist:
+      tags:
+      - NoConsoleSound
   - type: ContainerContainer
     containers:
       board: !type:Container
@@ -61,3 +72,26 @@
   - type: LightningTarget
     priority: 1
   - type: RequireProjectileTarget
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: Wires
+    boardName: wires-board-name-computer
+    layoutId: Computer
+#
+#     This is overwritten by children, so needs to be defined there
+#  - type: UserInterface
+#    interfaces:
+#      enum.WiresUiKey.Key:
+#        type: WiresBoundUserInterface
+
+- type: entity
+  parent: BaseComputer
+  id: BaseComputerAiAccess
+  components:
+  - type: StationAiWhitelist
+  - type: Wires
+    boardName: wires-board-name-computer
+    layoutId: ComputerAi

@@ -1,0 +1,1195 @@
+# Bun bottom
+
+- type: foodSequenceElement
+  id: BunTopBurger
+  final: true
+  sprites:
+  - sprite: Objects/Consumable/Food/burger_sequence.rsi
+    state: bun_top
+  tags:
+  - Bun
+
+# Mice
+
+- type: foodSequenceElement
+  id: RatBurger
+  name: food-sequence-burger-content-rat
+  sprites:
+  - sprite: Mobs/Animals/mouse.rsi
+    state: dead-0
+  - sprite: Mobs/Animals/mouse.rsi
+    state: dead-1
+  - sprite: Mobs/Animals/mouse.rsi
+    state: dead-2
+
+- type: foodSequenceElement
+  id: RatTaco
+  name: food-sequence-content-rat
+  sprites:
+  - sprite: Objects/Consumable/Food/taco_sequence.rsi
+    state: rat
+
+- type: foodSequenceElement
+  id: RatSkewer
+  name: food-sequence-content-rat
+  sprites:
+  - sprite: Objects/Consumable/Food/skewer.rsi
+    state: skewer-rat
+
+# Cheese
+
+- type: foodSequenceElement
+  id: CheeseBurger
+  name: food-sequence-content-cheese
+  sprites:
+  - sprite: Objects/Consumable/Food/burger_sequence.rsi
+    state: cheese
+  tags:
+  - Cheese
+
+- type: foodSequenceElement
+  id: CheeseTaco
+  name: food-sequence-content-cheese
+  sprites:
+  - sprite: Objects/Consumable/Food/taco_sequence.rsi
+    state: cheese
+  tags:
+  - Cheese
+
+# Steak
+
+- type: foodSequenceElement
+  id: MeatSteak
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: plain-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Bacon
+
+- type: foodSequenceElement
+  id: MeatBacon
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: bacon-cooked
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: bacon2-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Bear meat
+
+- type: foodSequenceElement
+  id: MeatBear
+  name: food-sequence-content-bear
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: product-cooked
+  tags:
+  - Cooked
+  - Meat
+
+- type: foodSequenceElement
+  id: MeatBearBurger
+  name: food-sequence-burger-content-bear
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: product-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Penguin meat
+
+- type: foodSequenceElement
+  id: MeatPenguin
+  name: food-sequence-content-penguin
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: bird-cooked
+  tags:
+  - Cooked
+  - Meat
+
+- type: foodSequenceElement
+  id: MeatPenguinBurger
+  name: food-sequence-burger-content-penguin
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: bird-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Chicken meat
+
+- type: foodSequenceElement
+  id: MeatChicken
+  name: food-sequence-content-chicken
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: chicken-fried
+  tags:
+  - Cooked
+  - Meat
+  - Chicken
+
+# Fried Chicken meat
+
+- type: foodSequenceElement
+  id: MeatFriedChicken
+  name: food-sequence-content-chicken
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: chicken-fried
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: chicken2-fried
+  tags:
+  - Cooked
+  - Meat
+  - Chicken
+
+# Duck meat
+
+- type: foodSequenceElement
+  id: MeatDuck
+  name: food-sequence-content-duck
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: bird-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Crab meat
+
+- type: foodSequenceElement
+  id: MeatCrab
+  name: food-sequence-content-crab
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: crab-cooked
+  tags:
+  - Cooked
+  - Meat
+  - Crab
+
+- type: foodSequenceElement
+  id: MeatCrabBurger
+  name: food-sequence-burger-content-crab
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: crab-cooked
+  tags:
+  - Cooked
+  - Meat
+  - Crab
+
+# Meat goliath
+
+- type: foodSequenceElement
+  id: MeatGoliath
+  name: food-sequence-content-goliath
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: goliath-cooked
+  tags:
+  - Cooked
+  - Meat
+
+- type: foodSequenceElement
+  id: MeatGoliathBurger
+  name: food-sequence-burger-content-goliath
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: goliath-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Xeno meat
+
+- type: foodSequenceElement
+  id: MeatXeno
+  name: food-sequence-content-xeno
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: rouny-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Meat lizard
+
+- type: foodSequenceElement
+  id: MeatLizard
+  name: food-sequence-content-lizard
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: lizard-cooked
+  tags:
+  - Cooked
+  - Meat
+
+- type: foodSequenceElement
+  id: MeatLizardBurger
+  name: food-sequence-burger-content-lizard
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: lizard-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Meat spider
+
+- type: foodSequenceElement
+  id: MeatSpider
+  name: food-sequence-content-spider
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: spiderleg-cooked
+  tags:
+  - Cooked
+  - Meat
+
+- type: foodSequenceElement
+  id: MeatSpiderBurger
+  name: food-sequence-burger-content-spider
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: spiderleg-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Meatball
+
+- type: foodSequenceElement
+  id: MeatBall
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: meatball-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Snail meat
+
+- type: foodSequenceElement
+  id: MeatSnail
+  name: food-sequence-content-snail
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: snail-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Meat cutlet
+
+- type: foodSequenceElement
+  id: MeatCutlet
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: cutlet-cooked
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+
+# Bear cutlet
+
+- type: foodSequenceElement
+  id: BearCutlet
+  name: food-sequence-content-bear
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: cutlet-cooked
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+
+- type: foodSequenceElement
+  id: BearCutletBurger
+  name: food-sequence-burger-content-bear
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: cutlet-cooked
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+
+# Penguin cutlet
+
+- type: foodSequenceElement
+  id: PenguinCutlet
+  name: food-sequence-content-penguin
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: cutlet-cooked
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+
+- type: foodSequenceElement
+  id: PenguinCutletBurger
+  name: food-sequence-burger-content-penguin
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: cutlet-cooked
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+
+# Chicken cutlet
+
+- type: foodSequenceElement
+  id: ChickenCutlet
+  name: food-sequence-content-chicken
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: cutlet-cooked
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+  - Chicken
+
+# Duck cutlet
+
+- type: foodSequenceElement
+  id: DuckCutlet
+  name: food-sequence-content-duck
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: cutlet-cooked
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+
+# Spider cutlet
+
+- type: foodSequenceElement
+  id: LizardCutlet
+  name: food-sequence-content-lizard
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: cutlet-cooked
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+
+- type: foodSequenceElement
+  id: LizardCutletBurger
+  name: food-sequence-burger-content-lizard
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: cutlet-cooked
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+
+# Spider cutlet
+
+- type: foodSequenceElement
+  id: SpiderCutlet
+  name: food-sequence-content-spider
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: spidercutlet-cooked
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+
+- type: foodSequenceElement
+  id: SpiderCutletBurger
+  name: food-sequence-burger-content-spider
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: spidercutlet-cooked
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+
+# Xeno cutlet
+
+- type: foodSequenceElement
+  id: XenoCutlet
+  name: food-sequence-content-xeno
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: xenocutlet-cooked
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+
+# Brain
+
+- type: foodSequenceElement
+  id: Brain
+  name: food-sequence-content-brain
+  sprites:
+  - sprite: Mobs/Species/Human/organs.rsi
+    state: brain
+  tags:
+  - Brain
+  - Raw
+
+# Banana
+
+- type: foodSequenceElement
+  id: Banana
+  name: food-sequence-content-banana
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: produce
+  tags:
+  - Fruit
+
+# Mimana
+
+- type: foodSequenceElement
+  id: Mimana
+  name: food-sequence-content-mimana
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/mimana.rsi
+    state: produce
+  tags:
+  - Fruit
+
+# Carrot
+
+- type: foodSequenceElement
+  id: Carrot
+  name: food-sequence-content-carrot
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/carrot.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+- type: foodSequenceElement
+  id: CarrotBurger
+  name: food-sequence-burger-content-carrot
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/carrot.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+# Cabbage
+
+- type: foodSequenceElement
+  id: Cabbage
+  name: food-sequence-content-cabbage
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/carrot.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+- type: foodSequenceElement
+  id: CabbageBurger
+  name: food-sequence-burger-content-cabbage
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/cabbage.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+# Garlic
+
+- type: foodSequenceElement
+  id: Garlic
+  name: food-sequence-content-garlic
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/garlic.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+- type: foodSequenceElement
+  id: GarlicBurger
+  name: food-sequence-burger-content-garlic
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/garlic.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+# Lemon
+
+- type: foodSequenceElement
+  id: Lemon
+  name: food-sequence-content-lemon
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/lemon.rsi
+    state: produce
+  tags:
+    - Fruit
+
+# Lemoon
+
+- type: foodSequenceElement
+  id: Lemoon
+  name: food-sequence-content-lemoon
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/lemoon.rsi
+    state: produce
+  tags:
+    - Fruit
+
+# Lime
+
+- type: foodSequenceElement
+  id: Lime
+  name: food-sequence-content-lime
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/lime.rsi
+    state: produce
+  tags:
+    - Fruit
+
+# Orange
+
+- type: foodSequenceElement
+  id: Orange
+  name: food-sequence-content-orange
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/orange.rsi
+    state: produce
+  tags:
+    - Fruit
+
+# Extradimensional Orange
+
+- type: foodSequenceElement
+  id: ExtradimensionalOrange
+  name: food-sequence-content-orange
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/extradimensional_orange.rsi
+    state: produce
+  scale: 0.5,0.5
+  tags:
+    - Fruit
+
+- type: foodSequenceElement
+  id: ExtradimensionalOrangeBurger
+  name: food-sequence-burger-content-extradimensional-orange
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/extradimensional_orange.rsi
+    state: produce
+  scale: 0.5,0.5
+  tags:
+    - Fruit
+
+# Potato
+
+- type: foodSequenceElement
+  id: Potato
+  name: food-sequence-content-potato
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/potato.rsi
+    state: produce
+  tags:
+    - Vegetable
+
+# Tomato
+
+- type: foodSequenceElement
+  id: Tomato
+  name: food-sequence-content-tomato
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/tomato.rsi
+    state: produce
+  tags:
+  - Fruit
+  - Vegetable
+
+- type: foodSequenceElement
+  id: TomatoSkewer
+  name: food-sequence-content-tomato
+  sprites:
+  - sprite: Objects/Consumable/Food/skewer.rsi
+    state: skewer-tomato
+  tags:
+  - Fruit
+  - Vegetable
+
+# Blue Tomato
+
+- type: foodSequenceElement
+  id: BlueTomato
+  name: food-sequence-content-tomato
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/blue_tomato.rsi
+    state: produce
+  tags:
+  - Fruit
+  - Vegetable
+
+# Blood Tomato
+
+- type: foodSequenceElement
+  id: BloodTomato
+  name: food-sequence-content-tomato
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/blood_tomato.rsi
+    state: produce
+  tags:
+  - Fruit
+  - Vegetable
+
+# Apple
+
+- type: foodSequenceElement
+  id: Apple
+  name: food-sequence-content-apple
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/apple.rsi
+    state: produce
+  tags:
+  - Fruit
+
+# Golden Apple
+
+- type: foodSequenceElement
+  id: GoldenApple
+  name: food-sequence-content-apple
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/golden_apple.rsi
+    state: produce
+  tags:
+  - Fruit
+
+# Pineapple
+
+- type: foodSequenceElement
+  id: PineappleSliceBurger
+  name: food-sequence-burger-content-pineapple
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/pineapple.rsi
+    state: slice
+  tags:
+  - Fruit
+  - Slice
+
+- type: foodSequenceElement
+  id: PineappleSlice
+  name: food-sequence-content-pineapple
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/pineapple.rsi
+    state: slice
+  tags:
+  - Fruit
+  - Slice
+
+# Onion
+
+- type: foodSequenceElement
+  id: OnionSliceBurger
+  name: food-sequence-burger-content-onion
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/onion.rsi
+    state: slice
+  tags:
+  - Vegetable
+  - Slice
+
+- type: foodSequenceElement
+  id: OnionSlice
+  name: food-sequence-content-onion
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/onion.rsi
+    state: slice
+  tags:
+  - Vegetable
+  - Slice
+
+# Onion red
+
+- type: foodSequenceElement
+  id: OnionRedSliceBurger
+  name: food-sequence-burger-content-onion
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/onion_red.rsi
+    state: slice
+  tags:
+  - Vegetable
+  - Slice
+
+- type: foodSequenceElement
+  id: OnionRedSlice
+  name: food-sequence-content-onion
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/onion_red.rsi
+    state: slice
+  tags:
+  - Vegetable
+  - Slice
+
+# Watermelon
+
+- type: foodSequenceElement
+  id: WatermelonSliceBurger
+  name: food-sequence-burger-content-watermelon
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/watermelon.rsi
+    state: slice
+  tags:
+  - Fruit
+  - Slice
+
+- type: foodSequenceElement
+  id: WatermelonSlice
+  name: food-sequence-content-watermelon
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/watermelon.rsi
+    state: slice
+  tags:
+  - Fruit
+  - Slice
+
+- type: foodSequenceElement
+  id: WatermelonSliceSkewer
+  name: food-sequence-content-watermelon
+  sprites:
+  - sprite: Objects/Consumable/Food/skewer.rsi
+    state: skewer-watermelon
+  tags:
+  - Fruit
+  - Slice
+
+# Holymelon
+
+- type: foodSequenceElement
+  id: HolymelonSliceBurger
+  name: food-sequence-burger-content-holymelon
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/holymelon.rsi
+    state: slice
+  tags:
+  - Fruit
+  - Slice
+
+- type: foodSequenceElement
+  id: HolymelonSlice
+  name: food-sequence-content-holymelon
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/holymelon.rsi
+    state: slice
+  tags:
+  - Fruit
+  - Slice
+
+- type: foodSequenceElement
+  id: HolymelonSliceSkewer
+  name: food-sequence-content-holymelon
+  sprites:
+  - sprite: Objects/Consumable/Food/skewer.rsi
+    state: skewer-holymelon
+  tags:
+  - Fruit
+  - Slice
+
+# Chili pepper
+
+- type: foodSequenceElement
+  id: ChiliPepper
+  name: food-sequence-content-chili
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/chili.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+- type: foodSequenceElement
+  id: ChiliPepperSkewer
+  name: food-sequence-content-chili
+  sprites:
+  - sprite: Objects/Consumable/Food/skewer.rsi
+    state: skewer-pepper
+  tags:
+  - Vegetable
+
+# Chilly pepper
+
+- type: foodSequenceElement
+  id: ChillyPepper
+  name: food-sequence-content-chilly
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/chilly.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+- type: foodSequenceElement
+  id: ChillyPepperSkewer
+  name: food-sequence-content-chilly
+  sprites:
+  - sprite: Objects/Consumable/Food/skewer.rsi
+    state: skewer-bluepepper
+  tags:
+  - Vegetable
+
+# Corn
+- type: foodSequenceElement
+  id: Corn
+  name: food-sequence-content-corn
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/corn.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+- type: foodSequenceElement
+  id: CornSkewer
+  name: food-sequence-content-corn
+  sprites:
+  - sprite: Objects/Consumable/Food/skewer.rsi
+    state: skewer-corn
+  tags:
+  - Vegetable
+
+# Aloe
+
+- type: foodSequenceElement
+  id: Aloe
+  name: food-sequence-content-aloe
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/aloe.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+# Poppy
+
+- type: foodSequenceElement
+  id: Poppy
+  name: food-sequence-content-poppy
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/poppy.rsi
+    state: produce
+  tags:
+  - Flower
+
+# lily
+
+- type: foodSequenceElement
+  id: Lily
+  name: food-sequence-content-lily
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/lily.rsi
+    state: produce
+  tags:
+  - Flower
+
+# lingzhi
+
+- type: foodSequenceElement
+  id: Lingzhi
+  name: food-sequence-content-mushroom
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/lingzhi.rsi
+    state: produce
+
+# AmbrosiaVulgaris
+
+- type: foodSequenceElement
+  id: AmbrosiaVulgaris
+  name: food-sequence-content-ambrosia
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+    state: produce
+
+- type: foodSequenceElement
+  id: AmbrosiaVulgarisBurger
+  name: food-sequence-burger-content-ambrosia
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+    state: produce
+
+# AmbrosiaDeus
+
+- type: foodSequenceElement
+  id: AmbrosiaDeus
+  name: food-sequence-content-ambrosia
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/ambrosia_deus.rsi
+    state: produce
+
+- type: foodSequenceElement
+  id: AmbrosiaDeusBurger
+  name: food-sequence-burger-content-ambrosia
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/ambrosia_deus.rsi
+    state: produce
+
+# Glasstle
+
+- type: foodSequenceElement
+  id: Glasstle
+  name: food-sequence-content-glasstle
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/glasstle.rsi
+    state: produce
+  tags:
+  - Fruit
+
+- type: foodSequenceElement
+  id: GlasstleBurger
+  name: food-sequence-burger-content-glasstle
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/glasstle.rsi
+    state: produce
+  tags:
+  - Fruit
+
+# FlyAmanita
+
+- type: foodSequenceElement
+  id: FlyAmanita
+  name: food-sequence-content-mushroom
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
+    state: produce
+
+# Gatfruit
+
+- type: foodSequenceElement
+  id: Gatfruit
+  name: food-sequence-content-gatfruit
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/gatfruit.rsi
+    state: produce
+  tags:
+  - Fruit
+
+- type: foodSequenceElement
+  id: GatfruitBurger
+  name: food-sequence-burger-content-gatfruit
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/gatfruit.rsi
+    state: produce
+  tags:
+  - Fruit
+
+# Capfruit
+
+- type: foodSequenceElement
+  id: Capfruit
+  name: food-sequence-content-capfruit
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/capfruit.rsi
+    state: produce
+  tags:
+  - Fruit
+
+- type: foodSequenceElement
+  id: CapfruitBurger
+  name: food-sequence-burger-content-capfruit
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/capfruit.rsi
+    state: produce
+  tags:
+  - Fruit
+
+# Soybeans
+
+- type: foodSequenceElement
+  id: Soybeans
+  name: food-sequence-content-soy
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/soybeans.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+- type: foodSequenceElement
+  id: SoybeansBurger
+  name: food-sequence-burger-content-soy
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/soybeans.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+# SpacemansTrumpet
+
+- type: foodSequenceElement
+  id: SpacemansTrumpet
+  name: food-sequence-content-spacemans-trumpet
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
+    state: produce
+  tags:
+  - Flower
+
+- type: foodSequenceElement
+  id: SpacemansTrumpetBurger
+  name: food-sequence-burger-content-spacemans-trumpet
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
+    state: produce
+  tags:
+  - Flower
+
+# Koibean
+
+- type: foodSequenceElement
+  id: Koibean
+  name: food-sequence-content-koibean
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/koibean.rsi
+    state: produce
+  tags:
+  - Fruit
+
+- type: foodSequenceElement
+  id: KoibeanBurger
+  name: food-sequence-burger-content-koibean
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/koibean.rsi
+    state: produce
+  tags:
+  - Fruit
+
+# Galaxythistle
+
+- type: foodSequenceElement
+  id: Galaxythistle
+  name: food-sequence-content-galaxy
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
+    state: produce
+  tags:
+  - Fruit
+
+- type: foodSequenceElement
+  id: GalaxythistleBurger
+  name: food-sequence-burger-content-galaxy
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
+    state: produce
+  tags:
+  - Fruit
+
+# bungo
+
+- type: foodSequenceElement
+  id: Bungo
+  name: food-sequence-content-bungo
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/bungo.rsi
+    state: produce
+  tags:
+  - Fruit
+
+# Pea
+
+- type: foodSequenceElement
+  id: Pea
+  name: food-sequence-content-pea
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/pea.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+# World Pea
+
+- type: foodSequenceElement
+  id: WorldPea
+  name: food-sequence-content-world-pea
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/world_pea.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+- type: foodSequenceElement
+  id: WorldPeaBurger
+  name: food-sequence-burger-content-world-pea
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/world_pea.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+# Cherry
+
+- type: foodSequenceElement
+  id: Cherry
+  name: food-sequence-content-cherry
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/cherry.rsi
+    state: produce
+  tags:
+  - Fruit
+
+# Berries
+
+- type: foodSequenceElement
+  id: Berries
+  name: food-sequence-content-berries
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/berries.rsi
+    state: produce
+  tags:
+  - Fruit
+
+- type: foodSequenceElement
+  id: BerriesBurger
+  name: food-sequence-burger-content-berries
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/berries.rsi
+    state: produce
+  tags:
+  - Fruit
+
+# Suppermatter
+
+- type: foodSequenceElement
+  id: Suppermatter
+  name: food-sequence-content-suppermatter
+  sprites:
+  - sprite: Objects/Consumable/Food/Baked/cake.rsi
+    state: suppermatter-shard
+
+- type: foodSequenceElement
+  id: SuppermatterBurger
+  name: food-sequence-burger-content-suppermatter
+  sprites:
+  - sprite: Objects/Consumable/Food/Baked/cake.rsi
+    state: suppermatter-shard
+
+
+# Anomaly berries
+
+- type: foodSequenceElement
+  id: AnomalyBerry
+  name: food-sequence-content-anomaly-berry
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi
+    state: produce
+
+- type: foodSequenceElement
+  id: AnomalyBerryBurger
+  name: food-sequence-burger-content-anomaly-berry
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi
+    state: produce

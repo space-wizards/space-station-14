@@ -170,6 +170,11 @@
   - type: ExplosionResistance
     damageCoefficient: 0.50
   - type: AntiRottingContainer
+  - type: Construction
+    graph: ClosetFreezer
+    node: done
+    containers:
+    - entity_storage
 
 - type: entity
   id: LockerFreezer
@@ -360,6 +365,20 @@
     stateDoorOpen: shotguncase_open
     stateDoorClosed: shotguncase_door
   - type: AccessReader
+  - type: Construction
+    graph: GunSafe
+    node: done
+    containers:
+    - entity_storage
+  - type: StaticPrice
+    price: 660
+
+- type: entity
+  id: GunSafeBaseSecure
+  parent: GunSafe
+  suffix: Armory, Locked
+  components:
+  - type: AccessReader
     access: [["Armory"]]
 
 # Detective
@@ -402,6 +421,7 @@
   parent: LockerSyndicatePersonal
   description: Advanced locker technology.
   components:
+    - type: ArrivalsBlacklist
     - type: BluespaceLocker
       minBluespaceLinks: 1
       behaviorProperties:
