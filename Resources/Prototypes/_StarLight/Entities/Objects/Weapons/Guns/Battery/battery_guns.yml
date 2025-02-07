@@ -259,7 +259,7 @@
     startingCharge: 1500
       
 - type: entity
-  parent: BaseWeaponBattery
+  parent: [ BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband ]
   id: WeaponIonRifle
   name: ion rifle
   components:
@@ -293,6 +293,11 @@
     zeroVisible: true
   - type: Appearance
   - type: EmpImmune
+  - type: GunRequiresWield
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 8
+    pvsIncrease: 0.3
   
 - type: entity
   parent: BaseWeaponBattery
@@ -537,7 +542,7 @@
   - type: Appearance
   
 - type: entity
-  parent: BaseWeaponBattery
+  parent: [ BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband ]
   id: WeaponEnergySniper
   name: LWAP
   components:
@@ -565,6 +570,11 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+  - type: GunRequiresWield
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 5
+    pvsIncrease: 0.3
 
 - type: entity
   name: pulse carbine
