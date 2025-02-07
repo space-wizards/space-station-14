@@ -62,7 +62,8 @@
     MailImpSpaceBlade: 1
     MailNFBuildABuddy: 0.2
     MailNFBikeHorn: 0.5
-    MailImpBee: 0.4
+    MailImpBee: 0.3
+    MailImpBROS: 0.1
     MailBlockGameDIY: 0.4
     MailSpaceVillainDIY: 0.4 # Lowered to accommodate the foam sabre
     MailNFSmoke: 0.4

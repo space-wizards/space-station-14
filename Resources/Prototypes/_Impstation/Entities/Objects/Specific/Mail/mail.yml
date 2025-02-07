@@ -47,6 +47,15 @@
     - id: MobAngryBee
 
 - type: entity
+  parent: BaseMail
+  id: MailImpBROS
+  suffix: an bros
+  components:
+  - type: Mail
+    contents:
+    - id: MobBros
+
+- type: entity
   parent: BaseMailLarge
   id: MailImpChameleonScarf
   suffix: chameleon scarf
