@@ -69,6 +69,17 @@
 
 - type: entity
   parent: ClothingNeckPinBase
+  id: ClothingNeckHeterosexualPin
+  name: heterosexual pin
+  description: Be heterosexual do crime.
+  components:
+  - type: Sprite
+    state: hetero
+  - type: Clothing
+    equippedPrefix: hetero
+
+- type: entity
+  parent: ClothingNeckPinBase
   id: ClothingNeckIntersexPin
   name: intersex pin
   description: Be intersex do crime.
@@ -143,17 +154,6 @@
     state: trans
   - type: Clothing
     equippedPrefix: trans
-
-- type: entity
-  parent: ClothingNeckPinBase
-  id: ClothingNeckHeterosexualPin
-  name: heterosexual pin
-  description: Be heterosexual do crime.
-  components:
-  - type: Sprite
-    state: hetero
-  - type: Clothing
-    equippedPrefix: hetero
 
 - type: entity
   parent: ClothingNeckPinBase

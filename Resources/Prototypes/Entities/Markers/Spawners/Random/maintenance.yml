@@ -145,6 +145,7 @@
         - id: ClothingNeckAsexualPin
         - id: ClothingNeckBisexualPin
         - id: ClothingNeckGayPin
+        - id: ClothingNeckHeterosexualPin
         - id: ClothingNeckIntersexPin
         - id: ClothingNeckLesbianPin
         - id: ClothingNeckNonBinaryPin
