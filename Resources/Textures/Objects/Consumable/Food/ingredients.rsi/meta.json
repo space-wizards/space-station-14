@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation and baystation and modified by potato1234x at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24 and https://github.com/Baystation12/Baystation12/commit/a6067826de7fd8f698793f6d84e6c2f1f9b1f188. Tofu and tofu-slice were created by Discord user rosysyntax#6514. Chevrelog and chevredisk created by Github user deathride58, tortilladough tortillaflat and tortillaslice added by Phunny, butter-slice and croissant-raw taken from tgstation at commit https://github.com/tgstation/tgstation/commit/7ffd61b6fa6a6183daa8900f9a490f46f7a81955, cotton made by mlexf (discord 1143460554963427380)",
+  "copyright": "Taken from tgstation and baystation and modified by potato1234x at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24 and https://github.com/Baystation12/Baystation12/commit/a6067826de7fd8f698793f6d84e6c2f1f9b1f188. Tofu and tofu-slice were created by Discord user rosysyntax#6514. Chevrelog and chevredisk created by Github user deathride58, tortilladough tortillaflat and tortillaslice added by Phunny, butter-slice and croissant-raw taken from tgstation at commit https://github.com/tgstation/tgstation/commit/7ffd61b6fa6a6183daa8900f9a490f46f7a81955, cotton made by mlexf (discord 1143460554963427380). Croissant-raw-cotton, cotton-dough-slice and cotton-dough-rope by JuneSzalkowska, cloth-box by Janet Blackquill <uhhadd@gmail.com> 2024",
   "size": {
     "x": 32,
     "y": 32
@@ -45,6 +45,12 @@
     },
     {
       "name": "cotton-dough"
+    },
+    {
+      "name": "cotton-dough-slice"
+    },
+    {
+      "name": "cotton-dough-rope"
     },
     {
       "name": "dough"
@@ -123,6 +129,12 @@
     },
     {
       "name": "croissant-raw"
+    },
+    {
+      "name": "croissant-raw-cotton"
+    },
+    {
+      "name": "cloth-box"
     }
   ]
 }

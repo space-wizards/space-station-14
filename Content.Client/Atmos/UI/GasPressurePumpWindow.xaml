@@ -1,22 +1,18 @@
-<DefaultWindow xmlns="https://spacestation14.io"
+<controls:FancyWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            MinSize="200 120" Title="Pressure Pump">
+            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+            SetSize="340 110" MinSize="340 110" Title="Pressure Pump">
     <BoxContainer Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Text="{Loc comp-gas-pump-ui-pump-status}"/>
-            <Control MinSize="5 0" />
+            <Label Text="{Loc comp-gas-pump-ui-pump-status}" Margin="0 0 5 0"/>
             <Button Name="ToggleStatusButton"/>
+            <Control HorizontalExpand="True"/>
+            <Button HorizontalAlignment="Right" Name="SetOutputPressureButton" Text="{Loc comp-gas-pump-ui-pump-set-rate}" Disabled="True" Margin="0 0 5 0"/>
+            <Button Name="SetMaxPressureButton" Text="{Loc comp-gas-pump-ui-pump-set-max}" />
         </BoxContainer>
-
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <Label Text="{Loc comp-gas-pump-ui-pump-output-pressure}"/>
-            <Control MinSize="5 0" />
-            <LineEdit Name="PumpPressureOutputInput" MinSize="70 0" />
-            <Control MinSize="5 0" />
-            <Button Name="SetMaxPressureButton" Text="{Loc comp-gas-pump-ui-pump-set-max}" />
-            <Control MinSize="5 0" />
-            <Control HorizontalExpand="True" />
-            <Button Name="SetOutputPressureButton" Text="{Loc comp-gas-pump-ui-pump-set-rate}" HorizontalAlignment="Right" Disabled="True"/>
+            <FloatSpinBox HorizontalExpand="True" Name="PumpPressureOutputInput" MinSize="70 0" />
         </BoxContainer>
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>
