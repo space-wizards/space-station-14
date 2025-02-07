@@ -49,7 +49,7 @@
 - type: entity
   parent: BaseMailLarge
   id: MailImpChameleonScarf
-  suffix: Chameleon scarf
+  suffix: chameleon scarf
   components:
   - type: Mail
     contents:
@@ -111,11 +111,40 @@
 - type: entity
   parent: BaseMail
   id: MailImpSpaceBlade
-  suffix: SpaceBlade
+  suffix: space blade
   components:
   - type: Mail
     contents:
     - id: MysterySpaceBladeBox
+
+- type: entity
+  parent: BaseMailLarge
+  id: MailImpFuckingGun
+  suffix: real gun
+  components:
+  - type: Mail
+    contents: # syndicate guns only
+    - id: WeaponPistolViper
+      orGroup: Gun
+      prob: 1
+    - id: WeaponRevolverPython
+      orGroup: Gun
+      prob: 1
+    - id: WeaponPistolCobra
+      orGroup: Gun
+      prob: 0.5
+    - id: WeaponRevolverMateba
+      orGroup: Gun
+      prob: 0.1
+    - id: WeaponShotgunBulldog
+      orGroup: Gun
+      prob: 0.25
+    - id: WeaponLightMachineGunL6
+      orGroup: Gun
+      prob: 0.1
+    - id: WeaponLauncherChinaLake
+      orGroup: Gun
+      prob: 0.1
 
 # Department-specific mail:
 # Engineering
@@ -130,6 +159,32 @@
     - id: RCDAmmo
 
 # Job-specific mail:
+# HoS
+
+- type: entity
+  parent: BaseMail
+  id: MailImpHosPillRefill
+  suffix: hos pills (refill)
+  components:
+  - type: Mail
+    isFragile: true
+    isPriority: true
+    contents:
+    - id: PillCanisterHOSRefill
+    - id: PaperMailHosRefill
+
+# Warden
+
+- type: entity
+  parent: BaseMail
+  id: MailImpHosPillWarden
+  suffix: hos pills (warden sample)
+  components:
+  - type: Mail
+    isFragile: true
+    contents:
+    - id: PillCanisterWardenSample
+
 # Passenger
 
 - type: entity
@@ -154,6 +209,7 @@
     - id: BorgModuleTckTckGun
       prob: 0.05 #9% was too much power
     - id: PaperMailTckTck
+
 # Chef
 
 - type: entity
@@ -164,3 +220,5 @@
   - type: Mail
     contents:
     - id: ConveyorBeltAssembly
+      amount: 3
+    - id: PaperMailDahirInsaat
