@@ -11,8 +11,8 @@
     shape:
     - 0,0,4,3
   - type: SpeedModifiedOnWield
-    walkModifier: 0.80
-    sprintModifier: 0.80
+    walkModifier: 0.85
+    sprintModifier: 0.85
   - type: Clothing
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
     quickEquip: false
