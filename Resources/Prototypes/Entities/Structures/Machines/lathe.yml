@@ -740,6 +740,7 @@
       - BoxShotgunUranium
       - BoxShellTranquilizer
       - ClothingBackpackElectropack
+      - ClothingShoesBootsMagSci
       - ExplosivePayload
       - FlashPayload
       - GrenadeBlast
@@ -769,6 +770,7 @@
       - PowerCageSmall
       - ShuttleGunDusterCircuitboard
       - ShuttleGunFriendshipCircuitboard
+      - ShuttleGunKineticCircuitboard
       - ShuttleGunPerforatorCircuitboard
       - ShuttleGunSvalinnMachineGunCircuitboard
       - Signaller
@@ -784,6 +786,7 @@
       - WeaponDisablerSMG
       - WeaponLaserCannon
       - WeaponLaserCarbine
+      - WeaponProtoKineticAccelerator
       - WeaponXrayCannon
   - type: MaterialStorage
     whitelist:
