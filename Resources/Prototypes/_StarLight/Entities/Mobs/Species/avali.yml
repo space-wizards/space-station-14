@@ -5,6 +5,7 @@
   id: BaseMobAvali
   abstract: true
   components:
+  - type: Absorbable
   - type: HumanoidAppearance
     species: Avali
   - type: Hunger
@@ -40,9 +41,13 @@
       Male: MaleAvali
       Female: FemaleAvali
       Unsexed: MaleAvali
+  - type: MovementSpeedModifier
+    weightlessAcceleration: 1.6 # Avalis are specifically built to fly in low-g environments 
+    weightlessFriction: 1
+    weightlessModifier: 1
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Moth # PLACEHOLDER for now :3
+    damageModifierSet: Avali
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:

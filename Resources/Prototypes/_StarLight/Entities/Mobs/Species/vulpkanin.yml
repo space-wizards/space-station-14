@@ -63,6 +63,17 @@
     damage:
       types:
         Slash: 5
+  - type: Temperature # Ported over from CD. Afterall, it does make sense that something with fur can handle more cold/less heat. Basegame Moths, apparently, have similar resistances.
+    heatDamageThreshold: 325
+    coldDamageThreshold: 230
+    currentTemperature: 310.15
+    specificHeat: 46
+    coldDamage:
+      types:
+        Cold : 0.05 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 2.5 #per second, scales with temperature & other constants
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Vulpkanin

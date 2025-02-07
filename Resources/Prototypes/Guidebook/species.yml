@@ -14,6 +14,7 @@
     - Felionoid
     - Cyclorite
     - Vulpkanin
+    - Avali
 
 - type: guideEntry
   id: Arachnid
@@ -69,3 +70,8 @@
   id: Vulpkanin
   name: species-name-vulpkanin
   text: "/ServerInfo/Guidebook/Mobs/Vulpkanin.xml"
+
+- type: guideEntry
+  id: Avali
+  name: species-name-avali
+  text: "/ServerInfo/Guidebook/Mobs/Avali.xml"
