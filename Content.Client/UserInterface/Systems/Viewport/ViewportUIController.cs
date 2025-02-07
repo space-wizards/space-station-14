@@ -16,7 +16,7 @@ public sealed class ViewportUIController : UIController
     [Dependency] private readonly IPlayerManager _playerMan = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [UISystemDependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [UISystemDependency] private readonly SharedTransformSystem? _transformSystem = default!;
     public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
     public const int ViewportHeight = 15;
     private MainViewport? Viewport => UIManager.ActiveScreen?.GetWidget<MainViewport>();
@@ -95,7 +95,7 @@ public sealed class ViewportUIController : UIController
         _entMan.TryGetComponent(ent, out EyeComponent? eye);
 
         if (eye?.Eye == _eyeManager.CurrentEye
-            && _transformSystem.GetWorldPosition(ent.Value) == default)
+            && (_transformSystem is null || _transformSystem.GetWorldPosition(ent.Value) == default))
             return; // nothing to worry about, the player is just in null space... actually that is probably a problem?
 
         // Currently, this shouldn't happen. This likely happened because the main eye was set to null. When this
