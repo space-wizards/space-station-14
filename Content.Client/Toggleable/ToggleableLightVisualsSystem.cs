@@ -4,7 +4,6 @@ using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Hands;
 using Content.Shared.Inventory;
-using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Toggleable;
 using Robust.Client.GameObjects;
@@ -17,7 +16,6 @@ public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLi
 {
     [Dependency] private readonly SharedItemSystem _itemSys = default!;
     [Dependency] private readonly SharedPointLightSystem _lights = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
     public override void Initialize()
     {
@@ -72,6 +70,7 @@ public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLi
         if (!component.ClothingVisuals.TryGetValue(args.Slot, out var layers))
             return;
 
+        //Check for any species specific data for sprite layers
         if (TryComp(args.Equipee, out InventoryComponent? inventory) && inventory.SpeciesId != null && sprite.BaseRSI != null) 
         {
             foreach (var layer in layers) 
@@ -85,10 +84,6 @@ public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLi
 
         var modulate = AppearanceSystem.TryGetData<Color>(uid, ToggleableLightVisuals.Color, out var color, appearance);
 
-        // Check for Species specific data
-        //if (args.Sprite !=null && )
-        //use args.Sprite.BaseRSI to get the RSI data
-        //find speciesID using inventory component, you'll need to subscribe to InventoryEvents
         var i = 0;
         foreach (var layer in layers)
         {

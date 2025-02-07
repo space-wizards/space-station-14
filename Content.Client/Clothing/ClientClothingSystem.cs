@@ -106,7 +106,6 @@ public sealed class ClientClothingSystem : ClothingSystem
         List<PrototypeLayerData>? layers = null;
 
         //Attempt to populate custom clothingVisuals, and check for species specific visuals
-        //item.ClothingVisuals.TryGetValue(args.Slot, out layers);
         if (inventory.SpeciesId != null && item.ClothingVisuals.TryGetValue(args.Slot, out layers))
         {
             //Probably want to move this to a generic find RSI function
@@ -308,7 +307,7 @@ public sealed class ClientClothingSystem : ClothingSystem
                     break;
             }
         }
-        // should probably check for racial specific layers before this step
+        
         // add the new layers
         foreach (var (key, layerData) in ev.Layers)
         {
@@ -351,7 +350,7 @@ public sealed class ClientClothingSystem : ClothingSystem
             //This code nulls out sprite components like being unshaded 
             if (displacementData is not null)
             {
-                //YOU ABSOLUTELY HAVE TO CHECK FOR RACE SPECIFIC SPRITES BEFORE THIS STEP OR MANY THINGS BREAK
+                //As of writing this any shaders will be overwritten if displacement data is added
                 //Checking that the state is not tied to the current race. In this case we don't need to use the displacement maps.
                 if (layerData.State is not null && inventory.SpeciesId is not null && layerData.State.EndsWith(inventory.SpeciesId))
                     continue;
