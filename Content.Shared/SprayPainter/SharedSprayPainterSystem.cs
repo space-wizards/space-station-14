@@ -180,11 +180,11 @@ public abstract class SharedSprayPainterSystem : EntitySystem
                 styles.Add(style);
             }
 
-            Targets[proto.Category] = new(styles.ToList(), groups, proto.Visuals, proto.State, proto.Time);
+            Targets[proto.Category] = new(styles.ToList(), groups, proto.Visuals, proto.Time);
         }
     }
 
     #endregion
 }
 
-public record PaintableTargets(List<string> Styles, List<PaintableGroupPrototype> Groups, PaintableVisuals Visuals, string? State, float Time);
+public record PaintableTargets(List<string> Styles, List<PaintableGroupPrototype> Groups, PaintableVisuals Visuals, float Time);

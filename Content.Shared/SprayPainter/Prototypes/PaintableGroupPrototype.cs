@@ -16,9 +16,6 @@ public sealed partial class PaintableGroupPrototype : IPrototype
     public PaintableVisuals Visuals = PaintableVisuals.BaseRSI;
 
     [DataField]
-    public string? State = null;
-
-    [DataField]
     public float Time = 2.0f;
 
     [DataField(required: true)]
