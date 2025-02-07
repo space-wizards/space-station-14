@@ -395,15 +395,16 @@
   - type: Sprite
     sprite: Mobs/Silicon/Bots/supplybot.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+    - map: ["enum.DamageStateVisualLayers.Base"]
       state: supplybot
-  - type: SpriteMovement
-    movementLayers:
-      movement:
-        state: supplybot-moving
-    noMovementLayers:
-      movement:
-        state: supplybot
+      sprite: Mobs/Silicon/Bots/supplybot.rsi
+  #- type: SpriteMovement
+  #  movementLayers:
+  #    movement:
+  #      state: supplybot-moving
+  #  noMovementLayers:
+  #    movement:
+  #     state: supplybot
   - type: GhostRole
     makeSentient: true
     name: ghost-role-information-supplybot-name

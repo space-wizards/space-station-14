@@ -5,59 +5,11 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "supplybot drawn by netwy",
+  "copyright": "supplybot drawn by John Kerfus",
   "states": [
     {
       "name": "supplybot",
-      "directions": 4,
-      "delays": [
-        [
-          0.3,
-          0.1
-        ],
-        [
-          0.3,
-          0.1
-        ],
-        [
-          0.3,
-          0.1
-        ],
-        [
-          0.3,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "supplybot-moving",
-      "directions": 4,
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ],
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ],
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ],
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
+      "directions": 4
     }
   ]
 }
