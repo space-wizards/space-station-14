@@ -67,6 +67,6 @@
     - AnomalyTrapGravity
     - AnomalyTrapTech
     - AnomalyTrapRock
-    - AnomalyTrapSanta
+    # - AnomalyTrapSanta # christmas is over
     chance: 1
 
