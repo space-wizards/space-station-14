@@ -60,6 +60,11 @@
   - type: RandomHumanoidAppearance
     randomizeName: false
     hair: GoblinHairA
+    hairColor: "#ffdd56"
+    eyeColor: "#0d4883"
+    age: 35
+    sex: Male
+    skinColor: "#608c76"
 
 - type: entity
   parent: MobGoblin
