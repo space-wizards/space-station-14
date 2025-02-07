@@ -191,7 +191,7 @@ public abstract class SharedNanoChatSystem : EntitySystem
     /// <summary>
     ///     Sets whether notifications are muted for a specific chat.
     /// </summary>
-    public void ToggleChatMuted(Entity<NanoChatCardComponent?> card, uint chat, bool? muted)
+    public void ToggleChatMuted(Entity<NanoChatCardComponent?> card, uint chat)
     {
         if (!Resolve(card, ref card.Comp))
             return;
