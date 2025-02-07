@@ -376,7 +376,7 @@
   parent: [ClothingOuterWinterCoatToggleable, BaseSecurityCommandContraband]
   id: ClothingOuterWinterHoSUnarmored
   name: head of security's winter coat
-  description: A sturdy coat, a warm coat, but not an armored coat.
+  description: An unarmored yet sturdy warm coat.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
@@ -663,10 +663,37 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterSci
 
+##########################################################
+- type: entity
+  parent: [ClothingOuterArmorBasic, ClothingOuterWinterCoatToggleable, BaseRestrictedContraband]
+  id: ClothingOuterWinterSec
+  name: security armored winter coat
+  description: A sturdy, utilitarian winter coat designed to protect an officer from any brig-bound threats and hypothermic events.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    layers:
+    - state: SEC-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: SEC-inhand-left
+      right:
+      - state: SEC-inhand-right
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: SEC-equipped-OUTERCLOTHING
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterSec
+##########################################################
+
 - type: entity
   parent: [ClothingOuterWinterCoatToggleable, BaseRestrictedContraband]
-  id: ClothingOuterWinterSec
+  id: ClothingOuterWinterSecUnarmored
   name: security winter coat
+  description: An unarmored yet sturdy warm coat.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
@@ -735,7 +762,7 @@
   parent: [ClothingOuterWinterCoatToggleable, BaseRestrictedContraband]
   id: ClothingOuterWinterWardenUnarmored
   name: warden's winter coat
-  description: A sturdy coat, a warm coat, but not an armored coat.
+  description: An unarmored yet sturdy warm coat.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
