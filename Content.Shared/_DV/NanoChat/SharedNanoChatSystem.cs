@@ -189,6 +189,19 @@ public abstract class SharedNanoChatSystem : EntitySystem
     }
 
     /// <summary>
+    ///     Sets whether notifications are muted for a specific chat.
+    /// </summary>
+    public void ToggleChatMuted(Entity<NanoChatCardComponent?> card, uint chat, bool? muted)
+    {
+        if (!Resolve(card, ref card.Comp))
+            return;
+
+        if (!card.Comp.MutedChats.Remove(chat))
+            card.Comp.MutedChats.Add(chat);
+        Dirty(card);
+    }
+
+    /// <summary>
     ///     Gets whether NanoChat number is listed.
     /// </summary>
     public bool GetListNumber(Entity<NanoChatCardComponent?> card)
