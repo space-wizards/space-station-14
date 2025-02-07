@@ -48,6 +48,8 @@
     maxZoom: "1.125, 1.125"
   - type: Speech
     allowedEmotes: ['Howl', 'Growl', 'Bark']
+    speechSounds: Vulpkanin
+    speechVerb: Vulpkanin
   - type: Vocal
     sounds:
       Male: MaleVulpkanin

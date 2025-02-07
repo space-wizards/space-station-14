@@ -1,0 +1,91 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Sprites by Github MozarteanChaos / Discord mozarteanchaos (213813868282118144)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "ears_bottom_primary",
+            "directions": 4
+        },
+        {
+            "name": "ears_bottom_secondary",
+            "directions": 4
+        },
+        {
+            "name": "ears_top_primary",
+            "directions": 4
+        },
+        {
+            "name": "ears_top_secondary",
+            "directions": 4
+        },
+        {
+            "name": "head_primary",
+            "directions": 4
+        },
+        {
+            "name": "head_secondary",
+            "directions": 4
+        },
+        {
+            "name": "larm_primary",
+            "directions": 4
+        },
+        {
+            "name": "larm_secondary",
+            "directions": 4
+        },
+        {
+            "name": "lhand_primary",
+            "directions": 4
+        },
+        {
+            "name": "lhand_secondary",
+            "directions": 4
+        },
+        {
+            "name": "rarm_primary",
+            "directions": 4
+        },
+        {
+            "name": "rarm_secondary",
+            "directions": 4
+        },
+        {
+            "name": "rhand_primary",
+            "directions": 4
+        },
+        {
+            "name": "rhand_secondary",
+            "directions": 4
+        },
+        {
+            "name": "lleg",
+            "directions": 4
+        },
+        {
+            "name": "rleg",
+            "directions": 4
+        },
+        {
+            "name": "tail_avali_primary",
+            "directions": 4
+        },
+        {
+            "name": "tail_avali_secondary",
+            "directions": 4
+        },
+        {
+            "name": "torso_primary",
+            "directions": 4
+        },
+        {
+            "name": "torso_secondary",
+            "directions": 4
+        }
+    ]
+}

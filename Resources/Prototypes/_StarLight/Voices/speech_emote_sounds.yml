@@ -170,3 +170,24 @@
       collection: CycloriteWhistle
     Yawn:
       collection: CycloriteYawn
+
+# Avali Sounds
+- type: emoteSounds
+  id: MaleAvali
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/_Starlight/Effects/avali_scream.ogg
+#    Laugh:
+#      path: /Audio/_Starlight/Effects/avali_laugh.ogg
+
+- type: emoteSounds
+  id: FemaleAvali
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/_Starlight/Effects/avali_scream.ogg
+#    Laugh:
+#      path: /Audio/_Starlight/Effects/avali_laugh.ogg
