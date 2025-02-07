@@ -23681,9 +23681,7 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - invalid
           - 1261
-          - invalid
           - 1260
           - 1259
           - 1258

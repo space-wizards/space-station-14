@@ -2,16 +2,16 @@
   id: Manor
   mapName: 'Manor Station'
   mapPath: /Maps/_Starlight/Stations/Manor.yml
-  minPlayers: 40
+  minPlayers: 50
   stations:
-    Fland:
+    Manor:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
           mapNameTemplate: '{0} Manor Station {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'B'
+            prefixCreator: 'ST'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_delta.yml
         - type: StationJobs
@@ -59,7 +59,7 @@
             #Mime: [ 1, 1 ]
             #Musician: [ 1, 1 ]
             #silicon
-            #StationAi: [ 1, 1 ]
+            StationAi: [ 1, 1 ]
             #Borg: [ 2, 2 ]
             #law
             #Magistrate: [ 1, 1 ]
