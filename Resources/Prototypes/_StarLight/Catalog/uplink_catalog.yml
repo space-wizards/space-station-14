@@ -94,3 +94,32 @@
     Telecrystal: 1
   categories:
   - UplinkAmmo
+
+
+# Cybernetics
+
+- type: listing
+  id: UplinkEyeImplantNightVision
+  name: uplink-nightvision-eyes
+  description: uplink-nightvision-eyes-desc
+  icon: { sprite: /Textures/_Starlight/Objects/Specific/Medical/implants.rsi, state: eyes_night }
+  productEntity: EyeImplantNightVision
+  discountDownTo:
+    Telecrystal: 2
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkCybernetics
+
+- type: listing
+  id: UplinkEyeImplantThermal
+  name: uplink-thermalvision-eyes
+  description: uplink-thermalvision-eyes-desc
+  icon: { sprite: /Textures/_Starlight/Objects/Specific/Medical/implants.rsi, state: eyes_thermal }
+  productEntity: EyeImplantThermal
+  discountDownTo:
+    Telecrystal: 4
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkCybernetics

@@ -89,6 +89,11 @@ public sealed partial class GunSystem
                 {
                     sprite.LayerSetVisible(GunVisualLayers.MagUnshaded, false);
                 }
+                
+                if (sprite.LayerMapTryGet(GunVisualLayers.Tip, out _)) //🌟Starlight🌟
+                {
+                    sprite.LayerSetVisible(GunVisualLayers.Tip, false);
+                }
 
                 return;
             }

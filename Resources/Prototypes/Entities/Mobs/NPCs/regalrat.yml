@@ -4,6 +4,7 @@
   parent: [ SimpleMobBase, MobCombat ]
   description: He's da rat. He make da roolz.
   components:
+  - type: ThermalVision
   - type: VentCrawler
   - type: CombatMode
   - type: MovementSpeedModifier

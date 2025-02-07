@@ -79,16 +79,16 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         if (args.Tools.Count == 0
             || !(args.Tools.FirstOrDefault() is var organId)
             || !TryComp<BodyPartComponent>(args.Part, out var bodyPart))
-                return;
-                
+            return;
+
         var containerId = SharedBodySystem.GetOrganContainerId(ent.Comp.Slot);
-            
+
         if (ent.Comp.Slot == "cavity" && _containers.TryGetContainer(args.Part, containerId, out var container))
         {
             _containers.Insert(organId, container);
             return;
         }
-        
+
         if (!TryComp<OrganComponent>(organId, out var organComp))
             return;
 
@@ -97,94 +97,36 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         _delayAccumulator = 0;
         _delayQueue.Enqueue(() =>
         {
-            if (_body.InsertOrgan(part, organId, ent.Comp.Slot, bodyPart, organComp) // todo move to system
-            && TryComp<DamageableComponent>(organId, out var organDamageable)
-            && TryComp<DamageableComponent>(body, out var bodyDamageable))
-            {
-                var ev = new SurgeryOrganInsertCompleted(body, part, organId);
-                RaiseLocalEvent(organId, ref ev);
+            if (!_body.InsertOrgan(part, organId, ent.Comp.Slot, bodyPart, organComp)) return;
 
-                if (TryComp<OrganEyesComponent>(organId, out var organEyes)
-                    && TryComp<BlindableComponent>(body, out var blindable))
-                {
-                    _blindable.SetMinDamage((body, blindable), organEyes.MinDamage ?? 0);
-                    _blindable.AdjustEyeDamage((body, blindable), (organEyes.EyeDamage ?? 0) - blindable.MaxDamage);
-                }
-                if (TryComp<AbductorOrganComponent>(organId, out var abductorOrgan))
-                {
-                    if (TryComp<AbductorVictimComponent>(body, out var victim))
-                        victim.Organ = abductorOrgan.Organ;
-                    if (abductorOrgan.Organ == AbductorOrganType.Vent)
-                        AddComp<VentCrawlerComponent>(body);
-                }
-                if (TryComp<OrganTongueComponent>(organId, out var organTongue)
-                    && !organTongue.IsMuted)
-                    RemComp<MutedComponent>(body);
-
-                var change = _damageableSystem.TryChangeDamage(body, organDamageable.Damage, true, false, bodyDamageable);
-                if (change is not null)
-                    _damageableSystem.TryChangeDamage(organId, change.Invert(), true, false, organDamageable);
-            }
+            var ev = new SurgeryOrganImplantationCompleted(body, part, organId);
+            RaiseLocalEvent(organId, ref ev);
         });
     }
     private void OnStepOrganExtractComplete(Entity<SurgeryStepOrganExtractComponent> ent, ref SurgeryStepEvent args)
     {
         if (ent.Comp.Organ?.Count != 1) return;
-        
+
         var type = ent.Comp.Organ.Values.First().Component.GetType();
-        
+
         if (ent.Comp.Slot != null && _containers.TryGetContainer(args.Part, SharedBodySystem.GetOrganContainerId(ent.Comp.Slot), out var container))
         {
-            
             foreach (var containedEnt in container.ContainedEntities)
-            {
                 if (HasComp(containedEnt, type))
                     _containers.Remove(containedEnt, container);
-            }
-            
+
             return;
         }
-        
-        var organs = _body.GetPartOrgans(args.Part, Comp<BodyPartComponent>(args.Part));
-        foreach (var organ in organs) // todo move to system
-        {
-            if (HasComp(organ.Id, type))
-            {
-                var ev = new SurgeryOrganExtractCompleted(args.Body, args.Part, organ.Id);
-                RaiseLocalEvent(organ.Id, ref ev);
 
-                if (_body.RemoveOrgan(organ.Id, organ.Component)
-                    && TryComp<OrganDamageComponent>(organ.Id, out var damageRule)
-                    && damageRule.Damage is not null
-                    && TryComp<DamageableComponent>(organ.Id, out var organDamageable)
-                    && TryComp<DamageableComponent>(args.Body, out var bodyDamageable))
-                {
-                    if (TryComp<OrganEyesComponent>(organ.Id, out var organEyes)
-                        && TryComp<BlindableComponent>(args.Body, out var blindable))
-                    {
-                        organEyes.EyeDamage = blindable.EyeDamage;
-                        organEyes.MinDamage = blindable.MinDamage;
-                        _blindable.UpdateIsBlind((args.Body, blindable));
-                    }
-                    if (TryComp<OrganTongueComponent>(organ.Id, out var organTongue))
-                    {
-                        organTongue.IsMuted = HasComp<MutedComponent>(args.Body);
-                        AddComp<MutedComponent>(args.Body);
-                    }
-                    if (TryComp<AbductorOrganComponent>(organ.Id, out var abductorOrgan))
-                    {
-                        if (TryComp<AbductorVictimComponent>(args.Body, out var victim))
-                            if (victim.Organ == abductorOrgan.Organ)
-                                victim.Organ = AbductorOrganType.None;
-                        if (abductorOrgan.Organ == AbductorOrganType.Vent)
-                            RemComp<VentCrawlerComponent>(args.Body);
-                    }
-                    var change = _damageableSystem.TryChangeDamage(args.Body, damageRule.Damage.Invert(), true, false, bodyDamageable);
-                    if (change is not null)
-                        _damageableSystem.TryChangeDamage(organ.Id, change.Invert(), true, false, organDamageable);
-                }
-                return;
-            }
+        var organs = _body.GetPartOrgans(args.Part, Comp<BodyPartComponent>(args.Part));
+        foreach (var organ in organs) 
+        {
+            if (!HasComp(organ.Id, type) || !_body.RemoveOrgan(organ.Id, organ.Component)) continue;
+
+            var ev = new SurgeryOrganExtracted(args.Body, args.Part, organ.Id);
+            RaiseLocalEvent(organ.Id, ref ev);
+
+            return;
         }
     }
 

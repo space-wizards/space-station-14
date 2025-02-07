@@ -4,35 +4,29 @@
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/AstroDust.png"
-      slowness: 0.94
       scale: "1, 1"
       scrolling: "-0.1, 0.1"
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/AstroBackground_stars.png"
-      slowness: 0.97
       scale: "0.1, 0.1"
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/AstroBackground_stars_2.png"
-      slowness: 0.97
       scale: "0.1, 0.1"
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/AstroStars.png"
-      slowness: 0.94
       scale: "0.3, 0.3"
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/AstroStars2.png"
-      slowness: 0.94
       scale: "0.3, 0.3"
   layersLQ:
     - texture:
         !type:GeneratedParallaxTextureSource
         id: ""
         configPath: "/Prototypes/Parallaxes/parallax_config.toml"
-        slowness: 0.875
   layersLQUseHQ: false
 
 - type: parallax
@@ -41,30 +35,26 @@
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/AxiomaBackground_space.png"
-      slowness: 0.998046875
       scale: "1, 1"
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/AxiomaBackground_stars.png"
-      slowness: 0.97
       scale: "1, 1"
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/AxiomaDust.png"
-      slowness: 0.94
       scale: "2, 2"
       scrolling: "-0.1, 0.1"
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/AxiomaStars.png"
-      slowness: 0.94
       scale: "1, 1"
   layersLQ:
     - texture:
         !type:GeneratedParallaxTextureSource
         id: ""
         configPath: "/Prototypes/Parallaxes/parallax_config.toml"
-        slowness: 0.875
+
   layersLQUseHQ: false
 
 - type: parallax
@@ -73,32 +63,26 @@
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/donutspace.png"
-      slowness: 0.998046875
       scale: "1, 1"
     - texture:
         !type:GeneratedParallaxTextureSource
         id: "hq_wizard_stars"
         configPath: "/Prototypes/Parallaxes/parallax_config_stars.toml"
-      slowness: 0.996625
     - texture:
         !type:GeneratedParallaxTextureSource
         id: "hq_wizard_stars_dim"
         configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim.toml"
-      slowness: 0.989375
     - texture:
         !type:GeneratedParallaxTextureSource
         id: "hq_wizard_stars_faster"
         configPath: "/Prototypes/Parallaxes/parallax_config_stars-2.toml"
-      slowness: 0.987265625
     - texture:
         !type:GeneratedParallaxTextureSource
         id: "hq_wizard_stars_dim_faster"
         configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim-2.toml"
-      slowness: 0.984352
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Parallaxes/planet.png"
-      slowness: 0.998046875
       scale: "1, 1"
       tiled: false
   layersLQ:
@@ -106,7 +90,7 @@
         !type:GeneratedParallaxTextureSource
         id: ""
         configPath: "/Prototypes/Parallaxes/parallax_config.toml"
-        slowness: 0.875
+
   layersLQUseHQ: false
 
 - type: parallax
@@ -115,34 +99,28 @@
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/EclipseBackground_space.png"
-      slowness: 0.998046875
       scale: "1, 1"
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/EclipseStars_Background.png"
-      slowness: 0.97
       scale: "1, 1"
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/EclipseDust.png"
-      slowness: 0.98
       scale: "1, 1"
       scrolling: "-0.02, 0.02"
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/EclipseNebulae.png"
-      slowness: 0.98
       scale: "1, 1"
       scrolling: "-0.02, 0.02"
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/EclipseStars.png"
-      slowness: 0.94
       scale: "1, 1"
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/EclipsePlanets.png"
-      slowness: 0.998046875
       scale: "1, 1"
       tiled: false
   layersLQ:
@@ -150,7 +128,7 @@
         !type:GeneratedParallaxTextureSource
         id: ""
         configPath: "/Prototypes/Parallaxes/parallax_config.toml"
-        slowness: 0.875
+
   layersLQUseHQ: false
 
 - type: parallax
@@ -159,14 +137,12 @@
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
-      slowness: 0.5
       scrolling: "0.1, 0"
       tiled: true
       shader: ""
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
-      slowness: 0
       scrolling: "-0.1, 0"
       tiled: true
       shader: ""
@@ -174,7 +150,6 @@
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
-      slowness: 0
       scrolling: "-0.1, 0"
       tiled: true
       shader: ""
@@ -186,21 +161,19 @@
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
-      slowness: 0.5
       scrolling: "0.1, 0"
       tiled: true
       shader: ""
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
-      slowness: 0
+
       scrolling: "-0.1, 0"
       tiled: true
       shader: ""
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Uploaded/Textures/Parallaxes/IceParallax.png"
-      slowness: 0
+        path: "/Textures/_Starlight/Parallaxes/IceParallax.png"
       scrolling: "0, 0"
       tiled: true
       shader: ""
@@ -208,7 +181,6 @@
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/IceParallax.png"
-      slowness: 0
       scrolling: "0, 0"
       tiled: true
       shader: ""
@@ -220,7 +192,6 @@
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Tiles/Planet/Snow/ice.png"
-      slowness: 0
       scrolling: "0, 0"
       tiled: true
       shader: ""
@@ -228,7 +199,6 @@
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Tiles/Planet/Snow/ice.png"
-      slowness: 0
       scrolling: "-0, 0"
       tiled: true
       shader: ""
@@ -240,7 +210,6 @@
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/LavaParallax.png"
-      slowness: 0
       scrolling: "0.1, 0"
       tiled: true
       shader: ""
@@ -252,7 +221,6 @@
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/LavaLightParallax.png"
-      slowness: 0
       scrolling: "0.1, 0"
       tiled: true
   layersLQUseHQ: true
@@ -263,32 +231,26 @@
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/DeltaParallaxBG.png"
-      slowness: 0.998046875
       scale: "0.5, 0.5"
     - texture:
         !type:GeneratedParallaxTextureSource
         id: "hq_wizard_stars"
         configPath: "/Prototypes/Parallaxes/parallax_config_stars.toml"
-      slowness: 0.996625
     - texture:
         !type:GeneratedParallaxTextureSource
         id: "hq_wizard_stars_dim"
         configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim.toml"
-      slowness: 0.989375
     - texture:
         !type:GeneratedParallaxTextureSource
         id: "hq_wizard_stars_faster"
         configPath: "/Prototypes/Parallaxes/parallax_config_stars-2.toml"
-      slowness: 0.987265625
     - texture:
         !type:GeneratedParallaxTextureSource
         id: "hq_wizard_stars_dim_faster"
         configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim-2.toml"
-      slowness: 0.984352
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/_Starlight/Parallaxes/DeltaParallaxNeb.png"
-      slowness: 0.978046875
       scale: "1, 1"
       tiled: false
   layersLQ:
@@ -296,5 +258,5 @@
         !type:GeneratedParallaxTextureSource
         id: ""
         configPath: "/Prototypes/Parallaxes/parallax_config.toml"
-        slowness: 0.875
+
   layersLQUseHQ: false

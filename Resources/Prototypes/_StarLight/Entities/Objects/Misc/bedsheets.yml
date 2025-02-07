@@ -1,0 +1,19 @@
+- type: entity
+  parent: BedsheetBase
+  id: BedsheetBaseStarlight
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/bedsheets.rsi
+    noRot: true
+
+- type: entity
+  id: BedsheetBrigmedicStrange
+  parent: [BedsheetBaseStarlight, HarmonicaInstrument]
+  name: Strange Brigmedic's Bedsheet
+  description: Upon closer inspection, this seems to be multiple brigmedic bedsheets sewn together including a harmonica for good measure along with the initials 'K.T' sewn in. Stealing such a prized posession would make a certain vulpine very angry.
+  components:
+  - type: Sprite
+    state: sheetbrigmedicstrange
+  - type: Clothing
+    sprite: _Starlight/Clothing/Neck/Bedsheets/brigmedic.rsi

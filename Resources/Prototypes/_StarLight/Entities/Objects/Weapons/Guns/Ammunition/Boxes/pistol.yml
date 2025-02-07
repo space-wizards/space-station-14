@@ -23,5 +23,5 @@
     whitelist:
       tags:
         - CartridgePistolSP8
-    proto: CartridgePistol40Nr
+    proto: CartridgePistol40NrSP
     capacity: 60

@@ -73,7 +73,7 @@
   description: Use this to annoy captains of all stations at once.
   components:
     - type: AccessReader
-      access: [[ "Command" ]]
+      access: [[ "CentralCommand" ]]
     - type: Sprite
       layers:
       - map: ["computerLayerBody"]

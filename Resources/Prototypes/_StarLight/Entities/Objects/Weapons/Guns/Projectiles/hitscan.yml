@@ -278,18 +278,66 @@
       state: ap
       
 - type: hitscan
-  id: BulletPistolTrace40Nr
+  id: BulletPistolTrace40NrSP
+  parent: BulletTrace
+  staminaDamage: 15
+  damage:
+    types:
+      Piercing: 20
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: sp
+  armorPenetration: -0.5
+  pierceChance: 0.30
+  ricochetChance: 0.20
+  
+- type: hitscan
+  id: BulletPistolTrace40NrHP
   parent: BulletTrace
   staminaDamage: 20
   damage:
     types:
-      Blunt: 25
+      Piercing: 24
   bullet:
     sprite:
       sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-      state: practice
-  pierceChance: 0.1
-  ricochetChance: 0.2
+      state: bullet
+  armorPenetration: -1
+  pierceChance: 0.02
+  ricochetChance: 0.10
+  
+- type: hitscan
+  id: BulletPistolTrace40NrFMJ
+  parent: BulletTrace
+  staminaDamage: 13
+  damage:
+    types:
+      Piercing: 16
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: fmj
+  armorPenetration: 0.25
+  pierceChance: 0.55
+  ricochetChance: 0.70
+  pierceLevel: Wood
+  
+- type: hitscan
+  id: BulletPistolTrace40NrAP
+  parent: BulletTrace
+  staminaDamage: 10
+  damage:
+    types:
+      Piercing: 14
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: ap
+  armorPenetration: 0.50
+  pierceChance: 0.63
+  ricochetChance: 0.35
+  pierceLevel: Metal
 
 ### caseless rifle <<<<<<<<<<<<<<<
 

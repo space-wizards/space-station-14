@@ -87,3 +87,8 @@
   id: MenacingShuttleUplinkPirate
   name: Pirate
   priority: 5
+
+# agent uplink
+- type: storeCategory
+  id: UplinkCybernetics
+  name: Cybernetics

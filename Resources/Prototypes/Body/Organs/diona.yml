@@ -62,6 +62,9 @@
     layers:
       - state: eyeball-l
       - state: eyeball-r
+  - type: OrganVisualization
+    layer: Eyes
+    prototype: MobDionaEyes
 
 - type: entity
   id: OrganDionaStomach

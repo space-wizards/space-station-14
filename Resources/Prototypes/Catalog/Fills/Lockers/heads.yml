@@ -127,7 +127,7 @@
       # Yes they do fuck you.
     - id: ClothingBackpackIan
       prob: 0.5
-    - id: ClothingHeadsetCommand
+    - id: ClothingHeadsetHoP
     - id: ClothingNeckGoldmedal
     - id: DoorRemoteService
     - id: HoPIDCard
@@ -336,6 +336,7 @@
     - id: SecurityTechFabCircuitboard
     - id: WeaponDisabler
     - id: WantedListCartridge
+    - id: DrinkHosFlask
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable

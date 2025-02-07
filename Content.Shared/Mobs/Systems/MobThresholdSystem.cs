@@ -4,6 +4,7 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Events;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Mobs.Systems;
@@ -391,6 +392,16 @@ public sealed class MobThresholdSystem : EntitySystem
         if (alertPrototype.SupportsSeverity)
         {
             var severity = _alerts.GetMinSeverity(currentAlert);
+
+            var ev = new BeforeAlertSeverityCheckEvent(currentAlert, severity);
+            RaiseLocalEvent(target, ev);
+
+            if (ev.CancelUpdate)
+            {
+                _alerts.ShowAlert(target, ev.CurrentAlert, ev.Severity);
+                return;
+            }
+
             if (TryGetNextState(target, currentMobState, out var nextState, threshold) &&
                 TryGetPercentageForState(target, nextState.Value, damageable.TotalDamage, out var percentage))
             {

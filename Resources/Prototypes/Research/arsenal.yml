@@ -35,6 +35,7 @@
   - MagazineBoxMagnumIncendiary
   - MagazineBoxLightRifleIncendiary
   - MagazineBoxRifleIncendiary
+  - LightRifleHeavyMagazineIncendiary
 
 - type: technology
   id: WeaponizedLaserManipulation
@@ -53,7 +54,7 @@
   id: NonlethalAmmunition
   name: research-technology-nonlethal-ammunition
   icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi
     state: beanbag
   discipline: Arsenal
   tier: 1
@@ -92,6 +93,7 @@
   - MagazineBoxLightRifleUranium
   - MagazineBoxRifleUranium
   - BoxShotgunUranium
+  - LightRifleHeavyMagazineUranium
 
 - type: technology
   id: AdvancedRiotControl
@@ -139,25 +141,6 @@
   - ClothingBackpackElectropack
 
 # Tier 2
-
-- type: technology
-  id: ArmorPenetrationMunitions
-  name: research-technology-armor-penetration
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag.rsi
-    state: ap
-  discipline: Arsenal
-  tier: 2
-  cost: 11500
-  recipeUnlocks:
-  - SpeedLoaderMagnumAP
-  - MagazinePistolAP
-  - MagazineRifleAP
-  - MagazineLightRifleAP
-  - MagazineBoxMagnumAP
-  - MagazineBoxPistolAP
-  - MagazineBoxRifleAP
-  - MagazineBoxLightRifleAP
 
 - type: technology
   id: ConcentratedLaserWeaponry

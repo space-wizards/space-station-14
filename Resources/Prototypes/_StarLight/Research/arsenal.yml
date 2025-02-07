@@ -1,3 +1,25 @@
+# Tier 2
+
+- type: technology
+  id: ArmorPenetrationMunitions
+  name: research-technology-armor-penetration
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag.rsi
+    state: ap
+  discipline: Arsenal
+  tier: 2
+  cost: 11500
+  recipeUnlocks:
+  - SpeedLoaderMagnumAP
+  - MagazinePistolAP
+  - MagazineRifleAP
+  - MagazineLightRifleAP
+  - MagazineBoxMagnumAP
+  - MagazineBoxPistolAP
+  - MagazineBoxRifleAP
+  - MagazineBoxLightRifleAP
+  - LightRifleHeavyMagazineAP
+
 - type: technology
   id: IonWeaponry
   name: research-technology-ion-weaponry
@@ -11,6 +33,8 @@
   - WeaponIonRifle
   - WeaponIonCarbine
   
+ # Tier 4 
+
 - type: technology
   id: DecloneTechnology
   name: research-technology-declone-technology
@@ -22,3 +46,4 @@
   cost: 30000
   recipeUnlocks:
   - WeaponDecloner
+  
