@@ -23,7 +23,6 @@ nano-chat-list-number = List number
 
 # Create chat popup
 nano-chat-new-title = Add a new chat
-nano-chat-edit-title = Edit a contact
 nano-chat-number-label = Number
 nano-chat-name-label = Name
 nano-chat-job-label = Job title
