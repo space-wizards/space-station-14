@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.UserInterface;
 using Robust.Shared.Timing;
+using Content.Shared.Input;
 
 namespace Content.Client._DV.CartridgeLoader.Cartridges;
 
@@ -75,6 +76,17 @@ public sealed partial class NanoChatUiFragment : BoxContainer
             OnMessageSent?.Invoke(NanoChatUiMessageType.ToggleMute, null, null, null);
         };
 
+        MessageInput.OnKeyBindDown += args =>
+        {
+            if (args.Function == ContentKeyFunctions.NanoChatNavigateUpUnread)
+                CycleChannel(CycleDirection.Up, true);
+            else if (args.Function == ContentKeyFunctions.NanoChatNavigateDownUnread)
+                CycleChannel(CycleDirection.Down, true);
+            else if (args.Function == ContentKeyFunctions.NanoChatNavigateUp)
+                CycleChannel(CycleDirection.Up, false);
+            else if (args.Function == ContentKeyFunctions.NanoChatNavigateDown)
+                CycleChannel(CycleDirection.Down, false);
+        };
         MessageInput.OnTextChanged += args =>
         {
             var length = args.Text.Length;
@@ -123,6 +135,44 @@ public sealed partial class NanoChatUiFragment : BoxContainer
         ChatView.Visible = !ChatView.Visible;
         LookupView.Visible = !ChatView.Visible;
         LookupButton.Pressed = LookupView.Visible;
+    }
+
+    public enum CycleDirection : byte
+    {
+        Up,
+        Down,
+    };
+
+    private void CycleChannel(CycleDirection direction, bool onlyUnread)
+    {
+        if (_recipients.Count == 0)
+            return;
+
+        var orderedRecipients = _recipients.OrderBy(r => r.Value.Name).Select(r => r.Key).ToArray();
+        var currentChatIndex = (direction, _currentChat) switch
+        {
+            (CycleDirection.Up, null) => _recipients.Count,
+            (CycleDirection.Down, null) => 0,
+            (_, uint currentChat) => Array.IndexOf(orderedRecipients, currentChat),
+            _ => 0
+        };
+        var newChatIndex = currentChatIndex;
+
+        do
+        {
+            newChatIndex = direction switch
+            {
+                CycleDirection.Up => newChatIndex - 1,
+                CycleDirection.Down => newChatIndex + 1,
+                _ => currentChatIndex,
+            };
+            if (newChatIndex < 0)
+                newChatIndex = _recipients.Count - 1;
+            else if (newChatIndex >= _recipients.Count)
+                newChatIndex = 0;
+        } while (onlyUnread && newChatIndex != currentChatIndex && !_recipients[orderedRecipients[newChatIndex]].HasUnread);
+
+        SelectChat(orderedRecipients[newChatIndex]);
     }
 
     private void SendMessage()
