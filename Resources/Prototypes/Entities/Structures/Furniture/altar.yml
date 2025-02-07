@@ -79,10 +79,10 @@
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
-    state: druid
+    state: undevoted
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
-    state: druid
+    state: undevoted
 
 - type: entity
   id: AltarNanotrasen
