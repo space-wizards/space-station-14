@@ -131,6 +131,12 @@
     - ClothingNeckGayPin
 
 - type: loadout
+  id: ClothingNeckHeterosexualPin
+  storage:
+    back:
+    - ClothingNeckHeterosexualPin
+
+- type: loadout
   id: ClothingNeckIntersexPin
   storage:
     back:
