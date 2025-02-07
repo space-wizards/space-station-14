@@ -1,0 +1,19 @@
+- files: 
+  - "chaos.png"
+  - "druid.png"
+  - "nanotrasen.png"
+  - "satana.png"
+  - "satana_lightning.png"
+  - "space-christian.png"
+  - "space-christian_lightning.png"
+  - "technology.png"
+  - "technology_lightning.png"
+  - "toolbox.png"
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from https://github.com/TauCetiStation/TauCetiClassic/pull/5184/commits/7489ad4520ddf83968c467cd587bde2c821e10a6"
+  source: "https://github.com/TauCetiStation/TauCetiClassic/pull/5184/commits/7489ad4520ddf83968c467cd587bde2c821e10a6"
+
+- files: ["undevoted.png"]
+  license: "CC-BY-SA-4.0"
+  copyright: "Modified from toolbox.png (https://github.com/TauCetiStation/TauCetiClassic/pull/5184/commits/7489ad4520ddf83968c467cd587bde2c821e10a6) by Booblesnoot"
+  source: "TODO: link to pr"
