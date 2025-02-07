@@ -1,10 +1,10 @@
 - type: loadout
-  id: LaissezFaireSuit
+  id: WorkadaySuit
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorPhysician
   equipment:
-    jumpsuit: ClothingUniformJumpsuitLaissezFaire
+    jumpsuit: ClothingUniformJumpsuitWorkaday
 
 - type: loadout
   id: Stethoscope

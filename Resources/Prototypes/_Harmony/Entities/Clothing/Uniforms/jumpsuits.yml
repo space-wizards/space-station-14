@@ -77,11 +77,11 @@
 
 - type: entity
   parent: [ClothingUniformBase]
-  id: ClothingUniformJumpsuitLaissezFaire
-  name: laissez-faire suit
+  id: ClothingUniformJumpsuitWorkaday
+  name: workaday suit
   description: A suit to show just how much you don't care.
   components:
   - type: Sprite
-    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/laissez_faire.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/workaday.rsi
   - type: Clothing
-    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/laissez_faire.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/workaday.rsi
