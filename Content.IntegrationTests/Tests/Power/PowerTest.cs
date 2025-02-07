@@ -633,6 +633,7 @@ namespace Content.IntegrationTests.Tests.Power
             var gameTiming = server.ResolveDependency<IGameTiming>();
             var batterySys = entityManager.System<BatterySystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
+            var xformSys = entityManager.System<SharedTransformSystem>();
             PowerConsumerComponent consumer = default!;
             PowerSupplierComponent supplier = default!;
             PowerNetworkBatteryComponent netBattery = default!;
@@ -651,7 +652,7 @@ namespace Content.IntegrationTests.Tests.Power
                 }
 
                 var terminal = entityManager.SpawnEntity("CableTerminal", grid.Owner.ToCoordinates(0, 1));
-                entityManager.GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
+                xformSys.SetLocalRotationNoLerp(terminal, Angle.FromDegrees(180));
 
                 var batteryEnt = entityManager.SpawnEntity("FullBatteryDummy", grid.Owner.ToCoordinates(0, 2));
                 var supplyEnt = entityManager.SpawnEntity("GeneratorDummy", grid.Owner.ToCoordinates(0, 0));
@@ -711,6 +712,7 @@ namespace Content.IntegrationTests.Tests.Power
             var gameTiming = server.ResolveDependency<IGameTiming>();
             var batterySys = entityManager.System<BatterySystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
+            var xformSys = entityManager.System<SharedTransformSystem>();
             PowerConsumerComponent consumer = default!;
             PowerSupplierComponent supplier = default!;
             PowerNetworkBatteryComponent netBattery = default!;
@@ -729,7 +731,7 @@ namespace Content.IntegrationTests.Tests.Power
                 }
 
                 var terminal = entityManager.SpawnEntity("CableTerminal", grid.Owner.ToCoordinates(0, 1));
-                entityManager.GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
+                xformSys.SetLocalRotationNoLerp(terminal, Angle.FromDegrees(180));
 
                 var batteryEnt = entityManager.SpawnEntity("FullBatteryDummy", grid.Owner.ToCoordinates(0, 2));
                 var supplyEnt = entityManager.SpawnEntity("GeneratorDummy", grid.Owner.ToCoordinates(0, 0));
@@ -788,6 +790,7 @@ namespace Content.IntegrationTests.Tests.Power
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
+            var xformSys = entityManager.System<SharedTransformSystem>();
             PowerConsumerComponent consumer1 = default!;
             PowerConsumerComponent consumer2 = default!;
             PowerSupplierComponent supplier = default!;
@@ -814,7 +817,7 @@ namespace Content.IntegrationTests.Tests.Power
 
                 entityManager.SpawnEntity("CableTerminal", grid.Owner.ToCoordinates(0, 2));
                 var terminal = entityManager.SpawnEntity("CableTerminal", grid.Owner.ToCoordinates(0, 2));
-                entityManager.GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
+                xformSys.SetLocalRotationNoLerp(terminal, Angle.FromDegrees(180));
 
                 var batteryEnt1 = entityManager.SpawnEntity("FullBatteryDummy", grid.Owner.ToCoordinates(0, 1));
                 var batteryEnt2 = entityManager.SpawnEntity("FullBatteryDummy", grid.Owner.ToCoordinates(0, 3));
@@ -984,6 +987,7 @@ namespace Content.IntegrationTests.Tests.Power
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
+            var xformSys = entityManager.System<SharedTransformSystem>();
             PowerConsumerComponent consumer1 = default!;
             PowerConsumerComponent consumer2 = default!;
             PowerSupplierComponent supplier = default!;
@@ -1010,7 +1014,7 @@ namespace Content.IntegrationTests.Tests.Power
 
                 entityManager.SpawnEntity("CableTerminal", grid.Owner.ToCoordinates(0, 2));
                 var terminal = entityManager.SpawnEntity("CableTerminal", grid.Owner.ToCoordinates(0, 2));
-                entityManager.GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
+                xformSys.SetLocalRotationNoLerp(terminal, Angle.FromDegrees(180));
 
                 var batteryEnt1 = entityManager.SpawnEntity("FullBatteryDummy", grid.Owner.ToCoordinates(0, 1));
                 var batteryEnt2 = entityManager.SpawnEntity("FullBatteryDummy", grid.Owner.ToCoordinates(0, 3));
@@ -1072,6 +1076,7 @@ namespace Content.IntegrationTests.Tests.Power
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
+            var xformSys = entityManager.System<SharedTransformSystem>();
             PowerConsumerComponent consumer = default!;
             PowerSupplierComponent supplier = default!;
             PowerNetworkBatteryComponent netBattery = default!;
@@ -1089,7 +1094,7 @@ namespace Content.IntegrationTests.Tests.Power
                 }
 
                 var terminal = entityManager.SpawnEntity("CableTerminal", grid.Owner.ToCoordinates(0, 1));
-                entityManager.GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
+                xformSys.SetLocalRotationNoLerp(terminal, Angle.FromDegrees(180));
 
                 var batteryEnt = entityManager.SpawnEntity("FullBatteryDummy", grid.Owner.ToCoordinates(0, 2));
                 var supplyEnt = entityManager.SpawnEntity("GeneratorDummy", grid.Owner.ToCoordinates(0, 0));
@@ -1157,6 +1162,7 @@ namespace Content.IntegrationTests.Tests.Power
             var entityManager = server.ResolveDependency<IEntityManager>();
             var nodeContainer = entityManager.System<NodeContainerSystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
+            var xformSys = entityManager.System<SharedTransformSystem>();
             CableNode leftNode = default!;
             CableNode rightNode = default!;
             Node batteryInput = default!;
@@ -1179,7 +1185,7 @@ namespace Content.IntegrationTests.Tests.Power
                 var rightEnt = entityManager.SpawnEntity("CableHV", grid.Owner.ToCoordinates(0, 3));
 
                 var terminal = entityManager.SpawnEntity("CableTerminal", grid.Owner.ToCoordinates(0, 1));
-                entityManager.GetComponent<TransformComponent>(terminal).LocalRotation = Angle.FromDegrees(180);
+                xformSys.SetLocalRotationNoLerp(terminal, Angle.FromDegrees(180));
 
                 var battery = entityManager.SpawnEntity("FullBatteryDummy", grid.Owner.ToCoordinates(0, 2));
                 var batteryNodeContainer = entityManager.GetComponent<NodeContainerComponent>(battery);
