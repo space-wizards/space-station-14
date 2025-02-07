@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: The Silence of Tenebrae has been added to the station's library
-    type: Add
-  id: 568
-  time: '2024-11-25T05:56:38.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/793
 - author: suyo
   changes:
   - message: Added three new tracks total for lobby and jukebox
@@ -4283,3 +4276,11 @@
   id: 1067
   time: '2025-02-06T19:57:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1590
+- author: widgetbeck
+  changes:
+  - message: Revolutionaries now see messages from the HeadRev who converted them
+      highlighted in red.
+    type: Add
+  id: 1068
+  time: '2025-02-07T11:20:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1599
