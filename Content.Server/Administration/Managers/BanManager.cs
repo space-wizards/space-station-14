@@ -76,8 +76,6 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             BanNotificationChannel,
             ProcessBanNotification,
             OnDatabaseNotificationEarlyFilter);
-            
-        _db.SubscribeToNotifications(OnDatabaseNotification);
         
         _cfg.OnValueChanged(StarlightCCVars.DiscordBanWebhook, OnWebhookChanged, true);
         _cfg.OnValueChanged(CVars.GameHostName, OnServerNameChanged, true);
