@@ -3,3 +3,6 @@ Licensed under CC BY 4.0
 
 hamburger_icon.svg.png
 Released into the public domain
+
+edit.svg.png by H2D2 Design under MIT License
+https://www.svgrepo.com/svg/453928/edit

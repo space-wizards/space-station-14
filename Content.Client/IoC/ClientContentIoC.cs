@@ -2,7 +2,7 @@ using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Clickable;
-using Content.Client._DV.NanoChat;
+using Content.Client._DV.NanoChat; // DeltaV: NanoChat
 using Content.Client.DebugMon;
 using Content.Client.Eui;
 using Content.Client.Fullscreen;
@@ -25,7 +25,7 @@ using Content.Shared.Administration.Managers;
 using Content.Shared.Chat;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
-using Robust.Client.GameObjects;
+using Robust.Client.GameObjects; // DeltaV: NanoChat
 
 namespace Content.Client.IoC
 {
@@ -56,7 +56,7 @@ namespace Content.Client.IoC
             collection.Register<DocumentParsingManager>();
             collection.Register<ContentReplayPlaybackManager>();
             collection.Register<ISharedPlaytimeManager, JobRequirementsManager>();
-            collection.Register<NanoChatSystem>();
+            collection.Register<NanoChatSystem>(); // DeltaV: NanoChat
             collection.Register<MappingManager>();
             collection.Register<DebugMonitorManager>();
             collection.Register<PlayerRateLimitManager>();
