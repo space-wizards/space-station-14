@@ -75,7 +75,6 @@ public sealed class RandomHumanoidAppearanceSystem : EntitySystem
         foreach (var keyValuePair in dict)
         {
             List<Color> markingColors = [];
-            var coolVar = keyValuePair.Value;
             // if the list<color> has no members, set it to our random color. otherwise, set it to the color in the list.
             if (keyValuePair.Value.Count <= 0)
             {
