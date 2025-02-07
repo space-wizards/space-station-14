@@ -18,7 +18,6 @@ entities:
       name: NT Evac Log
     - type: Transform
       pos: -0.42093527,-0.86894274
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
