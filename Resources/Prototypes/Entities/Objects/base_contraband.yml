@@ -29,6 +29,7 @@
   components:
   - type: Contraband
     severity: Restricted
+    allowedDepartments: [ Security ]
 
 # one department restricted contraband
 - type: entity
