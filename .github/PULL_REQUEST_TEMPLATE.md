@@ -6,7 +6,7 @@
 ## Reason for change
 <!-- Explain why it was changed. Link any relevant discussions or issues. -->
 
-## Effect on game alance
+## Effect on game balance
 <!-- Explain how this will affect game balance. -->
 This will not affect game balance.
 
