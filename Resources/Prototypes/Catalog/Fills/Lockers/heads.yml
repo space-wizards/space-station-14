@@ -161,6 +161,7 @@
     - id: DoorRemoteEngineering
     - id: RCD
     - id: RCDAmmo
+    - id: RPD # Harmony Change: Add RPD to locker before upstream implimentation
     - id: RubberStampCE
 
 # Hardsuit table, used for suit storage as well
