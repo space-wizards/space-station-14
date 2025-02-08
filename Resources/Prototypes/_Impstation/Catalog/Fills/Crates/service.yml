@@ -31,8 +31,10 @@
         - id: BoozeDispenserFlatpack
         - id: SodaDispenserFlatpack
         - id: MaterialWoodPlank
-        - id: MaterialCloth
+        - id: MaterialCloth10
         - id: DrinkGlass
-          amount: 10
+          amount: 5
         - id: Spoon
         - id: DrinkShaker
+        - id: CustomDrinkJug
+          amount: 2
