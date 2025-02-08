@@ -54,6 +54,18 @@
             type: Vox
         clear: true
         time: 5
+      - !type:Emote
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Oxygen
+          min: 1.0
+        - !type:OrganType
+          type: Vox
+          shouldHave: true
+        emote: Wheeze
+        showInChat: true
+        probability: 0.15
+
 
 - type: reagent
   id: Plasma
@@ -180,6 +192,21 @@
           type: Plant
           shouldHave: false
         factor: -4
+      - !type:Emote
+        conditions:
+        - !type:ReagentThreshold
+          reagent: CarbonDioxide
+          min: 1.0
+        - !type:OrganType
+          type: Plant
+          shouldHave: false
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
+        emote: Wheeze
+        showInChat: true
+        probability: 0.15
+
       # We need a metabolism effect on reagent removal
       #- !type:AdjustAlert
       #  alertType: CarbonDioxide
@@ -260,6 +287,14 @@
         emote: Scream
         showInChat: true
         probability: 0.01
+      - !type:Emote
+        conditions:
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
+        emote: Drool
+        showInChat: true
+        probability: 0.1
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold

@@ -1346,6 +1346,10 @@
         emote: Yawn
         showInChat: true
         probability: 0.1
+      - !type:Emote
+        emote: Drool
+        showInChat: true
+        probability: 0.05
       - !type:GenericStatusEffect
         key: Drowsiness
         component: Drowsiness

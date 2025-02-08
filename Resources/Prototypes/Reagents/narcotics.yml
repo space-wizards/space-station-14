@@ -305,6 +305,10 @@
         component: ForcedSleeping
         refresh: false
         type: Add
+      - !type:Emote
+        emote: Drool
+        showInChat: true
+        probability: 0.1
 
 - type: reagent
   id: MuteToxin
@@ -408,6 +412,9 @@
       - !type:Emote
         emote: Scream
         probability: 0.08
+      - !type:Emote
+        emote: Cough
+        probability: 0.15
       - !type:GenericStatusEffect
         key: TemporaryBlindness
         component: TemporaryBlindness

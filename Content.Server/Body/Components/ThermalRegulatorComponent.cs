@@ -1,5 +1,8 @@
 using Content.Server.Body.Systems;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Prototypes;
+using Content.Shared.Chat.Prototypes;
+
 
 namespace Content.Server.Body.Components;
 
@@ -61,4 +64,20 @@ public sealed partial class ThermalRegulatorComponent : Component
     /// </summary>
     [DataField]
     public float ThermalRegulationTemperatureThreshold;
+
+    /// <summary>
+    ///     The emote that sweats
+    /// </summary>
+    [DataField]
+    public ProtoId<EmotePrototype> SweatEmote = "Sweat";
+
+    /// <summary>
+    ///     The emote that shivers
+    /// </summary>
+    [DataField]
+    public ProtoId<EmotePrototype> ShiverEmote = "Shiver";
+    [ViewVariables]
+    public float SweatEmoteProgress = 0.0f;
+    [ViewVariables]
+    public float ShiverEmoteProgress = 0.0f;
 }

@@ -3,6 +3,8 @@ using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
 using Robust.Shared.Timing;
+using Content.Server.Chat.Systems;
+using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.Body.Systems;
 
@@ -11,6 +13,8 @@ public sealed class ThermalRegulatorSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly TemperatureSystem _tempSys = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSys = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -51,6 +55,9 @@ public sealed class ThermalRegulatorSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp2, logMissing: false))
             return;
 
+        if (_mobState.IsDead(ent))
+            return;
+
         var totalMetabolismTempChange = ent.Comp1.MetabolismHeat - ent.Comp1.RadiatedHeat;
 
         // implicit heat regulation
@@ -74,7 +81,7 @@ public sealed class ThermalRegulatorSystem : EntitySystem
 
         // if body temperature is not within comfortable, thermal regulation
         // processes starts
-        if (tempDiff > ent.Comp1.ThermalRegulationTemperatureThreshold)
+        if (tempDiff < ent.Comp1.ThermalRegulationTemperatureThreshold)
             return;
 
         if (ent.Comp2.CurrentTemperature > ent.Comp1.NormalBodyTemperature)
@@ -83,6 +90,14 @@ public sealed class ThermalRegulatorSystem : EntitySystem
                 return;
 
             _tempSys.ChangeHeat(ent, -Math.Min(targetHeat, ent.Comp1.SweatHeatRegulation), ignoreHeatResistance: true, ent);
+
+            //you sweat maximally at 87C, which is 40C higher than what would kill you IRL, at once every 8 seconds (50 over comfort * once every 8 seconds = 400)
+            ent.Comp1.SweatEmoteProgress += Math.Min(tempDiff + 10, 50) / 400;
+            if (ent.Comp1.SweatEmoteProgress > 1.0f)
+            {
+                _chat.TryEmoteWithChat(ent, ent.Comp1.SweatEmote, ChatTransmitRange.HideChat, ignoreActionBlocker: true);
+                ent.Comp1.SweatEmoteProgress = 0.0f;
+            }
         }
         else
         {
@@ -90,6 +105,14 @@ public sealed class ThermalRegulatorSystem : EntitySystem
                 return;
 
             _tempSys.ChangeHeat(ent, Math.Min(targetHeat, ent.Comp1.ShiveringHeatRegulation), ignoreHeatResistance: true, ent);
+
+            //you shiver maximally at -100C, which is about how low IRl cryo chambers go, at once every 8 seconds (100 under comfort * 10 = 100)
+            ent.Comp1.ShiverEmoteProgress += Math.Min(tempDiff + 20, 100) / 800;
+            if (ent.Comp1.ShiverEmoteProgress > 1.0f)
+            {
+                _chat.TryEmoteWithChat(ent, ent.Comp1.ShiverEmote, ChatTransmitRange.HideChat, ignoreActionBlocker: true);
+                ent.Comp1.ShiverEmoteProgress = 0.0f;
+            }
         }
     }
 }
