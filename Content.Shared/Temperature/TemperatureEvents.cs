@@ -6,11 +6,14 @@ public sealed class ModifyChangedTemperatureEvent : EntityEventArgs, IInventoryR
 {
     public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
 
+    public readonly float CurrentTemperature;
+
     public float TemperatureDelta;
 
-    public ModifyChangedTemperatureEvent(float temperature)
+    public ModifyChangedTemperatureEvent(float temperatureDelta, float currentTemperature)
     {
-        TemperatureDelta = temperature;
+        TemperatureDelta = temperatureDelta;
+        CurrentTemperature = currentTemperature;
     }
 }
 

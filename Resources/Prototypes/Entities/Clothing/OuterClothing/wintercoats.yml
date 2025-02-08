@@ -10,7 +10,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
   - type: TemperatureProtection
     heatingCoefficient: 1.1
+    heatingCoefficientMaxTemp: 330
     coolingCoefficient: 0.1
+    coolingCoefficientMaxTemp: 330
   - type: Item
     size: Normal
   - type: Armor
