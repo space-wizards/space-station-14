@@ -26,6 +26,45 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookSmite
+  name: spellbook-smite-name
+  description: spellbook-smite-desc
+  productAction: ActionSmite
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookOffensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookCluwne
+  name: spellbook-cluwne-name
+  description: spellbook-cluwne-desc
+  productAction: ActionCluwne
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookOffensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookSlip
+  name: spellbook-slip-name
+  description: spellbook-slip-desc
+  productAction: ActionSlippery
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookOffensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Defensive
 - type: listing
   id: SpellbookForceWall
@@ -56,6 +95,20 @@
   name: spellbook-blink-name
   description: spellbook-blink-desc
   productAction: ActionBlink
+  cost:
+    WizCoin: 1
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+# Taking an Eldritch spell, good proof of concept and a way to celebrate everything magic.
+- type: listing
+  id: SpellbookVoidApplause
+  name: spellbook-voidapplause-name
+  description: spellbook-voidapplause-desc
+  productAction: ActionVoidApplause
   cost:
     WizCoin: 1
   categories:
