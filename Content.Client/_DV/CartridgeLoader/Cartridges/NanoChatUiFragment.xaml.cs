@@ -246,10 +246,10 @@ public sealed partial class NanoChatUiFragment : BoxContainer
 
     private void BeginEditChat()
     {
-        if (_currentChat == null)
+        if (_currentChat is not uint currentChat)
             return;
 
-        var recipient = _recipients[_currentChat ?? 0];
+        var recipient = _recipients[currentChat];
 
         _editChatPopup.ClearInputs();
         _editChatPopup.SetNumberInput(recipient.Number.ToString());
