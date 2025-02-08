@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: (Hummingbird) Fixed a number of typos.
-    type: Fix
-  - message: (Hummingbird) Added a ghost warp to the evil skull.
-    type: Add
-  - message: (Hummingbird) Removed bears.
-    type: Remove
-  id: 580
-  time: '2024-11-26T08:25:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/801
 - author: FlippenPage
   changes:
   - message: Fixed Drones being unable to move.
@@ -4255,3 +4244,11 @@
   id: 1079
   time: '2025-02-08T12:23:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1611
+- author: DinnerCalzone
+  changes:
+  - message: Using a mop as a melee weapon now splashes some of its contents when
+      it hits a mob.
+    type: Add
+  id: 1080
+  time: '2025-02-08T12:40:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1589
