@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ATDoop
-  changes:
-  - message: All empty art toolboxes are now filled. No more disappointment when looking
-      for crayons!
-    type: Tweak
-  id: 576
-  time: '2024-11-26T02:41:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/800
 - author: Sha-Seng
   changes:
   - message: tacticool and operative jumpsuits are now foldable
@@ -4262,3 +4254,10 @@
   id: 1075
   time: '2025-02-08T02:14:33.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1603
+- author: ultramario1998
+  changes:
+  - message: A few more packages can now be sent your way!
+    type: Add
+  id: 1076
+  time: '2025-02-08T02:18:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1604
