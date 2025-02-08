@@ -26,6 +26,9 @@
     ClothingHeadHatKippahSimple: 3 #imp
     ClothingHeadHatKippahWhiteAndBlue: 1 #imp
     ClothingHeadHatKippahBlueAndGold: 1 #imp
+    ClothingHeadHatShrineMaidenWig: 2 # imp edit - giving this religious outfit the sanctity it deserves
+    ClothingOuterSuitShrineMaiden: 2
+    Gohei: 2
   contrabandInventory:
     ClothingMaskClownChaplin: 1
     ClothingOuterClownPriest: 1
