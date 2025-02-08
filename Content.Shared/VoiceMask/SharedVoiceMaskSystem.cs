@@ -1,3 +1,5 @@
+using Content.Shared.Speech;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.VoiceMask;
@@ -12,10 +14,10 @@ public enum VoiceMaskUIKey : byte
 public sealed class VoiceMaskBuiState : BoundUserInterfaceState
 {
     public readonly string Name;
-    public readonly string? Verb;
-    public readonly string? Sound;
+    public readonly ProtoId<SpeechVerbPrototype>? Verb;
+    public readonly ProtoId<SpeechSoundsPrototype>? Sound;
 
-    public VoiceMaskBuiState(string name, string? verb, string? sound)
+    public VoiceMaskBuiState(string name, ProtoId<SpeechVerbPrototype>? verb, ProtoId<SpeechSoundsPrototype>? sound)
     {
         Name = name;
         Verb = verb;
@@ -40,9 +42,9 @@ public sealed class VoiceMaskChangeNameMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class VoiceMaskChangeVerbMessage : BoundUserInterfaceMessage
 {
-    public readonly string? Verb;
+    public readonly ProtoId<SpeechVerbPrototype>? Verb;
 
-    public VoiceMaskChangeVerbMessage(string? verb)
+    public VoiceMaskChangeVerbMessage(ProtoId<SpeechVerbPrototype>? verb)
     {
         Verb = verb;
     }
@@ -54,9 +56,9 @@ public sealed class VoiceMaskChangeVerbMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class VoiceMaskChangeSoundMessage : BoundUserInterfaceMessage
 {
-    public readonly string? Sound;
+    public readonly ProtoId<SpeechSoundsPrototype>? Sound;
 
-    public VoiceMaskChangeSoundMessage(string? sound)
+    public VoiceMaskChangeSoundMessage(ProtoId<SpeechSoundsPrototype>? sound)
     {
         Sound = sound;
     }

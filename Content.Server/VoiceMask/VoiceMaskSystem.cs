@@ -48,25 +48,25 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     #region User inputs from UI
     private void OnChangeVerb(Entity<VoiceMaskComponent> entity, ref VoiceMaskChangeVerbMessage msg)
     {
-        if (msg.Verb is { } id && !_proto.HasIndex<SpeechVerbPrototype>(id))
+        if (msg.Verb is { } id && !_proto.HasIndex(id))
             return;
 
         entity.Comp.VoiceMaskSpeechVerb = msg.Verb;
         // verb is only important to metagamers so no need to log as opposed to name
 
-        _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-success"), entity, msg.Actor);
+        _popupSystem.PopupEntity(Loc.GetString(entity.Comp.SuccessPopup), entity, msg.Actor);
 
         UpdateUI(entity);
     }
 
     private void OnChangeSound(Entity<VoiceMaskComponent> entity, ref VoiceMaskChangeSoundMessage msg)
     {
-        if (msg.Sound is { } id && !_proto.HasIndex<SpeechSoundsPrototype>(id))
+        if (msg.Sound != null && !_proto.HasIndex(msg.Sound))
             return;
 
         entity.Comp.VoiceMaskSpeechSound = msg.Sound;
 
-        _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-success"), entity, msg.Actor);
+        _popupSystem.PopupEntity(Loc.GetString(entity.Comp.SuccessPopup), entity, msg.Actor);
 
         UpdateUI(entity);
     }
@@ -75,14 +75,14 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (message.Name.Length > HumanoidCharacterProfile.MaxNameLength || message.Name.Length <= 0)
         {
-            _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-failure"), entity, message.Actor, PopupType.SmallCaution);
+            _popupSystem.PopupEntity(Loc.GetString(entity.Comp.FailurePopup), entity, message.Actor, PopupType.SmallCaution);
             return;
         }
 
         entity.Comp.VoiceMaskName = message.Name;
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(message.Actor):player} set voice of {ToPrettyString(entity):mask}: {entity.Comp.VoiceMaskName}");
 
-        _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-success"), entity, message.Actor);
+        _popupSystem.PopupEntity(Loc.GetString(entity.Comp.SuccessPopup), entity, message.Actor);
 
         UpdateUI(entity);
     }
@@ -118,7 +118,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     #region Helper functions
     private string GetCurrentVoiceName(Entity<VoiceMaskComponent> entity)
     {
-        return entity.Comp.VoiceMaskName ?? Loc.GetString("voice-mask-default-name-override");
+        return entity.Comp.VoiceMaskName ?? Loc.GetString(entity.Comp.DefaultNameOverride);
     }
     #endregion
 }

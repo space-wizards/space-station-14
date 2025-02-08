@@ -34,7 +34,7 @@ namespace Content.Server.Speech
             var evt = new TransformSpeechNoiseEvent(ent.Owner);
             RaiseLocalEvent(ent.Owner, evt);
 
-            var protoId = evt.OverrideSpeechSound ?? ent.Comp.SpeechSounds;
+            var protoId = evt.OverrideSpeechSound ?? ent.Comp.SpeechSounds.Value;
             var prototype = _protoManager.Index<SpeechSoundsPrototype>(protoId);
 
             // Different sounds for ask/exclaim based on last character

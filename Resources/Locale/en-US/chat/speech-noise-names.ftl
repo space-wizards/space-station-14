@@ -16,3 +16,5 @@ chat-speech-noise-name-arachnid = Arachnid
 chat-speech-noise-name-cat = Cat
 chat-speech-noise-name-dog = Dog
 chat-speech-noise-name-cluck = Cluck
+chat-speech-noise-name-goat = Goat
+

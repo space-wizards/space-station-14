@@ -180,6 +180,7 @@
 
 - type: speechSounds
   id: Goat
+  name: chat-speech-noise-name-goat
   saySound:
     path: /Audio/Animals/goat_bah.ogg
   askSound:

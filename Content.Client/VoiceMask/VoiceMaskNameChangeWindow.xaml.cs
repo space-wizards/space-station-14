@@ -12,28 +12,28 @@ namespace Content.Client.VoiceMask;
 public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
 {
     public Action<string>? OnNameChange;
-    public Action<string?>? OnVerbChange;
-    public Action<string?>? OnSoundChange;
+    public Action<ProtoId<SpeechVerbPrototype>?>? OnVerbChange;
+    public Action<ProtoId<SpeechSoundsPrototype>?>? OnSoundChange;
 
     /// <summary>
     ///     List of all the loaded speech verbs (name, protoID).
     /// </summary>
-    private List<(string, string)> _speechVerbs = new();
+    private readonly List<(string, ProtoId<SpeechVerbPrototype>)> _speechVerbs = new();
 
     /// <summary>
     ///     The currently selected verb.
     /// </summary>
-    private string? _selectedVerb;
+    private ProtoId<SpeechVerbPrototype>? _selectedVerb;
 
     /// <summary>
     ///     List of all the loaded speech sounds (name, protoID).
     /// </summary>
-    private List<(string, string)> _speechSounds = new();
+    private readonly List<(string, ProtoId<SpeechSoundsPrototype>)> _speechSounds = new();
 
     /// <summary>
     ///     The currently selected sound.
     /// </summary>
-    private string? _selectedSound;
+    private ProtoId<SpeechSoundsPrototype>? _selectedSound;
 
     public VoiceMaskNameChangeWindow()
     {
@@ -46,13 +46,13 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
 
         SpeechVerbSelector.OnItemSelected += args =>
         {
-            OnVerbChange?.Invoke((string?)args.Button.GetItemMetadata(args.Id));
+            OnVerbChange?.Invoke((ProtoId<SpeechVerbPrototype>?)args.Button.GetItemMetadata(args.Id));
             SpeechVerbSelector.SelectId(args.Id);
         };
 
         SpeechSoundSelector.OnItemSelected += args =>
         {
-            OnSoundChange?.Invoke((string?)args.Button.GetItemMetadata(args.Id));
+            OnSoundChange?.Invoke((ProtoId<SpeechSoundsPrototype>?)args.Button.GetItemMetadata(args.Id));
             SpeechSoundSelector.SelectId(args.Id);
         };
     }
@@ -68,13 +68,13 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
         {
             _speechVerbs.Add((Loc.GetString(verb.Name), verb.ID));
         }
-        _speechVerbs.Sort((a, b) => a.Item1.CompareTo(b.Item1));
+        _speechSounds.Sort((a, b) => string.Compare(a.Item1, b.Item1, StringComparison.OrdinalIgnoreCase));
 
         foreach (var noise in proto.EnumeratePrototypes<SpeechSoundsPrototype>())
         {
             _speechSounds.Add((Loc.GetString(noise.Name), noise.ID));
         }
-        _speechSounds.Sort((a, b) => a.Item1.CompareTo(b.Item1));
+        _speechSounds.Sort((a, b) => string.Compare(a.Item1, b.Item1, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>
@@ -105,12 +105,13 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
     /// <summary>
     ///     Populates a button with the given list of names / ids. Also adds a "default" button with null as the id.
     /// </summary>
-    private void PopulateOptionButton(OptionButton button, string? selectedOption, List<(string, string)> values)
+    private void PopulateOptionButton<T>(OptionButton button, ProtoId<T>? selectedOption, List<(string, ProtoId<T>)> values) where T : class, IPrototype
     {
         button.Clear();
 
         // Add the default option that wont do anything when selected.
         AddOption(button, selectedOption, Loc.GetString("chat-speech-verb-name-none"), null);
+
         foreach (var (name, id) in values)
         {
             AddOption(button, selectedOption, name, id);
@@ -121,20 +122,21 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
     ///     Actually adds the option to the drop down menu. If the given value matches the selected value, it will also
     ///     make the drop down menu display it as the currently selected value.
     /// </summary>
-    private void AddOption(OptionButton button, string? selectedValue, string name, string? value)
+    private void AddOption<T>(OptionButton button, ProtoId<T>? selectedValue, string name, ProtoId<T>? value) where T: class, IPrototype
     {
         var id = button.ItemCount;
         button.AddItem(name);
-        if (value is { } metadata)
-            button.SetItemMetadata(id, metadata);
+        if (value != null)
+            button.SetItemMetadata(id, value);
 
         if (value == selectedValue)
             button.SelectId(id);
     }
+
     /// <summary>
     ///     Updates the currently selected item in the drop down to the given value.
     /// </summary>
-    private void UpdateSelectedButtonOption(OptionButton button, string? selected)
+    private void UpdateSelectedButtonOption<T>(OptionButton button, ProtoId<T>? selected) where T: class, IPrototype
     {
         for (var id = 0; id < button.ItemCount; id++)
         {
