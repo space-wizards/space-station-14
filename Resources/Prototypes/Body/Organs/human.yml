@@ -74,7 +74,7 @@
   - type: Item
     size: Small
     heldPrefix: brain
-  
+
 - type: entity
   id: OrganHumanEyes
   parent: BaseHumanOrgan
@@ -208,6 +208,9 @@
     groups:
     - id: Food
     - id: Drink
+  - type: ReactionMixer
+    reactionTypes:
+    - Centrifuge
 
 - type: entity
   id: OrganHumanLiver

@@ -24,6 +24,9 @@
       solutions:
         stomach:
           maxVol: 30.0
+    - type: ReactionMixer
+      reactionTypes:
+      - Centrifuge
 
 - type: entity
   id: OrganSlimesLungs
