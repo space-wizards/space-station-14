@@ -46,7 +46,7 @@
   parent: [ClothingNeckBase, BaseCommandContraband]
   id: ClothingNeckMantleHOS
   name: head of security's mantle
-  description: Shootouts with nukies are just another Tuesday for this HoS. This mantle is a symbol of commitment to the station.
+  description: Shootouts with syndicate agents are just another Tuesday for this HoS. This mantle is a symbol of commitment to the station.
   components: #Harmony Update:Updating pathing for HoS mantle spriting fix
   - type: Sprite
     sprite: _Harmony/Clothing/Neck/mantles/hosmantle.rsi
