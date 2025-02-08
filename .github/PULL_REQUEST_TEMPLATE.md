@@ -50,7 +50,7 @@ ADMIN:
 - add: Candy bowls can now be found near waiting lines.
 - remove: The syndicate headset has been removed from the uplink.
 - tweak: The detective’s revolver now contains cap bullets instead of lethals.
-- fix: Fixed reflected projectiles dealing stamina damage unintentionally.
+- fix:  Reflected projectiles no longer deal stamina damage unintentionally.
 -->
 
 :cl:
