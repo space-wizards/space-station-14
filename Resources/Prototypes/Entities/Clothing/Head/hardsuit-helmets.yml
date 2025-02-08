@@ -621,6 +621,8 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
   - type: PointLight
     color: "#f4ffad"
+  - type: FireProtection
+    reduction: 0.2
   - type: Armor
     modifiers:
       coefficients:
@@ -628,8 +630,6 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
-  - type: FireProtection
-    reduction: 0.2
 
 #ERT Medical Hardsuit
 - type: entity
