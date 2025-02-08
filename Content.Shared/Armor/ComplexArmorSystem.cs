@@ -10,7 +10,6 @@ namespace Content.Shared.Armor;
 /// </summary>
 public abstract class ComplexArmorSystem : EntitySystem
 {
-    [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
