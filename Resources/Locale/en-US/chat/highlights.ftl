@@ -19,7 +19,7 @@ highlights-brigmedic = Brigmedic, Brigmed, "Medic", Security, "Sec"
 highlights-cargo-technician = Cargo Technician, Cargo Tech, Cargo
 highlights-salvage-specialist = Salvage Specialist, Salvager, Salvage, "Salv", Miner
 # impstation edit - new job
-highlights-courier = Courier, Mail
+highlights-courier = Courier, Mail, Penalized
 
 # Engineering
 highlights-atmospheric-technician = Atmospheric Technician, Atmos tech, Atmospheric, Atmos
