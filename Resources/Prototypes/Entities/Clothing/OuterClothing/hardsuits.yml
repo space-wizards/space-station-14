@@ -385,7 +385,6 @@
     modifiers:
       coefficients:
         Radiation: 0.0
-        Slash: 0.0
     slots:
     - HEAD
     clothingTag:
