@@ -35,6 +35,17 @@
   id: stationOxygen
   lowerBound: !type:AlarmThresholdSetting
     threshold: 0.10
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.3
+  lowerWarnAround: !type:AlarmThresholdSetting
+    threshold: 1.5
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.8
+
+- type: alarmThreshold
+  id: stationNitrogen
+  lowerBound: !type:AlarmThresholdSetting
+    threshold: 0.10
   lowerWarnAround: !type:AlarmThresholdSetting
     threshold: 1.5
 
