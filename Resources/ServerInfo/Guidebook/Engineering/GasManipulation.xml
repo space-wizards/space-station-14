@@ -1,0 +1,108 @@
+﻿<Document>
+  # Gas Manipulation
+  Atmos has a wide variety of tools and equipment at their disposal for the manipulation of gasses throughout the station.
+
+  [bold]Warning: unanchoring (unwrenching) most devices containing gas will [color=red]leak gas[/color] into the atmosphere.[/bold]
+  You can safely unanchor [textlink="canisters" link="GasCanisters"], [textlink="portable scrubbers" link="PortableScrubber"], [textlink="condensers" link="GasCondensing"], and [textlink="thermomachines" link="Thermomachines"].
+
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeHalf" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeBend" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeFourway" Caption=""/>
+  </Box>
+  <Box>
+    ## Pipes
+  </Box>
+  <Box>
+    [color=#999999][italic]Distributing gasses from one place to another[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="GasPressurePump" Caption=""/>
+    <GuideEntityEmbed Entity="GasVolumePump" Caption=""/>
+  </Box>
+  <Box>
+    ## Pumps
+  </Box>
+  <Box>
+    [color=#999999][italic]Forcing the movement of gasses from one place to another[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="GasVentPump" Caption=""/>
+    <GuideEntityEmbed Entity="GasPassiveVent" Caption=""/>
+    <GuideEntityEmbed Entity="GasOutletInjector" Caption=""/>
+    <GuideEntityEmbed Entity="GasVentScrubber" Caption=""/>
+    <GuideEntityEmbed Entity="PortableScrubber" Caption=""/>
+  </Box>
+  <Box>
+    ## Atmosphere Input and Output
+  </Box>
+  <Box>
+    [color=#999999][italic]Inserting and extracting gasses from a present (or non-present) atmosphere[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="GasValve" Caption=""/>
+    <GuideEntityEmbed Entity="SignalControlledValve" Caption=""/>
+    <GuideEntityEmbed Entity="PressureControlledValve" Caption=""/>
+    <GuideEntityEmbed Entity="GasPassiveGate" Caption=""/>
+  </Box>
+  <Box>
+    ## Valves
+  </Box>
+  <Box>
+    [color=#999999][italic]Controlling the flow of gas through pipes[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="GasMixer" Caption=""/>
+    <GuideEntityEmbed Entity="GasFilter" Caption=""/>
+  </Box>
+  <Box>
+    ## Mixing and Filtering
+  </Box>
+  <Box>
+    [color=#999999][italic]Manipulating the composition of gas[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="AirCanister" Caption=""/>
+    <GuideEntityEmbed Entity="OxygenCanister" Caption=""/>
+    <GuideEntityEmbed Entity="NitrogenCanister" Caption=""/>
+    <GuideEntityEmbed Entity="CarbonDioxideCanister" Caption=""/>
+    <GuideEntityEmbed Entity="StorageCanister" Caption=""/>
+    <GuideEntityEmbed Entity="GasPort" Caption=""/>
+  </Box>
+  <Box>
+    ## Gas Canisters
+  </Box>
+  <Box>
+    [color=#999999][italic]Storing and transporting gas for easy use by the crew[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="SpaceHeater" Caption=""/>
+    <GuideEntityEmbed Entity="GasThermoMachineHeater" Caption=""/>
+    <GuideEntityEmbed Entity="GasThermoMachineFreezer" Caption=""/>
+    <GuideEntityEmbed Entity="HeatExchanger" Caption=""/>
+  </Box>
+  <Box>
+    ## Thermomachines and Radiators
+  </Box>
+  <Box>
+    [color=#999999][italic]Manipulating the temperature of gasses in a pipenet or atmosphere[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="BaseGasCondenser" Caption=""/>
+  </Box>
+  <Box>
+    ## Gas Condensing
+  </Box>
+  <Box>
+    [color=#999999][italic]Condensing gasses for further use[italic][/color]
+  </Box>
+</Document>
