@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FlippenPage
-  changes:
-  - message: Fixed Drones being unable to move.
-    type: Fix
-  id: 581
-  time: '2024-11-26T09:25:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/806
 - author: Sha-Seng
   changes:
   - message: Beanbag Kammerers and Beanbag Enforcers are now blue!
@@ -4252,3 +4245,13 @@
   id: 1080
   time: '2025-02-08T12:40:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1589
+- author: hivehum
+  changes:
+  - message: You have no longer heard of Hatsune Miku.
+    type: Remove
+  - message: Due to its status as a religious uniform, the shrine maiden outfit has
+      been moved to the PietyVend.
+    type: Tweak
+  id: 1081
+  time: '2025-02-08T22:54:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1614
