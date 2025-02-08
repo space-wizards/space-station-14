@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Taken from goonstation at commit https://github.com/goonstation/goonstation/commit/21fa17b2537be6e621a1768c1ba08b8eecbbd4b9",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    }
+  ]
+}

@@ -54,7 +54,30 @@
       - NukeOpsUplink
 
 # Wearables
+- type: listing
+  id: UplinkMantisGloves
+  name: mantis-gloves-uplink-name
+  description: mantis-gloves-uplink-desc
+  icon: { sprite: /Textures/_Harmony/Clothing/Hands/Gloves/mantis_activated.rsi, state: icon }
+  productEntity: ClothingHandsGlovesMantis
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 2
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkWearables
 # Pointless
+- type: listing
+  id: UplinkClusterWeh
+  name: uplink-cluster-weh-name
+  description: uplink-cluster-weh-desc
+  productEntity: ClusterWeh
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkPointless
+
 # Job Specific
 - type: listing
   id: UplinkHypoShell

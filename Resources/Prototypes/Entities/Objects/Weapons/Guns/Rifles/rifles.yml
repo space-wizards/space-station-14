@@ -148,17 +148,17 @@
   name: Lecter
   parent: [BaseWeaponRifle, BaseRestrictedContraband]
   id: WeaponRifleLecter
-  description: A high end military grade assault rifle. Uses .20 rifle ammo.
+  description: A high end military grade carbine. Uses .20 rifle ammo. # Harmony change: "assault rifle" now says "carbine" to better fit the lecter sprite.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
+    sprite: _Harmony/Objects/Weapons/Guns/Rifles/lecter.rsi # Harmony change: Use a custom lecter sprite.
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
+    sprite: _Harmony/Objects/Weapons/Guns/Rifles/lecter.rsi # Harmony change: Use a custom lecter sprite.
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg

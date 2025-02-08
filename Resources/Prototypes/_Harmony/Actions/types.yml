@@ -1,0 +1,12 @@
+- type: entity
+  id: ActionToggleMantisGloves
+  name: Toggle mantis blades
+  description: Extends or retracts the deadly blades in your gloves.
+  components:
+  - type: InstantAction
+    useDelay: 1.0
+    icon:
+      sprite: _Harmony/Clothing/Hands/Gloves/mantis_activated.rsi
+      state: icon
+    itemIconStyle: NoItem
+    event: !type:ToggleActionEvent {}

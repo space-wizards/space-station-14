@@ -128,8 +128,10 @@
     name: ghost-role-information-slimes-name
     description: ghost-role-information-slimes-description
     rules: ghost-role-information-nonantagonist-rules
-    raffle:
-      settings: short
+    # harmony start: remove ghost role raffle from slimes
+    # raffle:
+    #   settings: short
+    # harmony end
   - type: Speech
     speechVerb: Slime
     speechSounds: Slime
@@ -167,8 +169,12 @@
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
       rules: ghost-role-information-angry-slimes-rules
-      raffle:
-        settings: short
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonist
+      # harmony start: remove ghost role raffle from slimes
+      # raffle:
+      #   settings: short
+      # harmony end
 
 - type: entity
   name: green slime
@@ -205,8 +211,12 @@
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
       rules: ghost-role-information-angry-slimes-rules
-      raffle:
-        settings: short
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonist
+      # harmony start: remove ghost role raffle from slimes
+      # raffle:
+      #   settings: short
+      # harmony end
 
 - type: entity
   name: yellow slime
@@ -242,5 +252,9 @@
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
       rules: ghost-role-information-angry-slimes-rules
-      raffle:
-        settings: short
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonist
+      # harmony start: remove ghost role raffle from slimes
+      # raffle:
+      #   settings: short
+      # harmony end

@@ -1,0 +1,61 @@
+- type: entity
+  parent: ClothingHandsGlovesLatex
+  id: ClothingHandsGlovesMantis
+  suffix: Mantis
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Hands/Gloves/mantis.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Clothing
+    sprite: _Harmony/Clothing/Hands/Gloves/mantis.rsi
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True:
+            sprite: _Harmony/Clothing/Hands/Gloves/mantis_activated.rsi  #Goonstation license forced my hand to do this.
+            state: icon
+          False:
+            sprite: _Harmony/Clothing/Hands/Gloves/mantis.rsi
+            state: icon
+  - type: ItemToggle
+    onUse: false
+    onActivate: false
+    soundActivate:
+      path: /Audio/_Harmony/Weapons/mantison.wav
+      params:
+        volume: 3
+    soundDeactivate:
+      path: /Audio/_Harmony/Weapons/mantisoff.wav
+      params:
+        volume: 3
+  - type: ToggleClothing
+    action: ActionToggleMantisGloves
+    disableOnUnequip: true
+  - type: MantisGloves
+  - type: ComponentToggler
+    components:
+    - type: MeleeWeapon
+      attackRate: 1.5
+      damage:
+        types:
+          Slash: 15
+      mustBeEquippedToUse: true
+      animation: WeaponArcClaw
+      wideAnimation: WeaponArcClaw
+      soundSwing:
+        path: /Audio/Weapons/punchmiss.ogg
+        params:
+          volume: 3
+          variation: 0.025
+      soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+        params:
+          volume: 3
+          variation: 0.025
+    - type: Sharp
+    - type: Contraband
+      severity: Syndicate
