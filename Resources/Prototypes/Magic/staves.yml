@@ -52,6 +52,9 @@
       - state: animation-inhand-left
       right:
       - state: animation-inhand-right
+  - type: Tag
+    tags:
+    - WizardWand
 
 - type: entity
   id: ActionRgbLight

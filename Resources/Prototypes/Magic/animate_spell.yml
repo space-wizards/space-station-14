@@ -4,7 +4,8 @@
   description: Bring an inanimate object to life!
   components:
   - type: EntityTargetAction
-    useDelay: 1
+    useDelay: 0
+    charges: 5
     itemIconStyle: BigAction
     whitelist:
       components:
@@ -28,9 +29,6 @@
       - type: InputMover
       - type: MobMover
       - type: MovementSpeedModifier
-      - type: Speech
-      - type: Emoting
-      - type: Examiner
       - type: HTN
         rootTask:
           task: SimpleHostileCompound

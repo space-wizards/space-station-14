@@ -43,11 +43,6 @@ namespace Content.Shared.Damage
         /// </summary>
         private void DamageableInit(EntityUid uid, DamageableComponent component, ComponentInit _)
         {
-            if (component.DamageContainerID == "ManifestedSpirit")
-            {
-                Log.Debug("foo");
-            }
-
             if (component.DamageContainerID != null &&
                 _prototypeManager.TryIndex<DamageContainerPrototype>(component.DamageContainerID,
                 out var damageContainerPrototype))
