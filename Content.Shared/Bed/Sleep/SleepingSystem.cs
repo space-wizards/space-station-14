@@ -69,6 +69,25 @@ public sealed partial class SleepingSystem : EntitySystem
         SubscribeLocalEvent<SleepingComponent, BeforeForceSayEvent>(OnChangeForceSay, after: new []{typeof(PainNumbnessSystem)});
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<PendingSleepingComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if(_gameTiming.CurTime > comp.SleepTime)
+                TrySleeping(uid);
+        }
+    }
+
+    // Takes time in seconds
+    public void AddPendingSleeping(EntityUid uid, float time)
+    {
+        var comp = EntityManager.AddComponent<PendingSleepingComponent>(uid);
+        comp.SleepTime = _gameTiming.CurTime + TimeSpan.FromSeconds(time);
+    }
+
     private void OnUnbuckleAttempt(Entity<SleepingComponent> ent, ref UnbuckleAttemptEvent args)
     {
         // TODO is this necessary?
