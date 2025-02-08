@@ -29,6 +29,11 @@ public sealed class MechBoundUserInterface : BoundUserInterface
         {
             SendMessage(new MechEquipmentRemoveMessage(EntMan.GetNetEntity(uid)));
         };
+        
+        _menu.OnMaintenanceModeChanged += toggle =>
+        {
+            SendMessage(new MechMaintenanceUiMessage(toggle));
+        };
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

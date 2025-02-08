@@ -15,6 +15,8 @@ public sealed partial class MechMenu : FancyWindow
     private EntityUid _mech;
 
     public event Action<EntityUid>? OnRemoveButtonPressed;
+    
+    public event Action<bool>? OnMaintenanceModeChanged;
 
     public MechMenu()
     {
@@ -57,6 +59,19 @@ public sealed partial class MechMenu : FancyWindow
     {
         if (!_ent.TryGetComponent<MechComponent>(_mech, out var mechComp))
             return;
+
+        MaintenanceOffButton.Disabled = !mechComp.MaintenanceMode;
+        MaintenanceOffButton.OnPressed += _ => {
+            MaintenanceOffButton.Disabled = true;
+            MaintenanceOnButton.Disabled = false;
+            OnMaintenanceModeChanged?.Invoke(false);
+        };
+        MaintenanceOnButton.Disabled = mechComp.MaintenanceMode;
+        MaintenanceOnButton.OnPressed += _ => {
+            MaintenanceOffButton.Disabled = false;
+            MaintenanceOnButton.Disabled = true;
+            OnMaintenanceModeChanged?.Invoke(true);
+        };
 
         EquipmentControlContainer.Children.Clear();
         foreach (var ent in mechComp.EquipmentContainer.ContainedEntities)

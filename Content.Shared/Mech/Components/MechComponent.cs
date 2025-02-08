@@ -25,7 +25,7 @@ public sealed partial class MechComponent : Component
     /// </summary>
     [DataField("maintenance")]
     [AutoNetworkedField]
-    public bool MaintenanceMode = false
+    public bool MaintenanceMode = false;
 
     /// <summary>
     /// How much "health" the mech has left.

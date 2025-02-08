@@ -55,8 +55,6 @@ public abstract class SharedMechSystem : EntitySystem
         SubscribeLocalEvent<MechComponent, DragDropTargetEvent>(OnDragDrop);
         SubscribeLocalEvent<MechComponent, CanDropTargetEvent>(OnCanDragDrop);
         SubscribeLocalEvent<MechComponent, GotEmaggedEvent>(OnEmagged);
-        SubscribeLocalEvent<MechComponent, UpdateCanMoveEvent>(OnMoveAttempt);
-        SubscribeLocalEvent<MechComponent, ShotAttemptedEvent>(OnShootAttempt);
 
         SubscribeLocalEvent<MechPilotComponent, GetMeleeWeaponEvent>(OnGetMeleeWeapon);
         SubscribeLocalEvent<MechPilotComponent, CanAttackFromContainerEvent>(OnCanAttackFromContainer);
@@ -116,22 +114,6 @@ public abstract class SharedMechSystem : EntitySystem
             return;
 
         args.Entities.Add(pilot.Value);
-    }
-    
-    private void OnMoveAttempt(EntityUid uid, MechComponent component, UpdateCanMoveEvent args)
-    {
-        if (!component.MaintenanceMode)
-            return;
-
-        args.Cancel();
-    }
-    
-    private void OnShootAttempt(EntityUid uid, MechComponent component, ref ShotAttemptedEvent args)
-    {
-        if (!component.MaintenanceMode)
-            return;
-
-        args.Cancel();
     }
 
     private void SetupUser(EntityUid mech, EntityUid pilot, MechComponent? component = null)

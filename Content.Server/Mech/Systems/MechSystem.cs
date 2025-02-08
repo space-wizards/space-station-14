@@ -11,11 +11,13 @@ using Content.Shared.Interaction;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
+using Content.Shared.Repairable;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Wires;
+using Content.Shared.Weapons.Ranged.Events;
 using Content.Server.Body.Systems;
 using Content.Shared.Tools.Systems;
 using Robust.Server.Containers;
@@ -62,9 +64,11 @@ public sealed partial class MechSystem : SharedMechSystem
 
         SubscribeLocalEvent<MechComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<MechComponent, MechEquipmentRemoveMessage>(OnRemoveEquipmentMessage);
+        SubscribeLocalEvent<MechComponent, MechMaintenanceUiMessage>(OnMaintenanceMessage);
 
         SubscribeLocalEvent<MechComponent, UpdateCanMoveEvent>(OnMechCanMoveEvent);
-
+        SubscribeLocalEvent<MechComponent, ShotAttemptedEvent>(OnShootAttempt);
+        SubscribeLocalEvent<MechComponent, CanRepaireEvent>(CanRepaire);
 
         SubscribeLocalEvent<MechPilotComponent, ToolUserAttemptUseEvent>(OnToolUseAttempt);
         SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
@@ -81,8 +85,25 @@ public sealed partial class MechSystem : SharedMechSystem
 
     private void OnMechCanMoveEvent(EntityUid uid, MechComponent component, UpdateCanMoveEvent args)
     {
-        if (component.Broken || component.Integrity <= 0 || component.Energy <= 0)
+        if (component.Broken || component.Integrity <= 0 || component.Energy <= 0 || component.MaintenanceMode)
             args.Cancel();
+    }
+    
+    private void OnShootAttempt(EntityUid uid, MechComponent component, ref ShotAttemptedEvent args)
+    {
+        if (!component.MaintenanceMode)
+            return;
+
+        args.Cancel();
+    }
+    
+    private void CanRepaire(EntityUid uid, MechComponent component, ref CanRepaireEvent args)
+    {
+        if (!component.MaintenanceMode)
+        {
+            args.Cancelled = true;
+            args.Message = "You need to turn on maintenance mode first!";
+        }
     }
 
     private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
@@ -156,11 +177,24 @@ public sealed partial class MechSystem : SharedMechSystem
 
         if (!Exists(equip) || Deleted(equip))
             return;
+        
+        if (!component.MaintenanceMode)
+        {
+            _popup.PopupEntity("You need to turn on maintenance mode first!", uid, PopupType.MediumCaution);
+            return;
+        }
 
         if (!component.EquipmentContainer.ContainedEntities.Contains(equip))
             return;
 
         RemoveEquipment(uid, equip, component);
+    }
+    
+    private void OnMaintenanceMessage(EntityUid uid, MechComponent component, MechMaintenanceUiMessage args)
+    {
+        component.MaintenanceMode = args.Toggle;
+        
+        _actionBlocker.UpdateCanMove(uid);
     }
 
     private void OnOpenUi(EntityUid uid, MechComponent component, MechOpenUiEvent args)
