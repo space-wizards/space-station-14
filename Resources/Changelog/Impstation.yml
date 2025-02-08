@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Changeling can no longer be the main antagonist on consecutive rounds.
-    type: Tweak
-  id: 579
-  time: '2024-11-26T08:26:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/804
 - author: DinnerCalzone
   changes:
   - message: (Hummingbird) Fixed a number of typos.
@@ -4255,3 +4248,10 @@
   id: 1078
   time: '2025-02-08T02:24:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1606
+- author: widgetbeck
+  changes:
+  - message: Goblins can once more open doors, pilot shuttles, and host anomalies.
+    type: Fix
+  id: 1079
+  time: '2025-02-08T12:23:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1611
