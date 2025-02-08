@@ -215,14 +215,54 @@
     - Lava
 
 # Weather mods -> not required
-#- type: salvageWeatherMod
-#  id: SnowfallHeavy
-#  weather: SnowfallHeavy
-#  cost: 1
-#
-#- type: salvageWeatherMod
-#  id: Rain
-#  weather: Rain
+- type: salvageWeatherMod
+  id: Ashfall
+  desc: salvage-weather-mod-ashfall
+  weather: Ashfall
+  biomes:
+    - Lava
+
+- type: salvageWeatherMod
+  id: SnowfallHeavy
+  desc: salvage-weather-mod-snowfallheavy
+  weather: SnowfallHeavy
+  cost: 1
+  biomes:
+    - Snow
+
+- type: salvageWeatherMod
+  id: SnowfallMedium
+  desc: salvage-weather-mod-snowfallmedium
+  weather: SnowfallMedium
+  biomes:
+    - Snow
+
+- type: salvageWeatherMod
+  id: SnowfallLight
+  desc: salvage-weather-mod-snowfalllight
+  weather: SnowfallLight
+  biomes:
+    - Snow
+
+- type: salvageWeatherMod
+  id: Rain
+  desc: salvage-weather-mod-rain
+  weather: Rain
+  biomes:
+    - Grasslands
+    - Snow
+
+- type: salvageWeatherMod
+  id: Storm
+  desc: salvage-weather-mod-storm
+  weather: Storm
+  biomes:
+    - Grasslands
+
+- type: salvageWeatherMod
+  id: Clear
+  desc:  salvage-weather-mod-clear
+  weather: null
 
 # Dungeons
 #  For now just simple 1-dungeon setups

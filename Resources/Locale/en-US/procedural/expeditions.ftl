@@ -58,6 +58,14 @@ salvage-air-mod-dangerous-atmosphere = Dangerous atmosphere
 salvage-air-mod-toxic-atmosphere = Toxic atmosphere
 salvage-air-mod-volatile-atmosphere = Volatile atmosphere
 
+salvage-weather-mod-ashfall = Ashfall
+salvage-weather-mod-snowfallheavy = Heavy snowfall
+salvage-weather-mod-snowfallmedium = Medium snowfall
+salvage-weather-mod-snowfalllight = Light snowfall
+salvage-weather-mod-rain = Rainy weather
+salvage-weather-mod-storm = Stormy weather
+salvage-weather-mod-clear = Clear weather
+
 salvage-dungeon-mod-lava-brig = Lava Brig
 salvage-dungeon-mod-snowy-labs = Snowy labs
 salvage-dungeon-mod-experiment = Experiment
