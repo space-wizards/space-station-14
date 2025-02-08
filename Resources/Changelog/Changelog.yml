@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ravage123321
-  changes:
-  - message: You can make a holy helmet from holymelons!
-    type: Add
-  id: 7417
-  time: '2024-09-22T10:33:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32272
 - author: saga3152
   changes:
   - message: Citrus plants can now be mutated into each other.
@@ -3901,3 +3894,10 @@
   id: 7916
   time: '2025-02-08T21:16:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34836
+- author: lzk228
+  changes:
+  - message: Straight ally pin added to loadouts and to the Pride-O-Mat.
+    type: Add
+  id: 7917
+  time: '2025-02-08T23:02:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34977
