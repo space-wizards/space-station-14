@@ -1813,6 +1813,12 @@ entities:
     - type: Transform
       pos: 15.5,10.5
       parent: 1
+  - uid: 2204
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,17.5
+      parent: 1
   - uid: 2711
     components:
     - type: Transform
@@ -11269,8 +11275,6 @@ entities:
   entities:
   - uid: 2660
     components:
-    - type: MetaData
-      desc: potomu-chto ponabiraut vsyakih... 
     - type: Transform
       pos: 25.5,46.5
       parent: 1
