@@ -1,65 +1,4 @@
 ﻿Entries:
-- author: JIPDawg
-  changes:
-  - message: Small Hydraulic clamp now correctly consumes 2% battery instead of recharging
-      the battery by 2%
-    type: Fix
-  id: 7408
-  time: '2024-09-20T04:09:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32320
-- author: clinux
-  changes:
-  - message: Added the psychologist's stamp. Prescribe treatments for your less mentally
-      sane crew!
-    type: Add
-  id: 7409
-  time: '2024-09-20T14:42:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31881
-- author: saga3152
-  changes:
-  - message: You can now make vodka and soda water.
-    type: Add
-  id: 7410
-  time: '2024-09-20T22:27:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32252
-- author: goet
-  changes:
-  - message: Hides character sprite in health analyzer window if the scan becomes
-      inactive.
-    type: Fix
-  id: 7411
-  time: '2024-09-21T05:54:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31879
-- author: TGRCDev
-  changes:
-  - message: Station maps now have a directory for finding specific departments and
-      areas.
-    type: Add
-  id: 7412
-  time: '2024-09-21T07:33:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31156
-- author: TheShuEd
-  changes:
-  - message: Cores from floral anomalies are now seeds for hydroponics!
-    type: Add
-  id: 7413
-  time: '2024-09-21T19:54:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31987
-- author: Plykiya
-  changes:
-  - message: The rat king is now capable of butchering things, like animals.
-    type: Add
-  id: 7414
-  time: '2024-09-21T23:21:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32232
-- author: AsnDen
-  changes:
-  - message: Now AI is able to use news manager console that is far away from its
-      core.
-    type: Fix
-  id: 7415
-  time: '2024-09-22T08:20:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32334
 - author: metalgearsloth
   changes:
   - message: Fix unbuckling mispredicting.
@@ -3905,3 +3844,62 @@
   id: 7907
   time: '2025-02-05T23:12:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34890
+- author: centcomofficer24
+  changes:
+  - message: Added a genderqueer pin!
+    type: Add
+  id: 7908
+  time: '2025-02-06T05:49:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34561
+- author: SG6732
+  changes:
+  - message: Swapped the stick of butter with 5 u of olive oil in the boiled spaghetti
+      recipe.
+    type: Tweak
+  id: 7909
+  time: '2025-02-06T11:45:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34904
+- author: deltanedas
+  changes:
+  - message: Fixed huds showing for chameleon projector users.
+    type: Fix
+  id: 7910
+  time: '2025-02-06T13:45:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34825
+- author: 12rabbits
+  changes:
+  - message: Activating a DNA scrambler implant no longer retains the previous identity's
+      description.
+    type: Fix
+  id: 7911
+  time: '2025-02-06T19:09:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34920
+- author: GrownSamoyedDog
+  changes:
+  - message: Control Button in Guidebook has been redirected to Controls properly
+    type: Fix
+  id: 7912
+  time: '2025-02-06T19:16:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34914
+- author: themias
+  changes:
+  - message: Combat bakery kit price is reduced from 6TC to 4TC, increased baguette
+      sword attack speed, throwing croissants ignore armor
+    type: Tweak
+  id: 7913
+  time: '2025-02-06T23:07:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34927
+- author: sowelipililimute
+  changes:
+  - message: You will no longer be told you need 0H 0M more minutes to play a role
+    type: Fix
+  id: 7914
+  time: '2025-02-08T06:12:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34961
+- author: Chaboricks
+  changes:
+  - message: Changed the sound of paper doors.
+    type: Tweak
+  id: 7915
+  time: '2025-02-08T07:24:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34857
