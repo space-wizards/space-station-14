@@ -177,6 +177,7 @@
      contents:
        - id: ClothingHeadHatCargosoft
        - id: ClothingUniformJumpsuitCargo
+       - id: ClothingUniformJumpsuitCargoPantsHarmony # Harmony change
        - id: ClothingBackpack
        - id: ClothingShoesColorBlack
        - id: ClothingUniformJumpskirtCargo

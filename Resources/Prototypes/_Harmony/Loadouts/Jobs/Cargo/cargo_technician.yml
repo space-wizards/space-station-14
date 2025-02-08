@@ -1,5 +1,71 @@
+# Senior Time
+- type: loadoutEffectGroup
+  id: SeniorTechnician
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 3600 # 1 hr
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobCargoTechnician
+      time: 3600 # 1 hr
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 10800 # 3 hrs
+
 # Head
 - type: loadout
   id: CargoTechnicianBandanaHarmony
   equipment:
     head: ClothingHeadBandBrown
+
+- type: loadout
+  id: SeniorTechnicianBeretHarmony
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorTechnician
+  equipment:
+    head: ClothingHeadHatBeretSeniorTechnicianHarmony
+
+# Jumpsuits
+- type: loadout
+  id: CargoOfficeSlacksJumpsuitHarmony
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCargoOfficeSlacksHarmony
+
+- type: loadout
+  id: CargoverallsHarmony
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCargoverallsHarmony
+
+- type: loadout
+  id: SeniorTechnicianJumpsuitHarmony
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorTechnician
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSeniorTechnicianHarmony
+
+- type: loadout
+  id: CargoPantsHarmony
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCargoPantsHarmony
+
+# Jumpskirts
+- type: loadout
+  id: CargoOfficeSkirtJumpskirtHarmony
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCargoOfficeSkirtHarmony
+
+- type: loadout
+  id: SeniorTechnicianJumpskirtHarmony
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorTechnician
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtSeniorTechnicianHarmony

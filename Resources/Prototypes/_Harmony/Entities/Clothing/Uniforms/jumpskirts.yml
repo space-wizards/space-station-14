@@ -41,3 +41,25 @@
     sprite: _Harmony/Clothing/Uniforms/Jumpskirt/hos_turtle.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/Uniforms/Jumpskirt/hos_turtle.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtCargoOfficeSkirtHarmony
+  name: cargo office skirt
+  description: For those who'd rather push pencils than crates.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/cargo_skirt.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/cargo_skirt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtSeniorTechnicianHarmony
+  name: senior technician jumpskirt
+  description: For the veteran freight movers, you've earned it.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/senior_technician.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/senior_technician.rsi
