@@ -1121,3 +1121,11 @@ Entries:
     changes:
     - type: Add
       message: Added Blatantly Nuclear by mrjajkes
+  - id: 341
+    author: Jajsha
+    time: '2025-02-08T07:09:14.0000000+00:00'
+    url: https://github.com/ss14-harmony/ss14-harmony/pull/341
+    changes:
+    - type: Add
+      message: Added the laissez-faire suit and various other clothing items to the
+        medical doctor loadout.
