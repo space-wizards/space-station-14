@@ -164,7 +164,7 @@
    - chitter
    - chitters
    - chittered
-   
+
 - type: emote #imp
   id: Coo
   name: chat-emote-name-coo
