@@ -1,5 +1,5 @@
 ﻿using Content.Server.Ghost;
-using Content.Server.Light.Components;
+using Content.Shared.Light.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Robust.Shared.Random;
