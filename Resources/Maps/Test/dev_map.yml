@@ -11270,7 +11270,7 @@ entities:
   - uid: 2660
     components:
     - type: MetaData
-      desc: potomu-chto ponabiraut vsyakih...
+      desc: potomu-chto ponabiraut vsyakih... 
     - type: Transform
       pos: 25.5,46.5
       parent: 1
