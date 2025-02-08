@@ -96,7 +96,6 @@
       - id: HolofanProjector
       - id: RCD
       - id: RCDAmmo
-      - id: RPD # Harmony Change: Add RPD to locker before upstream implimentation
 
 - type: entity
   id: LockerAtmosphericsFilled
@@ -113,7 +112,6 @@
       - id: HolofanProjector
       - id: RCD
       - id: RCDAmmo
-      - id: RPD # Harmony Change: Add RPD to locker before upstream implimentation
 
 - type: entity
   id: LockerEngineerFilledHardsuit
