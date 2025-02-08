@@ -12,10 +12,31 @@ public sealed partial class TabletopSystem
     /// </summary>
     private const int TabletopSeparation = 100;
 
+    private MapId? _tabletopMap = null;
+
     /// <summary>
     ///     Map where all tabletops reside.
     /// </summary>
-    public MapId TabletopMap { get; private set; } = MapId.Nullspace;
+    public MapId TabletopMap
+    {
+        get
+        {
+            if (_tabletopMap is { } tabletopMap && _map.MapExists(_tabletopMap))
+                return tabletopMap;
+
+            var mapUid = _map.CreateMap(out tabletopMap);
+            _tabletopMap = tabletopMap;
+            _tabletops = 0;
+
+            var mapComp = EntityManager.GetComponent<MapComponent>(mapUid);
+
+            // Lighting is always disabled in tabletop world.
+            mapComp.LightingEnabled = false;
+            Dirty(mapUid, mapComp);
+
+            return tabletopMap;
+        }
+    }
 
     /// <summary>
     ///     The number of tabletops created in the map.
@@ -40,23 +61,16 @@ public sealed partial class TabletopSystem
         return UlamSpiral(_tabletops++) * TabletopSeparation;
     }
 
-    /// <summary>
-    ///     Ensures that the tabletop map exists. Creates it if it doesn't.
-    /// </summary>
-    private void EnsureTabletopMap()
+    private void OnRoundRestart(RoundRestartCleanupEvent _)
     {
-        if (TabletopMap != MapId.Nullspace && _mapManager.MapExists(TabletopMap))
+        if (_tabletopMap is not { } tabletopMap || !_map.MapExists(tabletopMap))
             return;
 
-        TabletopMap = _mapManager.CreateMap();
+        // This will usually *not* be the case, but better make sure.
+        _mapManager.DeleteMap(tabletopMap);
+
+        // Reset tabletop count.
         _tabletops = 0;
-        var mapUid = _mapManager.GetMapEntityId(TabletopMap);
-
-        var mapComp = EntityManager.GetComponent<MapComponent>(mapUid);
-
-        // Lighting is always disabled in tabletop world.
-        mapComp.LightingEnabled = false;
-        Dirty(mapUid, mapComp);
     }
 
     /// <summary>
@@ -64,7 +78,7 @@ public sealed partial class TabletopSystem
     /// </summary>
     /// <param name="n">Scalar to map to a 2D position.</param>
     /// <returns>The mapped 2D position for the scalar.</returns>
-    private Vector2i UlamSpiral(int n)
+    private static Vector2i UlamSpiral(int n)
     {
         var k = (int)MathF.Ceiling(MathF.Sqrt(n) - 1) / 2;
         var t = 2 * k + 1;
@@ -85,17 +99,5 @@ public sealed partial class TabletopSystem
             return new Vector2i(-k + (m - n), k);
 
         return new Vector2i(k, k - (m - n - t));
-    }
-
-    private void OnRoundRestart(RoundRestartCleanupEvent _)
-    {
-        if (TabletopMap == MapId.Nullspace || !_mapManager.MapExists(TabletopMap))
-            return;
-
-        // This will usually *not* be the case, but better make sure.
-        _mapManager.DeleteMap(TabletopMap);
-
-        // Reset tabletop count.
-        _tabletops = 0;
     }
 }

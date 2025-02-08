@@ -29,7 +29,7 @@ public sealed partial class TabletopWindow : DefaultWindow
         {
             eye.Rotation = eye.Rotation.Opposite();
 
-            // Flip alignmento of the button
+            // Flip alignment of the button
             FlipButton.HorizontalAlignment = FlipButton.HorizontalAlignment == HAlignment.Right
                 ? HAlignment.Left
                 : HAlignment.Right;

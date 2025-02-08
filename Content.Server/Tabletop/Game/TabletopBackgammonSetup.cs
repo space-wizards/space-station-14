@@ -1,20 +1,23 @@
+using System.Linq;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Tabletop.Game;
 
 [UsedImplicitly]
 public sealed partial class TabletopBackgammonSetup : TabletopSetup
 {
+    [DataField]
+    public EntProtoId BoardPrototype = default!;
 
-    [DataField("whitePiecePrototype")]
-    public string WhitePiecePrototype { get; private set; } = "WhiteTabletopPiece";
+    [DataField]
+    public string WhitePiecePrototype = "WhiteTabletopPiece";
 
-    [DataField("blackPiecePrototype")]
-    public string BlackPiecePrototype { get; private set; } = "BlackTabletopPiece";
-    public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
+    [DataField]
+    public string BlackPiecePrototype = "BlackTabletopPiece";
+
+    protected override void SetupTabletop(Spawner spawner)
     {
-        var board = entityManager.SpawnEntity(BoardPrototype, session.Position);
-
         const float borderLengthX = 7.35f; //BORDER
         const float borderLengthY = 5.60f; //BORDER
 
@@ -40,11 +43,15 @@ public sealed partial class TabletopBackgammonSetup : TabletopSetup
             bool isTop,
             bool isLeftSide)
         {
-            for (int i = 0; i < numberOfPieces; i++)
+            foreach (var piece in Enumerable.Range(0, numberOfPieces))
             {
-                session.Entities.Add(entityManager.SpawnEntity(isBlackPiece ? BlackPiecePrototype : WhitePiecePrototype, session.Position.Offset(GetXPosition(distanceFromSide, isLeftSide), GetYPosition(i, isTop))));
+                spawner.Spawn(isBlackPiece ? BlackPiecePrototype : WhitePiecePrototype,
+                    GetXPosition(distanceFromSide, isLeftSide),
+                    GetYPosition(piece, isTop));
             }
         }
+
+        spawner.Spawn(BoardPrototype, 0, 0);
 
         // Top left
         AddPieces(0, 5, true, true, true);

@@ -5,7 +5,6 @@ using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -26,7 +25,6 @@ public sealed class TabletopSystem : SharedTabletopSystem
     [Dependency] private readonly IUserInterfaceManager _uiManger = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     // Time in seconds to wait until sending the location of a dragged entity to the server again
@@ -50,12 +48,11 @@ public sealed class TabletopSystem : SharedTabletopSystem
 
         SubscribeNetworkEvent<TabletopPlayEvent>(OnTabletopPlay);
         SubscribeLocalEvent<TabletopDraggableComponent, ComponentRemove>(HandleDraggableRemoved);
-        SubscribeLocalEvent<TabletopDraggableComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    private void HandleDraggableRemoved(EntityUid uid, TabletopDraggableComponent component, ComponentRemove args)
+    private void HandleDraggableRemoved(Entity<TabletopDraggableComponent> entity, ref ComponentRemove args)
     {
-        if (_draggedEntity == uid)
+        if (_draggedEntity == entity)
             StopDragging(false);
     }
 
@@ -76,9 +73,10 @@ public sealed class TabletopSystem : SharedTabletopSystem
         }
 
         // If no entity is being dragged or no viewport is clicked, return
-        if (_draggedEntity == null || _viewport == null) return;
+        if (_draggedEntity is not { } draggedEntity || _viewport == null)
+            return;
 
-        if (!CanDrag(playerEntity, _draggedEntity.Value, out var draggableComponent))
+        if (!CanDrag(playerEntity, draggedEntity, out var draggableComponent))
         {
             StopDragging();
             return;
@@ -97,19 +95,21 @@ public sealed class TabletopSystem : SharedTabletopSystem
         var coords = _viewport.PixelToMap(_inputManager.MouseScreenPosition.Position);
 
         // Clamp coordinates to viewport
-        var clampedCoords = ClampPositionToViewport(coords, _viewport);
-        if (clampedCoords.Equals(MapCoordinates.Nullspace)) return;
+        if (ClampPositionToViewport(coords, _viewport) is not { } clampedCoords)
+            return;
 
         // Move the entity locally every update
-        _transformSystem.SetWorldPosition(_draggedEntity.Value, clampedCoords.Position);
+        _transformSystem.SetWorldPosition(draggedEntity, clampedCoords.Position);
 
         // Increment total time passed
         _timePassed += frameTime;
 
         // Only send new position to server when Delay is reached
-        if (_timePassed >= Delay && _table != null)
+        if (_timePassed >= Delay && _table is { } table)
         {
-            RaisePredictiveEvent(new TabletopMoveEvent(GetNetEntity(_draggedEntity.Value), clampedCoords, GetNetEntity(_table.Value)));
+            RaisePredictiveEvent(new TabletopMoveEvent(GetNetEntity(draggedEntity),
+                clampedCoords,
+                GetNetEntity(table)));
             _timePassed -= Delay;
         }
     }
@@ -130,7 +130,7 @@ public sealed class TabletopSystem : SharedTabletopSystem
         // Get the camera entity that the server has created for us
         var camera = GetEntity(msg.CameraUid);
 
-        if (!EntityManager.TryGetComponent<EyeComponent>(camera, out var eyeComponent))
+        if (!TryComp<EyeComponent>(camera, out var eyeComponent))
         {
             // If there is no eye, print error and do not open any window
             Log.Error("Camera entity does not have eye component!");
@@ -142,7 +142,7 @@ public sealed class TabletopSystem : SharedTabletopSystem
         {
             MinWidth = 500,
             MinHeight = 436,
-            Title = msg.Title
+            Title = msg.Title,
         };
 
         _window.OnClose += OnWindowClose;
@@ -150,9 +150,9 @@ public sealed class TabletopSystem : SharedTabletopSystem
 
     private void OnWindowClose()
     {
-        if (_table != null)
+        if (_table is { } table)
         {
-            RaiseNetworkEvent(new TabletopStopPlayingEvent(GetNetEntity(_table.Value)));
+            RaiseNetworkEvent(new TabletopStopPlayingEvent(GetNetEntity(table)));
         }
 
         StopDragging();
@@ -167,70 +167,47 @@ public sealed class TabletopSystem : SharedTabletopSystem
         return args.State switch
         {
             BoundKeyState.Down => OnMouseDown(args),
-            BoundKeyState.Up => OnMouseUp(args),
-            _ => false
+            BoundKeyState.Up => OnMouseUp(),
+            _ => false,
         };
+
+        bool OnMouseDown(in PointerInputCmdArgs args)
+        {
+            // Return if no player entity
+            if (_playerManager.LocalEntity is not { } playerEntity)
+                return false;
+
+            // Return if can not see table or stunned/no hands
+            if (!CanSeeTable(playerEntity, _table) || !CanDrag(playerEntity, args.EntityUid, out _))
+                return false;
+
+            // Try to get the viewport under the cursor
+            if (_uiManger.MouseGetControl(args.ScreenCoordinates) as ScalingViewport is not { } viewport)
+                return false;
+
+            StartDragging(args.EntityUid, viewport);
+            return true;
+        }
+
+        bool OnMouseUp()
+        {
+            StopDragging();
+            return false;
+        }
     }
+
     private bool OnUseSecondary(in PointerInputCmdArgs args)
     {
-        if (_draggedEntity != null && _table != null)
+        if (_draggedEntity is { } draggedEntity && _table is { } table)
         {
-            var ev = new TabletopRequestTakeOut
+            RaiseNetworkEvent(new TabletopRequestTakeOut
             {
-                Entity = GetNetEntity(_draggedEntity.Value),
-                TableUid = GetNetEntity(_table.Value)
-            };
-            RaiseNetworkEvent(ev);
+                Entity = GetNetEntity(draggedEntity),
+                TableUid = GetNetEntity(table)
+            });
         }
+
         return false;
-    }
-
-    private bool OnMouseDown(in PointerInputCmdArgs args)
-    {
-        // Return if no player entity
-        if (_playerManager.LocalEntity is not { } playerEntity)
-            return false;
-
-        var entity = args.EntityUid;
-
-        // Return if can not see table or stunned/no hands
-        if (!CanSeeTable(playerEntity, _table) || !CanDrag(playerEntity, entity, out _))
-        {
-            return false;
-        }
-
-        // Try to get the viewport under the cursor
-        if (_uiManger.MouseGetControl(args.ScreenCoordinates) as ScalingViewport is not { } viewport)
-        {
-            return false;
-        }
-
-        StartDragging(entity, viewport);
-        return true;
-    }
-
-    private bool OnMouseUp(in PointerInputCmdArgs args)
-    {
-        StopDragging();
-        return false;
-    }
-
-    private void OnAppearanceChange(EntityUid uid, TabletopDraggableComponent comp, ref AppearanceChangeEvent args)
-    {
-        if (args.Sprite == null)
-            return;
-
-        // TODO: maybe this can work more nicely, by maybe only having to set the item to "being dragged", and have
-        //  the appearance handle the rest
-        if (_appearance.TryGetData<Vector2>(uid, TabletopItemVisuals.Scale, out var scale, args.Component))
-        {
-            args.Sprite.Scale = scale;
-        }
-
-        if (_appearance.TryGetData<int>(uid, TabletopItemVisuals.DrawDepth, out var drawDepth, args.Component))
-        {
-            args.Sprite.DrawDepth = drawDepth;
-        }
     }
 
     #endregion
@@ -257,10 +234,12 @@ public sealed class TabletopSystem : SharedTabletopSystem
     private void StopDragging(bool broadcast = true)
     {
         // Set the dragging player on the component to noone
-        if (broadcast && _draggedEntity != null && EntityManager.HasComponent<TabletopDraggableComponent>(_draggedEntity.Value))
+        if (broadcast && _draggedEntity is { } draggedEntity && HasComp<TabletopDraggableComponent>(draggedEntity))
         {
-            RaisePredictiveEvent(new TabletopMoveEvent(GetNetEntity(_draggedEntity.Value), Transforms.GetMapCoordinates(_draggedEntity.Value), GetNetEntity(_table!.Value)));
-            RaisePredictiveEvent(new TabletopDraggingPlayerChangedEvent(GetNetEntity(_draggedEntity.Value), false));
+            RaisePredictiveEvent(new TabletopMoveEvent(GetNetEntity(draggedEntity),
+                Transforms.GetMapCoordinates(draggedEntity),
+                GetNetEntity(_table!.Value)));
+            RaisePredictiveEvent(new TabletopDraggingPlayerChangedEvent(GetNetEntity(draggedEntity), false));
         }
 
         _draggedEntity = null;
@@ -273,15 +252,12 @@ public sealed class TabletopSystem : SharedTabletopSystem
     /// <param name="coordinates">The coordinates to be clamped.</param>
     /// <param name="viewport">The viewport to clamp the coordinates to.</param>
     /// <returns>Coordinates clamped to the viewport.</returns>
-    private static MapCoordinates ClampPositionToViewport(MapCoordinates coordinates, ScalingViewport viewport)
+    private static MapCoordinates? ClampPositionToViewport(MapCoordinates coordinates, ScalingViewport viewport)
     {
-        if (coordinates == MapCoordinates.Nullspace) return MapCoordinates.Nullspace;
+        if (coordinates == MapCoordinates.Nullspace || viewport.Eye is not { } eye)
+            return null;
 
-        var eye = viewport.Eye;
-        if (eye == null)
-            return MapCoordinates.Nullspace;
-
-        var size = (Vector2) viewport.ViewportSize / EyeManager.PixelsPerMeter; // Convert to tiles instead of pixels
+        var size = (Vector2)viewport.ViewportSize / EyeManager.PixelsPerMeter; // Convert to tiles instead of pixels
         var eyePosition = eye.Position.Position;
         var eyeRotation = eye.Rotation;
         var eyeScale = eye.Scale;
@@ -290,7 +266,8 @@ public sealed class TabletopSystem : SharedTabletopSystem
         var max = (eyePosition + size / 2) / eyeScale;
 
         // If 90/270 degrees rotated, flip X and Y
-        if (MathHelper.CloseToPercent(eyeRotation.Degrees % 180d, 90d) || MathHelper.CloseToPercent(eyeRotation.Degrees % 180d, -90d))
+        if (MathHelper.CloseToPercent(eyeRotation.Degrees % 180d, 90d) ||
+            MathHelper.CloseToPercent(eyeRotation.Degrees % 180d, -90d))
         {
             (min.Y, min.X) = (min.X, min.Y);
             (max.Y, max.X) = (max.X, max.Y);

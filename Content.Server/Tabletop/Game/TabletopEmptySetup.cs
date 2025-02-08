@@ -1,13 +1,23 @@
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Tabletop.Game;
 
+/// <summary>
+/// A <see cref="TabletopSetup"/> which spawns <see cref="BoardPrototype"/> in the center of the tabletop space and
+/// nothing else.
+/// </summary>
 [UsedImplicitly]
 public sealed partial class TabletopEmptySetup : TabletopSetup
 {
-    public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
+    /// <summary>
+    /// The board to spawn.
+    /// </summary>
+    [DataField]
+    public EntProtoId BoardPrototype = default!;
+
+    protected override void SetupTabletop(Spawner spawner)
     {
-        var board = entityManager.SpawnEntity(BoardPrototype, session.Position.Offset(0, 0));
-        session.Entities.Add(board);
+        spawner.Spawn(BoardPrototype, 0, 0);
     }
 }

@@ -1,86 +1,68 @@
+using System.Diagnostics;
+using System.Linq;
 using JetBrains.Annotations;
-using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Tabletop.Game;
 
 [UsedImplicitly]
 public sealed partial class TabletopChessSetup : TabletopSetup
 {
-
     // TODO: Un-hardcode the rest of entity prototype IDs, probably.
+    [DataField]
+    public EntProtoId BoardPrototype = default!;
 
-    public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
+    protected override void SetupTabletop(Spawner spawner)
     {
-        var chessboard = entityManager.SpawnEntity(BoardPrototype, session.Position.Offset(-1, 0));
-
-        session.Entities.Add(chessboard);
-
-        SpawnPieces(session, entityManager, session.Position.Offset(-4.5f, 3.5f));
+        spawner.Spawn(BoardPrototype, -1, 0);
+        SpawnPieces(spawner.WithRelativeSpawnPosition(-4.5f, 3.5f));
     }
 
-    private void SpawnPieces(TabletopSession session, IEntityManager entityManager, MapCoordinates topLeft, float separation = 1f)
+    private static void SpawnPieces(Spawner spawner)
     {
-        var (mapId, x, y) = topLeft;
-
         // Spawn all black pieces
-        SpawnPiecesRow(session, entityManager, "Black", topLeft, separation);
-        SpawnPawns(session, entityManager, "Black", new MapCoordinates(x, y - separation, mapId) , separation);
+        SpawnPiecesRow(spawner, "Black");
+        SpawnPawns(spawner.WithRelativeSpawnPosition(0, -1), "Black");
 
         // Spawn all white pieces
-        SpawnPawns(session, entityManager, "White", new MapCoordinates(x, y - 6 * separation, mapId) , separation);
-        SpawnPiecesRow(session, entityManager, "White", new MapCoordinates(x, y - 7 * separation, mapId), separation);
+        SpawnPawns(spawner.WithRelativeSpawnPosition(0, -6), "White");
+        SpawnPiecesRow(spawner.WithRelativeSpawnPosition(0, -7), "White");
 
         // Extra queens
-        EntityUid tempQualifier = entityManager.SpawnEntity("BlackQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 3 * separation, mapId));
-        session.Entities.Add(tempQualifier);
-        EntityUid tempQualifier1 = entityManager.SpawnEntity("WhiteQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 4 * separation, mapId));
-        session.Entities.Add(tempQualifier1);
+        spawner.Spawn("BlackQueen", 9, -3);
+        spawner.Spawn("WhiteQueen", 9, -4);
     }
 
     // TODO: refactor to load FEN instead
-    private void SpawnPiecesRow(TabletopSession session, IEntityManager entityManager, string color, MapCoordinates left, float separation = 1f)
+    private static void SpawnPiecesRow(Spawner spawner, string color)
     {
+        // Piece arrangement with Forsyth–Edwards Notation (FEN) characters.
         const string piecesRow = "rnbqkbnr";
-
-        var (mapId, x, y) = left;
-
-        for (int i = 0; i < 8; i++)
+        var pieces = piecesRow.Select((p, column) =>
         {
-            switch (piecesRow[i])
+            var piece = p switch
             {
-                case 'r':
-                    EntityUid tempQualifier = entityManager.SpawnEntity(color + "Rook", new MapCoordinates(x + i * separation, y, mapId));
-                    session.Entities.Add(tempQualifier);
-                    break;
-                case 'n':
-                    EntityUid tempQualifier1 = entityManager.SpawnEntity(color + "Knight", new MapCoordinates(x + i * separation, y, mapId));
-                    session.Entities.Add(tempQualifier1);
-                    break;
-                case 'b':
-                    EntityUid tempQualifier2 = entityManager.SpawnEntity(color + "Bishop", new MapCoordinates(x + i * separation, y, mapId));
-                    session.Entities.Add(tempQualifier2);
-                    break;
-                case 'q':
-                    EntityUid tempQualifier3 = entityManager.SpawnEntity(color + "Queen", new MapCoordinates(x + i * separation, y, mapId));
-                    session.Entities.Add(tempQualifier3);
-                    break;
-                case 'k':
-                    EntityUid tempQualifier4 = entityManager.SpawnEntity(color + "King", new MapCoordinates(x + i * separation, y, mapId));
-                    session.Entities.Add(tempQualifier4);
-                    break;
-            }
+                'r' => "Rook",
+                'n' => "Knight",
+                'b' => "Bishop",
+                'q' => "Queen",
+                'k' => "King",
+                _ => throw new UnreachableException(),
+            };
+            return (piece, column);
+        });
+        foreach (var (piece, column) in pieces)
+        {
+            spawner.Spawn($"{color}{piece}", column, 0);
         }
     }
 
     // TODO: refactor to load FEN instead
-    private void SpawnPawns(TabletopSession session, IEntityManager entityManager, string color, MapCoordinates left, float separation = 1f)
+    private static void SpawnPawns(Spawner spawner, string color)
     {
-        var (mapId, x, y) = left;
-
-        for (int i = 0; i < 8; i++)
+        foreach (var column in Enumerable.Range(0, 8))
         {
-            EntityUid tempQualifier = entityManager.SpawnEntity(color + "Pawn", new MapCoordinates(x + i * separation, y, mapId));
-            session.Entities.Add(tempQualifier);
+            spawner.Spawn($"{color}Pawn", column, 0);
         }
     }
 }

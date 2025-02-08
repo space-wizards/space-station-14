@@ -9,27 +9,21 @@ namespace Content.Shared.Tabletop.Events;
 /// <see cref="TabletopDraggableComponent"/> has been moved.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class TabletopMoveEvent : EntityEventArgs
+public sealed class TabletopMoveEvent(NetEntity movedEntityUid, MapCoordinates coordinates, NetEntity tableUid)
+    : EntityEventArgs
 {
     /// <summary>
     /// The UID of the entity being moved.
     /// </summary>
-    public NetEntity MovedEntityUid { get; }
+    public NetEntity MovedEntityUid { get; } = movedEntityUid;
 
     /// <summary>
     /// The new coordinates of the entity being moved.
     /// </summary>
-    public MapCoordinates Coordinates { get; }
+    public MapCoordinates Coordinates { get; } = coordinates;
 
     /// <summary>
     /// The UID of the table the entity is being moved on.
     /// </summary>
-    public NetEntity TableUid { get; }
-
-    public TabletopMoveEvent(NetEntity movedEntityUid, MapCoordinates coordinates, NetEntity tableUid)
-    {
-        MovedEntityUid = movedEntityUid;
-        Coordinates = coordinates;
-        TableUid = tableUid;
-    }
+    public NetEntity TableUid { get; } = tableUid;
 }

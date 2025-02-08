@@ -22,6 +22,7 @@ namespace Content.Server.Tabletop;
 public sealed partial class TabletopSystem : SharedTabletopSystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly EyeSystem _eye = default!;
     [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -50,7 +51,7 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
 
         var table = GetEntity(msg.TableUid);
 
-        if (!TryComp(table, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
+        if (!TryComp<TabletopGameComponent>(table, out var tabletop) || tabletop.Session is not { } session)
             return;
 
         if (!msg.Entity.IsValid())
@@ -58,9 +59,11 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
 
         var entity = GetEntity(msg.Entity);
 
-        if (!TryComp(entity, out TabletopHologramComponent? hologram))
+        if (!TryComp<TabletopHologramComponent>(entity, out _))
         {
-            _popupSystem.PopupEntity(Loc.GetString("tabletop-error-remove-non-hologram"), table, args.SenderSession);
+            _popupSystem.PopupEntity(Loc.GetString("tabletop-error-remove-non-hologram"),
+                table,
+                args.SenderSession);
             return;
         }
 
@@ -79,21 +82,18 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         if (!_cfg.GetCVar(CCVars.GameTabletopPlace))
             return;
 
-        if (!EntityManager.TryGetComponent(args.User, out HandsComponent? hands))
+        if (!TryComp<HandsComponent>(args.User, out var hands))
             return;
 
         if (component.Session is not { } session)
             return;
 
-        if (hands.ActiveHand == null)
-            return;
-
-        if (hands.ActiveHand.HeldEntity == null)
+        if (hands.ActiveHand?.HeldEntity == null)
             return;
 
         var handEnt = hands.ActiveHand.HeldEntity.Value;
 
-        if (!TryComp<ItemComponent>(handEnt, out var item))
+        if (!HasComp<ItemComponent>(handEnt))
             return;
 
         var meta = MetaData(handEnt);
@@ -114,7 +114,8 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         if (args.SenderSession is not { } playerSession)
             return;
 
-        if (!TryComp(GetEntity(msg.TableUid), out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
+        if (!TryComp<TabletopGameComponent>(GetEntity(msg.TableUid), out var tabletop) ||
+            tabletop.Session is not { } session)
             return;
 
         // Check if player is actually playing at this table
@@ -132,13 +133,13 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+        if (!TryComp<ActorComponent>(args.User, out var actor))
             return;
 
-        var playVerb = new ActivationVerb()
+        var playVerb = new ActivationVerb
         {
             Text = Loc.GetString("tabletop-verb-play-game"),
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/die.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/die.svg.192dpi.png")),
             Act = () => OpenSessionFor(actor.PlayerSession, uid)
         };
 
@@ -151,7 +152,7 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
             return;
 
         // Check that a player is attached to the entity.
-        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+        if (!TryComp<ActorComponent>(args.User, out var actor))
             return;
 
         OpenSessionFor(actor.PlayerSession, uid);
@@ -169,16 +170,16 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
 
     private void OnPlayerDetached(EntityUid uid, TabletopGamerComponent component, PlayerDetachedEvent args)
     {
-        if(component.Tabletop.IsValid())
+        if (component.Tabletop.IsValid())
             CloseSessionFor(args.Player, component.Tabletop);
     }
 
     private void OnGamerShutdown(EntityUid uid, TabletopGamerComponent component, ComponentShutdown args)
     {
-        if (!EntityManager.TryGetComponent(uid, out ActorComponent? actor))
+        if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 
-        if(component.Tabletop.IsValid())
+        if (component.Tabletop.IsValid())
             CloseSessionFor(actor.PlayerSession, component.Tabletop);
     }
 
@@ -192,9 +193,9 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
             if (!Exists(gamer.Tabletop))
                 continue;
 
-            if (!TryComp(uid, out ActorComponent? actor))
+            if (!TryComp<ActorComponent>(uid, out var actor))
             {
-                EntityManager.RemoveComponent<TabletopGamerComponent>(uid);
+                RemComp<TabletopGamerComponent>(uid);
                 return;
             }
 
