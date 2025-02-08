@@ -30,7 +30,7 @@ public sealed class SiliconLawBoundUserInterface : BoundUserInterface
     {
         base.UpdateState(state);
 
-        if (state is not SiliconLawBuiState msg)
+        if (state is not SiliconLawBuiState msg || _menu == null)
             return;
 
         if (_laws != null && _laws.Count == msg.Laws.Count)
@@ -49,7 +49,6 @@ public sealed class SiliconLawBoundUserInterface : BoundUserInterface
         }
 
         _laws = msg.Laws.ToList();
-
-        _menu?.Update(_owner, msg);
+        _menu.Update(_owner, msg);
     }
 }
