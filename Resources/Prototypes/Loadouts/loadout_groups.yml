@@ -1532,6 +1532,9 @@
   - DetectiveArmorVest
   - DetectiveCoatGrey
   - DetectiveCoat
+  - ArmorVest #imp
+  - ArmorVestSlim #imp
+  - ArmorVestCompact #imp
 
 - type: loadoutGroup
   id: DetectiveShoes
@@ -1579,6 +1582,9 @@
   loadouts:
   - BrigmedicArmoredWinterCoat
   - BrigmedicWinterCoat
+  - ArmorVest #imp
+  - ArmorVestSlim #imp
+  - ArmorVestCompact #imp
 
 - type: loadoutGroup
   id: BrigmedicShoes
