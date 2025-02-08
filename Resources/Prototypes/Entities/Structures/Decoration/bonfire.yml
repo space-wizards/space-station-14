@@ -9,23 +9,36 @@
     sprite: Structures/Decoration/bonfire.rsi
     layers:
       - state: bonfire
-      - state: burning
-  #- type: PointLight
-  #  radius: 5
-  #  energy: 3
-  #  color: "#FFC90C"
+  - type: AmbientSound
+    volume: -5
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/fireplace.ogg
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Wood
+  # imp edits
+  - type: Appearance
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
   - type: Destructible
     thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 100 # imp edit
+          damage: 100
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
-      # imp edits
       - trigger:
           !type:DamageTrigger
           damage: 50
@@ -40,35 +53,29 @@
             MaterialWoodPlank1:
               min: 6
               max: 10
-        # end imp edits
-  #- type: AmbientSound
-  #  volume: -5
-  #  range: 5
-  #  sound:
-  #    path: /Audio/Ambience/Objects/fireplace.ogg
-  # imp edits
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.25
-        density: 60
-        mask:
-        - MachineMask
-        layer:
-        - SlipLayer
-        hard: false
-  - type: StepTrigger
-    requiredTriggeredSpeed: 0
-    intersectRatio: 0.1
-  - type: TileEntityEffect
-    effects:
-    - !type:FlammableReaction
-      multiplier: 2.5
-      multiplierOnExisting: 0.75
-    - !type:Ignite
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
   - type: Climbable
+  - type: Flammable
+    damage:
+      types:
+        Heat: 0 # adding any damage would make it break loudly into pieces, which feels weird
+    flammableCollisionShape:
+      !type:PhysShapeCircle
+      radius: 0.25
+    maximumFireStacks: 6
+    fireSpread: true
+    alwaysCombustible: true
+    firestacksOnIgnite: 2
+    firestackFade: 0.05 # gets hotter the longer it's on
+    toggleAmbientSound: true
+  - type: FireVisuals
+    sprite: Structures/Decoration/bonfire.rsi
+    normalState: burning
+    maxLightRadius: 8
+    maxLightEnergy: 5
   - type: Construction
     graph: Bonfire
     node: bonfire
