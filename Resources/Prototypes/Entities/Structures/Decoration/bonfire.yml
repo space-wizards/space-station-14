@@ -10,10 +10,10 @@
     layers:
       - state: bonfire
       - state: burning
-  - type: PointLight
-    radius: 5
-    energy: 3
-    color: "#FFC90C"
+  #- type: PointLight
+  #  radius: 5
+  #  energy: 3
+  #  color: "#FFC90C"
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Wood
@@ -21,16 +21,58 @@
     thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 100 # imp edit
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+      # imp edits
+      - trigger:
+          !type:DamageTrigger
           damage: 50
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
-  - type: AmbientSound
-    volume: -5
-    range: 5
-    sound:
-      path: /Audio/Ambience/Objects/fireplace.ogg
-  - type: AlwaysHot
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WoodDestroy
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MaterialWoodPlank1:
+              min: 6
+              max: 10
+        # end imp edits
+  #- type: AmbientSound
+  #  volume: -5
+  #  range: 5
+  #  sound:
+  #    path: /Audio/Ambience/Objects/fireplace.ogg
+  # imp edits
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - SlipLayer
+        hard: false
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+  - type: TileEntityEffect
+    effects:
+    - !type:FlammableReaction
+      multiplier: 2.5
+      multiplierOnExisting: 0.75
+    - !type:Ignite
+  - type: Climbable
+  - type: Construction
+    graph: Bonfire
+    node: bonfire
+  # end imp edits
 
 - type: entity
   id: LegionnaireBonfire
