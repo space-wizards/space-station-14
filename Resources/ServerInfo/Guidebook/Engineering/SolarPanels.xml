@@ -18,6 +18,8 @@
   This is because the station is occluding some panels, so don't worry about it too much.
   Most stations have solar arrays placed at all sides of the station, so there's always some power being generated.
 
+  When directly facing the sun with no object occlusion, regular solar panels can generate [color=orange][protodata="SolarPanel" comp="SolarPanel" member="MaxSupply" format="N0"] W[/color] of power.
+
   Solar panels generate [color=orange]HV power[/color], and as such require an [color=orange]HV wire[/color] running underneath them to connect to the station's power grid.
 
   ## Power Bridge
