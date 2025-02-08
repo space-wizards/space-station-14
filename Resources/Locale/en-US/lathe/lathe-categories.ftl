@@ -12,6 +12,7 @@ lathe-category-weapons = Weapons
 # Cutter
 lathe-category-concrete = Concrete
 lathe-category-dark = Dark
+lathe-category-maints = Maints
 lathe-category-steel = Steel
 lathe-category-white = White
 lathe-category-wood = Wood

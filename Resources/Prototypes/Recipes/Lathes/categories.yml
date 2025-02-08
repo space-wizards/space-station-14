@@ -45,6 +45,10 @@
   name: lathe-category-dark
 
 - type: latheCategory
+  id: Maints
+  name: lathe-category-maints
+
+- type: latheCategory
   id: Steel
   name: lathe-category-steel
 

@@ -7,15 +7,42 @@
   categories:
     - Tiles
   completetime: 0.5
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseTileRecipe
+  id: BaseSteelTileRecipe
+  categories:
+    - Steel
   materials:
     Steel: 25
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseSteelTileRecipe
+  id: BaseDarkTileRecipe
+  categories:
+    - Dark
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseSteelTileRecipe
+  id: BaseWhiteTileRecipe
+  categories:
+    - White
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseSteelTileRecipe
+  id: BaseMaintTileRecipe
+  categories:
+    - Maints
 
 - type: latheRecipe
   abstract: true
   parent: BaseTileRecipe
   id: BaseWoodTileRecipe
   categories:
-    - Tiles
     - Wood
   materials:
     Wood: 25
@@ -25,35 +52,10 @@
   parent: BaseTileRecipe
   id: BaseConcreteTileRecipe
   categories:
-    - Tiles
     - Concrete
   materials:
     Steel: 25
     Plastic: 25
-
-- type: latheRecipe
-  abstract: true
-  parent: BaseTileRecipe
-  id: BaseDarkTileRecipe
-  categories:
-    - Tiles
-    - Dark
-
-- type: latheRecipe
-  abstract: true
-  parent: BaseTileRecipe
-  id: BaseSteelTileRecipe
-  categories:
-    - Tiles
-    - Steel
-
-- type: latheRecipe
-  abstract: true
-  parent: BaseTileRecipe
-  id: BaseWhiteTileRecipe
-  categories:
-    - Tiles
-    - White
 
 ## Recipes
 
@@ -207,17 +209,17 @@
 
 # Other steel
 - type: latheRecipe
-  parent: BaseSteelTileRecipe
+  parent: BaseMaintTileRecipe
   id: FloorTileItemGratingMaint
   result: FloorTileItemGratingMaint
 
 - type: latheRecipe
-  parent: BaseSteelTileRecipe
+  parent: BaseMaintTileRecipe
   id: FloorTileItemTechmaint
   result: FloorTileItemTechmaint
 
 - type: latheRecipe
-  parent: BaseSteelTileRecipe
+  parent: BaseMaintTileRecipe
   id: FloorTileItemSteelMaint
   result: FloorTileItemSteelMaint
 
