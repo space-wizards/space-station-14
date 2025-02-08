@@ -25,6 +25,7 @@
       collection: MetalThud
   - type: Spillable
     solution: absorbed
+    allowMeleeDamage: true #imp edit
     spillWhenThrown: false #imp edit
   - type: Wieldable
   - type: IncreaseDamageOnWield
@@ -88,6 +89,7 @@
          collection: MetalThud
     - type: Spillable
       solution: absorbed
+      allowMeleeDamage: true #imp edit
       spillWhenThrown: false #imp edit
     - type: Wieldable
     - type: IncreaseDamageOnWield
