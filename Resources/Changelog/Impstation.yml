@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: The Chaplain's iconic Null Rod returns! Can be transformed into various
-      gadgets.
-    type: Add
-  id: 574
-  time: '2024-11-26T02:39:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/795
 - author: FlippenPage
   changes:
   - message: Added Drones
@@ -4263,3 +4255,12 @@
   id: 1073
   time: '2025-02-08T01:50:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1595
+- author: honeyed-lemons
+  changes:
+  - message: Priority Mail takes 5 minutes to expire again
+    type: Tweak
+  - message: Fixed some mail examine text
+    type: Fix
+  id: 1074
+  time: '2025-02-08T01:58:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1601
