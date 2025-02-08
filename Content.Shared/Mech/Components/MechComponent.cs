@@ -19,6 +19,13 @@ public sealed partial class MechComponent : Component
     [DataField("breakOnEmag")]
     [AutoNetworkedField]
     public bool BreakOnEmag = true;
+    
+    /// <summary>
+    /// is the mech in maintenance mode?
+    /// </summary>
+    [DataField("maintenance")]
+    [AutoNetworkedField]
+    public bool MaintenanceMode = false
 
     /// <summary>
     /// How much "health" the mech has left.
