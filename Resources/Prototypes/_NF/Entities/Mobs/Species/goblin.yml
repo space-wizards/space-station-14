@@ -87,6 +87,10 @@
   - type: Tag
     tags:
     - VimPilot
+    - DoorBumpOpener
+    - CanPilot
+    - FootstepSound
+    - AnomalyHost
   - type: Reactive
     groups:
       Flammable: [ Touch ]
