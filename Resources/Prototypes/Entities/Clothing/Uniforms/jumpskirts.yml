@@ -132,7 +132,7 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/cmo_turtle.rsi
 
-# Harmony Change - Updates sprite pathing, parent, name, and description.
+# Harmony Change - Updates sprite pathing, contraband level, name, and description.
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseRestrictedContraband]
   id: ClothingUniformJumpskirtDetective
@@ -145,7 +145,7 @@
       sprite: _Harmony/Clothing/Uniforms/Jumpskirt/detective.rsi
 # End of Harmony changes.
 
-# Harmony Change - Updates sprite pathing, parent, name, and description.
+# Harmony Change - Updates sprite pathing, contraband level, name, and description.
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseRestrictedContraband]
   id: ClothingUniformJumpskirtDetectiveGrey
