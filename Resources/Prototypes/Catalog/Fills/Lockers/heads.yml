@@ -334,6 +334,7 @@
     - id: SecurityTechFabCircuitboard
     - id: WeaponDisabler
     - id: WantedListCartridge
+    - id: DrinkHosFlask
     - id: ClothingNeckBronzeheart #imp
     - id: TicketPad #imp special
     - id: BaseSeclinkRadio #imp

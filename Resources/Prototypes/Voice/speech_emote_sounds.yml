@@ -526,6 +526,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Hew:
+      collection: Hew
     Wuhey:
       collection: Wuhey
     Ungh:
@@ -1034,7 +1036,6 @@
       collection: Wuhey
     Ungh:
       collection: Ungh
-
     Gasp:
       collection: UnisexGasp
     DefaultDeathgasp:
