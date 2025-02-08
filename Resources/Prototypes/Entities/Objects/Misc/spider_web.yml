@@ -74,9 +74,7 @@
       ignoreWhitelist:
         components:
             - IgnoreSpiderWeb
-    - type: Tag
-      tags:
-      - SpiderWeb
+    - type: SpiderWebObject
 
 - type: entity
   id: SpiderWebClown
@@ -163,6 +161,4 @@
           reagents:
           - ReagentId: Sugar
             Quantity: 2
-    - type: Tag
-      tags:
-      - SpiderWeb
+    - type: SpiderWebObject

@@ -2352,8 +2352,8 @@
   - type: WebPlacer
     webPrototype: SpiderWeb
     destinationBlacklist:
-      tags:
-      - SpiderWeb
+      components:
+      - SpiderWebObject
   - type: IgnoreSpiderWeb
   - type: Bloodstream
     bloodMaxVolume: 150
