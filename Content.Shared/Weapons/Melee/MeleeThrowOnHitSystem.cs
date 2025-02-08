@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Numerics;
 using Content.Shared.Construction.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
@@ -8,9 +6,8 @@ using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Timing;
+using System.Numerics;
 
 namespace Content.Shared.Weapons.Melee;
 
@@ -19,150 +16,72 @@ namespace Content.Shared.Weapons.Melee;
 /// </summary>
 public sealed class MeleeThrowOnHitSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly UseDelaySystem _delay = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
-
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
     /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<MeleeThrowOnHitComponent, MeleeHitEvent>(OnMeleeHit);
         SubscribeLocalEvent<MeleeThrowOnHitComponent, ThrowDoHitEvent>(OnThrowHit);
-        SubscribeLocalEvent<MeleeThrownComponent, ComponentStartup>(OnThrownStartup);
-        SubscribeLocalEvent<MeleeThrownComponent, ComponentShutdown>(OnThrownShutdown);
-        SubscribeLocalEvent<MeleeThrownComponent, StartCollideEvent>(OnStartCollide);
-        SubscribeLocalEvent<MeleeThrowOnHitComponent, AttemptMeleeThrowOnHitEvent>(OnAttempt);
     }
 
-    private void OnAttempt(Entity<MeleeThrowOnHitComponent> ent, ref AttemptMeleeThrowOnHitEvent args)
+    private void OnMeleeHit(Entity<MeleeThrowOnHitComponent> weapon, ref MeleeHitEvent args)
     {
-        // This is in an instance where you'd like this to control if the melee throw on hit works instead of an anomaly core like it does for Gorilla Gauntlets
-        // Only nesting here in cases where enabled is set elsewhere
-        if (ent.Comp.DisableDuringUseDelay)
-        {
-            if (TryComp<UseDelayComponent>(ent.Owner, out var useDelay) && _delay.IsDelayed((ent.Owner, useDelay)))
-            {
-                ent.Comp.Enabled = false;
-                return;
-            }
-
-            ent.Comp.Enabled = true;
-        }
-    }
-
-    private void OnMeleeHit(Entity<MeleeThrowOnHitComponent> ent, ref MeleeHitEvent args)
-    {
+        // TODO: MeleeHitEvent is weird. Why is this even raised if we don't hit something?
         if (!args.IsHit)
             return;
 
-        ThrowOnHitHelper(ent, args.User, args.HitEntities.ToHashSet(), direction: args.Direction);
-    }
-
-    private void OnThrowHit(Entity<MeleeThrowOnHitComponent> ent, ref ThrowDoHitEvent args)
-    {
-        if (args.Component.Thrower is null || !ent.Comp.ActivateOnThrown)
+        if (_delay.IsDelayed(weapon.Owner))
             return;
 
-        ThrowOnHitHelper(ent, args.Component.Thrower.Value, [args.Target]);
-    }
-
-    private void ThrowOnHitHelper(Entity<MeleeThrowOnHitComponent> ent, EntityUid user, HashSet<EntityUid> hitEntities, Vector2? direction = null)
-    {
-        var (_, comp) = ent;
-
-        var mapPos = _transform.GetMapCoordinates(user).Position;
-        foreach (var hit in hitEntities)
+        var userPos = _transform.GetMapCoordinates(args.User).Position;
+        foreach (var target in args.HitEntities)
         {
-            var hitPos = _transform.GetMapCoordinates(hit).Position;
-            var angle = direction ?? hitPos - mapPos;
-            if (angle == Vector2.Zero)
-                continue;
-
-            if (!CanThrowOnHit(ent, hit))
-                continue;
-
-            if (comp.UnanchorOnHit && HasComp<AnchorableComponent>(hit))
-            {
-                _transform.Unanchor(hit, Transform(hit));
-            }
-
-            RemComp<MeleeThrownComponent>(hit);
-            var ev = new MeleeThrowOnHitStartEvent(user, ent);
-            RaiseLocalEvent(hit, ref ev);
-            var thrownComp = new MeleeThrownComponent
-            {
-                Velocity = angle.Normalized() * comp.Speed,
-                Lifetime = comp.Lifetime,
-                MinLifetime = comp.MinLifetime
-            };
-            AddComp(hit, thrownComp);
-
-            if (ent.Comp.StunTime != null)
-                _stun.TryParalyze(hit, ent.Comp.StunTime.Value, false);
+            var targetPos = _transform.GetMapCoordinates(target).Position;
+            var direction = args.Direction ?? targetPos - userPos;
+            ThrowOnHitHelper(weapon, args.User, target, direction);
         }
     }
 
-    private void OnThrownStartup(Entity<MeleeThrownComponent> ent, ref ComponentStartup args)
+    private void OnThrowHit(Entity<MeleeThrowOnHitComponent> weapon, ref ThrowDoHitEvent args)
     {
-        var (_, comp) = ent;
-
-        if (!TryComp<PhysicsComponent>(ent, out var body) ||
-            (body.BodyType & (BodyType.Dynamic | BodyType.KinematicController)) == 0x0)
+        if (!weapon.Comp.ActivateOnThrown)
             return;
 
-        comp.PreviousStatus = body.BodyStatus;
-        comp.ThrownEndTime = _timing.CurTime + TimeSpan.FromSeconds(comp.Lifetime);
-        comp.MinLifetimeTime = _timing.CurTime + TimeSpan.FromSeconds(comp.MinLifetime);
-        _physics.SetBodyStatus(ent, body, BodyStatus.InAir);
-        _physics.SetLinearVelocity(ent, Vector2.Zero, body: body);
-        _physics.ApplyLinearImpulse(ent, comp.Velocity * body.Mass, body: body);
-        Dirty(ent, ent.Comp);
-    }
-
-    private void OnThrownShutdown(Entity<MeleeThrownComponent> ent, ref ComponentShutdown args)
-    {
-        if (TryComp<PhysicsComponent>(ent, out var body))
-            _physics.SetBodyStatus(ent, body, ent.Comp.PreviousStatus);
-        var ev = new MeleeThrowOnHitEndEvent();
-        RaiseLocalEvent(ent, ref ev);
-    }
-
-    private void OnStartCollide(Entity<MeleeThrownComponent> ent, ref StartCollideEvent args)
-    {
-        var (_, comp) = ent;
-        if (!args.OtherFixture.Hard || !args.OtherBody.CanCollide || !args.OurFixture.Hard || !args.OurBody.CanCollide)
+        if (!TryComp<PhysicsComponent>(args.Thrown, out var weaponPhysics))
             return;
 
-        if (_timing.CurTime < comp.MinLifetimeTime)
+        ThrowOnHitHelper(weapon, args.Component.Thrower, args.Target, weaponPhysics.LinearVelocity);
+    }
+
+    private void ThrowOnHitHelper(Entity<MeleeThrowOnHitComponent> ent, EntityUid? user, EntityUid target, Vector2 direction)
+    {
+        var attemptEvent = new AttemptMeleeThrowOnHitEvent(target, user);
+        RaiseLocalEvent(ent.Owner, ref attemptEvent);
+
+        if (attemptEvent.Cancelled)
             return;
 
-        RemCompDeferred(ent, ent.Comp);
-    }
+        var startEvent = new MeleeThrowOnHitStartEvent(ent.Owner, user);
+        RaiseLocalEvent(target, ref startEvent);
 
-    public bool CanThrowOnHit(Entity<MeleeThrowOnHitComponent> ent, EntityUid target)
-    {
-        var (uid, comp) = ent;
+        if (ent.Comp.StunTime != null)
+            _stun.TryParalyze(target, ent.Comp.StunTime.Value, false);
+        if (ent.Comp.UnanchorOnHit && HasComp<AnchorableComponent>(target))
+            _transform.Unanchor(target);
 
-        var ev = new AttemptMeleeThrowOnHitEvent(target);
-        RaiseLocalEvent(uid, ref ev);
+        if (direction == Vector2.Zero)
+            return;
 
-        if (ev.Handled)
-            return !ev.Cancelled;
+        // Don't throw objects that cannot be moved
+        // TryThrow checks this as well, but we don't want to log a warning.
+        // We don't do this earlier because anomalies change their body type when hit with a gorilla gauntlet.
+        if (!TryComp<PhysicsComponent>(target, out var targetPhysics) || (targetPhysics.BodyType & (BodyType.Dynamic | BodyType.KinematicController)) == 0x0)
+            return;
 
-        return comp.Enabled;
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<MeleeThrownComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (_timing.CurTime > comp.ThrownEndTime)
-                RemCompDeferred(uid, comp);
-        }
+        _throwing.TryThrow(target, direction.Normalized() * ent.Comp.Distance, ent.Comp.Speed, user);
     }
 }
