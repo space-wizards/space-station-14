@@ -105,7 +105,7 @@ public sealed partial class SupermatterSystem : EntitySystem
 
     public void OnSupermatterUpdated(EntityUid uid, SupermatterComponent sm, AtmosDeviceUpdateEvent args)
     {
-        ProcessAtmos(uid, sm);
+        ProcessAtmos(uid, sm, args.dt);
         HandleDamage(uid, sm);
 
         if (sm.Damage >= sm.DamageDelaminationPoint || sm.Delamming)

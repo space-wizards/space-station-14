@@ -2,9 +2,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using Content.Server.Chat.Systems;
-using Content.Server.Explosion.EntitySystems;
 using Content.Server.Singularity.Components;
-using Content.Server.Sound.Components;
 using Content.Shared._EinsteinEngines.CCVar;
 using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Content.Shared.Atmos;
@@ -36,7 +34,7 @@ public sealed partial class SupermatterSystem
     /// <summary>
     /// Handle power and radiation output depending on atmospheric things.
     /// </summary>
-    private void ProcessAtmos(EntityUid uid, SupermatterComponent sm)
+    private void ProcessAtmos(EntityUid uid, SupermatterComponent sm, float frameTime)
     {
         var mix = _atmosphere.GetContainingMixture(uid, true, true);
 
@@ -147,7 +145,9 @@ public sealed partial class SupermatterSystem
         }
 
         // Power * 0.55 * a value between 1 and 0.8
-        var energy = sm.Power * _config.GetCVar(EinsteinCCVars.SupermatterReactionPowerModifier) * (1f - sm.PsyCoefficient * 0.2f);
+        // This has to be differentiated with respect to time, since its going to be interacting with systems
+        // that also differentiate. Basically, if we don't multiply by 2 * frameTime, the supermatter will explode faster if your server's tickrate is higher.
+        var energy = sm.Power * _config.GetCVar(EinsteinCCVars.SupermatterReactionPowerModifier) * (1f - sm.PsyCoefficient * 0.2f) * 2 * frameTime;
 
         // Keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock is on.
         // An increase of 4°C at 25% efficiency here results in an increase of 1°C / (#tilesincore) overall.
