@@ -29,11 +29,10 @@ Use screenshots or recorded videos as appropriate. Small fixes and refactors are
 This will be posted in #codebase-changes. -->
 
 ## Test steps
-<!-- Write some test steps that prove your PR works as intended. This will speed up your review time. An example is included below -->
-1. Open the game and load into the Dev station
-2. Use the entity spawn window to spawn Ian
-3. Pet Ian
-4. You should hear Ian bark and little love hearts appear
+<!-- Write some test steps that prove your PR works as intended. The first step is assumed to be "Load the Dev station" unless stated otherwise. This will speed up your review time. An example is included below -->
+1. Use the entity spawn window to spawn Ian
+2. Pet Ian
+3. You should hear Ian bark and little love hearts appear
 
 **Change log**
 <!-- Add a change log entry to make players aware of new features or changes that could affect gameplay.
