@@ -650,6 +650,7 @@
   loadouts:
   - CargoTechnicianHead
   - CargoTechnicianBandanaHarmony # Harmony
+  - SeniorTechnicianBeretHarmony # Harmony change: adds senior tech beret to loadout group
 
 - type: loadoutGroup
   id: CargoTechnicianJumpsuit
@@ -657,6 +658,14 @@
   loadouts:
   - CargoTechnicianJumpsuit
   - CargoTechnicianJumpskirt
+# start of harmony change: adds new outfits to loadout
+  - CargoPantsHarmony
+  - CargoverallsHarmony
+  - CargoOfficeSlacksJumpsuitHarmony
+  - CargoOfficeSkirtJumpskirtHarmony
+  - SeniorTechnicianJumpsuitHarmony
+  - SeniorTechnicianJumpskirtHarmony
+# end of harmony change
 
 - type: loadoutGroup
   id: CargoTechnicianBackpack
@@ -1208,6 +1217,7 @@
   loadouts:
   - MedicalDoctorJumpsuit
   - MedicalDoctorJumpskirt
+  - WorkadaySuit # Harmony
   - SeniorPhysicianJumpsuit
   - SeniorPhysicianJumpskirt
   - MedicalBlueScrubs
@@ -1236,6 +1246,7 @@
   name: loadout-group-medical-doctor-shoes
   loadouts:
   - WhiteShoes
+  - BlackShoes # Harmony
   - MedicalWinterBoots
 
 - type: loadoutGroup

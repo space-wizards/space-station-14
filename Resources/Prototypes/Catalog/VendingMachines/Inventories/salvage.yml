@@ -10,3 +10,9 @@
     RadioHandheld: 2
     WeaponGrapplingGun: 4
     WeaponProtoKineticAccelerator: 4
+# Harmony change - Readed Floodlights, seismic charges, fultons, and fulton beacons.
+    Floodlight: 2
+    SeismicCharge: 2
+    FultonBeacon: 1
+    Fulton: 2
+# End of Harmony change.
