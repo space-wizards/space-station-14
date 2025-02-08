@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by Nienhaus for /tg/station at commit https://github.com/tgstation/tgstation/pull/3058/commits/c3eef7846b2d27c689cc6ee2b8348e3814eab361. Icon, inhand, and equipped have been resprited by CrimsonJupiter for Harmony.",
+  "copyright": "Made by Nienhaus for /tg/station at commit https://github.com/tgstation/tgstation/commit/9f98e67545cf206bae3d7a2622769bbf1dd52d0a. Icon, inhand, and equipped have been resprited by CrimsonJupiter for Harmony.",
   "size": {
     "x": 32,
     "y": 32
