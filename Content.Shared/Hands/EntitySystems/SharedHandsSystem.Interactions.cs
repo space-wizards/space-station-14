@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Damage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
@@ -28,7 +29,6 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         SubscribeLocalEvent<HandsComponent, GetUsedEntityEvent>(OnGetUsedEntity);
         SubscribeLocalEvent<HandsComponent, ExaminedEvent>(HandleExamined);
-        SubscribeLocalEvent<HandsComponent, MeleeAttackEvent>(OnMeleeAttack);
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.UseItemInHand, InputCmdHandler.FromDelegate(HandleUseItem, handle: false, outsidePrediction: false))
@@ -218,18 +218,21 @@ public abstract partial class SharedHandsSystem : EntitySystem
     }
 
     /// <summary>
-    /// Fires when a melee weapon is swung and delays the throw timer.
-    /// Makes an exception for when the entity is the weapon itself, i.e. unarmed attacks.
+    /// Resets the throw cooldown to allow for throwing, and optionally sets a new throw tim if given.
     /// </summary>
-    private void OnMeleeAttack(Entity<HandsComponent> ent, ref MeleeAttackEvent args)
+    /// <param name="customTime">If set, this will be the new NextThrowTime.</param>
+    public void ResetThrowCooldown(EntityUid uid, HandsComponent? handsComp, TimeSpan? customTime = null)
     {
-        if (ent.Owner == args.Weapon)
+        if (!Resolve(uid, ref handsComp))
             return;
 
-        if (!TryComp<MeleeWeaponComponent>(args.Weapon, out var melee))
+        if (customTime == null || _timing.CurTime > customTime)
+        {
+            handsComp.NextThrowTime = _timing.CurTime;
             return;
+        }
 
-        if (ent.Comp.NextThrowTime < melee.NextAttack)
-            ent.Comp.NextThrowTime = melee.NextAttack;
+        handsComp.NextThrowTime = (TimeSpan)customTime;
+
     }
 }
