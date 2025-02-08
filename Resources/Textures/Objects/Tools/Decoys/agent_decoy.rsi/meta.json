@@ -11,6 +11,14 @@
         "name": "folded"
         },
         {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
         "name": "aballoon",
         "directions": 4
         }

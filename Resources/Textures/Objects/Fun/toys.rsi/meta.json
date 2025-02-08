@@ -205,6 +205,14 @@
       "name": "spbox"
     },
     {
+      "name": "spbox-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "spbox-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "toy_mouse"
     },
     {

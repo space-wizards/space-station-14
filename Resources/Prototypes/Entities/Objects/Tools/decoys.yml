@@ -69,6 +69,11 @@
   description: Upon closer inspection, this Syndicate operative is actually a balloon.
   components:
   - type: Sprite
+    inhandVisuals:
+        left:
+        - state: inter-inhand-left
+        right:
+        - state: inter-inhand-right
     sprite: Objects/Tools/Decoys/operative_decoy.rsi
     layers:
     - state: oballoon
@@ -84,6 +89,11 @@
   description: Upon closer inspection, this Syndicate agent is actually a balloon.
   components:
   - type: Sprite
+    inhandVisuals:
+      left:
+      - state: inter-inhand-left
+      right:
+      - state: inter-inhand-right
     sprite: Objects/Tools/Decoys/agent_decoy.rsi
     layers:
     - state: aballoon
@@ -99,6 +109,11 @@
   description: Upon closer inspection, this Syndicate elite operative is actually a balloon.
   components:
   - type: Sprite
+    inhandVisuals:
+      left:
+      - state: inter-inhand-left
+      right:
+      - state: inter-inhand-right
     sprite: Objects/Tools/Decoys/elite_decoy.rsi
     layers:
     - state: eballoon
@@ -116,6 +131,11 @@
   description: Upon closer inspection, this Syndicate juggernaut is actually a balloon.
   components:
   - type: Sprite
+    inhandVisuals:
+      left:
+      - state: inter-inhand-left
+      right:
+      - state: inter-inhand-right
     sprite: Objects/Tools/Decoys/juggernaut_decoy.rsi
     layers:
     - state: jballoon
@@ -131,6 +151,11 @@
   description: Upon closer inspection, this Syndicate commander is actually a balloon.
   components:
   - type: Sprite
+    inhandVisuals:
+      left:
+      - state: inter-inhand-left
+      right:
+      - state: inter-inhand-right
     sprite: Objects/Tools/Decoys/commander_decoy.rsi
     layers:
     - state: cballoon
