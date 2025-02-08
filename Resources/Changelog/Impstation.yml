@@ -1,27 +1,4 @@
 ﻿Entries:
-- author: AvianMaiden
-  changes:
-  - message: A unique announcer "Mesa Vox", using assets from Half-Life's Black Mesa
-      VOX system! And vox--just like the species of bird aliens; I'm a big fan of
-      birds. Desert birds too.
-    type: Add
-  - message: Some Michael Announcer lines should now actually play in-game.
-    type: Fix
-  - message: Michael dialogue for evacuation shuttle arrival changed to default FemVox,
-      like most other announcers. His soft voice gets so easily lost, which is pretty
-      bad for something like evac.
-    type: Tweak
-  - message: Michael Announcer now has the default (iconic) comms console chimes rather
-      than his generic "attention".
-    type: Tweak
-  - message: Changed the chances of certain announcers appearing to pair with Mesa
-      Vox. Sinister and Mesa Vox have the same weight, acting as more common than
-      sillier announcers like Intern, but still less common than the regular announcers
-      like VoxFem or MedBot.
-    type: Tweak
-  id: 573
-  time: '2024-11-25T13:17:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/798
 - author: AftrLite
   changes:
   - message: The Chaplain's iconic Null Rod returns! Can be transformed into various
@@ -4279,3 +4256,10 @@
   id: 1072
   time: '2025-02-08T01:25:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1583
+- author: TheGrimbeeper
+  changes:
+  - message: 'New depth 10 station wide destruction: Supermatter!'
+    type: Add
+  id: 1073
+  time: '2025-02-08T01:50:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1595
