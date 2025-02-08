@@ -43,7 +43,6 @@
   - type: UseDelayOnMeleeHit
   - type: MeleeThrowOnHit
     stunTime: 3
-    disableDuringUseDelay: true
     activateOnThrown: true
   - type: MeleeWeapon
     wideAnimationRotation: -135
