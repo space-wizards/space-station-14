@@ -172,7 +172,7 @@ public abstract partial class BaseActionComponent : Component
     ///     Takes priority over RaiseOnUser.
     /// </summary>
     [DataField]
-    [Obsolete("This component will be reworked in an upcoming action refactor")]
+    [Obsolete("This datafield will be reworked in an upcoming action refactor")]
     public bool RaiseOnAction;
 
     /// <summary>
