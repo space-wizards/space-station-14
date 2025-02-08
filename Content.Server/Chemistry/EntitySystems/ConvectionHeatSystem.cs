@@ -16,21 +16,18 @@ public sealed class ConvectionHeatSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<InternalTemperatureComponent, SolutionComponent, ConvectionHeatComponent>();
-        while (query.MoveNext(out var ent, out var internalTemp, out var soluComp, out var Convect))
+        var query = EntityQueryEnumerator<InternalTemperatureComponent, ConvectionHeatComponent>();
+        while (query.MoveNext(out var ent, out var internalTemp, out var convect))
         {
 
             if (!TryComp<SolutionContainerManagerComponent>(ent, out var solutionContainer))
                 continue;
 
-            if (!_solutionContainer.TryGetSolution(ent, soluComp.Solution.Name, out _ , out var solutionCurrentTemp))
+            if (!_solutionContainer.TryGetSolution(ent, convect.Solution, out _ , out var solutionCurrentTemp))
                 continue;
 
             // Apply the heat to all solutions in the container
-            var energy = (internalTemp.Temperature - solutionCurrentTemp.Temperature)*frameTime;
-
-            Convect.TempDifference = 20f;
-
+            var energy = (internalTemp.Temperature - solutionCurrentTemp.Temperature);
             foreach (var (_, solution) in _solutionContainer.EnumerateSolutions((ent, solutionContainer)))
             {
                 // Add the thermal energy to the solution it says rerun content.server
