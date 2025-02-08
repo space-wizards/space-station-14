@@ -22,6 +22,7 @@
         probability: 0.33
       - !type:Emote
         emote: Scream
+        showAboveHead: true
         probability: 0.15
 
 - type: reagent

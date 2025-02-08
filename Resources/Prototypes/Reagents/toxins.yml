@@ -58,11 +58,11 @@
       effects:
       - !type:Emote
         emote: Yawn
-        showInChat: true
+        showAboveHead: true
         probability: 0.1
       - !type:Emote
         emote: Drool
-        showInChat: true
+        showAboveHead: true
         probability: 0.05
       - !type:MovespeedModifier
         walkSpeedModifier: 0.65
@@ -150,6 +150,7 @@
       - !type:Emote
         emote: Scream
         probability: 0.3
+        showAboveHead: true
   metabolisms:
     Poison:
       metabolismRate : 3.00 # High damage, high metabolism rate. You need a lot of units to crit. Simulates acid burning through you fast.
@@ -166,6 +167,7 @@
       - !type:Emote
         emote: Scream
         probability: 0.3
+        showAboveHead: true
 
 - type: reagent
   id: FerrochromicAcid
@@ -212,6 +214,7 @@
       - !type:Emote
         emote: Scream
         probability: 0.2
+        showAboveHead: true
   metabolisms:
     Poison:
       metabolismRate: 3.00 # High damage, high metabolism rate. You need a lot of units to crit. Simulates acid burning through you fast.
@@ -228,6 +231,7 @@
       - !type:Emote
         emote: Scream
         probability: 0.25
+        showAboveHead: true
 
 - type: reagent
   id: SulfuricAcid
@@ -260,6 +264,7 @@
       - !type:Emote
         emote: Scream
         probability: 0.1
+        showAboveHead: true
   metabolisms:
     Poison:
       metabolismRate: 3.00 # Okay damage, high metabolism rate. You need a lot of units to crit. Simulates acid burning through you fast.
@@ -276,6 +281,7 @@
       - !type:Emote
         emote: Scream
         probability: 0.2
+        showAboveHead: true
 
 - type: reagent
   id: UnstableMutagen
@@ -314,7 +320,7 @@
             Asphyxiation: 5
       - !type:Emote
         emote: Wheeze
-        showInChat: true
+        showAboveHead: true
         probability: 0.2
   plantMetabolism:
   - !type:PlantAdjustToxins
@@ -336,7 +342,7 @@
             Airloss: 10
       - !type:Emote
         emote: Wheeze
-        showInChat: true
+        showAboveHead: true
         probability: 0.3
 
 - type: reagent
@@ -399,11 +405,11 @@
         probability: 0.2
       - !type:Emote
         emote: Cough
-        showInChat: true
+        showAboveHead: true
         probability: 0.1
       - !type:Emote
         emote: Sneeze
-        showInChat: true
+        showAboveHead: true
         probability: 0.1
 
 - type: reagent
@@ -575,7 +581,7 @@
       effects:
       - !type:Emote
         emote: Honk
-        showInChat: true
+        showAboveHead: true
         force: true
         probability: 0.2
       - !type:HealthChange
@@ -645,7 +651,7 @@
             Airloss: 2
       - !type:Emote
         emote: Wheeze
-        showInChat: true
+        showAboveHead: true
         probability: 0.1
 
 - type: reagent

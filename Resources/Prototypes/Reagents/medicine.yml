@@ -537,6 +537,7 @@
       - !type:Emote
         emote: Scream
         probability: 0.2
+        showAboveHead: true
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -1126,6 +1127,7 @@
           min: 20
         emote: Scream
         probability: 0.2
+        showAboveHead: true
 
 - type: reagent
   id: Insuzine
@@ -1169,7 +1171,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 12
-          
+
 - type: reagent
   id: Opporozidone #Name based of an altered version of the startreck chem "Opporozine"
   name: reagent-name-opporozidone
@@ -1344,11 +1346,11 @@
       effects:
       - !type:Emote
         emote: Yawn
-        showInChat: true
+        showAboveHead: true
         probability: 0.1
       - !type:Emote
         emote: Drool
-        showInChat: true
+        showAboveHead: true
         probability: 0.05
       - !type:GenericStatusEffect
         key: Drowsiness
