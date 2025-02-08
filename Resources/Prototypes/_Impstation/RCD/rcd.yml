@@ -1,0 +1,43 @@
+- type: rcd
+  id: SignalButton
+  category: Electrical
+  sprite: /Textures/_Impstation/Interface/Radial/RCD/switchbutton.png
+  mode: ConstructObject
+  prototype: SignalButton
+  cost: 5
+  delay: 4
+  rotation: User
+  fx: EffectRCDConstruct4
+
+- type: rcd
+  id: TwoWayLever
+  category: Electrical
+  sprite: /Textures/_Impstation/Interface/Radial/RCD/switchlever.png
+  mode: ConstructObject
+  prototype: TwoWayLever
+  cost: 5
+  delay: 4
+  rotation: User
+  fx: EffectRCDConstruct4
+
+- type: rcd
+  id: ClothingHeadHatCone
+  category: Electrical
+  sprite: /Textures/_Impstation/Interface/Radial/RCD/cone.png
+  mode: ConstructObject
+  prototype: ClothingHeadHatCone
+  cost: 2
+  delay: 1
+  rotation: Fixed
+  fx: EffectRCDConstruct1
+
+- type: rcd
+  id: PowerCellSmall
+  category: Electrical
+  sprite: /Textures/_Impstation/Interface/Radial/RCD/powercell.png
+  mode: ConstructObject
+  prototype: PowerCellSmallPrinted
+  cost: 5
+  delay: 3
+  rotation: Fixed
+  fx: EffectRCDConstruct3

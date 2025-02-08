@@ -11,7 +11,7 @@
   cost: 1
   components:
   - type: SignatureFont
-    font: "/Fonts/_DV/ComicNeue/ComicNeue-Regular.ttf"
+    font: ComicNeue
 
 - type: trait
   id: FontHachiMaruPop
@@ -21,7 +21,7 @@
   cost: 1
   components:
   - type: SignatureFont
-    font: "/Fonts/_DV/HachiMaruPop/HachiMaruPop-Regular.ttf"
+    font: HachiMaruPop
 
 - type: trait
   id: FontKodeMono
@@ -31,7 +31,7 @@
   cost: 1
   components:
   - type: SignatureFont
-    font: "/Fonts/_DV/KodeMono/KodeMono-Regular.ttf"
+    font: KodeMono
 
 - type: trait
   id: FontReenieBeanie
@@ -41,7 +41,7 @@
   cost: 1
   components:
   - type: SignatureFont
-    font: "/Fonts/_DV/ReenieBeanie/ReenieBeanie-Regular.ttf"
+    font: ReenieBeanie
 
 - type: trait
   id: FontTangerine
@@ -51,7 +51,7 @@
   cost: 1
   components:
   - type: SignatureFont
-    font: "/Fonts/_DV/Tangerine/Tangerine_Bold.ttf"
+    font: Tangerine
 
 - type: trait
   id: FontUnifrakturMaguntia
@@ -61,7 +61,7 @@
   cost: 1
   components:
   - type: SignatureFont
-    font: "/Fonts/_DV/UnifrakturMaguntia/UnifrakturMaguntia-Regular.ttf"
+    font: UnifrakturMaguntia
 
 - type: trait
   id: FontWahroonga
@@ -71,4 +71,4 @@
   cost: 1
   components:
   - type: SignatureFont
-    font: "/Fonts/_DV/Wahroonga/Wahroonga-Regular.ttf"
+    font: Wahroonga

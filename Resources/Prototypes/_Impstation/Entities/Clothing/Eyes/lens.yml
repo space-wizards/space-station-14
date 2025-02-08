@@ -1,13 +1,13 @@
 - type: entity
   parent: ClothingEyesBase
   id: PrescriptionLens
-  name: prescription lens
+  name: prescription lenses
   description: Adaptive lenses that fit inside frames or your face.
   components:
   - type: Sprite
     layers:
-      - sprite: Clothing/Eyes/Misc/lenses.rsi
-        state: small
+      - sprite: _Impstation/Clothing/Eyes/Misc/lenses.rsi
+        state: clear-small
   - type: VisionCorrection
     correctionPower: 2
   - type: Tag
@@ -17,20 +17,21 @@
 - type: entity
   parent: PrescriptionLens
   id: PrescriptionLensStrong
-  name: strong prescription lens
+  name: strong prescription lenses
   components:
   - type: Sprite
     layers:
-      - sprite: Clothing/Eyes/Misc/lenses.rsi
-        state: large
+      - sprite: _Impstation/Clothing/Eyes/Misc/lenses.rsi
+        state: clear-large
   - type: VisionCorrection
     correctionPower: 4
 
-# admeme right now
 - type: entity
   parent: PrescriptionLens
-  id: AntiPrescriptionLens
-  suffix: Inverse
+  id: BlindingLens
+  name: blinding lenses
+  description: Adaptive lenses that ruin your vision.
   components:
   - type: VisionCorrection
-    visionBonus: 2
+    correctionPower: 0
+    visionBonus: 6

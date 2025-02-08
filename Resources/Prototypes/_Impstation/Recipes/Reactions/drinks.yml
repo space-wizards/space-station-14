@@ -143,6 +143,8 @@
 
 - type: reaction
   id: KingSoda
+  requiredMixerCategories:
+    - Stir
   reactants:
     CoconutWater:
       amount: 1
@@ -183,6 +185,8 @@
 
 - type: reaction
   id: JungleJuice
+  requiredMixerCategories:
+    - Shake
   reactants:
     Beer:
       amount: 0.5
@@ -383,3 +387,19 @@
       amount: 1
   products:
     CleverGirl: 5
+
+- type: reaction
+  id: LovePotion
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    SodaWater:
+      amount: 1
+    Sugar:
+      amount: 1
+    JuiceLemon:
+      amount: 1
+    JuiceBerry:
+      amount: 1
+  products:
+    LovePotion: 4

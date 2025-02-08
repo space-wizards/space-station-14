@@ -72,3 +72,84 @@
   solids:
      FoodBowlBig: 1
      WhoopieCushion: 1
+
+- type: microwaveMealRecipe
+  id: RecipeChocolateHeart
+  name: homemade chocolate heart recipe
+  result: FoodHomemadeChocolateHeart
+  time: 5
+  reagents:
+    Sugar: 2
+    CocoaPowder: 2
+    Milk: 2 # being lactose safe is the least of this recipe's worries
+
+- type: microwaveMealRecipe
+  id: RecipeHeartCarpaccio
+  name: heart carpaccio recipe
+  result: MealHeartCarpaccio
+  time: 5 # warming it as a formality
+  solids:
+    OrganAnimalHeart: 1 # use the whole mouse. whatever
+    OrganAnimalLiver: 1
+    OrganAnimalLungs: 1
+    OrganAnimalKidneys: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMacaronBerry
+  name: berry macaron recipe
+  result: FoodMacaronBerry
+  time: 15
+  reagents: # just like real life this has to fucking suck to make
+    Sugar: 5
+    Egg: 1
+  solids:
+    FoodSnackPistachios: 1
+    FoodBerries: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMacaronCherry
+  name: cherry macaron recipe
+  result: FoodMacaronCherry
+  time: 15
+  reagents:
+    Sugar: 5
+    Egg: 1
+  solids:
+    FoodSnackPistachios: 1
+    FoodCherry: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMacaronLemon
+  name: lemon macaron recipe
+  result: FoodMacaronLemon
+  time: 15
+  reagents:
+    Sugar: 5
+    Egg: 1
+  solids:
+    FoodSnackPistachios: 1
+    FoodLemon: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMacaronCotton
+  name: cotton macaron recipe
+  result: FoodMacaronCotton
+  time: 15
+  reagents:
+    Fiber: 5
+    Egg: 1
+  solids:
+    FoodSnackPistachios: 1
+    CottonBol: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMacaronMimana
+  name: mimana macaron recipe
+  result: FoodMacaronMimana
+  time: 15
+  reagents:
+    Sugar: 5
+    Egg: 1
+  solids:
+    FoodSnackPistachios: 1
+    FoodMimana: 1

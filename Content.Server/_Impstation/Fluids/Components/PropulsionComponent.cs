@@ -6,6 +6,6 @@ namespace Content.Server._Impstation.Fluids.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class PropulsionComponent : SharedPropulsionComponent
 {
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables(VVAccess.ReadOnly)]
     public HashSet<Entity<PropulsedByComponent>> AffectingEntities = new();
 }

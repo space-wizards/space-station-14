@@ -92,6 +92,7 @@
         orGroup: SpacemenFig
       - id: ToyFigurineNukieElite
         orGroup: SpacemenFig
+        prob: 0.50 #imp
       - id: ToyFigurineFootsoldier
         orGroup: SpacemenFig
       - id: ToyFigurineWizardFake
@@ -100,6 +101,10 @@
         orGroup: SpacemenFig
       - id: ToyFigurineGreytider
         orGroup: SpacemenFig
+      - id: ToyFigurineCourier #<imp>
+        orGroup: SpacemenFig
+      - id: ToyFigurineBrigmedic
+        orGroup: SpacemenFig #</imp>
       - id: ToyFigurineWizard
         prob: 0.50
         orGroup: SpacemenFig
@@ -133,3 +138,39 @@
       - id: ToyFigurineHamlet
         prob: 0.20
         orGroup: SpacemenFig
+      - id: ToyFigurineCBURNQuarantineOfficer #<imp>
+        prob: 0.50
+        orGroup: SpacemenFig
+      - id: ToyFigurineCentCommOfficial
+        prob: 0.50
+        orGroup: SpacemenFig
+      - id: ToyFigurineChronologyAgent
+        prob: 0.50
+        orGroup: SpacemenFig
+      - id: ToyFigurineDeathsquadAgent
+        prob: 0.50
+        orGroup: SpacemenFig
+      - id: ToyFigurineERTChaplain
+        prob: 0.50
+        orGroup: SpacemenFig
+      - id: ToyFigurineERTEngineer
+        prob: 0.50
+        orGroup: SpacemenFig
+      - id: ToyFigurineERTJanitor
+        prob: 0.50
+        orGroup: SpacemenFig
+      - id: ToyFigurineERTLeader
+        prob: 0.50
+        orGroup: SpacemenFig
+      - id: ToyFigurineERTMedic
+        prob: 0.50
+        orGroup: SpacemenFig
+      - id: ToyFigurineERTSecurity
+        prob: 0.50
+        orGroup: SpacemenFig 
+      - id: ToyFigurineNukieAgent
+        prob: 0.50
+        orGroup: SpacemenFig 
+      - id: ToyFigurineNukieJuggernaut
+        prob: 0.50
+        orGroup: SpacemenFig #</imp>

@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "all by RosySaturniidae",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+            "name": "cburn"
+        },
+        {
+            "name": "centcomm"
+        },
+        {
+            "name": "chrono"
+        },
+        {
+            "name": "deathsquad"
+        },
+        {
+            "name": "ertchaplain"
+        },
+        {
+            "name": "ertengineer"
+        },
+        {
+            "name": "ertjanitor"
+        },
+        {
+            "name": "ertleader"
+        },
+        {
+            "name": "ertmedic"
+        },
+        {
+            "name": "ertsecurity"
+        },
+        {
+            "name": "courier"
+        },
+        {
+            "name": "brigmedic"
+        },
+        {
+            "name": "nukie"
+        },
+        {
+            "name": "nukie_commander"
+        },
+        {
+            "name": "nukie_elite"
+        },
+        {
+            "name": "nukie_agent"
+        },
+        {
+            "name": "nukie_juggernaut"
+        }
+    ]
+}

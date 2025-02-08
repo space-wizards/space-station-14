@@ -112,3 +112,33 @@
     soundHit:
       collection: WeakHit
   
+- type: entity
+  id: RCDRechargingTckTck
+  parent: RCD
+  name: micro RCD
+  description: A bite-sized construction device for cyborgs. Uses an internal battery charge to construct wiring and connective devices.
+  suffix: AutoRecharge
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tools/tckrcd.rsi
+    state: icon
+  - type: Item
+    size: Tiny
+  - type: Clothing
+    sprite: _Impstation/Objects/Tools/tckrcd.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: LimitedCharges
+    maxCharges: 20
+    charges: 20
+  - type: AutoRecharge
+    rechargeDuration: 10
+  - type: RCD
+    availablePrototypes:
+    - LVCable
+    - MVCable
+    - SignalButton
+    - TwoWayLever
+    - ClothingHeadHatCone
+    - PowerCellSmall

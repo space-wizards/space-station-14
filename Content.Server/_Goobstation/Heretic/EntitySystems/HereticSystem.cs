@@ -147,9 +147,12 @@ public sealed partial class HereticSystem : EntitySystem
         }
 
         // add whatever more until satisfied
-        for (int i = 0; i <= ent.Comp.MaxTargets - pickedTargets.Count; i++)
-            if (eligibleTargets.Count > 0)
-                pickedTargets.Add(_rand.PickAndTake<EntityUid>(eligibleTargets));
+        while (ent.Comp.MaxTargets > pickedTargets.Count)
+        {
+            if (eligibleTargets.Count <= 0)
+                break;
+            pickedTargets.Add(_rand.PickAndTake<EntityUid>(eligibleTargets));
+        }
 
         // leave only unique entityuids
         pickedTargets = pickedTargets.Distinct().ToList();

@@ -59,19 +59,21 @@
     MailNFCritter: 1
     MailNFFigurineBulk: 1
     MailNFPlushie: 1
-    MailSpaceBlade: 1
+    MailImpSpaceBlade: 1
     MailNFBuildABuddy: 0.2
     MailNFBikeHorn: 0.5
-    MailImpBee: 0.4
+    MailImpBee: 0.3
+    MailImpBROS: 0.1
     MailBlockGameDIY: 0.4
     MailSpaceVillainDIY: 0.4 # Lowered to accommodate the foam sabre
     MailNFSmoke: 0.4
     #MailNFEMP: 0.3 # Imp commented cuz error log :(
     MailNFThrongler: 0.01 # DeltaV: 0.1 to 0.01
+    MailImpFuckingGun: 0.01 # Mira requested this. maybe don't turn it on yet without discussion
 
   # Department and job-specific mail can have slightly higher weights,
   # since they'll be merged with the everyone pool.
-  departments: #add to 36.9
+  departments: #add to 37.9
     Medical: #adds to 15 including MailMedicalSpaceacillin
       MailMedicalBasicSupplies: 2
       MailMedicalChemistrySupplement: 2
@@ -81,12 +83,13 @@
       # MailMedicalSpaceacillin: 1
       MailMedicalStabilizers: 2
       MailNFMedkit: 2
-    Engineering: #adds to 12
+    Engineering: #adds to 13
       MailEngineeringCables: 2
       MailEngineeringKudzuDeterrent: 2
       MailEngineeringSheetGlass: 2
       MailEngineeringWelderReplacement: 2
       MailNFCircuitboardIndustrial: 2
+      MailImpEngineeringCompressedMatter: 2
       MailNFCircuitboardService: 1
       MailNFPowerTool: 1
     Security: #adds to 9
@@ -103,11 +106,13 @@
       MailStationRepNFNukeDisk: 0.3
       MailCommandNFPipebombIntern: 0.1
 
-  jobs: # add to 43
+  jobs: # add to 46
     Botanist: # adds to 4.5
       MailBotanistChemicalBottles: 2
       MailBotanistMutagen: 1.5
       MailBotanistSeeds: 1
+    Chef:
+      MailImpChefConveyor: 1
     ChiefEngineer:
       MailEngineeringKudzuDeterrent: 2
     ChiefMedicalOfficer: # adds to 7
@@ -124,6 +129,7 @@
       MailHoPSupplement: 3
     HeadOfSecurity:
       MailSecurityNonlethalsKit: 2
+      MailImpHosPillRefill: 1
     Lawyer:
       MailSecurityDVSpaceLaw: 2
     Mime: #adds to 6
@@ -135,5 +141,6 @@
       MailImpGoblin: 2
     Warden:
       MailWardenCrowdControl: 2
+      MailImpHosPillWarden: 1
     SalvageSpecialist:
-      MailTckTck: 2
+      MailImpTckTck: 2

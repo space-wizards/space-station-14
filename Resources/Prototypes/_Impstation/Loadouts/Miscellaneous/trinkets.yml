@@ -130,3 +130,15 @@
   storage:
     back:
     - HeartLocket
+
+- type: loadout
+  id: GoldRingTrinket
+  storage:
+    back:
+    - GoldRingTrinket
+
+- type: loadout
+  id: SilverRingTrinket
+  storage:
+    back:
+    - SilverRingTrinket
