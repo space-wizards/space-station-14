@@ -83,6 +83,7 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
         if (TryComp<EmbeddableProjectileComponent>(ent, out var projectile))
             _proj.UnEmbed(ent, projectile, actionOwner.Value);
 
+        _popups.PopupPredicted(Loc.GetString("item-recall-item-disappear", ("item", ent)), ent.Owner);
         _popups.PopupPredicted(Loc.GetString("item-recall-item-summon", ("item", ent)), actionOwner.Value, actionOwner.Value);
 
         _hands.TryForcePickupAnyHand(actionOwner.Value, ent);
