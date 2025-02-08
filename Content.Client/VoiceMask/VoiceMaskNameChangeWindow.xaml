@@ -3,20 +3,15 @@
                Title="{Loc 'voice-mask-name-change-window'}"
                MinSize="400 175">
     <BoxContainer Orientation="Vertical" Margin="7">
-        <BoxContainer Orientation="Vertical" Margin="0 0 0 10"  >
-            <BoxContainer HorizontalExpand="True">
-                <LineEdit Name="NameSelector" MinWidth="175" Margin="0 0 10 0" />
-                <Button Name="NameSelectorSet" Text="{Loc 'voice-mask-name-change-set'}" HorizontalAlignment="Right" HorizontalExpand="True" />
-            </BoxContainer>
+        <GridContainer Columns="2">
+            <LineEdit Name="NameSelector" HorizontalExpand="True" />
+            <Button Name="NameSelectorSet" Text="{Loc 'voice-mask-name-change-set'}" />
             <Label StyleClasses="LabelSubText" Text="{Loc 'voice-mask-name-change-info'}" />
-        </BoxContainer>
-        <BoxContainer HorizontalExpand="True">
+            <Control /> <!-- GridContainer needs a padding element so it goes to the next row -->
             <Label Text="{Loc 'voice-mask-name-change-speech-style'}" />
-            <OptionButton MinWidth="100"  Name="SpeechVerbSelector" HorizontalAlignment="Right" HorizontalExpand="True" /> <!-- Populated in AddVerbsAndSounds -->
-        </BoxContainer>
-        <BoxContainer HorizontalExpand="True" >
+            <OptionButton Name="SpeechVerbSelector" />
             <Label Text="{Loc 'voice-mask-name-change-speech-sound'}" />
-            <OptionButton MinWidth="100" Name="SpeechSoundSelector" HorizontalAlignment="Right" HorizontalExpand="True" /> <!-- Populated in AddVerbsAndSounds -->
-        </BoxContainer>
+            <OptionButton Name="SpeechSoundSelector" />
+        </GridContainer>
     </BoxContainer>
 </controls:FancyWindow>
