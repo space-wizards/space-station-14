@@ -68,13 +68,13 @@
       groups:
         Flammable: [Touch]
         Extinguish: [Touch]
+    - type: SpiderWebObject
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.5
       sprintSpeedModifier: 0.5
       ignoreWhitelist:
         components:
             - IgnoreSpiderWeb
-    - type: SpiderWebObject
 
 - type: entity
   id: SpiderWebClown
@@ -114,17 +114,18 @@
         slips:
           shape:
             !type:PhysShapeAabb
-            bounds: "-0.4,-0.3,0.4,0.3"
+            bounds: "-0.3,-0.3,0.3,0.3"
           hard: false
           layer:
           - SlipLayer
         fix1:
+          hard: false
+          density: 7
           shape:
             !type:PhysShapeAabb
-            bounds: "-0.4,-0.3,0.4,0.3"
-          density: 1000
-          mask:
-          - ItemMask
+            bounds: "-0.5,-0.5,0.5,0.5"
+          layer:
+          - MidImpassable
     - type: Damageable
       damageModifierSet: Wood
     - type: Destructible
@@ -150,6 +151,7 @@
       groups:
         Flammable: [Touch]
         Extinguish: [Touch]
+    - type: SpiderWebObject
     - type: FlavorProfile
       flavors:
         - sweet
@@ -161,4 +163,3 @@
           reagents:
           - ReagentId: Sugar
             Quantity: 2
-    - type: SpiderWebObject

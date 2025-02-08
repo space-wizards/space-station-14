@@ -2492,8 +2492,8 @@
         params:
           variation: 0.125
       destinationBlacklist:
-        tags:
-        - SpiderWeb
+        components:
+        - SpiderWebObject
     - type: MeleeWeapon
       altDisarm: false
       angle: 0

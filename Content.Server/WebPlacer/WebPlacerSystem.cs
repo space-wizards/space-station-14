@@ -45,7 +45,7 @@ public sealed class WebPlacerSystem : SharedWebPlacerSystem
             return;
         }
 
-        // Get coordinates and spawn Comp.WebPrototype if the coordinates are valid.
+        // Get coordinates and spawn webs if the coordinates are valid.
         bool success = false;
         foreach (var vect in webPlacer.Comp.OffsetVectors)
         {
