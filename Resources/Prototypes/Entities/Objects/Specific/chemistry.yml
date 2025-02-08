@@ -252,13 +252,12 @@
     fillBaseName: beakerlarge
     inHandsMaxFillLevels: 4
     inHandsFillBaseName: -fill-
-  - type: BeakerHeater
-    beakerHeatPerSecond: 20
+  - type: ConvectionHeat
   - type: Temperature
     currentTemperature: 290
   - type: InternalTemperature
     conductivity: 0.2
-    thickness: 0.5
+    thickness: 0.05
     area: 0.5
   - type: PhysicalComposition
     materialComposition:
