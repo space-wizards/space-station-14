@@ -7,7 +7,7 @@ reagent-desc-ale = A dark alchoholic beverage made by malted barley and yeast.
 reagent-name-beer = beer
 reagent-desc-beer = An alcoholic beverage made from malted grains, hops, yeast, and water.
 
-reagent-name-blue-curacao = blue curacao
+reagent-name-blue-curacao = blue Curaçao
 reagent-desc-blue-curacao = Exotically blue, fruity drink, distilled from oranges.
 
 reagent-name-cognac = cognac
@@ -28,7 +28,7 @@ reagent-desc-coffeeliqueur = Liquor flavoured with cold brewed coffee and spices
 reagent-name-melon-liquor = melon liquor
 reagent-desc-melon-liquor = A relatively sweet and fruity 46 proof liquor.
 
-reagent-name-n-t-cahors = NeoTheology Cahors Wine
+reagent-name-n-t-cahors = NeoTheology Cahors wine
 reagent-desc-n-t-cahors = Fortified dessert wine made from cabernet sauvignon, saperavi and other grapes.
 
 reagent-name-poison-wine = poison wine
@@ -53,7 +53,7 @@ reagent-name-whiskey = whiskey
 reagent-desc-whiskey = A type of distilled alcoholic beverage made from fermented grain mash.
 
 reagent-name-wine = wine
-reagent-desc-wine = An premium alchoholic beverage made from distilled grape juice.
+reagent-desc-wine = A premium alcoholic beverage made from distilled grape juice.
 
 reagent-name-champagne = champagne
 reagent-desc-champagne = A premium sparkling wine
@@ -70,43 +70,43 @@ reagent-desc-aloe = So very, very, very good.
 reagent-name-amasec = amasec
 reagent-desc-amasec = Official drink of the Gun Club!
 
-reagent-name-andalusia = andalusia
+reagent-name-andalusia = Andalusia
 reagent-desc-andalusia = A nice, strangely named drink.
 
 reagent-name-antifreeze = antifreeze
 reagent-desc-antifreeze = Ultimate refreshment.
 
-reagent-name-atomic-bomb = atomic bomb
+reagent-name-atomic-bomb = Atomic Bomb
 reagent-desc-atomic-bomb = Nuclear proliferation never tasted so good.
 
-reagent-name-b52 = b-52
+reagent-name-b52 = B-52
 reagent-desc-b52 = Coffee, irish cream, and cognac. You will get bombed.
 
-reagent-name-blue-hawaiian = blue hawaiian
+reagent-name-blue-hawaiian = Blue Hawaiian
 reagent-desc-blue-hawaiian = Aloha! Does that mean hello or goodbye?
 
-reagent-name-bahama-mama = bahama mama
+reagent-name-bahama-mama = Bahama Mama
 reagent-desc-bahama-mama = Tropical cocktail.
 
-reagent-name-banana-honk = banana honk
+reagent-name-banana-honk = Banana Honk
 reagent-desc-banana-honk = A drink from Clown Heaven.
 
 reagent-name-barefoot = barefoot
 reagent-desc-barefoot = Barefoot and pregnant.
 
-reagent-name-beepsky-smash = beepsky smash
+reagent-name-beepsky-smash = Beepsky smash
 reagent-desc-beepsky-smash = Deny drinking this and prepare for THE LAW.
 
-reagent-name-black-russian = black russian
+reagent-name-black-russian = Black Russian
 reagent-desc-black-russian = For the lactose-intolerant. Still as classy as a White Russian.
 
-reagent-name-bloody-mary = bloody mary
+reagent-name-bloody-mary = Bloody Mary
 reagent-desc-bloody-mary = A strange yet pleasurable mixture made of vodka, tomato, and lime juice.
 
 reagent-name-booger = booger
 reagent-desc-booger = Ewww...
 
-reagent-name-brave-bull = brave bull
+reagent-name-brave-bull = Brave Bull
 reagent-desc-brave-bull = It's just as effective as Dutch-Courage!
 
 reagent-name-coconut-rum = coconut rum
@@ -115,22 +115,22 @@ reagent-desc-coconut-rum = Rum with coconut for that tropical feel.
 reagent-name-cosmopolitan = cosmopolitan
 reagent-desc-cosmopolitan = Even in the worst situations, nothing beats a fresh cosmopolitan.
 
-reagent-name-cuba-libre = cuba libre
+reagent-name-cuba-libre = Cuba libre
 reagent-desc-cuba-libre = Rum, mixed with cola. Viva la revolucion.
 
-reagent-name-demons-blood = demons blood
+reagent-name-demons-blood = Demon's Blood
 reagent-desc-demons-blood = AHHHH!!!!
 
-reagent-name-devils-kiss = devils kiss
+reagent-name-devils-kiss = Devil's Kiss
 reagent-desc-devils-kiss = Creepy time!
 
-reagent-name-doctors-delight = the doctor's delight
+reagent-name-doctors-delight = The Doctor's Delight
 reagent-desc-doctors-delight = A gulp a day keeps the MediBot away. That's probably for the best.
 
 reagent-name-driest-martini = driest martini
 reagent-desc-driest-martini = Only for the experienced. You think you see sand floating in the glass.
 
-reagent-name-erika-surprise = erika surprise
+reagent-name-erika-surprise = Erika surprise
 reagent-desc-erika-surprise = The surprise is, it's green!
 
 reagent-name-gargle-blaster = Pan-Galactic Gargle Blaster
@@ -142,13 +142,13 @@ reagent-desc-gin-fizz = Refreshingly lemony, deliciously dry.
 reagent-name-gin-tonic = gin and tonic
 reagent-desc-gin-tonic = An all time classic, mild cocktail.
 
-reagent-name-gildlager = gildlager
+reagent-name-gildlager = Gildlager
 reagent-desc-gildlager = 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
 
 reagent-name-grog = grog
 reagent-desc-grog = Watered-down rum, pirate approved!
 
-reagent-name-hippies-delight = hippies delight
+reagent-name-hippies-delight = Hippie's Delight
 reagent-desc-hippies-delight = You just don't get it maaaan.
 
 reagent-name-hooch = hooch
@@ -157,32 +157,35 @@ reagent-desc-hooch = Either someone's failure at cocktail making or attempt in a
 reagent-name-iced-beer = iced beer
 reagent-desc-iced-beer = A beer which is so cold the air around it freezes.
 
-reagent-name-irish-car-bomb = irish car bomb
-reagent-desc-irish-car-bomb = A troubling mixture of irish cream and ale.
+reagent-name-irish-slammer = Irish slammer
+reagent-desc-irish-slammer = An unconventional mixture of irish cream and stout.
 
-reagent-name-irish-cream = irish cream
+reagent-name-irish-cream = Irish cream
 reagent-desc-irish-cream = Whiskey-imbued cream. What else could you expect from the Irish.
 
-reagent-name-irish-coffee = irish coffee
+reagent-name-irish-coffee = Irish coffee
 reagent-desc-irish-coffee = Coffee served with irish cream. Regular cream just isn't the same!
 
-reagent-name-kira-special = kira special
+reagent-name-kira-special = Kira special
 reagent-desc-kira-special = Long live the guy who everyone had mistaken for a girl. Baka!
 
-reagent-name-long-island-iced-tea = long island iced tea
+reagent-name-long-island-iced-tea = Long Island iced tea
 reagent-desc-long-island-iced-tea = The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only.
 
-reagent-name-manhattan = manhattan
+reagent-name-manhattan = Manhattan
 reagent-desc-manhattan = The Detective's undercover drink of choice. He never could stomach gin...
 
-reagent-name-manhattan-project = manhattan project
+reagent-name-manhattan-project = Manhattan Project
 reagent-desc-manhattan-project = A scientist's drink of choice, for pondering ways to blow up the ship.
 
-reagent-name-manly-dorf = manly dorf
+reagent-name-manly-dorf = Manly Dorf
 reagent-desc-manly-dorf = Beer and Ale, brought together in a delicious mix. Intended for stout dwarves only.
 
 reagent-name-margarita = margarita
 reagent-desc-margarita = On the rocks with salt on the rim. Arriba~!
+
+reagent-name-the-martinez = The Martinez
+reagent-desc-the-martinez = The edgerunner legend. Remembered by a drink, forgotten by a drunk.
 
 reagent-name-martini = classic martini
 reagent-desc-martini = Vermouth with Gin. Not quite how 007 enjoyed it, but still delicious.
@@ -190,7 +193,7 @@ reagent-desc-martini = Vermouth with Gin. Not quite how 007 enjoyed it, but stil
 reagent-name-mead = mead
 reagent-desc-mead = A Viking's drink, though a cheap one.
 
-reagent-name-mojito = mojito
+reagent-name-mojito = Mojito
 reagent-desc-mojito = If it's good enough for Spesscuba, it's good enough for you.
 
 reagent-name-moonshine = moonshine
@@ -202,16 +205,16 @@ reagent-desc-neurotoxin = A strong neurotoxin that puts the subject into a death
 reagent-name-painkiller = painkiller
 reagent-desc-painkiller = A cure for what ails you.
 
-reagent-name-patron = patron
+reagent-name-patron = Patrón
 reagent-desc-patron = Tequila with silver in it, a favorite of alcoholic women in the club scene.
 
-reagent-name-pina-colada = piña colada
+reagent-name-pina-colada = Piña Colada
 reagent-desc-pina-colada = For getting lost in the rain.
 
 reagent-name-red-mead = red mead
 reagent-desc-red-mead = The true Viking's drink! Even though it has a strange red color.
 
-reagent-name-rewriter = rewriter
+reagent-name-rewriter = Rewriter
 reagent-desc-rewriter = The secret of the sanctuary of the Librarian...
 
 reagent-name-sbiten = sbiten
@@ -220,7 +223,7 @@ reagent-desc-sbiten = A spicy Vodka! Might be a little hot for the little guys!
 reagent-name-screwdriver-cocktail = screwdriver
 reagent-desc-screwdriver-cocktail = Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious.
 
-reagent-name-cogchamp = cogchamp
+reagent-name-cogchamp = Cogchamp
 reagent-desc-cogchamp = Not even Ratvar's Four Generals could withstand this! Qevax Jryy!
 
 reagent-name-silencer = silencer
@@ -229,11 +232,11 @@ reagent-desc-silencer = A drink from Mime Heaven.
 reagent-name-singulo = singulo
 reagent-desc-singulo = A blue-space beverage!
 
-reagent-name-snow-white = snow white
+reagent-name-snow-white = Snow White
 reagent-desc-snow-white = A cold refreshment.
 
 reagent-name-sui-dream = sui dream
-reagent-desc-sui-dream = 'Comprised of: White soda, blue curacao, melon liquor.'
+reagent-desc-sui-dream = 'Comprised of: White soda, blue Curaçao, melon liquor.'
 
 reagent-name-syndicate-bomb = syndicate bomb
 reagent-desc-syndicate-bomb = Somebody set us up the bomb!
@@ -241,7 +244,7 @@ reagent-desc-syndicate-bomb = Somebody set us up the bomb!
 reagent-name-tequila-sunrise = tequila sunrise
 reagent-desc-tequila-sunrise = Tequila and orange juice. Much like a Screwdriver, only Mexican.
 
-reagent-name-three-mile-island = three mile island iced tea
+reagent-name-three-mile-island = Three Mile Island iced tea
 reagent-desc-three-mile-island = "Made for a woman, strong enough for a man."
 
 reagent-name-toxins-special = toxins special
@@ -259,16 +262,19 @@ reagent-desc-whiskey-cola = Whiskey, mixed with cola. Surprisingly refreshing.
 reagent-name-whiskey-soda = whiskey soda
 reagent-desc-whiskey-soda = For the more refined griffon.
 
-reagent-name-white-russian = white russian
+reagent-name-white-gilgamesh = White Gilgamesh
+reagent-desc-white-gilgamesh = A sickening mixture of milk and beer. Makes you feel like you're made of wood.
+
+reagent-name-white-russian = White Russian
 reagent-desc-white-russian = That's just, like, your opinion, man...
 
 reagent-name-vodka-red-bool = vodka red bool
 reagent-desc-vodka-red-bool = Because heart failure and liver failure go hand in hand.
 
-reagent-name-xeno-basher = xeno basher
+reagent-name-xeno-basher = Xeno Basher
 reagent-desc-xeno-basher = The perfect drink before an expedition.
 
-reagent-name-irish-bool = irish bool
+reagent-name-irish-bool = Irish bool
 reagent-desc-irish-bool = Like a bool in a Ireland shop.
 
 reagent-name-budget-insuls = budget insuls
@@ -280,5 +286,5 @@ reagent-desc-watermelon-wakeup = If you want to be awake, this will do it... Als
 reagent-name-rubberneck = rubberneck
 reagent-desc-rubberneck = A popular drink amongst those adhering to an all synthetic diet.
 
-reagent-name-zombiecocktail = zombie
+reagent-name-zombiecocktail = Zombie
 reagent-desc-zombiecocktail = It gets in your head. Your he-eyeh-ead.

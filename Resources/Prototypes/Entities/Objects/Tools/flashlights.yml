@@ -87,9 +87,10 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellHigh
+        startingItem: PowerCellMedium
   - type: HandheldLight
     addPrefix: false
+    wattage: 0.5
   - type: ToggleableLightVisuals
     inhandVisuals:
       left:

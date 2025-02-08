@@ -28,10 +28,10 @@ public sealed partial class MaskComponent : Component
     public bool IsToggled;
 
     /// <summary>
-    /// The clothing RSI prefix to use when the mask is toggled.
+    /// Equipped prefix to use after the mask was pulled down.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string EquippedPrefix = "toggled";
+    public string EquippedPrefix = "up";
 
     /// <summary>
     /// When <see langword="false"/>, the mask will not be toggleable.
