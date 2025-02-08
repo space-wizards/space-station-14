@@ -201,3 +201,29 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
+
+- type: reaction
+  id: SolidifyGold
+  impact: Low
+  quantized: true
+  reactants:
+    Gold:
+      amount: 10
+    FrostOil:
+      amount: 5
+  effects:
+  - !type:CreateEntityReactionEffect
+    entity: IngotGold1
+
+- type: reaction
+  id: SolidifySilver
+  impact: Low
+  quantized: true
+  reactants:
+    Silver:
+      amount: 10
+    FrostOil:
+      amount: 5
+  effects:
+  - !type:CreateEntityReactionEffect
+    entity: IngotSilver1
