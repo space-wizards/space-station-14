@@ -38,6 +38,7 @@
     event: !type:RevenantSedateActionEvent
     checkCanInteract: false
     useDelay: 20
+    itemIconStyle: BigAction
 
 #- type: entity
 #  id: ActionRevenantBlight

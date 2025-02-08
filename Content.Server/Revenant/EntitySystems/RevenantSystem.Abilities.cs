@@ -329,8 +329,13 @@ public sealed partial class RevenantSystem
 
         args.Handled = true;
 
-        _sleeping.AddPendingSleeping(args.Target, component.PendingTime);
-        _chat.TryEmoteWithChat(args.Target, component.YawnEmote);
+        var pendingSleeping = new PendingSleepingComponent
+        {
+            SleepDelay = component.SedatePendingTime,
+        };
+        EntityManager.AddComponent(args.Target, pendingSleeping);
+
+        _chat.TryEmoteWithChat(args.Target, component.SedateYawnEmote);
     }
 
     private void OnBlightAction(EntityUid uid, RevenantComponent component, RevenantBlightActionEvent args)

@@ -9,9 +9,9 @@ namespace Content.Shared.Bed.Sleep;
 [AutoGenerateComponentState, AutoGenerateComponentPause(Dirty = true)]
 public sealed partial class PendingSleepingComponent : Component
 {
-    /// <summary>
-    ///     When the component will be added
-    /// </summary>
+    [DataField]
+    public float SleepDelay;
+
     [DataField]
     [AutoNetworkedField, AutoPausedField]
     public TimeSpan SleepTime;

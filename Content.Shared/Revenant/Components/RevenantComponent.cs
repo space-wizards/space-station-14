@@ -164,13 +164,13 @@ public sealed partial class RevenantComponent : Component
     ///  Target yawns when the action is used
     /// </summary>
     [DataField]
-    public ProtoId<EmotePrototype> YawnEmote = "Yawn";
+    public ProtoId<EmotePrototype> SedateYawnEmote = "Yawn";
 
     /// <summary>
     /// The time after which the target will fall asleep.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float PendingTime = 5f;
+    public float SedatePendingTime = 5f;
     #endregion
 
     #region Blight Ability
