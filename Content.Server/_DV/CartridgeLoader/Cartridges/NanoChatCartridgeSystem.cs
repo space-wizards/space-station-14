@@ -471,19 +471,18 @@ public sealed class NanoChatCartridgeSystem : EntitySystem
         Entity<NanoChatCardComponent> recipient,
         NanoChatMessage message)
     {
-        var senderNumber = sender.Comp.Number;
-        if (senderNumber == null)
+        if (sender.Comp.Number is not uint senderNumber)
             return;
 
         // Always try to get and add sender info to recipient's contacts
-        if (!EnsureRecipientExists(recipient, senderNumber.Value))
+        if (!EnsureRecipientExists(recipient, senderNumber))
             return;
 
-        _nanoChat.AddMessage((recipient, recipient.Comp), senderNumber.Value, message with { DeliveryFailed = false });
+        _nanoChat.AddMessage((recipient, recipient.Comp), senderNumber, message with { DeliveryFailed = false });
 
 
         if (recipient.Comp.IsClosed || _nanoChat.GetCurrentChat((recipient, recipient.Comp)) != senderNumber)
-            HandleUnreadNotification(recipient, message, (uint)senderNumber);
+            HandleUnreadNotification(recipient, message, senderNumber);
 
         var msgEv = new NanoChatMessageReceivedEvent(recipient);
         RaiseLocalEvent(ref msgEv);
