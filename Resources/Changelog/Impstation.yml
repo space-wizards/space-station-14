@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Sir Gollylad will now spawn with a passenger ID card, so he can escape
-      maints more easily. Also a gobtools crowbar.
-    type: Tweak
-  - message: Goblin Stowaways' tools (gobtools) now have unique sprites.
-    type: Add
-  - message: Goblin Stowaways should be less common, and can only be triggered once.
-    type: Tweak
-  id: 578
-  time: '2024-11-26T05:12:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/789
 - author: hivehum
   changes:
   - message: Changeling can no longer be the main antagonist on consecutive rounds.
@@ -4259,3 +4247,11 @@
   id: 1077
   time: '2025-02-08T02:20:00.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1605
+- author: mqole
+  changes:
+  - message: Bottles and vials are a bit bigger. They might not fit as easily into
+      small containers.
+    type: Tweak
+  id: 1078
+  time: '2025-02-08T02:24:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1606
