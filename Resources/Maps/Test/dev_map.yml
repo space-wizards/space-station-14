@@ -10411,18 +10411,6 @@ entities:
     - type: Transform
       pos: 35.5,16.5
       parent: 1
-- proto: MagazineBoxAntiMaterielBig
-  entities:
-  - uid: 2204
-    components:
-    - type: Transform
-      pos: 74.5,35.5
-      parent: 1
-  - uid: 2213
-    components:
-    - type: Transform
-      pos: 74.5,35.5
-      parent: 1
 - proto: MagazineBoxLightRifle
   entities:
   - uid: 2071
