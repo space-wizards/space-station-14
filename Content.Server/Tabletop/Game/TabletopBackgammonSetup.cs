@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Content.Server.Tabletop
+namespace Content.Server.Tabletop.Game
 {
     [UsedImplicitly]
     public sealed partial class TabletopBackgammonSetup : TabletopSetup

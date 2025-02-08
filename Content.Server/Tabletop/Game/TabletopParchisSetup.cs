@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Tabletop
+namespace Content.Server.Tabletop.Game
 {
     [UsedImplicitly]
     public sealed partial class TabletopParchisSetup : TabletopSetup

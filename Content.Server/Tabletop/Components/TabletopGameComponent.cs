@@ -18,7 +18,7 @@ namespace Content.Server.Tabletop.Components
         /// The type of method used to set up a tabletop.
         /// </summary>
         [DataField(required: true)]
-        public TabletopSetup Setup { get; private set; } = new TabletopChessSetup();
+        public TabletopSetup Setup { get; private set; } = new Game.TabletopChessSetup();
 
         /// <summary>
         /// The size of the viewport being opened. Must match the board dimensions otherwise you'll get the space parallax (unless that's what you want).
