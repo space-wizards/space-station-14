@@ -300,7 +300,6 @@
     lowPressureMultiplier: 1000
   - type: FireProtection
     reduction: 0.2
-  - type: ArmorHelmet
 
 #Chief Medical Officer's Hardsuit
 - type: entity

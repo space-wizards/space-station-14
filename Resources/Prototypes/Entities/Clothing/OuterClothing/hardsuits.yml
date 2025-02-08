@@ -381,7 +381,7 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhite
-  - type: ArmorWithHelmet
+  - type: ComplexArmor
     modifiers:
       coefficients:
         Radiation: 0
