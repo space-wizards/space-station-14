@@ -12,20 +12,23 @@
     ClothingOuterHoodieBlack: 1
     ClothingHeadHatHoodNunHood: 1
     ClothingOuterNunRobe: 1
+    ClothingHeadHatKippahSimple: 3 #imp
+    ClothingHeadHatKippahWhiteAndBlue: 1 #imp
+    ClothingHeadHatKippahBlueAndGold: 1 #imp
     ClothingHeadHatFez: 1
     ClothingHeadHatPlaguedoctor: 1
     ClothingHeadHatWitch: 1
     ClothingHeadHatWitch1: 1
     ClothingOuterPlagueSuit: 1
     ClothingMaskPlague: 1
+    ClothingHeadHatShrineMaidenWig: 2 # imp edit - giving this religious outfit the sanctity it deserves
+    ClothingOuterSuitShrineMaiden: 2 # imp
     ClothingHeadsetService: 2
+    Gohei: 2
     Bible: 1
     BoxCandle: 2
     BoxCandleSmall: 2
     Urn: 5
-    ClothingHeadHatKippahSimple: 3 #imp
-    ClothingHeadHatKippahWhiteAndBlue: 1 #imp
-    ClothingHeadHatKippahBlueAndGold: 1 #imp
   contrabandInventory:
     ClothingMaskClownChaplin: 1
     ClothingOuterClownPriest: 1

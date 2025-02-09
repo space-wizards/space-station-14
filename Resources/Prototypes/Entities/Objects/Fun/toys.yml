@@ -360,6 +360,8 @@
   description: An adorable stuffed toy that resembles a lizardperson of every color. You just might trip while staring at it...
   name: rainbow lizard plushie
   components:
+  - type: Sprite
+    state: rainbowlizardplush
   - type: PointLight
     radius: 1.5
     energy: 2
@@ -369,6 +371,14 @@
     clothingVisuals:
       head:
       - state: lizard-equipped-HELMET
+        shader: unshaded
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: rainbowlizardplush-inhand-left
+        shader: unshaded
+      right:
+      - state: rainbowlizardplush-inhand-right
         shader: unshaded
 
 - type: entity
@@ -819,21 +829,24 @@
     state: plushie_vox
   - type: EmitSoundOnUse
     sound:
-      path: /Audio/Voice/Vox/shriek1.ogg
+      path: /Audio/_Impstation/Voice/Vox/voxcoo2.ogg
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
+  - type: EmitSoundOnActivate #imp
+    sound:
+      path: /Audio/_Impstation/Voice/Vox/voxcoo2.ogg
   - type: Food
     requiresSpecialDigestion: true
     useSound:
-      path: /Audio/Voice/Vox/shriek1.ogg
+      path: /Audio/_Impstation/Voice/Vox/voxcry.ogg
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
-      path: /Audio/Voice/Vox/shriek1.ogg
+      path: /Audio/_Impstation/Voice/Vox/voxchitter2.ogg
 
 - type: entity
   parent: BasePlushie

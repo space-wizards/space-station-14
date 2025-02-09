@@ -1,0 +1,31 @@
+﻿- type: constructionGraph
+  id: Bouquet
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: bouquet
+      steps:
+      - tag: Flower
+        name: a flower # dont look at me
+        icon:
+          sprite: Objects/Specific/Hydroponics/poppy.rsi
+          state: produce
+      - tag: Flower
+        name: a flower # DONT LOOK AT ME
+        icon:
+          sprite: Objects/Specific/Hydroponics/poppy.rsi
+          state: produce
+      - tag: Flower
+        name: a flower # DONT LOOK AT ME!!!!!!
+        icon:
+          sprite: Objects/Specific/Hydroponics/poppy.rsi
+          state: produce
+      - tag: Paper
+        name: 1x paper # i dont want to do this right
+        icon:
+          sprite: Objects/Misc/bureaucracy.rsi
+          state: paper
+        doAfter: 5
+  - node: bouquet
+    entity: ItemBouquet

@@ -7,3 +7,54 @@
     sprite: _Impstation/Structures/Storage/Crates/luxury.rsi
   - type: Sprite
     sprite: _Impstation/Structures/Storage/Crates/luxury.rsi
+
+- type: entity
+  parent: CrateGeneric
+  id: CrateValentines
+  name: romantic crate
+  description: A crate full of tchotchkes and toys to celebrate love.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Storage/valentinescrate.rsi
+    layers:
+    - state: crate
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: crate_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "0.0,-0.09375"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: Icon
+    sprite: _Impstation/Objects/Storage/valentinescrate.rsi
+    state: crate_icon
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateDoorOpen: crate_open
+    stateDoorClosed: crate_door
+
+- type: entity
+  id: CrateValentinesFilled
+  parent: CrateValentines
+  name: romantic crate
+  suffix: filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: ItemBouquet
+    - id: PlushieHeadofPersonnel
+    - id: PlushieCaptain
+    - id: PlushieGiantBear
+    - id: BoxMacarons
+      amount: 3
+    - id: BoxConversationHeart
+      amount: 3
+    - id: BoxChocolateHearts
+      amount: 2
+    - id: HeartLocket
+    - id: FoodGummyWorm
+      prob: 0.01
+

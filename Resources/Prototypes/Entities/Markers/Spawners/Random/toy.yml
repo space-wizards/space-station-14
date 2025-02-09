@@ -86,6 +86,21 @@
       rarePrototypes:
       - ToyFigurineNukieElite
       - ToyFigurineNukieCommander
+      - ToyFigurineNukieAgent #<imp>
+      - ToyFigurineNukieJuggernaut
+      - ToyFigurineCyborgAssault
+      - ToyFigurineCyborgCorpsman
+      - ToyFigurineCyborgSaboteur
+      - ToyFigurineCBURNQuarantineOfficer
+      - ToyFigurineCentCommOfficial
+      - ToyFigurineChronologyAgent
+      - ToyFigurineDeathsquadAgent
+      - ToyFigurineERTChaplain
+      - ToyFigurineERTEngineer
+      - ToyFigurineERTJanitor
+      - ToyFigurineERTLeader
+      - ToyFigurineERTMedic
+      - ToyFigurineERTSecurity #</imp>
       rareChance: 0.05
       prototypes:
       - ToyFigurinePassenger
@@ -134,5 +149,14 @@
       - ToyFigurineMouse
       - ToyFigurineHamlet
       - ToyFigurineThief
+      - ToyFigurineCourier #<imp>
+      - ToyFigurineBrigmedic 
+      - ToyFigurineCyborgDefault
+      - ToyFigurineCyborgEngineering
+      - ToyFigurineCyborgJanitorial
+      - ToyFigurineCyborgMedical
+      - ToyFigurineCyborgSalvage
+      - ToyFigurineCyborgService
+      - ToyFigurineStationAI #</imp>
       chance: 0.90
       offset: 0.2

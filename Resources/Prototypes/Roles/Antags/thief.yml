@@ -10,7 +10,7 @@
   id: ThiefGear
   storage:
     back:
+    - ThiefBeacon
     - ToolboxThief
     - ClothingHandsChameleonThief
-    - ThiefBeacon
     - ThiefBusinessCard #imp

@@ -110,8 +110,6 @@
     #   path: events/vent_critters.ogg
     # - id: spiderSpawn # Some simple spiders are appearing in vents
     #   path: events/vent_critters.ogg
-    # - id: trashAnimalMigration # Trash-eating critters are appearing in vents
-    #   path: events/vent_critters.ogg
     # - id: snailMigration # Adorable little snails are appearing in vents
     #   path: events/vent_critters.ogg
     # - id: snailMigrationLowPop # Adorable little snails are appearing in vents

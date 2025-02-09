@@ -137,10 +137,18 @@ def diff_changelog(
 
 
 def get_discord_body(content: str):
+    if DISCORD_ROLE_ID:
+        # if a ping is configured,
+        # allow that role to be mentioned
+        allowed_mentions = {"roles": [DISCORD_ROLE_ID]}
+    else:
+        # if no role mention is allowed
+        # then this is explicitly needed to suppress @everyone
+        allowed_mentions = {"parse": []}
+
     return {
         "content": content,
-        # Do not allow any mentions.
-        "allowed_mentions": {"parse": []},
+        "allowed_mentions": allowed_mentions,
         # SUPPRESS_EMBEDS
         "flags": 1 << 2,
     }

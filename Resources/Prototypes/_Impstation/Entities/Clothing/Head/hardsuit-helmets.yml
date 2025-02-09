@@ -54,3 +54,17 @@
     sprite: _Impstation/Clothing/Head/Helmets/repomansuithelmet.rsi
   - type: PointLight
     color: "#d1c906"
+
+# Dinosaur Commander hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitDino
+  name: dinosaur commander's helmet
+  description: Risen from the ashes of prehistory, forged in the temporal flux of one second in the past, this helmet embodies the true fearsome nature of the Dino Wars.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hardsuits/dinosuit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hardsuits/dinosuit.rsi
+  - type: FactionClothing
+    faction: Dino

@@ -26,6 +26,8 @@
     rules: ghost-role-information-nonantagonist-freeagent-goblin-stowaway
     raffle:
       settings: default
+    mindRoles:
+    - MindRoleGhostRoleTeamFreeAgent
   - type: GhostRoleMobSpawner
     prototype: MobGoblinStowaway
   - type: Sprite
@@ -47,6 +49,8 @@
     rules: ghost-role-information-familiar-rules
     raffle:
       settings: default
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
   - type: GhostRoleMobSpawner
     prototype: MobGoblinKnight
   - type: Sprite
@@ -69,6 +73,8 @@
     rules: ghost-role-information-nonantagonist-freeagent-goblin-stowaway
     raffle:
       settings: default
+    mindRoles:
+    - MindRoleGhostRoleTeamFreeAgent
   - type: GhostRoleMobSpawner
     prototype: MobGoblinCastaway
   - type: Sprite

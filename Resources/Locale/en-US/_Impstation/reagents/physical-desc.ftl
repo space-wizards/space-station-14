@@ -8,3 +8,4 @@ reagent-physical-desc-thavenbad = unpleasant
 reagent-physical-desc-brotherly = brotherly
 reagent-physical-desc-thegrease = really greasy
 reagent-physical-desc-rodent = mousy
+reagent-physical-desc-lovepotion = romantic

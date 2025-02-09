@@ -85,7 +85,7 @@
     embedOnThrow: false
   - type: EmbedPassiveDamage
   - type: ItemToggleSignatureWriter
-    activatedFont: /Fonts/_DV/AndTheDoorCreeeaked/AndTheDoorCreeeaked-Regular.otf
+    activatedFont: AndTheDoorCreeeaked
     activatedColor: black
   # end imp edits #
 

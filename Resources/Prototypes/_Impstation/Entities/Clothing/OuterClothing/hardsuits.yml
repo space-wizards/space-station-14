@@ -95,3 +95,50 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitRepomen
+
+# Dinosaur Commander Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitBase, TierXContraband]
+  id: ClothingOuterHardsuitDino
+  name: dinosaur commander's hardsuit
+  description: Risen from the ashes of prehistory, forged in the temporal flux of one second in the past, this hardsuit embodies the true warrior spirit of the Dino Wars.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/dinosuit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/dinosuit.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+  - type: FireProtection
+    reduction: 0.8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.1
+        Slash: 0.1
+        Piercing: 0.1
+        Heat: 0.1
+        Caustic: 0.1
+        Radiation: 0.1
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepThud
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitDino
+
+- type: entity
+  parent: ClothingOuterHardsuitDino
+  id: ClothingOuterHardsuitDinoUnremoveable
+  suffix: Unremoveable
+  components:
+  - type: Unremoveable

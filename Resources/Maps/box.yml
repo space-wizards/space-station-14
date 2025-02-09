@@ -2231,7 +2231,7 @@ entities:
         - node:
             cleanable: True
             zIndex: 5
-            color: '#FFFFFF28'
+            color: '#FFFFFF7F'
             id: Dirt
           decals:
             205: -33,-11

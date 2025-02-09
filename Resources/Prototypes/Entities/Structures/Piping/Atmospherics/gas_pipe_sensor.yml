@@ -45,6 +45,9 @@
     tags:
     - AirSensor
     - Unstackable
+  - type: VentCrawTube # Imp vent crawling start
+    containerId: VentCrawTube
+  - type: VentCrawTransit # Imp vent crawling end
 
 - type: entity
   parent: GasPipeSensor

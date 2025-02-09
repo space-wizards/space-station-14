@@ -88,6 +88,8 @@
     rules: ghost-role-information-familiar-rules
     raffle:
       settings: short
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
   - type: GhostTakeoverAvailable
   - type: CanEscapeInventory
     baseResistTime: 3

@@ -23,6 +23,7 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Prototypes;
 using Content.Shared.Roles;
+using Content.Shared.Changeling;
 
 namespace Content.Server.Heretic.EntitySystems;
 
@@ -54,7 +55,7 @@ public sealed partial class HereticSystem : EntitySystem
         SubscribeLocalEvent<HereticComponent, BeforeDamageChangedEvent>(OnBeforeDamage);
         SubscribeLocalEvent<HereticComponent, DamageModifyEvent>(OnDamage);
 
-        
+
     }
 
     public override void Update(float frameTime)
@@ -123,7 +124,7 @@ public sealed partial class HereticSystem : EntitySystem
             eligibleTargets.Add(target.AttachedEntity!.Value); // it can't be null because see .Where(HasValue)
 
         // no heretics or other baboons
-        eligibleTargets = eligibleTargets.Where(t => !HasComp<GhoulComponent>(t) && !HasComp<HereticComponent>(t)).ToList();
+        eligibleTargets = eligibleTargets.Where(t => !HasComp<GhoulComponent>(t) || !HasComp<HereticComponent>(t) || !HasComp<ChangelingComponent>(t)).ToList();
 
         var pickedTargets = new List<EntityUid?>();
 
@@ -147,9 +148,12 @@ public sealed partial class HereticSystem : EntitySystem
         }
 
         // add whatever more until satisfied
-        for (int i = 0; i <= ent.Comp.MaxTargets - pickedTargets.Count; i++)
-            if (eligibleTargets.Count > 0)
-                pickedTargets.Add(_rand.PickAndTake<EntityUid>(eligibleTargets));
+        while (ent.Comp.MaxTargets > pickedTargets.Count)
+        {
+            if (eligibleTargets.Count <= 0)
+                break;
+            pickedTargets.Add(_rand.PickAndTake<EntityUid>(eligibleTargets));
+        }
 
         // leave only unique entityuids
         pickedTargets = pickedTargets.Distinct().ToList();

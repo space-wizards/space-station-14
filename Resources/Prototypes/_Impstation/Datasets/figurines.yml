@@ -1,0 +1,143 @@
+- type: localizedDataset
+  id: FigurinesCBURN
+  values:
+    prefix: figurines-cburn-
+    count: 10
+
+- type: localizedDataset
+  id: FigurinesCentCommOfficial
+  values:
+    prefix: figurines-centcomm-
+    count: 8
+
+- type: localizedDataset
+  id: FigurinesChronoAgent
+  values:
+    prefix: figurines-chronoagent-
+    count: 10
+
+- type: localizedDataset
+  id: FigurinesDeathsquad
+  values:
+    prefix: figurines-deathsquad-
+    count: 10
+
+- type: localizedDataset
+  id: FigurinesERTChaplain
+  values:
+    prefix: figurines-ertchaplain-
+    count: 8
+
+- type: localizedDataset
+  id: FigurinesERTEngineer
+  values:
+    prefix: figurines-ertengineer-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesERTJanitor
+  values:
+    prefix: figurines-ertjanitor-
+    count: 7
+
+- type: localizedDataset
+  id: FigurinesERTLeader
+  values:
+    prefix: figurines-ertleader-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesERTMedic
+  values:
+    prefix: figurines-ertmedic-
+    count: 5
+
+- type: localizedDataset
+  id: FigurinesERTSecurity
+  values:
+    prefix: figurines-ertsecurity-
+    count: 7
+
+- type: localizedDataset
+  id: FigurinesBrigmedic
+  values:
+    prefix: figurines-brigmedic-
+    count: 7
+
+- type: localizedDataset
+  id: FigurinesCourier
+  values:
+    prefix: figurines-courier-
+    count: 9
+
+- type: localizedDataset
+  id: FigurinesNukieAgent
+  values:
+    prefix: figurines-nukieagent-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesNukieJuggernaut
+  values:
+    prefix: figurines-nukiejuggernaut-
+    count: 5
+
+- type: localizedDataset
+  id: FigurinesCyborgDefault
+  values:
+    prefix: figurines-cyborgdefault-
+    count: 7
+
+- type: localizedDataset
+  id: FigurinesCyborgEngineering
+  values:
+    prefix: figurines-cyborgengineering-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesCyborgJanitorial
+  values:
+    prefix: figurines-cyborgjanitorial-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesCyborgMedical
+  values:
+    prefix: figurines-cyborgmedical-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesCyborgSalvage
+  values:
+    prefix: figurines-cyborgsalvage-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesCyborgService
+  values:
+    prefix: figurines-cyborgservice-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesCyborgAssault
+  values:
+    prefix: figurines-cyborgassault-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesCyborgCorpsman
+  values:
+    prefix: figurines-cyborgcorpsman-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesCyborgSaboteur
+  values:
+    prefix: figurines-cyborgsaboteur-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesStationAI
+  values:
+    prefix: figurines-stationai-
+    count: 7

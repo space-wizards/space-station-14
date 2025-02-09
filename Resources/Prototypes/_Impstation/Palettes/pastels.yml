@@ -1,0 +1,12 @@
+﻿- type: palette
+  id: Pastel
+  name: Pastel
+  colors:
+    "pale pink": "#fc8cb8"
+    "pale blue": "#76cbff"
+    "pale yellow": "#ffef98"
+    "pale orange": "#eea35e"
+    "pale green": "#8be395"
+    "pale purple": "#aa8be3"
+    "pale white": "#e1daec"
+    "the heart of darkness": "#23233c"

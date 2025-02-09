@@ -1,0 +1,23 @@
+- type: entity
+  parent: GasPipeSensor
+  id: GasPipeSensorVoxBox
+  suffix: Vox Box
+  components:
+  - type: Label
+    currentLabel: gas-pipe-sensor-vox-box
+
+- type: entity
+  parent: GasPipeSensor
+  id: GasPipeSensorSupermatter
+  suffix: Supermatter
+  components:
+  - type: Label
+    currentLabel: gas-pipe-sensor-supermatter
+
+- type: entity
+  parent: GasPipeSensor
+  id: GasPipeSensorMedCryo
+  suffix: Med Cryo
+  components:
+  - type: Label
+    currentLabel: gas-pipe-sensor-med-cryo

@@ -44,7 +44,8 @@ changeling-sting-extract-fail = {CAPITALIZE(THE($target))} lacks extractable DNA
 changeling-sting-extract-max = We cannot extract more DNA until we assume a new form.
 
 changeling-stasis-enter = We enter regenerative stasis.
-changeling-stasis-enter-fail = We cannot enter stasis.
+changeling-stasis-enter-fail-already = We are already in stasis.
+changeling-stasis-enter-fail-eaten = We have been consumed, and cannot enter stasis.
 changeling-stasis-exit = We rise from stasis.
 changeling-stasis-exit-fail = We are not in stasis.
 changeling-stasis-exit-fail-dead = We have been hollowed, and cannot rise from stasis.
