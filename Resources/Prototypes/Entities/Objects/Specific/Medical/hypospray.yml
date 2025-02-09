@@ -104,6 +104,7 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: Item
     sprite: Objects/Specific/Medical/medipen.rsi
+    heldPrefix: medipen
     size: Tiny
   - type: SolutionContainerManager
     solutions:
@@ -166,6 +167,8 @@
   id: AntiPoisonMedipen
   description: A rapid dose of anti-poison. Contains ultravasculine and epinephrine.
   components:
+  - type: Item
+    heldPrefix: penacid
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -193,6 +196,8 @@
   id: BruteAutoInjector
   description: A rapid dose of bicaridine and tranexamic acid, intended for combat applications.
   components:
+  - type: Item
+    heldPrefix: bicpen
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -225,6 +230,8 @@
   id: BurnAutoInjector
   description: A rapid dose of dermaline and leporazine, intended for combat applications.
   components:
+  - type: Item
+    heldPrefix: dermpen
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -257,6 +264,8 @@
   id: RadAutoInjector
   description: A rapid dose of anti-radiation. Contains arithrazine and bicaridine.
   components:
+  - type: Item
+    heldPrefix: arithpen
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -289,6 +298,8 @@
   id: PunctAutoInjector
   description: A rapid dose of puncturase and tranexamic acid, intended for combat applications.
   components:
+  - type: Item
+    heldPrefix: punctpen
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -321,6 +332,8 @@
   id: PyraAutoInjector
   description: A rapid dose of pyrazine and dermaline, intended for combat applications.
   components:
+  - type: Item
+    heldPrefix: pyrapen
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -353,6 +366,8 @@
   id: AirlossAutoInjector
   description: A rapid dose of saline and dexalin plus, intended to get someone up quickly.
   components:
+  - type: Item
+    heldPrefix: dexpen
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -385,6 +400,8 @@
   id: SpaceMedipen
   description: Contains a mix of chemicals that protect you from the deadly effects of space.
   components:
+  - type: Item
+    heldPrefix: hypovolemic
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -418,6 +435,8 @@
   id: Stimpack
   description: Contains enough hyperzine for you to have the chemical's effect for 30 seconds. Use it when you're sure you're ready to throw down.
   components:
+  - type: Item
+    heldPrefix: stimpen
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -450,6 +469,8 @@
   id: StimpackMini
   description: A microinjector of hyperzine that give you about 15 seconds of the chemical's effects.
   components:
+  - type: Item
+    heldPrefix: stimpen
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -477,6 +498,8 @@
   id: CombatMedipen
   description: A single-use medipen containing chemicals that regenerate most types of damage.
   components:
+  - type: Item
+    heldPrefix: morphen
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
