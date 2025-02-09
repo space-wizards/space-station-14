@@ -1,20 +1,22 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Traits.Assorted;
 
 /// <summary>
 /// This is used for the unrevivable trait as well as generally preventing revival.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class UnrevivableComponent : Component
 {
     /// <summary>
     /// A field to define if we should display the "Genetic incompatibility" warning on health analysers
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Analyzable { get; set; } = true;
 
     /// <summary>
     /// The loc string used to provide a reason for being unrevivable
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public LocId ReasonMessage = "defibrillator-unrevivable";
 }
