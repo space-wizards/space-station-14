@@ -2,7 +2,7 @@
   parent: BaseItem
   id: BaseHandheldCriminalRecords
   name: portable criminal records
-  description: All the power of a criminal records computer, but it fits in your pocket.
+  description: All the power of a criminal records computer, but it fits in your pocket, or on your back!
   abstract: true
   components:
   - type: CriminalRecordsConsole
@@ -11,6 +11,25 @@
     layers:
       - state: portable_criminal
       - state: screen-criminal
+        shader: unshaded
+# THIS PART'S BROKEN I GUESS, LEMME SEE IF GITHUB SAYS ANYTHING
+  - type: Clothing
+    quickEquip: false
+    sprite: _Impstation/Objects/Devices/tablet.rsi
+    equippedPrefix: criminal
+    slots:
+    - suitStorage
+# LIZARD CODE COMPARISON
+#  - type: Clothing
+#    quickEquip: false
+#    sprite: Objects/Fun/toys.rsi
+#    equippedPrefix: lizard
+#    slots:
+#    - HEAD
+    clothingVisuals:
+      suitStorage:
+      - state: criminal-equipped-SUITSTORAGE
+      - state: criminal-equipped-SUITSTORAGE-overlay
         shader: unshaded
   - type: ActivatableUI
     key: enum.CriminalRecordsConsoleKey.Key
