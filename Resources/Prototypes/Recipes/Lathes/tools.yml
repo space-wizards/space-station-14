@@ -4,7 +4,7 @@
   abstract: true
   id: BaseToolRecipe
   categories:
-    - Tools
+  - Tools
   completetime: 2
   materials:
     Steel: 200
@@ -54,7 +54,7 @@
   id: CableStack
   result: CableApcStack1
   categories:
-    - Parts
+  - Parts
   completetime: 0.1
   materials:
     Steel: 30

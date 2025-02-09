@@ -76,7 +76,7 @@
   id: HandheldHealthAnalyzer
   result: HandheldHealthAnalyzerEmpty
   categories:
-    - Tools
+  - Tools
   completetime: 4
   materials:
     Glass: 500

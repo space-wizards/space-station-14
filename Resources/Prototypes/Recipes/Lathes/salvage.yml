@@ -22,7 +22,7 @@
   id: Fulton
   result: Fulton1
   categories:
-    - Tools
+  - Tools
   completetime: 1
   materials:
     Steel: 200
@@ -32,7 +32,7 @@
   id: FultonBeacon
   result: FultonBeacon
   categories:
-    - Tools
+  - Tools
   completetime: 5
   materials:
     Steel: 1000
@@ -43,7 +43,7 @@
   id: SeismicCharge
   result: SeismicCharge
   categories:
-    - Tools
+  - Tools
   completetime: 1
   materials:
     Plastic: 1500

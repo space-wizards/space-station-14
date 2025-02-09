@@ -2,7 +2,7 @@
   id: PowerCellSmall
   result: PowerCellSmallPrinted
   categories:
-    - Parts
+  - Parts
   completetime: 1
   materials:
     Steel: 100
@@ -12,7 +12,7 @@
   id: PowerCellMedium
   result: PowerCellMediumPrinted
   categories:
-    - Parts
+  - Parts
   completetime: 6
   materials:
     Steel: 300
@@ -24,7 +24,7 @@
   id: PowerCellHigh
   result: PowerCellHighPrinted
   categories:
-    - Parts
+  - Parts
   completetime: 10
   materials:
     Steel: 300
@@ -36,7 +36,7 @@
   id: PowerCellMicroreactor
   result: PowerCellMicroreactorPrinted
   categories:
-    - Parts
+  - Parts
   completetime: 10
   materials:
     Steel: 500

@@ -44,7 +44,7 @@
   id: ExplosivePayload
   result: ExplosivePayload
   categories:
-    - Weapons
+  - Weapons
   completetime: 4
   materials:
     Steel: 100
@@ -75,7 +75,7 @@
   id: AnomalyLocator
   result: AnomalyLocatorEmpty
   categories:
-    - Tools
+  - Tools
   completetime: 3
   materials:
     Steel: 400
@@ -85,7 +85,7 @@
   id: AnomalyLocatorWide
   result: AnomalyLocatorWideEmpty
   categories:
-    - Tools
+  - Tools
   completetime: 3
   materials:
     Steel: 400
@@ -103,7 +103,7 @@
   id: WeaponPistolCHIMP
   result: WeaponPistolCHIMP
   categories:
-    - Tools
+  - Tools
   completetime: 5
   materials:
     Steel: 500
@@ -113,7 +113,7 @@
   id: WeaponGauntletGorilla
   result: WeaponGauntletGorilla
   categories:
-    - Tools
+  - Tools
   completetime: 5
   materials:
     Steel: 1500
@@ -159,7 +159,7 @@
   id: WeaponForceGun
   result: WeaponForceGun
   categories:
-    - Tools
+  - Tools
   completetime: 5
   materials:
     Steel: 500
@@ -179,7 +179,7 @@
   id: WeaponProtoKineticAccelerator
   result: WeaponProtoKineticAccelerator
   categories:
-    - Weapons
+  - Weapons
   completetime: 5
   materials:
     Steel: 1000
@@ -190,7 +190,7 @@
   id: WeaponTetherGun
   result: WeaponTetherGun
   categories:
-    - Tools
+  - Tools
   completetime: 5
   materials:
     Steel: 500
@@ -201,7 +201,7 @@
   id: WeaponGrapplingGun
   result: WeaponGrapplingGun
   categories:
-    - Tools
+  - Tools
   completetime: 5
   materials:
     Steel: 500

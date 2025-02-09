@@ -2,7 +2,7 @@
   id: BioGenMonkeyCube
   result: MonkeyCube
   categories:
-    - Food
+  - Food
   completetime: 3
   materials:
     Biomass: 70
@@ -11,7 +11,7 @@
   id: BioGenKoboldCube
   result: KoboldCube
   categories:
-    - Food
+  - Food
   completetime: 3
   materials:
     Biomass: 70
@@ -20,7 +20,7 @@
   id: BioGenMaterialCloth1
   result: MaterialCloth1
   categories:
-    - Materials
+  - Materials
   icon:
     sprite: Objects/Materials/materials.rsi
     state: cloth
@@ -32,7 +32,7 @@
   id: BioGenMaterialCardboard1
   result: MaterialCardboard1
   categories:
-    - Materials
+  - Materials
   icon:
     sprite: Objects/Materials/materials.rsi
     state: cardboard
@@ -44,7 +44,7 @@
   id: BioGenPaper
   result: Paper
   categories:
-    - Materials
+  - Materials
   completetime: 1
   materials:
     Biomass: 2
@@ -53,7 +53,7 @@
   id: BioGenPaperRolling1
   result: PaperRolling1
   categories:
-    - Materials
+  - Materials
   completetime: 1
   materials:
     Biomass: 1
@@ -62,7 +62,7 @@
   id: BioGenCandle
   result: Candle
   categories:
-    - Materials
+  - Materials
   completetime: 3
   materials:
     Biomass: 3
@@ -72,7 +72,7 @@
   resultReagents:
     PlantBGone: 10
   categories:
-    - Chemicals
+  - Chemicals
   icon:
     sprite: Objects/Tools/Hydroponics/sprays.rsi
     state: plantbgone
@@ -85,7 +85,7 @@
   resultReagents:
     WeedKiller: 10
   categories:
-    - Chemicals
+  - Chemicals
   icon:
     sprite: Objects/Tools/Hydroponics/sprays.rsi
     state: weedspray
@@ -98,7 +98,7 @@
   resultReagents:
     PestKiller: 10
   categories:
-    - Chemicals
+  - Chemicals
   icon:
     sprite: Objects/Tools/Hydroponics/sprays.rsi
     state: weedspray
@@ -111,7 +111,7 @@
   resultReagents:
     Left4Zed: 10
   categories:
-    - Chemicals
+  - Chemicals
   icon:
     sprite: Objects/Specific/Chemistry/bottle.rsi
     state: bottle-1
@@ -124,7 +124,7 @@
   resultReagents:
     EZNutrient: 10
   categories:
-    - Chemicals
+  - Chemicals
   icon:
     sprite: Objects/Specific/Chemistry/bottle.rsi
     state: bottle-1
@@ -137,7 +137,7 @@
   resultReagents:
     RobustHarvest: 10
   categories:
-    - Chemicals
+  - Chemicals
   icon:
     sprite: Objects/Specific/Chemistry/bottle.rsi
     state: bottle-1
@@ -150,7 +150,7 @@
   resultReagents:
     Milk: 10
   categories:
-    - Food
+  - Food
   icon:
     sprite: Objects/Consumable/Drinks/milk.rsi
     state: icon
@@ -163,7 +163,7 @@
   resultReagents:
     MilkSoy: 10
   categories:
-    - Food
+  - Food
   icon:
     sprite: Objects/Consumable/Drinks/soymilk.rsi
     state: icon
@@ -176,7 +176,7 @@
   resultReagents:
     Ethanol: 10
   categories:
-    - Food
+  - Food
   icon:
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
     state: icon
@@ -189,7 +189,7 @@
   resultReagents:
     Cream: 10
   categories:
-    - Food
+  - Food
   icon:
     sprite: Objects/Consumable/Drinks/cream.rsi
     state: icon
@@ -202,7 +202,7 @@
   resultReagents:
     Blackpepper: 10
   categories:
-    - Food
+  - Food
   icon:
     sprite: Objects/Consumable/Food/condiments.rsi
     state: packet-pepper
@@ -215,7 +215,7 @@
   resultReagents:
     Enzyme: 10
   categories:
-    - Food
+  - Food
   icon:
     sprite: Objects/Consumable/Food/condiments.rsi
     state: bottle-empty
@@ -228,7 +228,7 @@
   resultReagents:
     Flour: 10
   categories:
-    - Food
+  - Food
   icon:
     sprite: Objects/Consumable/Food/ingredients.rsi
     state: flour-big
@@ -241,7 +241,7 @@
   resultReagents:
     Sugar: 10
   categories:
-    - Food
+  - Food
   icon:
     sprite: Objects/Consumable/Food/ingredients.rsi
     state: sugar-big
