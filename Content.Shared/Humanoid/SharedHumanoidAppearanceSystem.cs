@@ -143,9 +143,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         HumanoidAppearanceComponent? targetHumanoid = null)
     {
         if (!Resolve(source, ref sourceHumanoid) || !Resolve(target, ref targetHumanoid))
-        {
             return;
-        }
 
         targetHumanoid.Species = sourceHumanoid.Species;
         targetHumanoid.SkinColor = sourceHumanoid.SkinColor;
@@ -157,9 +155,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         targetHumanoid.Gender = sourceHumanoid.Gender;
         if (TryComp<GrammarComponent>(target, out var grammar))
-        {
             grammar.Gender = sourceHumanoid.Gender;
-        }
 
         Dirty(target, targetHumanoid);
     }
