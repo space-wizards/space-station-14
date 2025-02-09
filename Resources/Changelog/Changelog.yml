@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Computers now have a maintenance panel with a Power and AI wire (if AI-connected).
-    type: Tweak
-  - message: Computer deconstruction now begins with the crowbar, not the screwdriver.
-    type: Tweak
-  id: 7423
-  time: '2024-09-23T10:51:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32273
 - author: lzk228
   changes:
   - message: Guidebook books now do damage like default writeable books.
@@ -3899,3 +3890,10 @@
   id: 7922
   time: '2025-02-09T21:01:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34996
+- author: notquitehadouken
+  changes:
+  - message: Added loungewear to uniform printer
+    type: Add
+  id: 7923
+  time: '2025-02-09T22:16:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35008
