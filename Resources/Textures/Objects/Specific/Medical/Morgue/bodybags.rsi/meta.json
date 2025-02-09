@@ -11,6 +11,14 @@
       "name": "bag"
     },
     {
+			"name": "bag-inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "bag-inhand-right",
+			"directions": 4
+		},
+    {
       "name": "bag_folded"
     },
     {

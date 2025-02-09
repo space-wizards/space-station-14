@@ -76,11 +76,11 @@
 		{
 			"name": "regenerative-mesh"
 		},
-                {
+        {
 			"name": "regenerative-mesh-inhand-right",
 			"directions": 4
 		},
-                {
+        {
 			"name": "regenerative-mesh-inhand-left",
 			"directions": 4
 		},
