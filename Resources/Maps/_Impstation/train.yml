@@ -6322,6 +6322,7 @@ entities:
       - 7542
       - 9971
       - 7496
+      - 387
   - uid: 31
     components:
     - type: Transform
@@ -6338,6 +6339,9 @@ entities:
       - 7489
       - 7543
       - 7542
+      - 388
+      - 9780
+      - 9980
   - uid: 32
     components:
     - type: Transform
@@ -9602,12 +9606,18 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 0.5,-141.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 30
   - uid: 388
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,-149.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 31
   - uid: 389
     components:
     - type: Transform
@@ -38308,13 +38318,16 @@ entities:
     - type: ContainerContainer
       containers:
         lens_slot: !type:ContainerSlot {}
-- proto: ClothingEyesHudOnionBeer
+- proto: ClothingEyesGlassesOutlawGlasses
   entities:
   - uid: 5525
     components:
     - type: Transform
-      pos: 17.613636,-73.25992
+      pos: 17.5,-73.5
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesHudSecurity
   entities:
   - uid: 5526
@@ -38428,6 +38441,13 @@ entities:
     components:
     - type: Transform
       pos: -7.7489276,-255.68477
+      parent: 2
+- proto: ClothingHeadHatBunny
+  entities:
+  - uid: 18992
+    components:
+    - type: Transform
+      pos: 17.5,-69.5
       parent: 2
 - proto: ClothingHeadHatCowboyBountyHunter
   entities:
@@ -71499,6 +71519,9 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 4.5,-149.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 31
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 9781
@@ -73570,6 +73593,9 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 4.5,-148.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 31
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 9982
