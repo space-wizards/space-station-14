@@ -1,7 +1,7 @@
 ﻿# Configuration preset used on Wizard's Den Leviathan
 
 [game]
-desc = "Official English Space Station 14 servers. Vanilla, roleplay ruleset. "
+desc = "Official English Space Station 14 servers. Vanilla, roleplay ruleset. Pre-release test branch.\nThis server is running the development branch. You can see upcoming changes ahead of the next bi-weekly release, but they may not be final.\nFeatures and changes on this server may be rolled back before release.\nPlease report any bugs you find, via github or Discord. Thank you!"
 hostname = "[EN][Dev Branch] Wizard's Den Vulture [US East 2]"
 
 [hub]
