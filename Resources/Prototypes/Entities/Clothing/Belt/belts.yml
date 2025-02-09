@@ -44,6 +44,7 @@
         - TrayScanner
         - GasAnalyzer
         - HandLabeler
+        - RadarConsole
   - type: ItemMapper
     mapLayers:
       drill:
