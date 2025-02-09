@@ -26,6 +26,14 @@
 		{
 			"name": "gauze"
 		},
+		{
+			"name": "gauze-inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "gauze-inhand-right",
+			"directions": 4
+		},
         {
             "name": "tourniquet"
         },
