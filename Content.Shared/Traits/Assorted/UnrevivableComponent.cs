@@ -16,5 +16,5 @@ public sealed partial class UnrevivableComponent : Component
     /// The loc string used to provide a reason for being unrevivable
     /// </summary>
     [DataField]
-    public string ReasonMessage = "defibrillator-unrevivable";
+    public LocId ReasonMessage = "defibrillator-unrevivable";
 }
