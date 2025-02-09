@@ -26,6 +26,16 @@ public sealed partial class MechComponent : Component
     [DataField("maintenance")]
     [AutoNetworkedField]
     public bool MaintenanceMode = false;
+    
+    /// <summary>
+    /// is the mech lights are toggled?
+    /// </summary>
+    [DataField("light")]
+    [AutoNetworkedField]
+    public bool Light = false;
+    
+    [DataField("toggleLightSound")]
+    public SoundSpecifier ToggleLightSound = new SoundPathSpecifier("/Audio/Items/flashlight_pda.ogg");
 
     /// <summary>
     /// How much "health" the mech has left.
@@ -158,6 +168,8 @@ public sealed partial class MechComponent : Component
     public EntProtoId MechUiAction = "ActionMechOpenUI";
     [DataField]
     public EntProtoId MechEjectAction = "ActionMechEject";
+    [DataField]
+    public EntProtoId MechToggleLightAction = "ActionMechToggleLights";
     #endregion
 
     #region Visualizer States
@@ -172,4 +184,5 @@ public sealed partial class MechComponent : Component
     [DataField] public EntityUid? MechCycleActionEntity;
     [DataField] public EntityUid? MechUiActionEntity;
     [DataField] public EntityUid? MechEjectActionEntity;
+    [DataField] public EntityUid? MechToggleLightActionEntity;
 }
