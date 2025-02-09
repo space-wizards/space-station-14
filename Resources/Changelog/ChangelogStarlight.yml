@@ -3238,4 +3238,34 @@ Entries:
   id: 450
   time: '2025-02-09T04:04:34.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/314
+- author: STARLIGHT TEAM
+  changes:
+  - message: Updated Hristov to match the damage changes made by Wizden.
+    type: Add
+  id: 451
+  time: '2025-02-09T04:20:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/315
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added derivation property to bullets—this affects the random deviation
+      angle after penetrating a target. The larger the caliber, the more stable the
+      bullet's trajectory.
+    type: Fix
+  id: 452
+  time: '2025-02-09T04:20:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/315
+- author: STARLIGHT TEAM
+  changes:
+  - message: Slightly reduced thermal vision contrast.
+    type: Fix
+  id: 453
+  time: '2025-02-09T04:20:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/315
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed an armor penetration bug.
+    type: Fix
+  id: 454
+  time: '2025-02-09T04:20:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/315
 
