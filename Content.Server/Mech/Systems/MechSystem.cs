@@ -105,7 +105,7 @@ public sealed partial class MechSystem : SharedMechSystem
         
         _actions.SetToggled(component.MechToggleLightActionEntity, !component.Light);
         
-        _audioSystem.PlayPredicted(component.ToggleLightSound, uid, args.Performer);
+        _audioSystem.PlayPredicted(component.ToggleLightSound, uid, uid);
         
         component.Light = !component.Light;
         

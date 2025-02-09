@@ -19,6 +19,8 @@ using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
@@ -42,6 +44,8 @@ public abstract class SharedMechSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedPointLightSystem _light = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -130,6 +134,18 @@ public abstract class SharedMechSystem : EntitySystem
         _interaction.SetRelay(pilot, mech, irelay);
         rider.Mech = mech;
         Dirty(pilot, rider);
+        
+        if ((component.Integrity / component.MaxIntegrity) * 100 >= 50 )
+            if (component.FirstStart)
+            {
+                _audioSystem.PlayEntity(component.NominalLongSound, pilot, mech);
+                component.FirstStart = false;
+                Dirty(mech, component);
+            }
+            else
+                _audioSystem.PlayEntity(component.NominalSound, pilot, mech);
+        else
+            _audioSystem.PlayEntity(component.CriticalDamageSound, pilot, mech);
 
         if (_net.IsClient)
             return;
@@ -137,7 +153,8 @@ public abstract class SharedMechSystem : EntitySystem
         _actions.AddAction(pilot, ref component.MechCycleActionEntity, component.MechCycleAction, mech);
         _actions.AddAction(pilot, ref component.MechUiActionEntity, component.MechUiAction, mech);
         _actions.AddAction(pilot, ref component.MechEjectActionEntity, component.MechEjectAction, mech);
-        _actions.AddAction(pilot, ref component.MechToggleLightActionEntity, component.MechToggleLightAction, mech);
+        if (_light.TryGetLight(mech, out var light))
+            _actions.AddAction(pilot, ref component.MechToggleLightActionEntity, component.MechToggleLightAction, mech);
     }
 
     private void RemoveUser(EntityUid mech, EntityUid pilot)
@@ -284,6 +301,17 @@ public abstract class SharedMechSystem : EntitySystem
 
         if (component.Energy + delta < 0)
             return false;
+        
+        if ((component.Energy / component.MaxEnergy) * 100 <= 10 
+            && component.PlayPowerSound 
+            && component.PilotSlot.ContainedEntity != null)
+        {
+            _audioSystem.PlayEntity(component.LowPowerSound, component.PilotSlot.ContainedEntity.Value, uid);
+            
+            component.PlayPowerSound = false;
+        }
+        else if ((component.Energy / component.MaxEnergy) * 100 >= 10)
+            component.PlayPowerSound = true;
 
         component.Energy = FixedPoint2.Clamp(component.Energy + delta, 0, component.MaxEnergy);
         Dirty(uid, component);

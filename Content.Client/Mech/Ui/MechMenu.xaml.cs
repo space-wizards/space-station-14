@@ -60,19 +60,6 @@ public sealed partial class MechMenu : FancyWindow
         if (!_ent.TryGetComponent<MechComponent>(_mech, out var mechComp))
             return;
 
-        MaintenanceOffButton.Disabled = !mechComp.MaintenanceMode;
-        MaintenanceOffButton.OnPressed += _ => {
-            MaintenanceOffButton.Disabled = true;
-            MaintenanceOnButton.Disabled = false;
-            OnMaintenanceModeChanged?.Invoke(false);
-        };
-        MaintenanceOnButton.Disabled = mechComp.MaintenanceMode;
-        MaintenanceOnButton.OnPressed += _ => {
-            MaintenanceOffButton.Disabled = false;
-            MaintenanceOnButton.Disabled = true;
-            OnMaintenanceModeChanged?.Invoke(true);
-        };
-
         EquipmentControlContainer.Children.Clear();
         foreach (var ent in mechComp.EquipmentContainer.ContainedEntities)
         {
@@ -88,6 +75,25 @@ public sealed partial class MechMenu : FancyWindow
 
             EquipmentControlContainer.AddChild(control);
         }
+    }
+    
+    public void UpdateMaintenanceButtons()
+    {
+        if (!_ent.TryGetComponent<MechComponent>(_mech, out var mechComp))
+            return;
+
+        MaintenanceOffButton.Disabled = !mechComp.MaintenanceMode;
+        MaintenanceOffButton.OnPressed += _ => {
+            MaintenanceOffButton.Disabled = true;
+            MaintenanceOnButton.Disabled = false;
+            OnMaintenanceModeChanged?.Invoke(false);
+        };
+        MaintenanceOnButton.Disabled = mechComp.MaintenanceMode;
+        MaintenanceOnButton.OnPressed += _ => {
+            MaintenanceOffButton.Disabled = false;
+            MaintenanceOnButton.Disabled = true;
+            OnMaintenanceModeChanged?.Invoke(true);
+        };
     }
 }
 
