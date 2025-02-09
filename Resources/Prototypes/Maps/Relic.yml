@@ -2,7 +2,7 @@
   id: Relic
   mapName: 'Relic'
   mapPath: /Maps/Relic.yml
-  minPlayers: 0
+  minPlayers: 20
   maxPlayers: 55
   stations:
     Relic:
