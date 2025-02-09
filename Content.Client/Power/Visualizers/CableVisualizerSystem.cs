@@ -27,5 +27,6 @@ public sealed class CableVisualizerSystem : VisualizerSystem<CableVisualizerComp
             mask = WireVisDirFlags.None;
 
         args.Sprite.LayerSetState(0, $"{component.StatePrefix}{(int) mask}");
+        args.Sprite.LayerSetState(1, $"{component.ExtraLayerPrefix}{(int) mask}");
     }
 }
