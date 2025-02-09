@@ -35,14 +35,17 @@ public abstract class SharedFishingRodSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<FishingProjectileComponent, ProjectileEmbedEvent>(OnGrappleCollide);
-        SubscribeLocalEvent<FishingProjectileComponent, JointRemovedEvent>(OnGrappleJointRemoved);
+
         SubscribeLocalEvent<CanWeightlessMoveEvent>(OnWeightlessMove);
         SubscribeAllEvent<RequestGrapplingReelMessage>(OnGrapplingReel);
 
         SubscribeLocalEvent<FishingRodComponent, GunShotEvent>(OnGrapplingShot);
         SubscribeLocalEvent<FishingRodComponent, ActivateInWorldEvent>(OnGunActivate);
         SubscribeLocalEvent<FishingRodComponent, HandDeselectedEvent>(OnGrapplingDeselected);
+
+        SubscribeLocalEvent<FishingProjectileComponent, ProjectileEmbedEvent>(OnGrappleCollide);
+        SubscribeLocalEvent<FishingProjectileComponent, JointRemovedEvent>(OnGrappleJointRemoved);
+        SubscribeLocalEvent<FishingProjectileComponent, RemoveEmbedEvent>(OnRemoveEmbed);
     }
 
     private void OnGrappleJointRemoved(EntityUid uid, FishingProjectileComponent component, JointRemovedEvent args)
@@ -208,15 +211,26 @@ public abstract class SharedFishingRodSystem : EntitySystem
         if (!Timing.IsFirstTimePredicted)
             return;
 
-        //joint between the hook and the weapon 
-        var jointComp = EnsureComp<JointComponent>(uid);
-        var joint = _joints.CreateDistanceJoint(args.Embedded, args.Weapon, anchorA: new Vector2(0f, 0.5f), id: GrapplingJoint);
+        //joint between the embedded and the weapon 
+        var jointComp = EnsureComp<JointComponent>(args.Weapon);
+        var joint = _joints.CreateDistanceJoint(args.Weapon, args.Embedded, anchorA: new Vector2(0f, 0.5f), id: GrapplingJoint);
         joint.MaxLength = joint.Length + 0.2f;
         joint.Stiffness = 1f;
         joint.MinLength = 0.35f;
         // Setting velocity directly for mob movement fucks this so need to make them aware of it.
         // joint.Breakpoint = 4000f;
-        Dirty(uid, jointComp);
+        Dirty(args.Weapon, jointComp);
+    }
+
+    private void OnRemoveEmbed(EntityUid uid, FishingProjectileComponent component, RemoveEmbedEvent args)
+    {
+        if (TryComp<EmbeddableProjectileComponent>(uid, out var projectile))
+        {
+            if (projectile.EmbeddedIntoUid != null)
+            {
+                _joints.ClearJoints(projectile.EmbeddedIntoUid.Value);
+            }
+        }
     }
 
     [Serializable, NetSerializable]
