@@ -3194,4 +3194,41 @@ Entries:
   id: 444
   time: '2025-02-06T16:03:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/303
+- author: STARLIGHT TEAM
+  changes:
+  - message: Thermal vision can now be toggled on and off.
+    type: Add
+  id: 445
+  time: '2025-02-09T02:57:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/313
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where the thermal vision shader would fly off to the opposite
+      end of the universe.
+    type: Fix
+  id: 446
+  time: '2025-02-09T02:57:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/313
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where the Cyclorite eye was mistakenly considered an implant.
+    type: Fix
+  id: 447
+  time: '2025-02-09T02:57:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/313
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where flash didn’t work with thermal and night vision.
+    type: Fix
+  id: 448
+  time: '2025-02-09T02:57:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/313
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where carried living creatures were displayed on top of the
+      sprite. Now, creatures inside a container are completely invisible.
+    type: Fix
+  id: 449
+  time: '2025-02-09T02:57:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/313
 
