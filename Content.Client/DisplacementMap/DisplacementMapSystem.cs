@@ -13,12 +13,10 @@ public sealed class DisplacementMapSystem : EntitySystem
     {
         if (data.ShaderOverride != null)
         {
-            //imp edit start
-            //if the layer is unshaded by default, use the unshaded displacement shader
+            //imp edit start - replaced the simple shader replacement w/ a ternary that checks if the layer is unshaded before setting the shader
             sprite.LayerSetShader(index,
-                sprite[index] is SpriteComponent.Layer { ShaderPrototype: "unshaded" } //little hack to force-check if something is using the unshaded "shader" (in quotes because this thing seems to not fucking exist????)
+                sprite[index] is SpriteComponent.Layer { ShaderPrototype: "unshaded" }
                     ? data.ShaderOverrideUnshaded
-                    //else, continue as normal
                     : data.ShaderOverride);
             //imp edit end
         }
