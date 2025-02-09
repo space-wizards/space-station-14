@@ -11,6 +11,14 @@
       "name": "broken"
     },
     {
+			"name": "implanter-inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "implanter-inhand-right",
+			"directions": 4
+		},
+    {
       "name": "implanter0"
     },
     {
