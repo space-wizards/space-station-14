@@ -91,7 +91,7 @@ public sealed class DCCVars
     /// if not delivered?
     /// </summary>
     public static readonly CVarDef<double> MailPriorityDuration =
-        CVarDef.Create("mail.priorityduration", 10.0d, CVar.SERVERONLY);
+        CVarDef.Create("mail.priorityduration", 5.0d, CVar.SERVERONLY);
 
     /// <summary>
     /// What's the bonus for delivering a priority package intact?

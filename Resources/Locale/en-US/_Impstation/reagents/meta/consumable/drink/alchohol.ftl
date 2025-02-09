@@ -60,3 +60,6 @@ reagent-desc-clevergirl = A sly and cunning cocktail, as brilliant as it is dang
 
 reagent-name-moscowmule = moscow mule
 reagent-desc-moscowmule = A fresh and sparkly cocktail, with just the right kick of ginger to wake you from your stupor. If it's not in copper, why even bother?
+
+reagent-name-lovepotion = love potion
+reagent-desc-lovepotion = One taste and you'll fall in love. This is not a legally binding statement.

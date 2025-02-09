@@ -120,7 +120,7 @@
   files:
     - /Audio/_Impstation/Voice/Vox/voxchitter1.ogg
     - /Audio/_Impstation/Voice/Vox/voxchitter2.ogg
-    
+
 - type: soundCollection
   id: VoxCoo
   files:
@@ -136,3 +136,8 @@
   id: Wuhey
   files:
     - /Audio/_Impstation/Voice/Misc/wuhey.ogg
+
+- type: soundCollection
+  id: Blinks
+  files:
+    - /Audio/_Impstation/Effects/Emotes/blink.ogg

@@ -1,13 +1,6 @@
 # Impstation Mail
 
-- type: entity
-  parent: BaseMailLarge
-  id: MailImpGoblin
-  suffix: a whole goblin
-  components:
-  - type: Mail
-    contents:
-    - id: MobGoblinStowaway
+# Everyone
 
 - type: entity
   parent: BaseMailLarge
@@ -54,9 +47,18 @@
     - id: MobAngryBee
 
 - type: entity
+  parent: BaseMail
+  id: MailImpBROS
+  suffix: an bros
+  components:
+  - type: Mail
+    contents:
+    - id: MobBros
+
+- type: entity
   parent: BaseMailLarge
   id: MailImpChameleonScarf
-  suffix: Chameleon scarf
+  suffix: chameleon scarf
   components:
   - type: Mail
     contents:
@@ -116,8 +118,98 @@
     - id: PaperMailNTBedsheetsAd
 
 - type: entity
+  parent: BaseMail
+  id: MailImpSpaceBlade
+  suffix: space blade
+  components:
+  - type: Mail
+    contents:
+    - id: MysterySpaceBladeBox
+
+- type: entity
   parent: BaseMailLarge
-  id: MailTckTck #for salvagers. also because I want to
+  id: MailImpFuckingGun
+  suffix: real gun
+  components:
+  - type: Mail
+    contents: # syndicate guns only
+    - id: WeaponPistolViper
+      orGroup: Gun
+      prob: 1
+    - id: WeaponRevolverPython
+      orGroup: Gun
+      prob: 1
+    - id: WeaponPistolCobra
+      orGroup: Gun
+      prob: 0.5
+    - id: WeaponRevolverMateba
+      orGroup: Gun
+      prob: 0.1
+    - id: WeaponShotgunBulldog
+      orGroup: Gun
+      prob: 0.25
+    - id: WeaponLightMachineGunL6
+      orGroup: Gun
+      prob: 0.1
+    - id: WeaponLauncherChinaLake
+      orGroup: Gun
+      prob: 0.1
+
+# Department-specific mail:
+# Engineering
+
+- type: entity
+  parent: BaseMail
+  id: MailImpEngineeringCompressedMatter
+  suffix: compressed matter
+  components:
+  - type: Mail
+    contents:
+    - id: RCDAmmo
+
+# Job-specific mail:
+# HoS
+
+- type: entity
+  parent: BaseMail
+  id: MailImpHosPillRefill
+  suffix: hos pills (refill)
+  components:
+  - type: Mail
+    isFragile: true
+    isPriority: true
+    contents:
+    - id: PillCanisterHOSRefill
+    - id: PaperMailHosRefill
+
+# Warden
+
+- type: entity
+  parent: BaseMail
+  id: MailImpHosPillWarden
+  suffix: hos pills (warden sample)
+  components:
+  - type: Mail
+    isFragile: true
+    contents:
+    - id: PillCanisterWardenSample
+
+# Passenger
+
+- type: entity
+  parent: BaseMailLarge
+  id: MailImpGoblin
+  suffix: a whole goblin
+  components:
+  - type: Mail
+    contents:
+    - id: MobGoblinStowaway
+
+# Salvage Specialist
+
+- type: entity
+  parent: BaseMailLarge
+  id: MailImpTckTck #for salvagers. also because I want to
   suffix: Tck'tck
   components:
   - type: Mail
@@ -127,11 +219,15 @@
       prob: 0.05 #9% was too much power
     - id: PaperMailTckTck
 
+# Chef
+
 - type: entity
-  parent: BaseMail
-  id: MailSpaceBlade
-  suffix: SpaceBlade
+  parent: BaseMailLarge
+  id: MailImpChefConveyor
+  suffix: chef conveyors
   components:
   - type: Mail
     contents:
-    - id: MysterySpaceBladeBox
+    - id: ConveyorBeltAssembly
+      amount: 3
+    - id: PaperMailDahirInsaat

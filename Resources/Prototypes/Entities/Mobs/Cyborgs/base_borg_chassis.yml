@@ -275,7 +275,7 @@
     maxIntensity: 20
     canCreateVacuum: false # its for killing the borg not the station
   - type: SignatureFont # imp
-    font: "/Fonts/Sixtyfour/Sixtyfour-Regular.ttf"
+    font: Sixtyfour
 
 - type: entity
   id: BaseBorgChassisNT

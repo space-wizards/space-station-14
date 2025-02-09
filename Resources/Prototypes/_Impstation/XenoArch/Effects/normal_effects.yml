@@ -467,3 +467,16 @@
       amount: 10
     - chemical: SpaceDrugs
       amount: 10
+
+- type: artifactEffect
+  id: EffectSupermatter
+  targetDepth: 10
+  effectHint: artifact-effect-hint-destruction
+  components:
+  - type: SpawnArtifact
+    range: 0.1
+    maxSpawns: 1
+    spawns:
+    - id: PortalSupermatter
+    - id: SupermatterNoAnnouncementSpawner
+    - id: AdminInstantEffectGravityWell

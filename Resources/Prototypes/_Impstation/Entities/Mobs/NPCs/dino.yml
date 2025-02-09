@@ -829,31 +829,36 @@
     animation: WeaponArcClaw
     wideAnimation: WeaponArcClaw
     altDisarm: false
+    autoAttack: true
+    attackRate: 4
     angle: 45
-    range: 1
+    range: 1.5
     soundHit:
       collection: AlienClaw
     damage:
       types:
-        Slash: 6
-        Structural: 6
+        Blunt: 3
+        Slash: 5
+        Structural: 8
   - type: Devourer
     foodPreference: Humanoid
     shouldStoreDevoured: true
     chemical: DinoBlood
-    healRate: 15.0
+    healRate: 10
     whitelist:
       components:
       - MobState
       - Door
       tags:
       - Wall
+  - type: Stamina
+    critThreshold: 200
+    stunTime: 3
   - type: FlashImmunity
   - type: GhostRole
-    allowMovement: true
-    makeSentient: true
     name: ghost-role-information-dino-commander-name
     description: ghost-role-information-dino-commander-description
     rules: ghost-role-information-rules-team-antagonist
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+  - type: GhostTakeoverAvailable

@@ -245,3 +245,112 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepExplosion
+
+- type: entity
+  id: ItemBouquet
+  parent: BaseItem
+  name: bouquet
+  description: That's flowers alright.
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Fun/bouquet.rsi
+      state: bouquet
+    - type: Item
+      size: Normal
+      sprite: _Impstation/Objects/Fun/bouquet.rsi
+      inhandVisuals:
+        left:
+        - state: bouquet-inhand-left
+        right:
+        - state: bouquet-inhand-right
+    - type: Construction
+      graph: Bouquet
+      node: bouquet
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieGiantBear
+  name: ursa massive plushie
+  description: If I have to carry this for one second longer I might die.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    state: giantbearplush
+  - type: Item
+    size: Large
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    inhandVisuals:
+      left:
+      - state: giantbearplush-inhand
+      right:
+      - state: giantbearplush-inhand
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/bear.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/bear.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+  - type: HeldSpeedModifier
+    walkModifier: 0.5
+    sprintModifier: 0.5
+  - type: DamageOtherOnHit # if you get hit by this you deserve it
+    damage:
+      types:
+        Blunt: 15
+    soundHit: /Audio/Animals/bear.ogg
+    staminaCost: 50
+  - type: MultiHandedItem
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieCaptain
+  name: model captain plushie
+  description: "A soft toy representative of Nanotrasen's workplace relationship initiative. Remember: the only 'union' you should join is the 'union' of holy matrimony."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    state: plushie1
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Human/manlaugh1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Human/femalescream_1.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Human/male_cough_1.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Human/femalescream_2.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Human/femalescream_3.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieHeadofPersonnel
+  name: model head of personnel plushie
+  description: "A soft toy representative of Nanotrasen's workplace relationship initiative. Remember: the only Code Pink you should see is the Hex Code in your NanoChat!"
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    state: plushie2
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/toy_rustle.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/toy_rustle.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/toy_rustle.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/toy_rustle.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/toy_rustle.ogg

@@ -107,7 +107,6 @@
     sprite: _Impstation/Clothing/OuterClothing/Hardsuits/dinosuit.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/OuterClothing/Hardsuits/dinosuit.rsi
-  # deathsquad hardsuit stats. fuck it
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -128,8 +127,8 @@
         Caustic: 0.1
         Radiation: 0.1
   - type: ClothingSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
+    walkModifier: 0.8
+    sprintModifier: 0.8
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepThud
