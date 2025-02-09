@@ -25,6 +25,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Revenant.Components;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -399,8 +400,12 @@ namespace Content.Server.Ghost
         public void MakeVisible(bool visible)
         {
             var entityQuery = EntityQueryEnumerator<GhostComponent, VisibilityComponent>();
-            while (entityQuery.MoveNext(out var uid, out _, out var vis))
+            while (entityQuery.MoveNext(out var uid, out var ghostComp, out var vis))
             {
+                // Don't show Revenants, best way to check for admin ghost is if they can interact
+                if (ghostComp.CanGhostInteract || HasComp<RevenantComponent>(uid))
+                    continue;
+
                 if (visible)
                 {
                     _visibilitySystem.AddLayer((uid, vis), (int) VisibilityFlags.Normal, false);
