@@ -22,7 +22,6 @@ using Content.Shared.Damage.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Shared.Mindshield.Components;
-using Content.Shared._Goobstation.FakeMindshield.Components;
 
 namespace Content.Server.Changeling;
 
