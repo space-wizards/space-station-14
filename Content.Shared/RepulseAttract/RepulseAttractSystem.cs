@@ -1,11 +1,13 @@
-﻿using Content.Shared.Ghost;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Item;
+﻿using Content.Shared.Physics;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Whitelist;
 using Content.Shared.Wieldable;
+using Robust.Shared.Map;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
+using System.Numerics;
 
 namespace Content.Shared.RepulseAttract;
 
@@ -20,73 +22,57 @@ public sealed class RepulseAttractSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RepulseAttractComponent, GettingPickedUpAttemptEvent>(OnPickupAttempt);
-        SubscribeLocalEvent<RepulseAttractComponent, DroppedEvent>(OnDrop);
         SubscribeLocalEvent<RepulseAttractComponent, AttemptMeleeEvent>(OnMeleeAttempt, after: [typeof(SharedWieldableSystem)]);
     }
-
-    private void OnPickupAttempt(Entity<RepulseAttractComponent> ent, ref GettingPickedUpAttemptEvent args)
-    {
-        if (args.Cancelled || ent.Owner == args.User)
-            return;
-
-        ent.Comp.User = args.User;
-    }
-
-    private void OnDrop(Entity<RepulseAttractComponent> ent, ref DroppedEvent args)
-    {
-        ent.Comp.User = null;
-    }
-
     private void OnMeleeAttempt(Entity<RepulseAttractComponent> ent, ref AttemptMeleeEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (ent.Comp.DisableDuringUseDelay)
-        {
-            if (TryComp<UseDelayComponent>(ent.Owner, out var useDelay) && _delay.IsDelayed((ent.Owner, useDelay)))
-                return;
-        }
+        if (_delay.IsDelayed(ent.Owner))
+            return;
 
-        TryRepulseAttract(ent);
+        TryRepulseAttract(ent, args.User);
     }
 
-    /// <summary>
-    ///     Try to Repulse or Attract
-    /// </summary>
-    /// <returns></returns>
-    private bool TryRepulseAttract(Entity<RepulseAttractComponent> ent)
+    public bool TryRepulseAttract(Entity<RepulseAttractComponent> ent, EntityUid user)
     {
-        var caster = ent.Owner;
-        var comp = ent.Comp;
+        var position = _xForm.GetMapCoordinates(ent.Owner);
+        return TryRepulseAttract(ent.Comp.Attract, position, ent.Comp.Speed, ent.Comp.Range, ent.Comp.Whitelist, ent.Comp.Blacklist);
+    }
 
-        if (comp.User != null)
-            caster = comp.User.Value;
-
-        var xForm = Transform(caster);
-        var userWorldPos = _xForm.GetWorldPosition(xForm);
-
-        var entsInRange = _lookup.GetEntitiesInRange(caster, comp.Range);
+    public bool TryRepulseAttract(bool attract, MapCoordinates position, float speed, float range, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
+    {
+        var entsInRange = _lookup.GetEntitiesInRange(position, range, flags: LookupFlags.Dynamic | LookupFlags.Sundries);
+        var epicenter = position.Position;
+        var bodyQuery = GetEntityQuery<PhysicsComponent>();
+        var xformQuery = GetEntityQuery<TransformComponent>();
 
         foreach (var target in entsInRange)
         {
-            if (_whitelist.IsWhitelistFail(comp.Whitelist, target) || _whitelist.IsBlacklistPass(comp.Blacklist, target))
+            if (!bodyQuery.TryGetComponent(target, out var physics)
+                || physics.BodyType == BodyType.Static
+                || physics.CollisionLayer == (int)CollisionGroup.GhostImpassable) // don't affect ghosts
                 continue;
 
-            var targetXForm = Transform(target);
-
-            if (targetXForm.Anchored || HasComp<GhostComponent>(target))
+            if (_whitelist.IsWhitelistFail(whitelist, target) || _whitelist.IsBlacklistPass(blacklist, target))
                 continue;
 
-            var targetWorldPos = _xForm.GetWorldPosition(target);
+            var targetXForm = xformQuery.GetComponent(target);
 
-            var direction = targetWorldPos - userWorldPos;
+            var targetPos = _xForm.GetMapCoordinates(target, targetXForm).Position;
 
-            if (comp.Attract)
-                direction = userWorldPos - targetWorldPos;
+            // vector from epicenter to target entity
+            var direction = targetPos - epicenter;
 
-            _throw.TryThrow(target, direction, comp.Strength, doSpin: true);
+            if (direction == Vector2.Zero)
+                continue;
+
+            // attract: throw all items directly to to the epicenter
+            // repulse: throw them up to the maximum range
+            var throwDirection = attract ? -direction : direction.Normalized() * (range - direction.Length());
+
+            _throw.TryThrow(target, throwDirection, speed);
         }
 
         return true;

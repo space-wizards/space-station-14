@@ -167,7 +167,7 @@ public abstract class SharedWieldableSystem : EntitySystem
         else if (component.UnwieldOnUse)
             args.Handled = TryUnwield(uid, component, args.User);
 
-        if (HasComp<UseDelayComponent>(uid) && component.NoUseDelayOnWield)
+        if (HasComp<UseDelayComponent>(uid) && !component.UseDelayOnWield)
             args.ApplyDelay = false;
     }
 
@@ -213,7 +213,7 @@ public abstract class SharedWieldableSystem : EntitySystem
         if (!CanWield(used, component, user))
             return false;
 
-        if (TryComp(used, out UseDelayComponent? useDelay) && !component.NoUseDelayOnWield)
+        if (TryComp(used, out UseDelayComponent? useDelay) && component.UseDelayOnWield)
         {
             if (!_delay.TryResetDelay((used, useDelay), true))
                 return false;

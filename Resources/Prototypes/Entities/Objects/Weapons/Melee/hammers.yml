@@ -31,7 +31,7 @@
   description: A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy.
   components:
   - type: Wieldable
-    noUseDelayOnWield: true
+    useDelayOnWield: false
   - type: MeleeRequiresWield
   - type: LandAtCursor
   - type: Sprite
@@ -74,17 +74,16 @@
   description: The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows.
   components:
   - type: Wieldable
-    noUseDelayOnWield: true
+    useDelayOnWield: false
   - type: MeleeRequiresWield
   - type: Sprite
     sprite: Objects/Weapons/Melee/singularityhammer.rsi
     layers:
     - state: icon
   - type: RepulseAttract
-    strength: 15 #Anything above this pushes things too far away from the Wizard
+    speed: 15 #Anything above this pushes things too far away from the Wizard
     range: 5
     attract: true
-    disableDuringUseDelay: true
     whitelist:
       components:
       - MobMover

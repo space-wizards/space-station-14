@@ -10,37 +10,25 @@ namespace Content.Shared.RepulseAttract;
 public sealed partial class RepulseAttractComponent : Component
 {
     /// <summary>
-    ///     Optional user, used if the <see cref="RepulseAttractComponent"/> is on an Item
-    /// </summary>
-    [DataField]
-    public EntityUid? User;
-
-    /// <summary>
     ///     Attracts if true, Repulse if false.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Attract;
 
     /// <summary>
-    ///     How strong should the Repulse/Attract be?
+    ///     How fast should the Repulsion/Attraction be?
     /// </summary>
-    [DataField]
-    public float Strength = 1.0F;
+    [DataField, AutoNetworkedField]
+    public float Speed = 1.0f;
 
     /// <summary>
     ///     How close do the entities need to be?
     /// </summary>
-    [DataField]
-    public float Range = 1.0F;
+    [DataField, AutoNetworkedField]
+    public float Range = 1.0f;
 
     /// <summary>
-    ///     Should this work while there's an active UseDelayComponent?
-    /// </summary>
-    [DataField]
-    public bool DisableDuringUseDelay;
-
-    /// <summary>
-    ///     What kind of entities should this effect only?
+    ///     What kind of entities should this effect apply to?
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? Whitelist;
