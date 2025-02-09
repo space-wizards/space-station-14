@@ -66,7 +66,6 @@
   suffix: Wizard
   components:
   - type: ImmovableRod
-    minSpeed: 25
     maxSpeed: 25
     destroyTiles: false
     randomizeVelocity: false
