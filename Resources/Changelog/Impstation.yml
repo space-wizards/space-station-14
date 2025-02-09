@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: 'New Ammo Type: .22 Auto (incl. Incendiary, Uranium, and Practice)'
-    type: Add
-  - message: Mk 93 Machine Pistol
-    type: Add
-  - message: Mk 92HB Hyper-Burst Pistol
-    type: Add
-  - message: Zipper .22; a Dogshit pistol found in maintenance loot rarely.
-    type: Add
-  - message: Zipper .22 Syndicate Bundle; purchased for 20 TC-- uses Armor Piercing
-      rounds to deal defense-ignoring damage.
-    type: Add
-  - message: Machine Pistol and Hyperburst Pistol Crates to the Cargo Store
-    type: Add
-  - message: Advanced Sidearms as a Tier 1 technology for Science to research
-    type: Add
-  - message: Advanced Pistol Munitions as a Tier 2 technology for Science to research
-    type: Add
-  id: 586
-  time: '2024-11-26T19:18:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/809
 - author: honeyed-lemons
   changes:
   - message: Adjust spacewind min calc mass to 15
@@ -4244,3 +4222,10 @@
   id: 1085
   time: '2025-02-09T19:15:37.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1627
+- author: Darkmajia
+  changes:
+  - message: Hiding inside a locker will prevent supermatter delamination hallucinations.
+    type: Add
+  id: 1086
+  time: '2025-02-09T23:55:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1625
