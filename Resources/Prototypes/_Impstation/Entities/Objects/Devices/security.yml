@@ -12,25 +12,25 @@
       - state: portable_criminal
       - state: screen-criminal
         shader: unshaded
-# THIS PART'S BROKEN I GUESS, LEMME SEE IF GITHUB SAYS ANYTHING
   - type: Clothing
     quickEquip: false
-    sprite: _Impstation/Objects/Devices/tablet.rsi
+    sprite: _Impstation/Objects/Devices/tablets.rsi
     equippedPrefix: criminal
     slots:
     - suitStorage
-# LIZARD CODE COMPARISON
-#  - type: Clothing
-#    quickEquip: false
-#    sprite: Objects/Fun/toys.rsi
-#    equippedPrefix: lizard
-#    slots:
-#    - HEAD
+# THIS PART STILL ISN'T WORKING WITH THE UNSHADED LAYER, I'LL ASK RUDDYGREAT
     clothingVisuals:
       suitStorage:
       - state: criminal-equipped-SUITSTORAGE
       - state: criminal-equipped-SUITSTORAGE-overlay
         shader: unshaded
+# RUDDYGREAT'S UNSHADED DEMO CODE COMPARISON
+#  - type: Clothing
+#    sprite: Clothing/Head/Hats/beret_engineering.rsi
+#    clothingVisuals:
+#      head:
+#      - state: equipped-HELMET
+#        shader: unshaded
   - type: ActivatableUI
     key: enum.CriminalRecordsConsoleKey.Key
   - type: UserInterface
