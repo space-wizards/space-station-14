@@ -37,8 +37,6 @@ public sealed class CycloritesVisionSystem : EntitySystem
         _overlayMan.AddOverlay(_overlay);
         if (_effect == null)
             AddNightVision(ent.Owner);
-        else if (HasComp<EyeProtectionComponent>(ent.Owner))
-            RemoveNightVision();
     }
 
     private void OnPlayerDetached(Entity<CycloritesVisionComponent> ent, ref LocalPlayerDetachedEvent args)
@@ -54,8 +52,6 @@ public sealed class CycloritesVisionSystem : EntitySystem
         _overlayMan.AddOverlay(_overlay);
         if (_effect == null)
             AddNightVision(ent.Owner);
-        else if (HasComp<EyeProtectionComponent>(ent.Owner))
-            RemoveNightVision();
     }
 
     private void OnVisionShutdown(Entity<CycloritesVisionComponent> ent, ref ComponentShutdown args)
@@ -68,8 +64,6 @@ public sealed class CycloritesVisionSystem : EntitySystem
 
     private void AddNightVision(EntityUid uid)
     {
-        if (HasComp<EyeProtectionComponent>(uid)) return;
-
         _effect = SpawnAttachedTo(_effectPrototype, Transform(uid).Coordinates);
         _xformSys.SetParent(_effect.Value, uid);
     }

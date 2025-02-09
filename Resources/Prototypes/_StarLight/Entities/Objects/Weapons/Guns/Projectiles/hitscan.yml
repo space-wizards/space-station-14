@@ -56,9 +56,15 @@
   parent: BulletTrace
   damage:
     types:
-      Piercing: 40
-      Structural: 30
+      Piercing: 75
+      Structural: 226
   staminaDamage: 35
+  armorPenetration: 0.35
+  pierceChance: 0.95
+  pierceLevel: Rock
+  ricochetChance: 0.95
+  steps: 20
+  derivation: 0.005
 
 - type: hitscan
   id: DebugBulletTrace
@@ -89,6 +95,7 @@
       Piercing: 35
   armorPenetration: -0.25
   pierceChance: 0.40
+  derivation: 0.05
   ricochetChance: 0.30
   bullet:
     sprite:
@@ -103,6 +110,7 @@
       Piercing: 46 #+ 30%
   armorPenetration: -1
   pierceChance: 0.03
+  derivation: 0.05
   ricochetChance: 0.15
 
 - type: hitscan
@@ -113,6 +121,7 @@
       Piercing: 28 #- 20%
   armorPenetration: 0.35
   pierceChance: 0.69
+  derivation: 0.05
   ricochetChance: 0.80
   pierceLevel: Metal
   bullet:
@@ -131,6 +140,7 @@
       sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
       state: practice
   pierceChance: 0.69
+  derivation: 0.05
   ricochetChance: 0.48
 
 - type: hitscan
@@ -142,6 +152,7 @@
       Blunt: 3
       Heat: 32
   pierceChance: 0.69
+  derivation: 0.05
   ricochetChance: 0.48
   bullet:
     sprite:
@@ -156,6 +167,7 @@
       Radiation: 15
       Piercing: 20
   pierceChance: 0.69
+  derivation: 0.05
   ricochetChance: 0.80
   pierceLevel: HardenedMetal
   bullet:
@@ -171,6 +183,7 @@
       Piercing: 21 #- 40%
   armorPenetration: 0.69
   pierceChance: 0.81
+  derivation: 0.05
   ricochetChance: 0.48
   pierceLevel: HardenedMetal
   bullet:
@@ -188,6 +201,7 @@
       Piercing: 16
   armorPenetration: -0.25
   pierceChance: 0.40
+  derivation: 0.2
   ricochetChance: 0.30
   bullet:
     sprite:
@@ -202,6 +216,7 @@
       Piercing: 20 #+ 30%
   armorPenetration: -1
   pierceChance: 0.03
+  derivation: 0.2
   ricochetChance: 0.15
 
 - type: hitscan
@@ -212,6 +227,7 @@
       Piercing: 12 #- 20%
   armorPenetration: 0.35
   pierceChance: 0.69
+  derivation: 0.2
   ricochetChance: 0.80
   pierceLevel: Wood
   bullet:
@@ -230,6 +246,7 @@
       sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
       state: practice
   pierceChance: 0.69
+  derivation: 0.2
   ricochetChance: 0.48
 
 - type: hitscan
@@ -241,6 +258,7 @@
       Blunt: 2
       Heat: 14
   pierceChance: 0.69
+  derivation: 0.2
   ricochetChance: 0.48
   bullet:
     sprite:
@@ -255,6 +273,7 @@
       Radiation: 6
       Piercing: 10
   pierceChance: 0.69
+  derivation: 0.2
   ricochetChance: 0.80
   pierceLevel: HardenedMetal
   bullet:
@@ -270,6 +289,7 @@
       Piercing: 9 #- 40%
   armorPenetration: 0.69
   pierceChance: 0.81
+  derivation: 0.2
   ricochetChance: 0.48
   pierceLevel: Metal
   bullet:
@@ -290,6 +310,7 @@
       state: sp
   armorPenetration: -0.5
   pierceChance: 0.30
+  derivation: 0.15
   ricochetChance: 0.20
   
 - type: hitscan
@@ -305,6 +326,7 @@
       state: bullet
   armorPenetration: -1
   pierceChance: 0.02
+  derivation: 0.15
   ricochetChance: 0.10
   
 - type: hitscan
@@ -320,6 +342,7 @@
       state: fmj
   armorPenetration: 0.25
   pierceChance: 0.55
+  derivation: 0.15
   ricochetChance: 0.70
   pierceLevel: Wood
   
@@ -336,6 +359,7 @@
       state: ap
   armorPenetration: 0.50
   pierceChance: 0.63
+  derivation: 0.15
   ricochetChance: 0.35
   pierceLevel: Metal
 
@@ -382,6 +406,7 @@
       Piercing: 19
   armorPenetration: -0.25
   pierceChance: 0.40
+  derivation: 0.05
   ricochetChance: 0.30
   pierceLevel: Metal
   bullet:
@@ -398,6 +423,7 @@
   pierceLevel: Wood
   armorPenetration: -1
   pierceChance: 0.03
+  derivation: 0.05
   ricochetChance: 0.15
 
 - type: hitscan
@@ -408,6 +434,7 @@
       Piercing: 15 #- 20%
   armorPenetration: 0.35
   pierceChance: 0.69
+  derivation: 0.05
   ricochetChance: 0.80
   pierceLevel: Metal
   bullet:
@@ -423,6 +450,7 @@
       Piercing: 11 #- 40%
   armorPenetration: 0.69
   pierceChance: 0.81
+  derivation: 0.05
   ricochetChance: 0.48
   pierceLevel: HardenedMetal
   bullet:
@@ -441,6 +469,7 @@
       sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
       state: practice
   pierceChance: 0.69
+  derivation: 0.05
   ricochetChance: 0.48
 
 - type: hitscan
@@ -452,6 +481,7 @@
       Blunt: 3
       Heat: 16
   pierceChance: 0.69
+  derivation: 0.05
   ricochetChance: 0.48
   bullet:
     sprite:
@@ -466,6 +496,7 @@
       Radiation: 9
       Piercing: 10
   pierceChance: 0.69
+  derivation: 0.05
   ricochetChance: 0.80
   pierceLevel: HardenedMetal
   bullet:
