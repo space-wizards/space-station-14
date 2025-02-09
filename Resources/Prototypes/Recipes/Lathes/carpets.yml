@@ -2,7 +2,7 @@
   abstract: true
   id: BaseCarpetRecipe
   categories:
-    - Carpets
+  - Carpets
   completetime: 1
   materials:
     Cloth: 100

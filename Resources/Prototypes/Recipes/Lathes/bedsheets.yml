@@ -2,7 +2,7 @@
   abstract: true
   id: BaseBedsheetRecipe
   categories:
-    - Bedsheets
+  - Bedsheets
   completetime: 2
   materials:
     Cloth: 150

@@ -4,7 +4,7 @@
   abstract: true
   id: BaseJumpsuitRecipe
   categories:
-    - Jumpsuits
+  - Jumpsuits
   completetime: 4
   materials:
     Cloth: 300
@@ -14,8 +14,8 @@
   parent: BaseJumpsuitRecipe
   id: BaseCommandJumpsuitRecipe
   categories:
-    - Jumpsuits
-    - Command
+  - Jumpsuits
+  - Command
   materials:
     Cloth: 300
     Durathread: 100
@@ -24,7 +24,7 @@
   abstract: true
   id: BaseCoatRecipe
   categories:
-    - Coats
+  - Coats
   completetime: 3.2 # don't ask why its faster than a jumpsuit??
   materials:
     Cloth: 500
@@ -35,8 +35,8 @@
   parent: BaseCoatRecipe
   id: BaseCommandCoatRecipe
   categories:
-    - Coats
-    - Command
+  - Coats
+  - Command
   materials:
     Cloth: 500
     Durathread: 300
@@ -45,7 +45,7 @@
   abstract: true
   id: BaseHatRecipe
   categories:
-    - Hats
+  - Hats
   completetime: 2
   materials:
     Cloth: 100
@@ -55,8 +55,8 @@
   parent: BaseHatRecipe
   id: BaseCommandHatRecipe
   categories:
-    - Hats
-    - Command
+  - Hats
+  - Command
   materials:
     Cloth: 100
     Durathread: 50
@@ -65,7 +65,7 @@
   abstract: true
   id: BaseNeckClothingRecipe
   categories:
-    - Neck
+  - Neck
   completetime: 2
   materials:
     Cloth: 200
