@@ -88,6 +88,9 @@
       - ToyFigurineNukieCommander
       - ToyFigurineNukieAgent #<imp>
       - ToyFigurineNukieJuggernaut
+      - ToyFigurineCyborgAssault
+      - ToyFigurineCyborgCorpsman
+      - ToyFigurineCyborgSaboteur
       - ToyFigurineCBURNQuarantineOfficer
       - ToyFigurineCentCommOfficial
       - ToyFigurineChronologyAgent
@@ -147,6 +150,13 @@
       - ToyFigurineHamlet
       - ToyFigurineThief
       - ToyFigurineCourier #<imp>
-      - ToyFigurineBrigmedic #</imp>
+      - ToyFigurineBrigmedic 
+      - ToyFigurineCyborgDefault
+      - ToyFigurineCyborgEngineering
+      - ToyFigurineCyborgJanitorial
+      - ToyFigurineCyborgMedical
+      - ToyFigurineCyborgSalvage
+      - ToyFigurineCyborgService
+      - ToyFigurineStationAI #</imp>
       chance: 0.90
       offset: 0.2
