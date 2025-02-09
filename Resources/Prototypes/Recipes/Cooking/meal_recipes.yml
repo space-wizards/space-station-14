@@ -653,8 +653,8 @@
 
 #Italian
 - type: microwaveMealRecipe
-  id: RecipeBoiledSpaghetti
-  name: boiled spaghetti recipe
+  id: RecipeRawSpaghetti
+  name: raw spaghetti recipe
   result: FoodNoodlesBoiled
   time: 15
   reagents:
