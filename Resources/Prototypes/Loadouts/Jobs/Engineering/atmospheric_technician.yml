@@ -41,3 +41,9 @@
   id: WhiteShoes
   equipment:
     shoes: ClothingShoesColorWhite
+
+# Gloves
+- type: loadout
+  id: AtmosphericTechnicianGloves
+  equipment:
+    gloves: ClothingHandsGlovesAtmos

@@ -269,6 +269,20 @@
   - type: Fiber
     fiberMaterial: fibers-insulative
 
+- type: entity
+  parent: [ ClothingHandsGlovesSyntheticBase, BaseEngineeringContraband ]
+  id: ClothingHandsGlovesAtmos
+  name: atmos insulated gloves
+  description: Insulated against heat, not shock. Fireproof.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/atmos.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/atmos.rsi
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-yellow
+
 # can't parent combat gloves since they are butcherable
 - type: entity
   parent: ClothingHandsGlovesSyntheticBase
