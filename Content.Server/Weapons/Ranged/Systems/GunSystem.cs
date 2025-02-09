@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Numerics;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Components;
@@ -425,7 +425,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
             if (hitscan.Reflective != ReflectType.None)
             {
-                for (var reflectAttempt = 0; reflectAttempt < 5; reflectAttempt++)
+                for (var reflectAttempt = 0; reflectAttempt < hitscan.Steps; reflectAttempt++)
                 {
                     var ray = new CollisionRay(from.Position, dir, hitscan.CollisionMask);
                     var rayCastResults =
@@ -503,7 +503,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         if (ev.Pierced)
                         {
-                            var random = Random.NextFloat(-0.5f, 0.5f);
+                            var random = Random.NextFloat(-hitscan.Derivation, hitscan.Derivation);
                             fromEffect = _transform.ToCoordinates(result.HitEntity, new MapCoordinates(result.HitPos, fromMap.MapId));
                             from = TransformSystem.ToMapCoordinates(fromEffect);
                             dir = (dir.ToAngle() + random).ToVec();
@@ -767,7 +767,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (pvs.Count > 0)
         {
             var filter = Filter.Empty();
-            foreach (var pos in pvs)
+            foreach (var pos in pvs.Where(x=>x.IsValid(EntityManager)))
                 filter.Merge(Filter.Pvs(pos, entityMan: EntityManager));
 
             RaiseNetworkEvent(hitscanEvent, filter);
