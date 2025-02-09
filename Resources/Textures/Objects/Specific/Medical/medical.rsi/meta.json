@@ -38,6 +38,14 @@
             "name": "tourniquet"
         },
 		{
+			"name": "tourniquet-inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "tourniquet-inhand-right",
+			"directions": 4
+		},
+		{
 			"name": "morphine"
 		},
 		{
