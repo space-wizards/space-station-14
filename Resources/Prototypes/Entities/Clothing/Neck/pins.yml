@@ -25,6 +25,17 @@
 
 - type: entity
   parent: ClothingNeckPinBase
+  id: ClothingNeckStrPin
+  name: straight pin
+  description: Just be, dont crime.
+  components:
+  - type: Sprite
+    state: straight
+  - type: Clothing
+    equippedPrefix: str
+
+- type: entity
+  parent: ClothingNeckPinBase
   id: ClothingNeckAllyPin
   name: straight ally pin
   description: Be ally do crime.
