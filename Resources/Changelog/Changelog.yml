@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: L6 Saw now fits in the suit slot
-    type: Tweak
-  - message: L6 Saw is now a 5x4 item
-    type: Tweak
-  id: 7421
-  time: '2024-09-23T06:48:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30525
 - author: ElectroJr
   changes:
   - message: Entities within the same container as the player only appear in the context
@@ -3901,3 +3892,11 @@
   id: 7920
   time: '2025-02-09T12:15:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35000
+- author: Boaz1111
+  changes:
+  - message: Long Bacon Scarf(Lesbian scarf but long) can now be found in the pride-o-mat's
+      hacked inventory!
+    type: Add
+  id: 7921
+  time: '2025-02-09T15:10:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34950
