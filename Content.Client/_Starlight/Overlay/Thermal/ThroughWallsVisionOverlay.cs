@@ -5,24 +5,28 @@ using Robust.Shared.Prototypes;
 using Content.Shared.Eye.Blinding.Components;
 using Robust.Client.GameObjects;
 using Content.Shared.Body.Components;
+using Microsoft.CodeAnalysis;
 
 namespace Content.Client._Starlight.Overlay.Thermal;
 
-public sealed class ThermalVisionOverlay : Robust.Client.Graphics.Overlay
+public sealed class ThroughWallsVisionOverlay : Robust.Client.Graphics.Overlay
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    private readonly ContainerSystem _containerSystem;
     private readonly TransformSystem _transform;
+    private readonly ShaderInstance _shader;
+
     public override bool RequestScreenTexture => true;
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
-    private readonly ShaderInstance _screenShader;
-    public ThermalVisionOverlay()
+    public ThroughWallsVisionOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _screenShader = _prototypeManager.Index<ShaderPrototype>("ThermalVisionScreenShader").InstanceUnique();
         _transform = _entityManager.System<TransformSystem>();
-        ZIndex = 10000;
+        _containerSystem = _entityManager.System<ContainerSystem>();
+
+        _shader = _prototypeManager.Index<ShaderPrototype>("BrightnessShader").InstanceUnique();
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -50,14 +54,19 @@ public sealed class ThermalVisionOverlay : Robust.Client.Graphics.Overlay
             return;
 
         var worldHandle = args.WorldHandle;
-        var viewport = args.WorldBounds; 
+        var viewport = args.WorldBounds;
         var eyeRotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
 
-        _screenShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        worldHandle.UseShader(_shader);
+        var query = _entityManager.EntityQueryEnumerator<BodyComponent, MetaDataComponent, SpriteComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out _, out var meta, out var sprite, out var xform))
+        {
+            if (xform.MapID != args.MapId || _containerSystem.IsEntityInContainer(uid, meta)) continue;
+            var (position, rotation) = _transform.GetWorldPositionRotation(xform);
 
-        worldHandle.UseShader(_screenShader);
-        worldHandle.DrawRect(viewport, Color.White);
+            sprite.Render(worldHandle, eyeRotation, rotation, null, position);
+        }
+
         worldHandle.UseShader(null);
     }
 }
-                                     
