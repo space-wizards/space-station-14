@@ -32,3 +32,5 @@
     node: windoorClockwork
     containers:
     - board
+  - type: StaticPrice
+    price: 240

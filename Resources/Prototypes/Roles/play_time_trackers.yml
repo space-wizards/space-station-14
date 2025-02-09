@@ -47,6 +47,9 @@
   id: JobDetective
 
 - type: playTimeTracker
+  id: JobERTChaplain
+
+- type: playTimeTracker
   id: JobERTEngineer
 
 - type: playTimeTracker
@@ -60,6 +63,12 @@
 
 - type: playTimeTracker
   id: JobERTSecurity
+
+- type: playTimeTracker
+  id: JobDeathSquad
+
+- type: playTimeTracker
+  id: JobCBURN
 
 - type: playTimeTracker
   id: JobHeadOfPersonnel
@@ -123,6 +132,9 @@
 
 - type: playTimeTracker
   id: JobServiceWorker
+
+- type: playTimeTracker
+  id: JobStationAi
 
 - type: playTimeTracker
   id: JobStationEngineer

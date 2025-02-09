@@ -19,6 +19,12 @@
     - map: ["enum.SolutionContainerLayers.Fill"]
       state: fill-1
       visible: false
+  - type: MixableSolution
+    solution: food
+  - type: Drink
+    solution: food
+    useSound:
+      path: /Audio/Items/drink.ogg
   - type: DamageOnLand
     damage:
       types:
@@ -35,8 +41,8 @@
     canChangeTransferAmount: true
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Destructible
     thresholds:
     - trigger:

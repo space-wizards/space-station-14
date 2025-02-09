@@ -27,8 +27,8 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.ResearchClientUiKey.Key
-      type: ResearchClientBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
   - type: Machine
     board: AnomalyVesselCircuitboard
   - type: PointLight
@@ -37,9 +37,6 @@
     color: "#fca3c0"
   - type: Appearance
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-vessel
-    layoutId: Vessel
   - type: AmbientSound
     enabled: false
     range: 3
@@ -160,6 +157,7 @@
     board: APECircuitboard
   - type: Lock
     locked: false
+  - type: LockedWiresPanel
   - type: AccessReader
     access: [[ "Research" ]]
   - type: Emitter
@@ -171,10 +169,12 @@
     - AnomalousParticleDelta
     - AnomalousParticleEpsilon
     - AnomalousParticleZeta
+    - AnomalousParticleSigma
     setTypePorts:
       SetParticleDelta: AnomalousParticleDelta
       SetParticleEpsilon: AnomalousParticleEpsilon
       SetParticleZeta: AnomalousParticleZeta
+      SetParticleSigma: AnomalousParticleSigma
     fireBurstSize: 1
     fireBurstDelayMin: 2
     fireBurstDelayMax: 6
@@ -184,6 +184,7 @@
     guides:
     - APE
   - type: Gun
+    projectileSpeed: 10
     fireRate: 10 #just has to be fast enough to keep up with upgrades
     showExamineText: false
     selectedMode: SemiAuto
@@ -194,9 +195,6 @@
   - type: Appearance
   - type: WiresPanel
   - type: WiresVisuals
-  - type: Wires
-    boardName: wires-board-name-ape
-    layoutId: Ape
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
@@ -204,6 +202,7 @@
           True: { visible: true }
           False: { visible: false }
   - type: LockVisuals
+  - type: LockedAnchorable
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -217,6 +216,7 @@
       - SetParticleDelta
       - SetParticleEpsilon
       - SetParticleZeta
+      - SetParticleSigma
 
 - type: entity
   id: MachineAnomalyGenerator
@@ -226,6 +226,7 @@
   placement:
     mode: AlignTileAny
   components:
+  - type: StationAiWhitelist
   - type: SpriteFade
   - type: Sprite
     sprite: Structures/Machines/Anomaly/anomaly_generator.rsi
@@ -301,8 +302,10 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-      - key: enum.AnomalyGeneratorUiKey.Key
-        type: AnomalyGeneratorBoundUserInterface
+        enum.AnomalyGeneratorUiKey.Key:
+          type: AnomalyGeneratorBoundUserInterface
+        enum.WiresUiKey.Key:
+          type: WiresBoundUserInterface
   - type: Appearance
   - type: ActiveRadio
     channels:

@@ -1,4 +1,5 @@
 using Content.Shared.Dataset;
+using Content.Shared.FixedPoint;
 ﻿using Content.Shared.NPC.Prototypes;
 using Content.Shared.Random;
 using Content.Shared.Roles;
@@ -23,13 +24,31 @@ public sealed partial class TraitorRuleComponent : Component
     public ProtoId<NpcFactionPrototype> SyndicateFaction = "Syndicate";
 
     [DataField]
-    public ProtoId<WeightedRandomPrototype> ObjectiveGroup = "TraitorObjectiveGroups";
-
-    [DataField]
     public ProtoId<DatasetPrototype> CodewordAdjectives = "adjectives";
 
     [DataField]
     public ProtoId<DatasetPrototype> CodewordVerbs = "verbs";
+
+    [DataField]
+    public ProtoId<DatasetPrototype> ObjectiveIssuers = "TraitorCorporations";
+
+    /// <summary>
+    /// Give this traitor an Uplink on spawn.
+    /// </summary>
+    [DataField]
+    public bool GiveUplink = true;
+
+    /// <summary>
+    /// Give this traitor the codewords.
+    /// </summary>
+    [DataField]
+    public bool GiveCodewords = true;
+
+    /// <summary>
+    /// Give this traitor a briefing in chat.
+    /// </summary>
+    [DataField]
+    public bool GiveBriefing = true;
 
     public int TotalTraitors => TraitorMinds.Count;
     public string[] Codewords = new string[3];
@@ -57,4 +76,16 @@ public sealed partial class TraitorRuleComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
+
+    /// <summary>
+    /// The amount of codewords that are selected.
+    /// </summary>
+    [DataField]
+    public int CodewordCount = 4;
+
+    /// <summary>
+    /// The amount of TC traitors start with.
+    /// </summary>
+    [DataField]
+    public FixedPoint2 StartingBalance = 20;
 }

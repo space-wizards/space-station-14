@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Numerics;
 using Content.Server.Anomaly.Components;
 using Content.Shared.Administration.Logs;
@@ -6,8 +6,8 @@ using Content.Shared.Anomaly.Components;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Teleportation.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Collections;
 using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
@@ -32,23 +32,25 @@ public sealed class BluespaceAnomalySystem : EntitySystem
     {
         var xformQuery = GetEntityQuery<TransformComponent>();
         var xform = xformQuery.GetComponent(uid);
-        var range = component.MaxShuffleRadius * args.Severity;
+        var range = component.MaxShuffleRadius * args.Severity * args.PowerModifier;
+        // get a list of all entities in range with the MobStateComponent
+        // we filter out those inside a container
+        // otherwise borg brains get removed from their body, or PAIs from a PDA
         var mobs = new HashSet<Entity<MobStateComponent>>();
-        _lookup.GetEntitiesInRange(xform.Coordinates, range, mobs);
-        var allEnts = new List<EntityUid>(mobs.Select(m => m.Owner)) { uid };
-        var coords = new List<Vector2>();
+        _lookup.GetEntitiesInRange(xform.Coordinates, range, mobs, flags: LookupFlags.Uncontained);
+        var allEnts = new ValueList<EntityUid>(mobs.Select(m => m.Owner)) { uid };
+        var coords = new ValueList<Vector2>();
         foreach (var ent in allEnts)
         {
-            if (xformQuery.TryGetComponent(ent, out var xf))
-                coords.Add(xf.MapPosition.Position);
+            if (xformQuery.TryGetComponent(ent, out var allXform))
+                coords.Add(_xform.GetWorldPosition(allXform));
         }
 
         _random.Shuffle(coords);
         for (var i = 0; i < allEnts.Count; i++)
         {
-
             _adminLogger.Add(LogType.Teleport, $"{ToPrettyString(allEnts[i])} has been shuffled to {coords[i]} by the {ToPrettyString(uid)} at {xform.Coordinates}");
-            _xform.SetWorldPosition(allEnts[i], coords[i], xformQuery);
+            _xform.SetWorldPosition(allEnts[i], coords[i]);
         }
     }
 
@@ -56,10 +58,10 @@ public sealed class BluespaceAnomalySystem : EntitySystem
     {
         var xform = Transform(uid);
         var mapPos = _xform.GetWorldPosition(xform);
-        var radius = component.SupercriticalTeleportRadius;
+        var radius = component.SupercriticalTeleportRadius * args.PowerModifier;
         var gridBounds = new Box2(mapPos - new Vector2(radius, radius), mapPos + new Vector2(radius, radius));
         var mobs = new HashSet<Entity<MobStateComponent>>();
-        _lookup.GetEntitiesInRange(xform.Coordinates, component.MaxShuffleRadius, mobs);
+        _lookup.GetEntitiesInRange(xform.Coordinates, component.MaxShuffleRadius, mobs, flags: LookupFlags.Uncontained);
         foreach (var comp in mobs)
         {
             var ent = comp.Owner;

@@ -1,0 +1,16 @@
+- type: entity
+  parent: FoodBreadBaguette
+  id: WeaponBaguette
+  suffix: Weapon
+  components:
+  - type: MeleeWeapon
+    attackRate: 1.4
+    wideAnimationRotation: -120
+    damage:
+      types:
+        Slash: 16
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Reflect
+    reflectProb: 0.05
+    spread: 90

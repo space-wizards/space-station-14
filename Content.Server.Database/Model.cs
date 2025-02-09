@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
@@ -28,6 +30,7 @@ namespace Content.Server.Database
         public DbSet<AdminLog> AdminLog { get; set; } = null!;
         public DbSet<AdminLogPlayer> AdminLogPlayer { get; set; } = null!;
         public DbSet<Whitelist> Whitelist { get; set; } = null!;
+        public DbSet<Blacklist> Blacklist { get; set; } = null!;
         public DbSet<ServerBan> Ban { get; set; } = default!;
         public DbSet<ServerUnban> Unban { get; set; } = default!;
         public DbSet<ServerBanExemption> BanExemption { get; set; } = default!;
@@ -40,6 +43,9 @@ namespace Content.Server.Database
         public DbSet<AdminNote> AdminNotes { get; set; } = null!;
         public DbSet<AdminWatchlist> AdminWatchlists { get; set; } = null!;
         public DbSet<AdminMessage> AdminMessages { get; set; } = null!;
+        public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
+        public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
+        public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,8 +62,26 @@ namespace Content.Server.Database
                 .IsUnique();
 
             modelBuilder.Entity<Trait>()
-                        .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.TraitName})
-                        .IsUnique();
+                .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.TraitName})
+                .IsUnique();
+
+            modelBuilder.Entity<ProfileRoleLoadout>()
+                .HasOne(e => e.Profile)
+                .WithMany(e => e.Loadouts)
+                .HasForeignKey(e => e.ProfileId)
+                .IsRequired();
+
+            modelBuilder.Entity<ProfileLoadoutGroup>()
+                .HasOne(e => e.ProfileRoleLoadout)
+                .WithMany(e => e.Groups)
+                .HasForeignKey(e => e.ProfileRoleLoadoutId)
+                .IsRequired();
+
+            modelBuilder.Entity<ProfileLoadout>()
+                .HasOne(e => e.ProfileLoadoutGroup)
+                .WithMany(e => e.Loadouts)
+                .HasForeignKey(e => e.ProfileLoadoutGroupId)
+                .IsRequired();
 
             modelBuilder.Entity<Job>()
                 .HasIndex(j => j.ProfileId);
@@ -118,10 +142,6 @@ namespace Content.Server.Database
             modelBuilder.Entity<Round>()
                 .HasIndex(round => round.StartDate);
 
-            modelBuilder.Entity<Round>()
-                .Property(round => round.StartDate)
-                .HasDefaultValue(default(DateTime));
-
             modelBuilder.Entity<AdminLogPlayer>()
                 .HasKey(logPlayer => new {logPlayer.RoundId, logPlayer.LogId, logPlayer.PlayerUserId});
 
@@ -171,6 +191,9 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<ConnectionLog>()
                 .HasIndex(p => p.UserId);
+
+            modelBuilder.Entity<ConnectionLog>()
+                .HasIndex(p => p.Time);
 
             modelBuilder.Entity<ConnectionLog>()
                 .Property(p => p.ServerId)
@@ -300,6 +323,54 @@ namespace Content.Server.Database
                 .HasForeignKey(ban => ban.LastEditedById)
                 .HasPrincipalKey(author => author.UserId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<RoleWhitelist>()
+                .HasOne(w => w.Player)
+                .WithMany(p => p.JobWhitelists)
+                .HasForeignKey(w => w.PlayerUserId)
+                .HasPrincipalKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Changes for modern HWID integration
+            modelBuilder.Entity<Player>()
+                .OwnsOne(p => p.LastSeenHWId)
+                .Property(p => p.Hwid)
+                .HasColumnName("last_seen_hwid");
+
+            modelBuilder.Entity<Player>()
+                .OwnsOne(p => p.LastSeenHWId)
+                .Property(p => p.Type)
+                .HasDefaultValue(HwidType.Legacy);
+
+            modelBuilder.Entity<ServerBan>()
+                .OwnsOne(p => p.HWId)
+                .Property(p => p.Hwid)
+                .HasColumnName("hwid");
+
+            modelBuilder.Entity<ServerBan>()
+                .OwnsOne(p => p.HWId)
+                .Property(p => p.Type)
+                .HasDefaultValue(HwidType.Legacy);
+
+            modelBuilder.Entity<ServerRoleBan>()
+                .OwnsOne(p => p.HWId)
+                .Property(p => p.Hwid)
+                .HasColumnName("hwid");
+
+            modelBuilder.Entity<ServerRoleBan>()
+                .OwnsOne(p => p.HWId)
+                .Property(p => p.Type)
+                .HasDefaultValue(HwidType.Legacy);
+
+            modelBuilder.Entity<ConnectionLog>()
+                .OwnsOne(p => p.HWId)
+                .Property(p => p.Hwid)
+                .HasColumnName("hwid");
+
+            modelBuilder.Entity<ConnectionLog>()
+                .OwnsOne(p => p.HWId)
+                .Property(p => p.Type)
+                .HasDefaultValue(HwidType.Legacy);
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
@@ -341,12 +412,12 @@ namespace Content.Server.Database
         public string FacialHairColor { get; set; } = null!;
         public string EyeColor { get; set; } = null!;
         public string SkinColor { get; set; } = null!;
-        public string Clothing { get; set; } = null!;
-        public string Backpack { get; set; } = null!;
         public int SpawnPriority { get; set; } = 0;
         public List<Job> Jobs { get; } = new();
         public List<Antag> Antags { get; } = new();
         public List<Trait> Traits { get; } = new();
+
+        public List<ProfileRoleLoadout> Loadouts { get; } = new();
 
         [Column("pref_unavailable")] public DbPreferenceUnavailableMode PreferenceUnavailable { get; set; }
 
@@ -391,6 +462,79 @@ namespace Content.Server.Database
         public string TraitName { get; set; } = null!;
     }
 
+    #region Loadouts
+
+    /// <summary>
+    /// Corresponds to a single role's loadout inside the DB.
+    /// </summary>
+    public class ProfileRoleLoadout
+    {
+        public int Id { get; set; }
+
+        public int ProfileId { get; set; }
+
+        public Profile Profile { get; set; } = null!;
+
+        /// <summary>
+        /// The corresponding role prototype on the profile.
+        /// </summary>
+        public string RoleName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Store the saved loadout groups. These may get validated and removed when loaded at runtime.
+        /// </summary>
+        public List<ProfileLoadoutGroup> Groups { get; set; } = new();
+    }
+
+    /// <summary>
+    /// Corresponds to a loadout group prototype with the specified loadouts attached.
+    /// </summary>
+    public class ProfileLoadoutGroup
+    {
+        public int Id { get; set; }
+
+        public int ProfileRoleLoadoutId { get; set; }
+
+        /// <summary>
+        /// The corresponding RoleLoadout that owns this.
+        /// </summary>
+        public ProfileRoleLoadout ProfileRoleLoadout { get; set; } = null!;
+
+        /// <summary>
+        /// The corresponding group prototype.
+        /// </summary>
+        public string GroupName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Selected loadout prototype. Null if none is set.
+        /// May get validated at runtime and updated to to the default.
+        /// </summary>
+        public List<ProfileLoadout> Loadouts { get; set; } = new();
+    }
+
+    /// <summary>
+    /// Corresponds to a selected loadout.
+    /// </summary>
+    public class ProfileLoadout
+    {
+        public int Id { get; set; }
+
+        public int ProfileLoadoutGroupId { get; set; }
+
+        public ProfileLoadoutGroup ProfileLoadoutGroup { get; set; } = null!;
+
+        /// <summary>
+        /// Corresponding loadout prototype.
+        /// </summary>
+        public string LoadoutName { get; set; } = string.Empty;
+
+        /*
+         * Insert extra data here like custom descriptions or colors or whatever.
+         */
+    }
+
+    #endregion
+
     public enum DbPreferenceUnavailableMode
     {
         // These enum values HAVE to match the ones in PreferenceUnavailableMode in Shared.
@@ -419,7 +563,7 @@ namespace Content.Server.Database
         public string LastSeenUserName { get; set; } = null!;
         public DateTime LastSeenTime { get; set; }
         public IPAddress LastSeenAddress { get; set; } = null!;
-        public byte[]? LastSeenHWId { get; set; }
+        public TypedHwid? LastSeenHWId { get; set; }
 
         // Data that changes with each round
         public List<Round> Rounds { get; set; } = null!;
@@ -443,6 +587,7 @@ namespace Content.Server.Database
         public List<ServerBan> AdminServerBansLastEdited { get; set; } = null!;
         public List<ServerRoleBan> AdminServerRoleBansCreated { get; set; } = null!;
         public List<ServerRoleBan> AdminServerRoleBansLastEdited { get; set; } = null!;
+        public List<RoleWhitelist> JobWhitelists { get; set; } = null!;
     }
 
     [Table("whitelist")]
@@ -451,10 +596,29 @@ namespace Content.Server.Database
         [Required, Key] public Guid UserId { get; set; }
     }
 
+    /// <summary>
+    /// List of users who are on the "blacklist". This is a list that may be used by Whitelist implementations to deny access to certain users.
+    /// </summary>
+    [Table("blacklist")]
+    public class Blacklist
+    {
+        [Required, Key] public Guid UserId { get; set; }
+    }
+
     public class Admin
     {
         [Key] public Guid UserId { get; set; }
         public string? Title { get; set; }
+
+        /// <summary>
+        /// If true, the admin is voluntarily deadminned. They can re-admin at any time.
+        /// </summary>
+        public bool Deadminned { get; set; }
+
+        /// <summary>
+        /// If true, the admin is suspended by an admin with <c>PERMISSIONS</c>. They will not have in-game permissions.
+        /// </summary>
+        public bool Suspended { get; set; }
 
         public int? AdminRankId { get; set; }
         public AdminRank? AdminRank { get; set; }
@@ -494,7 +658,7 @@ namespace Content.Server.Database
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         public List<Player> Players { get; set; } = default!;
 
@@ -558,7 +722,7 @@ namespace Content.Server.Database
         int Id { get; set; }
         Guid? PlayerUserId { get; set; }
         NpgsqlInet? Address { get; set; }
-        byte[]? HWId { get; set; }
+        TypedHwid? HWId { get; set; }
         DateTime BanTime { get; set; }
         DateTime? ExpirationTime { get; set; }
         string Reason { get; set; }
@@ -597,6 +761,19 @@ namespace Content.Server.Database
         /// Intended use is for users with shared connections. This should not be used as an alternative to <see cref="Datacenter"/>.
         /// </remarks>
         IP = 1 << 1,
+
+        /// <summary>
+        /// Ban is an IP range that is only applied for first time joins.
+        /// </summary>
+        /// <remarks>
+        /// Intended for use with residential IP ranges that are often used maliciously.
+        /// </remarks>
+        BlacklistedRange = 1 << 2,
+
+        /// <summary>
+        /// Represents having all possible exemption flags.
+        /// </summary>
+        All = int.MaxValue,
         // @formatter:on
     }
 
@@ -630,7 +807,7 @@ namespace Content.Server.Database
         /// <summary>
         /// Hardware ID of the banned player.
         /// </summary>
-        public byte[]? HWId { get; set; }
+        public TypedHwid? HWId { get; set; }
 
         /// <summary>
         /// The time when the ban was applied by an administrator.
@@ -768,7 +945,7 @@ namespace Content.Server.Database
         public DateTime Time { get; set; }
 
         public IPAddress Address { get; set; } = null!;
-        public byte[]? HWId { get; set; }
+        public TypedHwid? HWId { get; set; }
 
         public ConnectionDenyReason? Denied { get; set; }
 
@@ -785,6 +962,8 @@ namespace Content.Server.Database
 
         public List<ServerBanHit> BanHits { get; set; } = null!;
         public Server Server { get; set; } = null!;
+
+        public float Trust { get; set; }
     }
 
     public enum ConnectionDenyReason : byte
@@ -793,6 +972,15 @@ namespace Content.Server.Database
         Whitelist = 1,
         Full = 2,
         Panic = 3,
+        /*
+         * If baby jail is removed, please reserve this value for as long as can reasonably be done to prevent causing ambiguity in connection denial reasons.
+         * Reservation by commenting out the value is likely sufficient for this purpose, but may impact projects which depend on SS14 like SS14.Admin.
+         *
+         * Edit: It has
+         */
+        BabyJail = 4,
+        /// Results from rejected connections with external API checking tools
+        IPChecks = 5,
     }
 
     public class ServerBanHit
@@ -815,7 +1003,7 @@ namespace Content.Server.Database
         public Guid? PlayerUserId { get; set; }
         [Required] public TimeSpan PlaytimeAtNote { get; set; }
         public NpgsqlInet? Address { get; set; }
-        public byte[]? HWId { get; set; }
+        public TypedHwid? HWId { get; set; }
 
         public DateTime BanTime { get; set; }
 
@@ -879,8 +1067,35 @@ namespace Content.Server.Database
         public byte[] Data { get; set; } = default!;
     }
 
+    // Note: this interface isn't used by the game, but it *is* used by SS14.Admin.
+    // Don't remove! Or face the consequences!
+    public interface IAdminRemarksCommon
+    {
+        public int Id { get; }
+
+        public int? RoundId { get; }
+        public Round? Round { get; }
+
+        public Guid? PlayerUserId { get; }
+        public Player? Player { get; }
+        public TimeSpan PlaytimeAtNote { get; }
+
+        public string Message { get; }
+
+        public Player? CreatedBy { get; }
+
+        public DateTime CreatedAt { get; }
+
+        public Player? LastEditedBy { get; }
+
+        public DateTime? LastEditedAt { get; }
+        public DateTime? ExpirationTime { get; }
+
+        public bool Deleted { get; }
+    }
+
     [Index(nameof(PlayerUserId))]
-    public class AdminNote
+    public class AdminNote : IAdminRemarksCommon
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int Id { get; set; }
 
@@ -914,7 +1129,7 @@ namespace Content.Server.Database
     }
 
     [Index(nameof(PlayerUserId))]
-    public class AdminWatchlist
+    public class AdminWatchlist : IAdminRemarksCommon
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int Id { get; set; }
 
@@ -945,7 +1160,7 @@ namespace Content.Server.Database
     }
 
     [Index(nameof(PlayerUserId))]
-    public class AdminMessage
+    public class AdminMessage : IAdminRemarksCommon
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int Id { get; set; }
 
@@ -984,5 +1199,126 @@ namespace Content.Server.Database
         /// Whether the message has been dismissed permanently by the player.
         /// </summary>
         public bool Dismissed { get; set; }
+    }
+
+    [PrimaryKey(nameof(PlayerUserId), nameof(RoleId))]
+    public class RoleWhitelist
+    {
+        [Required, ForeignKey("Player")]
+        public Guid PlayerUserId { get; set; }
+        public Player Player { get; set; } = default!;
+
+        [Required]
+        public string RoleId { get; set; } = default!;
+    }
+
+    /// <summary>
+    /// Defines a template that admins can use to quickly fill out ban information.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This information is not currently used by the game itself, but it is used by SS14.Admin.
+    /// </para>
+    /// </remarks>
+    public sealed class BanTemplate
+    {
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Title of the ban template. This is purely for reference by admins and not copied into the ban.
+        /// </summary>
+        public required string Title { get; set; }
+
+        /// <summary>
+        /// How long the ban should last. 0 for permanent.
+        /// </summary>
+        public TimeSpan Length { get; set; }
+
+        /// <summary>
+        /// The reason for the ban.
+        /// </summary>
+        /// <seealso cref="ServerBan.Reason"/>
+        public string Reason { get; set; } = "";
+
+        /// <summary>
+        /// Exemptions granted to the ban.
+        /// </summary>
+        /// <seealso cref="ServerBan.ExemptFlags"/>
+        public ServerBanExemptFlags ExemptFlags { get; set; }
+
+        /// <summary>
+        /// Severity of the ban
+        /// </summary>
+        /// <seealso cref="ServerBan.Severity"/>
+        public NoteSeverity Severity { get; set; }
+
+        /// <summary>
+        /// Ban will be automatically deleted once expired.
+        /// </summary>
+        /// <seealso cref="ServerBan.AutoDelete"/>
+        public bool AutoDelete { get; set; }
+
+        /// <summary>
+        /// Ban is not visible to players in the remarks menu.
+        /// </summary>
+        /// <seealso cref="ServerBan.Hidden"/>
+        public bool Hidden { get; set; }
+    }
+
+    /// <summary>
+    /// A hardware ID value together with its <see cref="HwidType"/>.
+    /// </summary>
+    /// <seealso cref="ImmutableTypedHwid"/>
+    [Owned]
+    public sealed class TypedHwid
+    {
+        public byte[] Hwid { get; set; } = default!;
+        public HwidType Type { get; set; }
+
+        [return: NotNullIfNotNull(nameof(immutable))]
+        public static implicit operator TypedHwid?(ImmutableTypedHwid? immutable)
+        {
+            if (immutable == null)
+                return null;
+
+            return new TypedHwid
+            {
+                Hwid = immutable.Hwid.ToArray(),
+                Type = immutable.Type,
+            };
+        }
+
+        [return: NotNullIfNotNull(nameof(hwid))]
+        public static implicit operator ImmutableTypedHwid?(TypedHwid? hwid)
+        {
+            if (hwid == null)
+                return null;
+
+            return new ImmutableTypedHwid(hwid.Hwid.ToImmutableArray(), hwid.Type);
+        }
+    }
+
+
+    /// <summary>
+    ///  Cache for the IPIntel system
+    /// </summary>
+    public class IPIntelCache
+    {
+        public int Id { get; set; }
+
+        /// <summary>
+        /// The IP address (duh). This is made unique manually for psql cause of ef core bug.
+        /// </summary>
+        public IPAddress Address { get; set; } = null!;
+
+        /// <summary>
+        /// Date this record was added. Used to check if our cache is out of date.
+        /// </summary>
+        public DateTime Time { get; set; }
+
+        /// <summary>
+        /// The score IPIntel returned
+        /// </summary>
+        public float Score { get; set; }
     }
 }

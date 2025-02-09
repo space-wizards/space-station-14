@@ -1,8 +1,4 @@
-using Content.Server.Body.Components;
-using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
-using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Movement.Systems;
 using Content.Shared.Actions.Events;
@@ -14,15 +10,14 @@ using Content.Shared.Database;
 using Content.Shared.Effects;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Speech.Components;
 using Content.Shared.StatusEffect;
-using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -33,21 +28,17 @@ namespace Content.Server.Weapons.Melee;
 
 public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly LagCompensationSystem _lag = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutions = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
         SubscribeLocalEvent<MeleeSpeechComponent, MeleeHitEvent>(OnSpeechHit);
         SubscribeLocalEvent<MeleeWeaponComponent, DamageExamineEvent>(OnMeleeExamineDamage);
     }
@@ -65,8 +56,14 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         _damageExamine.AddDamageExamine(args.Message, damageSpec, Loc.GetString("damage-melee"));
     }
 
-    protected override bool ArcRaySuccessful(EntityUid targetUid, Vector2 position, Angle angle, Angle arcWidth, float range, MapId mapId,
-        EntityUid ignore, ICommonSession? session)
+    protected override bool ArcRaySuccessful(EntityUid targetUid,
+        Vector2 position,
+        Angle angle,
+        Angle arcWidth,
+        float range,
+        MapId mapId,
+        EntityUid ignore,
+        ICommonSession? session)
     {
         // Originally the client didn't predict damage effects so you'd intuit some level of how far
         // in the future you'd need to predict, but then there was a lot of complaining like "why would you add artifical delay" as if ping is a choice.
@@ -81,7 +78,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // Could also check the arc though future effort + if they're aimbotting it's not really going to make a difference.
 
         // (This runs lagcomp internally and is what clickattacks use)
-        if (!Interaction.InRangeUnobstructed(ignore, targetUid, range + 0.1f))
+        if (!Interaction.InRangeUnobstructed(ignore, targetUid, range + 0.1f, overlapCheck: false))
             return false;
 
         // TODO: Check arc though due to the aforementioned aimbot + damage split comments it's less important.
@@ -158,7 +155,8 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return false;
         }
 
-        Audio.PlayPvs(combatMode.DisarmSuccessSound, user, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
+        _audio.PlayPvs(combatMode.DisarmSuccessSound, user, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
+        AdminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(user):user} used disarm on {ToPrettyString(target):target}");
 
         var targetEnt = Identity.Entity(target, EntityManager);
         var userEnt = Identity.Entity(user, EntityManager);
@@ -174,7 +172,6 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         PopupSystem.PopupEntity(msgOther, user, filterOther, true);
         PopupSystem.PopupEntity(msgUser, target, user);
-
 
         if (eventArgs.IsStunned)
         {
@@ -196,15 +193,10 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (session is { } pSession)
         {
             (targetCoordinates, targetLocalAngle) = _lag.GetCoordinatesAngle(target, pSession);
-        }
-        else
-        {
-            var xform = Transform(target);
-            targetCoordinates = xform.Coordinates;
-            targetLocalAngle = xform.LocalRotation;
+            return Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range, overlapCheck: false);
         }
 
-        return Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range);
+        return Interaction.InRangeUnobstructed(user, target, range);
     }
 
     protected override void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform)
@@ -260,48 +252,5 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             _chat.TrySendInGameICMessage(args.User, comp.Battlecry, InGameICChatType.Speak, true, true, checkRadioPrefix: false);  //Speech that isn't sent to chat or adminlogs
         }
 
-    }
-
-    private void OnChemicalInjectorHit(Entity<MeleeChemicalInjectorComponent> entity, ref MeleeHitEvent args)
-    {
-        if (!args.IsHit ||
-            !args.HitEntities.Any() ||
-            !_solutions.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solutionContainer))
-        {
-            return;
-        }
-
-        var hitBloodstreams = new List<(EntityUid Entity, BloodstreamComponent Component)>();
-        var bloodQuery = GetEntityQuery<BloodstreamComponent>();
-
-        foreach (var hit in args.HitEntities)
-        {
-            if (Deleted(hit))
-                continue;
-
-            // prevent deathnettles injecting through hardsuits
-            if (!entity.Comp.PierceArmor && _inventory.TryGetSlotEntity(hit, "outerClothing", out var suit) && _tag.HasTag(suit.Value, "Hardsuit"))
-            {
-                PopupSystem.PopupEntity(Loc.GetString("melee-inject-failed-hardsuit", ("weapon", entity.Owner)), args.User, args.User, PopupType.SmallCaution);
-                continue;
-            }
-
-            if (bloodQuery.TryGetComponent(hit, out var bloodstream))
-                hitBloodstreams.Add((hit, bloodstream));
-        }
-
-        if (!hitBloodstreams.Any())
-            return;
-
-        var removedSolution = _solutions.SplitSolution(solutionContainer.Value, entity.Comp.TransferAmount * hitBloodstreams.Count);
-        var removedVol = removedSolution.Volume;
-        var solutionToInject = removedSolution.SplitSolution(removedVol * entity.Comp.TransferEfficiency);
-        var volPerBloodstream = solutionToInject.Volume * (1 / hitBloodstreams.Count);
-
-        foreach (var (ent, bloodstream) in hitBloodstreams)
-        {
-            var individualInjection = solutionToInject.SplitSolution(volPerBloodstream);
-            _bloodstream.TryAddToChemicals(ent, individualInjection, bloodstream);
-        }
     }
 }

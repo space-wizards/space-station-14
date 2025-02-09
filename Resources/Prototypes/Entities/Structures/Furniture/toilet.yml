@@ -1,49 +1,122 @@
 - type: entity
   name: toilet
-  id: ToiletEmpty
-  suffix: Empty
-  parent: SeatBase
+  id: BaseToilet
+  parent: [ DisposalUnitBase, SeatBase ]
   description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
+  abstract: true
   components:
-  - type: MeleeSound
-    soundGroups:
-      Brute:
-        path:
-          "/Audio/Weapons/slash.ogg"
-  - type: Anchorable
   - type: Sprite
     sprite: Structures/Furniture/toilet.rsi
-    state: closed_toilet_seat_up
+    layers:
+    - state: condisposal
+      map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
+    - state: disposal
+      map: [ "enum.DisposalUnitVisualLayers.Base" ]
+    - state: disposal-flush
+      map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]
+    - state: dispover-charge
+      map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
+    - state: dispover-ready
+      map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
+    - state: dispover-full
+      map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
+    - state: dispover-handle
+      map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
+    - map: [ "DoorVisualState.DoorOpen" ]
+    - map: [ "SeatVisualState.SeatUp" ]
+  - type: Rotatable
+  - type: Transform
+    noRot: false
+  - type: Strap
+    whitelist:
+      components:
+      - HumanoidAppearance
+  - type: DisposalUnit
+    autoEngageEnabled: false
+    noUI: true
+    blacklist:
+      components:
+      - HumanoidAppearance
+      - Plunger
+      - SolutionTransfer
+    whitelist:
+      components:
+      - Item
+    soundFlush: /Audio/Effects/Fluids/flush.ogg
+    soundInsert: /Audio/Effects/Fluids/splash.ogg
   - type: Toilet
-  - type: SecretStash
-    secretPartName: secret-stash-part-toilet
   - type: ContainerContainer
     containers:
       stash: !type:ContainerSlot {}
+      disposals: !type:Container
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - None
+  - type: PlungerUse
+  - type: Appearance
+  - type: SecretStash
+    secretStashName: secret-stash-toilet
+  - type: ToolOpenable
+    openToolQualityNeeded: Prying
+    closeToolQualityNeeded: Prying
+    name: secret-stash-toilet
+  - type: Drain
+    autoDrain: false
+  - type: StaticPrice
+    price: 100
+  - type: UserInterface
+    interfaces:
+      enum.DisposalUnitUiKey.Key:
+        type: DisposalUnitBoundUserInterface
+  - type: RatKingRummageable
   - type: SolutionContainerManager
     solutions:
       drainBuffer:
+        maxVol: 100
+      tank:
         maxVol: 500
-      toilet:
-        maxVol: 250
-  - type: Transform
-    anchored: true
-  - type: Physics
-    bodyType: Static
+  - type: SolutionRegeneration
+    solution: tank
+    generated:
+      reagents:
+      - ReagentId: Water
+        Quantity: 1
+  - type: DrainableSolution
+    solution: tank
+  - type: ReagentTank
+  - type: DumpableSolution
+    solution: drainBuffer
+  - type: GenericVisualizer
+    visuals:
+      enum.ToiletVisuals.SeatVisualState:
+        SeatVisualState.SeatUp:
+          SeatUp: { state: disposal-up }
+          SeatDown: { state: disposal-down }
+      enum.ToolOpenableVisuals.ToolOpenableVisualState:
+        ToolOpenableVisualState.StashOpen:
+          Open: { state: disposal-open }
+          Closed: { state: disposal-closed }
+
+- type: entity
+  name: toilet
+  description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
+  id: ToiletEmpty
+  parent: BaseToilet
+  suffix: Empty
+  components:
   - type: Construction
     graph: Toilet
     node: toilet
-  - type: Appearance
-  - type: Drain
-    autoDrain: false
-  - type: DumpableSolution
-    solution: drainBuffer
-  - type: SolutionContainerVisuals
-    maxFillLevels: 1
-    fillBaseName: fill-
-    solutionName: drainBuffer
-  - type: StaticPrice
-    price: 25
 
 - type: entity
   id: ToiletDirtyWater
@@ -52,9 +125,69 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      toilet:
+      drainBuffer:
+        maxVol: 100
+      tank:
+        maxVol: 500
         reagents:
         - ReagentId: Water
           Quantity: 180
+        - ReagentId: GastroToxin
+          Quantity: 20
+
+- type: entity
+  id: ToiletGoldenEmpty
+  parent: BaseToilet
+  name: golden toilet
+  description: The HT-451G is the gold version of the device. It says on the side that it is made of the purest Mercurian gold and a real leather seat.
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/golden_toilet.rsi
+  - type: StaticPrice
+    price: 1500
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          IngotGold1:
+            min: 5
+            max: 5
+
+- type: entity
+  id: ToiletGoldenDirtyWater
+  parent: ToiletGoldenEmpty
+  suffix: Dirty Water, StealTarget
+  components:
+  - type: StealTarget
+    stealGroup: ToiletGoldenDirtyWater
+  - type: SolutionContainerManager
+    solutions:
+      drainBuffer:
+        maxVol: 100
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Water
+          Quantity: 160
+        - ReagentId: Gold
+          Quantity: 20
         - ReagentId: GastroToxin
           Quantity: 20

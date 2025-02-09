@@ -58,6 +58,12 @@ public sealed partial class WiresPanelComponent : Component
 }
 
 /// <summary>
+/// Event raised on a <see cref="WiresPanelComponent"/> before its open state is about to be changed.
+/// </summary>
+[ByRefEvent]
+public record struct AttemptChangePanelEvent(bool Open, EntityUid? User, bool Cancelled = false);
+
+/// <summary>
 /// Event raised when a panel is opened or closed.
 /// </summary>
 [ByRefEvent]

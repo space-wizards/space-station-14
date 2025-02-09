@@ -1,11 +1,12 @@
 using Content.Server.Objectives.Components;
+using Content.Server.Revolutionary.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
-using Content.Shared.Roles.Jobs;
 using Robust.Shared.Configuration;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -17,7 +18,6 @@ public sealed class KillPersonConditionSystem : EntitySystem
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedJobSystem _job = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly TargetObjectiveSystem _target = default!;
 
@@ -53,8 +53,18 @@ public sealed class KillPersonConditionSystem : EntitySystem
         if (target.Target != null)
             return;
 
+        var allHumans = _mind.GetAliveHumans(args.MindId);
+
+        // Can't have multiple objectives to kill the same person
+        foreach (var objective in args.Mind.Objectives)
+        {
+            if (HasComp<KillPersonConditionComponent>(objective) && TryComp<TargetObjectiveComponent>(objective, out var kill))
+            {
+                allHumans.RemoveWhere(x => x.Owner == kill.Target);
+            }
+        }
+
         // no other humans to kill
-        var allHumans = _mind.GetAliveHumansExcept(args.MindId);
         if (allHumans.Count == 0)
         {
             args.Cancelled = true;
@@ -78,19 +88,18 @@ public sealed class KillPersonConditionSystem : EntitySystem
             return;
 
         // no other humans to kill
-        var allHumans = _mind.GetAliveHumansExcept(args.MindId);
+        var allHumans = _mind.GetAliveHumans(args.MindId);
         if (allHumans.Count == 0)
         {
             args.Cancelled = true;
             return;
         }
 
-        var allHeads = new List<EntityUid>();
-        foreach (var mind in allHumans)
+        var allHeads = new HashSet<Entity<MindComponent>>();
+        foreach (var person in allHumans)
         {
-            // RequireAdminNotify used as a cheap way to check for command department
-            if (_job.MindTryGetJob(mind, out _, out var prototype) && prototype.RequireAdminNotify)
-                allHeads.Add(mind);
+            if (TryComp<MindComponent>(person, out var mind) && mind.OwnedEntity is { } ent && HasComp<CommandStaffComponent>(ent))
+                allHeads.Add(person);
         }
 
         if (allHeads.Count == 0)

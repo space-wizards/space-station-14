@@ -1,0 +1,44 @@
+# Head
+- type: loadout
+  id: CargoTechnicianHead
+  equipment:
+    head: ClothingHeadHatCargosoft
+
+# Jumpsuit
+- type: loadout
+  id: CargoTechnicianJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCargo
+
+- type: loadout
+  id: CargoTechnicianJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCargo
+
+# Back
+- type: loadout
+  id: CargoTechnicianBackpack
+  equipment:
+    back: ClothingBackpackCargo
+
+- type: loadout
+  id: CargoTechnicianSatchel
+  equipment:
+    back: ClothingBackpackSatchelCargo
+
+- type: loadout
+  id: CargoTechnicianDuffel
+  equipment:
+    back: ClothingBackpackDuffelCargo
+
+# OuterClothing
+- type: loadout
+  id: CargoTechnicianWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterCargo
+
+# Shoes
+- type: loadout
+  id: CargoWinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinterCargo

@@ -172,6 +172,21 @@
     Laughter: 2
 
 - type: reaction
+  id: CreateCrystals
+  quantized: true
+  minTemp: 374
+  reactants:
+    Sugar:
+      amount: 15
+    Water:
+      amount: 15
+    Ethanol:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: ShardCrystalRandom
+
+- type: reaction
   id: Gunpowder
   impact: Low
   quantized: true
@@ -186,3 +201,47 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
+
+- type: reaction
+  id: SolidifyGold
+  impact: Low
+  quantized: true
+  reactants:
+    Gold:
+      amount: 10
+    FrostOil:
+      amount: 5
+  effects:
+  - !type:CreateEntityReactionEffect
+    entity: IngotGold1
+
+- type: reaction
+  id: SolidifySilver
+  impact: Low
+  quantized: true
+  reactants:
+    Silver:
+      amount: 10
+    FrostOil:
+      amount: 5
+  effects:
+  - !type:CreateEntityReactionEffect
+    entity: IngotSilver1
+
+- type: reaction
+  id: WehHewExplosion
+  impact: High
+  priority: 20
+  reactants:
+    JuiceThatMakesYouWeh:
+      amount: 1
+    JuiceThatMakesYouHew:
+      amount: 1
+  effects:
+  - !type:ExplosionReactionEffect
+    explosionType: Radioactive
+    maxIntensity: 200
+    intensityPerUnit: 2
+    intensitySlope: 1
+    maxTotalIntensity: 250
+    tileBreakScale: 0.00001

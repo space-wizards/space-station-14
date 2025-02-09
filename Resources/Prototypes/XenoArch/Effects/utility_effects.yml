@@ -1,4 +1,4 @@
-﻿# Utility effects permanently modify the entity in some way when triggered, and they generally make it 'useful' for some purpose,
+# Utility effects permanently modify the entity in some way when triggered, and they generally make it 'useful' for some purpose,
 # like turning the artifact into a tool, or gun, or whatever.
 - type: artifactEffect
   id: EffectIntercom
@@ -49,10 +49,6 @@
   permanentComponents:
   - type: Item
     size: Huge
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: [ ]
   - type: Storage
     maxItemSize: Huge
     grid:
@@ -106,7 +102,6 @@
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: Drink
-    isOpen: true
     solution: beaker
 
 - type: artifactEffect
@@ -164,9 +159,6 @@
     components:
     - Item
   permanentComponents:
-  - type: ContainerContainer
-    containers:
-      revolver-ammo: !type:Container
   - type: RevolverAmmoProvider
     whitelist:
       tags:
@@ -198,10 +190,13 @@
     allowMovement: true
     allowSpeech: true
     makeSentient: true
-    name: sentient artifact
-    description: |
-      Enact your eldritch whims.
-      Forcibly activate your nodes for good or for evil.
+    name: ghost-role-information-artifact-name
+    description: ghost-role-information-artifact-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
+    raffle:
+      settings: default
   - type: GhostTakeoverAvailable
   - type: MovementSpeedModifier
     baseWalkSpeed: 0.25
@@ -217,13 +212,13 @@
   permanentComponents:
   - type: UserInterface
     interfaces:
-      - key: enum.SignalLinkerUiKey.Key
-        type: SignalPortSelectorBoundUserInterface
+        enum.SignalLinkerUiKey.Key:
+          type: SignalPortSelectorBoundUserInterface
   - type: ToolTileCompatible
   - type: Tool
     qualities:
     - Screwing
-    speed: 2 # Very powerful multitool to balance out the desire to sell or scrap for points
+    speedModifier: 2 # Very powerful multitool to balance out the desire to sell or scrap for points
     useSound: /Audio/Items/drill_use.ogg
   - type: Tag
     tags:

@@ -16,7 +16,7 @@
       layers:
         - state: station_map_broken
     - type: Damageable
-      damageContainer: Inorganic
+      damageContainer: StructuralInorganic
     - type: Destructible
       thresholds:
         - trigger:
@@ -59,7 +59,6 @@
         board: !type:Container
     - type: ApcPowerReceiver
       powerLoad: 200
-      priority: Low
     - type: WallMount
       arc: 360
     - type: ExtensionCableReceiver
@@ -87,7 +86,7 @@
               acts: [ "Destruction" ]
     - type: UserInterface
       interfaces:
-        - key: enum.StationMapUiKey.Key
+        enum.StationMapUiKey.Key:
           type: StationMapBoundUserInterface
 
 - type: entity

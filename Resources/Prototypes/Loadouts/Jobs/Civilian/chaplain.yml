@@ -1,0 +1,79 @@
+# Head
+- type: loadout
+  id: ChaplainHead
+  equipment:
+    head: ClothingHeadHatFez
+
+- type: loadout
+  id: ChaplainNunHood
+  equipment:
+    head: ClothingHeadHatHoodNunHood
+
+- type: loadout
+  id: ChaplainPlagueHat
+  equipment:
+    head: ClothingHeadHatPlaguedoctor
+
+- type: loadout
+  id: ChaplainWitchHat
+  equipment:
+    head: ClothingHeadHatWitch
+
+- type: loadout
+  id: ChaplainWitchHatAlt
+  equipment:
+    head: ClothingHeadHatWitch1
+
+# Mask
+- type: loadout
+  id: ChaplainMask
+  equipment:
+    mask: ClothingMaskPlague
+
+# Jumpsuit
+- type: loadout
+  id: ChaplainJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChaplain
+
+- type: loadout
+  id: ChaplainJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtChaplain
+
+- type: loadout
+  id: ChaplainRobesDark
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMonasticRobeDark
+
+- type: loadout
+  id: ChaplainRobesLight
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMonasticRobeLight
+
+# Neck
+- type: loadout
+  id: ChaplainNeck
+  equipment:
+    neck: ClothingNeckStoleChaplain
+
+# Outer clothing
+- type: loadout
+  id: ChaplainPlagueSuit
+  equipment:
+    outerClothing: ClothingOuterPlagueSuit
+
+- type: loadout
+  id: ChaplainNunRobe
+  equipment:
+    outerClothing: ClothingOuterNunRobe
+
+- type: loadout
+  id: ChaplainBlackHoodie
+  equipment:
+    outerClothing: ClothingOuterHoodieBlack
+
+- type: loadout
+  id: ChaplainHoodie
+  equipment:
+    outerClothing: ClothingOuterHoodieChaplain

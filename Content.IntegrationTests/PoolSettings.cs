@@ -1,5 +1,7 @@
 ﻿#nullable enable
 
+using Robust.Shared.Random;
+
 namespace Content.IntegrationTests;
 
 /// <summary>
@@ -9,16 +11,6 @@ namespace Content.IntegrationTests;
 /// </summary>
 public sealed class PoolSettings
 {
-    /// <summary>
-    /// If the returned pair must not be reused
-    /// </summary>
-    public bool MustNotBeReused => Destructive || NoLoadContent || NoLoadTestPrototypes;
-
-    /// <summary>
-    /// If the given pair must be brand new
-    /// </summary>
-    public bool MustBeNew => Fresh || NoLoadContent || NoLoadTestPrototypes;
-
     /// <summary>
     /// Set to true if the test will ruin the server/client pair.
     /// </summary>
@@ -34,8 +26,6 @@ public sealed class PoolSettings
     /// </summary>
     public bool DummyTicker { get; init; } = true;
 
-    public bool UseDummyTicker => !InLobby && DummyTicker;
-
     /// <summary>
     /// If true, this enables the creation of admin logs during the test.
     /// </summary>
@@ -47,8 +37,6 @@ public sealed class PoolSettings
     /// If <see cref="InLobby"/> is true, this option is ignored.
     /// </summary>
     public bool Connected { get; init; }
-
-    public bool ShouldBeConnected => InLobby || Connected;
 
     /// <summary>
     /// Set to true if the given server/client pair should be in the lobby.
@@ -91,6 +79,34 @@ public sealed class PoolSettings
     /// Overrides the test name detection, and uses this in the test history instead
     /// </summary>
     public string? TestName { get; set; }
+
+    /// <summary>
+    /// If set, this will be used to call <see cref="IRobustRandom.SetSeed"/>
+    /// </summary>
+    public int? ServerSeed { get; set; }
+
+    /// <summary>
+    /// If set, this will be used to call <see cref="IRobustRandom.SetSeed"/>
+    /// </summary>
+    public int? ClientSeed { get; set; }
+
+    #region Inferred Properties
+
+    /// <summary>
+    /// If the returned pair must not be reused
+    /// </summary>
+    public bool MustNotBeReused => Destructive || NoLoadContent || NoLoadTestPrototypes;
+
+    /// <summary>
+    /// If the given pair must be brand new
+    /// </summary>
+    public bool MustBeNew => Fresh || NoLoadContent || NoLoadTestPrototypes;
+
+    public bool UseDummyTicker => !InLobby && DummyTicker;
+
+    public bool ShouldBeConnected => InLobby || Connected;
+
+    #endregion
 
     /// <summary>
     /// Tries to guess if we can skip recycling the server/client pair.

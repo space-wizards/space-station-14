@@ -1,4 +1,4 @@
-﻿# The progenitor. This should only container the most basic components possible.
+# The progenitor. This should only container the most basic components possible.
 # Only put things on here if every mob *must* have it. This includes ghosts.
 - type: entity
   save: false
@@ -41,8 +41,15 @@
   - type: CameraRecoil
   - type: MindContainer
   - type: MovementSpeedModifier
+  - type: RequireProjectileTarget
+    active: False
+
+- type: entity
+  save: false
+  id: MobPolymorphable
+  abstract: true
+  components:
   - type: Polymorphable
-  - type: StatusIcon
 
 # Used for mobs that have health and can take damage.
 - type: entity
@@ -60,6 +67,21 @@
         damage: 400
       behaviors:
       - !type:GibBehavior { }
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 1500
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawnInContainer: true
+        spawn:
+          Ash:
+            min: 1
+            max: 1
+      - !type:BurnBodyBehavior { }
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MeatLaserImpact
   - type: RadiationReceiver
   - type: Stamina
   - type: MobState
@@ -82,6 +104,8 @@
     - Piercing
     - Heat
     - Shock
+    - Cold
+    - Caustic
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -177,7 +201,7 @@
     canResistFire: true
     damage: #per second, scales with number of fire 'stacks'
       types:
-        Heat: 3
+        Heat: 1.5
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning

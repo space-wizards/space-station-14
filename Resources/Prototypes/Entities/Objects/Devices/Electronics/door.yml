@@ -2,14 +2,24 @@
   id: DoorElectronics
   parent: BaseElectronics
   name: door electronics
-  description: An electronics board used in doors and airlocks
+  description: An electronics board used in doors and airlocks.
   components:
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: door_electronics
-    - type: AccessReader
     - type: Tag
       tags:
         - DoorElectronics
+    - type: DoorElectronics
     - type: StaticPrice
       price: 55
+    - type: AccessReader
+    - type: ActivatableUI
+      key: enum.DoorElectronicsConfigurationUiKey.Key
+      requiredItems:
+        tags:
+        - DoorElectronicsConfigurator
+    - type: UserInterface
+      interfaces:
+        enum.DoorElectronicsConfigurationUiKey.Key:
+          type: DoorElectronicsBoundUserInterface

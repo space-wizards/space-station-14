@@ -1,9 +1,10 @@
 using Content.Server.Body.Systems;
+using Content.Server.Polymorph.Components;
 using Content.Server.Popups;
 using Content.Shared.Body.Components;
+using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -22,6 +23,9 @@ public sealed class ImmovableRodSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override void Update(float frameTime)
     {
@@ -36,7 +40,7 @@ public sealed class ImmovableRodSystem : EntitySystem
             if (!TryComp<MapGridComponent>(trans.GridUid, out var grid))
                 continue;
 
-            grid.SetTile(trans.Coordinates, Tile.Empty);
+            _map.SetTile(trans.GridUid.Value, grid, trans.Coordinates, Tile.Empty);
         }
     }
 
@@ -57,18 +61,21 @@ public sealed class ImmovableRodSystem : EntitySystem
             _physics.SetFriction(uid, phys, 0f);
             _physics.SetBodyStatus(uid, phys, BodyStatus.InAir);
 
-            if (!component.RandomizeVelocity)
-                return;
-
             var xform = Transform(uid);
-            var vel = component.DirectionOverride.Degrees switch
+            var (worldPos, worldRot) = _transform.GetWorldPositionRotation(uid);
+            var vel = worldRot.ToWorldVec() * component.MaxSpeed;
+
+            if (component.RandomizeVelocity)
             {
-                0f => _random.NextVector2(component.MinSpeed, component.MaxSpeed),
-                _ => xform.WorldRotation.RotateVec(component.DirectionOverride.ToVec()) * _random.NextFloat(component.MinSpeed, component.MaxSpeed)
-            };
+                vel = component.DirectionOverride.Degrees switch
+                {
+                    0f => _random.NextVector2(component.MinSpeed, component.MaxSpeed),
+                    _ => worldRot.RotateVec(component.DirectionOverride.ToVec()) * _random.NextFloat(component.MinSpeed, component.MaxSpeed)
+                };
+            }
 
             _physics.ApplyLinearImpulse(uid, vel, body: phys);
-            xform.LocalRotation = (vel - xform.WorldPosition).ToWorldAngle() + MathHelper.PiOver2;
+            xform.LocalRotation = (vel - worldPos).ToWorldAngle() + MathHelper.PiOver2;
         }
     }
 
@@ -94,12 +101,28 @@ public sealed class ImmovableRodSystem : EntitySystem
             return;
         }
 
-        // gib em
+        // dont delete/hurt self if polymoprhed into a rod
+        if (TryComp<PolymorphedEntityComponent>(uid, out var polymorphed))
+        {
+            if (polymorphed.Parent == ent)
+                return;
+        }
+
+        // gib or damage em
         if (TryComp<BodyComponent>(ent, out var body))
         {
             component.MobCount++;
-
             _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid, PopupType.LargeCaution);
+
+            if (!component.ShouldGib)
+            {
+                if (component.Damage == null)
+                    return;
+
+                _damageable.TryChangeDamage(ent, component.Damage, ignoreResistances: true);
+                return;
+            }
+
             _bodySystem.GibBody(ent, body: body);
             return;
         }

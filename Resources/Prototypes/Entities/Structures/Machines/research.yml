@@ -20,11 +20,8 @@
     - CivilianServices
   - type: ApcPowerReceiver
     powerLoad: 200
-    priority: Low
   - type: ExtensionCableReceiver
   - type: WiresPanel
-  - type: Wires
-    layoutId: rndserver
   - type: WiresVisuals
   - type: Machine
     board: ResearchAndDevelopmentServerMachineCircuitboard
@@ -51,6 +48,7 @@
             min: 1
             max: 2
   - type: Appearance
+  - type: AmbientOnPowered
   - type: AmbientSound
     volume: -9
     range: 5
@@ -86,8 +84,8 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.ResearchClientUiKey.Key
-      type: ResearchClientBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
   - type: Appearance
   - type: GenericVisualizer
     visuals:

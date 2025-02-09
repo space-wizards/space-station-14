@@ -32,7 +32,6 @@
     size: Tiny
   - type: Drink
     solution: food
-    refillable: false
   - type: Openable
     sound:
       collection: packetOpenSounds
@@ -141,7 +140,7 @@
 
 - type: entity
   parent: BaseFoodCondimentPacket
-  id: FoodCondimentPacketFrostoil
+  id: FoodCondimentPacketColdsauce
   name: coldsauce
   description: Coldsauce. Leaves the tongue numb in its passage.
   components:
@@ -150,7 +149,7 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Frostoil
+        - ReagentId: Coldsauce
           Quantity: 10
   - type: Icon
     state: packet-frostoil
@@ -376,7 +375,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Frostoil
+        - ReagentId: Coldsauce
           Quantity: 30
   - type: Sprite
     layers:
@@ -523,7 +522,7 @@
 # Shakers
 
 - type: entity
-  parent: BaseFoodCondimentBottle
+  parent: BaseFoodCondiment
   id: BaseFoodShaker
   abstract: true
   name: empty shaker
@@ -561,6 +560,8 @@
         acts: [ "Destruction" ]
   - type: Sprite
     state: shaker-empty
+  - type: RefillableSolution
+    solution: food
 
 - type: entity
   parent: BaseFoodShaker

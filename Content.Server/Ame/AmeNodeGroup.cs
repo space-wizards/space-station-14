@@ -134,22 +134,11 @@ public sealed class AmeNodeGroup : BaseNodeGroup
         // The AME is being overloaded.
         // Note about these maths: I would assume the general idea here is to make larger engines less safe to overload.
         // In other words, yes, those are supposed to be CoreCount, not safeFuelLimit.
-        var instability = 0;
         var overloadVsSizeResult = fuel - CoreCount;
 
-        // fuel > safeFuelLimit: Slow damage. Can safely run at this level for burst periods if the engine is small and someone is keeping an eye on it.
-        if (_random.Prob(0.5f))
-            instability = 1;
-        // overloadVsSizeResult > 5:
-        if (overloadVsSizeResult > 5)
-            instability = 3;
-        // overloadVsSizeResult > 10: This will explode in at most 20 injections.
-        if (overloadVsSizeResult > 10)
-            instability = 5;
-
-        // Apply calculated instability
-        if (instability == 0)
-            return powerOutput;
+        var instability = overloadVsSizeResult / CoreCount;
+        var fuzz = _random.Next(-1, 2); // -1 to 1
+        instability += fuzz; // fuzz the values a tiny bit.
 
         overloading = true;
         var integrityCheck = 100;
@@ -179,10 +168,14 @@ public sealed class AmeNodeGroup : BaseNodeGroup
     /// </summary>
     public float CalculatePower(int fuel, int cores)
     {
-        // Fuel is squared so more fuel vastly increases power and efficiency
-        // We divide by the number of cores so a larger AME is less efficient at the same fuel settings
-        // this results in all AMEs having the same efficiency at the same fuel-per-core setting
-        return 2000000f * fuel * fuel / cores;
+        // Balanced around a single core AME with injection level 2 producing 120KW.
+        // Two core with four injection is 150kW. Two core with two injection is 90kW.
+
+        // Increasing core count creates diminishing returns, increasing injection amount increases 
+        // Unlike the previous solution, increasing fuel and cores always leads to an increase in power, even if by very small amounts.
+        // Increasing core count without increasing fuel always leads to reduced power as well.
+        // At 18+ cores and 2 inject, the power produced is less than 0, the Max ensures the AME can never produce "negative" power.
+        return MathF.Max(200000f * MathF.Log10(2 * fuel * MathF.Pow(cores, (float)-0.5)), 0);
     }
 
     public int GetTotalStability()

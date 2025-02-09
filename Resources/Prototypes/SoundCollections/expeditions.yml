@@ -1,0 +1,5 @@
+- type: soundCollection
+  id: ExpeditionEnd
+  files:
+  - /Audio/Expedition/tension_session.ogg
+  - /Audio/Expedition/deadline.ogg

@@ -4,6 +4,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Decals.Overlays;
 
@@ -16,7 +17,7 @@ public sealed class DecalPlacementOverlay : Overlay
     private readonly SharedTransformSystem _transform;
     private readonly SpriteSystem _sprite;
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
 
     public DecalPlacementOverlay(DecalPlacementSystem placement, SharedTransformSystem transform, SpriteSystem sprite)
     {
@@ -24,6 +25,7 @@ public sealed class DecalPlacementOverlay : Overlay
         _placement = placement;
         _transform = transform;
         _sprite = sprite;
+        ZIndex = 1000;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -51,11 +53,11 @@ public sealed class DecalPlacementOverlay : Overlay
         var handle = args.WorldHandle;
         handle.SetTransform(worldMatrix);
 
-        var localPos = invMatrix.Transform(mousePos.Position);
+        var localPos = Vector2.Transform(mousePos.Position, invMatrix);
 
         if (snap)
         {
-            localPos = (Vector2) localPos.Floored() + grid.TileSizeHalfVector;
+            localPos = localPos.Floored() + grid.TileSizeHalfVector;
         }
 
         // Nothing uses snap cardinals so probably don't need preview?
@@ -63,6 +65,6 @@ public sealed class DecalPlacementOverlay : Overlay
         var box = new Box2Rotated(aabb, rotation, localPos);
 
         handle.DrawTextureRect(_sprite.Frame0(decal.Sprite), box, color);
-        handle.SetTransform(Matrix3.Identity);
+        handle.SetTransform(Matrix3x2.Identity);
     }
 }

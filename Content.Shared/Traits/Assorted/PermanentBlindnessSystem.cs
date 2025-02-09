@@ -12,21 +12,19 @@ namespace Content.Shared.Traits.Assorted;
 public sealed class PermanentBlindnessSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly BlindableSystem _blinding = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<PermanentBlindnessComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<PermanentBlindnessComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PermanentBlindnessComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<PermanentBlindnessComponent, EyeDamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<PermanentBlindnessComponent, ExaminedEvent>(OnExamined);
     }
 
     private void OnExamined(Entity<PermanentBlindnessComponent> blindness, ref ExaminedEvent args)
     {
-        if (args.IsInDetailsRange && !_net.IsClient)
+        if (args.IsInDetailsRange && !_net.IsClient && blindness.Comp.Blindness == 0)
         {
             args.PushMarkup(Loc.GetString("permanent-blindness-trait-examined", ("target", Identity.Entity(blindness, EntityManager))));
         }
@@ -34,31 +32,26 @@ public sealed class PermanentBlindnessSystem : EntitySystem
 
     private void OnShutdown(Entity<PermanentBlindnessComponent> blindness, ref ComponentShutdown args)
     {
-        _blinding.UpdateIsBlind(blindness.Owner);
+        if (!TryComp<BlindableComponent>(blindness.Owner, out var blindable))
+            return;
+
+        if (blindable.MinDamage != 0)
+        {
+            _blinding.SetMinDamage((blindness.Owner, blindable), 0);
+        }
     }
 
-    private void OnStartup(Entity<PermanentBlindnessComponent> blindness, ref ComponentStartup args)
+    private void OnMapInit(Entity<PermanentBlindnessComponent> blindness, ref MapInitEvent args)
     {
-        if (!_entityManager.TryGetComponent<BlindableComponent>(blindness, out var blindable))
+        if(!TryComp<BlindableComponent>(blindness.Owner, out var blindable))
             return;
 
-        var damageToDeal = (int) BlurryVisionComponent.MaxMagnitude - blindable.EyeDamage;
-
-        if (damageToDeal <= 0)
-            return;
-
-        _blinding.AdjustEyeDamage(blindness.Owner, damageToDeal);
-    }
-
-    private void OnDamageChanged(Entity<PermanentBlindnessComponent> blindness, ref EyeDamageChangedEvent args)
-    {
-        if (args.Damage >= BlurryVisionComponent.MaxMagnitude)
-            return;
-
-        if (!_entityManager.TryGetComponent<BlindableComponent>(blindness, out var blindable))
-            return;
-
-        var damageRestoration = (int) BlurryVisionComponent.MaxMagnitude - args.Damage;
-        _blinding.AdjustEyeDamage(blindness.Owner, damageRestoration);
+        if (blindness.Comp.Blindness != 0)
+            _blinding.SetMinDamage((blindness.Owner, blindable), blindness.Comp.Blindness);
+        else
+        {
+            var maxMagnitudeInt = (int) BlurryVisionComponent.MaxMagnitude;
+            _blinding.SetMinDamage((blindness.Owner, blindable), maxMagnitudeInt);
+        }
     }
 }

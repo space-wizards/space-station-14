@@ -58,6 +58,11 @@
   path: "/Textures/Shaders/drunk.swsl"
 
 - type: shader
+  id: Drowsiness
+  kind: source
+  path: "/Textures/Shaders/radial_blur.swsl"
+
+- type: shader
   id: Texture
   kind: source
   path: "/Textures/Shaders/texture.swsl"
@@ -99,3 +104,8 @@
   id: Cataracts
   kind: source
   path: "/Textures/Shaders/cataracts.swsl"
+
+- type: shader
+  id: Hologram
+  kind: source
+  path: "/Textures/Shaders/hologram.swsl"

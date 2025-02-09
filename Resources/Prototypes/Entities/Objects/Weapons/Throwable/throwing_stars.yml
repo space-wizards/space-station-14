@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseMinorContraband]
   id: ThrowingStar
   name: throwing star
   description: An ancient weapon still used to this day, due to its ease of lodging itself into its victim's body parts.
@@ -31,6 +31,7 @@
         friction: 0.2
   - type: EmbeddableProjectile
     sound: /Audio/Weapons/star_hit.ogg
+  - type: LandAtCursor
   - type: DamageOtherOnHit
     damage:
       types:

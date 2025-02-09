@@ -2,43 +2,24 @@
   id: PirateGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitPirate
-    back: ClothingBackpackPirateFilled
+    back: ClothingBackpackSatchelLeather
     head: ClothingHeadBandBlack
     shoes: ClothingShoesBootsLaceup
     id: PiratePDA
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
-  innerClothingSkirt: ClothingUniformJumpsuitPirate
-  satchel: ClothingBackpackPirateFilled
-  duffelbag: ClothingBackpackPirateFilled
 
 - type: startingGear
   id: PirateCaptainGear
+  parent: PirateGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitPirate
-    back: ClothingBackpackPirateFilled
     head: ClothingHeadHatPirate
-    shoes: ClothingShoesBootsLaceup
-    id: PiratePDA
-    belt: ClothingBeltUtility
-    pocket1: AppraisalTool
     pocket2: EnergyCutlass
     outerClothing: ClothingOuterCoatPirate
-  innerClothingSkirt: ClothingUniformJumpskirtColorLightBrown
-  satchel: ClothingBackpackPirateFilled
-  duffelbag: ClothingBackpackPirateFilled
 
 - type: startingGear
   id: PirateFirstmateGear
+  parent: PirateGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitPirate
-    back: ClothingBackpackPirateFilled
     head: ClothingHeadHatPirateTricord
-    shoes: ClothingShoesBootsLaceup
-    id: PiratePDA
-    belt: ClothingBeltUtility
-    pocket1: AppraisalTool
     outerClothing: ClothingOuterCoatGentle
-  innerClothingSkirt: ClothingUniformJumpsuitPirate
-  satchel: ClothingBackpackPirateFilled
-  duffelbag: ClothingBackpackPirateFilled

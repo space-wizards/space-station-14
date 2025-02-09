@@ -20,72 +20,11 @@
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/caseless_rifle.rsi
   - type: MagazineVisuals
     magState: mag
-    steps: 2
+    steps: 4
     zeroVisible: false
   - type: Appearance
 
 # Boxes
-- type: entity
-  parent: BaseMagazineBoxCaselessRifle
-  id: MagazineBoxCaselessRifle10x24
-  name: ammunition box (.25 caseless)
-  components:
-  - type: BallisticAmmoProvider
-    capacity: 200
-    proto: CartridgeCaselessRifle
-  - type: Sprite
-    layers:
-    - state: base-10x24
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag10-1
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: mag10
-    steps: 2
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
-  parent: BaseMagazineBoxCaselessRifle
-  id: MagazineBoxCaselessRifleBig
-  name: ammunition box (.25 caseless)
-  components:
-  - type: BallisticAmmoProvider
-    capacity: 200
-    proto: CartridgeCaselessRifle
-  - type: Sprite
-    layers:
-    - state: base-b
-      map: ["enum.GunVisualLayers.Base"]
-    - state: magb-1
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: magb
-    steps: 2
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
-  parent: BaseMagazineBoxCaselessRifle
-  id: MagazineBoxCaselessRifleBigRubber
-  name: ammunition box (.25 caseless rubber)
-  components:
-  - type: BallisticAmmoProvider
-    capacity: 200
-    proto: CartridgeCaselessRifleRubber
-  - type: Sprite
-    layers:
-    - state: base-b
-      map: ["enum.GunVisualLayers.Base"]
-    - state: magb-1
-      map: ["enum.GunVisualLayers.Mag"]
-    - state: rubber-b
-  - type: MagazineVisuals
-    magState: magb
-    steps: 2
-    zeroVisible: false
-  - type: Appearance
-
 - type: entity
   parent: BaseMagazineBoxCaselessRifle
   id: MagazineBoxCaselessRifle
@@ -114,18 +53,3 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
     - state: practice
-
-- type: entity
-  parent: BaseMagazineBoxCaselessRifle
-  id: MagazineBoxCaselessRifleRubber
-  name: ammunition box (.25 caseless rubber)
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeCaselessRifleRubber
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-    - state: rubber

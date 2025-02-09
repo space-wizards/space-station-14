@@ -16,7 +16,6 @@
     arc: 360 # interact despite grilles
   - type: Tag
     tags:
-      - RCDDeconstructWhitelist
       - ForceFixRotations
       - Window
   - type: Sprite
@@ -42,6 +41,10 @@
   - type: ExaminableDamage
     messages: WindowMessages
   - type: Repairable
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 4
+    fx: EffectRCDDeconstruct4
   - type: Destructible
     thresholds:
     - trigger:
@@ -81,14 +84,41 @@
     node: window
   - type: Appearance
   - type: DamageVisuals
-    thresholds: [4, 8, 12]
-    damageDivisor: 3.333
+    thresholds: [5, 10, 20]
+    damageDivisor: 2
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
     price: 100
   - type: BlockWeather
+
+- type: entity
+  parent: Window
+  id: TintedWindow
+  name: tinted window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/tinted_window.rsi
+  - type: Icon
+    sprite: Structures/Windows/tinted_window.rsi
+  - type: IconSmooth
+    base: twindow
+  - type: Construction
+    graph: Window
+    node: tintedWindow
+  - type: Occluder
+  - type: StaticPrice
+    price: 70
+
+- type: entity
+  id: WindowRCDResistant
+  parent: Window
+  abstract: true
+  components:
+  - type: RCDDeconstructable
+    deconstructable: false
 
 - type: entity
   id: WindowDirectional
@@ -127,7 +157,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,-0.36"
+          bounds: "-0.5,-0.5,0.5,-0.28125"
         density: 1500
         mask:
         - FullTileMask
@@ -135,15 +165,19 @@
         - GlassLayer
   - type: Repairable
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Glass
   - type: ExaminableDamage
     messages: WindowMessages
+  - type: RCDDeconstructable
+    cost: 4
+    delay: 2
+    fx: EffectRCDDeconstruct2
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150 #excess damage (nuke?). avoid computational cost of spawning entities.
+        damage: 50 #excess damage (nuke?). avoid computational cost of spawning entities.
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -173,13 +207,20 @@
     node: windowDirectional
   - type: Appearance
   - type: DamageVisuals
-    thresholds: [4, 8, 12]
-    damageDivisor: 3.333
+    thresholds: [5, 10, 20]
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks_directional.rsi
   - type: StaticPrice
-    price: 10
+    price: 15
+
+- type: entity
+  id: WindowDirectionalRCDResistant
+  parent: WindowDirectional
+  abstract: true
+  components:
+  - type: RCDDeconstructable
+    deconstructable: false
 
 - type: entity
   id: WindowFrostedDirectional
@@ -197,6 +238,8 @@
   - type: Icon
     sprite: Structures/Windows/directional.rsi
     state: frosted_window
+  - type: StaticPrice
+    price: 35
 
 - type: entity
   parent: Window
@@ -211,6 +254,9 @@
     drawdepth: WallTops
     sprite: Structures/Windows/window_diagonal.rsi
     state: state0
+  - type: Tag
+    tags:
+    - Diagonal
   - type: IconSmooth
     mode: Diagonal
     key: windows

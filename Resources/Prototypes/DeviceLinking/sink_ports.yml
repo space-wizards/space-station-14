@@ -49,6 +49,11 @@
   description: signal-port-description-trigger
 
 - type: sinkPort
+  id: Timer
+  name: signal-port-name-timer
+  description: signal-port-description-timer
+
+- type: sinkPort
   id: OrderReceiver
   name: signal-port-name-order-receiver
   description: signal-port-description-order-receiver
@@ -94,6 +99,16 @@
   description: signal-port-description-logic-input
 
 - type: sinkPort
+  id: MemoryInput
+  name: signal-port-name-logic-input
+  description: signal-port-description-logic-memory-input
+
+- type: sinkPort
+  id: MemoryEnable
+  name: signal-port-name-logic-enable
+  description: signal-port-description-logic-enable
+
+- type: sinkPort
   id: SetParticleDelta
   name: signal-port-name-set-particle-delta
   description: signal-port-description-set-particle-delta
@@ -107,3 +122,8 @@
   id: SetParticleZeta
   name: signal-port-name-set-particle-zeta
   description: signal-port-description-set-particle-zeta
+
+- type: sinkPort
+  id: SetParticleSigma
+  name: signal-port-name-set-particle-sigma
+  description: signal-port-description-set-particle-sigma

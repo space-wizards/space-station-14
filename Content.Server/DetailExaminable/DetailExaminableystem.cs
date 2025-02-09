@@ -1,4 +1,4 @@
-﻿using Content.Shared.Examine;
+using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
@@ -28,7 +28,7 @@ namespace Content.Server.DetailExaminable
                 Act = () =>
                 {
                     var markup = new FormattedMessage();
-                    markup.AddMarkup(component.Content);
+                    markup.AddMarkupOrThrow(component.Content);
                     _examineSystem.SendExamineTooltip(args.User, uid, markup, false, false);
                 },
                 Text = Loc.GetString("detail-examinable-verb-text"),

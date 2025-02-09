@@ -4,6 +4,7 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Events;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Mobs.Systems;
@@ -212,7 +213,7 @@ public sealed class MobThresholdSystem : EntitySystem
         MobThresholdsComponent? thresholdComponent = null)
     {
         threshold = null;
-        if (!Resolve(target, ref thresholdComponent))
+        if (!Resolve(target, ref thresholdComponent, false))
             return false;
 
         return TryGetThresholdForState(target, MobState.Dead, out threshold, thresholdComponent);
@@ -391,6 +392,16 @@ public sealed class MobThresholdSystem : EntitySystem
         if (alertPrototype.SupportsSeverity)
         {
             var severity = _alerts.GetMinSeverity(currentAlert);
+
+            var ev = new BeforeAlertSeverityCheckEvent(currentAlert, severity);
+            RaiseLocalEvent(target, ev);
+
+            if (ev.CancelUpdate)
+            {
+                _alerts.ShowAlert(target, ev.CurrentAlert, ev.Severity);
+                return;
+            }
+
             if (TryGetNextState(target, currentMobState, out var nextState, threshold) &&
                 TryGetPercentageForState(target, nextState.Value, damageable.TotalDamage, out var percentage))
             {
@@ -431,7 +442,7 @@ public sealed class MobThresholdSystem : EntitySystem
     private void MobThresholdShutdown(EntityUid target, MobThresholdsComponent component, ComponentShutdown args)
     {
         if (component.TriggersAlerts)
-            _alerts.ClearAlertCategory(target, AlertCategory.Health);
+            _alerts.ClearAlertCategory(target, component.HealthAlertCategory);
     }
 
     private void OnUpdateMobState(EntityUid target, MobThresholdsComponent component, ref UpdateMobStateEvent args)

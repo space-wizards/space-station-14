@@ -1,7 +1,7 @@
 - type: entity
   id: BaseMagazineShotgun
   name: ammo drum (.50 shells)
-  parent: BaseItem
+  parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
   components:
   - type: Tag
@@ -32,6 +32,15 @@
     steps: 2
     zeroVisible: false
   - type: Appearance
+
+- type: entity
+  id: MagazineShotgunEmpty
+  name: ammo drum (.50 shells any)
+  suffix: empty
+  parent: BaseMagazineShotgun
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
 
 - type: entity
   id: MagazineShotgun

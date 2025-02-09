@@ -28,6 +28,9 @@ signal-port-description-doorbolt = Bolts door when HIGH.
 signal-port-name-trigger = Trigger
 signal-port-description-trigger = Triggers some mechanism on the device.
 
+signal-port-name-timer = Timer
+signal-port-description-timer = Starts the timer countdown of the device.
+
 signal-port-name-order-sender = Order sender
 signal-port-description-order-sender = Cargo console order sender
 
@@ -70,6 +73,9 @@ signal-port-description-set-particle-epsilon = Sets the type of particle this de
 signal-port-name-set-particle-zeta = Set particle type: zeta
 signal-port-description-set-particle-zeta = Sets the type of particle this device emits to zeta.
 
+signal-port-name-set-particle-sigma = Set particle type: sigma
+signal-port-description-set-particle-sigma = Sets the type of particle this device emits to sigma.
+
 signal-port-name-logic-input-a = Input A
 signal-port-description-logic-input-a = First input of a logic gate.
 
@@ -78,3 +84,8 @@ signal-port-description-logic-input-b = Second input of a logic gate.
 
 signal-port-name-logic-input = Input
 signal-port-description-logic-input = Input to the edge detector, cannot be a pulse signal.
+
+signal-port-description-logic-memory-input = Signal to load into the memory cell, when enabled.
+
+signal-port-name-logic-enable = Enable
+signal-port-description-logic-enable = Only loads the input signal into the memory cell when HIGH.

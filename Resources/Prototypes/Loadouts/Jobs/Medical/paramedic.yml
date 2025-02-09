@@ -1,0 +1,34 @@
+# Head
+- type: loadout
+  id: ParamedicHead
+  equipment:
+    head: ClothingHeadHatParamedicsoft
+
+# Jumpsuit
+- type: loadout
+  id: ParamedicJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitParamedic
+
+- type: loadout
+  id: ParamedicJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtParamedic
+
+# Outer clothing
+- type: loadout
+  id: ParamedicWindbreaker
+  equipment:
+    outerClothing: ClothingOuterCoatParamedicWB
+
+- type: loadout
+  id: ParamedicWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterPara
+
+# Shoes
+- type: loadout
+  id: BlueShoes
+  equipment:
+    shoes: ClothingShoesColorBlue
+

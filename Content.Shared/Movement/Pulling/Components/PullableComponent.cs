@@ -1,4 +1,6 @@
+using Content.Shared.Alert;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Movement.Pulling.Components;
 
@@ -36,4 +38,9 @@ public sealed partial class PullableComponent : Component
     [Access(typeof(Systems.PullingSystem), Other = AccessPermissions.ReadExecute)]
     [AutoNetworkedField, DataField]
     public bool PrevFixedRotation;
+
+    [DataField]
+    public ProtoId<AlertPrototype> PulledAlert = "Pulled";
 }
+
+public sealed partial class StopBeingPulledAlertEvent : BaseAlertEvent;

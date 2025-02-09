@@ -1,15 +1,15 @@
-﻿using Content.Server.Administration.Logs;
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using Content.Server.Station.Components;
-using Content.Server.Station.Systems;
 using Content.Shared.Database;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Respawn;
+using Content.Shared.Station.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Respawn;
@@ -21,8 +21,10 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public override void Initialize()
     {
@@ -87,6 +89,10 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         if (!TryComp<MapGridComponent>(entityGridUid, out var grid) || MetaData(entityGridUid.Value).EntityLifeStage >= EntityLifeStage.Terminating)
             return;
 
+        //Invalid prototype
+        if (!_proto.HasIndex(component.Prototype))
+            return;
+
         if (TryFindRandomTile(entityGridUid.Value, entityMapUid.Value, 10, out var coords))
             Respawn(uid, component.Prototype, coords);
 
@@ -95,12 +101,12 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         {
             var xform = Transform(entityGridUid.Value);
             var pos = xform.Coordinates;
-            var mapPos = xform.MapPosition;
+            var mapPos = _transform.GetMapCoordinates(entityGridUid.Value, xform: xform);
             var circle = new Circle(mapPos.Position, 2);
 
             var found = false;
 
-            foreach (var tile in grid.GetTilesIntersecting(circle))
+            foreach (var tile in _map.GetTilesIntersecting(entityGridUid.Value, grid, circle))
             {
                 if (tile.IsSpace(_tileDefinitionManager)
                     || _turf.IsTileBlocked(tile, CollisionGroup.MobMask)
@@ -157,7 +163,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         var tile = tileRef.GridIndices;
 
         var found = false;
-        var (gridPos, _, gridMatrix) = xform.GetWorldPositionRotationMatrix();
+        var (gridPos, _, gridMatrix) = _transform.GetWorldPositionRotationMatrix(xform);
         var gridBounds = gridMatrix.TransformBox(grid.LocalAABB);
 
         //Obviously don't put anything ridiculous in here
@@ -171,9 +177,9 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
             var mapTarget = grid.WorldToTile(mapPos);
             var circle = new Circle(mapPos, 2);
 
-            foreach (var newTileRef in grid.GetTilesIntersecting(circle))
+            foreach (var newTileRef in _map.GetTilesIntersecting(targetGrid, grid, circle))
             {
-                if (newTileRef.IsSpace(_tileDefinitionManager) || newTileRef.IsBlockedTurf(true) || !_atmosphere.IsTileMixtureProbablySafe(targetGrid, targetMap, mapTarget))
+                if (newTileRef.IsSpace(_tileDefinitionManager) || _turf.IsTileBlocked(newTileRef, CollisionGroup.MobMask) || !_atmosphere.IsTileMixtureProbablySafe(targetGrid, targetMap, mapTarget))
                     continue;
 
                 found = true;

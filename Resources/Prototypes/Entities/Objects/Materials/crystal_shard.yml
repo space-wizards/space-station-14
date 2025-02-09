@@ -6,6 +6,8 @@
   description:  A small piece of crystal.
   components:
   - type: Sharp
+  - type: Execution
+    doAfterDuration: 4.0
   - type: Sprite
     layers:
       - sprite: Objects/Materials/Shards/crystal.rsi
@@ -134,3 +136,18 @@
     tags:
       - Trash
       - CrystalRed
+
+- type: entity
+  parent: ShardCrystalBase
+  id: ShardCrystalRandom
+  name: random crystal shard
+  components:
+  - type: RandomSpawner
+    prototypes:
+      - ShardCrystalGreen
+      - ShardCrystalPink
+      - ShardCrystalOrange
+      - ShardCrystalBlue
+      - ShardCrystalCyan
+      - ShardCrystalRed
+    chance: 1

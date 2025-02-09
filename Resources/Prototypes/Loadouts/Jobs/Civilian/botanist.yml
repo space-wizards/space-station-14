@@ -1,0 +1,53 @@
+# Head
+- type: loadout
+  id: BotanistHead
+  equipment:
+    head: ClothingHeadHatTrucker
+
+- type: loadout
+  id: BotanistBandana
+  equipment:
+    head: ClothingHeadBandBotany
+
+# Jumpsuit
+- type: loadout
+  id: BotanistJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHydroponics
+
+- type: loadout
+  id: BotanistJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHydroponics
+
+- type: loadout
+  id: BotanistOveralls
+  equipment:
+    jumpsuit: ClothingUniformOveralls
+
+# Back
+- type: loadout
+  id: BotanistBackpack
+  equipment:
+    back: ClothingBackpackHydroponics
+
+- type: loadout
+  id: BotanistSatchel
+  equipment:
+    back: ClothingBackpackSatchelHydroponics
+
+- type: loadout
+  id: BotanistDuffel
+  equipment:
+    back: ClothingBackpackDuffelHydroponics
+
+# Outer clothing
+- type: loadout
+  id: BotanistApron
+  equipment:
+    outerClothing: ClothingOuterApronBotanist
+
+- type: loadout
+  id: BotanistWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterHydro

@@ -1,0 +1,114 @@
+# Greytide Time
+- type: loadoutEffectGroup
+  id: GreyTider
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPassenger
+      time: 36000 #10 hrs, silly reward for people who play passenger a lot
+
+# Head of Greytide (for grey mantle)
+- type: loadoutEffectGroup
+  id: MasterGrey
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPassenger
+      time: 72000 #20 hrs, fun mantle for the most experienced greytiders
+
+# Face
+- type: loadout
+  id: PassengerFace
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: GreyTider
+  equipment:
+    mask: ClothingMaskGas
+
+# Jumpsuits
+# Grey
+- type: loadout
+  id: GreyJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGrey
+
+- type: loadout
+  id: GreyJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorGrey
+
+# Rainbow
+- type: loadout
+  id: RainbowJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: GreyTider
+  equipment:
+    jumpsuit: ClothingUniformColorRainbow
+
+# Ancient
+- type: loadout
+  id: AncientJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: GreyTider
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAncient
+
+# Neck
+- type: loadout
+  id: Mantle
+  equipment:
+    neck: ClothingNeckMantle
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterGrey
+
+- type: startingGear
+  id: Mantle
+  equipment:
+    neck: ClothingNeckMantle
+
+# Back
+- type: loadout
+  id: CommonBackpack
+  equipment:
+    back: ClothingBackpack
+
+- type: loadout
+  id: CommonSatchel
+  equipment:
+    back: ClothingBackpackSatchel
+
+- type: loadout
+  id: CommonDuffel
+  equipment:
+    back: ClothingBackpackDuffel
+
+# Gloves
+- type: loadout
+  id: PassengerGloves
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: GreyTider
+  equipment:
+    gloves: ClothingHandsGlovesFingerlessInsulated
+
+# Outerclothing
+- type: loadout
+  id: PassengerWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterCoat
+
+# Shoes
+- type: loadout
+  id: BlackShoes
+  equipment:
+    shoes: ClothingShoesColorBlack
+
+- type: loadout
+  id: WinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinter

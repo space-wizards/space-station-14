@@ -19,6 +19,7 @@
       - DrinkColaCan
       - DrinkIcedTeaCan
       - DrinkLemonLimeCan
+      - DrinkLemonLimeCranberryCan
       - DrinkGrapeCan
       - DrinkRootBeerCan
       - DrinkSodaWaterCan
@@ -31,6 +32,7 @@
       - DrinkDrGibbCan
       - DrinkEnergyDrinkCan
       - DrinkShamblersJuiceCan
+      - DrinkSolDryCan
       - DrinkPwrGameCan
       - DrinkHotCoco
       - DrinkHotCoffee

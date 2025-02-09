@@ -2,7 +2,7 @@
   parent: BaseItem
   id: NotekeeperCartridge
   name: notekeeper cartridge
-  description: A program for keeping notes
+  description: A program for keeping notes.
   components:
   - type: Sprite
     sprite: Objects/Devices/cartridge.rsi
@@ -13,14 +13,14 @@
     programName: notekeeper-program-name
     icon:
       sprite:  Objects/Misc/books.rsi
-      state: book6
+      state: book_icon
   - type: NotekeeperCartridge
 
 - type: entity
   parent: BaseItem
   id: NewsReaderCartridge
   name: news cartridge
-  description: A program for reading news
+  description: A program for reading news.
   components:
   - type: Sprite
     sprite: Objects/Devices/cartridge.rsi
@@ -38,7 +38,7 @@
   parent: BaseItem
   id: CrewManifestCartridge
   name: crew manifest cartridge
-  description: A program for listing your fellow crewmembers
+  description: A program for listing your fellow crewmembers.
   components:
     - type: Sprite
       sprite: Objects/Devices/cartridge.rsi
@@ -56,7 +56,7 @@
   parent: BaseItem
   id: NetProbeCartridge
   name: NetProbe cartridge
-  description: A program for getting the address and frequency of network devices
+  description: A program for getting the address and frequency of network devices.
   components:
     - type: Sprite
       sprite: Objects/Devices/cartridge.rsi
@@ -74,7 +74,7 @@
   parent: BaseItem
   id: LogProbeCartridge
   name: LogProbe cartridge
-  description: A program for getting access logs from devices
+  description: A program for getting access logs from devices.
   components:
     - type: Sprite
       sprite: Objects/Devices/cartridge.rsi
@@ -90,5 +90,67 @@
         sprite: Structures/Doors/Airlocks/Standard/security.rsi
         state: closed
     - type: LogProbeCartridge
+    - type: GuideHelp
       guides:
-        - Forensics
+      - Forensics
+
+- type: entity
+  parent: BaseItem
+  id: WantedListCartridge
+  name: Wanted list cartridge
+  description: A program to get a list of wanted persons.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-sec
+  - type: Icon
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-sec
+  - type: UIFragment
+    ui: !type:WantedListUi
+  - type: Cartridge
+    programName: wanted-list-program-name
+    icon:
+      sprite: Objects/Misc/books.rsi
+      state: icon_magnifier
+  - type: WantedListCartridge
+  - type: StealTarget
+    stealGroup: WantedListCartridge
+
+- type: entity
+  parent: BaseItem
+  id: MedTekCartridge
+  name: MedTek cartridge
+  description: A program that provides medical diagnostic tools.
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-med
+    - type: Icon
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-med
+    - type: Cartridge
+      programName: med-tek-program-name
+      icon:
+        sprite: Objects/Specific/Medical/healthanalyzer.rsi
+        state: icon
+    - type: MedTekCartridge
+
+- type: entity
+  parent: BaseItem
+  id: AstroNavCartridge
+  name: AstroNav cartridge
+  description: A program for navigation that provides GPS coordinates.
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-nav
+    - type: Icon
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-nav
+    - type: Cartridge
+      programName: astro-nav-program-name
+      icon:
+        sprite: Objects/Devices/gps.rsi
+        state: icon
+    - type: AstroNavCartridge

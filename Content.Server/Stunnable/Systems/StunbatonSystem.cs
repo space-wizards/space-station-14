@@ -1,7 +1,6 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Events;
-using Content.Server.Stunnable.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
@@ -19,7 +18,7 @@ namespace Content.Server.Stunnable.Systems
         [Dependency] private readonly RiggableSystem _riggableSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly BatterySystem _battery = default!;
-        [Dependency] private readonly SharedItemToggleSystem _itemToggle = default!;
+        [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
 
         public override void Initialize()
         {
@@ -58,10 +57,7 @@ namespace Content.Server.Stunnable.Systems
 
         private void ToggleDone(Entity<StunbatonComponent> entity, ref ItemToggledEvent args)
         {
-            if (!TryComp<ItemComponent>(entity, out var item))
-                return;
-
-            _item.SetHeldPrefix(entity.Owner, args.Activated ? "on" : "off", component: item);
+            _item.SetHeldPrefix(entity.Owner, args.Activated ? "on" : "off");
         }
 
         private void TryTurnOn(Entity<StunbatonComponent> entity, ref ItemToggleActivateAttemptEvent args)

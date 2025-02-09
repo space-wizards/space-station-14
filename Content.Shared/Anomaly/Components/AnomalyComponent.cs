@@ -1,5 +1,6 @@
 using System.Numerics;
-using Content.Shared.Damage;
+using Content.Shared.Anomaly.Effects;
+using Content.Shared.Anomaly.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -15,7 +16,7 @@ namespace Content.Shared.Anomaly.Components;
 /// Anomalies and their related components were designed here: https://hackmd.io/@ss14-design/r1sQbkJOs
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-[Access(typeof(SharedAnomalySystem))]
+[Access(typeof(SharedAnomalySystem), typeof(SharedInnerBodyAnomalySystem))]
 public sealed partial class AnomalyComponent : Component
 {
     /// <summary>
@@ -94,13 +95,13 @@ public sealed partial class AnomalyComponent : Component
     /// The minimum interval between pulses.
     /// </summary>
     [DataField]
-    public TimeSpan MinPulseLength = TimeSpan.FromMinutes(1);
+    public TimeSpan MinPulseLength = TimeSpan.FromMinutes(2);
 
     /// <summary>
     /// The maximum interval between pulses.
     /// </summary>
     [DataField]
-    public TimeSpan MaxPulseLength = TimeSpan.FromMinutes(2);
+    public TimeSpan MaxPulseLength = TimeSpan.FromMinutes(4);
 
     /// <summary>
     /// A percentage by which the length of a pulse might vary.
@@ -151,20 +152,26 @@ public sealed partial class AnomalyComponent : Component
     /// <summary>
     /// The particle type that increases the severity of the anomaly.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public AnomalousParticleType SeverityParticleType;
 
     /// <summary>
     /// The particle type that destabilizes the anomaly.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public AnomalousParticleType DestabilizingParticleType;
 
     /// <summary>
     /// The particle type that weakens the anomalys health.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public AnomalousParticleType WeakeningParticleType;
+
+    /// <summary>
+    /// The particle type that change anomaly behaviour.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public AnomalousParticleType TransformationParticleType;
 
     #region Points and Vessels
     /// <summary>
@@ -177,37 +184,23 @@ public sealed partial class AnomalyComponent : Component
     /// <summary>
     /// The minimum amount of research points generated per second
     /// </summary>
-    [DataField("minPointsPerSecond")]
+    [DataField]
     public int MinPointsPerSecond = 10;
 
     /// <summary>
     /// The maximum amount of research points generated per second
     /// This doesn't include the point bonus for being unstable.
     /// </summary>
-    [DataField("maxPointsPerSecond")]
-    public int MaxPointsPerSecond = 80;
+    [DataField]
+    public int MaxPointsPerSecond = 70;
 
     /// <summary>
     /// The multiplier applied to the point value for the
     /// anomaly being above the <see cref="GrowthThreshold"/>
     /// </summary>
-    [DataField("growingPointMultiplier")]
+    [DataField]
     public float GrowingPointMultiplier = 1.5f;
     #endregion
-
-    /// <summary>
-    /// The amount of damage dealt when either a player touches the anomaly
-    /// directly or by hitting the anomaly.
-    /// </summary>
-    [DataField(required: true)]
-    public DamageSpecifier AnomalyContactDamage = default!;
-
-    /// <summary>
-    /// The sound effect played when a player
-    /// burns themselves on an anomaly via contact.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier AnomalyContactDamageSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 
     /// <summary>
     /// A prototype entity that appears when an anomaly supercrit collapse.
@@ -220,6 +213,31 @@ public sealed partial class AnomalyComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntProtoId? CoreInertPrototype;
+
+    #region Behavior Deviations
+
+    [DataField]
+    public ProtoId<AnomalyBehaviorPrototype>? CurrentBehavior;
+
+    /// <summary>
+    /// Presumption of anomaly to change behavior. The higher the number, the higher the chance that the anomaly will change its behavior.
+    /// </summary>
+    [DataField]
+    public float Continuity = 0f;
+
+    /// <summary>
+    /// Minimum contituty probability chance, that can be selected by anomaly on MapInit
+    /// </summary>
+    [DataField]
+    public float MinContituty = 0.1f;
+
+    /// <summary>
+    /// Maximum contituty probability chance, that can be selected by anomaly on MapInit
+    /// </summary>
+    [DataField]
+    public float MaxContituty = 1.0f;
+
+    #endregion
 
     #region Floating Animation
     /// <summary>
@@ -234,10 +252,13 @@ public sealed partial class AnomalyComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("offset")]
-    public Vector2 FloatingOffset = new(0, 0.15f);
+    public Vector2 FloatingOffset = new(0, 0);
 
     public readonly string AnimationKey = "anomalyfloat";
     #endregion
+
+    [DataField]
+    public bool DeleteEntity = true;
 }
 
 /// <summary>
@@ -247,13 +268,13 @@ public sealed partial class AnomalyComponent : Component
 /// <param name="Stability"></param>
 /// <param name="Severity"></param>
 [ByRefEvent]
-public readonly record struct AnomalyPulseEvent(EntityUid Anomaly, float Stability, float Severity);
+public readonly record struct AnomalyPulseEvent(EntityUid Anomaly, float Stability, float Severity, float PowerModifier);
 
 /// <summary>
 /// Event raised on an anomaly when it reaches a supercritical point.
 /// </summary>
 [ByRefEvent]
-public readonly record struct AnomalySupercriticalEvent(EntityUid Anomaly);
+public readonly record struct AnomalySupercriticalEvent(EntityUid Anomaly, float PowerModifier);
 
 /// <summary>
 /// Event broadcast after an anomaly goes supercritical
@@ -282,3 +303,10 @@ public readonly record struct AnomalyStabilityChangedEvent(EntityUid Anomaly, fl
 /// <param name="Anomaly">The anomaly being changed</param>
 [ByRefEvent]
 public readonly record struct AnomalyHealthChangedEvent(EntityUid Anomaly, float Health);
+
+/// <summary>
+/// Event broadcast when an anomaly's behavior is changed.
+/// This is raised after the relevant components are applied
+/// </summary>
+[ByRefEvent]
+public readonly record struct AnomalyBehaviorChangedEvent(EntityUid Anomaly, ProtoId<AnomalyBehaviorPrototype>? Old, ProtoId<AnomalyBehaviorPrototype>? New);
