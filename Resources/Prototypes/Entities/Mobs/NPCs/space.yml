@@ -525,7 +525,7 @@
   - type: MobStateActions
     actions:
       Alive:
-      - ActionSmite
+      - ActionSmiteNoReq
       Critical:
       - ActionCritSuccumb
       - ActionCritFakeDeath
