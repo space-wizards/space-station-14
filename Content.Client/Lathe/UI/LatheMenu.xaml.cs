@@ -100,13 +100,7 @@ public sealed partial class LatheMenu : DefaultWindow
                 if (proto.Categories.Count <= 0)
                     continue;
 
-                bool validRecipe = false;
-                foreach (var category in proto.Categories)
-                    if (category == CurrentCategory)
-                    {
-                        validRecipe = true;
-                        break;
-                    }
+                var validRecipe = proto.Categories.Any(category => category == CurrentCategory);
 
                 if (!validRecipe)
                     continue;
