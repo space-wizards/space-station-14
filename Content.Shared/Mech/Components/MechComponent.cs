@@ -194,7 +194,7 @@ public sealed partial class MechComponent : Component
     public SoundSpecifier CriticalDamageSound = new SoundPathSpecifier("/Audio/Mecha/critnano.ogg");
     
     [DataField]
-    public bool FirstStart = true;
+    public bool FirstStart = false;
     
     [DataField]
     public bool PlayPowerSound = true;

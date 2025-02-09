@@ -73,7 +73,6 @@
   components:
   - type: MobMover
   - type: Mech
-    firstStart: false
   - type: MechAir
   - type: AirFilter
     # everything except oxygen and nitrogen
