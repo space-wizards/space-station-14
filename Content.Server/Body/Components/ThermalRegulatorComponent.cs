@@ -80,4 +80,14 @@ public sealed partial class ThermalRegulatorComponent : Component
     public float SweatEmoteProgress = 0.0f;
     [ViewVariables]
     public float ShiverEmoteProgress = 0.0f;
+    /// <summary>
+    ///     Does this entity do the sweat emote when warm
+    /// </summary>
+    [DataField]
+    public bool VisuallySweats;
+    /// <summary>
+    ///     Does this entity do the shiver emote when cold
+    /// </summary>
+    [DataField]
+    public bool VisuallyShivers;
 }

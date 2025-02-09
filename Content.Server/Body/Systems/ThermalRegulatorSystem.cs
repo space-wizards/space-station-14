@@ -91,8 +91,11 @@ public sealed class ThermalRegulatorSystem : EntitySystem
 
             _tempSys.ChangeHeat(ent, -Math.Min(targetHeat, ent.Comp1.SweatHeatRegulation), ignoreHeatResistance: true, ent);
 
-            //you sweat maximally at 87C, which is 40C higher than what would kill you IRL, at once every 8 seconds (50 over comfort * once every 8 seconds = 400)
-            ent.Comp1.SweatEmoteProgress += Math.Min(tempDiff + 10, 50) / 400;
+            if (!ent.Comp1.VisuallySweats)
+                return;
+
+            //for humans, they start sweating at 25C over body temp, at once every 30 seconds, and maximally at 75C over, once per 15 seconds
+            ent.Comp1.SweatEmoteProgress += Math.Min(tempDiff / ent.Comp1.ThermalRegulationTemperatureThreshold, 2) / 30;
             if (ent.Comp1.SweatEmoteProgress > 1.0f)
             {
                 _chat.TryEmoteWithChat(ent, ent.Comp1.SweatEmote, ChatTransmitRange.HideChat, ignoreActionBlocker: true);
@@ -106,8 +109,11 @@ public sealed class ThermalRegulatorSystem : EntitySystem
 
             _tempSys.ChangeHeat(ent, Math.Min(targetHeat, ent.Comp1.ShiveringHeatRegulation), ignoreHeatResistance: true, ent);
 
-            //you shiver maximally at -100C, which is about how low IRl cryo chambers go, at once every 8 seconds (100 under comfort * 10 = 100)
-            ent.Comp1.ShiverEmoteProgress += Math.Min(tempDiff + 20, 100) / 800;
+            if (!ent.Comp1.VisuallyShivers)
+                return;
+
+            //for humans, they start shivering at 25C under body temp, at once every 30 seconds, and maximally at 75C under, once per 15 seconds
+            ent.Comp1.ShiverEmoteProgress += Math.Min(tempDiff / ent.Comp1.ThermalRegulationTemperatureThreshold, 2) / 30;
             if (ent.Comp1.ShiverEmoteProgress > 1.0f)
             {
                 _chat.TryEmoteWithChat(ent, ent.Comp1.ShiverEmote, ChatTransmitRange.HideChat, ignoreActionBlocker: true);
