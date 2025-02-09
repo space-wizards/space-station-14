@@ -12,7 +12,7 @@ public sealed partial class UnrevivableComponent : Component
     /// A field to define if we should display the "Genetic incompatibility" warning on health analysers
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool Analyzable { get; set; } = true;
+    public bool Analyzable = true;
 
     /// <summary>
     /// The loc string used to provide a reason for being unrevivable
