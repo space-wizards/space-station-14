@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Physics;
 using Content.Shared.Weapons.Reflect;
@@ -56,6 +56,14 @@ public sealed partial class HitscanPrototype : IPrototype, IShootable, IInheriti
     // 🌟Starlight🌟
     [ViewVariables(VVAccess.ReadWrite), DataField("pierceChance")]
     public float PierceChance = 0.10f;
+
+    // 🌟Starlight🌟
+    [ViewVariables(VVAccess.ReadWrite), DataField("derivation")]
+    public float Derivation = 0.10f;
+
+    // 🌟Starlight🌟
+    [ViewVariables(VVAccess.ReadWrite), DataField("steps")]
+    public int Steps = 5;
 
     // 🌟Starlight🌟
     [ViewVariables(VVAccess.ReadWrite), DataField("pierceLevel")]
