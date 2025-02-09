@@ -3231,4 +3231,11 @@ Entries:
   id: 449
   time: '2025-02-09T02:57:48.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/313
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where the Abductor couldn't use the Wonderprod.
+    type: Fix
+  id: 450
+  time: '2025-02-09T04:04:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/314
 
