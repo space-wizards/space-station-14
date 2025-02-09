@@ -137,7 +137,7 @@
     count: 6
 
 - type: localizedDataset
-  id: FigurinesCyborgStationAI
+  id: FigurinesStationAI
   values:
-    prefix: figurines-cyborgstationai-
+    prefix: figurines-stationai-
     count: 7
