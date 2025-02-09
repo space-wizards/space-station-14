@@ -305,4 +305,4 @@ Resources/MapImages
 *.bak
 
 # Direnv stuff
-.direnv/ 
+.direnv/
