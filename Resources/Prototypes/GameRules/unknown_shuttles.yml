@@ -26,13 +26,13 @@
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
     - id: UnknownShuttleSyndieEvacPod
+    - id: UnknownShuttleManOWar
 
 - type: entityTable
   id: UnknownShuttlesHostileTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
     - id: LoneOpsSpawn
-    - id: UnknownShuttleManOWar
     - id: UnknownShuttleInstigator
 
 # Shuttle Game Rules
@@ -99,7 +99,7 @@
   components:
   - type: StationEvent
     startAnnouncement: null # It should be silent.
-    weight: 5 # lower because weird freelance roles
+    weight: 7 # lower because free agent roles
     maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: LoadMapRule
     preloadedGrid: SyndieEvacPod
@@ -209,8 +209,8 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #Leaving this one because theyre like primitives and its funnier
-    weight: 1 # lower because antags
-    earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly. (4) & antags
+    weight: 7 # a little lower because free agents
+    earliestStart: 30 # late enough to hopefully have enough ghosts to fill all roles quickly. (4) & free agents
   - type: LoadMapRule
     preloadedGrid: ManOWar
 
