@@ -3,7 +3,7 @@ using Content.Shared.Tools;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Repairable
+namespace Content.Shared.Repairable
 {
     [RegisterComponent]
     public sealed partial class RepairableComponent : Component
