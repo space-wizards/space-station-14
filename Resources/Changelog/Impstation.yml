@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Beanbag Kammerers and Beanbag Enforcers are now blue!
-    type: Tweak
-  - message: Beanbag Shells and their associated containers are also blue now (that's
-      my attack)
-    type: Tweak
-  - message: Minor touchups on lethal Kammerer and Enforcer sprites
-    type: Tweak
-  id: 582
-  time: '2024-11-26T19:09:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/760
 - author: widgetbeck
   changes:
   - message: Added the goblin EVA suit (gobsuit.) Admin-only for the moment.
@@ -4255,3 +4243,10 @@
   id: 1081
   time: '2025-02-08T22:54:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1614
+- author: hivehum
+  changes:
+  - message: Courier and Brigmedic now have appropriate text highlighting auto-fills.
+    type: Add
+  id: 1082
+  time: '2025-02-09T04:39:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1615
