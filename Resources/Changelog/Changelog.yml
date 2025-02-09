@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Guidebook books now do damage like default writeable books.
-    type: Fix
-  id: 7424
-  time: '2024-09-23T11:12:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32403
 - author: Jophire
   changes:
   - message: VIM mech now can open maintenance doors!
@@ -3897,3 +3890,10 @@
   id: 7923
   time: '2025-02-09T22:16:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35008
+- author: Vortebo
+  changes:
+  - message: Added Relic station.
+    type: Add
+  id: 7924
+  time: '2025-02-09T23:24:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34988
