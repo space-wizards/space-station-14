@@ -227,7 +227,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             {
                 fingerprint.Fingerprint = _forensicsSystem.GenerateFingerprint();
             }
-            RemComp<DetailExaminableComponent>(ent); // remove MRP+ custom description if one exists
+            RemComp<DetailExaminableComponent>(ent); // remove MRP+ custom description if one exists 
             _identity.QueueIdentityUpdate(ent); // manually queue identity update since we don't raise the event
             _popup.PopupEntity(Loc.GetString("scramble-implant-activated-popup"), ent, ent);
         }
