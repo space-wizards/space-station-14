@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: You can examine entities inside of your own container again.
-    type: Fix
-  id: 7420
-  time: '2024-09-23T04:55:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32267
 - author: Cojoke-dot
   changes:
   - message: L6 Saw now fits in the suit slot
@@ -3901,3 +3894,10 @@
   id: 7919
   time: '2025-02-09T00:12:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34974
+- author: rokudara-sen
+  changes:
+  - message: Anchored shuttle console will no longer rotate.
+    type: Fix
+  id: 7920
+  time: '2025-02-09T12:15:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35000
