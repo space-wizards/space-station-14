@@ -419,8 +419,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (!TryComp<BlindableComponent>(target, out var blindable) || blindable.IsBlind)
             return;
 
-        _blindable.AdjustEyeDamage((target, blindable), 2);
-        var timeSpan = TimeSpan.FromSeconds(5f);
+        var timeSpan = TimeSpan.FromSeconds(7f);
         _statusEffect.TryAddStatusEffect(target, TemporaryBlindnessSystem.BlindingStatusEffect, timeSpan, false, TemporaryBlindnessSystem.BlindingStatusEffect);
     }
     private void OnStingCryo(EntityUid uid, ChangelingComponent comp, ref StingCryoEvent args)
