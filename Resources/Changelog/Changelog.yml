@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Entities within the same container as the player only appear in the context
-      menu when clicking near the container.
-    type: Fix
-  id: 7422
-  time: '2024-09-23T07:28:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32395
 - author: Errant
   changes:
   - message: Computers now have a maintenance panel with a Power and AI wire (if AI-connected).
@@ -3900,3 +3892,10 @@
   id: 7921
   time: '2025-02-09T15:10:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34950
+- author: Spacemann
+  changes:
+  - message: Removed Cog station
+    type: Remove
+  id: 7922
+  time: '2025-02-09T21:01:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34996
