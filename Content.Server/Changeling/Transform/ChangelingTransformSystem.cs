@@ -15,7 +15,7 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
     [Dependency] private readonly GrammarSystem _grammarSystem = default!;
     [Dependency] private readonly IdentitySystem _identitySystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly BodyEmotesSystem _bodyEmotesSystem = default!;
+
     public override void TransformGrammarSet(EntityUid uid, Gender gender)
     {
         //How to stop quantum gender, a bug where the Examine pronoun will mispredict 100% of the time. Need to SPECIFICALLY
@@ -36,9 +36,7 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
 
     protected override void TransformBodyEmotes(EntityUid uid, EntityUid target)
     {
-        if (!TryComp<BodyEmotesComponent>(target, out var targetBodyEmotes))
-            return;
-        CopyComp<BodyEmotesComponent>((target, targetBodyEmotes), uid, out var bodyEmotes);
+        CopyComp<BodyEmotesComponent>(target, uid, out var bodyEmotes);
     }
     protected override void StartSound(Entity<ChangelingTransformComponent> ent, SoundSpecifier? sound)
     {

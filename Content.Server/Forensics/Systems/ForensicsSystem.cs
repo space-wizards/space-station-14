@@ -32,14 +32,14 @@ namespace Content.Server.Forensics
         {
             SubscribeLocalEvent<FingerprintComponent, ContactInteractionEvent>(OnInteract);
             SubscribeLocalEvent<FingerprintComponent, MapInitEvent>(OnFingerprintInit);
-            SubscribeLocalEvent<Shared.Forensics.DnaComponent, MapInitEvent>(OnDNAInit);
+            SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit);
 
             SubscribeLocalEvent<ForensicsComponent, BeingGibbedEvent>(OnBeingGibbed);
             SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
             SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(AbsorbentSystem) });
             SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
-            SubscribeLocalEvent<Shared.Forensics.DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
+            SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
             SubscribeLocalEvent<DnaSubstanceTraceComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
             SubscribeLocalEvent<CleansForensicsComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
         }
@@ -67,7 +67,7 @@ namespace Content.Server.Forensics
             component.Fingerprint = GenerateFingerprint();
         }
 
-        private void OnDNAInit(EntityUid uid, Shared.Forensics.DnaComponent component, MapInitEvent args)
+        private void OnDNAInit(EntityUid uid, DnaComponent component, MapInitEvent args)
         {
             if (component.DNA == String.Empty)
             {
@@ -82,7 +82,7 @@ namespace Content.Server.Forensics
         {
             string dna = Loc.GetString("forensics-dna-unknown");
 
-            if (TryComp(uid, out Shared.Forensics.DnaComponent? dnaComp))
+            if (TryComp(uid, out DnaComponent? dnaComp))
                 dna = dnaComp.DNA;
 
             foreach (EntityUid part in args.GibbedParts)
@@ -101,7 +101,7 @@ namespace Content.Server.Forensics
             {
                 foreach (EntityUid hitEntity in args.HitEntities)
                 {
-                    if (TryComp<Shared.Forensics.DnaComponent>(hitEntity, out var hitEntityComp))
+                    if (TryComp<DnaComponent>(hitEntity, out var hitEntityComp))
                         component.DNAs.Add(hitEntityComp.DNA);
                 }
             }
@@ -297,7 +297,7 @@ namespace Content.Server.Forensics
                 component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
         }
 
-        private void OnTransferDnaEvent(EntityUid uid, Shared.Forensics.DnaComponent component, ref TransferDnaEvent args)
+        private void OnTransferDnaEvent(EntityUid uid, DnaComponent component, ref TransferDnaEvent args)
         {
             var recipientComp = EnsureComp<ForensicsComponent>(args.Recipient);
             recipientComp.DNAs.Add(component.DNA);
@@ -314,7 +314,7 @@ namespace Content.Server.Forensics
         /// <param name="canDnaBeCleaned">If this DNA be cleaned off of the recipient. e.g. cleaning a knife vs cleaning a puddle of blood</param>
         public void TransferDna(EntityUid recipient, EntityUid donor, bool canDnaBeCleaned = true)
         {
-            if (TryComp<Shared.Forensics.DnaComponent>(donor, out var donorComp))
+            if (TryComp<DnaComponent>(donor, out var donorComp))
             {
                 EnsureComp<ForensicsComponent>(recipient, out var recipientComp);
                 recipientComp.DNAs.Add(donorComp.DNA);
