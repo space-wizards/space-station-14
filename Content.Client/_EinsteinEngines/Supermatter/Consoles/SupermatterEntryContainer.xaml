@@ -23,7 +23,7 @@
             <gfx:StyleBoxFlat BackgroundColor="#25252a"/>
         </PanelContainer.PanelOverride>
         <BoxContainer Orientation="Horizontal" Margin="6 3">
-            
+
             <!-- Engine details -->
             <BoxContainer HorizontalExpand="True" Orientation="Vertical" Margin="0 0 6 0">
                 <!-- Integrity display -->
@@ -36,7 +36,7 @@
                                     <Label Name="IntegrityBarLabel" HorizontalAlignment="Right" Margin="0 0 4 0" />
                                 </ProgressBar>
                             </PanelContainer>
-                            <Button Name="IntegrityButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1">
+                            <Button Name="IntegrityButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1 -1 -2 -1">
                                 <TextureRect Name="IntegrityButtonArrow" TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
                             </Button>
                         </BoxContainer>
@@ -59,7 +59,7 @@
                                     <Label Name="PowerBarLabel" HorizontalAlignment="Right" Margin="0 0 4 0" />
                                 </ProgressBar>
                             </PanelContainer>
-                            <Button Name="PowerButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1">
+                            <Button Name="PowerButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1 -1 -2 -1">
                                 <TextureRect Name="PowerButtonArrow" TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
                             </Button>
                         </BoxContainer>
@@ -82,7 +82,7 @@
                                     <Label Name="RadiationBarLabel" HorizontalAlignment="Right" Margin="0 0 4 0" />
                                 </ProgressBar>
                             </PanelContainer>
-                            <Button Name="RadiationButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1">
+                            <Button Name="RadiationButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1 -1 -2 -1">
                                 <TextureRect Name="RadiationButtonArrow" TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
                             </Button>
                         </BoxContainer>
@@ -101,9 +101,9 @@
 
                 <!-- Absorbed moles display -->
                 <BoxContainer Orientation="Horizontal" Margin="0 1">
-                    <Label Name="MolesLabel" Text="{Loc 'supermatter-console-window-label-power'}" HorizontalExpand="True" HorizontalAlignment="Left" />
+                    <Label Name="MolesLabel" Text="{Loc 'supermatter-console-window-label-moles'}" HorizontalExpand="True" HorizontalAlignment="Left" />
                     <BoxContainer SetWidth="180" SetHeight="24" Orientation="Horizontal">
-                        <PanelContainer Name="MolesBarBorder" HorizontalExpand="True" Margin="0 0 4 0">
+                        <PanelContainer Name="MolesBarBorder" HorizontalExpand="True" Margin="0">
                             <ProgressBar Name="MolesBar" MinValue="0" MaxValue="100" Margin="1">
                                 <Label Name="MolesBarLabel" HorizontalAlignment="Right" Margin="0 0 4 0" />
                             </ProgressBar>
@@ -115,7 +115,7 @@
                 <BoxContainer Orientation="Horizontal" Margin="0 1">
                     <Label Name="TemperatureLabel" Text="{Loc 'supermatter-console-window-label-temperature'}" HorizontalExpand="True" HorizontalAlignment="Left" />
                     <BoxContainer SetWidth="180" SetHeight="24" Orientation="Horizontal">
-                        <PanelContainer Name="TemperatureBarBorder" HorizontalExpand="True" Margin="0 0 4 0">
+                        <PanelContainer Name="TemperatureBarBorder" HorizontalExpand="True" Margin="0">
                             <ProgressBar Name="TemperatureBar" MinValue="0" MaxValue="1000" Margin="1">
                                 <Label Name="TemperatureBarLabel" HorizontalAlignment="Right" Margin="0 0 4 0" />
                             </ProgressBar>
@@ -129,7 +129,7 @@
                         <Label Name="TemperatureLimitLabel" Text="{Loc 'supermatter-console-window-label-temperature-limit'}" HorizontalExpand="True" HorizontalAlignment="Left" />
                         <BoxContainer SetWidth="180" SetHeight="24" Orientation="Horizontal">
                             <Label Name="TemperatureLimitBarLabel" HorizontalExpand="True" HorizontalAlignment="Left" Margin="0 0 4 0" />
-                            <Button Name="TemperatureLimitButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1">
+                            <Button Name="TemperatureLimitButton" SetWidth="27" StyleClasses="ButtonSquare" Margin="-1 -1 -2 -1">
                                 <TextureRect Name="TemperatureLimitButtonArrow" TexturePath="/Textures/_EinsteinEngines/Interface/Supermatter/arrow_down.png" VerticalAlignment="Center" Margin="-8 -2 0 0" />
                             </Button>
                         </BoxContainer>
@@ -182,8 +182,16 @@
                 </BoxContainer>
             </BoxContainer>
 
-            <!-- Gas details (entries added by C# code) -->
-            <BoxContainer Name="GasTable" HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical" Margin="6 0 0 0" />
+            <!-- Gas details -->
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="6 0 0 0">
+                <!-- Show all gases -->
+                <Button Name="ShowAllGasButton" StyleClasses="OpenLeft" SetHeight="26" HorizontalAlignment="Right">
+                    <Label Name="ShowAllGasLabel" Text="{Loc 'supermatter-console-window-label-show-all-gas'}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4 0 0 0" />
+                </Button>
+
+                <!-- Gas table (entries added by C# code) -->
+                <BoxContainer Name="GasTable" Orientation="Vertical" />
+            </BoxContainer>
         </BoxContainer>
     </PanelContainer>
 
