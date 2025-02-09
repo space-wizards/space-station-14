@@ -717,7 +717,9 @@ public sealed partial class ChangelingSystem : EntitySystem
             return;
         }
 
-        EnsureComp<FakeMindShieldComponent>(ent);
+        EnsureComp<FakeMindShieldComponent>(ent, out var comp);
+        comp.IsEnabled = true;
+
         _popup.PopupEntity(Loc.GetString("changeling-mindshield-start"), ent, ent);
     }
 
