@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PotentiallyTom
-  changes:
-  - message: Vent pressure lockout can be temporarily disabled with a screwdriver
-    type: Tweak
-  id: 7419
-  time: '2024-09-22T19:59:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31050
 - author: metalgearsloth
   changes:
   - message: You can examine entities inside of your own container again.
@@ -3901,3 +3894,10 @@
   id: 7918
   time: '2025-02-08T23:16:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34450
+- author: august-sun
+  changes:
+  - message: Reworked Lecter and magazine sprites.
+    type: Tweak
+  id: 7919
+  time: '2025-02-09T00:12:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34974
