@@ -124,7 +124,7 @@ namespace Content.Shared.Damage
         ///     null if the user had no applicable components that can take damage.
         /// </returns>
         public DamageSpecifier? TryChangeDamage(EntityUid? uid, DamageSpecifier damage, bool ignoreResistances = false,
-            bool interruptsDoAfters = true, DamageableComponent? damageable = null, EntityUid? origin = null)
+            bool interruptsDoAfters = true, DamageableComponent? damageable = null, EntityUid? origin = null, bool alwaysApplyBaseDamageModifier = false)
         {
             if (!uid.HasValue || !_damageableQuery.Resolve(uid.Value, ref damageable, false))
             {
@@ -144,19 +144,24 @@ namespace Content.Shared.Damage
                 return null;
 
             // Apply resistances
-            if (!ignoreResistances)
+            if (!ignoreResistances || alwaysApplyBaseDamageModifier)
             {
                 if (damageable.DamageModifierSetId != null &&
                     _prototypeManager.TryIndex<DamageModifierSetPrototype>(damageable.DamageModifierSetId, out var modifierSet))
                 {
                     // TODO DAMAGE PERFORMANCE
                     // use a local private field instead of creating a new dictionary here..
+                    // also change the logic somewhere here for having alwaysApplyBaseDamageModifier at true and ignoreResistances at true at the same time incase you add more stuff here, under those conditions it should only apply this single modifier set to damage
                     damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
                 }
 
-                var ev = new DamageModifyEvent(damage, origin);
-                RaiseLocalEvent(uid.Value, ev);
-                damage = ev.Damage;
+                // this if statement is here incase we only wanted to apply the base damage modifiers
+                if (!ignoreResistances)
+                {
+                    var ev = new DamageModifyEvent(damage, origin);
+                    RaiseLocalEvent(uid.Value, ev);
+                    damage = ev.Damage;
+                }
 
                 if (damage.Empty)
                 {
