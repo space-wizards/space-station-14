@@ -331,7 +331,7 @@ public sealed partial class RevenantSystem
 
         var pendingSleeping = new PendingSleepingComponent
         {
-            SleepDelay = component.SedatePendingTime,
+            PendingTime = component.SedatePendingTime,
         };
         EntityManager.AddComponent(args.Target, pendingSleeping);
 

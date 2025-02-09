@@ -70,6 +70,25 @@ public sealed partial class SleepingSystem : EntitySystem
         SubscribeLocalEvent<SleepingComponent, BeforeForceSayEvent>(OnChangeForceSay, after: new []{typeof(PainNumbnessSystem)});
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<PendingSleepingComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (pendingSleeping?.FallAsleepTime != null && _gameTiming?.CurTime != null)
+            {
+                if (pendingSleeping.FallAsleepTime < _gameTiming.CurTime)
+                {
+                    TrySleeping(uid);
+                }
+
+                EntityManager.RemoveComponent<PendingSleepingComponent>(uid);
+            }
+        }
+    }
+
     private void OnUnbuckleAttempt(Entity<SleepingComponent> ent, ref UnbuckleAttemptEvent args)
     {
         // TODO is this necessary?
@@ -243,19 +262,8 @@ public sealed partial class SleepingSystem : EntitySystem
 
     private void OnPendingSleepingInit(Entity<PendingSleepingComponent> ent, ref ComponentInit args)
     {
-        ent.Comp.SleepTime = _gameTiming.CurTime + TimeSpan.FromSeconds(ent.Comp.SleepDelay);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<PendingSleepingComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if(_gameTiming.CurTime > comp.SleepTime)
-                TrySleeping(uid);
-        }
+        if (ent.Comp.PendingTime != null)
+            ent.Comp.FallAsleepTime = _gameTiming.CurTime + TimeSpan.FromSeconds(ent.Comp.PendingTime);
     }
 
     private void Wake(Entity<SleepingComponent> ent)
