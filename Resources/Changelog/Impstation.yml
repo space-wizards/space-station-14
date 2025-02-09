@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: DinnerCalzone
   changes:
-  - message: (Hummingbird) The external airlocks in the area between the center and
-      starboard wing now properly require external access.
-    type: Fix
-  id: 584
-  time: '2024-11-26T19:10:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/807
-- author: DinnerCalzone
-  changes:
   - message: 'Shotgun beanbags have been reworked into stun slugs. These do 7.5 shock
       and 40 stamina damage compared to beanbags'' 10 blunt and 40 stamina damage,
       so being shot by them will not cause you to bleed. Note: insulated gloves will
@@ -4250,3 +4242,11 @@
   id: 1083
   time: '2025-02-09T09:21:12.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1619
+- author: TheGrimbeeper
+  changes:
+  - message: Heretics can no longer have changelings appear on the sacrifice heartbeat,
+      because changelings cannot be sacrificed.
+    type: Fix
+  id: 1084
+  time: '2025-02-09T09:24:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1620
