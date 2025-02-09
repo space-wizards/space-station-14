@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: 'Shotgun beanbags have been reworked into stun slugs. These do 7.5 shock
-      and 40 stamina damage compared to beanbags'' 10 blunt and 40 stamina damage,
-      so being shot by them will not cause you to bleed. Note: insulated gloves will
-      not make you immune to these!'
-    type: Tweak
-  - message: Gave mice 40% shock vulnerability so they can still be one-shot by the
-      bartender's shotgun. (Their little hearts can't take the voltage.)
-    type: Tweak
-  id: 585
-  time: '2024-11-26T19:10:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/762
 - author: DVDPlayerOfDiscordFame
   changes:
   - message: 'New Ammo Type: .22 Auto (incl. Incendiary, Uranium, and Practice)'
@@ -4250,3 +4237,10 @@
   id: 1084
   time: '2025-02-09T09:24:40.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1620
+- author: irismessage
+  changes:
+  - message: 'Round dividers for #postround chat'
+    type: Add
+  id: 1085
+  time: '2025-02-09T19:15:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1627
