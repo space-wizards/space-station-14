@@ -8,7 +8,14 @@
   - type: Absorbable
   - type: HumanoidAppearance
     species: Avali
-  - type: Hunger
+  - type: Hunger # on 2x more
+    thresholds:
+      Overfed: 250
+      Okay: 200
+      Peckish: 150
+      Starving: 100
+      Dead: 0
+    baseDecayRate: 0.03
   - type: Thirst
   - type: Icon
     sprite: _Starlight/Mobs/Species/Avali/parts.rsi
@@ -24,6 +31,27 @@
   - type: Speech
     speechVerb: Parrot # RMC did it right.
     speechSounds: MaleAvali
+  - type: PassiveDamage 
+    allowedStates:
+    - Alive
+    damageCap: 180 #To clarify due to the lack of cap, if you're knocked into crit you still won't be able to get back up even with passive healing. Weaker than normal regen, too.
+    damage:
+      types:
+        Heat: -0.05
+      groups:
+        Brute: -0.05
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      90: Critical
+      180: Dead
+  - type: Sprite 
+    scale: 0.9, 0.9
+  - type: TemperatureSpeed
+    thresholds:
+      250: 0.9
+      230: 0.8
+      223: 0.6
   - type: Fixtures
     fixtures:
       fix1:
@@ -45,6 +73,8 @@
     weightlessAcceleration: 1.6 # Avalis are specifically built to fly in low-g environments 
     weightlessFriction: 1
     weightlessModifier: 1
+    speciesSprintSpeedModifier: 1.05 #slightly faster due to smaller size (I refuse to go any higher because of what happened with the run speed of felonids.)
+    speciesWalkSpeedModifier: 1.00
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Avali
@@ -62,7 +92,7 @@
     animation: WeaponArcClaw
     damage:
       types:
-        Slash: 5
+        Slash: 6.25
   - type: Temperature
     heatDamageThreshold: 310
     coldDamageThreshold: 223

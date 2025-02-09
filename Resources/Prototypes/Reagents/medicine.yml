@@ -253,6 +253,10 @@
     Medicine:
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:OrganType #starliight
+          type: Avali
+          shouldHave: false
         damage:
           types:
             Asphyxiation: -1
@@ -265,6 +269,16 @@
           types:
             Asphyxiation: 3
             Cold: 1
+      - !type:HealthChange #Starliiiight
+        conditions:
+        - !type:OrganType
+          type: Avali
+          shouldHave: true
+        damage:
+          types:
+            Poison: 1 #Avali blood is ammonia based, so chems made to treat normal bloodloss poison them instead
+            Asphyxiation: 1 
+            Bloodloss: 0.5
 
 - type: reagent
   id: DexalinPlus
@@ -278,6 +292,10 @@
     Medicine:
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:OrganType #starliight
+          type: Avali
+          shouldHave: false
         damage:
           types:
             Asphyxiation: -3.5
@@ -297,6 +315,16 @@
           types:
             Asphyxiation: 5
             Cold: 3
+      - !type:HealthChange #Starliiiight
+        conditions:
+        - !type:OrganType
+          type: Avali
+          shouldHave: true
+        damage:
+          types:
+            Poison: 1.5 #Avali blood is ammonia based, so chems made to treat normal bloodloss poison them instead. Dex+ is worse.
+            Asphyxiation: 3.5
+            Bloodloss: 3
 
 # this ones a doozy
 - type: reagent
@@ -658,6 +686,29 @@
           factor: 6
         - !type:ModifyBloodLevel
           amount: 6
+    Medicine: #Starliiiight
+      effects:
+        - !type:ModifyBloodLevel
+          conditions:
+          - !type:OrganType
+           type: Avali
+           shouldHave: true
+          amount: -7
+        - !type:ModifyBleedAmount
+          conditions:
+          - !type:OrganType
+           type: Avali
+           shouldHave: true
+          amount: 0.7
+        - !type:HealthChange
+          conditions:
+          - !type:OrganType
+           type: Avali
+           shouldHave: true
+          damage:
+            types:
+              Poison: 5 #This is on par with giving someone the wrong blood-type (very lethal)
+              Slash: 0.7 #Needed to be able to stop bloodloss
 
 - type: reagent
   id: Siderlac

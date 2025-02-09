@@ -69,6 +69,14 @@
         damage:
           types:
             Poison: 0.1
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Avali
+          shouldHave: false
+        damage:
+          types:
+            Poison: 0.2
     Medicine:
       effects:
       - !type:ModifyBloodLevel
@@ -160,6 +168,14 @@
         damage:
           types:
             Poison: 0.1
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Avali
+          shouldHave: true
+        damage:
+          types:
+            Poison: 0.2
     Medicine:
       effects:
       - !type:ModifyBloodLevel

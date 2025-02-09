@@ -18,11 +18,11 @@
       - right_leg
       - left_leg
       organs:
-        heart: OrganHumanHeart
-        lungs: OrganHumanLungs
-        stomach: OrganHumanStomach
-        liver: OrganHumanLiver
-        kidneys: OrganHumanKidneys
+        heart: OrganAvaliHeart
+        lungs: OrganAvaliLungs
+        stomach: OrganAvaliStomach
+        liver: OrganAvaliLiver
+        kidneys: OrganAvaliKidneys
     right_arm:
       part: RightArmAvali
       connections:

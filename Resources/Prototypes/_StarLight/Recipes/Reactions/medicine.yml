@@ -1,0 +1,13 @@
+- type: reaction
+  id: Amoxla
+  impact: Medium
+  minTemp: 540
+  reactants:
+    Ammonia:
+      amount: 1
+    Carbon:
+      amount: 1
+    Iron:
+      amount: 1
+  products:
+    Amoxla: 2
