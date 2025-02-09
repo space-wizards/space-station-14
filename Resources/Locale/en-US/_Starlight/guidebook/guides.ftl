@@ -62,3 +62,18 @@ guide-entry-sl-firing-demotion-policies = Firing / Demotion
 guide-entry-sl-cause-for-demotion = Causes for Demotion and Dismissal
 guide-entry-sl-vote-of-no-confidence = Vote of No Confidence
 guide-entry-sl-money-accounts-and-space-credits = Money Accounts and Space Credits
+
+guide-entry-sl-security-sop-intro = Security
+
+guide-entry-sl-legal-sop-intro = Legal
+
+guide-entry-sl-engineering-sop-intro = Engineering
+
+guide-entry-sl-medical-sop-intro = Medical
+
+guide-entry-sl-cargo-sop-intro = Cargo
+
+guide-entry-sl-science-sop-intro = Science
+
+guide-entry-sl-nano-trasen-employee-sop-intro = NanoTrasen Employee
+
