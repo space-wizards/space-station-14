@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "all by RosySaturniidae",
+  "copyright": "crew, centcomm, nukie sprites by RosySaturniidae, silicon sprites by crocodilecarousel with tweaks from RosySaturniidae",
   "size": {
     "x": 32,
     "y": 32
@@ -113,10 +113,10 @@
             "name": "cyborg_saboteur_unshaded"
         },
         {
-            "name": "cyborg_station_ai"
+            "name": "station_ai"
         },
         {
-            "name": "cyborg_station_ai_unshaded"
+            "name": "station_ai_unshaded"
         }
     ]
 }
