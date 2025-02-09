@@ -596,7 +596,7 @@
     - Head
   - type: SurgeryOrganExistCondition
     organ:
-    - type: FunctionalOrgan
+    - type: EyeImplant
   - type: Sprite
     sprite: _Starlight/Objects/Specific/Medical/implants.rsi
     layers:
@@ -620,7 +620,7 @@
     - Head
   - type: SurgeryOrganDontExistCondition
     organ:
-    - type: FunctionalOrgan
+    - type: EyeImplant
   - type: Sprite
     sprite: _Starlight/Objects/Specific/Medical/implants.rsi
     layers:

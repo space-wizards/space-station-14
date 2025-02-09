@@ -3194,4 +3194,85 @@ Entries:
   id: 444
   time: '2025-02-06T16:03:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/303
+- author: STARLIGHT TEAM
+  changes:
+  - message: Thermal vision can now be toggled on and off.
+    type: Add
+  id: 445
+  time: '2025-02-09T02:57:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/313
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where the thermal vision shader would fly off to the opposite
+      end of the universe.
+    type: Fix
+  id: 446
+  time: '2025-02-09T02:57:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/313
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where the Cyclorite eye was mistakenly considered an implant.
+    type: Fix
+  id: 447
+  time: '2025-02-09T02:57:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/313
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where flash didn’t work with thermal and night vision.
+    type: Fix
+  id: 448
+  time: '2025-02-09T02:57:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/313
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where carried living creatures were displayed on top of the
+      sprite. Now, creatures inside a container are completely invisible.
+    type: Fix
+  id: 449
+  time: '2025-02-09T02:57:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/313
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where the Abductor couldn't use the Wonderprod.
+    type: Fix
+  id: 450
+  time: '2025-02-09T04:04:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/314
+- author: STARLIGHT TEAM
+  changes:
+  - message: Updated Hristov to match the damage changes made by Wizden.
+    type: Add
+  id: 451
+  time: '2025-02-09T04:20:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/315
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added derivation property to bullets—this affects the random deviation
+      angle after penetrating a target. The larger the caliber, the more stable the
+      bullet's trajectory.
+    type: Fix
+  id: 452
+  time: '2025-02-09T04:20:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/315
+- author: STARLIGHT TEAM
+  changes:
+  - message: Slightly reduced thermal vision contrast.
+    type: Fix
+  id: 453
+  time: '2025-02-09T04:20:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/315
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed an armor penetration bug.
+    type: Fix
+  id: 454
+  time: '2025-02-09T04:20:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/315
+- author: Killer Tamashi
+  changes:
+  - message: Re-Re-Resprited M492. For the last time.
+    type: Tweak
+  id: 455
+  time: '2025-02-09T11:00:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/317
 

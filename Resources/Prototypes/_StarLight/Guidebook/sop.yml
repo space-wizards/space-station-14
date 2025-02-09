@@ -5,6 +5,13 @@
   children:
     - general-sop
     - command-sop
+    - security-sop-intro
+    - legal-sop-intro
+    - engineering-sop-intro
+    - medical-sop-intro
+    - cargo-sop-intro
+    - science-sop-intro
+    - nano-trasen-employee-sop-intro
 
 - type: guideEntry
   id: general-sop
@@ -218,3 +225,59 @@
   name: guide-entry-sl-money-accounts-and-space-credits
   text: "/ServerInfo/Guidebook/StarlightSOP/GeneralSOP/NanotrasenStaffHandlingPolicies/money-accounts-and-space-credits.xml"
   priority: 5
+
+
+
+- type: guideEntry
+  id: security-sop-intro
+  name: guide-entry-sl-security-sop-intro
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/security-sop-intro.xml"
+  priority: 3
+
+
+
+- type: guideEntry
+  id: legal-sop-intro
+  name: guide-entry-sl-legal-sop-intro
+  text: "/ServerInfo/Guidebook/StarlightSOP/LegalSOP/legal-sop-intro.xml"
+  priority: 4
+
+
+
+- type: guideEntry
+  id: engineering-sop-intro
+  name: guide-entry-sl-engineering-sop-intro
+  text: "/ServerInfo/Guidebook/StarlightSOP/EngineeringSOP/engineering-sop-intro.xml"
+  priority: 5
+
+
+
+- type: guideEntry
+  id: medical-sop-intro
+  name: guide-entry-sl-medical-sop-intro
+  text: "/ServerInfo/Guidebook/StarlightSOP/MedicalSOP/medical-sop-intro.xml"
+  priority: 6
+
+
+
+- type: guideEntry
+  id: cargo-sop-intro
+  name: guide-entry-sl-cargo-sop-intro
+  text: "/ServerInfo/Guidebook/StarlightSOP/CargoSOP/cargo-sop-intro.xml"
+  priority: 7
+
+
+
+- type: guideEntry
+  id: science-sop-intro
+  name: guide-entry-sl-science-sop-intro
+  text: "/ServerInfo/Guidebook/StarlightSOP/ScienceSOP/science-sop-intro.xml"
+  priority: 8
+
+
+
+- type: guideEntry
+  id: nano-trasen-employee-sop-intro
+  name: guide-entry-sl-nano-trasen-employee-sop-intro
+  text: "/ServerInfo/Guidebook/StarlightSOP/NanoTrasenEmployeeSOP/nano-trasen-employee-sop-intro.xml"
+  priority: 9
