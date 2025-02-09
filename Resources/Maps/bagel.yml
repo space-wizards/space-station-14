@@ -10949,16 +10949,10 @@ entities:
       parent: 60
 - proto: AirlockArmoryGlassLocked
   entities:
-  - uid: 342
-    components:
-    - type: MetaData
-      name: Ready Room
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -29.5,-15.5
-      parent: 60
   - uid: 8471
     components:
+    - type: MetaData
+      name: Armory
     - type: Transform
       pos: -26.5,-2.5
       parent: 60
@@ -13588,6 +13582,13 @@ entities:
       parent: 60
 - proto: AirlockSecurityGlassLocked
   entities:
+  - uid: 342
+    components:
+    - type: MetaData
+      name: Ready Room
+    - type: Transform
+      pos: -29.5,-15.5
+      parent: 60
   - uid: 1225
     components:
     - type: MetaData
