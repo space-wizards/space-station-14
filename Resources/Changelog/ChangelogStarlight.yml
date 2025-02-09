@@ -3268,4 +3268,11 @@ Entries:
   id: 454
   time: '2025-02-09T04:20:45.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/315
+- author: Killer Tamashi
+  changes:
+  - message: Re-Re-Resprited M492. For the last time.
+    type: Tweak
+  id: 455
+  time: '2025-02-09T11:00:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/317
 
