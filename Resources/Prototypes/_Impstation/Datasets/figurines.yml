@@ -81,3 +81,63 @@
   values:
     prefix: figurines-nukiejuggernaut-
     count: 5
+
+- type: localizedDataset
+  id: FigurinesCyborgDefault
+  values:
+    prefix: figurines-cyborgdefault-
+    count: 7
+
+- type: localizedDataset
+  id: FigurinesCyborgEngineering
+  values:
+    prefix: figurines-cyborgengineering-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesCyborgJanitorial
+  values:
+    prefix: figurines-cyborgjanitorial-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesCyborgMedical
+  values:
+    prefix: figurines-cyborgmedical-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesCyborgSalvage
+  values:
+    prefix: figurines-cyborgsalvage-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesCyborgService
+  values:
+    prefix: figurines-cyborgservice-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesCyborgAssault
+  values:
+    prefix: figurines-cyborgassault-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesCyborgCorpsman
+  values:
+    prefix: figurines-cyborgcorpsman-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesCyborgSaboteur
+  values:
+    prefix: figurines-cyborgsaboteur-
+    count: 6
+
+- type: localizedDataset
+  id: FigurinesCyborgStationAI
+  values:
+    prefix: figurines-cyborgstationai-
+    count: 7

@@ -14,7 +14,6 @@
     tags:
     - Trash
   - type: SpaceGarbage
-
 - type: entity
   parent: PresentRandom
   id: MysteryFigureBox
@@ -104,7 +103,21 @@
       - id: ToyFigurineCourier #<imp>
         orGroup: SpacemenFig
       - id: ToyFigurineBrigmedic
-        orGroup: SpacemenFig #</imp>
+        orGroup: SpacemenFig 
+      - id: ToyFigurineCyborgDefault 
+        orGroup: SpacemenFig
+      - id: ToyFigurineCyborgEngineering
+        orGroup: SpacemenFig
+      - id: ToyFigurineCyborgJanitorial
+        orGroup: SpacemenFig
+      - id: ToyFigurineCyborgMedical
+        orGroup: SpacemenFig
+      - id: ToyFigurineCyborgSalvage
+        orGroup: SpacemenFig
+      - id: ToyFigurineCyborgService
+        orGroup: SpacemenFig
+      - id: ToyFigurineStationAI
+        orGroup: SpacemenFig
       - id: ToyFigurineWizard
         prob: 0.50
         orGroup: SpacemenFig
@@ -145,7 +158,7 @@
         prob: 0.50
         orGroup: SpacemenFig
       - id: ToyFigurineChronologyAgent
-        prob: 0.50
+        prob: 0.01
         orGroup: SpacemenFig
       - id: ToyFigurineDeathsquadAgent
         prob: 0.50
@@ -172,5 +185,14 @@
         prob: 0.50
         orGroup: SpacemenFig 
       - id: ToyFigurineNukieJuggernaut
+        prob: 0.50
+        orGroup: SpacemenFig
+      - id: ToyFigurineCyborgAssault
+        prob: 0.50
+        orGroup: SpacemenFig 
+      - id: ToyFigurineCyborgCorpsman
+        prob: 0.50
+        orGroup: SpacemenFig
+      - id: ToyFigurineCyborgSaboteur
         prob: 0.50
         orGroup: SpacemenFig #</imp>

@@ -57,6 +57,66 @@
         },
         {
             "name": "nukie_juggernaut"
+        },
+        {
+            "name": "cyborg_default"
+        },
+        {
+            "name": "cyborg_default_unshaded"
+        },
+        {
+            "name": "cyborg_engineering"
+        },
+        {
+            "name": "cyborg_engineering_unshaded"
+        },
+        {
+            "name": "cyborg_janitorial"
+        },
+        {
+            "name": "cyborg_janitorial_unshaded"
+        },
+        {
+            "name": "cyborg_medical"
+        },
+        {
+            "name": "cyborg_medical_unshaded"
+        },
+        {
+            "name": "cyborg_salvage"
+        },
+        {
+            "name": "cyborg_salvage_unshaded"
+        },
+        {
+            "name": "cyborg_service"
+        },
+        {
+            "name": "cyborg_service_unshaded"
+        },
+        {
+            "name": "cyborg_assault"
+        },
+        {
+            "name": "cyborg_assault_unshaded"
+        },
+        {
+            "name": "cyborg_corpsman"
+        },
+        {
+            "name": "cyborg_corpsman_unshaded"
+        },
+        {
+            "name": "cyborg_saboteur"
+        },
+        {
+            "name": "cyborg_saboteur_unshaded"
+        },
+        {
+            "name": "cyborg_station_ai"
+        },
+        {
+            "name": "cyborg_station_ai_unshaded"
         }
     ]
 }
