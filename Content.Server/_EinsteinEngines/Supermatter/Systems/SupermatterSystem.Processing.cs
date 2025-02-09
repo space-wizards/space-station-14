@@ -15,6 +15,7 @@ using Content.Shared.Physics;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Speech;
+using Content.Shared.Storage.Components;
 using Content.Shared.Traits.Assorted;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -674,10 +675,11 @@ public sealed partial class SupermatterSystem
         // Play the reality distortion sound for every player on the map
         _audio.PlayGlobal(sm.DistortSound, mapFilter, true);
 
-        // Add hallucinations to every player on the map
+        // Add hallucinations to every mob on the map, except those in EntityStorage (lockers, etc)
         // TODO: change this from paracusia to actual hallucinations whenever those are real
         var mobLookup = new HashSet<Entity<MobStateComponent>>();
         _entityLookup.GetEntitiesOnMap<MobStateComponent>(mapId, mobLookup);
+        mobLookup.RemoveWhere(x => HasComp<InsideEntityStorageComponent>(x));
 
         // These values match the paracusia disability, since we can't double up on paracusia
         var paracusiaSounds = new SoundCollectionSpecifier("Paracusia");
@@ -744,7 +746,7 @@ public sealed partial class SupermatterSystem
     }
 
     /// <summary>
-    /// Checks for
+    /// Checks whether a mob can see the supermatter, then applies hallucinations and psychologist coefficient
     /// </summary>
     private void HandleVision(EntityUid uid, SupermatterComponent sm)
     {
