@@ -470,23 +470,23 @@
     sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
 
 - type: entity
-  parent: ClothingOuterStorageBase
-  id: ClothingOuterCoatBomberAerostatic
-  name: aerostatic bomber
-  description: Sunrise, Parabellum.
+  parent: ClothingOuterArmorBasic
+  id: ClothingOuterCoatFieldBomber
+  name: field bomber
+  description: A red bomber jacket, worn open with the sleeves pushed up. The white logos mark the wearer as Nanotrasen security.
   components:
   - type: Sprite
-    sprite: _NF/Clothing/OuterClothing/Coats/bomber_aerostatic.rsi
+    sprite: _NF/Clothing/OuterClothing/Coats/field_bomber.rsi
   - type: Clothing
-    sprite: _NF/Clothing/OuterClothing/Coats/bomber_aerostatic.rsi
+    sprite: _NF/Clothing/OuterClothing/Coats/field_bomber.rsi #imp
 
 - type: entity
-  parent: ClothingOuterStorageBase
-  id: ClothingOuterCoatJacketJamrock
-  name: jamrock blazer
-  description: Detective. Arriving. On the scene.
+  parent: ClothingOuterCoatDetective
+  id: ClothingOuterCoatFieldJacket
+  name: field jacket
+  description: A soft black suit jacket with loose cuffs. The white logos mark the wearer as Nanotrasen security.
   components:
   - type: Sprite
-    sprite: _NF/Clothing/OuterClothing/Coats/blazer_jamrock.rsi
+    sprite: _NF/Clothing/OuterClothing/Coats/field_jacket.rsi
   - type: Clothing
-    sprite: _NF/Clothing/OuterClothing/Coats/blazer_jamrock.rsi
+    sprite: _NF/Clothing/OuterClothing/Coats/field_jacket.rsi #imp

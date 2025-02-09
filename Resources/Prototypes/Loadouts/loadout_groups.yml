@@ -1405,6 +1405,7 @@
   - ArmorVestSlim #imp
   - ArmorVestCompact #imp
   - WardenWinterCoatUnarmored
+  - ClothingOuterCoatFieldBomber #imp
 
 - type: loadoutGroup
   id: WardenPDA
@@ -1473,6 +1474,7 @@
   - ArmorVestSlim
   - ArmorVestCompact #imp
   - SecurityOfficerWintercoat
+  - ClothingOuterCoatFieldBomber #imp
 
 - type: loadoutGroup
   id: SecurityShoes
@@ -1532,6 +1534,7 @@
   - DetectiveArmorVest
   - DetectiveCoatGrey
   - DetectiveCoat
+  - ClothingOuterCoatFieldJacket #imp
 
 - type: loadoutGroup
   id: DetectiveShoes
