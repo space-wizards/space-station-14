@@ -18,6 +18,14 @@
             ]
         },
         {
+			"name": "scanner-inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "scanner-inhand-right",
+			"directions": 4
+		},
+        {
             "name": "icon",
             "directions": 1
         }
