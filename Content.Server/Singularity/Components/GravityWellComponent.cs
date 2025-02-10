@@ -55,6 +55,9 @@ public sealed partial class GravityWellComponent : Component
     [DataField, Access(typeof(GravityWellSystem)), AutoPausedField]
     public TimeSpan NextPulseTime { get; internal set; } = default!;
 
+    /// <summary>
+    /// The last time this gravity well pulsed.
+    /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public TimeSpan LastPulseTime => NextPulseTime - TargetPulsePeriod;
 
