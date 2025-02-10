@@ -157,7 +157,12 @@ namespace Content.Server.Abilities.Mime
             mimePowers.VowBroken = false;
             AddComp<MutedComponent>(uid);
             if (mimePowers.PreventWriting)
-                AddComp(uid, new IlliterateComponent { FailWriteMessage = mimePowers.FailWriteMessage });
+            {
+                EnsureComp<IlliterateComponent>(uid, out var illiterateComponent);
+                illiterateComponent.FailWriteMessage = mimePowers.FailWriteMessage;
+                Dirty(uid, illiterateComponent);
+            }
+
             _alertsSystem.ClearAlert(uid, mimePowers.VowBrokenAlert);
             _alertsSystem.ShowAlert(uid, mimePowers.VowAlert);
             _actionsSystem.AddAction(uid, ref mimePowers.InvisibleWallActionEntity, mimePowers.InvisibleWallAction, uid);
