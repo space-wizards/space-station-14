@@ -32,7 +32,7 @@
   description: Theres pen scribbles all over the edges, and a few sticky notes stuck on it.
   components:
   - type: Sprite
-    sprite: DeltaV/Objects/Devices/pda.rsi
+    sprite: Objects/Devices/pda.rsi
     layers:
     - map: [ "enum.PdaVisualLayers.Base" ]
     - state: "light_overlay"
@@ -53,5 +53,5 @@
         tags:
         - Write
   - type: Icon
-    sprite: DeltaV/Objects/Devices/pda.rsi
+    sprite: _DV/Objects/Devices/pda.rsi
     state: pda-admin-assistant

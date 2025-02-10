@@ -16,6 +16,6 @@
   description: A suit worn by the Administrative Assistant. Smells of burnt coffee.
   components:
   - type: Sprite
-    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/admin_assistant.rsi
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/admin_assistant.rsi
   - type: Clothing
-    sprite: DeltaV/Clothing/Uniforms/Jumpsuit/admin_assistant.rsi
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/admin_assistant.rsi

@@ -10,9 +10,9 @@
       - EncryptionKeyCommand
       - EncryptionKeyCommon
   - type: Sprite
-    sprite: DeltaV/Clothing/Ears/Headsets/adminassistant.rsi
+    sprite: _DV/Clothing/Ears/Headsets/adminassistant.rsi
   - type: Clothing
-    sprite: DeltaV/Clothing/Ears/Headsets/adminassistant.rsi
+    sprite: _DV/Clothing/Ears/Headsets/adminassistant.rsi
 
 - type: entity
   parent: ClothingHeadsetAdminAssistant

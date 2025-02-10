@@ -6,7 +6,7 @@
   - type: Sprite
     layers:
     - state: default
-    - sprite: DeltaV/Objects/Misc/id_cards.rsi
+    - sprite: _DV/Objects/Misc/id_cards.rsi
       state: idcargoassistant
   - type: PresetIdCard
     job: CargoAssistant
@@ -19,7 +19,7 @@
   - type: Sprite
     layers:
     - state: silver
-    - sprite: DeltaV/Objects/Misc/id_cards.rsi
+    - sprite: _DV/Objects/Misc/id_cards.rsi
       state: idadminassistant
   - type: Item
     heldPrefix: silver

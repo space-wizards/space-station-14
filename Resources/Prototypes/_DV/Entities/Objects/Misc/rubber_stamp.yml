@@ -9,5 +9,5 @@
     stampedColor: "#4191f2"
     stampState: "paper_stamp-admin-assistant"
   - type: Sprite
-    sprite: DeltaV/Objects/Misc/stamps.rsi
+    sprite: _DV/Objects/Misc/stamps.rsi
     state: stamp-admin-assistant
