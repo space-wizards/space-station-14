@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Added the S-Cargo moving trunk! Its a normal locker, but with zero gravity
-      at all times.
-    type: Add
-  - message: Edited the sprite for the s-cargo satchel slightly.
-    type: Tweak
-  id: 588
-  time: '2024-11-27T08:21:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/812
 - author: Sha-Seng
   changes:
   - message: Beanbag shell ammo box is now a stun slug ammo box
@@ -4233,3 +4223,10 @@
   id: 1087
   time: '2025-02-10T03:17:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1622
+- author: nowaitstop
+  changes:
+  - message: New playing card colors! Good luck finding them lol
+    type: Add
+  id: 1088
+  time: '2025-02-10T18:05:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1623
