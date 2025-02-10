@@ -15,7 +15,15 @@ public abstract class SharedThavenMoodSystem : EntitySystem
 
     protected virtual void OnEmagged(EntityUid uid, ThavenMoodsComponent comp, ref GotEmaggedEvent args)
     {
-        if (comp.CanBeEmagged && !_emag.CheckFlag(uid, EmagType.Interaction))
-            args.Handled = true;
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            return;
+
+        if (uid == args.UserUid)
+            return;
+
+        args.Handled = true;
     }
 }
