@@ -95,7 +95,7 @@ public sealed class ThermalRegulatorSystem : EntitySystem
                 return;
 
             //for humans, they start sweating at 25C over body temp, at once every 30 seconds, and maximally at 50C over, once per 15 seconds
-            ent.Comp1.SweatEmoteProgress += Math.Min(tempDiff / ent.Comp1.ThermalRegulationTemperatureThreshold, 3) / 45;
+            ent.Comp1.SweatEmoteProgress += Math.Min(tempDiff / ent.Comp1.ThermalRegulationTemperatureThreshold, 3) / 30;
             if (ent.Comp1.SweatEmoteProgress > 1.0f)
             {
                 _chat.TryEmoteWithChat(ent, ent.Comp1.SweatEmote, ChatTransmitRange.HideChat, ignoreActionBlocker: true);
