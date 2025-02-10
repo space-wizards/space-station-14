@@ -44,11 +44,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             portableNode.ConnectionsEnabled = args.Anchored;
-
-            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
-            {
-                _appearance.SetData(uid, GasPortableVisuals.ConnectedState, args.Anchored, appearance);
-            }
         }
 
         public bool FindGasPortIn(EntityUid? gridId, EntityCoordinates coordinates, [NotNullWhen(true)] out GasPortComponent? port)

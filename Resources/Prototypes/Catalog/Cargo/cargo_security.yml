@@ -1,7 +1,7 @@
 - type: cargoProduct
   id: SecurityArmor
   icon:
-    sprite: Clothing/OuterClothing/Armor/security.rsi
+    sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
     state: icon
   product: CrateSecurityArmor
   cost: 725
@@ -25,16 +25,6 @@
     state: base
   product: CrateSecurityNonlethal
   cost: 4000
-  category: cargoproduct-category-name-security
-  group: market
-
-- type: cargoProduct
-  id: SecurityRiot
-  icon:
-    sprite: Clothing/OuterClothing/Armor/riot.rsi
-    state: icon
-  product: CrateSecurityRiot
-  cost: 7500
   category: cargoproduct-category-name-security
   group: market
 

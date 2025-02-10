@@ -77,6 +77,11 @@ public abstract partial class BaseActionComponent : Component
     public (TimeSpan Start, TimeSpan End)? Cooldown;
 
     /// <summary>
+    ///     If true, the action will have an initial cooldown applied upon addition.
+    /// </summary>
+    [DataField] public bool StartDelay = false;
+
+    /// <summary>
     ///     Time interval between action uses.
     /// </summary>
     [DataField("useDelay")] public TimeSpan? UseDelay;
@@ -163,6 +168,14 @@ public abstract partial class BaseActionComponent : Component
     public bool RaiseOnUser;
 
     /// <summary>
+    ///     If true, this will cause the the action event to always be raised directed at the action itself instead of the action's container/provider.
+    ///     Takes priority over RaiseOnUser.
+    /// </summary>
+    [DataField]
+    [Obsolete("This datafield will be reworked in an upcoming action refactor")]
+    public bool RaiseOnAction;
+
+    /// <summary>
     ///     Whether or not to automatically add this action to the action bar when it becomes available.
     /// </summary>
     [DataField("autoPopulate")] public bool AutoPopulate = true;
@@ -207,6 +220,7 @@ public abstract class BaseActionComponentState : ComponentState
     public int Priority;
     public NetEntity? AttachedEntity;
     public bool RaiseOnUser;
+    public bool RaiseOnAction;
     public bool AutoPopulate;
     public bool Temporary;
     public ItemActionIconStyle ItemIconStyle;
@@ -218,6 +232,7 @@ public abstract class BaseActionComponentState : ComponentState
         EntityIcon = entManager.GetNetEntity(component.EntIcon);
         AttachedEntity = entManager.GetNetEntity(component.AttachedEntity);
         RaiseOnUser = component.RaiseOnUser;
+        RaiseOnAction = component.RaiseOnAction;
         Icon = component.Icon;
         IconOn = component.IconOn;
         IconColor = component.IconColor;
