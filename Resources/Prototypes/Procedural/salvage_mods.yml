@@ -235,6 +235,13 @@
     - Grasslands
 
 - type: salvageDungeonMod
+  id: SyndicateBase
+  desc: salvage-dungeon-mod-syndicate-base
+  proto: SyndicateBase
+  biomes:
+    - Snow
+
+- type: salvageDungeonMod
   id: LavaBrig
   desc: salvage-dungeon-mod-lava-brig
   proto: LavaBrig

@@ -179,6 +179,31 @@
   - !type:PrototypeDunGen
     proto: PlanetBase
 
+- type: dungeonConfig
+  id: SyndicateBase
+  data:
+    colors:
+      Decals: "#6E2323"
+    entities:
+      Cabling: CableApcExtension
+      CornerWalls: WallReinforced
+      Walls: WallReinforced
+    spawnGroups:
+      CornerClutter: BaseClutter
+      Entrance: SyndicateBaseEntrance
+      EntranceFlank: SyndicateBaseWindow
+      Junction: SyndicateBaseAirlock
+      Window: SyndicateBaseWindow
+    tiles:
+      FallbackTile: FloorDark
+    whitelists:
+      Rooms:
+        tags:
+        - SalvageSyndicateBase
+  layers:
+  - !type:PrototypeDunGen
+    proto: PlanetBase
+
 # Spawn groups
 # Basic
 - type: entitySpawnEntry
@@ -279,3 +304,32 @@
   - id: IntercomScience
     prob: 0.1
     orGroup: content
+
+# Syndicate base
+- type: entitySpawnEntry
+  id: SyndicateBaseAirlock
+  entries:
+  - id: CableApcExtension
+  - id: AirlockSyndicateGlass
+
+- type: entitySpawnEntry
+  id: SyndicateBaseWindow
+  entries:
+  - id: Grille
+  - id: ReinforcedPlasmaWindow
+
+- type: entitySpawnEntry
+  id: SyndicateBaseEntrance
+  entries:
+  - id: CableApcExtension
+  - id: AirlockSyndicateGlassLocked
+
+- type: entitySpawnEntry
+  id: SyndicateBaseEntrancePossiblyRigged
+  entries:
+  - id: CableApcExtension
+  - id: AirlockSyndicateGlassLocked
+  - id: LandMineExplosive
+    prob: 0.02
+  - id: LandMineModular
+    prob: 0.05
