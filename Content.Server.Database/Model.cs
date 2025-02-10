@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
@@ -28,6 +30,7 @@ namespace Content.Server.Database
         public DbSet<AdminLog> AdminLog { get; set; } = null!;
         public DbSet<AdminLogPlayer> AdminLogPlayer { get; set; } = null!;
         public DbSet<Whitelist> Whitelist { get; set; } = null!;
+        public DbSet<Blacklist> Blacklist { get; set; } = null!;
         public DbSet<ServerBan> Ban { get; set; } = default!;
         public DbSet<ServerUnban> Unban { get; set; } = default!;
         public DbSet<ServerBanExemption> BanExemption { get; set; } = default!;
@@ -42,6 +45,7 @@ namespace Content.Server.Database
         public DbSet<AdminMessage> AdminMessages { get; set; } = null!;
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
+        public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -326,6 +330,47 @@ namespace Content.Server.Database
                 .HasForeignKey(w => w.PlayerUserId)
                 .HasPrincipalKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Changes for modern HWID integration
+            modelBuilder.Entity<Player>()
+                .OwnsOne(p => p.LastSeenHWId)
+                .Property(p => p.Hwid)
+                .HasColumnName("last_seen_hwid");
+
+            modelBuilder.Entity<Player>()
+                .OwnsOne(p => p.LastSeenHWId)
+                .Property(p => p.Type)
+                .HasDefaultValue(HwidType.Legacy);
+
+            modelBuilder.Entity<ServerBan>()
+                .OwnsOne(p => p.HWId)
+                .Property(p => p.Hwid)
+                .HasColumnName("hwid");
+
+            modelBuilder.Entity<ServerBan>()
+                .OwnsOne(p => p.HWId)
+                .Property(p => p.Type)
+                .HasDefaultValue(HwidType.Legacy);
+
+            modelBuilder.Entity<ServerRoleBan>()
+                .OwnsOne(p => p.HWId)
+                .Property(p => p.Hwid)
+                .HasColumnName("hwid");
+
+            modelBuilder.Entity<ServerRoleBan>()
+                .OwnsOne(p => p.HWId)
+                .Property(p => p.Type)
+                .HasDefaultValue(HwidType.Legacy);
+
+            modelBuilder.Entity<ConnectionLog>()
+                .OwnsOne(p => p.HWId)
+                .Property(p => p.Hwid)
+                .HasColumnName("hwid");
+
+            modelBuilder.Entity<ConnectionLog>()
+                .OwnsOne(p => p.HWId)
+                .Property(p => p.Type)
+                .HasDefaultValue(HwidType.Legacy);
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
@@ -518,7 +563,7 @@ namespace Content.Server.Database
         public string LastSeenUserName { get; set; } = null!;
         public DateTime LastSeenTime { get; set; }
         public IPAddress LastSeenAddress { get; set; } = null!;
-        public byte[]? LastSeenHWId { get; set; }
+        public TypedHwid? LastSeenHWId { get; set; }
 
         // Data that changes with each round
         public List<Round> Rounds { get; set; } = null!;
@@ -551,10 +596,29 @@ namespace Content.Server.Database
         [Required, Key] public Guid UserId { get; set; }
     }
 
+    /// <summary>
+    /// List of users who are on the "blacklist". This is a list that may be used by Whitelist implementations to deny access to certain users.
+    /// </summary>
+    [Table("blacklist")]
+    public class Blacklist
+    {
+        [Required, Key] public Guid UserId { get; set; }
+    }
+
     public class Admin
     {
         [Key] public Guid UserId { get; set; }
         public string? Title { get; set; }
+
+        /// <summary>
+        /// If true, the admin is voluntarily deadminned. They can re-admin at any time.
+        /// </summary>
+        public bool Deadminned { get; set; }
+
+        /// <summary>
+        /// If true, the admin is suspended by an admin with <c>PERMISSIONS</c>. They will not have in-game permissions.
+        /// </summary>
+        public bool Suspended { get; set; }
 
         public int? AdminRankId { get; set; }
         public AdminRank? AdminRank { get; set; }
@@ -658,7 +722,7 @@ namespace Content.Server.Database
         int Id { get; set; }
         Guid? PlayerUserId { get; set; }
         NpgsqlInet? Address { get; set; }
-        byte[]? HWId { get; set; }
+        TypedHwid? HWId { get; set; }
         DateTime BanTime { get; set; }
         DateTime? ExpirationTime { get; set; }
         string Reason { get; set; }
@@ -705,6 +769,11 @@ namespace Content.Server.Database
         /// Intended for use with residential IP ranges that are often used maliciously.
         /// </remarks>
         BlacklistedRange = 1 << 2,
+
+        /// <summary>
+        /// Represents having all possible exemption flags.
+        /// </summary>
+        All = int.MaxValue,
         // @formatter:on
     }
 
@@ -738,7 +807,7 @@ namespace Content.Server.Database
         /// <summary>
         /// Hardware ID of the banned player.
         /// </summary>
-        public byte[]? HWId { get; set; }
+        public TypedHwid? HWId { get; set; }
 
         /// <summary>
         /// The time when the ban was applied by an administrator.
@@ -876,7 +945,7 @@ namespace Content.Server.Database
         public DateTime Time { get; set; }
 
         public IPAddress Address { get; set; } = null!;
-        public byte[]? HWId { get; set; }
+        public TypedHwid? HWId { get; set; }
 
         public ConnectionDenyReason? Denied { get; set; }
 
@@ -893,6 +962,8 @@ namespace Content.Server.Database
 
         public List<ServerBanHit> BanHits { get; set; } = null!;
         public Server Server { get; set; } = null!;
+
+        public float Trust { get; set; }
     }
 
     public enum ConnectionDenyReason : byte
@@ -902,12 +973,14 @@ namespace Content.Server.Database
         Full = 2,
         Panic = 3,
         /*
-         * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
-         * 
          * If baby jail is removed, please reserve this value for as long as can reasonably be done to prevent causing ambiguity in connection denial reasons.
          * Reservation by commenting out the value is likely sufficient for this purpose, but may impact projects which depend on SS14 like SS14.Admin.
+         *
+         * Edit: It has
          */
         BabyJail = 4,
+        /// Results from rejected connections with external API checking tools
+        IPChecks = 5,
     }
 
     public class ServerBanHit
@@ -930,7 +1003,7 @@ namespace Content.Server.Database
         public Guid? PlayerUserId { get; set; }
         [Required] public TimeSpan PlaytimeAtNote { get; set; }
         public NpgsqlInet? Address { get; set; }
-        public byte[]? HWId { get; set; }
+        public TypedHwid? HWId { get; set; }
 
         public DateTime BanTime { get; set; }
 
@@ -1190,5 +1263,62 @@ namespace Content.Server.Database
         /// </summary>
         /// <seealso cref="ServerBan.Hidden"/>
         public bool Hidden { get; set; }
+    }
+
+    /// <summary>
+    /// A hardware ID value together with its <see cref="HwidType"/>.
+    /// </summary>
+    /// <seealso cref="ImmutableTypedHwid"/>
+    [Owned]
+    public sealed class TypedHwid
+    {
+        public byte[] Hwid { get; set; } = default!;
+        public HwidType Type { get; set; }
+
+        [return: NotNullIfNotNull(nameof(immutable))]
+        public static implicit operator TypedHwid?(ImmutableTypedHwid? immutable)
+        {
+            if (immutable == null)
+                return null;
+
+            return new TypedHwid
+            {
+                Hwid = immutable.Hwid.ToArray(),
+                Type = immutable.Type,
+            };
+        }
+
+        [return: NotNullIfNotNull(nameof(hwid))]
+        public static implicit operator ImmutableTypedHwid?(TypedHwid? hwid)
+        {
+            if (hwid == null)
+                return null;
+
+            return new ImmutableTypedHwid(hwid.Hwid.ToImmutableArray(), hwid.Type);
+        }
+    }
+
+
+    /// <summary>
+    ///  Cache for the IPIntel system
+    /// </summary>
+    public class IPIntelCache
+    {
+        public int Id { get; set; }
+
+        /// <summary>
+        /// The IP address (duh). This is made unique manually for psql cause of ef core bug.
+        /// </summary>
+        public IPAddress Address { get; set; } = null!;
+
+        /// <summary>
+        /// Date this record was added. Used to check if our cache is out of date.
+        /// </summary>
+        public DateTime Time { get; set; }
+
+        /// <summary>
+        /// The score IPIntel returned
+        /// </summary>
+        public float Score { get; set; }
     }
 }

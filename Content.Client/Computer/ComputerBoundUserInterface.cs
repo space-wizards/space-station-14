@@ -11,8 +11,6 @@ namespace Content.Client.Computer
     [Virtual]
     public class ComputerBoundUserInterface<TWindow, TState> : ComputerBoundUserInterfaceBase where TWindow : BaseWindow, IComputerWindow<TState>, new() where TState : BoundUserInterfaceState
     {
-        [Dependency] private readonly IDynamicTypeFactory _dynamicTypeFactory = default!;
-
         [ViewVariables]
         private TWindow? _window;
 

@@ -4,6 +4,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Containers;
@@ -17,6 +18,7 @@ public abstract partial class SharedHandsSystem
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private readonly SharedVirtualItemSystem _virtualSystem = default!;
@@ -157,6 +159,19 @@ public abstract partial class SharedHandsSystem
 
         item = hand.HeldEntity;
         return item != null;
+    }
+
+    /// <summary>
+    /// Gets active hand item if relevant otherwise gets the entity itself.
+    /// </summary>
+    public EntityUid GetActiveItemOrSelf(Entity<HandsComponent?> entity)
+    {
+        if (!TryGetActiveItem(entity, out var item))
+        {
+            return entity.Owner;
+        }
+
+        return item.Value;
     }
 
     public Hand? GetActiveHand(Entity<HandsComponent?> entity)

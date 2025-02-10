@@ -38,7 +38,7 @@ namespace Content.Client.Access.UI
             SendMessage(new AgentIDCardJobChangedMessage(newJob));
         }
 
-        public void OnJobIconChanged(ProtoId<StatusIconPrototype> newJobIconId)
+        public void OnJobIconChanged(ProtoId<JobIconPrototype> newJobIconId)
         {
             SendMessage(new AgentIDCardJobIconChangedMessage(newJobIconId));
         }
@@ -55,7 +55,7 @@ namespace Content.Client.Access.UI
 
             _window.SetCurrentName(cast.CurrentName);
             _window.SetCurrentJob(cast.CurrentJob);
-            _window.SetAllowedIcons(cast.Icons, cast.CurrentJobIconId);
+            _window.SetAllowedIcons(cast.CurrentJobIconId);
         }
     }
 }

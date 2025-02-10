@@ -16,7 +16,7 @@
     - type: Appearance
     - type: GenericVisualizer
       visuals:
-        enum.GasPortableVisuals.ConnectedState:
+        enum.AnchorVisuals.Anchored:
           connectedToPort:
             False: { state: can-connector, visible: false }
             True: { state: can-connector, visible: true }
@@ -99,11 +99,14 @@
           components:
             - GasTank
     - type: StaticPrice
-      price: 1000
+      price: 200
     - type: AccessReader
       access: [["Atmospherics"], ["Engineering"], ["Research"]]
     - type: Lock
       locked: false
+    - type: GuideHelp
+      guides:
+      - GasCanisters
 
 - type: entity
   parent: GasCanister
@@ -692,7 +695,7 @@
       materialComposition:
         Steel: 500
     - type: StaticPrice
-      price: 60
+      price: 125
 
 - type: entity
   parent: GasCanisterBrokenBase

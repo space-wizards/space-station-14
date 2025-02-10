@@ -1072,7 +1072,7 @@ entities:
     - type: Transform
       pos: 3.5357494,-8.260544
       parent: 289
-- proto: MaterialDiamond
+- proto: MaterialDiamond1
   entities:
   - uid: 128
     components:

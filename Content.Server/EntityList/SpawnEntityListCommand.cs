@@ -23,13 +23,13 @@ namespace Content.Server.EntityList
 
             if (shell.Player is not { } player)
             {
-                shell.WriteError("You must be a player to run this command.");
+                shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
                 return;
             }
 
             if (player.AttachedEntity is not {} attached)
             {
-                shell.WriteError("You must have an entity to run this command.");
+                shell.WriteError(Loc.GetString("shell-only-players-can-run-this-command"));
                 return;
             }
 

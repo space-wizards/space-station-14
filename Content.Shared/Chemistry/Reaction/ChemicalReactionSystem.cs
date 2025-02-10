@@ -172,7 +172,7 @@ namespace Content.Shared.Chemistry.Reaction
                 if (!reactant.Value.Catalyst)
                 {
                     var amountToRemove = unitReactions * reactant.Value.Amount;
-                    solution.RemoveReagent(reactant.Key, amountToRemove);
+                    solution.RemoveReagent(reactant.Key, amountToRemove, ignoreReagentData: true);
                 }
             }
 

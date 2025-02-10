@@ -32,6 +32,8 @@ namespace Content.Server.Disposal.Tube
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private readonly SharedMapSystem _map = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -345,7 +347,7 @@ namespace Content.Server.Disposal.Tube
                 return null;
 
             var position = xform.Coordinates;
-            foreach (var entity in grid.GetInDir(position, nextDirection))
+            foreach (var entity in _map.GetInDir(xform.GridUid.Value, grid, position, nextDirection))
             {
                 if (!TryComp(entity, out DisposalTubeComponent? tube))
                 {

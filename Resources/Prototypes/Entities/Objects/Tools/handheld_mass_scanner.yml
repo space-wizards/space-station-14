@@ -15,7 +15,7 @@
         visible: true
         map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: RadarConsole
-    maxRange: 64
+    maxRange: 256
     followEntity: true
   - type: Appearance
   - type: GenericVisualizer
@@ -25,8 +25,8 @@
           True: { visible: true }
           False: { visible: false }
   - type: PowerCellDraw
-    drawRate: 3
-    useRate: 100
+    drawRate: 1.5
+  - type: ToggleCellDraw
   - type: ActivatableUI
     key: enum.RadarConsoleUiKey.Key
     inHandsOnly: true

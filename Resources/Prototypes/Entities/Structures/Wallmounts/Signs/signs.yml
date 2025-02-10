@@ -18,6 +18,15 @@
 
 - type: entity
   parent: BaseSignDirectional
+  id: SignDirectionalAtmos
+  name: atmos sign
+  description: A direction sign, pointing out which way the Atmospherics department is.
+  components:
+  - type: Sprite
+    state: direction_atmos
+
+- type: entity
+  parent: BaseSignDirectional
   id: SignDirectionalBar
   name: bar sign
   description: A direction sign, pointing out which way the bar is.
@@ -232,6 +241,15 @@
   - type: Sprite
     state: direction_wash
 
+- type: entity
+  parent: BaseSignDirectional
+  id: SignDirectionalEscapePod
+  name: escape pods sign
+  description: A direction sign, pointing out the way to an escape pod dock.
+  components:
+  - type: Sprite
+    state: direction_pods
+
 # Regular Signs
 
 - type: entity
@@ -314,6 +332,15 @@
   components:
   - type: Sprite
     state: bar
+
+- type: entity
+  parent: BaseSign
+  id: SignBath
+  name: bathroom sign
+  description: A sign indicating the bathroom.
+  components:
+  - type: Sprite
+    state: bath
 
 - type: entity
   parent: BaseSign
@@ -748,6 +775,14 @@
     state: cans
 
 - type: entity
+  parent: SignCans
+  id: SignCansScience
+  suffix: science
+  components:
+  - type: Sprite
+    state: cans_sci
+
+- type: entity
   parent: BaseSign
   id: SignShipDock
   name: evac sign
@@ -1081,7 +1116,15 @@
   - type: Sprite
     state: medium_secure
 
-
+# TODO: make a fancier version of this sign
+- type: entity
+  parent: BaseSign
+  id: SignVox
+  name: vox area sign
+  description: A sign indicating that the area ahead is intended for Vox crew members and does not have an oxygen atmosphere.
+  components:
+  - type: Sprite
+    state: vox
 
 # Atmos Warnings
 
@@ -1219,6 +1262,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign1
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
@@ -1228,6 +1272,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign2
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
@@ -1237,6 +1282,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign3
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
@@ -1246,6 +1292,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign4
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
@@ -1255,6 +1302,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign5
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign

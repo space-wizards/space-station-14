@@ -17,8 +17,13 @@ namespace Content.Server.Disposal
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player;
-            if (player?.AttachedEntity == null)
+            if (shell.Player is not { } player)
+            {
+                shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
+                return;
+            }
+
+            if (player.AttachedEntity is not { } attached)
             {
                 shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));
                 return;
