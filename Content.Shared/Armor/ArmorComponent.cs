@@ -38,7 +38,7 @@ public record struct ArmorExamineEvent(FormattedMessage Msg);
 public sealed class CoefficientQueryEvent : EntityEventArgs, IInventoryRelayEvent
 {
     /// <summary>
-    /// All slots to relay too
+    /// All slots to relay to
     /// </summary>
     public SlotFlags TargetSlots { get; set; }
 
