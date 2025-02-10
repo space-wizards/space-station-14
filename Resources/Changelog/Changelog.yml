@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Jophire
-  changes:
-  - message: VIM mech now can open maintenance doors!
-    type: Add
-  id: 7425
-  time: '2024-09-23T13:08:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32302
 - author: lzk228
   changes:
   - message: Cadet PDA now has wanted list cartridge preinstalled.
@@ -3897,3 +3890,10 @@
   id: 7924
   time: '2025-02-09T23:24:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34988
+- author: IProduceWidgets
+  changes:
+  - message: Pacifists can throw things that break.
+    type: Fix
+  id: 7925
+  time: '2025-02-10T01:24:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31060
