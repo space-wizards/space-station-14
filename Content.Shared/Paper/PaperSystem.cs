@@ -3,6 +3,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Examine;
+using Content.Shared.Ghost;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
@@ -110,6 +111,14 @@ public sealed class PaperSystem : EntitySystem
                     var paperEditingDisabledMessage = Loc.GetString("paper-tamper-proof-modified-message");
                     _popupSystem.PopupEntity(paperEditingDisabledMessage, entity, args.User);
 
+                    args.Handled = true;
+                    return;
+                }
+
+                if (TryComp<IlliterateComponent>(entity.Owner, out var illiterateComp))
+                {
+                    var fileWriteMessage = Loc.GetString(illiterateComp.FailWriteMessage);
+                    _popupSystem.PopupEntity(fileWriteMessage, entity, args.User);
                     args.Handled = true;
                     return;
                 }
