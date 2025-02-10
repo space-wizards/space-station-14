@@ -11,7 +11,7 @@ public abstract class AlertsSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    private FrozenDictionary<AlertType, AlertPrototype> _typeToAlert = default!;
+    private FrozenDictionary<ProtoId<AlertPrototype>, AlertPrototype> _typeToAlert = default!;
 
     public IReadOnlyDictionary<AlertKey, AlertState>? GetActiveAlerts(EntityUid euid)
     {
@@ -20,23 +20,23 @@ public abstract class AlertsSystem : EntitySystem
             : null;
     }
 
-    public short GetSeverityRange(AlertType alertType)
+    public short GetSeverityRange(ProtoId<AlertPrototype> alertType)
     {
         var minSeverity = _typeToAlert[alertType].MinSeverity;
         return (short)MathF.Max(minSeverity,_typeToAlert[alertType].MaxSeverity - minSeverity);
     }
 
-    public short GetMaxSeverity(AlertType alertType)
+    public short GetMaxSeverity(ProtoId<AlertPrototype> alertType)
     {
         return _typeToAlert[alertType].MaxSeverity;
     }
 
-    public short GetMinSeverity(AlertType alertType)
+    public short GetMinSeverity(ProtoId<AlertPrototype> alertType)
     {
         return _typeToAlert[alertType].MinSeverity;
     }
 
-    public bool IsShowingAlert(EntityUid euid, AlertType alertType)
+    public bool IsShowingAlert(EntityUid euid, ProtoId<AlertPrototype> alertType)
     {
         if (!EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
             return false;
@@ -51,7 +51,7 @@ public abstract class AlertsSystem : EntitySystem
     }
 
     /// <returns>true iff an alert of the indicated alert category is currently showing</returns>
-    public bool IsShowingAlertCategory(EntityUid euid, AlertCategory alertCategory)
+    public bool IsShowingAlertCategory(EntityUid euid, ProtoId<AlertCategoryPrototype> alertCategory)
     {
         return EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent)
                && alertsComponent.Alerts.ContainsKey(AlertKey.ForCategory(alertCategory));
@@ -78,7 +78,7 @@ public abstract class AlertsSystem : EntitySystem
     ///     be erased if there is currently a cooldown for the alert)</param>
     /// <param name="autoRemove">if true, the alert will be removed at the end of the cooldown</param>
     /// <param name="showCooldown">if true, the cooldown will be visibly shown over the alert icon</param>
-    public void ShowAlert(EntityUid euid, AlertType alertType, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null, bool autoRemove = false, bool showCooldown = true )
+    public void ShowAlert(EntityUid euid, ProtoId<AlertPrototype> alertType, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null, bool autoRemove = false, bool showCooldown = true )
     {
         // This should be handled as part of networking.
         if (_timing.ApplyingState)
@@ -131,7 +131,7 @@ public abstract class AlertsSystem : EntitySystem
     /// <summary>
     /// Clear the alert with the given category, if one is currently showing.
     /// </summary>
-    public void ClearAlertCategory(EntityUid euid, AlertCategory category)
+    public void ClearAlertCategory(EntityUid euid, ProtoId<AlertCategoryPrototype> category)
     {
         if(!TryComp(euid, out AlertsComponent? alertsComponent))
             return;
@@ -150,7 +150,7 @@ public abstract class AlertsSystem : EntitySystem
     /// <summary>
     /// Clear the alert of the given type if it is currently showing.
     /// </summary>
-    public void ClearAlert(EntityUid euid, AlertType alertType)
+    public void ClearAlert(EntityUid euid, ProtoId<AlertPrototype> alertType)
     {
         if (_timing.ApplyingState)
             return;
@@ -195,7 +195,7 @@ public abstract class AlertsSystem : EntitySystem
 
         SubscribeLocalEvent<AlertAutoRemoveComponent, EntityUnpausedEvent>(OnAutoRemoveUnPaused);
 
-        SubscribeNetworkEvent<ClickAlertEvent>(HandleClickAlert);
+        SubscribeAllEvent<ClickAlertEvent>(HandleClickAlert);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(HandlePrototypesReloaded);
         LoadPrototypes();
     }
@@ -286,13 +286,13 @@ public abstract class AlertsSystem : EntitySystem
 
     protected virtual void LoadPrototypes()
     {
-        var dict = new Dictionary<AlertType, AlertPrototype>();
+        var dict = new Dictionary<ProtoId<AlertPrototype>, AlertPrototype>();
         foreach (var alert in _prototypeManager.EnumeratePrototypes<AlertPrototype>())
         {
-            if (!dict.TryAdd(alert.AlertType, alert))
+            if (!dict.TryAdd(alert.ID, alert))
             {
                 Log.Error("Found alert with duplicate alertType {0} - all alerts must have" +
-                          " a unique alertType, this one will be skipped", alert.AlertType);
+                          " a unique alertType, this one will be skipped", alert.ID);
             }
         }
 
@@ -303,7 +303,7 @@ public abstract class AlertsSystem : EntitySystem
     /// Tries to get the alert of the indicated type
     /// </summary>
     /// <returns>true if found</returns>
-    public bool TryGet(AlertType alertType, [NotNullWhen(true)] out AlertPrototype? alert)
+    public bool TryGet(ProtoId<AlertPrototype> alertType, [NotNullWhen(true)] out AlertPrototype? alert)
     {
         return _typeToAlert.TryGetValue(alertType, out alert);
     }
@@ -328,7 +328,20 @@ public abstract class AlertsSystem : EntitySystem
             return;
         }
 
-        alert.OnClick?.AlertClicked(player.Value);
+        ActivateAlert(player.Value, alert);
+    }
+
+    public bool ActivateAlert(EntityUid user, AlertPrototype alert)
+    {
+        if (alert.ClickEvent is not { } clickEvent)
+            return false;
+
+        clickEvent.Handled = false;
+        clickEvent.User = user;
+        clickEvent.AlertId = alert.ID;
+
+        RaiseLocalEvent(user, (object) clickEvent, true);
+        return clickEvent.Handled;
     }
 
     private void OnPlayerAttached(EntityUid uid, AlertsComponent component, PlayerAttachedEvent args)

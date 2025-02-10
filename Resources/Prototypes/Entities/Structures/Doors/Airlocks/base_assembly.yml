@@ -28,8 +28,8 @@
     anchored: true
     noRot: true
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: RCDDeconstructable
     cost: 6
     delay: 8

@@ -6,6 +6,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos.Piping.Portable.Components;
 using Content.Shared.Atmos.Visuals;
+using Content.Shared.Power;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 
@@ -163,7 +164,7 @@ public sealed class SpaceHeaterSystem : EntitySystem
         {
             return;
         }
-        _userInterfaceSystem.TrySetUiState(uid, SpaceHeaterUiKey.Key,
+        _userInterfaceSystem.SetUiState(uid, SpaceHeaterUiKey.Key,
             new SpaceHeaterBoundUserInterfaceState(spaceHeater.MinTemperature, spaceHeater.MaxTemperature, thermoMachine.TargetTemperature, !powerReceiver.PowerDisabled, spaceHeater.Mode, spaceHeater.PowerLevel));
     }
 

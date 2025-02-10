@@ -49,6 +49,20 @@
       - MobCorgiIanPup
 
 - type: entity
+  name: Dev Mouse Spawner
+  id: SpawnMobCorgiMouse
+  suffix: Admeme
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCorgiMouse
+
+- type: entity
   name: Possum Morty Spawner
   id: SpawnMobPossumMorty
   parent: MarkerBase
@@ -838,3 +852,74 @@
   - type: ConditionalSpawner
     prototypes:
     - MobLuminousEntity
+
+- type: entity
+  name: clown spider spawner
+  id: SpawnClownSpider
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: clown
+      sprite: Mobs/Animals/clownspider.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobClownSpider
+
+- type: entity
+  name: honk bot spawner
+  id: SpawnHonkBot
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: honkbot
+      sprite: Mobs/Silicon/Bots/honkbot.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobHonkBot
+
+- type: entity
+  name: gingerbread man Spawner
+  id: SpawnMobGingerbreadAI
+  suffix: Ghostrole
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: full
+        sprite: Mobs/Species/Gingerbread/parts.rsi
+  - type: ConditionalSpawner
+    prototypes:
+      - MobGingerbreadAI
+
+- type: entity
+  name: Reindeer Buck Spawner
+  id: SpawnMobReindeerBuck
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: reindeer_buck_still
+      sprite: Mobs/Animals/reindeer_buck.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobReindeerBuck
+
+- type: entity
+  name: Reindeer Doe Spawner
+  id: SpawnMobReindeerDoe
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: reindeer_doe_still
+      sprite: Mobs/Animals/reindeer_doe.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobReindeerDoe

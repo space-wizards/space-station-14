@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by Hanzdegloker on github",
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon_empty"
+    },
+    {
+      "name": "fill-1"
+    },
+    {
+      "name": "fill-2"
+    }
+  ]
+}

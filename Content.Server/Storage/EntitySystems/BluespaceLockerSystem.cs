@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Resist;
-using Content.Server.Station.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
@@ -9,6 +8,7 @@ using Content.Shared.Coordinates;
 using Content.Shared.DoAfter;
 using Content.Shared.Lock;
 using Content.Shared.Mind.Components;
+using Content.Shared.Station.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Tools.Systems;
@@ -16,6 +16,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Prototypes;
+using Content.Server.Shuttles.Components;
 
 namespace Content.Server.Storage.EntitySystems;
 
@@ -47,6 +48,8 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
         if (component.BehaviorProperties.BluespaceEffectOnInit)
             BluespaceEffect(uid, component, component, true);
+
+        EnsureComp<ArrivalsBlacklistComponent>(uid); // To stop people getting to arrivals terminal
     }
 
     public void BluespaceEffect(EntityUid effectTargetUid, BluespaceLockerComponent effectSourceComponent, BluespaceLockerComponent? effectTargetComponent, bool bypassLimit = false)
@@ -109,7 +112,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
             // Move contained air
             if (component.BehaviorProperties.TransportGas)
             {
-                entityStorageComponent.Air.CopyFromMutable(target.Value.storageComponent.Air);
+                entityStorageComponent.Air.CopyFrom(target.Value.storageComponent.Air);
                 target.Value.storageComponent.Air.Clear();
             }
 
@@ -326,7 +329,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         // Move contained air
         if (component.BehaviorProperties.TransportGas)
         {
-            target.Value.storageComponent.Air.CopyFromMutable(entityStorageComponent.Air);
+            target.Value.storageComponent.Air.CopyFrom(entityStorageComponent.Air);
             entityStorageComponent.Air.Clear();
         }
 
@@ -390,7 +393,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         {
             case BluespaceLockerDestroyType.Explode:
                 _explosionSystem.QueueExplosion(uid.ToCoordinates().ToMap(EntityManager, _transformSystem),
-                    ExplosionSystem.DefaultExplosionPrototypeId, 4, 1, 2, maxTileBreak: 0);
+                    ExplosionSystem.DefaultExplosionPrototypeId, 4, 1, 2, uid, maxTileBreak: 0);
                 goto case BluespaceLockerDestroyType.Delete;
             case BluespaceLockerDestroyType.Delete:
                 QueueDel(uid);

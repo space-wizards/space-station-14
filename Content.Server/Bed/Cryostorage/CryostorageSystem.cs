@@ -1,24 +1,24 @@
 using System.Globalization;
-using System.Linq;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking;
+using Content.Server.Chat.Systems;
+using Content.Server.Ghost;
 using Content.Server.Hands.Systems;
 using Content.Server.Inventory;
 using Content.Server.Popups;
-using Content.Server.Chat.Systems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
-using Content.Shared.StationRecords;
-using Content.Shared.UserInterface;
 using Content.Shared.Access.Systems;
 using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Chat;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Database;
+using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Mind.Components;
+using Content.Shared.StationRecords;
+using Content.Shared.UserInterface;
 using Robust.Server.Audio;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -40,7 +40,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly ClimbSystem _climb = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly GhostSystem _ghostSystem = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly ServerInventorySystem _inventory = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
@@ -79,9 +79,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     private void OnRemoveItemBuiMessage(Entity<CryostorageComponent> ent, ref CryostorageRemoveItemBuiMessage args)
     {
         var (_, comp) = ent;
-        if (args.Session.AttachedEntity is not { } attachedEntity)
-            return;
-
+        var attachedEntity = args.Actor;
         var cryoContained = GetEntity(args.StoredEntity);
 
         if (!comp.StoredPlayers.Contains(cryoContained) || !IsInPausedMap(cryoContained))
@@ -114,6 +112,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         AdminLog.Add(LogType.Action, LogImpact.High,
             $"{ToPrettyString(attachedEntity):player} removed item {ToPrettyString(entity)} from cryostorage-contained player " +
             $"{ToPrettyString(cryoContained):player}, stored in cryostorage {ToPrettyString(ent)}");
+
         _container.TryRemoveFromContainer(entity.Value);
         _transform.SetCoordinates(entity.Value, Transform(attachedEntity).Coordinates);
         _hands.PickupOrDrop(attachedEntity, entity.Value);
@@ -122,8 +121,8 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
     private void UpdateCryostorageUIState(Entity<CryostorageComponent> ent)
     {
-        var state = new CryostorageBuiState(GetAllContainedData(ent).ToList());
-        _ui.TrySetUiState(ent, CryostorageUIKey.Key, state);
+        var state = new CryostorageBuiState(GetAllContainedData(ent));
+        _ui.SetUiState(ent.Owner, CryostorageUIKey.Key, state);
     }
 
     private void OnPlayerSpawned(Entity<CryostorageContainedComponent> ent, ref PlayerSpawnCompleteEvent args)
@@ -211,7 +210,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             if (userId != null && Mind.TryGetMind(userId.Value, out var mind) &&
                 HasComp<CryostorageContainedComponent>(mind.Value.Comp.CurrentEntity))
             {
-                _gameTicker.OnGhostAttempt(mind.Value, false);
+                _ghostSystem.OnGhostAttempt(mind.Value, false);
             }
         }
 
@@ -240,6 +239,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             Loc.GetString(
                 "earlyleave-cryo-announcement",
                 ("character", name),
+                ("entity", ent.Owner), // gender things for supporting downstreams with other languages
                 ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))
             ), Loc.GetString("earlyleave-cryo-sender"),
             playDefaultSound: false
@@ -293,12 +293,17 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             _chatManager.ChatMessageToOne(ChatChannel.Server, msg, msg, uid, false, actor.PlayerSession.Channel);
     }
 
-    private IEnumerable<CryostorageContainedPlayerData> GetAllContainedData(Entity<CryostorageComponent> ent)
+    private List<CryostorageContainedPlayerData> GetAllContainedData(Entity<CryostorageComponent> ent)
     {
+        var data = new List<CryostorageContainedPlayerData>();
+        data.EnsureCapacity(ent.Comp.StoredPlayers.Count);
+
         foreach (var contained in ent.Comp.StoredPlayers)
         {
-            yield return GetContainedData(contained);
+            data.Add(GetContainedData(contained));
         }
+
+        return data;
     }
 
     private CryostorageContainedPlayerData GetContainedData(EntityUid uid)

@@ -1,6 +1,6 @@
 - type: entity
   id: BodyBag
-  parent: BaseFoldable
+  parent: BaseDeployFoldable
   name: body bag
   description: A plastic bag designed for the storage and transportation of cadavers to stop body decomposition.
   components:
@@ -51,11 +51,14 @@
   - type: EntityStorageLayingDownOverride
   - type: PaperLabel
     labelSlot:
-      insertVerbText: Attach Label
-      ejectVerbText: Remove Label
+      insertVerbText: comp-paper-label-insert
+      ejectVerbText: comp-paper-label-eject
       whitelist:
         components:
         - Paper
+      blacklist:
+        tags:
+        - Book
   - type: Appearance
   - type: EntityStorageVisuals
     stateDoorOpen: open_overlay

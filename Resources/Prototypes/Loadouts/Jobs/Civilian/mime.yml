@@ -1,27 +1,15 @@
 # Head
 - type: loadout
   id: MimeHead
-  equipment: MimeHead
-
-- type: startingGear
-  id: MimeHead
   equipment:
     head: ClothingHeadHatBeret
 
 - type: loadout
   id: MimeFrenchBeret
-  equipment: MimeFrenchBeret
-
-- type: startingGear
-  id: MimeFrenchBeret
   equipment:
     head: ClothingHeadHatBeretFrench
 
 - type: loadout
-  id: MimeCap
-  equipment: MimeCap
-
-- type: startingGear
   id: MimeCap
   equipment:
     head: ClothingHeadHatMimesoft
@@ -29,27 +17,15 @@
 # Mask
 - type: loadout
   id: MimeMask
-  equipment: MimeMask
-
-- type: startingGear
-  id: MimeMask
   equipment:
     mask: ClothingMaskMime
 
 - type: loadout
   id: MimeMaskSad
-  equipment: MimeMaskSad
-
-- type: startingGear
-  id: MimeMaskSad
   equipment:
     mask: ClothingMaskSadMime
 
 - type: loadout
-  id: MimeMaskScared
-  equipment: MimeMaskScared
-
-- type: startingGear
   id: MimeMaskScared
   equipment:
     mask: ClothingMaskScaredMime
@@ -57,18 +33,10 @@
 # Jumpsuit
 - type: loadout
   id: MimeJumpsuit
-  equipment: MimeJumpsuit
-
-- type: startingGear
-  id: MimeJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitMime
 
 - type: loadout
-  id: MimeJumpskirt
-  equipment: MimeJumpskirt
-
-- type: startingGear
   id: MimeJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtMime
@@ -76,37 +44,32 @@
 # Back
 - type: loadout
   id: MimeBackpack
-  equipment: MimeBackpack
-
-- type: startingGear
-  id: MimeBackpack
   equipment:
-    back: ClothingBackpackMimeFilled
+    back: ClothingBackpackMime
 
 - type: loadout
   id: MimeSatchel
-  equipment: MimeSatchel
-
-- type: startingGear
-  id: MimeSatchel
   equipment:
-    back: ClothingBackpackSatchelMimeFilled
+    back: ClothingBackpackSatchelMime
 
 - type: loadout
   id: MimeDuffel
-  equipment: MimeDuffel
-
-- type: startingGear
-  id: MimeDuffel
   equipment:
-    back: ClothingBackpackDuffelMimeFilled
+    back: ClothingBackpackDuffelMime
 
 # Outerclothing
 - type: loadout
   id: MimeWintercoat
-  equipment: MimeWintercoat
-
-- type: startingGear
-  id: MimeWintercoat
   equipment:
     outerClothing: ClothingOuterWinterMime
+
+# Belt
+- type: loadout
+  id: MimeSuspendersRed
+  equipment:
+    belt: ClothingBeltSuspendersRed
+
+- type: loadout
+  id: MimeSuspendersBlack
+  equipment:
+    belt: ClothingBeltSuspendersBlack

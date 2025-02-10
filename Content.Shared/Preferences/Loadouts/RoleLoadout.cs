@@ -1,4 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Random;
 using Robust.Shared.Collections;
 using Robust.Shared.Player;
@@ -11,11 +13,13 @@ namespace Content.Shared.Preferences.Loadouts;
 /// <summary>
 /// Contains all of the selected data for a role's loadout.
 /// </summary>
-[Serializable, NetSerializable]
-public sealed class RoleLoadout
+[Serializable, NetSerializable, DataDefinition]
+public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
 {
-    public readonly ProtoId<RoleLoadoutPrototype> Role;
+    [DataField]
+    public ProtoId<RoleLoadoutPrototype> Role;
 
+    [DataField]
     public Dictionary<ProtoId<LoadoutGroupPrototype>, List<Loadout>> SelectedLoadouts = new();
 
     /*
@@ -44,7 +48,7 @@ public sealed class RoleLoadout
     /// <summary>
     /// Ensures all prototypes exist and effects can be applied.
     /// </summary>
-    public void EnsureValid(ICommonSession session, IDependencyCollection collection)
+    public void EnsureValid(HumanoidCharacterProfile profile, ICommonSession session, IDependencyCollection collection)
     {
         var groupRemove = new ValueList<string>();
         var protoManager = collection.Resolve<IPrototypeManager>();
@@ -55,11 +59,28 @@ public sealed class RoleLoadout
             return;
         }
 
+        // In some instances we might not have picked up a new group for existing data.
+        foreach (var groupProto in roleProto.Groups)
+        {
+            if (SelectedLoadouts.ContainsKey(groupProto))
+                continue;
+
+            // Data will get set below.
+            SelectedLoadouts[groupProto] = new List<Loadout>();
+        }
+
         // Reset points to recalculate.
         Points = roleProto.Points;
 
         foreach (var (group, groupLoadouts) in SelectedLoadouts)
         {
+            // Check the group is even valid for this role.
+            if (!roleProto.Groups.Contains(group))
+            {
+                groupRemove.Add(group);
+                continue;
+            }
+
             // Dump if Group doesn't exist
             if (!protoManager.TryIndex(group, out var groupProto))
             {
@@ -74,14 +95,22 @@ public sealed class RoleLoadout
             {
                 var loadout = loadouts[i];
 
+                // Old prototype or otherwise invalid.
                 if (!protoManager.TryIndex(loadout.Prototype, out var loadoutProto))
                 {
                     loadouts.RemoveAt(i);
                     continue;
                 }
 
+                // Malicious client maybe, check the group even has it.
+                if (!groupProto.Loadouts.Contains(loadout.Prototype))
+                {
+                    loadouts.RemoveAt(i);
+                    continue;
+                }
+
                 // Validate the loadout can be applied (e.g. points).
-                if (!IsValid(session, loadout.Prototype, collection, out _))
+                if (!IsValid(profile, session, loadout.Prototype, collection, out _))
                 {
                     loadouts.RemoveAt(i);
                     continue;
@@ -95,9 +124,12 @@ public sealed class RoleLoadout
             // If you put invalid ones first but that's your fault for not using sensible defaults
             if (loadouts.Count < groupProto.MinLimit)
             {
-                for (var i = 0; i < Math.Min(groupProto.MinLimit, groupProto.Loadouts.Count); i++)
+                foreach (var protoId in groupProto.Loadouts)
                 {
-                    if (!protoManager.TryIndex(groupProto.Loadouts[i], out var loadoutProto))
+                    if (loadouts.Count >= groupProto.MinLimit)
+                        break;
+
+                    if (!protoManager.TryIndex(protoId, out var loadoutProto))
                         continue;
 
                     var defaultLoadout = new Loadout()
@@ -108,7 +140,10 @@ public sealed class RoleLoadout
                     if (loadouts.Contains(defaultLoadout))
                         continue;
 
-                    // Still need to apply the effects even if validation is ignored.
+                    // Not valid so don't default to it anyway.
+                    if (!IsValid(profile, session, defaultLoadout.Prototype, collection, out _))
+                        continue;
+
                     loadouts.Add(defaultLoadout);
                     Apply(loadoutProto);
                 }
@@ -134,11 +169,15 @@ public sealed class RoleLoadout
     /// <summary>
     /// Resets the selected loadouts to default if no data is present.
     /// </summary>
-    public void SetDefault(IPrototypeManager protoManager, bool force = false)
+    public void SetDefault(HumanoidCharacterProfile? profile, ICommonSession? session, IPrototypeManager protoManager, bool force = false)
     {
+        if (profile == null)
+            return;
+
         if (force)
             SelectedLoadouts.Clear();
 
+        var collection = IoCManager.Instance!;
         var roleProto = protoManager.Index(Role);
 
         for (var i = roleProto.Groups.Count - 1; i >= 0; i--)
@@ -151,14 +190,32 @@ public sealed class RoleLoadout
             if (SelectedLoadouts.ContainsKey(group))
                 continue;
 
-            SelectedLoadouts[group] = new List<Loadout>();
+            var loadouts = new List<Loadout>();
+            SelectedLoadouts[group] = loadouts;
 
             if (groupProto.MinLimit > 0)
             {
                 // Apply any loadouts we can.
-                for (var j = 0; j < Math.Min(groupProto.MinLimit, groupProto.Loadouts.Count); j++)
+                foreach (var protoId in groupProto.Loadouts)
                 {
-                    AddLoadout(group, groupProto.Loadouts[j], protoManager);
+                    // Reached the limit, time to stop
+                    if (loadouts.Count >= groupProto.MinLimit)
+                        break;
+
+                    if (!protoManager.TryIndex(protoId, out var loadoutProto))
+                        continue;
+
+                    var defaultLoadout = new Loadout()
+                    {
+                        Prototype = loadoutProto.ID,
+                    };
+
+                    // Not valid so don't default to it anyway.
+                    if (!IsValid(profile, session, defaultLoadout.Prototype, collection, out _))
+                        continue;
+
+                    loadouts.Add(defaultLoadout);
+                    Apply(loadoutProto);
                 }
             }
         }
@@ -167,7 +224,7 @@ public sealed class RoleLoadout
     /// <summary>
     /// Returns whether a loadout is valid or not.
     /// </summary>
-    public bool IsValid(ICommonSession session, ProtoId<LoadoutPrototype> loadout, IDependencyCollection collection, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool IsValid(HumanoidCharacterProfile profile, ICommonSession? session, ProtoId<LoadoutPrototype> loadout, IDependencyCollection collection, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
 
@@ -176,11 +233,11 @@ public sealed class RoleLoadout
         if (!protoManager.TryIndex(loadout, out var loadoutProto))
         {
             // Uhh
-            reason = FormattedMessage.FromMarkup("");
+            reason = FormattedMessage.FromMarkupOrThrow("");
             return false;
         }
 
-        if (!protoManager.TryIndex(Role, out var roleProto))
+        if (!protoManager.HasIndex(Role))
         {
             reason = FormattedMessage.FromUnformatted("loadouts-prototype-missing");
             return false;
@@ -190,7 +247,7 @@ public sealed class RoleLoadout
 
         foreach (var effect in loadoutProto.Effects)
         {
-            valid = valid && effect.Validate(this, session, collection, out reason);
+            valid = valid && effect.Validate(profile, this, session, collection, out reason);
         }
 
         return valid;
@@ -256,5 +313,40 @@ public sealed class RoleLoadout
         }
 
         return false;
+    }
+
+    public bool Equals(RoleLoadout? other)
+    {
+        if (ReferenceEquals(null, other)) return false;
+        if (ReferenceEquals(this, other)) return true;
+
+        if (!Role.Equals(other.Role) ||
+            SelectedLoadouts.Count != other.SelectedLoadouts.Count ||
+            Points != other.Points)
+        {
+            return false;
+        }
+
+        // Tried using SequenceEqual but it stinky so.
+        foreach (var (key, value) in SelectedLoadouts)
+        {
+            if (!other.SelectedLoadouts.TryGetValue(key, out var otherValue) ||
+                !otherValue.SequenceEqual(value))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return ReferenceEquals(this, obj) || obj is RoleLoadout other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Role, SelectedLoadouts, Points);
     }
 }

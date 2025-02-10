@@ -5,7 +5,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -18,10 +17,6 @@ namespace Content.Shared.Storage
     public sealed partial class StorageComponent : Component
     {
         public static string ContainerId = "storagebase";
-
-        // TODO: This fucking sucks
-        [ViewVariables(VVAccess.ReadWrite), DataField]
-        public bool IsUiOpen;
 
         [ViewVariables]
         public Container Container = default!;
@@ -57,8 +52,36 @@ namespace Content.Shared.Storage
         [DataField]
         public bool QuickInsert; // Can insert storables by clicking them with the storage entity
 
+        /// <summary>
+        /// Minimum delay between quick/area insert actions.
+        /// </summary>
+        /// <remarks>Used to prevent autoclickers spamming server with individual pickup actions.</remarks>
+        public TimeSpan QuickInsertCooldown = TimeSpan.FromSeconds(0.5);
+
+        /// <summary>
+        /// Minimum delay between UI open actions.
+        /// <remarks>Used to spamming opening sounds.</remarks>
+        /// </summary>
         [DataField]
-        public bool ClickInsert = true; // Can insert stuff by clicking the storage entity with it
+        public TimeSpan OpenUiCooldown = TimeSpan.Zero;
+
+        /// <summary>
+        /// Can insert stuff by clicking the storage entity with it.
+        /// </summary>
+        [DataField]
+        public bool ClickInsert = true;
+
+        /// <summary>
+        /// Open the storage window when pressing E.
+        /// When false you can still open the inventory using verbs.
+        /// </summary>
+        [DataField]
+        public bool OpenOnActivate = true;
+
+        /// <summary>
+        /// How many entities area pickup can pickup at once.
+        /// </summary>
+        public const int AreaPickupLimit = 10;
 
         [DataField]
         public bool AreaInsert; // Clicking with the storage entity causes it to insert all nearby storables after a delay
@@ -110,10 +133,31 @@ namespace Content.Shared.Storage
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public StorageDefaultOrientation? DefaultStorageOrientation;
 
+        /// <summary>
+        /// If true, sets StackVisuals.Hide to true when the container is closed
+        /// Used in cases where there are sprites that are shown when the container is open but not
+        /// when it is closed
+        /// </summary>
+        [DataField]
+        public bool HideStackVisualsWhenClosed = true;
+
         [Serializable, NetSerializable]
         public enum StorageUiKey : byte
         {
             Key,
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class OpenNestedStorageEvent : EntityEventArgs
+    {
+        public readonly NetEntity InteractedItemUid;
+        public readonly NetEntity StorageUid;
+
+        public OpenNestedStorageEvent(NetEntity interactedItemUid, NetEntity storageUid)
+        {
+            InteractedItemUid = interactedItemUid;
+            StorageUid = storageUid;
         }
     }
 
@@ -149,16 +193,22 @@ namespace Content.Shared.Storage
     }
 
     [Serializable, NetSerializable]
-    public sealed class StorageRemoveItemEvent : EntityEventArgs
+    public sealed class StorageTransferItemEvent : EntityEventArgs
     {
         public readonly NetEntity ItemEnt;
 
+        /// <summary>
+        /// Target storage to receive the transfer.
+        /// </summary>
         public readonly NetEntity StorageEnt;
 
-        public StorageRemoveItemEvent(NetEntity itemEnt, NetEntity storageEnt)
+        public readonly ItemStorageLocation Location;
+
+        public StorageTransferItemEvent(NetEntity itemEnt, NetEntity storageEnt, ItemStorageLocation location)
         {
             ItemEnt = itemEnt;
             StorageEnt = storageEnt;
+            Location = location;
         }
     }
 
@@ -214,14 +264,11 @@ namespace Content.Shared.Storage
         }
     }
 
-    /// <summary>
-    /// An extra BUI message that either opens, closes, or focuses the storage window based on context.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class StorageModifyWindowMessage : BoundUserInterfaceMessage
-    {
+    [ByRefEvent]
+    public record struct StorageInteractAttemptEvent(bool Silent, bool Cancelled = false);
 
-    }
+    [ByRefEvent]
+    public record struct StorageInteractUsingAttemptEvent(bool Cancelled = false);
 
     [NetSerializable]
     [Serializable]

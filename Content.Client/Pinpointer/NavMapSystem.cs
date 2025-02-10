@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Pinpointer;
 using Robust.Shared.GameStates;
 
@@ -14,50 +15,96 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
 
     private void OnHandleState(EntityUid uid, NavMapComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is not NavMapComponentState state)
-            return;
+        Dictionary<Vector2i, int[]> modifiedChunks;
+        Dictionary<NetEntity, NavMapBeacon> beacons;
+        Dictionary<NetEntity, NavMapRegionProperties> regions;
 
-        if (!state.FullState)
+        switch (args.Current)
         {
-            foreach (var index in component.Chunks.Keys)
+            case NavMapDeltaState delta:
             {
-                if (!state.AllChunks!.Contains(index))
-                    component.Chunks.Remove(index);
-            }
+                modifiedChunks = delta.ModifiedChunks;
+                beacons = delta.Beacons;
+                regions = delta.Regions;
 
-            foreach (var beacon in component.Beacons)
-            {
-                if (!state.AllBeacons!.Contains(beacon))
-                    component.Beacons.Remove(beacon);
+                foreach (var index in component.Chunks.Keys)
+                {
+                    if (!delta.AllChunks!.Contains(index))
+                        component.Chunks.Remove(index);
+                }
+
+                break;
             }
+            case NavMapState state:
+            {
+                modifiedChunks = state.Chunks;
+                beacons = state.Beacons;
+                regions = state.Regions;
+
+                foreach (var index in component.Chunks.Keys)
+                {
+                    if (!state.Chunks.ContainsKey(index))
+                        component.Chunks.Remove(index);
+                }
+
+                break;
+            }
+            default:
+                return;
         }
 
-        else
-        {
-            foreach (var index in component.Chunks.Keys)
-            {
-                if (!state.Chunks.ContainsKey(index))
-                    component.Chunks.Remove(index);
-            }
+        // Update region data and queue new regions for flooding
+        var prevRegionOwners = component.RegionProperties.Keys.ToList();
+        var validRegionOwners = new List<NetEntity>();
 
-            foreach (var beacon in component.Beacons)
-            {
-                if (!state.Beacons.Contains(beacon))
-                    component.Beacons.Remove(beacon);
-            }
+        component.RegionProperties.Clear();
+
+        foreach (var (regionOwner, regionData) in regions)
+        {
+            if (!regionData.Seeds.Any())
+                continue;
+
+            component.RegionProperties[regionOwner] = regionData;
+            validRegionOwners.Add(regionOwner);
+
+            if (component.RegionOverlays.ContainsKey(regionOwner))
+                continue;
+
+            if (component.QueuedRegionsToFlood.Contains(regionOwner))
+                continue;
+
+            component.QueuedRegionsToFlood.Enqueue(regionOwner);
         }
 
-        foreach (var ((category, origin), chunk) in state.Chunks)
+        // Remove stale region owners
+        var regionOwnersToRemove = prevRegionOwners.Except(validRegionOwners);
+
+        foreach (var regionOwnerRemoved in regionOwnersToRemove)
+            RemoveNavMapRegion(uid, component, regionOwnerRemoved);
+
+        // Modify chunks
+        foreach (var (origin, chunk) in modifiedChunks)
         {
             var newChunk = new NavMapChunk(origin);
+            Array.Copy(chunk, newChunk.TileData, chunk.Length);
+            component.Chunks[origin] = newChunk;
 
-            foreach (var (atmosDirection, value) in chunk)
-                newChunk.TileData[atmosDirection] = value;
+            // If the affected chunk intersects one or more regions, re-flood them
+            if (!component.ChunkToRegionOwnerTable.TryGetValue(origin, out var affectedOwners))
+                continue;
 
-            component.Chunks[(category, origin)] = newChunk;
+            foreach (var affectedOwner in affectedOwners)
+            {
+                if (!component.QueuedRegionsToFlood.Contains(affectedOwner))
+                    component.QueuedRegionsToFlood.Enqueue(affectedOwner);
+            }
         }
 
-        foreach (var beacon in state.Beacons)
-            component.Beacons.Add(beacon);
+        // Refresh beacons
+        component.Beacons.Clear();
+        foreach (var (nuid, beacon) in beacons)
+        {
+            component.Beacons[nuid] = beacon;
+        }
     }
 }

@@ -12,9 +12,19 @@
       effects:
       - !type:SatiateThirst
         factor: 2
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 2.0
+        type: Remove
       - !type:AdjustReagent
         reagent: Theobromine
         amount: 0.05
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/coffeeglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: HotCocoa
@@ -90,6 +100,15 @@
   metamorphicMaxFillLevels: 1
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 2.0
+        type: Remove
 
 - type: reagent
   id: GreenTea
@@ -100,9 +119,9 @@
   flavor: tea
   color: "#7EB626"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/glass_green.rsi
+    sprite: Objects/Consumable/Drinks/greenteaglass.rsi
     state: icon_empty
-  metamorphicMaxFillLevels: 5
+  metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
 
@@ -139,6 +158,15 @@
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 2.0
+        type: Remove
 
 - type: reagent
   id: IcedGreenTea
@@ -149,7 +177,7 @@
   flavor: icedtea
   color: "#5B821B"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/glass_green.rsi
+    sprite: Objects/Consumable/Drinks/icedgreenteaglass.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
@@ -316,6 +344,10 @@
       effects:
       - !type:SatiateThirst
         factor: 6
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 3.0
+        type: Remove
     Poison:
       effects:
       - !type:HealthChange
@@ -348,6 +380,15 @@
   metamorphicMaxFillLevels: 1
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 2.0
+        type: Remove
 
 - type: reagent
   id: Tea
@@ -366,6 +407,12 @@
       - !type:AdjustReagent
         reagent: Theobromine
         amount: 0.05
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/teaglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: TonicWater
@@ -376,6 +423,12 @@
   flavor: tonicwater
   color: "#0064C8"
   fizziness: 0.4
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/tonicglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Water
@@ -408,6 +461,12 @@
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 1
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/iceglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: DryRamen

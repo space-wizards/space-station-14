@@ -7,6 +7,21 @@
   flavor: soda
   color: "#6c2828"
   recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/colaglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 1.0
+        type: Remove
 
 - type: reagent
   id: RoyRogers
@@ -42,6 +57,12 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: drgibb
   color: "#102000"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/dr_gibb_glass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: EnergyDrink
@@ -56,9 +77,13 @@
       effects:
       - !type:SatiateThirst
         factor: 2
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 2.0
+        type: Remove
       - !type:AdjustReagent
         reagent: Theobromine
-        amount: 0.05
+        amount: 0.1
   fizziness: 0.4
 
 - type: reagent
@@ -95,6 +120,15 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: lemonlimesoda
   color: "#878F00"
+
+- type: reagent
+  id: LemonLimeCranberry
+  name: reagent-name-lemon-lime-cranberry
+  parent: BaseSoda
+  desc: reagent-desc-lemon-lime-cranberry
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: lemonlimecranberrysoda
+  color: "#803C53"
 
 - type: reagent
   id: PwrGame
@@ -174,6 +208,12 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: sodacitrus
   color: "#a6fa5a"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/space_mountain_wind_glass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: SpaceUp
@@ -183,6 +223,12 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: spaceup
   color: "#e3e3e37d"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/space-up_glass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Starkist

@@ -120,3 +120,72 @@ chatsan-replacement-43 = i guess
 
 chatsan-word-44 = tbf
 chatsan-replacement-44 = to be fair
+
+chatsan-word-45 = tysm
+chatsan-replacement-45 = thank you so much
+
+chatsan-word-46 = tyvm
+chatsan-replacement-46 = thank you very much
+
+chatsan-word-47 = cya
+chatsan-replacement-47 = see ya
+
+chatsan-word-48 = rn
+chatsan-replacement-48 = right now
+
+chatsan-word-49 = atm
+chatsan-replacement-49 = at the moment
+
+chatsan-word-50 = istg
+chatsan-replacement-50 = I swear to god
+
+chatsan-word-51 = rq
+chatsan-replacement-51 = real quick
+
+chatsan-word-52 = dw
+chatsan-replacement-52 = don't worry
+
+chatsan-word-53 = wru
+chatsan-replacement-53 = where are you
+
+chatsan-word-54 = fs
+chatsan-replacement-54 = for sure
+
+chatsan-word-55 = ngl
+chatsan-replacement-55 = not gonna lie
+
+chatsan-word-56 = fml
+chatsan-replacement-56 = fuck my life
+
+chatsan-word-57 = wtaf
+chatsan-replacement-57 = what the actual fuck
+
+chatsan-word-58 = wsg
+chatsan-replacement-58 = what's good
+
+chatsan-word-59 = mb
+chatsan-replacement-59 = my bad
+
+chatsan-word-60 = jfc
+chatsan-replacement-60 = jesus fucking christ
+
+chatsan-word-61 = omw
+chatsan-replacement-61 = on my way
+
+chatsan-word-62 = otw
+chatsan-replacement-62 = on the way
+
+chatsan-word-63 = yk
+chatsan-replacement-63 = you know
+
+chatsan-word-64 = istfg
+chatsan-replacement-64 = i swear to fucking god
+
+chatsan-word-65 = idgaf
+chatsan-replacement-65 = i don't give a fuck
+
+chatsan-word-66 = smth
+chatsan-replacement-66 = something
+
+chatsan-word-67 = allg
+chatsan-replacement-67 = all good

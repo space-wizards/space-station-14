@@ -1,4 +1,5 @@
-using Content.Shared.Dataset;
+﻿using Content.Shared.Dataset;
+using Content.Shared.Random.Helpers;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -47,9 +48,22 @@ public sealed class RandomMetadataSystem : EntitySystem
         var outputSegments = new List<string>();
         foreach (var segment in segments)
         {
-            outputSegments.Add(_prototype.TryIndex<DatasetPrototype>(segment, out var proto)
-                ? Loc.GetString(_random.Pick(proto.Values))
-                : Loc.GetString(segment));
+            if (_prototype.TryIndex<LocalizedDatasetPrototype>(segment, out var localizedProto))
+            {
+                outputSegments.Add(_random.Pick(localizedProto));
+            }
+            else if (_prototype.TryIndex<DatasetPrototype>(segment, out var proto))
+            {
+                var random = _random.Pick(proto.Values);
+                if (Loc.TryGetString(random, out var localizedSegment))
+                    outputSegments.Add(localizedSegment);
+                else
+                    outputSegments.Add(random);
+            }
+            else if (Loc.TryGetString(segment, out var localizedSegment))
+                outputSegments.Add(localizedSegment);
+            else
+                outputSegments.Add(segment);
         }
         return string.Join(separator, outputSegments);
     }

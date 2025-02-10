@@ -1,4 +1,3 @@
-using Content.Shared.Antag;
 using Content.Shared.StatusIcon;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -6,11 +5,8 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Zombies;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class InitialInfectedComponent : Component, IAntagStatusIconComponent
+public sealed partial class InitialInfectedComponent : Component
 {
-    [DataField("initialInfectedStatusIcon")]
-    public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "InitialInfectedFaction";
-
     [DataField]
-    public bool IconVisibleToGhost { get; set; } = true;
+    public ProtoId<FactionIconPrototype> StatusIcon = "InitialInfectedFaction";
 }

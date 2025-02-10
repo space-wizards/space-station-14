@@ -28,14 +28,16 @@ namespace Content.Client.Launcher
         private readonly IRobustRandom _random;
         private readonly IPrototypeManager _prototype;
         private readonly IConfigurationManager _cfg;
+        private readonly IClipboardManager _clipboard;
 
         public LauncherConnectingGui(LauncherConnecting state, IRobustRandom random,
-            IPrototypeManager prototype, IConfigurationManager config)
+            IPrototypeManager prototype, IConfigurationManager config, IClipboardManager clipboard)
         {
             _state = state;
             _random = random;
             _prototype = prototype;
             _cfg = config;
+            _clipboard = clipboard;
 
             RobustXamlLoader.Load(this);
 
@@ -44,8 +46,11 @@ namespace Content.Client.Launcher
             Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
 
             ChangeLoginTip();
-            ReconnectButton.OnPressed += ReconnectButtonPressed;
             RetryButton.OnPressed += ReconnectButtonPressed;
+            ReconnectButton.OnPressed += ReconnectButtonPressed;
+
+            CopyButton.OnPressed += CopyButtonPressed;
+            CopyButtonDisconnected.OnPressed += CopyButtonDisconnectedPressed;
             ExitButton.OnPressed += _ => _state.Exit();
 
             var addr = state.Address;
@@ -76,6 +81,24 @@ namespace Content.Client.Launcher
             }
 
             _state.RetryConnect();
+        }
+
+        private void CopyButtonPressed(BaseButton.ButtonEventArgs args)
+        {
+            CopyText(ConnectFailReason.Text);
+        }
+
+        private void CopyButtonDisconnectedPressed(BaseButton.ButtonEventArgs args)
+        {
+            CopyText(DisconnectReason.Text);
+        }
+
+        private void CopyText(string? text)
+        {
+            if (!string.IsNullOrEmpty(text))
+            {
+                _clipboard.SetText(text);
+            }
         }
 
         private void ConnectFailReasonChanged(string? reason)
@@ -116,7 +139,7 @@ namespace Content.Client.Launcher
         private void ChangeLoginTip()
         {
             var tipsDataset = _cfg.GetCVar(CCVars.LoginTipsDataset);
-            var loginTipsEnabled = _prototype.TryIndex<DatasetPrototype>(tipsDataset, out var tips);
+            var loginTipsEnabled = _prototype.TryIndex<LocalizedDatasetPrototype>(tipsDataset, out var tips);
 
             LoginTips.Visible = loginTipsEnabled;
             if (!loginTipsEnabled)
@@ -131,7 +154,7 @@ namespace Content.Client.Launcher
 
             var randomIndex = _random.Next(tipList.Count);
             var tip = tipList[randomIndex];
-            LoginTip.SetMessage(tip);
+            LoginTip.SetMessage(Loc.GetString(tip));
 
             LoginTipTitle.Text = Loc.GetString("connecting-window-tip", ("numberTip", randomIndex));
         }

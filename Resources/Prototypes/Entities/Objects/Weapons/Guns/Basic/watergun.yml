@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: WeaponWaterGunBase
   abstract: true
   parent: BaseItem
@@ -34,8 +34,8 @@
     canChangeTransferAmount: true
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: DrawableSolution
     solution: chamber
   - type: RefillableSolution
@@ -71,7 +71,7 @@
   id: WeaponWaterBlaster
   parent: WeaponWaterGunBase
   name: water blaster
-  description: With this bad boy, you'll be the cooleste kid at the summer barbecue.
+  description: With this bad boy, you'll be the coolest kid at the summer barbecue.
   components:
   - type: Gun
     cameraRecoilScalar: 0 #no recoil

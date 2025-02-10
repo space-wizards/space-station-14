@@ -4,7 +4,8 @@ welder-component-no-fuel-message = The welder has no fuel left!
 welder-component-no-fuel-in-tank = The {$owner} is empty.
 welder-component-on-examine-welder-lit-message = [color=orange]Lit[/color]
 welder-component-on-examine-welder-not-lit-message = Not lit
-welder-component-on-examine-detailed-message = Fuel: [color={$colorName}]{$fuelLeft}/{$fuelCapacity}[/color]. {$status}
+welder-component-on-examine-detailed-message = Fuel: [color={$colorName}]{$fuelLeft}/{$fuelCapacity}[/color]
+    {$status}
 welder-component-suicide-lit-others-message = {$victim} welds their every orifice closed! It looks like they are trying to commit suicide!
 welder-component-suicide-lit-message = You weld your every orifice closed!
 welder-component-suicide-unlit-others-message = {$victim} bashes themselves with the unlit welding torch!

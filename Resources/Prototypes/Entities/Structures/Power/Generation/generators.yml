@@ -52,7 +52,7 @@
   - type: Anchorable
   - type: Pullable
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: PacifismDangerousAttack
   - type: Destructible
@@ -87,6 +87,9 @@
     onBump: false
     requirePower: true
     highVoltageNode: output
+  - type: GuideHelp
+    guides:
+    - ShuttleCraft
 
 # Base Wallmount Generator
 
@@ -140,11 +143,14 @@
     supplyRampRate: 500
     supplyRampTolerance: 500
   - type: WallMount
+  - type: GuideHelp
+    guides:
+    - ShuttleCraft
 
 # Construction Frames
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   id: BaseGeneratorWallmountFrame
   name: wallmount generator frame
   description: A construction frame for a wallmount generator.
@@ -225,6 +231,9 @@
   - type: ContainerContainer
     containers:
       board: !type:Container
+  - type: GuideHelp
+    guides:
+    - ShuttleCraft
 
 # RTG - no fuel requirement
 

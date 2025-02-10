@@ -26,10 +26,10 @@ public abstract partial class SharedSalvageSystem : EntitySystem
     [ValidatePrototypeId<SalvageLootPrototype>]
     public const string ExpeditionsLootProto = "SalvageLoot";
 
-    public static string GetFTLName(DatasetPrototype dataset, int seed)
+    public string GetFTLName(LocalizedDatasetPrototype dataset, int seed)
     {
         var random = new System.Random(seed);
-        return $"{dataset.Values[random.Next(dataset.Values.Count)]}-{random.Next(10, 100)}-{(char) (65 + random.Next(26))}";
+        return $"{Loc.GetString(dataset.Values[random.Next(dataset.Values.Count)])}-{random.Next(10, 100)}-{(char) (65 + random.Next(26))}";
     }
 
     public SalvageMission GetMission(SalvageDifficultyPrototype difficulty, int seed)
@@ -55,18 +55,18 @@ public abstract partial class SharedSalvageSystem : EntitySystem
 
         if (air.Description != string.Empty)
         {
-            mods.Add(air.Description);
+            mods.Add(Loc.GetString(air.Description));
         }
 
         // only show the description if there is an atmosphere since wont matter otherwise
         if (temp.Description != string.Empty && !air.Space)
         {
-            mods.Add(temp.Description);
+            mods.Add(Loc.GetString(temp.Description));
         }
 
         if (light.Description != string.Empty)
         {
-            mods.Add(light.Description);
+            mods.Add(Loc.GetString(light.Description));
         }
 
         var duration = TimeSpan.FromSeconds(CfgManager.GetCVar(CCVars.SalvageExpeditionDuration));

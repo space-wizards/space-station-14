@@ -3,17 +3,33 @@
   start: start
   graph:
     - node: start
+    - node: startBroken
 
     - node: ameShielding
       entity: AmeShielding
       edges:
         - to: start
+          conditions:
+            - !type:AmeShieldIntegrity
           completed:
             - !type:AdminLog  # I don't like logging it like this. The log should include the user, AMEShielding EntityID, and AMEPart EntityID, and there should also be a start of attempt log.
               message: "An AME shielding was deconstructed"
             - !type:SpawnPrototype
               prototype: AmePartFlatpack
               amount: 1
+            - !type:DeleteEntity
+          steps:
+            - tool: Welding
+              doAfter: 3
+
+        - to: startBroken
+          conditions:
+            - !type:AmeShieldIntegrity
+              checkAbove: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 5
             - !type:DeleteEntity
           steps:
             - tool: Welding

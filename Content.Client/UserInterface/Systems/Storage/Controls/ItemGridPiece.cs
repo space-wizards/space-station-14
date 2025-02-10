@@ -9,7 +9,7 @@ using Robust.Client.UserInterface.CustomControls;
 
 namespace Content.Client.UserInterface.Systems.Storage.Controls;
 
-public sealed class ItemGridPiece : Control
+public sealed class ItemGridPiece : Control, IEntityControl
 {
     private readonly IEntityManager _entityManager;
     private readonly StorageUIController _storageController;
@@ -59,7 +59,7 @@ public sealed class ItemGridPiece : Control
         Location = location;
 
         Visible = true;
-        MouseFilter = MouseFilterMode.Pass;
+        MouseFilter = MouseFilterMode.Stop;
 
         TooltipSupplier = SupplyTooltip;
 
@@ -105,8 +105,11 @@ public sealed class ItemGridPiece : Control
             return;
         }
 
-        if (_storageController.IsDragging && _storageController.DraggingGhost?.Entity == Entity && _storageController.DraggingGhost != this)
+        if (_storageController.IsDragging && _storageController.DraggingGhost?.Entity == Entity &&
+            _storageController.DraggingGhost != this)
+        {
             return;
+        }
 
         var adjustedShape = _entityManager.System<ItemSystem>().GetAdjustedItemShape((Entity, itemComponent), Location.Rotation, Vector2i.Zero);
         var boundingGrid = adjustedShape.GetBoundingBox();
@@ -287,6 +290,8 @@ public sealed class ItemGridPiece : Control
         var actualSize = new Vector2(boxSize.X + 1, boxSize.Y + 1);
         return actualSize * new Vector2i(8, 8);
     }
+
+    public EntityUid? UiEntity => Entity;
 }
 
 public enum ItemGridPieceMarks

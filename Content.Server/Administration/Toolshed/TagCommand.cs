@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Shared.Administration;
 using Content.Shared.Tag;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Toolshed.TypeParsers;
@@ -13,94 +14,72 @@ public sealed class TagCommand : ToolshedCommand
     private TagSystem? _tag;
 
     [CommandImplementation("list")]
-    public IEnumerable<string> List([PipedArgument] IEnumerable<EntityUid> ent)
+    public IEnumerable<ProtoId<TagPrototype>> List([PipedArgument] IEnumerable<EntityUid> ent)
     {
         return ent.SelectMany(x =>
         {
             if (TryComp<TagComponent>(x, out var tags))
                 // Note: Cast is required for C# to figure out the type signature.
-                return (IEnumerable<string>)tags.Tags;
-            return Array.Empty<string>();
+                return (IEnumerable<ProtoId<TagPrototype>>)tags.Tags;
+            return Array.Empty<ProtoId<TagPrototype>>();
         });
     }
 
-    [CommandImplementation("add")]
-    public EntityUid Add(
-            [CommandInvocationContext] IInvocationContext ctx,
-            [PipedArgument] EntityUid input,
-            [CommandArgument] ValueRef<string, Prototype<TagPrototype>> @ref
-        )
+    [CommandImplementation("with")]
+    public IEnumerable<EntityUid> With(
+        [CommandInvocationContext] IInvocationContext ctx,
+        [PipedArgument] IEnumerable<EntityUid> entities,
+        [CommandArgument] ValueRef<string, Prototype<TagPrototype>> tag)
     {
         _tag ??= GetSys<TagSystem>();
-        _tag.AddTag(input, @ref.Evaluate(ctx)!);
+        return entities.Where(e => _tag.HasTag(e, tag.Evaluate(ctx)!));
+    }
+
+    [CommandImplementation("add")]
+    public EntityUid Add([PipedArgument] EntityUid input, ProtoId<TagPrototype> tag)
+    {
+        _tag ??= GetSys<TagSystem>();
+        _tag.AddTag(input, tag);
         return input;
     }
 
     [CommandImplementation("add")]
-    public IEnumerable<EntityUid> Add(
-            [CommandInvocationContext] IInvocationContext ctx,
-            [PipedArgument] IEnumerable<EntityUid> input,
-            [CommandArgument] ValueRef<string, Prototype<TagPrototype>> @ref
-        )
-        => input.Select(x => Add(ctx, x, @ref));
+    public IEnumerable<EntityUid> Add([PipedArgument] IEnumerable<EntityUid> input, ProtoId<TagPrototype> tag)
+        => input.Select(x => Add(x, tag));
 
     [CommandImplementation("rm")]
-    public EntityUid Rm(
-        [CommandInvocationContext] IInvocationContext ctx,
-        [PipedArgument] EntityUid input,
-        [CommandArgument] ValueRef<string, Prototype<TagPrototype>> @ref
-    )
+    public EntityUid Rm([PipedArgument] EntityUid input, ProtoId<TagPrototype> tag)
     {
         _tag ??= GetSys<TagSystem>();
-        _tag.RemoveTag(input, @ref.Evaluate(ctx)!);
+        _tag.RemoveTag(input, tag);
         return input;
     }
 
     [CommandImplementation("rm")]
-    public IEnumerable<EntityUid> Rm(
-            [CommandInvocationContext] IInvocationContext ctx,
-            [PipedArgument] IEnumerable<EntityUid> input,
-            [CommandArgument] ValueRef<string, Prototype<TagPrototype>> @ref
-        )
-        => input.Select(x => Rm(ctx, x, @ref));
+    public IEnumerable<EntityUid> Rm([PipedArgument] IEnumerable<EntityUid> input, ProtoId<TagPrototype> tag)
+        => input.Select(x => Rm(x, tag));
 
     [CommandImplementation("addmany")]
-    public EntityUid AddMany(
-        [CommandInvocationContext] IInvocationContext ctx,
-        [PipedArgument] EntityUid input,
-        [CommandArgument] ValueRef<IEnumerable<string>, IEnumerable<string>> @ref
-    )
+    public EntityUid AddMany([PipedArgument] EntityUid input, IEnumerable<ProtoId<TagPrototype>> tags)
     {
         _tag ??= GetSys<TagSystem>();
-        _tag.AddTags(input, @ref.Evaluate(ctx)!);
+        _tag.AddTags(input, tags);
         return input;
     }
 
     [CommandImplementation("addmany")]
-    public IEnumerable<EntityUid> AddMany(
-            [CommandInvocationContext] IInvocationContext ctx,
-            [PipedArgument] IEnumerable<EntityUid> input,
-            [CommandArgument] ValueRef<IEnumerable<string>, IEnumerable<string>> @ref
-        )
-        => input.Select(x => AddMany(ctx, x, @ref));
+    public IEnumerable<EntityUid> AddMany([PipedArgument] IEnumerable<EntityUid> input, IEnumerable<ProtoId<TagPrototype>> tags)
+        => input.Select(x => AddMany(x, tags.ToArray()));
 
     [CommandImplementation("rmmany")]
-    public EntityUid RmMany(
-        [CommandInvocationContext] IInvocationContext ctx,
-        [PipedArgument] EntityUid input,
-        [CommandArgument] ValueRef<IEnumerable<string>, IEnumerable<string>> @ref
-    )
+    public EntityUid RmMany([PipedArgument] EntityUid input, IEnumerable<ProtoId<TagPrototype>> tags)
     {
         _tag ??= GetSys<TagSystem>();
-        _tag.RemoveTags(input, @ref.Evaluate(ctx)!);
+        _tag.RemoveTags(input, tags);
         return input;
     }
 
     [CommandImplementation("rmmany")]
-    public IEnumerable<EntityUid> RmMany(
-            [CommandInvocationContext] IInvocationContext ctx,
-            [PipedArgument] IEnumerable<EntityUid> input,
-            [CommandArgument] ValueRef<IEnumerable<string>, IEnumerable<string>> @ref
-        )
-        => input.Select(x => RmMany(ctx, x, @ref));
+    public IEnumerable<EntityUid> RmMany([PipedArgument] IEnumerable<EntityUid> input, IEnumerable<ProtoId<TagPrototype>> tags)
+        => input.Select(x => RmMany(x, tags.ToArray()));
 }

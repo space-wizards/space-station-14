@@ -21,18 +21,24 @@ public static partial class PoolManager
         (CCVars.NPCMaxUpdates.Name,           "999999"),
         (CVars.ThreadParallelCount.Name,      "1"),
         (CCVars.GameRoleTimers.Name,          "false"),
+        (CCVars.GameRoleWhitelist.Name,       "false"),
         (CCVars.GridFill.Name,                "false"),
+        (CCVars.PreloadGrids.Name,            "false"),
         (CCVars.ArrivalsShuttles.Name,        "false"),
         (CCVars.EmergencyShuttleEnabled.Name, "false"),
         (CCVars.ProcgenPreload.Name,          "false"),
         (CCVars.WorldgenEnabled.Name,         "false"),
+        (CCVars.GatewayGeneratorEnabled.Name, "false"),
         (CVars.ReplayClientRecordingEnabled.Name, "false"),
         (CVars.ReplayServerRecordingEnabled.Name, "false"),
         (CCVars.GameDummyTicker.Name, "true"),
         (CCVars.GameLobbyEnabled.Name, "false"),
         (CCVars.ConfigPresetDevelopment.Name, "false"),
         (CCVars.AdminLogsEnabled.Name, "false"),
-        (CVars.NetBufferSize.Name, "0")
+        (CCVars.AutosaveEnabled.Name, "false"),
+        (CVars.NetBufferSize.Name, "0"),
+        (CCVars.InteractionRateLimitCount.Name, "9999999"),
+        (CCVars.InteractionRateLimitPeriod.Name, "0.1"),
     };
 
     public static async Task SetupCVars(RobustIntegrationTest.IntegrationInstance instance, PoolSettings settings)

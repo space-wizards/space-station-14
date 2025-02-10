@@ -47,6 +47,7 @@
         whitelist:
           tags:
             - MagazinePistol
+        whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
         startingItem: CartridgePistol
@@ -58,6 +59,7 @@
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
+  - type: AmmoCounter
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -68,15 +70,12 @@
 
 - type: entity
   name: viper
-  parent: BaseWeaponPistol
+  parent: [BaseWeaponPistol, BaseSyndicateContraband]
   id: WeaponPistolViper
   description: A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses .35 auto ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
-    availableModes:
-    - FullAuto
-    - SemiAuto
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -89,6 +88,7 @@
           tags:
             - MagazinePistol
             - MagazinePistolHighCapacity
+        whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
         startingItem: CartridgePistol
@@ -102,8 +102,43 @@
       gun_chamber: !type:ContainerSlot
 
 - type: entity
+  name: echis
+  parent: [ BaseItem, BaseSyndicateContraband ]
+  id: WeaponPistolEchis
+  description: A viper for use by cyborgs. Creates .35 ammo on the fly from an internal ammo fabricator, which slowly self-charges.
+  components:
+  - type: Gun
+    fireRate: 5
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletPistol
+    fireCost: 100
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 25
+  - type: AmmoCounter
+
+- type: entity
   name: cobra
-  parent: BaseWeaponPistol
+  parent: [ BaseWeaponPistol, BaseSyndicateContraband ]
   id: WeaponPistolCobra
   description: A rugged, robust operator handgun with inbuilt silencer. Uses .25 caseless ammo.
   components:
@@ -137,6 +172,7 @@
         whitelist:
           tags:
             - MagazinePistolCaselessRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
         startingItem: CartridgeCaselessRifle
@@ -151,7 +187,7 @@
 
 - type: entity
   name: mk 58
-  parent: BaseWeaponPistol
+  parent: [BaseWeaponPistol, BaseRestrictedContraband]
   id: WeaponPistolMk58
   description: A cheap, ubiquitous sidearm, produced by a NanoTrasen subsidiary. Uses .35 auto ammo.
   components:
@@ -172,34 +208,10 @@
       path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
 
 - type: entity
-  id: WeaponPistolMk58Nonlethal
-  parent: WeaponPistolMk58
-  suffix: Non-lethal
-  components:
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazinePistolRubber
-        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazinePistol
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgePistolRubber
-        priority: 1
-        whitelist:
-          tags:
-            - CartridgePistol
-
-- type: entity
   name: N1984
-  parent: BaseWeaponPistol
+  parent: [BaseWeaponPistol, BaseRestrictedContraband]
   id: WeaponPistolN1984 # the spaces in description are for formatting.
-  description: The sidearm of any self respecting officer.     Comes in .45 magnum, the lord's caliber. 
+  description: The sidearm of any self respecting officer.     Comes in .45 magnum, the lord's caliber.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
@@ -231,34 +243,10 @@
         whitelist:
           tags:
             - MagazineMagnum
+        whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
         startingItem: CartridgeMagnum
-        priority: 1
-        whitelist:
-          tags:
-            - CartridgeMagnum
-
-- type: entity
-  name: N1984
-  parent: WeaponPistolN1984
-  id: WeaponPistolN1984Nonlethal
-  suffix: Non-lethal
-  components:
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineMagnumRubber
-        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazineMagnum
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeMagnumRubber
         priority: 1
         whitelist:
           tags:

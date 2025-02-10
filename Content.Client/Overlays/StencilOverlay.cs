@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Parallax;
 using Content.Client.Weather;
 using Content.Shared.Salvage;
@@ -23,6 +24,7 @@ public sealed partial class StencilOverlay : Overlay
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     private readonly ParallaxSystem _parallax;
     private readonly SharedTransformSystem _transform;
+    private readonly SharedMapSystem _map;
     private readonly SpriteSystem _sprite;
     private readonly WeatherSystem _weather;
 
@@ -32,11 +34,12 @@ public sealed partial class StencilOverlay : Overlay
 
     private readonly ShaderInstance _shader;
 
-    public StencilOverlay(ParallaxSystem parallax, SharedTransformSystem transform, SpriteSystem sprite, WeatherSystem weather)
+    public StencilOverlay(ParallaxSystem parallax, SharedTransformSystem transform, SharedMapSystem map, SpriteSystem sprite, WeatherSystem weather)
     {
         ZIndex = ParallaxSystem.ParallaxZIndex + 1;
         _parallax = parallax;
         _transform = transform;
+        _map = map;
         _sprite = sprite;
         _weather = weather;
         IoCManager.InjectDependencies(this);
@@ -72,6 +75,6 @@ public sealed partial class StencilOverlay : Overlay
         }
 
         args.WorldHandle.UseShader(null);
-        args.WorldHandle.SetTransform(Matrix3.Identity);
+        args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
 }

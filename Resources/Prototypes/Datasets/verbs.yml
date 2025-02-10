@@ -1,4 +1,4 @@
-﻿- type: dataset
+- type: dataset
   id: verbs
   values:
   - accept
@@ -616,7 +616,6 @@
   - whine
   - whip
   - whirl
-  - whisper
   - whistle
   - wink
   - wipe

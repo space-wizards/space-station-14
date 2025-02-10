@@ -30,7 +30,7 @@
           radius: 0.45
         density: 25
         mask:
-        - SmallMobMask
+        - ItemMask
         layer:
         - MachineLayer
   - type: EntityStorage
@@ -64,3 +64,8 @@
   - type: Item
     size: Ginormous
     sprite: Objects/Storage/petcarrier.rsi
+  - type: Construction
+    graph: PetCarrier
+    node: petCarrier
+    containers:
+    - entity_storage

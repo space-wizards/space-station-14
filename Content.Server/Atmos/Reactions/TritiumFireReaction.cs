@@ -1,5 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Reactions;
 using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.Reactions
@@ -14,7 +15,7 @@ namespace Content.Server.Atmos.Reactions
             var oldHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture, true);
             var temperature = mixture.Temperature;
             var location = holder as TileAtmosphere;
-            mixture.ReactionResults[GasReaction.Fire] = 0f;
+            mixture.ReactionResults[(byte)GasReaction.Fire] = 0f;
             var burnedFuel = 0f;
             var initialTrit = mixture.GetMoles(Gas.Tritium);
 
@@ -44,7 +45,7 @@ namespace Content.Server.Atmos.Reactions
                 // Conservation of mass is important.
                 mixture.AdjustMoles(Gas.WaterVapor, burnedFuel);
 
-                mixture.ReactionResults[GasReaction.Fire] += burnedFuel;
+                mixture.ReactionResults[(byte)GasReaction.Fire] += burnedFuel;
             }
 
             energyReleased /= heatScale; // adjust energy to make sure speedup doesn't cause mega temperature rise
@@ -64,7 +65,7 @@ namespace Content.Server.Atmos.Reactions
                 }
             }
 
-            return mixture.ReactionResults[GasReaction.Fire] != 0 ? ReactionResult.Reacting : ReactionResult.NoReaction;
+            return mixture.ReactionResults[(byte)GasReaction.Fire] != 0 ? ReactionResult.Reacting : ReactionResult.NoReaction;
         }
     }
 }

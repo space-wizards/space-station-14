@@ -28,7 +28,7 @@ public sealed partial class SalvageSystem
         var mission = GetMission(_prototypeManager.Index<SalvageDifficultyPrototype>(missionparams.Difficulty), missionparams.Seed);
         data.NextOffer = _timing.CurTime + mission.Duration + TimeSpan.FromSeconds(1);
 
-        _labelSystem.Label(cdUid, GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), missionparams.Seed));
+        _labelSystem.Label(cdUid, GetFTLName(_prototypeManager.Index<LocalizedDatasetPrototype>("NamesBorer"), missionparams.Seed));
         _audio.PlayPvs(component.PrintSound, uid);
 
         UpdateConsoles((station.Value, data));
@@ -56,7 +56,7 @@ public sealed partial class SalvageSystem
             if (station != component.Owner)
                 continue;
 
-            _ui.TrySetUiState(uid, SalvageConsoleUiKey.Expedition, state, ui: uiComp);
+            _ui.SetUiState((uid, uiComp), SalvageConsoleUiKey.Expedition, state);
         }
     }
 
@@ -74,6 +74,6 @@ public sealed partial class SalvageSystem
             state = new SalvageExpeditionConsoleState(TimeSpan.Zero, false, true, 0, new List<SalvageMissionParams>());
         }
 
-        _ui.TrySetUiState(component, SalvageConsoleUiKey.Expedition, state);
+        _ui.SetUiState(component.Owner, SalvageConsoleUiKey.Expedition, state);
     }
 }

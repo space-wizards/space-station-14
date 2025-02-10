@@ -101,7 +101,7 @@
       layers:
         - sprite: Fluids/wet_floor_sparkles.rsi
           state: sparkles
-      drawdepth: FloorObjects
+      drawdepth: Puddles
       color: "#FFFFFF80"
 
 - type: entity
@@ -113,7 +113,6 @@
   components:
   - type: Clickable
   - type: Slippery
-    launchForwardsMultiplier: 2.0
   - type: Transform
     noRot: true
     anchored: true
@@ -121,7 +120,7 @@
     layers:
     - sprite: Fluids/puddle.rsi
       state: splat0
-    drawdepth: FloorObjects
+    drawdepth: Puddles
     color: "#FFFFFF80"
   - type: Physics
     bodyType: Static
@@ -142,8 +141,11 @@
     mode: CardinalFlags
   - type: SolutionContainerManager
     solutions:
-      puddle: { maxVol: 1000 }
+      puddle:
+        maxVol: 1000
   - type: Puddle
+  - type: MixableSolution
+    solution: puddle
   - type: Appearance
   - type: ActiveEdgeSpreader
   - type: EdgeSpreader
@@ -160,3 +162,6 @@
     solution: puddle
   - type: BadDrink
   - type: IgnoresFingerprints
+  - type: Tag
+    tags:
+    - DNASolutionScannable

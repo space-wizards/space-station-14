@@ -1,6 +1,5 @@
 using Content.Shared.Audio;
 using Content.Shared.Hands;
-using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
@@ -8,6 +7,8 @@ using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Content.Shared.Sound.Components;
 using Content.Shared.Throwing;
+using Content.Shared.UserInterface;
+using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -34,6 +35,8 @@ public abstract class SharedEmitSoundSystem : EntitySystem
     [Dependency] private   readonly SharedAmbientSoundSystem _ambient = default!;
     [Dependency] private   readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -46,10 +49,19 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         SubscribeLocalEvent<EmitSoundOnPickupComponent, GotEquippedHandEvent>(OnEmitSoundOnPickup);
         SubscribeLocalEvent<EmitSoundOnDropComponent, DroppedEvent>(OnEmitSoundOnDrop);
         SubscribeLocalEvent<EmitSoundOnInteractUsingComponent, InteractUsingEvent>(OnEmitSoundOnInteractUsing);
+        SubscribeLocalEvent<EmitSoundOnUIOpenComponent, AfterActivatableUIOpenEvent>(HandleEmitSoundOnUIOpen);
 
         SubscribeLocalEvent<EmitSoundOnCollideComponent, StartCollideEvent>(OnEmitSoundOnCollide);
 
         SubscribeLocalEvent<SoundWhileAliveComponent, MobStateChangedEvent>(OnMobState);
+    }
+
+    private void HandleEmitSoundOnUIOpen(EntityUid uid, EmitSoundOnUIOpenComponent component, AfterActivatableUIOpenEvent args)
+    {
+        if (_whitelistSystem.IsBlacklistFail(component.Blacklist, args.User))
+        {
+            TryEmitSound(uid, component, args.User);
+        }
     }
 
     private void OnMobState(Entity<SoundWhileAliveComponent> entity, ref MobStateChangedEvent args)
@@ -72,13 +84,13 @@ public abstract class SharedEmitSoundSystem : EntitySystem
     private void OnEmitSoundOnLand(EntityUid uid, BaseEmitSoundComponent component, ref LandEvent args)
     {
         if (!args.PlaySound ||
-            !TryComp<TransformComponent>(uid, out var xform) ||
+            !TryComp(uid, out TransformComponent? xform) ||
             !TryComp<MapGridComponent>(xform.GridUid, out var grid))
         {
             return;
         }
 
-        var tile = grid.GetTileRef(xform.Coordinates);
+        var tile = _map.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
 
         // Handle maps being grids (we'll still emit the sound).
         if (xform.GridUid != xform.MapUid && tile.IsSpace(_tileDefMan))
@@ -123,7 +135,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
 
     private void OnEmitSoundOnInteractUsing(Entity<EmitSoundOnInteractUsingComponent> ent, ref InteractUsingEvent args)
     {
-        if (ent.Comp.Whitelist.IsValid(args.Used, EntityManager))
+        if (_whitelistSystem.IsWhitelistPass(ent.Comp.Whitelist, args.Used))
         {
             TryEmitSound(ent, ent.Comp, args.User);
         }
@@ -133,14 +145,22 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         if (component.Sound == null)
             return;
 
-        if (predict)
+        if (component.Positional)
         {
-            _audioSystem.PlayPredicted(component.Sound, uid, user);
+            var coords = Transform(uid).Coordinates;
+            if (predict)
+                _audioSystem.PlayPredicted(component.Sound, coords, user);
+            else if (_netMan.IsServer)
+                // don't predict sounds that client couldn't have played already
+                _audioSystem.PlayPvs(component.Sound, coords);
         }
-        else if (_netMan.IsServer)
+        else
         {
-            // don't predict sounds that client couldn't have played already
-            _audioSystem.PlayPvs(component.Sound, uid);
+            if (predict)
+                _audioSystem.PlayPredicted(component.Sound, uid, user);
+            else if (_netMan.IsServer)
+                // don't predict sounds that client couldn't have played already
+                _audioSystem.PlayPvs(component.Sound, uid);
         }
     }
 

@@ -31,8 +31,6 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
     public const string GrapplingJoint = "grappling";
 
-    public const float ReelRate = 2.5f;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -66,7 +64,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             var visuals = EnsureComp<JointVisualsComponent>(shotUid.Value);
             visuals.Sprite = component.RopeSprite;
             visuals.OffsetA = new Vector2(0f, 0.5f);
-            visuals.Target = uid;
+            visuals.Target = GetNetEntity(uid);
             Dirty(shotUid.Value, visuals);
         }
 
@@ -116,19 +114,14 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
     private void OnGunActivate(EntityUid uid, GrapplingGunComponent component, ActivateInWorldEvent args)
     {
-        if (!Timing.IsFirstTimePredicted || args.Handled)
-            return;
-
-        if (Deleted(component.Projectile))
+        if (!Timing.IsFirstTimePredicted || args.Handled || !args.Complex || component.Projectile is not {} projectile)
             return;
 
         _audio.PlayPredicted(component.CycleSound, uid, args.User);
         _appearance.SetData(uid, SharedTetherGunSystem.TetherVisualsStatus.Key, true);
 
         if (_netManager.IsServer)
-        {
-            QueueDel(component.Projectile.Value);
-        }
+            QueueDel(projectile);
 
         component.Projectile = null;
         SetReeling(uid, component, false, args.User);
@@ -187,7 +180,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             }
 
             // TODO: This should be on engine.
-            distance.MaxLength = MathF.Max(distance.MinLength, distance.MaxLength - ReelRate * frameTime);
+            distance.MaxLength = MathF.Max(distance.MinLength, distance.MaxLength - grappling.ReelRate * frameTime);
             distance.Length = MathF.Min(distance.MaxLength, distance.Length);
 
             _physics.WakeBody(joint.BodyAUid);

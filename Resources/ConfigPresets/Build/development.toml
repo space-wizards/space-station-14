@@ -5,6 +5,10 @@ lobbyenabled = false
 map = "Dev"
 role_timers = false
 
+[ghost]
+role_time = 0.5
+quick_lottery = true
+
 [gateway]
 generator_enabled = false
 
@@ -23,6 +27,7 @@ grid_fill = false
 auto_call_time = 0
 emergency = false
 arrivals = false
+preload_grids = false
 
 [admin]
 see_own_notes = true

@@ -1,32 +1,34 @@
 <Document>
-# Access Configurator
-The access configurator is a tool used to specify what type of personnel may use certain devices.
+  # Access Configurator
+  The access configurator is a tool used to specify what type of personnel may use certain devices.
 
-<Box>
-	<GuideEntityEmbed Entity="AccessConfigurator" Caption="access configurator"/>
-</Box>
+  <Box>
+	  <GuideEntityEmbed Entity="AccessConfigurator" Caption="access configurator"/>
+  </Box>
 
-Configurable devices can include airlocks, secure crates and lockers, as well as access restricted machines.
+  Configurable devices can include airlocks, secure crates and lockers, as well as access restricted machines.
+  Note: Airlocks can have their accesses configured by the [color=#a4885c]Network Configurator[/color] (or multitool), for convenience.
 
-## Where to find access configurators
-Each station is equipped with up to two access configurators. The first is in the possession of the Chief Engineer, while the second can be found with the Head of Personnel.
+  ## Where to find Access Configurators
+  Each station is equipped with up to two access configurators. The first is in the possession of the Chief Engineer, while the second can be found with the Head of Personnel.
 
-## How to use the access configurator
-To modify a device using the access configurator
-- First, use the access configurator on the chosen device to link them together. This will automatically open the configurator UI.
-- Next, insert an ID card into the access configurator.
-- Set the access requirements of the connected device. What requirements can be added or removed will depend upon the access privileges of the inserted ID card.
-- Any changes made will be applied immediately - simply eject the ID card from the access configurator and close the UI when you are done.
+  ## How to use the access configurator
+  To modify a device using the access configurator:
+  - First, use the access configurator on the chosen device to link them together. This will automatically open the configurator UI.
+  - Next, insert an ID card into the access configurator.
+  - Set the access requirements of the connected device. What requirements can be added or removed will depend upon the access privileges of the inserted ID card.
+  - Any changes made will be applied [color=#a4885c]immediately[/color] - simply eject the ID card from the access configurator and close the UI when you are done.
 
-## Restrictions on changing access
-As a safety precaution, the inserted ID must possess *all* of the access requirements that are currently active on the connected device in order to modify it. 
+  ## Restrictions on changing access
+  As a safety precaution, the inserted ID must possess [bold]all[/bold] of the access requirements that are currently active on the connected device in order to modify it.
 
-For example, a device which can be access by both 'Science' and 'Medical' personnel can only by modified using an ID card that has access to both of these departments. The access configurator will warn the user if the inserted ID card does not have sufficient privileges to modify a device.
+  For example, a device which can be accessed by both 'Science' and 'Medical' personnel can only by modified using an ID card that has access to [color=#a4885c]both[/color] of these departments.
+  The access configurator will warn the user if the inserted ID card does not have sufficient privileges to modify a device.
 
-A device with no access requirements set, like a public access airlock, can be modified using any valid station ID card.
+  A device with no access requirements set, like a public access airlock, can be modified using any valid station ID card.
 
-## Repairing damaged ID card readers
-Syndicate agents may attempt to hack access restricted devices through the use of a Cryptographic Sequencer (EMAG). This nefarious tool will completely short out any ID card readers that are attached to the device. 
+  ## Repairing damaged ID card readers
+  Syndicate agents may attempt to hack access-restricted devices through the use of a [color=#a4885c]Cryptographic Sequencer (EMAG)[/color]. This nefarious tool will completely short out any ID card readers that are attached to the device.
 
-Crew members will need to partially de/reconstruct affected devices, and then set appropriate access permissions afterwards using the access configurator, to re-establish access restrictions.
+  Engineers will need to partially de/reconstruct affected devices, and then set appropriate access permissions afterwards using the access configurator (or network configurator, for airlocks), to re-establish access restrictions.
 </Document>

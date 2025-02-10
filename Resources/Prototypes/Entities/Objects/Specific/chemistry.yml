@@ -25,7 +25,8 @@
     solutions:
       beaker:
         maxVol: 50
-        canMix: true
+  - type: MixableSolution
+    solution: beaker
   - type: FitsInDispenser
     solution: beaker
   - type: RefillableSolution
@@ -40,10 +41,12 @@
     solution: beaker
   - type: SolutionTransfer
     canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: beaker
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Drink
     solution: beaker
   - type: Appearance
@@ -89,6 +92,7 @@
         Blunt: 5
   - type: StaticPrice
     price: 30
+  - type: DnaSubstanceTrace
 
 - type: entity
   parent: BaseItem
@@ -117,7 +121,8 @@
     solutions:
       beaker:
         maxVol: 50
-        canMix: true
+  - type: MixableSolution
+    solution: beaker
   - type: FitsInDispenser
     solution: beaker
   - type: RefillableSolution
@@ -132,10 +137,12 @@
     solution: beaker
   - type: SolutionTransfer
     canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: beaker
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Drink
     solution: beaker
   - type: Appearance
@@ -147,6 +154,7 @@
     damageModifierSet: Glass
   - type: StaticPrice
     price: 30
+  - type: DnaSubstanceTrace
 
 - type: entity
   name: beaker
@@ -158,6 +166,9 @@
     solution: beaker
   - type: StaticPrice
     price: 10
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: beaker
@@ -165,11 +176,12 @@
     inHandsFillBaseName: -fill-
 
 - type: entity
-  name: cryoxadone beaker
-  description: Filled with a reagent used in cryogenic tubes.
+  suffix: cryoxadone
   parent: Beaker
   id: CryoxadoneBeakerSmall
   components:
+  - type: Label
+    currentLabel: reagent-name-cryoxadone
   - type: SolutionContainerManager
     solutions:
       beaker:
@@ -200,13 +212,15 @@
     solutions:
       beaker:
         maxVol: 100
-        canMix: true
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: beakerlarge
     inHandsMaxFillLevels: 4
     inHandsFillBaseName: -fill-
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 100
   - type: StaticPrice
     price: 20
 
@@ -222,6 +236,8 @@
     sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
     layers:
       - state: beakernoreact
+  - type: SolutionContainerVisuals
+    maxFillLevels: 0
   - type: SolutionContainerManager
     solutions:
       beaker:
@@ -240,11 +256,12 @@
     sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
     layers:
       - state: beakerbluespace
+  - type: SolutionContainerVisuals
+    maxFillLevels: 0
   - type: SolutionContainerManager
     solutions:
       beaker:
         maxVol: 1000
-        canMix: true
 
 - type: entity
   name: dropper
@@ -266,6 +283,7 @@
   - type: Injector
     injectOnly: false
     ignoreMobs: true
+    ignoreClosed: false
     minTransferAmount: 1
     maxTransferAmount: 5
     transferAmount: 1
@@ -274,12 +292,13 @@
     solution: dropper
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Spillable
     solution: injector
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi
+    size: Tiny
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1
@@ -288,6 +307,10 @@
     inHandsFillBaseName: -fill-
   - type: StaticPrice
     price: 40
+  - type: DnaSubstanceTrace
+  - type: Tag
+    tags:
+    - Dropper
 
 - type: entity
   name: borgdropper
@@ -363,6 +386,66 @@
     tags:
     - Syringe
     - Trash
+
+- type: entity
+  name: mini syringe
+  parent: Syringe
+  description: A regular syringe, reshaped to fit inside of a gun.
+  id: MiniSyringe
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    layers:
+      - state: minisyringe1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+      - state: syringeproj
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: minisyringe
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
+  - type: EmbeddableProjectile
+    offset: "-0.1,0"
+    minimumSpeed: 3
+    removalTime: 0.25
+    embedOnThrow: false
+  - type: SolutionInjectWhileEmbedded
+    transferAmount: 1
+    solution: injector
+    updateInterval: 2
+  - type: SolutionInjectOnEmbed
+    transferAmount: 2
+    solution: injector
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.3,0.1,0.3"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: Projectile
+    deleteOnCollide: false
+    onlyCollideWhenShot: true
+    damage:
+      types:
+        Piercing: 5
+  - type: Tag
+    tags:
+    - Syringe
+    - Trash
+    - SyringeGunAmmo
 
 - type: entity
   parent: BaseSyringe
@@ -448,7 +531,8 @@
     sprite: Objects/Specific/Chemistry/pills.rsi
   - type: Pill
   - type: Food
-    forceFeedDelay: 1
+    delay: 0.6
+    forceFeedDelay: 2
     transferAmount: null
     eatMessage: food-swallow
     useSound: /Audio/Items/pill.ogg
@@ -459,12 +543,8 @@
     solutions:
       food:
         maxVol: 20
-  - type: SolutionSpiker
-    sourceSolution: food
-  - type: Extractable
-    grindableSolutionName: food
-  - type: StaticPrice
-    price: 0
+  - type: ExplosionResistance
+    damageCoefficient: 0.025 # survives conventional explosives but not minibombs and nukes
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -477,6 +557,12 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: SolutionSpiker
+    sourceSolution: food
+  - type: Extractable
+    grindableSolutionName: food
+  - type: StaticPrice
+    price: 0
   - type: Tag
     tags:
     - Pill
@@ -504,4 +590,7 @@
     areaInsertRadius: 1
     storageInsertSound: /Audio/Effects/pill_insert.ogg
     storageRemoveSound: /Audio/Effects/pill_remove.ogg
+    whitelist: 
+      tags:
+      - Pill
   - type: Dumpable

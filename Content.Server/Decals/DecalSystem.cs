@@ -35,7 +35,7 @@ namespace Content.Server.Decals
         [Dependency] private readonly IConfigurationManager _conf = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly MapSystem _mapSystem = default!;
+        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
         private readonly Dictionary<NetEntity, HashSet<Vector2i>> _dirtyChunks = new();
         private readonly Dictionary<ICommonSession, Dictionary<NetEntity, HashSet<Vector2i>>> _previousSentChunks = new();
@@ -89,7 +89,7 @@ namespace Content.Server.Decals
                 playerData.Clear();
             }
 
-            var query = EntityQueryEnumerator<DecalGridComponent, MetaDataComponent>();
+            var query = AllEntityQuery<DecalGridComponent, MetaDataComponent>();
             while (query.MoveNext(out var uid, out var grid, out var meta))
             {
                 grid.ForceTick = _timing.CurTick;
@@ -106,7 +106,7 @@ namespace Content.Server.Decals
                 return;
 
             // Transfer decals over to the new grid.
-            var enumerator = Comp<MapGridComponent>(ev.Grid).GetAllTilesEnumerator();
+            var enumerator = _mapSystem.GetAllTilesEnumerator(ev.Grid, Comp<MapGridComponent>(ev.Grid));
 
             var oldChunkCollection = oldComp.ChunkCollection.ChunkCollection;
             var chunkCollection = newComp.ChunkCollection.ChunkCollection;
