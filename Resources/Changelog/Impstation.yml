@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Direct window upgrading is back! Shuttle windows are not back, though.
-    type: Add
-  id: 592
-  time: '2024-11-27T19:31:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/821
 - author: widgetbeck
   changes:
   - message: Replaced "creepy crawly" Thaven mood with something that should have
@@ -4230,3 +4223,11 @@
   id: 1091
   time: '2025-02-10T21:01:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1631
+- author: Darkmajia
+  changes:
+  - message: Box Station's atmospherics department and supermatter chamber have been
+      revamped slightly.
+    type: Tweak
+  id: 1092
+  time: '2025-02-10T21:11:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1634
