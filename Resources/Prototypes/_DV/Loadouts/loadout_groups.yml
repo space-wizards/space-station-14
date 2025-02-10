@@ -13,7 +13,7 @@
   name: loadout-group-logistics-assistant-head
   minLimit: 0
   loadouts:
-  - LogisticsTechnicianHead
+  - CargoTechnicianHead
 
 - type: loadoutGroup
   id: LogisticsAssistantJumpsuit
@@ -26,23 +26,23 @@
   id: LogisticsAssistantBackpack
   name: loadout-group-logistics-assistant-backpack
   loadouts:
-  - LogisticsTechnicianBackpack
-  - LogisticsTechnicianSatchel
-  - LogisticsTechnicianDuffel
+  - CargoTechnicianBackpack
+  - CargoTechnicianSatchel
+  - CargoTechnicianDuffel
 
 - type: loadoutGroup
   id: LogisticsAssistantOuterClothing
   name: loadout-group-logistics-assistant-outerclothing
   minLimit: 0
   loadouts:
-  - LogisticsTechnicianWintercoat
+  - CargoTechnicianWintercoat
 
 - type: loadoutGroup
   id: LogisticsAssistantShoes
   name: loadout-group-logistics-assistant-shoes
   loadouts:
   - BlackShoes
-  - LogisticsWinterBoots
+  - CargoWinterBoots
 
 # Command
 ## Administrative Assistant
