@@ -55,5 +55,10 @@ namespace Content.Server.Abilities.Mime
         [DataField]
         public ProtoId<AlertPrototype> VowBrokenAlert = "VowBroken";
 
+        [DataField]
+        public bool PreventWriting = false;
+
+        [DataField]
+        public LocId FailWriteMessage = "paper-component-illiterate-mime";
     }
 }

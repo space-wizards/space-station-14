@@ -5,6 +5,7 @@ using Content.Shared.Actions.Events;
 using Content.Shared.Alert;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Maps;
+using Content.Shared.Paper;
 using Content.Shared.Physics;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -55,6 +56,13 @@ namespace Content.Server.Abilities.Mime
         private void OnComponentInit(EntityUid uid, MimePowersComponent component, ComponentInit args)
         {
             EnsureComp<MutedComponent>(uid);
+            if (component.PreventWriting)
+            {
+                EnsureComp<IlliterateComponent>(uid, out var illiterateComponent);
+                illiterateComponent.FailWriteMessage = component.FailWriteMessage;
+                Dirty(uid, illiterateComponent);
+            }
+
             _alertsSystem.ShowAlert(uid, component.VowAlert);
             _actionsSystem.AddAction(uid, ref component.InvisibleWallActionEntity, component.InvisibleWallAction, uid);
         }
@@ -123,6 +131,8 @@ namespace Content.Server.Abilities.Mime
             mimePowers.VowBroken = true;
             mimePowers.VowRepentTime = _timing.CurTime + mimePowers.VowCooldown;
             RemComp<MutedComponent>(uid);
+            if (mimePowers.PreventWriting)
+                RemComp<IlliterateComponent>(uid);
             _alertsSystem.ClearAlert(uid, mimePowers.VowAlert);
             _alertsSystem.ShowAlert(uid, mimePowers.VowBrokenAlert);
             _actionsSystem.RemoveAction(uid, mimePowers.InvisibleWallActionEntity);
@@ -146,6 +156,8 @@ namespace Content.Server.Abilities.Mime
             mimePowers.ReadyToRepent = false;
             mimePowers.VowBroken = false;
             AddComp<MutedComponent>(uid);
+            if (mimePowers.PreventWriting)
+                AddComp(uid, new IlliterateComponent { FailWriteMessage = mimePowers.FailWriteMessage });
             _alertsSystem.ClearAlert(uid, mimePowers.VowBrokenAlert);
             _alertsSystem.ShowAlert(uid, mimePowers.VowAlert);
             _actionsSystem.AddAction(uid, ref mimePowers.InvisibleWallActionEntity, mimePowers.InvisibleWallAction, uid);

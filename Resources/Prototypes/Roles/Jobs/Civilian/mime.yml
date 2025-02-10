@@ -16,6 +16,7 @@
   - !type:AddComponentSpecial
     components:
     - type: MimePowers
+      preventWriting: true
     - type: FrenchAccent
 
 - type: startingGear
