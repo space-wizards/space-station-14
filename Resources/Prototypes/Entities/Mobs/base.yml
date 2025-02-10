@@ -229,7 +229,7 @@
   components:
   - type: SolutionContainerManager
   - type: InjectableSolution
-    solution: chemicals
+    solution: bloodstream
   - type: Bloodstream
     bloodlossDamage:
       types:
