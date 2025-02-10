@@ -23,6 +23,34 @@
   - type: Body
     prototype: Avali
     requiredLegs: 2
+  - type: Inventory
+    speciesId: avali
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+            state: jumpsuit
+      shoes: # DM only for colored shoes!
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+            state: shoes
+      head:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+            state: head
+      hand:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+            state: hand
+      back:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Avali/displacement.rsi
+            state: back
   - type: Butcherable
     butcheringType: Spike
     spawned:

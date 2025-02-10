@@ -22,8 +22,12 @@
       "name": "hand",
       "directions": 4
     },
-	{
+	  {
       "name": "shoes",
+      "directions" : 4
+    },
+	  {
+      "name": "back",
       "directions" : 4
     }
   ]

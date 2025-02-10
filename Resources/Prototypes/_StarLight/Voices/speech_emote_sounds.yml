@@ -179,8 +179,28 @@
   sounds:
     Scream:
       path: /Audio/_Starlight/Effects/avali_scream.ogg
-#    Laugh:
-#      path: /Audio/_Starlight/Effects/avali_laugh.ogg
+    Laugh:
+      collection: MaleLaugh
+    Sneeze:
+      collection: MaleSneezes
+    Cough:
+      collection: MaleCoughs
+    Yawn:
+      collection: MaleYawn
+    Snore:
+      collection: Snores
+    Sigh:
+      collection: MaleSigh
+    Crying:
+      collection: MaleCry
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MaleDeathGasp
 
 - type: emoteSounds
   id: FemaleAvali
@@ -189,5 +209,25 @@
   sounds:
     Scream:
       path: /Audio/_Starlight/Effects/avali_scream.ogg
-#    Laugh:
-#      path: /Audio/_Starlight/Effects/avali_laugh.ogg
+    Laugh:
+      collection: FemaleLaugh
+    Sneeze:
+      collection: FemaleSneezes
+    Cough:
+      collection: FemaleCoughs
+    Yawn:
+      collection: FemaleYawn
+    Snore:
+      collection: Snores
+    Sigh:
+      collection: FemaleSigh
+    Crying:
+      collection: FemaleCry
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
