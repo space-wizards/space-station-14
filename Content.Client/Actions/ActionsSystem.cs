@@ -137,6 +137,7 @@ namespace Content.Client.Actions
             component.Priority = state.Priority;
             component.AttachedEntity = EnsureEntity<T>(state.AttachedEntity, uid);
             component.RaiseOnUser = state.RaiseOnUser;
+            component.RaiseOnAction = state.RaiseOnAction;
             component.AutoPopulate = state.AutoPopulate;
             component.Temporary = state.Temporary;
             component.ItemIconStyle = state.ItemIconStyle;
