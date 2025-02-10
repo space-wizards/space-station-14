@@ -20,6 +20,7 @@ using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Speech.EntitySystems;
 using Robust.Server.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -123,16 +124,15 @@ public sealed class BloodstreamSystem : EntitySystem
 
             var bloodLevel = GetBloodLevel(uid);
 
-            // Adds blood to their blood level if it is below the maximum; Blood regeneration. Must be alive.
-            if (bloodLevel < 1f && !_mobStateSystem.IsDead(uid))
+            // Blood level regulation. Must be alive.
+            if (bloodLevel != 1f && !_mobStateSystem.IsDead(uid))
             {
-                var bloodDelta = bloodstream.BloodReferenceVolume - bloodSolution.Volume;
+                var bloodDelta = bloodstream.BloodReferenceVolume.Float() - bloodSolution.Volume.Float();
                 var bloodRefreshAmount = bloodstream.BloodRefreshAmount;
 
-                if (bloodDelta < bloodRefreshAmount)
-                    bloodRefreshAmount = bloodDelta;
+                bloodDelta = (float)FixedPoint2.Clamp(bloodDelta, -bloodRefreshAmount, bloodRefreshAmount);
 
-                TryModifyBloodLevel(uid, bloodRefreshAmount, bloodstream);
+                TryModifyBloodLevel(uid, bloodDelta, bloodstream);
             }
 
             // Removes blood from the bloodstream based on bleed amount (bleed rate)
@@ -140,7 +140,7 @@ public sealed class BloodstreamSystem : EntitySystem
             if (bloodstream.BleedAmount > 0)
             {
                 // Blood is removed from the bloodstream at a 1-1 rate with the bleed amount
-                TryModifyBloodLevel(uid, (-bloodstream.BleedAmount), bloodstream);
+                TryBleedOut(uid, bloodstream.BleedAmount, bloodstream);
                 // Bleed rate is reduced by the bleed reduction amount in the bloodstream component.
                 TryModifyBleedAmount(uid, -bloodstream.BleedReductionAmount, bloodstream);
             }
@@ -241,7 +241,7 @@ public sealed class BloodstreamSystem : EntitySystem
         var prob = Math.Clamp(totalFloat / 25, 0, 1);
         if (totalFloat > 0 && _robustRandom.Prob(prob))
         {
-            TryModifyBloodLevel(ent, (-total) / 5, ent);
+            TryBleedOut(ent, total / 5, ent);
             _audio.PlayPvs(ent.Comp.InstantBloodSound, ent);
         }
 
@@ -379,7 +379,7 @@ public sealed class BloodstreamSystem : EntitySystem
     public bool TryModifyBloodLevel(EntityUid uid, FixedPoint2 amount, BloodstreamComponent? component = null)
     {
         if (!Resolve(uid, ref component, logMissing: false)
-            || !_solutionContainerSystem.ResolveSolution(uid, component.BloodSolutionName, ref component.BloodSolution))
+            || !_solutionContainerSystem.ResolveSolution(uid, component.BloodSolutionName, ref component.BloodSolution, out var bloodSolution))
         {
             return false;
         }
@@ -387,10 +387,35 @@ public sealed class BloodstreamSystem : EntitySystem
         if (amount >= 0)
             return _solutionContainerSystem.TryAddReagent(component.BloodSolution.Value, component.BloodReagent, amount, null, GetEntityBloodData(uid));
 
-        // Removal is more involved,
-        // since we also wanna handle moving it to the temporary solution
-        // and then spilling it if necessary.
-        var newSol = _solutionContainerSystem.SplitSolution(component.BloodSolution.Value, -amount);
+        amount *= -1;
+
+        for (var i = bloodSolution.Contents.Count - 1; i >= 0; i--)
+        {
+            var (reagentId, quantity) = bloodSolution.Contents[i];
+            if (reagentId.Prototype == component.BloodReagent)
+            {
+                var delta = FixedPoint2.Min(amount, quantity);
+                _solutionContainerSystem.RemoveReagent(component.BloodSolution.Value, reagentId, delta);
+                amount -= delta;
+
+                if (amount <= 0)
+                    return true;
+            }
+        }
+
+        return true;
+    }
+
+    public bool TryBleedOut(EntityUid uid, FixedPoint2 amount, BloodstreamComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, logMissing: false)
+            || !_solutionContainerSystem.ResolveSolution(uid, component.BloodSolutionName, ref component.BloodSolution)
+            || amount <= 0)
+        {
+            return false;
+        }
+
+        var newSol = _solutionContainerSystem.SplitSolution(component.BloodSolution.Value, amount);
 
         if (!_solutionContainerSystem.ResolveSolution(uid, component.BloodTemporarySolutionName, ref component.TemporarySolution, out var tempSolution))
             return true;
