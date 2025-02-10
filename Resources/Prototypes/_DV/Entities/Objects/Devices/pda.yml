@@ -31,18 +31,6 @@
   name: administrative assistant PDA
   description: Theres pen scribbles all over the edges, and a few sticky notes stuck on it.
   components:
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    layers:
-    - map: [ "enum.PdaVisualLayers.Base" ]
-    - state: "light_overlay"
-      map: [ "enum.PdaVisualLayers.Flashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "enum.PdaVisualLayers.IdLight" ]
-      shader: "unshaded"
-      visible: false
   - type: Pda
     id: AdminAssistantIDCard
     state: pda-admin-assistant
@@ -52,6 +40,8 @@
       whitelist:
         tags:
         - Write
+  - type: PdaBorderColor
+    borderColor: "#4992b4"
   - type: Icon
     sprite: _DV/Objects/Devices/pda.rsi
     state: pda-admin-assistant
