@@ -7,39 +7,39 @@
   - NitrileGloves
   - ChemistryGloves
 
-## Logistics Assistant
+## Supply Assistant
 - type: loadoutGroup
-  id: LogisticsAssistantHead
-  name: loadout-group-logistics-assistant-head
+  id: SupplyAssistantHead
+  name: loadout-group-supply-assistant-head
   minLimit: 0
   loadouts:
   - CargoTechnicianHead
 
 - type: loadoutGroup
-  id: LogisticsAssistantJumpsuit
-  name: loadout-group-logistics-assistant-jumpsuit
+  id: SupplyAssistantJumpsuit
+  name: loadout-group-supply-assistant-jumpsuit
   loadouts:
   - LightBrownJumpsuit
   - LightBrownJumpskirt
 
 - type: loadoutGroup
-  id: LogisticsAssistantBackpack
-  name: loadout-group-logistics-assistant-backpack
+  id: SupplyAssistantBackpack
+  name: loadout-group-supply-assistant-backpack
   loadouts:
   - CargoTechnicianBackpack
   - CargoTechnicianSatchel
   - CargoTechnicianDuffel
 
 - type: loadoutGroup
-  id: LogisticsAssistantOuterClothing
-  name: loadout-group-logistics-assistant-outerclothing
+  id: SupplyAssistantOuterClothing
+  name: loadout-group-supply-assistant-outerclothing
   minLimit: 0
   loadouts:
   - CargoTechnicianWintercoat
 
 - type: loadoutGroup
-  id: LogisticsAssistantShoes
-  name: loadout-group-logistics-assistant-shoes
+  id: SupplyAssistantShoes
+  name: loadout-group-supply-assistant-shoes
   loadouts:
   - BlackShoes
   - CargoWinterBoots

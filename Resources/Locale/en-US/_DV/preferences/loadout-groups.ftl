@@ -1,10 +1,10 @@
 loadout-group-chemistry-gloves = Chemist gloves
 
-loadout-group-logistics-assistant-head = Logistics Assistant head
-loadout-group-logistics-assistant-jumpsuit = Logistics Assistant jumpsuit
-loadout-group-logistics-assistant-backpack = Logistics Assistant backpack
-loadout-group-logistics-assistant-outerclothing = Logistics Assistant outer clothing
-loadout-group-logistics-assistant-shoes = Logistics Assistant shoes
+loadout-group-supply-assistant-head = Supply Assistant head
+loadout-group-supply-assistant-jumpsuit = Supply Assistant jumpsuit
+loadout-group-supply-assistant-backpack = Supply Assistant backpack
+loadout-group-supply-assistant-outerclothing = Supply Assistant outer clothing
+loadout-group-supply-assistant-shoes = Supply Assistant shoes
 
 loadout-group-admin-assistant-head = Administrative Assistant head
 loadout-group-admin-assistant-jumpsuit = Administrative Assistant jumpsuit

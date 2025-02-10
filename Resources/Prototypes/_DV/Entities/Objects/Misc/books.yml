@@ -2,7 +2,7 @@
   id: BookLogistics
   parent: BaseGuidebook
   name: logistics 101
-  description: A Nanotrasen guide book for a new cargo assistant still on training
+  description: A Nanotrasen guide book for a supply assistant still in training.
   components:
   - type: Sprite
     layers:

@@ -1,5 +1,5 @@
 - type: playTimeTracker
-  id: JobLogisticsAssistant
+  id: JobSupplyAssistant
 
 - type: playTimeTracker
   id: JobAdminAssistant

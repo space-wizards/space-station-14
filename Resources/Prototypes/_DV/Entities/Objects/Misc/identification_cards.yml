@@ -1,15 +1,15 @@
 - type: entity
   parent: IDCardStandard
-  id: LogisticsAssistantIDCard
-  name: logistics assistant ID card
+  id: SupplyAssistantIDCard
+  name: supply assistant ID card
   components:
   - type: Sprite
     layers:
     - state: default
     - sprite: _DV/Objects/Misc/id_cards.rsi
-      state: idlogisticsassistant
+      state: idsupplyassistant
   - type: PresetIdCard
-    job: LogisticsAssistant
+    job: SupplyAssistant
 
 - type: entity
   parent: IDCardStandard
