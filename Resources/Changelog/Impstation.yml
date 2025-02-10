@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Closet Skeletons spawn with the Ancient Jumpsuit now b/c it makes sense
-      and is foldable
-    type: Tweak
-  id: 600
-  time: '2024-11-28T22:47:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/827
 - author: DinnerCalzone
   changes:
   - message: Reworded the description of the nonlethal shotgun crate to match previous
@@ -4221,3 +4213,10 @@
   id: 1099
   time: '2025-02-10T23:35:31.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1608
+- author: Darkmajia
+  changes:
+  - message: Surplus crates can no longer contain more surplus crates.
+    type: Remove
+  id: 1100
+  time: '2025-02-10T23:36:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1637
