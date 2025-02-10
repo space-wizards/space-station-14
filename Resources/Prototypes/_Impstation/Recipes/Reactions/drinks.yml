@@ -403,3 +403,15 @@
       amount: 1
   products:
     LovePotion: 4
+
+- type: reaction
+  id: OrangeCoffee
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    JuiceOrange:
+      amount: 1
+    Coffee:
+      amount: 1
+  products:
+    OrangeCoffee: 2
