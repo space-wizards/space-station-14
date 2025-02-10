@@ -96,7 +96,7 @@
         amount: 10
   - type: AccessReader
     access: [[Wizard]]
-    breakOnEmag: false
+    breakOnAccessBreaker: false
   - type: Destructible
     thresholds:
     - trigger:

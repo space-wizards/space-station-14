@@ -22,7 +22,6 @@ using Content.Shared.Damage.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Shared.Mindshield.Components;
-using Content.Shared._Goobstation.FakeMindshield.Components;
 
 namespace Content.Server.Changeling;
 
@@ -717,7 +716,9 @@ public sealed partial class ChangelingSystem : EntitySystem
             return;
         }
 
-        EnsureComp<FakeMindShieldComponent>(ent);
+        EnsureComp<FakeMindShieldComponent>(ent, out var comp);
+        comp.IsEnabled = true;
+
         _popup.PopupEntity(Loc.GetString("changeling-mindshield-start"), ent, ent);
     }
 
