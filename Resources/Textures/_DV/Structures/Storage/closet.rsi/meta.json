@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "copyright": "Taken from tgstation, added admin assist based on captain's locker by Radezolid",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+        {
+            "name": "admin_assist"
+        },
+        {
+            "name": "admin_assist_door"
+        },
+        {
+            "name": "admin_assist_open"
+        }
+    ]
+}

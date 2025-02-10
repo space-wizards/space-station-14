@@ -1,0 +1,18 @@
+- type: job
+  id: CargoAssistant
+  name: job-name-cargo-assistant
+  description: job-description-cargo-assistant
+  startingGear: CargoAssistantGear
+  playTimeTracker: JobCargoAssistant
+  icon: "JobIconCargoAssistant"
+  supervisors: job-supervisors-qm
+  access:
+  - Cargo
+  - Maintenance
+
+- type: startingGear
+  id: CargoAssistantGear
+  equipment:
+    id: CargoAssistantPDA
+    ears: ClothingHeadsetCargo
+    pocket1: BookLogistics

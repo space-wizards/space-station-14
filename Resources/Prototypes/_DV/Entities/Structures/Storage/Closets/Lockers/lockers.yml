@@ -1,0 +1,11 @@
+- type: entity
+  parent: LockerBaseSecureDeltaV
+  id: LockerAdministrativeAssistant
+  name: administrative assistant's locker
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: admin_assist
+    stateDoorOpen: admin_assist_open
+    stateDoorClosed: admin_assist_door
+  - type: AccessReader
+    access: [["Command"]]

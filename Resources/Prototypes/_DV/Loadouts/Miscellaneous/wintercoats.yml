@@ -1,0 +1,74 @@
+- type: loadout
+  id: WinterCoatBrown
+  equipment:
+    outerClothing: ClothingOuterWinterColorBrown
+
+- type: loadout
+  id: WinterCoatBlack
+  equipment:
+    outerClothing: ClothingOuterWinterColorBlack
+
+- type: loadout
+  id: WinterCoatGray
+  equipment:
+    outerClothing: ClothingOuterWinterColorGray
+
+- type: loadout
+  id: WinterCoatWhite
+  equipment:
+    outerClothing: ClothingOuterWinterColorWhite
+
+- type: loadout
+  id: WinterCoatBlue
+  equipment:
+    outerClothing: ClothingOuterWinterColorBlue
+
+- type: loadout
+  id: WinterCoatRed
+  equipment:
+    outerClothing: ClothingOuterWinterColorRed
+
+- type: loadout
+  id: WinterCoatGreen
+  equipment:
+    outerClothing: ClothingOuterWinterColorGreen
+
+- type: loadout
+  id: WinterCoatOrange
+  equipment:
+    outerClothing: ClothingOuterWinterColorOrange
+
+- type: loadout
+  id: WinterCoatYellow
+  equipment:
+    outerClothing: ClothingOuterWinterColorYellow
+
+- type: loadout
+  id: WinterCoatLightBrown
+  equipment:
+    outerClothing: ClothingOuterWinterColorLightBrown
+
+- type: loadout
+  id: WinterCoatPurple
+  equipment:
+    outerClothing: ClothingOuterWinterColorPurple
+
+- type: loadout
+  id: WinterCoat
+  equipment:
+    outerClothing: ClothingOuterWinterCoat
+
+- type: loadout
+  id: WinterCoatLong
+  equipment:
+    outerClothing: ClothingOuterWinterCoatLong
+
+- type: loadout
+  id: WinterCoatPlaid
+  equipment:
+    outerClothing: ClothingOuterWinterCoatPlaid
+
+- type: loadout
+  id: CorporateJacket
+  equipment:
+    outerClothing: ClothingOuterCorporateJacket

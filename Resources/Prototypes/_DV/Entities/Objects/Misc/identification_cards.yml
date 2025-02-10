@@ -1,0 +1,27 @@
+- type: entity
+  parent: IDCardStandard
+  id: CargoAssistantIDCard
+  name: cargo assistant ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - sprite: DeltaV/Objects/Misc/id_cards.rsi
+      state: idcargoassistant
+  - type: PresetIdCard
+    job: CargoAssistant
+
+- type: entity
+  parent: IDCardStandard
+  id: AdminAssistantIDCard
+  name: administrative assistant ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: silver
+    - sprite: DeltaV/Objects/Misc/id_cards.rsi
+      state: idadminassistant
+  - type: Item
+    heldPrefix: silver
+  - type: PresetIdCard
+    job: AdministrativeAssistant

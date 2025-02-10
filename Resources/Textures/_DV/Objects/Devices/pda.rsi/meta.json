@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "added adminassistand and added the cargo assistant by Radezolid",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "pda-cargo-assistant"
+        },
+        {
+            "name": "pda-admin-assistant"
+        }
+    ]
+}
