@@ -115,10 +115,10 @@ public sealed class PaperSystem : EntitySystem
                     return;
                 }
 
-                if (TryComp<IlliterateComponent>(entity.Owner, out var illiterateComp))
+                if (TryComp<IlliterateComponent>(args.User, out var illiterateComp))
                 {
                     var fileWriteMessage = Loc.GetString(illiterateComp.FailWriteMessage);
-                    _popupSystem.PopupEntity(fileWriteMessage, entity, args.User);
+                    _popupSystem.PopupClient(fileWriteMessage, entity.Owner, args.User);
                     args.Handled = true;
                     return;
                 }
