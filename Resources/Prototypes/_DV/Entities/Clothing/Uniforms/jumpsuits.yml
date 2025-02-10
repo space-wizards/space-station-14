@@ -8,3 +8,14 @@
     sprite: _DV/Clothing/Uniforms/Jumpsuit/chemshirtsuit.rsi
   - type: Clothing
     sprite: _DV/Clothing/Uniforms/Jumpsuit/chemshirtsuit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitAdminAssistant
+  name: administrative assistant's jumpsuit
+  description: A suit worn by the Administrative Assistant. Smells of burnt coffee.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/admin_assistant.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/admin_assistant.rsi

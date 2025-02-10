@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "supplyassistant made by Radezolid, adminassistant made by noctyrnal (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "supplyassistant"
+        },
+        {
+            "name": "adminassistant"
+        }
+    ]
+}

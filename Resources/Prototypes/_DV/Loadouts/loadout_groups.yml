@@ -6,3 +6,80 @@
   - LatexGloves
   - NitrileGloves
   - ChemistryGloves
+
+## Supply Assistant
+- type: loadoutGroup
+  id: SupplyAssistantHead
+  name: loadout-group-supply-assistant-head
+  minLimit: 0
+  loadouts:
+  - CargoTechnicianHead
+
+- type: loadoutGroup
+  id: SupplyAssistantJumpsuit
+  name: loadout-group-supply-assistant-jumpsuit
+  loadouts:
+  - LightBrownJumpsuit
+  - LightBrownJumpskirt
+
+- type: loadoutGroup
+  id: SupplyAssistantBackpack
+  name: loadout-group-supply-assistant-backpack
+  loadouts:
+  - CargoTechnicianBackpack
+  - CargoTechnicianSatchel
+  - CargoTechnicianDuffel
+
+- type: loadoutGroup
+  id: SupplyAssistantOuterClothing
+  name: loadout-group-supply-assistant-outerclothing
+  minLimit: 0
+  loadouts:
+  - CargoTechnicianWintercoat
+
+- type: loadoutGroup
+  id: SupplyAssistantShoes
+  name: loadout-group-supply-assistant-shoes
+  loadouts:
+  - BlackShoes
+  - CargoWinterBoots
+
+# Command
+## Administrative Assistant
+- type: loadoutGroup
+  id: AdminAssistantJumpsuit
+  name: loadout-group-admin-assistant-jumpsuit
+  loadouts:
+  - AdminAssistantJumpsuit
+  - AdminAssistantJumpskirt
+
+- type: loadoutGroup
+  id: AdminAssistantShoes
+  name: loadout-group-admin-assistant-shoes
+  loadouts:
+  - BlackShoes
+  - LeatherShoes
+  - LacedShoes
+
+- type: loadoutGroup
+  id: AdminAssistantOuter
+  name: loadout-group-admin-assistant-outerclothing
+  loadouts:
+  - BartenderVest
+  - WinterCoatBlack
+  - WinterCoatBrown
+
+- type: loadoutGroup
+  id: AdminAssistantEar
+  name: loadout-group-admin-assistant-headset
+  loadouts:
+  - AdminAssistantHeadset
+  - AdminAssistantAltHeadset
+
+- type: loadoutGroup
+  id: AdminAssistantGloves
+  name: loadout-group-admin-assistant-gloves
+  minLimit: 0
+  loadouts:
+  - BlackGloves
+  - WhiteGloves
