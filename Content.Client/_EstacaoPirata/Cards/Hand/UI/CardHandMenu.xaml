@@ -8,5 +8,5 @@
                 MinSize="450 450">
 
 
-    <ui:RadialContainer Name="Main" VerticalExpand="True" HorizontalExpand="True" Radius="64" ReserveSpaceForHiddenChildren="False"></ui:RadialContainer>
+    <ui:RadialContainer Name="Main" VerticalExpand="True" HorizontalExpand="True" InitialRadius="100" ReserveSpaceForHiddenChildren="False"></ui:RadialContainer>
 </ui:RadialMenu>

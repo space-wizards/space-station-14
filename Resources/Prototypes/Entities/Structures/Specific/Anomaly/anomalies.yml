@@ -452,6 +452,9 @@
         maxRange: 5
       spawns:
       - MobSpawnCrabUranium
+  - type: RadiationSource
+    intensity: 0.2
+    slope: 0.1
 
 - type: entity
   id: AnomalyRockQuartz

@@ -2,45 +2,38 @@ using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System.Linq;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Holopad;
 
 public sealed class HolopadSystem : SharedHolopadSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HolopadHologramComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<HolopadHologramComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<HolopadHologramComponent, BeforePostShaderRenderEvent>(OnShaderRender);
         SubscribeAllEvent<TypingChangedEvent>(OnTypingChanged);
-
-        SubscribeNetworkEvent<PlayerSpriteStateRequest>(OnPlayerSpriteStateRequest);
-        SubscribeNetworkEvent<PlayerSpriteStateMessage>(OnPlayerSpriteStateMessage);
     }
 
-    private void OnComponentInit(EntityUid uid, HolopadHologramComponent component, ComponentInit ev)
+    private void OnComponentStartup(Entity<HolopadHologramComponent> entity, ref ComponentStartup ev)
     {
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
-            return;
-
-        UpdateHologramSprite(uid);
+        UpdateHologramSprite(entity, entity.Comp.LinkedEntity);
     }
 
-    private void OnShaderRender(EntityUid uid, HolopadHologramComponent component, BeforePostShaderRenderEvent ev)
+    private void OnShaderRender(Entity<HolopadHologramComponent> entity, ref BeforePostShaderRenderEvent ev)
     {
         if (ev.Sprite.PostShader == null)
             return;
 
-        ev.Sprite.PostShader.SetParameter("t", (float)_timing.CurTime.TotalSeconds * component.ScrollRate);
+        UpdateHologramSprite(entity, entity.Comp.LinkedEntity);
     }
 
     private void OnTypingChanged(TypingChangedEvent ev, EntitySessionEventArgs args)
@@ -57,100 +50,66 @@ public sealed class HolopadSystem : SharedHolopadSystem
         RaiseNetworkEvent(netEv);
     }
 
-    private void OnPlayerSpriteStateRequest(PlayerSpriteStateRequest ev)
+    private void UpdateHologramSprite(EntityUid hologram, EntityUid? target)
     {
-        var targetPlayer = GetEntity(ev.TargetPlayer);
-        var player = _playerManager.LocalSession?.AttachedEntity;
-
-        // Ignore the request if received by a player who isn't the target
-        if (targetPlayer != player)
+        // Get required components
+        if (!TryComp<SpriteComponent>(hologram, out var hologramSprite) ||
+            !TryComp<HolopadHologramComponent>(hologram, out var holopadhologram))
             return;
 
-        if (!TryComp<SpriteComponent>(player, out var playerSprite))
-            return;
-
-        var spriteLayerData = new List<PrototypeLayerData>();
-
-        if (playerSprite.Visible)
-        {
-            // Record the RSI paths, state names and shader paramaters of all visible layers
-            for (int i = 0; i < playerSprite.AllLayers.Count(); i++)
-            {
-                if (!playerSprite.TryGetLayer(i, out var layer))
-                    continue;
-
-                if (!layer.Visible ||
-                    string.IsNullOrEmpty(layer.ActualRsi?.Path.ToString()) ||
-                    string.IsNullOrEmpty(layer.State.Name))
-                    continue;
-
-                var layerDatum = new PrototypeLayerData();
-                layerDatum.RsiPath = layer.ActualRsi.Path.ToString();
-                layerDatum.State = layer.State.Name;
-
-                if (layer.CopyToShaderParameters != null)
-                {
-                    var key = (string)layer.CopyToShaderParameters.LayerKey;
-
-                    if (playerSprite.LayerMapTryGet(key, out var otherLayerIdx) &&
-                        playerSprite.TryGetLayer(otherLayerIdx, out var otherLayer) &&
-                        otherLayer.Visible)
-                    {
-                        layerDatum.MapKeys = new() { key };
-
-                        layerDatum.CopyToShaderParameters = new PrototypeCopyToShaderParameters()
-                        {
-                            LayerKey = key,
-                            ParameterTexture = layer.CopyToShaderParameters.ParameterTexture,
-                            ParameterUV = layer.CopyToShaderParameters.ParameterUV
-                        };
-                    }
-                }
-
-                spriteLayerData.Add(layerDatum);
-            }
-        }
-
-        // Return the recorded data to the server
-        var evResponse = new PlayerSpriteStateMessage(ev.TargetPlayer, spriteLayerData.ToArray());
-        RaiseNetworkEvent(evResponse);
-    }
-
-    private void OnPlayerSpriteStateMessage(PlayerSpriteStateMessage ev)
-    {
-        UpdateHologramSprite(GetEntity(ev.SpriteEntity), ev.SpriteLayerData);
-    }
-
-    private void UpdateHologramSprite(EntityUid uid, PrototypeLayerData[]? layerData = null)
-    {
-        if (!TryComp<SpriteComponent>(uid, out var hologramSprite))
-            return;
-
-        if (!TryComp<HolopadHologramComponent>(uid, out var holopadhologram))
-            return;
-
+        // Remove all sprite layers
         for (int i = hologramSprite.AllLayers.Count() - 1; i >= 0; i--)
             hologramSprite.RemoveLayer(i);
 
-        if (layerData == null || layerData.Length == 0)
+        if (TryComp<SpriteComponent>(target, out var targetSprite))
         {
-            layerData = new PrototypeLayerData[1];
-            layerData[0] = new PrototypeLayerData()
+            // Use the target's holographic avatar (if available)
+            if (TryComp<HolographicAvatarComponent>(target, out var targetAvatar) &&
+                targetAvatar.LayerData != null)
             {
-                RsiPath = holopadhologram.RsiPath,
-                State = holopadhologram.RsiState
-            };
+                for (int i = 0; i < targetAvatar.LayerData.Length; i++)
+                {
+                    var layer = targetAvatar.LayerData[i];
+                    hologramSprite.AddLayer(targetAvatar.LayerData[i], i);
+                }
+            }
+
+            // Otherwise copy the target's current physical appearance
+            else
+            {
+                hologramSprite.CopyFrom(targetSprite);
+            }
         }
 
-        for (int i = 0; i < layerData.Length; i++)
+        // There is no target, display a default sprite instead (if available)
+        else
         {
-            var layer = layerData[i];
-            layer.Shader = "unshaded";
+            if (string.IsNullOrEmpty(holopadhologram.RsiPath) || string.IsNullOrEmpty(holopadhologram.RsiState))
+                return;
 
-            hologramSprite.AddLayer(layerData[i], i);
+            var layer = new PrototypeLayerData();
+            layer.RsiPath = holopadhologram.RsiPath;
+            layer.State = holopadhologram.RsiState;
+
+            hologramSprite.AddLayer(layer);
         }
 
-        UpdateHologramShader(uid, hologramSprite, holopadhologram);
+        // Override specific values
+        hologramSprite.Color = Color.White;
+        hologramSprite.Offset = holopadhologram.Offset;
+        hologramSprite.DrawDepth = (int)DrawDepth.Mobs;
+        hologramSprite.NoRotation = true;
+        hologramSprite.DirectionOverride = Direction.South;
+        hologramSprite.EnableDirectionOverride = true;
+
+        // Remove shading from all layers (except displacement maps)
+        for (int i = 0; i < hologramSprite.AllLayers.Count(); i++)
+        {
+            if (hologramSprite.TryGetLayer(i, out var layer) && layer.ShaderPrototype != "DisplacedStencilDraw")
+                hologramSprite.LayerSetShader(i, "unshaded");
+        }
+
+        UpdateHologramShader(hologram, hologramSprite, holopadhologram);
     }
 
     private void UpdateHologramShader(EntityUid uid, SpriteComponent sprite, HolopadHologramComponent holopadHologram)

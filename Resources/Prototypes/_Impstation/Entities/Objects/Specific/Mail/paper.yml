@@ -53,3 +53,40 @@
       ──────────────────────────────────────────
       Sincerely, T'ckr'tk, Fourth.
       O'ckt'rt "Outriggers"
+
+- type: entity
+  id: PaperMailDahirInsaat
+  categories: [ HideSpawnMenu ]
+  suffix: "construction ad"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+          [head=2]Dear Imp Sector Nutrition Department[/head]
+
+          [head=3]We at [italic]Dahir Insaat[/italic] would like to offer you this opportunity to demo our New[/head]
+                            [head=2][bold]Turnkey Kitchen[/bold][/head]
+          [head=3].[/head]
+              [head=4]Put the conveyors down and watch it go![/head]
+                        [color=#BBBBBB]Check out our state-of-the-art Quadcopter technology! Now with Disabler variants! Usable anywhere five semi trucks can park.[/color]
+
+- type: entity
+  id: PaperMailHosRefill
+  categories: [ HideSpawnMenu ]
+  suffix: "rx note"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2 # credits to Moomoobeef (Github) for this template!
+        [color=#5b97bc]░░██░░ [head=2]Rx Memo[/head]
+        ██████ [head=3]Subject: Your Refill [/head]
+        ░░██░░ [head=3]From: Nanotrasen Pharmacies [/head]
+        [/color]                  [color=#bbbbbb][head=3]The Real Chemistry Department[/head]
+        [/color]───────────────────────────────────────
+            [head=5]Dear (NAME),[/head]
+        Your refill request has been approved. Please find it enclosed. 
+
+        You have: ([color=#cb0000]4[/color] of 365) fills remaining.
+
+        Please remember to contact your prescribing doctor for further fills. We remind you that Nanotrasen takes your mental health very seriously.
+        ──────────────────────────────────────

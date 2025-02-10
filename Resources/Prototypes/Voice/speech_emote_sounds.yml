@@ -526,6 +526,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Hew:
+      collection: Hew
     Wuhey:
       collection: Wuhey
     Ungh:
@@ -1034,7 +1036,6 @@
       collection: Wuhey
     Ungh:
       collection: Ungh
-
     Gasp:
       collection: UnisexGasp
     DefaultDeathgasp:
@@ -1092,6 +1093,10 @@
       collection: Salutes
     Crack: # Imp addition
       collection: Cracks
+    Blink: # Imp addition
+      collection: Blinks
+      params:
+        volume: -3
 
 - type: emoteSounds
   id: DionaBodyEmotes
@@ -1106,6 +1111,10 @@
        volume: -5
     Crack:
       collection: Cracks
+    Blink: # Imp addition
+      collection: Blinks
+      params:
+        volume: -3
 
 
 - type: emoteSounds
@@ -1125,6 +1134,10 @@
       collection: Salutes
     Crack: # Imp addition
       collection: Cracks
+    Blink: # Imp addition
+      collection: Blinks
+      params:
+        volume: -3
 
 - type: emoteSounds
   id: MaleThaven

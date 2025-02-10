@@ -26,6 +26,8 @@ namespace Content.Server.GameTicking
 
         private WebhookIdentifier? _webhookIdentifier;
 
+        private WebhookIdentifier? _webhookIdentifierPostround;
+
         [ViewVariables]
         private string? RoundEndSoundCollection { get; set; }
 
@@ -61,6 +63,13 @@ namespace Content.Server.GameTicking
                 if (!string.IsNullOrWhiteSpace(value))
                 {
                     _discord.GetWebhook(value, data => _webhookIdentifier = data.ToIdentifier());
+                }
+            }, true);
+            Subs.CVar(_cfg, CCVars.DiscordPostroundChatWebhook, value =>
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    _discord.GetWebhook(value, data => _webhookIdentifierPostround = data.ToIdentifier());
                 }
             }, true);
             Subs.CVar(_cfg, CCVars.DiscordRoundEndRoleWebhook, value =>

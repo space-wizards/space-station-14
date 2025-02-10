@@ -36,9 +36,9 @@
     ClothingHeadHatChickenhead: 2
     ClothingOuterSuitMonkey: 2
     ClothingHeadHatPumpkin: 2
-    ClothingHeadHatShrineMaidenWig: 2
-    ClothingOuterSuitShrineMaiden: 2
-    Gohei: 2
+    # ClothingHeadHatShrineMaidenWig: 2 # imp edit - giving this religious outfit the sanctity it deserves
+    # ClothingOuterSuitShrineMaiden: 2
+    # Gohei: 2
     ClothingOuterSuitWitchRobes: 2
     ClothingHeadHatWitch1: 2
     ClothingHeadHatRedRacoon: 2
@@ -81,6 +81,6 @@
     ClothingShoesBling: 1
     ClothingShoesBootsCowboyFancy: 1
     ClothingOuterDogi: 1
-    ClothingMaskSexyClown: 1
-    ClothingMaskSexyMime: 1
+    ClothingMaskBlushingClown: 1
+    ClothingMaskBlushingMime: 1
     ClothingHeadHatCowboyBountyHunter: 1

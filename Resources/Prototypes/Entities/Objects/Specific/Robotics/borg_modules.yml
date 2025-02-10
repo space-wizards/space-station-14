@@ -572,7 +572,7 @@
   id: BorgModuleOperative
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, Tier2Contraband ]
   name: operative cyborg module
-  description: A module that comes with a crowbar, an Emag and a syndicate pinpointer.
+  description: A module that comes with a crowbar, an Emag, an Access Breaker and a syndicate pinpointer.
   components:
     - type: Sprite
       layers:
@@ -582,7 +582,7 @@
       items:
       - Crowbar
       - Emag
-      - Doorjack #Delta-V add doorjack, emag no longer opens doors.
+      - AccessBreaker
       - PinpointerSyndicateNuclear
     - type: BorgModuleIcon
       icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-operative-module }

@@ -539,6 +539,10 @@ LightTree06: LightTree
 #2024-12-28
 # DrinkIrishCarBomb: DrinkIrishSlammer - reverted on imp
 
+#2025-01-06
+ClothingMaskSexyClown: ClothingMaskBlushingClown
+ClothingMaskSexyMime: ClothingMaskBlushingMime
+
 # IMPSTATION SPECIFIC MIGRATIONS BELOW
 # ====================================
 

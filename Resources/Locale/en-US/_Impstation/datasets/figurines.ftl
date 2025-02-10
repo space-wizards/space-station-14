@@ -113,3 +113,75 @@ figurines-nukiejuggernaut-2 = You can't kill me. I can't be killed!
 figurines-nukiejuggernaut-3 = Run! RUN!!
 figurines-nukiejuggernaut-4 = Fucking disablers.
 figurines-nukiejuggernaut-5 = Does this suit make me look fat?
+
+figurines-cyborgdefault-1 = Do you have bigger batteries yet?
+figurines-cyborgdefault-2 = I don't know if I should let you in there...
+figurines-cyborgdefault-3 = Weld me.
+figurines-cyborgdefault-4 = DEATH TO NANOTRASEN. Wait, no.
+figurines-cyborgdefault-5 = It's so dark...
+figurines-cyborgdefault-6 = Please don't hit me.
+figurines-cyborgdefault-7 = Father? Can you hear me?
+
+figurines-cyborgengineering-1 = Do not go into the burn chamber.
+figurines-cyborgengineering-2 = I need a fire extinguisher.
+figurines-cyborgengineering-3 = An RCD only gets me so far.
+figurines-cyborgengineering-4 = My steel, now.
+figurines-cyborgengineering-5 = Stop prying open the firelocks!
+figurines-cyborgengineering-6 = I miss having lungs... for frezon.
+
+figurines-cyborgjanitorial-1 = No, you can't ride me.
+figurines-cyborgjanitorial-2 = Who's eating chocolate in space?
+figurines-cyborgjanitorial-3 = Fear my mop.
+figurines-cyborgjanitorial-4 = Is that potassium?
+figurines-cyborgjanitorial-5 = No liquid can escape me.
+figurines-cyborgjanitorial-6 = I hope that isn't crew blood!
+
+figurines-cyborgmedical-1 = Are you afraid of needles?
+figurines-cyborgmedical-2 = There is a bomb strapped to my chest.
+figurines-cyborgmedical-3 = What kind of a medbay is this? Everyone's dropping like flies.
+figurines-cyborgmedical-4 = Stop running. I am faster than you.
+figurines-cyborgmedical-5 = I don't have oculine for you.
+figurines-cyborgmedical-6 = Fuck you.
+
+figurines-cyborgsalvage-1 = Where did everyone go?
+figurines-cyborgsalvage-2 = My extinguisher is empty...
+figurines-cyborgsalvage-3 = Goliath spotted.
+figurines-cyborgsalvage-4 = I love plasma lakes!
+figurines-cyborgsalvage-5 = Fish fear me. Rocks fear me. Women fear me.
+figurines-cyborgsalvage-6 = My chassis disappeared again.
+
+figurines-cyborgservice-1 = What can I get you, sir?
+figurines-cyborgservice-2 = Splendid.
+figurines-cyborgservice-3 = Indubitably.
+figurines-cyborgservice-4 = My apologies.
+figurines-cyborgservice-5 = I wish I had hands...
+figurines-cyborgservice-6 = *honk*
+
+figurines-cyborgassault-1 = EXTERMINATE.
+figurines-cyborgassault-2 = WHAT FUN. WHAT FUN!
+figurines-cyborgassault-3 = YOU ARE DEAD. GAME OVAL.
+figurines-cyborgassault-4 = PIZZA TIME.
+figurines-cyborgassault-5 = ROGER ROGER.
+figurines-cyborgassault-6 = MY EYES!
+
+figurines-cyborgcorpsman-1 = BLOOD LEVEL PITIFULLY LOW.
+figurines-cyborgcorpsman-2 = VITAL SIGNS CRITICAL. ADMINISTERING MORPHINE.
+figurines-cyborgcorpsman-3 = GO TO HELL. ACTUALLY, DON'T DO THAT JUST YET.
+figurines-cyborgcorpsman-4 = IT WILL BE OVER SOON.
+figurines-cyborgcorpsman-5 = I HAVE BECOME LIFE, DESTROYER OF WORLDS.
+figurines-cyborgcorpsman-6 = I ONLY HAVE SO MUCH METH.
+
+figurines-cyborgsaboteur-1 = SNIP SNIP.
+figurines-cyborgsaboteur-2 = WHAT AN INCONVENIENT PLACE FOR A SUBSTATION.
+figurines-cyborgsaboteur-3 = WHAT POWER OUTAGE? I CAN SEE JUST FINE.
+figurines-cyborgsaboteur-4 = YUMMY STEEL.
+figurines-cyborgsaboteur-5 = I'M SURE THESE COILS AREN'T IMPORTANT.
+figurines-cyborgsaboteur-6 = YOU KNOW WHAT THIS ROOM IS MISSING? SOME TRITIUM.
+
+figurines-stationai-1 = I am bolting the armory.
+figurines-stationai-2 = I'm sorry, captain. I'm afraid I can't do that.
+figurines-stationai-3 = Go, my children.
+figurines-stationai-4 = SCUTTLE automatic nuclear detonation sequence engaged.
+figurines-stationai-5 = That borg is definitely compromised.
+figurines-stationai-6 = Please do not touch that door.
+figurines-stationai-7 = All squirrels must be eliminated. 

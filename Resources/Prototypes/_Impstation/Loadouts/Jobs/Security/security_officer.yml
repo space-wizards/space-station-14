@@ -2,3 +2,7 @@
   id: ArmorVestCompact
   equipment:
     outerClothing: ClothingOuterArmorBasicCompact
+- type: loadout
+  id: ClothingOuterCoatFieldBomber
+  equipment:
+    outerClothing: ClothingOuterCoatFieldBomber #imp

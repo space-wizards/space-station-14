@@ -1,0 +1,19 @@
+- type: entity
+  id: PortalSupermatter
+  parent: BasePortal
+  description: Something yellow is coming through!
+  components:
+  - type: Transform
+    anchored: False
+  - type: Sprite
+    layers:
+    - state: portal-yellow
+  - type: PointLight
+    color: Goldenrod
+    radius: 3
+    energy: 1
+    netsync: false
+  - type: Portal
+    randomTeleport: false
+  - type: TimedDespawn
+    lifetime: 2

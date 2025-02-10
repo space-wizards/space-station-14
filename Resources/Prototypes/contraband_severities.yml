@@ -17,7 +17,7 @@
   id: Restricted
   examineColor: yellow
   examineText: contraband-examine-text-Restricted
-  showDepartments: true
+  showDepartmentsAndJobs: true
 
 # Having this as a regular crew member is considered grand theft. (nuke disk, captain's gear, objective items, etc)
 - type: contrabandSeverity
