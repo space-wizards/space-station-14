@@ -121,7 +121,6 @@
   - type: Icon
     sprite: Structures/Power/Cables/mv_cable.rsi
     state: mvcable_4
-
   - type: NodeContainer
     nodes:
       power:
