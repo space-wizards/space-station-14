@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Decapoid vapor tanks are now fully functional, which means that Decapoids
-      are now fully functional. They just need customization!
-    type: Fix
-  id: 595
-  time: '2024-11-27T19:32:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/820
 - author: TGRCDev
   changes:
   - message: Crates/lockers being pulled can now only be opened by the person pulling
@@ -4227,3 +4219,10 @@
   id: 1094
   time: '2025-02-10T22:41:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1612
+- author: Saeko-44
+  changes:
+  - message: The fishing rod, capable of reeling things in, as a tier 1 civilian tech
+    type: Add
+  id: 1095
+  time: '2025-02-10T22:49:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1482
