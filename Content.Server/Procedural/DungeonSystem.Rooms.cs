@@ -143,34 +143,6 @@ public sealed partial class DungeonSystem
 
         var finalRoomRotation = roomTransform.Rotation();
 
-        // go BRRNNTTT on existing stuff
-        if (clearExisting)
-        {
-            //The Box2 rotation completely breaks the entity calculation from lookup. and before that, there's a 75% chance the spawn room won't remove anything underneath it.
-            //Therefore, Box2 must be calculated separately for all 4 rotation options.
-            var point1 = Vector2.Transform(-room.Size / 2, roomTransform);
-            var point2 = Vector2.Transform(room.Size / 2, roomTransform);
-            var gridBounds = GetRotatedBox(point1, point2, finalRoomRotation);
-
-            _entitySet.Clear();
-            // Polygon skin moment
-            gridBounds = gridBounds.Enlarged(-0.05f);
-            _lookup.GetLocalEntitiesIntersecting(gridUid, gridBounds, _entitySet, LookupFlags.Uncontained);
-
-            foreach (var templateEnt in _entitySet)
-            {
-                Del(templateEnt);
-            }
-
-            if (TryComp(gridUid, out DecalGridComponent? decalGrid))
-            {
-                foreach (var decal in _decals.GetDecalsIntersecting(gridUid, gridBounds, decalGrid))
-                {
-                    _decals.RemoveDecal(gridUid, decal.Index, decalGrid);
-                }
-            }
-        }
-
         var roomCenter = (room.Offset + room.Size / 2f) * grid.TileSize;
         var tileOffset = -roomCenter + grid.TileSizeHalfVector;
         _tiles.Clear();
@@ -196,6 +168,15 @@ public sealed partial class DungeonSystem
                 }
 
                 _tiles.Add((rounded, tileRef.Tile));
+
+                if (clearExisting)
+                {
+                    var anchored = _maps.GetAnchoredEntities((gridUid, grid), rounded);
+                    foreach (var ent in anchored)
+                    {
+                        QueueDel(ent);
+                    }
+                }
             }
         }
 
