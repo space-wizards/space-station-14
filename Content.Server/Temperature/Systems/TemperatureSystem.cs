@@ -8,13 +8,12 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
+using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Physics.Events;
-using Content.Shared.Projectiles;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Temperature.Systems;
@@ -448,7 +447,7 @@ public sealed class TemperatureSystem : EntitySystem
 
     private void ChangeTemperatureOnCollide(Entity<ChangeTemperatureOnCollideComponent> ent, ref ProjectileHitEvent args)
     {
-        _temperature.ChangeHeat(args.Target, ent.Comp.Heat, ent.Comp.IgnoreHeatResistance);// adjust the temperature
+        ChangeHeat(args.Target, ent.Comp.Heat, ent.Comp.IgnoreHeatResistance);// adjust the temperature
     }
 
     private void OnParentChange(EntityUid uid, TemperatureComponent component,
