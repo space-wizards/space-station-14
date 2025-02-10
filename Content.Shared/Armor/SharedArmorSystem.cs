@@ -19,7 +19,7 @@ public abstract class SharedArmorSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<CoeffientQueryEvent>>(OnCoeffientQuery);
+        SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<CoefficientQueryEvent>>(OnCoefficientQuery);
         SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
         SubscribeLocalEvent<ArmorComponent, BorgModuleRelayedEvent<DamageModifyEvent>>(OnBorgDamageModify);
         SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
@@ -28,13 +28,13 @@ public abstract class SharedArmorSystem : EntitySystem
     /// <summary>
     /// Get the total Damage reduction value of all equipment caught by the relay.
     /// </summary>
-    /// <param name="ent"></param>
-    /// <param name="args"></param>
-    private void OnCoeffientQuery(Entity<ArmorComponent> ent, ref InventoryRelayedEvent<CoeffientQueryEvent> args)
+    /// <param name="ent">The item that's being relayed too</param>
+    /// <param name="args">the Event, contains the running count of armor percentage as a coefficient</param>
+    private void OnCoefficientQuery(Entity<ArmorComponent> ent, ref InventoryRelayedEvent<CoefficientQueryEvent> args)
     {
-        foreach (var a in ent.Comp.Modifiers.Coefficients)
+        foreach (var armorCoefficient in ent.Comp.Modifiers.Coefficients)
         {
-            args.Args.DamageModifiers.Coefficients[a.Key] = args.Args.DamageModifiers.Coefficients.TryGetValue(a.Key, out var coefficient) ? coefficient * a.Value : a.Value;
+            args.Args.DamageModifiers.Coefficients[armorCoefficient.Key] = args.Args.DamageModifiers.Coefficients.TryGetValue(armorCoefficient.Key, out var coefficient) ? coefficient * armorCoefficient.Value : armorCoefficient.Value;
         }
     }
 
@@ -95,15 +95,4 @@ public abstract class SharedArmorSystem : EntitySystem
     }
 }
 
-public sealed class CoeffientQueryEvent : EntityEventArgs, IInventoryRelayEvent
-{
-    public SlotFlags TargetSlots { get; set; }
 
-    public DamageModifierSet DamageModifiers { get; set; } = new DamageModifierSet();
-
-    public CoeffientQueryEvent(SlotFlags slots)
-    {
-        TargetSlots = slots;
-
-    }
-}
