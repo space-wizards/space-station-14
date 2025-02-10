@@ -94,8 +94,8 @@ public sealed class ThermalRegulatorSystem : EntitySystem
             if (!ent.Comp1.VisuallySweats)
                 return;
 
-            //for humans, they start sweating at 25C over body temp, at once every 30 seconds, and maximally at 75C over, once per 15 seconds
-            ent.Comp1.SweatEmoteProgress += Math.Min(tempDiff / ent.Comp1.ThermalRegulationTemperatureThreshold, 2) / 30;
+            //for humans, they start sweating at 25C over body temp, at once every 30 seconds, and maximally at 50C over, once per 15 seconds
+            ent.Comp1.SweatEmoteProgress += Math.Min(tempDiff / ent.Comp1.ThermalRegulationTemperatureThreshold, 3) / 45;
             if (ent.Comp1.SweatEmoteProgress > 1.0f)
             {
                 _chat.TryEmoteWithChat(ent, ent.Comp1.SweatEmote, ChatTransmitRange.HideChat, ignoreActionBlocker: true);
@@ -112,7 +112,7 @@ public sealed class ThermalRegulatorSystem : EntitySystem
             if (!ent.Comp1.VisuallyShivers)
                 return;
 
-            //for humans, they start shivering at 25C under body temp, at once every 30 seconds, and maximally at 75C under, once per 15 seconds
+            //for humans, they start shivering at 25C under body temp, at once every 30 seconds, and maximally at 50C under, once per 15 seconds
             ent.Comp1.ShiverEmoteProgress += Math.Min(tempDiff / ent.Comp1.ThermalRegulationTemperatureThreshold, 2) / 30;
             if (ent.Comp1.ShiverEmoteProgress > 1.0f)
             {
