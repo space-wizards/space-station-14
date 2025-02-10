@@ -8,6 +8,9 @@ namespace Content.Shared.Paper
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class IlliterateComponent : Component
     {
+        /// <summary>
+        /// What message is displayed when the entity fails to write?
+        /// </summary>
         [DataField]
         [AutoNetworkedField]
         public LocId FailWriteMessage = "paper-component-illiterate";
