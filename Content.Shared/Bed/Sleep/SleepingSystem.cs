@@ -75,16 +75,15 @@ public sealed partial class SleepingSystem : EntitySystem
         base.Update(frameTime);
 
         var query = EntityQueryEnumerator<PendingSleepingComponent>();
-        while (query.MoveNext(out var uid, out var comp))
+        while (query.MoveNext(out var uid, out var pendingSleeping))
         {
-            if (pendingSleeping?.FallAsleepTime != null && _gameTiming?.CurTime != null)
+            if (pendingSleeping?.FallAsleepTime != null)
             {
                 if (pendingSleeping.FallAsleepTime < _gameTiming.CurTime)
                 {
                     TrySleeping(uid);
+                    EntityManager.RemoveComponent<PendingSleepingComponent>(uid);
                 }
-
-                EntityManager.RemoveComponent<PendingSleepingComponent>(uid);
             }
         }
     }
@@ -264,6 +263,8 @@ public sealed partial class SleepingSystem : EntitySystem
     {
         if (ent.Comp.PendingTime != null)
             ent.Comp.FallAsleepTime = _gameTiming.CurTime + TimeSpan.FromSeconds(ent.Comp.PendingTime);
+        else
+            EntityManager.RemoveComponent<PendingSleepingComponent>(ent.Owner);
     }
 
     private void Wake(Entity<SleepingComponent> ent)
