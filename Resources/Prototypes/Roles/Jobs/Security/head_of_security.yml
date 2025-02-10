@@ -13,6 +13,9 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 324000 # 90 hrs
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 21600 #6 hrs
     - !type:OverallPlaytimeRequirement
       time: 144000 #40 hrs
   weight: 10
