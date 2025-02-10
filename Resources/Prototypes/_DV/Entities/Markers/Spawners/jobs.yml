@@ -1,15 +1,15 @@
 - type: entity
   parent: SpawnPointJobBase
-  id: SpawnPointCargoAssistant
-  name: cargo assistant
+  id: SpawnPointLogisticsAssistant
+  name: logistics assistant
   components:
   - type: SpawnPoint
-    job_id: CargoTechnician # Change to CargoAssistant once it's mapped on every map
+    job_id: CargoTechnician # Change to LogisticsAssistant once it's mapped on every map
   - type: Sprite
     layers:
     - state: green
     - sprite: _DV/Markers/jobs.rsi
-      state: cargoassistant
+      state: logisticsassistant
 
 - type: entity
   parent: SpawnPointJobBase

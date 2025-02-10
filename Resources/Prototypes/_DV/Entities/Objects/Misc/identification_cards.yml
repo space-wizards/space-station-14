@@ -1,15 +1,15 @@
 - type: entity
   parent: IDCardStandard
-  id: CargoAssistantIDCard
-  name: cargo assistant ID card
+  id: LogisticsAssistantIDCard
+  name: logistics assistant ID card
   components:
   - type: Sprite
     layers:
     - state: default
     - sprite: _DV/Objects/Misc/id_cards.rsi
-      state: idcargoassistant
+      state: idlogisticsassistant
   - type: PresetIdCard
-    job: CargoAssistant
+    job: LogisticsAssistant
 
 - type: entity
   parent: IDCardStandard

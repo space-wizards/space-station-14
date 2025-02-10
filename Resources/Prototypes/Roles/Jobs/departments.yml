@@ -8,7 +8,7 @@
   - Courier # Imp
   - Quartermaster
   - SalvageSpecialist
-  #- CargoAssistant # DeltaV - Uncomment once ready to deploy.
+  #- LogisticsAssistant # DeltaV - Uncomment once ready to deploy.
 
 - type: department
   id: Civilian

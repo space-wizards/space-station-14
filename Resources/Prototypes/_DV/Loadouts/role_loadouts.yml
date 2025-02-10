@@ -1,12 +1,12 @@
 - type: roleLoadout
-  id: JobCargoAssistant
+  id: JobLogisticsAssistant
   groups:
   - GroupTankHarness
-  - CargoAssistantHead
-  - CargoAssistantJumpsuit
-  - CargoAssistantBackpack
-  - CargoAssistantOuterClothing
-  - CargoAssistantShoes
+  - LogisticsAssistantHead
+  - LogisticsAssistantJumpsuit
+  - LogisticsAssistantBackpack
+  - LogisticsAssistantOuterClothing
+  - LogisticsAssistantShoes
   - Glasses
   - Survival
   - Trinkets

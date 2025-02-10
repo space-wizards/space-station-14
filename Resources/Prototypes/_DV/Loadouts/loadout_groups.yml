@@ -7,42 +7,42 @@
   - NitrileGloves
   - ChemistryGloves
 
-## Cargo Assistant
+## Logistics Assistant
 - type: loadoutGroup
-  id: CargoAssistantHead
-  name: loadout-group-cargo-assistant-head
+  id: LogisticsAssistantHead
+  name: loadout-group-logistics-assistant-head
   minLimit: 0
   loadouts:
-  - CargoTechnicianHead
+  - LogisticsTechnicianHead
 
 - type: loadoutGroup
-  id: CargoAssistantJumpsuit
-  name: loadout-group-cargo-assistant-jumpsuit
+  id: LogisticsAssistantJumpsuit
+  name: loadout-group-logistics-assistant-jumpsuit
   loadouts:
-  - CargoTechnicianJumpsuit
-  - CargoTechnicianJumpskirt
+  - LightBrownJumpsuit
+  - LightBrownJumpskirt
 
 - type: loadoutGroup
-  id: CargoAssistantBackpack
-  name: loadout-group-cargo-assistant-backpack
+  id: LogisticsAssistantBackpack
+  name: loadout-group-logistics-assistant-backpack
   loadouts:
-  - CargoTechnicianBackpack
-  - CargoTechnicianSatchel
-  - CargoTechnicianDuffel
+  - LogisticsTechnicianBackpack
+  - LogisticsTechnicianSatchel
+  - LogisticsTechnicianDuffel
 
 - type: loadoutGroup
-  id: CargoAssistantOuterClothing
-  name: loadout-group-cargo-assistant-outerclothing
+  id: LogisticsAssistantOuterClothing
+  name: loadout-group-logistics-assistant-outerclothing
   minLimit: 0
   loadouts:
-  - CargoTechnicianWintercoat
+  - LogisticsTechnicianWintercoat
 
 - type: loadoutGroup
-  id: CargoAssistantShoes
-  name: loadout-group-cargo-assistant-shoes
+  id: LogisticsAssistantShoes
+  name: loadout-group-logistics-assistant-shoes
   loadouts:
   - BlackShoes
-  - CargoWinterBoots
+  - LogisticsWinterBoots
 
 # Command
 ## Administrative Assistant

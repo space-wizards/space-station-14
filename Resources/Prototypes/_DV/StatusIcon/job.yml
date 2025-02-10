@@ -1,10 +1,10 @@
 - type: jobIcon
   parent: JobIcon
-  id: JobIconCargoAssistant
+  id: JobIconLogisticsAssistant
   icon:
     sprite: /Textures/_DV/Interface/Misc/job_icons.rsi
-    state: CargoAssistant
-  jobName: job-name-cargo-assistant
+    state: LogisticsAssistant
+  jobName: job-name-logistics-assistant
 
 - type: jobIcon
   parent: JobIcon

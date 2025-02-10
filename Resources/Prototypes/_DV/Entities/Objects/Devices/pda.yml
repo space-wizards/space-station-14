@@ -17,12 +17,12 @@
 
 - type: entity
   parent: CargoPDA
-  id: CargoAssistantPDA
-  name: cargo assistant PDA
+  id: LogisticsAssistantPDA
+  name: logistics assistant PDA
   description: It smells like cardboard.
   components:
   - type: Pda
-    id: CargoAssistantIDCard
+    id: LogisticsAssistantIDCard
 
 - type: entity
   parent: BasePDA

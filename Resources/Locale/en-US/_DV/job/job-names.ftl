@@ -1,2 +1,2 @@
-job-name-cargo-assistant = Cargo Assistant
+job-name-logistsc-assistant = Logistics Assistant
 job-name-admin-assistant = Administrative Assistant
