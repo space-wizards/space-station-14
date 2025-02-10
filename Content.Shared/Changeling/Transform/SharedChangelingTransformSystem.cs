@@ -165,16 +165,6 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
         currentDna.DNA = targetConsumedDna.DNA;
 
-        // Dealing with the VocalComponent being full cloned with incorrect Action attachment
-        // var stashScreamEntity = currentVocals.ScreamActionEntity;
-        // if (CopyComp<VocalComponent>((targetIdentity, targetConsumedVocals), ent, out var vocalComp))
-        // {
-        //     vocalComp.ScreamActionEntity = stashScreamEntity;
-        //     //ProtoId's don't get copied (as far as we can tell), So we reinitialize em
-        //     _vocalSystem.LoadSounds(ent, vocalComp);
-        // }
-        // CopyComp<VocalComponent>(targetIdentity, ent, out var vocalComp);
-        // CopyComp<SpeechComponent>(targetIdentity, ent, out _ );
         CopyComps(targetIdentity, ent, null,  typeof(VocalComponent), typeof(SpeechComponent));
 
         // Make sure the target Identity has a Typing indicator, if the identity is human or dwarf and never had a mind it'll never have a typingIndicatorComponent
