@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Various creatures can now crawl through the station's pipes. Beware!
-    type: Add
-  id: 598
-  time: '2024-11-28T22:29:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/822
-- author: Sha-Seng
-  changes:
-  - message: Black Utility Belt crafted with a spray painter and a utility belt
-    type: Add
-  - message: Filled versions of the black utility belt if you want to map them too
-    type: Add
-  id: 599
-  time: '2024-11-28T22:45:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/824
 - author: Sha-Seng
   changes:
   - message: Closet Skeletons spawn with the Ancient Jumpsuit now b/c it makes sense
@@ -4223,3 +4207,17 @@
   id: 1097
   time: '2025-02-10T23:11:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1572
+- author: Darkmajia
+  changes:
+  - message: Bonfires can be built, lit, and extinguished.
+    type: Add
+  id: 1098
+  time: '2025-02-10T23:35:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1613
+- author: Sha-Seng
+  changes:
+  - message: Detectives and brigmeds can now spawn with sec armor vests if they wanna
+    type: Add
+  id: 1099
+  time: '2025-02-10T23:35:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1608
