@@ -23,7 +23,6 @@
   components:
   - type: Pda
     id: CargoAssistantIDCard
-    state: pda-cargo-assistant
 
 - type: entity
   parent: BasePDA
@@ -40,6 +39,11 @@
       whitelist:
         tags:
         - Write
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-admin-assistant
   - type: PdaBorderColor
     borderColor: "#4992b4"
   - type: Icon
