@@ -54,10 +54,11 @@
       drink:
         # it's a cryostasis flash filled with healing goodies what could possibly go wrong?
         # i will certainly not abuse it as a heretic chemist
-        maxVol: 100
-        canReact: false
+        # imp edit: ^^^^this guy no longer has his free 100u cryostasis beaker to pwn noobs with. jesus christ
+        maxVol: 75
+        canReact: true
         reagents:
         - ReagentId: Omnizine
-          Quantity: 80
+          Quantity: 60
         - ReagentId: TranexamicAcid
-          Quantity: 20
+          Quantity: 15
