@@ -52,6 +52,7 @@ public sealed class VocalSystem : EntitySystem
     {
         LoadSounds(uid, component);
     }
+
     private void OnEmote(EntityUid uid, VocalComponent component, ref EmoteEvent args)
     {
         if (args.Handled || !args.Emote.Category.HasFlag(EmoteCategory.Vocal))
