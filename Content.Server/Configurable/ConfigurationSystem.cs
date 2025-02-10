@@ -1,10 +1,10 @@
 using Content.Shared.Configurable;
 using Content.Shared.Interaction;
-using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
+using Robust.Shared.Utility;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Server.Configurable;
@@ -18,59 +18,79 @@ public sealed class ConfigurationSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ConfigurationComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
         SubscribeLocalEvent<ConfigurationComponent, ConfigurationUpdatedMessage>(OnUpdate);
         SubscribeLocalEvent<ConfigurationComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<ConfigurationComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<ConfigurationComponent, ContainerIsInsertingAttemptEvent>(OnInsert);
     }
 
-    private void OnInteractUsing(EntityUid uid, ConfigurationComponent component, InteractUsingEvent args)
+    private void OnGetInteractionVerbs(Entity<ConfigurationComponent> entity, ref GetVerbsEvent<InteractionVerb> args)
+    {
+        if (args.Using is not { } tool || !_toolSystem.HasQuality(tool, entity.Comp.QualityNeeded))
+            return;
+
+        // Manually capture this value because C# doesn't want to implicitly capture in the lambda below from a `ref` value.
+        var user = args.User;
+
+        args.Verbs.Add(new InteractionVerb
+        {
+            Act = () => { _uiSystem.TryOpenUi(entity.Owner, ConfigurationUiKey.Key, user); },
+            Text = Loc.GetString("configure-verb-get-data-text"),
+            Message = Loc.GetString("anomaly-sync-connect-verb-message", ("configurable", entity)),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
+        });
+    }
+
+    private void OnInteractUsing(Entity<ConfigurationComponent> entity, ref InteractUsingEvent args)
     {
         // TODO use activatable ui system
-        if (args.Handled)
+        if (args.Handled || !_toolSystem.HasQuality(args.Used, entity.Comp.QualityNeeded))
             return;
 
-        if (!_toolSystem.HasQuality(args.Used, component.QualityNeeded))
-            return;
-
-        args.Handled = _uiSystem.TryOpenUi(uid, ConfigurationUiKey.Key, args.User);
+        args.Handled = _uiSystem.TryOpenUi(entity.Owner, ConfigurationUiKey.Key, args.User);
     }
 
-    private void OnStartup(EntityUid uid, ConfigurationComponent component, ComponentStartup args)
+    private void OnStartup(Entity<ConfigurationComponent> entity, ref ComponentStartup args)
     {
-        UpdateUi(uid, component);
+        UpdateUi(entity);
     }
 
-    private void UpdateUi(EntityUid uid, ConfigurationComponent component)
+    private void UpdateUi(Entity<ConfigurationComponent> entity)
     {
-        if (_uiSystem.HasUi(uid, ConfigurationUiKey.Key))
-            _uiSystem.SetUiState(uid, ConfigurationUiKey.Key, new ConfigurationBoundUserInterfaceState(component.Config));
+        if (_uiSystem.HasUi(entity, ConfigurationUiKey.Key))
+        {
+            _uiSystem.SetUiState(entity.Owner,
+                ConfigurationUiKey.Key,
+                new ConfigurationBoundUserInterfaceState(entity.Comp.Config));
+        }
     }
 
-    private void OnUpdate(EntityUid uid, ConfigurationComponent component, ConfigurationUpdatedMessage args)
+    private void OnUpdate(Entity<ConfigurationComponent> entity, ref ConfigurationUpdatedMessage args)
     {
-        foreach (var key in component.Config.Keys)
+        foreach (var key in entity.Comp.Config.Keys)
         {
             var value = args.Config.GetValueOrDefault(key);
 
-            if (string.IsNullOrWhiteSpace(value) || component.Validation != null && !component.Validation.IsMatch(value))
+            if (string.IsNullOrWhiteSpace(value) ||
+                entity.Comp.Validation != null && !entity.Comp.Validation.IsMatch(value))
                 continue;
 
-            component.Config[key] = value;
+            entity.Comp.Config[key] = value;
         }
 
-        UpdateUi(uid, component);
+        UpdateUi(entity);
 
-        var updatedEvent = new ConfigurationUpdatedEvent(component);
-        RaiseLocalEvent(uid, updatedEvent, false);
+        var updatedEvent = new ConfigurationUpdatedEvent(entity);
+        RaiseLocalEvent(entity, updatedEvent);
 
         // TODO support float (spinbox) and enum (drop-down) configurations
         // TODO support verbs.
     }
 
-    private void OnInsert(EntityUid uid, ConfigurationComponent component, ContainerIsInsertingAttemptEvent args)
+    private void OnInsert(Entity<ConfigurationComponent> entity, ref ContainerIsInsertingAttemptEvent args)
     {
-        if (!_toolSystem.HasQuality(args.EntityUid, component.QualityNeeded))
+        if (!_toolSystem.HasQuality(args.EntityUid, entity.Comp.QualityNeeded))
             return;
 
         args.Cancel();
@@ -79,13 +99,8 @@ public sealed class ConfigurationSystem : EntitySystem
     /// <summary>
     /// Sent when configuration values got changes
     /// </summary>
-    public sealed class ConfigurationUpdatedEvent : EntityEventArgs
+    public sealed class ConfigurationUpdatedEvent(ConfigurationComponent configuration) : EntityEventArgs
     {
-        public ConfigurationComponent Configuration;
-
-        public ConfigurationUpdatedEvent(ConfigurationComponent configuration)
-        {
-            Configuration = configuration;
-        }
+        public ConfigurationComponent Configuration = configuration;
     }
 }
