@@ -94,5 +94,3 @@ public abstract class SharedArmorSystem : EntitySystem
         return msg;
     }
 }
-
-
