@@ -11,3 +11,17 @@
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobAdministrativeAssistant
+  groups:
+  - AdminAssistantJumpsuit
+  - AdminAssistantOuter
+  - AdminAssistantShoes
+  - AdminAssistantEar
+  - AdminAssistantGloves
+  - CommonBackpack
+  - Glasses
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool

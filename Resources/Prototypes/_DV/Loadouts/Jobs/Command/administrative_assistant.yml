@@ -18,3 +18,13 @@
   id: AdminAssistantAltHeadset
   equipment:
     ears: ClothingHeadsetAltAdminAssistant
+
+- type: loadout
+  id: BlackGloves
+  equipment:
+    gloves: ClothingHandsGlovesColorBlack
+
+- type: loadout
+  id: WhiteGloves
+  equipment:
+    gloves: ClothingHandsGlovesColorWhite
