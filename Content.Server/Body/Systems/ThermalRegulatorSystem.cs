@@ -82,7 +82,11 @@ public sealed class ThermalRegulatorSystem : EntitySystem
         // if body temperature is not within comfortable, thermal regulation
         // processes starts
         if (tempDiff < ent.Comp1.ThermalRegulationTemperatureThreshold)
+        {
+            ent.Comp1.ShiverEmoteProgress = TimeSpan.Zero;
+            ent.Comp1.SweatEmoteProgress = TimeSpan.Zero;
             return;
+        }
 
         if (ent.Comp2.CurrentTemperature > ent.Comp1.NormalBodyTemperature)
         {
@@ -94,12 +98,12 @@ public sealed class ThermalRegulatorSystem : EntitySystem
             if (!ent.Comp1.VisuallySweats)
                 return;
 
-            //for humans, they start sweating at 25C over body temp, at once every 30 seconds, and maximally at 50C over, once per 15 seconds
-            ent.Comp1.SweatEmoteProgress += Math.Min(tempDiff / ent.Comp1.ThermalRegulationTemperatureThreshold, 3) / 30;
-            if (ent.Comp1.SweatEmoteProgress > 1.0f)
+            // For humans, they start sweating at 25C over body temp, at once every 30 seconds, and maximally at 50C over, once per 15 seconds
+            ent.Comp1.SweatEmoteProgress += TimeSpan.FromSeconds(Math.Min(tempDiff / ent.Comp1.ThermalRegulationTemperatureThreshold, 2));
+            if (ent.Comp1.SweatEmoteProgress > ent.Comp1.EmoteCooldown)
             {
                 _chat.TryEmoteWithChat(ent, ent.Comp1.SweatEmote, ChatTransmitRange.HideChat, ignoreActionBlocker: true);
-                ent.Comp1.SweatEmoteProgress = 0.0f;
+                ent.Comp1.SweatEmoteProgress = TimeSpan.Zero;
             }
         }
         else
@@ -112,12 +116,12 @@ public sealed class ThermalRegulatorSystem : EntitySystem
             if (!ent.Comp1.VisuallyShivers)
                 return;
 
-            //for humans, they start shivering at 25C under body temp, at once every 30 seconds, and maximally at 50C under, once per 15 seconds
-            ent.Comp1.ShiverEmoteProgress += Math.Min(tempDiff / ent.Comp1.ThermalRegulationTemperatureThreshold, 2) / 30;
-            if (ent.Comp1.ShiverEmoteProgress > 1.0f)
+            // For humans, they start shivering at 25C under body temp, at once every 30 seconds, and maximally at 50C under, once per 15 seconds
+            ent.Comp1.ShiverEmoteProgress += TimeSpan.FromSeconds(Math.Min(tempDiff / ent.Comp1.ThermalRegulationTemperatureThreshold, 2));
+            if (ent.Comp1.ShiverEmoteProgress > ent.Comp1.EmoteCooldown)
             {
                 _chat.TryEmoteWithChat(ent, ent.Comp1.ShiverEmote, ChatTransmitRange.HideChat, ignoreActionBlocker: true);
-                ent.Comp1.ShiverEmoteProgress = 0.0f;
+                ent.Comp1.ShiverEmoteProgress = TimeSpan.Zero;
             }
         }
     }

@@ -63,7 +63,6 @@
           type: Vox
           shouldHave: true
         emote: Wheeze
-        showAboveHead: true
         probability: 0.15
 
 
@@ -204,7 +203,6 @@
           type: Vox
           shouldHave: false
         emote: Wheeze
-        showAboveHead: true
         probability: 0.15
 
       # We need a metabolism effect on reagent removal
@@ -274,7 +272,6 @@
           type: Slime
           shouldHave: false
         emote: Laugh
-        showAboveHead: true
         probability: 0.1
       - !type:Emote
         conditions:
@@ -285,7 +282,6 @@
           type: Slime
           shouldHave: false
         emote: Scream
-        showAboveHead: true
         probability: 0.01
       - !type:Emote
         conditions:
@@ -293,7 +289,6 @@
           type: Slime
           shouldHave: false
         emote: Drool
-        showAboveHead: true
         probability: 0.1
       - !type:PopupMessage
         conditions:

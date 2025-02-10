@@ -15,15 +15,19 @@ public sealed partial class Emote : EntityEffect
 {
     [DataField("emote", customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
     public string? EmoteId;
-
+    /// <summary>
+    ///     Shows above someone's head and in chat
+    /// </summary>
     [DataField]
     public bool ShowInChat;
 
     [DataField]
     public bool Force = false;
-    //Middle option between showing above someone's head, but not in the emote chat messages
+    /// <summary>
+    ///     Middle option between showing above someone's head, but not in chat
+    /// </summary>
     [DataField]
-    public bool ShowAboveHead;
+    public bool ShowAboveHead = true;
 
     // JUSTIFICATION: Emoting is flavor, so same reason popup messages are not in here.
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
@@ -37,10 +41,10 @@ public sealed partial class Emote : EntityEffect
         var chatSys = args.EntityManager.System<ChatSystem>();
         if (ShowInChat)
             chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, ChatTransmitRange.GhostRangeLimit, forceEmote: Force);
+        else if (ShowAboveHead)
+            chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, ChatTransmitRange.HideChat, forceEmote: Force);
         else
-            if (ShowAboveHead)
-                chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, ChatTransmitRange.HideChat, forceEmote: Force);
-            else
-                chatSys.TryEmoteWithoutChat(args.TargetEntity, EmoteId);
+            chatSys.TryEmoteWithoutChat(args.TargetEntity, EmoteId);
+
     }
 }

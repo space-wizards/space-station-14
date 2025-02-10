@@ -66,25 +66,32 @@ public sealed partial class ThermalRegulatorComponent : Component
     public float ThermalRegulationTemperatureThreshold;
 
     /// <summary>
-    ///     The emote that sweats
+    ///     The emote that shows when an entity sweats
     /// </summary>
     [DataField]
     public ProtoId<EmotePrototype> SweatEmote = "Sweat";
 
     /// <summary>
-    ///     The emote that shivers
+    ///     The emote that shows when an entity shivers
     /// </summary>
     [DataField]
     public ProtoId<EmotePrototype> ShiverEmote = "Shiver";
-    [ViewVariables]
-    public float SweatEmoteProgress = 0.0f;
-    [ViewVariables]
-    public float ShiverEmoteProgress = 0.0f;
+
+    [DataField]
+    public TimeSpan EmoteCooldown = TimeSpan.FromSeconds(30);
+
+    [DataField]
+    public TimeSpan SweatEmoteProgress;
+
+    [DataField]
+    public TimeSpan ShiverEmoteProgress;
+
     /// <summary>
     ///     Does this entity do the sweat emote when warm
     /// </summary>
     [DataField]
     public bool VisuallySweats;
+
     /// <summary>
     ///     Does this entity do the shiver emote when cold
     /// </summary>
