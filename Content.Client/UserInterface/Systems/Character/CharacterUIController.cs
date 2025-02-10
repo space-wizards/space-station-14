@@ -56,7 +56,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         _window = UIManager.CreateWindow<CharacterWindow>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
 
-
+        LoadButton();
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenCharacterMenu,
@@ -66,6 +66,8 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
     public void OnStateExited(GameplayState state)
     {
+        UnloadButton();
+
         if (_window != null)
         {
             _window.Dispose();
