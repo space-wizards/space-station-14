@@ -177,7 +177,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         _physics.SetBodyType(embeddable, BodyType.Dynamic, body: physics, xform: xform);
         _transform.AttachToGridOrMap(embeddable, xform);
         embeddable.Comp.EmbeddedIntoUid = null;
-        Dirty(embeddable, embeddable.Comp);
+        Dirty(embeddable);
 
         // Reset whether the projectile has damaged anything if it successfully was removed
         if (TryComp<ProjectileComponent>(embeddable, out var projectile))
