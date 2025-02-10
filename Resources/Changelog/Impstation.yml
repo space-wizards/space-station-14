@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Chameleon PDA
-    type: Add
-  - message: PDAs show the most recent ID placed inside as the owner, instead of being
-      fixed.
-    type: Tweak
-  id: 594
-  time: '2024-11-27T19:32:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/810
 - author: widgetbeck
   changes:
   - message: Decapoid vapor tanks are now fully functional, which means that Decapoids
@@ -4230,3 +4220,10 @@
   id: 1093
   time: '2025-02-10T21:19:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1632
+- author: FutureExalt
+  changes:
+  - message: new roundstart coats for secoff, warden, and detective.
+    type: Add
+  id: 1094
+  time: '2025-02-10T22:41:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1612
