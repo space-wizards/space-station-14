@@ -258,7 +258,7 @@
 - type: entity
   id: ActionStingBlind
   name: Blind Sting
-  description: We sting a target, blinding them temporarily. Costs a medium amount of chemicals.
+  description: We sting a target, blinding them temporarily. Costs a sizeable amount of chemicals. Stinging multiple times won't intensify the effect.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
@@ -273,7 +273,7 @@
       state: sting_blind
     event: !type:StingBlindEvent {}
   - type: ChangelingAction
-    chemicalCost: 35
+    chemicalCost: 50
     useInLesserForm: true
 
 - type: entity

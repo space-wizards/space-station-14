@@ -189,6 +189,16 @@
     state: head_twisting
 
 - type: marking
+  id: HeadTwistingFlipped
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Human, Dwarf, SlimePerson]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/scars.rsi
+    state: head_twisting_flipped
+
+- type: marking
   id: LegProstheticLeft
   bodyPart: LLeg
   markingCategory: Legs
