@@ -12,6 +12,7 @@ using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -54,6 +55,38 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         SubscribeLocalEvent<EmitSoundOnCollideComponent, StartCollideEvent>(OnEmitSoundOnCollide);
 
         SubscribeLocalEvent<SoundWhileAliveComponent, MobStateChangedEvent>(OnMobState);
+
+        // We need to handle state manually here
+        // BaseEmitSoundComponent isn't registered so we have to subscribe to each one
+        // TODO: Make it use autonetworking instead of relying on inheritance
+        SubscribeEmitComponent<EmitSoundOnActivateComponent>();
+        SubscribeEmitComponent<EmitSoundOnCollideComponent>();
+        SubscribeEmitComponent<EmitSoundOnDropComponent>();
+        SubscribeEmitComponent<EmitSoundOnInteractUsingComponent>();
+        SubscribeEmitComponent<EmitSoundOnLandComponent>();
+        SubscribeEmitComponent<EmitSoundOnPickupComponent>();
+        SubscribeEmitComponent<EmitSoundOnSpawnComponent>();
+        SubscribeEmitComponent<EmitSoundOnThrowComponent>();
+        SubscribeEmitComponent<EmitSoundOnUIOpenComponent>();
+        SubscribeEmitComponent<EmitSoundOnUseComponent>();
+
+        // Helper method so it's a little less ugly
+        void SubscribeEmitComponent<T>() where T : BaseEmitSoundComponent
+        {
+            SubscribeLocalEvent<T, ComponentGetState>(GetBaseEmitState);
+            SubscribeLocalEvent<T, ComponentHandleState>(HandleBaseEmitState);
+        }
+    }
+
+    private static void GetBaseEmitState<T>(EntityUid uid, T component, ref ComponentGetState args) where T : BaseEmitSoundComponent
+    {
+        args.State = new EmitSoundComponentState(component.Sound);
+    }
+
+    private static void HandleBaseEmitState<T>(EntityUid uid, T component, ref ComponentHandleState args) where T : BaseEmitSoundComponent
+    {
+        if (args.Current is EmitSoundComponentState state)
+            component.Sound = state.Sound;
     }
 
     private void HandleEmitSoundOnUIOpen(EntityUid uid, EmitSoundOnUIOpenComponent component, AfterActivatableUIOpenEvent args)
