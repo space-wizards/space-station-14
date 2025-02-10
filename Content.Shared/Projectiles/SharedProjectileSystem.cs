@@ -188,7 +188,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             Dirty(embeddable, projectile);
         }
 
-        Dirty(embeddable);
         _physics.WakeBody(embeddable);
     }
 
