@@ -32,7 +32,6 @@
   components:
   - type: Pda
     id: AdminAssistantIDCard
-    state: pda-admin-assistant
     penSlot:
       startingItem: LuxuryPen
       priority: -1
@@ -47,5 +46,5 @@
   - type: PdaBorderColor
     borderColor: "#4992b4"
   - type: Icon
-    sprite: _DV/Objects/Devices/pda.rsi
+    sprite: Objects/Devices/pda.rsi
     state: pda-admin-assistant
