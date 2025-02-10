@@ -31,8 +31,6 @@ public sealed partial class GraphicsTab : Control
         Control.AddOptionPercentSlider(CVars.LightBlurFactor, LightingBlurFactorSlider, 0f, 1f, 0.003f);
         Control.AddOptionCheckBox(CVars.LightSoftShadows, LightingSoftShadowsCheckBox);
 
-        UpdateLightingSettingsVisibility();
-
         Control.AddOptionDropDown(
             CVars.DisplayUIScale,
             DropDownUIScale,
@@ -78,6 +76,7 @@ public sealed partial class GraphicsTab : Control
 
         UpdateViewportWidthRange();
         UpdateViewportSettingsVisibility();
+        UpdateLightingSettingsVisibility();
     }
 
     private void UpdateViewportSettingsVisibility()
