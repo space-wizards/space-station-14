@@ -9,9 +9,16 @@
                 <CheckBox Name="VSyncCheckBox" Text="{Loc 'ui-options-vsync'}" />
                 <CheckBox Name="FullscreenCheckBox" Text="{Loc 'ui-options-fullscreen'}" />
 
+                <!-- Lighting -->
+                <Label Text="{Loc 'ui-options-lighting-label'}" StyleClasses="LabelKeyText"/>
+                <ui:OptionDropDown Name="DropDownLightingQuality" Title="{Loc 'ui-options-lighting-quality-label'}" />
+                <ui:OptionSlider Name="LightingResolutionScaleSlider" Title="{Loc 'ui-options-lighting-resolution-scale-label'}" />
+                <CheckBox Name="LightingBlurCheckBox" Text="{Loc 'ui-options-lighting-blur-label'}" />
+                <ui:OptionSlider Name="LightingBlurFactorSlider" Title="{Loc 'ui-options-lighting-blur-factor-label'}" />
+                <CheckBox Name="LightingSoftShadowsCheckBox" Text="{Loc 'ui-options-lighting-soft-shadows-label'}" />
+
                 <!-- Quality -->
                 <Label Text="{Loc 'ui-options-quality-label'}" StyleClasses="LabelKeyText"/>
-                <ui:OptionDropDown Name="DropDownLightingQuality" Title="{Loc 'ui-options-lighting-label'}" />
                 <CheckBox Name="ViewportLowResCheckBox" Text="{Loc 'ui-options-vp-low-res'}" />
                 <CheckBox Name="ParallaxLowQualityCheckBox" Text="{Loc 'ui-options-parallax-low-quality'}" />
 
