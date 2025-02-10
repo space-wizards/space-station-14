@@ -165,6 +165,23 @@
     - PipeNetworks
 
 - type: entity
+  parent: GasPipeBroken
+  id: GasPipeStraightBroken
+  suffix: Straight
+  components:
+  # FIXME held sprites
+  # FIXME item shape etc.
+  # FIXME inherit more
+  # FIXME sprite copyright
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    drawdepth: ThinPipe
+    visible: false
+    layers:
+      - state: pipeStraightBroken
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+
+- type: entity
   parent: GasPipeBase
   id: GasPipeBend
   suffix: Bend
@@ -228,6 +245,19 @@
     guides:
     - Pipes
     - PipeNetworks
+
+- type: entity
+  parent: GasPipeBroken
+  id: GasPipeBendBroken
+  suffix: Straight
+  components:
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    drawdepth: ThinPipe
+    visible: false
+    layers:
+      - state: pipeBendBroken
+        map: [ "enum.PipeVisualLayers.Pipe" ]
 
 - type: entity
   parent: GasPipeBase

@@ -90,7 +90,7 @@
         doAfter: 1
 
   - node: straightBroken
-    entity: GasPipeBroken
+    entity: GasPipeStraightBroken
     edges:
     - to: straight
       conditions:
@@ -129,7 +129,7 @@
         doAfter: 1
 
   - node: bendBroken
-    entity: GasPipeBroken
+    entity: GasPipeBendBroken
     edges:
     - to: bend
       conditions:
