@@ -46,7 +46,7 @@
     - MagazineMagnum
 
 - type: startingGear
-  id: ERTLeaderGearEVA
+  id: ERTMarinesGearLeader
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTLeader
     back: ClothingBackpackERTLeader
@@ -139,7 +139,7 @@
     - Lantern
 
 - type: startingGear
-  id: ERTChaplainGearEVA
+  id: ERTMarinesGearPaladin
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTChaplain
     back: ClothingBackpackERTChaplain
@@ -273,7 +273,7 @@
     - GrenadeStinger
 
 - type: startingGear
-  id: ERTSecurityGearEVA
+  id: ERTMarinesGearRifleman
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackERTSecurity
@@ -306,7 +306,7 @@
     - MagazineRifle
 
 - type: startingGear
-  id: ERTSecurityGearEVABreacher
+  id: ERTMarinesGearBreacher
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackERTSecurity
@@ -341,7 +341,7 @@
     - BoxLethalshot
 
 - type: startingGear
-  id: ERTSecurityGearEVAGrenadier
+  id: ERTMarinesGearGrenadier
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackERTSecurity
@@ -380,7 +380,7 @@
     - MagazinePistolSubMachineGun
 
 - type: startingGear
-  id: ERTSecurityGearEVALaserRifleman
+  id: ERTMarinesGearLaserRifleman
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackERTSecurity
@@ -474,7 +474,7 @@
     - PyraAutoInjector
 
 - type: startingGear
-  id: ERTMedicalGearEVA
+  id: ERTMarinesGearMedic
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTMedic
     back: ClothingBackpackERTMedical
