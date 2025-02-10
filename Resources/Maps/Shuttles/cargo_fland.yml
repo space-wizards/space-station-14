@@ -195,7 +195,7 @@ entities:
       parent: 1
     - type: Door
       secondsUntilStateChange: -4923.5425
-      state: PartiallyOpen
+      state: Opening
   - uid: 51
     components:
     - type: Transform
@@ -204,7 +204,7 @@ entities:
       parent: 1
     - type: Door
       secondsUntilStateChange: -4922.5757
-      state: PartiallyOpen
+      state: Opening
   - uid: 52
     components:
     - type: Transform
@@ -213,7 +213,7 @@ entities:
       parent: 1
     - type: Door
       secondsUntilStateChange: -4921.642
-      state: PartiallyOpen
+      state: Opening
   - uid: 53
     components:
     - type: Transform
@@ -222,7 +222,7 @@ entities:
       parent: 1
     - type: Door
       secondsUntilStateChange: -4936.642
-      state: PartiallyOpen
+      state: Opening
 - proto: APCBasic
   entities:
   - uid: 121

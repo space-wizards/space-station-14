@@ -2505,7 +2505,7 @@ entities:
       parent: 2
     - type: Door
       secondsUntilStateChange: -19820.787
-      state: PartiallyOpen
+      state: Opening
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -2555,7 +2555,7 @@ entities:
       parent: 2
     - type: Door
       secondsUntilStateChange: -12801.055
-      state: PartiallyOpen
+      state: Opening
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -2566,7 +2566,7 @@ entities:
       parent: 2
     - type: Door
       secondsUntilStateChange: -12799.388
-      state: PartiallyOpen
+      state: Opening
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -2793,7 +2793,7 @@ entities:
       parent: 2
     - type: Door
       secondsUntilStateChange: -99992.46
-      state: PartiallyOpen
+      state: Opening
     - type: DeviceLinkSource
       linkedPorts:
         2119:
@@ -3235,7 +3235,7 @@ entities:
       parent: 2
     - type: Door
       secondsUntilStateChange: -81270.45
-      state: PartiallyOpen
+      state: Opening
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -3326,7 +3326,7 @@ entities:
       parent: 2
     - type: Door
       secondsUntilStateChange: -12798.1875
-      state: PartiallyOpen
+      state: Opening
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True

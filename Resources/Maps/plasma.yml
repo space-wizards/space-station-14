@@ -166148,7 +166148,7 @@ entities:
         DoorStatus: True
     - type: Door
       secondsUntilStateChange: -197977.33
-      state: PartiallyOpen
+      state: Opening
     - type: Airlock
       autoClose: False
   - uid: 23283

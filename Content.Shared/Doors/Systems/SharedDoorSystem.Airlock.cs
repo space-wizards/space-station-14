@@ -34,7 +34,7 @@ public abstract partial class SharedDoorSystem
         // the initial power-check.
 
         if (!TryComp(airlock, out DoorComponent? door)
-            || door.State is DoorState.PartiallyOpen or DoorState.PartiallyClosed
+            || door.State is DoorState.Opening or DoorState.Closing
             || CanChangeState(airlock,
                 door.State is DoorState.AttemptingCloseByPrying or DoorState.AttemptingOpenByPrying))
             return;

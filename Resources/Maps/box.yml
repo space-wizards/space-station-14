@@ -13835,7 +13835,7 @@ entities:
       parent: 8364
     - type: Door
       secondsUntilStateChange: -93654.52
-      state: PartiallyOpen
+      state: Opening
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -15380,7 +15380,7 @@ entities:
       parent: 8364
     - type: Door
       secondsUntilStateChange: -6911.021
-      state: PartiallyOpen
+      state: Opening
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -87872,7 +87872,7 @@ entities:
       parent: 8364
     - type: Door
       secondsUntilStateChange: -885.5329
-      state: PartiallyClosed
+      state: Closing
   - uid: 13388
     components:
     - type: Transform
@@ -87880,7 +87880,7 @@ entities:
       parent: 8364
     - type: Door
       secondsUntilStateChange: -921.2329
-      state: PartiallyClosed
+      state: Closing
   - uid: 13389
     components:
     - type: Transform
@@ -88048,7 +88048,7 @@ entities:
       parent: 8364
     - type: Door
       secondsUntilStateChange: -87843.06
-      state: PartiallyClosed
+      state: Closing
   - uid: 15010
     components:
     - type: Transform

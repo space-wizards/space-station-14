@@ -136,13 +136,13 @@ public sealed partial class DoorSystem : SharedDoorSystem
                 }
 
                 return;
-            case DoorState.AttemptingOpenBySelf or DoorState.AttemptingOpenByPrying or DoorState.PartiallyOpen:
+            case DoorState.AttemptingOpenBySelf or DoorState.AttemptingOpenByPrying or DoorState.Opening:
                 PlayAnimationIfNotPlaying((door, animPlayer),
                     (Animation)door.Comp.OpeningAnimation,
                     DoorComponent.AnimationKeyOpen);
 
                 return;
-            case DoorState.AttemptingCloseBySelf or DoorState.AttemptingCloseByPrying or DoorState.PartiallyClosed:
+            case DoorState.AttemptingCloseBySelf or DoorState.AttemptingCloseByPrying or DoorState.Closing:
                 PlayAnimationIfNotPlaying((door, animPlayer),
                     (Animation)door.Comp.ClosingAnimation,
                     DoorComponent.AnimationKeyClose);

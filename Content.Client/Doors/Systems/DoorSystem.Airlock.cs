@@ -117,7 +117,7 @@ public sealed partial class DoorSystem
         {
             // Emergency lights are visible when the door is fully closed.
             var visible = emergencyLightsVisible
-                          && door.State is DoorState.Closed or DoorState.WeldedClosed
+                          && door.State is DoorState.Closed or DoorState.Welded
                           && !boltedVisible;
 
             args.Sprite.LayerSetVisible(DoorVisualLayers.BaseEmergencyAccess, visible);
@@ -144,8 +144,8 @@ public sealed partial class DoorSystem
                // Unlit is not visible when being pried open or closed.
                || state is DoorState.AttemptingCloseBySelf
                    or DoorState.AttemptingOpenBySelf
-                   or DoorState.PartiallyOpen
-                   or DoorState.PartiallyClosed
+                   or DoorState.Opening
+                   or DoorState.Closing
                    or DoorState.Denying
                || _appearanceSystem.TryGetData<bool>(airlock, DoorVisuals.ClosedLights, out var closedLights, comp)
                && closedLights;
@@ -162,7 +162,7 @@ public sealed partial class DoorSystem
 
     private bool IsBoltedVisible(Entity<AirlockComponent> airlock, AppearanceComponent comp, DoorState doorState)
     {
-        return doorState is DoorState.Closed or DoorState.WeldedClosed
+        return doorState is DoorState.Closed or DoorState.Welded
                && _appearanceSystem.TryGetData<bool>(airlock, DoorVisuals.BoltLights, out var visible, comp)
                && visible;
     }

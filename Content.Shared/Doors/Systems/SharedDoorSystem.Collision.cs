@@ -28,8 +28,8 @@ public abstract partial class SharedDoorSystem
             case DoorState.Closed
                 or DoorState.AttemptingOpenBySelf
                 or DoorState.AttemptingOpenByPrying
-                or DoorState.PartiallyClosed
-                or DoorState.WeldedClosed
+                or DoorState.Closing
+                or DoorState.Welded
                 or DoorState.Denying
                 or DoorState.Emagging:
                 return true;
@@ -76,11 +76,11 @@ public abstract partial class SharedDoorSystem
 
         switch (door.Comp.State)
         {
-            case DoorState.PartiallyClosed:
+            case DoorState.Closing:
                 SetState(door, DoorState.Open);
 
                 return;
-            case DoorState.PartiallyOpen:
+            case DoorState.Opening:
                 SetState(door, DoorState.Closed);
 
                 return;

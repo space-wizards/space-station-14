@@ -13976,7 +13976,7 @@ entities:
       parent: 2
     - type: Door
       secondsUntilStateChange: -311998.12
-      state: PartiallyOpen
+      state: Opening
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
