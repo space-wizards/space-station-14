@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Adjust spacewind min calc mass to 15
-    type: Tweak
-  id: 587
-  time: '2024-11-26T19:37:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/811
 - author: kipdotnet
   changes:
   - message: Added the S-Cargo moving trunk! Its a normal locker, but with zero gravity
@@ -4229,3 +4222,14 @@
   id: 1086
   time: '2025-02-09T23:55:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1625
+- author: AftrLite
+  changes:
+  - message: Flipped version of the twisted scar marking.
+    type: Add
+  - message: '[Changeling Blind Sting] No longer damages eyes, instead inflicting
+      the blindness debuff for a significantly longer time. Ability''s Chemical Cost
+      increased to align with this buff.'
+    type: Tweak
+  id: 1087
+  time: '2025-02-10T03:17:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1622
