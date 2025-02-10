@@ -50,7 +50,6 @@ public sealed partial class LivingHeartMenu : RadialMenu
 
             var button = new EmbeddedEntityMenuButton
             {
-                StyleClasses = { "RadialMenuButton" },
                 SetSize = new Vector2(64, 64),
                 ToolTip = _ent.TryGetComponent<MetaDataComponent>(ent.Value, out var md) ? md.EntityName : "Unknown",
                 NetEntity = (NetEntity) target,
@@ -90,7 +89,7 @@ public sealed partial class LivingHeartMenu : RadialMenu
         }
     }
 
-    public sealed class EmbeddedEntityMenuButton : RadialMenuTextureButton
+    public sealed class EmbeddedEntityMenuButton : RadialMenuTextureButtonWithSector
     {
         public NetEntity NetEntity;
     }
