@@ -8,6 +8,7 @@ desc = "Official English testing server for Space Station 14.\nVanilla, roleplay
 tags = "lang:en,region:am_n_e,rp:low"
 
 [server]
+# This needs to be specified even though it's identical to the hostname, because fallback lobby name is "Lobby <hostname>" which would be too long and go out of bounds
 lobby_name = "[EN][Testing] Wizard's Den Vulture [US East 2]"
 
 [chat]
