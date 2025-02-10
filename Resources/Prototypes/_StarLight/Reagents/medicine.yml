@@ -79,4 +79,4 @@
         - !type:OrganType
           type: Avali
           shouldHave: true
-        ammount: 3
+        amount: 3
