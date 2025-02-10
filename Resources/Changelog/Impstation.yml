@@ -1,34 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Beanbag shell ammo box is now a stun slug ammo box
-    type: Tweak
-  id: 589
-  time: '2024-11-27T08:22:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/815
-- author: Pinkbat5
-  changes:
-  - message: Chemists can now wear a new formal jumpsuit, the senior physician beret/labcoat,
-      and some heavy-duty PPE.
-    type: Add
-  id: 590
-  time: '2024-11-27T10:47:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/814
-- author: widgetbeck
-  changes:
-  - message: Added (hopefully) extremely rare event, Goblin Castaways, and its associated
-      CrateFullOGoblins.
-    type: Add
-  - message: Changed weights of all goblin events to make them less common.
-    type: Tweak
-  - message: Sir Gollylad is now ripped, and can pry open doors (extremely slowly.)
-      However, this does mean that his ID card and crowbar have been removed.
-    type: Tweak
-  - message: Sir Gollylad is no longer bald, and will spawn with a random skin color.
-    type: Tweak
-  id: 591
-  time: '2024-11-27T11:49:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/817
 - author: Darkmajia
   changes:
   - message: Direct window upgrading is back! Shuttle windows are not back, though.
@@ -4230,3 +4200,33 @@
   id: 1088
   time: '2025-02-10T18:05:35.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1623
+- author: Darkmajia
+  changes:
+  - message: '"Show all gases" has been added to the supermatter console.'
+    type: Add
+  id: 1089
+  time: '2025-02-10T21:00:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1624
+- author: Kandiyaki
+  changes:
+  - message: the guidebook page for the eldritch flask now exists.
+    type: Tweak
+  - message: the eldritch flask no longer works as a cryostasis container, and its
+      size has been reduced.
+    type: Tweak
+  - message: the eldritch flask's catalog entry now shows the correct items needed
+      to create it.
+    type: Tweak
+  - message: the ritual of knowledge no longer has a chance to eat its user's organs.
+    type: Fix
+  id: 1090
+  time: '2025-02-10T21:07:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1635
+- author: Pinkbat5
+  changes:
+  - message: Baton, disabler and utility tokens now start in seclinks instead of roundstart
+      security inventories.
+    type: Tweak
+  id: 1091
+  time: '2025-02-10T21:01:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1631
