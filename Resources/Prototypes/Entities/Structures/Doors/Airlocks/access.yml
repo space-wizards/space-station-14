@@ -65,6 +65,15 @@
       board: [ DoorElectronicsBar ]
 
 - type: entity
+  parent: AirlockServiceLocked
+  id: AirlockBarKitchenLocked
+  suffix: Bar&Kitchen, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsBarKitchen ]
+
+- type: entity
   parent: AirlockHydroponics
   id: AirlockHydroponicsLocked
   suffix: Hydroponics, Locked
@@ -469,6 +478,16 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsBar ]
+
+- type: entity
+  parent: AirlockServiceGlassLocked
+  id: AirlockBarKitchenGlassLocked
+  suffix: Bar&Kitchen, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsBarKitchen ]
+
 
 - type: entity
   parent: AirlockExternalGlass
@@ -906,6 +925,15 @@
 
 - type: entity
   parent: AirlockMaintServiceLocked
+  id: AirlockMaintBarKitchenLocked
+  suffix: Bar&Kitchen, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsBarKitchen ]
+
+- type: entity
+  parent: AirlockMaintServiceLocked
   id: AirlockMaintChapelLocked
   suffix: Chapel, Locked
   components:
@@ -968,6 +996,15 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsKitchen ]
+
+- type: entity
+  parent: AirlockMaintServiceLocked
+  id: AirlockMaintKitchenHydroLocked
+  suffix: Kitchen/Hydroponics, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsKitchenHydroponics ]
 
 - type: entity
   parent: AirlockMaint
