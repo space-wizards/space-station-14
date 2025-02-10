@@ -112,7 +112,11 @@ namespace Content.Shared.Damage
         }
 
         /// <summary>
-        ///     Applies damage specified via a <see cref="DamageSpecifier"/>.
+        ///     Applies damage specified via a <see cref="DamageSpecifier"/> accounting for resistances. Resistances can
+        ///     come from a DamageModifierSet (e.g. for species resistances) or be added as part of a DamageModifyEvent.
+        ///
+        ///     ignoreResistances ignores all resistances except when alwaysApplyBaseDamageModifier is true, in which
+        ///     case only base damage modifiers are applied.
         /// </summary>
         /// <remarks>
         ///     <see cref="DamageSpecifier"/> is effectively just a dictionary of damage types and damage values. This
@@ -143,30 +147,31 @@ namespace Content.Shared.Damage
             if (before.Cancelled)
                 return null;
 
+            bool applyBaseResistances = alwaysApplyBaseDamageModifier || !ignoreResistances;
+            bool applyDamageModifiers = !ignoreResistances;
+
             // Apply resistances
-            if (!ignoreResistances || alwaysApplyBaseDamageModifier)
+            if (applyBaseResistances)
             {
                 if (damageable.DamageModifierSetId != null &&
                     _prototypeManager.TryIndex<DamageModifierSetPrototype>(damageable.DamageModifierSetId, out var modifierSet))
                 {
                     // TODO DAMAGE PERFORMANCE
                     // use a local private field instead of creating a new dictionary here..
-                    // also change the logic somewhere here for having alwaysApplyBaseDamageModifier at true and ignoreResistances at true at the same time incase you add more stuff here, under those conditions it should only apply this single modifier set to damage
                     damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
                 }
+            }
 
-                // this if statement is here incase we only wanted to apply the base damage modifiers
-                if (!ignoreResistances)
-                {
-                    var ev = new DamageModifyEvent(damage, origin);
-                    RaiseLocalEvent(uid.Value, ev);
-                    damage = ev.Damage;
-                }
+            if (applyDamageModifiers)
+            {
+                var ev = new DamageModifyEvent(damage, origin);
+                RaiseLocalEvent(uid.Value, ev);
+                damage = ev.Damage;
+            }
 
-                if (damage.Empty)
-                {
-                    return damage;
-                }
+            if (damage.Empty)
+            {
+                return damage;
             }
 
             // TODO DAMAGE PERFORMANCE
