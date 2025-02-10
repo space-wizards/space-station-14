@@ -713,7 +713,6 @@
   - type: RgbLightController
     layers: [ 0 ]
   - type: Item
-    heldPrefix: rainbowcarpplush
     inhandVisuals:
       left:
       - state: rainbowcarpplush-inhand-left
