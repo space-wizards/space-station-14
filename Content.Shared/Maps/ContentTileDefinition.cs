@@ -122,7 +122,7 @@ namespace Content.Shared.Maps
     }
 
     [Flags]
-    public enum TileFlag : ushort
+    public enum TileFlag : byte
     {
         None = 0,
         Roof = 1 << 0,

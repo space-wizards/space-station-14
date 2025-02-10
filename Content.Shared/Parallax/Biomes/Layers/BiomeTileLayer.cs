@@ -32,5 +32,5 @@ public sealed partial class BiomeTileLayer : IBiomeLayer
     /// Flags to set on the tile when placed.
     /// </summary>
     [DataField]
-    public ushort Flags = 0;
+    public byte Flags = 0;
 }

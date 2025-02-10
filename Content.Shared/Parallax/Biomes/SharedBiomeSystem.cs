@@ -142,7 +142,7 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Gets the underlying biome tile, ignoring any existing tile that may be there.
     /// </summary>
-    private bool TryGetTile(Vector2i indices, FastNoiseLite noise, bool invert, float threshold, ContentTileDefinition tileDef, ushort tileFlags, List<byte>? variants, [NotNullWhen(true)] out Tile? tile)
+    private bool TryGetTile(Vector2i indices, FastNoiseLite noise, bool invert, float threshold, ContentTileDefinition tileDef, byte tileFlags, List<byte>? variants, [NotNullWhen(true)] out Tile? tile)
     {
         var found = noise.GetNoise(indices.X, indices.Y);
         found = invert ? found * -1 : found;
@@ -163,7 +163,7 @@ public abstract class SharedBiomeSystem : EntitySystem
             variant = _tile.PickVariant(tileDef, (int) variantValue);
         }
 
-        tile = new Tile(tileDef.TileId, 0, variant, contentFlag: tileFlags);
+        tile = new Tile(tileDef.TileId, flags: tileFlags, variant);
         return true;
     }
 
