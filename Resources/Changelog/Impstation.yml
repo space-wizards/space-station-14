@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Mucin now evaporates and costs less thirst.
-    type: Tweak
-  - message: Propulsion gel nerf.
-    type: Tweak
-  id: 597
-  time: '2024-11-27T20:55:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/818
 - author: formlessnameless
   changes:
   - message: Various creatures can now crawl through the station's pipes. Beware!
@@ -4225,3 +4216,10 @@
   id: 1096
   time: '2025-02-10T23:05:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1571
+- author: Darkmajia
+  changes:
+  - message: Corpses no longer collide with plastic flaps.
+    type: Fix
+  id: 1097
+  time: '2025-02-10T23:11:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1572
