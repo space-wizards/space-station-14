@@ -227,7 +227,7 @@ entities:
       parent: 292
     - type: Door
       secondsUntilStateChange: -623.03485
-      state: Opening
+      state: PartiallyOpen
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -244,7 +244,7 @@ entities:
       parent: 292
     - type: Door
       secondsUntilStateChange: -624.7682
-      state: Opening
+      state: PartiallyOpen
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -261,7 +261,7 @@ entities:
       parent: 292
     - type: Door
       secondsUntilStateChange: -619.23486
-      state: Opening
+      state: PartiallyOpen
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -278,7 +278,7 @@ entities:
       parent: 292
     - type: Door
       secondsUntilStateChange: -621.1349
-      state: Opening
+      state: PartiallyOpen
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True

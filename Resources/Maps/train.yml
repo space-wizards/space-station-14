@@ -76251,7 +76251,7 @@ entities:
       parent: 2
     - type: Door
       secondsUntilStateChange: -148220.45
-      state: Closing
+      state: PartiallyClosed
   - uid: 11227
     components:
     - type: Transform

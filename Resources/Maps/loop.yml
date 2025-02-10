@@ -7268,7 +7268,7 @@ entities:
       parent: 2
     - type: Door
       secondsUntilStateChange: -50568.94
-      state: Opening
+      state: PartiallyOpen
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -43743,7 +43743,7 @@ entities:
       parent: 2
     - type: Door
       secondsUntilStateChange: -298324.5
-      state: Opening
+      state: PartiallyOpen
   - uid: 6747
     components:
     - type: Transform
@@ -43751,7 +43751,7 @@ entities:
       parent: 2
     - type: Door
       secondsUntilStateChange: -298325.22
-      state: Opening
+      state: PartiallyOpen
   - uid: 6749
     components:
     - type: Transform
@@ -43759,7 +43759,7 @@ entities:
       parent: 2
     - type: Door
       secondsUntilStateChange: -298323.78
-      state: Opening
+      state: PartiallyOpen
   - uid: 6750
     components:
     - type: Transform
@@ -43767,7 +43767,7 @@ entities:
       parent: 2
     - type: Door
       secondsUntilStateChange: -298323.16
-      state: Opening
+      state: PartiallyOpen
   - uid: 9721
     components:
     - type: Transform
