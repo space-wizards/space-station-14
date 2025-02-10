@@ -15,16 +15,12 @@ public sealed class RoomFillSystem : EntitySystem
 
     private void OnRoomFillMapInit(EntityUid uid, RoomFillComponent component, MapInitEvent args)
     {
-        // Just test things.
-        if (component.Size == Vector2i.Zero)
-            return;
-
         var xform = Transform(uid);
 
         if (xform.GridUid != null)
         {
             var random = new Random();
-            var room = _dungeon.GetRoomPrototype(random, component.RoomWhitelist, component.Size);
+            var room = _dungeon.GetRoomPrototype(random, component.RoomWhitelist, component.MinSize, component.MaxSize);
 
             if (room != null)
             {

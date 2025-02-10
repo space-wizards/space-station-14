@@ -17,9 +17,20 @@ public sealed partial class DungeonSystem
     private readonly List<DungeonRoomPrototype> _availableRooms = new();
 
     /// <summary>
-    /// Gets a random dungeon room matching the specified area and whitelist.
+    /// Gets a random dungeon room matching the specified area, whitelist and size.
     /// </summary>
-    public DungeonRoomPrototype? GetRoomPrototype(Random random, EntityWhitelist? whitelist = null, Vector2i? size = null)
+    public DungeonRoomPrototype? GetRoomPrototype(Vector2i size, Random random, EntityWhitelist? whitelist = null)
+    {
+        return GetRoomPrototype(random, whitelist, minSize: size, maxSize: size);
+    }
+
+    /// <summary>
+    /// Gets a random dungeon room matching the specified area and whitelist and size range
+    /// </summary>
+    public DungeonRoomPrototype? GetRoomPrototype(Random random,
+        EntityWhitelist? whitelist = null,
+        Vector2i? minSize = null,
+        Vector2i? maxSize = null)
     {
         // Can never be true.
         if (whitelist is { Tags: null })
@@ -31,7 +42,10 @@ public sealed partial class DungeonSystem
 
         foreach (var proto in _prototype.EnumeratePrototypes<DungeonRoomPrototype>())
         {
-            if (size is not null && proto.Size != size)
+            if (minSize is not null && (proto.Size.X < minSize.Value.X || proto.Size.Y < minSize.Value.Y))
+                continue;
+
+            if (maxSize is not null && (proto.Size.X > maxSize.Value.X || proto.Size.Y > maxSize.Value.Y))
                 continue;
 
             if (whitelist == null)
