@@ -40,6 +40,7 @@ ui-options-event-music = Event Music
 ui-options-announcer-disable-multiple-sounds = Disable Overlapping Announcer Sounds
 ui-options-announcer-disable-multiple-sounds-tooltip = Some announcements will not sound right, this setting isn't recommended
 ui-options-admin-sounds = Play Admin Sounds
+ui-options-bwoink-sound = Play AHelp Notification Sound
 ui-options-volume-label = Volume
 
 ## Graphics menu

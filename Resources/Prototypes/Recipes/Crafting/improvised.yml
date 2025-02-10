@@ -281,6 +281,19 @@
     state: icon
 
 - type: construction
+  name: goliath hardsuit
+  id: HardsuitGoliath
+  graph: HardsuitGoliath
+  startNode: start
+  targetNode: hardsuitGoliath
+  category: construction-category-clothing
+  objectType: Item
+  description: A lightweight hardsuit, adorned with a patchwork of thick, chitinous goliath hide.
+  icon:
+    sprite: Clothing/OuterClothing/Hardsuits/goliath.rsi
+    state: icon
+
+- type: construction
   name: yarn noodles
   id: yarnnoodles
   graph: YarnNoodles

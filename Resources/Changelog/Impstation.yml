@@ -1,186 +1,4 @@
 ﻿Entries:
-- author: FlippenPage
-  changes:
-  - message: Fixed Drones being unable to move.
-    type: Fix
-  id: 581
-  time: '2024-11-26T09:25:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/806
-- author: Sha-Seng
-  changes:
-  - message: Beanbag Kammerers and Beanbag Enforcers are now blue!
-    type: Tweak
-  - message: Beanbag Shells and their associated containers are also blue now (that's
-      my attack)
-    type: Tweak
-  - message: Minor touchups on lethal Kammerer and Enforcer sprites
-    type: Tweak
-  id: 582
-  time: '2024-11-26T19:09:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/760
-- author: widgetbeck
-  changes:
-  - message: Added the goblin EVA suit (gobsuit.) Admin-only for the moment.
-    type: Add
-  id: 583
-  time: '2024-11-26T19:11:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/808
-- author: DinnerCalzone
-  changes:
-  - message: (Hummingbird) The external airlocks in the area between the center and
-      starboard wing now properly require external access.
-    type: Fix
-  id: 584
-  time: '2024-11-26T19:10:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/807
-- author: DinnerCalzone
-  changes:
-  - message: 'Shotgun beanbags have been reworked into stun slugs. These do 7.5 shock
-      and 40 stamina damage compared to beanbags'' 10 blunt and 40 stamina damage,
-      so being shot by them will not cause you to bleed. Note: insulated gloves will
-      not make you immune to these!'
-    type: Tweak
-  - message: Gave mice 40% shock vulnerability so they can still be one-shot by the
-      bartender's shotgun. (Their little hearts can't take the voltage.)
-    type: Tweak
-  id: 585
-  time: '2024-11-26T19:10:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/762
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: 'New Ammo Type: .22 Auto (incl. Incendiary, Uranium, and Practice)'
-    type: Add
-  - message: Mk 93 Machine Pistol
-    type: Add
-  - message: Mk 92HB Hyper-Burst Pistol
-    type: Add
-  - message: Zipper .22; a Dogshit pistol found in maintenance loot rarely.
-    type: Add
-  - message: Zipper .22 Syndicate Bundle; purchased for 20 TC-- uses Armor Piercing
-      rounds to deal defense-ignoring damage.
-    type: Add
-  - message: Machine Pistol and Hyperburst Pistol Crates to the Cargo Store
-    type: Add
-  - message: Advanced Sidearms as a Tier 1 technology for Science to research
-    type: Add
-  - message: Advanced Pistol Munitions as a Tier 2 technology for Science to research
-    type: Add
-  id: 586
-  time: '2024-11-26T19:18:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/809
-- author: honeyed-lemons
-  changes:
-  - message: Adjust spacewind min calc mass to 15
-    type: Tweak
-  id: 587
-  time: '2024-11-26T19:37:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/811
-- author: kipdotnet
-  changes:
-  - message: Added the S-Cargo moving trunk! Its a normal locker, but with zero gravity
-      at all times.
-    type: Add
-  - message: Edited the sprite for the s-cargo satchel slightly.
-    type: Tweak
-  id: 588
-  time: '2024-11-27T08:21:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/812
-- author: Sha-Seng
-  changes:
-  - message: Beanbag shell ammo box is now a stun slug ammo box
-    type: Tweak
-  id: 589
-  time: '2024-11-27T08:22:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/815
-- author: Pinkbat5
-  changes:
-  - message: Chemists can now wear a new formal jumpsuit, the senior physician beret/labcoat,
-      and some heavy-duty PPE.
-    type: Add
-  id: 590
-  time: '2024-11-27T10:47:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/814
-- author: widgetbeck
-  changes:
-  - message: Added (hopefully) extremely rare event, Goblin Castaways, and its associated
-      CrateFullOGoblins.
-    type: Add
-  - message: Changed weights of all goblin events to make them less common.
-    type: Tweak
-  - message: Sir Gollylad is now ripped, and can pry open doors (extremely slowly.)
-      However, this does mean that his ID card and crowbar have been removed.
-    type: Tweak
-  - message: Sir Gollylad is no longer bald, and will spawn with a random skin color.
-    type: Tweak
-  id: 591
-  time: '2024-11-27T11:49:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/817
-- author: Darkmajia
-  changes:
-  - message: Direct window upgrading is back! Shuttle windows are not back, though.
-    type: Add
-  id: 592
-  time: '2024-11-27T19:31:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/821
-- author: widgetbeck
-  changes:
-  - message: Replaced "creepy crawly" Thaven mood with something that should have
-      less gameplay impact.
-    type: Tweak
-  id: 593
-  time: '2024-11-27T19:31:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/819
-- author: honeyed-lemons
-  changes:
-  - message: Chameleon PDA
-    type: Add
-  - message: PDAs show the most recent ID placed inside as the owner, instead of being
-      fixed.
-    type: Tweak
-  id: 594
-  time: '2024-11-27T19:32:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/810
-- author: widgetbeck
-  changes:
-  - message: Decapoid vapor tanks are now fully functional, which means that Decapoids
-      are now fully functional. They just need customization!
-    type: Fix
-  id: 595
-  time: '2024-11-27T19:32:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/820
-- author: TGRCDev
-  changes:
-  - message: Crates/lockers being pulled can now only be opened by the person pulling
-      them
-    type: Tweak
-  id: 596
-  time: '2024-11-27T19:34:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/791
-- author: widgetbeck
-  changes:
-  - message: Mucin now evaporates and costs less thirst.
-    type: Tweak
-  - message: Propulsion gel nerf.
-    type: Tweak
-  id: 597
-  time: '2024-11-27T20:55:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/818
-- author: formlessnameless
-  changes:
-  - message: Various creatures can now crawl through the station's pipes. Beware!
-    type: Add
-  id: 598
-  time: '2024-11-28T22:29:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/822
-- author: Sha-Seng
-  changes:
-  - message: Black Utility Belt crafted with a spray painter and a utility belt
-    type: Add
-  - message: Filled versions of the black utility belt if you want to map them too
-    type: Add
-  id: 599
-  time: '2024-11-28T22:45:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/824
 - author: Sha-Seng
   changes:
   - message: Closet Skeletons spawn with the Ancient Jumpsuit now b/c it makes sense
@@ -4252,3 +4070,154 @@
   id: 1080
   time: '2025-02-08T12:40:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1589
+- author: hivehum
+  changes:
+  - message: You have no longer heard of Hatsune Miku.
+    type: Remove
+  - message: Due to its status as a religious uniform, the shrine maiden outfit has
+      been moved to the PietyVend.
+    type: Tweak
+  id: 1081
+  time: '2025-02-08T22:54:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1614
+- author: hivehum
+  changes:
+  - message: Courier and Brigmedic now have appropriate text highlighting auto-fills.
+    type: Add
+  id: 1082
+  time: '2025-02-09T04:39:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1615
+- author: crocodilecarousel, RosySaturniidae
+  changes:
+  - message: Added some more figurines for our metallic friends!
+    type: Add
+  id: 1083
+  time: '2025-02-09T09:21:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1619
+- author: TheGrimbeeper
+  changes:
+  - message: Heretics can no longer have changelings appear on the sacrifice heartbeat,
+      because changelings cannot be sacrificed.
+    type: Fix
+  id: 1084
+  time: '2025-02-09T09:24:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1620
+- author: irismessage
+  changes:
+  - message: 'Round dividers for #postround chat'
+    type: Add
+  id: 1085
+  time: '2025-02-09T19:15:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1627
+- author: Darkmajia
+  changes:
+  - message: Hiding inside a locker will prevent supermatter delamination hallucinations.
+    type: Add
+  id: 1086
+  time: '2025-02-09T23:55:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1625
+- author: AftrLite
+  changes:
+  - message: Flipped version of the twisted scar marking.
+    type: Add
+  - message: '[Changeling Blind Sting] No longer damages eyes, instead inflicting
+      the blindness debuff for a significantly longer time. Ability''s Chemical Cost
+      increased to align with this buff.'
+    type: Tweak
+  id: 1087
+  time: '2025-02-10T03:17:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1622
+- author: nowaitstop
+  changes:
+  - message: New playing card colors! Good luck finding them lol
+    type: Add
+  id: 1088
+  time: '2025-02-10T18:05:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1623
+- author: Darkmajia
+  changes:
+  - message: '"Show all gases" has been added to the supermatter console.'
+    type: Add
+  id: 1089
+  time: '2025-02-10T21:00:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1624
+- author: Kandiyaki
+  changes:
+  - message: the guidebook page for the eldritch flask now exists.
+    type: Tweak
+  - message: the eldritch flask no longer works as a cryostasis container, and its
+      size has been reduced.
+    type: Tweak
+  - message: the eldritch flask's catalog entry now shows the correct items needed
+      to create it.
+    type: Tweak
+  - message: the ritual of knowledge no longer has a chance to eat its user's organs.
+    type: Fix
+  id: 1090
+  time: '2025-02-10T21:07:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1635
+- author: Pinkbat5
+  changes:
+  - message: Baton, disabler and utility tokens now start in seclinks instead of roundstart
+      security inventories.
+    type: Tweak
+  id: 1091
+  time: '2025-02-10T21:01:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1631
+- author: Darkmajia
+  changes:
+  - message: Box Station's atmospherics department and supermatter chamber have been
+      revamped slightly.
+    type: Tweak
+  id: 1092
+  time: '2025-02-10T21:11:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1634
+- author: kipdotnet
+  changes:
+  - message: You can now take a Sip-u-lacrum.
+    type: Add
+  id: 1093
+  time: '2025-02-10T21:19:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1632
+- author: FutureExalt
+  changes:
+  - message: new roundstart coats for secoff, warden, and detective.
+    type: Add
+  id: 1094
+  time: '2025-02-10T22:41:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1612
+- author: Saeko-44
+  changes:
+  - message: The fishing rod, capable of reeling things in, as a tier 1 civilian tech
+    type: Add
+  id: 1095
+  time: '2025-02-10T22:49:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1482
+- author: Darkmajia
+  changes:
+  - message: Grays and dwarves have had their accents fixed up a little.
+    type: Tweak
+  id: 1096
+  time: '2025-02-10T23:05:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1571
+- author: Darkmajia
+  changes:
+  - message: Corpses no longer collide with plastic flaps.
+    type: Fix
+  id: 1097
+  time: '2025-02-10T23:11:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1572
+- author: Darkmajia
+  changes:
+  - message: Bonfires can be built, lit, and extinguished.
+    type: Add
+  id: 1098
+  time: '2025-02-10T23:35:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1613
+- author: Sha-Seng
+  changes:
+  - message: Detectives and brigmeds can now spawn with sec armor vests if they wanna
+    type: Add
+  id: 1099
+  time: '2025-02-10T23:35:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1608

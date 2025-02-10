@@ -53,7 +53,6 @@ public sealed partial class HereticRitualRuneRadialMenu : RadialMenu
 
             var button = new HereticRitualMenuButton
             {
-                StyleClasses = { "RadialMenuButton" },
                 SetSize = new Vector2(64, 64),
                 ToolTip = Loc.GetString(ritualPrototype.LocName),
                 ProtoId = ritualPrototype.ID
@@ -94,7 +93,7 @@ public sealed partial class HereticRitualRuneRadialMenu : RadialMenu
         }
     }
 
-    public sealed class HereticRitualMenuButton : RadialMenuTextureButton
+    public sealed class HereticRitualMenuButton : RadialMenuTextureButtonWithSector
     {
         public ProtoId<HereticRitualPrototype> ProtoId { get; set; }
     }

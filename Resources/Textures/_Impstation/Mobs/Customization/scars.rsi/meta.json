@@ -72,6 +72,10 @@
           "directions": 4
       },
       {
+          "name": "head_twisting_flipped",
+          "directions": 4
+      },
+      {
           "name": "leg_l_prosthetic",
           "directions": 4
       },

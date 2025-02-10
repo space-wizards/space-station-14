@@ -361,6 +361,9 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
     protected override void OnEmagged(EntityUid uid, ThavenMoodsComponent comp, ref GotEmaggedEvent args)
     {
         base.OnEmagged(uid, comp, ref args);
+        if(!args.Handled)
+            return;
+
         TryAddRandomMood(uid, WildcardDataset, comp);
     }
 }

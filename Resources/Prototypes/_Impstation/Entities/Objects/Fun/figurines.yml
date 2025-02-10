@@ -165,3 +165,153 @@
     state: nukie_juggernaut
   - type: SpeakOnTrigger
     pack: FigurinesNukieJuggernaut
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineCyborgDefault
+  name: cyborg figure
+  description: A figurine depicting an unspecialized cyborg that just doesn't seem to understand that you aren't going to hurt anyone with that knife.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    layers:
+     - state: cyborg_default
+     - state: cyborg_default_unshaded
+       shader: unshaded
+  - type: SpeakOnTrigger
+    pack: FigurinesCyborgDefault
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineCyborgEngineering
+  name: engineering cyborg figure
+  description: A figurine depicting an engineering cyborg that is stealing any materials you do not have bolted down.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    layers:
+     - state: cyborg_engineering
+     - state: cyborg_engineering_unshaded
+       shader: unshaded
+  - type: SpeakOnTrigger
+    pack: FigurinesCyborgEngineering
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineCyborgJanitorial
+  name: janitorial cyborg figure
+  description: A figurine depicting a janitorial cyborg that has just careened into space trying to fix a lightbulb.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    layers:
+     - state: cyborg_janitorial
+     - state: cyborg_janitorial_unshaded
+       shader: unshaded
+  - type: SpeakOnTrigger
+    pack: FigurinesCyborgJanitorial
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineCyborgMedical
+  name: medical cyborg figure
+  description: A figurine depicting a medical cyborg that refuses to tell you what's in its beakers.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    layers:
+     - state: cyborg_medical
+     - state: cyborg_medical_unshaded
+       shader: unshaded
+  - type: SpeakOnTrigger
+    pack: FigurinesCyborgMedical
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineCyborgSalvage
+  name: salvaging cyborg figure
+  description: A figurine depicting a salvaging cyborg that is already long gone, getting stomped on by megafauna.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    layers:
+     - state: cyborg_salvage
+     - state: cyborg_salvage_unshaded
+       shader: unshaded
+  - type: SpeakOnTrigger
+    pack: FigurinesCyborgSalvage
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineCyborgService
+  name: service cyborg figure
+  description: A figurine depicting a service cyborg that is insisting you call it a 'sir.'
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    layers:
+     - state: cyborg_service
+     - state: cyborg_service_unshaded
+       shader: unshaded
+  - type: SpeakOnTrigger
+    pack: FigurinesCyborgService
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineCyborgAssault
+  name: syndicate assault cyborg figure
+  description: A figurine depicting a Syndicate-branded assault cyborg that is already shooting at you.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    layers:
+     - state: cyborg_assault
+     - state: cyborg_assault_unshaded
+       shader: unshaded
+  - type: SpeakOnTrigger
+    pack: FigurinesCyborgAssault
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineCyborgCorpsman
+  name: syndicate corpsman cyborg figure
+  description: A figurine depicting a Syndicate-branded corpsman cyborg that is somehow already covered in blood.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    layers:
+     - state: cyborg_corpsman
+     - state: cyborg_corpsman_unshaded
+       shader: unshaded
+  - type: SpeakOnTrigger
+    pack: FigurinesCyborgCorpsman
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineCyborgSaboteur
+  name: syndicate saboteur cyborg figure
+  description: A figurine depicting a Syndicate-branded saboteur cyborg that you could have sworn was was yellow the last time you saw it.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    layers:
+     - state: cyborg_saboteur
+     - state: cyborg_saboteur_unshaded
+       shader: unshaded
+  - type: SpeakOnTrigger
+    pack: FigurinesCyborgSaboteur
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineStationAI
+  name: station AI figure
+  description: A figurine depicting an avatar of the station's AI overseer, trying to tell you that you are committing crew harm.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    layers:
+     - state: station_ai
+     - state: station_ai_unshaded
+       shader: unshaded
+  - type: SpeakOnTrigger
+    pack: FigurinesStationAI

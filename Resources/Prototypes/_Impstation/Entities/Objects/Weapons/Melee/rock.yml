@@ -1,0 +1,51 @@
+- type: entity
+  parent: BaseItem
+  id: BigRock
+  name: rock
+  description: It's a rock. You should know what to do with this.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Objects/Decoration/Flora/flora_rockssolid.rsi
+    layers:
+    - state: rocksolid01
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        rocksolid01: ""
+        rocksolid02: ""
+        rocksolid03: ""
+  - type: Item
+    size: Normal
+  - type: Appearance
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 1000
+        layer:
+        - HalfWallLayer
+        - Opaque
+  - type: Climbable
+  - type: MeleeWeapon
+    wideAnimationRotation: 45
+    damage:
+      types:
+        Blunt: 5
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 10
+        Structural: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 10
+  - type: StaminaDamageOnHit
+    damage: 4
+  - type: UseDelay
+    delay: 1
