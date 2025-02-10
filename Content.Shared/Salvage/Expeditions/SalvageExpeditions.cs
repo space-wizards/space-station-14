@@ -2,6 +2,7 @@ using Content.Shared.Salvage.Expeditions.Modifiers;
 using Content.Shared.Weather;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -100,7 +101,7 @@ public sealed record SalvageMission(
     string Biome,
     string Air,
     float Temperature,
-    string? Weather,
+    ProtoId<WeatherPrototype>? Weather,
     Color? Color,
     TimeSpan Duration,
     List<string> Modifiers)
@@ -138,7 +139,7 @@ public sealed record SalvageMission(
     /// <summary>
     /// Weather to be displayed on the planet.
     /// </summary>
-    public readonly string? Weather = Weather;
+    public readonly ProtoId<WeatherPrototype>? Weather = Weather;
 
     /// <summary>
     /// Lighting color to be used (AKA outdoor lighting).
