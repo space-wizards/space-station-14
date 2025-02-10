@@ -1,4 +1,4 @@
-﻿# Configuration preset used on Wizard's Den Salamander
+# Configuration preset used on Wizard's Den Salamander
 
 [game]
 desc = "Official English Space Station 14 servers. Medium roleplay ruleset. you must be whitelisted by playing on other Wizard's Den servers if there are more than 15 online players."
@@ -26,3 +26,4 @@ flavor_text = true
 
 [hub]
 tags = "lang:en,region:am_n_w,rp:med"
+
