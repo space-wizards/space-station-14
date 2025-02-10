@@ -80,6 +80,27 @@
   - type: Construction
     graph: GasPipe
     node: half
+  - type: Destructible
+    thresholds:
+    - trigger: # for nukes
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger: # regular damage trigger (replace with broken pipe)
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
+      - !type:ChangeConstructionNodeBehavior
+        node: halfBroken
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: GuideHelp
     guides:
     - Pipes
@@ -103,6 +124,27 @@
   - type: Construction
     graph: GasPipe
     node: straight
+  - type: Destructible
+    thresholds:
+    - trigger: # for nukes
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger: # regular damage trigger (replace with broken pipe)
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
+      - !type:ChangeConstructionNodeBehavior
+        node: straightBroken
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: Item
     size: Normal
     storedSprite:
@@ -140,6 +182,27 @@
   - type: Construction
     graph: GasPipe
     node: bend
+  - type: Destructible
+    thresholds:
+    - trigger: # for nukes
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger: # regular damage trigger (replace with broken pipe)
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
+      - !type:ChangeConstructionNodeBehavior
+        node: bendBroken
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: Item
     size: Small
     shape:
@@ -184,6 +247,27 @@
   - type: Construction
     graph: GasPipe
     node: tjunction
+  - type: Destructible
+    thresholds:
+    - trigger: # for nukes
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger: # regular damage trigger (replace with broken pipe)
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
+      - !type:ChangeConstructionNodeBehavior
+        node: tjunctionBroken
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: Item
     size: Normal
     shape:
@@ -226,6 +310,27 @@
   - type: Construction
     graph: GasPipe
     node: fourway
+  - type: Destructible
+    thresholds:
+    - trigger: # for nukes
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger: # regular damage trigger (replace with broken pipe)
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
+      - !type:ChangeConstructionNodeBehavior
+        node: fourwayBroken
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: Item
     size: Normal
     shape:
