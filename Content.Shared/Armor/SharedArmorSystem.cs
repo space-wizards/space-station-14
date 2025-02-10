@@ -19,9 +19,23 @@ public abstract class SharedArmorSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<CoeffientQueryEvent>>(OnCoeffientQuery);
         SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
         SubscribeLocalEvent<ArmorComponent, BorgModuleRelayedEvent<DamageModifyEvent>>(OnBorgDamageModify);
         SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
+    }
+
+    /// <summary>
+    /// Get the total Damage reduction value of all equipment caught by the relay.
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <param name="args"></param>
+    private void OnCoeffientQuery(Entity<ArmorComponent> ent, ref InventoryRelayedEvent<CoeffientQueryEvent> args)
+    {
+        foreach (var a in ent.Comp.Modifiers.Coefficients)
+        {
+            args.Args.DamageModifiers.Coefficients[a.Key] = args.Args.DamageModifiers.Coefficients.TryGetValue(a.Key, out var coefficient) ? coefficient * a.Value : a.Value;
+        }
     }
 
     private void OnDamageModify(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<DamageModifyEvent> args)
@@ -78,5 +92,18 @@ public abstract class SharedArmorSystem : EntitySystem
         }
 
         return msg;
+    }
+}
+
+public sealed class CoeffientQueryEvent : EntityEventArgs, IInventoryRelayEvent
+{
+    public SlotFlags TargetSlots { get; set; }
+
+    public DamageModifierSet DamageModifiers { get; set; } = new DamageModifierSet();
+
+    public CoeffientQueryEvent(SlotFlags slots)
+    {
+        TargetSlots = slots;
+
     }
 }
