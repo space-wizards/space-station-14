@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, GasTankRoundBase]
   id: BaseHandheldCriminalRecords
   name: portable criminal records
   description: All the power of a criminal records computer, but it fits in your pocket, or on your back!
@@ -9,27 +9,38 @@
   - type: Sprite
     sprite: _Impstation/Objects/Devices/tablets.rsi
     layers:
-      - state: portable_criminal
-      - state: screen-criminal
-        shader: unshaded
+    - state: portable_criminal
+    - state: screen-criminal
+      shader: unshaded
+# HIGH-VIS VEST CODE FOR COMPARISON
+#  - type: Sprite
+#    sprite: Clothing/OuterClothing/Vests/hazard.rsi
+#    layers:
+#    - state: icon
+#    - state: icon-unshaded
+#      shader: unshaded
   - type: Clothing
     quickEquip: false
     sprite: _Impstation/Objects/Devices/tablets.rsi
     equippedPrefix: criminal
     slots:
     - suitStorage
-# THIS PART STILL ISN'T WORKING WITH THE UNSHADED LAYER, I'LL ASK RUDDYGREAT
+# LAYERING STILL NOT FUCKING WORK DESPITE BEING
+# FUCKING
+# EXACTLY WHAT UPSTREAM DID WITH THEIR HIGH-VIS VEST
+# WHY
     clothingVisuals:
       suitStorage:
-      - state: criminal-equipped-SUITSTORAGE
-      - state: criminal-equipped-SUITSTORAGE-overlay
+      - state: equipped-SUITSTORAGE
+      - state: equipped-SUITSTORAGE-unshaded
         shader: unshaded
-# RUDDYGREAT'S UNSHADED DEMO CODE COMPARISON
+# HIGH-VIS VEST CODE FOR COMPARISON
 #  - type: Clothing
-#    sprite: Clothing/Head/Hats/beret_engineering.rsi
+#    sprite: Clothing/OuterClothing/Vests/hazard.rsi
 #    clothingVisuals:
-#      head:
-#      - state: equipped-HELMET
+#      outerClothing:
+#      - state: equipped-OUTERCLOTHING
+#      - state: equipped-OUTERCLOTHING-unshaded
 #        shader: unshaded
   - type: ActivatableUI
     key: enum.CriminalRecordsConsoleKey.Key
