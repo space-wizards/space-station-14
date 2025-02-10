@@ -9,7 +9,7 @@ namespace Content.Shared.Paper
     public sealed partial class IlliterateComponent : Component
     {
         [DataField]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public string FailWriteMessage = "paper-component-illiterate";
+        [AutoNetworkedField]
+        public LocId FailWriteMessage = "paper-component-illiterate";
     }
 }
