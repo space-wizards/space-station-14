@@ -67,9 +67,11 @@
           - /Maps/Ruins/djstation.yml
           - /Maps/Ruins/empty_flagship.yml
           - /Maps/Ruins/old_ai_sat.yml
+          - /Maps/Ruins/ruined_prison_ship.yml
           - /Maps/Ruins/syndicate_dropship.yml
           - /Maps/Ruins/whiteship_ancient.yml
           - /Maps/Ruins/whiteship_bluespacejumper.yml
+          - /Maps/Ruins/wrecklaimer.yml
         vgroid: !type:DungeonSpawnGroup
           minimumDistance: 300
           maximumDistance: 350
