@@ -473,7 +473,7 @@
   parent: ClothingOuterArmorBasic
   id: ClothingOuterCoatFieldBomber
   name: field bomber
-  description: A red bomber jacket, worn open with the sleeves pushed up. The white logos mark the wearer as Nanotrasen security.
+  description: A red bomber jacket, worn open with the sleeves pushed up. The Nanotrasen logo on the front and the shield on the back are sewn with special high-vis thread.
   components:
   - type: Sprite
     sprite: _NF/Clothing/OuterClothing/Coats/field_bomber.rsi
