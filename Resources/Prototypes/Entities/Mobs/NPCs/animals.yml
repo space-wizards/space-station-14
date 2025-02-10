@@ -50,7 +50,7 @@
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodReferenceVolume: 50
   - type: ReplacementAccent
     accent: mouse
   - type: MeleeWeapon
@@ -114,7 +114,7 @@
     - Bee
     - Trash
   - type: Bloodstream
-    bloodMaxVolume: 0.1
+    bloodReferenceVolume: 0.1
   - type: MobPrice
     price: 50
   - type: NPCRetaliation
@@ -151,7 +151,7 @@
     factions:
     - SimpleHostile
   - type: Bloodstream
-    bloodMaxVolume: 0.1
+    bloodReferenceVolume: 0.1
   - type: ZombieImmune
 
 
@@ -225,7 +225,7 @@
     interactSuccessSound:
       path: /Audio/Animals/chicken_cluck_happy.ogg
   - type: Bloodstream
-    bloodMaxVolume: 100
+    bloodReferenceVolume: 100
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
@@ -351,7 +351,7 @@
         Base: cockroach_dead
   - type: Bloodstream
     bloodReagent: InsectBlood
-    bloodMaxVolume: 20
+    bloodReferenceVolume: 20
   - type: Food
   - type: FlavorProfile
     flavors:
@@ -659,7 +659,7 @@
     interactSuccessSound:
       path: /Audio/Animals/duck_quack_happy.ogg
   - type: Bloodstream
-    bloodMaxVolume: 100
+    bloodReferenceVolume: 100
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
@@ -770,7 +770,7 @@
       Dead:
         Base: dead
   - type: Bloodstream
-    bloodMaxVolume: 0.1
+    bloodReferenceVolume: 0.1
   - type: MobPrice
     price: 50
 
@@ -915,7 +915,7 @@
   - type: ReplacementAccent
     accent: crab
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodReferenceVolume: 50
     bloodReagent: CopperBlood
   - type: Tag
     tags:
@@ -1072,7 +1072,7 @@
     interactSuccessSound:
       path: /Audio/Animals/goose_honk.ogg
   - type: Bloodstream
-    bloodMaxVolume: 100
+    bloodReferenceVolume: 100
   - type: NpcFactionMember
     factions:
     - Passive
@@ -1114,7 +1114,7 @@
     - id: FoodMeat
       amount: 4
   - type: Bloodstream
-    bloodMaxVolume: 300
+    bloodReferenceVolume: 300
     # if you fuck with the gorilla he will harambe you
   - type: MeleeWeapon
     soundHit:
@@ -1758,7 +1758,7 @@
       types:
         Piercing: 0
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodReferenceVolume: 50
   - type: CanEscapeInventory
   - type: MobPrice
     price: 50
@@ -1945,7 +1945,7 @@
     interactSuccessSound:
       path: /Audio/Animals/lizard_happy.ogg
   - type: Bloodstream
-    bloodMaxVolume: 150
+    bloodReferenceVolume: 150
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
@@ -1999,7 +1999,7 @@
     interactFailureString: petting-failure-generic
     interactSuccessSpawn: EffectHearts
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodReferenceVolume: 50
 
 - type: entity
   name: frog
@@ -2055,7 +2055,7 @@
     interactSuccessSound:
       path: /Audio/Animals/frog_ribbit.ogg
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodReferenceVolume: 50
   - type: Tag
     tags:
     - VimPilot
@@ -2114,7 +2114,7 @@
     interactSuccessSound:
       path: /Audio/Animals/parrot_raught.ogg
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodReferenceVolume: 50
 
 - type: entity
   name: penguin
@@ -2291,7 +2291,7 @@
     interactFailureString: petting-failure-generic
     interactSuccessSpawn: EffectHearts
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodReferenceVolume: 50
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
@@ -2352,7 +2352,7 @@
   - type: Spider
   - type: IgnoreSpiderWeb
   - type: Bloodstream
-    bloodMaxVolume: 150
+    bloodReferenceVolume: 150
     bloodReagent: CopperBlood
   - type: Speech
     speechVerb: Arachnid
@@ -2498,7 +2498,7 @@
     - type: Speech
       speechVerb: Cluwne
     - type: Bloodstream
-      bloodMaxVolume: 150
+      bloodReferenceVolume: 150
       bloodReagent: Laughter
 
 - type: entity
@@ -2696,7 +2696,7 @@
     attributes:
       gender: epicene
   - type: Bloodstream
-    bloodMaxVolume: 100
+    bloodReferenceVolume: 100
   - type: MeleeWeapon
     angle: 0
     animation: WeaponArcBite
@@ -3336,7 +3336,7 @@
     interactSuccessSound:
       path: /Audio/Animals/fox_squeak.ogg
   - type: Bloodstream
-    bloodMaxVolume: 60
+    bloodReferenceVolume: 60
   - type: CanEscapeInventory
     baseResistTime: 3
   - type: MobPrice
@@ -3446,7 +3446,7 @@
     templateId: pet
   - type: Bloodstream
     bloodReagent: Sap
-    bloodMaxVolume: 60
+    bloodReferenceVolume: 60
   - type: DamageStateVisuals
     states:
       Alive:
@@ -3550,7 +3550,7 @@
     - id: FoodMeat
       amount: 4
   - type: Bloodstream
-    bloodMaxVolume: 300
+    bloodReferenceVolume: 300
     # Horns though
   - type: MeleeWeapon
     damage:

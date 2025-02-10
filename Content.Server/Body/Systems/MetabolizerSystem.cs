@@ -167,6 +167,11 @@ namespace Content.Server.Body.Systems
                 if (reagents >= ent.Comp1.MaxReagentsProcessable)
                     return;
 
+                if (TryComp<BloodstreamComponent>(solutionEntityUid.Value, out var bloodstream))
+                {
+                    if (reagent.Prototype == bloodstream.BloodReagent.Id)
+                        continue;
+                }
 
                 // loop over all our groups and see which ones apply
                 if (ent.Comp1.MetabolismGroups is null)
