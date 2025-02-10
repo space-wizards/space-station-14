@@ -13,8 +13,7 @@
     - type: MothAccent
     - type: SnalienAccent
     - type: GrayAccent
-    - type: ReplacementAccent
-      accent: dwarf
+    - type: DwarfAccent
     - type: NoContractionsAccent
 
 # 1 Cost
@@ -249,6 +248,6 @@
     - type: LizardAccent
     - type: MothAccent
     - type: GrayAccent
-    - type: ReplacementAccent
-      accent: dwarf
+    - type: DwarfAccent
       # Imp TODO: add cowboy, italian, liar, mobster, and slimes to this list one day since apparently you can only remove one ReplacementAccent at a time without pissing off the linter, maybe we can figure it out later. For now, adding the dwarf accent since that's an accent you can spawn with under current circumstances.
+      # idk about all this but dwarves have their own accent component now yay!!!!
