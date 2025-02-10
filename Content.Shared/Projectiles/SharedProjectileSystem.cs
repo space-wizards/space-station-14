@@ -185,6 +185,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             projectile.Shooter = null;
             projectile.Weapon = null;
             projectile.ProjectileSpent = false;
+            Dirty(embeddable, projectile);
         }
 
         Dirty(embeddable);
