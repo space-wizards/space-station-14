@@ -3275,4 +3275,26 @@ Entries:
   id: 455
   time: '2025-02-09T11:00:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/317
+- author: Rinary
+  changes:
+  - message: Added mech maintenance mode. Now for repairing, changing equipment needs
+      to enable maintenance mode.
+    type: Add
+  id: 456
+  time: '2025-02-09T15:28:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/318
+- author: Rinary
+  changes:
+  - message: Mechs are speaking.
+    type: Add
+  id: 457
+  time: '2025-02-09T15:28:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/318
+- author: Rinary
+  changes:
+  - message: Fixed bug when teleported player controlling mech.
+    type: Fix
+  id: 458
+  time: '2025-02-09T15:28:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/318
 

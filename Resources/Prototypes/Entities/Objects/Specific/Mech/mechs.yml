@@ -37,6 +37,34 @@
     equipmentWhitelist:
       tags:
       - SmallMech
+      
+- type: entity
+  id: NanotrasenMech
+  abstract: true
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Mech
+    firstStart: true
+    lowPowerSound:
+      path: /Audio/Mecha/lowpowernano.ogg
+    nominalSound:
+      path: /Audio/Mecha/nominalnano.ogg
+      
+- type: entity
+  id: SyndieMech
+  abstract: true
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Mech
+    firstStart: true
+    lowPowerSound:
+      path: /Audio/Mecha/lowpowersyndi.ogg
+    nominalSound:
+      path: /Audio/Mecha/nominalsyndi.ogg
+    nominalLongSound:
+      path: /Audio/Mecha/longsyndiactivation.ogg
+    criticalDamageSound:
+      path: /Audio/Mecha/critdestrsyndi.ogg
 
 - type: entity
   id: BaseMech
@@ -45,6 +73,7 @@
   components:
   - type: MobMover
   - type: Mech
+    firstStart: false
   - type: MechAir
   - type: AirFilter
     # everything except oxygen and nitrogen
@@ -146,9 +175,11 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: PointLight
-    enabled: false
-    radius: 8
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 6
     energy: 5
+    enabled: false
 
 # Ripley MK-I
 - type: entity
@@ -566,7 +597,7 @@
 # Marauder
 - type: entity
   id: MechMarauder
-  parent: [ BaseMech, CombatMech, BaseCentcommContraband ]
+  parent: [ BaseMech, CombatMech, BaseCentcommContraband, NanotrasenMech ]
   name: Marauder
   description: Looks like we're all saved. # ERT mech
   components:
@@ -634,7 +665,7 @@
 # Seraph
 - type: entity
   id: MechSeraph
-  parent: [ BaseMech, CombatMech, BaseCentcommContraband ]
+  parent: [ BaseMech, CombatMech, BaseCentcommContraband, NanotrasenMech ]
   name: Seraph
   description: That's the last thing you'll see. # Death Squad mech
   components:
@@ -705,7 +736,7 @@
 # Dark Gygax
 - type: entity
   id: MechGygaxSyndie
-  parent: [ BaseMech, CombatMech, BaseSyndicateContraband ]
+  parent: [ BaseMech, CombatMech, BaseSyndicateContraband, SyndieMech ]
   name: Dark Gygax
   description: A modified Gygax used for nefarious purposes. On the back of the armor plate there is an inscription "Cybersun Inc."
   components:
@@ -773,7 +804,7 @@
 # Mauler
 - type: entity
   id: MechMaulerSyndie
-  parent: [ BaseMech, CombatMech, BaseSyndicateContraband ]
+  parent: [ BaseMech, CombatMech, BaseSyndicateContraband, SyndieMech ]
   name: Mauler
   description: A modified Marauder used by the Syndicate that's not as maneuverable as the Dark Gygax, but it makes up for that in armor and sheer firepower. On the back of the armor plate there is an inscription "Cybersun Inc."
   components:

@@ -4,22 +4,28 @@ using Content.Server.Mech.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Actions;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
+using Content.Shared.Toggleable;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
+using Content.Shared.Repairable;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Wires;
+using Content.Shared.Weapons.Ranged.Events;
 using Content.Server.Body.Systems;
 using Content.Shared.Tools.Systems;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Content.Shared.Whitelist;
@@ -35,6 +41,8 @@ public sealed partial class MechSystem : SharedMechSystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
@@ -45,12 +53,14 @@ public sealed partial class MechSystem : SharedMechSystem
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly NpcFactionSystem _factionSystem = default!;
+    [Dependency] private readonly SharedPointLightSystem _light = default!;
     
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<MechComponent, ToggleActionEvent>(OnToggleLightEvent);
         SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MechComponent, EntInsertedIntoContainerMessage>(OnInsertBattery);
         SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
@@ -62,9 +72,11 @@ public sealed partial class MechSystem : SharedMechSystem
 
         SubscribeLocalEvent<MechComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<MechComponent, MechEquipmentRemoveMessage>(OnRemoveEquipmentMessage);
+        SubscribeLocalEvent<MechComponent, MechMaintenanceUiMessage>(OnMaintenanceMessage);
 
         SubscribeLocalEvent<MechComponent, UpdateCanMoveEvent>(OnMechCanMoveEvent);
-
+        SubscribeLocalEvent<MechComponent, ShotAttemptedEvent>(OnShootAttempt);
+        SubscribeLocalEvent<MechComponent, CanRepaireEvent>(CanRepaire);
 
         SubscribeLocalEvent<MechPilotComponent, ToolUserAttemptUseEvent>(OnToolUseAttempt);
         SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
@@ -78,11 +90,49 @@ public sealed partial class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechComponent, MechSoundboardPlayMessage>(ReceiveEquipmentUiMesssages);
         #endregion
     }
+    
+    private void OnToggleLightEvent(EntityUid uid, MechComponent component, ToggleActionEvent args)
+    {
+        if (args.Handled)
+            return;
+        
+        if (!_light.TryGetLight(uid, out var light))
+            return;
+        
+        args.Handled = true;
+        
+        _light.SetEnabled(uid, !component.Light, comp: light);
+        
+        _actions.SetToggled(component.MechToggleLightActionEntity, !component.Light);
+        
+        _audioSystem.PlayPredicted(component.ToggleLightSound, uid, uid);
+        
+        component.Light = !component.Light;
+        
+        UpdateAppearance(uid, component);
+    }
 
     private void OnMechCanMoveEvent(EntityUid uid, MechComponent component, UpdateCanMoveEvent args)
     {
-        if (component.Broken || component.Integrity <= 0 || component.Energy <= 0)
+        if (component.Broken || component.Integrity <= 0 || component.Energy <= 0 || component.MaintenanceMode)
             args.Cancel();
+    }
+    
+    private void OnShootAttempt(EntityUid uid, MechComponent component, ref ShotAttemptedEvent args)
+    {
+        if (!component.MaintenanceMode)
+            return;
+
+        args.Cancel();
+    }
+    
+    private void CanRepaire(EntityUid uid, MechComponent component, ref CanRepaireEvent args)
+    {
+        if (!component.MaintenanceMode)
+        {
+            args.Cancelled = true;
+            args.Message = "You need to turn on maintenance mode first!";
+        }
     }
 
     private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
@@ -156,11 +206,24 @@ public sealed partial class MechSystem : SharedMechSystem
 
         if (!Exists(equip) || Deleted(equip))
             return;
+        
+        if (!component.MaintenanceMode)
+        {
+            _popup.PopupEntity("You need to turn on maintenance mode first!", uid, PopupType.MediumCaution);
+            return;
+        }
 
         if (!component.EquipmentContainer.ContainedEntities.Contains(equip))
             return;
 
         RemoveEquipment(uid, equip, component);
+    }
+    
+    private void OnMaintenanceMessage(EntityUid uid, MechComponent component, MechMaintenanceUiMessage args)
+    {
+        component.MaintenanceMode = args.Toggle;
+        
+        _actionBlocker.UpdateCanMove(uid);
     }
 
     private void OnOpenUi(EntityUid uid, MechComponent component, MechOpenUiEvent args)

@@ -11,3 +11,9 @@ public abstract partial class SharedRepairableSystem : EntitySystem
     }
 }
 
+[ByRefEvent]
+public record struct CanRepaireEvent(Entity<RepairableComponent> Ent, EntityUid User)
+{
+    public bool Cancelled = false;
+    public string Message = "You can't repair this!";
+}

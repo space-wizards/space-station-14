@@ -35,3 +35,19 @@
       sprite: Interface/Actions/actions_mecha.rsi
       state: mech_eject
     event: !type:MechEjectPilotEvent
+
+- type: entity
+  id: ActionMechToggleLights
+  name: Toggle Lights
+  description: Turn on mech-mounted spotlights for visibility in poorly lit areas.
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_lights_off
+    iconOn:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_lights_on
+    event: !type:ToggleActionEvent
+    useDelay: 1

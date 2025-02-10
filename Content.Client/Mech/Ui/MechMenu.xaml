@@ -36,6 +36,7 @@
                        Access="Public"
                        HorizontalExpand="True" />
             </BoxContainer>
+            
             <SpriteView Name="MechView"
                         Margin="10 0 0 0"
                         VerticalAlignment="Center"
@@ -45,6 +46,11 @@
                         MaxSize="64 64"
                         Scale="2 2">
             </SpriteView>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="10 0 10 10">
+            <Label Text="Maintenance:" VerticalAlignment="Center" Margin="5 0 5 0"/>
+            <Button Name="MaintenanceOffButton" Text="OFF" HorizontalExpand="True" Margin="5 0 5 0"/>
+            <Button Name="MaintenanceOnButton" Text="ON" HorizontalExpand="True" Margin="5 0 5 0"/>
         </BoxContainer>
         <BoxContainer VerticalExpand="True" Margin="10 0 10 10" Orientation="Vertical">
             <PanelContainer VerticalExpand="True" MinSize="0 200">

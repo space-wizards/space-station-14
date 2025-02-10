@@ -37,7 +37,6 @@ public sealed class MechGunSystem : EntitySystem
             return;
 
         var chargeDelta = component.MaxCharge - component.CurrentCharge;
-
         // TODO: The battery charge of the mech would be spent directly when fired.
         if (chargeDelta <= 0 
             || mech.Energy - chargeDelta < 0
