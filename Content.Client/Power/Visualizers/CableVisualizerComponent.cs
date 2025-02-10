@@ -6,6 +6,6 @@ public sealed partial class CableVisualizerComponent : Component
     [DataField]
     public string? StatePrefix;
 
-    [DataField()]
+    [DataField]
     public string? ExtraLayerPrefix;
 }
