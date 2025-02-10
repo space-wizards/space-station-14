@@ -13,7 +13,6 @@
   recipes:
   - BorgModuleCable
   - BorgModuleFireExtinguisher
-  - BorgModuleTool
 
 - type: latheRecipePack
   id: BorgLimbsStatic
