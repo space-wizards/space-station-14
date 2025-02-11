@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Prototypes;
 using Content.Shared.Access;
 
-namespace Content.Shared.Doors.Components;
+namespace Content.Shared.Doors.Electronics;
 
 /// <summary>
 /// Allows an entity's AccessReader to be configured via UI.

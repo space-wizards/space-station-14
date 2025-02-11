@@ -2,7 +2,7 @@ using System.Linq;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Electronics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 
