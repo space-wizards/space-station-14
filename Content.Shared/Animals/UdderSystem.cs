@@ -54,7 +54,7 @@ public sealed class UdderSystem : EntitySystem
             if (_mobState.IsDead(uid))
                 continue;
 
-            if (!_solutionContainerSystem.ResolveSolution(uid, udder.SolutionName, ref udder.Solution, out var solution))
+            if (udder.Solution is null || !_solutionContainerSystem.ResolveSolution(uid, udder.SolutionName, ref udder.Solution, out var solution))
                 continue;
 
             if (solution.AvailableVolume == 0)
