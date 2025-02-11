@@ -28,6 +28,7 @@
 - type: startingGear
   id: SecurityCadetGear
   equipment:
+    eyes: ClothingEyesGlassesSunglasses # imp
     shoes: ClothingShoesBootsJackFilled
     outerClothing: ClothingOuterArmorBasic
     id: SecurityCadetPDA
