@@ -82,13 +82,13 @@
       completed:
       - !type:EmptyAllContainers
       steps:
-      - tool: Undevoting
+      - tool: Prying #So chaplain can't hide stuff in toolboxes/plants/etc without anyone else being able to get them. Prying first so it appears in deconstruction text.
         doAfter: 1
     - to: undevoted #Is this okay? It doesn't cause any errors and the deconstruction text doesn't break, but it feels weird...
       completed:
       - !type:EmptyAllContainers
       steps:
-      - tool: Prying #So chaplain can't hide stuff in toolboxes/plants/etc without anyone else being able to get them
+      - tool: Undevoting
         doAfter: 1
 
   - node: chaos
@@ -98,13 +98,13 @@
       completed:
       - !type:EmptyAllContainers
       steps:
-      - tool: Undevoting
+      - tool: Prying
         doAfter: 1
     - to: undevoted
       completed:
       - !type:EmptyAllContainers
       steps:
-      - tool: Prying
+      - tool: Undevoting
         doAfter: 1
         
   - node: druid
@@ -114,13 +114,13 @@
       completed:
       - !type:EmptyAllContainers
       steps:
-      - tool: Undevoting
+      - tool: Prying
         doAfter: 1
     - to: undevoted
       completed:
       - !type:EmptyAllContainers
       steps:
-      - tool: Prying
+      - tool: Undevoting
         doAfter: 1
 
   - node: toolbox
@@ -130,13 +130,13 @@
       completed:
       - !type:EmptyAllContainers
       steps:
-      - tool: Undevoting
+      - tool: Prying
         doAfter: 1
     - to: undevoted
       completed:
       - !type:EmptyAllContainers
       steps:
-      - tool: Prying
+      - tool: Undevoting
         doAfter: 1
 
   - node: spaceChristian
@@ -146,13 +146,13 @@
       completed:
       - !type:EmptyAllContainers
       steps:
-      - tool: Undevoting
+      - tool: Prying
         doAfter: 1
     - to: undevoted
       completed:
       - !type:EmptyAllContainers
       steps:
-      - tool: Prying
+      - tool: Undevoting
         doAfter: 1
 
   - node: satana
@@ -162,13 +162,13 @@
       completed:
       - !type:EmptyAllContainers
       steps:
-      - tool: Undevoting
+      - tool: Prying
         doAfter: 1
     - to: undevoted
       completed:
       - !type:EmptyAllContainers
       steps:
-      - tool: Prying
+      - tool: Undevoting
         doAfter: 1
 
   - node: technology
@@ -178,11 +178,11 @@
       completed:
       - !type:EmptyAllContainers
       steps:
-      - tool: Undevoting
+      - tool: Prying
         doAfter: 1
     - to: undevoted
       completed:
       - !type:EmptyAllContainers
       steps:
-      - tool: Prying
+      - tool: Undevoting
         doAfter: 1
