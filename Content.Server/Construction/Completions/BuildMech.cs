@@ -44,7 +44,7 @@ public sealed partial class BuildMech : IGraphAction
             return;
         }
         
-        if (!containerSystem.TryGetContainer(uid, GasTankContainer, out var gasTankContainer, _))
+        if (!containerSystem.TryGetContainer(uid, GasTankContainer, out var gasTankContainer))
         {
             Logger.Warning($"Mech construct entity {uid} did not have the specified '{GasTankContainer}' container! Aborting build mech action.");
             return;

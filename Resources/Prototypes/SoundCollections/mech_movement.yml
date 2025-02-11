@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: MechMovement
+  files:
+  - /Audio/Mecha/mechmove01.ogg
+  - /Audio/Mecha/mechmove03.ogg
+  - /Audio/Mecha/mechmove04.ogg
