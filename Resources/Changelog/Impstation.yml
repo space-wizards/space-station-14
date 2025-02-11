@@ -1,85 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Glass airlocks that are locked by civilian accesses (eg. janitor, service,
-      kitchen) now use a sprite that better matches their standard counterpart.
-    type: Tweak
-  id: 603
-  time: '2024-11-28T22:58:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/831
-- author: Darkmajia
-  changes:
-  - message: Something old, scorned and vengeful has clawed its way back through the
-      streams of time. Something's here. And it's here... for war.
-    type: Add
-  id: 604
-  time: '2024-11-28T23:09:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/832
-- author: DinnerCalzone
-  changes:
-  - message: Airlocks locked behind civilian roles now each have their own sprite
-      to better convey who can access them at a glance.
-    type: Add
-  - message: Made the colors of hydroponics airlocks a little less saturated.
-    type: Tweak
-  id: 605
-  time: '2024-11-29T07:38:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/834
-- author: Sha-Seng
-  changes:
-  - message: Slime "eye glow" marking (does not actually make eyes unshaded) (yet)
-    type: Add
-  id: 606
-  time: '2024-11-29T07:43:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/833
-- author: TheGrimbeeper
-  changes:
-  - message: artifact effect that will have chemists and bartenders upset at the scientists
-    type: Add
-  id: 607
-  time: '2024-11-30T00:26:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/835
-- author: Sha-Seng
-  changes:
-  - message: Mime hardsuit helmet light now has the eyes light up instead of just
-      using a hardhat light
-    type: Tweak
-  id: 608
-  time: '2024-11-30T00:27:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/838
-- author: Pinkbat5
-  changes:
-  - message: Diona and Nymphs can now use the mycorrhizal gestalt, a special long-range
-      channel that only other diona can hear. Hotkey is +m.
-    type: Add
-  - message: Changelings now use the new collective mind system; hivemind messages
-      no longer have the sender's name attached.
-    type: Tweak
-  - message: Changeling hivemind hotkey is now +h.
-    type: Tweak
-  - message: Changelings no longer whisper when they use the hivemind.
-    type: Fix
-  id: 609
-  time: '2024-11-30T02:23:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/841
-- author: Sha-Seng
-  changes:
-  - message: ancient jumpsuit, cossack suit, loungewear, wizard shoes, tourist shoes,
-      and slippers are now found in hacked theater vendors
-    type: Add
-  - message: removed patronizing spanish accent from poncho so it's wearable too
-    type: Tweak
-  id: 610
-  time: '2024-11-30T02:28:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/840
-- author: formlessnameless
-  changes:
-  - message: You now automatically stop at every intersection while ventcrawling to
-      make navigation easier.
-    type: Tweak
-  id: 611
-  time: '2024-11-30T12:51:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/839
 - author: AftrLite
   changes:
   - message: Ongoing resprites to a large amount of assets. Expect more palette parity
@@ -4221,3 +4140,74 @@
   id: 1102
   time: '2025-02-11T09:17:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1640
+- author: Darkmajia
+  changes:
+  - message: Supply assistant locks out after 15 hours of cargo department playtime.
+    type: Fix
+  id: 1103
+  time: '2025-02-11T20:52:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1654
+- author: Darkmajia
+  changes:
+  - message: Administrative assistant's HUD has been removed from its roundstart equipment,
+      and added to its locker.
+    type: Tweak
+  id: 1104
+  time: '2025-02-11T21:04:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1649
+- author: Darkmajia
+  changes:
+  - message: Supply assistant's loadout options reduced to be in line with other intern
+      roles.
+    type: Remove
+  id: 1105
+  time: '2025-02-11T21:05:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1655
+- author: mqole
+  changes:
+  - message: Command playtime is no longer required for most command roles.
+    type: Tweak
+  id: 1106
+  time: '2025-02-11T22:31:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1659
+- author: Blackern5000
+  changes:
+  - message: Added four new big snake tail markings for reptilians.
+    type: Add
+  id: 1107
+  time: '2025-02-11T22:32:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1658
+- author: Darkmajia
+  changes:
+  - message: Solar panels can be directly upgraded to their plasma/uranium variants,
+      similarly to window upgrading.
+    type: Add
+  id: 1108
+  time: '2025-02-11T22:31:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1656
+- author: Pivotbash
+  changes:
+  - message: Sec Space Blade, Portable Criminal Records Computer, and the Pribar now
+      fit in the security belt
+    type: Tweak
+  - message: Pribar now prys 10% faster
+    type: Tweak
+  - message: moved spaceblade to the utility tab instead of the disabler tab
+    type: Tweak
+  id: 1109
+  time: '2025-02-11T22:34:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1643
+- author: formlessnameless
+  changes:
+  - message: Thief access breaker is back in the box.
+    type: Fix
+  id: 1110
+  time: '2025-02-11T22:36:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1662
+- author: TheGrimbeeper
+  changes:
+  - message: 'New artifact trigger: Expressiveness'
+    type: Add
+  id: 1111
+  time: '2025-02-11T22:36:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1642

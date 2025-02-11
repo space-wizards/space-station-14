@@ -485,6 +485,9 @@
         - CombatKnife
         - Truncheon
         - SecTicket
+        - Pribar #imp
+        - SpaceBladeSec #imp
+        - HandheldCriminalRecords #imp
       components:
         - Stunbaton
         - FlashOnTrigger

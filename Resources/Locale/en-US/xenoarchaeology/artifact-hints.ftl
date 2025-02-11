@@ -45,6 +45,7 @@ artifact-trigger-hint-examine = Examination
 artifact-trigger-hint-resurrection = Resurrection
 artifact-trigger-hint-medical = Therapeutic chemicals
 artifact-trigger-hint-funny = Slapstick comedy
+artifact-trigger-hint-expression = Expressiveness
 
 artifact-trigger-hint-drink-classic-martini = Beverage "Classically shaken"
 artifact-trigger-hint-drink-caffine = Beverage "Caffinated"
