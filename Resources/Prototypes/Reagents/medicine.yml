@@ -657,7 +657,7 @@
         - !type:SatiateThirst
           factor: 6
         - !type:ModifyBloodLevel
-          amount: 6
+          amount: 1
 
 - type: reagent
   id: Siderlac
