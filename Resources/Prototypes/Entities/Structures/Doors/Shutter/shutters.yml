@@ -34,6 +34,9 @@
     containers:
       board: !type:Container
   - type: NavMapDoor
+  - type: Tag
+    tags:
+    - ForceNoFixRotations # Don't want the fixrotations command to target these
   - type: Door
     openDrawDepth: BlastDoors
     closedDrawDepth: BlastDoors
@@ -49,9 +52,9 @@
       types:
         Blunt: 5 # getting shutters closed on you probably doesn't hurt that much
     openSound:
-      path: /Audio/Machines/blastdoor.ogg
+      path: /Audio/Machines/shutter.ogg
     closeSound:
-      path: /Audio/Machines/blastdoor.ogg
+      path: /Audio/Machines/shutter.ogg
   - type: Weldable
     time: 3
   - type: Appearance
@@ -93,10 +96,10 @@
     lastSignals:
       DoorStatus: false
   - type: InteractionPopup
-    interactSuccessString: comp-window-knock
-    messagePerceivedByOthers: comp-window-knock
+    interactSuccessString: shutter-rattle
+    messagePerceivedByOthers: shutter-rattle
     interactSuccessSound:
-      path: /Audio/Effects/glass_knock.ogg
+      collection: FenceRattle
   - type: BlockWeather
 
 - type: entity

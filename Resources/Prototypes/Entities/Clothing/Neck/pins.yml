@@ -232,7 +232,7 @@
     state: trans
   - type: Clothing
     equippedPrefix: trans
- 
+
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckAutismPin
