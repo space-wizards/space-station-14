@@ -8,6 +8,16 @@
   },
   "states": [
     {
+      "name": "base",
+      "directions": 4
+    },
+    {
+      "name": "base-open"
+    },
+    {
+      "name": "base-broken"
+    },
+    {
       "name": "hamtr_chassis"
     },
     {

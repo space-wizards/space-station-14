@@ -8,6 +8,34 @@
     },
     "states": [
       {
+        "name": "durand",
+        "directions": 4
+      },
+      {
+        "name": "durand-open",
+        "delays": [
+          [
+            1,
+            0.1,
+            0.1,
+            0.5,
+            0.1,
+            0.1
+          ]
+        ]
+      },
+      {
+        "name": "durand-broken",
+        "delays": [
+          [
+            0.5,
+            1,
+            0.5,
+            1
+          ]
+        ]
+      },
+      {
         "name": "durand_chassis"
       },
       {
