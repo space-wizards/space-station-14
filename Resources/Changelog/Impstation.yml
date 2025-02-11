@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Slime "eye glow" marking (does not actually make eyes unshaded) (yet)
-    type: Add
-  id: 606
-  time: '2024-11-29T07:43:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/833
-- author: TheGrimbeeper
-  changes:
-  - message: artifact effect that will have chemists and bartenders upset at the scientists
-    type: Add
-  id: 607
-  time: '2024-11-30T00:26:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/835
-- author: Sha-Seng
-  changes:
-  - message: Mime hardsuit helmet light now has the eyes light up instead of just
-      using a hardhat light
-    type: Tweak
-  id: 608
-  time: '2024-11-30T00:27:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/838
 - author: Pinkbat5
   changes:
   - message: Diona and Nymphs can now use the mycorrhizal gestalt, a special long-range
@@ -4218,3 +4196,25 @@
   id: 1105
   time: '2025-02-11T21:05:23.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1655
+- author: mqole
+  changes:
+  - message: Command playtime is no longer required for most command roles.
+    type: Tweak
+  id: 1106
+  time: '2025-02-11T22:31:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1659
+- author: Blackern5000
+  changes:
+  - message: Added four new big snake tail markings for reptilians.
+    type: Add
+  id: 1107
+  time: '2025-02-11T22:32:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1658
+- author: Darkmajia
+  changes:
+  - message: Solar panels can be directly upgraded to their plasma/uranium variants,
+      similarly to window upgrading.
+    type: Add
+  id: 1108
+  time: '2025-02-11T22:31:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1656
