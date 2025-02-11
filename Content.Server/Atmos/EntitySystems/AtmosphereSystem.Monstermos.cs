@@ -596,7 +596,7 @@ namespace Content.Server.Atmos.EntitySystems
             var mapGrid = ent.Comp3;
             foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, tile.GridIndices))
             {
-                if (!_doorAlarmQuery.TryGetComponent(entity, out var doorAlarm))
+                if (!_firelockQuery.TryGetComponent(entity, out var doorAlarm))
                     continue;
 
                 reconsiderAdjacent |= _door.TriggerAlarm((entity, doorAlarm));
@@ -604,7 +604,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, other.GridIndices))
             {
-                if (!_doorAlarmQuery.TryGetComponent(entity, out var doorAlarm))
+                if (!_firelockQuery.TryGetComponent(entity, out var doorAlarm))
                     continue;
 
                 reconsiderAdjacent |= _door.TriggerAlarm((entity, doorAlarm));
