@@ -89,8 +89,7 @@ public sealed partial class ExplosionSystem
         if (referenceGrid != null)
         {
             var xform = Transform(Comp<MapGridComponent>(referenceGrid.Value).Owner);
-            spaceMatrix = xform.WorldMatrix;
-            spaceAngle = xform.WorldRotation;
+            (_, spaceAngle, spaceMatrix) = _transformSystem.GetWorldPositionRotationMatrix(xform);
         }
 
         // is the explosion starting on a grid?
