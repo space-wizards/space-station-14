@@ -114,7 +114,6 @@
   suffix: armor-piercing
   components:
   - type: RevolverAmmoProvider
-    whitelist:
     proto: CartridgeMagnumAP
 
 - type: entity
