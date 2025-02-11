@@ -5,13 +5,55 @@
   - Commander
   - Lieutenant
   - Major
-  
+
 - type: dataset
   id: NamesFirstMilitary
   values:
   - Corporal
   - Sergeant
   - Specialist
+
+- type: dataset
+  id: NamesFirstERTLeader
+  values:
+  - Lieutenant
+
+- type: dataset
+  id: NamesFirstERTSpecialist
+  values:
+  - Specialist
+
+- type: dataset
+  id: NamesFirstERTPaladin
+  values:
+  - Paladin
+
+- type: dataset
+  id: NamesFirstERTSecurity
+  values:
+  - Officer
+  #- Enforcer
+
+- type: dataset
+  id: NamesFirstERTBreacher
+  values:
+  - Pointman
+  # - Breacher
+
+- type: dataset
+  id: NamesFirstERTRifleman
+  values:
+  - Rifleman
+
+- type: dataset
+  id: NamesFirstERTGrenadier
+  values:
+  - Grenadier
+
+- type: dataset
+  id: NamesFirstERTMedical
+  values:
+  - Corpsman
 
 - type: dataset
   id: NamesLastMilitary

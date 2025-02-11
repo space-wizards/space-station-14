@@ -86,6 +86,50 @@
 
 - type: entity
   parent: Jug
+  suffix: punct & tranex
+  id: JugPunct
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: Puncturase
+          Quantity: 130
+        - ReagentId: TranexamicAcid
+          Quantity: 65
+
+- type: entity
+  parent: Jug
+  suffix: pyra & derma
+  id: JugPyra
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: Pyrazine
+          Quantity: 100
+        - ReagentId: Dermaline
+          Quantity: 100
+
+- type: entity
+  parent: Jug
+  suffix: tricordazine
+  id: JugTrico
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: Tricordrazine
+          Quantity: 200
+
+# chemvend jugs
+- type: entity
+  parent: Jug
   suffix: carbon
   id: JugCarbon
   categories: [ HideSpawnMenu ]
