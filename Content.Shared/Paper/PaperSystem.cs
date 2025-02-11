@@ -115,13 +115,20 @@ public sealed class PaperSystem : EntitySystem
                     return;
                 }
 
-                if (TryComp<IlliterateComponent>(args.User, out var illiterateComp))
+                var ev = new PaperWriteAttemptEvent(entity.Owner);
+                RaiseLocalEvent(args.User, ev);
+                if (ev.Cancelled)
                 {
-                    var fileWriteMessage = Loc.GetString(illiterateComp.FailWriteMessage);
-                    _popupSystem.PopupClient(fileWriteMessage, entity.Owner, args.User);
+                    if (ev.FailReason is not null)
+                    {
+                        var fileWriteMessage = Loc.GetString(ev.FailReason);
+                        _popupSystem.PopupClient(fileWriteMessage, entity.Owner, args.User);
+                    }
+
                     args.Handled = true;
                     return;
                 }
+
                 var writeEvent = new PaperWriteEvent(entity, args.User);
                 RaiseLocalEvent(args.Used, ref writeEvent);
 
@@ -165,7 +172,9 @@ public sealed class PaperSystem : EntitySystem
 
     private void OnInputTextMessage(Entity<PaperComponent> entity, ref PaperInputTextMessage args)
     {
-        if (HasComp<IlliterateComponent>(args.Actor))
+        var ev = new PaperWriteAttemptEvent(entity.Owner);
+        RaiseLocalEvent(args.Actor, ev);
+        if (ev.Cancelled)
             return;
 
         if (args.Text.Length <= entity.Comp.ContentSize)
@@ -241,3 +250,9 @@ public sealed class PaperSystem : EntitySystem
 /// </summary>
 [ByRefEvent]
 public record struct PaperWriteEvent(EntityUid User, EntityUid Paper);
+
+public class PaperWriteAttemptEvent(EntityUid paper): CancellableEntityEventArgs
+{
+    public EntityUid Paper = paper;
+    public string? FailReason = null;
+}
