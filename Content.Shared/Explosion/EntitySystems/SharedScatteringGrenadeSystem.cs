@@ -50,7 +50,7 @@ public abstract class SharedScatteringGrenadeSystem : EntitySystem
             return;
 
         // Make sure there's room for another grenade to be added
-        if (GrenadeCount(entity) >= entity.Comp.Capacity)
+        if (entity.Comp.Count >= entity.Comp.Capacity)
             return;
 
         if (args.Handled || !_whitelistSystem.IsValid(entity.Comp.Whitelist, args.Used))
@@ -69,14 +69,6 @@ public abstract class SharedScatteringGrenadeSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(entity, out var appearanceComponent))
             return;
 
-        _appearance.SetData(entity, ClusterGrenadeVisuals.GrenadesCounter, GrenadeCount(entity), appearanceComponent);
-    }
-
-    /// <summary>
-    /// Returns the number of grenades currently contained in the cluster (both spawned and unspawned)
-    /// </summary>
-    public int GrenadeCount(Entity<ScatteringGrenadeComponent> entity)
-    {
-        return entity.Comp.UnspawnedCount + entity.Comp.Container.ContainedEntities.Count;
+        _appearance.SetData(entity, ClusterGrenadeVisuals.GrenadesCounter, entity.Comp.Count, appearanceComponent);
     }
 }
