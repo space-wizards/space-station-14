@@ -79,17 +79,6 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         {
             return;
         }
-
-        // UISystemDependency not injected at this point so do it the old fashion way, I love ordering issues.
-        var uiSystem = EntityManager.System<SharedUserInterfaceSystem>();
-
-        foreach (var bui in uiSystem.GetActorUis((_player.LocalEntity.Value, userComp)))
-        {
-            if (!uiSystem.TryGetOpenUi<StorageBoundUserInterface>(bui.Entity, StorageComponent.StorageUiKey.Key, out var storageBui))
-                continue;
-
-            storageBui.ReOpen();
-        }
     }
 
     private void OnStorageWindowTitle(bool obj)
