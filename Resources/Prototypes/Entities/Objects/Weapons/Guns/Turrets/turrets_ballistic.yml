@@ -129,10 +129,10 @@
           FoodMeatXeno:
             min: 3
             max: 5
-    - type: InteractionPopup
-      interactDelay: 1.0
-      successChance: 0.8
-      interactSuccessString: petting-success-generic
-      interactFailureString: petting-failure-generic
-      interactSuccessSound:
-        path: /Audio/Animals/snake_hiss.ogg
+  - type: InteractionPopup
+    interactDelay: 1.0
+    successChance: 0.8
+    interactSuccessString: petting-success-generic
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/snake_hiss.ogg
