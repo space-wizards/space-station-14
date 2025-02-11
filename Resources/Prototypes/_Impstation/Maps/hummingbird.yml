@@ -19,6 +19,7 @@
           availableJobs:
             #command
             Captain: [ 1, 1 ]
+            AdministrativeAssistant : [ 1, 1 ]
             #service
             HeadOfPersonnel: [ 1, 1 ]
             Bartender: [ 2, 2 ]
@@ -57,6 +58,7 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             Courier: [ 2, 2 ]
+            SupplyAssistant: [ 2, 2 ]
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 2 ]
