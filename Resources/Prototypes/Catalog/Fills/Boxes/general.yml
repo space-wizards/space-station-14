@@ -55,6 +55,16 @@
         amount: 12
 
 - type: entity
+  name: lightbulb box warm
+  parent: BoxLightbulb
+  id: BoxWarmLightbulb
+  components:
+  - type: StorageFill
+    contents:
+      - id: WarmLightBulb
+        amount: 12
+
+- type: entity
   name: lighttube box
   parent: BoxLightbulb
   id: BoxLighttube
@@ -178,7 +188,7 @@
       - id: FoodCondimentPacketKetchup
   - type: Sprite
     layers:
-      - state: box_olive
+      - state: box
       - state: writing
 
 - type: entity
