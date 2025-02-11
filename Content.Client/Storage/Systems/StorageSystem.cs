@@ -76,10 +76,6 @@ public sealed class StorageSystem : SharedStorageSystem
             {
                 _queuedBuis.Add((containerBui, false));
             }
-            else
-            {
-                _queuedBuis.Add((storageBui, true));
-            }
         }
     }
 
