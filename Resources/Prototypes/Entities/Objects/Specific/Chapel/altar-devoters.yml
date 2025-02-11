@@ -16,11 +16,11 @@
     tags:
     - DevoterNanotrasen
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
-    state: nanotrasen
+    sprite: Objects/Specific/Chapel/devoter.rsi
+    state: devoters
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
-    state: nanotrasen
+    sprite: Objects/Specific/Chapel/devoter.rsi
+    state: devoters
 
 - type: entity
   parent: BaseAltarDevoter
