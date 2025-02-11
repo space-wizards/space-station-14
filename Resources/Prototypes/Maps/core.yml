@@ -26,6 +26,7 @@
             Janitor: [ 2, 2 ]
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
+            AdministrativeAssistant: [ 1, 1 ] # imp
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 3, 3 ]
@@ -54,9 +55,10 @@
             Brigmedic: [ 1, 1 ]
             #supply
             CargoTechnician: [ 3, 3 ]
+            SupplyAssistant: [ 3, 3 ] # imp
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 2, 2 ]
-            Courier: [ 2, 2 ]
+            Courier: [ 2, 2 ] # imp
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]
