@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: whatston3
-  changes:
-  - message: Area insert items can pick up single item sets when clicking on the floor.
-    type: Fix
-  id: 7428
-  time: '2024-09-24T14:23:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32153
 - author: LordEclipse
   changes:
   - message: The Antimov Law Board is now available in both the Traitor and Nuclear
@@ -3897,3 +3890,11 @@
   id: 7927
   time: '2025-02-10T22:17:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34954
+- author: sowelipililimute
+  changes:
+  - message: Smart equipping into your backpack w/ a nested storage window open no
+      longer bugs out
+    type: Fix
+  id: 7928
+  time: '2025-02-11T02:15:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35048
