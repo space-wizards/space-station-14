@@ -1,4 +1,4 @@
-namespace Content.Server.Doors.Actions;
+namespace Content.Server.Doors;
 
 public enum AirlockWireIdentifier : byte
 {

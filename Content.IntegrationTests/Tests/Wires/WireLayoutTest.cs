@@ -1,4 +1,4 @@
-﻿using Content.Server.Doors.Actions;
+﻿using Content.Server.Doors;
 using Content.Server.Power;
 using Content.Server.Wires;
 using Robust.Shared.GameObjects;

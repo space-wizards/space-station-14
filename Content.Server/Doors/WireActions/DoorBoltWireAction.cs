@@ -4,7 +4,7 @@ using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Wires;
 
-namespace Content.Server.Doors.Actions;
+namespace Content.Server.Doors;
 
 public sealed partial class DoorBoltWireAction : ComponentWireAction<DoorBoltComponent>
 {
