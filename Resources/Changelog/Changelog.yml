@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Fixed some people's preferences taking ages to load, hopefully.
-    type: Fix
-  id: 7433
-  time: '2024-09-24T20:43:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32434
 - author: Moomoobeef
   changes:
   - message: Most papers are no longer considered trash.
@@ -3897,3 +3890,10 @@
   id: 7932
   time: '2025-02-11T03:29:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34587
+- author: Nox38
+  changes:
+  - message: Vendomats now contain 2 Screwdrivers, and an addition Wirecutter.
+    type: Tweak
+  id: 7933
+  time: '2025-02-11T06:35:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35059
