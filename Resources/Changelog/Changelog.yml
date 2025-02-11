@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: LordEclipse
-  changes:
-  - message: The Antimov Law Board is now available in both the Traitor and Nuclear
-      Operative Uplinks, 14 and 24 TC respectively.
-    type: Add
-  id: 7429
-  time: '2024-09-24T15:06:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31916
 - author: lzk228
   changes:
   - message: Freezer electronics added to autolathe, with which you can craft locker
@@ -3898,3 +3890,10 @@
   id: 7928
   time: '2025-02-11T02:15:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35048
+- author: Tayrtahn
+  changes:
+  - message: Radio frequencies are now displayed with a decimal point.
+    type: Tweak
+  id: 7929
+  time: '2025-02-11T02:36:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35046
