@@ -27,6 +27,7 @@
             ChiefMedicalOfficer: [ 1, 1 ]
             ChiefEngineer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
+            AdministrativeAssistant: [ 1, 1 ]
             #security
             SecurityOfficer: [ 1, 1 ]
             #cargo
@@ -34,6 +35,7 @@
             SalvageSpecialist: [ 1, 1 ]
             AtmosphericTechnician: [ 1, 1 ]
             Courier: [ 1, 1 ]
+            SupplyAssistant: [ 1, 1 ]
             #service
             Bartender: [ 1, 1 ]
             Botanist: [ 1, 1 ]
