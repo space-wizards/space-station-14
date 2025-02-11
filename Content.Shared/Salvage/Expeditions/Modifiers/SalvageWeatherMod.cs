@@ -23,6 +23,6 @@ public sealed partial class SalvageWeatherMod : IPrototype, IBiomeSpecificMod
     /// <summary>
     /// Weather prototype to use on the planet.
     /// </summary>
-    [DataField("weather", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<WeatherPrototype>))]
+    [DataField("weather", required: true)]
     public ProtoId<WeatherPrototype>? WeatherPrototype;
 }

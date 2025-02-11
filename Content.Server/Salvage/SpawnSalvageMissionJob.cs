@@ -156,7 +156,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             {
                 // intentionally let the weather fade in
                 _entManager.System<WeatherSystem>()
-                    .SetWeather(mapId, _prototypeManager.Index<WeatherPrototype>(mission.Weather), _timing.CurTime.Add(TimeSpan.FromSeconds(30)));
+                    .SetWeather(mapId, _prototypeManager.Index<WeatherPrototype>(mission.Weather), null);
             }
 
             if (mission.Color != null)
