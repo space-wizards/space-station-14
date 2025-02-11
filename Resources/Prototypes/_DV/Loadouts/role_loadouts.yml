@@ -2,11 +2,8 @@
   id: JobSupplyAssistant
   groups:
   - GroupTankHarness
-  - SupplyAssistantHead
   - SupplyAssistantJumpsuit
   - SupplyAssistantBackpack
-  - SupplyAssistantOuterClothing
-  - SupplyAssistantShoes
   - Glasses
   - Survival
   - Trinkets

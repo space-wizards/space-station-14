@@ -14,6 +14,7 @@
 - type: startingGear
   id: SupplyAssistantGear
   equipment:
+    shoes: ClothingShoesColorBlack
     id: SupplyAssistantPDA
     ears: ClothingHeadsetCargo
     pocket1: BookLogistics
