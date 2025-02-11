@@ -31,6 +31,23 @@
 
 - type: entity
   parent: ClothingNeckPinBase
+  id: ClothingNeckAllyPin
+  name: straight ally pin
+  description: Be ally do crime.
+  components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: ally-inhand-left
+      right:
+      - state: ally-inhand-right
+  - type: Sprite
+    state: ally
+  - type: Clothing
+    equippedPrefix: ally
+
+- type: entity
+  parent: ClothingNeckPinBase
   id: ClothingNeckAromanticPin
   name: aromantic pin
   description: Be aro do crime.
@@ -89,9 +106,9 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: asex-inhand-left
+      - state: gay-inhand-left
       right:
-      - state: asex-inhand-right
+      - state: gay-inhand-right
   - type: Sprite
     state: gay
   - type: Clothing
@@ -164,6 +181,40 @@
     state: pan
   - type: Clothing
     equippedPrefix: pan
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckOmnisexualPin
+  name: omnisexual pin
+  description: Be omni do crime.
+  components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: omni-inhand-left
+      right:
+      - state: omni-inhand-right
+  - type: Sprite
+    state: omni
+  - type: Clothing
+    equippedPrefix: omni
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckGenderqueerPin
+  name: genderqueer pin
+  description: be crime, do gender
+  components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: gender-inhand-left
+      right:
+      - state: gender-inhand-right
+  - type: Sprite
+    state: gender
+  - type: Clothing
+    equippedPrefix: gender
 
 - type: entity
   parent: ClothingNeckPinBase
