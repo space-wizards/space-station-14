@@ -522,7 +522,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return true;
 
         // Anyone can click to open firelocks.
-        if (door.Comp.State == DoorState.Closed && TryComp<DoorAlarmComponent>(door, out _))
+        if (door.Comp.State == DoorState.Closed && TryComp<FirelockComponent>(door, out _))
             return true;
 
         return !Resolve(door, ref access, false) || _accessReaderSystem.IsAllowed(user.Value, door, access);

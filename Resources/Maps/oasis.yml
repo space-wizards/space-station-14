@@ -96299,7 +96299,7 @@ entities:
       - 18287
       - 18282
       - 18271
-    - type: DoorAlarm
+    - type: Firelock
       emergencyCloseCooldown: 16782.4165528
   - uid: 167
     components:

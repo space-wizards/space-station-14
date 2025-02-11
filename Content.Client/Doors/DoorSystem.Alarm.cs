@@ -13,24 +13,24 @@ public sealed partial class DoorSystem
 
     private void InitializeClientDoorAlarm()
     {
-        SubscribeLocalEvent<DoorAlarmComponent, MapInitEvent>(SetAppearance);
-        SubscribeLocalEvent<DoorAlarmComponent, ComponentStartup>(SetAppearance);
-        SubscribeLocalEvent<DoorAlarmComponent, DoorAlarmChangedEvent>(SetAppearance);
+        SubscribeLocalEvent<FirelockComponent, MapInitEvent>(SetAppearance);
+        SubscribeLocalEvent<FirelockComponent, ComponentStartup>(SetAppearance);
+        SubscribeLocalEvent<FirelockComponent, DoorAlarmChangedEvent>(SetAppearance);
     }
 
-    private void SetAppearance<T>(Entity<DoorAlarmComponent> doorAlarm, ref T _) where T : EntityEventArgs
+    private void SetAppearance<T>(Entity<FirelockComponent> doorAlarm, ref T _) where T : EntityEventArgs
     {
         UpdateAppearance(doorAlarm);
     }
 
-    protected override void OnDoorStateChanged(Entity<DoorAlarmComponent> doorAlarm, ref DoorStateChangedEvent args)
+    protected override void OnDoorStateChanged(Entity<FirelockComponent> doorAlarm, ref DoorStateChangedEvent args)
     {
         base.OnDoorStateChanged(doorAlarm, ref args);
 
         UpdateAppearance(doorAlarm);
     }
 
-    private void UpdateAppearance(Entity<DoorAlarmComponent> doorAlarm)
+    private void UpdateAppearance(Entity<FirelockComponent> doorAlarm)
     {
         if (TryComp<SpriteComponent>(doorAlarm, out var sprite))
             sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, doorAlarm.Comp.IsTriggered);

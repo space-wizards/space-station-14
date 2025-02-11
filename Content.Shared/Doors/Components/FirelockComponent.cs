@@ -7,7 +7,7 @@ namespace Content.Shared.Doors.Components
     /// and unlock the door.
     /// </summary>
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-    public sealed partial class DoorAlarmComponent : Component
+    public sealed partial class FirelockComponent : Component
     {
         #region Settings
 

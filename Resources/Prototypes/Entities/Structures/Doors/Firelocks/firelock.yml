@@ -87,7 +87,7 @@
     - type: Weldable
       fuel: 5
       time: 3
-    - type: DoorAlarm
+    - type: Firelock
     - type: Appearance
     - type: WiresVisuals
     - type: WiresPanel

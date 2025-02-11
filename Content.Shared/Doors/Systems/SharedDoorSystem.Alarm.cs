@@ -9,22 +9,22 @@ public abstract partial class SharedDoorSystem
 
     private void InitializeAlarm()
     {
-        SubscribeLocalEvent<DoorAlarmComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<DoorAlarmComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
-        SubscribeLocalEvent<DoorAlarmComponent, BeforePryEvent>(OnBeforePry);
-        SubscribeLocalEvent<DoorAlarmComponent, GetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
-        SubscribeLocalEvent((Entity<DoorAlarmComponent> doorAlarm, ref PriedEvent args) => OnAfterPried(doorAlarm));
-        SubscribeLocalEvent<DoorAlarmComponent, DoorStateChangedEvent>(OnDoorStateChanged);
+        SubscribeLocalEvent<FirelockComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<FirelockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
+        SubscribeLocalEvent<FirelockComponent, BeforePryEvent>(OnBeforePry);
+        SubscribeLocalEvent<FirelockComponent, GetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
+        SubscribeLocalEvent((Entity<FirelockComponent> doorAlarm, ref PriedEvent args) => OnAfterPried(doorAlarm));
+        SubscribeLocalEvent<FirelockComponent, DoorStateChangedEvent>(OnDoorStateChanged);
     }
 
-    private void OnPowerChanged(Entity<DoorAlarmComponent> doorAlarm, ref PowerChangedEvent args)
+    private void OnPowerChanged(Entity<FirelockComponent> doorAlarm, ref PowerChangedEvent args)
     {
         doorAlarm.Comp.IsPowered = args.Powered;
 
         Dirty(doorAlarm);
     }
 
-    public bool TriggerAlarm(Entity<DoorAlarmComponent> doorAlarm, bool predicted = false)
+    public bool TriggerAlarm(Entity<FirelockComponent> doorAlarm, bool predicted = false)
     {
         if (doorAlarm.Comp.IsTriggered)
             return true;
@@ -37,7 +37,7 @@ public abstract partial class SharedDoorSystem
         return SetAlarm(doorAlarm, true, predicted);
     }
 
-    protected bool SetAlarm(Entity<DoorAlarmComponent> doorAlarm, bool alarmTriggered, bool predicted = false)
+    protected bool SetAlarm(Entity<FirelockComponent> doorAlarm, bool alarmTriggered, bool predicted = false)
     {
         if (!TryComp<DoorComponent>(doorAlarm, out var door))
             return false;
@@ -61,7 +61,7 @@ public abstract partial class SharedDoorSystem
 
     #region Access/Prying
 
-    private static void OnDoorGetPryTimeModifier(Entity<DoorAlarmComponent> firelock, ref GetPryTimeModifierEvent args)
+    private static void OnDoorGetPryTimeModifier(Entity<FirelockComponent> firelock, ref GetPryTimeModifierEvent args)
     {
         if (!firelock.Comp.IsActive)
             return;
@@ -69,7 +69,7 @@ public abstract partial class SharedDoorSystem
         args.PryTimeModifier *= firelock.Comp.LockedPryTimeModifier;
     }
 
-    private void OnBeforePry(Entity<DoorAlarmComponent> doorAlarm, ref BeforePryEvent args)
+    private void OnBeforePry(Entity<FirelockComponent> doorAlarm, ref BeforePryEvent args)
     {
         if (args.Cancelled)
             return;
@@ -80,7 +80,7 @@ public abstract partial class SharedDoorSystem
         args.Cancelled = true;
     }
 
-    private void OnBeforeDoorOpened(Entity<DoorAlarmComponent> doorAlarm, ref BeforeDoorOpenedEvent args)
+    private void OnBeforeDoorOpened(Entity<FirelockComponent> doorAlarm, ref BeforeDoorOpenedEvent args)
     {
         if (!doorAlarm.Comp.IsActive ||
             args.User == null ||
@@ -90,7 +90,7 @@ public abstract partial class SharedDoorSystem
         args.Cancel();
     }
 
-    protected virtual void OnDoorStateChanged(Entity<DoorAlarmComponent> doorAlarm, ref DoorStateChangedEvent args)
+    protected virtual void OnDoorStateChanged(Entity<FirelockComponent> doorAlarm, ref DoorStateChangedEvent args)
     {
         if (args.State != DoorState.Open)
             return;
@@ -102,7 +102,7 @@ public abstract partial class SharedDoorSystem
         Dirty(doorAlarm, doorAlarm.Comp);
     }
 
-    private void OnAfterPried(Entity<DoorAlarmComponent> doorAlarm)
+    private void OnAfterPried(Entity<FirelockComponent> doorAlarm)
     {
         doorAlarm.Comp.EmergencyCloseCooldown = _gameTiming.CurTime + doorAlarm.Comp.EmergencyCloseCooldownDuration;
     }
