@@ -54,4 +54,4 @@ public sealed partial class TechnologyDatabaseComponent : Component
 /// server to all of it's clients.
 /// </remarks>
 [ByRefEvent]
-public readonly record struct TechnologyDatabaseModifiedEvent;
+public readonly record struct TechnologyDatabaseModifiedEvent(List<string>? NewlyUnlockedRecipes);
