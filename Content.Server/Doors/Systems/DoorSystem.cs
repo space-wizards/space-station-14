@@ -26,25 +26,12 @@ public sealed partial class DoorSystem : SharedDoorSystem
     protected override void SetCollidable(Entity<DoorComponent> door, bool isClosed)
     {
         if (door.Comp.ChangeAirtight && TryComp<AirtightComponent>(door, out var airtight))
-            SetCyclingAtmosAirtightDirection(door, airtight, isClosed);
+            _airtightSystem.SetAirblocked((door, airtight), isClosed);
 
         // Pathfinding / AI stuff.
         RaiseLocalEvent(new AccessReaderChangeEvent(door, isClosed));
 
         base.SetCollidable(door, isClosed);
-    }
-
-    private void SetCyclingAtmosAirtightDirection(Entity<DoorComponent> door, AirtightComponent airtight, bool isClosed)
-    {
-        var ev = new DoorAirtightDirectionChanged
-        {
-            Entity = (door, airtight),
-            InitialDirection = AtmosDirection.South | AtmosDirection.North,
-        };
-
-        ev.InitialDirection = isClosed ? ev.InitialDirection |= AtmosDirection.West : ev.InitialDirection |= AtmosDirection.East;
-
-        RaiseLocalEvent(door, ref ev);
     }
 
     private void OnBoltPowerChanged(Entity<DoorBoltComponent> ent, ref PowerChangedEvent args)
@@ -59,11 +46,4 @@ public sealed partial class DoorSystem : SharedDoorSystem
         Dirty(ent, ent.Comp);
         UpdateBoltLightStatus(ent);
     }
-}
-
-[ByRefEvent]
-public record struct DoorAirtightDirectionChanged
-{
-    public Entity<AirtightComponent> Entity;
-    public AtmosDirection InitialDirection;
 }
