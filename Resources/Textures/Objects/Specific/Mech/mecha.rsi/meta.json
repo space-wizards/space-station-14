@@ -115,7 +115,16 @@
       "directions": 4
     },
     {
-      "name": "darkgygax-open"
+      "name": "darkgygax-open",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
     },
     {
       "name": "darkgygax-broken"
@@ -133,6 +142,42 @@
     },
     {
       "name": "hauler-broken"
+    },
+    {
+      "name": "paddy",
+      "directions": 4
+    },
+    {
+      "name": "paddy-empty",
+      "directions": 4
+    },
+    {
+      "name": "paddy-open"
+    },
+    {
+      "name": "paddy-broken"
+    },
+    {
+      "name": "paddy_sirens",
+      "directions": 4,
+      "delays": [
+        [
+          0.4,
+          0.4
+        ],
+        [
+          0.4,
+          0.4
+        ],
+        [
+          0.4,
+          0.4
+        ],
+        [
+          0.4,
+          0.4
+        ]
+      ]
     }
   ]
 }
