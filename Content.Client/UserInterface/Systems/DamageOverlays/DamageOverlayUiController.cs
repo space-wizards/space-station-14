@@ -100,7 +100,7 @@ public sealed class DamageOverlayUiController : UIController
 
                 if (!EntityManager.HasComponent<PainNumbnessComponent>(entity))
                 {
-                    foreach (var painDamageType in damageable.PainDamageGroupIDs)
+                    foreach (var painDamageType in damageable.PainDamageGroups)
                     {
                         damageable.DamagePerGroup.TryGetValue(painDamageType, out var painDamage);
                         painLevel += painDamage;
