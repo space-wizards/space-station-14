@@ -19,6 +19,57 @@
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: AmbientSound
+    volume: -5
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/fireplace.ogg
+  - type: EntityHeater
+    requirePower: false
+  - type: ItemPlacer
+    maxEntities: 6 # big fire, many steaks
+    whitelist:
+      components:
+      - Temperature
+  - type: PlaceableSurface
+
+# imp edit - most of these components are new, with old ones rolled into BaseBonfire. and yet, we are still in an upstream file
+- type: entity
+  id: Bonfire
+  parent: BonfireBase
+  name: bonfire
+  description: What can be better than a late evening under the sky with guitar and friends?
+  components:
+  - type: Sprite
+    layers:
+    - state: bonfire
+  - type: Appearance
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 50

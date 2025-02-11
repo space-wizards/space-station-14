@@ -315,6 +315,13 @@ namespace Content.Server.Atmos.EntitySystems
 
             _ignitionSourceSystem.SetIgnited(uid, false);
 
+            // imp edit
+            if (flammable.ToggleAmbientSound && TryComp<AmbientSoundComponent>(uid, out var ambient))
+                _ambient.SetAmbience(uid, false, ambient);
+
+            var ev = new OnExtinguishEvent();
+            RaiseLocalEvent(uid, ev);
+
             UpdateAppearance(uid, flammable);
         }
 
@@ -337,6 +344,15 @@ namespace Content.Server.Atmos.EntitySystems
                     _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(uid):target} set on fire by {ToPrettyString(ignitionSource):actor}");
                 flammable.OnFire = true;
             }
+
+            // imp edit
+            if (flammable.ToggleAmbientSound &&
+                TryComp<AmbientSoundComponent>(uid, out var ambient) &&
+                !ambient.Enabled)
+                _ambient.SetAmbience(uid, true, ambient);
+
+            var ev = new OnIngnitionEvent();
+            RaiseLocalEvent(uid, ev);
 
             UpdateAppearance(uid, flammable);
         }
@@ -466,4 +482,16 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
     }
+
+    /// <summary>
+    /// Raised when something is ignited.
+    /// </summary>
+    public sealed class OnIngnitionEvent : EntityEventArgs { }
+
+    /// <summary>
+    /// Raised when something is extinguished.
+    /// </summary>
+    public sealed class OnExtinguishEvent : EntityEventArgs { }
 }
+
+
