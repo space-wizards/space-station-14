@@ -115,11 +115,11 @@ public abstract partial class SharedDoorSystem : EntitySystem
             switch (door.Comp.State)
             {
                 // Make sure doors are not perpetually stuck opening or closing.
-                case DoorState.AttemptingOpenBySelf or DoorState.AttemptingOpenByPrying or DoorState.PartiallyOpen:
+                case DoorState.AttemptingOpenBySelf or DoorState.AttemptingOpenByPrying or DoorState.Opening:
                     door.Comp.State = DoorState.Open;
 
                     break;
-                case DoorState.AttemptingCloseBySelf or DoorState.AttemptingCloseByPrying or DoorState.PartiallyClosed:
+                case DoorState.AttemptingCloseBySelf or DoorState.AttemptingCloseByPrying or DoorState.Closing:
                     door.Comp.State = DoorState.Closed;
 
                     break;
@@ -233,7 +233,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
     private void OnBeforePry(Entity<DoorComponent> door, ref BeforePryEvent args)
     {
-        if (door.Comp.State == DoorState.WeldedClosed || !door.Comp.CanPry)
+        if (door.Comp.State == DoorState.Welded || !door.Comp.CanPry)
             args.Cancelled = true;
     }
 
@@ -264,7 +264,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     private void OnWeldAttempt(Entity<DoorComponent> component, ref WeldableAttemptEvent args)
     {
         if (component.Comp.CurrentlyCrushing.Count <= 0 &&
-            component.Comp.State is DoorState.Closed or DoorState.WeldedClosed)
+            component.Comp.State is DoorState.Closed or DoorState.Welded)
             return;
 
         args.Cancel();
@@ -275,10 +275,10 @@ public abstract partial class SharedDoorSystem : EntitySystem
         switch (door.Comp.State)
         {
             case DoorState.Closed:
-                SetState(door, DoorState.WeldedClosed);
+                SetState(door, DoorState.Welded);
 
                 return;
-            case DoorState.WeldedClosed:
+            case DoorState.Welded:
                 SetState(door, DoorState.Closed);
 
                 return;
@@ -338,7 +338,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
     public bool CanOpen(Entity<DoorComponent> door, EntityUid? user = null, bool quiet = true)
     {
-        if (door.Comp.State == DoorState.WeldedClosed)
+        if (door.Comp.State == DoorState.Welded)
             return false;
 
         var ev = new BeforeDoorOpenedEvent
@@ -393,7 +393,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     private void OnPartialOpen(Entity<DoorComponent> door)
     {
         SetCollidable(door, false);
-        SetState(door, DoorState.PartiallyOpen);
+        SetState(door, DoorState.Opening);
 
         door.Comp.NextStateChange = _gameTiming.CurTime + door.Comp.OpenTimeTwo;
 
@@ -441,7 +441,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     {
         // Since both closing/closed and welded are door states, we need to prevent 'closing' a welded door or else
         // there will be weird state bugs.
-        if (door.Comp.State is DoorState.WeldedClosed or DoorState.Closed)
+        if (door.Comp.State is DoorState.Welded or DoorState.Closed)
             return false;
 
         var ev = new BeforeDoorClosedEvent(door.Comp.PerformCollisionCheck);
@@ -490,7 +490,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return;
         }
 
-        SetState(door, DoorState.PartiallyClosed);
+        SetState(door, DoorState.Closing);
         SetCollidable(door, true);
 
         door.Comp.NextStateChange = _gameTiming.CurTime + door.Comp.CloseTimeTwo;
@@ -602,7 +602,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 OnPartialOpen(door);
 
                 return;
-            case DoorState.PartiallyOpen:
+            case DoorState.Opening:
                 SetState(door, DoorState.Open);
 
                 return;
@@ -610,7 +610,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 CloseDoor(door);
 
                 return;
-            case DoorState.PartiallyClosed or DoorState.Denying:
+            case DoorState.Closing or DoorState.Denying:
                 SetState(door, DoorState.Closed);
 
                 return;
@@ -627,7 +627,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 }
 
                 return;
-            case DoorState.WeldedClosed:
+            case DoorState.Welded:
                 // A welded door? This should never have been active in the first place.
                 Log.Error($"Welded door was in the list of active doors. Door: {ToPrettyString(door)}");
 

@@ -17,7 +17,7 @@ namespace Content.Server.Construction.Conditions
             if (!entityManager.TryGetComponent(uid, out DoorComponent? doorComponent))
                 return false;
 
-            return doorComponent.State == DoorState.WeldedClosed;
+            return doorComponent.State == DoorState.Welded;
         }
 
         public bool DoExamine(ExaminedEvent args)
@@ -28,7 +28,7 @@ namespace Content.Server.Construction.Conditions
 
             if (!entMan.TryGetComponent(entity, out DoorComponent? door)) return false;
 
-            var isWelded = door.State == DoorState.WeldedClosed;
+            var isWelded = door.State == DoorState.Welded;
             if (isWelded != Welded)
             {
                 if (Welded)
