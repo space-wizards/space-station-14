@@ -976,7 +976,6 @@ namespace Content.Server.Database.Migrations.Postgres
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("EntityName")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)")
                         .HasColumnName("entity_name");

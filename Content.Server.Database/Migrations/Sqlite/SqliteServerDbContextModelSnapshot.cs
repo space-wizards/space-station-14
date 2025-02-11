@@ -922,7 +922,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnName("profile_role_loadout_id");
 
                     b.Property<string>("EntityName")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("TEXT")
                         .HasColumnName("entity_name");
