@@ -24,7 +24,7 @@
         - MachineLayer
         layer:
         - LowImpassable
-        hard: False
+        hard: false
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: StationAiVision
