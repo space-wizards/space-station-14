@@ -57,6 +57,18 @@ public sealed partial class DoAfter
     public float TargetDistance;
 
     /// <summary>
+    ///     Whether or not the user was in storage when the do after was started.
+    /// </summary>
+    [DataField]
+    public bool UserInStorage = false;
+
+    /// <summary>
+    ///      Whether or not the target was in storage when the do after was started.
+    /// </summary>
+    [DataField]
+    public bool TargetInStorage = false;
+
+    /// <summary>
     ///     If <see cref="DoAfterArgs.NeedHand"/> is true, this is the hand that was selected when the doafter started.
     /// </summary>
     [DataField("activeHand")]
@@ -95,6 +107,8 @@ public sealed partial class DoAfter
         Completed = other.Completed;
         UserPosition = other.UserPosition;
         TargetDistance = other.TargetDistance;
+        UserInStorage = other.UserInStorage;
+        TargetInStorage = other.TargetInStorage;
         InitialHand = other.InitialHand;
         InitialItem = other.InitialItem;
 
