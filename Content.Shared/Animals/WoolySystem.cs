@@ -46,7 +46,7 @@ public sealed class WoolySystem : EntitySystem
             if (_mobState.IsDead(uid))
                 continue;
 
-            if (!_solutionContainer.ResolveSolution(uid, wooly.SolutionName, ref wooly.Solution, out var solution))
+            if (wooly.Solution is null || !_solutionContainer.ResolveSolution(uid, wooly.SolutionName, ref wooly.Solution, out var solution))
                 continue;
 
             if (solution.AvailableVolume == 0)
