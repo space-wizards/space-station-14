@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: august-sun
-  changes:
-  - message: Rolling pins are now craftable.
-    type: Tweak
-  id: 7438
-  time: '2024-09-25T17:27:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32285
 - author: BramvanZijp
   changes:
   - message: Fixed an issue that caused Doctors Delight to metabolize twice the normal
@@ -3897,3 +3890,10 @@
   id: 7937
   time: '2025-02-11T17:48:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35063
+- author: Terraspark4941
+  changes:
+  - message: The spray nozzle can now be stored inside the backpack water tank!
+    type: Tweak
+  id: 7938
+  time: '2025-02-11T19:05:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34209
