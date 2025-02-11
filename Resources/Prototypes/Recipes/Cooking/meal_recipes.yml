@@ -24,6 +24,14 @@
     FoodDoughRope: 1
     PoppySeeds: 1
 
+- type: microwaveMealRecipe
+  id: RecipeBagelCotton
+  name: cotton bagel recipe
+  result: FoodBagelCotton
+  time: 5
+  solids:
+    FoodDoughCottonRope: 1
+
 #Burgers
 
 - type: microwaveMealRecipe
@@ -459,6 +467,17 @@
     FoodDough: 1
 
 - type: microwaveMealRecipe
+  id: RecipeBaguetteCotton
+  name: baguette recipe
+  result: FoodBreadBaguetteCotton
+  time: 15
+  reagents:
+    TableSalt: 5
+    Blackpepper: 5
+  solids:
+    FoodDoughCotton: 1
+
+- type: microwaveMealRecipe
   id: RecipeBaguetteSword
   name: baguette sword recipe
   result: WeaponBaguette
@@ -641,8 +660,7 @@
   reagents:
     Flour: 15
     Egg: 6
-  solids:
-    FoodButter: 1
+    OilOlive: 5
 
 - type: microwaveMealRecipe
   id: RecipePastaTomato
@@ -1940,12 +1958,13 @@
     FoodBreadBaguetteSlice: 1
 
 - type: microwaveMealRecipe
-  id: RecipeCookedSpaceshroom
-  name: cooked spaceshroom recipe
-  result: FoodSpaceshroomCooked
+  id: RecipeFoodBakedChevreChaudCotton
+  name: cotton chevre chaud recipe
+  result: FoodBakedChevreChaudCotton
   time: 5
   solids:
-    FoodSpaceshroom: 1
+    FoodChevreSlice: 1
+    FoodBreadBaguetteCottonSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeCannabisButter
@@ -2073,6 +2092,15 @@
   time: 5
   solids:
     FoodCroissantRaw: 1
+    FoodButterSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCroissantCotton
+  name: cotton croissant recipe
+  result: FoodBakedCroissantCotton
+  time: 5
+  solids:
+    FoodCroissantRawCotton: 1
     FoodButterSlice: 1
 
 - type: microwaveMealRecipe
