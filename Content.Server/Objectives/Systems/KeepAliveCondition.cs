@@ -58,6 +58,18 @@ public sealed class KeepAliveConditionSystem : EntitySystem
             }
         }
 
+        // Not gonna save someone who's aimed to die a glorious death
+        foreach (var traitor in traitors)
+        {
+            foreach (var objective in traitor.Mind.Objectives)
+            {
+                if (TryComp<DieConditionComponent>(objective, out var _))
+                {
+                    traitors.RemoveWhere(x => x.Id == traitor.Id);
+                }
+            }
+        }
+
         // You are the first/only traitor.
         if (traitors.Count == 0)
         {
