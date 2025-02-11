@@ -4,11 +4,10 @@
   description: job-description-cargotech
   playTimeTracker: JobCargoTechnician
   # Begin DeltaV modifications - Add time requirement to cargo tech
-  # Uncomment once ready to deploy Supply Assistant
-  #requirements:
-  #- !type:DepartmentTimeRequirement
-  #  department: Cargo
-  #  time: 21600 # 6 hrs ~3 shifts.
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Cargo
+    time: 21600 # 6 hrs ~3 shifts.
   # End DeltaV modifications
   startingGear: CargoTechGear
   icon: "JobIconCargoTechnician"
