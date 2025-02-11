@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: DinnerCalzone
   changes:
-  - message: Added the janitorial hardsuit, purchasable from Cargo for $5000. Go get
-      to cleaning out in space!
-    type: Add
-  id: 602
-  time: '2024-11-28T22:50:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/828
-- author: DinnerCalzone
-  changes:
   - message: Glass airlocks that are locked by civilian accesses (eg. janitor, service,
       kitchen) now use a sprite that better matches their standard counterpart.
     type: Tweak
@@ -4219,3 +4211,13 @@
   id: 1101
   time: '2025-02-11T07:19:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1646
+- author: mqole
+  changes:
+  - message: Supply and Command intern roles! If you've already played a lot of the
+      department, don't worry. You won't need to reunlock anything!
+    type: Add
+  - message: QM now requires 6 hours of Salvage time, bumped up from 3.
+    type: Tweak
+  id: 1102
+  time: '2025-02-11T09:17:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1640
