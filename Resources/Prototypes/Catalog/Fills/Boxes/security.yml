@@ -47,7 +47,7 @@
   name: stinger grenade box
   parent: BoxCardboard
   id: BoxStinger
-  description: IT STINGS!
+  description: A box full of stinger grenades. Disperse!
   components:
   - type: StorageFill
     contents:
@@ -62,7 +62,7 @@
   name: tear gas grenade box
   parent: BoxCardboard
   id: BoxTearGas
-  description: IT STINGS!
+  description: A box full of tear gas grenades. Hold your breath.
   components:
   - type: StorageFill
     contents:
@@ -102,6 +102,21 @@
     layers:
       - state: box_security
       - state: secglasses
+
+- type: entity
+  name: sunglasses box
+  parent: BoxCardboard
+  id: BoxSunglasses
+  description: A box of cool flash-proof sunglasses.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingEyesGlassesSunglasses
+        amount: 4
+  - type: Sprite
+    layers:
+      - state: box_security
+      - state: sunglasses
 
 - type: entity
   name: forensic pad box
