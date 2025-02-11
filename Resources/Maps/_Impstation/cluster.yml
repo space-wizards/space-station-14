@@ -37011,8 +37011,6 @@ entities:
       pos: 3.5,-29.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 12818
       - 12813
