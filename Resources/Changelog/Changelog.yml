@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: goet
-  changes:
-  - message: Vending machines can be hacked again.
-    type: Fix
-  id: 7435
-  time: '2024-09-25T05:21:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32431
 - author: themias
   changes:
   - message: Agent ID card can now only copy access within interaction range.
@@ -3897,3 +3890,10 @@
   id: 7934
   time: '2025-02-11T09:36:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33306
+- author: centcomofficer24
+  changes:
+  - message: Increased the armor crates price from 725 spesos to 1250 spesos.
+    type: Tweak
+  id: 7935
+  time: '2025-02-11T12:17:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34541
