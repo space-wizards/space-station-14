@@ -47,4 +47,5 @@
     staminaDamage: 0 # anything but this is gamebreaking
     canThrowTrigger: true
     canMoveBreakout: true
+    maxEnsnares: 1
   - type: LandAtCursor
