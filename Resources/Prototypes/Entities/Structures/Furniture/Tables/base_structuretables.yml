@@ -36,6 +36,9 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepHull
+  - type: Tag
+    tags:
+    - ForceFixRotations
 
 - type: entity
   id: CounterBase

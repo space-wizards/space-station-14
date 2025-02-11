@@ -60,13 +60,13 @@ namespace Content.IntegrationTests.Tests
             "Reach",
             "Train",
             "Oasis",
-            "Cog",
             "Gate",
             "Amber",
             "Loop",
-            "Elkridge"
-
-
+            "Plasma",
+            "Elkridge",
+            "Convex",
+            "Relic"
         };
 
         /// <summary>
