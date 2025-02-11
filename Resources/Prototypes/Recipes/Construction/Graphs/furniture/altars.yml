@@ -78,16 +78,28 @@
   - node: nanotrasen
     entity: AltarNanotrasen
     edges:
-    - to: undevoted
+    - to: undevoted 
       completed:
       - !type:EmptyAllContainers
       steps:
-      - tool: Prying
+      - tool: Undevoting
+        doAfter: 1
+    - to: undevoted #Is this okay? It doesn't cause any errors and the deconstruction text doesn't break, but it feels weird...
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Prying #So chaplain can't hide stuff in toolboxes/plants/etc without anyone else being able to get them
         doAfter: 1
 
   - node: chaos
     entity: AltarChaos
     edges:
+    - to: undevoted 
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Undevoting
+        doAfter: 1
     - to: undevoted
       completed:
       - !type:EmptyAllContainers
@@ -98,6 +110,12 @@
   - node: druid
     entity: AltarDruid
     edges:
+    - to: undevoted 
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Undevoting
+        doAfter: 1
     - to: undevoted
       completed:
       - !type:EmptyAllContainers
@@ -108,6 +126,12 @@
   - node: toolbox
     entity: AltarToolbox
     edges:
+    - to: undevoted 
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Undevoting
+        doAfter: 1
     - to: undevoted
       completed:
       - !type:EmptyAllContainers
@@ -118,6 +142,12 @@
   - node: spaceChristian
     entity: AltarSpaceChristian
     edges:
+    - to: undevoted 
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Undevoting
+        doAfter: 1
     - to: undevoted
       completed:
       - !type:EmptyAllContainers
@@ -128,6 +158,12 @@
   - node: satana
     entity: AltarSatana
     edges:
+    - to: undevoted 
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Undevoting
+        doAfter: 1
     - to: undevoted
       completed:
       - !type:EmptyAllContainers
@@ -138,6 +174,12 @@
   - node: technology
     entity: AltarTechnology
     edges:
+    - to: undevoted 
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Undevoting
+        doAfter: 1
     - to: undevoted
       completed:
       - !type:EmptyAllContainers
