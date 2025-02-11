@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: ArchRBX
-  changes:
-  - message: The AstroNav PDA cartridge has now been added, which turns your PDA into
-      a handheld GPS
-    type: Add
-  - message: The AstroNav cartridge has been added to the QM locker, and comes preinstalled
-      on salvage PDA's
-    type: Add
-  id: 7432
-  time: '2024-09-24T17:02:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32194
 - author: PJB3005
   changes:
   - message: Fixed some people's preferences taking ages to load, hopefully.
@@ -3901,3 +3890,10 @@
   id: 7931
   time: '2025-02-11T03:23:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34421
+- author: themias
+  changes:
+  - message: You can no longer use pulled objects as tools.
+    type: Fix
+  id: 7932
+  time: '2025-02-11T03:29:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34587
