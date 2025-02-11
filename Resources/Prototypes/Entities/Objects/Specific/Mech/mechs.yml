@@ -179,6 +179,10 @@
     radius: 6
     energy: 5
     enabled: false
+  - type: PowerCellDraw
+    enabled: false
+    drawRate: 2
+    useRate: 0
 
 # Ripley MK-I
 - type: entity
