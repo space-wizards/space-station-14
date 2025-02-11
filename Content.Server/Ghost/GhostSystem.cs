@@ -25,8 +25,8 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Revenant.Components;
 using Content.Shared.Storage.Components;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -66,6 +66,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly TagSystem _tag = default!;
 
         private EntityQuery<GhostComponent> _ghostQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
@@ -400,10 +401,9 @@ namespace Content.Server.Ghost
         public void MakeVisible(bool visible)
         {
             var entityQuery = EntityQueryEnumerator<GhostComponent, VisibilityComponent>();
-            while (entityQuery.MoveNext(out var uid, out var ghostComp, out var vis))
+            while (entityQuery.MoveNext(out var uid, out var _, out var vis))
             {
-                // Don't show Revenants, best way to check for admin ghost is if they can interact
-                if (ghostComp.CanGhostInteract || HasComp<RevenantComponent>(uid))
+                if (!_tag.HasTag(uid, "AllowGhostShownByEvent"))
                     continue;
 
                 if (visible)
