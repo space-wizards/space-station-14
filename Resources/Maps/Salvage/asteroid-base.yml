@@ -430,7 +430,7 @@ entities:
       pos: -9.5,-6.5
       parent: 407
     - type: Door
-      state: WeldedClosed
+      state: Welded
     - type: Physics
       canCollide: False
     - type: Airtight
