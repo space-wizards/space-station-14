@@ -41,6 +41,12 @@ public sealed partial class NPCRangedCombatComponent : Component
     public bool TargetInLOS = false;
 
     /// <summary>
+    /// If true, only opaque objects will block line of sight.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool UseOpaqueForLOSChecks = false;
+
+    /// <summary>
     /// Delay after target is in LOS before we start shooting.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
