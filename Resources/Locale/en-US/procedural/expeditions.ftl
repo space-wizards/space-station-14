@@ -58,7 +58,9 @@ salvage-air-mod-dangerous-atmosphere = Dangerous atmosphere
 salvage-air-mod-toxic-atmosphere = Toxic atmosphere
 salvage-air-mod-volatile-atmosphere = Volatile atmosphere
 
-salvage-weather-mod-ashfall = Ashfall
+salvage-weather-mod-ashfallheavy = Heavy ashfall
+salvage-weather-mod-ashfallmedium = Medium ashfall
+salvage-weather-mod-ashfalllight = Light ashfall
 salvage-weather-mod-snowfallheavy = Heavy snowfall
 salvage-weather-mod-snowfallmedium = Medium snowfall
 salvage-weather-mod-snowfalllight = Light snowfall
