@@ -37,8 +37,6 @@ namespace Content.Server.Doors.Systems
 
         private void PowerChanged(EntityUid uid, FirelockComponent component, ref PowerChangedEvent args)
         {
-            // TODO this should REALLLLY not be door specific appearance thing.
-            _appearance.SetData(uid, DoorVisuals.Powered, args.Powered);
             component.Powered = args.Powered;
             Dirty(uid, component);
         }
