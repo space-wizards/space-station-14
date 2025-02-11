@@ -151,6 +151,7 @@
       mech-pilot-slot: !type:ContainerSlot
       mech-equipment-container: !type:Container
       mech-battery-slot: !type:ContainerSlot
+      mech-gas-tank-slot: !type:ContainerSlot
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: LightArmor
