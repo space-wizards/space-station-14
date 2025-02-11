@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: BramvanZijp
-  changes:
-  - message: Fixed an issue that caused Doctors Delight to metabolize twice the normal
-      speed, which also halved its effectiveness.
-    type: Fix
-  id: 7439
-  time: '2024-09-25T17:39:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32297
 - author: Ilya246
   changes:
   - message: Atmos gas sell prices significantly lowered.
@@ -3897,3 +3889,11 @@
   id: 7938
   time: '2025-02-11T19:05:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34209
+- author: Tayrtahn
+  changes:
+  - message: Ghosts are no longer sent to the void if the player they are following
+      is polymorphed.
+    type: Fix
+  id: 7939
+  time: '2025-02-11T21:34:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33878
