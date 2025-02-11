@@ -113,19 +113,14 @@
   table: !type:AllSelector
     children:
     - id: AccessConfigurator
-    - id: BoxEncryptionKeyPassenger
-    - id: BoxEncryptionKeyService
-    - id: BoxHeadset
-    - id: BoxID
-    - id: BoxPDA
     - id: CigarGoldCase
       prob: 0.25
       # Fuck the HoP they don't deserve fucking cigars.
       # Yes they do fuck you.
     - id: ClothingBackpackIan
       prob: 0.5
-    - id: ClothingHeadsetCommand
-    - id: ClothingNeckGoldmedal
+    - id: ClothingHeadsetAltCommand
+    - id: ClothingHandsGlovesHop
     - id: DoorRemoteService
     - id: HoPIDCard
     - id: IDComputerCircuitboard
@@ -133,7 +128,7 @@
     - id: RubberStampDenied
     - id: RubberStampHop
     - id: WeaponDisabler
-    - id: ClothingEyesHudCommand
+    - id: ClothingEyesGlassesCommand
 
 - type: entity
   id: LockerHeadOfPersonnelFilled

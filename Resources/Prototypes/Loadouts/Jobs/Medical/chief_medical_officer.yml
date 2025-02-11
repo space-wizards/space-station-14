@@ -70,3 +70,13 @@
   equipment:
     outerClothing: ClothingOuterWinterCMO
 
+# Ears
+- type: loadout
+  id: ChiefMedicalOfficerHeadset
+  equipment:
+    ears: ClothingHeadsetCMO
+
+- type: loadout
+  id: ChiefMedicalOfficerAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltMedical

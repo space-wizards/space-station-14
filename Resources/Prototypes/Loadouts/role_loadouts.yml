@@ -7,6 +7,8 @@
   - CaptainJumpsuit
   - CaptainBackpack
   - CaptainOuterClothing
+  - CaptainShoes
+  - CaptainEars
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -20,7 +22,8 @@
   - HoPJumpsuit
   - HoPBackpack
   - HoPOuterClothing
-  - Glasses
+  - HoPShoes
+  - HoPEars
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -201,6 +204,7 @@
   - QuartermasterJumpsuit
   - CargoTechnicianBackpack
   - QuartermasterOuterClothing
+  - QuartermasterEars
   - QuartermasterShoes
   - Glasses
   - Survival
@@ -243,6 +247,7 @@
   - StationEngineerBackpack
   - ChiefEngineerNeck
   - ChiefEngineerOuterClothing
+  - ChiefEngineerEars
   - ChiefEngineerShoes
   - SurvivalExtended
   - Trinkets
@@ -295,6 +300,7 @@
   - ScientistBackpack
   - ResearchDirectorOuterClothing
   - ScientistGloves
+  - ResearchDirectorEars
   - ResearchDirectorShoes
   - Glasses
   - Survival
@@ -339,6 +345,7 @@
   - SecurityBackpack
   - SecurityBelt
   - HeadofSecurityOuterClothing
+  - HeadofSecurityEars
   - SecurityShoes
   - SurvivalSecurity
   - Trinkets
@@ -409,6 +416,7 @@
   - MedicalBackpack
   - ChiefMedicalOfficerOuterClothing
   - ChiefMedicalOfficerNeck
+  - ChiefMedicalOfficerEars
   - ChiefMedicalOfficerShoes
   - Glasses
   - SurvivalMedical

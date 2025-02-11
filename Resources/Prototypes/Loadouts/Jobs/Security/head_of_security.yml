@@ -79,3 +79,14 @@
   id: HeadofSecurityWinterCoat
   equipment:
     outerClothing: ClothingOuterWinterHoS
+
+# Ears
+- type: loadout
+  id: HeadofSecurityrHeadset
+  equipment:
+    ears: ClothingHeadsetSecurity
+
+- type: loadout
+  id: HeadofSecurityrAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltSecurity

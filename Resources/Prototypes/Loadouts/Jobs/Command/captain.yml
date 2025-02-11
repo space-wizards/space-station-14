@@ -90,3 +90,25 @@
   id: CaptainWintercoat
   equipment:
     outerClothing: ClothingOuterWinterCap
+
+# Ears
+- type: loadout
+  id: CommandHeadset
+  equipment:
+    ears: ClothingHeadsetCommand
+
+- type: loadout
+  id: CommandAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltCommand
+
+# Shoes
+- type: loadout
+  id: LaceupShoes
+  equipment:
+    shoes: ClothingShoesBootsLaceup
+
+- type: loadout
+  id: CommandWinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinter

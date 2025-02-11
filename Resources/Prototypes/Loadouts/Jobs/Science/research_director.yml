@@ -53,3 +53,14 @@
   id: ResearchDirectorWintercoat
   equipment:
     outerClothing: ClothingOuterWinterRD
+
+# Ears
+- type: loadout
+  id: ResearchDirectorHeadset
+  equipment:
+    ears: ClothingHeadsetRD
+
+- type: loadout
+  id: ResearchDirectorAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltScience
