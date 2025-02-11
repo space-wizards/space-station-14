@@ -157,7 +157,7 @@
     damageModifierSet: LightArmor
   - type: FootstepModifier
     footstepSoundCollection:
-      collection: MechMovement
+      path: /Audio/Mecha/mechmove03.ogg
   - type: GuideHelp
     guides:
     - Robotics
@@ -199,6 +199,9 @@
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: base
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
     baseState: base
     openState: base-open
@@ -207,9 +210,6 @@
     pilotWhitelist:
       components:
         - HumanoidAppearance
-  - type: FootstepModifier
-    footstepSoundCollection:
-      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: MeleeWeapon
     hidden: true
     attackRate: 1
@@ -244,6 +244,9 @@
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: base
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
     baseState: base
     openState: base-open
@@ -253,9 +256,6 @@
     pilotWhitelist:
       components:
         - HumanoidAppearance
-  - type: FootstepModifier
-    footstepSoundCollection:
-      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: MeleeWeapon
     hidden: true
     attackRate: 1
@@ -292,6 +292,9 @@
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: base
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
     baseState: base
     openState: base-open
@@ -387,6 +390,9 @@
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: base
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
     baseState: base
     openState: base-open
@@ -446,6 +452,7 @@
         - MobLayer
   - type: FootstepModifier
     footstepSoundCollection:
+      path: /Audio/Mecha/mechmove03.ogg
       params:
         volume: -10
   - type: Mech
@@ -501,6 +508,9 @@
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: base
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
     baseState: base
     openState: base-open
@@ -545,6 +555,9 @@
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: base
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
     baseState: base
     openState: base-open
@@ -599,6 +612,9 @@
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: marauder
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
     baseState: marauder
     openState: marauder-open
@@ -664,6 +680,9 @@
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: seraph
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
     baseState: seraph
     openState: seraph-open
@@ -732,6 +751,9 @@
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: darkgygax
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
     baseState: darkgygax
     openState: darkgygax-open
@@ -797,6 +819,9 @@
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: mauler
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
     baseState: mauler
     openState: mauler-open
