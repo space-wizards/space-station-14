@@ -1835,9 +1835,9 @@
   productEntity: GatfruitSeeds
   discountCategory: usualDiscounts
   discountDownTo:
-    Telecrystal: 2
-  cost:
     Telecrystal: 4
+  cost:
+    Telecrystal: 6
   categories:
   - UplinkJob
   conditions:
