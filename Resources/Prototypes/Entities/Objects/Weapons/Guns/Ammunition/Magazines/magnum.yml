@@ -16,7 +16,7 @@
 
 - type: entity
   id: BaseMagazineMagnumSubMachineGun
-  name: "Vector magazine (.45 magnum)"
+  name: SMG magazine (.45 magnum)
   parent: BaseItem
   abstract: true
   components:
@@ -116,9 +116,10 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
 
+
 - type: entity
   id: MagazineMagnumSubMachineGunEmpty
-  name: "Vector magazine (.45 magnum any)"
+  name: SMG magazine (.45 magnum any)
   suffix: empty
   parent: BaseMagazineMagnumSubMachineGun
   components:
@@ -131,7 +132,7 @@
 
 - type: entity
   id: MagazineMagnumSubMachineGun
-  name: "Vector magazine (.45 magnum)"
+  name: SMG magazine (.45 magnum)
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -145,7 +146,7 @@
 
 - type: entity
   id: MagazineMagnumSubMachineGunPractice
-  name: "Vector magazine (.45 magnum practice)"
+  name: SMG magazine (.45 magnum practice)
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -159,7 +160,7 @@
 
 - type: entity
   id: MagazineMagnumSubMachineGunUranium
-  name: "Vector magazine (.45 magnum uranium)"
+  name: SMG magazine (.45 magnum uranium)
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -173,7 +174,7 @@
 
 - type: entity
   id: MagazineMagnumSubMachineGunPiercing
-  name: "Vector magazine (.45 magnum armor-piercing)"
+  name: SMG magazine (.45 magnum armour-piercing)
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
