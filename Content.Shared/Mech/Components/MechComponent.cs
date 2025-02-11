@@ -69,6 +69,15 @@ public sealed partial class MechComponent : Component
 
     [ViewVariables]
     public readonly string BatterySlotId = "mech-battery-slot";
+    
+    /// <summary>
+    /// The slot the gas tank is stored in.
+    /// </summary>
+    [ViewVariables]
+    public ContainerSlot GasTankSlot = default!;
+
+    [ViewVariables]
+    public readonly string GasTankSlotId = "mech-gas-tank-slot";
 
     /// <summary>
     /// A multiplier used to calculate how much of the damage done to a mech
