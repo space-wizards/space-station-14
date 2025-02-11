@@ -1,8 +1,8 @@
 - type: gameMap
   id: Plasma
   mapName: 'Plasma'
-  mapPath: /Maps/plasma.yml
-  minPlayers: 30
+  mapPath: /Maps/_Impstation/plasma.yml
+  minPlayers: 35
   maxPlayers: 80
   stations:
     Plasma:
@@ -18,10 +18,11 @@
         - type: StationCargoShuttle
           path: /Maps/Shuttles/cargo_plasma.yml
         - type: StationJobs
-          availableJobs: #Total of 66 jobs roundstart, max of 93 inc. latejoins and trainees.
-            #command - 7
+          availableJobs: #Total of 70 jobs roundstart, max of 97 inc. latejoins and trainees.
+            #command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
+            AdministrativeAssistant : [ 1, 1 ]
             ChiefEngineer: [ 1, 1 ]
             ChiefMedicalOfficer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
@@ -60,8 +61,9 @@
             Detective: [ 1, 2 ]
             SecurityCadet: [ 4, 4 ]
             Lawyer: [ 1, 2 ]
-            #supply - 8-10
+            #supply - 11-13
             SalvageSpecialist: [ 4, 4 ]
             CargoTechnician: [ 4, 6 ]
+            SupplyAssistant: [ 3, 3 ]
             #civilian - the tiders yearn for the mines
             Passenger: [ -1, -1 ]

@@ -1,0 +1,13 @@
+- type: entity
+  parent: LockerBaseSecure
+  id: LockerAdministrativeAssistant
+  name: administrative assistant's locker
+  components:
+  - type: Sprite
+    sprite: _DV/Structures/Storage/closet.rsi
+  - type: EntityStorageVisuals
+    stateBaseClosed: admin_assist
+    stateDoorOpen: admin_assist_open
+    stateDoorClosed: admin_assist_door
+  - type: AccessReader
+    access: [["Command"]]

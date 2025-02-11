@@ -1,0 +1,32 @@
+- type: job
+  id: AdministrativeAssistant
+  name: job-name-admin-assistant
+  description: job-description-admin-assistant
+  playTimeTracker: JobAdminAssistant
+  requirements:
+  - !type:OverallPlaytimeRequirement # DeltaV - Playtime requirement
+    time: 90000 # 25 hours
+  startingGear: AdminAssistantGear
+  icon: "JobIconAdminAssitant"
+  supervisors: job-supervisors-command
+  canBeAntag: false
+  access:
+  - Command
+  - Maintenance
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: CommandStaff
+
+- type: startingGear
+  id: AdminAssistantGear
+  equipment:
+    eyes: ClothingEyesHudCommand
+    belt: BoxFolderClipboard
+    id: AdminAssistantPDA
+    pocket1: RubberStampAdminAssistant
+  storage:
+    back:
+    - Flash

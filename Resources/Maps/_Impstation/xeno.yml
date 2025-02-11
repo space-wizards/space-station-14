@@ -40032,6 +40032,35 @@ entities:
       rot: 3.141592653589793 rad
       pos: 9.5,-32.5
       parent: 2
+  - uid: 19150
+    components:
+    - type: Transform
+      pos: -48.38659,-43.53025
+      parent: 2
+  - uid: 19151
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -46.63659,-44.514626
+      parent: 2
+  - uid: 19152
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -49.464714,-45.514626
+      parent: 2
+  - uid: 19153
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -47.652214,-47.40525
+      parent: 2
+  - uid: 19154
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -46.495964,-46.46775
+      parent: 2
 - proto: ChairFoldingSpawnFolded
   entities:
   - uid: 9949
@@ -45077,7 +45106,6 @@ entities:
       pos: -60.5,-62.5
       parent: 2
     - type: NavMapBeacon
-      color: '#9FED58FF'
       text: Clown & Mime Room
   - uid: 16255
     components:
@@ -45085,7 +45113,6 @@ entities:
       pos: -32.5,-23.5
       parent: 2
     - type: NavMapBeacon
-      color: '#9FED58FF'
       text: Reporter
 - proto: DefaultStationBeaconToolRoom
   entities:
@@ -83045,6 +83072,13 @@ entities:
         - Pressed: Toggle
         252:
         - Pressed: Toggle
+- proto: LockerAdministrativeAssistantFilled
+  entities:
+  - uid: 15351
+    components:
+    - type: Transform
+      pos: -47.5,-51.5
+      parent: 2
 - proto: LockerAtmosphericsFilledHardsuit
   entities:
   - uid: 4796
@@ -99403,6 +99437,13 @@ entities:
     - type: Transform
       pos: 75.5,-30.5
       parent: 2
+- proto: SpawnPointAdminAssistant
+  entities:
+  - uid: 19155
+    components:
+    - type: Transform
+      pos: -49.5,-44.5
+      parent: 2
 - proto: SpawnPointAtmos
   entities:
   - uid: 15345
@@ -99475,10 +99516,10 @@ entities:
       parent: 2
 - proto: SpawnPointCaptain
   entities:
-  - uid: 15311
+  - uid: 15336
     components:
     - type: Transform
-      pos: -37.5,-55.5
+      pos: -46.5,-45.5
       parent: 2
 - proto: SpawnPointCargoTechnician
   entities:
@@ -99545,17 +99586,17 @@ entities:
       parent: 2
 - proto: SpawnPointChiefEngineer
   entities:
-  - uid: 15316
+  - uid: 15325
     components:
     - type: Transform
-      pos: -30.5,-63.5
+      pos: -47.5,-43.5
       parent: 2
 - proto: SpawnPointChiefMedicalOfficer
   entities:
-  - uid: 15302
+  - uid: 15316
     components:
     - type: Transform
-      pos: 10.5,-14.5
+      pos: -48.5,-43.5
       parent: 2
 - proto: SpawnPointClown
   entities:
@@ -99585,17 +99626,17 @@ entities:
       parent: 2
 - proto: SpawnPointHeadOfPersonnel
   entities:
-  - uid: 15325
+  - uid: 15311
     components:
     - type: Transform
-      pos: 14.5,-63.5
+      pos: -46.5,-44.5
       parent: 2
 - proto: SpawnPointHeadOfSecurity
   entities:
-  - uid: 15336
+  - uid: 19156
     components:
     - type: Transform
-      pos: 68.5,-29.5
+      pos: -46.5,-46.5
       parent: 2
 - proto: SpawnPointJanitor
   entities:
@@ -99659,6 +99700,23 @@ entities:
     components:
     - type: Transform
       pos: -43.5,-28.5
+      parent: 2
+- proto: SpawnPointLogisticsAssistant
+  entities:
+  - uid: 19147
+    components:
+    - type: Transform
+      pos: 11.5,-93.5
+      parent: 2
+  - uid: 19148
+    components:
+    - type: Transform
+      pos: 12.5,-93.5
+      parent: 2
+  - uid: 19149
+    components:
+    - type: Transform
+      pos: 14.5,-96.5
       parent: 2
 - proto: SpawnPointMedicalDoctor
   entities:
@@ -99746,10 +99804,10 @@ entities:
       parent: 2
 - proto: SpawnPointQuartermaster
   entities:
-  - uid: 15351
+  - uid: 15298
     components:
     - type: Transform
-      pos: 9.5,-88.5
+      pos: -49.5,-46.5
       parent: 2
 - proto: SpawnPointReporter
   entities:
@@ -99782,10 +99840,10 @@ entities:
       parent: 2
 - proto: SpawnPointResearchDirector
   entities:
-  - uid: 15298
+  - uid: 15302
     components:
     - type: Transform
-      pos: -22.5,-17.5
+      pos: -49.5,-45.5
       parent: 2
 - proto: SpawnPointSalvageSpecialist
   entities:

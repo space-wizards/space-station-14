@@ -20,6 +20,7 @@
             #service
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
+            AdministrativeAssistant: [ 1, 1 ] # imp
             Bartender: [ 1, 1 ]
             Botanist: [ 1, 2 ]
             Chef: [ 1, 1 ]
@@ -54,7 +55,8 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 2, 2 ]
             CargoTechnician: [ 2, 2 ]
-            Courier: [ 1, 1 ]
+            SupplyAssistant: [ 2, 2 ] # imp
+            Courier: [ 1, 1 ] # imp
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]

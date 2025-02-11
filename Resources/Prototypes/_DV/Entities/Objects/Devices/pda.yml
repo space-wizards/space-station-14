@@ -14,3 +14,37 @@
       enum.PdaVisuals.PdaType:
         !type:String
         pda-syndi-agent
+
+- type: entity
+  parent: CargoPDA
+  id: SupplyAssistantPDA
+  name: supply assistant PDA
+  description: It smells like cardboard.
+  components:
+  - type: Pda
+    id: SupplyAssistantIDCard
+
+- type: entity
+  parent: BasePDA
+  id: AdminAssistantPDA
+  name: administrative assistant PDA
+  description: Theres pen scribbles all over the edges, and a few sticky notes stuck on it.
+  components:
+  - type: Pda
+    id: AdminAssistantIDCard
+    penSlot:
+      startingItem: LuxuryPen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-admin-assistant
+  - type: PdaBorderColor
+    borderColor: "#4992b4"
+  - type: Icon
+    sprite: Objects/Devices/pda.rsi
+    state: pda-admin-assistant

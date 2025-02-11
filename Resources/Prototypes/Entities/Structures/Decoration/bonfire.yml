@@ -1,19 +1,17 @@
+# imp edit - base bonfire so legionnaire bonfire and other static bonfires can parent off this
 - type: entity
-  id: Bonfire
+  id: BonfireBase
   parent: BaseStructure
   name: bonfire
   description: What can be better than a late evening under the sky with guitar and friends?
+  abstract: true
   components:
   - type: Sprite
     noRot: true
     sprite: Structures/Decoration/bonfire.rsi
     layers:
-      - state: bonfire
-      - state: burning
-  - type: PointLight
-    radius: 5
-    energy: 3
-    color: "#FFC90C"
+    - state: bonfire
+    - state: burning
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Wood
@@ -76,21 +74,54 @@
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
-  - type: AmbientSound
-    volume: -5
-    range: 5
-    sound:
-      path: /Audio/Ambience/Objects/fireplace.ogg
-  - type: AlwaysHot
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WoodDestroy
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MaterialWoodPlank1:
+              min: 6
+              max: 10
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+  - type: Climbable
+  - type: Flammable
+    damage:
+      types:
+        Heat: 0 # adding any damage would make it break loudly into pieces, which feels weird
+    flammableCollisionShape:
+      !type:PhysShapeCircle
+      radius: 0.25
+    maximumFireStacks: 6
+    fireSpread: true
+    alwaysCombustible: true
+    firestacksOnIgnite: 2
+    firestackFade: 0.05 # gets hotter the longer it's on
+    toggleAmbientSound: true
+  - type: FireVisuals
+    sprite: Structures/Decoration/bonfire.rsi
+    normalState: burning
+    maxLightRadius: 8
+    maxLightEnergy: 5
+  - type: Construction
+    graph: Bonfire
+    node: bonfire
 
 - type: entity
   id: LegionnaireBonfire
-  parent: Bonfire
+  parent: BonfireBase
   name: legionnaire bonfire
   description: There, in the land of lava and ash, place to to cook marshmallow and potato.
   components:
   - type: Sprite
     layers:
       - state: legionnaire_bonfire
+  # imp edits
   - type: PointLight
+    radius: 5
+    energy: 3
     color: "#FF5601"
+  - type: AlwaysHot
+  # end imp edits

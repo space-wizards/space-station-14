@@ -431,3 +431,19 @@
   - type: Icon
     sprite: _Impstation/Objects/Consumable/Drinks/lovepotion.rsi
     state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkOrangeCoffeeGlass
+  suffix: orange coffee
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: OrangeCoffee
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/orangecoffee.rsi
+    state: icon

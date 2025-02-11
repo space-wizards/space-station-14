@@ -1,94 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Direct window upgrading is back! Shuttle windows are not back, though.
-    type: Add
-  id: 592
-  time: '2024-11-27T19:31:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/821
-- author: widgetbeck
-  changes:
-  - message: Replaced "creepy crawly" Thaven mood with something that should have
-      less gameplay impact.
-    type: Tweak
-  id: 593
-  time: '2024-11-27T19:31:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/819
-- author: honeyed-lemons
-  changes:
-  - message: Chameleon PDA
-    type: Add
-  - message: PDAs show the most recent ID placed inside as the owner, instead of being
-      fixed.
-    type: Tweak
-  id: 594
-  time: '2024-11-27T19:32:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/810
-- author: widgetbeck
-  changes:
-  - message: Decapoid vapor tanks are now fully functional, which means that Decapoids
-      are now fully functional. They just need customization!
-    type: Fix
-  id: 595
-  time: '2024-11-27T19:32:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/820
-- author: TGRCDev
-  changes:
-  - message: Crates/lockers being pulled can now only be opened by the person pulling
-      them
-    type: Tweak
-  id: 596
-  time: '2024-11-27T19:34:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/791
-- author: widgetbeck
-  changes:
-  - message: Mucin now evaporates and costs less thirst.
-    type: Tweak
-  - message: Propulsion gel nerf.
-    type: Tweak
-  id: 597
-  time: '2024-11-27T20:55:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/818
-- author: formlessnameless
-  changes:
-  - message: Various creatures can now crawl through the station's pipes. Beware!
-    type: Add
-  id: 598
-  time: '2024-11-28T22:29:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/822
-- author: Sha-Seng
-  changes:
-  - message: Black Utility Belt crafted with a spray painter and a utility belt
-    type: Add
-  - message: Filled versions of the black utility belt if you want to map them too
-    type: Add
-  id: 599
-  time: '2024-11-28T22:45:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/824
-- author: Sha-Seng
-  changes:
-  - message: Closet Skeletons spawn with the Ancient Jumpsuit now b/c it makes sense
-      and is foldable
-    type: Tweak
-  id: 600
-  time: '2024-11-28T22:47:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/827
-- author: DinnerCalzone
-  changes:
-  - message: Reworded the description of the nonlethal shotgun crate to match previous
-      changes to them.
-    type: Tweak
-  id: 601
-  time: '2024-11-28T22:50:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/829
-- author: DinnerCalzone
-  changes:
-  - message: Added the janitorial hardsuit, purchasable from Cargo for $5000. Go get
-      to cleaning out in space!
-    type: Add
-  id: 602
-  time: '2024-11-28T22:50:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/828
 - author: DinnerCalzone
   changes:
   - message: Glass airlocks that are locked by civilian accesses (eg. janitor, service,
@@ -4230,3 +4140,84 @@
   id: 1091
   time: '2025-02-10T21:01:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1631
+- author: Darkmajia
+  changes:
+  - message: Box Station's atmospherics department and supermatter chamber have been
+      revamped slightly.
+    type: Tweak
+  id: 1092
+  time: '2025-02-10T21:11:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1634
+- author: kipdotnet
+  changes:
+  - message: You can now take a Sip-u-lacrum.
+    type: Add
+  id: 1093
+  time: '2025-02-10T21:19:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1632
+- author: FutureExalt
+  changes:
+  - message: new roundstart coats for secoff, warden, and detective.
+    type: Add
+  id: 1094
+  time: '2025-02-10T22:41:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1612
+- author: Saeko-44
+  changes:
+  - message: The fishing rod, capable of reeling things in, as a tier 1 civilian tech
+    type: Add
+  id: 1095
+  time: '2025-02-10T22:49:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1482
+- author: Darkmajia
+  changes:
+  - message: Grays and dwarves have had their accents fixed up a little.
+    type: Tweak
+  id: 1096
+  time: '2025-02-10T23:05:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1571
+- author: Darkmajia
+  changes:
+  - message: Corpses no longer collide with plastic flaps.
+    type: Fix
+  id: 1097
+  time: '2025-02-10T23:11:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1572
+- author: Darkmajia
+  changes:
+  - message: Bonfires can be built, lit, and extinguished.
+    type: Add
+  id: 1098
+  time: '2025-02-10T23:35:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1613
+- author: Sha-Seng
+  changes:
+  - message: Detectives and brigmeds can now spawn with sec armor vests if they wanna
+    type: Add
+  id: 1099
+  time: '2025-02-10T23:35:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1608
+- author: Darkmajia
+  changes:
+  - message: Surplus crates can no longer contain more surplus crates.
+    type: Remove
+  id: 1100
+  time: '2025-02-10T23:36:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1637
+- author: DinnerCalzone
+  changes:
+  - message: Courier support has been added to Cluster and Saltern.
+    type: Add
+  id: 1101
+  time: '2025-02-11T07:19:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1646
+- author: mqole
+  changes:
+  - message: Supply and Command intern roles! If you've already played a lot of the
+      department, don't worry. You won't need to reunlock anything!
+    type: Add
+  - message: QM now requires 6 hours of Salvage time, bumped up from 3.
+    type: Tweak
+  id: 1102
+  time: '2025-02-11T09:17:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1640

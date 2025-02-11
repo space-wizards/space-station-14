@@ -8933,22 +8933,6 @@ entities:
     - type: Transform
       pos: 20.439417,0.67220914
       parent: 8364
-- proto: ActionToggleInternals
-  entities:
-  - uid: 28120
-    components:
-    - type: Transform
-      parent: 28119
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 28119
-  - uid: 28122
-    components:
-    - type: Transform
-      parent: 28121
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 28121
 - proto: AirAlarm
   entities:
   - uid: 256
@@ -11933,7 +11917,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -82424.12
+      secondsUntilStateChange: -82936.875
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -16951,17 +16935,17 @@ entities:
   - uid: 4050
     components:
     - type: Transform
-      pos: -7.998723,-86.36196
+      pos: -8.279414,-86.37961
       parent: 8364
   - uid: 16991
     components:
     - type: Transform
-      pos: -7.5716395,-86.33071
+      pos: -8.029414,-86.41086
       parent: 8364
   - uid: 17317
     components:
     - type: Transform
-      pos: -8.44664,-86.434875
+      pos: -8.539831,-86.41086
       parent: 8364
   - uid: 28405
     components:
@@ -16971,7 +16955,7 @@ entities:
   - uid: 28406
     components:
     - type: Transform
-      pos: -7.0666733,-86.34965
+      pos: -8.310664,-86.45253
       parent: 8364
 - proto: BoozeDispenser
   entities:
@@ -17054,6 +17038,11 @@ entities:
     components:
     - type: Transform
       pos: 76.50828,-54.33026
+      parent: 8364
+  - uid: 28432
+    components:
+    - type: Transform
+      pos: 22.527243,-21.58029
       parent: 8364
 - proto: BoxBeanbag
   entities:
@@ -69454,15 +69443,39 @@ entities:
       parent: 8364
 - proto: ClothingBackpackDuffelSurgeryFilled
   entities:
-  - uid: 28117
+  - uid: 19325
     components:
     - type: Transform
-      pos: 19.578487,-29.280598
+      pos: 19.43971,-29.143759
       parent: 8364
-  - uid: 28118
+    - type: GroupExamine
+      group:
+      - hoverMessage: ""
+        contextText: verb-examine-group-other
+        icon: /Textures/Interface/examine-star.png
+        components:
+        - Armor
+        - ClothingSpeedModifier
+        entries:
+        - message: >-
+            It provides the following protection:
+
+            - [color=orange]Explosion[/color] damage [color=white]to contents[/color] reduced by [color=lightblue]10%[/color].
+          priority: 0
+          component: Armor
+        - message: This decreases your running speed by [color=yellow]10%[/color].
+          priority: 0
+          component: ClothingSpeedModifier
+        title: null
+  - uid: 28119
     components:
     - type: Transform
-      pos: 19.971287,-29.155598
+      pos: 19.356377,-29.445843
+      parent: 8364
+  - uid: 28426
+    components:
+    - type: Transform
+      pos: 19.356377,-29.445843
       parent: 8364
     - type: GroupExamine
       group:
@@ -69547,6 +69560,11 @@ entities:
     - type: Transform
       pos: 5.596113,-61.594017
       parent: 8364
+  - uid: 28459
+    components:
+    - type: Transform
+      pos: -3.5006232,-91.22195
+      parent: 8364
 - proto: ClothingBeltUtilityFilled
   entities:
   - uid: 5299
@@ -69604,14 +69622,6 @@ entities:
     components:
     - type: Transform
       pos: -3.3809297,-63.418907
-      parent: 8364
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
-  - uid: 28395
-    components:
-    - type: Transform
-      pos: -6.547055,-86.38177
       parent: 8364
     - type: ContainerContainer
       containers:
@@ -69785,6 +69795,11 @@ entities:
     components:
     - type: Transform
       pos: 36.579914,-36.47853
+      parent: 8364
+  - uid: 28428
+    components:
+    - type: Transform
+      pos: 21.56624,-29.581902
       parent: 8364
 - proto: ClothingHeadHatAnimalCatBrown
   entities:
@@ -70134,20 +70149,20 @@ entities:
       parent: 8364
 - proto: ClothingMaskBreathMedical
   entities:
+  - uid: 14112
+    components:
+    - type: Transform
+      pos: 20.741793,-29.466675
+      parent: 8364
   - uid: 21719
     components:
     - type: Transform
       pos: 63.664223,12.6749115
       parent: 8364
-  - uid: 28126
+  - uid: 28118
     components:
     - type: Transform
-      pos: 21.163843,-29.508192
-      parent: 8364
-  - uid: 28127
-    components:
-    - type: Transform
-      pos: 21.665617,-29.355612
+      pos: 20.950127,-29.268759
       parent: 8364
 - proto: ClothingMaskClown
   entities:
@@ -83333,6 +83348,13 @@ entities:
       rot: 3.141592653589793 rad
       pos: -0.5,-89.5
       parent: 8364
+- proto: EmitterCircuitboard
+  entities:
+  - uid: 28455
+    components:
+    - type: Transform
+      pos: -3.5318732,-92.03445
+      parent: 8364
 - proto: EncryptionKeyCargo
   entities:
   - uid: 27347
@@ -85284,7 +85306,7 @@ entities:
       pos: -8.5,-70.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -34149.145
+      secondsUntilStateChange: -34661.9
       state: Closing
   - uid: 5277
     components:
@@ -86067,7 +86089,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -76612.65
+      secondsUntilStateChange: -77125.41
       state: Closing
   - uid: 15010
     components:
@@ -87060,6 +87082,13 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 20.5,-31.5
+      parent: 8364
+    - type: Fixtures
+      fixtures: {}
+  - uid: 28326
+    components:
+    - type: Transform
+      pos: 18.5,-20.5
       parent: 8364
     - type: Fixtures
       fixtures: {}
@@ -121141,11 +121170,6 @@ entities:
     - type: Transform
       pos: -8.5,-62.5
       parent: 8364
-  - uid: 5263
-    components:
-    - type: Transform
-      pos: 22.5,-32.5
-      parent: 8364
   - uid: 5271
     components:
     - type: Transform
@@ -125051,7 +125075,7 @@ entities:
       pos: 28.5,-34.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -56383.004
+      secondsUntilStateChange: -56895.758
       state: Closing
 - proto: hydroponicsSoil
   entities:
@@ -126006,6 +126030,13 @@ entities:
         - Pressed: Open
         2506:
         - Pressed: Open
+- proto: LockerAdministrativeAssistantFilled
+  entities:
+  - uid: 28463
+    components:
+    - type: Transform
+      pos: -6.5,-12.5
+      parent: 8364
 - proto: LockerAtmosphericsFilled
   entities:
   - uid: 28132
@@ -126111,15 +126142,15 @@ entities:
         - 0
 - proto: LockerChemistryFilled
   entities:
-  - uid: 14112
+  - uid: 28127
     components:
     - type: Transform
-      pos: 22.5,-23.5
+      pos: 19.5,-27.5
       parent: 8364
-  - uid: 18770
+  - uid: 28438
     components:
     - type: Transform
-      pos: 22.5,-21.5
+      pos: 20.5,-27.5
       parent: 8364
 - proto: LockerChiefEngineerFilled
   entities:
@@ -127319,6 +127350,13 @@ entities:
     - type: Transform
       pos: 71.5,-40.5
       parent: 8364
+- proto: MachineCentrifuge
+  entities:
+  - uid: 28439
+    components:
+    - type: Transform
+      pos: 22.5,-22.5
+      parent: 8364
 - proto: MachineElectrolysisUnit
   entities:
   - uid: 14109
@@ -127349,6 +127387,11 @@ entities:
     components:
     - type: Transform
       pos: 2.5,-53.5
+      parent: 8364
+  - uid: 28126
+    components:
+    - type: Transform
+      pos: -0.5,-91.5
       parent: 8364
 - proto: MagazinePistolSubMachineGunTopMounted
   entities:
@@ -128482,37 +128525,21 @@ entities:
       parent: 8364
 - proto: NitrousOxideTankFilled
   entities:
+  - uid: 282
+    components:
+    - type: Transform
+      pos: 20.325127,-29.404175
+      parent: 8364
+  - uid: 18770
+    components:
+    - type: Transform
+      pos: 20.043877,-29.435425
+      parent: 8364
   - uid: 21342
     components:
     - type: Transform
       pos: 54.482033,-24.522997
       parent: 8364
-  - uid: 28119
-    components:
-    - type: Transform
-      pos: 20.528427,-29.341526
-      parent: 8364
-    - type: GasTank
-      toggleActionEntity: 28120
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 28120
-  - uid: 28121
-    components:
-    - type: Transform
-      pos: 20.757593,-29.424858
-      parent: 8364
-    - type: GasTank
-      toggleActionEntity: 28122
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 28122
 - proto: NTDefaultCircuitBoard
   entities:
   - uid: 27913
@@ -133890,12 +133917,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -8.5,-82.5
       parent: 8364
-  - uid: 28515
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 26.5,-35.5
-      parent: 8364
 - proto: PoweredlightEmpty
   entities:
   - uid: 26900
@@ -135515,11 +135536,23 @@ entities:
     - type: Transform
       pos: 32.5,-79.5
       parent: 8364
+  - uid: 28122
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 24.5,-36.5
+      parent: 8364
   - uid: 28404
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -11.5,-86.5
+      parent: 8364
+  - uid: 28425
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 26.5,-36.5
       parent: 8364
 - proto: PoweredSmallLightEmpty
   entities:
@@ -145879,6 +145912,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 4.5,49.5
       parent: 8364
+  - uid: 28395
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 26.5,-35.5
+      parent: 8364
 - proto: SmartFridge
   entities:
   - uid: 3652
@@ -146015,6 +146054,11 @@ entities:
     components:
     - type: Transform
       pos: 10.464365,-22.554323
+      parent: 8364
+  - uid: 28427
+    components:
+    - type: Transform
+      pos: 21.543877,-29.268759
       parent: 8364
 - proto: SodaDispenser
   entities:
@@ -147544,6 +147588,13 @@ entities:
     - type: Transform
       pos: 20.5,-23.5
       parent: 8364
+- proto: SpawnPointAdminAssistant
+  entities:
+  - uid: 28462
+    components:
+    - type: Transform
+      pos: -8.5,-12.5
+      parent: 8364
 - proto: SpawnPointAtmos
   entities:
   - uid: 17809
@@ -147818,6 +147869,23 @@ entities:
     components:
     - type: Transform
       pos: 69.5,-57.5
+      parent: 8364
+- proto: SpawnPointLogisticsAssistant
+  entities:
+  - uid: 5263
+    components:
+    - type: Transform
+      pos: -26.5,-23.5
+      parent: 8364
+  - uid: 28460
+    components:
+    - type: Transform
+      pos: -26.5,-24.5
+      parent: 8364
+  - uid: 28461
+    components:
+    - type: Transform
+      pos: -26.5,-25.5
       parent: 8364
 - proto: SpawnPointMedicalDoctor
   entities:
@@ -150604,17 +150672,6 @@ entities:
       - SurveillanceCameraMedical
       nameSet: True
       id: Medbay Lobby
-  - uid: 282
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 18.5,-20.5
-      parent: 8364
-    - type: SurveillanceCamera
-      setupAvailableNetworks:
-      - SurveillanceCameraMedical
-      nameSet: True
-      id: Chemistry
   - uid: 5224
     components:
     - type: Transform
@@ -150774,6 +150831,14 @@ entities:
       - SurveillanceCameraMedical
       nameSet: True
       id: Medical Hall W
+  - uid: 28433
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 22.5,-20.5
+      parent: 8364
+    - type: SurveillanceCamera
+      id: Chemistry
 - proto: SurveillanceCameraRouterCommand
   entities:
   - uid: 27338
@@ -153256,6 +153321,24 @@ entities:
       rot: 3.141592653589793 rad
       pos: -8.5,-86.5
       parent: 8364
+  - uid: 28456
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,-90.5
+      parent: 8364
+  - uid: 28457
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,-91.5
+      parent: 8364
+  - uid: 28458
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,-92.5
+      parent: 8364
 - proto: TableCarpet
   entities:
   - uid: 10549
@@ -153649,6 +153732,16 @@ entities:
     components:
     - type: Transform
       pos: 21.5,-29.5
+      parent: 8364
+  - uid: 28121
+    components:
+    - type: Transform
+      pos: 22.5,-21.5
+      parent: 8364
+  - uid: 28429
+    components:
+    - type: Transform
+      pos: 22.5,-22.5
       parent: 8364
 - proto: TablePlasmaGlass
   entities:
@@ -155810,6 +155903,12 @@ entities:
     - type: Transform
       pos: 46.5,-44.5
       parent: 8364
+  - uid: 28117
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,-93.5
+      parent: 8364
 - proto: UniformPrinter
   entities:
   - uid: 5870
@@ -155930,10 +156029,10 @@ entities:
       parent: 8364
 - proto: VendingMachineChemicals
   entities:
-  - uid: 19325
+  - uid: 28120
     components:
     - type: Transform
-      pos: 22.5,-22.5
+      pos: 22.5,-23.5
       parent: 8364
 - proto: VendingMachineCigs
   entities:

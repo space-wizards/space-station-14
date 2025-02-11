@@ -122,3 +122,8 @@
   id: lovepotion
   flavorType: Complex
   description: flavor-complex-lovepotion
+
+- type: flavor
+  id: orangecoffee
+  flavorType: Complex
+  description: flavor-complex-orangecoffee

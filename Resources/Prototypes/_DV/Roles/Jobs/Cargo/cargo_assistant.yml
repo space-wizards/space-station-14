@@ -1,0 +1,19 @@
+- type: job
+  id: SupplyAssistant
+  name: job-name-supply-assistant
+  description: job-description-supply-assistant
+  startingGear: SupplyAssistantGear
+  playTimeTracker: JobSupplyAssistant
+  icon: "JobIconSupplyAssistant"
+  supervisors: job-supervisors-qm
+  access:
+  - Cargo
+  - Maintenance
+  - Logistics #imp
+
+- type: startingGear
+  id: SupplyAssistantGear
+  equipment:
+    id: SupplyAssistantPDA
+    ears: ClothingHeadsetCargo
+    pocket1: BookLogistics
