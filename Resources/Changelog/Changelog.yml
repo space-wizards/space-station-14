@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Freezer electronics added to autolathe, with which you can craft locker
-      freezer or crate freezer.
-    type: Add
-  id: 7430
-  time: '2024-09-24T15:19:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32277
 - author: MilonPL
   changes:
   - message: Paper will no longer stay on fire indefinitely.
@@ -3897,3 +3889,11 @@
   id: 7929
   time: '2025-02-11T02:36:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35046
+- author: themias
+  changes:
+  - message: Fixed an exploit using multiple R&D computers to research multiple discipline
+      tier 3 technologies
+    type: Fix
+  id: 7930
+  time: '2025-02-11T02:52:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34334
