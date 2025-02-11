@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Glass airlocks that are locked by civilian accesses (eg. janitor, service,
-      kitchen) now use a sprite that better matches their standard counterpart.
-    type: Tweak
-  id: 603
-  time: '2024-11-28T22:58:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/831
 - author: Darkmajia
   changes:
   - message: Something old, scorned and vengeful has clawed its way back through the
@@ -4221,3 +4213,10 @@
   id: 1102
   time: '2025-02-11T09:17:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1640
+- author: Darkmajia
+  changes:
+  - message: Supply assistant locks out after 15 hours of cargo department playtime.
+    type: Fix
+  id: 1103
+  time: '2025-02-11T20:52:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1654
