@@ -9,13 +9,6 @@
 
 ## Supply Assistant
 - type: loadoutGroup
-  id: SupplyAssistantHead
-  name: loadout-group-supply-assistant-head
-  minLimit: 0
-  loadouts:
-  - CargoTechnicianHead
-
-- type: loadoutGroup
   id: SupplyAssistantJumpsuit
   name: loadout-group-supply-assistant-jumpsuit
   loadouts:
@@ -29,20 +22,6 @@
   - CargoTechnicianBackpack
   - CargoTechnicianSatchel
   - CargoTechnicianDuffel
-
-- type: loadoutGroup
-  id: SupplyAssistantOuterClothing
-  name: loadout-group-supply-assistant-outerclothing
-  minLimit: 0
-  loadouts:
-  - CargoTechnicianWintercoat
-
-- type: loadoutGroup
-  id: SupplyAssistantShoes
-  name: loadout-group-supply-assistant-shoes
-  loadouts:
-  - BlackShoes
-  - CargoWinterBoots
 
 # Command
 ## Administrative Assistant
