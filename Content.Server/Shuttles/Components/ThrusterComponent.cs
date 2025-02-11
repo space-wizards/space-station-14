@@ -53,7 +53,7 @@ namespace Content.Server.Shuttles.Components
         /// <summary>
         /// How often thruster deals damage.
         /// </summary>
-        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        [DataField]
         public TimeSpan FireCooldown = TimeSpan.FromSeconds(2);
 
         /// <summary>

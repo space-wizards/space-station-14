@@ -232,6 +232,8 @@ public sealed class ThrusterSystem : EntitySystem
 
     private void OnThrusterInit(EntityUid uid, ThrusterComponent component, ComponentInit args)
     {
+        component.NextFire = _timing.CurTime + component.FireCooldown;
+
         _ambient.SetAmbience(uid, false);
 
         if (!component.Enabled)
@@ -464,7 +466,7 @@ public sealed class ThrusterSystem : EntitySystem
             if (!comp.Firing || comp.Colliding.Count == 0 || comp.Damage == null || comp.NextFire > curTime)
                 continue;
 
-            comp.NextFire = curTime + comp.FireCooldown;
+            comp.NextFire += comp.FireCooldown;
 
             foreach (var uid in comp.Colliding.ToArray())
             {
