@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Pinkbat5
-  changes:
-  - message: Diona and Nymphs can now use the mycorrhizal gestalt, a special long-range
-      channel that only other diona can hear. Hotkey is +m.
-    type: Add
-  - message: Changelings now use the new collective mind system; hivemind messages
-      no longer have the sender's name attached.
-    type: Tweak
-  - message: Changeling hivemind hotkey is now +h.
-    type: Tweak
-  - message: Changelings no longer whisper when they use the hivemind.
-    type: Fix
-  id: 609
-  time: '2024-11-30T02:23:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/841
 - author: Sha-Seng
   changes:
   - message: ancient jumpsuit, cossack suit, loungewear, wizard shoes, tourist shoes,
@@ -4218,3 +4203,15 @@
   id: 1108
   time: '2025-02-11T22:31:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1656
+- author: Pivotbash
+  changes:
+  - message: Sec Space Blade, Portable Criminal Records Computer, and the Pribar now
+      fit in the security belt
+    type: Tweak
+  - message: Pribar now prys 10% faster
+    type: Tweak
+  - message: moved spaceblade to the utility tab instead of the disabler tab
+    type: Tweak
+  id: 1109
+  time: '2025-02-11T22:34:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1643
