@@ -3297,4 +3297,12 @@ Entries:
   id: 458
   time: '2025-02-09T15:28:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/318
+- author: Conflee
+  changes:
+  - message: Changed the year displayed in the PDA from 3025 to 2525 to match lore
+      being written
+    type: Tweak
+  id: 459
+  time: '2025-02-11T07:53:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/319
 
