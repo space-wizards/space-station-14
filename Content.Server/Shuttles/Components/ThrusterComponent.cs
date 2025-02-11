@@ -51,10 +51,16 @@ namespace Content.Server.Shuttles.Components
         public bool Firing = false;
 
         /// <summary>
+        /// How often thruster deals damage.
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        public TimeSpan FireCooldown = TimeSpan.FromSeconds(2);
+
+        /// <summary>
         /// Next time we tick damage for anyone colliding.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("nextFire", customTypeSerializer:typeof(TimeOffsetSerializer))]
-        public TimeSpan NextFire;
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        public TimeSpan NextFire = TimeSpan.Zero;
     }
 
     public enum ThrusterType
