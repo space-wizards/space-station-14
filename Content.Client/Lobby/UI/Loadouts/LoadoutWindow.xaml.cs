@@ -38,13 +38,6 @@ public sealed partial class LoadoutWindow : FancyWindow
         else
         {
             var name = loadout.EntityName;
-            var random = collection.Resolve<IRobustRandom>();
-
-            // Pick a random name if we use a dataset.
-            if (string.IsNullOrEmpty(name) && protoManager.TryIndex(proto.NameDataset, out var nameData))
-            {
-                RoleNameEdit.PlaceHolder = random.Pick(nameData);
-            }
 
             RoleNameEdit.ToolTip = Loc.GetString(
                 "loadout-name-edit-tooltip",

@@ -484,7 +484,7 @@ namespace Content.Server.Database
         /// Custom name of the role loadout if it supports it.
         /// </summary>
         [MaxLength(256)]
-        public string EntityName { get; set; } = string.Empty;
+        public string? EntityName { get; set; }
 
         /// <summary>
         /// Store the saved loadout groups. These may get validated and removed when loaded at runtime.
