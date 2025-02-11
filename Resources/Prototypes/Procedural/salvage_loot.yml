@@ -111,6 +111,8 @@
           prob: 0.7
         - proto: CDDogtags # imp
           prob: 0.7
+        - proto: BigRock #imp
+          prob: 0.01
 
 # Mob loot table
 
