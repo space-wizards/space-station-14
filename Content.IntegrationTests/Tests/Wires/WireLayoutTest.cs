@@ -1,10 +1,9 @@
-﻿using Content.Server.Doors;
+﻿using Content.Server.Doors.Actions;
 using Content.Server.Power;
 using Content.Server.Wires;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using DoorBoltWireAction = Content.Server.Doors.Actions.DoorBoltWireAction;
 
 namespace Content.IntegrationTests.Tests.Wires;
 
