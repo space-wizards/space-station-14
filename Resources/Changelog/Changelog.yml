@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Moomoobeef
-  changes:
-  - message: Most papers are no longer considered trash.
-    type: Tweak
-  id: 7434
-  time: '2024-09-24T21:58:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32343
 - author: goet
   changes:
   - message: Vending machines can be hacked again.
@@ -3897,3 +3890,10 @@
   id: 7933
   time: '2025-02-11T06:35:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35059
+- author: pheenty
+  changes:
+  - message: Python now costs only 4 TC!
+    type: Tweak
+  id: 7934
+  time: '2025-02-11T09:36:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33306
