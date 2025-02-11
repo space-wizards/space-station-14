@@ -787,7 +787,7 @@
         Slash: 0.4
         Piercing: 0.3
         Heat: 0.4
-        Radiation: 0.01
+        Radiation: 0.2
         Caustic: 0.4
   - type: FireProtection
     reduction: 0.8
@@ -825,7 +825,7 @@
         Slash: 0.5
         Piercing: 0.5
         Heat: 0.4
-        Radiation: 0.01
+        Radiation: 0.2
         Caustic: 0.5
   - type: ClothingSpeedModifier
     walkModifier: 1.0
