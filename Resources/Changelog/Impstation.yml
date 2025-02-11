@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: DinnerCalzone
   changes:
-  - message: Reworded the description of the nonlethal shotgun crate to match previous
-      changes to them.
-    type: Tweak
-  id: 601
-  time: '2024-11-28T22:50:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/829
-- author: DinnerCalzone
-  changes:
   - message: Added the janitorial hardsuit, purchasable from Cargo for $5000. Go get
       to cleaning out in space!
     type: Add
@@ -4220,3 +4212,10 @@
   id: 1100
   time: '2025-02-10T23:36:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1637
+- author: DinnerCalzone
+  changes:
+  - message: Courier support has been added to Cluster and Saltern.
+    type: Add
+  id: 1101
+  time: '2025-02-11T07:19:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1646
