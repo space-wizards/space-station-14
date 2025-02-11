@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: ancient jumpsuit, cossack suit, loungewear, wizard shoes, tourist shoes,
-      and slippers are now found in hacked theater vendors
-    type: Add
-  - message: removed patronizing spanish accent from poncho so it's wearable too
-    type: Tweak
-  id: 610
-  time: '2024-11-30T02:28:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/840
-- author: formlessnameless
-  changes:
-  - message: You now automatically stop at every intersection while ventcrawling to
-      make navigation easier.
-    type: Tweak
-  id: 611
-  time: '2024-11-30T12:51:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/839
 - author: AftrLite
   changes:
   - message: Ongoing resprites to a large amount of assets. Expect more palette parity
@@ -4215,3 +4197,17 @@
   id: 1109
   time: '2025-02-11T22:34:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1643
+- author: formlessnameless
+  changes:
+  - message: Thief access breaker is back in the box.
+    type: Fix
+  id: 1110
+  time: '2025-02-11T22:36:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1662
+- author: TheGrimbeeper
+  changes:
+  - message: 'New artifact trigger: Expressiveness'
+    type: Add
+  id: 1111
+  time: '2025-02-11T22:36:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1642
