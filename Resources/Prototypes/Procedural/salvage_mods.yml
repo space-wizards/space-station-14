@@ -216,14 +216,14 @@
 
 # Weather mods -> not required
 - type: salvageWeatherMod
-  id: Ashfall
+  id: AshfallLight
   desc: salvage-weather-mod-ashfalllight
   weather: AshfallLight
   biomes:
     - Lava
 
 - type: salvageWeatherMod
-  id: Ashfall
+  id: AshfallMedium
   desc: salvage-weather-mod-ashfallmedium
   weather: Ashfall
   cost: 2 #well you can barely see anything
