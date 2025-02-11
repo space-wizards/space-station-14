@@ -12,6 +12,10 @@
       "directions": 8
     },
     {
+      "name": "base_shadow",
+      "directions": 8
+    },
+    {
       "name": "stun",
       "directions": 8
     },
