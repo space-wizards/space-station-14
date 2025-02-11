@@ -64,3 +64,16 @@
   storage:
     back:
     - PlushieVox
+
+# Towels
+- type: loadout
+  id: TowelStripedOrange
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPermaPrisoner
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelStripedOrange
