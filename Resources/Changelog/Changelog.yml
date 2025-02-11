@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Agent ID card can now only copy access within interaction range.
-    type: Fix
-  id: 7436
-  time: '2024-09-25T15:41:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32445
 - author: Myra
   changes:
   - message: Silicon with no laws will not have binary channel access.
@@ -3897,3 +3890,10 @@
   id: 7935
   time: '2025-02-11T12:17:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34541
+- author: pheenty
+  changes:
+  - message: The interrogator lamp is now considered security contraband.
+    type: Tweak
+  id: 7936
+  time: '2025-02-11T16:15:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35064
