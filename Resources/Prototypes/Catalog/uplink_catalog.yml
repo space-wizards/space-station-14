@@ -18,12 +18,12 @@
   id: UplinkRevolverPython
   name: uplink-revolver-python-name
   description: uplink-revolver-python-desc
-  productEntity: WeaponRevolverPython
+  productEntity: WeaponRevolverPythonAP
   discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 2
   cost:
-    Telecrystal: 4 # Originally was 13 and then 8 TC, preloaded with AP rounds, but was not used due to high cost
+    Telecrystal: 4 # Originally was 13 and then 8 TC but was not used due to high cost
   categories:
   - UplinkWeaponry
 
@@ -498,21 +498,11 @@
   - UplinkAmmo
 
 # For the Python
-- type: listing
-  id: UplinkSpeedLoaderMagnum
-  name: uplink-speedloader-magnum-name
-  description: uplink-speedloader-magnum-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi, state: icon }
-  productEntity: SpeedLoaderMagnum
-  cost:
-    Telecrystal: 2
-  categories:
-  - UplinkAmmo
 
 - type: listing
   id: UplinkSpeedLoaderMagnumAP
-  name: uplink-speedloader-magnum-ap-name
-  description: uplink-speedloader-magnum-ap-desc
+  name: uplink-speedloader-magnu-name
+  description: uplink-speedloader-magnu-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi, state: icon }
   productEntity: SpeedLoaderMagnumAP
   cost:
@@ -1846,9 +1836,9 @@
   productEntity: GatfruitSeeds
   discountCategory: usualDiscounts
   discountDownTo:
-    Telecrystal: 3
+    Telecrystal: 2
   cost:
-    Telecrystal: 6
+    Telecrystal: 4
   categories:
   - UplinkJob
   conditions:
@@ -1933,11 +1923,11 @@
   name: uplink-revolver-cap-gun-fake-name
   description: uplink-revolver-cap-gun-fake-desc
   productEntity: RevolverCapGunFake
-  discountCategory: usualDiscounts
+  discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 5
+    Telecrystal: 3
   cost:
-    Telecrystal: 9
+    Telecrystal: 5
   categories:
   - UplinkJob
   conditions:
