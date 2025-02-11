@@ -14,7 +14,6 @@ namespace Content.Server.Doors.Systems
             SubscribeLocalEvent<FirelockComponent, AtmosAlarmEvent>(OnAtmosAlarm);
         }
 
-        // TODO: It'd be nice if this was just a door alarm event?
         private void OnAtmosAlarm(Entity<FirelockComponent> doorAlarm, ref AtmosAlarmEvent args)
         {
             switch (args.AlarmType)

@@ -377,7 +377,6 @@ public enum DoorState : byte
 public enum DoorVisuals : byte
 {
     State,
-    Powered,
     BoltLights,
     EmergencyLights,
     ClosedLights,

@@ -15,16 +15,9 @@ public sealed partial class DoorSystem
 
     private void InitializeAirlock()
     {
-        SubscribeLocalEvent<AirlockComponent, ComponentInit>(OnAirlockInit);
         SubscribeLocalEvent<AirlockComponent, SignalReceivedEvent>(OnSignalReceived);
         SubscribeLocalEvent<AirlockComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate);
-    }
-
-    private void OnAirlockInit(Entity<AirlockComponent> airlock, ref ComponentInit args)
-    {
-        if (TryComp<ApcPowerReceiverComponent>(airlock, out var receiverComponent))
-            _appearance.SetData(airlock, DoorVisuals.Powered, receiverComponent.Powered);
     }
 
     private void OnSignalReceived(Entity<AirlockComponent> airlock, ref SignalReceivedEvent args)
@@ -40,9 +33,6 @@ public sealed partial class DoorSystem
     {
         airlock.Comp.Powered = args.Powered;
         Dirty(airlock);
-
-        if (TryComp<AppearanceComponent>(airlock, out var appearanceComponent))
-            _appearance.SetData(airlock, DoorVisuals.Powered, args.Powered, appearanceComponent);
 
         if (!TryComp(airlock, out DoorComponent? door))
             return;

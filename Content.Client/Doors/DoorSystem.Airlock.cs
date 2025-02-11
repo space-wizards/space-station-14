@@ -1,5 +1,6 @@
 using Content.Client.Wires.Visualizers;
 using Content.Shared.Doors.Components;
+using Content.Shared.Power;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 
@@ -100,7 +101,7 @@ public sealed partial class DoorSystem
         var unlitVisible = false;
 
         // Determine which lights should be switched on.
-        if (_appearanceSystem.TryGetData<bool>(airlock, DoorVisuals.Powered, out var powered, args.Component) &&
+        if (_appearanceSystem.TryGetData<bool>(airlock, PowerDeviceVisuals.Powered, out var powered, args.Component) &&
             powered)
         {
             boltedVisible = IsBoltedVisible(airlock, args.Component, door.State);
