@@ -23,7 +23,6 @@
 - type: startingGear
   id: AdminAssistantGear
   equipment:
-    eyes: ClothingEyesHudCommand
     belt: BoxFolderClipboard
     id: AdminAssistantPDA
     pocket1: RubberStampAdminAssistant
