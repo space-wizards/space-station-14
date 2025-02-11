@@ -1,5 +1,6 @@
 ﻿using Content.Shared.DoAfter;
 using Content.Shared.Mech.Components;
+using Content.Shared.Mech;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mech.Equipment.Components;
@@ -19,6 +20,8 @@ public sealed partial class MechEquipmentComponent : Component
     /// The mech that the equipment is inside of.
     /// </summary>
     [ViewVariables] public EntityUid? EquipmentOwner;
+    
+    [ViewVariables] public EquipmentType EquipmentType = EquipmentType.Active;
 }
 
 /// <summary>
