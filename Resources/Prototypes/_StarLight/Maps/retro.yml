@@ -1,5 +1,5 @@
 - type: gameMap
-  id: Retro
+  id: StarlightRetro
   mapName: 'Retro Installation'
   mapPath: /Maps/_Starlight/Stations/Retro.yml
   minPlayers: 60
