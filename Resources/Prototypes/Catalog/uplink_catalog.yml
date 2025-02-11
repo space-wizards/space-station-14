@@ -498,7 +498,6 @@
   - UplinkAmmo
 
 # For the Python
-
 - type: listing
   id: UplinkSpeedLoaderMagnumAP
   name: uplink-speedloader-magnum-name
