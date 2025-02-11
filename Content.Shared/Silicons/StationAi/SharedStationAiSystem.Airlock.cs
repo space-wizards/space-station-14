@@ -26,7 +26,7 @@ public abstract partial class SharedStationAiSystem
             return;
         }
 
-        var setResult = _doors.TrySetBoltDown((ent, component), args.Bolted, args.User, predicted: true);
+        var setResult = _airlocks.TrySetBoltDown((ent, component), args.Bolted, args.User, predicted: true);
         if (!setResult)
         {
             ShowDeviceNotRespondingPopup(args.User);
@@ -44,7 +44,7 @@ public abstract partial class SharedStationAiSystem
             return;
         }
 
-        _doors.SetEmergencyAccess((ent, component), args.EmergencyAccess, args.User, predicted: true);
+        _airlocks.SetEmergencyAccess((ent, component), args.EmergencyAccess, args.User, predicted: true);
     }
 
     /// <summary>
