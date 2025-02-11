@@ -14303,6 +14303,11 @@ entities:
     - type: Transform
       pos: -27.5,14.5
       parent: 2
+  - uid: 7069
+    components:
+    - type: Transform
+      pos: 41.5,2.5
+      parent: 2
 - proto: CableApcStack
   entities:
   - uid: 1898
@@ -22245,6 +22250,12 @@ entities:
     components:
     - type: Transform
       pos: -19.5,13.5
+      parent: 2
+  - uid: 9948
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 35.5,2.5
       parent: 2
 - proto: ChairOfficeLight
   entities:
@@ -47254,6 +47265,13 @@ entities:
     - type: Transform
       pos: -65.51371,-16.937654
       parent: 2
+- proto: LockerAdministrativeAssistantFilled
+  entities:
+  - uid: 9950
+    components:
+    - type: Transform
+      pos: 37.5,4.5
+      parent: 2
 - proto: LockerAtmosphericsFilledHardsuit
   entities:
   - uid: 6796
@@ -48994,7 +49012,8 @@ entities:
   - uid: 7050
     components:
     - type: Transform
-      pos: 39.5,4.5
+      rot: -1.5707963267948966 rad
+      pos: 42.5,2.5
       parent: 2
   - uid: 7051
     components:
@@ -49127,12 +49146,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -53.5,-1.5
-      parent: 2
-  - uid: 7069
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 39.5,0.5
       parent: 2
   - uid: 7070
     components:
@@ -50250,6 +50263,17 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -19.5,9.5
+      parent: 2
+  - uid: 9951
+    components:
+    - type: Transform
+      pos: 38.5,4.5
+      parent: 2
+  - uid: 9952
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 38.5,0.5
       parent: 2
 - proto: PoweredlightLED
   entities:
@@ -54850,6 +54874,13 @@ entities:
     - type: Transform
       pos: -2.5,-8.5
       parent: 2
+- proto: SpawnPointAdminAssistant
+  entities:
+  - uid: 9949
+    components:
+    - type: Transform
+      pos: 35.5,2.5
+      parent: 2
 - proto: SpawnPointAtmos
   entities:
   - uid: 7984
@@ -55092,6 +55123,18 @@ entities:
     components:
     - type: Transform
       pos: -39.5,-8.5
+      parent: 2
+- proto: SpawnPointLogisticsAssistant
+  entities:
+  - uid: 9946
+    components:
+    - type: Transform
+      pos: -22.5,14.5
+      parent: 2
+  - uid: 9947
+    components:
+    - type: Transform
+      pos: -16.5,15.5
       parent: 2
 - proto: SpawnPointMedicalDoctor
   entities:
