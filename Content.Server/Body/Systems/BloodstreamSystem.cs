@@ -310,7 +310,7 @@ public sealed class BloodstreamSystem : EntitySystem
         if (_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution, out var bloodSolution))
         {
             _solutionContainerSystem.RemoveAllSolution(entity.Comp.BloodSolution.Value);
-            TryModifyBloodLevel(entity.Owner, bloodSolution.AvailableVolume, entity.Comp);
+            TryModifyBloodLevel(entity.Owner, entity.Comp.BloodReferenceVolume, entity.Comp);
         }
     }
 
