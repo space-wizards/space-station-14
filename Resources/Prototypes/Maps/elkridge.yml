@@ -2,8 +2,8 @@
   id: Elkridge
   mapName: 'Elkridge Depot'
   mapPath: /Maps/elkridge.yml
-  minPlayers: 7
-  maxPlayers: 35
+  minPlayers: 15
+  maxPlayers: 45
   stations:
     Elkridge:
       stationProto: StandardNanotrasenStation
@@ -73,7 +73,7 @@
                 - StationEngineer
                 - TechnicalAssistant
             MedicalTeam:
-              roundStart: 5
+              roundStart: 4
               midRound: 5
               members:
                 - MedicalIntern

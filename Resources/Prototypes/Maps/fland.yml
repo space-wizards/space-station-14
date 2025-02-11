@@ -24,11 +24,11 @@
             Bartender: [ 2, 2 ]
             Botanist: [ 3, 3 ]
             Chef: [ 2, 2 ]
-            Janitor: [ 3, 3 ]
+            Janitor: [ 4, 4 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 2 ]
-            Reporter: [ 1, 1 ]
+            Reporter: [ 2, 2 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
@@ -54,7 +54,7 @@
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
-            CargoTechnician: [ 4, 4 ]
+            CargoTechnician: [ 6, 6 ]
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]
@@ -62,11 +62,11 @@
             Musician: [ 1, 1 ]
             #silicon
             StationAi: [ 1, 1 ]
-            Borg: [ 2, 2 ]
+            Borg: [ 5, 5 ]
           jobGroups:
             EngineeringTeam:
-              roundStart: 9
-              midRound: 9
+              roundStart: 10
+              midRound: 10
               members:
                 - StationEngineer
                 - TechnicalAssistant
@@ -83,8 +83,8 @@
                 - Scientist
                 - ResearchAssistant
             SecurityTeam:
-              roundStart: 12
-              midRound: 12
+              roundStart: 16
+              midRound: 16
               members:
                 - SecurityOfficer
                 - SecurityCadet
