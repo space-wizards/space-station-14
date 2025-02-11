@@ -54,6 +54,8 @@
     - Book
   - type: StealTarget
     stealGroup: Bible
+  - type: Tool
+    qualities: [ Undevoting ]
 
 - type: entity
   parent: [Bible, BaseSyndicateContraband]
