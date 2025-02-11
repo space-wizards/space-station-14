@@ -15,13 +15,13 @@ public sealed partial class DoorBoltComponent : Component
     /// <summary>
     /// Sound to play when the bolts on the airlock go up.
     /// </summary>
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier BoltUpSound = new SoundPathSpecifier("/Audio/Machines/boltsup.ogg");
 
     /// <summary>
     /// Sound to play when the bolts on the airlock go down.
     /// </summary>
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier BoltDownSound = new SoundPathSpecifier("/Audio/Machines/boltsdown.ogg");
 
     /// <summary>
