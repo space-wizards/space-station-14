@@ -3305,4 +3305,11 @@ Entries:
   id: 459
   time: '2025-02-11T07:53:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/319
+- author: PubliclyExecutedPig
+  changes:
+  - message: Changed both Lobster and Hotel Station
+    type: Tweak
+  id: 460
+  time: '2025-02-11T08:52:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/309
 
