@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MilonPL
-  changes:
-  - message: Paper will no longer stay on fire indefinitely.
-    type: Fix
-  id: 7431
-  time: '2024-09-24T15:48:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32412
 - author: ArchRBX
   changes:
   - message: The AstroNav PDA cartridge has now been added, which turns your PDA into
@@ -3897,3 +3890,14 @@
   id: 7930
   time: '2025-02-11T02:52:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34334
+- author: K-Dynamic
+  changes:
+  - message: Flashbangs, stinger grenades, EMP grenades, smoke grenades, and tear
+      gas grenades have new appearances.
+    type: Tweak
+  - message: Projectile grenades (including stinger and shrapnel grenades) should
+      now play animations when triggered.
+    type: Fix
+  id: 7931
+  time: '2025-02-11T03:23:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34421
