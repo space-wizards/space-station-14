@@ -3,7 +3,7 @@ using Content.Shared.Doors.Components;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Doors.UI;
+namespace Content.Client.Doors.Electronics;
 
 public sealed class DoorElectronicsBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {

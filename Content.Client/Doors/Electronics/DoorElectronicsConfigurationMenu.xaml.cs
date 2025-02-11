@@ -7,7 +7,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 
-namespace Content.Client.Doors.UI;
+namespace Content.Client.Doors.Electronics;
 
 [GenerateTypedNameReferences]
 public sealed partial class DoorElectronicsConfigurationMenu : FancyWindow
