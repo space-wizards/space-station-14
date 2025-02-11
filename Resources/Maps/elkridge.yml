@@ -13975,7 +13975,7 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -311998.12
+      secondsUntilStateChange: -313094.84
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -16961,11 +16961,6 @@ entities:
       parent: 2
 - proto: Barricade
   entities:
-  - uid: 2119
-    components:
-    - type: Transform
-      pos: -20.5,-45.5
-      parent: 2
   - uid: 6733
     components:
     - type: Transform
@@ -17796,6 +17791,11 @@ entities:
     components:
     - type: Transform
       pos: -9.505383,21.489458
+      parent: 2
+  - uid: 16463
+    components:
+    - type: Transform
+      pos: -13.593551,25.572092
       parent: 2
 - proto: BoxFolderBlue
   entities:
@@ -43573,6 +43573,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: -3.9565754,-16.251305
       parent: 2
+  - uid: 15559
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -2.4354122,-6.304986
+      parent: 2
 - proto: ChairOfficeLight
   entities:
   - uid: 7677
@@ -44770,6 +44776,11 @@ entities:
       parent: 2
 - proto: ClosetRadiationSuitFilled
   entities:
+  - uid: 2119
+    components:
+    - type: Transform
+      pos: -20.5,-45.5
+      parent: 2
   - uid: 2841
     components:
     - type: Transform
@@ -44779,6 +44790,16 @@ entities:
     components:
     - type: Transform
       pos: -11.5,14.5
+      parent: 2
+  - uid: 6665
+    components:
+    - type: Transform
+      pos: -21.5,46.5
+      parent: 2
+  - uid: 16462
+    components:
+    - type: Transform
+      pos: 20.5,32.5
       parent: 2
 - proto: ClosetSteelBase
   entities:
@@ -46310,6 +46331,7 @@ entities:
   - uid: 1249
     components:
     - type: MetaData
+      desc: A specialised crate for storing volatile P.A.C.M.A.N. fuel. It is insulated from radiation.
       name: secure P.A.C.M.A.N. fuel crate
     - type: Transform
       pos: 30.5,-15.5
@@ -46344,6 +46366,7 @@ entities:
           showEnts: False
           occludes: True
           ent: null
+    - type: RadiationBlockingContainer
 - proto: CrateEngineeringShuttle
   entities:
   - uid: 6177
@@ -73896,11 +73919,6 @@ entities:
     - type: Transform
       pos: 39.5,30.5
       parent: 2
-  - uid: 16103
-    components:
-    - type: Transform
-      pos: -21.5,46.5
-      parent: 2
   - uid: 16104
     components:
     - type: Transform
@@ -81808,6 +81826,11 @@ entities:
     - type: Transform
       pos: 5.4015055,27.15652
       parent: 2
+  - uid: 16464
+    components:
+    - type: Transform
+      pos: -13.406051,25.447092
+      parent: 2
 - proto: PersonalAI
   entities:
   - uid: 6312
@@ -88058,7 +88081,7 @@ entities:
   - uid: 6743
     components:
     - type: Transform
-      pos: -15.476229,20.535725
+      pos: -15.386784,25.57014
       parent: 2
 - proto: SheetPlasteel
   entities:
@@ -88077,7 +88100,7 @@ entities:
   - uid: 6741
     components:
     - type: Transform
-      pos: -15.388418,25.607353
+      pos: -15.511784,20.523266
       parent: 2
 - proto: SheetPlastic10
   entities:
@@ -89833,6 +89856,11 @@ entities:
     - type: Transform
       pos: 17.5,-12.5
       parent: 2
+  - uid: 16466
+    components:
+    - type: Transform
+      pos: -8.5,26.5
+      parent: 2
 - proto: SignExamroom
   entities:
   - uid: 12705
@@ -90143,6 +90171,11 @@ entities:
     components:
     - type: Transform
       pos: -16.5,22.5
+      parent: 2
+  - uid: 16465
+    components:
+    - type: Transform
+      pos: -17.5,19.5
       parent: 2
 - proto: SignSpace
   entities:
@@ -91839,10 +91872,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 18.5,-13.5
       parent: 2
-  - uid: 6665
+  - uid: 9961
     components:
     - type: Transform
-      pos: -15.5,25.5
+      rot: 3.141592653589793 rad
+      pos: -14.5,25.5
       parent: 2
   - uid: 11099
     components:
@@ -92094,16 +92128,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -30.5,31.5
-      parent: 2
-  - uid: 16308
-    components:
-    - type: Transform
-      pos: -13.5,25.5
-      parent: 2
-  - uid: 16309
-    components:
-    - type: Transform
-      pos: -14.5,25.5
       parent: 2
   - uid: 16311
     components:
@@ -92451,12 +92475,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 17.5,-0.5
-      parent: 2
-  - uid: 15678
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -2.5,-6.5
       parent: 2
 - proto: StorageCanister
   entities:
@@ -96260,6 +96278,16 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 11.5,-19.5
+      parent: 2
+  - uid: 16308
+    components:
+    - type: Transform
+      pos: -15.5,25.5
+      parent: 2
+  - uid: 16309
+    components:
+    - type: Transform
+      pos: -13.5,25.5
       parent: 2
   - uid: 16310
     components:
@@ -110512,15 +110540,17 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -15.5,24.5
       parent: 2
-  - uid: 9961
+  - uid: 15561
     components:
     - type: Transform
-      pos: -16.5,26.5
+      rot: 3.141592653589793 rad
+      pos: -12.5,25.5
       parent: 2
-  - uid: 9971
+  - uid: 15678
     components:
     - type: Transform
-      pos: -12.5,26.5
+      rot: 3.141592653589793 rad
+      pos: -16.5,25.5
       parent: 2
 - proto: WindoorSecureSecurityLawyerLocked
   entities:
@@ -111298,6 +111328,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 15.5,-0.5
       parent: 2
+  - uid: 9971
+    components:
+    - type: Transform
+      pos: -13.5,25.5
+      parent: 2
   - uid: 11157
     components:
     - type: Transform
@@ -111350,15 +111385,10 @@ entities:
       rot: 3.141592653589793 rad
       pos: 7.5,-15.5
       parent: 2
-  - uid: 15559
+  - uid: 16103
     components:
     - type: Transform
-      pos: -15.5,26.5
-      parent: 2
-  - uid: 15561
-    components:
-    - type: Transform
-      pos: -13.5,26.5
+      pos: -15.5,25.5
       parent: 2
   - uid: 16165
     components:
