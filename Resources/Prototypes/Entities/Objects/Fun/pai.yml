@@ -43,10 +43,6 @@
     stopSearchVerbText: pai-system-stop-searching-verb-text
     stopSearchVerbPopup: pai-system-stopped-searching
   - type: Examiner
-  - type: IntrinsicRadioReceiver
-  - type: ActiveRadio
-    channels:
-    - Common
   - type: DoAfter
   - type: Actions
   - type: TypingIndicator
@@ -73,6 +69,16 @@
     whitelist:
       components:
         - SecretStash
+  - type: PAIRadio
+  - type: EncryptionKeyHolder
+    keySlots: 4
+  - type: ContainerContainer
+    containers:
+      key_slots: !type:Container
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommon
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]
@@ -91,12 +97,6 @@
     roleName: pai-system-role-name-syndicate
     roleDescription: pai-system-role-description-syndicate
     roleRules: ghost-role-information-familiar-rules
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Syndicate
-  - type: ActiveRadio
-    channels:
-    - Syndicate
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -105,6 +105,13 @@
           Off: { state: syndicate-pai-off-overlay }
           Searching: { state: syndicate-pai-searching-overlay }
           On: { state: syndicate-pai-on-overlay }
+  - type: EncryptionKeyHolder
+    keySlots: 4
+    keysUnlocked: false # No free keys for sec(((
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySyndie
 
 - type: entity
   parent: PersonalAI
@@ -134,6 +141,9 @@
   - type: Construction
     graph: PotatoAI
     node: potatoai
+  - type: ContainerFill
+    containers:
+      key_slots: Null
 
 - type: entity
   id: ActionPAIPlayMidi
