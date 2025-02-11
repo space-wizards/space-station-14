@@ -83,8 +83,8 @@ public sealed class ThermalRegulatorSystem : EntitySystem
         // processes starts
         if (tempDiff < ent.Comp1.ThermalRegulationTemperatureThreshold)
         {
-            ent.Comp1.ShiverEmoteProgress = TimeSpan.Zero;
-            ent.Comp1.SweatEmoteProgress = TimeSpan.Zero;
+            ent.Comp1.ShiverEmoteProgress = 0f;
+            ent.Comp1.SweatEmoteProgress = 0f;
             return;
         }
 
@@ -99,11 +99,13 @@ public sealed class ThermalRegulatorSystem : EntitySystem
                 return;
 
             // For humans, they start sweating at 25C over body temp, at once every 30 seconds, and maximally at 50C over, once per 15 seconds
-            ent.Comp1.SweatEmoteProgress += TimeSpan.FromSeconds(Math.Min(tempDiff / ent.Comp1.ThermalRegulationTemperatureThreshold, 2));
-            if (ent.Comp1.SweatEmoteProgress > ent.Comp1.EmoteCooldown)
+            //the quickest they can be sweating is 2x their uncomfortable temp threshold, and it takes the update frequency into account
+            var delta = Math.Min(tempDiff / ent.Comp1.ThermalRegulationTemperatureThreshold, 2);
+            ent.Comp1.SweatEmoteProgress += delta * (ent.Comp1.UpdateInterval.Seconds / ent.Comp1.EmoteCooldown);
+            if (ent.Comp1.SweatEmoteProgress > 1)
             {
                 _chat.TryEmoteWithChat(ent, ent.Comp1.SweatEmote, ChatTransmitRange.HideChat, ignoreActionBlocker: true);
-                ent.Comp1.SweatEmoteProgress = TimeSpan.Zero;
+                ent.Comp1.SweatEmoteProgress = 0f;
             }
         }
         else
@@ -117,11 +119,12 @@ public sealed class ThermalRegulatorSystem : EntitySystem
                 return;
 
             // For humans, they start shivering at 25C under body temp, at once every 30 seconds, and maximally at 50C under, once per 15 seconds
-            ent.Comp1.ShiverEmoteProgress += TimeSpan.FromSeconds(Math.Min(tempDiff / ent.Comp1.ThermalRegulationTemperatureThreshold, 2));
-            if (ent.Comp1.ShiverEmoteProgress > ent.Comp1.EmoteCooldown)
+            var delta = Math.Min(tempDiff / ent.Comp1.ThermalRegulationTemperatureThreshold, 2);
+            ent.Comp1.ShiverEmoteProgress += delta * (ent.Comp1.UpdateInterval.Seconds / ent.Comp1.EmoteCooldown);
+            if (ent.Comp1.ShiverEmoteProgress > 1)
             {
                 _chat.TryEmoteWithChat(ent, ent.Comp1.ShiverEmote, ChatTransmitRange.HideChat, ignoreActionBlocker: true);
-                ent.Comp1.ShiverEmoteProgress = TimeSpan.Zero;
+                ent.Comp1.ShiverEmoteProgress = 0f;
             }
         }
     }

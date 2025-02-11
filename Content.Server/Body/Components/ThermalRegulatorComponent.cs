@@ -3,7 +3,6 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Prototypes;
 using Content.Shared.Chat.Prototypes;
 
-
 namespace Content.Server.Body.Components;
 
 [RegisterComponent]
@@ -78,13 +77,13 @@ public sealed partial class ThermalRegulatorComponent : Component
     public ProtoId<EmotePrototype> ShiverEmote = "Shiver";
 
     [DataField]
-    public TimeSpan EmoteCooldown = TimeSpan.FromSeconds(30);
+    public float EmoteCooldown = 30;
 
     [DataField]
-    public TimeSpan SweatEmoteProgress;
+    public float SweatEmoteProgress;
 
     [DataField]
-    public TimeSpan ShiverEmoteProgress;
+    public float ShiverEmoteProgress;
 
     /// <summary>
     ///     Does this entity do the sweat emote when warm
