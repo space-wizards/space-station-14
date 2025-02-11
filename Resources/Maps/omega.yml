@@ -395,7 +395,6 @@ entities:
             2109: -42,-13
             2152: -37,22
             2153: -36,22
-            2182: -34,20
             2183: -38,15
             2310: -51,8
             2411: -60,1
@@ -420,6 +419,7 @@ entities:
             2841: -48,6
             2861: -42,-16
             2862: -40,-16
+            2871: -36,20
         - node:
             angle: 4.71238898038469 rad
             color: '#DE3A3AFF'
@@ -1118,19 +1118,17 @@ entities:
             color: '#FFFFFFFF'
             id: Dirt
           decals:
-            2025: -42,-18
             1030: -44,-28
             1031: -45,-29
             1032: -43,-27
             1033: -44,-30
+            2025: -42,-18
         - node:
             cleanable: True
             zIndex: 1
             color: '#FFFFFFFF'
             id: DirtHeavy
           decals:
-            2026: -41,-18
-            2027: -40,-19
             801: 7,-33
             802: 8,-32
             809: 5,-39
@@ -1143,14 +1141,8 @@ entities:
             1537: -47,-8
             1538: -47,-7
             1539: -47,-10
-            2510: -51,-16
-            2511: -49,-18
-            2512: -49,-16
-            2513: -51,-18
-            2514: -51,-17
-            2515: -49,-17
-            2516: -49,-16
-            2520: -49,-5
+            2026: -41,-18
+            2027: -40,-19
             2478: -48,0
             2479: -50,1
             2480: -57,3
@@ -1159,6 +1151,14 @@ entities:
             2483: -54,0
             2494: -54,6
             2495: -55,8
+            2510: -51,-16
+            2511: -49,-18
+            2512: -49,-16
+            2513: -51,-18
+            2514: -51,-17
+            2515: -49,-17
+            2516: -49,-16
+            2520: -49,-5
         - node:
             cleanable: True
             zIndex: 1
@@ -1184,14 +1184,6 @@ entities:
             color: '#FFFFFFFF'
             id: DirtLight
           decals:
-            2028: -40,-18
-            910: 20,27
-            911: 19,26
-            912: 17,26
-            913: 16,24
-            914: 16,30
-            915: 17,32
-            916: 16,35
             804: 8,-34
             805: 8,-36
             806: 13,-39
@@ -1227,6 +1219,13 @@ entities:
             843: -6,-28
             844: -6,-33
             845: -11,-38
+            910: 20,27
+            911: 19,26
+            912: 17,26
+            913: 16,24
+            914: 16,30
+            915: 17,32
+            916: 16,35
             1536: -47,-9
             1543: -46,-13
             1544: -45,-12
@@ -1238,6 +1237,7 @@ entities:
             1550: -46,-7
             1551: -45,-6
             1552: -40,-6
+            2028: -40,-18
             2517: -50,-16
             2518: -50,-18
             2519: -51,-16
@@ -1247,11 +1247,11 @@ entities:
             color: '#FFFFFFFF'
             id: DirtMedium
           decals:
-            2031: -41,-19
             803: 8,-33
             1540: -46,-10
             1541: -46,-9
             1542: -46,-12
+            2031: -41,-19
         - node:
             color: '#FFFFFFFF'
             id: FlowersBROne
@@ -1729,12 +1729,10 @@ entities:
             515: -30,13
             516: -30,15
             517: -30,17
-            518: -30,19
             525: -28,16
             526: -28,19
             543: -32,11
             545: -32,18
-            546: -32,19
             547: -32,20
             592: -32,26
             593: -32,27
@@ -2263,7 +2261,6 @@ entities:
             523: -31,12
             533: -26,16
             534: -26,19
-            535: -29,18
             536: -29,15
             537: -29,13
             614: -27,11
@@ -2411,7 +2408,6 @@ entities:
             2166: -37,14
             2172: -35,18
             2176: -34,18
-            2177: -36,18
             2180: -30,11
             2184: -33,18
             2717: 51,-5
@@ -2422,6 +2418,7 @@ entities:
             2730: 29,-8
             2731: 30,-8
             2732: 31,-8
+            2876: -36,18
         - node:
             color: '#EFB34196'
             id: QuarterTileOverlayGreyscale270
@@ -2593,8 +2590,8 @@ entities:
             617: -27,10
             2173: -35,18
             2175: -34,18
-            2178: -36,18
             2185: -33,18
+            2875: -36,18
         - node:
             color: '#EFB34196'
             id: QuarterTileOverlayGreyscale90
@@ -2844,7 +2841,6 @@ entities:
           decals:
             287: 31,4
             431: -2,-25
-            2158: -34,16
         - node:
             color: '#EFB34196'
             id: ThreeQuarterTileOverlayGreyscale90
@@ -3005,6 +3001,7 @@ entities:
             id: WarnEndS
           decals:
             2142: -37,20
+            2868: -35,20
         - node:
             color: '#52B4E996'
             id: WarnFullGreyscale
@@ -3024,7 +3021,6 @@ entities:
             1900: 26,15
             2097: -60,0
             2099: -60,2
-            2146: -35,20
             2338: -47,-3
             2339: -47,-2
             2390: -55,4
@@ -3051,6 +3047,7 @@ entities:
             2792: 6,15
             2802: 8,17
             2835: -53,8
+            2867: -35,20
         - node:
             color: '#52B4E996'
             id: WarnLineGreyscaleE
@@ -3155,11 +3152,9 @@ entities:
             924: 21,8
             2133: -59,4
             2140: -59,5
-            2147: -35,20
             2167: -37,14
             2168: -37,15
             2169: -37,16
-            2179: -36,18
             2342: -43,-3
             2343: -43,-2
             2387: -53,4
@@ -3192,6 +3187,7 @@ entities:
             2831: -46,7
             2834: -46,8
             2838: -46,5
+            2866: -35,20
         - node:
             color: '#FFFFFFFF'
             id: WarnLineW
@@ -4470,7 +4466,7 @@ entities:
             4: 2184
           -13,4:
             3: 2184
-            6: 546
+            5: 546
           -12,5:
             0: 1
             1: 3856
@@ -4479,7 +4475,7 @@ entities:
           -11,5:
             1: 784
           -11,4:
-            5: 546
+            6: 546
           -11,6:
             0: 49152
           -11,3:
@@ -4809,9 +4805,9 @@ entities:
           temperature: 293.15
           moles:
           - 0
+          - 0
+          - 0
           - 6666.982
-          - 0
-          - 0
           - 0
           - 0
           - 0
@@ -4824,9 +4820,9 @@ entities:
           temperature: 293.15
           moles:
           - 0
-          - 0
-          - 0
           - 6666.982
+          - 0
+          - 0
           - 0
           - 0
           - 0
@@ -4859,6 +4855,54 @@ entities:
     - type: Transform
       pos: -49.383278,-8.450993
       parent: 4812
+- proto: ActionToggleBlock
+  entities:
+  - uid: 12052
+    components:
+    - type: Transform
+      parent: 7935
+    - type: InstantAction
+      originalIconColor: '#FFFFFFFF'
+      container: 7935
+  - uid: 13922
+    components:
+    - type: Transform
+      parent: 13921
+    - type: InstantAction
+      originalIconColor: '#FFFFFFFF'
+      container: 13921
+- proto: ActionToggleInternals
+  entities:
+  - uid: 10945
+    components:
+    - type: Transform
+      parent: 13680
+    - type: InstantAction
+      originalIconColor: '#FFFFFFFF'
+      container: 13680
+  - uid: 13919
+    components:
+    - type: Transform
+      parent: 13917
+    - type: InstantAction
+      originalIconColor: '#FFFFFFFF'
+      container: 13917
+- proto: ActionToggleJetpack
+  entities:
+  - uid: 8332
+    components:
+    - type: Transform
+      parent: 13680
+    - type: InstantAction
+      originalIconColor: '#FFFFFFFF'
+      container: 13680
+  - uid: 13918
+    components:
+    - type: Transform
+      parent: 13917
+    - type: InstantAction
+      originalIconColor: '#FFFFFFFF'
+      container: 13917
 - proto: ActionToggleLight
   entities:
   - uid: 6594
@@ -5917,6 +5961,11 @@ entities:
     components:
     - type: Transform
       pos: -34.5,13.5
+      parent: 4812
+  - uid: 8043
+    components:
+    - type: Transform
+      pos: -32.5,18.5
       parent: 4812
   - uid: 10941
     components:
@@ -7583,11 +7632,6 @@ entities:
     components:
     - type: Transform
       pos: -30.5,25.5
-      parent: 4812
-  - uid: 12052
-    components:
-    - type: Transform
-      pos: -32.5,18.5
       parent: 4812
 - proto: AirlockServiceLocked
   entities:
@@ -21403,6 +21447,16 @@ entities:
     - type: Transform
       pos: -17.5,32.5
       parent: 4812
+  - uid: 13926
+    components:
+    - type: Transform
+      pos: -36.5,10.5
+      parent: 4812
+  - uid: 13928
+    components:
+    - type: Transform
+      pos: -36.5,9.5
+      parent: 4812
 - proto: CableApcStack
   entities:
   - uid: 6196
@@ -28095,6 +28149,16 @@ entities:
     components:
     - type: Transform
       pos: -40.5,8.5
+      parent: 4812
+  - uid: 13929
+    components:
+    - type: Transform
+      pos: -36.5,10.5
+      parent: 4812
+  - uid: 13930
+    components:
+    - type: Transform
+      pos: -36.5,9.5
       parent: 4812
 - proto: CableMVStack
   entities:
@@ -47363,12 +47427,6 @@ entities:
       parent: 4812
     - type: AtmosPipeColor
       color: '#990000FF'
-  - uid: 5032
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -14.5,-27.5
-      parent: 4812
   - uid: 5077
     components:
     - type: Transform
@@ -53865,6 +53923,11 @@ entities:
       parent: 4812
     - type: AtmosPipeColor
       color: '#0055CCFF'
+  - uid: 5032
+    components:
+    - type: Transform
+      pos: -14.5,-27.5
+      parent: 4812
   - uid: 5096
     components:
     - type: Transform
@@ -60799,29 +60862,51 @@ entities:
   - uid: 12053
     components:
     - type: Transform
+      anchored: True
       pos: -37.5,22.5
       parent: 4812
+    - type: Physics
+      bodyType: Static
+- proto: GunSafePistolMk58
+  entities:
+  - uid: 13920
+    components:
+    - type: Transform
+      anchored: True
+      pos: -33.5,20.5
+      parent: 4812
+    - type: Physics
+      bodyType: Static
 - proto: GunSafeRifleLecter
   entities:
   - uid: 12215
     components:
     - type: Transform
+      anchored: True
       pos: -37.5,20.5
       parent: 4812
+    - type: Physics
+      bodyType: Static
 - proto: GunSafeShotgunKammerer
   entities:
   - uid: 12054
     components:
     - type: Transform
+      anchored: True
       pos: -34.5,22.5
       parent: 4812
+    - type: Physics
+      bodyType: Static
 - proto: GunSafeSubMachineGunDrozd
   entities:
   - uid: 8377
     components:
     - type: Transform
+      anchored: True
       pos: -37.5,21.5
       parent: 4812
+    - type: Physics
+      bodyType: Static
 - proto: Handcuffs
   entities:
   - uid: 4865
@@ -61819,8 +61904,35 @@ entities:
   - uid: 13680
     components:
     - type: Transform
-      pos: -33.539055,21.668404
+      pos: -33.729538,21.689896
       parent: 4812
+    - type: GasTank
+      toggleActionEntity: 10945
+    - type: Jetpack
+      toggleActionEntity: 8332
+    - type: ActionsContainer
+    - type: ContainerContainer
+      containers:
+        actions: !type:Container
+          ents:
+          - 8332
+          - 10945
+  - uid: 13917
+    components:
+    - type: Transform
+      pos: -33.3936,21.666458
+      parent: 4812
+    - type: GasTank
+      toggleActionEntity: 13919
+    - type: Jetpack
+      toggleActionEntity: 13918
+    - type: ActionsContainer
+    - type: ContainerContainer
+      containers:
+        actions: !type:Container
+          ents:
+          - 13918
+          - 13919
 - proto: KitchenKnife
   entities:
   - uid: 1642
@@ -62728,6 +62840,11 @@ entities:
     components:
     - type: Transform
       pos: -31.5,19.5
+      parent: 4812
+  - uid: 13915
+    components:
+    - type: Transform
+      pos: -31.5,17.5
       parent: 4812
 - proto: LockerFreezer
   entities:
@@ -64437,11 +64554,16 @@ entities:
       parent: 4812
 - proto: PortableFlasher
   entities:
-  - uid: 11923
+  - uid: 13914
     components:
     - type: Transform
-      pos: -33.5,20.5
+      anchored: False
+      pos: -35.5,20.5
       parent: 4812
+    - type: TriggerOnProximity
+      enabled: False
+    - type: Physics
+      bodyType: Dynamic
 - proto: PortableGeneratorJrPacman
   entities:
   - uid: 741
@@ -70912,12 +71034,50 @@ entities:
     - type: Transform
       pos: -33.720795,21.923859
       parent: 4812
+  - uid: 13923
+    components:
+    - type: Transform
+      pos: -33.713516,21.77357
+      parent: 4812
 - proto: RiotLaserShield
   entities:
   - uid: 7935
     components:
     - type: Transform
-      pos: -33.356216,21.923859
+      pos: -33.463516,22.047007
+      parent: 4812
+    - type: Blocking
+      blockingToggleActionEntity: 12052
+    - type: ActionsContainer
+    - type: ContainerContainer
+      containers:
+        actions: !type:Container
+          ents:
+          - 12052
+  - uid: 13924
+    components:
+    - type: Transform
+      pos: -33.44008,21.882944
+      parent: 4812
+- proto: RiotShield
+  entities:
+  - uid: 13921
+    components:
+    - type: Transform
+      pos: -33.244766,22.062632
+      parent: 4812
+    - type: Blocking
+      blockingToggleActionEntity: 13922
+    - type: ActionsContainer
+    - type: ContainerContainer
+      containers:
+        actions: !type:Container
+          ents:
+          - 13922
+  - uid: 13925
+    components:
+    - type: Transform
+      pos: -33.19008,21.890757
       parent: 4812
 - proto: RobocopCircuitBoard
   entities:
@@ -71074,10 +71234,10 @@ entities:
       parent: 4812
 - proto: SecurityTechFab
   entities:
-  - uid: 10945
+  - uid: 11923
     components:
     - type: Transform
-      pos: -35.5,20.5
+      pos: -36.5,18.5
       parent: 4812
 - proto: SeedExtractor
   entities:
@@ -74151,6 +74311,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 10.5,-7.5
       parent: 4812
+  - uid: 13927
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -36.5,9.5
+      parent: 4812
 - proto: Stool
   entities:
   - uid: 1752
@@ -74507,11 +74673,6 @@ entities:
       parent: 4812
 - proto: SuitStorageSec
   entities:
-  - uid: 8043
-    components:
-    - type: Transform
-      pos: -36.5,18.5
-      parent: 4812
   - uid: 8045
     components:
     - type: Transform
@@ -87696,6 +87857,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -32.5,15.5
       parent: 4812
+  - uid: 13916
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -35.5,18.5
+      parent: 4812
 - proto: WindoorSecureAtmosphericsLocked
   entities:
   - uid: 7369
@@ -87880,12 +88047,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -27.5,19.5
-      parent: 4812
-  - uid: 8332
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -35.5,18.5
       parent: 4812
 - proto: Window
   entities:
