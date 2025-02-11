@@ -149,7 +149,7 @@
     node: potatoai
   - type: ContainerFill
     containers:
-      key_slots: Null
+      key_slots: []
 
 - type: entity
   id: ActionPAIPlayMidi
