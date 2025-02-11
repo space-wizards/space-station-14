@@ -46,6 +46,7 @@ public sealed class WoolySystem : EntitySystem
             if (_mobState.IsDead(uid))
                 continue;
 
+            // TODO: Find a better solution of fixing Solution field being null when entity leaves PVS. This was causing debug asserts and is a bandaid.
             if (wooly.Solution is null || !_solutionContainer.ResolveSolution(uid, wooly.SolutionName, ref wooly.Solution, out var solution))
                 continue;
 

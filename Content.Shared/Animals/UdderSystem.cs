@@ -54,6 +54,7 @@ public sealed class UdderSystem : EntitySystem
             if (_mobState.IsDead(uid))
                 continue;
 
+            // TODO: Find a better solution of fixing Solution field being null when entity leaves PVS. This was causing debug asserts and is a bandaid.
             if (udder.Solution is null || !_solutionContainerSystem.ResolveSolution(uid, udder.SolutionName, ref udder.Solution, out var solution))
                 continue;
 
