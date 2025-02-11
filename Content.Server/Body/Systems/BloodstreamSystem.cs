@@ -127,12 +127,12 @@ public sealed class BloodstreamSystem : EntitySystem
             // Blood level regulation. Must be alive.
             if (bloodLevel != 1f && !_mobStateSystem.IsDead(uid))
             {
-                var bloodDelta = bloodstream.BloodReferenceVolume.Float() - bloodSolution.Volume.Float();
+                var bloodError = bloodstream.BloodReferenceVolume - bloodstream.BloodReferenceVolume * bloodLevel;
                 var bloodRefreshAmount = bloodstream.BloodRefreshAmount;
 
-                bloodDelta = (float)FixedPoint2.Clamp(bloodDelta, -bloodRefreshAmount, bloodRefreshAmount);
+                bloodError = FixedPoint2.Clamp(bloodError, -bloodRefreshAmount, bloodRefreshAmount);
 
-                TryModifyBloodLevel(uid, bloodDelta, bloodstream);
+                TryModifyBloodLevel(uid, bloodError, bloodstream);
             }
 
             // Removes blood from the bloodstream based on bleed amount (bleed rate)
