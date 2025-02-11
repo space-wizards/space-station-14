@@ -24,42 +24,46 @@ public sealed class SolutionSpikerSystem : EntitySystem
         SubscribeLocalEvent<RefillableSolutionComponent, InteractUsingEvent>(OnInteractUsing);
     }
 
+    private void OnInteractUsing(Entity<RefillableSolutionComponent> entity, ref InteractUsingEvent args)
+    {
+        if (TrySpike(args.Used, args.Target, args.User, entity.Comp))
+            args.Handled = true;
+    }
+
     /// <summary>
     ///     Immediately transfer all reagents from this entity, to the other entity.
     ///     The source entity will then be acted on by TriggerSystem.
     /// </summary>
-    private void OnInteractUsing(Entity<RefillableSolutionComponent> entity, ref InteractUsingEvent args)
+    /// <param name="source">Source of the solution.</param>
+    /// <param name="target">Target to spike with the solution from source.</param>
+    /// <param name="user">User spiking the target solution.</param>
+    private bool TrySpike(EntityUid source, EntityUid target, EntityUid user, RefillableSolutionComponent? spikableTarget = null,
+        SolutionSpikerComponent? spikableSource = null,
+        SolutionContainerManagerComponent? managerSource = null,
+        SolutionContainerManagerComponent? managerTarget = null)
     {
-        var (source, target, user) = (args.Used, args.Target, args.User);
-        SolutionSpikerComponent? spikableSource = null;
-        var spikableTarget = entity.Comp;
-        SolutionContainerManagerComponent? managerSource = null;
-        SolutionContainerManagerComponent? managerTarget = null;
-
         if (!Resolve(source, ref spikableSource, ref managerSource, false)
             || !Resolve(target, ref spikableTarget, ref managerTarget, false)
             || !_solution.TryGetRefillableSolution((target, spikableTarget, managerTarget), out var targetSoln, out var targetSolution)
             || !_solution.TryGetSolution((source, managerSource), spikableSource.SourceSolution, out _, out var sourceSolution))
         {
-            return;
+            return false;
         }
 
         if (targetSolution.Volume == 0 && !spikableSource.IgnoreEmpty)
         {
             _popup.PopupClient(Loc.GetString(spikableSource.PopupEmpty, ("spiked-entity", target), ("spike-entity", source)), user, user);
-            return;
+            return false;
         }
 
         if (!_solution.ForceAddSolution(targetSoln.Value, sourceSolution))
-            return;
+            return false;
 
         _popup.PopupClient(Loc.GetString(spikableSource.Popup, ("spiked-entity", target), ("spike-entity", source)), user, user);
         sourceSolution.RemoveAllSolution();
-
         if (spikableSource.Delete)
-        {
             QueueDel(source);
-            args.Handled = true;
-        }
+
+        return true;
     }
 }
