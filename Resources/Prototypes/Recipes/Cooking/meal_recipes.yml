@@ -2142,7 +2142,7 @@
   id: RecipeGrilledCheeseSandwich
   name: grilled cheese sandwich recipe
   result: FoodBakedGrilledCheeseSandwich
-  time: 5
+  time: 10
   solids:
     FoodBreadPlainSlice: 2
     FoodCheeseSlice: 1
