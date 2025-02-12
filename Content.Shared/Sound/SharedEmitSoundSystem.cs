@@ -78,15 +78,24 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         }
     }
 
-    private static void GetBaseEmitState<T>(EntityUid uid, T component, ref ComponentGetState args) where T : BaseEmitSoundComponent
+    private static void GetBaseEmitState<T>(Entity<T> ent, ref ComponentGetState args) where T : BaseEmitSoundComponent
     {
-        args.State = new EmitSoundComponentState(component.Sound);
+        args.State = new EmitSoundComponentState(ent.Comp.Sound);
     }
 
-    private static void HandleBaseEmitState<T>(EntityUid uid, T component, ref ComponentHandleState args) where T : BaseEmitSoundComponent
+    private static void HandleBaseEmitState<T>(Entity<T> ent, ref ComponentHandleState args) where T : BaseEmitSoundComponent
     {
-        if (args.Current is EmitSoundComponentState state)
-            component.Sound = state.Sound;
+        if (args.Current is not EmitSoundComponentState state)
+            return;
+
+        ent.Comp.Sound = state.Sound switch
+        {
+            SoundPathSpecifier pathSpec => new SoundPathSpecifier(pathSpec.Path, pathSpec.Params),
+            SoundCollectionSpecifier collectionSpec => collectionSpec.Collection != null
+                ? new SoundCollectionSpecifier(collectionSpec.Collection, collectionSpec.Params)
+                : null,
+            _ => null,
+        };
     }
 
     private void HandleEmitSoundOnUIOpen(EntityUid uid, EmitSoundOnUIOpenComponent component, AfterActivatableUIOpenEvent args)
