@@ -84,10 +84,16 @@ public sealed class ContrabandSystem : EntitySystem
                     jobId = id.Comp.LocalizedJobTitle;
                 }
             }
+            //
 
             // for the jobs we compare the localized string in case you use an agent ID or custom job name that is not a prototype
-            if (departments.Intersect(ent.Comp.AllowedDepartments).Any()
-                || localizedJobs.Contains(jobId))
+            if (departments.Contains("CentralCommand"))
+            {
+                args.PushMarkup(Loc.GetString("contraband-examine-text-in-the-clear"));
+            }
+            else if (severity.ID != "Syndicate" &&
+                     departments.Intersect(ent.Comp.AllowedDepartments).Any()
+                     || localizedJobs.Contains(jobId))
             {
                 // you are allowed to use this!
                 args.PushMarkup(Loc.GetString("contraband-examine-text-in-the-clear"));
