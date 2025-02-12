@@ -36,10 +36,10 @@ public sealed class RepulseAttractSystem : EntitySystem
     public bool TryRepulseAttract(Entity<RepulseAttractComponent> ent, EntityUid user)
     {
         var position = _xForm.GetMapCoordinates(ent.Owner);
-        return TryRepulseAttract(ent.Comp.Attract, position, ent.Comp.Speed, ent.Comp.Range, ent.Comp.Whitelist, ent.Comp.Blacklist);
+        return TryRepulseAttract(ent.Comp.Attract, position, ent.Comp.Speed, ent.Comp.Range, ent.Comp.Whitelist);
     }
 
-    public bool TryRepulseAttract(bool attract, MapCoordinates position, float speed, float range, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
+    public bool TryRepulseAttract(bool attract, MapCoordinates position, float speed, float range, EntityWhitelist? whitelist = null)
     {
         var entsInRange = _lookup.GetEntitiesInRange(position, range, flags: LookupFlags.Dynamic | LookupFlags.Sundries);
         var epicenter = position.Position;
@@ -53,7 +53,7 @@ public sealed class RepulseAttractSystem : EntitySystem
                 || physics.CollisionLayer == (int)CollisionGroup.GhostImpassable) // don't affect ghosts
                 continue;
 
-            if (_whitelist.IsWhitelistFail(whitelist, target) || _whitelist.IsBlacklistPass(blacklist, target))
+            if (_whitelist.IsWhitelistFail(whitelist, target))
                 continue;
 
             var targetXForm = xformQuery.GetComponent(target);
