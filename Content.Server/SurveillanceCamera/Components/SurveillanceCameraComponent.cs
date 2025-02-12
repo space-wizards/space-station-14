@@ -35,11 +35,11 @@ public sealed partial class SurveillanceCameraComponent : Component
     public string CameraId { get; set;  } = "camera";
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("nameSet")]
+    [DataField]
     public bool NameSet { get; set; }
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("networkSet")]
+    [DataField]
     public bool NetworkSet { get; set; }
 
     // This has to be device network frequency prototypes.

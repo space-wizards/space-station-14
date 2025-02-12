@@ -12,7 +12,7 @@ public sealed partial class ThirstComponent : Component
 {
     // Base stuff
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("baseDecayRate")]
+    [DataField]
     [AutoNetworkedField]
     public float BaseDecayRate = 0.1f;
 
@@ -34,7 +34,7 @@ public sealed partial class ThirstComponent : Component
     /// <summary>
     /// The time when the hunger will update next.
     /// </summary>
-    [DataField("nextUpdateTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)), ViewVariables(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     [AutoPausedField]
     public TimeSpan NextUpdateTime;

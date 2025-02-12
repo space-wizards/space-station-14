@@ -8,7 +8,7 @@ namespace Content.Server.Power.Components;
 [RegisterComponent]
 public sealed partial class ApcComponent : BaseApcNetComponent
 {
-    [DataField("onReceiveMessageSound")]
+    [DataField]
     public SoundSpecifier OnReceiveMessageSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
     public ApcChargeState LastChargeState;

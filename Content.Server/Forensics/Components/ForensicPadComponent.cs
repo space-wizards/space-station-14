@@ -6,7 +6,7 @@ namespace Content.Server.Forensics
     [RegisterComponent]
     public sealed partial class ForensicPadComponent : Component
     {
-        [DataField("scanDelay")]
+        [DataField]
         public float ScanDelay = 3.0f;
 
         public bool Used = false;

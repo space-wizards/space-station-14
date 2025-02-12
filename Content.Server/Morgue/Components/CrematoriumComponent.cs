@@ -11,12 +11,12 @@ public sealed partial class CrematoriumComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public int CookTime = 5;
 
-    [DataField("cremateStartSound")]
+    [DataField]
     public SoundSpecifier CremateStartSound = new SoundPathSpecifier("/Audio/Items/Lighters/lighter1.ogg");
 
-    [DataField("crematingSound")]
+    [DataField]
     public SoundSpecifier CrematingSound = new SoundPathSpecifier("/Audio/Effects/burning.ogg");
 
-    [DataField("cremateFinishSound")]
+    [DataField]
     public SoundSpecifier CremateFinishSound = new SoundPathSpecifier("/Audio/Machines/ding.ogg");
 }

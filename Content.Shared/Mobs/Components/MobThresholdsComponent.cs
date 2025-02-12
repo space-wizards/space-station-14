@@ -14,10 +14,10 @@ public sealed partial class MobThresholdsComponent : Component
     [DataField("thresholds", required: true)]
     public SortedDictionary<FixedPoint2, MobState> Thresholds = new();
 
-    [DataField("triggersAlerts")]
+    [DataField]
     public bool TriggersAlerts = true;
 
-    [DataField("currentThresholdState")]
+    [DataField]
     public MobState CurrentThresholdState;
 
     /// <summary>
@@ -38,13 +38,13 @@ public sealed partial class MobThresholdsComponent : Component
     /// <summary>
     /// Whether or not this entity should display damage overlays (robots don't feel pain, black out etc.)
     /// </summary>
-    [DataField("showOverlays")]
+    [DataField]
     public bool ShowOverlays = true;
 
     /// <summary>
     /// Whether or not this entity can be revived out of a dead state.
     /// </summary>
-    [DataField("allowRevives")]
+    [DataField]
     public bool AllowRevives;
 }
 

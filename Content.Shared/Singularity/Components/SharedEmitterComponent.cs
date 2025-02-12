@@ -28,7 +28,7 @@ public sealed partial class EmitterComponent : Component
     /// <summary>
     /// The entity that is spawned when the emitter fires.
     /// </summary>
-    [DataField("boltType", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string BoltType = "EmitterBolt";
 
     [DataField("selectableTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
@@ -37,31 +37,31 @@ public sealed partial class EmitterComponent : Component
     /// <summary>
     /// The current amount of power being used.
     /// </summary>
-    [DataField("powerUseActive")]
+    [DataField]
     public int PowerUseActive = 600;
 
     /// <summary>
     /// The amount of shots that are fired in a single "burst"
     /// </summary>
-    [DataField("fireBurstSize")]
+    [DataField]
     public int FireBurstSize = 3;
 
     /// <summary>
     /// The time between each shot during a burst.
     /// </summary>
-    [DataField("fireInterval")]
+    [DataField]
     public TimeSpan FireInterval = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// The current minimum delay between bursts.
     /// </summary>
-    [DataField("fireBurstDelayMin")]
+    [DataField]
     public TimeSpan FireBurstDelayMin = TimeSpan.FromSeconds(4);
 
     /// <summary>
     /// The current maximum delay between bursts.
     /// </summary>
-    [DataField("fireBurstDelayMax")]
+    [DataField]
     public TimeSpan FireBurstDelayMax = TimeSpan.FromSeconds(10);
 
     /// <summary>
@@ -79,19 +79,19 @@ public sealed partial class EmitterComponent : Component
     /// <summary>
     /// Signal port that turns on the emitter.
     /// </summary>
-    [DataField("onPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>)))]
     public string OnPort = "On";
 
     /// <summary>
     /// Signal port that turns off the emitter.
     /// </summary>
-    [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>)))]
     public string OffPort = "Off";
 
     /// <summary>
     /// Signal port that toggles the emitter on or off.
     /// </summary>
-    [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>)))]
     public string TogglePort = "Toggle";
 
     /// <summary>

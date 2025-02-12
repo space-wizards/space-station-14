@@ -21,22 +21,22 @@ namespace Content.Client.Light.Components
         protected IEntityManager _entMan = default!;
         protected IRobustRandom _random = default!;
 
-        [DataField("id")] public string ID { get; set; } = string.Empty;
+        [DataField] public string ID { get; set; } = string.Empty;
 
         [DataField("property")]
         public virtual string Property { get; protected set; } = nameof(PointLightComponent.AnimatedRadius);
 
-        [DataField("isLooped")] public bool IsLooped { get; set; }
+        [DataField] public bool IsLooped { get; set; }
 
-        [DataField("enabled")] public bool Enabled { get; set; }
+        [DataField] public bool Enabled { get; set; }
 
-        [DataField("startValue")] public float StartValue { get; set; } = 0f;
+        [DataField] public float StartValue { get; set; } = 0f;
 
-        [DataField("endValue")] public float EndValue { get; set; } = 2f;
+        [DataField] public float EndValue { get; set; } = 2f;
 
-        [DataField("minDuration")] public float MinDuration { get; set; } = -1f;
+        [DataField] public float MinDuration { get; set; } = -1f;
 
-        [DataField("maxDuration")] public float MaxDuration { get; set; } = 2f;
+        [DataField] public float MaxDuration { get; set; } = 2f;
 
         [DataField("interpolate")] public AnimationInterpolationMode InterpolateMode { get; set; } = AnimationInterpolationMode.Linear;
 
@@ -172,7 +172,7 @@ namespace Content.Client.Light.Components
         /// Automatically reverse the animation when EndValue is reached. In this particular case, MaxTime specifies the
         /// time of the full animation, including the reverse interpolation.
         /// </summary>
-        [DataField("reverseWhenFinished")]
+        [DataField]
         public bool ReverseWhenFinished { get; set; }
 
         public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(

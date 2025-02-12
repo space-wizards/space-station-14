@@ -13,7 +13,7 @@ namespace Content.Shared.Light.Components;
 [NetworkedComponent, RegisterComponent, Access(typeof(SharedRgbLightControllerSystem))]
 public sealed partial class RgbLightControllerComponent : Component
 {
-    [DataField("cycleRate")]
+    [DataField]
     public float CycleRate { get; set; } = 0.1f;
 
     /// <summary>

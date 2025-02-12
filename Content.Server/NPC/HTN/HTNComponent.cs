@@ -16,7 +16,7 @@ public sealed partial class HTNComponent : NPCComponent
     /// <summary>
     /// Check any active services for our current plan. This is used to find new targets for example without changing our plan.
     /// </summary>
-    [DataField("checkServices")]
+    [DataField]
     public bool CheckServices = true;
 
     /// <summary>

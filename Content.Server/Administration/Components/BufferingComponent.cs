@@ -13,10 +13,10 @@ public sealed partial class BufferingComponent : Component
     public float MinimumTimeTilNextBuffer = 10.0f;
     [DataField("maxTimeTilNextBuffer")]
     public float MaximumTimeTilNextBuffer = 120.0f;
-    [DataField("timeTilNextBuffer")]
+    [DataField]
     public float TimeTilNextBuffer = 15.0f;
     [DataField("bufferingIcon")]
     public EntityUid? BufferingIcon = null;
-    [DataField("bufferingTimer")]
+    [DataField]
     public float BufferingTimer = 0.0f;
 }

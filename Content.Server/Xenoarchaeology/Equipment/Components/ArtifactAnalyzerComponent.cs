@@ -16,7 +16,7 @@ public sealed partial class ArtifactAnalyzerComponent : Component
     /// <summary>
     /// How long it takes to analyze an artifact
     /// </summary>
-    [DataField("analysisDuration", customTypeSerializer: typeof(TimespanSerializer))]
+    [DataField(customTypeSerializer: typeof(TimespanSerializer)))]
     public TimeSpan AnalysisDuration = TimeSpan.FromSeconds(30);
 
     /// <summary>
@@ -29,7 +29,7 @@ public sealed partial class ArtifactAnalyzerComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public bool ReadyToPrint = false;
 
-    [DataField("scanFinishedSound")]
+    [DataField]
     public SoundSpecifier ScanFinishedSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
 
     #region Analysis Data

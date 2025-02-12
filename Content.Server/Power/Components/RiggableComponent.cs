@@ -7,11 +7,11 @@ namespace Content.Server.Power.Components;
 public sealed partial class RiggableComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("isRigged")]
+    [DataField]
     public bool IsRigged;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("solution")]
+    [DataField]
     public string Solution = "battery";
 
     [ViewVariables(VVAccess.ReadWrite)]

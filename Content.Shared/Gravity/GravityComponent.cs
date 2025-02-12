@@ -8,7 +8,7 @@ namespace Content.Shared.Gravity
     [NetworkedComponent]
     public sealed partial class GravityComponent : Component
     {
-        [DataField("gravityShakeSound")]
+        [DataField]
         public SoundSpecifier GravityShakeSound { get; set; } = new SoundPathSpecifier("/Audio/Effects/alert.ogg");
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -25,14 +25,14 @@ namespace Content.Shared.Gravity
             }
         }
 
-        [DataField("enabled")]
+        [DataField]
         public bool Enabled;
 
         /// <summary>
         /// Inherent gravity ensures GravitySystem won't change Enabled according to the gravity generators attached to this entity.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("inherent")]
+        [DataField]
         public bool Inherent;
     }
 }

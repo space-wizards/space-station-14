@@ -11,7 +11,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 public sealed partial class RechargeBasicEntityAmmoComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("rechargeCooldown")]
+    [DataField]
     [AutoNetworkedField]
     public float RechargeCooldown = 1.5f;
 

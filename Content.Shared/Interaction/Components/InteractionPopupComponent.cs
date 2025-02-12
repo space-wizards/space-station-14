@@ -9,7 +9,7 @@ public sealed partial class InteractionPopupComponent : Component
     /// <summary>
     /// Time delay between interactions to avoid spam.
     /// </summary>
-    [DataField("interactDelay")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan InteractDelay = TimeSpan.FromSeconds(1.0);
 
@@ -59,7 +59,7 @@ public sealed partial class InteractionPopupComponent : Component
     /// 0.5 = 50% chance to play either success or failure popup and sound.
     /// 0   = always play "failure" popup and sound.
     /// </summary>
-    [DataField("successChance")]
+    [DataField]
     public float SuccessChance = 1.0f; // Always succeed, unless specified otherwise on the yaml prototype.
 
     /// <summary>
@@ -71,7 +71,7 @@ public sealed partial class InteractionPopupComponent : Component
     /// <summary>
     /// Will the sound effect be perceived by entities not involved in the interaction?
     /// </summary>
-    [DataField("soundPerceivedByOthers")]
+    [DataField]
     public bool SoundPerceivedByOthers = true;
 
     [ViewVariables(VVAccess.ReadWrite)]

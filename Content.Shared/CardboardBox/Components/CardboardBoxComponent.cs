@@ -21,7 +21,7 @@ public sealed partial class CardboardBoxComponent : Component
     /// The entity used for the box opening effect
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("effect")]
+    [DataField]
     public string Effect = "Exclamation";
 
     /// <summary>
@@ -35,26 +35,26 @@ public sealed partial class CardboardBoxComponent : Component
 	/// Whether to prevent the box from making the sound and effect
 	/// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-	[DataField("quiet")]
+	[DataField]
 	public bool Quiet = false;
 
     /// <summary>
     /// How far should the box opening effect go?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("distance")]
+    [DataField]
     public float Distance = 6f;
 
     /// <summary>
     /// Time at which the sound effect can next be played.
     /// </summary>
-    [DataField("effectCooldown", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)))]
     public TimeSpan EffectCooldown;
 
     /// <summary>
     /// Time between sound effects. Prevents effect spam
     /// </summary>
-    [DataField("cooldownDuration")]
+    [DataField]
     public TimeSpan CooldownDuration = TimeSpan.FromSeconds(5f);
 }
 

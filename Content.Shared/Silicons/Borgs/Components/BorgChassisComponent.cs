@@ -25,7 +25,7 @@ public sealed partial class BorgChassisComponent : Component
     /// <summary>
     /// The container ID for the brain
     /// </summary>
-    [DataField("brainContainerId")]
+    [DataField]
     public string BrainContainerId = "borg_brain";
 
     [ViewVariables(VVAccess.ReadWrite)]
@@ -44,13 +44,13 @@ public sealed partial class BorgChassisComponent : Component
     /// <summary>
     /// How many modules can be installed in this borg
     /// </summary>
-    [DataField("maxModules"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public int MaxModules = 3;
 
     /// <summary>
     /// The ID for the module container
     /// </summary>
-    [DataField("moduleContainerId")]
+    [DataField]
     public string ModuleContainerId = "borg_module";
 
     [ViewVariables(VVAccess.ReadWrite)]
@@ -66,10 +66,10 @@ public sealed partial class BorgChassisComponent : Component
     public EntityUid? SelectedModule;
 
     #region Visuals
-    [DataField("hasMindState")]
+    [DataField]
     public string HasMindState = string.Empty;
 
-    [DataField("noMindState")]
+    [DataField]
     public string NoMindState = string.Empty;
     #endregion
 

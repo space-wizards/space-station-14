@@ -12,9 +12,9 @@ public sealed partial class RandomMetadataComponent : Component
     [DataField("nameSegments")]
     public List<string>? NameSegments;
 
-    [DataField("nameSeparator")]
+    [DataField]
     public string NameSeparator = " ";
 
-    [DataField("descriptionSeparator")]
+    [DataField]
     public string DescriptionSeparator = " ";
 }

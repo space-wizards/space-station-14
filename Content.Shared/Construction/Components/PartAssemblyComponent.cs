@@ -25,7 +25,7 @@ public sealed partial class PartAssemblyComponent : Component
     /// <summary>
     /// The container where the parts are stored
     /// </summary>
-    [DataField("containerId")]
+    [DataField]
     public string ContainerId = "part-container";
 
     /// <summary>

@@ -10,6 +10,6 @@ public sealed partial class EyeProtectionComponent : Component
     /// How many seconds to subtract from the status effect. If it's greater than the source
     /// of blindness, do not blind.
     /// </summary>
-    [DataField("protectionTime")]
+    [DataField]
     public TimeSpan ProtectionTime = TimeSpan.FromSeconds(10);
 }

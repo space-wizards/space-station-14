@@ -20,7 +20,7 @@ public sealed partial class WieldableComponent : Component
     ///     Number of free hands required (excluding the item itself) required
     ///     to wield it
     /// </summary>
-    [DataField("freeHandsRequired")]
+    [DataField]
     public int FreeHandsRequired = 1;
 
     [AutoNetworkedField, DataField("wielded")]

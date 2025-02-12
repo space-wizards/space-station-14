@@ -8,24 +8,24 @@ namespace Content.Server.PDA.Ringer
         [DataField("ringtone")]
         public Note[] Ringtone = new Note[SharedRingerSystem.RingtoneLength];
 
-        [DataField("timeElapsed")]
+        [DataField]
         public float TimeElapsed = 0;
 
         /// <summary>
         /// Keeps track of how many notes have elapsed if the ringer component is playing.
         /// </summary>
-        [DataField("noteCount")]
+        [DataField]
         public int NoteCount = 0;
 
         /// <summary>
         /// How far the sound projects in metres.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("range")]
+        [DataField]
         public float Range = 3f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("volume")]
+        [DataField]
         public float Volume = -4f;
     }
 

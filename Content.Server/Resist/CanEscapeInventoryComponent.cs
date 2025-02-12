@@ -8,7 +8,7 @@ public sealed partial class CanEscapeInventoryComponent : Component
     /// <summary>
     /// Base doafter length for uncontested breakouts.
     /// </summary>
-    [DataField("baseResistTime")]
+    [DataField]
     public float BaseResistTime = 5f;
 
     public bool IsEscaping => DoAfter != null;

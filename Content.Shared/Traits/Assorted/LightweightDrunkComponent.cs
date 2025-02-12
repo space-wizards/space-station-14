@@ -10,6 +10,6 @@ namespace Content.Shared.Traits.Assorted;
 [Access(typeof(SharedDrunkSystem))]
 public sealed partial class LightweightDrunkComponent : Component
 {
-    [DataField("boozeStrengthMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float BoozeStrengthMultiplier = 4f;
 }

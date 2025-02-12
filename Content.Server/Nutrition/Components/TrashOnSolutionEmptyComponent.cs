@@ -10,7 +10,7 @@ namespace Content.Server.Nutrition.Components
         /// <summary>
         /// The name of the solution of which to check emptiness
         /// </summary>
-        [DataField("solution")]
+        [DataField]
         public string Solution { get; set; } = string.Empty;
     }
 }

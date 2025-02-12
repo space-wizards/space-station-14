@@ -14,12 +14,12 @@ public sealed partial class BlobFloorPlanBuilderComponent : Component
     /// <summary>
     ///     The probability that placing a floor tile will add up to three-four neighboring tiles as well.
     /// </summary>
-    [DataField("blobDrawProb")] public float BlobDrawProb;
+    [DataField] public float BlobDrawProb;
 
     /// <summary>
     ///     The maximum radius for the structure.
     /// </summary>
-    [DataField("radius", required: true)] public float Radius;
+    [DataField(required: true)] public float Radius;
 
     /// <summary>
     ///     The tiles to be used for the floor plan.
@@ -31,7 +31,7 @@ public sealed partial class BlobFloorPlanBuilderComponent : Component
     /// <summary>
     ///     The number of floor tiles to place when drawing the asteroid layout.
     /// </summary>
-    [DataField("floorPlacements", required: true)]
+    [DataField(required: true)]
     public int FloorPlacements { get; private set; }
 }
 

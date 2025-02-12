@@ -13,7 +13,7 @@ public sealed partial class RotatingLightComponent : Component
     /// <summary>
     /// Speed to rotate at, in degrees per second
     /// </summary>
-    [DataField("speed")]
+    [DataField]
     public float Speed = 90f;
 
     [ViewVariables, AutoNetworkedField]

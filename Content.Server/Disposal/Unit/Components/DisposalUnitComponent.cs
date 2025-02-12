@@ -8,6 +8,6 @@ namespace Content.Server.Disposal.Unit.Components;
 [RegisterComponent]
 public sealed partial class DisposalUnitComponent : SharedDisposalUnitComponent
 {
-    [DataField("air")]
+    [DataField]
     public GasMixture Air = new(Atmospherics.CellVolume);
 }

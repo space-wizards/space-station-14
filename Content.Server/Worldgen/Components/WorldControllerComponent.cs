@@ -14,7 +14,7 @@ public sealed partial class WorldControllerComponent : Component
     /// <summary>
     ///     The prototype to use for chunks on this world map.
     /// </summary>
-    [DataField("chunkProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string ChunkProto = "WorldChunk";
 
     /// <summary>

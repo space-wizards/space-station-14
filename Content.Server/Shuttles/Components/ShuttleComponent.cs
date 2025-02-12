@@ -59,10 +59,10 @@ namespace Content.Server.Shuttles.Components
         /// <summary>
         /// Damping applied to the shuttle's physics component when not in FTL.
         /// </summary>
-        [DataField("linearDamping"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public float LinearDamping = 0.05f;
 
-        [DataField("angularDamping"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public float AngularDamping = 0.05f;
     }
 }

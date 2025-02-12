@@ -33,7 +33,7 @@ public sealed partial class HungerComponent : Component
     /// The base amount at which <see cref="LastAuthoritativeHungerValue"/> decays.
     /// </summary>
     /// <remarks>Any time this is modified, <see cref="HungerSystem.SetAuthoritativeHungerValue"/> should be called.</remarks>
-    [DataField("baseDecayRate"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float BaseDecayRate = 0.01666666666f;
 
     /// <summary>
@@ -41,7 +41,7 @@ public sealed partial class HungerComponent : Component
     /// Affected by <seealso cref="CurrentThreshold"/>
     /// </summary>
     /// <remarks>Any time this is modified, <see cref="HungerSystem.SetAuthoritativeHungerValue"/> should be called.</remarks>
-    [DataField("actualDecayRate"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     [AutoNetworkedField]
     public float ActualDecayRate;
 
@@ -49,7 +49,7 @@ public sealed partial class HungerComponent : Component
     /// The last threshold this entity was at.
     /// Stored in order to prevent recalculating
     /// </summary>
-    [DataField("lastThreshold"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     [AutoNetworkedField]
     public HungerThreshold LastThreshold;
 
@@ -57,7 +57,7 @@ public sealed partial class HungerComponent : Component
     /// The current hunger threshold the entity is at
     /// </summary>
     /// <remarks>Any time this is modified, <see cref="HungerSystem.SetAuthoritativeHungerValue"/> should be called.</remarks>
-    [DataField("currentThreshold"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     [AutoNetworkedField]
     public HungerThreshold CurrentThreshold;
 
@@ -107,7 +107,7 @@ public sealed partial class HungerComponent : Component
     /// <summary>
     /// The amount of slowdown applied when an entity is starving
     /// </summary>
-    [DataField("starvingSlowdownModifier"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     [AutoNetworkedField]
     public float StarvingSlowdownModifier = 0.75f;
 

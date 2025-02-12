@@ -8,8 +8,8 @@ namespace Content.Server.Gravity
     [Access(typeof(GravityGeneratorSystem))]
     public sealed partial class GravityGeneratorComponent : SharedGravityGeneratorComponent
     {
-        [DataField("lightRadiusMin")] public float LightRadiusMin { get; set; }
-        [DataField("lightRadiusMax")] public float LightRadiusMax { get; set; }
+        [DataField] public float LightRadiusMin { get; set; }
+        [DataField] public float LightRadiusMax { get; set; }
 
         /// <summary>
         /// Is the gravity generator currently "producing" gravity?

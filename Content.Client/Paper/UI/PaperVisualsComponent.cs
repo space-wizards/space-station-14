@@ -15,26 +15,26 @@ public sealed partial class PaperVisualsComponent : Component
     ///     An optional patch to configure tiling stretching of the background. Used to set
     ///     the PatchMargin in a <code>StyleBoxTexture</code>
     /// </summary>
-    [DataField("backgroundPatchMargin")]
+    [DataField]
     public Box2 BackgroundPatchMargin = default;
 
     /// <summary>
     ///     Modulate the background image by this color. Can be used to add colorful
     ///     variants of images, without having to create new textures.
     /// </summary>
-    [DataField("backgroundModulate")]
+    [DataField]
     public Color BackgroundModulate = Color.White;
 
     /// <summary>
     ///     Should the background image tile, or be streched? Sets <code>StyleBoxTexture.StrechMode</code>
     /// </summary>
-    [DataField("backgroundImageTile")]
+    [DataField]
     public bool BackgroundImageTile = false;
 
     /// <summary>
     ///     An additional scale to apply to the background image
     /// </summary>
-    [DataField("backgroundScale")]
+    [DataField]
     public Vector2 BackgroundScale = Vector2.One;
 
     /// <summary>
@@ -46,13 +46,13 @@ public sealed partial class PaperVisualsComponent : Component
     /// <summary>
     ///     Modulate the header image by this color
     /// </summary>
-    [DataField("headerImageModulate")]
+    [DataField]
     public Color HeaderImageModulate = Color.White;
 
     /// <summary>
     ///     Any additional margin to add around the header
     /// </summary>
-    [DataField("headerMargin")]
+    [DataField]
     public Box2 HeaderMargin = default;
 
     /// <summary>
@@ -67,13 +67,13 @@ public sealed partial class PaperVisualsComponent : Component
     /// <summary>
     ///     Modulate the content image by this color
     /// </summary>
-    [DataField("contentImageModulate")]
+    [DataField]
     public Color ContentImageModulate = Color.White;
 
     /// <summary>
     ///     An additional margin around the content (including header)
     /// </summary>
-    [DataField("contentMargin")]
+    [DataField]
     public Box2 ContentMargin = default;
 
     /// <summary>
@@ -81,13 +81,13 @@ public sealed partial class PaperVisualsComponent : Component
     ///     content image will be vertically tiled after this many lines
     ///     of text.
     /// </summary>
-    [DataField("contentImageNumLines")]
+    [DataField]
     public int ContentImageNumLines = 1;
 
     /// <summary>
     ///     Modulate the style's font by this color
     /// </summary>
-    [DataField("fontAccentColor")]
+    [DataField]
     public Color FontAccentColor = new Color(223, 223, 213);
 
     /// <summary>

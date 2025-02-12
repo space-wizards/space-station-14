@@ -26,10 +26,10 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         private float _transferRate = 50;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("maxTransferRate")]
+        [DataField]
         public float MaxTransferRate = Atmospherics.MaxTransferRate;
 
-        [DataField("maxPressure")]
+        [DataField]
         [GuidebookData]
         public float MaxPressure { get; set; } = GasVolumePumpComponent.DefaultHigherThreshold;
 

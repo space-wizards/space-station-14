@@ -10,7 +10,7 @@ public sealed partial class GeneratingAnomalyGeneratorComponent : Component
     /// <summary>
     /// When the generating period will end.
     /// </summary>
-    [DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)))]
     [AutoPausedField]
     public TimeSpan EndTime = TimeSpan.Zero;
 

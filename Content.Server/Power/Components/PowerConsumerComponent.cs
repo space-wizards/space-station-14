@@ -12,11 +12,11 @@ namespace Content.Server.Power.Components
         /// <summary>
         ///     How much power this needs to be fully powered.
         /// </summary>
-        [DataField("drawRate")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public float DrawRate { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
 
-        [DataField("showInMonitor")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ShowInMonitor { get; set; } = true;
 

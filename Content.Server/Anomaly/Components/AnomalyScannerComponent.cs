@@ -19,7 +19,7 @@ public sealed partial class AnomalyScannerComponent : Component
     /// <summary>
     /// How long the scan takes
     /// </summary>
-    [DataField("scanDoAfterDuration")]
+    [DataField]
     public float ScanDoAfterDuration = 5;
 
     /// <summary>

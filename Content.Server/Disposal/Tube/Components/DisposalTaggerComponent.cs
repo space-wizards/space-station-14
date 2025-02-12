@@ -13,10 +13,10 @@ namespace Content.Server.Disposal.Tube.Components
     public sealed partial class DisposalTaggerComponent : DisposalTransitComponent
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("tag")]
+        [DataField]
         public string Tag = "";
 
-        [DataField("clickSound")]
+        [DataField]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
     }
 }

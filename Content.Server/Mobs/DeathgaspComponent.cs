@@ -13,6 +13,6 @@ public sealed partial class DeathgaspComponent : Component
     /// <summary>
     ///     The emote prototype to use.
     /// </summary>
-    [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EmotePrototype>))]
+    [DataField(customTypeSerializer:typeof(PrototypeIdSerializer<EmotePrototype>)))]
     public string Prototype = "DefaultDeathgasp";
 }

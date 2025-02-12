@@ -14,6 +14,6 @@ public sealed partial class LocalityLoaderComponent : Component
     ///     The maximum distance an entity can be from the loader for it to not load.
     ///     Once a loader is closer than this, the event is fired and this component removed.
     /// </summary>
-    [DataField("loadingDistance")] public int LoadingDistance = 32;
+    [DataField] public int LoadingDistance = 32;
 }
 

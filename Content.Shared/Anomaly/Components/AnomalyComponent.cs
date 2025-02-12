@@ -64,7 +64,7 @@ public sealed partial class AnomalyComponent : Component
     /// <summary>
     /// The amount of health lost when the stability is below the <see cref="DecayThreshold"/>
     /// </summary>
-    [DataField("healthChangePerSecond"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float HealthChangePerSecond = -0.01f;
     #endregion
 
@@ -73,13 +73,13 @@ public sealed partial class AnomalyComponent : Component
     /// If the <see cref="Stability"/> of the anomaly exceeds this value, it
     /// becomes unstable and starts increasing in <see cref="Severity"/>.
     /// </summary>
-    [DataField("growthThreshold"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float GrowthThreshold = 0.5f;
 
     /// <summary>
     /// A coefficient used for calculating the increase in severity when above the GrowthThreshold
     /// </summary>
-    [DataField("severityGrowthCoefficient"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float SeverityGrowthCoefficient = 0.07f;
     #endregion
 
@@ -244,7 +244,7 @@ public sealed partial class AnomalyComponent : Component
     /// How long it takes to go from the bottom of the animation to the top.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("animationTime")]
+    [DataField]
     public float AnimationTime = 2f;
 
     /// <summary>

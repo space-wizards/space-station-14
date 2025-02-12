@@ -27,7 +27,7 @@ namespace Content.Shared.SubFloor
         /// <remarks>
         ///     Useful for entities like vents, which are only partially hidden. Anchor attempts will still be blocked.
         /// </remarks>
-        [DataField("blockInteractions")]
+        [DataField]
         public bool BlockInteractions { get; set; } = true;
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Content.Shared.SubFloor
         /// <remarks>
         /// Useful for cables and piping, gives maint it's distinct noise.
         /// </remarks>
-        [DataField("blockAmbience")]
+        [DataField]
         public bool BlockAmbience { get; set; } = true;
 
         /// <summary>

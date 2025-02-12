@@ -7,11 +7,11 @@ namespace Content.Server.Damage.Components;
 [RegisterComponent]
 public sealed partial class DamageOnHitComponent : Component
 {
-    [DataField("ignoreResistances")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public bool IgnoreResistances = true;
 
-    [DataField("damage", required: true)]
+    [DataField(required: true)]
     [ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier Damage = default!;
 }

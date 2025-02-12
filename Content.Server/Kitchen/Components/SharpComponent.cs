@@ -10,6 +10,6 @@ public sealed partial class SharpComponent : Component
     // TODO just make this a tool type.
     public HashSet<EntityUid> Butchering = new();
 
-    [DataField("butcherDelayModifier")]
+    [DataField]
     public float ButcherDelayModifier = 1.0f;
 }

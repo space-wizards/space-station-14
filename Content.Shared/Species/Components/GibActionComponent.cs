@@ -10,7 +10,7 @@ public sealed partial class GibActionComponent : Component
     /// <summary>
     /// The action to use.
     /// </summary>
-    [DataField("actionPrototype", required: true)]
+    [DataField(required: true)]
     public EntProtoId ActionPrototype;
 
     [DataField, AutoNetworkedField] 
@@ -25,6 +25,6 @@ public sealed partial class GibActionComponent : Component
     /// <summary>
     /// The text that appears when attempting to split.
     /// </summary>
-    [DataField("popupText")]
+    [DataField]
     public string PopupText = "diona-gib-action-use";
 }

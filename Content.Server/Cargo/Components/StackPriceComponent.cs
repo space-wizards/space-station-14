@@ -9,6 +9,6 @@ public sealed partial class StackPriceComponent : Component
     /// <summary>
     /// The price of the object this component is on, per unit.
     /// </summary>
-    [DataField("price", required: true)]
+    [DataField(required: true)]
     public double Price;
 }

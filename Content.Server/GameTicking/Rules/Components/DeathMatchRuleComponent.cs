@@ -16,13 +16,13 @@ public sealed partial class DeathMatchRuleComponent : Component
     /// <summary>
     /// The number of points a player has to get to win.
     /// </summary>
-    [DataField("killCap"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public FixedPoint2 KillCap = 31;
 
     /// <summary>
     /// How long until the round restarts
     /// </summary>
-    [DataField("restartDelay"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public TimeSpan RestartDelay = TimeSpan.FromSeconds(10f);
 
     /// <summary>
@@ -41,6 +41,6 @@ public sealed partial class DeathMatchRuleComponent : Component
     /// <summary>
     /// The gear all players spawn with.
     /// </summary>
-    [DataField("gear", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>)), ViewVariables(VVAccess.ReadWrite)), ViewVariables(customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public string Gear = "DeathMatchGear";
 }

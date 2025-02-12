@@ -25,11 +25,11 @@ public sealed partial class ClothingComponent : Component
     public string? MappedLayer;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("quickEquip")]
+    [DataField]
     public bool QuickEquip = true;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("slots", required: true)]
+    [DataField(required: true)]
     [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)]
     public SlotFlags Slots = SlotFlags.NONE;
 

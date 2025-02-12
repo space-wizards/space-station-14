@@ -27,12 +27,12 @@ public sealed partial class BonusMeleeDamageComponent : Component
     /// <summary>
     /// A flat damage increase added to <see cref="GetHeavyDamageModifierEvent"/>
     /// </summary>
-    [DataField("heavyDamageFlatModifier"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public FixedPoint2 HeavyDamageFlatModifier;
 
     /// <summary>
     /// A value multiplier by the value of <see cref="GetHeavyDamageModifierEvent"/>
     /// </summary>
-    [DataField("heavyDamageMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float HeavyDamageMultiplier = 1;
 }

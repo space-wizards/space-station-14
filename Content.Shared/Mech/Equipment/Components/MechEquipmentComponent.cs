@@ -13,7 +13,7 @@ public sealed partial class MechEquipmentComponent : Component
     /// <summary>
     /// How long does it take to install this piece of equipment
     /// </summary>
-    [DataField("installDuration")] public float InstallDuration = 5;
+    [DataField] public float InstallDuration = 5;
 
     /// <summary>
     /// The mech that the equipment is inside of.

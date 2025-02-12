@@ -14,7 +14,7 @@ public sealed partial class LightBulbComponent : Component
     /// <summary>
     /// The color of the lightbulb and the light it produces.
     /// </summary>
-    [DataField("color")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public Color Color = Color.White;
 
@@ -34,42 +34,42 @@ public sealed partial class LightBulbComponent : Component
     /// <summary>
     /// The temperature the air around the lightbulb is exposed to when the lightbulb burns out.
     /// </summary>
-    [DataField("BurningTemperature")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public int BurningTemperature = 1400;
 
     /// <summary>
     /// Relates to how bright the light produced by the lightbulb is.
     /// </summary>
-    [DataField("lightEnergy")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float LightEnergy = 0.8f;
 
     /// <summary>
     /// The maximum radius of the point light source this light produces.
     /// </summary>
-    [DataField("lightRadius")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float LightRadius = 10;
 
     /// <summary>
     /// Relates to the falloff constant of the light produced by the lightbulb.
     /// </summary>
-    [DataField("lightSoftness")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float LightSoftness = 1;
 
     /// <summary>
     /// The amount of power used by the lightbulb when it's active.
     /// </summary>
-    [DataField("PowerUse")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public int PowerUse = 60;
 
     /// <summary>
     /// The sound produced when the lightbulb breaks.
     /// </summary>
-    [DataField("breakSound")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier BreakSound = new SoundCollectionSpecifier("GlassBreak", AudioParams.Default.WithVolume(-6f));
 
@@ -78,21 +78,21 @@ public sealed partial class LightBulbComponent : Component
     /// <summary>
     /// The sprite state used when the lightbulb is intact.
     /// </summary>
-    [DataField("normalSpriteState")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public string NormalSpriteState = "normal";
 
     /// <summary>
     /// The sprite state used when the lightbulb is broken.
     /// </summary>
-    [DataField("brokenSpriteState")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public string BrokenSpriteState = "broken";
 
     /// <summary>
     /// The sprite state used when the lightbulb is burned.
     /// </summary>
-    [DataField("burnedSpriteState")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public string BurnedSpriteState = "burned";
 

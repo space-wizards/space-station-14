@@ -9,6 +9,6 @@ public sealed partial class ChargeBatteryArtifactComponent : Component
     /// <summary>
     /// The radius of entities that will be affected
     /// </summary>
-    [DataField("radius")]
+    [DataField]
     public float Radius = 15f;
 }

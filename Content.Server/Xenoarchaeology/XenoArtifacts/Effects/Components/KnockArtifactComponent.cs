@@ -9,6 +9,6 @@ public sealed partial class KnockArtifactComponent : Component
     /// <summary>
     /// The range of the spell
     /// </summary>
-    [DataField("knockRange")]
+    [DataField]
     public float KnockRange = 4f;
 }

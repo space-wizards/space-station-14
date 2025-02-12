@@ -6,10 +6,10 @@ namespace Content.Server.Damage.Components;
 [RegisterComponent]
 public sealed partial class IgniteOnHeatDamageComponent : Component
 {
-    [DataField("fireStacks")]
+    [DataField]
     public float FireStacks = 1f;
 
     // The minimum amount of damage taken to apply fire stacks
-    [DataField("threshold")]
+    [DataField]
     public FixedPoint2 Threshold = 15;
 }

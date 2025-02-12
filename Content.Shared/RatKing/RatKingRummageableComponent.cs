@@ -16,21 +16,21 @@ public sealed partial class RatKingRummageableComponent : Component
     /// <summary>
     /// Whether or not this entity has been rummaged through already.
     /// </summary>
-    [DataField("looted"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     [AutoNetworkedField]
     public bool Looted;
 
     /// <summary>
     /// How long it takes to rummage through a rummageable container.
     /// </summary>
-    [DataField("rummageDuration"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     [AutoNetworkedField]
     public float RummageDuration = 3f;
 
     /// <summary>
     /// A weighted random entity prototype containing the different loot that rummaging can provide.
     /// </summary>
-    [DataField("rummageLoot", customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomEntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomEntityPrototype>)), ViewVariables(VVAccess.ReadWrite)), ViewVariables(customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomEntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public string RummageLoot = "RatKingLoot";
 

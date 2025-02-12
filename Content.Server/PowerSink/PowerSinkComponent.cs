@@ -27,14 +27,14 @@ namespace Content.Server.PowerSink
         /// <summary>
         /// The highest sound warning threshold that has been hit (plays sfx occasionally as explosion nears)
         /// </summary>
-        [DataField("highestWarningSoundThreshold")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public float HighestWarningSoundThreshold = 0f;
 
-        [DataField("chargeFireSound")]
+        [DataField]
         public SoundSpecifier ChargeFireSound = new SoundPathSpecifier("/Audio/Effects/PowerSink/charge_fire.ogg");
 
-        [DataField("electricSound")] public SoundSpecifier ElectricSound =
+        [DataField] public SoundSpecifier ElectricSound =
             new SoundPathSpecifier("/Audio/Effects/PowerSink/electric.ogg")
             {
                 Params = AudioParams.Default

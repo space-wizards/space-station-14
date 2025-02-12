@@ -56,7 +56,7 @@ namespace Content.Server.Chemistry.Components
         [DataField]
         public List<ItemSlot> StorageSlots = new List<ItemSlot>();
 
-        [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
         [ViewVariables(VVAccess.ReadWrite)]

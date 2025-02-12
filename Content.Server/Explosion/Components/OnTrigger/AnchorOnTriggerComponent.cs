@@ -8,6 +8,6 @@ namespace Content.Server.Explosion.Components;
 [RegisterComponent]
 public sealed partial class AnchorOnTriggerComponent : Component
 {
-    [DataField("removeOnTrigger")]
+    [DataField]
     public bool RemoveOnTrigger = true;
 }

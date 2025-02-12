@@ -42,7 +42,7 @@ namespace Content.Server.Power.Components
         ///     When true, causes this to never appear powered.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("powerDisabled")]
+        [DataField]
         public bool PowerDisabled {
             get => !NetworkLoad.Enabled;
             set => NetworkLoad.Enabled = !value;

@@ -19,6 +19,6 @@ public sealed partial class RingerUplinkComponent : Component
     /// <summary>
     /// Whether to show the toggle uplink button in pda settings.
     /// </summary>
-    [DataField("unlocked"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public bool Unlocked;
 }

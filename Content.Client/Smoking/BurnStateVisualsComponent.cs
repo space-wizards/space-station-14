@@ -3,11 +3,11 @@ namespace Content.Client.Smoking;
 [RegisterComponent]
 public sealed partial class BurnStateVisualsComponent : Component
 {
-    [DataField("burntIcon")]
+    [DataField]
     public string BurntIcon = "burnt-icon";
-    [DataField("litIcon")]
+    [DataField]
     public string LitIcon = "lit-icon";
-    [DataField("unlitIcon")]
+    [DataField]
     public string UnlitIcon = "icon";
 }
 

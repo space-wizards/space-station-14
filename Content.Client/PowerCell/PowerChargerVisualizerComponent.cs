@@ -9,14 +9,14 @@ public sealed partial class PowerChargerVisualsComponent : Component
     /// <summary>
     /// The base sprite state used if the power cell charger does not contain a power cell.
     /// </summary>
-    [DataField("emptyState")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public string EmptyState = "empty";
 
     /// <summary>
     /// The base sprite state used if the power cell charger contains a power cell.
     /// </summary>
-    [DataField("occupiedState")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public string OccupiedState = "full";
 

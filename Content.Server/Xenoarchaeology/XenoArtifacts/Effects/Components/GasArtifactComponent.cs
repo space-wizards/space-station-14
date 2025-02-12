@@ -51,13 +51,13 @@ public sealed partial class GasArtifactComponent : Component
     ///     Artifact will stop spawn gas.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("maxExternalPressure")]
+    [DataField]
     public float MaxExternalPressure = Atmospherics.GasMinerDefaultMaxExternalPressure;
 
     /// <summary>
     ///     Moles of gas to spawn each time when artifact activated.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("spawnAmount")]
+    [DataField]
     public float SpawnAmount = Atmospherics.MolesCellStandard * 3;
 }

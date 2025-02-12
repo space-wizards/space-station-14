@@ -10,19 +10,19 @@ public sealed partial class MassHallucinationsRuleComponent : Component
     /// <summary>
     /// The maximum time between incidents in seconds
     /// </summary>
-    [DataField("maxTimeBetweenIncidents", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite), ViewVariables(required: true), ViewVariables(VVAccess.ReadWrite)]
     public float MaxTimeBetweenIncidents;
 
     /// <summary>
     /// The minimum time between incidents in seconds
     /// </summary>
-    [DataField("minTimeBetweenIncidents", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite), ViewVariables(required: true), ViewVariables(VVAccess.ReadWrite)]
     public float MinTimeBetweenIncidents;
 
-    [DataField("maxSoundDistance", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite), ViewVariables(required: true), ViewVariables(VVAccess.ReadWrite)]
     public float MaxSoundDistance;
 
-    [DataField("sounds", required: true)]
+    [DataField(required: true)]
     public SoundSpecifier Sounds = default!;
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]

@@ -14,7 +14,7 @@ public sealed partial class SolarFlareRuleComponent : Component
     /// <summary>
     ///     If true, only headsets affected, but e.g. handheld radio will still work
     /// </summary>
-    [DataField("onlyJamHeadsets")]
+    [DataField]
     public bool OnlyJamHeadsets;
 
     /// <summary>
@@ -38,18 +38,18 @@ public sealed partial class SolarFlareRuleComponent : Component
     /// <remarks>
     ///     Channels are not removed from it, so its possible to roll the same channel multiple times.
     /// </remarks>
-    [DataField("extraCount")]
+    [DataField]
     public uint ExtraCount;
 
     /// <summary>
     ///     Chance light bulb breaks per second during event
     /// </summary>
-    [DataField("lightBreakChancePerSecond")]
+    [DataField]
     public float LightBreakChancePerSecond;
 
     /// <summary>
     ///     Chance door toggles per second during event
     /// </summary>
-    [DataField("doorToggleChancePerSecond")]
+    [DataField]
     public float DoorToggleChancePerSecond;
 }

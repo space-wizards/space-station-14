@@ -15,10 +15,10 @@ namespace Content.Server.Light.Components
     [RegisterComponent, Access(typeof(PoweredLightSystem))]
     public sealed partial class PoweredLightComponent : Component
     {
-        [DataField("burnHandSound")]
+        [DataField]
         public SoundSpecifier BurnHandSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 
-        [DataField("turnOnSound")]
+        [DataField]
         public SoundSpecifier TurnOnSound = new SoundPathSpecifier("/Audio/Machines/light_tube_on.ogg");
 
         [DataField("hasLampOnSpawn", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
@@ -27,16 +27,16 @@ namespace Content.Server.Light.Components
         [DataField("bulb")]
         public LightBulbType BulbType;
 
-        [DataField("on")]
+        [DataField]
         public bool On = true;
 
-        [DataField("ignoreGhostsBoo")]
+        [DataField]
         public bool IgnoreGhostsBoo;
 
-        [DataField("ghostBlinkingTime")]
+        [DataField]
         public TimeSpan GhostBlinkingTime = TimeSpan.FromSeconds(10);
 
-        [DataField("ghostBlinkingCooldown")]
+        [DataField]
         public TimeSpan GhostBlinkingCooldown = TimeSpan.FromSeconds(60);
 
         [ViewVariables]
@@ -50,31 +50,31 @@ namespace Content.Server.Light.Components
         [ViewVariables]
         public TimeSpan? LastGhostBlink;
 
-        [DataField("onPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>)))]
         public string OnPort = "On";
 
-        [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>)))]
         public string OffPort = "Off";
 
-        [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>)))]
         public string TogglePort = "Toggle";
 
         /// <summary>
         /// How long it takes to eject a bulb from this
         /// </summary>
-        [DataField("ejectBulbDelay")]
+        [DataField]
         public float EjectBulbDelay = 2;
 
         /// <summary>
         /// Shock damage done to a mob that hits the light with an unarmed attack
         /// </summary>
-        [DataField("unarmedHitShock")]
+        [DataField]
         public int UnarmedHitShock = 20;
 
         /// <summary>
         /// Stun duration applied to a mob that hits the light with an unarmed attack
         /// </summary>
-        [DataField("unarmedHitStun")]
+        [DataField]
         public TimeSpan UnarmedHitStun = TimeSpan.FromSeconds(5);
     }
 }

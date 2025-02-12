@@ -33,25 +33,25 @@ namespace Content.Server.Atmos.Components
         public EntityUid? ConnectStream;
         public EntityUid? DisconnectStream;
 
-        [DataField("air"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public GasMixture Air { get; set; } = new();
 
         /// <summary>
         ///     Pressure at which tank should be considered 'low' such as for internals.
         /// </summary>
-        [DataField("tankLowPressure"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public float TankLowPressure = DefaultLowPressure;
 
         /// <summary>
         ///     Distributed pressure.
         /// </summary>
-        [DataField("outputPressure"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public float OutputPressure = DefaultOutputPressure;
 
         /// <summary>
         ///     The maximum allowed output pressure.
         /// </summary>
-        [DataField("maxOutputPressure"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public float MaxOutputPressure = 3 * DefaultOutputPressure;
 
         /// <summary>
@@ -73,28 +73,28 @@ namespace Content.Server.Atmos.Components
         /// <summary>
         ///     Pressure at which tanks start leaking.
         /// </summary>
-        [DataField("tankLeakPressure"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public float TankLeakPressure = 30 * Atmospherics.OneAtmosphere;
 
         /// <summary>
         ///     Pressure at which tank spills all contents into atmosphere.
         /// </summary>
-        [DataField("tankRupturePressure"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public float TankRupturePressure = 40 * Atmospherics.OneAtmosphere;
 
         /// <summary>
         ///     Base 3x3 explosion.
         /// </summary>
-        [DataField("tankFragmentPressure"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public float TankFragmentPressure = 50 * Atmospherics.OneAtmosphere;
 
         /// <summary>
         ///     Increases explosion for each scale kPa above threshold.
         /// </summary>
-        [DataField("tankFragmentScale"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public float TankFragmentScale = 2 * Atmospherics.OneAtmosphere;
 
-        [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
         public string ToggleAction = "ActionToggleInternals";
 
         [DataField("toggleActionEntity")] public EntityUid? ToggleActionEntity;
@@ -102,16 +102,16 @@ namespace Content.Server.Atmos.Components
         /// <summary>
         ///     Valve to release gas from tank
         /// </summary>
-        [DataField("isValveOpen"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public bool IsValveOpen = false;
 
         /// <summary>
         ///     Gas release rate in L/s
         /// </summary>
-        [DataField("valveOutputRate"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public float ValveOutputRate = 100f;
 
-        [DataField("valveSound"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public SoundSpecifier ValveSound =
             new SoundCollectionSpecifier("valveSqueak")
             {

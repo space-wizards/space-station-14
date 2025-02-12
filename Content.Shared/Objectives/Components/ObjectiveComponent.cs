@@ -22,7 +22,7 @@ public sealed partial class ObjectiveComponent : Component
     /// <summary>
     /// Organisation that issued this objective, used for grouping and as a header above common objectives.
     /// </summary>
-    [DataField("issuer", required: true)]
+    [DataField(required: true)]
     private LocId Issuer { get; set; }
 
     [ViewVariables(VVAccess.ReadOnly)]

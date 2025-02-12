@@ -12,7 +12,7 @@ namespace Content.Server.Pointing.Components
         ///     <see cref="RoguePointingArrowComponent"/> when its duration runs out.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("rogue")]
+        [DataField]
         public bool Rogue;
     }
 }

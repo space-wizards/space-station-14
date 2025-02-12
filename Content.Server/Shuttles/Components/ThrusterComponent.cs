@@ -41,7 +41,7 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         [DataField("damage")] public DamageSpecifier? Damage = new();
 
-        [DataField("requireSpace")]
+        [DataField]
         public bool RequireSpace = true;
 
         // Used for burns

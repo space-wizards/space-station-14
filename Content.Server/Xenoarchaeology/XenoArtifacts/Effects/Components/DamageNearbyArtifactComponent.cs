@@ -12,7 +12,7 @@ public sealed partial class DamageNearbyArtifactComponent : Component
     /// <summary>
     /// The radius of entities that will be affected
     /// </summary>
-    [DataField("radius")]
+    [DataField]
     public float Radius = 3f;
 
     /// <summary>
@@ -27,18 +27,18 @@ public sealed partial class DamageNearbyArtifactComponent : Component
     /// <summary>
     /// The damage that is applied
     /// </summary>
-    [DataField("damage", required: true)]
+    [DataField(required: true)]
     public DamageSpecifier Damage = default!;
 
     /// <summary>
     /// The chance that damage is applied to each individual entity
     /// </summary>
-    [DataField("damageChance")]
+    [DataField]
     public float DamageChance = 1f;
 
     /// <summary>
     /// Whether or not this should ignore resistances for the damage
     /// </summary>
-    [DataField("ignoreResistances")]
+    [DataField]
     public bool IgnoreResistances;
 }

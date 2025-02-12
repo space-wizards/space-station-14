@@ -24,13 +24,13 @@ public sealed partial class ArtifactComponent : Component
     /// <summary>
     /// Minimum number of nodes to generate, inclusive
     /// </summary>
-    [DataField("nodesMin")]
+    [DataField]
     public int NodesMin = 3;
 
     /// <summary>
     /// Maximum number of nodes to generate, exclusive
     /// </summary>
-    [DataField("nodesMax")]
+    [DataField]
     public int NodesMax = 9;
     #endregion
 
@@ -44,45 +44,45 @@ public sealed partial class ArtifactComponent : Component
     /// Is this artifact under some suppression device?
     /// f true, will ignore all trigger activations attempts.
     /// </summary>
-    [DataField("isSuppressed"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public bool IsSuppressed;
 
     /// <summary>
     /// The last time the artifact was activated.
     /// </summary>
-    [DataField("lastActivationTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)))]
     public TimeSpan LastActivationTime;
 
     /// <summary>
     /// A multiplier applied to the calculated point value
     /// to determine the monetary value of the artifact
     /// </summary>
-    [DataField("priceMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float PriceMultiplier = 0.05f;
 
     /// <summary>
     /// The base amount of research points for each artifact node.
     /// </summary>
-    [DataField("pointsPerNode"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public int PointsPerNode = 6500;
 
     /// <summary>
     /// Research points which have been "consumed" from the theoretical max value of the artifact.
     /// </summary>
-    [DataField("consumedPoints"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public int ConsumedPoints;
 
     /// <summary>
     /// A multiplier that is raised to the power of the average depth of a node.
     /// Used for calculating the research point value of an artifact node.
     /// </summary>
-    [DataField("pointDangerMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float PointDangerMultiplier = 1.35f;
 
     /// <summary>
     /// The sound that plays when an artifact is activated
     /// </summary>
-    [DataField("activationSound")]
+    [DataField]
     public SoundSpecifier ActivationSound = new SoundCollectionSpecifier("ArtifactActivation")
     {
         Params = new()
@@ -122,7 +122,7 @@ public sealed partial class ArtifactNode : ICloneable
     /// <summary>
     /// Whether or not the node has been entered
     /// </summary>
-    [DataField("discovered"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public bool Discovered;
 
     /// <summary>
@@ -134,7 +134,7 @@ public sealed partial class ArtifactNode : ICloneable
     /// <summary>
     /// Whether or not the node has been triggered
     /// </summary>
-    [DataField("triggered"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public bool Triggered;
 
     /// <summary>

@@ -6,20 +6,20 @@ namespace Content.Server.Shuttles.Components;
 [RegisterComponent, Access(typeof(ArrivalsSystem)), AutoGenerateComponentPause]
 public sealed partial class ArrivalsShuttleComponent : Component
 {
-    [DataField("station")]
+    [DataField]
     public EntityUid Station;
 
-    [DataField("nextTransfer", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)))]
     [AutoPausedField]
     public TimeSpan NextTransfer;
 
-    [DataField("nextArrivalsTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)))]
     public TimeSpan NextArrivalsTime;
 
     /// <summary>
     ///     the first arrivals FTL originates from nullspace instead of the station
     /// </summary>
-    [DataField("firstRun")]
+    [DataField]
     public bool FirstRun = true;
 
 }

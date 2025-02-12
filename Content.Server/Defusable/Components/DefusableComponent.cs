@@ -55,7 +55,7 @@ public sealed partial class DefusableComponent : Component
     /// <summary>
     /// How much time is added when the Activate wire is pulsed?
     /// </summary>
-    [DataField("delayTime")]
+    [DataField]
     public int DelayTime = 30;
 
     #region Wires

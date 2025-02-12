@@ -12,7 +12,7 @@ public sealed partial class RadiationSourceComponent : Component
     ///     when hit radiation blocker.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("intensity")]
+    [DataField]
     public float Intensity = 1;
 
     /// <summary>
@@ -21,7 +21,7 @@ public sealed partial class RadiationSourceComponent : Component
     ///     of radiation source will be.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("slope")]
+    [DataField]
     public float Slope = 0.5f;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]

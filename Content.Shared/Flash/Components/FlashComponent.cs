@@ -19,20 +19,20 @@ namespace Content.Shared.Flash.Components
         [DataField]
         public TimeSpan? MeleeStunDuration = TimeSpan.FromSeconds(1.5);
 
-        [DataField("range")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public float Range { get; set; } = 7f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("aoeFlashDuration")]
+        [DataField]
         public int AoeFlashDuration { get; set; } = 2000;
 
-        [DataField("slowTo")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public float SlowTo { get; set; } = 0.5f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("sound")]
+        [DataField]
         public SoundSpecifier Sound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/flash.ogg")
         {
             Params = AudioParams.Default.WithVolume(1f).WithMaxDistance(3f)

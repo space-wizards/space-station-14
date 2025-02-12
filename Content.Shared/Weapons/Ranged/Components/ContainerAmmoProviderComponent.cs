@@ -10,7 +10,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 [Access(typeof(SharedGunSystem))]
 public sealed partial class ContainerAmmoProviderComponent : AmmoProviderComponent
 {
-    [DataField("container", required: true)]
+    [DataField(required: true)]
     [ViewVariables]
     public string Container = default!;
 

@@ -19,7 +19,7 @@ public sealed partial class SingularityComponent : Component
     /// If you want to set this use <see cref="SharedSingularitySystem.SetLevel"/>().
     /// </summary>
     [Access(friends: typeof(SharedSingularitySystem), Other = AccessPermissions.Read, Self = AccessPermissions.Read)]
-    [DataField("level")]
+    [DataField]
     public byte Level = 1;
 
     /// <summary>
@@ -28,14 +28,14 @@ public sealed partial class SingularityComponent : Component
     /// If you want to set this use <see cref="SharedSingularitySystem.SetRadsPerLevel"/>().
     /// </summary>
     [Access(friends: typeof(SharedSingularitySystem), Other = AccessPermissions.Read, Self = AccessPermissions.Read)]
-    [DataField("radsPerLevel")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float RadsPerLevel = 2f;
 
     /// <summary>
     /// The amount of energy this singularity contains.
     /// </summary>
-    [DataField("energy")]
+    [DataField]
     public float Energy = 180f;
 
     /// <summary>

@@ -11,7 +11,7 @@ namespace Content.Server.Nutrition.Components
     {
         public const string BowlSlotId = "bowl_slot";
 
-        [DataField("bowl_slot")]
+        [DataField]
         public ItemSlot BowlSlot = new();
     }
 }

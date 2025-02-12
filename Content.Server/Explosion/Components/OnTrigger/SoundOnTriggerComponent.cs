@@ -9,7 +9,7 @@ namespace Content.Server.Explosion.Components;
 [RegisterComponent]
 public sealed partial class SoundOnTriggerComponent : Component
 {
-    [DataField("removeOnTrigger")]
+    [DataField]
     public bool RemoveOnTrigger = true;
 
     [DataField("sound")]

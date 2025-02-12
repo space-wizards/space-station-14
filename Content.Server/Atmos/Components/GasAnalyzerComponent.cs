@@ -7,12 +7,12 @@ namespace Content.Server.Atmos.Components;
 public sealed partial class ActiveGasAnalyzerComponent : Component
 {
     // Set to a tiny bit after the default because otherwise the user often gets a blank window when first using
-    [DataField("accumulatedFrameTime"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float AccumulatedFrametime = 2.01f;
 
     /// <summary>
     /// How often to update the analyzer
     /// </summary>
-    [DataField("updateInterval"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float UpdateInterval = 1f;
 }

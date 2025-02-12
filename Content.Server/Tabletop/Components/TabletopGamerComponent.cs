@@ -6,7 +6,7 @@ namespace Content.Server.Tabletop.Components
     [RegisterComponent, Access(typeof(TabletopSystem))]
     public sealed partial class TabletopGamerComponent : Component
     {
-        [DataField("tabletop")]
+        [DataField]
         public EntityUid Tabletop { get; set; } = EntityUid.Invalid;
     }
 }

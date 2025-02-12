@@ -39,7 +39,7 @@ public sealed partial class CuffableComponent : Component
     /// <summary>
     /// Whether or not the entity can still interact (is not cuffed)
     /// </summary>
-    [DataField("canStillInteract"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public bool CanStillInteract = true;
 
     [DataField]

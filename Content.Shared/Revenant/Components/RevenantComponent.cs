@@ -21,13 +21,13 @@ public sealed partial class RevenantComponent : Component
     [AutoNetworkedField]
     public FixedPoint2 Essence = 75;
 
-    [DataField("stolenEssenceCurrencyPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<CurrencyPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<CurrencyPrototype>)))]
     public string StolenEssenceCurrencyPrototype = "StolenEssence";
 
     /// <summary>
     /// Prototype to spawn when the entity dies.
     /// </summary>
-    [DataField("spawnOnDeathPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string SpawnOnDeathPrototype = "Ectoplasm";
 
     /// <summary>
@@ -61,7 +61,7 @@ public sealed partial class RevenantComponent : Component
     /// <summary>
     /// The duration of the soul search
     /// </summary>
-    [DataField("soulSearchDuration")]
+    [DataField]
     public float SoulSearchDuration = 2.5f;
 
     /// <summary>
@@ -69,7 +69,7 @@ public sealed partial class RevenantComponent : Component
     /// the first float corresponds to amount of time the entity is stunned.
     /// the second corresponds to the amount of time the entity is made solid.
     /// </summary>
-    [DataField("harvestDebuffs")]
+    [DataField]
     public Vector2 HarvestDebuffs = new(5, 5);
 
     /// <summary>
@@ -93,7 +93,7 @@ public sealed partial class RevenantComponent : Component
     /// the first float corresponds to amount of time the entity is stunned.
     /// the second corresponds to the amount of time the entity is made solid.
     /// </summary>
-    [DataField("defileDebuffs")]
+    [DataField]
     public Vector2 DefileDebuffs = new(1, 4);
 
     /// <summary>
@@ -128,7 +128,7 @@ public sealed partial class RevenantComponent : Component
     /// the first float corresponds to amount of time the entity is stunned.
     /// the second corresponds to the amount of time the entity is made solid.
     /// </summary>
-    [DataField("overloadDebuffs")]
+    [DataField]
     public Vector2 OverloadDebuffs = new(3, 8);
 
     /// <summary>
@@ -156,7 +156,7 @@ public sealed partial class RevenantComponent : Component
     /// the first float corresponds to amount of time the entity is stunned.
     /// the second corresponds to the amount of time the entity is made solid.
     /// </summary>
-    [DataField("blightDebuffs")]
+    [DataField]
     public Vector2 BlightDebuffs = new(2, 5);
 
     /// <summary>
@@ -178,7 +178,7 @@ public sealed partial class RevenantComponent : Component
     /// the first float corresponds to amount of time the entity is stunned.
     /// the second corresponds to the amount of time the entity is made solid.
     /// </summary>
-    [DataField("malfunctionDebuffs")]
+    [DataField]
     public Vector2 MalfunctionDebuffs = new(2, 8);
 
     /// <summary>
@@ -205,13 +205,13 @@ public sealed partial class RevenantComponent : Component
     public ProtoId<AlertPrototype> EssenceAlert = "Essence";
 
     #region Visualizer
-    [DataField("state")]
+    [DataField]
     public string State = "idle";
-    [DataField("corporealState")]
+    [DataField]
     public string CorporealState = "active";
-    [DataField("stunnedState")]
+    [DataField]
     public string StunnedState = "stunned";
-    [DataField("harvestingState")]
+    [DataField]
     public string HarvestingState = "harvesting";
     #endregion
 

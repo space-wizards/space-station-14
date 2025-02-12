@@ -26,25 +26,25 @@ public sealed partial class HandTeleporterComponent : Component
     [DataField]
     public bool AllowPortalsOnDifferentGrids;
 
-    [DataField("firstPortalPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string FirstPortalPrototype = "PortalRed";
 
-    [DataField("secondPortalPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string SecondPortalPrototype = "PortalBlue";
 
-    [DataField("newPortalSound")] public SoundSpecifier NewPortalSound =
+    [DataField] public SoundSpecifier NewPortalSound =
         new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg")
         {
             Params = AudioParams.Default.WithVolume(-2f)
         };
 
-    [DataField("clearPortalsSound")]
+    [DataField]
     public SoundSpecifier ClearPortalsSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
 
     /// <summary>
     ///     Delay for creating the portals in seconds.
     /// </summary>
-    [DataField("portalCreationDelay")]
+    [DataField]
     public float PortalCreationDelay = 1.0f;
 }
 

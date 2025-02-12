@@ -23,13 +23,13 @@ public abstract partial class SharedBeamComponent : Component
     /// <summary>
     /// The first beam created, useful for keeping track of chains.
     /// </summary>
-    [DataField("originBeam")]
+    [DataField]
     public EntityUid OriginBeam;
 
     /// <summary>
     /// The entity that fired the beam originally
     /// </summary>
-    [DataField("beamShooter")]
+    [DataField]
     public EntityUid BeamShooter;
 
     /// <summary>

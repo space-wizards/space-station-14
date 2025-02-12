@@ -9,7 +9,7 @@ namespace Content.Server.Explosion.Components
     [RegisterComponent]
     public sealed partial class TriggerOnSignalComponent : Component
     {
-        [DataField("port", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>)))]
         public string Port = "Trigger";
     }
 }

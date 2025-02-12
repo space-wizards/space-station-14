@@ -68,7 +68,7 @@ public sealed partial class DamageVisualsComponent : Component
     ///     - There are no target layers
     ///     - There is no damage group
     /// </summary>
-    [DataField("overlay")] public  bool Overlay = true;
+    [DataField] public  bool Overlay = true;
 
     /// <summary>
     ///     A single damage group to target.
@@ -106,7 +106,7 @@ public sealed partial class DamageVisualsComponent : Component
     ///     This will only work if you have damageOverlay
     ///     defined - otherwise, it will not work.
     /// </remarks>
-    [DataField("trackAllDamage")] public  bool TrackAllDamage;
+    [DataField] public  bool TrackAllDamage;
     /// <summary>
     ///     This is the overlay sprite used, if _trackAllDamage is
     ///     enabled. Supports no complex per-group layering,
@@ -151,7 +151,7 @@ public sealed partial class DamageVisualizerSprite
     ///     - DamageOverlay_{threshold} if not targeting
     ///       a layer.
     /// </remarks>
-    [DataField("sprite", required: true)] public  string Sprite = default!;
+    [DataField(required: true)] public  string Sprite = default!;
 
     /// <summary>
     ///     The color of this sprite overlay.

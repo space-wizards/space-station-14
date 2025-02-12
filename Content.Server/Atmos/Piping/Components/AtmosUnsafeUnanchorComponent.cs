@@ -4,7 +4,7 @@ namespace Content.Server.Atmos.Piping.Components
     public sealed partial class AtmosUnsafeUnanchorComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("enabled")]
+        [DataField]
         public bool Enabled { get; set; } = true;
     }
 }

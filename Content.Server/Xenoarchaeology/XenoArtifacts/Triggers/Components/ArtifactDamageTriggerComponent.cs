@@ -18,7 +18,7 @@ public sealed partial class ArtifactDamageTriggerComponent : Component
     /// <summary>
     /// What threshold has to be reached before it is activated?
     /// </summary>
-    [DataField("damageThreshold", required: true)]
+    [DataField(required: true)]
     public float DamageThreshold;
 
     /// <summary>

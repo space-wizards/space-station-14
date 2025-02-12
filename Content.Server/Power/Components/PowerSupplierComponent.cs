@@ -13,7 +13,7 @@ namespace Content.Server.Power.Components
         public float MaxSupply { get => NetworkSupply.MaxSupply; set => NetworkSupply.MaxSupply = value; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("supplyRampTolerance")]
+        [DataField]
         public float SupplyRampTolerance
         {
             get => NetworkSupply.SupplyRampTolerance;
@@ -21,7 +21,7 @@ namespace Content.Server.Power.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("supplyRampRate")]
+        [DataField]
         public float SupplyRampRate
         {
             get => NetworkSupply.SupplyRampRate;
@@ -29,7 +29,7 @@ namespace Content.Server.Power.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("supplyRampPosition")]
+        [DataField]
         public float SupplyRampPosition
         {
             get => NetworkSupply.SupplyRampPosition;
@@ -37,7 +37,7 @@ namespace Content.Server.Power.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("enabled")]
+        [DataField]
         public bool Enabled
         {
             get => NetworkSupply.Enabled;

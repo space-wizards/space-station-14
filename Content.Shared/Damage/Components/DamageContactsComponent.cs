@@ -9,7 +9,7 @@ public sealed partial class DamageContactsComponent : Component
     /// <summary>
     /// The damage done each second to those touching this entity
     /// </summary>
-    [DataField("damage", required: true)]
+    [DataField(required: true)]
     public DamageSpecifier Damage = new();
 
     /// <summary>

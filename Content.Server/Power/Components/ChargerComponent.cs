@@ -12,13 +12,13 @@ namespace Content.Server.Power.Components
         /// <summary>
         /// The charge rate of the charger, in watts
         /// </summary>
-        [DataField("chargeRate")]
+        [DataField]
         public float ChargeRate = 20.0f;
 
         /// <summary>
         /// The container ID that is holds the entities being charged.
         /// </summary>
-        [DataField("slotId", required: true)]
+        [DataField(required: true)]
         public string SlotId = string.Empty;
 
         /// <summary>

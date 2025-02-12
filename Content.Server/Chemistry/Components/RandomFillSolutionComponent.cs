@@ -13,7 +13,7 @@ public sealed partial class RandomFillSolutionComponent : Component
     /// <summary>
     ///     Solution name which to add reagents to.
     /// </summary>
-    [DataField("solution")]
+    [DataField]
     public string Solution { get; set; } = "default";
 
     /// <summary>

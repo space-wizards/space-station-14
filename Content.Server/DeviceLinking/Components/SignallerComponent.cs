@@ -12,7 +12,7 @@ namespace Content.Server.DeviceLinking.Components
         /// <summary>
         ///     The port that gets signaled when the switch turns on.
         /// </summary>
-        [DataField("port", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>)))]
         public string Port = "Pressed";
     }
 }

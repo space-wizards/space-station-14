@@ -10,12 +10,12 @@ public sealed partial class RandomTeleportArtifactComponent : Component
     /// <summary>
     /// The max distance that the artifact will teleport.
     /// </summary>
-    [DataField("maxRange")]
+    [DataField]
     public float MaxRange = 15f;
 
     /// <summary>
     /// The min distance that the artifact will teleport.
     /// </summary>
-    [DataField("minRange")]
+    [DataField]
     public float MinRange = 6f;
 }

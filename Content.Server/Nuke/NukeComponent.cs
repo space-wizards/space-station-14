@@ -21,7 +21,7 @@ namespace Content.Server.Nuke
         /// <summary>
         ///     Default bomb timer value in seconds.
         /// </summary>
-        [DataField("timer")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public int Timer = 300;
 
@@ -36,7 +36,7 @@ namespace Content.Server.Nuke
         ///     How long until the bomb can arm again after deactivation.
         ///     Used to prevent announcements spam.
         /// </summary>
-        [DataField("cooldown")]
+        [DataField]
         public int Cooldown = 30;
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Content.Server.Nuke
         ///     behaviours are specified by this <see cref="ItemSlot"/> definition. Make sure the whitelist, is correct
         ///     otherwise a blank bit of paper will work as a "disk".
         /// </summary>
-        [DataField("diskSlot")]
+        [DataField]
         public ItemSlot DiskSlot = new();
 
         /// <summary>
@@ -56,36 +56,36 @@ namespace Content.Server.Nuke
         /// <summary>
         ///     How long a user must wait to disarm the bomb.
         /// </summary>
-        [DataField("disarmDoafterLength")]
+        [DataField]
         public float DisarmDoafterLength = 30.0f;
 
-        [DataField("alertLevelOnActivate")] public string AlertLevelOnActivate = default!;
-        [DataField("alertLevelOnDeactivate")] public string AlertLevelOnDeactivate = default!;
+        [DataField] public string AlertLevelOnActivate = default!;
+        [DataField] public string AlertLevelOnDeactivate = default!;
 
         /// <summary>
         ///     This is stored so we can do a funny by making 0 shift the last played note up by 12 semitones (octave)
         /// </summary>
         public int LastPlayedKeypadSemitones = 0;
 
-        [DataField("keypadPressSound")]
+        [DataField]
         public SoundSpecifier KeypadPressSound = new SoundPathSpecifier("/Audio/Machines/Nuke/general_beep.ogg");
 
-        [DataField("accessGrantedSound")]
+        [DataField]
         public SoundSpecifier AccessGrantedSound = new SoundPathSpecifier("/Audio/Machines/Nuke/confirm_beep.ogg");
 
-        [DataField("accessDeniedSound")]
+        [DataField]
         public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/Nuke/angry_beep.ogg");
 
-        [DataField("alertSound")]
+        [DataField]
         public SoundSpecifier AlertSound = new SoundPathSpecifier("/Audio/Machines/Nuke/nuke_alarm.ogg");
 
-        [DataField("armSound")]
+        [DataField]
         public SoundSpecifier ArmSound = new SoundPathSpecifier("/Audio/Misc/notice1.ogg");
 
-        [DataField("disarmSound")]
+        [DataField]
         public SoundSpecifier DisarmSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
 
-        [DataField("armMusic")]
+        [DataField]
         public SoundSpecifier ArmMusic = new SoundCollectionSpecifier("NukeMusic");
 
         // These datafields here are duplicates of those in explosive component. But I'm hesitant to use explosive
@@ -98,7 +98,7 @@ namespace Content.Server.Nuke
         ///     information (e.g., the light that the explosion gives off).
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("explosionType", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<ExplosionPrototype>))]
+        [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<ExplosionPrototype>)))]
         public string ExplosionType = default!;
 
         /// <summary>
@@ -106,14 +106,14 @@ namespace Content.Server.Nuke
         ///     break chance the explosion can achieve at any given location.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("maxIntensity")]
+        [DataField]
         public float MaxIntensity = 100;
 
         /// <summary>
         ///     How quickly the intensity drops off as you move away from the epicenter.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("intensitySlope")]
+        [DataField]
         public float IntensitySlope = 5;
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Content.Server.Nuke
         ///     number (see <see cref="ExplosionSystem.RadiusToIntensity"/>).
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("totalIntensity")]
+        [DataField]
         public float TotalIntensity = 100000;
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Content.Server.Nuke
         /// </summary>
         public (MapId, EntityUid?)? OriginMapGrid;
 
-        [DataField("codeLength")] public int CodeLength = 6;
+        [DataField] public int CodeLength = 6;
         [ViewVariables] public string Code = string.Empty;
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Content.Server.Nuke
         ///     The radius from the nuke for which there must be floor tiles for it to be anchorable.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("requiredFloorRadius")]
+        [DataField]
         public float RequiredFloorRadius = 5;
     }
 }

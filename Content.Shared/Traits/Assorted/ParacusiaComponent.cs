@@ -15,28 +15,28 @@ public sealed partial class ParacusiaComponent : Component
     /// <summary>
     /// The maximum time between incidents in seconds
     /// </summary>
-    [DataField("maxTimeBetweenIncidents", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite), ViewVariables(required: true), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public float MaxTimeBetweenIncidents = 60f;
 
     /// <summary>
     /// The minimum time between incidents in seconds
     /// </summary>
-    [DataField("minTimeBetweenIncidents", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite), ViewVariables(required: true), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public float MinTimeBetweenIncidents = 30f;
 
     /// <summary>
     /// How far away at most can the sound be?
     /// </summary>
-    [DataField("maxSoundDistance", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite), ViewVariables(required: true), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public float MaxSoundDistance;
 
     /// <summary>
     /// The sounds to choose from
     /// </summary>
-    [DataField("sounds", required: true)]
+    [DataField(required: true)]
     [AutoNetworkedField]
     public SoundSpecifier Sounds = default!;
 

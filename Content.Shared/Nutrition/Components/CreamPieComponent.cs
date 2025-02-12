@@ -7,10 +7,10 @@ namespace Content.Shared.Nutrition.Components
     [RegisterComponent]
     public sealed partial class CreamPieComponent : Component
     {
-        [DataField("paralyzeTime")]
+        [DataField]
         public float ParalyzeTime { get; private set; } = 1f;
 
-        [DataField("sound")]
+        [DataField]
         public SoundSpecifier Sound { get; private set; } = new SoundCollectionSpecifier("desecration");
 
         [ViewVariables]

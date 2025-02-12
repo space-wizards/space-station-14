@@ -14,30 +14,30 @@ namespace Content.Server.Radio.Components;
 public sealed partial class RadioMicrophoneComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("broadcastChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>)))]
     public string BroadcastChannel = SharedChatSystem.CommonChannel;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("listenRange")]
+    [DataField]
     public int ListenRange  = 4;
 
-    [DataField("enabled")]
+    [DataField]
     public bool Enabled = false;
 
-    [DataField("powerRequired")]
+    [DataField]
     public bool PowerRequired = false;
 
     /// <summary>
     /// Whether or not interacting with this entity
     /// toggles it on or off.
     /// </summary>
-    [DataField("toggleOnInteract")]
+    [DataField]
     public bool ToggleOnInteract = true;
 
     /// <summary>
     /// Whether or not the speaker must have an
     /// unobstructed path to the radio to speak
     /// </summary>
-    [DataField("unobstructedRequired")]
+    [DataField]
     public bool UnobstructedRequired = false;
 }

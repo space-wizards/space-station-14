@@ -3,13 +3,13 @@
 [RegisterComponent]
 public sealed partial class RandomArtifactSpriteComponent : Component
 {
-    [DataField("minSprite")]
+    [DataField]
     public int MinSprite = 1;
 
-    [DataField("maxSprite")]
+    [DataField]
     public int MaxSprite = 14;
 
-    [DataField("activationTime")]
+    [DataField]
     public double ActivationTime = 2.0;
 
     public TimeSpan? ActivationStart;

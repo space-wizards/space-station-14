@@ -12,18 +12,18 @@ namespace Content.Shared.Audio;
 [Access(typeof(SharedAmbientSoundSystem))]
 public sealed partial class AmbientSoundComponent : Component, IComponentTreeEntry<AmbientSoundComponent>
 {
-    [DataField("enabled", readOnly: true)]
+    [DataField(readOnly: true)]
     [ViewVariables(VVAccess.ReadWrite)] // only for map editing
     public bool Enabled { get; set; } = true;
 
-    [DataField("sound", required: true), ViewVariables(VVAccess.ReadWrite)] // only for map editing
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite), ViewVariables(required: true), ViewVariables(VVAccess.ReadWrite)] // only for map editing
     public SoundSpecifier Sound = default!;
 
     /// <summary>
     /// How far away this ambient sound can potentially be heard.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] // only for map editing
-    [DataField("range")]
+    [DataField]
     public float Range = 2f;
 
     public Vector2 RangeVector => new Vector2(Range, Range);
@@ -32,7 +32,7 @@ public sealed partial class AmbientSoundComponent : Component, IComponentTreeEnt
     /// Applies this volume to the sound being played.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] // only for map editing
-    [DataField("volume")]
+    [DataField]
     public float Volume = -10f;
 
     public EntityUid? TreeUid { get; set; }

@@ -27,13 +27,13 @@ namespace Content.Shared.Nutrition.Components
         /// The chance that the utensil has to break with each use.
         /// A value of 0 means that it is unbreakable.
         /// </summary>
-        [DataField("breakChance")]
+        [DataField]
         public float BreakChance;
 
         /// <summary>
         /// The sound to be played if the utensil breaks.
         /// </summary>
-        [DataField("breakSound")]
+        [DataField]
         public SoundSpecifier BreakSound = new SoundPathSpecifier("/Audio/Items/snap.ogg");
     }
 

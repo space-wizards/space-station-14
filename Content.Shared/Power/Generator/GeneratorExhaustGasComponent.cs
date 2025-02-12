@@ -16,18 +16,18 @@ public sealed partial class GeneratorExhaustGasComponent : Component
     /// <summary>
     /// The type of gas that will be emitted by the generator.
     /// </summary>
-    [DataField("gasType"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public Gas GasType = Gas.CarbonDioxide;
 
     /// <summary>
     /// The amount of moles of gas that should be produced when one unit of fuel is burned.
     /// </summary>
-    [DataField("moleRatio"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float MoleRatio = 1;
 
     /// <summary>
     /// The temperature of created gas.
     /// </summary>
-    [DataField("temperature"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float Temperature = Atmospherics.T0C + 100;
 }

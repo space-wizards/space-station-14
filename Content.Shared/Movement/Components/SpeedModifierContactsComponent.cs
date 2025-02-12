@@ -9,12 +9,12 @@ namespace Content.Shared.Movement.Components;
 [Access(typeof(SpeedModifierContactsSystem))]
 public sealed partial class SpeedModifierContactsComponent : Component
 {
-    [DataField("walkSpeedModifier"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     [AutoNetworkedField]
     public float WalkSpeedModifier = 1.0f;
 
     [AutoNetworkedField]
-    [DataField("sprintSpeedModifier"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float SprintSpeedModifier = 1.0f;
 
     [DataField("ignoreWhitelist")]

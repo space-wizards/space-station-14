@@ -13,12 +13,12 @@ namespace Content.Shared.PDA
         public const string PdaPenSlotId = "PDA-pen";
         public const string PdaPaiSlotId = "PDA-pai";
 
-        [DataField("idSlot")]
+        [DataField]
         public ItemSlot IdSlot = new();
 
-        [DataField("penSlot")]
+        [DataField]
         public ItemSlot PenSlot = new();
-        [DataField("paiSlot")]
+        [DataField]
         public ItemSlot PaiSlot = new();
 
         // Really this should just be using ItemSlot.StartingItem. However, seeing as we have so many different starting

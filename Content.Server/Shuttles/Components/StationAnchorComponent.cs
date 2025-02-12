@@ -6,6 +6,6 @@ namespace Content.Server.Shuttles.Components;
 [Access(typeof(StationAnchorSystem))]
 public sealed partial class StationAnchorComponent : Component
 {
-    [DataField("switchedOn")]
+    [DataField]
     public bool SwitchedOn { get; set; } = true;
 }

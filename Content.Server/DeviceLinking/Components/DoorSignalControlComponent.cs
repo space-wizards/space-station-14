@@ -6,13 +6,13 @@ namespace Content.Server.DeviceLinking.Components
     [RegisterComponent]
     public sealed partial class DoorSignalControlComponent : Component
     {
-        [DataField("openPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>)))]
         public string OpenPort = "Open";
 
-        [DataField("closePort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>)))]
         public string ClosePort = "Close";
 
-        [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>)))]
         public string TogglePort = "Toggle";
 
         [DataField("boltPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]

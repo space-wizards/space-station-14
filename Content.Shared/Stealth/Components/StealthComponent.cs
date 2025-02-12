@@ -16,25 +16,25 @@ public sealed partial class StealthComponent : Component
     /// <summary>
     /// Whether or not the stealth effect should currently be applied.
     /// </summary>
-    [DataField("enabled")]
+    [DataField]
     public bool Enabled = true;
 
     /// <summary>
     /// The creature will continue invisible at death.
     /// </summary>
-    [DataField("enabledOnDeath")]
+    [DataField]
     public bool EnabledOnDeath = true;
 
     /// <summary>
     /// Whether or not the entity previously had an interaction outline prior to cloaking.
     /// </summary>
-    [DataField("hadOutline")]
+    [DataField]
     public bool HadOutline;
 
     /// <summary>
     /// Minimum visibility before the entity becomes unexaminable (and thus no longer appears on context menus).
     /// </summary>
-    [DataField("examineThreshold")]
+    [DataField]
     public float ExamineThreshold = 0.5f;
 
     /// <summary>
@@ -43,7 +43,7 @@ public sealed partial class StealthComponent : Component
     /// get the actual current visibility, use <see cref="SharedStealthSystem.GetVisibility(EntityUid, StealthComponent?)"/>
     /// If you don't have anything else updating the stealth, this will just stay at a constant value, which can be useful.
     /// </summary>
-    [DataField("lastVisibility")]
+    [DataField]
     [Access(typeof(SharedStealthSystem), Other = AccessPermissions.None)]
     public float LastVisibility = 1;
 
@@ -58,19 +58,19 @@ public sealed partial class StealthComponent : Component
     /// <summary>
     /// Minimum visibility. Note that the visual effect caps out at -1, but this value is allowed to be larger or smaller.
     /// </summary>
-    [DataField("minVisibility")]
+    [DataField]
     public float MinVisibility = -1f;
 
     /// <summary>
     /// Maximum visibility. Note that the visual effect caps out at +1, but this value is allowed to be larger or smaller.
     /// </summary>
-    [DataField("maxVisibility")]
+    [DataField]
     public float MaxVisibility = 1.5f;
 
     /// <summary>
     ///     Localization string for how you'd like to describe this effect.
     /// </summary>
-    [DataField("examinedDesc")]
+    [DataField]
     public string ExaminedDesc = "stealth-visual-effect";
 }
 

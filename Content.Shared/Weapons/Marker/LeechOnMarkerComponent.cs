@@ -11,6 +11,6 @@ public sealed partial class LeechOnMarkerComponent : Component
 {
     // TODO: Can't network damagespecifiers yet last I checked.
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("leech", required: true)]
+    [DataField(required: true)]
     public DamageSpecifier Leech = new();
 }

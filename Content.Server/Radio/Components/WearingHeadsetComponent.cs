@@ -8,6 +8,6 @@ namespace Content.Server.Radio.Components;
 [RegisterComponent]
 public sealed partial class WearingHeadsetComponent : Component
 {
-    [DataField("headset")]
+    [DataField]
     public EntityUid Headset;
 }

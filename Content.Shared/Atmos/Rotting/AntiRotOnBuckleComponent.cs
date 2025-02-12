@@ -11,7 +11,7 @@ public sealed partial class AntiRotOnBuckleComponent : Component
     /// <summary>
     /// Does this component require power to function.
     /// </summary>
-    [DataField("requiresPower"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public bool RequiresPower = true;
 
     /// <summary>

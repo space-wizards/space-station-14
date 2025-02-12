@@ -19,7 +19,7 @@ namespace Content.Shared.Storage.Components
     [Access(typeof(SharedItemCounterSystem))]
     public sealed partial class ItemCounterComponent : Component
     {
-        [DataField("count", required: true)]
+        [DataField(required: true)]
         public EntityWhitelist Count { get; set; } = default!;
 
         [DataField("amount")]
@@ -28,7 +28,7 @@ namespace Content.Shared.Storage.Components
         /// <summary>
         /// Default IconLayer stack.
         /// </summary>
-        [DataField("baseLayer")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public string BaseLayer = "";
 

@@ -10,6 +10,6 @@ public sealed partial class MobsterAccentComponent : Component
     /// <summary>
     ///     Do you make all the rules?
     /// </summary>
-    [DataField("isBoss")]
+    [DataField]
     public bool IsBoss = true;
 }

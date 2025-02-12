@@ -9,13 +9,13 @@ namespace Content.Server.Engineering.Components
         [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? Prototype { get; private set; }
 
-        [DataField("ignoreDistance")]
+        [DataField]
         public bool IgnoreDistance { get; private set; }
 
         [DataField("doAfter")]
         public float DoAfterTime = 0;
 
-        [DataField("removeOnInteract")]
+        [DataField]
         public bool RemoveOnInteract = false;
     }
 }

@@ -13,10 +13,10 @@ namespace Content.Shared.Configurable
         [DataField("config")]
         public Dictionary<string, string?> Config = new();
 
-        [DataField("qualityNeeded", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>)))]
         public string QualityNeeded = SharedToolSystem.PulseQuality;
 
-        [DataField("validation")]
+        [DataField]
         public Regex Validation = new("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
 
         [Serializable, NetSerializable]

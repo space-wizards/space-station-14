@@ -58,39 +58,39 @@ namespace Content.Server.Forensics
         /// <summary>
         /// The time (in seconds) that it takes to scan an entity.
         /// </summary>
-        [DataField("scanDelay")]
+        [DataField]
         public float ScanDelay = 3.0f;
 
         /// <summary>
         /// How often can the scanner print out reports?
         /// </summary>
-        [DataField("printCooldown")]
+        [DataField]
         public TimeSpan PrintCooldown = TimeSpan.FromSeconds(5);
 
         /// <summary>
         /// The sound that's played when there's a match between a scan and an
         /// inserted forensic pad.
         /// </summary>
-        [DataField("soundMatch")]
+        [DataField]
         public SoundSpecifier SoundMatch = new SoundPathSpecifier("/Audio/Machines/Nuke/angry_beep.ogg");
 
         /// <summary>
         /// The sound that's played when there's no match between a scan and an
         /// inserted forensic pad.
         /// </summary>
-        [DataField("soundNoMatch")]
+        [DataField]
         public SoundSpecifier SoundNoMatch = new SoundPathSpecifier("/Audio/Machines/airlock_deny.ogg");
 
         /// <summary>
         /// The sound that's played when the scanner prints off a report.
         /// </summary>
-        [DataField("soundPrint")]
+        [DataField]
         public SoundSpecifier SoundPrint = new SoundPathSpecifier("/Audio/Machines/short_print_and_rip.ogg");
 
         /// <summary>
         /// What the machine will print
         /// </summary>
-        [DataField("machineOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
         public string MachineOutput = "ForensicReportPaper";
 
     }

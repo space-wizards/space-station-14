@@ -11,13 +11,13 @@ namespace Content.Server.Kitchen.Components
     [RegisterComponent]
     public sealed partial class MicrowaveComponent : Component
     {
-        [DataField("cookTimeMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public float CookTimeMultiplier = 1;
 
-        [DataField("baseHeatMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public float BaseHeatMultiplier = 100;
 
-        [DataField("objectHeatMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public float ObjectHeatMultiplier = 100;
 
         [DataField("failureResult", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
@@ -27,18 +27,18 @@ namespace Content.Server.Kitchen.Components
         [DataField("beginCookingSound")]
         public SoundSpecifier StartCookingSound = new SoundPathSpecifier("/Audio/Machines/microwave_start_beep.ogg");
 
-        [DataField("foodDoneSound")]
+        [DataField]
         public SoundSpecifier FoodDoneSound = new SoundPathSpecifier("/Audio/Machines/microwave_done_beep.ogg");
 
-        [DataField("clickSound")]
+        [DataField]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
-        [DataField("ItemBreakSound")]
+        [DataField]
         public SoundSpecifier ItemBreakSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
 
         public EntityUid? PlayingStream;
 
-        [DataField("loopingSound")]
+        [DataField]
         public SoundSpecifier LoopingSound = new SoundPathSpecifier("/Audio/Machines/microwave_loop.ogg");
         #endregion
 
@@ -53,7 +53,7 @@ namespace Content.Server.Kitchen.Components
         /// The cook times for all recipes should be divisible by 5,with a minimum of 1 second.
         /// For right now, I don't think any recipe cook time should be greater than 60 seconds.
         /// </summary>
-        [DataField("currentCookTimerTime"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public uint CurrentCookTimerTime = 0;
 
         /// <summary>
@@ -66,13 +66,13 @@ namespace Content.Server.Kitchen.Components
         /// The maximum number of seconds a microwave can be set to.
         /// This is currently only used for validation and the client does not check this.
         /// </summary>
-        [DataField("maxCookTime"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public uint MaxCookTime = 30;
 
         /// <summary>
         ///     The max temperature that this microwave can heat objects to.
         /// </summary>
-        [DataField("temperatureUpperThreshold")]
+        [DataField]
         public float TemperatureUpperThreshold = 373.15f;
 
         public int CurrentCookTimeButtonIndex;

@@ -26,7 +26,7 @@ public sealed partial class ItemBorgModuleComponent : Component
     /// <summary>
     /// A counter that ensures a unique
     /// </summary>
-    [DataField("handCounter")]
+    [DataField]
     public int HandCounter;
 
     /// <summary>
@@ -45,7 +45,7 @@ public sealed partial class ItemBorgModuleComponent : Component
     /// <summary>
     /// An ID for the container where provided items are stored when not used.
     /// </summary>
-    [DataField("providedContainerId")]
+    [DataField]
     public string ProvidedContainerId = "provided_container";
 }
 

@@ -25,7 +25,7 @@ namespace Content.Shared.CombatMode
         [ViewVariables(VVAccess.ReadWrite), DataField("canDisarm")]
         public bool? CanDisarm;
 
-        [DataField("disarmSuccessSound")]
+        [DataField]
         public SoundSpecifier DisarmSuccessSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
 
         [DataField("disarmFailChance")]
@@ -33,7 +33,7 @@ namespace Content.Shared.CombatMode
 
         #endregion
 
-        [DataField("combatToggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
         public string CombatToggleAction = "ActionCombatModeToggle";
 
         [DataField, AutoNetworkedField]

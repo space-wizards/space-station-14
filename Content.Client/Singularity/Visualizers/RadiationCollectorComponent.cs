@@ -25,27 +25,27 @@ public sealed partial class RadiationCollectorComponent : Component
     /// <summary>
     /// The RSI state used for the main sprite layer (<see cref="RadiationCollectorVisualLayers.Main"/>) when the radiation collector is active.
     /// </summary>
-    [DataField("activeState")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public string ActiveState = "ca_on";
 
     /// <summary>
     /// The RSI state used for the main sprite layer (<see cref="RadiationCollectorVisualLayers.Main"/>) when the radiation collector is inactive.
     /// </summary>
-    [DataField("inactiveState")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public string InactiveState = "ca_off";
 
     /// <summary>
     /// Used to build the <value cref="ActivateAnimation">activation animation</value> when the component is initialized.
     /// </summary>
-    [DataField("activatingState")]
+    [DataField]
     public string ActivatingState = "ca_active";
 
     /// <summary>
     /// Used to build the <see cref="DeactiveAnimation">deactivation animation</see> when the component is initialized.
     /// </summary>
-    [DataField("deactivatingState")]
+    [DataField]
     public string DeactivatingState = "ca_deactive";
 
     /// <summary>

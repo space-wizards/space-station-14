@@ -8,10 +8,10 @@ namespace Content.Shared.Storage.Components;
 [RegisterComponent]
 public sealed partial class StorageFillVisualizerComponent : Component
 {
-    [DataField("maxFillLevels", required: true)]
+    [DataField(required: true)]
     public int MaxFillLevels;
 
-    [DataField("fillBaseName", required: true)]
+    [DataField(required: true)]
     public string FillBaseName = default!;
 }
 

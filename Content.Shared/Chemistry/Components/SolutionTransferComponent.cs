@@ -12,7 +12,7 @@ public sealed partial class SolutionTransferComponent : Component
     /// <summary>
     ///     The amount of solution to be transferred from this solution when clicking on other solutions with it.
     /// </summary>
-    [DataField("transferAmount")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public FixedPoint2 TransferAmount { get; set; } = FixedPoint2.New(5);
@@ -34,21 +34,21 @@ public sealed partial class SolutionTransferComponent : Component
     /// <summary>
     ///     Can this entity take reagent from reagent tanks?
     /// </summary>
-    [DataField("canReceive")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public bool CanReceive { get; set; } = true;
 
     /// <summary>
     ///     Can this entity give reagent to other reagent containers?
     /// </summary>
-    [DataField("canSend")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public bool CanSend { get; set; } = true;
 
     /// <summary>
     /// Whether you're allowed to change the transfer amount.
     /// </summary>
-    [DataField("canChangeTransferAmount")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public bool CanChangeTransferAmount { get; set; } = false;
 }

@@ -12,16 +12,16 @@ namespace Content.Server.Chemistry.Components
     [Access(typeof(ChemMasterSystem))]
     public sealed partial class ChemMasterComponent : Component
     {
-        [DataField("pillType"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public uint PillType = 0;
 
-        [DataField("mode"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public ChemMasterMode Mode = ChemMasterMode.Transfer;
 
-        [DataField("pillDosageLimit", required: true), ViewVariables(VVAccess.ReadWrite)]
+        [DataField(required: true), ViewVariables(VVAccess.ReadWrite), ViewVariables(required: true), ViewVariables(VVAccess.ReadWrite)]
         public uint PillDosageLimit;
 
-        [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
     }
 }

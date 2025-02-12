@@ -12,21 +12,21 @@ public sealed partial class RandomWalkComponent : Component
     /// <summary>
     /// The minimum speed at which this entity will move.
     /// </summary>
-    [DataField("minSpeed")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float MinSpeed = 7.5f;
 
     /// <summary>
     /// The maximum speed at which this entity will move.
     /// </summary>
-    [DataField("maxSpeed")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float MaxSpeed = 10f;
 
     /// <summary>
     /// The amount of speed carried over when the speed updates.
     /// </summary>
-    [DataField("accumulatorRatio")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float AccumulatorRatio = 0.0f;
 
@@ -45,7 +45,7 @@ public sealed partial class RandomWalkComponent : Component
     /// <summary>
     /// Whether this random walker should take a step immediately when it starts up.
     /// </summary>
-    [DataField("stepOnStartup")]
+    [DataField]
     [ViewVariables(VVAccess.ReadOnly)]
     public bool StepOnStartup = false;
 
@@ -54,14 +54,14 @@ public sealed partial class RandomWalkComponent : Component
     /// <summary>
     /// The minimum amount of time between speed updates.
     /// </summary>
-    [DataField("minStepCooldown")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan MinStepCooldown { get; internal set; } = TimeSpan.FromSeconds(2.0);
 
     /// <summary>
     /// The maximum amount of time between speed updates.
     /// </summary>
-    [DataField("maxStepCooldown")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan MaxStepCooldown { get; internal set; } = TimeSpan.FromSeconds(5.0);
 

@@ -13,7 +13,7 @@ namespace Content.Server.Light.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedLightReplacerSystem))]
 public sealed partial class LightReplacerComponent : Component
 {
-    [DataField("sound")]
+    [DataField]
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Weapons/click.ogg")
     {
         Params = new()

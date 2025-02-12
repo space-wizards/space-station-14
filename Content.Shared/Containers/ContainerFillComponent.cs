@@ -28,7 +28,7 @@ public sealed partial class ContainerFillComponent : Component
     ///     If true, entities spawned via the construction system will not have entities spawned into containers managed
     ///     by the construction system.
     /// </summary>
-    [DataField("ignoreConstructionSpawn")]
+    [DataField]
     public bool IgnoreConstructionSpawn = true;
 }
 

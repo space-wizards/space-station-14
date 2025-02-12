@@ -17,20 +17,20 @@ namespace Content.Shared.Doors.Components
         /// Pry time modifier to be used when the firelock is currently closed due to fire or pressure.
         /// </summary>
         /// <returns></returns>
-        [DataField("lockedPryTimeModifier"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public float LockedPryTimeModifier = 1.5f;
 
         /// <summary>
         /// Maximum pressure difference before the firelock will refuse to open, in kPa.
         /// </summary>
-        [DataField("pressureThreshold"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         [GuidebookData]
         public float PressureThreshold = 20;
 
         /// <summary>
         /// Maximum temperature difference before the firelock will refuse to open, in k.
         /// </summary>
-        [DataField("temperatureThreshold"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         [GuidebookData]
         public float TemperatureThreshold = 330;
         // this used to check for hot-spots, but because accessing that data is a a mess this now just checks
@@ -40,7 +40,7 @@ namespace Content.Shared.Doors.Components
         /// If true, and if this door has an <see cref="AtmosAlarmableComponent"/>, then it will only auto-close if the
         /// alarm is set to danger.
         /// </summary>
-        [DataField("alarmAutoClose"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public bool AlarmAutoClose = true;
 
         /// <summary>

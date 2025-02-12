@@ -8,7 +8,7 @@ namespace Content.Server.Labels.Components
     [RegisterComponent]
     public sealed partial class PaperLabelComponent : Component
     {
-        [DataField("labelSlot")]
+        [DataField]
         public ItemSlot LabelSlot = new();
     }
 }

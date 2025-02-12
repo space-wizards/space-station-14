@@ -17,14 +17,14 @@ public sealed partial class PortableGeneratorComponent : Component
     /// <summary>
     /// Chance that this generator will start. If it fails, the user has to try again.
     /// </summary>
-    [DataField("startChance")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float StartChance { get; set; } = 1f;
 
     /// <summary>
     /// Amount of time it takes to attempt to start the generator.
     /// </summary>
-    [DataField("startTime")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan StartTime { get; set; } = TimeSpan.FromSeconds(2);
 

@@ -16,7 +16,7 @@ public sealed partial class AlertLevelComponent : Component
     public AlertLevelPrototype? AlertLevels;
 
     // Once stations are a prototype, this should be used.
-    [DataField("alertLevelPrototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<AlertLevelPrototype>))]
+    [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<AlertLevelPrototype>)))]
     public string AlertLevelPrototype = default!;
 
     /// <summary>

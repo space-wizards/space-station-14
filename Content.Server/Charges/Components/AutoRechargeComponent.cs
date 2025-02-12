@@ -15,13 +15,13 @@ public sealed partial class AutoRechargeComponent : Component
     /// <summary>
     /// The time it takes to regain a single charge
     /// </summary>
-    [DataField("rechargeDuration"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public TimeSpan RechargeDuration = TimeSpan.FromSeconds(90);
 
     /// <summary>
     /// The time when the next charge will be added
     /// </summary>
-    [DataField("nextChargeTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)))]
     [AutoPausedField]
     public TimeSpan NextChargeTime;
 }

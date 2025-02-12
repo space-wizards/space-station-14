@@ -13,7 +13,7 @@ public sealed partial class GasAnalyzerComponent : Component
     [ViewVariables]
     public EntityUid User;
 
-    [DataField("enabled"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public bool Enabled;
 
     [Serializable, NetSerializable]

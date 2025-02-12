@@ -9,25 +9,25 @@ namespace Content.Shared.Damage.Components;
 [Access(typeof(DamageOnHoldingSystem))]
 public sealed partial class DamageOnHoldingComponent : Component
 {
-    [DataField("enabled"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     [AutoNetworkedField]
     public bool Enabled = true;
 
     /// <summary>
     /// Damage per interval dealt to entity holding the entity with this component
     /// </summary>
-    [DataField("damage"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public DamageSpecifier Damage = new();
     // TODO: make it networked
 
     /// <summary>
     /// Delay between damage events in seconds
     /// </summary>
-    [DataField("interval"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     [AutoNetworkedField]
     public float Interval = 1f;
 
-    [DataField("nextDamage", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)), ViewVariables(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     [AutoPausedField]
     public TimeSpan NextDamage = TimeSpan.Zero;

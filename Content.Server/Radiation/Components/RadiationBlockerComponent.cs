@@ -12,7 +12,7 @@ public sealed partial class RadiationBlockerComponent : Component
     /// <summary>
     ///     Does it block radiation at all?
     /// </summary>
-    [DataField("enabled")]
+    [DataField]
     public bool Enabled = true;
 
     /// <summary>

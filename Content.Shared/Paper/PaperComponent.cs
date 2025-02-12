@@ -11,7 +11,7 @@ public sealed partial class PaperComponent : Component
     [DataField("content"), AutoNetworkedField]
     public string Content { get; set; } = "";
 
-    [DataField("contentSize")]
+    [DataField]
     public int ContentSize { get; set; } = 6000;
 
     [DataField("stampedBy"), AutoNetworkedField]

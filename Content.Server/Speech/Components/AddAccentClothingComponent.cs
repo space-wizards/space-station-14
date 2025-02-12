@@ -11,7 +11,7 @@ public sealed partial class AddAccentClothingComponent : Component
     /// <summary>
     ///     Component name for accent that will be applied.
     /// </summary>
-    [DataField("accent", required: true)]
+    [DataField(required: true)]
     public string Accent = default!;
 
     /// <summary>

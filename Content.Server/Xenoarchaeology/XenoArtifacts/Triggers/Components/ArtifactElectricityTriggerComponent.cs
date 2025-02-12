@@ -10,6 +10,6 @@ public sealed partial class ArtifactElectricityTriggerComponent : Component
     /// <summary>
     ///     How much power should artifact receive to operate.
     /// </summary>
-    [DataField("minPower")]
+    [DataField]
     public float MinPower = 400;
 }

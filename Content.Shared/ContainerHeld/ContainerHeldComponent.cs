@@ -11,6 +11,6 @@ public sealed partial class ContainerHeldComponent: Component
     ///     to ToggleVisuals.Toggled = true, and
     ///     SetHeldPrefix() to "full" instead of "empty".
     /// </summary>
-    [DataField("threshold")]
+    [DataField]
     public int Threshold { get; private set; } = 1;
 }

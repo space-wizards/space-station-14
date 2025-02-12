@@ -42,11 +42,11 @@ namespace Content.Server.Atmos.Components
 
 
         // TODO ATMOS Do we need these two fields?
-        [DataField("rotateAirBlocked")]
+        [DataField]
         public bool RotateAirBlocked { get; set; } = true;
 
         // TODO ATMOS remove this? What is this even for??
-        [DataField("fixAirBlockedDirectionInitialize")]
+        [DataField]
         public bool FixAirBlockedDirectionInitialize { get; set; } = true;
 
         /// <summary>

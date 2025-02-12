@@ -28,10 +28,10 @@ public sealed partial class CableComponent : Component
     ///     Checked by <see cref="CablePlacerComponent"/> to determine if there is
     ///     already a cable of a type on a tile.
     /// </summary>
-    [DataField("cableType")]
+    [DataField]
     public CableType CableType = CableType.HighVoltage;
 
-    [DataField("cuttingDelay")]
+    [DataField]
     public float CuttingDelay = 1f;
 }
 

@@ -15,7 +15,7 @@ public sealed partial class SericultureComponent : Component
     /// <summary>
     /// The text that pops up whenever sericulture fails for not having enough hunger.
     /// </summary>
-    [DataField("popupText")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public string PopupText = "sericulture-failure-hunger";
@@ -43,7 +43,7 @@ public sealed partial class SericultureComponent : Component
     /// <summary>
     /// How long will it take to make.
     /// </summary>
-    [DataField("productionLength")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public float ProductionLength = 3f;
@@ -51,7 +51,7 @@ public sealed partial class SericultureComponent : Component
     /// <summary>
     /// This will subtract (not add, don't get this mixed up) from the current hunger of the mob doing sericulture.
     /// </summary>
-    [DataField("hungerCost")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public float HungerCost = 5f;
@@ -59,7 +59,7 @@ public sealed partial class SericultureComponent : Component
     /// <summary>
     /// The lowest hunger threshold that this mob can be in before it's allowed to spin silk.
     /// </summary>
-    [DataField("minHungerThreshold")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public HungerThreshold MinHungerThreshold = HungerThreshold.Okay;

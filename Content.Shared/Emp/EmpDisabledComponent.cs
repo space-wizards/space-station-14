@@ -18,7 +18,7 @@ public sealed partial class EmpDisabledComponent : Component
     [AutoPausedField]
     public TimeSpan DisabledUntil;
 
-    [DataField("effectCoolDown"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float EffectCooldown = 3f;
 
     /// <summary>

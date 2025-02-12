@@ -7,18 +7,18 @@ namespace Content.Server.Emp;
 [Access(typeof(EmpSystem))]
 public sealed partial class EmpOnTriggerComponent : Component
 {
-    [DataField("range"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float Range = 1.0f;
 
     /// <summary>
     /// How much energy will be consumed per battery in range
     /// </summary>
-    [DataField("energyConsumption"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float EnergyConsumption;
 
     /// <summary>
     /// How long it disables targets in seconds
     /// </summary>
-    [DataField("disableDuration"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float DisableDuration = 60f;
 }

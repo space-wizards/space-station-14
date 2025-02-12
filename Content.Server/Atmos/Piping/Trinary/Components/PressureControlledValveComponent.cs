@@ -19,19 +19,19 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
         public string OutletName { get; set; } = "outlet";
 
         [ViewVariables(VVAccess.ReadOnly)]
-        [DataField("enabled")]
+        [DataField]
         public bool Enabled { get; set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("gain")]
+        [DataField]
         public float Gain { get; set; } = 10;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("threshold")]
+        [DataField]
         [GuidebookData]
         public float Threshold { get; set; } = Atmospherics.OneAtmosphere;
 
-        [DataField("maxTransferRate")]
+        [DataField]
         public float MaxTransferRate { get; set; } = Atmospherics.MaxTransferRate;
     }
 }

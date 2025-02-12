@@ -9,7 +9,7 @@ namespace Content.Server.Chemistry.Components.DeleteOnSolutionEmptyComponent
         /// <summary>
         /// The name of the solution of which to check emptiness
         /// </summary>
-        [DataField("solution")]
+        [DataField]
         public string Solution = string.Empty;
     }
 }

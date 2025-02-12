@@ -9,7 +9,7 @@ namespace Content.Shared.NameIdentifier;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class NameIdentifierComponent : Component
 {
-    [DataField("group", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<NameIdentifierGroupPrototype>))]
+    [DataField(required: true, customTypeSerializer:typeof(PrototypeIdSerializer<NameIdentifierGroupPrototype>)))]
     public string Group = string.Empty;
 
     /// <summary>

@@ -14,7 +14,7 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         public string OutletName { get; set; } = "outlet";
 
         [ViewVariables(VVAccess.ReadOnly)]
-        [DataField("flowRate")]
+        [DataField]
         public float FlowRate { get; set; } = 0;
     }
 }

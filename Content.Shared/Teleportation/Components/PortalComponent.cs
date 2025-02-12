@@ -14,19 +14,19 @@ public sealed partial class PortalComponent : Component
     ///     Sound played on arriving to this portal, centered on the destination.
     ///     The arrival sound of the entered portal will play if the destination is not a portal.
     /// </summary>
-    [DataField("arrivalSound")]
+    [DataField]
     public SoundSpecifier ArrivalSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
 
     /// <summary>
     ///     Sound played on departing from this portal, centered on the original portal.
     /// </summary>
-    [DataField("departureSound")]
+    [DataField]
     public SoundSpecifier DepartureSound = new SoundPathSpecifier("/Audio/Effects/teleport_departure.ogg");
 
     /// <summary>
     ///     If no portals are linked, the subject will be teleported a random distance at maximum this far away.
     /// </summary>
-    [DataField("maxRandomRadius"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float MaxRandomRadius = 7.0f;
 
     /// <summary>
@@ -35,7 +35,7 @@ public sealed partial class PortalComponent : Component
     /// <remarks>
     ///     Shouldn't be able to teleport people to centcomm or the eshuttle from the station
     /// </remarks>
-    [DataField("canTeleportToOtherMaps"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public bool CanTeleportToOtherMaps = false;
 
     /// <summary>

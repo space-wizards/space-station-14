@@ -7,30 +7,30 @@ namespace Content.Shared.Nutrition.Components
     [RegisterComponent, NetworkedComponent]
     public sealed partial class SmokableComponent : Component
     {
-        [DataField("solution")]
+        [DataField]
         public string Solution { get; private set; } = "smokable";
 
         /// <summary>
         ///     Solution inhale amount per second.
         /// </summary>
-        [DataField("inhaleAmount"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public FixedPoint2 InhaleAmount { get; private set; } = FixedPoint2.New(0.05f);
 
-        [DataField("state")]
+        [DataField]
         public SmokableState State { get; set; } = SmokableState.Unlit;
 
-        [DataField("exposeTemperature"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public float ExposeTemperature { get; set; } = 0;
 
-        [DataField("exposeVolume"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public float ExposeVolume { get; set; } = 1f;
 
         // clothing prefixes
-        [DataField("burntPrefix")]
+        [DataField]
         public string BurntPrefix = "unlit";
-        [DataField("litPrefix")]
+        [DataField]
         public string LitPrefix = "lit";
-        [DataField("unlitPrefix")]
+        [DataField]
         public string UnlitPrefix = "unlit";
     }
 }

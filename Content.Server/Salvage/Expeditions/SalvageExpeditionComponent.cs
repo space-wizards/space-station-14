@@ -19,7 +19,7 @@ public sealed partial class SalvageExpeditionComponent : SharedSalvageExpedition
     /// <summary>
     /// Where the dungeon is located for initial announcement.
     /// </summary>
-    [DataField("dungeonLocation")]
+    [DataField]
     public Vector2 DungeonLocation = Vector2.Zero;
 
     /// <summary>
@@ -32,7 +32,7 @@ public sealed partial class SalvageExpeditionComponent : SharedSalvageExpedition
     /// <summary>
     /// Station whose mission this is.
     /// </summary>
-    [DataField("station")]
+    [DataField]
     public EntityUid Station;
 
     [ViewVariables] public bool Completed = false;

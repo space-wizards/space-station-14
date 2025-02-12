@@ -7,17 +7,17 @@ namespace Content.Client.Atmos.Visualizers;
 [RegisterComponent]
 public sealed partial class PortableScrubberVisualsComponent : Component
 {
-    [DataField("idleState", required: true)]
+    [DataField(required: true)]
     public string IdleState = default!;
 
-    [DataField("runningState", required: true)]
+    [DataField(required: true)]
     public string RunningState = default!;
 
     /// Powered and not full
-    [DataField("readyState", required: true)]
+    [DataField(required: true)]
     public string ReadyState = default!;
 
     /// Powered and full
-    [DataField("fullState", required: true)]
+    [DataField(required: true)]
     public string FullState = default!;
 }

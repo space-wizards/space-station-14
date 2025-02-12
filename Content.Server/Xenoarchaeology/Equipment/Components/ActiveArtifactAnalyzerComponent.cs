@@ -12,7 +12,7 @@ public sealed partial class ActiveArtifactAnalyzerComponent : Component
     /// <summary>
     /// When did the scanning start or last resume?
     /// </summary>
-    [DataField("startTime", customTypeSerializer: typeof(TimespanSerializer))]
+    [DataField(customTypeSerializer: typeof(TimespanSerializer)))]
     public TimeSpan StartTime;
 
     /// <summary>

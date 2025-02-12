@@ -16,12 +16,12 @@ public sealed partial class RadioSpeakerComponent : Component
     /// Whether or not interacting with this entity
     /// toggles it on or off.
     /// </summary>
-    [DataField("toggleOnInteract")]
+    [DataField]
     public bool ToggleOnInteract = true;
 
     [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
     public HashSet<string> Channels = new () { SharedChatSystem.CommonChannel };
 
-    [DataField("enabled")]
+    [DataField]
     public bool Enabled;
 }

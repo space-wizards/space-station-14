@@ -7,6 +7,6 @@
 [RegisterComponent]
 public sealed partial class ShuffleArtifactComponent : Component
 {
-    [DataField("radius")]
+    [DataField]
     public float Radius = 7.5f;
 }

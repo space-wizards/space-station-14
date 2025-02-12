@@ -9,13 +9,13 @@ public sealed partial class ArtifactMagnetTriggerComponent : Component
     /// <summary>
     /// how close to the magnet do you have to be?
     /// </summary>
-    [DataField("range")]
+    [DataField]
     public float Range = 40f;
 
     /// <summary>
     /// How close do active magboots have to be?
     /// This is smaller because they are weaker magnets
     /// </summary>
-    [DataField("magbootRange")]
+    [DataField]
     public float MagbootRange = 2f;
 }

@@ -16,45 +16,45 @@ public sealed partial class FatExtractorComponent : Component
     /// <summary>
     /// Whether or not the extractor is currently extracting fat from someone
     /// </summary>
-    [DataField("processing")]
+    [DataField]
     public bool Processing = true;
 
     /// <summary>
     /// How much nutrition is extracted per second.
     /// </summary>
-    [DataField("nutritionPerSecond"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public int NutritionPerSecond = 10;
 
     /// <summary>
     /// An accumulator which tracks extracted nutrition to determine
     /// when to spawn a meat.
     /// </summary>
-    [DataField("nutrientAccumulator"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public int NutrientAccumulator;
 
     /// <summary>
     /// How high <see cref="NutrientAccumulator"/> has to be to spawn meat
     /// </summary>
-    [DataField("nutrientPerMeat"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public int NutrientPerMeat = 30;
 
     /// <summary>
     /// Meat spawned by the extractor.
     /// </summary>
-    [DataField("meatPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)), ViewVariables(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public string MeatPrototype = "FoodMeat";
 
     /// <summary>
     /// When the next update will occur
     /// </summary>
-    [DataField("nextUpdate", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)), ViewVariables(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     [AutoPausedField]
     public TimeSpan NextUpdate;
 
     /// <summary>
     /// How long each update takes
     /// </summary>
-    [DataField("updateTime"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public TimeSpan UpdateTime = TimeSpan.FromSeconds(1);
 
     /// <summary>
@@ -69,6 +69,6 @@ public sealed partial class FatExtractorComponent : Component
     /// A minium hunger threshold for extracting nutrition.
     /// Ignored when emagged.
     /// </summary>
-    [DataField("minHungerThreshold")]
+    [DataField]
     public HungerThreshold MinHungerThreshold = HungerThreshold.Okay;
 }

@@ -12,7 +12,7 @@ public sealed partial class SpawnPointComponent : Component, ISpawnPoint
     /// <summary>
     /// The type of spawn point
     /// </summary>
-    [DataField("spawn_type"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public SpawnPointType SpawnType { get; set; } = SpawnPointType.Unset;
 
     public override string ToString()

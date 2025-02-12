@@ -8,11 +8,11 @@ namespace Content.Shared.Tools.Components;
 [Access(typeof(WeldableSystem))]
 public sealed partial class LayerChangeOnWeldComponent : Component
 {
-    [DataField("unWeldedLayer")]
+    [DataField]
     [ViewVariables]
     public CollisionGroup UnWeldedLayer = CollisionGroup.AirlockLayer;
 
-    [DataField("weldedLayer")]
+    [DataField]
     [ViewVariables]
     public CollisionGroup WeldedLayer = CollisionGroup.WallLayer;
 }

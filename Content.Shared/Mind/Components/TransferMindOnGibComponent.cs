@@ -6,6 +6,6 @@ namespace Content.Shared.Mind.Components;
 [RegisterComponent]
 public sealed partial class TransferMindOnGibComponent : Component
 {
-    [DataField("targetTag", customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>)))]
     public string TargetTag = "MindTransferTarget";
 }

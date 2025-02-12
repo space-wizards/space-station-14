@@ -15,7 +15,7 @@ public sealed partial class ChemicalPuddleArtifactComponent : Component
     /// <summary>
     /// The solution where all the chemicals are stored
     /// </summary>
-    [DataField("chemicalSolution", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite), ViewVariables(required: true), ViewVariables(VVAccess.ReadWrite)]
     public Solution ChemicalSolution = default!;
 
     /// <summary>
@@ -27,6 +27,6 @@ public sealed partial class ChemicalPuddleArtifactComponent : Component
     /// <summary>
     /// The number of chemicals in the puddle
     /// </summary>
-    [DataField("chemAmount")]
+    [DataField]
     public int ChemAmount = 3;
 }

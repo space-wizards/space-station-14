@@ -24,13 +24,13 @@ public sealed partial class LimitedItemGiverComponent : Component
     /// <summary>
     /// The (localized) message shown upon receiving something.
     /// </summary>
-    [DataField("receivedPopup", required: true)]
+    [DataField(required: true)]
     public string ReceivedPopup = default!;
 
     /// <summary>
     /// The (localized) message shown upon being denied.
     /// </summary>
-    [DataField("deniedPopup", required: true)]
+    [DataField(required: true)]
     public string DeniedPopup = default!;
 
     /// <summary>

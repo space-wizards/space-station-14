@@ -16,7 +16,7 @@ namespace Content.Server.Bible.Components
         public string? SpecialItemPrototype = null;
         public bool AlreadySummoned = false;
 
-        [DataField("requiresBibleUser")]
+        [DataField]
         public bool RequiresBibleUser = true;
 
         /// <summary>
@@ -25,16 +25,16 @@ namespace Content.Server.Bible.Components
         [ViewVariables]
         public EntityUid? Summon = null;
 
-        [DataField("summonAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
         public string SummonAction = "ActionBibleSummon";
 
         [DataField("summonActionEntity")]
         public EntityUid? SummonActionEntity;
 
         /// Used for respawning
-        [DataField("accumulator")]
+        [DataField]
         public float Accumulator = 0f;
-        [DataField("respawnTime")]
+        [DataField]
         public float RespawnTime = 180f;
     }
 }

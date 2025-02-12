@@ -21,18 +21,18 @@ public sealed partial class AnalysisConsoleComponent : Component
     /// <summary>
     /// The machine linking port for the analyzer
     /// </summary>
-    [DataField("linkingPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>)))]
     public string LinkingPort = "ArtifactAnalyzerSender";
 
     /// <summary>
     /// The sound played when an artifact has points extracted.
     /// </summary>
-    [DataField("extractSound")]
+    [DataField]
     public SoundSpecifier ExtractSound = new SoundPathSpecifier("/Audio/Effects/radpulse11.ogg");
 
     /// <summary>
     /// The entity spawned by a report.
     /// </summary>
-    [DataField("reportEntityId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string ReportEntityId = "Paper";
 }

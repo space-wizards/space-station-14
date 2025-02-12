@@ -38,7 +38,7 @@ public abstract partial class BaseActionComponent : Component
     ///     This currently only exists for decal-placement actions, so that the action icons correspond to the color of
     ///     the decal. But this is probably useful for other actions, including maybe changing color on toggle.
     /// </remarks>
-    [DataField("iconColor")] public Color IconColor = Color.White;
+    [DataField] public Color IconColor = Color.White;
 
     /// <summary>
     ///     The original <see cref="IconColor"/> this action was.
@@ -58,7 +58,7 @@ public abstract partial class BaseActionComponent : Component
     /// <summary>
     ///     Whether this action is currently enabled. If not enabled, this action cannot be performed.
     /// </summary>
-    [DataField("enabled")] public bool Enabled = true;
+    [DataField] public bool Enabled = true;
 
     /// <summary>
     ///     The toggle state of this action. Toggling switches the currently displayed icon, see <see cref="Icon"/> and <see cref="IconOn"/>.
@@ -102,7 +102,7 @@ public abstract partial class BaseActionComponent : Component
     /// <summary>
     ///     If enabled, charges will regenerate after a <see cref="Cooldown"/> is complete
     /// </summary>
-    [DataField("renewCharges")]public bool RenewCharges;
+    [DataField]public bool RenewCharges;
 
     /// <summary>
     /// The entity that contains this action. If the action is innate, this may be the user themselves.
@@ -138,7 +138,7 @@ public abstract partial class BaseActionComponent : Component
     ///     Whether the action system should block this action if the user cannot currently interact. Some spells or
     ///     abilities may want to disable this and implement their own checks.
     /// </summary>
-    [DataField("checkCanInteract")] public bool CheckCanInteract = true;
+    [DataField] public bool CheckCanInteract = true;
 
     /// <summary>
     /// Whether to check if the user is conscious or not. Can be used instead of <see cref="CheckCanInteract"/>
@@ -149,12 +149,12 @@ public abstract partial class BaseActionComponent : Component
     /// <summary>
     ///     If true, this will cause the action to only execute locally without ever notifying the server.
     /// </summary>
-    [DataField("clientExclusive")] public bool ClientExclusive = false;
+    [DataField] public bool ClientExclusive = false;
 
     /// <summary>
     ///     Determines the order in which actions are automatically added the action bar.
     /// </summary>
-    [DataField("priority")] public int Priority = 0;
+    [DataField] public int Priority = 0;
 
     /// <summary>
     ///     What entity, if any, currently has this action in the actions component?
@@ -178,17 +178,17 @@ public abstract partial class BaseActionComponent : Component
     /// <summary>
     ///     Whether or not to automatically add this action to the action bar when it becomes available.
     /// </summary>
-    [DataField("autoPopulate")] public bool AutoPopulate = true;
+    [DataField] public bool AutoPopulate = true;
 
     /// <summary>
     ///     Temporary actions are deleted when they get removed a <see cref="ActionsComponent"/>.
     /// </summary>
-    [DataField("temporary")] public bool Temporary;
+    [DataField] public bool Temporary;
 
     /// <summary>
     ///     Determines the appearance of the entity-icon for actions that are enabled via some entity.
     /// </summary>
-    [DataField("itemIconStyle")] public ItemActionIconStyle ItemIconStyle;
+    [DataField] public ItemActionIconStyle ItemIconStyle;
 
     /// <summary>
     ///     If not null, this sound will be played when performing this action.

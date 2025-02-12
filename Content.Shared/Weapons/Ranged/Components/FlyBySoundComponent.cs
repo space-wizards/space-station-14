@@ -22,7 +22,7 @@ public sealed partial class FlyBySoundComponent : Component
         Params = AudioParams.Default,
     };
 
-    [DataField("range")]
+    [DataField]
     [AutoNetworkedField]
     public float Range = 1.5f;
 }

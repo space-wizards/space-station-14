@@ -6,12 +6,12 @@
 [RegisterComponent]
 public sealed partial class IgniteArtifactComponent : Component
 {
-    [DataField("range")]
+    [DataField]
     public float Range = 2f;
 
-    [DataField("minFireStack")]
+    [DataField]
     public int MinFireStack = 2;
 
-    [DataField("maxFireStack")]
+    [DataField]
     public int MaxFireStack = 5;
 }

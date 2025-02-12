@@ -8,7 +8,7 @@ public sealed partial class DamagePopupComponent : Component
     /// <summary>
     /// Bool that will be used to determine if the popup type can be changed with a left click.
     /// </summary>
-    [DataField("allowTypeChange")] [ViewVariables(VVAccess.ReadWrite)]
+    [DataField] [ViewVariables]
     public bool AllowTypeChange = false;
     /// <summary>
     /// Enum that will be used to determine the type of damage popup displayed.

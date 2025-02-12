@@ -23,7 +23,7 @@ public sealed partial class MeleeSpeechComponent : Component
     /// The maximum amount of characters allowed in a battlecry
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("MaxBattlecryLength")]
+    [DataField]
     [AutoNetworkedField]
     public int MaxBattlecryLength = 12;
 

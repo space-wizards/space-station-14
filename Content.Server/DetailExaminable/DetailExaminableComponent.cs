@@ -3,7 +3,7 @@
     [RegisterComponent]
     public sealed partial class DetailExaminableComponent : Component
     {
-        [DataField("content", required: true)] [ViewVariables(VVAccess.ReadWrite)]
+        [DataField(required: true)] [ViewVariables(required: true)]
         public string Content = "";
     }
 }

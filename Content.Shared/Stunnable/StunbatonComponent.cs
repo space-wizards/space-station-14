@@ -9,10 +9,10 @@ namespace Content.Shared.Stunnable;
 [Access(typeof(SharedStunbatonSystem))]
 public sealed partial class StunbatonComponent : Component
 {
-    [DataField("energyPerUse"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     [AutoNetworkedField]
     public float EnergyPerUse = 350;
 
-    [DataField("sparksSound")]
+    [DataField]
     public SoundSpecifier SparksSound = new SoundCollectionSpecifier("sparks");
 }

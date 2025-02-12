@@ -27,24 +27,24 @@ public sealed partial class AirAlarmComponent : Component
     /// <summary>
     /// Previous alarm state for use with output ports.
     /// </summary>
-    [DataField("state")]
+    [DataField]
     public AtmosAlarmType State = AtmosAlarmType.Normal;
 
     /// <summary>
     /// The port that gets set to high while the alarm is in the danger state, and low when not.
     /// </summary>
-    [DataField("dangerPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>)))]
     public string DangerPort = "AirDanger";
 
     /// <summary>
     /// The port that gets set to high while the alarm is in the warning state, and low when not.
     /// </summary>
-    [DataField("warningPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>)))]
     public string WarningPort = "AirWarning";
 
     /// <summary>
     /// The port that gets set to high while the alarm is in the normal state, and low when not.
     /// </summary>
-    [DataField("normalPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>)))]
     public string NormalPort = "AirNormal";
 }

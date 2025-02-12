@@ -19,6 +19,6 @@ public sealed partial class TriggerOnMobstateChangeComponent : Component
     /// If true, prevents suicide attempts for the trigger to prevent cheese.
     /// </summary>
     [ViewVariables]
-    [DataField("preventSuicide")]
+    [DataField]
     public bool PreventSuicide = false;
 }

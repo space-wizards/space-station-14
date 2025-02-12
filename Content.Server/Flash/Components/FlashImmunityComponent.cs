@@ -8,6 +8,6 @@ namespace Content.Server.Flash.Components;
 public sealed partial class FlashImmunityComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("enabled")]
+    [DataField]
     public bool Enabled { get; set; } = true;
 }

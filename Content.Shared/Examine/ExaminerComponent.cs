@@ -7,11 +7,11 @@ namespace Content.Shared.Examine
     public sealed partial class ExaminerComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("skipChecks")]
+        [DataField]
         public bool SkipChecks = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("checkInRangeUnOccluded")]
+        [DataField]
         public bool CheckInRangeUnOccluded = true;
     }
 }

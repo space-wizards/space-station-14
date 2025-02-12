@@ -12,13 +12,13 @@ namespace Content.Shared.Stealth.Components
         /// <summary>
         /// Rate that effects how fast an entity's visibility passively changes.
         /// </summary>
-        [DataField("passiveVisibilityRate")]
+        [DataField]
         public float PassiveVisibilityRate = -0.15f;
 
         /// <summary>
         /// Rate for movement induced visibility changes. Scales with distance moved.
         /// </summary>
-        [DataField("movementVisibilityRate")]
+        [DataField]
         public float MovementVisibilityRate = 0.2f;
     }
 }

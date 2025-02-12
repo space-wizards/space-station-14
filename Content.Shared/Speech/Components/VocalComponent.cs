@@ -23,19 +23,19 @@ public sealed partial class VocalComponent : Component
     [AutoNetworkedField]
     public Dictionary<Sex, string>? Sounds;
 
-    [DataField("screamId", customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>)))]
     [AutoNetworkedField]
     public string ScreamId = "Scream";
 
-    [DataField("wilhelm")]
+    [DataField]
     [AutoNetworkedField]
     public SoundSpecifier Wilhelm = new SoundPathSpecifier("/Audio/Voice/Human/wilhelm_scream.ogg");
 
-    [DataField("wilhelmProbability")]
+    [DataField]
     [AutoNetworkedField]
     public float WilhelmProbability = 0.0002f;
 
-    [DataField("screamAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     [AutoNetworkedField]
     public string ScreamAction = "ActionScream";
 

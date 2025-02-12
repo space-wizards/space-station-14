@@ -35,10 +35,10 @@ public sealed partial class AtmosAlarmableComponent : Component
 
     [ViewVariables] public bool IgnoreAlarms { get; set; } = false;
 
-    [DataField("alarmSound")]
+    [DataField]
     public SoundSpecifier AlarmSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/alarm.ogg");
 
-    [DataField("alarmVolume")]
+    [DataField]
     public float AlarmVolume { get; set; } = -10;
 
     /// <summary>
@@ -55,6 +55,6 @@ public sealed partial class AtmosAlarmableComponent : Component
     ///     receive, that means that attempting to sync outwards
     ///     will result in nothing happening.
     /// </summary>
-    [DataField("receiveOnly")]
+    [DataField]
     public bool ReceiveOnly { get; private set; }
 }

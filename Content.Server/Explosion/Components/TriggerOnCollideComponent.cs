@@ -3,13 +3,13 @@ namespace Content.Server.Explosion.Components
     [RegisterComponent]
     public sealed partial class TriggerOnCollideComponent : Component
     {
-		[DataField("fixtureID", required: true)]
+		[DataField(required: true)]
 		public string FixtureID = String.Empty;
 
         /// <summary>
         ///     Doesn't trigger if the other colliding fixture is nonhard.
         /// </summary>
-        [DataField("ignoreOtherNonHard")]
+        [DataField]
         public bool IgnoreOtherNonHard = true;
     }
 }

@@ -10,18 +10,18 @@ public sealed partial class ThrowArtifactComponent : Component
     /// <summary>
     /// How close do you have to be to get yeeted?
     /// </summary>
-    [DataField("range")]
+    [DataField]
     public float Range = 2f;
 
     /// <summary>
     /// How likely is it that an individual tile will get pried?
     /// </summary>
-    [DataField("tilePryChance")]
+    [DataField]
     public float TilePryChance = 0.5f;
 
     /// <summary>
     /// How strongly does stuff get thrown?
     /// </summary>
-    [DataField("throwStrength"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float ThrowStrength = 5f;
 }

@@ -8,6 +8,6 @@ namespace Content.Server.Speech.Components;
 [RegisterComponent]
 public sealed partial class ActiveListenerComponent : Component
 {
-    [DataField("range")]
+    [DataField]
     public float Range = ChatSystem.VoiceRange;
 }

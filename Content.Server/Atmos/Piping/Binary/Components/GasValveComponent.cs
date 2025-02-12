@@ -5,7 +5,7 @@ namespace Content.Server.Atmos.Piping.Binary.Components
     [RegisterComponent]
     public sealed partial class GasValveComponent : Component
     {
-        [DataField("open")]
+        [DataField]
         public bool Open { get; set; } = true;
 
         [DataField("inlet")]
@@ -14,7 +14,7 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         [DataField("outlet")]
         public string OutletName { get; set; } = "outlet";
 
-        [DataField("valveSound")]
+        [DataField]
         public SoundSpecifier ValveSound { get; private set; } = new SoundCollectionSpecifier("valveSqueak");
     }
 }

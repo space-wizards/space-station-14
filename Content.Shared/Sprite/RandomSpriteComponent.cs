@@ -9,7 +9,7 @@ public sealed partial class RandomSpriteComponent : Component
     /// Whether or not all groups from <see cref="Available"/> are used,
     /// or if only one is picked at random.
     /// </summary>
-    [DataField("getAllGroups")]
+    [DataField]
     public bool GetAllGroups;
 
     /// <summary>

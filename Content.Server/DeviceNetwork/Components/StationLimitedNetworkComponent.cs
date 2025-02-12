@@ -15,7 +15,7 @@ namespace Content.Server.DeviceNetwork.Components
         /// <summary>
         /// Whether the entity is allowed to receive packets from entities that are not tied to any station
         /// </summary>
-        [DataField("allowNonStationPackets")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool AllowNonStationPackets = false;
     }

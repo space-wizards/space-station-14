@@ -12,7 +12,7 @@ namespace Content.Server.Shuttles.Components
         /// <summary>
         /// How much should the pilot's eye be zoomed by when piloting using this console?
         /// </summary>
-        [DataField("zoom")]
+        [DataField]
         public Vector2 Zoom = new(1.5f, 1.5f);
 
         /// <summary>

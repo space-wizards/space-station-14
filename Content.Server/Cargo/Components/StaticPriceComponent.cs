@@ -9,6 +9,6 @@ public sealed partial class StaticPriceComponent : Component
     /// <summary>
     /// The price of the object this component is on.
     /// </summary>
-    [DataField("price", required: true)]
+    [DataField(required: true)]
     public double Price;
 }

@@ -12,7 +12,7 @@ namespace Content.Server.Nuke
         /// station as the paper, or if it will get a random code from all
         /// possible nukes.
         /// </summary>
-        [DataField("allNukesAvailable")]
+        [DataField]
         public bool AllNukesAvailable;
     }
 }

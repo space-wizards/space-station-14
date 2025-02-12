@@ -9,6 +9,6 @@ public sealed partial class ChemicalFuelGeneratorDirectSourceComponent : Compone
     /// <summary>
     /// The solution to pull fuel material from.
     /// </summary>
-    [DataField("solution", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite), ViewVariables(required: true), ViewVariables(VVAccess.ReadWrite)]
     public string Solution = default!;
 }

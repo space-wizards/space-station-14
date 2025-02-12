@@ -22,14 +22,14 @@ public sealed partial class WiresPanelSecurityComponent : Component
     /// <summary>
     ///     Determines whether the wiring is accessible to hackers or not
     /// </summary>
-    [DataField("wiresAccessible")]
+    [DataField]
     [AutoNetworkedField]
     public bool WiresAccessible = true;
 
     /// <summary>
     ///     Name of the construction graph node that the entity will start on
     /// </summary>
-    [DataField("securityLevel")]
+    [DataField]
     [AutoNetworkedField]
     public string SecurityLevel = string.Empty;
 }

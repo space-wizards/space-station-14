@@ -5,7 +5,7 @@ namespace Content.Client.Atmos.Monitor;
 [RegisterComponent]
 public sealed partial class AtmosAlarmableVisualsComponent : Component
 {
-    [DataField("layerMap")]
+    [DataField]
     public string LayerMap { get; private set; } = string.Empty;
 
     [DataField("alarmStates")]

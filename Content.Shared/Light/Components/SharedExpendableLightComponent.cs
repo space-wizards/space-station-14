@@ -11,22 +11,22 @@ public abstract partial class SharedExpendableLightComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public ExpendableLightState CurrentState { get; set; }
 
-    [DataField("turnOnBehaviourID")]
+    [DataField]
     public string TurnOnBehaviourID { get; set; } = string.Empty;
 
-    [DataField("fadeOutBehaviourID")]
+    [DataField]
     public string FadeOutBehaviourID { get; set; } = string.Empty;
 
-    [DataField("glowDuration")]
+    [DataField]
     public float GlowDuration { get; set; } = 60 * 15f;
 
-    [DataField("fadeOutDuration")]
+    [DataField]
     public float FadeOutDuration { get; set; } = 60 * 5f;
 
-    [DataField("spentDesc")]
+    [DataField]
     public string SpentDesc { get; set; } = string.Empty;
 
-    [DataField("spentName")]
+    [DataField]
     public string SpentName { get; set; } = string.Empty;
 
     [DataField("litSound")]

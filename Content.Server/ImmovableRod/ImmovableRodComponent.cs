@@ -11,31 +11,31 @@ public sealed partial class ImmovableRodComponent : Component
     [DataField("hitSound")]
     public SoundSpecifier Sound = new SoundCollectionSpecifier("MetalSlam");
 
-    [DataField("hitSoundProbability")]
+    [DataField]
     public float HitSoundProbability = 0.1f;
 
-    [DataField("minSpeed")]
+    [DataField]
     public float MinSpeed = 10f;
 
-    [DataField("maxSpeed")]
+    [DataField]
     public float MaxSpeed = 35f;
 
     /// <remarks>
     ///     Stuff like wizard rods might want to set this to false, so that they can set the velocity themselves.
     /// </remarks>
-    [DataField("randomizeVelocity")]
+    [DataField]
     public bool RandomizeVelocity = true;
 
     /// <summary>
     ///     Overrides the random direction for an immovable rod.
     /// </summary>
-    [DataField("directionOverride")]
+    [DataField]
     public Angle DirectionOverride = Angle.Zero;
 
     /// <summary>
     ///     With this set to true, rods will automatically set the tiles under them to space.
     /// </summary>
-    [DataField("destroyTiles")]
+    [DataField]
     public bool DestroyTiles = true;
 
     /// <summary>

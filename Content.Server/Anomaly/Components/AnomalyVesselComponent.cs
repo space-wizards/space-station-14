@@ -29,25 +29,25 @@ public sealed partial class AnomalyVesselComponent : Component
     /// <summary>
     /// The maximum time between each beep
     /// </summary>
-    [DataField("maxBeepInterval")]
+    [DataField]
     public TimeSpan MaxBeepInterval = TimeSpan.FromSeconds(2f);
 
     /// <summary>
     /// The minimum time between each beep
     /// </summary>
-    [DataField("minBeepInterval")]
+    [DataField]
     public TimeSpan MinBeepInterval = TimeSpan.FromSeconds(0.75f);
 
     /// <summary>
     /// When the next beep sound will play
     /// </summary>
-    [DataField("nextBeep", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer)))]
     [AutoPausedField]
     public TimeSpan NextBeep = TimeSpan.Zero;
 
     /// <summary>
     /// The sound that is played repeatedly when the anomaly is destabilizing/decaying
     /// </summary>
-    [DataField("beepSound")]
+    [DataField]
     public SoundSpecifier BeepSound = new SoundPathSpecifier("/Audio/Machines/vessel_warning.ogg");
 }

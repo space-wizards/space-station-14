@@ -11,15 +11,15 @@ namespace Content.Server.Pointing.Components
         public EntityUid? Chasing;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("turningDelay")]
+        [DataField]
         public float TurningDelay = 2;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("chasingSpeed")]
+        [DataField]
         public float ChasingSpeed = 5;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("chasingTime")]
+        [DataField]
         public float ChasingTime = 1;
     }
 }

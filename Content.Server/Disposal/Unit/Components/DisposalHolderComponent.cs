@@ -49,7 +49,7 @@ namespace Content.Server.Disposal.Unit.Components
         [ViewVariables]
         public HashSet<string> Tags { get; set; } = new();
 
-        [DataField("air")]
+        [DataField]
         public GasMixture Air { get; set; } = new(70);
     }
 }

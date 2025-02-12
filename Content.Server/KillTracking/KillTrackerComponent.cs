@@ -13,7 +13,7 @@ public sealed partial class KillTrackerComponent : Component
     /// <summary>
     /// The mobstate that registers as a "kill"
     /// </summary>
-    [DataField("killState")]
+    [DataField]
     public MobState KillState = MobState.Critical;
 
     /// <summary>
@@ -31,7 +31,7 @@ public abstract record KillSource;
 [DataDefinition, Serializable]
 public sealed partial record KillPlayerSource : KillSource
 {
-    [DataField("playerId")]
+    [DataField]
     public NetUserId PlayerId;
 
     public KillPlayerSource(NetUserId playerId)
@@ -46,7 +46,7 @@ public sealed partial record KillPlayerSource : KillSource
 [DataDefinition, Serializable]
 public sealed partial record KillNpcSource : KillSource
 {
-    [DataField("npcEnt")]
+    [DataField]
     public EntityUid NpcEnt;
 
     public KillNpcSource(EntityUid npcEnt)

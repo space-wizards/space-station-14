@@ -15,19 +15,19 @@ public sealed partial class PinpointerComponent : Component
     [DataField("component"), ViewVariables(VVAccess.ReadWrite)]
     public string? Component;
 
-    [DataField("mediumDistance"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float MediumDistance = 16f;
 
-    [DataField("closeDistance"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float CloseDistance = 8f;
 
-    [DataField("reachedDistance"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float ReachedDistance = 1f;
 
     /// <summary>
     ///     Pinpointer arrow precision in radians.
     /// </summary>
-    [DataField("precision"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public double Precision = 0.09;
 
     /// <summary>
@@ -39,13 +39,13 @@ public sealed partial class PinpointerComponent : Component
     /// <summary>
     ///     Whether or not the target name should be updated when the target is updated.
     /// </summary>
-    [DataField("updateTargetName"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public bool UpdateTargetName;
 
     /// <summary>
     ///     Whether or not the target can be reassigned.
     /// </summary>
-    [DataField("canRetarget"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public bool CanRetarget;
 
     [ViewVariables]

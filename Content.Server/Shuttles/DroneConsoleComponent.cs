@@ -10,7 +10,7 @@ namespace Content.Server.Shuttles;
 [RegisterComponent]
 public sealed partial class DroneConsoleComponent : Component
 {
-    [DataField("components", required: true)]
+    [DataField(required: true)]
     public ComponentRegistry Components = default!;
 
     /// <summary>

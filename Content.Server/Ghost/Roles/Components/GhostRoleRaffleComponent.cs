@@ -43,16 +43,16 @@ public sealed partial class GhostRoleRaffleComponent : Component
     /// Must be set to the same value as <see cref="Countdown"/> on initialization.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField("cumulativeTime")]
+    [DataField]
     public TimeSpan CumulativeTime = TimeSpan.MaxValue;
 
     /// <inheritdoc cref="GhostRoleRaffleSettings.JoinExtendsDurationBy"/>
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField("joinExtendsDurationBy")]
+    [DataField]
     public TimeSpan JoinExtendsDurationBy { get; set; }
 
     /// <inheritdoc cref="GhostRoleRaffleSettings.MaxDuration"/>
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField("maxDuration")]
+    [DataField]
     public TimeSpan MaxDuration { get; set; }
 }

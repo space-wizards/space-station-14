@@ -7,10 +7,10 @@ namespace Content.Server.Construction.Components
     [RegisterComponent, Access(typeof(ConstructionSystem))]
     public sealed partial class ConstructionComponent : Component
     {
-        [DataField("graph", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>))]
+        [DataField(required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>)))]
         public string Graph { get; set; } = string.Empty;
 
-        [DataField("node", required:true)]
+        [DataField(required:true)]
         public string Node { get; set; } = default!;
 
         [DataField("edge")]

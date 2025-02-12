@@ -10,7 +10,7 @@ namespace Content.Shared.Inventory;
 [AutoGenerateComponentState(true)]
 public sealed partial class InventoryComponent : Component
 {
-    [DataField("templateId", customTypeSerializer: typeof(PrototypeIdSerializer<InventoryTemplatePrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<InventoryTemplatePrototype>)))]
     [AutoNetworkedField]
     public string TemplateId { get; set; } = "human";
 

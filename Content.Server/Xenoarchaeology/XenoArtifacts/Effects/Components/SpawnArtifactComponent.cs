@@ -15,12 +15,12 @@ public sealed partial class SpawnArtifactComponent : Component
     /// <summary>
     /// The range around the artifact that it will spawn the entity
     /// </summary>
-    [DataField("range")]
+    [DataField]
     public float Range = 0.5f;
 
     /// <summary>
     /// The maximum number of times the spawn will occur
     /// </summary>
-    [DataField("maxSpawns")]
+    [DataField]
     public int MaxSpawns = 10;
 }

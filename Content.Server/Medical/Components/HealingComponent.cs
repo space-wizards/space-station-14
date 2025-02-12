@@ -11,7 +11,7 @@ namespace Content.Server.Medical.Components
     [RegisterComponent]
     public sealed partial class HealingComponent : Component
     {
-        [DataField("damage", required: true)]
+        [DataField(required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
 
@@ -19,14 +19,14 @@ namespace Content.Server.Medical.Components
         ///     This should generally be negative,
         ///     since you're, like, trying to heal damage.
         /// </remarks>
-        [DataField("bloodlossModifier")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public float BloodlossModifier = 0.0f;
 
         /// <summary>
         ///     Restore missing blood.
         /// </summary>
-        [DataField("ModifyBloodLevel")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public float ModifyBloodLevel = 0.0f;
 
@@ -42,13 +42,13 @@ namespace Content.Server.Medical.Components
         /// How long it takes to apply the damage.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("delay")]
+        [DataField]
         public float Delay = 3f;
 
         /// <summary>
         /// Delay multiplier when healing yourself.
         /// </summary>
-        [DataField("selfHealPenaltyMultiplier")]
+        [DataField]
         public float SelfHealPenaltyMultiplier = 3f;
 
         /// <summary>

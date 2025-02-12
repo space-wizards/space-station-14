@@ -21,6 +21,6 @@ public sealed partial class SoundOnOverloadComponent : Component
     /// <summary>
     /// Modifies the volume the sound is played at
     /// </summary>
-    [DataField("volumeModifier")]
+    [DataField]
     public float VolumeModifier;
 }

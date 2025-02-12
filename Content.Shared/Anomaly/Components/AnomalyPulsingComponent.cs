@@ -11,7 +11,7 @@ public sealed partial class AnomalyPulsingComponent : Component
     /// <summary>
     /// The time at which the pulse will be over.
     /// </summary>
-    [DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)), ViewVariables(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     [AutoPausedField]
     public TimeSpan EndTime;
 

@@ -12,7 +12,7 @@ public abstract partial class SharedLightningComponent : Component
     /// Can this lightning arc?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("canArc")]
+    [DataField]
     public bool CanArc;
 
     /// <summary>
@@ -27,7 +27,7 @@ public abstract partial class SharedLightningComponent : Component
     /// The prototype ID used for arcing bolts. Usually will be the same name as the main proto but it could be flexible.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("lightningPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string LightningPrototype = "Lightning";
 
     /// <summary>
@@ -40,7 +40,7 @@ public abstract partial class SharedLightningComponent : Component
     /// How far should this lightning go?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("maxLength")]
+    [DataField]
     public float MaxLength = 5f;
 
     /// <summary>
@@ -52,6 +52,6 @@ public abstract partial class SharedLightningComponent : Component
     /// <summary>
     /// What should this arc to?
     /// </summary>
-    [DataField("collisionMask")]
+    [DataField]
     public int CollisionMask = (int) (CollisionGroup.MobMask | CollisionGroup.MachineMask);
 }

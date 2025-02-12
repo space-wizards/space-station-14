@@ -15,25 +15,25 @@ public sealed partial class SignalSwitchComponent : Component
     /// <summary>
     ///     The port that gets signaled when the switch turns on.
     /// </summary>
-    [DataField("onPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>)))]
     public string OnPort = "On";
 
     /// <summary>
     ///     The port that gets signaled when the switch turns off.
     /// </summary>
-    [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>)))]
     public string OffPort = "Off";
 
     /// <summary>
     ///     The port that gets signaled with the switch's current status.
     ///     This is only used if OnPort is different from OffPort, not in the case of a toggle switch.
     /// </summary>
-    [DataField("statusPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>)))]
     public string StatusPort = "Status";
 
-    [DataField("state")]
+    [DataField]
     public bool State;
 
-    [DataField("clickSound")]
+    [DataField]
     public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg");
 }

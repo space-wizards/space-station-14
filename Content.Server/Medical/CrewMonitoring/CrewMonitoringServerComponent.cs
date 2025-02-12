@@ -16,6 +16,6 @@ public sealed partial class CrewMonitoringServerComponent : Component
     /// <summary>
     ///     After what time sensor consider to be lost.
     /// </summary>
-    [DataField("sensorTimeout"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float SensorTimeout = 10f;
 }

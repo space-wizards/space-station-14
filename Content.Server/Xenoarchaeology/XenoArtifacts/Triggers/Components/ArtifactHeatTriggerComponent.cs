@@ -15,7 +15,7 @@ public sealed partial class ArtifactHeatTriggerComponent : Component
     ///     Around 100 degrees celsius by default.
     ///     Doesn't affect hot items temperature.
     /// </summary>
-    [DataField("activationTemperature")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float ActivationTemperature = 373;
 

@@ -24,7 +24,7 @@ public sealed partial class GhostRoleComponent : Component
     /// <summary>
     /// Whether the <see cref="MakeSentientCommand"/> should run on the mob.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)] [DataField("makeSentient")]
+    [ViewVariables] [DataField]
     public bool MakeSentient = true;
 
     /// <summary>

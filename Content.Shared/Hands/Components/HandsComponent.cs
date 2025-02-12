@@ -48,7 +48,7 @@ public sealed partial class HandsComponent : Component
     /// <summary>
     ///     Distance after which longer throw targets stop increasing throw impulse.
     /// </summary>
-    [DataField("throwRange")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float ThrowRange { get; set; } = 8f;
 
@@ -56,7 +56,7 @@ public sealed partial class HandsComponent : Component
     ///     Whether or not to add in-hand sprites for held items. Some entities (e.g., drones) don't want these.
     ///     Used by the client.
     /// </summary>
-    [DataField("showInHands")]
+    [DataField]
     public bool ShowInHands = true;
 
     /// <summary>

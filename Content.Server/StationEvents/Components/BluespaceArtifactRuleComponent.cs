@@ -11,10 +11,10 @@ namespace Content.Server.StationEvents.Components;
 [RegisterComponent, Access(typeof(BluespaceArtifactRule))]
 public sealed partial class BluespaceArtifactRuleComponent : Component
 {
-    [DataField("artifactSpawnerPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string ArtifactSpawnerPrototype = "RandomArtifactSpawner";
 
-    [DataField("artifactFlashPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string ArtifactFlashPrototype = "EffectFlashBluespace";
 
     [DataField("possibleSightings")]

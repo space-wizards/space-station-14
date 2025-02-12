@@ -26,13 +26,13 @@ public sealed partial class RandomGiftComponent : Component
     /// <summary>
     /// Whether or not the gift should be limited only to actual items.
     /// </summary>
-    [DataField("insaneMode", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite), ViewVariables(required: true), ViewVariables(VVAccess.ReadWrite)]
     public bool InsaneMode;
 
     /// <summary>
     /// What entities are allowed to examine this gift to see its contents.
     /// </summary>
-    [DataField("contentsViewers", required: true)]
+    [DataField(required: true)]
     public EntityWhitelist ContentsViewers = default!;
 
     /// <summary>

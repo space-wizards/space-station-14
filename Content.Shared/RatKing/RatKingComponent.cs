@@ -9,7 +9,7 @@ namespace Content.Shared.RatKing;
 [AutoGenerateComponentState]
 public sealed partial class RatKingComponent : Component
 {
-    [DataField("actionRaiseArmy", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string ActionRaiseArmy = "ActionRatKingRaiseArmy";
 
     /// <summary>
@@ -30,7 +30,7 @@ public sealed partial class RatKingComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("armyMobSpawnId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string ArmyMobSpawnId = "MobRatServant";
 
-    [DataField("actionDomain", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string ActionDomain = "ActionRatKingDomain";
 
     /// <summary>
@@ -42,13 +42,13 @@ public sealed partial class RatKingComponent : Component
     /// <summary>
     ///     The amount of hunger one use of Domain consumes
     /// </summary>
-    [DataField("hungerPerDomainUse", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite), ViewVariables(required: true), ViewVariables(VVAccess.ReadWrite)]
     public float HungerPerDomainUse = 50f;
 
     /// <summary>
     ///     How many moles of ammonia are released after one us of Domain
     /// </summary>
-    [DataField("molesAmmoniaPerDomain"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float MolesAmmoniaPerDomain = 200f;
 
     /// <summary>
@@ -64,25 +64,25 @@ public sealed partial class RatKingComponent : Component
     [DataField("servants")]
     public HashSet<EntityUid> Servants = new();
 
-    [DataField("actionOrderStay", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string ActionOrderStay = "ActionRatKingOrderStay";
 
     [DataField("actionOrderStayEntity")]
     public EntityUid? ActionOrderStayEntity;
 
-    [DataField("actionOrderFollow", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string ActionOrderFollow = "ActionRatKingOrderFollow";
 
     [DataField("actionOrderFollowEntity")]
     public EntityUid? ActionOrderFollowEntity;
 
-    [DataField("actionOrderCheeseEm", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string ActionOrderCheeseEm = "ActionRatKingOrderCheeseEm";
 
     [DataField("actionOrderCheeseEmEntity")]
     public EntityUid? ActionOrderCheeseEmEntity;
 
-    [DataField("actionOrderLoose", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string ActionOrderLoose = "ActionRatKingOrderLoose";
 
     [DataField("actionOrderLooseEntity")]

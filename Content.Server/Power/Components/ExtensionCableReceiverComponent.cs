@@ -16,7 +16,7 @@ namespace Content.Server.Power.Components
         ///     The max distance from a <see cref="ExtensionCableProviderComponent"/> that this can receive power from.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("receptionRange")]
+        [DataField]
         public int ReceptionRange { get; set; } = 3;
     }
 }

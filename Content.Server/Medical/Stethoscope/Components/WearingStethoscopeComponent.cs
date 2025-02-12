@@ -10,7 +10,7 @@ namespace Content.Server.Medical.Components
     {
         public CancellationTokenSource? CancelToken;
 
-        [DataField("delay")]
+        [DataField]
         public float Delay = 2.5f;
 
         public EntityUid Stethoscope = default!;

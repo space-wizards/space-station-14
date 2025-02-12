@@ -9,13 +9,13 @@ public sealed partial class KillCalloutRuleComponent : Component
     /// <summary>
     /// Root used to generate kill callouts
     /// </summary>
-    [DataField("killCalloutPrefix")]
+    [DataField]
     public string KillCalloutPrefix = "death-match-kill-callout-";
 
     /// <summary>
     /// A value used to randomly select a kill callout
     /// </summary>
-    [DataField("killCalloutAmount")]
+    [DataField]
     public int KillCalloutAmount = 60;
 
     /// <summary>
@@ -27,6 +27,6 @@ public sealed partial class KillCalloutRuleComponent : Component
     /// <summary>
     /// A value used to randomly select a kill callout when a player is killed by the environment
     /// </summary>
-    [DataField("selfKillCalloutAmount")]
+    [DataField]
     public int SelfKillCalloutAmount = 10;
 }

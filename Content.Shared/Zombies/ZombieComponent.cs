@@ -35,19 +35,19 @@ public sealed partial class ZombieComponent : Component
     /// <summary>
     /// The skin color of the zombie
     /// </summary>
-    [DataField("skinColor")]
+    [DataField]
     public Color SkinColor = new(0.45f, 0.51f, 0.29f);
 
     /// <summary>
     /// The eye color of the zombie
     /// </summary>
-    [DataField("eyeColor")]
+    [DataField]
     public Color EyeColor = new(0.96f, 0.13f, 0.24f);
 
     /// <summary>
     /// The base layer to apply to any 'external' humanoid layers upon zombification.
     /// </summary>
-    [DataField("baseLayerExternal")]
+    [DataField]
     public string BaseLayerExternal = "MobHumanoidMarkingMatchSkin";
 
     /// <summary>
@@ -59,7 +59,7 @@ public sealed partial class ZombieComponent : Component
     /// <summary>
     /// The role prototype of the zombie antag role
     /// </summary>
-    [DataField("zombieRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>)))]
     public string ZombieRoleId = "Zombie";
 
     /// <summary>
@@ -71,13 +71,13 @@ public sealed partial class ZombieComponent : Component
     /// <summary>
     /// The skin color of the humanoid to restore in case of cloning
     /// </summary>
-    [DataField("beforeZombifiedSkinColor")]
+    [DataField]
     public Color BeforeZombifiedSkinColor;
 
     /// <summary>
     /// The eye color of the humanoid to restore in case of cloning
     /// </summary>
-    [DataField("beforeZombifiedEyeColor")]
+    [DataField]
     public Color BeforeZombifiedEyeColor;
 
     [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
@@ -85,7 +85,7 @@ public sealed partial class ZombieComponent : Component
 
     public EmoteSoundsPrototype? EmoteSounds;
 
-    [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer)))]
     public TimeSpan NextTick;
 
     [DataField("zombieStatusIcon")]
@@ -94,7 +94,7 @@ public sealed partial class ZombieComponent : Component
     /// <summary>
     /// Healing each second
     /// </summary>
-    [DataField("passiveHealing")]
+    [DataField]
     public DamageSpecifier PassiveHealing = new()
     {
         DamageDict = new ()
@@ -110,13 +110,13 @@ public sealed partial class ZombieComponent : Component
     /// <summary>
     /// A multiplier applied to <see cref="PassiveHealing"/> when the entity is in critical condition.
     /// </summary>
-    [DataField("passiveHealingCritMultiplier")]
+    [DataField]
     public float PassiveHealingCritMultiplier = 2f;
 
     /// <summary>
     /// Healing given when a zombie bites a living being.
     /// </summary>
-    [DataField("healingOnBite")]
+    [DataField]
     public DamageSpecifier HealingOnBite = new()
     {
         DamageDict = new()
@@ -130,7 +130,7 @@ public sealed partial class ZombieComponent : Component
     /// <summary>
     ///     Path to antagonist alert sound.
     /// </summary>
-    [DataField("greetSoundNotification")]
+    [DataField]
     public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/zombie_start.ogg");
 
     /// <summary>
@@ -142,12 +142,12 @@ public sealed partial class ZombieComponent : Component
     /// <summary>
     /// The blood reagent of the humanoid to restore in case of cloning
     /// </summary>
-    [DataField("beforeZombifiedBloodReagent")]
+    [DataField]
     public string BeforeZombifiedBloodReagent = string.Empty;
 
     /// <summary>
     /// The blood reagent to give the zombie. In case you want zombies that bleed milk, or something.
     /// </summary>
-    [DataField("newBloodReagent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>)))]
     public string NewBloodReagent = "ZombieBlood";
 }

@@ -126,14 +126,14 @@ public sealed partial class ParticleAcceleratorControlBoxComponent : Component
     /// <summary>
     /// The time at which the PA last fired a wave of particles.
     /// </summary>
-    [DataField("lastFire")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan LastFire;
 
     /// <summary>
     /// The time at which the PA will next fire a wave of particles.
     /// </summary>
-    [DataField("nextFire")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextFire;
 
@@ -150,7 +150,7 @@ public sealed partial class ParticleAcceleratorControlBoxComponent : Component
     // So the *actual* effective firing delay of the PA is 6 seconds, not 5 as listed in the code.
     // So...
     // I have reflected that here to be authentic.
-    [DataField("chargeTime")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan ChargeTime = TimeSpan.FromSeconds(6.0);
 

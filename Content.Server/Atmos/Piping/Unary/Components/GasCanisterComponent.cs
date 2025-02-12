@@ -36,31 +36,31 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     Minimum release pressure possible for the release valve.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("minReleasePressure")]
+        [DataField]
         public float MinReleasePressure { get; set; } = Atmospherics.OneAtmosphere / 10;
 
         /// <summary>
         ///     Maximum release pressure possible for the release valve.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("maxReleasePressure")]
+        [DataField]
         public float MaxReleasePressure { get; set; } = Atmospherics.OneAtmosphere * 10;
 
         /// <summary>
         ///     Valve release pressure.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("releasePressure")]
+        [DataField]
         public float ReleasePressure { get; set; } = Atmospherics.OneAtmosphere;
 
         /// <summary>
         ///     Whether the release valve is open on the canister.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("releaseValve")]
+        [DataField]
         public bool ReleaseValve { get; set; } = false;
 
-        [DataField("accessDeniedSound")]
+        [DataField]
         public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 
         #region GuidebookData

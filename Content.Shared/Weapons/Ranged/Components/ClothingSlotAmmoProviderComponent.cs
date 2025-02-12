@@ -15,7 +15,7 @@ public sealed partial class ClothingSlotAmmoProviderComponent : AmmoProviderComp
     /// <summary>
     /// The slot that the ammo provider should be located in.
     /// </summary>
-    [DataField("targetSlot", required: true)]
+    [DataField(required: true)]
     public SlotFlags TargetSlot;
 
     /// <summary>

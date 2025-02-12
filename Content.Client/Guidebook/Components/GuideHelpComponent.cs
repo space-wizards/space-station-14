@@ -20,7 +20,7 @@ public sealed partial class GuideHelpComponent : Component
     /// <summary>
     /// Whether or not to automatically include the children of the given guides.
     /// </summary>
-    [DataField("includeChildren")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public bool IncludeChildren = true;
 
@@ -28,7 +28,7 @@ public sealed partial class GuideHelpComponent : Component
     /// Whether or not to open the UI when interacting with the entity while on hand.
     /// Mostly intended for books
     /// </summary>
-    [DataField("openOnActivation")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public bool OpenOnActivation;
 }

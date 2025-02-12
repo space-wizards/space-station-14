@@ -11,19 +11,19 @@ public sealed partial class GasProducerAnomalyComponent : Component
     /// <summary>
     /// Should this gas be released when an anomaly reaches max severity?
     /// </summary>
-    [DataField("releaseOnMaxSeverity")]
+    [DataField]
     public bool ReleaseOnMaxSeverity = false;
 
     /// <summary>
     /// Should this gas be released over time?
     /// </summary>
-    [DataField("releasePassively")]
+    [DataField]
     public bool ReleasePassively = false; // In case there are any future anomalies that release gas passively
 
     /// <summary>
     /// The gas to release
     /// </summary>
-    [DataField("releasedGas", required: true)]
+    [DataField(required: true)]
     public Gas ReleasedGas = Gas.WaterVapor; // There is no entry for none, and Gas cannot be null
 
     /// <summary>
@@ -35,24 +35,24 @@ public sealed partial class GasProducerAnomalyComponent : Component
     /// <summary>
     /// The amount of gas released passively
     /// </summary>
-    [DataField("passiveMoleAmount")]
+    [DataField]
     public float PassiveMoleAmount = 1f;
 
     /// <summary>
     /// The radius of random gas spawns.
     /// </summary>
-    [DataField("spawnRadius", required: true)]
+    [DataField(required: true)]
     public float spawnRadius = 3;
 
     /// <summary>
     /// The number of tiles which will be modified.
     /// </summary>
-    [DataField("tileCount")]
+    [DataField]
     public int tileCount = 1;
 
     /// <summary>
     /// The the amount the tempurature should be modified by (negative for decreasing temp)
     /// </summary>
-    [DataField("tempChange")]
+    [DataField]
     public float tempChange = 0;
 }

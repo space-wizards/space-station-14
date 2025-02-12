@@ -37,7 +37,7 @@ namespace Content.Server.Dragon
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField("maxAccumulator")] public float RiftMaxAccumulator = 300f;
 
-        [DataField("spawnRiftAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
         public string SpawnRiftAction = "ActionSpawnRift";
 
         /// <summary>

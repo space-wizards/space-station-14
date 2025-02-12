@@ -10,11 +10,11 @@ namespace Content.Shared.Spider;
 public sealed partial class SpiderComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("webPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string WebPrototype = "SpiderWeb";
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("webAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string WebAction = "ActionSpiderWeb";
 
     [DataField] public EntityUid? Action;

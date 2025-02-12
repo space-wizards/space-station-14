@@ -7,40 +7,40 @@ namespace Content.Server.Nutrition.Components // Vapes are very nutritious.
     [RegisterComponent, Access(typeof(SmokingSystem))]
     public sealed partial class VapeComponent : Component
     {
-        [DataField("delay")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public float Delay { get; set; } = 5;
 
-        [DataField("userDelay")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public float UserDelay { get; set; } = 2;
 
-        [DataField("explosionIntensity")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public float ExplosionIntensity { get; set; } = 2.5f;
 
         // TODO use RiggableComponent.
-        [DataField("explodeOnUse")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ExplodeOnUse { get; set; } = false;
 
-        [DataField("damage", required: true)]
+        [DataField(required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
 
-        [DataField("gasType")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public Gas GasType { get; set; } = Gas.WaterVapor;
 
         /// <summary>
         /// Solution volume will be divided by this number and converted to the gas
         /// </summary>
-        [DataField("reductionFactor")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public float ReductionFactor { get; set; } = 300f;
 
         // TODO when this gets fixed, use prototype serializers
-        [DataField("solutionNeeded")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public string SolutionNeeded = "Water";
     }

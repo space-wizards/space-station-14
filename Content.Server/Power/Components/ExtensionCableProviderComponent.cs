@@ -10,7 +10,7 @@ namespace Content.Server.Power.Components
         ///     The max distance this can connect to <see cref="ExtensionCableReceiverComponent"/>s from.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("transferRange")]
+        [DataField]
         public int TransferRange { get; set; } = 3;
 
         [ViewVariables] public List<ExtensionCableReceiverComponent> LinkedReceivers { get; } = new();

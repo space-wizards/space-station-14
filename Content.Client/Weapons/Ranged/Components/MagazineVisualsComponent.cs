@@ -21,7 +21,7 @@ public sealed partial class MagazineVisualsComponent : Component
     /// <summary>
     /// Should we hide when the count is 0
     /// </summary>
-    [DataField("zeroVisible")] public bool ZeroVisible;
+    [DataField] public bool ZeroVisible;
 }
 
 public enum GunVisualLayers : byte

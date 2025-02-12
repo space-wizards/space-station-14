@@ -11,14 +11,14 @@ public sealed partial class ResearchServerComponent : Component
     /// The name of the server
     /// </summary>
     [AutoNetworkedField]
-    [DataField("serverName"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public string ServerName = "RDSERVER";
 
     /// <summary>
     /// The amount of points on the server.
     /// </summary>
     [AutoNetworkedField]
-    [DataField("points"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public int Points;
 
     /// <summary>
@@ -37,10 +37,10 @@ public sealed partial class ResearchServerComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public List<EntityUid> Clients = new();
 
-    [DataField("nextUpdateTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)))]
     public TimeSpan NextUpdateTime = TimeSpan.Zero;
 
-    [DataField("researchConsoleUpdateTime"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public TimeSpan ResearchConsoleUpdateTime = TimeSpan.FromSeconds(1);
 }
 

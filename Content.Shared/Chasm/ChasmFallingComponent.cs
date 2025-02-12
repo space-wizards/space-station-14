@@ -13,16 +13,16 @@ public sealed partial class ChasmFallingComponent : Component
     /// <summary>
     ///     Time it should take for the falling animation (scaling down) to complete.
     /// </summary>
-    [DataField("animationTime")]
+    [DataField]
     public TimeSpan AnimationTime = TimeSpan.FromSeconds(1.5f);
 
     /// <summary>
     ///     Time it should take in seconds for the entity to actually delete
     /// </summary>
-    [DataField("deletionTime")]
+    [DataField]
     public TimeSpan DeletionTime = TimeSpan.FromSeconds(1.8f);
 
-    [DataField("nextDeletionTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer)))]
     [AutoPausedField]
     public TimeSpan NextDeletionTime = TimeSpan.Zero;
 

@@ -8,14 +8,14 @@ namespace Content.Server.Damage.Components
         /// <summary>
         /// Should this entity be damaged when it lands regardless of its resistances?
         /// </summary>
-        [DataField("ignoreResistances")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool IgnoreResistances = false;
 
         /// <summary>
         /// How much damage.
         /// </summary>
-        [DataField("damage", required: true)]
+        [DataField(required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
     }

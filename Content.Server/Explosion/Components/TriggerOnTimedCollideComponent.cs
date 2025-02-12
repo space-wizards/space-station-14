@@ -7,7 +7,7 @@
 public sealed partial class TriggerOnTimedCollideComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("threshold")]
+    [DataField]
     public float Threshold;
 
     /// <summary>

@@ -9,10 +9,10 @@ namespace Content.Shared.Payload.Components;
 [RegisterComponent]
 public sealed partial class ChemicalPayloadComponent : Component
 {
-    [DataField("beakerSlotA", required: true)]
+    [DataField(required: true)]
     public ItemSlot BeakerSlotA = new();
 
-    [DataField("beakerSlotB", required: true)]
+    [DataField(required: true)]
     public ItemSlot BeakerSlotB = new();
 }
 

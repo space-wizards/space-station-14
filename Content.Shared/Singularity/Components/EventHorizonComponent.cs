@@ -18,7 +18,7 @@ public sealed partial class EventHorizonComponent : Component
     /// If &lt; 0.0 this behavior will not be active.
     /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetRadius"/>.
     /// </summary>
-    [DataField("radius")]
+    [DataField]
     public float Radius;
 
     /// <summary>
@@ -37,7 +37,7 @@ public sealed partial class EventHorizonComponent : Component
     /// Whether the event horizon can consume/destroy the devices built to contain it.
     /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetCanBreachContainment"/>.
     /// </summary>
-    [DataField("canBreachContainment")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public bool CanBreachContainment = false;
 

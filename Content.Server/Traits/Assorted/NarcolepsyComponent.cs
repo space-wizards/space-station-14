@@ -11,13 +11,13 @@ public sealed partial class NarcolepsyComponent : Component
     /// <summary>
     /// The random time between incidents, (min, max).
     /// </summary>
-    [DataField("timeBetweenIncidents", required: true)]
+    [DataField(required: true)]
     public Vector2 TimeBetweenIncidents { get; private set; }
 
     /// <summary>
     /// The duration of incidents, (min, max).
     /// </summary>
-    [DataField("durationOfIncident", required: true)]
+    [DataField(required: true)]
     public Vector2 DurationOfIncident { get; private set; }
 
     public float NextIncidentTime;

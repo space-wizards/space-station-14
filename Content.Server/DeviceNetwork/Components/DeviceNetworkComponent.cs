@@ -56,14 +56,14 @@ namespace Content.Server.DeviceNetwork.Components
         ///     The address of the device, either on the network it is currently connected to or whatever address it
         ///     most recently used.
         /// </summary>
-        [DataField("address")]
+        [DataField]
         public string Address = string.Empty;
 
         /// <summary>
         ///     If true, the address was customized and should be preserved across networks. If false, a randomly
         ///     generated address will be created whenever this device connects to a network.
         /// </summary>
-        [DataField("customAddress")]
+        [DataField]
         public bool CustomAddress = false;
 
         /// <summary>
@@ -77,21 +77,21 @@ namespace Content.Server.DeviceNetwork.Components
         /// <summary>
         ///     Whether the device should listen for all device messages, regardless of the intended recipient.
         /// </summary>
-        [DataField("receiveAll")]
+        [DataField]
         public bool ReceiveAll;
 
         /// <summary>
         ///     If the device should show its address upon an examine. Useful for devices
         ///     that do not have a visible UI.
         /// </summary>
-        [DataField("examinableAddress")]
+        [DataField]
         public bool ExaminableAddress;
 
         /// <summary>
         ///     Whether the device should attempt to join the network on map init.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("autoConnect")]
+        [DataField]
         public bool AutoConnect = true;
 
         /// <summary>
@@ -99,14 +99,14 @@ namespace Content.Server.DeviceNetwork.Components
         /// <see cref="DeviceListSystem"/>
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("sendBroadcastAttemptEvent")]
+        [DataField]
         public bool SendBroadcastAttemptEvent = false;
 
         /// <summary>
         ///     Whether this device's address can be saved to device-lists
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("savableAddress")]
+        [DataField]
         public bool SavableAddress = true;
 
         /// <summary>

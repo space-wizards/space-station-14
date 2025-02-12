@@ -18,14 +18,14 @@ namespace Content.Server.Forensics
         /// <summary>
         /// How close you must be to wipe the prints/blood/etc. off of this entity
         /// </summary>
-        [DataField("cleanDistance")]
+        [DataField]
         public float CleanDistance = 1.5f;
 
         /// <summary>
         /// Can the DNA be cleaned off of this entity?
         /// e.g. you can wipe the DNA off of a knife, but not a cigarette
         /// </summary>
-        [DataField("canDnaBeCleaned")]
+        [DataField]
         public bool CanDnaBeCleaned = true;
     }
 }

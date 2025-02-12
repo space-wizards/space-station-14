@@ -18,13 +18,13 @@ public abstract partial class SharedInstrumentComponent : Component
     [DataField("bank"), ViewVariables(VVAccess.ReadWrite)]
     public byte InstrumentBank { get; set; }
 
-    [DataField("allowPercussion"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public bool AllowPercussion { get; set; }
 
-    [DataField("allowProgramChange"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public bool AllowProgramChange { get ; set; }
 
-    [DataField("respectMidiLimits"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public bool RespectMidiLimits { get; set; } = true;
 
     [ViewVariables(VVAccess.ReadWrite)]

@@ -9,39 +9,39 @@ namespace Content.Shared.Lube;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class LubeComponent : Component
 {
-    [DataField("squeeze")]
+    [DataField]
     public SoundSpecifier Squeeze = new SoundPathSpecifier("/Audio/Items/squeezebottle.ogg");
 
     /// <summary>
     /// Solution on the entity that contains the glue.
     /// </summary>
-    [DataField("solution")]
+    [DataField]
     public string Solution = "drink";
 
     /// <summary>
     /// Reagent that will be used as glue.
     /// </summary>
-    [DataField("reagent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>)))]
     public string Reagent = "SpaceLube";
 
     /// <summary>
     /// Reagent consumption per use.
     /// </summary>
-    [DataField("consumption"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public FixedPoint2 Consumption = FixedPoint2.New(3);
 
     /// <summary>
     /// Min slips per unit
     /// </summary>
-    [DataField("minSlips"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public int MinSlips = 1;
 
     /// <summary>
     /// Max slips per unit
     /// </summary>
-    [DataField("maxSlips"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public int MaxSlips = 6;
 
-    [DataField("slipStrength"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public int SlipStrength = 10;
 }

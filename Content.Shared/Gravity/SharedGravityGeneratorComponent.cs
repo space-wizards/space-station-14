@@ -17,28 +17,28 @@ public partial class SharedGravityGeneratorComponent : Component
     /// <summary>
     /// The sprite used by the core of the gravity generator when the gravity generator is starting up.
     /// </summary>
-    [DataField("coreStartupState")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public string CoreStartupState = "startup";
 
     /// <summary>
     /// The sprite used by the core of the gravity generator when the gravity generator is idle.
     /// </summary>
-    [DataField("coreIdleState")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public string CoreIdleState = "idle";
 
     /// <summary>
     /// The sprite used by the core of the gravity generator when the gravity generator is activating.
     /// </summary>
-    [DataField("coreActivatingState")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public string CoreActivatingState = "activating";
 
     /// <summary>
     /// The sprite used by the core of the gravity generator when the gravity generator is active.
     /// </summary>
-    [DataField("coreActivatedState")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public string CoreActivatedState = "activated";
 }

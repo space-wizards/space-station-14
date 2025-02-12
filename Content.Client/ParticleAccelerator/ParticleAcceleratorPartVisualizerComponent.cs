@@ -6,7 +6,7 @@ namespace Content.Client.ParticleAccelerator;
 [Access(typeof(ParticleAcceleratorPartVisualizerSystem))]
 public sealed partial class ParticleAcceleratorPartVisualsComponent : Component
 {
-    [DataField("stateBase", required: true)]
+    [DataField(required: true)]
     [ViewVariables(VVAccess.ReadWrite)]
     public string StateBase = default!;
 

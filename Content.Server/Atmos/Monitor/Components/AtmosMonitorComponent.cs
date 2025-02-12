@@ -19,7 +19,7 @@ public sealed partial class AtmosMonitorComponent : Component
     // Note that this cancels every single network
     // event, including ones that may not be
     // related to atmos monitor events.
-    [DataField("netEnabled")]
+    [DataField]
     public bool NetEnabled = true;
 
     [DataField("temperatureThresholdId", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThresholdPrototype>)))]
@@ -38,7 +38,7 @@ public sealed partial class AtmosMonitorComponent : Component
     // since there's events for fire, setting this to true
     // will make the atmos monitor act like a smoke detector,
     // immediately signalling danger if there's a fire
-    [DataField("monitorFire")]
+    [DataField]
     public bool MonitorFire = false;
 
     [DataField("gasThresholdPrototypes",
@@ -55,7 +55,7 @@ public sealed partial class AtmosMonitorComponent : Component
     public GasMixture? TileGas;
 
     // Stores the last alarm state of this alarm.
-    [DataField("lastAlarmState")]
+    [DataField]
     public AtmosAlarmType LastAlarmState = AtmosAlarmType.Normal;
 
     [DataField("trippedThresholds")]

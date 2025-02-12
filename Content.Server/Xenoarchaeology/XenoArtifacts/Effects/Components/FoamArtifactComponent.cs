@@ -26,24 +26,24 @@ public sealed partial class FoamArtifactComponent : Component
     /// <summary>
     /// How long does the foam last?
     /// </summary>
-    [DataField("duration"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float Duration = 10;
 
     /// <summary>
     /// How much reagent is in the foam?
     /// </summary>
-    [DataField("reagentAmount"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public float ReagentAmount = 100;
 
     /// <summary>
     /// Minimum radius of foam spawned
     /// </summary>
-    [DataField("minFoamAmount"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public int MinFoamAmount = 15;
 
     /// <summary>
     /// Maximum radius of foam spawned
     /// </summary>
-    [DataField("maxFoamAmount"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public int MaxFoamAmount = 20;
 }

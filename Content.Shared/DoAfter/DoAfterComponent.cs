@@ -8,7 +8,7 @@ namespace Content.Shared.DoAfter;
 [Access(typeof(SharedDoAfterSystem))]
 public sealed partial class DoAfterComponent : Component
 {
-    [DataField("nextId")]
+    [DataField]
     public ushort NextId;
 
     [DataField("doAfters")]

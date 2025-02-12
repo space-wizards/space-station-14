@@ -7,7 +7,7 @@ namespace Content.Server.DeviceNetwork.Components
     [ComponentProtoName("WirelessNetworkConnection")]
     public sealed partial class WirelessNetworkComponent : Component
     {
-        [DataField("range")]
+        [DataField]
         public int Range { get; set; }
     }
 }

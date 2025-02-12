@@ -15,7 +15,7 @@ namespace Content.Shared.Stacks
         ///     Current stack count.
         ///     Do NOT set this directly, use the <see cref="SharedStackSystem.SetCount"/> method instead.
         /// </summary>
-        [DataField("count")]
+        [DataField]
         public int Count { get; set; } = 30;
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Content.Shared.Stacks
         ///     Set to true to not reduce the count when used.
         ///     Note that <see cref="Count"/> still limits the amount that can be used at any one time.
         /// </summary>
-        [DataField("unlimited")]
+        [DataField]
         [ViewVariables(VVAccess.ReadOnly)]
         public bool Unlimited { get; set; }
 
@@ -38,10 +38,10 @@ namespace Content.Shared.Stacks
         /// Lingering stacks will remain present even when there are no items.
         /// Instead, they will become transparent.
         /// </summary>
-        [DataField("lingering"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public bool Lingering;
 
-        [DataField("throwIndividually"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public bool ThrowIndividually { get; set; } = false;
 
         [ViewVariables]
@@ -50,7 +50,7 @@ namespace Content.Shared.Stacks
         /// <summary>
         /// Default IconLayer stack.
         /// </summary>
-        [DataField("baseLayer")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public string BaseLayer = "";
 

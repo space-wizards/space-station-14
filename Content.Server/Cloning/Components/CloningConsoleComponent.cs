@@ -14,7 +14,7 @@ namespace Content.Server.Cloning.Components
         public EntityUid? CloningPod = null;
 
         /// Maximum distance between console and one if its machines
-        [DataField("maxDistance")]
+        [DataField]
         public float MaxDistance = 4f;
 
         public bool GeneticScannerInRange = true;

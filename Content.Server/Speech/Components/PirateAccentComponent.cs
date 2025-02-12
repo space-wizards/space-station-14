@@ -7,7 +7,7 @@ namespace Content.Server.Speech.Components;
 public sealed partial class PirateAccentComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("yarrChance")]
+    [DataField]
     public float YarrChance = 0.5f;
 
     [ViewVariables]

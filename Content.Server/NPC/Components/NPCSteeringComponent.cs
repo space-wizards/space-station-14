@@ -42,19 +42,19 @@ public sealed partial class NPCSteeringComponent : Component
     /// <summary>
     /// Set to true from other systems if you wish to force the NPC to move closer.
     /// </summary>
-    [DataField("forceMove")]
+    [DataField]
     public bool ForceMove = false;
 
-    [DataField("lastSteerDirection")]
+    [DataField]
     public Vector2 LastSteerDirection = Vector2.Zero;
 
     /// <summary>
     /// Last position we considered for being stuck.
     /// </summary>
-    [DataField("lastStuckCoordinates")]
+    [DataField]
     public EntityCoordinates LastStuckCoordinates;
 
-    [DataField("lastStuckTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer)))]
     [AutoPausedField]
     public TimeSpan LastStuckTime;
 
@@ -69,16 +69,16 @@ public sealed partial class NPCSteeringComponent : Component
     /// <summary>
     /// Are we considered arrived if we have line of sight of the target.
     /// </summary>
-    [DataField("arriveOnLineOfSight")]
+    [DataField]
     public bool ArriveOnLineOfSight = false;
 
     /// <summary>
     /// How long the target has been in line of sight if applicable.
     /// </summary>
-    [DataField("lineOfSightTimer")]
+    [DataField]
     public float LineOfSightTimer = 0f;
 
-    [DataField("lineOfSightTimeRequired")]
+    [DataField]
     public float LineOfSightTimeRequired = 0.5f;
 
     [ViewVariables] public CancellationTokenSource? PathfindToken = null;

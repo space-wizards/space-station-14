@@ -25,6 +25,6 @@ public sealed partial class ActiveRadioComponent : Component
     /// <summary>
     ///     If this radio can hear all messages on all maps
     /// </summary>
-    [DataField("globalReceive")]
+    [DataField]
     public bool GlobalReceive = false;
 }

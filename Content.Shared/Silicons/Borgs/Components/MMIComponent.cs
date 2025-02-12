@@ -15,7 +15,7 @@ public sealed partial class MMIComponent : Component
     /// <summary>
     /// The ID of the itemslot that holds the brain.
     /// </summary>
-    [DataField("brainSlotId")]
+    [DataField]
     public string BrainSlotId = "brain_slot";
 
     /// <summary>
@@ -27,19 +27,19 @@ public sealed partial class MMIComponent : Component
     /// <summary>
     /// The sprite state when the brain inserted has a mind.
     /// </summary>
-    [DataField("hasMindState")]
+    [DataField]
     public string HasMindState = "mmi_alive";
 
     /// <summary>
     /// The sprite state when the brain inserted doesn't have a mind.
     /// </summary>
-    [DataField("noMindState")]
+    [DataField]
     public string NoMindState = "mmi_dead";
 
     /// <summary>
     /// The sprite state when there is no brain inserted.
     /// </summary>
-    [DataField("noBrainState")]
+    [DataField]
     public string NoBrainState = "mmi_off";
 }
 

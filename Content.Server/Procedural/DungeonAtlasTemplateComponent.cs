@@ -8,6 +8,6 @@ namespace Content.Server.Procedural;
 [RegisterComponent]
 public sealed partial class DungeonAtlasTemplateComponent : Component
 {
-    [DataField("path", required: true)]
+    [DataField(required: true)]
     public ResPath Path;
 }

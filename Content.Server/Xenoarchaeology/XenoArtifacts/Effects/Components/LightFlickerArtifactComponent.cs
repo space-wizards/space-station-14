@@ -9,12 +9,12 @@ public sealed partial class LightFlickerArtifactComponent : Component
     /// <summary>
     /// Lights within this radius will be flickered on activation
     /// </summary>
-    [DataField("radius")]
+    [DataField]
     public float Radius = 4;
 
     /// <summary>
     /// The chance that the light will flicker
     /// </summary>
-    [DataField("flickerChance")]
+    [DataField]
     public float FlickerChance = 0.75f;
 }

@@ -6,6 +6,6 @@
 [RegisterComponent]
 public sealed partial class ZombieAccentOverrideComponent : Component
 {
-    [DataField("accent")]
+    [DataField]
     public string Accent = "zombie";
 }

@@ -9,7 +9,7 @@ public sealed partial class PillComponent : Component
     /// The pill id. Used for networking & serializing pill visuals.
     /// </summary>
     [AutoNetworkedField]
-    [DataField("pillType")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public uint PillType;
 }

@@ -6,13 +6,13 @@ namespace Content.Server.NPC.Components;
 [RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class NPCJukeComponent : Component
 {
-    [DataField("jukeType")]
+    [DataField]
     public JukeType JukeType = JukeType.Away;
 
-    [DataField("jukeDuration")]
+    [DataField]
     public float JukeDuration = 0.5f;
 
-    [DataField("nextJuke", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer)))]
     [AutoPausedField]
     public TimeSpan NextJuke;
 

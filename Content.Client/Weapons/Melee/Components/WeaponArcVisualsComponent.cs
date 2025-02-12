@@ -8,7 +8,7 @@ public sealed partial class WeaponArcVisualsComponent : Component
 {
     public EntityUid? User;
 
-    [DataField("animation")]
+    [DataField]
     public WeaponArcAnimation Animation = WeaponArcAnimation.None;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("fadeOut")]

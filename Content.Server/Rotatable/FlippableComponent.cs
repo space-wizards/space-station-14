@@ -9,7 +9,7 @@ namespace Content.Server.Rotatable
         /// <summary>
         ///     Entity to replace this entity with when the current one is 'flipped'.
         /// </summary>
-        [DataField("mirrorEntity", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
         public string MirrorEntity = default!;
     }
 }

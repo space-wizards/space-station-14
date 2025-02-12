@@ -15,10 +15,10 @@ public sealed partial class NetProbeCartridgeComponent : Component
     /// <summary>
     /// Limits the amount of devices that can be saved
     /// </summary>
-    [DataField("maxSavedDevices")]
+    [DataField]
     public int MaxSavedDevices { get; set; } = 9;
 
-    [DataField("soundScan")]
+    [DataField]
     public SoundSpecifier SoundScan = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
 }
 

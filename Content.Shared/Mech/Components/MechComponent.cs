@@ -80,7 +80,7 @@ public sealed partial class MechComponent : Component
     /// <summary>
     /// The maximum amount of equipment items that can be installed in the mech
     /// </summary>
-    [DataField("maxEquipmentAmount"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables]
     public int MaxEquipmentAmount = 3;
 
     /// <summary>

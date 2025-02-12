@@ -33,7 +33,7 @@ public sealed partial class TelepathicArtifactComponent : Component
     /// <summary>
     ///     Radius in which player can receive artifacts messages.
     /// </summary>
-    [DataField("range")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float Range = 10f;
 }

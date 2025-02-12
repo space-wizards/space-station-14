@@ -31,7 +31,7 @@ public sealed partial class MechAssemblyComponent : Component
     /// <summary>
     /// The prototype spawned when the assembly is finished
     /// </summary>
-    [DataField("finishedPrototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string FinishedPrototype = default!;
 
     /// <summary>
@@ -45,6 +45,6 @@ public sealed partial class MechAssemblyComponent : Component
     /// The quality of tool needed to remove all the parts
     /// from the parts container.
     /// </summary>
-    [DataField("qualityNeeded", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>)))]
     public string QualityNeeded = "Prying";
 }

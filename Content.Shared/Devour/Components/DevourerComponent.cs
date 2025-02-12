@@ -24,7 +24,7 @@ public sealed partial class DevourerComponent : Component
         Params = AudioParams.Default.WithVolume(-3f),
     };
 
-    [DataField("devourTime")]
+    [DataField]
     public float DevourTime = 3f;
 
     /// <summary>
@@ -33,7 +33,7 @@ public sealed partial class DevourerComponent : Component
     /// NOTE: original intended design was to increase this proportionally with damage thresholds, but those proved quite difficult to get consistently. right now it devours the structure at a fixed timer.
     /// </remarks>
     /// </summary>
-    [DataField("structureDevourTime")]
+    [DataField]
     public float StructureDevourTime = 10f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("soundStructureDevour")]
@@ -62,7 +62,7 @@ public sealed partial class DevourerComponent : Component
     /// <summary>
     /// The chemical ID injected upon devouring
     /// </summary>
-    [DataField("chemical", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>)))]
     public string Chemical = "Ichor";
 
     /// <summary>
@@ -74,7 +74,7 @@ public sealed partial class DevourerComponent : Component
     /// <summary>
     /// The favorite food not only feeds you, but also heals
     /// </summary>
-    [DataField("foodPreference")]
+    [DataField]
     public FoodPreference FoodPreference = FoodPreference.All;
 }
 

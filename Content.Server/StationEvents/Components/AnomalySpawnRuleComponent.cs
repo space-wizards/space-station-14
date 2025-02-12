@@ -10,6 +10,6 @@ namespace Content.Server.StationEvents.Components;
 [RegisterComponent, Access(typeof(AnomalySpawnRule))]
 public sealed partial class AnomalySpawnRuleComponent : Component
 {
-    [DataField("anomalySpawnerPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string AnomalySpawnerPrototype = "RandomAnomalySpawner";
 }

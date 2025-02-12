@@ -18,12 +18,12 @@ namespace Content.Server.Light.Components
         /// How long will matchstick last in seconds.
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
-        [DataField("duration")]
+        [DataField]
         public int Duration = 10;
 
         /// <summary>
         /// Sound played when you ignite the matchstick.
         /// </summary>
-        [DataField("igniteSound", required: true)] public SoundSpecifier IgniteSound = default!;
+        [DataField(required: true)] public SoundSpecifier IgniteSound = default!;
     }
 }

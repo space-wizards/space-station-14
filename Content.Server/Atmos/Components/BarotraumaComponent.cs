@@ -11,11 +11,11 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     public sealed partial class BarotraumaComponent : Component
     {
-        [DataField("damage", required: true)]
+        [DataField(required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
 
-        [DataField("maxDamage")]
+        [DataField]
         [ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2 MaxDamage = 200;
 

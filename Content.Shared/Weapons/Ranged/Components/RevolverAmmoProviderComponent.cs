@@ -24,7 +24,7 @@ public sealed partial class RevolverAmmoProviderComponent : AmmoProviderComponen
     [DataField("currentSlot")]
     public int CurrentIndex;
 
-    [DataField("capacity")]
+    [DataField]
     public int Capacity = 6;
 
     // Like BallisticAmmoProvider we defer spawning until necessary

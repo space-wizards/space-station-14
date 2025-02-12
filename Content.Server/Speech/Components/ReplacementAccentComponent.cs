@@ -36,7 +36,7 @@ namespace Content.Server.Speech.Components
     [RegisterComponent]
     public sealed partial class ReplacementAccentComponent : Component
     {
-        [DataField("accent", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>), required: true)]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>), required: true), required: true)]
         public string Accent = default!;
 
     }

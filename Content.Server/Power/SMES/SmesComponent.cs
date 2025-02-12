@@ -27,7 +27,7 @@ public sealed partial class SmesComponent : Component
     /// The number of distinct charge levels a SMES has.
     /// 0 is empty max is full.
     /// </summary>
-    [DataField("numChargeLevels")]
+    [DataField]
     public int NumChargeLevels = 6;
 
     /// <summary>

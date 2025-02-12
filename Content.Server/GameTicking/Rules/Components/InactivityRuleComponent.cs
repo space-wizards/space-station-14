@@ -11,13 +11,13 @@ public sealed partial class InactivityRuleComponent : Component
     /// <summary>
     /// How long the round must be inactive to restart
     /// </summary>
-    [DataField("inactivityMaxTime", required: true)]
+    [DataField(required: true)]
     public TimeSpan InactivityMaxTime = TimeSpan.FromMinutes(10);
 
     /// <summary>
     /// The delay between announcing round end and the lobby.
     /// </summary>
-    [DataField("roundEndDelay", required: true)]
+    [DataField(required: true)]
     public TimeSpan RoundEndDelay  = TimeSpan.FromSeconds(10);
 
     public CancellationTokenSource TimerCancel = new();

@@ -9,6 +9,6 @@ public sealed partial class ArtifactDeathTriggerComponent : Component
     /// <summary>
     /// How close to the death the artifact has to be for it to trigger.
     /// </summary>
-    [DataField("range")]
+    [DataField]
     public float Range = 15f;
 }

@@ -7,7 +7,7 @@ namespace Content.Shared.Dragon;
 [NetworkedComponent, EntityCategory("Spawner")]
 public abstract partial class SharedDragonRiftComponent : Component
 {
-    [DataField("state")]
+    [DataField]
     public DragonRiftState State = DragonRiftState.Charging;
 }
 

@@ -11,10 +11,10 @@ namespace Content.Server.Medical.Stethoscope.Components
     {
         public bool IsActive = false;
 
-        [DataField("delay")]
+        [DataField]
         public float Delay = 2.5f;
 
-        [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
         public string Action = "ActionStethoscope";
 
         [DataField("actionEntity")] public EntityUid? ActionEntity;

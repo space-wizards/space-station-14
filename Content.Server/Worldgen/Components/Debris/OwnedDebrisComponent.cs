@@ -14,11 +14,11 @@ public sealed partial class OwnedDebrisComponent : Component
     /// <summary>
     ///     The last location in the controller's internal structure for this debris.
     /// </summary>
-    [DataField("lastKey")] public Vector2 LastKey;
+    [DataField] public Vector2 LastKey;
 
     /// <summary>
     ///     The DebrisFeaturePlacerController-having entity that owns this.
     /// </summary>
-    [DataField("owningController")] public EntityUid OwningController;
+    [DataField] public EntityUid OwningController;
 }
 

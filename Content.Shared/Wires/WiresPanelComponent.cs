@@ -13,7 +13,7 @@ public sealed partial class WiresPanelComponent : Component
     /// <summary>
     ///     Is the panel open for this entity's wires?
     /// </summary>
-    [DataField("open")]
+    [DataField]
     [AutoNetworkedField]
     public bool Open;
 
@@ -24,10 +24,10 @@ public sealed partial class WiresPanelComponent : Component
     [AutoNetworkedField]
     public bool Visible = true;
 
-    [DataField("screwdriverOpenSound")]
+    [DataField]
     public SoundSpecifier ScrewdriverOpenSound = new SoundPathSpecifier("/Audio/Machines/screwdriveropen.ogg");
 
-    [DataField("screwdriverCloseSound")]
+    [DataField]
     public SoundSpecifier ScrewdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
 
     /// <summary>

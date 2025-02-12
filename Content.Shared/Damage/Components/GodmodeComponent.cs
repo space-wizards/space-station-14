@@ -6,7 +6,7 @@ namespace Content.Shared.Damage.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedGodmodeSystem))]
 public sealed partial class GodmodeComponent : Component
 {
-    [DataField("wasMovedByPressure")]
+    [DataField]
     public bool WasMovedByPressure;
 
     [DataField("oldDamage")]

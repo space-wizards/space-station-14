@@ -10,7 +10,7 @@ public sealed partial class SurveillanceCameraRouterComponent : Component
     [ViewVariables] public bool Active { get; set; }
 
     // The name of the subnet connected to this router.
-    [DataField("subnetName")]
+    [DataField]
     public string SubnetName { get; set; } = string.Empty;
 
     [ViewVariables]

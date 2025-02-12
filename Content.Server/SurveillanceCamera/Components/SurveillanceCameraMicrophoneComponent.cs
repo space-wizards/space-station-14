@@ -9,7 +9,7 @@ namespace Content.Server.SurveillanceCamera;
 [RegisterComponent]
 public sealed partial class SurveillanceCameraMicrophoneComponent : Component
 {
-    [DataField("enabled")]
+    [DataField]
     public bool Enabled { get; set; } = true;
 
     /// <summary>
@@ -17,10 +17,10 @@ public sealed partial class SurveillanceCameraMicrophoneComponent : Component
     ///     messages from these entities over the surveillance camera.
     ///     Used to avoid things like feedback loops, or radio spam.
     /// </summary>
-    [DataField("blacklist")]
+    [DataField]
     public EntityWhitelist Blacklist { get; private set; } = new();
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("range")]
+    [DataField]
     public int Range { get; private set; } = 10;
 }

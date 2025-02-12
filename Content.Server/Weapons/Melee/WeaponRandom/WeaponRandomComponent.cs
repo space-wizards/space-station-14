@@ -10,7 +10,7 @@ internal sealed partial class WeaponRandomComponent : Component
     /// <summary>
     /// Amount of damage that will be caused. This is specified in the yaml.
     /// </summary>
-    [DataField("damageBonus")]
+    [DataField]
     public DamageSpecifier DamageBonus = new();
 
     /// <summary>
@@ -22,7 +22,7 @@ internal sealed partial class WeaponRandomComponent : Component
     /// <summary>
     /// Sound effect to play when the damage bonus occurs.
     /// </summary>
-    [DataField("damageSound")]
+    [DataField]
     public SoundSpecifier DamageSound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
 
 }

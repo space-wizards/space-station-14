@@ -6,7 +6,7 @@ namespace Content.Server.Atmos.Piping.Binary.Components
     public sealed partial class GasRecyclerComponent : Component
     {
         [ViewVariables(VVAccess.ReadOnly)]
-        [DataField("reacting")]
+        [DataField]
         public Boolean Reacting { get; set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]

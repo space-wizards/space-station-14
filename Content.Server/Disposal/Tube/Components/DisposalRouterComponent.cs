@@ -15,7 +15,7 @@ namespace Content.Server.Disposal.Tube.Components
         [DataField("tags")]
         public HashSet<string> Tags = new();
 
-        [DataField("clickSound")]
+        [DataField]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
     }
 }

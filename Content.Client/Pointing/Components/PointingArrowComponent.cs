@@ -9,7 +9,7 @@ public sealed partial class PointingArrowComponent : SharedPointingArrowComponen
     /// How far the arrow moves up and down during the floating phase.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("offset")]
+    [DataField]
     public Vector2 Offset = new(0, 0.25f);
 
     public readonly string AnimationKey = "pointingarrow";

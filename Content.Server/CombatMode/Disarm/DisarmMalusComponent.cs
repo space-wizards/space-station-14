@@ -10,7 +10,7 @@ namespace Content.Server.CombatMode.Disarm
         /// So, disarm chances are a % chance represented as a value between 0 and 1.
         /// This default would be a 30% penalty to that.
         /// </summary>
-        [DataField("malus")]
+        [DataField]
         public float Malus = 0.3f;
     }
 }

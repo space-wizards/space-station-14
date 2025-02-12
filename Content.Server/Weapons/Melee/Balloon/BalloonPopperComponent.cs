@@ -13,12 +13,12 @@ public sealed partial class BalloonPopperComponent : Component
     /// <summary>
     /// The tag that marks something as a balloon.
     /// </summary>
-    [DataField("balloonTag", customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>)))]
     public string BalloonTag = "Balloon";
 
     /// <summary>
     /// The sound played when a balloon is popped.
     /// </summary>
-    [DataField("popSound")]
+    [DataField]
     public SoundSpecifier PopSound = new SoundPathSpecifier("/Audio/Effects/balloon-pop.ogg");
 }

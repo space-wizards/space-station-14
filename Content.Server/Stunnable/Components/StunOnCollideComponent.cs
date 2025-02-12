@@ -9,19 +9,19 @@ namespace Content.Server.Stunnable.Components
         // TODO: Can probably predict this.
 
         // See stunsystem for what these do
-        [DataField("stunAmount")]
+        [DataField]
         public int StunAmount;
 
-        [DataField("knockdownAmount")]
+        [DataField]
         public int KnockdownAmount;
 
-        [DataField("slowdownAmount")]
+        [DataField]
         public int SlowdownAmount;
 
-        [DataField("walkSpeedMultiplier")]
+        [DataField]
         public float WalkSpeedMultiplier = 1f;
 
-        [DataField("runSpeedMultiplier")]
+        [DataField]
         public float RunSpeedMultiplier = 1f;
 
         /// <summary>

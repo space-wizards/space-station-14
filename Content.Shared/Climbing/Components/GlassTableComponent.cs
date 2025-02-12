@@ -13,13 +13,13 @@ public sealed partial class GlassTableComponent : Component
     /// <summary>
     ///     How much damage should be given to the climber?
     /// </summary>
-    [DataField("climberDamage")]
+    [DataField]
     public DamageSpecifier ClimberDamage = default!;
 
     /// <summary>
     ///     How much damage should be given to the table when climbed on?
     /// </summary>
-    [DataField("tableDamage")]
+    [DataField]
     public DamageSpecifier TableDamage = default!;
 
     /// <summary>

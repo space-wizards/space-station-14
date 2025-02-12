@@ -11,7 +11,7 @@ namespace Content.Client.Storage.Components;
 [RegisterComponent]
 public sealed partial class StorageContainerVisualsComponent : Component
 {
-    [DataField("maxFillLevels")]
+    [DataField]
     public int MaxFillLevels = 0;
 
     /// <summary>

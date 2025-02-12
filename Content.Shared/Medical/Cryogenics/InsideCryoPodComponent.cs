@@ -8,6 +8,6 @@ namespace Content.Shared.Medical.Cryogenics;
 public sealed partial class InsideCryoPodComponent: Component
 {
     [ViewVariables]
-    [DataField("previousOffset")]
+    [DataField]
     public Vector2 PreviousOffset { get; set; } = new(0, 0);
 }

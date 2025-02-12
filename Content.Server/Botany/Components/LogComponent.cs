@@ -10,8 +10,8 @@ namespace Content.Server.Botany.Components;
 [Access(typeof(LogSystem))]
 public sealed partial class LogComponent : Component
 {
-    [DataField("spawnedPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)))]
     public string SpawnedPrototype = "MaterialWoodPlank1";
 
-    [DataField("spawnCount")] public int SpawnCount = 2;
+    [DataField] public int SpawnCount = 2;
 }

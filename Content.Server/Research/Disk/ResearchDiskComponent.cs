@@ -3,7 +3,7 @@ namespace Content.Server.Research.Disk
     [RegisterComponent]
     public sealed partial class ResearchDiskComponent : Component
     {
-        [DataField("points"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables]
         public int Points = 1000;
 
         /// <summary>
@@ -13,7 +13,7 @@ namespace Content.Server.Research.Disk
         /// <remarks>
         /// This is for debug purposes only.
         /// </remarks>
-        [DataField("unlockAllTech")]
+        [DataField]
         public bool UnlockAllTech = false;
     }
 }

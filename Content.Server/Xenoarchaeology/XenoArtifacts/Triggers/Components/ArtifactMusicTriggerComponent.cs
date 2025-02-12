@@ -9,6 +9,6 @@ public sealed partial class ArtifactMusicTriggerComponent : Component
     /// <summary>
     /// how close does the artifact have to be to the instrument to activate
     /// </summary>
-    [DataField("range")]
+    [DataField]
     public float Range = 5;
 }

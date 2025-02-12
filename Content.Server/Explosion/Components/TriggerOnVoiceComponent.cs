@@ -13,16 +13,16 @@ namespace Content.Server.Explosion.Components
         public string? KeyPhrase;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("listenRange")]
+        [DataField]
         public int ListenRange { get; private set; } = 4;
 
-        [DataField("isRecording")]
+        [DataField]
         public bool IsRecording = false;
 
-        [DataField("minLength")]
+        [DataField]
         public int MinLength = 3;
 
-        [DataField("maxLength")]
+        [DataField]
         public int MaxLength = 50;
     }
 }

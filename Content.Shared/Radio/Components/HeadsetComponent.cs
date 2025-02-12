@@ -8,11 +8,11 @@ namespace Content.Shared.Radio.Components;
 [RegisterComponent]
 public sealed partial class HeadsetComponent : Component
 {
-    [DataField("enabled")]
+    [DataField]
     public bool Enabled = true;
 
     public bool IsEquipped = false;
 
-    [DataField("requiredSlot")]
+    [DataField]
     public SlotFlags RequiredSlot = SlotFlags.EARS;
 }
