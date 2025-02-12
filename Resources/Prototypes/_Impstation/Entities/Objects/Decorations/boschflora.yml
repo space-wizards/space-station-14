@@ -1,0 +1,60 @@
+- type: entity
+  parent: BaseTree
+  id: BoschTreeLarge
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Decoration/Flora/flora_boschtreeslarge.rsi
+    offset: 0,1.55
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.18,-0.35,0.18,0.35"
+        density: 2000
+        layer:
+        - WallLayer
+- type: entity
+  parent: BoschTreeLarge
+  id: BoschFloraTreeLarge
+  name: large garden tree
+  components:
+  - type: Sprite
+    layers:
+    - state: treelarge01
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        treelarge01: ""
+- type: entity
+  parent: BoschTreeLarge
+  id: BoschFloraTreeTall
+  name: tall fir tree
+  components:
+  - type: Sprite
+    offset: 0,3
+    sprite: _Impstation/Objects/Decoration/Flora/flora_boschfir.rsi
+    layers:
+    - state: firtree
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        firtree: ""
+- type: entity
+  parent: BoschTreeLarge
+  id: BoschFloraTreeStump
+  name: tall fir tree (stump)
+  components:
+  - type: Sprite
+    offset: 0,1.55
+    sprite: _Impstation/Objects/Decoration/Flora/flora_boschstump.rsi
+    layers:
+    - state: stump
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        stump: ""
