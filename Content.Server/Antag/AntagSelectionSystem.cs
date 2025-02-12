@@ -312,7 +312,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         var playersByRoleTimeAsc = from entry in sessionAndRoleTimes orderby entry.Value ascending select entry;
 
         // now we do playtime biasing.
-        var probToGuarantee = 1f; // the highest chance of getting a guaranteed spot. given to the person queued with the lowest mindrole playtime.
+        var probToGuarantee = 0.3f; // the highest chance of getting a guaranteed spot. given to the person queued with the lowest mindrole playtime.
         var probReduction = probToGuarantee / ((float)playersByRoleTimeAsc.Count() / 2f); // linearly reduces the probability so that it hits zero after going through half of the players.
         List<ICommonSession> guaranteed = [];
         foreach (var keyValuePair in playersByRoleTimeAsc) // for each entry, decide whether or not it should override random antag selection based on its weight, and add it to a list if it should.
