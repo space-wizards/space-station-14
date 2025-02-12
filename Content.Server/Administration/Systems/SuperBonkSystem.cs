@@ -61,7 +61,7 @@ public sealed class SuperBonkSystem : EntitySystem
 
             if (!TryBonk(uid, comp.Tables.Current) || !comp.Tables.MoveNext())
             {
-                _toRemove.Add(uid);
+                RemComp<SuperBonkComponent>(uid);
                 continue;
             }
 
@@ -78,6 +78,8 @@ public sealed class SuperBonkSystem : EntitySystem
 
     public void StartSuperBonk(EntityUid target, bool stopWhenDead = false)
     {
+        if (HasComp<SuperBonkComponent>(target))
+            return;
 
         //The other check in the code to stop when the target dies does not work if the target is already dead.
         if (stopWhenDead && TryComp<MobStateComponent>(target, out var mobState) && mobState.CurrentState == MobState.Dead)
