@@ -91,7 +91,10 @@ namespace Content.Client.Construction.UI
 
             // This is required so that if we load after the system is initialized, we can bind to it immediately
             if (_systemManager.TryGetEntitySystem<ConstructionSystem>(out var constructionSystem))
+            {
+                constructionSystem.ClearAllGhosts();
                 SystemBindingChanged(constructionSystem);
+            }
 
             _systemManager.SystemLoaded += OnSystemLoaded;
             _systemManager.SystemUnloaded += OnSystemUnloaded;
