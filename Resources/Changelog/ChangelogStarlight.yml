@@ -3321,4 +3321,12 @@ Entries:
   id: 461
   time: '2025-02-12T05:20:17.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/321
+- author: Conflee
+  changes:
+  - message: Added RetroStation, High Pop. Currently not in rotation, has to be set
+      by Admins. For playtesting.
+    type: Add
+  id: 462
+  time: '2025-02-12T06:49:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/312
 
