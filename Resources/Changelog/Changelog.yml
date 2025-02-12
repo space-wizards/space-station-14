@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: metalgearsloth
   changes:
-  - message: Fix airlock autoclose mispredicting.
-    type: Fix
-  id: 7444
-  time: '2024-09-27T06:10:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32477
-- author: metalgearsloth
-  changes:
   - message: Fix storage area pickup sound playing more than once.
     type: Fix
   id: 7445
@@ -3894,3 +3887,11 @@
   id: 7943
   time: '2025-02-12T08:58:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34889
+- author: Xillan
+  changes:
+  - message: Changed light brown gloves to have their own unique fiber for detectives,
+      where previously they were indistinguishable from normal / dark brown gloves.
+    type: Tweak
+  id: 7944
+  time: '2025-02-12T18:41:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35111
