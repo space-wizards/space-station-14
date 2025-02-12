@@ -1,5 +1,5 @@
 - type: gameMap
-  id: Hotel
+  id: StarlightHotel
   mapName: 'Hotel'
   mapPath: /Maps/_Starlight/Stations/Hotel.yml
   minPlayers: 15

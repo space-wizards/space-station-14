@@ -3297,4 +3297,64 @@ Entries:
   id: 458
   time: '2025-02-09T15:28:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/318
-
+- author: Conflee
+  changes:
+  - message: Changed the year displayed in the PDA from 3025 to 2525 to match lore
+      being written
+    type: Tweak
+  id: 459
+  time: '2025-02-11T07:53:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/319
+- author: PubliclyExecutedPig
+  changes:
+  - message: Changed both Lobster and Hotel Station
+    type: Tweak
+  id: 460
+  time: '2025-02-11T08:52:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/309
+- author: STARLIGHT TEAM
+  changes:
+  - message: Allow the eye to interact across maps. (The Abductor no longer needs
+      to fly to the station map to teleport onto the station.) (A change for the upcoming
+      new Blood Cult mode, specifically for Nar'Sie. 🤫)
+    type: Tweak
+  id: 461
+  time: '2025-02-12T05:20:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/321
+- author: Conflee
+  changes:
+  - message: Added RetroStation, High Pop. Currently not in rotation, has to be set
+      by Admins. For playtesting.
+    type: Add
+  id: 462
+  time: '2025-02-12T06:49:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/312
+- author: Rinary
+  changes:
+  - message: Now mech flashlight drains mech battery
+    type: Tweak
+  id: 463
+  time: '2025-02-12T13:41:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/320
+- author: Rinary
+  changes:
+  - message: Added mech equipment types(WIP)
+    type: Add
+  id: 464
+  time: '2025-02-12T13:41:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/320
+- author: Rinary
+  changes:
+  - message: Resprited Mechs
+    type: Tweak
+  id: 465
+  time: '2025-02-12T13:41:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/320
+- author: Rinary
+  changes:
+  - message: 'Removed all dangerous command perms from QUERY to DANGER, now loading
+      prototypes and files available only for head staff'
+    type: Tweak
+  id: 465
+  time: '2025-02-12T13:48:08.124134+00:00'
+  url: 'null'

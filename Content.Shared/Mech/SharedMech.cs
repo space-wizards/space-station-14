@@ -24,6 +24,13 @@ public enum MechVisualLayers : byte
     Light
 }
 
+[Serializable, NetSerializable]
+public enum EquipmentType : byte
+{
+    Active,
+    Passive
+}
+
 /// <summary>
 /// Event raised on equipment when it is inserted into a mech
 /// </summary>
