@@ -5,7 +5,9 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Popups;
 using Content.Shared.Timing;
+using Robust.Shared.Map;
 using Microsoft.CodeAnalysis.Scripting.Hosting;
 using Robust.Shared.Toolshed.Commands.Math;
 
@@ -17,6 +19,7 @@ public sealed class SignallerSystem : EntitySystem
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -55,9 +58,15 @@ public sealed class SignallerSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnSignalFailed(Entity<SignallerComponent> ent, ref SignalFailedEvent args)
+    private void OnSignalFailed(Entity<SignallerComponent> ent, ref SignalFailedEvent args) // called by WirelessNetworkSystem
     {
-        // makes a popup if the signaller is out of range
-        _popup.PopupEntity(Loc.GetString("signaller-interact-out-of-range-text"), ent.Owner);
+        if (args.failed) // makes a popup if the signaller is out of range
+        {
+            _popup.PopupEntity(Loc.GetString("signaller-interact-out-of-range-text"), ent.Owner, _transform.GetParentUid(ent.Owner), PopupType.SmallCaution);
+        }
+        else // diff popup if it's in-range
+        {
+            _popup.PopupEntity(Loc.GetString("signaller-interact-in-range-text"), ent.Owner, _transform.GetParentUid(ent.Owner));
+        }
     }
 }
