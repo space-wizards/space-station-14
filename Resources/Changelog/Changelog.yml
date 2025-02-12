@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Trusted players can now initiate votekicks for serious rulebreaks, when
-      admins are unavailable.
-    type: Add
-  id: 7441
-  time: '2024-09-26T16:32:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32005
 - author: Beck Thompson
   changes:
   - message: Voice masks allow you to pick your speaking style again.
@@ -3895,3 +3887,10 @@
   id: 7940
   time: '2025-02-11T23:13:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34281
+- author: beck-thompson
+  changes:
+  - message: Fultons are now part of the Advanced Tools T2 research!
+    type: Add
+  id: 7941
+  time: '2025-02-12T00:29:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34567
