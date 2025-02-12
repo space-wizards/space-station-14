@@ -18,6 +18,12 @@ using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.Shared.Speech;
+using Content.Server.Popups;
+using Robust.Shared.Player;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Chat.Prototypes;
+using Content.Server.Speech.EntitySystems;
 
 namespace Content.Server.Body.Systems;
 
@@ -35,6 +41,7 @@ public sealed class RespiratorSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     private static readonly ProtoId<MetabolismGroupPrototype> GasId = new("Gas");
 
@@ -46,6 +53,9 @@ public sealed class RespiratorSystem : EntitySystem
         UpdatesAfter.Add(typeof(MetabolizerSystem));
         SubscribeLocalEvent<RespiratorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<RespiratorComponent, EntityUnpausedEvent>(OnUnpaused);
+        SubscribeLocalEvent<RespiratorComponent, SpeakAttemptEvent>(OnSpeakAttempt);
+        SubscribeLocalEvent<RespiratorComponent, EmoteEvent>(OnEmote, before: [typeof(VocalSystem)]);
+        SubscribeLocalEvent<RespiratorComponent, ScreamActionEvent>(OnScream, before: [typeof(VocalSystem)]);
         SubscribeLocalEvent<RespiratorComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
     }
 
@@ -58,6 +68,49 @@ public sealed class RespiratorSystem : EntitySystem
     {
         ent.Comp.NextUpdate += args.PausedTime;
     }
+
+    private void OnSpeakAttempt(Entity<RespiratorComponent> ent, ref SpeakAttemptEvent args)
+    {
+        var (uid, component) = ent;
+
+        if (component.Saturation < component.SuffocationThreshold)
+        {
+            var stringOthers = Loc.GetString("respiratory-speak-no-air-others", ("target", Identity.Entity(uid, EntityManager)));
+            _popup.PopupEntity(stringOthers, uid, Filter.PvsExcept(uid), true, Shared.Popups.PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("respiratory-speak-no-air-self"), uid, uid, Shared.Popups.PopupType.MediumCaution);
+
+            args.Cancel();
+        }
+    }
+
+    private void OnEmote(Entity<RespiratorComponent> ent, ref EmoteEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        var (_, component) = ent;
+
+        if (component.Saturation < component.SuffocationThreshold)
+            args.Handled = true;
+    }
+
+    private void OnScream(Entity<RespiratorComponent> ent, ref ScreamActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        var (uid, component) = ent;
+
+        if (component.Saturation < component.SuffocationThreshold)
+        {
+            var stringOthers = Loc.GetString("respiratory-scream-no-air-others", ("target", Identity.Entity(uid, EntityManager)));
+            _popup.PopupEntity(stringOthers, uid, Filter.PvsExcept(uid), true, Shared.Popups.PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("respiratory-scream-no-air-self"), uid, uid, Shared.Popups.PopupType.MediumCaution);
+
+            args.Handled = true;
+        }
+    }
+
 
     public override void Update(float frameTime)
     {
