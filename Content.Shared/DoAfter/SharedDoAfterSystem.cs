@@ -29,7 +29,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<DoAfterComponent, DamageChangedEvent>(OnDamage);
         SubscribeLocalEvent<DoAfterComponent, EntityUnpausedEvent>(OnUnpaused);
-        SubscribeLocalEvent<DoAfterComponent, MobStateChangedEvent>(OnStateChanged);
         SubscribeLocalEvent<DoAfterComponent, ComponentGetState>(OnDoAfterGetState);
         SubscribeLocalEvent<DoAfterComponent, ComponentHandleState>(OnDoAfterHandleState);
     }
@@ -43,18 +42,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
                 doAfter.CancelledTime = doAfter.CancelledTime.Value + args.PausedTime;
         }
 
-        Dirty(uid, component);
-    }
-
-    private void OnStateChanged(EntityUid uid, DoAfterComponent component, MobStateChangedEvent args)
-    {
-        if (args.NewMobState != MobState.Dead || args.NewMobState != MobState.Critical)
-            return;
-
-        foreach (var doAfter in component.DoAfters.Values)
-        {
-            InternalCancel(doAfter, component);
-        }
         Dirty(uid, component);
     }
 
