@@ -77,7 +77,7 @@
     ears: ClothingHeadsetCMO
 
 - type: loadout
-  id: ChiefEngineerAltHeadset
+  id: ChiefMedicalOfficerAltHeadset
   equipment:
     ears: ClothingHeadsetAltMedical
   effects:
