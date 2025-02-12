@@ -15,8 +15,6 @@ public sealed class SuperBonkSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    private readonly HashSet<EntityUid> _toRemove = [];
-
     public override void Initialize()
     {
         base.Initialize();
@@ -38,7 +36,7 @@ public sealed class SuperBonkSystem : EntitySystem
         var (uid, component) = ent;
 
         if (component.StopWhenDead && args.NewMobState == MobState.Dead)
-            _toRemove.Add(uid);
+            RemCompDeferred<SuperBonkComponent>(uid);
     }
 
     private void OnShutdown(Entity<SuperBonkComponent> ent, ref ComponentShutdown args)
@@ -67,13 +65,6 @@ public sealed class SuperBonkSystem : EntitySystem
 
             comp.NextBonk += comp.BonkCooldown;
         }
-
-        foreach (var uid in _toRemove)
-        {
-            RemComp<SuperBonkComponent>(uid);
-        }
-
-        _toRemove.Clear();
     }
 
     public void StartSuperBonk(EntityUid target, bool stopWhenDead = false)
