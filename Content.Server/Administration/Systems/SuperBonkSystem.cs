@@ -59,14 +59,7 @@ public sealed class SuperBonkSystem : EntitySystem
             if (comp.NextBonk > _timing.CurTime)
                 continue;
 
-            var tableUid = comp.Tables.Current;
-
-            // It would be very weird for something without a transform component to have a bonk component
-            // but just in case because I don't want to crash the server.
-            if (!HasComp<TransformComponent>(tableUid))
-                continue;
-
-            if (!comp.Tables.MoveNext() || !TryBonk((uid, comp), tableUid))
+            if (!TryBonk(uid, comp.Tables.Current) || !comp.Tables.MoveNext())
             {
                 _toRemove.Add(uid);
                 continue;
@@ -110,20 +103,23 @@ public sealed class SuperBonkSystem : EntitySystem
         AddComp(target, component);
     }
 
-    private bool TryBonk(Entity<SuperBonkComponent> ent, EntityUid tableUid)
+    private bool TryBonk(EntityUid uid, EntityUid tableUid)
     {
-        var (uid, _) = ent;
-
         // Remove SuperBonkComponent if we don't have ClumsyComponent
         // because we wouldn't be able to do anything anyway.
         if (!TryComp<ClumsyComponent>(uid, out var clumsyComp))
             return false;
 
-        _transformSystem.SetCoordinates(uid, Transform(tableUid).Coordinates);
+        // It would be very weird for something without a transform component to have a bonk component
+        // but just in case because I don't want to crash the server.
+        if (HasComp<TransformComponent>(tableUid))
+        {
+            _transformSystem.SetCoordinates(uid, Transform(tableUid).Coordinates);
 
-        _clumsySystem.HitHeadClumsy((uid, clumsyComp), tableUid);
+            _clumsySystem.HitHeadClumsy((uid, clumsyComp), tableUid);
 
-        _audioSystem.PlayPvs(clumsyComp.TableBonkSound, tableUid);
+            _audioSystem.PlayPvs(clumsyComp.TableBonkSound, tableUid);
+        }
 
         return true;
     }
