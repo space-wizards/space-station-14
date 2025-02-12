@@ -847,6 +847,9 @@
   id: MailingUnitElectronics
 
 - type: Tag
+  id: Maints
+
+- type: Tag
   id: Matchstick
 
 - type: Tag
@@ -1191,6 +1194,9 @@
 
 - type: Tag
   id: Spray
+
+- type: Tag
+  id: SprayNozzle
 
 - type: Tag
   id: SpreaderIgnore
