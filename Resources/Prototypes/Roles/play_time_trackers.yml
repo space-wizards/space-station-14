@@ -159,3 +159,44 @@
 
 - type: playTimeTracker
   id: JobZookeeper
+
+# imp change - Antag trackers
+
+- type: playTimeTracker
+  id: AntagDragon
+
+- type: playTimeTracker
+  id: AntagNinja
+
+- type: playTimeTracker
+  id: AntagNuclearOperative
+
+- type: playTimeTracker
+  id: AntagNuclearAgent
+
+- type: playTimeTracker
+  id: AntagNuclearCommander
+
+- type: playTimeTracker
+  id: AntagHeadRevolutionary
+
+- type: playTimeTracker
+  id: AntagRevolutionary
+
+- type: playTimeTracker
+  id: AntagSubvertedSilicon
+
+- type: playTimeTracker
+  id: AntagThief
+
+- type: playTimeTracker
+  id: AntagSyndicateAgent
+
+- type: playTimeTracker
+  id: AntagSyndicateSleeperAgent
+
+- type: playTimeTracker
+  id: AntagInitialInfected
+
+- type: playTimeTracker
+  id: AntagZombie
