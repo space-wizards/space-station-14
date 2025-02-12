@@ -70,18 +70,10 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
 
         if (ent.Comp.StunTime != null)
             _stun.TryParalyze(target, ent.Comp.StunTime.Value, false);
-        if (ent.Comp.UnanchorOnHit && HasComp<AnchorableComponent>(target))
-            _transform.Unanchor(target);
 
         if (direction == Vector2.Zero)
             return;
 
-        // Don't throw objects that cannot be moved
-        // TryThrow checks this as well, but we don't want to log a warning.
-        // We don't do this earlier because anomalies change their body type when hit with a gorilla gauntlet.
-        if (!TryComp<PhysicsComponent>(target, out var targetPhysics) || (targetPhysics.BodyType & (BodyType.Dynamic | BodyType.KinematicController)) == 0x0)
-            return;
-
-        _throwing.TryThrow(target, direction.Normalized() * ent.Comp.Distance, ent.Comp.Speed, user);
+        _throwing.TryThrow(target, direction.Normalized() * ent.Comp.Distance, ent.Comp.Speed, user, unanchorOnHit: ent.Comp.UnanchorOnHit);
     }
 }
