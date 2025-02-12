@@ -8,6 +8,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using System.Numerics;
+using Content.Shared.Weapons.Melee;
 
 namespace Content.Shared.RepulseAttract;
 
@@ -22,13 +23,10 @@ public sealed class RepulseAttractSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RepulseAttractComponent, AttemptMeleeEvent>(OnMeleeAttempt, after: [typeof(SharedWieldableSystem)]);
+        SubscribeLocalEvent<RepulseAttractComponent, MeleeHitEvent>(OnMeleeAttempt, before: [typeof(UseDelayOnMeleeHitSystem)], after: [typeof(SharedWieldableSystem)]);
     }
-    private void OnMeleeAttempt(Entity<RepulseAttractComponent> ent, ref AttemptMeleeEvent args)
+    private void OnMeleeAttempt(Entity<RepulseAttractComponent> ent, ref MeleeHitEvent args)
     {
-        if (args.Cancelled)
-            return;
-
         if (_delay.IsDelayed(ent.Owner))
             return;
 
