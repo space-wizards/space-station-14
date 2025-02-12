@@ -188,6 +188,7 @@ loadout-group-chief-medical-officer-neck = Chief Medical Officer neck
 loadout-group-chief-medical-officer-ears = Chief Medical Officer headset
 
 loadout-group-medical-doctor-head = Medical Doctor head
+loadout-group-medical-doctor-eyes = Medical Doctor HUD
 loadout-group-medical-doctor-jumpsuit = Medical Doctor jumpsuit
 loadout-group-medical-doctor-outerclothing = Medical Doctor outer clothing
 loadout-group-medical-doctor-backpack = Medical Doctor backpack
