@@ -8,13 +8,15 @@ using Content.Shared.Database;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Reflection;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Commands;
 
 /// <summary>
 /// Allows admins to change certain CVars. This is different than the "cvar" command which is host only and can change any CVar.
 /// </summary>
+/// <remarks>
+/// Possible todo for future, store default values for cvars, and allow resetting to default.
+/// </remarks>
 [AdminCommand(AdminFlags.Admin)]
 public sealed class ChangeCvarCommand : LocalizedCommands
 {
@@ -28,10 +30,8 @@ public sealed class ChangeCvarCommand : LocalizedCommands
 
     private void Init()
     {
-        if (_initialized)
-        {
+        if (_initialized) // hate this.
             return;
-        }
 
         _initialized = true;
 
@@ -49,6 +49,9 @@ public sealed class ChangeCvarCommand : LocalizedCommands
 
                 var cvarDef = (CVarDef)field.GetValue(null)!;
                 _changableCvars.Add(new ChangableCVar(cvarDef.Name, allowed));
+                // Possible todo? check if the cvar is registered in the config manager? or already registered in our list?
+                // Think engine will blow up anyways if its double registered? Not sure.
+                // This command should be fine with multiple registrations.
             }
         }
     }
@@ -192,16 +195,14 @@ public sealed class ChangeCvarCommand : LocalizedCommands
 
     private List<ChangableCVar> GetAllRunnableCvars(IConsoleShell shell)
     {
+        // Not a player, running as server. We COULD return all cvars,
+        // but a check later down the line will prevent it from anyways. Use the "cvar" command instead.
         if (shell.Player == null)
-        {
-            return new List<ChangableCVar>();
-        }
+            return [];
 
         var adminData = _adminManager.GetAdminData(shell.Player);
         if (adminData == null)
-        {
-            return new List<ChangableCVar>();
-        }
+            return []; // Not an admin
 
         return _changableCvars
             .Where(cvar => adminData.HasFlag(cvar.Control.AdminFlags))
