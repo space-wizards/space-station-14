@@ -11,6 +11,9 @@
       "name": "bag"
     },
     {
+      "name": "bag_overlay"
+    },
+    {
       "name": "bag_folded"
     },
     {
