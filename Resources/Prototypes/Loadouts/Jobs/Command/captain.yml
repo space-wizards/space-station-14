@@ -1,4 +1,4 @@
-# For mantles
+# For Master Captains; over-ear headset, mantle
 - type: loadoutEffectGroup
   id: MasterCap
   effects:
@@ -80,7 +80,7 @@
   equipment:
     back: ClothingBackpackDuffelCaptain
 
-# Outer clothing
+# OuterClothing
 - type: loadout
   id: CaptainOuterClothing
   equipment:
@@ -96,6 +96,14 @@
   id: CommandHeadset
   equipment:
     ears: ClothingHeadsetCommand
+
+- type: loadout
+  id: CommandAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterCap
 
 - type: loadout
   id: CommandAltHeadset

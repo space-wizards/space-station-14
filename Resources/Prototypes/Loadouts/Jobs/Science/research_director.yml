@@ -1,4 +1,4 @@
-# For mantles
+# For Master RDs; over-ear headset, mantle
 - type: loadoutEffectGroup
   id: MasterRD
   effects:
@@ -59,6 +59,14 @@
   id: ResearchDirectorHeadset
   equipment:
     ears: ClothingHeadsetRD
+
+- type: loadout
+  id: ResearchDirectorAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltScience
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterRD
 
 - type: loadout
   id: ResearchDirectorAltHeadset

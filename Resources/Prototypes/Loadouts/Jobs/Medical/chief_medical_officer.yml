@@ -1,4 +1,4 @@
-# For mantles
+# For Master CMOs; over-ear headset, mantle
 - type: loadoutEffectGroup
   id: MasterCMO
   effects:
@@ -59,7 +59,7 @@
   equipment:
     neck: ClothingNeckMantleCMO
 
-# Outer clothing
+# OuterClothing
 - type: loadout
   id: ChiefMedicalOfficerLabCoat
   equipment:
@@ -75,6 +75,14 @@
   id: ChiefMedicalOfficerHeadset
   equipment:
     ears: ClothingHeadsetCMO
+
+- type: loadout
+  id: ChiefEngineerAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltMedical
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterCMO
 
 - type: loadout
   id: ChiefMedicalOfficerAltHeadset

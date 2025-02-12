@@ -161,7 +161,7 @@
   name: loadout-group-hop-ears
   loadouts:
   - CommandHeadset
-  - CommandAltHeadset
+  - HoPAltHeadset
 
 - type: loadoutGroup
   id: HoPJumpsuit

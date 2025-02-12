@@ -1,4 +1,4 @@
-# For mantles
+# For Master HoSs; over-ear headset, mantle
 - type: loadoutEffectGroup
   id: MasterHoS
   effects:
@@ -85,6 +85,14 @@
   id: HeadofSecurityrHeadset
   equipment:
     ears: ClothingHeadsetSecurity
+
+- type: loadout
+  id: HeadofSecurityrAltHeadset
+  equipment:
+    ears: ClothingHeadsetAltSecurity
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterHoS
 
 - type: loadout
   id: HeadofSecurityrAltHeadset
