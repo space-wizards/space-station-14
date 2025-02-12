@@ -42,7 +42,7 @@ public sealed class ContrabandSystem : EntitySystem
         Dirty(uid, contraband);
     }
 
-    private void OnDetailedExamine(EntityUid ent,ContrabandComponent component, ref GetVerbsEvent<ExamineVerb> args)
+    private void OnDetailedExamine(EntityUid ent, ContrabandComponent component, ref GetVerbsEvent<ExamineVerb> args)
     {
 
         if (!_contrabandExamineEnabled)
@@ -64,11 +64,11 @@ public sealed class ContrabandSystem : EntitySystem
             //creating a combined list of jobs and departments for the restricted text
             var list = ContentLocalizationManager.FormatList(localizedDepartments.Concat(localizedJobs).ToList());
             // department restricted text
-            departmentExamineMessage = Loc.GetString("contraband-examine-text-Restricted-department", ("departments", list));
+            departmentExamineMessage = Loc.GetString("contraband-examine-text-Restricted-department", ("color", severity.ExamineColor), ("departments", list));
         }
         else
         {
-            departmentExamineMessage = Loc.GetString(severity.ExamineText);
+            departmentExamineMessage = Loc.GetString(severity.ExamineText, ("color", severity.ExamineColor));
         }
 
         // text based on ID card
