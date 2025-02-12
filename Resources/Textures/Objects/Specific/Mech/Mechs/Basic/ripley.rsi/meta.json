@@ -43,6 +43,20 @@
       "name": "base-g-full-open"
     },
     {
+      "name": "base-p"
+    },
+    {
+      "name": "base-p-open",
+      "directions": 4
+    },
+    {
+      "name": "base-p-full",
+      "directions": 4
+    },
+    {
+      "name": "base-p-full-open"
+    },
+    {
       "name": "ripley_chassis"
     },
     {
