@@ -51,7 +51,7 @@
     - 0,0,4,3
     whitelist:
       tags:
-        - Document
+      - Document
   - type: ItemMapper
     mapLayers:
       folder-overlay-paper:
@@ -191,7 +191,7 @@
         name: clipboard-slot-component-slot-name-pen
         whitelist:
           tags:
-            - Write
+          - Write
         insertOnInteract: false
   - type: Item
     sprite: Objects/Misc/clipboard.rsi
@@ -205,7 +205,7 @@
     - 0,0,5,3
     whitelist:
       tags:
-        - Document
+      - Document
   - type: ItemMapper
     mapLayers:
       clipboard_paper:
@@ -267,7 +267,7 @@
         name: clipboard-slot-component-slot-name-pen
         whitelist:
           tags:
-            - Write
+          - Write
         insertOnInteract: true
   - type: Item
     sprite: Objects/Misc/qm_clipboard.rsi
