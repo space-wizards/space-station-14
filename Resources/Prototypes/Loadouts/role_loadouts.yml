@@ -3,12 +3,12 @@
   id: JobCaptain
   groups:
   - CaptainHead
+  - CaptainEars
   - CaptainNeck
   - CaptainJumpsuit
   - CaptainBackpack
   - CaptainOuterClothing
   - CaptainShoes
-  - CaptainEars
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -18,12 +18,12 @@
   groups:
   - GroupTankHarness
   - HoPHead
+  - HoPEars
   - HoPNeck
   - HoPJumpsuit
   - HoPBackpack
   - HoPOuterClothing
   - HoPShoes
-  - HoPEars
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -200,11 +200,11 @@
   groups:
   - GroupTankHarness
   - QuartermasterHead
+  - QuartermasterEars
   - QuartermasterNeck
   - QuartermasterJumpsuit
   - CargoTechnicianBackpack
   - QuartermasterOuterClothing
-  - QuartermasterEars
   - QuartermasterShoes
   - Glasses
   - Survival
@@ -243,11 +243,11 @@
   groups:
   - GroupTankHarness
   - ChiefEngineerHead
+  - ChiefEngineerEars
   - ChiefEngineerJumpsuit
   - StationEngineerBackpack
   - ChiefEngineerNeck
   - ChiefEngineerOuterClothing
-  - ChiefEngineerEars
   - ChiefEngineerShoes
   - SurvivalExtended
   - Trinkets
@@ -295,12 +295,12 @@
   groups:
   - GroupTankHarness
   - ResearchDirectorHead
+  - ResearchDirectorEars
   - ResearchDirectorNeck
   - ResearchDirectorJumpsuit
   - ScientistBackpack
   - ResearchDirectorOuterClothing
   - ScientistGloves
-  - ResearchDirectorEars
   - ResearchDirectorShoes
   - Glasses
   - Survival
@@ -340,12 +340,12 @@
   id: JobHeadOfSecurity
   groups:
   - HeadofSecurityHead
+  - HeadofSecurityEars
   - HeadofSecurityNeck
   - HeadofSecurityJumpsuit
   - SecurityBackpack
   - SecurityBelt
   - HeadofSecurityOuterClothing
-  - HeadofSecurityEars
   - SecurityShoes
   - SurvivalSecurity
   - Trinkets
@@ -410,13 +410,13 @@
   groups:
   - GroupTankHarness
   - ChiefMedicalOfficerHead
+  - ChiefMedicalOfficerEars
   - MedicalMask
   - ChiefMedicalOfficerJumpsuit
   - MedicalGloves
   - MedicalBackpack
   - ChiefMedicalOfficerOuterClothing
   - ChiefMedicalOfficerNeck
-  - ChiefMedicalOfficerEars
   - ChiefMedicalOfficerShoes
   - Glasses
   - SurvivalMedical
