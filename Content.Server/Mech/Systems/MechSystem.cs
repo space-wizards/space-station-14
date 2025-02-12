@@ -75,7 +75,8 @@ public sealed partial class MechSystem : SharedMechSystem
 
     private void OnMechCanMoveEvent(EntityUid uid, MechComponent component, UpdateCanMoveEvent args)
     {
-        if (!TryComp<BatteryComponent>(component.BatterySlot.ContainedEntity, out var batteryComp) || component.Broken || component.Integrity <= 0 || batteryComp.CurrentCharge <= 0)
+        if (!TryComp<BatteryComponent>(component.BatterySlot.ContainedEntity, out var batteryComp)
+            || component.Broken || component.Integrity <= 0 || batteryComp.CurrentCharge <= 0)
             args.Cancel();
     }
 

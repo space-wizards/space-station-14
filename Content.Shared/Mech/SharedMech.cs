@@ -62,14 +62,8 @@ public sealed partial class MechEjectPilotEvent : InstantActionEvent
 }
 
 [Serializable, NetSerializable]
-public sealed class MechEnergyMessage : BoundUserInterfaceMessage
+public sealed class MechEnergyMessage(float charge, float maxEnergy) : BoundUserInterfaceMessage
 {
-    public float Charge { get; }
-    public float MaxEnergy { get; }
-
-    public MechEnergyMessage(float charge, float maxEnergy)
-    {
-        Charge = charge;
-        MaxEnergy = maxEnergy;
-    }
+    public float Charge { get; } = charge;
+    public float MaxEnergy { get; } = maxEnergy;
 }
