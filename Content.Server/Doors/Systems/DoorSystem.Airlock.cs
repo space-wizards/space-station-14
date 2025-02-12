@@ -14,8 +14,6 @@ public partial class DoorSystem
 {
     public void InitializeAirlocksServer()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<AirlockComponent, SignalReceivedEvent>(OnSignalReceived);
         SubscribeLocalEvent<AirlockComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new[] {typeof(DoorSystem)});
