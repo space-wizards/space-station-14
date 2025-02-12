@@ -852,11 +852,11 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 19
+        maxVol: 21
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
+          Quantity: 11
         - ReagentId: Butter
           Quantity: 2
         - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 3
