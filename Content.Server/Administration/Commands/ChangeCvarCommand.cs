@@ -167,6 +167,8 @@ public sealed class ChangeCvarCommand : LocalizedCommands
                     LogImpact.High,
                     $"{shell.Player!.Name} ({shell.Player!.UserId}) changed CVAR {cvar} from {oldValue.ToString()} to {parsed.ToString()}"
                     );
+
+                shell.WriteLine(Loc.GetString("cmd-changecvar-success", ("cvar", cvar), ("old", oldValue), ("value", parsed)));
             }
             catch (FormatException)
             {

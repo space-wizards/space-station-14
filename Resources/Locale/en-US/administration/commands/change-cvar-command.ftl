@@ -6,3 +6,4 @@ cmd-changecvar-desc = Change a cvar value.
 cmd-changecvar-help = Usage: cvar <cvar> <value>
 cmd-changecvar-available-cvars = Listing available cvars:
 cmd-changecvar-no-cvars = No cvars found that you are allowed to change.
+cmd-changecvar-success = CVar {$cvar} changed from {$old} to {$value}.
