@@ -17,7 +17,6 @@ namespace Content.Server.Administration.Commands;
 /// <remarks>
 /// Possible todo for future, store default values for cvars, and allow resetting to default.
 /// </remarks>
-[AdminCommand(AdminFlags.Admin)]
 public sealed class ChangeCvarCommand : LocalizedCommands
 {
     [Dependency] private readonly IReflectionManager _reflectionManager = default!;
