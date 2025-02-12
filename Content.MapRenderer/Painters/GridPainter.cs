@@ -85,7 +85,7 @@ namespace Content.MapRenderer.Painters
                 }
                 if (prototype.ID.StartsWith("Effect"))
                 {
-                    Console.WriteLine($"Skipping unrenderable entity {prototype.ID}; please remove it from the map.");
+                    Console.WriteLine($"Skipping unrenderable entity {prototype.ID}; please remove it from the map");
                     continue;
                 }
 
