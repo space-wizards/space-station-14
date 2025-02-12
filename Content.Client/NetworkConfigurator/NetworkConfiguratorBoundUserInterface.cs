@@ -1,6 +1,5 @@
 ﻿using Content.Client.NetworkConfigurator.Systems;
 using Content.Shared.DeviceNetwork;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 

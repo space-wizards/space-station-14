@@ -1,6 +1,6 @@
 <cartridges:NotekeeperUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
                                  xmlns="https://spacestation14.io" Margin="1 0 2 0">
-    <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
+    <PanelContainer StyleClasses="BackgroundDark" />
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
             <BoxContainer Orientation="Vertical" Name="MessageContainer" HorizontalExpand="True" VerticalExpand="True"/>

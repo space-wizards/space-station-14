@@ -1,5 +1,3 @@
-using System;
-using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Chemistry.UI;

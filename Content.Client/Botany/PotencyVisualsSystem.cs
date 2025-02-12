@@ -1,6 +1,6 @@
 using System.Numerics;
-using Content.Shared.Botany;
 using Content.Client.Botany.Components;
+using Content.Shared.Botany;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Botany;

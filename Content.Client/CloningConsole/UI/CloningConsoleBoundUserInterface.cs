@@ -1,6 +1,5 @@
-using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Content.Shared.Cloning.CloningConsole;
+using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.CloningConsole.UI

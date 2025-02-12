@@ -3,7 +3,6 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC;
 using Content.Shared.SSDIndicator;
-using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;

@@ -10,46 +10,40 @@
             VerticalExpand="True" SizeFlagsStretchRatio="1">
             <BoxContainer Orientation="Vertical" VerticalExpand="True">
                 <Button Name="ServerSelectionButton"
-                    Text="{Loc 'analysis-console-server-list-button'}"></Button>
-                <BoxContainer MinHeight="5"></BoxContainer>
+                    Text="{Loc 'analysis-console-server-list-button'}" />
+                <BoxContainer MinHeight="5" />
                 <Button Name="ScanButton"
-                    Text="{Loc 'analysis-console-scan-button'}"
-                    ToolTip="{Loc 'analysis-console-scan-tooltip-info'}">
-                </Button>
-                <BoxContainer MinHeight="5"></BoxContainer>
+                        Text="{Loc 'analysis-console-scan-button'}"
+                        ToolTip="{Loc 'analysis-console-scan-tooltip-info'}" />
+                <BoxContainer MinHeight="5" />
                 <Button Name="PrintButton"
-                    Text="{Loc 'analysis-console-print-button'}"
-                    ToolTip="{Loc 'analysis-console-print-tooltip-info'}">
-                </Button>
-                <BoxContainer MinHeight="5"></BoxContainer>
+                        Text="{Loc 'analysis-console-print-button'}"
+                        ToolTip="{Loc 'analysis-console-print-tooltip-info'}" />
+                <BoxContainer MinHeight="5" />
                 <BoxContainer Orientation="Horizontal">
                     <Button Name="UpBiasButton"
                         Text="{Loc 'analysis-console-bias-up'}"
                         ToolTip="{Loc 'analysis-console-bias-button-info-up'}"
                         HorizontalExpand="True"
-                        StyleClasses="OpenRight">
-                    </Button>
+                        StyleClasses="OpenRight" />
                     <Button Name="DownBiasButton"
-                        Text="{Loc 'analysis-console-bias-down'}"
-                        ToolTip="{Loc 'analysis-console-bias-button-info-down'}"
-                        HorizontalExpand="True"
-                        StyleClasses="OpenLeft">
-                    </Button>
+                            Text="{Loc 'analysis-console-bias-down'}"
+                            ToolTip="{Loc 'analysis-console-bias-button-info-down'}"
+                            HorizontalExpand="True"
+                            StyleClasses="OpenLeft" />
                 </BoxContainer>
-                <BoxContainer MinHeight="15"></BoxContainer>
+                <BoxContainer MinHeight="15" />
                 <Button Name="ExtractButton"
-                    Text="{Loc 'analysis-console-extract-button'}"
-                    ToolTip="{Loc 'analysis-console-extract-button-info'}">
-                </Button>
+                        Text="{Loc 'analysis-console-extract-button'}"
+                        ToolTip="{Loc 'analysis-console-extract-button-info'}" />
             </BoxContainer>
             <BoxContainer Orientation="Vertical">
-                <Label Name="ProgressLabel"></Label>
+                <Label Name="ProgressLabel" />
                 <ProgressBar
                     Name="ProgressBar"
                     MinValue="0"
                     MaxValue="1"
-                    SetHeight="20">
-                </ProgressBar>
+                    SetHeight="20" />
             </BoxContainer>
         </BoxContainer>
         <customControls:VSeparator StyleClasses="LowDivider" />
@@ -60,7 +54,7 @@
             <BoxContainer Margin="10 10 10 10" Orientation="Horizontal">
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                     <BoxContainer VerticalExpand="True">
-                        <RichTextLabel Name="Information"> </RichTextLabel>
+                        <RichTextLabel Name="Information" />
                     </BoxContainer>
                 </BoxContainer>
                 <BoxContainer VerticalExpand="False" Orientation="Vertical" MaxSize="64 64">
@@ -70,10 +64,9 @@
                         VerticalExpand="False"
                         SetSize="64 64"
                         MaxSize="64 64"
-                        Scale="2 2">
-                    </SpriteView>
+                        Scale="2 2" />
                 </BoxContainer>
-                <BoxContainer VerticalExpand="True"></BoxContainer>
+                <BoxContainer VerticalExpand="True" />
             </BoxContainer>
         </PanelContainer>
     </BoxContainer>

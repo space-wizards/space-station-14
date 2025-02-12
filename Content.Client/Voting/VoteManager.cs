@@ -1,21 +1,14 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
+using Content.Client.Voting.UI;
 using Content.Shared.Voting;
 using Robust.Client;
 using Robust.Client.Audio;
 using Robust.Client.Console;
-using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
-using Robust.Shared.IoC;
+using Robust.Shared.Audio.Sources;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
-using Robust.Shared.Player;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Sources;
-using Robust.Shared.ContentPack;
-
 
 namespace Content.Client.Voting
 {
@@ -43,7 +36,7 @@ namespace Content.Client.Voting
 
         private readonly Dictionary<StandardVoteType, TimeSpan> _standardVoteTimeouts = new();
         private readonly Dictionary<int, ActiveVote> _votes = new();
-        private readonly Dictionary<int, UI.VotePopup> _votePopups = new();
+        private readonly Dictionary<int, VotePopup> _votePopups = new();
         private Control? _popupContainer;
 
         private IAudioSource? _voteSource;
@@ -120,7 +113,7 @@ namespace Content.Client.Voting
 
             foreach (var (vId, vote) in _votes)
             {
-                var popup = new UI.VotePopup(vote);
+                var popup = new VotePopup(vote);
 
                 _votePopups.Add(vId, popup);
                 _popupContainer.AddChild(popup);
@@ -196,7 +189,7 @@ namespace Content.Client.Voting
 
             if (@new && _popupContainer != null)
             {
-                var popup = new UI.VotePopup(existingVote);
+                var popup = new VotePopup(existingVote);
 
                 _votePopups.Add(voteId, popup);
                 _popupContainer.AddChild(popup);

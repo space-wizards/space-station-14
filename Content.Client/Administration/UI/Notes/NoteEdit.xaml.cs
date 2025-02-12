@@ -219,7 +219,7 @@ public sealed partial class NoteEdit : FancyWindow
         ExpiryLengthDropdown.SelectId(args.Id);
     }
 
-    private void OnTextChanged(HistoryLineEdit.LineEditEventArgs args)
+    private void OnTextChanged(LineEdit.LineEditEventArgs args)
     {
         ParseExpiryTime();
     }

@@ -2,7 +2,6 @@ using System.Numerics;
 using Content.Shared.Weather;
 using Robust.Client.Graphics;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics.Components;
 
 namespace Content.Client.Overlays;
 

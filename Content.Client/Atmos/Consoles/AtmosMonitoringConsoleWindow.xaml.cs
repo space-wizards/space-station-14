@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Client.Pinpointer.UI;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Atmos.Components;
@@ -11,8 +13,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Content.Client.Atmos.Consoles;
 

@@ -1,5 +1,5 @@
-using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Singularity.Components;
+using Content.Shared.Singularity.EntitySystems;
 
 namespace Content.Client.Singularity.Systems;
 

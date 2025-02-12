@@ -1,10 +1,10 @@
-﻿using Content.Shared.CrewManifest;
+﻿using System.Numerics;
+using Content.Shared.CrewManifest;
+using Content.Shared.Roles;
 using Content.Shared.StatusIcon;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Prototypes;
-using System.Numerics;
-using Content.Shared.Roles;
 
 namespace Content.Client.CrewManifest.UI;
 

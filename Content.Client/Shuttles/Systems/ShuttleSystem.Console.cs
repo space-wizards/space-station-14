@@ -1,5 +1,4 @@
 using Content.Client.Resources;
-using Content.Client.Shuttles.UI;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.UI.MapObjects;
 using Robust.Client.Graphics;

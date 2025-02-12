@@ -5,8 +5,7 @@
     <BoxContainer Orientation="Vertical">
         <LineEdit Name="Search" PlaceHolder = "{Loc 'chameleon-component-ui-search-placeholder'}"/>
         <ScrollContainer VerticalExpand="True">
-            <GridContainer Name="Grid" Columns="3" Margin="0 5" >
-            </GridContainer>
+            <GridContainer Name="Grid" Columns="3" Margin="0 5" />
         </ScrollContainer>
     </BoxContainer>
 </DefaultWindow>

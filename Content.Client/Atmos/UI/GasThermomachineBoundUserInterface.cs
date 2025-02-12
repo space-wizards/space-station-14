@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.UI

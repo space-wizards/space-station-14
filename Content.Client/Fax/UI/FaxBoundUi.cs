@@ -1,8 +1,6 @@
 using System.IO;
-using System.Threading.Tasks;
 using Content.Shared.Fax;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Fax.UI;

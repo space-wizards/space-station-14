@@ -18,8 +18,7 @@
                 </PanelContainer.PanelOverride>
             </PanelContainer>
             <ScrollContainer Name="ArticleListScrollbar" HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
-                <BoxContainer Name="ArticlesContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="6 6 6 6">
-                </BoxContainer>
+                <BoxContainer Name="ArticlesContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="6 6 6 6" />
             </ScrollContainer>
         </Control>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="12 7 12 9">

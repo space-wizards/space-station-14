@@ -20,7 +20,7 @@
             </BoxContainer>
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Right">
                 <Button Text="{Loc comp-space-heater-ui-decrease-temperature-range}" Access="Public" Name="DecreaseTempRange" StyleClasses="OpenRight"/>
-                <LineEdit Name ="Thermostat" MinSize="55 0"></LineEdit>
+                <LineEdit Name ="Thermostat" MinSize="55 0" />
                 <Button Text="{Loc comp-space-heater-ui-increase-temperature-range}" Access="Public" Name="IncreaseTempRange" StyleClasses="OpenLeft"/>
             </BoxContainer>
         </BoxContainer>

@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Client.Movement.Systems;
 using Content.Shared.Movement.Components;
 
 namespace Content.Client.Movement.Components;

@@ -1,10 +1,10 @@
 using Content.Client.Items;
 using Content.Client.Light.Components;
+using Content.Client.Light.EntitySystems;
 using Content.Shared.Light;
 using Content.Shared.Light.Components;
 using Content.Shared.Toggleable;
 using Robust.Client.GameObjects;
-using Content.Client.Light.EntitySystems;
 
 namespace Content.Client.Light;
 

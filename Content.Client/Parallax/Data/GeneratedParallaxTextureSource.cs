@@ -1,15 +1,13 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Nett;
-using Content.Shared.CCVar;
-using Content.Client.IoC;
 using Robust.Client.Graphics;
-using Robust.Shared.Utility;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
-using Robust.Shared.Graphics;
+using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 

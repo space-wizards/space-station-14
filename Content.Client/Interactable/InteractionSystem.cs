@@ -1,6 +1,4 @@
 using Content.Shared.Interaction;
-using Content.Shared.Storage;
-using Robust.Shared.Containers;
 
 namespace Content.Client.Interactable
 {

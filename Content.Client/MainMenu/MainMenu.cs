@@ -3,6 +3,7 @@ using Content.Client.MainMenu.UI;
 using Content.Client.UserInterface.Systems.EscapeMenu;
 using Robust.Client;
 using Robust.Client.ResourceManagement;
+using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared;
@@ -17,7 +18,7 @@ namespace Content.Client.MainMenu
     ///     Main menu screen that is the first screen to be displayed when the game starts.
     /// </summary>
     // Instantiated dynamically through the StateManager, Dependencies will be resolved.
-    public sealed class MainScreen : Robust.Client.State.State
+    public sealed class MainScreen : State
     {
         [Dependency] private readonly IBaseClient _client = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;

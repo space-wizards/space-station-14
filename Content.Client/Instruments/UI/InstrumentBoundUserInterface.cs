@@ -2,7 +2,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Instruments.UI;
 using Content.Shared.Interaction;
 using Robust.Client.Audio.Midi;
-using Robust.Client.Player;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Instruments.UI

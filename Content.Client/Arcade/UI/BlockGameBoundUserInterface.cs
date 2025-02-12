@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Arcade;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Arcade.UI;

@@ -7,6 +7,7 @@ using Content.Client.Administration.UI.Tabs.PlayerTab;
 using Content.Client.Gameplay;
 using Content.Client.Lobby;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Client.Verbs.UI;
 using Content.Shared.Administration.Events;
 using Content.Shared.Input;
@@ -35,7 +36,7 @@ public sealed class AdminUIController : UIController,
     [Dependency] private readonly VerbMenuUIController _verb = default!;
 
     private AdminMenuWindow? _window;
-    private MenuButton? AdminButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.AdminButton;
+    private MenuButton? AdminButton => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>()?.AdminButton;
     private PanicBunkerStatus? _panicBunker;
 
     public override void Initialize()

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Stylesheets;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -8,7 +9,6 @@ using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
-using System.Linq;
 
 namespace Content.Client.Atmos.Consoles;
 

@@ -1,11 +1,9 @@
 using System.Numerics;
 using Content.Shared.CombatMode;
-using Content.Shared.Weapons.Melee;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.Map;
 
 namespace Content.Client.Weapons.Melee;
 

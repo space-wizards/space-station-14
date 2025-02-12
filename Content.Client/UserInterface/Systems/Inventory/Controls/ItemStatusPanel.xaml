@@ -15,8 +15,7 @@
     </PanelContainer>
     <PanelContainer Name="HighlightPanel">
         <PanelContainer.PanelOverride>
-            <graphics:StyleBoxTexture PatchMarginBottom="4" PatchMarginTop="6" TextureScale="2 2">
-            </graphics:StyleBoxTexture>
+            <graphics:StyleBoxTexture PatchMarginBottom="4" PatchMarginTop="6" TextureScale="2 2" />
         </PanelContainer.PanelOverride>
     </PanelContainer>
     <BoxContainer Name="Contents" Orientation="Vertical" Margin="0 6 0 4" RectClipContent="True">

@@ -16,7 +16,6 @@
         </BoxContainer>
         <VerticalTabContainer Name="LoadoutGroupsContainer"
                               VerticalExpand="True"
-                              HorizontalExpand="True">
-        </VerticalTabContainer>
+                              HorizontalExpand="True" />
     </BoxContainer>
 </controls:FancyWindow>

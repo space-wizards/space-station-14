@@ -1,4 +1,3 @@
-using System.Net;
 using Content.Client.Hands.Systems;
 using Content.Shared.CombatMode;
 using Content.Shared.Weapons.Misc;

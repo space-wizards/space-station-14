@@ -24,8 +24,7 @@
                     <LineEdit
                         Name="SearchBar"
                         PlaceHolder="{Loc 'lathe-menu-search-designs'}"
-                        HorizontalExpand="True">
-                    </LineEdit>
+                        HorizontalExpand="True" />
                     <OptionButton
                         Name="FilterOption"
                         MinWidth="100"
@@ -46,8 +45,7 @@
                                 Orientation="Vertical"
                                 HorizontalExpand="True"
                                 VerticalExpand="True"
-                                RectClipContent="True">
-                            </BoxContainer>
+                                RectClipContent="True" />
                         </ScrollContainer>
                     </PanelContainer>
                 </BoxContainer>
@@ -78,8 +76,7 @@
                         Name="ServerListButton"
                         Text="{Loc 'lathe-menu-server-list'}"
                         TextAlign="Center"
-                        Mode="Press">
-                    </Button>
+                        Mode="Press" />
                 </BoxContainer>
                 <Label Text="{Loc 'lathe-menu-queue-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
                 <BoxContainer
@@ -98,8 +95,7 @@
                             RectClipContent="False"
                             HorizontalAlignment="Left"
                             Margin="5 0 0 0"
-                            Text="{Loc 'lathe-menu-fabricating-message'}">
-                        </Label>
+                            Text="{Loc 'lathe-menu-fabricating-message'}" />
                         <BoxContainer Name="FabricatingDisplayContainer"
                                       HorizontalAlignment="Left"
                                       Margin="100 0 0 0"/>
@@ -107,8 +103,7 @@
                             Name="NameLabel"
                             RectClipContent="True"
                             HorizontalAlignment="Left"
-                            Margin="130 0 0 0">
-                        </Label>
+                            Margin="130 0 0 0" />
                     </PanelContainer>
                 </BoxContainer>
                 <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
@@ -117,8 +112,7 @@
                         Orientation="Vertical"
                         HorizontalExpand="True"
                         VerticalExpand="True"
-                        RectClipContent="True">
-                    </BoxContainer>
+                        RectClipContent="True" />
                 </ScrollContainer>
             </BoxContainer>
             <BoxContainer

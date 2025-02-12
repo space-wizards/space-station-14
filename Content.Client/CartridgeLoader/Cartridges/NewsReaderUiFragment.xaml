@@ -7,7 +7,7 @@
                                Orientation="Vertical"
                                HorizontalExpand="True"
                                VerticalExpand="True">
-    <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
+    <PanelContainer StyleClasses="BackgroundDark" />
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="5,5,5,5">
         <Button
             Name="Prev"
@@ -48,8 +48,7 @@
                 MinSize="0 0"
                 Orientation="Vertical"
                 SizeFlagsStretchRatio="2"
-                VerticalExpand="True">
-            </BoxContainer>
+                VerticalExpand="True" />
             <RichTextLabel Margin="8,8,8,8" Name="PageText" VerticalAlignment="Top"/>
         </ScrollContainer>
     </PanelContainer>

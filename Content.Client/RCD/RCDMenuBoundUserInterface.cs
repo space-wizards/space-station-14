@@ -1,5 +1,4 @@
 using Content.Shared.RCD;
-using Content.Shared.RCD.Components;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Input;

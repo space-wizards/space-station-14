@@ -3,7 +3,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Systems;
-using Robust.Client.GameObjects;
 using Robust.Client.Physics;
 using Robust.Client.Player;
 using Robust.Shared.Configuration;

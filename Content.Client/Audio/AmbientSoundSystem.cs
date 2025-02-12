@@ -1,21 +1,17 @@
+using System.Linq;
+using System.Numerics;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Audio;
-using Robust.Shared.Log;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
-using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Linq;
-using System.Numerics;
-using Robust.Client.GameObjects;
-using Robust.Shared.Audio.Effects;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
 
 namespace Content.Client.Audio;
 //TODO: This is using a incomplete version of the whole "only play nearest sounds" algo, that breaks down a bit should the ambient sound cap get hit.

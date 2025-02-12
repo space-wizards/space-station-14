@@ -10,8 +10,8 @@
     <!-->
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal" Align="End">
-            <Button Name="NewLawButton" Text="{Loc silicon-law-ui-new-law}" MaxSize="256 64" StyleClasses="OpenRight"></Button>
-            <Button Name="Save" Text="{Loc silicon-law-ui-save}" MaxSize="256 64" Access="Public" StyleClasses="OpenLeft"></Button>
+            <Button Name="NewLawButton" Text="{Loc silicon-law-ui-new-law}" MaxSize="256 64" StyleClasses="OpenRight" />
+            <Button Name="Save" Text="{Loc silicon-law-ui-save}" MaxSize="256 64" Access="Public" StyleClasses="OpenLeft" />
         </BoxContainer>
     </BoxContainer>
     <BoxContainer Orientation="Vertical" Margin="4 60 0 0">

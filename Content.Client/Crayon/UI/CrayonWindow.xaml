@@ -6,8 +6,7 @@
         <ColorSelectorSliders Name="ColorSelector" Visible="False" />
         <LineEdit Name="Search" Margin="0 0 0 8" PlaceHolder="{Loc 'crayon-window-placeholder'}" />
         <ScrollContainer VerticalExpand="True">
-            <BoxContainer Name="Grids" Orientation="Vertical">
-            </BoxContainer>
+            <BoxContainer Name="Grids" Orientation="Vertical" />
         </ScrollContainer>
     </BoxContainer>
 </DefaultWindow>

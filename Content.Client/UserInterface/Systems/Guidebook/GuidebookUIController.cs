@@ -5,6 +5,7 @@ using Content.Client.Guidebook.Controls;
 using Content.Client.Lobby;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.CCVar;
 using Content.Shared.Guidebook;
 using Content.Shared.Input;
@@ -12,10 +13,10 @@ using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Configuration;
-using static Robust.Client.UserInterface.Controls.BaseButton;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Guidebook;
 
@@ -29,7 +30,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
     private const int PlaytimeOpenGuidebook = 60;
 
     private GuidebookWindow? _guideWindow;
-    private MenuButton? GuidebookButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.GuidebookButton;
+    private MenuButton? GuidebookButton => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>()?.GuidebookButton;
     private ProtoId<GuideEntryPrototype>? _lastEntry;
 
     public void OnStateEntered(LobbyState state)

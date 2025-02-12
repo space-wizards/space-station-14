@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Power.Generator;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Power.Generator;

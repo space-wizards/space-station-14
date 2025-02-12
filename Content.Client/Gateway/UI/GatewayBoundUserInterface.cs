@@ -1,6 +1,5 @@
 using Content.Shared.Gateway;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Gateway.UI;

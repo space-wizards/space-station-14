@@ -1,6 +1,5 @@
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
-using Robust.Shared.IoC;
 
 namespace Content.Client.Stylesheets
 {

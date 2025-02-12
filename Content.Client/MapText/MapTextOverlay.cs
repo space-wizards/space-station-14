@@ -1,9 +1,7 @@
 ﻿using System.Numerics;
-using Content.Shared.MapText;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.RichText;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;

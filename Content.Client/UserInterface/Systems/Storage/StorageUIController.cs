@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Client.Examine;
 using Content.Client.Hands.Systems;
 using Content.Client.Interaction;

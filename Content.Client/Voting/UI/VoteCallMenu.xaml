@@ -15,8 +15,7 @@
         <BoxContainer Orientation="Vertical" Margin="8 2 8 0" VerticalExpand="True" VerticalAlignment="Top">
             <BoxContainer Orientation="Vertical">
                 <OptionButton Margin="2 1" Name="VoteTypeButton" HorizontalExpand="False" />
-                <BoxContainer Name="VoteOptionsButtonContainer" HorizontalExpand="False" Orientation="Vertical"> 
-                </BoxContainer>
+                <BoxContainer Name="VoteOptionsButtonContainer" HorizontalExpand="False" Orientation="Vertical" />
                 <Button Margin="64 4" Name="FollowButton" Text="{Loc 'ui-vote-follow-button'}" Visible="False" />
                 <Label Margin="2 2" Name="VoteNotTrustedLabel" Text="{Loc 'ui-vote-trusted-users-notice'}" Visible="False" />
                 <Label Margin="2 2" Name="VoteWarningLabel" Text="{Loc 'ui-vote-abuse-warning'}" Visible="False" HorizontalAlignment="Center"/>

@@ -1,8 +1,7 @@
-using JetBrains.Annotations;
-using Content.Shared.MassMedia.Systems;
 using Content.Shared.MassMedia.Components;
+using Content.Shared.MassMedia.Systems;
+using JetBrains.Annotations;
 using Robust.Client.UserInterface;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.MassMedia.Ui;

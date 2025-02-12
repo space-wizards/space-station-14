@@ -1,6 +1,5 @@
 using Content.Shared.Thief;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Thief;

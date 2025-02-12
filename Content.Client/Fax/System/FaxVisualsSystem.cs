@@ -1,7 +1,7 @@
-using Robust.Client.GameObjects;
-using Content.Shared.Fax.Components;
 using Content.Shared.Fax;
+using Content.Shared.Fax.Components;
 using Robust.Client.Animations;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.Fax.System;
 

@@ -1,6 +1,5 @@
 using Content.Client.Changelog;
 using JetBrains.Annotations;
-using Robust.Client.State;
 using Robust.Client.UserInterface.Controllers;
 
 namespace Content.Client.UserInterface.Systems.EscapeMenu;

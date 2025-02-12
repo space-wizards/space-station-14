@@ -10,7 +10,6 @@ using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Player;

@@ -1,7 +1,5 @@
 using Content.Shared.MachineLinking;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
-using Robust.Shared.Timing;
 
 namespace Content.Client.MachineLinking.UI;
 

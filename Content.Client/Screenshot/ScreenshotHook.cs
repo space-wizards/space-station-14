@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using Content.Client.Viewport;
@@ -8,8 +7,6 @@ using Robust.Client.Input;
 using Robust.Client.State;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;

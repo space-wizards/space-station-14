@@ -1,9 +1,9 @@
+using System.Numerics;
 using Content.Shared.Holopad;
 using Content.Shared.Silicons.StationAi;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Shared.Player;
-using System.Numerics;
 
 namespace Content.Client.Holopad;
 

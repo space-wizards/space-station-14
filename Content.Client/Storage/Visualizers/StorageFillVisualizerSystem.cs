@@ -1,4 +1,3 @@
-using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Robust.Client.GameObjects;
 

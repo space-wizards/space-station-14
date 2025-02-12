@@ -2,7 +2,7 @@
                                    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                                    xmlns:ui="clr-namespace:Content.Client.CrewManifest.UI"
                                    xmlns="https://spacestation14.io" Margin="1 0 2 0">
-    <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
+    <PanelContainer StyleClasses="BackgroundDark" />
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
         <controls:StripeBack Name="StationNameContainer">
             <PanelContainer>

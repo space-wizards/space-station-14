@@ -13,8 +13,7 @@
                       SeparationOverride="4"
                       MinWidth="200">
             <Label Name="SelectedSpriteLabel"
-                   Text="{Loc 'spray-painter-selected-style'}">
-            </Label>
+                   Text="{Loc 'spray-painter-selected-style'}" />
             <ItemList Name="SpriteList"
                       SizeFlagsStretchRatio="8"
                       VerticalExpand="True"/>

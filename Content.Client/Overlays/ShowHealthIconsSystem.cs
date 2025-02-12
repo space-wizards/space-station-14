@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Damage;
 using Content.Shared.Inventory.Events;
@@ -6,7 +7,6 @@ using Content.Shared.Overlays;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
-using System.Linq;
 
 namespace Content.Client.Overlays;
 

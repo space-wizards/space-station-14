@@ -1,11 +1,11 @@
-﻿using System.Numerics;
-using Content.Client.Administration.Managers;
+﻿using Content.Client.Administration.Managers;
 using Content.Client.Gameplay;
 using Content.Client.Markers;
 using Content.Client.Sandbox;
 using Content.Client.SubFloor;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.DecalPlacer;
+using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Client.UserInterface.Systems.Sandbox.Windows;
 using Content.Shared.Input;
 using JetBrains.Annotations;
@@ -48,7 +48,7 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
     private TileSpawningUIController TileSpawningController => UIManager.GetUIController<TileSpawningUIController>();
     private DecalPlacerUIController DecalPlacerController => UIManager.GetUIController<DecalPlacerUIController>();
 
-    private MenuButton? SandboxButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.SandboxButton;
+    private MenuButton? SandboxButton => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>()?.SandboxButton;
 
     public void OnStateEntered(GameplayState state)
     {

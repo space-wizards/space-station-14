@@ -1,8 +1,6 @@
 using Content.Client.Light.Components;
 using Content.Shared.Light.Components;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Client.Light.EntitySystems;

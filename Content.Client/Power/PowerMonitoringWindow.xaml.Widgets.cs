@@ -1,11 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Shared.Power;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Numerics;
 using Vector4 = Robust.Shared.Maths.Vector4;
 
 namespace Content.Client.Power;

@@ -44,7 +44,7 @@
                       VerticalAlignment="Center"
                       Margin="0 10">
             <Button Name="GenerateButton"
-                    Text="{Loc 'anomaly-generator-generate'}"></Button>
+                    Text="{Loc 'anomaly-generator-generate'}" />
         </BoxContainer>
 
          <!-- Footer -->

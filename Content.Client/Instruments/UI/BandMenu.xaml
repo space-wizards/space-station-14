@@ -1,5 +1,4 @@
-<DefaultWindow Title="{Loc 'instruments-component-band-menu'}" MinSize="250 350" xmlns="https://spacestation14.io"
-               xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+<DefaultWindow Title="{Loc 'instruments-component-band-menu'}" MinSize="250 350" xmlns="https://spacestation14.io">
     <BoxContainer Orientation="Vertical" Align="Center" HorizontalExpand="true" VerticalExpand="true">
         <ItemList Name="BandList" SelectMode="Button" Margin="3 3 3 3"
                   HorizontalExpand="true" VerticalExpand="true" SizeFlagsStretchRatio="8"/>

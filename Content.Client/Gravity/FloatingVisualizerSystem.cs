@@ -1,7 +1,7 @@
 using System.Numerics;
 using Content.Shared.Gravity;
-using Robust.Client.GameObjects;
 using Robust.Client.Animations;
+using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 
 namespace Content.Client.Gravity;

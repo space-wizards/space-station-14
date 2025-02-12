@@ -1,5 +1,4 @@
-﻿using Robust.Client.GameObjects;
-using Robust.Client.UserInterface;
+﻿using Robust.Client.UserInterface;
 
 namespace Content.Client.UserInterface.Fragments;
 

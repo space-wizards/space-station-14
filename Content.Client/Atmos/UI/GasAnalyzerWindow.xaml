@@ -31,15 +31,13 @@
                         </BoxContainer>
                     </GridContainer>
                     <!-- this is for any leftover mixes for > trinary, but it'll look really ugly -->
-                    <BoxContainer Name="CDeviceMixes" HorizontalExpand="True" Orientation="Horizontal">
-                    </BoxContainer>
+                    <BoxContainer Name="CDeviceMixes" HorizontalExpand="True" Orientation="Horizontal" />
                 </BoxContainer>
 
             </ScrollContainer>
             <!-- Environment mix data -->
             <ScrollContainer VerticalExpand="True">
-                <BoxContainer Name="CEnvironmentMix" Orientation="Vertical" VerticalExpand="True" Margin="1 1 1 1" MinSize="315 150" Align="Center">
-                </BoxContainer>
+                <BoxContainer Name="CEnvironmentMix" Orientation="Vertical" VerticalExpand="True" Margin="1 1 1 1" MinSize="315 150" Align="Center" />
             </ScrollContainer>
         </TabContainer>
     </BoxContainer>

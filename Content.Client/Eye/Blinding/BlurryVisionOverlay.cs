@@ -1,10 +1,10 @@
+using Content.Shared.CCVar;
+using Content.Shared.Eye.Blinding.Components;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
-using Content.Shared.Eye.Blinding.Components;
-using Robust.Shared.Configuration;
 
 namespace Content.Client.Eye.Blinding
 {

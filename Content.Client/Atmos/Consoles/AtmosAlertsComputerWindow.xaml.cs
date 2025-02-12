@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Client.Message;
 using Content.Client.Pinpointer.UI;
 using Content.Client.Stylesheets;
@@ -13,8 +15,6 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Content.Client.Atmos.Consoles;
 

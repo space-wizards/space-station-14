@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
 using Content.Client.Replay.UI.Loading;
 using Robust.Client.Replays.Loading;
-using Robust.Shared.ContentPack;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Replay;
 

@@ -1,9 +1,9 @@
+using System.Numerics;
 using Content.Shared.Singularity.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
-using System.Numerics;
 
 namespace Content.Client.Singularity
 {

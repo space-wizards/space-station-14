@@ -1,6 +1,4 @@
 ﻿using Robust.Client.UserInterface.Controls;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Client.Voting.UI
 {

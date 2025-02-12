@@ -201,7 +201,7 @@ namespace Content.Client.Voting.UI
             obj.Button.SelectId(obj.Id);
         }
 
-        private void FollowSelected(Button.ButtonEventArgs obj)
+        private void FollowSelected(BaseButton.ButtonEventArgs obj)
         {
             if (_followDropdown == null)
                 return;

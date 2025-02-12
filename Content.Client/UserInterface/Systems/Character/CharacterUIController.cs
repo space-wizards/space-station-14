@@ -5,6 +5,7 @@ using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Character.Controls;
 using Content.Client.UserInterface.Systems.Character.Windows;
+using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Client.UserInterface.Systems.Objectives.Controls;
 using Content.Shared.Input;
 using Content.Shared.Mind;
@@ -47,7 +48,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     }
 
     private CharacterWindow? _window;
-    private MenuButton? CharacterButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.CharacterButton;
+    private MenuButton? CharacterButton => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>()?.CharacterButton;
 
     public void OnStateEntered(GameplayState state)
     {

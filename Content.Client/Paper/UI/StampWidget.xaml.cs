@@ -38,7 +38,7 @@ public sealed partial class StampWidget : PanelContainer
         _borderTexture = new StyleBoxTexture {
             Texture = borderImage,
         };
-        _borderTexture.SetPatchMargin(StyleBoxTexture.Margin.All, 7.0f);
+        _borderTexture.SetPatchMargin(StyleBox.Margin.All, 7.0f);
         PanelOverride = _borderTexture;
 
         var prototypes = IoCManager.Resolve<IPrototypeManager>();

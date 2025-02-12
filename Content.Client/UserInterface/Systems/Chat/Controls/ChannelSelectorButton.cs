@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.Chat;
+using Content.Shared.Radio;
 
 namespace Content.Client.UserInterface.Systems.Chat.Controls;
 
@@ -68,7 +69,7 @@ public sealed class ChannelSelectorButton : ChatPopupButton<ChannelSelectorPopup
         };
     }
 
-    public void UpdateChannelSelectButton(ChatSelectChannel channel, Shared.Radio.RadioChannelPrototype? radio)
+    public void UpdateChannelSelectButton(ChatSelectChannel channel, RadioChannelPrototype? radio)
     {
         Text = radio != null ? Loc.GetString(radio.Name) : ChannelSelectorName(channel);
         Modulate = radio?.Color ?? ChannelSelectColor(channel);

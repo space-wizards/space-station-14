@@ -1,6 +1,5 @@
 ﻿using Content.Client.UserInterface.Fragments;
 using Content.Shared.Mech;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Mech.Ui.Equipment;

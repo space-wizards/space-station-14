@@ -1,7 +1,7 @@
-using Content.Client.Remote.UI;
 using Content.Client.Items;
-using Content.Shared.Remotes.EntitySystems;
+using Content.Client.Remote.UI;
 using Content.Shared.Remotes.Components;
+using Content.Shared.Remotes.EntitySystems;
 
 namespace Content.Client.Remotes.EntitySystems;
 

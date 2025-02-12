@@ -1,7 +1,6 @@
 using System.Numerics;
 using Robust.Client.Placement;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Client.Placement.Modes
 {

@@ -10,7 +10,6 @@ using Robust.Client.Placement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.Utility;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;

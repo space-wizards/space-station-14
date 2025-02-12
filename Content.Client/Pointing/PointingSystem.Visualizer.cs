@@ -1,10 +1,10 @@
+using System.Numerics;
 using Content.Client.Pointing.Components;
 using Content.Shared.Pointing;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Animations;
-using System.Numerics;
 
 namespace Content.Client.Pointing;
 

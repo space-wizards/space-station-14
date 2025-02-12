@@ -1,7 +1,5 @@
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.CombatMode

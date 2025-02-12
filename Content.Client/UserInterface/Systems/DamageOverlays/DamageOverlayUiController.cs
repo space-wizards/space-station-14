@@ -1,3 +1,4 @@
+using Content.Client.UserInterface.Systems.DamageOverlays.Overlays;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
@@ -20,11 +21,11 @@ public sealed class DamageOverlayUiController : UIController
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     [UISystemDependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
-    private Overlays.DamageOverlay _overlay = default!;
+    private DamageOverlay _overlay = default!;
 
     public override void Initialize()
     {
-        _overlay = new Overlays.DamageOverlay();
+        _overlay = new DamageOverlay();
         SubscribeLocalEvent<LocalPlayerAttachedEvent>(OnPlayerAttach);
         SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);

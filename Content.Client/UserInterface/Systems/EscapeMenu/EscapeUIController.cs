@@ -2,6 +2,7 @@
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.UserInterface.Systems.Info;
+using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Client.Console;
@@ -28,7 +29,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 
     private Options.UI.EscapeMenu? _escapeWindow;
 
-    private MenuButton? EscapeButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EscapeButton;
+    private MenuButton? EscapeButton => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>()?.EscapeButton;
 
     public void UnloadButton()
     {

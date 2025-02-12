@@ -1,6 +1,5 @@
 using Content.Shared.Atmos.Components;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.UserInterface.Systems.Atmos.GasTank

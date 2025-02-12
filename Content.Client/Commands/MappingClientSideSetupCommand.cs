@@ -1,9 +1,7 @@
 using Content.Client.Actions;
-using Content.Client.Mapping;
 using Content.Client.Markers;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
-using Robust.Client.State;
 using Robust.Shared.Console;
 
 namespace Content.Client.Commands;

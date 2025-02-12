@@ -1,5 +1,4 @@
 using Robust.Client.GameObjects;
-
 using static Content.Shared.Paper.PaperComponent;
 
 namespace Content.Client.Paper.UI;

@@ -4,7 +4,6 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Polymorph.Components;
 using Content.Shared.Polymorph.Systems;
 using Robust.Client.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.Client.Polymorph.Systems;
 

@@ -2,7 +2,6 @@ using System.Text;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
-using Robust.Shared.Graphics;
 using Robust.Shared.Graphics.RSI;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;

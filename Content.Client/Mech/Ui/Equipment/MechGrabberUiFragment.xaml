@@ -8,8 +8,7 @@
                   VerticalExpand="True"
                   MinHeight="120"
                   HorizontalExpand="True"
-                  SelectMode="Button">
-        </ItemList>
-        <Label Name="SpaceLabel" HorizontalAlignment="Right" StyleClasses="LabelSubText"></Label>
+                  SelectMode="Button" />
+        <Label Name="SpaceLabel" HorizontalAlignment="Right" StyleClasses="LabelSubText" />
     </BoxContainer>
 </equipment:MechGrabberUiFragment>

@@ -1,9 +1,9 @@
 using System.Linq;
 using Content.Client.Light.Components;
-using Robust.Client.GameObjects;
 using Robust.Client.Animations;
-using Robust.Shared.Random;
+using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
+using Robust.Shared.Random;
 
 namespace Content.Client.Light.EntitySystems;
 

@@ -1,9 +1,9 @@
 using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
-using Robust.Shared.Input.Binding;
 using Robust.Shared;
 using Robust.Shared.Configuration;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 
 namespace Content.Client.Fullscreen;

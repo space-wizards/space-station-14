@@ -46,8 +46,7 @@
                         <BoxContainer
                             Name="AvailableCardsContainer"
                             Orientation="Vertical"
-                            VerticalExpand="True">
-                        </BoxContainer>
+                            VerticalExpand="True" />
                     </ScrollContainer>
                 </PanelContainer>
                 <Control MinHeight="10"/>
@@ -64,8 +63,7 @@
                         <BoxContainer
                             Name="UnlockedCardsContainer"
                             Orientation="Vertical"
-                            VerticalExpand="True">
-                        </BoxContainer>
+                            VerticalExpand="True" />
                     </ScrollContainer>
                 </PanelContainer>
             </BoxContainer>
@@ -88,8 +86,7 @@
                             MinSize="100 256"
                             Orientation="Vertical"
                             SizeFlagsStretchRatio="2"
-                            VerticalExpand="True">
-                        </BoxContainer>
+                            VerticalExpand="True" />
                     </ScrollContainer>
                 </PanelContainer>
             </BoxContainer>

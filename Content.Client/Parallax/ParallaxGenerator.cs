@@ -1,12 +1,8 @@
-﻿using System;
-using System.Threading;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
+using System.Threading;
 using Nett;
 using Robust.Client.Utility;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Noise;
 using Robust.Shared.Random;
 using SixLabors.ImageSharp;

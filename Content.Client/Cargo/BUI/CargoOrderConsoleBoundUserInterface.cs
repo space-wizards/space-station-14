@@ -1,13 +1,13 @@
-using Content.Shared.Cargo;
 using Content.Client.Cargo.UI;
+using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Cargo.BUI

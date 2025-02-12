@@ -1,14 +1,14 @@
 using System.Numerics;
-using Content.Shared.DoAfter;
 using Content.Client.UserInterface.Systems;
+using Content.Shared.DoAfter;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.Enums;
 using Robust.Client.Player;
+using Robust.Shared.Containers;
+using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Shared.Containers;
 
 namespace Content.Client.DoAfter;
 

@@ -19,8 +19,7 @@
                     Name="LawDisplayContainer"
                     Orientation="Vertical"
                     VerticalExpand="True"
-                    Margin="10 10 10 0">
-                </BoxContainer>
+                    Margin="10 10 10 0" />
             </ScrollContainer>
         </PanelContainer>
     </BoxContainer>

@@ -28,6 +28,6 @@
         </BoxContainer>
         <Button Name="SubmitButton" Text="{Loc admin-ui-blueprint-load}" />
         <Button Name="TeleportButton" Text="{Loc admin-ui-blueprint-teleport}" />
-        <Button Name="ResetButton" Text="{Loc admin-ui-blueprint-reset}"></Button>
+        <Button Name="ResetButton" Text="{Loc admin-ui-blueprint-reset}" />
     </BoxContainer>
 </DefaultWindow>

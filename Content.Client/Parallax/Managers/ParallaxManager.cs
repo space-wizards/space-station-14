@@ -1,12 +1,10 @@
-using System.Collections.Concurrent;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Client.Parallax.Data;
 using Content.Shared.CCVar;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Configuration;
-using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Parallax.Managers;
 

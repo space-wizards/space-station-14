@@ -1,16 +1,14 @@
-using System;
 using Robust.Client;
+using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Client.Launcher
 {
-    public sealed class LauncherConnecting : Robust.Client.State.State
+    public sealed class LauncherConnecting : State
     {
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IClientNetManager _clientNetManager = default!;

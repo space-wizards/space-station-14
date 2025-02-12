@@ -1,7 +1,5 @@
 using System.Linq;
-using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
-using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Content.Shared.Zombies;
 using Robust.Client.GameObjects;

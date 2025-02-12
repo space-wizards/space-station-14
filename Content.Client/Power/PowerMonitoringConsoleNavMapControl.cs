@@ -1,10 +1,9 @@
+using System.Numerics;
 using Content.Client.Pinpointer.UI;
-using Content.Shared.Pinpointer;
 using Content.Shared.Power;
 using Robust.Client.Graphics;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
-using System.Numerics;
 using static Content.Shared.Power.SharedPowerMonitoringConsoleSystem;
 
 namespace Content.Client.Power;

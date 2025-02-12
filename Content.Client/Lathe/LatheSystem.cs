@@ -1,8 +1,8 @@
-using Robust.Client.GameObjects;
+using Content.Client.Power;
 using Content.Shared.Lathe;
 using Content.Shared.Power;
-using Content.Client.Power;
 using Content.Shared.Research.Prototypes;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.Lathe;
 

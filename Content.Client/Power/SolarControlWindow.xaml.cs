@@ -1,4 +1,3 @@
-using System;
 using System.Numerics;
 using Content.Client.Computer;
 using Content.Shared.Solar;

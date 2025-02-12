@@ -1,5 +1,5 @@
-using Robust.Client.GameObjects;
 using Content.Shared.Smoking;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.Smoking;
 

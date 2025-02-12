@@ -1,7 +1,6 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                       xmlns:ui="clr-namespace:Content.Client.Chemistry.UI"
                       Title="{Loc 'reagent-dispenser-bound-user-interface-title'}"
                       MinSize="600 300"
@@ -16,8 +15,7 @@
                 HorizontalAlignment="Center"
                 Margin="5"
                 ButtonList="1,5,10,15,20,25,30,50,100"
-                RadioGroup="True">
-            </ui:ButtonGrid>
+                RadioGroup="True" />
             <Control VerticalExpand="True" />
             <Label Name="ContainerInfoName"
                    Access="Public"

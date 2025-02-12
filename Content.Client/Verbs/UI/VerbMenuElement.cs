@@ -3,10 +3,6 @@ using Content.Client.ContextMenu.UI;
 using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.Utility;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 
 namespace Content.Client.Verbs.UI
 {

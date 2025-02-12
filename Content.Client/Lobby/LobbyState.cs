@@ -9,6 +9,7 @@ using Content.Shared.CCVar;
 using Robust.Client;
 using Robust.Client.Console;
 using Robust.Client.ResourceManagement;
+using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
@@ -16,7 +17,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Lobby
 {
-    public sealed class LobbyState : Robust.Client.State.State
+    public sealed class LobbyState : State
     {
         [Dependency] private readonly IBaseClient _baseClient = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;

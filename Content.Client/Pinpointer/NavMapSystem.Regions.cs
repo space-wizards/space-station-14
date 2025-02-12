@@ -1,6 +1,6 @@
+using System.Linq;
 using Content.Shared.Atmos;
 using Content.Shared.Pinpointer;
-using System.Linq;
 
 namespace Content.Client.Pinpointer;
 

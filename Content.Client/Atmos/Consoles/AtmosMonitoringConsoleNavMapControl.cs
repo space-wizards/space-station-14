@@ -1,11 +1,11 @@
+using System.Linq;
+using System.Numerics;
 using Content.Client.Pinpointer.UI;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Pinpointer;
 using Robust.Client.Graphics;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
-using System.Linq;
-using System.Numerics;
 
 namespace Content.Client.Atmos.Consoles;
 

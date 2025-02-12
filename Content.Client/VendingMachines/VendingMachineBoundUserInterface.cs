@@ -1,9 +1,9 @@
+using System.Linq;
 using Content.Client.UserInterface.Controls;
 using Content.Client.VendingMachines.UI;
 using Content.Shared.VendingMachines;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
-using System.Linq;
 
 namespace Content.Client.VendingMachines
 {

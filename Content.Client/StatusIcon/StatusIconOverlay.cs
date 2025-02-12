@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Client.GameObjects;
@@ -5,7 +6,6 @@ using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using System.Numerics;
 
 namespace Content.Client.StatusIcon;
 

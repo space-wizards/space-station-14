@@ -3,7 +3,6 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Shared.Console;
-using Robust.Shared.Map;
 
 namespace Content.Client.Weapons.Melee;
 

@@ -11,13 +11,13 @@
             <!-- Alarm state -->
             <TextureRect Stretch="Keep" HorizontalAlignment="Left" Margin="-20 -2 0 0" ModulateSelfOverride="#25252a" TexturePath="/Textures/Interface/AtmosMonitoring/status_bg.png">
                 <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Horizontal" Margin="8 0">
-                    <TextureRect Name="ArrowTexture" VerticalAlignment="Center" SetSize="12 12" Stretch="KeepAspectCentered" Margin="3 0" TexturePath="/Textures/Interface/Nano/triangle_right.png"></TextureRect>
-                    <Label Name="AlarmStateLabel" HorizontalExpand="True" HorizontalAlignment="Center" FontColorOverride="#5A5A5A" Text="{Loc 'atmos-alerts-window-invalid-state'}"></Label>
+                    <TextureRect Name="ArrowTexture" VerticalAlignment="Center" SetSize="12 12" Stretch="KeepAspectCentered" Margin="3 0" TexturePath="/Textures/Interface/Nano/triangle_right.png" />
+                    <Label Name="AlarmStateLabel" HorizontalExpand="True" HorizontalAlignment="Center" FontColorOverride="#5A5A5A" Text="{Loc 'atmos-alerts-window-invalid-state'}" />
                 </BoxContainer>
             </TextureRect>
 
             <!-- Alarm name -->
-            <Label Name="AlarmNameLabel" Text="???" HorizontalExpand="True" HorizontalAlignment="Center" Margin="5 0"></Label>
+            <Label Name="AlarmNameLabel" Text="???" HorizontalExpand="True" HorizontalAlignment="Center" Margin="5 0" />
         </BoxContainer>
     </Button>
 
@@ -34,22 +34,22 @@
                 <!-- Main container for displaying atmospheric data -->
                 <BoxContainer Name="MainDataContainer" HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical" ReservesSpace="False" Visible="False">
                     <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
-                        <Label Name="TemperatureHeaderLabel" Text="{Loc 'atmos-alerts-window-temperature-label'}" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#a9a9a9" Margin="0 2 0 0" SetHeight="24"></Label>
-                        <Label Name="PressureHeaderLabel" Text="{Loc 'atmos-alerts-window-pressure-label'}" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#a9a9a9" Margin="0 2 0 0" SetHeight="24"></Label>
-                        <Label Name="OxygenationHeaderLabel" Text="{Loc 'atmos-alerts-window-oxygenation-label'}" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#a9a9a9" Margin="0 2 0 0" SetHeight="24"></Label>
+                        <Label Name="TemperatureHeaderLabel" Text="{Loc 'atmos-alerts-window-temperature-label'}" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#a9a9a9" Margin="0 2 0 0" SetHeight="24" />
+                        <Label Name="PressureHeaderLabel" Text="{Loc 'atmos-alerts-window-pressure-label'}" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#a9a9a9" Margin="0 2 0 0" SetHeight="24" />
+                        <Label Name="OxygenationHeaderLabel" Text="{Loc 'atmos-alerts-window-oxygenation-label'}" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#a9a9a9" Margin="0 2 0 0" SetHeight="24" />
                     </BoxContainer>
                     <PanelContainer HorizontalExpand="True">
                         <PanelContainer.PanelOverride>
                             <gfx:StyleBoxFlat BackgroundColor="#202023"/>
                         </PanelContainer.PanelOverride>
                         <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
-                            <Label Name="TemperatureLabel" Text="???" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#5A5A5A" Margin="0 2 0 0" SetHeight="24"></Label>
-                            <Label Name="PressureLabel" Text="???" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#5A5A5A" Margin="0 2 0 0" SetHeight="24"></Label>
-                            <Label Name="OxygenationLabel" Text="???" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#5A5A5A" Margin="0 2 0 0" SetHeight="24"></Label>
+                            <Label Name="TemperatureLabel" Text="???" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#5A5A5A" Margin="0 2 0 0" SetHeight="24" />
+                            <Label Name="PressureLabel" Text="???" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#5A5A5A" Margin="0 2 0 0" SetHeight="24" />
+                            <Label Name="OxygenationLabel" Text="???" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#5A5A5A" Margin="0 2 0 0" SetHeight="24" />
                         </BoxContainer>
                     </PanelContainer>
                     <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
-                        <Label Name="GasesHeaderLabel" Text="{Loc 'atmos-alerts-window-other-gases-label'}" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#a9a9a9" Margin="0 4 0 0" SetHeight="24"></Label>
+                        <Label Name="GasesHeaderLabel" Text="{Loc 'atmos-alerts-window-other-gases-label'}" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#a9a9a9" Margin="0 4 0 0" SetHeight="24" />
                     </BoxContainer>
                     <PanelContainer HorizontalExpand="True">
                         <PanelContainer.PanelOverride>
@@ -57,12 +57,12 @@
                         </PanelContainer.PanelOverride>
 
                         <!-- Gas entries added via C# code -->
-                        <GridContainer Name="GasGridContainer" HorizontalExpand="True" Columns = "4"></GridContainer>
+                        <GridContainer Name="GasGridContainer" HorizontalExpand="True" Columns = "4" />
                     </PanelContainer>
                 </BoxContainer>
 
                 <!-- If the alarm is inactive, this is label is displayed instead -->
-                <Label Name="NoDataLabel" Text="{Loc 'atmos-alerts-window-no-data-available'}" HorizontalAlignment="Center" Margin="0 15" FontColorOverride="#a9a9a9" ReservesSpace="False" Visible="False"></Label>
+                <Label Name="NoDataLabel" Text="{Loc 'atmos-alerts-window-no-data-available'}" HorizontalAlignment="Center" Margin="0 15" FontColorOverride="#a9a9a9" ReservesSpace="False" Visible="False" />
 
                 <!-- Silencing progress bar -->
                 <controls:StripeBack Name="SilenceAlarmProgressBar" ReservesSpace="False" Visible="False" Access="Public">
@@ -73,7 +73,7 @@
             </Control>
 
             <!-- Check box for silencing this alarm -->
-            <CheckBox Name="SilenceCheckBox" Text="{Loc 'atmos-alerts-window-silence-alerts'}" HorizontalAlignment="Left" Margin="5 5 5 5" Access="Public"></CheckBox>
+            <CheckBox Name="SilenceCheckBox" Text="{Loc 'atmos-alerts-window-silence-alerts'}" HorizontalAlignment="Left" Margin="5 5 5 5" Access="Public" />
         </BoxContainer>
     </PanelContainer>
 

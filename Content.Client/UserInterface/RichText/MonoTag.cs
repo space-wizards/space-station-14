@@ -1,7 +1,5 @@
-using System.Linq;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.RichText;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 

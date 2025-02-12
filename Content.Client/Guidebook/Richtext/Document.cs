@@ -1,7 +1,7 @@
+using System.Diagnostics.CodeAnalysis;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Client.Guidebook.Richtext;
 

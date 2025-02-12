@@ -1,5 +1,3 @@
-using System;
-using Content.Shared;
 using Content.Shared.Module;
 
 namespace Content.Client.IoC

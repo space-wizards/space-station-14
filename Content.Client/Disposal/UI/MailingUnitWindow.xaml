@@ -14,8 +14,7 @@
                   SelectMode="Single"
                   VerticalExpand="True"
                   HorizontalExpand="True"
-                  Margin="0 0 0 16">
-        </ItemList>
+                  Margin="0 0 0 16" />
         <BoxContainer Orientation="Horizontal" SeparationOverride="4">
             <Label Text="{Loc 'ui-disposal-unit-label-state'}" />
             <Label Name="UnitState"

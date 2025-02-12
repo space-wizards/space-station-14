@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Content.Shared.Fluids;
+﻿using Content.Shared.Fluids;
 using Robust.Client.Graphics;
 
 namespace Content.Client.Fluids;

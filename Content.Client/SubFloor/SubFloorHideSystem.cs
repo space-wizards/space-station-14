@@ -1,4 +1,3 @@
-using Content.Shared.DrawDepth;
 using Content.Shared.SubFloor;
 using Robust.Client.GameObjects;
 

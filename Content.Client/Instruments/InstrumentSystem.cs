@@ -1,8 +1,6 @@
 using System.Linq;
 using Content.Shared.CCVar;
 using Content.Shared.Instruments;
-using Content.Shared.Physics;
-using JetBrains.Annotations;
 using Robust.Client.Audio.Midi;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.Configuration;

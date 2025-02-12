@@ -1,5 +1,5 @@
-using Content.Shared.Storage;
 using Content.Shared.Lock;
+using Content.Shared.Storage;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Lock.Visualizers;

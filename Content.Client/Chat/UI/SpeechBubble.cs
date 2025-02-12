@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Client.Chat.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Speech;

@@ -10,11 +10,11 @@
             <Button Name="FollowButton" Text="{Loc admin-fax-follow}" />
         </BoxContainer>
         <Control MinHeight="5" />
-        <LineEdit Name="TitleEdit" HorizontalExpand="True" PlaceHolder="{Loc admin-fax-title-placeholder}"></LineEdit>
+        <LineEdit Name="TitleEdit" HorizontalExpand="True" PlaceHolder="{Loc admin-fax-title-placeholder}" />
         <Control MinHeight="5" />
-        <LineEdit Name="FromEdit" HorizontalExpand="True" PlaceHolder="{Loc admin-fax-from-placeholder}"></LineEdit>
+        <LineEdit Name="FromEdit" HorizontalExpand="True" PlaceHolder="{Loc admin-fax-from-placeholder}" />
         <Control MinHeight="5" />
-        <TextEdit Name="MessageEdit" HorizontalExpand="True" MinHeight="200"></TextEdit>
+        <TextEdit Name="MessageEdit" HorizontalExpand="True" MinHeight="200" />
         <Control MinHeight="5" />
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc admin-fax-stamp}" />

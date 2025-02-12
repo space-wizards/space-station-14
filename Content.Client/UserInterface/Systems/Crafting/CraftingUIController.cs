@@ -1,6 +1,7 @@
 using Content.Client.Construction.UI;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
@@ -12,7 +13,7 @@ namespace Content.Client.UserInterface.Systems.Crafting;
 public sealed class CraftingUIController : UIController, IOnStateChanged<GameplayState>
 {
     private ConstructionMenuPresenter? _presenter;
-    private MenuButton? CraftingButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.CraftingButton;
+    private MenuButton? CraftingButton => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>()?.CraftingButton;
 
     public void OnStateEntered(GameplayState state)
     {

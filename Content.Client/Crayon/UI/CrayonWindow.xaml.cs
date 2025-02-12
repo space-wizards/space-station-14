@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Shared.Crayon;
 using Content.Shared.Decals;
@@ -9,9 +9,6 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
-using Robust.Client.Utility;
-using Robust.Shared.Graphics;
-using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
@@ -102,7 +99,7 @@ namespace Content.Client.Crayon.UI
                         Name = name,
                         ToolTip = name,
                         Modulate = _color,
-                        Scale = new System.Numerics.Vector2(2, 2)
+                        Scale = new Vector2(2, 2)
                     };
                     button.OnPressed += ButtonOnPressed;
 

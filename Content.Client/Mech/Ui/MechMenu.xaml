@@ -28,7 +28,7 @@
                         <Label Name="EnergyDisplay"
                                Margin="5 0 0 0"
                                HorizontalAlignment="Left"
-                               VerticalAlignment="Center"></Label>
+                               VerticalAlignment="Center" />
                     </ProgressBar>
                 </BoxContainer>
                 <Label Name="SlotDisplay"
@@ -43,8 +43,7 @@
                         OverrideDirection="South"
                         SetSize="64 64"
                         MaxSize="64 64"
-                        Scale="2 2">
-            </SpriteView>
+                        Scale="2 2" />
         </BoxContainer>
         <BoxContainer VerticalExpand="True" Margin="10 0 10 10" Orientation="Vertical">
             <PanelContainer VerticalExpand="True" MinSize="0 200">
@@ -62,8 +61,7 @@
                         MinSize="100 256"
                         Orientation="Vertical"
                         SizeFlagsStretchRatio="2"
-                        VerticalExpand="True">
-                    </BoxContainer>
+                        VerticalExpand="True" />
                 </ScrollContainer>
             </PanelContainer>
         </BoxContainer>
