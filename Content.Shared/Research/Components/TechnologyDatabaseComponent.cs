@@ -55,3 +55,10 @@ public sealed partial class TechnologyDatabaseComponent : Component
 /// </remarks>
 [ByRefEvent]
 public readonly record struct TechnologyDatabaseModifiedEvent;
+
+/// <summary>
+/// Event raised on a database after being synchronized
+/// with the values from another database.
+/// </summary>
+[ByRefEvent]
+public readonly record struct TechnologyDatabaseSynchronizedEvent;

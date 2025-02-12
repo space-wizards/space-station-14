@@ -1,0 +1,105 @@
+- type: dungeonRoom
+  id: VGRoidInterior5x5a
+  size: 5,5
+  atlas: /Maps/Dungeon/vgroidinterior.yml
+  offset: 0,0
+  tags:
+  - VGRoidInterior
+
+- type: dungeonRoom
+  id: VGRoidInterior5x5b
+  size: 5,5
+  atlas: /Maps/Dungeon/vgroidinterior.yml
+  offset: 6,0
+  tags:
+  - VGRoidInterior
+
+- type: dungeonRoom
+  id: VGRoidInterior5x5c
+  size: 5,5
+  atlas: /Maps/Dungeon/vgroidinterior.yml
+  offset: 12,0
+  tags:
+  - VGRoidInterior
+
+- type: dungeonRoom
+  id: VGRoidInterior5x5d
+  size: 5,5
+  atlas: /Maps/Dungeon/vgroidinterior.yml
+  offset: 18,0
+  tags:
+  - VGRoidInterior
+
+- type: dungeonRoom
+  id: VGRoidInterior5x5e
+  size: 5,5
+  atlas: /Maps/Dungeon/vgroidinterior.yml
+  offset: 0,6
+  tags:
+    - VGRoidInterior
+
+- type: dungeonRoom
+  id: VGRoidInterior5x5f
+  size: 5,5
+  atlas: /Maps/Dungeon/vgroidinterior.yml
+  offset: 6,6
+  tags:
+  - VGRoidInterior
+
+- type: dungeonRoom
+  id: VGRoidInterior5x5g
+  size: 5,5
+  atlas: /Maps/Dungeon/vgroidinterior.yml
+  offset: 12,6
+  tags:
+  - VGRoidInterior
+
+- type: dungeonRoom
+  id: VGRoidInterior5x5h
+  size: 5,5
+  atlas: /Maps/Dungeon/vgroidinterior.yml
+  offset: 18,6
+  tags:
+  - VGRoidInterior
+
+- type: dungeonRoom
+  id: VGRoidInterior5x5i
+  size: 5,5
+  atlas: /Maps/Dungeon/vgroidinterior.yml
+  offset: 0,12
+  tags:
+  - VGRoidInterior
+
+- type: dungeonRoom
+  id: VGRoidInterior5x5j
+  size: 5,5
+  atlas: /Maps/Dungeon/vgroidinterior.yml
+  offset: 6,12
+  tags:
+  - VGRoidInterior
+
+- type: dungeonRoom
+  id: VGRoidInterior5x5k
+  size: 5,5
+  atlas: /Maps/Dungeon/vgroidinterior.yml
+  offset: 12,12
+  tags:
+  - VGRoidInterior
+
+- type: dungeonRoom
+  id: VGRoidInterior5x5l
+  size: 5,5
+  atlas: /Maps/Dungeon/vgroidinterior.yml
+  offset: 18,12
+  tags:
+  - VGRoidInterior
+
+- type: entity
+  id: VGRoidInteriorRoomMarker
+  parent: BaseRoomMarker
+  name: VGRoid interior marker
+  components:
+  - type: RoomFill
+    roomWhitelist:
+      tags:
+      - VGRoidInterior

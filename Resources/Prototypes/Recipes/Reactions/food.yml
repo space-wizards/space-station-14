@@ -73,6 +73,22 @@
       entity: FoodDoughTortilla
 
 - type: reaction
+  id: CreateDoughCotton
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    Fiber:
+      amount: 10
+    Flour:
+      amount: 5
+    Water:
+      amount: 10
+  effects:
+  - !type:CreateEntityReactionEffect
+    entity: FoodDoughCotton
+
+- type: reaction
   id: CreateCakeBatter
   impact: Low
   quantized: true
@@ -269,6 +285,18 @@
     Hotsauce: 3
 
 - type: reaction
+  id: CookingColdsauce
+  reactants:
+    JuiceTomato:
+      amount: 1
+    TableSalt:
+      amount: 1
+    FrostOil:
+      amount: 1
+  products:
+    Coldsauce: 3
+
+- type: reaction
   id: CookingVinegar
   reactants:
     Ethanol:
@@ -417,3 +445,14 @@
     Carbon: 1
     Water: 1
     Nitrogen: 2
+
+- type: reaction
+  id: ReduceMilk #makes Cream renewable
+  minTemp: 320
+  requiredMixerCategories:
+  - Shake
+  reactants:
+   Milk:
+    amount: 2
+  products:
+   Cream: 1

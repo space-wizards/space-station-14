@@ -30,3 +30,21 @@
     - /Audio/Voice/Cluwne/cluwnelaugh1.ogg
     - /Audio/Voice/Cluwne/cluwnelaugh2.ogg
     - /Audio/Voice/Cluwne/cluwnelaugh3.ogg
+
+- type: soundCollection
+  id: PlantScreams
+  files:
+    # Male.
+    - /Audio/Voice/Human/malescream_1.ogg
+    - /Audio/Voice/Human/malescream_2.ogg
+    - /Audio/Voice/Human/malescream_3.ogg
+    - /Audio/Voice/Human/malescream_4.ogg
+    - /Audio/Voice/Human/malescream_5.ogg
+    - /Audio/Voice/Human/malescream_6.ogg
+
+    # Female.
+    - /Audio/Voice/Human/femalescream_1.ogg
+    - /Audio/Voice/Human/femalescream_2.ogg
+    - /Audio/Voice/Human/femalescream_3.ogg
+    - /Audio/Voice/Human/femalescream_4.ogg
+    - /Audio/Voice/Human/femalescream_5.ogg

@@ -64,13 +64,23 @@ public sealed partial class LatheMenu : DefaultWindow
 
         if (_entityManager.TryGetComponent<LatheComponent>(Entity, out var latheComponent))
         {
-            if (!latheComponent.DynamicRecipes.Any())
+            if (!latheComponent.DynamicPacks.Any())
             {
                 ServerListButton.Visible = false;
             }
         }
 
         MaterialsList.SetOwner(Entity);
+    }
+
+    protected override void Opened()
+    {
+        base.Opened();
+
+        if (_entityManager.TryGetComponent<LatheComponent>(Entity, out var latheComp))
+        {
+            AmountLineEdit.SetText(latheComp.DefaultProductionAmount.ToString());
+        }
     }
 
     /// <summary>

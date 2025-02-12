@@ -36,7 +36,7 @@
   - type: Appearance
   - type: Damageable
     damageContainer: Inorganic
-    damageModifierSet: Wood  
+    damageModifierSet: Wood
   - type: Destructible
     thresholds:
     - trigger:
@@ -49,10 +49,10 @@
         spawn:
           MaterialCloth1:
             min: 1
-            max: 2
+            max: 1
   - type: WallMount
     arc: 360
-        
+
 - type: entity
   id: HospitalCurtains
   parent: BaseCurtains

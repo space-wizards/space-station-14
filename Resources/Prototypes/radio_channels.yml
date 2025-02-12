@@ -39,7 +39,7 @@
   name: chat-radio-science
   keycode: 'n'
   frequency: 1351
-  color: "#b05efa"
+  color: "#cd7ccd"
 
 - type: radioChannel
   id: Security
@@ -83,7 +83,7 @@
   name: chat-radio-binary
   keycode: 'b'
   frequency: 1001
-  color: "#2ed2fd"
+  color: "#5ed7aa"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
 

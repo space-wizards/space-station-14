@@ -108,6 +108,27 @@ namespace Content.Shared.Random.Helpers
             return true;
         }
 
+        public static T Pick<T>(Dictionary<T, float> weights, System.Random random)
+            where T : notnull
+        {
+            var sum = weights.Values.Sum();
+            var accumulated = 0f;
+
+            var rand = random.NextFloat() * sum;
+
+            foreach (var (key, weight) in weights)
+            {
+                accumulated += weight;
+
+                if (accumulated >= rand)
+                {
+                    return key;
+                }
+            }
+
+            throw new InvalidOperationException("Invalid weighted pick");
+        }
+
         public static (string reagent, FixedPoint2 quantity) Pick(this WeightedRandomFillSolutionPrototype prototype, IRobustRandom? random = null)
         {
             var randomFill = prototype.PickRandomFill(random);

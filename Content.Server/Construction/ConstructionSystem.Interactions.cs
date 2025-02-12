@@ -287,7 +287,7 @@ namespace Content.Server.Construction
                         {
                             BreakOnDamage = false,
                             BreakOnMove = true,
-                            NeedHand = true
+                            NeedHand = true,
                         };
 
                         var started  = _doAfterSystem.TryStartDoAfter(doAfterEventArgs);

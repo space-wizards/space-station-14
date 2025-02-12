@@ -3,7 +3,7 @@
 - type: entity
   id: CartridgeRocket
   name: PG-7VL grenade
-  parent: BaseItem
+  parent: [BaseItem, BaseMajorContraband]
   description: A 1.5 warhead designed for the RPG-7 launcher. Has tubular shape.
   components:
   - type: Tag
@@ -23,7 +23,7 @@
 - type: entity
   id: CartridgeRocketSlow
   name: PG-7VL grenade "Snail-Rocket"
-  parent: BaseItem
+  parent: [BaseItem, BaseMajorContraband]
   description: A 1.5 warhead designed for the RPG-7 launcher. It's unusually slow.
   components:
     - type: Tag
@@ -45,7 +45,7 @@
 - type: entity
   id: BaseGrenade
   name: base grenade
-  parent: BaseItem
+  parent: [BaseItem, BaseMajorContraband]
   abstract: true
   components:
   - type: Tag
@@ -122,7 +122,7 @@
   - type: SpentAmmoVisuals
     state: frag
     suffix: false
-    
+
 - type: entity
   id: GrenadeEMP
   name: EMP grenade
@@ -145,7 +145,7 @@
 - type: entity
   id: BaseCannonBall
   name: base cannon ball
-  parent: BaseItem
+  parent: [BaseItem, BaseMajorContraband]
   abstract: true
   components:
   - type: Tag
@@ -154,7 +154,7 @@
   - type: Item
     size: Small
   - type: Sprite
-  
+
 - type: entity
   id: CannonBall
   name: cannonball

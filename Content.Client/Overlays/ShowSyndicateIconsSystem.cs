@@ -22,7 +22,7 @@ public sealed class ShowSyndicateIconsSystem : EquipmentHudSystem<ShowSyndicateI
         if (!IsActive)
             return;
 
-        if (_prototype.TryIndex<StatusIconPrototype>(component.SyndStatusIcon, out var iconPrototype))
+        if (_prototype.TryIndex<FactionIconPrototype>(component.SyndStatusIcon, out var iconPrototype))
             ev.StatusIcons.Add(iconPrototype);
     }
 }

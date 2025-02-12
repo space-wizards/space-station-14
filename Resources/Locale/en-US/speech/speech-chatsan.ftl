@@ -156,3 +156,36 @@ chatsan-replacement-55 = not gonna lie
 
 chatsan-word-56 = fml
 chatsan-replacement-56 = fuck my life
+
+chatsan-word-57 = wtaf
+chatsan-replacement-57 = what the actual fuck
+
+chatsan-word-58 = wsg
+chatsan-replacement-58 = what's good
+
+chatsan-word-59 = mb
+chatsan-replacement-59 = my bad
+
+chatsan-word-60 = jfc
+chatsan-replacement-60 = jesus fucking christ
+
+chatsan-word-61 = omw
+chatsan-replacement-61 = on my way
+
+chatsan-word-62 = otw
+chatsan-replacement-62 = on the way
+
+chatsan-word-63 = yk
+chatsan-replacement-63 = you know
+
+chatsan-word-64 = istfg
+chatsan-replacement-64 = i swear to fucking god
+
+chatsan-word-65 = idgaf
+chatsan-replacement-65 = i don't give a fuck
+
+chatsan-word-66 = smth
+chatsan-replacement-66 = something
+
+chatsan-word-67 = allg
+chatsan-replacement-67 = all good

@@ -140,11 +140,29 @@ public abstract class SharedContentEyeSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    public void UpdateEyeOffset(Entity<EyeComponent?> eye)
+    public void UpdateEyeOffset(Entity<EyeComponent> eye)
     {
         var ev = new GetEyeOffsetEvent();
         RaiseLocalEvent(eye, ref ev);
-        _eye.SetOffset(eye, ev.Offset, eye);
+
+        var evRelayed = new GetEyeOffsetRelayedEvent();
+        RaiseLocalEvent(eye, ref evRelayed);
+
+        _eye.SetOffset(eye, ev.Offset + evRelayed.Offset, eye);
+    }
+
+    public void UpdatePvsScale(EntityUid uid, ContentEyeComponent? contentEye = null, EyeComponent? eye = null)
+    {
+        if (!Resolve(uid, ref contentEye) || !Resolve(uid, ref eye))
+            return;
+
+        var ev = new GetEyePvsScaleEvent();
+        RaiseLocalEvent(uid, ref ev);
+
+        var evRelayed = new GetEyePvsScaleRelayedEvent();
+        RaiseLocalEvent(uid, ref evRelayed);
+
+        _eye.SetPvsScale((uid, eye), 1 + ev.Scale + evRelayed.Scale);
     }
 
     /// <summary>

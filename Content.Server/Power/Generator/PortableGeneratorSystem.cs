@@ -73,8 +73,10 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.StartTime, new GeneratorStartedEvent(), uid, uid)
         {
-            BreakOnDamage = true, BreakOnMove = true, RequireCanInteract = true,
-            NeedHand = true
+            BreakOnDamage = true,
+            BreakOnMove = true,
+            NeedHand = true,
+            BreakOnDropItem = false,
         });
     }
 
@@ -115,7 +117,7 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         var clogged = _generator.GetIsClogged(uid);
 
         var sound = empty ? component.StartSoundEmpty : component.StartSound;
-        _audio.PlayEntity(sound, Filter.Pvs(uid), uid, true);
+        _audio.PlayPvs(sound, uid);
 
         if (!clogged && !empty && _random.Prob(component.StartChance))
         {

@@ -1,5 +1,6 @@
 using System.Numerics;
 using System.Threading.Tasks;
+using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
 
@@ -10,7 +11,7 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="FillGridDunGen"/>
     /// </summary>
-    private async Task<Dungeon> GenerateFillDunGen(DungeonData data, HashSet<Vector2i> reservedTiles)
+    private async Task<Dungeon> GenerateFillDunGen(FillGridDunGen fill, DungeonData data, HashSet<Vector2i> reservedTiles)
     {
         if (!data.Entities.TryGetValue(DungeonDataKey.Fill, out var fillEnt))
         {
@@ -26,6 +27,9 @@ public sealed partial class DungeonJob
             var tile = tileRef.Value.GridIndices;
 
             if (reservedTiles.Contains(tile))
+                continue;
+
+            if (fill.AllowedTiles != null && !fill.AllowedTiles.Contains(((ContentTileDefinition) _tileDefManager[tileRef.Value.Tile.TypeId]).ID))
                 continue;
 
             if (!_anchorable.TileFree(_grid, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
