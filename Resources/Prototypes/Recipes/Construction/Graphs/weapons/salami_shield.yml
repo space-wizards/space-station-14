@@ -15,5 +15,5 @@
           sprite: Objects/Decoration/lidsalami.rsi
           state: icon
         doAfter: 2
-- node: salamiShield
-  entity: SalamiShield
+  - node: salamiShield
+    entity: SalamiShield
