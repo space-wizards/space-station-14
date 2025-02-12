@@ -9,17 +9,17 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Announcements;
 
 [AdminCommand(AdminFlags.Moderator)]
-public sealed class AnnounceCommand : IConsoleCommand
+public sealed class AnnounceCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IResourceManager _res = default!;
 
-    public string Command => "announce";
-    public string Description => Loc.GetString("cmd-announce-desc");
-    public string Help => Loc.GetString("cmd-announce-help", ("command", Command));
+    public override string Command => "announce";
+    public override string Description => Loc.GetString("cmd-announce-desc");
+    public override string Help => Loc.GetString("cmd-announce-help", ("command", Command));
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         switch (args.Length)
         {
@@ -62,7 +62,7 @@ public sealed class AnnounceCommand : IConsoleCommand
         shell.WriteLine(Loc.GetString("shell-command-success"));
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         return args.Length switch
         {
