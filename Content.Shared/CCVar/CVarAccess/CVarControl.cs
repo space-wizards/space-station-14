@@ -19,5 +19,20 @@ public sealed class CVarControl : Attribute
         AdminFlags = adminFlags;
         Min = min;
         Max = max;
+
+        // Not actually sure if its a good idea to throw exceptions in attributes.
+
+        if (min != null && max != null)
+        {
+            if (min.GetType() != max.GetType())
+            {
+                throw new ArgumentException("Min and max must be of the same type.");
+            }
+        }
+
+        if (min == null && max != null || min != null && max == null)
+        {
+            throw new ArgumentException("Min and max must both be null or both be set.");
+        }
     }
 }

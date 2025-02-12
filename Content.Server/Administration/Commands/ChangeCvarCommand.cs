@@ -1,8 +1,10 @@
 ﻿using System.Linq;
 using System.Reflection;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.CCVar.CVarAccess;
+using Content.Shared.Database;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Reflection;
@@ -19,12 +21,12 @@ public sealed class ChangeCvarCommand : LocalizedCommands
     [Dependency] private readonly IReflectionManager _reflectionManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
 
     private List<ChangableCVar> _changableCvars = new();
     private bool _initialized;
 
     private void Init()
-    //void IPostInjectInit.PostInject()
     {
         if (_initialized)
         {
@@ -94,13 +96,13 @@ public sealed class ChangeCvarCommand : LocalizedCommands
             var type = _configurationManager.GetCVarType(cvar);
             try
             {
-                var parsed = ParseObject(type, value);
+                var parsed = CVarCommandUtil.ParseObject(type, value);
                 // Value check, is it in the min/max range?
                 var control = _changableCvars.First(c => c.Name == cvar).Control;
                 var allowed = true;
                 if (control is { Min: not null, Max: not null })
                 {
-                    switch (parsed)
+                    switch (parsed) // This looks bad, and im not sorry.
                     {
                         case int intVal:
                         {
@@ -149,7 +151,12 @@ public sealed class ChangeCvarCommand : LocalizedCommands
                     return;
                 }
 
+                var oldValue = _configurationManager.GetCVar<object>(cvar);
                 _configurationManager.SetCVar(cvar, parsed);
+                _adminLogManager.Add(LogType.AdminCommands,
+                    LogImpact.High,
+                    $"{shell.Player!.Name} ({shell.Player!.UserId}) changed CVAR {cvar} from {oldValue.ToString()} to {parsed.ToString()}"
+                    );
             }
             catch (FormatException)
             {
@@ -158,53 +165,11 @@ public sealed class ChangeCvarCommand : LocalizedCommands
         }
     }
 
-    // TODO: DEPLUCIATE FROM ConfigurationCommands
-    private static object ParseObject(Type type, string input)
-    {
-        if (type == typeof(bool))
-        {
-            if (bool.TryParse(input, out var val))
-                return val;
-
-            if (Parse.TryInt32(input, out var intVal))
-            {
-                if (intVal == 0) return false;
-                if (intVal == 1) return true;
-            }
-
-            throw new FormatException($"Could not parse bool value: {input}");
-        }
-
-        if (type == typeof(string))
-        {
-            return input;
-        }
-
-        if (type == typeof(int))
-        {
-            return Parse.Int32(input);
-        }
-
-        if (type == typeof(float))
-        {
-            return Parse.Float(input);
-        }
-
-        if (type == typeof(long))
-        {
-            return long.Parse(input);
-        }
-
-        if (type == typeof(ushort))
-        {
-            return ushort.Parse(input);
-        }
-
-        throw new NotSupportedException();
-    }
-
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
+        // This is kinda scrunkly.
+        // Ideally I would run init the moment the dependencies are injected, but IPostInjectInit.PostInject()
+        // does not run on commands. Will result in first completion being a bit slow, but eh, it's fine.
         Init();
 
         var cvars = GetAllRunnableCvars(shell);
@@ -246,6 +211,8 @@ public sealed class ChangeCvarCommand : LocalizedCommands
     private sealed class ChangableCVar
     {
         public string Name { get; }
+
+        // Holding a reference to the attribute might be skrunkly? Not sure how much mem it eats up.
         public CVarControl Control { get; }
 
         public ChangableCVar(string name, CVarControl control)
