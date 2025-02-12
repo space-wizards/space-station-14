@@ -19,23 +19,17 @@ public sealed partial class RepulseAttractComponent : Component
     ///     How fast should the Repulsion/Attraction be?
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float Speed = 1.0f;
+    public float Speed = 5.0f;
 
     /// <summary>
     ///     How close do the entities need to be?
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float Range = 1.0f;
+    public float Range = 5.0f;
 
     /// <summary>
     ///     What kind of entities should this effect apply to?
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? Whitelist;
-
-    /// <summary>
-    ///     What kind of entities should be excluded from the effect?
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityWhitelist? Blacklist;
 }
