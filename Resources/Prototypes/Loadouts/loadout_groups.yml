@@ -695,6 +695,20 @@
   - CargoWinterBoots
 
 - type: loadoutGroup
+  id: SalvageSpecialistEars
+  name: loadout-group-salvage-specialist-ears
+  loadouts:
+  - CargoHeadset
+  - SalvageMiningHeadset
+
+- type: loadoutGroup
+  id: SalvageSpecialistNeck
+  name: loadout-group-salvage-specialist-neck
+  minLimit: 0
+  loadouts:
+  - MiningCloak
+
+- type: loadoutGroup
   id: SalvageSpecialistBackpack
   name: loadout-group-salvage-specialist-backpack
   loadouts:
