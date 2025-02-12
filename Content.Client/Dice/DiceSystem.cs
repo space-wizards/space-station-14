@@ -10,7 +10,7 @@ public sealed class DiceSystem : SharedDiceSystem
         if (!Resolve(uid, ref die) || !TryComp(uid, out SpriteComponent? sprite))
             return;
 
-        // TODO maybe just move each diue to its own RSI?
+        // TODO maybe just move each die to its own RSI?
         var state = sprite.LayerGetState(0).Name;
         if (state == null)
             return;
