@@ -29,6 +29,9 @@
             "name":"geiger-module"
         },
         {
+            "name": "inflatable-module"
+        },
+        {
             "name":"rcd-module"
         },
         {
