@@ -4,7 +4,6 @@ using Content.Server.Body.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
-using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
@@ -24,7 +23,6 @@ public sealed class TemperatureSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly TemperatureSystem _temperature = default!;
-    [Dependency] protected readonly IPrototypeManager Prototypes = default!;
 
     /// <summary>
     ///     All the components that will have their damage updated at the end of the tick.
@@ -210,13 +208,18 @@ public sealed class TemperatureSystem : EntitySystem
             idealTemp = (temperature.ColdDamageThreshold + temperature.HeatDamageThreshold) / 2;
         }
 
-        if (args.CurrentTemperature <= idealTemp && temperature.ColdDamage != new DamageSpecifier(Prototypes.Index<DamageTypePrototype>("Cold"), 0.0))
+        if (args.CurrentTemperature <= idealTemp)
         {
+            if (temperature.ColdDamageThreshold <= 0)
+            {
+                _alerts.ClearAlertCategory(uid, TemperatureAlertCategory);
+                return;
+            }
             type = temperature.ColdAlert;
             threshold = temperature.ColdDamageThreshold;
             AlertChange(type, threshold, args.CurrentTemperature, idealTemp, uid);
         }
-        else if (temperature.HeatDamage != new DamageSpecifier(Prototypes.Index<DamageTypePrototype>("Heat"), 0.0))
+        else
         {
             type = temperature.HotAlert;
             threshold = temperature.HeatDamageThreshold;
