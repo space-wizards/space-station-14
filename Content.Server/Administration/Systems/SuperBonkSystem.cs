@@ -105,8 +105,6 @@ public sealed class SuperBonkSystem : EntitySystem
 
     private bool TryBonk(EntityUid uid, EntityUid tableUid)
     {
-        // Remove SuperBonkComponent if we don't have ClumsyComponent
-        // because we wouldn't be able to do anything anyway.
         if (!TryComp<ClumsyComponent>(uid, out var clumsyComp))
             return false;
 
