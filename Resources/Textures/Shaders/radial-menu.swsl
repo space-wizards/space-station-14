@@ -4,20 +4,21 @@ const highp float pi = 3.14159265;
 const highp float halfpi = 0.5 * pi;
 const highp float invpi = 1.0 / pi;
 
-const highp vec3 sectorColor = vec3(0.5, 0.1, 0.1);
-const highp vec3 borderColor = vec3(0.2, 0.78, 0.2);
 const highp vec3 selectedColor = vec3(0.5, 0.5, 1.0);
+const highp vec3 sectorColor = vec3(0.5, 0.1, 0.1);
+const highp vec4 borderColor = vec4(0.2, 0.78, 0.2, 0.6);
+const highp vec4 borderColorLight = vec4(0.2, 0.78, 0.2, 0.1);
 
 uniform highp float innerRadius;
 uniform highp float outerRadius;
 
-uniform highp float[64] angles;
+uniform highp float[64] separatorAngles;
+uniform highp float[64] sectorMedianAngles;
 uniform highp int childCount;
 uniform highp vec2 centerPos;
 
 uniform highp float selectedFrom;
 uniform highp float selectedTo;
-uniform highp float scale;
 uniform highp vec2 screenSize;
 
 highp float SMOOTH(highp float r, highp float R)
@@ -25,56 +26,93 @@ highp float SMOOTH(highp float r, highp float R)
     return 1.0 - smoothstep( R - 1.0, R + 1.0, r);
 }
 
-highp float line(highp vec2 uv, highp vec2 center, highp float r, highp float inner, highp float outer, highp float theta0)
+highp float separator(highp vec2 d, highp float r, highp float outer, highp float theta0, highp float thickness)
 {
-    if(r < outer && r > inner)
-    {
-        //angle of the line
-        highp vec2 d = uv - center;
-        //compute the distance to the line theta=theta0
-        // rotate due to difference in coordinate spaces between shaders and ui
-        highp float theta1 = theta0 - pi / 2;
-        highp vec2 p = outer * vec2(cos(theta1), -sin(theta1));
-        highp float l = length(d - p * clamp(dot(d, p) / dot(p, p), 0.0, 1.0));
-        return SMOOTH(l,1.0);
-    }
-    else return 0.0;
+    //compute the distance to the line theta=theta0
+    // rotate due to difference in coordinate spaces between shaders and ui
+    highp float theta1 = theta0 - pi / 2;
+    highp vec2 p = outer * vec2(cos(theta1), -sin(theta1));
+    highp float l = length(d - p * clamp(dot(d, p) / dot(p, p), 0.0, 1.0));
+    return SMOOTH(l, thickness);
 }
-
 
 highp float circle(highp float r, highp float radius, highp float width)
 {
     return SMOOTH(r - width / 2.0, radius) - SMOOTH(r + width / 2.0, radius);
 }
 
-
-highp float inRange(highp float r, highp float innerRadius, highp float outerRadius, highp float from, highp float to)
+highp float getAngle(highp vec2 d)
 {
-    if(r > innerRadius && r < outerRadius)
-    {
-        return 1.0;
+    highp vec2 n = normalize(d);
+    highp float angle = acos(n.x);
+    if (n.y < 0.0) {
+        angle = 2.0 * pi - angle;
     }
-
-    return 0.0;
+    // rotate
+    angle = mod(angle - pi / 2.0, 2.0 * pi);
+    return angle;
 }
 
+highp float pcurve(highp float x, highp float a, highp float b ){
+    highp float k = pow(a + b,a + b) / (pow(a, a)*pow(b, b));
+    return k * pow( x, a ) * pow( 1.0-x, b );
+}
+
+highp float fillGradient(highp float r, highp float inner, highp float outer)
+{
+    highp float nInner = inner / outer;
+    highp float nR = r / outer;
+    return pcurve(nR, nInner, 1.0);
+}
 
 void fragment()
 {
-    highp float scaledInnerRadius = innerRadius * scale;
-    highp float scaledOuterRadius = outerRadius * scale;
-
     highp float r = length(FRAGCOORD.xy - centerPos);
 
-    highp vec3 col = vec3(0.0);
-    col += inRange(r, scaledInnerRadius, scaledOuterRadius, selectedFrom, selectedTo) * sectorColor;
-    col += circle(r, scaledInnerRadius, 2.0) * borderColor;
-    col += circle(r, scaledOuterRadius, 2.0) * borderColor;
-    for (int i = 0; i < childCount; i++)
+    highp vec4 col = vec4(0.0);
+
+    if(r > innerRadius && r < outerRadius)
     {
-        col += line(FRAGCOORD.xy, centerPos, r, scaledInnerRadius, scaledOuterRadius, angles[i]) * borderColor;
+        //angle of the line
+        highp vec2 d = FRAGCOORD.xy - centerPos;
+        highp float angle = getAngle(d);
+
+        highp float g = fillGradient(r, innerRadius, outerRadius);
+        if(angle > selectedFrom && angle < selectedTo)
+        {
+            col +=  vec4(selectedColor, g);
+        }
+        else
+        {
+            col += vec4(sectorColor, g);
+        }
+
+        highp float diff = separatorAngles[1] - separatorAngles[0];
+
+        for (int i = 0; i < childCount; i++)
+        {
+            highp float iAngle = separatorAngles[i];
+            col += separator(d, r, outerRadius, iAngle, 1.0) * borderColor;
+
+            if(r > innerRadius + 15)
+            {
+                col += separator(d, r, outerRadius - 15, iAngle - (diff /2)* 0.2, 1.0) * 0.2 * borderColorLight;
+                col += separator(d, r, outerRadius - 15, iAngle + (diff /2)* 0.2, 1.0 ) * 0.2 * borderColorLight;
+
+                if( abs(sectorMedianAngles[i] - angle) < (diff /2)* 0.8)
+                {
+                    col += circle(r, innerRadius + 15, 2.0) * 0.2 * borderColorLight;
+                    col += circle(r, outerRadius - 15, 2.0) * 0.2 * borderColorLight;
+                }
+            }
+        }
     }
-    if(col != vec3(0.0)) {
-        COLOR = vec4(col, 1.0);
+
+    col += circle(r, innerRadius, 2.0) * borderColor;
+    col += circle(r, outerRadius, 2.0) * borderColor;
+
+
+    if(col != vec4(0.0)) {
+        COLOR = col;
     }
 }

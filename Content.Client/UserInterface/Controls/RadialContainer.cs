@@ -14,6 +14,7 @@ public class RadialContainer : LayoutContainer
     private readonly ShaderInstance _shader;
 
     private readonly float[] _angles = new float[64];
+    private readonly float[] _sectorMedians = new float[64];
 
     /// <summary>
     /// Increment of radius per child element to be rendered.
@@ -184,28 +185,34 @@ public class RadialContainer : LayoutContainer
         {
             var child = children[i];
             _angles[i] = child.AngleSectorTo;
+            _sectorMedians[i] = (child.AngleSectorTo + child.AngleSectorFrom) / 2;
             if (child.IsHovered)
             {
-                selectedFrom = child.AngleSectorFrom ;
-                selectedTo = child.AngleSectorTo ;
+                selectedFrom = child.AngleSectorFrom;
+                selectedTo = child.AngleSectorTo;
             }
         }
 
-        clone.SetParameter("angles", _angles);
+        clone.SetParameter("separatorAngles", _angles);
+        clone.SetParameter("sectorMedianAngles", _sectorMedians);
         clone.SetParameter("selectedFrom", selectedFrom);
         clone.SetParameter("selectedTo", selectedTo);
         clone.SetParameter("childCount", children.Length);
-        var menuCenter = new Vector2(-GlobalPixelPosition.X + Size.X * 2 + 159, GlobalPixelPosition.Y - Size.Y - 9);
-        var screenCenter = _clyde.ScreenSize / 2;
+        
+        var screenSize = _clyde.ScreenSize;
 
-        clone.SetParameter("centerPos", (screenCenter - menuCenter) * UIScale );
-        clone.SetParameter("scale", UIScale);
-        clone.SetParameter("screenSize", _clyde.ScreenSize);
-        clone.SetParameter("innerRadius", CalculatedRadius * InnerRadiusMultiplier);
-        clone.SetParameter("outerRadius", CalculatedRadius * OuterRadiusMultiplier);
+        var menuCenter = new Vector2(
+            ScreenCoordinates.X + Size.X / 2,
+            screenSize.Y - ScreenCoordinates.Y - Size.Y / 2
+        );
+
+        clone.SetParameter("centerPos", menuCenter * UIScale);
+        clone.SetParameter("screenSize", screenSize);
+        clone.SetParameter("innerRadius", CalculatedRadius * InnerRadiusMultiplier * UIScale);
+        clone.SetParameter("outerRadius", CalculatedRadius * OuterRadiusMultiplier * UIScale);
 
         handle.UseShader(clone);
-        handle.DrawRect(new UIBox2(0,0, 1900,1200), Color.White);
+        handle.DrawRect(new UIBox2(0, 0, screenSize.X, screenSize.Y), Color.White);
         handle.UseShader(null);
     }
 
