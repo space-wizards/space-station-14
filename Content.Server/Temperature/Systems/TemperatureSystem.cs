@@ -1,19 +1,19 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
+using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Physics.Events;
-using Content.Shared.Projectiles;
+using System.Linq;
 
 namespace Content.Server.Temperature.Systems;
 
@@ -24,6 +24,7 @@ public sealed class TemperatureSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly TemperatureSystem _temperature = default!;
+    [Dependency] protected readonly IPrototypeManager Prototypes = default!;
 
     /// <summary>
     ///     All the components that will have their damage updated at the end of the tick.
@@ -209,20 +210,25 @@ public sealed class TemperatureSystem : EntitySystem
             idealTemp = (temperature.ColdDamageThreshold + temperature.HeatDamageThreshold) / 2;
         }
 
-        if (args.CurrentTemperature <= idealTemp)
+        if (args.CurrentTemperature <= idealTemp && temperature.ColdDamage != new DamageSpecifier(Prototypes.Index<DamageTypePrototype>("Cold"), 0.0))
         {
             type = temperature.ColdAlert;
             threshold = temperature.ColdDamageThreshold;
+            AlertChange(type, threshold, args.CurrentTemperature, idealTemp, uid);
         }
-        else
+        else if (temperature.HeatDamage != new DamageSpecifier(Prototypes.Index<DamageTypePrototype>("Heat"), 0.0))
         {
             type = temperature.HotAlert;
             threshold = temperature.HeatDamageThreshold;
+            AlertChange(type, threshold, args.CurrentTemperature, idealTemp, uid);
         }
+    }
 
+    private void AlertChange(ProtoId<AlertPrototype> type, float threshold, float temp, float idealTemp, EntityUid uid)
+    {
         // Calculates a scale where 1.0 is the ideal temperature and 0.0 is where temperature damage begins
         // The cold and hot scales will differ in their range if the ideal temperature is not exactly halfway between the thresholds
-        var tempScale = (args.CurrentTemperature - threshold) / (idealTemp - threshold);
+        var tempScale = (temp - threshold) / (idealTemp - threshold);
         switch (tempScale)
         {
             case <= 0f:

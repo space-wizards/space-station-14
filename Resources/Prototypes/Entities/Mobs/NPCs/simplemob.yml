@@ -67,6 +67,10 @@
   - type: MobPrice
     price: 1000 # Living critters are valuable in space.
   - type: Perishable
+  - type: Temperature
+    coldDamage: #per second, scales with temperature & other constants
+      types:
+        Cold : 0.0
 
 - type: entity
   parent:
