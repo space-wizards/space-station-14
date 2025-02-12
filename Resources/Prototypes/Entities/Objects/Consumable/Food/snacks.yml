@@ -178,7 +178,7 @@
   - type: Item
 
 - type: entity
-  name: sweetie's pistachios
+  name: Sweetie's Pistachios
   parent: FoodSnackBase
   id: FoodSnackPistachios
   description: Sweeties's name-brand pistachios. Probably won't give you diseases. Probably.
