@@ -9,6 +9,7 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
+using Content.Server.Power.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
@@ -210,7 +211,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnPowerChanged(EntityUid uid, GasVentPumpComponent component, ref PowerChangedEvent args)
         {
-            component.Enabled = args.Powered;
             UpdateState(uid, component);
         }
 
@@ -318,7 +318,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 _ambientSoundSystem.SetAmbience(uid, false);
                 _appearance.SetData(uid, VentPumpVisuals.State, VentPumpState.Welded, appearance);
             }
-            else if (!vent.Enabled)
+            else if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered || !vent.Enabled)
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 _appearance.SetData(uid, VentPumpVisuals.State, VentPumpState.Off, appearance);
