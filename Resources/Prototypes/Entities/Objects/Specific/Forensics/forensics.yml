@@ -2,11 +2,15 @@
   id: ForensicPad
   name: forensic pad
   parent: BaseItem
-  description: A forensic pad for collecting fingerprints or fibers.
+  description: A forensic pad for collecting fingerprints, fibers or chemicals.
   components:
   - type: Item
     size: Tiny
   - type: ForensicPad
+    fingerprint: true
+    fiber: true
+    reagent: true
+    reagentContraband: true
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     layers:
@@ -18,3 +22,22 @@
   - type: GuideHelp
     guides:
     - Forensics
+
+- type: entity
+  id: ReagentPad
+  name: chemical pad
+  parent: BaseItem
+  description: A pad for collecting chemicals.
+  components:
+  - type: Item
+    size: Tiny
+  - type: ForensicPad
+    reagent: true
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+      color: goldenrod
+  - type: Tag
+    tags:
+    - Document
