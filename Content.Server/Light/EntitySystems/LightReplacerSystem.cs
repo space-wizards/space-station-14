@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Light.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.Light.Components;
