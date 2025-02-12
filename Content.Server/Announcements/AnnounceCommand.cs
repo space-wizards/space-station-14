@@ -11,6 +11,7 @@ namespace Content.Server.Announcements;
 [AdminCommand(AdminFlags.Moderator)]
 public sealed class AnnounceCommand : IConsoleCommand
 {
+    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IResourceManager _res = default!;
 
@@ -20,8 +21,6 @@ public sealed class AnnounceCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var chat = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
-
         switch (args.Length)
         {
             case 0:
@@ -59,7 +58,7 @@ public sealed class AnnounceCommand : IConsoleCommand
         if (args.Length >= 4)
             sound = new SoundPathSpecifier(args[3]);
 
-        chat.DispatchGlobalAnnouncement(message, sender, true, sound, color);
+        _chat.DispatchGlobalAnnouncement(message, sender, true, sound, color);
         shell.WriteLine(Loc.GetString("shell-command-success"));
     }
 
