@@ -21,17 +21,26 @@ namespace Content.Server.GameTicking
 
         private Dictionary<string, int> Statistics = new Dictionary<string, int>
         {
-            { "ExampleCount", 0 },
+            { "SlippedCount", 0 },
+            { "CreamedCount", 0 },
         };
 
         // Change the value by given int
-        public void ChangeValue(ChangeStatsValueEvent ev)
+        public void ChangeValue(ChangeStatsValueEvent args)
         {
-            Statistics[ev.Key] += ev.Amount;
+            if (args.Handled)
+                return;
+
+            if (Statistics.TryGetValue(args.Key, out var currentValue))
+            {
+                Statistics[args.Key] = currentValue + args.Amount;
+            }
+
+            args.Handled = true;
         }
 
         // Set all ints to zero
-        private void OnRoundStart(RoundStartingEvent ev)
+        private void OnRoundStart(RoundStartingEvent args)
         {
             foreach (var key in Statistics.Keys.ToList())
             {
@@ -39,14 +48,15 @@ namespace Content.Server.GameTicking
             }
         }
 
-        private void OnRoundEndText(RoundStatisticsAppendEvent ev)
+        private void OnRoundEndText(RoundStatisticsAppendEvent args)
         {
-            // Don't add anything if 0. We don't want to spoil any specific and hard statistics.
-            if(Statistics["ExampleCount"] != 0)
+            foreach (var (key, value) in Statistics)
             {
-                // var example = new StringBuilder();
-                // example.AppendLine(Loc.GetString("example", ("count", Statistics["ExampleCount"])));
-                // ev.AddLine(example.AppendLine().ToString());
+                if (value <= 0)
+                    continue;
+
+                var text = Loc.GetString($"round-end-statistic-{key.ToLower()}-times", ("count", value));
+                args.AddLine(text);
             }
         }
     }

@@ -1,7 +1,7 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
-using Robust.Shared.Network;
+using Content.Shared.GameTicking;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
@@ -108,6 +108,8 @@ public sealed class SlipperySystem : EntitySystem
         RaiseLocalEvent(uid, ref attemptCausingEv);
         if (attemptCausingEv.Cancelled)
             return;
+
+        RaiseNetworkEvent(new ChangeStatsValueEvent("SlippedTimes", 1));
 
         var ev = new SlipEvent(other);
         RaiseLocalEvent(uid, ref ev);
