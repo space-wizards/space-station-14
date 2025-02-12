@@ -96,6 +96,11 @@ public sealed partial class DoorComponent : Component
     [DataField("denySound")]
     public SoundSpecifier? DenySound;
 
+    /// <summary>
+    /// Sound to play when door has been emagged or possibly electrically tampered
+    /// </summary>
+    [DataField("sparkSound")]
+    public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks");
     #endregion
 
     #region Crushing

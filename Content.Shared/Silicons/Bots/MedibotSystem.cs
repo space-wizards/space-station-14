@@ -24,6 +24,8 @@ public sealed class MedibotSystem : EntitySystem
         if (!TryComp<MedibotComponent>(uid, out var medibot))
             return;
 
+        _audio.PlayPredicted(comp.SparkSound, uid, args.UserUid);
+
         foreach (var (state, treatment) in comp.Replacements)
         {
             medibot.Treatments[state] = treatment;

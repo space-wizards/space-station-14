@@ -142,7 +142,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     {
         if (!SetState(uid, DoorState.Emagging, door))
             return;
-
+        Audio.PlayPredicted(door.SparkSound, uid, args.UserUid, AudioParams.Default.WithVolume(8));
         args.Handled = true;
     }
 
