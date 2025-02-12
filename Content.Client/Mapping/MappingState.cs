@@ -231,7 +231,8 @@ public sealed class MappingState : GameplayStateBase
         var entities = new MappingPrototype(null, Loc.GetString("mapping-entities")) { Children = new List<MappingPrototype>() };
         foreach (var entity in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
         {
-            Register(entity, entity.ID, entities);
+            if (!entity.HideSpawnMenu)
+                Register(entity, entity.ID, entities);
         }
 
         Sort(mappings, entities);
