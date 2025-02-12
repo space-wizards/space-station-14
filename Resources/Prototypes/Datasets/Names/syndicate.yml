@@ -2,27 +2,46 @@
   id: SyndicateNamesNormal
   values:
   - Alfa
+  - Arrow
+  - Blaze
   - Bravo
+  - Buck
   - Charlie
+  - Cotton
   - Delta
+  - Eagle
   - Echo
+  - Falcon
   - Foxtrot
+  - Gabe
+  - Ghost
   - Golf
+  - Hawk
   - Hotel
   - India
+  - Jet
   - Juliett
+  - July
   - Kilo
   - Lima
   - Mike
+  - Nebula
   - November
   - Oscar
   - Papa
+  - Phoenix
+  - Price
   - Quebec
+  - Ramirez
   - Romeo
+  - Russell
+  - Sanders
+  - Saturn
   - Sierra
   - Tango
   - Uniform
   - Victor
+  - Violet
   - Whiskey
   - X-Ray
   - Zulu
@@ -53,6 +72,8 @@
   - Chi
   - Psi
   - Omega
+  - Kappa
+  - Hopper
 
 - type: dataset
   id: SyndicateNamesPrefix
