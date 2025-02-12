@@ -25,7 +25,7 @@
     - type: Item
       storedRotation: 0
     - type: Sprite
-      sprite: Objects/Specific/Mech/durand_construction.rsi
+      sprite: Objects/Specific/Mech/Mechs/Basic/durand.rsi
       state: durand_armor
     - type: Tag
       tags:
@@ -43,7 +43,7 @@
     - type: Item
       storedRotation: 0
     - type: Sprite
-      sprite: Objects/Specific/Mech/gygax_construction.rsi
+      sprite: Objects/Specific/Mech/Mechs/Basic/gygax.rsi
       state: gygax_armor
     - type: Tag
       tags:
@@ -82,9 +82,23 @@
     - type: Tag
       tags:
       - MechAirTank
+      - GasTank
     - type: GuideHelp
       guides:
       - Robotics
+    - type: ActivatableUI
+      key: enum.SharedGasTankUiKey.Key
+    - type: UserInterface
+      interfaces:
+        enum.SharedGasTankUiKey.Key:
+          type: GasTankBoundUserInterface
+    - type: GasTank
+      outputPressure: 21.3
+      air:
+        # If gas tank volume is changed, adjust MinimumTritiumOxyburnEnergy in Atmospherics.cs by the same proportions
+        volume: 5
+        temperature: 293.15
+      tankLowPressure: 30.0
 
 - type: entity
   id: MechThruster

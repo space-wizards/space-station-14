@@ -73,7 +73,6 @@
   components:
   - type: MobMover
   - type: Mech
-    firstStart: false
   - type: MechAir
   - type: AirFilter
     # everything except oxygen and nitrogen
@@ -152,6 +151,7 @@
       mech-pilot-slot: !type:ContainerSlot
       mech-equipment-container: !type:Container
       mech-battery-slot: !type:ContainerSlot
+      mech-gas-tank-slot: !type:ContainerSlot
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: LightArmor
@@ -180,6 +180,10 @@
     radius: 6
     energy: 5
     enabled: false
+  - type: PowerCellDraw
+    enabled: false
+    drawRate: 2
+    useRate: 0
 
 # Ripley MK-I
 - type: entity
@@ -191,17 +195,17 @@
   - type: Sprite
     drawdepth: Mobs
     noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/ripley.rsi
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
-      state: ripley
+      state: base
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
-    baseState: ripley
-    openState: ripley-open
-    brokenState: ripley-broken
+    baseState: base
+    openState: base-open
+    brokenState: base-broken
     mechToPilotDamageMultiplier: 0.75
     pilotWhitelist:
       components:
@@ -236,17 +240,17 @@
   - type: Sprite
     drawdepth: Mobs
     noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/ripleymkii.rsi
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
-      state: ripleymkii
+      state: base
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
-    baseState: ripleymkii
-    openState: ripleymkii-open
-    brokenState: ripleymkii-broken
+    baseState: base
+    openState: base-open
+    brokenState: base-broken
     mechToPilotDamageMultiplier: 0.4
     airtight: true
     pilotWhitelist:
@@ -284,17 +288,17 @@
   - type: Sprite
     drawdepth: Mobs
     noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/clarke.rsi
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
-      state: clarke
+      state: base
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
-    baseState: clarke
-    openState: clarke-open
-    brokenState: clarke-broken
+    baseState: base
+    openState: base-open
+    brokenState: base-broken
     mechToPilotDamageMultiplier: 0.5
     airtight: true
     pilotWhitelist:
@@ -332,19 +336,19 @@
   - type: Sprite
     drawdepth: Mobs
     noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/honker.rsi
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
-      state: honker
+      state: base
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown
       params:
         variation: 0.17
   - type: Mech
-    baseState: honker
-    openState: honker-open
-    brokenState: honker-broken
+    baseState: base
+    openState: base-open
+    brokenState: base-broken
     mechToPilotDamageMultiplier: 0.5
     airtight: true # Space Honks is real.
     pilotWhitelist:
@@ -382,17 +386,17 @@
   - type: Sprite
     drawdepth: Mobs
     noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/hamtr.rsi
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
-      state: hamtr
+      state: base
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
-    baseState: hamtr
-    openState: hamtr-open
-    brokenState: hamtr-broken
+    baseState: base
+    openState: base-open
+    brokenState: base-broken
     mechToPilotDamageMultiplier: 0.2
     maxEquipmentAmount: 2
     airtight: true
@@ -431,10 +435,10 @@
   - type: Sprite
     drawdepth: Mobs
     noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/vim.rsi
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
-      state: vim
+      state: base
   - type: Fixtures
     fixtures:
       fix1:
@@ -452,9 +456,9 @@
       params:
         volume: -10
   - type: Mech
-    baseState: vim
-    openState: vim-open
-    brokenState: vim-broken
+    baseState: base
+    openState: base-open
+    brokenState: base-broken
     maxEquipmentAmount: 0
     # keep mouse safe
     mechToPilotDamageMultiplier: 0.1
@@ -500,17 +504,17 @@
   - type: Sprite
     drawdepth: Mobs
     noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/gygax.rsi
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
-      state: gygax
+      state: base
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
-    baseState: gygax
-    openState: gygax-open
-    brokenState: gygax-broken
+    baseState: base
+    openState: base-open
+    brokenState: base-broken
     mechToPilotDamageMultiplier: 0.3
     airtight: true
     pilotWhitelist:
@@ -547,17 +551,17 @@
   - type: Sprite
     drawdepth: Mobs
     noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/durand.rsi
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
-      state: durand
+      state: base
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
-    baseState: durand
-    openState: durand-open
-    brokenState: durand-broken
+    baseState: base
+    openState: base-open
+    brokenState: base-broken
     mechToPilotDamageMultiplier: 0.25
     airtight: true
     maxIntegrity: 400
