@@ -74,10 +74,6 @@ public sealed class StorageSystem : SharedStorageSystem
             {
                 containerBui.Hide();
             }
-            else
-            {
-                storageBui.Show();
-            }
         }
     }
 
