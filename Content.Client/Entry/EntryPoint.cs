@@ -19,7 +19,6 @@ using Content.Client.Replay;
 using Content.Client.Screenshot;
 using Content.Client.Singularity;
 using Content.Client.Stylesheets;
-using Content.Client.UserInterface.Controls;
 using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Ame.Components;
@@ -158,8 +157,6 @@ namespace Content.Client.Entry
             ContentContexts.SetupContexts(_inputManager.Contexts);
 
             _parallaxManager.LoadDefaultParallax();
-            // todo: move into control? need to somehow make adding
-            // and removing controlled in one place
             _overlayManager.AddOverlay(new SingularityOverlay());
             _overlayManager.AddOverlay(new RadiationPulseOverlay());
             _chatManager.Initialize();
