@@ -1,37 +1,31 @@
 using Content.Server.Administration.Systems;
-using Content.Shared.Climbing.Components;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Administration.Components;
 
 /// <summary>
 /// Component to track the timer for the SuperBonk smite.
 /// </summary>
-[RegisterComponent, Access(typeof(SuperBonkSystem))]
-public sealed partial class SuperBonkComponent: Component
+[RegisterComponent, AutoGenerateComponentPause, Access(typeof(SuperBonkSystem))]
+public sealed partial class SuperBonkComponent : Component
 {
-    /// <summary>
-    /// Entity being Super Bonked.
-    /// </summary>
-    [DataField]
-    public EntityUid Target;
-
     /// <summary>
     /// All of the tables the target will be bonked on.
     /// </summary>
     [DataField]
-    public Dictionary<EntityUid, BonkableComponent>.Enumerator Tables;
+    public List<EntityUid>.Enumerator Tables;
 
     /// <summary>
-    /// Value used to reset the timer once it expires.
+    /// How often should we bonk.
     /// </summary>
     [DataField]
-    public float InitialTime = 0.10f;
+    public TimeSpan BonkCooldown = TimeSpan.FromMilliseconds(100);
 
     /// <summary>
-    /// Timer till the next bonk.
+    /// Next time when we will bonk.
     /// </summary>
-    [DataField]
-    public float TimeRemaining = 0.10f;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextBonk = TimeSpan.Zero;
 
     /// <summary>
     /// Whether to remove the clumsy component from the target after SuperBonk is done.
