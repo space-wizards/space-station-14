@@ -88,9 +88,6 @@
       components:
       - MobMover
       - Item
-    blacklist:
-      components:
-      - Anchorable
   - type: UseDelay
     delay: 10
   - type: UseDelayOnMeleeHit
