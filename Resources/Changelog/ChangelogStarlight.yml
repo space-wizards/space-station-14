@@ -3312,4 +3312,13 @@ Entries:
   id: 460
   time: '2025-02-11T08:52:23.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/309
+- author: STARLIGHT TEAM
+  changes:
+  - message: Allow the eye to interact across maps. (The Abductor no longer needs
+      to fly to the station map to teleport onto the station.) (A change for the upcoming
+      new Blood Cult mode, specifically for Nar'Sie. 🤫)
+    type: Tweak
+  id: 461
+  time: '2025-02-12T05:20:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/321
 
