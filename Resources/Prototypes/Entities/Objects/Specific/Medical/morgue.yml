@@ -13,7 +13,7 @@
     - state: bag
       map: ["unfoldedLayer", "enum.StorageVisualLayers.Base"]
     - state: bag_overlay #imp
-      map: ["unfoldedLayer"] #imp
+      map: ["unfoldedLayerOverlay"] #imp
       shader: unshaded #imp
     - state: bag_folded
       map: ["foldedLayer"]
