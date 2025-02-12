@@ -175,11 +175,11 @@
   - type: StorageFill
     contents:
     - id: FoodSnackRaisins
-      amount: 6
+      amount: 4
     - id: FoodSnackChocolate
       amount: 6
     - id: FoodSnackPistachios
-      amount: 6
+      amount: 4
     - id: ReagentContainerFlour
       amount: 3
     - id: ReagentContainerSugar
@@ -190,31 +190,23 @@
       amount: 2
     - id: FoodContainerEgg
       amount: 2
+    - id: FoodBoxCloth
+      amount: 1
 
 - type: entity
-  id: CrateFoodSurprise
+  id: CrateFoodHappyHonkMeals
   parent: CratePlastic
-  name: personnel surprise crate
-  description: A tasty surprise for a special person on the station. Not made for sharing!
+  name: Happy Honk meal delivery
+  description: Two fully loaded Happy Honk Big Bite Burger meals, complete with cheesy fries, a bottle of Space Cola, a slice of apple pie, and a toy! For those who just can't wait for the next transport to a Happy Honk franchise location!
   components:
   - type: StorageFill
     contents:
-    - id: FoodBurgerCrazy
-      amount: 1
-    - id: FoodMealFriesCheesy
-      amount: 1
-    - id: DrinkColaBottleFull
-      amount: 1
-    - id: FoodCakeBirthdaySlice
-      amount: 1
-    - id: ClothingHeadHatPartyWaterCup
-      amount: 1
-    - id: MysteryFigureBox
-      amount: 1
+      id: FoodMealHappyHonkBigBite
+      amount: 2
 
 - type: entity
   id: CrateFoodIceCream
-  parent: CratePlastic
+  parent: CrateFreezer
   name: ice cream delivery
   description: An assortment of ice cream delights for any occasion! Includes 16 frozen treats.
   components:
@@ -237,9 +229,9 @@
 
 - type: entity
   id: CrateFoodSnowcone
-  parent: CratePlastic
+  parent: CrateFreezer
   name: snowcone delivery
-  description: A packed crate of refreshing snowcones for a hard working crew, or even a lazy one! Includes 16 snowcones.
+  description: A freezer packed with refreshing snowcones for a hard working crew, or even a lazy one! Includes 16 snowcones.
   components:
   - type: StorageFill
     contents:

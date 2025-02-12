@@ -89,12 +89,12 @@
   group: market
 
 - type: cargoProduct
-  id: FoodSurprise
+  id: FoodHappyHonkMeals
   icon:
     sprite: Objects/Consumable/Food/burger.rsi
-    state: crazy
-  product: CrateFoodSurprise
-  cost: 850
+    state: bigbite
+  product: CrateFoodHappyHonkMeals
+  cost: 1000
   category: cargoproduct-category-name-food
   group: market
 
