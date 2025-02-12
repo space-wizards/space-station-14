@@ -362,12 +362,12 @@ public interface IRadialMenuItemWithSector
     /// <summary>
     /// Angle in radian where button sector should start.
     /// </summary>
-    public float AngleSectorFrom { set; }
+    public float AngleSectorFrom { set; get; }
 
     /// <summary>
     /// Angle in radian where button sector should end.
     /// </summary>
-    public float AngleSectorTo { set; }
+    public float AngleSectorTo { set; get; }
 
     /// <summary>
     /// Outer radius for drawing segment and pointer detection.
@@ -388,6 +388,13 @@ public interface IRadialMenuItemWithSector
     /// Coordinates of center in parent component - button container.
     /// </summary>
     public Vector2 ParentCenter { set; }
+
+    /// <summary>
+    /// Position of control.
+    /// </summary>
+    public Vector2 Position { get; }
+
+    public bool IsHovered { get; }
 }
 
 [Virtual]
@@ -480,6 +487,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
             _angleSectorFrom = value;
             _isWholeCircle = IsWholeCircle(value, _angleSectorTo);
         }
+        get => _angleSectorFrom;
     }
 
     /// <inheritdoc />
@@ -490,6 +498,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
             _angleSectorTo = value;
             _isWholeCircle = IsWholeCircle(_angleSectorFrom, value);
         }
+        get => _angleSectorTo;
     }
 
     /// <inheritdoc />
@@ -509,44 +518,6 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     /// </summary>
     public RadialMenuTextureButtonWithSector()
     {
-    }
-
-    /// <inheritdoc />
-    protected override void Draw(DrawingHandleScreen handle)
-    {
-        base.Draw(handle);
-
-        if (_parentCenter == null)
-        {
-            return;
-        }
-
-        // draw sector where space that button occupies actually is
-        var containerCenter = (_parentCenter.Value - Position) * UIScale;
-
-        var angleFrom = _angleSectorFrom + _angleOffset;
-        var angleTo = _angleSectorTo + _angleOffset;
-        if (DrawBackground)
-        {
-            var segmentColor = DrawMode == DrawModeEnum.Hover
-                ? _hoverBackgroundColorSrgb
-                : _backgroundColorSrgb;
-
-            DrawAnnulusSector(handle, containerCenter, _innerRadius * UIScale, _outerRadius * UIScale, angleFrom, angleTo, segmentColor);
-        }
-
-        if (DrawBorder)
-        {
-            var borderColor = DrawMode == DrawModeEnum.Hover
-                ? _hoverBorderColorSrgb
-                : _borderColorSrgb;
-            DrawAnnulusSector(handle, containerCenter, _innerRadius * UIScale, _outerRadius * UIScale, angleFrom, angleTo, borderColor, false);
-        }
-
-        if (!_isWholeCircle && DrawSeparators)
-        {
-            DrawSeparatorLines(handle, containerCenter, _innerRadius * UIScale, _outerRadius * UIScale, angleFrom, angleTo, SeparatorColor);
-        }
     }
 
     /// <inheritdoc />

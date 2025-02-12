@@ -1,12 +1,20 @@
 using Robust.Client.UserInterface.Controls;
 using System.Linq;
 using System.Numerics;
+using Robust.Client.Graphics;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface.Controls;
 
 [Virtual]
 public class RadialContainer : LayoutContainer
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IClyde _clyde= default!;
+    private readonly ShaderInstance _shader;
+
+    private readonly float[] _angles = new float[64];
+
     /// <summary>
     /// Increment of radius per child element to be rendered.
     /// </summary>
@@ -28,7 +36,6 @@ public class RadialContainer : LayoutContainer
         {
             return _angularRange;
         }
-
         set
         {
             var x = value.X;
@@ -89,7 +96,8 @@ public class RadialContainer : LayoutContainer
     /// </summary>
     public RadialContainer()
     {
-
+        IoCManager.InjectDependencies(this);
+        _shader = _prototypeManager.Index<ShaderPrototype>("RadialMenu").Instance();
     }
 
     /// <inheritdoc />
@@ -159,6 +167,50 @@ public class RadialContainer : LayoutContainer
         }
 
         return base.ArrangeOverride(finalSize);
+    }
+
+    /// <inheritdoc />
+    protected override void Draw(DrawingHandleScreen handle)
+    {
+        base.Draw(handle);
+
+        var clone = _shader.Duplicate();
+
+        var children = Children.OfType<IRadialMenuItemWithSector>()
+                               .ToArray();
+        var preSortedAngles = new float[children.Length];
+        float selectedFrom = 0;
+        float selectedTo = 0;
+        for (int i = 0; i < children.Length; i++)
+        {
+            var child = children[i];
+            preSortedAngles[i] = child.AngleSectorTo;
+            if (child.IsHovered)
+            {
+                selectedFrom = child.AngleSectorFrom ;
+                selectedTo = child.AngleSectorTo ;
+            }
+        }
+
+        Array.Sort(preSortedAngles, (x, y) => x == y ? 0 : x > y ? 1 : -1);
+        Array.Copy(preSortedAngles, _angles, children.Length);
+
+        clone.SetParameter("angles", _angles);
+        clone.SetParameter("selectedFrom", selectedFrom);
+        clone.SetParameter("selectedTo", selectedTo);
+        clone.SetParameter("childCount", children.Length);
+        var menuCenter = new Vector2(-GlobalPixelPosition.X + Size.X * 2 + 159, GlobalPixelPosition.Y - Size.Y - 9);
+        var screenCenter = _clyde.ScreenSize / 2;
+
+        clone.SetParameter("centerPos", (screenCenter - menuCenter) * UIScale );
+        clone.SetParameter("scale", UIScale);
+        clone.SetParameter("screenSize", _clyde.ScreenSize);
+        clone.SetParameter("innerRadius", CalculatedRadius * InnerRadiusMultiplier);
+        clone.SetParameter("outerRadius", CalculatedRadius * OuterRadiusMultiplier);
+
+        handle.UseShader(clone);
+        handle.DrawRect(new UIBox2(0,0, 1900,1200), Color.White);
+        handle.UseShader(null);
     }
 
     /// <summary>

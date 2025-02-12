@@ -160,7 +160,6 @@ namespace Content.Client.Entry
             _parallaxManager.LoadDefaultParallax();
             // todo: move into control? need to somehow make adding
             // and removing controlled in one place
-            _overlayManager.AddOverlay(new RadialMenuOverlay());
             _overlayManager.AddOverlay(new SingularityOverlay());
             _overlayManager.AddOverlay(new RadiationPulseOverlay());
             _chatManager.Initialize();

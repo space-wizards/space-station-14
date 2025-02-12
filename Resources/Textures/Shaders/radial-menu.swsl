@@ -1,21 +1,80 @@
-//Creates a border on the edges of the screen of the specified color and of the specified size (no uniforms yet cause I'm lazy)
+const highp float Thickness = 0.002;
 
-const highp vec4 borderColor = vec4(230.0, 0.0, 0.0, 1.0);
-const highp float borderSize = 300.0; //Pixel size of border
+const highp float pi = 3.14159265;
+const highp float halfpi = 0.5 * pi;
+const highp float invpi = 1.0 / pi;
 
-void fragment() {
-	highp vec2 pixelSize = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
-	highp float smallestLength = FRAGCOORD.x;
-	if(smallestLength > FRAGCOORD.y){
-		smallestLength = FRAGCOORD.y;
-	}
-	if(smallestLength > pixelSize.x-FRAGCOORD.x){
-		smallestLength = pixelSize.x-FRAGCOORD.x;
-	}
-	if(smallestLength > pixelSize.y-FRAGCOORD.y){
-		smallestLength = pixelSize.y-FRAGCOORD.y;
-	}
-	if(smallestLength <= borderSize){
-		COLOR = vec4(borderColor.r, borderColor.g, borderColor.b, abs((1.0-(smallestLength/borderSize))*(abs(sin(TIME))*0.8+0.2)));
-	}
+const highp vec3 sectorColor = vec3(0.5, 0.1, 0.1);
+const highp vec3 borderColor = vec3(0.2, 0.78, 0.2);
+const highp vec3 selectedColor = vec3(0.5, 0.5, 1.0);
+
+uniform highp float innerRadius;
+uniform highp float outerRadius;
+
+uniform highp float[64] angles;
+uniform highp int childCount;
+uniform highp vec2 centerPos;
+
+uniform highp float selectedFrom;
+uniform highp float selectedTo;
+uniform highp float scale;
+uniform highp vec2 screenSize;
+
+highp float SMOOTH(highp float r, highp float R)
+{
+    return 1.0 - smoothstep( R - 1.0, R + 1.0, r);
+}
+
+highp float line(highp vec2 uv, highp vec2 center, highp float r, highp float inner, highp float outer, highp float theta0)
+{
+    if(r < outer && r > inner)
+    {
+        //angle of the line
+        highp vec2 d = uv - center;
+        //compute the distance to the line theta=theta0
+        // rotate due to difference in coordinate spaces between shaders and ui
+        highp float theta1 = theta0 - pi / 2;
+        highp vec2 p = outer * vec2(cos(theta1), -sin(theta1));
+        highp float l = length(d - p * clamp(dot(d, p) / dot(p, p), 0.0, 1.0));
+        return SMOOTH(l,1.0);
+    }
+    else return 0.0;
+}
+
+
+highp float circle(highp float r, highp float radius, highp float width)
+{
+    return SMOOTH(r - width / 2.0, radius) - SMOOTH(r + width / 2.0, radius);
+}
+
+
+highp float inRange(highp float r, highp float innerRadius, highp float outerRadius, highp float from, highp float to)
+{
+    if(r > innerRadius && r < outerRadius)
+    {
+        return 1.0;
+    }
+
+    return 0.0;
+}
+
+
+void fragment()
+{
+    highp float scaledInnerRadius = innerRadius * scale;
+    highp float scaledOuterRadius = outerRadius * scale;
+
+    highp float r = length(FRAGCOORD.xy - centerPos);
+
+    highp vec3 col = vec3(0.0);
+    col += inRange(r, scaledInnerRadius, scaledOuterRadius, selectedFrom, selectedTo) * sectorColor;
+    col += circle(r, scaledInnerRadius, 2.0) * borderColor;
+    col += circle(r, scaledOuterRadius, 2.0) * borderColor;
+    for (int i = 0; i < childCount; i++)
+    {
+        col += line(FRAGCOORD.xy, centerPos, r, scaledInnerRadius, scaledOuterRadius, angles[i]) * borderColor;
+    }
+    if(col != vec3(0.0)) {
+        COLOR = vec4(col, 1.0);
+    }
 }
