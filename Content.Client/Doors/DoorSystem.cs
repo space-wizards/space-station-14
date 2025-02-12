@@ -18,8 +18,8 @@ public sealed partial class DoorSystem : SharedDoorSystem
 
         SubscribeLocalEvent<DoorComponent, AppearanceChangeEvent>(OnAppearanceChange);
 
-        InitializeAirlocks();
-        InitializeFirelocks();
+        InitializeAirlocksClient();
+        InitializeFirelocksClient();
     }
 
     protected override void OnComponentInit(Entity<DoorComponent> ent, ref ComponentInit args)

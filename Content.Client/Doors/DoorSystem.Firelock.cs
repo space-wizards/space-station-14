@@ -6,7 +6,7 @@ namespace Content.Client.Doors;
 
 public partial class DoorSystem
 {
-    public void InitializeFirelocks()
+    public void InitializeFirelocksClient()
     {
         SubscribeLocalEvent<FirelockComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }

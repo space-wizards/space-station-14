@@ -9,7 +9,7 @@ namespace Content.Client.Doors;
 
 public partial class DoorSystem
 {
-    public void InitializeAirlocks()
+    public void InitializeAirlocksClient()
     {
         SubscribeLocalEvent<AirlockComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<AirlockComponent, AppearanceChangeEvent>(OnAppearanceChange);
