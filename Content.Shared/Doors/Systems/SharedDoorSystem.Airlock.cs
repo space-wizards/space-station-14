@@ -1,25 +1,13 @@
 using Content.Shared.Doors.Components;
-using Robust.Shared.Audio.Systems;
-using Content.Shared.Popups;
 using Content.Shared.Prying.Components;
 using Content.Shared.Wires;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Doors.Systems;
 
-public abstract class SharedAirlockSystem : EntitySystem
+public abstract partial class SharedDoorSystem
 {
-    [Dependency] private   readonly IGameTiming _timing = default!;
-    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] protected readonly SharedDoorSystem DoorSystem = default!;
-    [Dependency] protected readonly SharedPopupSystem Popup = default!;
-    [Dependency] private   readonly SharedWiresSystem _wiresSystem = default!;
-
-    public override void Initialize()
+    public void InitializeAirlocks()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<AirlockComponent, BeforeDoorClosedEvent>(OnBeforeDoorClosed);
         SubscribeLocalEvent<AirlockComponent, DoorStateChangedEvent>(OnStateChanged);
         SubscribeLocalEvent<AirlockComponent, DoorBoltsChangedEvent>(OnBoltsChanged);
@@ -52,7 +40,7 @@ public abstract class SharedAirlockSystem : EntitySystem
     private void OnStateChanged(EntityUid uid, AirlockComponent component, DoorStateChangedEvent args)
     {
         // This is here so we don't accidentally bulldoze state values and mispredict.
-        if (_timing.ApplyingState)
+        if (GameTiming.ApplyingState)
             return;
 
         // Only show the maintenance panel if the airlock is closed

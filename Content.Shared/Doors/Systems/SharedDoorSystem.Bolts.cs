@@ -55,7 +55,7 @@ public abstract partial class SharedDoorSystem
 
     public void UpdateBoltLightStatus(Entity<DoorBoltComponent> ent)
     {
-        AppearanceSystem.SetData(ent, DoorVisuals.BoltLights, GetBoltLightsVisible(ent));
+        Appearance.SetData(ent, DoorVisuals.BoltLights, GetBoltLightsVisible(ent));
     }
 
     public bool GetBoltLightsVisible(Entity<DoorBoltComponent> ent)
