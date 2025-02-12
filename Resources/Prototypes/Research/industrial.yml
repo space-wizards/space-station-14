@@ -105,8 +105,8 @@
   id: RipleyAPLU
   name: research-technology-ripley-aplu
   icon:
-    sprite: Objects/Specific/Mech/mecha.rsi
-    state: ripley
+    sprite: Objects/Specific/Mech/Mechs/Basic/ripley.rsi
+    state: base
   discipline: Industrial
   tier: 1
   cost: 7500
@@ -187,8 +187,8 @@
   id: Ripley2
   name: research-technology-ripley-mkii
   icon:
-    sprite: Objects/Specific/Mech/mecha.rsi
-    state: ripleymkii
+    sprite: Objects/Specific/Mech/Mechs/Basic/ripleymkii.rsi
+    state: base
   discipline: Industrial
   tier: 2
   cost: 8000
@@ -202,8 +202,8 @@
   id: Clarke
   name: research-technology-clarke
   icon:
-    sprite: Objects/Specific/Mech/mecha.rsi
-    state: clarke
+    sprite: Objects/Specific/Mech/Mechs/Basic/clarke.rsi
+    state: base
   discipline: Industrial
   tier: 2
   cost: 10000

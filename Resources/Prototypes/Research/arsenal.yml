@@ -206,8 +206,8 @@
   id: Gygax
   name: research-technology-gygax
   icon:
-    sprite: Objects/Specific/Mech/mecha.rsi
-    state: gygax
+    sprite: Objects/Specific/Mech/Mechs/Basic/gygax.rsi
+    state: base
   discipline: Arsenal
   tier: 2
   cost: 12000
@@ -288,8 +288,8 @@
   id: Durand
   name: research-technology-durand
   icon:
-    sprite: Objects/Specific/Mech/mecha.rsi
-    state: durand
+    sprite: Objects/Specific/Mech/Mechs/Basic/durand.rsi
+    state: base
   discipline: Arsenal
   tier: 3
   cost: 16000
