@@ -463,9 +463,12 @@ public sealed class ThrusterSystem : EntitySystem
 
         while (query.MoveNext(out var comp))
         {
+            if (comp.NextFire > curTime)
+                continue;
+
             comp.NextFire += comp.FireCooldown;
 
-            if (!comp.Firing || comp.Colliding.Count == 0 || comp.Damage == null || comp.NextFire > curTime)
+            if (!comp.Firing || comp.Colliding.Count == 0 || comp.Damage == null)
                 continue;
 
             foreach (var uid in comp.Colliding.ToArray())
