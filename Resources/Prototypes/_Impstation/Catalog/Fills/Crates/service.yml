@@ -24,12 +24,12 @@
   id: CrateServiceMaintBarKit
   parent: CratePlastic
   name: maintenance bar kit
-  description: A crate to carry on the tradition of bar engineering.
+  description: A crate to carry on the tradition of bar engineering. Drinks not included.
   components:
     - type: StorageFill
       contents:
-        - id: BoozeDispenserFlatpack
-        - id: SodaDispenserFlatpack
+        - id: BoozeDispenserMachineCircuitboard
+        - id: SodaDispenserMachineCircuitboard
         - id: MaterialWoodPlank
         - id: MaterialCloth10
         - id: DrinkGlass
