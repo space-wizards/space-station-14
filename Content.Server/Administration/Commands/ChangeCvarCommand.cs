@@ -72,11 +72,18 @@ public sealed class ChangeCvarCommand : LocalizedCommands
         var cvar = args[0];
         if (cvar == "?")
         {
+            if (cvars.Count == 0)
+            {
+                shell.WriteLine(Loc.GetString("cmd-changecvar-no-cvars"));
+                return;
+            }
+
+            shell.WriteLine(Loc.GetString("cmd-changecvar-available-cvars"));
             shell.WriteLine(string.Join("\n", cvars.Select(c => c.Name)));
             return;
         }
 
-        if (!_configurationManager.IsCVarRegistered(cvar))
+        if (!_configurationManager.IsCVarRegistered(cvar)) // Might be a redunat check with the if statement below.
         {
             shell.WriteLine(Loc.GetString("cmd-changecvar-cvar-not-registered", ("cvar", cvar)));
             return;
