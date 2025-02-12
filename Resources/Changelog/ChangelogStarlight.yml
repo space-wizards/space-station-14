@@ -3329,4 +3329,25 @@ Entries:
   id: 462
   time: '2025-02-12T06:49:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/312
+- author: Rinary
+  changes:
+  - message: Now mech flashlight drains mech battery
+    type: Tweak
+  id: 463
+  time: '2025-02-12T13:41:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/320
+- author: Rinary
+  changes:
+  - message: Added mech equipment types(WIP)
+    type: Add
+  id: 464
+  time: '2025-02-12T13:41:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/320
+- author: Rinary
+  changes:
+  - message: Resprited Mechs
+    type: Tweak
+  id: 465
+  time: '2025-02-12T13:41:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/320
 
