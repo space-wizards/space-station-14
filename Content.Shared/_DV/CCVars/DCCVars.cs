@@ -53,13 +53,13 @@ public sealed class DCCVars
     /// What's the base bonus for delivering a package intact?
     /// </summary>
     public static readonly CVarDef<int> MailDefaultBounty =
-        CVarDef.Create("mail.defaultbounty", 250, CVar.SERVERONLY);
+        CVarDef.Create("mail.defaultbounty", 300, CVar.SERVERONLY);
 
     /// <summary>
     /// What's the base malus for delivering a package intact?
     /// </summary>
     public static readonly CVarDef<int> MailDefaultPenelty =
-        CVarDef.Create("mail.defaultpenelty", -100, CVar.SERVERONLY);
+        CVarDef.Create("mail.defaultpenelty", -50, CVar.SERVERONLY);
 
     /// <summary>
     /// Any item that breaks or is destroyed in less than this amount of
@@ -72,13 +72,13 @@ public sealed class DCCVars
     /// What's the bonus for delivering a fragile package intact?
     /// </summary>
     public static readonly CVarDef<int> MailFragileBonus =
-        CVarDef.Create("mail.fragilebonus", 250, CVar.SERVERONLY);
+        CVarDef.Create("mail.fragilebonus", 300, CVar.SERVERONLY);
 
     /// <summary>
     /// What's the malus for delivering a fragile package intact?
     /// </summary>
     public static readonly CVarDef<int> MailFragileMalus =
-        CVarDef.Create("mail.fragilemalus", -500, CVar.SERVERONLY);
+        CVarDef.Create("mail.fragilemalus", -250, CVar.SERVERONLY);
 
     /// <summary>
     /// What's the chance for any one delivery to be marked as priority mail?
@@ -103,7 +103,7 @@ public sealed class DCCVars
     /// What's the malus for delivering a priority package intact?
     /// </summary>
     public static readonly CVarDef<int> MailPriorityMalus =
-        CVarDef.Create("mail.prioritymalus", -250, CVar.SERVERONLY);
+        CVarDef.Create("mail.prioritymalus", -150, CVar.SERVERONLY);
 
     /// <summary>
     /// What's the bonus for delivering a large package intact?
@@ -115,6 +115,6 @@ public sealed class DCCVars
     /// What's the malus for delivering a large package intact?
     /// </summary>
     public static readonly CVarDef<int> MailLargeMalus =
-        CVarDef.Create("mail.largemalus", -500, CVar.SERVERONLY);
+        CVarDef.Create("mail.largemalus", -250, CVar.SERVERONLY);
 
 }

@@ -55,7 +55,7 @@
       enum.TransferAmountUiKey.Key:
         type: TransferAmountBoundUserInterface
   - type: Item
-    size: Tiny
+    size: Small #imp
     sprite: Objects/Specific/Chemistry/vial.rsi
     shape:
     - 0,0,0,0

@@ -19,6 +19,7 @@
   - External
   extendedAccess:
   - Courier # Imp
+  - Logistics #Imp
 
 - type: startingGear
   id: SalvageSpecialistGear

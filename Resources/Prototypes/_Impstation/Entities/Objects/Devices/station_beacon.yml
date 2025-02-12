@@ -42,3 +42,44 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-news
+
+#Portals
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconPortalEngineering
+  suffix: Engineering Portal
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-portal-engineering
+
+- type: entity
+  parent: DefaultStationBeaconSupply
+  id: DefaultStationBeaconPortalCargo
+  suffix: Cargo Portal
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-portal-cargo
+
+- type: entity
+  parent: DefaultStationBeaconMedical
+  id: DefaultStationBeaconPortalMedical
+  suffix: Medical Portal
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-portal-medical
+
+- type: entity
+  parent: DefaultStationBeaconSecurity
+  id: DefaultStationBeaconPortalSecurity
+  suffix: Security Portal
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-portal-security
+
+- type: entity
+  parent: DefaultStationBeaconScience
+  id: DefaultStationBeaconPortalScience
+  suffix: Science Portal
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-portal-science

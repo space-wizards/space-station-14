@@ -635,9 +635,29 @@
     - id: PlushieMoth
       prob: 0.5
       orGroup: Plushie
-    - id: PlushieBug # Imp - BUG!!!!
+    # imp edit start
+    - id: PlushieBug
       prob: 0.1
       orGroup: Plushie
+    - id: PlushieGray
+      orGroup: Plushie
+    - id: PlushieUrsaMinor
+      orGroup: Plushie
+    - id: PlushieDecapoid
+      orGroup: Plushie
+    - id: PlushieSnail
+      orGroup: Plushie
+    - id: PlushieImp
+      prob: 0.1
+      orGroup: Plushie
+    - id: PlushieHeadofPersonnel
+      orGroup: Plushie
+    - id: PlushieCaptain
+      orGroup: Plushie
+    - id: PlushieGiantBear
+      prob: 0.1
+      orGroup: Plushie
+    # imp edit end
 
 # Random snacks, replaces MailChocolate (lousy animal organs)
 - type: entity

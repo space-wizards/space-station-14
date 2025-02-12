@@ -149,6 +149,8 @@
     name: ghost-role-information-raccoon-name
     description: ghost-role-information-raccoon-description
     rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
   - type: GhostTakeoverAvailable
   - type: Vocal
     sounds:
@@ -176,6 +178,8 @@
     name: ghost-role-information-possum-name
     description: ghost-role-information-possum-description
     rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
   - type: GhostTakeoverAvailable
   - type: Vocal
     sounds:

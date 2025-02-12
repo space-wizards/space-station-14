@@ -235,6 +235,7 @@
   # imp edits #
   - type: ItemToggleDamageOtherOnHit
   - type: DamageOtherOnHit
+  - type: Engraveable
   # end imp edits #
 
 - type: entity

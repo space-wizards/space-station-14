@@ -129,8 +129,6 @@
       collection: SinisterVentcrittersAnnouncements
     - id: spiderSpawn # Some simple spiders are appearing in vents
       collection: SinisterVentcrittersAnnouncements
-    - id: trashAnimalMigration # Trash-eating critters are appearing in vents
-      collection: SinisterVentcrittersAnnouncements
     - id: snailMigration # Adorable little snails are appearing in vents
       collection: SinisterVentcrittersAnnouncements
     - id: snailMigrationLowPop # Adorable little snails are appearing in vents

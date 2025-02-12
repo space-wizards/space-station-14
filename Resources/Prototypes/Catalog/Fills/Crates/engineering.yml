@@ -150,7 +150,7 @@
 
 - type: entity
   id: CrateAirlockKit
-  parent: CrateGenericSteel
+  parent: CrateEngineering
   name: airlock kit
   description: A kit for building 6 airlocks, doesn't include tools.
   components:
@@ -215,3 +215,31 @@
   - type: StorageFill
     contents:
       - id: SpaceHeaterFlatpack
+
+- type: entityTable
+  id: RandomTechBoardTable
+  table: !type:GroupSelector
+    children:
+    - id: AirAlarmElectronics
+    - id: FireAlarmElectronics
+    - id: DoorElectronics
+    - id: FirelockElectronics
+    - id: APCElectronics
+    - id: SignalTimerElectronics
+    - id: SMESMachineCircuitboard
+    - id: SubstationMachineCircuitboard
+    - id: SpaceVillainArcadeComputerCircuitboard
+    - id: BlockGameArcadeComputerCircuitboard
+
+- type: entity
+  id: CrateTechBoardRandom
+  parent: CrateEngineering
+  name: surplus boards
+  description: Surplus boards from somewhere.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: RandomTechBoardTable
+        rolls: !type:RangeNumberSelector
+          range: 3, 7
