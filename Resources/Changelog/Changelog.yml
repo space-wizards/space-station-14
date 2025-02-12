@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: august-sun
-  changes:
-  - message: Fixed collision properties of gas and volumetric pumps.
-    type: Fix
-  id: 7443
-  time: '2024-09-27T05:49:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32471
 - author: metalgearsloth
   changes:
   - message: Fix airlock autoclose mispredicting.
@@ -3894,3 +3887,10 @@
   id: 7942
   time: '2025-02-12T00:43:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34910
+- author: MilonPL
+  changes:
+  - message: The announce command now takes optional color and sound parameters.
+    type: Tweak
+  id: 7943
+  time: '2025-02-12T08:58:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34889
