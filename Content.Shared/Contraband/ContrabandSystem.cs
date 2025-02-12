@@ -118,4 +118,9 @@ public sealed class ContrabandSystem : EntitySystem
     {
         _contrabandExamineEnabled = val;
     }
+
+    public bool Enabled()
+    {
+        return _contrabandExamineEnabled;
+    }
 }

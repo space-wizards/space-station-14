@@ -3,6 +3,7 @@ using Content.Server.Labels;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Contraband;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Forensics;
@@ -25,6 +26,7 @@ namespace Content.Server.Forensics
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly LabelSystem _label = default!;
+        [Dependency] private readonly ContrabandSystem _contraband = default!;
 
         public override void Initialize()
         {
@@ -102,7 +104,7 @@ namespace Content.Server.Forensics
                     if (_prototypeManager.TryIndex(x.Reagent.Prototype, out ReagentPrototype? reagent))
                     {
                         var localizedName = Loc.GetString(reagent.LocalizedName);
-                        if (component.ReagentContraband && _prototypeManager.TryIndex(reagent.Contraband, out var contraband))
+                        if (_contraband.Enabled() && component.ReagentContraband && _prototypeManager.TryIndex(reagent.Contraband, out var contraband))
                         {
                             localizedName = $"[color={contraband.ExamineColor}]{localizedName}[/color]";
                         }
