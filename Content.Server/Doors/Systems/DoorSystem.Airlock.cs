@@ -16,7 +16,7 @@ public partial class DoorSystem
     {
         SubscribeLocalEvent<AirlockComponent, SignalReceivedEvent>(OnSignalReceived);
         SubscribeLocalEvent<AirlockComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new[] {typeof(DoorSystem)});
+        SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate);
     }
 
     private void OnSignalReceived(EntityUid uid, AirlockComponent component, ref SignalReceivedEvent args)
