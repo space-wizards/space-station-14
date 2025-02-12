@@ -4,7 +4,7 @@
   id: BaseAltarDevoter
   components:
   - type: Item
-    size: Tiny
+    size: Small
 
 - type: entity
   parent: BaseAltarDevoter
@@ -17,10 +17,10 @@
     - DevoterNanotrasen
   - type: Sprite
     sprite: Objects/Specific/Chapel/devoter.rsi
-    state: devoters
+    state: nanotrasen
   - type: Icon
     sprite: Objects/Specific/Chapel/devoter.rsi
-    state: devoters
+    state: nanotrasen
 
 - type: entity
   parent: BaseAltarDevoter
@@ -32,10 +32,10 @@
     tags:
     - DevoterChaos
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    sprite: Objects/Specific/Chapel/devoter.rsi
     state: chaos
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    sprite: Objects/Specific/Chapel/devoter.rsi
     state: chaos
 
 - type: entity
@@ -48,10 +48,10 @@
     tags:
     - DevoterDruid
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    sprite: Objects/Specific/Chapel/devoter.rsi
     state: druid
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    sprite: Objects/Specific/Chapel/devoter.rsi
     state: druid
 
 - type: entity
@@ -64,10 +64,10 @@
     tags:
     - DevoterToolbox
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    sprite: Objects/Specific/Chapel/devoter.rsi
     state: toolbox
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    sprite: Objects/Specific/Chapel/devoter.rsi
     state: toolbox
 
 - type: entity
@@ -80,11 +80,11 @@
     tags:
     - DevoterSpaceChristian
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
-    state: space-christian
+    sprite: Objects/Specific/Chapel/devoter.rsi
+    state: space_christian
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
-    state: space-christian
+    sprite: Objects/Specific/Chapel/devoter.rsi
+    state: space_christian
 
 - type: entity
   parent: BaseAltarDevoter
@@ -96,10 +96,10 @@
     tags:
     - DevoterSatana
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    sprite: Objects/Specific/Chapel/devoter.rsi
     state: satana
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    sprite: Objects/Specific/Chapel/devoter.rsi
     state: satana
 
 - type: entity
@@ -112,8 +112,8 @@
     tags:
     - DevoterTechnology
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    sprite: Objects/Specific/Chapel/devoter.rsi
     state: technology
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    sprite: Objects/Specific/Chapel/devoter.rsi
     state: technology
