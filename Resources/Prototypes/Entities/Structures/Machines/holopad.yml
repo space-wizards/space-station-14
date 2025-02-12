@@ -117,10 +117,12 @@
     - Map
     - Unlimited
     ignoreTelephonesOnSameGrid: true
+  - type: Machine
+    board: HolopadLongRangeMachineCircuitboard
 
 - type: entity
   name: quantum entangling holopad
-  description: "An floor-mounted device for projecting holographic images to similar devices at extreme distances."
+  description: "A floor-mounted device for projecting holographic images to similar devices at extreme distances."
   parent: Holopad
   id: HolopadUnlimitedRange
   components:
