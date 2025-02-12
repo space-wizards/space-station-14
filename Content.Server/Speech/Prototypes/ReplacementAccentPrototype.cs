@@ -5,6 +5,7 @@ namespace Content.Server.Speech.Prototypes;
 [Prototype("accent")]
 public sealed partial class ReplacementAccentPrototype : IPrototype
 {
+    /// <inheritdoc/>
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
