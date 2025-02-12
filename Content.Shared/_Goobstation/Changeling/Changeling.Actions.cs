@@ -34,6 +34,7 @@ public sealed partial class ExitStasisEvent : InstantActionEvent { }
 #region Events - Combat
 
 public sealed partial class ToggleArmbladeEvent : InstantActionEvent { }
+public sealed partial class ToggleTentacleEvent : InstantActionEvent { }
 public sealed partial class CreateBoneShardEvent : InstantActionEvent { }
 public sealed partial class ToggleChitinousArmorEvent : InstantActionEvent { }
 public sealed partial class ToggleOrganicShieldEvent : InstantActionEvent { }

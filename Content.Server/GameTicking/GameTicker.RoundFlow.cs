@@ -671,15 +671,6 @@ namespace Content.Server.GameTicking
                 var payload = new WebhookPayload { Content = content };
 
                 await _discord.CreateMessage(_webhookIdentifier.Value, payload);
-
-                if (_webhookIdentifierPostround == null)
-                    return;
-
-                content = Loc.GetString("discord-round-postround-started",
-                    ("id", RoundId));
-                payload = new WebhookPayload { Content = content };
-
-                await _discord.CreateMessage(_webhookIdentifierPostround.Value, payload);
             }
             catch (Exception e)
             {

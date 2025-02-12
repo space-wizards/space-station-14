@@ -8,7 +8,7 @@
   - Courier # Imp
   - Quartermaster
   - SalvageSpecialist
-  #- SupplyAssistant # DeltaV - Uncomment once ready to deploy.
+  - SupplyAssistant # DeltaV
 
 - type: department
   id: Civilian
@@ -75,7 +75,7 @@
   - ERTSecurity
   - ERTEngineer
   - DeathSquad
-  #- AdministrativeAssistant # Delta V - Uncomment once ready to deploy. Administrative Assistant, see Resources/Prototypes/_DV/Roles/Jobs/Command/administrative_assistant.yml
+  - AdministrativeAssistant # Delta V
   primary: false
   weight: 100
 

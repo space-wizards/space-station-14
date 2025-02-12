@@ -35,7 +35,7 @@ public sealed partial class FishingRodComponent : Component
 
     [DataField]
     public SpriteSpecifier RopeSprite =
-        new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Guns/Launchers/grappling_gun.rsi"), "rope");
+        new SpriteSpecifier.Rsi(new ResPath("_Impstation/Objects/Fishing/fishingrod.rsi"), "rope");
 
     public EntityUid? Stream;
 }

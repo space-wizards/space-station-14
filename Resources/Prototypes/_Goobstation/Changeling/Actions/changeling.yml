@@ -151,6 +151,22 @@
     chemicalCost: 15
 
 - type: entity
+  id: ActionToggleTentacle
+  name: Toggle Tentacle
+  description: We shape one of our arms into a Tendon Fishing rod. We may retract our Rod in the same manner as we form it. Costs a small amount of chemicals.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 2
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: tentacle
+    event: !type:ToggleTentacleEvent {}
+  - type: ChangelingAction
+    chemicalCost: 15
+
+- type: entity
   id: ActionCreateBoneShard
   name: Form Bone Shard
   description: We break off shards of sharp bone to use as projectiles. Costs a small amount of chemicals.
