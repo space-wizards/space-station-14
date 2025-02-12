@@ -67,9 +67,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         {
             //Bingo waz here
             if (_weldable.IsWelded(uid))
-            {
                 return;
-            }
+
+            if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
+                return;
 
             var nodeName = vent.PumpDirection switch
             {
