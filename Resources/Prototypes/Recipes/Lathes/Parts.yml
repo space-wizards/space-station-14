@@ -3,7 +3,7 @@
   abstract: true
   id: BasePartRecipe
   categories:
-    - Parts
+  - Parts
   completetime: 2
   materials:
     Steel: 300
