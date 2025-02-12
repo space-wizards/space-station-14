@@ -3350,4 +3350,11 @@ Entries:
   id: 465
   time: '2025-02-12T13:41:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/320
-
+- author: Rinary
+  changes:
+  - message: 'Removed all dangerous command perms from QUERY to DANGER, now loading
+      prototypes and files available only for head staff'
+    type: Tweak
+  id: 465
+  time: '2025-02-12T13:48:08.124134+00:00'
+  url: 'null'
