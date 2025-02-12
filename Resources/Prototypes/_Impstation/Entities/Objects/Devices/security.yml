@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseItem, GasTankRoundBase]
+  parent: [BaseItem]
   id: BaseHandheldCriminalRecords
   name: portable criminal records
   description: All the power of a criminal records computer, but it fits in your pocket, or on your back!
@@ -12,36 +12,17 @@
     - state: portable_criminal
     - state: screen-criminal
       shader: unshaded
-# HIGH-VIS VEST CODE FOR COMPARISON
-#  - type: Sprite
-#    sprite: Clothing/OuterClothing/Vests/hazard.rsi
-#    layers:
-#    - state: icon
-#    - state: icon-unshaded
-#      shader: unshaded
   - type: Clothing
     quickEquip: false
     sprite: _Impstation/Objects/Devices/tablets.rsi
     equippedPrefix: criminal
     slots:
-    - suitStorage
-# LAYERING STILL NOT FUCKING WORK DESPITE BEING
-# FUCKING
-# EXACTLY WHAT UPSTREAM DID WITH THEIR HIGH-VIS VEST
-# WHY
+    - suitstorage
     clothingVisuals:
-      suitStorage:
-      - state: equipped-SUITSTORAGE
-      - state: equipped-SUITSTORAGE-unshaded
+      suitstorage:
+      - state: criminal-equipped-SUITSTORAGE
+      - state: criminal-equipped-SUITSTORAGE-unshaded
         shader: unshaded
-# HIGH-VIS VEST CODE FOR COMPARISON
-#  - type: Clothing
-#    sprite: Clothing/OuterClothing/Vests/hazard.rsi
-#    clothingVisuals:
-#      outerClothing:
-#      - state: equipped-OUTERCLOTHING
-#      - state: equipped-OUTERCLOTHING-unshaded
-#        shader: unshaded
   - type: ActivatableUI
     key: enum.CriminalRecordsConsoleKey.Key
   - type: UserInterface
