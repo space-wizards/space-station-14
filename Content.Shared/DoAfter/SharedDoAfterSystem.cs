@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
-using Content.Shared.Mobs;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
