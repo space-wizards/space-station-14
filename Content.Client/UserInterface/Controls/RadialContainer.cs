@@ -178,22 +178,18 @@ public class RadialContainer : LayoutContainer
 
         var children = Children.OfType<IRadialMenuItemWithSector>()
                                .ToArray();
-        var preSortedAngles = new float[children.Length];
         float selectedFrom = 0;
         float selectedTo = 0;
         for (int i = 0; i < children.Length; i++)
         {
             var child = children[i];
-            preSortedAngles[i] = child.AngleSectorTo;
+            _angles[i] = child.AngleSectorTo;
             if (child.IsHovered)
             {
                 selectedFrom = child.AngleSectorFrom ;
                 selectedTo = child.AngleSectorTo ;
             }
         }
-
-        Array.Sort(preSortedAngles, (x, y) => x == y ? 0 : x > y ? 1 : -1);
-        Array.Copy(preSortedAngles, _angles, children.Length);
 
         clone.SetParameter("angles", _angles);
         clone.SetParameter("selectedFrom", selectedFrom);
